@@ -1,0 +1,701 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="STL Debug|Win32">
+      <Configuration>STL Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="STL Debug|x64">
+      <Configuration>STL Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="STL Release|Win32">
+      <Configuration>STL Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="STL Release|x64">
+      <Configuration>STL Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="STL Unicode Debug|Win32">
+      <Configuration>STL Unicode Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="STL Unicode Debug|x64">
+      <Configuration>STL Unicode Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="STL Unicode Release|Win32">
+      <Configuration>STL Unicode Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="STL Unicode Release|x64">
+      <Configuration>STL Unicode Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{F805DC15-5143-4F3A-8C60-5C81247E2C7F}</ProjectGuid>
+    <Keyword>MFCProj</Keyword>
+    <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='STL Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v141</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='STL Debug|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v141</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='STL Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v141</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='STL Release|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v141</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='STL Unicode Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v141</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='STL Unicode Debug|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v141</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='STL Unicode Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v141</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='STL Unicode Release|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v141</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='STL Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='STL Debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='STL Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='STL Release|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='STL Unicode Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='STL Unicode Debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='STL Unicode Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='STL Unicode Release|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='STL Unicode Release|Win32'">.\WFC_Win32_STL_Unicode_Release\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='STL Unicode Release|x64'">$(Platform)\$(Configuration)\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='STL Unicode Release|Win32'">.\WFC_Win32_STL_Unicode_Release\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='STL Unicode Release|x64'">$(Platform)\$(Configuration)\</IntDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='STL Unicode Debug|Win32'">.\WFC_Win32_STL_Unicode_Debug\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='STL Unicode Debug|x64'">$(Platform)\$(Configuration)\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='STL Unicode Debug|Win32'">.\WFC_Win32_STL_Unicode_Debug\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='STL Unicode Debug|x64'">$(Platform)\$(Configuration)\</IntDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='STL Release|Win32'">.\WFC_Win32_STL_Release\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='STL Release|x64'">$(Platform)\$(Configuration)\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='STL Release|Win32'">.\WFC_Win32_STL_Release\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='STL Release|x64'">$(Platform)\$(Configuration)\</IntDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='STL Debug|Win32'">.\WFC_STL_Debug\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='STL Debug|x64'">$(Platform)\$(Configuration)\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='STL Debug|Win32'">.\WFC_STL_Debug\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='STL Debug|x64'">$(Platform)\$(Configuration)\</IntDir>
+    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='STL Debug|Win32'">AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='STL Debug|x64'">AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='STL Debug|Win32'" />
+    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='STL Debug|x64'" />
+    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='STL Debug|Win32'" />
+    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='STL Debug|x64'" />
+    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='STL Release|Win32'">AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='STL Release|x64'">AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='STL Release|Win32'" />
+    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='STL Release|x64'" />
+    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='STL Release|Win32'" />
+    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='STL Release|x64'" />
+    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='STL Unicode Debug|Win32'">AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='STL Unicode Debug|x64'">AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='STL Unicode Debug|Win32'" />
+    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='STL Unicode Debug|x64'" />
+    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='STL Unicode Debug|Win32'" />
+    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='STL Unicode Debug|x64'" />
+    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='STL Unicode Release|Win32'">AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='STL Unicode Release|x64'">NativeRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='STL Unicode Release|Win32'" />
+    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='STL Unicode Release|x64'" />
+    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='STL Unicode Release|Win32'" />
+    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='STL Unicode Release|x64'" />
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='STL Unicode Debug|x64'">
+    <RunCodeAnalysis>false</RunCodeAnalysis>
+    <IncludePath>$(VC_IncludePath);$(UniversalCRT_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
+    <LibraryPath>$(VC_LibraryPath_x64);$(UniversalCRT_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(NETFXKitsDir)Lib\um\x64</LibraryPath>
+    <EnableCppCoreCheck>true</EnableCppCoreCheck>
+    <EnableExperimentalCppCoreCheck>true</EnableExperimentalCppCoreCheck>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='STL Unicode Release|x64'">
+    <RunCodeAnalysis>false</RunCodeAnalysis>
+    <IncludePath>$(VC_IncludePath);$(UniversalCRT_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
+    <LibraryPath>$(VC_LibraryPath_x64);$(UniversalCRT_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(NETFXKitsDir)Lib\um\x64</LibraryPath>
+    <EnableCppCoreCheck>true</EnableCppCoreCheck>
+    <EnableExperimentalCppCoreCheck>true</EnableExperimentalCppCoreCheck>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='STL Unicode Release|Win32'">
+    <ClCompile>
+      <AdditionalOptions>/EHa  %(AdditionalOptions)</AdditionalOptions>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <AdditionalIncludeDirectories>../include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>NDEBUG;WIN32;_WINDOWS;_X86_;_MBCS;_WIN32_WINNT=0x501;MAKING_WFC;WINVER=0x501;WFC_STL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <StringPooling>true</StringPooling>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <PrecompiledHeader>Create</PrecompiledHeader>
+      <PrecompiledHeaderFile>
+      </PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile>$(IntDir)$(TargetName).pch</PrecompiledHeaderOutputFile>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <ProgramDataBaseFileName>$(IntDir)</ProgramDataBaseFileName>
+      <WarningLevel>Level4</WarningLevel>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+    </ClCompile>
+    <ResourceCompile>
+      <Culture>0x0409</Culture>
+    </ResourceCompile>
+    <Lib>
+      <OutputFile>.\UnicodeSTLWFC.lib</OutputFile>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='STL Unicode Release|x64'">
+    <ClCompile>
+      <AdditionalOptions>/EHa  /permissive- %(AdditionalOptions)</AdditionalOptions>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <AdditionalIncludeDirectories>../include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>NDEBUG;_WIN64;WIN32;_WINDOWS;_AMD64_;_MBCS;MAKING_WFC;WFC_STL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <StringPooling>true</StringPooling>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>wfc.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile>$(IntDir)$(TargetName).pch</PrecompiledHeaderOutputFile>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <ProgramDataBaseFileName>$(IntDir)</ProgramDataBaseFileName>
+      <WarningLevel>Level4</WarningLevel>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <EnablePREfast>false</EnablePREfast>
+    </ClCompile>
+    <ResourceCompile>
+      <Culture>0x0409</Culture>
+    </ResourceCompile>
+    <Lib>
+      <OutputFile>.\UnicodeSTLWFC64.lib</OutputFile>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <TargetMachine>MachineX64</TargetMachine>
+      <AdditionalOptions>/ignore:4221 %(AdditionalOptions)</AdditionalOptions>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='STL Unicode Debug|Win32'">
+    <ClCompile>
+      <AdditionalOptions>/EHa /EHa /EHc  %(AdditionalOptions)</AdditionalOptions>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>../include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_DEBUG;WIN32;_WINDOWS;_MBCS;_WIN32_WINNT=0x501;MAKING_WFC;WINVER=0x501;WFC_STL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <StringPooling>true</StringPooling>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <PrecompiledHeader>Create</PrecompiledHeader>
+      <PrecompiledHeaderFile>
+      </PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile>$(IntDir)$(TargetName).pch</PrecompiledHeaderOutputFile>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <ProgramDataBaseFileName>$(IntDir)</ProgramDataBaseFileName>
+      <WarningLevel>Level4</WarningLevel>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <CompileAs>CompileAsCpp</CompileAs>
+      <CompileAsManaged>false</CompileAsManaged>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <BrowseInformation>true</BrowseInformation>
+    </ClCompile>
+    <ResourceCompile>
+      <Culture>0x0409</Culture>
+    </ResourceCompile>
+    <Lib>
+      <OutputFile>.\DebugBuildOfUnicodeSTLWFC.lib</OutputFile>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <TargetMachine>MachineX64</TargetMachine>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='STL Unicode Debug|x64'">
+    <ClCompile>
+      <AdditionalOptions>/EHa /EHa /EHc  /permissive- %(AdditionalOptions)</AdditionalOptions>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>../include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_DEBUG;_WIN64;WIN32;_WINDOWS;_MBCS;MAKING_WFC;WFC_STL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <StringPooling>true</StringPooling>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>wfc.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile>$(IntDir)$(TargetName).pch</PrecompiledHeaderOutputFile>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <ProgramDataBaseFileName>$(IntDir)</ProgramDataBaseFileName>
+      <WarningLevel>Level4</WarningLevel>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <CompileAs>CompileAsCpp</CompileAs>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <EnablePREfast>false</EnablePREfast>
+    </ClCompile>
+    <ResourceCompile>
+      <Culture>0x0409</Culture>
+    </ResourceCompile>
+    <Lib>
+      <OutputFile>.\DebugBuildOfUnicodeSTLWFC64.lib</OutputFile>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <TargetMachine>MachineX64</TargetMachine>
+      <AdditionalOptions>/ignore:4221 %(AdditionalOptions)</AdditionalOptions>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='STL Release|Win32'">
+    <ClCompile>
+      <AdditionalOptions>/EHa  %(AdditionalOptions)</AdditionalOptions>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <AdditionalIncludeDirectories>../include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>NDEBUG;WIN32;_WINDOWS;_X86_;_WIN32_WINNT=0x400;MAKING_WFC;WINVER=0x401;WFC_STL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <StringPooling>true</StringPooling>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <PrecompiledHeader>Create</PrecompiledHeader>
+      <PrecompiledHeaderFile>
+      </PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile>$(IntDir)$(TargetName).pch</PrecompiledHeaderOutputFile>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <ProgramDataBaseFileName>$(IntDir)</ProgramDataBaseFileName>
+      <WarningLevel>Level4</WarningLevel>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+    </ClCompile>
+    <ResourceCompile>
+      <Culture>0x0409</Culture>
+    </ResourceCompile>
+    <Lib>
+      <OutputFile>.\STLWFC.lib</OutputFile>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='STL Release|x64'">
+    <ClCompile>
+      <AdditionalOptions>/EHa  %(AdditionalOptions)</AdditionalOptions>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <AdditionalIncludeDirectories>../include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>NDEBUG;WIN32;_WINDOWS;_X86_;_WIN32_WINNT=0x400;MAKING_WFC;WINVER=0x401;WFC_STL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <StringPooling>true</StringPooling>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <PrecompiledHeader>Create</PrecompiledHeader>
+      <PrecompiledHeaderFile>
+      </PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile>$(IntDir)$(TargetName).pch</PrecompiledHeaderOutputFile>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <ProgramDataBaseFileName>$(IntDir)</ProgramDataBaseFileName>
+      <WarningLevel>Level4</WarningLevel>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+    </ClCompile>
+    <ResourceCompile>
+      <Culture>0x0409</Culture>
+    </ResourceCompile>
+    <Lib>
+      <OutputFile>.\STLWFC64.lib</OutputFile>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <TargetMachine>MachineX64</TargetMachine>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='STL Debug|Win32'">
+    <ClCompile>
+      <AdditionalOptions>/EHa /EHa /EHc  %(AdditionalOptions)</AdditionalOptions>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>../include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_DEBUG;WIN32;_WINDOWS;_X86_;_WIN32_WINNT=0x400;MAKING_WFC;WINVER=0x401;WFC_STL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <StringPooling>true</StringPooling>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <PrecompiledHeader>Create</PrecompiledHeader>
+      <PrecompiledHeaderFile>
+      </PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile>$(IntDir)$(TargetName).pch</PrecompiledHeaderOutputFile>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <ProgramDataBaseFileName>$(IntDir)</ProgramDataBaseFileName>
+      <WarningLevel>Level4</WarningLevel>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <ShowIncludes>false</ShowIncludes>
+    </ClCompile>
+    <ResourceCompile>
+      <Culture>0x0409</Culture>
+    </ResourceCompile>
+    <Lib>
+      <OutputFile>.\DebugBuildOfSTLWFC.lib</OutputFile>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='STL Debug|x64'">
+    <ClCompile>
+      <AdditionalOptions>/EHa /EHa /EHc  %(AdditionalOptions)</AdditionalOptions>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>../include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_DEBUG;WIN32;_WINDOWS;_X86_;_WIN32_WINNT=0x400;MAKING_WFC;WINVER=0x401;WFC_STL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <StringPooling>true</StringPooling>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <PrecompiledHeader>Create</PrecompiledHeader>
+      <PrecompiledHeaderFile>
+      </PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile>$(IntDir)$(TargetName).pch</PrecompiledHeaderOutputFile>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <ProgramDataBaseFileName>$(IntDir)</ProgramDataBaseFileName>
+      <WarningLevel>Level4</WarningLevel>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <ShowIncludes>false</ShowIncludes>
+    </ClCompile>
+    <ResourceCompile>
+      <Culture>0x0409</Culture>
+    </ResourceCompile>
+    <Lib>
+      <OutputFile>.\DebugBuildOfSTLWFC64.lib</OutputFile>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <TargetMachine>MachineX64</TargetMachine>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\SRC\ATCP.cpp">
+      <DisableSpecificWarnings Condition="'$(Configuration)|$(Platform)'=='STL Unicode Debug|x64'">4221</DisableSpecificWarnings>
+      <DisableSpecificWarnings Condition="'$(Configuration)|$(Platform)'=='STL Unicode Release|x64'">4221</DisableSpecificWarnings>
+    </ClCompile>
+    <ClCompile Include="..\SRC\CBase64Coding.cpp" />
+    <ClCompile Include="..\SRC\CBitArray.cpp" />
+    <ClCompile Include="..\SRC\CCOMSucks.cpp" />
+    <ClCompile Include="..\SRC\CCryptographicAlgorithm.cpp" />
+    <ClCompile Include="..\SRC\CCryptographicHash.cpp" />
+    <ClCompile Include="..\SRC\CCryptographicKey.cpp" />
+    <ClCompile Include="..\SRC\CCryptographicProvider.cpp" />
+    <ClCompile Include="..\SRC\CCryptography.cpp" />
+    <ClCompile Include="..\SRC\CDataArchive.cpp" />
+    <ClCompile Include="..\SRC\CDataFile.cpp" />
+    <ClCompile Include="..\SRC\CDataMemory.cpp" />
+    <ClCompile Include="..\SRC\CDataParser.cpp" />
+    <ClCompile Include="..\SRC\CDataSocket.cpp" />
+    <ClCompile Include="..\SRC\CDesktop.cpp" />
+    <ClCompile Include="..\SRC\CEventLogRecord.CPP" />
+    <ClCompile Include="..\SRC\CEVNTLOG.CPP" />
+    <ClCompile Include="..\SRC\CExtensibleMarkupLanguageAttribute.cpp" />
+    <ClCompile Include="..\SRC\CExtensibleMarkupLanguageDocument.cpp" />
+    <ClCompile Include="..\SRC\CExtensibleMarkupLanguageElement.cpp" />
+    <ClCompile Include="..\SRC\CExtensibleMarkupLanguageEntities.cpp" />
+    <ClCompile Include="..\SRC\CFile64.cpp" />
+    <ClCompile Include="..\SRC\CFileDirectory.cpp" />
+    <ClCompile Include="..\SRC\CFileTime.CPP" />
+    <ClCompile Include="..\SRC\CFileTransferProtocol.cpp" />
+    <ClCompile Include="..\SRC\CGarbageCollector.cpp" />
+    <ClCompile Include="..\SRC\CJulianDate.cpp" />
+    <ClCompile Include="..\SRC\CMemoryFile.cpp" />
+    <ClCompile Include="..\SRC\CMicrosoftTape.cpp" />
+    <ClCompile Include="..\SRC\CMixer.cpp" />
+    <ClCompile Include="..\SRC\CMixerCapabilities.cpp" />
+    <ClCompile Include="..\SRC\CMixerControl.cpp" />
+    <ClCompile Include="..\SRC\CMixerControlDetails.cpp" />
+    <ClCompile Include="..\SRC\CMixerControlDetailsData.cpp" />
+    <ClCompile Include="..\SRC\CMixerControlInstance.cpp" />
+    <ClCompile Include="..\SRC\CMixerDestination.cpp" />
+    <ClCompile Include="..\SRC\CMixerLine.cpp" />
+    <ClCompile Include="..\SRC\CMixerSource.cpp" />
+    <ClCompile Include="..\SRC\CMixerSourceSelector.cpp" />
+    <ClCompile Include="..\SRC\CMixerSpeakers.cpp" />
+    <ClCompile Include="..\SRC\CMixerSwitchControl.cpp" />
+    <ClCompile Include="..\SRC\CMixerVolumeControl.cpp" />
+    <ClCompile Include="..\SRC\CMixerWaveIn.cpp" />
+    <ClCompile Include="..\SRC\CNetConn.cpp" />
+    <ClCompile Include="..\SRC\CNetFile.cpp" />
+    <ClCompile Include="..\SRC\CNetInfo.cpp" />
+    <ClCompile Include="..\SRC\CNetRsrc.cpp" />
+    <ClCompile Include="..\SRC\CNetScheduleJob.cpp" />
+    <ClCompile Include="..\SRC\CNetSess.cpp" />
+    <ClCompile Include="..\SRC\CNetShar.cpp" />
+    <ClCompile Include="..\SRC\CNetWkst.cpp" />
+    <ClCompile Include="..\SRC\CNetwork.cpp" />
+    <ClCompile Include="..\SRC\CNetworkConnectionInformation.cpp" />
+    <ClCompile Include="..\SRC\CNetworkFileInformation.cpp" />
+    <ClCompile Include="..\SRC\CNetworkResourceInformation.cpp" />
+    <ClCompile Include="..\SRC\CNetworkSessionInformation.cpp" />
+    <ClCompile Include="..\SRC\CNetworkUser.cpp" />
+    <ClCompile Include="..\SRC\CNetworkUserInformation.cpp" />
+    <ClCompile Include="..\SRC\CPasswordChangeFilter.cpp" />
+    <ClCompile Include="..\SRC\CPhysicalDiskFile.cpp" />
+    <ClCompile Include="..\SRC\CPing.cpp" />
+    <ClCompile Include="..\SRC\CPingRes.cpp" />
+    <ClCompile Include="..\SRC\CQueue.cpp">
+      <DisableSpecificWarnings Condition="'$(Configuration)|$(Platform)'=='STL Unicode Debug|x64'">4221</DisableSpecificWarnings>
+      <DisableSpecificWarnings Condition="'$(Configuration)|$(Platform)'=='STL Unicode Release|x64'">4221</DisableSpecificWarnings>
+    </ClCompile>
+    <ClCompile Include="..\SRC\CRandomNumberGenerator.cpp" />
+    <ClCompile Include="..\SRC\CRandomNumberGenerator2.cpp" />
+    <ClCompile Include="..\SRC\CRAS.CPP">
+      <DisableSpecificWarnings Condition="'$(Configuration)|$(Platform)'=='STL Unicode Debug|x64'">4221</DisableSpecificWarnings>
+      <DisableSpecificWarnings Condition="'$(Configuration)|$(Platform)'=='STL Unicode Release|x64'">4221</DisableSpecificWarnings>
+    </ClCompile>
+    <ClCompile Include="..\SRC\CRASADM.CPP" />
+    <ClCompile Include="..\SRC\CReedSolomonErrorCorrectionCode.cpp" />
+    <ClCompile Include="..\SRC\CServer.cpp" />
+    <ClCompile Include="..\SRC\CService.cpp" />
+    <ClCompile Include="..\SRC\CServiceApplication.cpp" />
+    <ClCompile Include="..\SRC\CSharedMemoryObject.cpp" />
+    <ClCompile Include="..\SRC\CSMTF.cpp" />
+    <ClCompile Include="..\SRC\CSuperRandomNumberGenerator.cpp" />
+    <ClCompile Include="..\SRC\CSvcMgr.cpp" />
+    <ClCompile Include="..\SRC\CSystemTime.cpp" />
+    <ClCompile Include="..\SRC\CTape.cpp" />
+    <ClCompile Include="..\SRC\CTapeGetMediaParameters.cpp" />
+    <ClCompile Include="..\SRC\CTimeEx.cpp" />
+    <ClCompile Include="..\SRC\CUNC.CPP" />
+    <ClCompile Include="..\SRC\CURL.CPP" />
+    <ClCompile Include="..\SRC\CUUCoding.cpp" />
+    <ClCompile Include="..\SRC\CVolume.cpp" />
+    <ClCompile Include="..\SRC\CXMLArchive.cpp" />
+    <ClCompile Include="..\SRC\DCB.CPP" />
+    <ClCompile Include="..\SRC\DumyFile.cpp" />
+    <ClCompile Include="..\SRC\IPCP.cpp">
+      <DisableSpecificWarnings Condition="'$(Configuration)|$(Platform)'=='STL Unicode Debug|x64'">4221</DisableSpecificWarnings>
+      <DisableSpecificWarnings Condition="'$(Configuration)|$(Platform)'=='STL Unicode Release|x64'">4221</DisableSpecificWarnings>
+    </ClCompile>
+    <ClCompile Include="..\SRC\IPXCP.cpp">
+      <DisableSpecificWarnings Condition="'$(Configuration)|$(Platform)'=='STL Unicode Debug|x64'">4221</DisableSpecificWarnings>
+      <DisableSpecificWarnings Condition="'$(Configuration)|$(Platform)'=='STL Unicode Release|x64'">4221</DisableSpecificWarnings>
+    </ClCompile>
+    <ClCompile Include="..\SRC\LMErr.cpp" />
+    <ClCompile Include="..\SRC\LSOCKETS.CPP" />
+    <ClCompile Include="..\SRC\LZFile.cpp" />
+    <ClCompile Include="..\SRC\Modem.CPP" />
+    <ClCompile Include="..\SRC\NAMDPIPE.CPP" />
+    <ClCompile Include="..\SRC\NBFCP.cpp">
+      <DisableSpecificWarnings Condition="'$(Configuration)|$(Platform)'=='STL Unicode Debug|x64'">4221</DisableSpecificWarnings>
+      <DisableSpecificWarnings Condition="'$(Configuration)|$(Platform)'=='STL Unicode Release|x64'">4221</DisableSpecificWarnings>
+    </ClCompile>
+    <ClCompile Include="..\SRC\OVRLPD.CPP" />
+    <ClCompile Include="..\SRC\PortInformation.CPP" />
+    <ClCompile Include="..\SRC\PrecompiledHeader.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='STL Unicode Debug|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='STL Unicode Release|x64'">Create</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\SRC\RASCP.CPP">
+      <DisableSpecificWarnings Condition="'$(Configuration)|$(Platform)'=='STL Unicode Debug|x64'">4221</DisableSpecificWarnings>
+      <DisableSpecificWarnings Condition="'$(Configuration)|$(Platform)'=='STL Unicode Release|x64'">4221</DisableSpecificWarnings>
+    </ClCompile>
+    <ClCompile Include="..\SRC\RASPPPCR.cpp">
+      <DisableSpecificWarnings Condition="'$(Configuration)|$(Platform)'=='STL Unicode Debug|x64'">4221</DisableSpecificWarnings>
+      <DisableSpecificWarnings Condition="'$(Configuration)|$(Platform)'=='STL Unicode Release|x64'">4221</DisableSpecificWarnings>
+    </ClCompile>
+    <ClCompile Include="..\SRC\RASPSTAT.CPP">
+      <DisableSpecificWarnings Condition="'$(Configuration)|$(Platform)'=='STL Unicode Debug|x64'">4221</DisableSpecificWarnings>
+      <DisableSpecificWarnings Condition="'$(Configuration)|$(Platform)'=='STL Unicode Release|x64'">4221</DisableSpecificWarnings>
+    </ClCompile>
+    <ClCompile Include="..\SRC\REGISTRY.CPP" />
+    <ClCompile Include="..\SRC\RemoteAccessServicePort.CPP">
+      <DisableSpecificWarnings Condition="'$(Configuration)|$(Platform)'=='STL Unicode Debug|x64'">4221</DisableSpecificWarnings>
+      <DisableSpecificWarnings Condition="'$(Configuration)|$(Platform)'=='STL Unicode Release|x64'">4221</DisableSpecificWarnings>
+    </ClCompile>
+    <ClCompile Include="..\SRC\RemoteAccessServiceUser.cpp">
+      <DisableSpecificWarnings Condition="'$(Configuration)|$(Platform)'=='STL Unicode Debug|x64'">4221</DisableSpecificWarnings>
+      <DisableSpecificWarnings Condition="'$(Configuration)|$(Platform)'=='STL Unicode Release|x64'">4221</DisableSpecificWarnings>
+    </ClCompile>
+    <ClCompile Include="..\SRC\Serial.CPP" />
+    <ClCompile Include="..\SRC\ServiceConfiguration.cpp" />
+    <ClCompile Include="..\SRC\SOCKETS.CPP" />
+    <ClCompile Include="..\SRC\SockFile.cpp" />
+    <ClCompile Include="..\SRC\STL_CString.cpp" />
+    <ClCompile Include="..\SRC\Structs.cpp" />
+    <ClCompile Include="..\SRC\TALKSOCK.CPP" />
+    <ClCompile Include="..\SRC\U2A_A2U.cpp" />
+    <ClCompile Include="..\SRC\wfc_am_i_administrator.cpp" />
+    <ClCompile Include="..\SRC\wfc_append_string_to_CByteArray.cpp" />
+    <ClCompile Include="..\SRC\wfc_append_text_to_edit_control.cpp" />
+    <ClCompile Include="..\SRC\wfc_calculate_entropy.cpp" />
+    <ClCompile Include="..\SRC\wfc_check_digital_signature.cpp" />
+    <ClCompile Include="..\SRC\wfc_close_handle.cpp" />
+    <ClCompile Include="..\SRC\wfc_convert_double_null_terminated_UNICODE_string.cpp" />
+    <ClCompile Include="..\SRC\wfc_convert_lpwstr_to_cstring.cpp" />
+    <ClCompile Include="..\SRC\wfc_convert_to_unicode.cpp" />
+    <ClCompile Include="..\SRC\wfc_create_hard_link.cpp" />
+    <ClCompile Include="..\SRC\wfc_create_path.cpp" />
+    <ClCompile Include="..\SRC\wfc_delete_oldest_file.cpp" />
+    <ClCompile Include="..\SRC\wfc_disable_privilege.cpp" />
+    <ClCompile Include="..\SRC\wfc_enable_all_privileges.cpp" />
+    <ClCompile Include="..\SRC\wfc_enable_privilege.cpp" />
+    <ClCompile Include="..\SRC\wfc_exit_process_and_delete_exe.cpp" />
+    <ClCompile Include="..\SRC\wfc_get_activex_servers.cpp" />
+    <ClCompile Include="..\SRC\wfc_get_day_of_week.cpp" />
+    <ClCompile Include="..\SRC\wfc_get_directory_usage_percentage.cpp" />
+    <ClCompile Include="..\SRC\wfc_get_error_string.cpp" />
+    <ClCompile Include="..\SRC\wfc_get_executable_directory.cpp" />
+    <ClCompile Include="..\SRC\wfc_get_filename_from_handle.cpp" />
+    <ClCompile Include="..\SRC\wfc_get_operating_system_version_string.cpp" />
+    <ClCompile Include="..\SRC\wfc_get_string_from_clipboard.cpp" />
+    <ClCompile Include="..\SRC\wfc_get_thread_name.cpp" />
+    <ClCompile Include="..\SRC\wfc_get_web_page.cpp" />
+    <ClCompile Include="..\SRC\wfc_is_and_find_routines.cpp" />
+    <ClCompile Include="..\SRC\wfc_kill_most_recently_used_document_list.cpp" />
+    <ClCompile Include="..\SRC\wfc_make_ntfs_go_fast.cpp" />
+    <ClCompile Include="..\SRC\wfc_move_file_at_reboot.cpp" />
+    <ClCompile Include="..\SRC\wfc_parse_iso_8601_string.cpp" />
+    <ClCompile Include="..\Src\wfc_protect.cpp" />
+    <ClCompile Include="..\Src\wfc_read_xml_from_file.cpp" />
+    <ClCompile Include="..\SRC\wfc_set_activex_servers.cpp" />
+    <ClCompile Include="..\SRC\wfc_set_thread_name.cpp" />
+    <ClCompile Include="..\SRC\wfc_start_screen_saver.cpp" />
+    <ClCompile Include="..\SRC\wfc_undocumented_get_system_process_list.cpp" />
+    <ClCompile Include="..\SRC\wfc_UNICODE_floating_point_routines.cpp" />
+    <ClCompile Include="..\SRC\wfc_web_post.cpp" />
+    <ClCompile Include="..\SRC\WfcTrace.cpp" />
+    <ClCompile Include="..\SRC\xml_character_test_routines.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\INCLUDE\CBase64Coding.hpp" />
+    <ClInclude Include="..\INCLUDE\CBitArray.hpp" />
+    <ClInclude Include="..\INCLUDE\CCOMSucks.hpp" />
+    <ClInclude Include="..\INCLUDE\CCriticalSection.hpp" />
+    <ClInclude Include="..\INCLUDE\CCrypto.hpp" />
+    <ClInclude Include="..\INCLUDE\CDataArchive.hpp" />
+    <ClInclude Include="..\INCLUDE\CDataChunk.hpp" />
+    <ClInclude Include="..\INCLUDE\CDataFile.hpp" />
+    <ClInclude Include="..\INCLUDE\CDataMemory.hpp" />
+    <ClInclude Include="..\INCLUDE\CDataParser.hpp" />
+    <ClInclude Include="..\INCLUDE\CDataSocket.hpp" />
+    <ClInclude Include="..\INCLUDE\CDesktop.hpp" />
+    <ClInclude Include="..\INCLUDE\CEventLogRecord.HPP" />
+    <ClInclude Include="..\INCLUDE\CEVNTLOG.HPP" />
+    <ClInclude Include="..\INCLUDE\CExtensibleMarkupLanguage.hpp" />
+    <ClInclude Include="..\INCLUDE\CFile.hpp" />
+    <ClInclude Include="..\INCLUDE\CFile64.hpp" />
+    <ClInclude Include="..\INCLUDE\CFileDirectory.hpp" />
+    <ClInclude Include="..\INCLUDE\CFileTime.hpp" />
+    <ClInclude Include="..\INCLUDE\CFileTransferProtocol.hpp" />
+    <ClInclude Include="..\INCLUDE\CGarbageCollector.hpp" />
+    <ClInclude Include="..\INCLUDE\CJulianDate.hpp" />
+    <ClInclude Include="..\INCLUDE\CMemoryFile.hpp" />
+    <ClInclude Include="..\INCLUDE\CMicrosoftTape.hpp" />
+    <ClInclude Include="..\INCLUDE\CMixer.hpp" />
+    <ClInclude Include="..\INCLUDE\CNetConn.hpp" />
+    <ClInclude Include="..\INCLUDE\CNetFile.hpp" />
+    <ClInclude Include="..\INCLUDE\CNetInfo.hpp" />
+    <ClInclude Include="..\INCLUDE\CNetRsrc.hpp" />
+    <ClInclude Include="..\INCLUDE\CNetSess.hpp" />
+    <ClInclude Include="..\INCLUDE\CNetShar.hpp" />
+    <ClInclude Include="..\INCLUDE\CNetUser.hpp" />
+    <ClInclude Include="..\INCLUDE\CNetWkst.hpp" />
+    <ClInclude Include="..\INCLUDE\CNetwork.hpp" />
+    <ClInclude Include="..\INCLUDE\CNetworkScheduleJob.hpp" />
+    <ClInclude Include="..\INCLUDE\CNMPIPE.HPP" />
+    <ClInclude Include="..\INCLUDE\CParsePoint.hpp" />
+    <ClInclude Include="..\INCLUDE\CPasswordChangeFilter.hpp" />
+    <ClInclude Include="..\INCLUDE\CPhysicalDiskFile.hpp" />
+    <ClInclude Include="..\INCLUDE\CPing.hpp" />
+    <ClInclude Include="..\INCLUDE\CQueue.hpp" />
+    <ClInclude Include="..\INCLUDE\CRandomNumberGenerator.hpp" />
+    <ClInclude Include="..\INCLUDE\CRandomNumberGenerator2.hpp" />
+    <ClInclude Include="..\INCLUDE\CRAS.HPP" />
+    <ClInclude Include="..\INCLUDE\CRASADM.HPP" />
+    <ClInclude Include="..\INCLUDE\CRASPORT.HPP" />
+    <ClInclude Include="..\INCLUDE\CReedSolomonErrorCorrectionCode.hpp" />
+    <ClInclude Include="..\INCLUDE\CREGISTY.HPP" />
+    <ClInclude Include="..\INCLUDE\CServer.hpp" />
+    <ClInclude Include="..\INCLUDE\CService.hpp" />
+    <ClInclude Include="..\INCLUDE\CServiceApplication.hpp" />
+    <ClInclude Include="..\INCLUDE\CSharedMemoryObject.hpp" />
+    <ClInclude Include="..\INCLUDE\CSMTF.hpp" />
+    <ClInclude Include="..\INCLUDE\CSuperRandomNumberGenerator.hpp" />
+    <ClInclude Include="..\INCLUDE\CSvcMgr.hpp" />
+    <ClInclude Include="..\INCLUDE\CSystemTime.hpp" />
+    <ClInclude Include="..\INCLUDE\ctape.hpp" />
+    <ClInclude Include="..\INCLUDE\CTimeEx.hpp" />
+    <ClInclude Include="..\INCLUDE\CUNC.HPP" />
+    <ClInclude Include="..\INCLUDE\CURL.HPP" />
+    <ClInclude Include="..\INCLUDE\CUUCoding.hpp" />
+    <ClInclude Include="..\INCLUDE\CVolume.hpp" />
+    <ClInclude Include="..\INCLUDE\CXMLArchive.hpp" />
+    <ClInclude Include="..\INCLUDE\DCB.HPP" />
+    <ClInclude Include="..\INCLUDE\DumyFile.hpp" />
+    <ClInclude Include="..\INCLUDE\Guards.hpp" />
+    <ClInclude Include="..\INCLUDE\LSOCKETS.HPP" />
+    <ClInclude Include="..\INCLUDE\LZFILE.HPP" />
+    <ClInclude Include="..\INCLUDE\Mfc2Stl.h" />
+    <ClInclude Include="..\INCLUDE\Modem.hpp" />
+    <ClInclude Include="..\INCLUDE\OVRLPD.HPP" />
+    <ClInclude Include="..\INCLUDE\PortInformation.hpp" />
+    <ClInclude Include="..\INCLUDE\samtf.h" />
+    <ClInclude Include="..\INCLUDE\Serial.hpp" />
+    <ClInclude Include="..\INCLUDE\ServiceConfiguration.hpp" />
+    <ClInclude Include="..\INCLUDE\SOCKETS.HPP" />
+    <ClInclude Include="..\INCLUDE\SockFile.hpp" />
+    <ClInclude Include="..\INCLUDE\stl_string_helpers.h" />
+    <ClInclude Include="..\INCLUDE\Structs.hpp" />
+    <ClInclude Include="..\INCLUDE\TSOCKETS.HPP" />
+    <ClInclude Include="..\INCLUDE\WFC.H" />
+    <ClInclude Include="..\INCLUDE\wfc_crypto.h" />
+    <ClInclude Include="..\INCLUDE\wfc_exceptions.h" />
+    <ClInclude Include="..\INCLUDE\wfc_linker_setup.h" />
+    <ClInclude Include="..\INCLUDE\wfc_thread_information_block.h" />
+    <ClInclude Include="..\INCLUDE\wfc_undocumented.h" />
+    <ClInclude Include="..\INCLUDE\wfc_validate.h" />
+    <ClInclude Include="..\INCLUDE\wfc_web_post.h" />
+    <ClInclude Include="..\INCLUDE\wfcfloat.h" />
+    <ClInclude Include="..\INCLUDE\WFCTrace.hpp" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

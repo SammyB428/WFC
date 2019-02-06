@@ -1,0 +1,21 @@
+Microsoft Visual Studio Solution File, Format Version 8.00
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Microphone", "Microphone.vcproj", "{F884D6F2-795A-4F53-A0E5-9F6A4AFBEFDF}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfiguration) = preSolution
+		Debug = Debug
+		Release = Release
+	EndGlobalSection
+	GlobalSection(ProjectConfiguration) = postSolution
+		{F884D6F2-795A-4F53-A0E5-9F6A4AFBEFDF}.Debug.ActiveCfg = Debug|Win32
+		{F884D6F2-795A-4F53-A0E5-9F6A4AFBEFDF}.Debug.Build.0 = Debug|Win32
+		{F884D6F2-795A-4F53-A0E5-9F6A4AFBEFDF}.Release.ActiveCfg = Release|Win32
+		{F884D6F2-795A-4F53-A0E5-9F6A4AFBEFDF}.Release.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+	EndGlobalSection
+	GlobalSection(ExtensibilityAddIns) = postSolution
+	EndGlobalSection
+EndGlobal

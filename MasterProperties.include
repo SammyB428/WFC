@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<!--
+    This is the MasterProperties.include file. 
+    It contains the default configurations used by the build server.
+    DO NOT MODIFY THIS FILE UNLESS IT IS ALSO APPLICABLE FOR THE BUILD SERVER
+    If you need any custom properties for your local setup, you can create a sibling UserProperties.include file and override settings a la cart.
+    That file is ignored by default so there is no chance of committing it to the repository
+-->
+
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <ToolsVersion>15.0</ToolsVersion>
+        <TruxtonWindowsSDKVersion>10.0.17134.0</TruxtonWindowsSDKVersion>
+        <Platform>x64</Platform>
+        <WFCRoot>$(MSBuildThisFileDirectory)</WFCRoot>
+        <ReleaseBuildDirectoryName>bin</ReleaseBuildDirectoryName>
+        <ReleaseBuildDirectory>$([System.IO.Path]::GetFullPath('$(WFCRoot)\$(ReleaseBuildDirectoryName)'))</ReleaseBuildDirectory>
+        <DebugBuildDirectoryName>Debugbin</DebugBuildDirectoryName>
+        <DebugBuildDirectory>$([System.IO.Path]::GetFullPath('$(WFCRoot)\$(DebugBuildDirectoryName)'))</DebugBuildDirectory>
+        <DistributionDirectory>$(WFCRoot)Distribution</DistributionDirectory>
+        <IncludeDirectoryName>include</IncludeDirectoryName>
+        <IncludeDirectory>$([System.IO.Path]::GetFullPath('$(IncludeDirectoryName)'))</IncludeDirectory>
+        <LibDirectoryName>lib</LibDirectoryName>
+        <LibDirectory>$([System.IO.Path]::GetFullPath('$(WFCRoot)\$(LibDirectoryName)'))</LibDirectory>
+        <notesting></notesting>
+        <PowerShell64>$(windir)\sysnative\WindowsPowerShell\v1.0\PowerShell.exe</PowerShell64>
+        <Product>WFC</Product>
+        <Today>$([System.DateTime]::Now.ToString("yyyyMMdd.HHmmss"))</Today>
+        <ProgramDataDir>$(env:ProgramData)</ProgramDataDir>
+        <StandardCppProperties>Platform=$(Platform);VisualStudioVersion=$(ToolsVersion)</StandardCppProperties>
+    </PropertyGroup>
+    <Choose>
+        <When Condition=" '$(Configuration)'=='Debug' ">
+            <PropertyGroup>
+                <ReferenceBinDirectory>$(DebugBuildDirectoryName)</ReferenceBinDirectory>
+            </PropertyGroup>
+        </When>
+        <When Condition=" '$(Configuration)'=='Release' ">
+            <PropertyGroup>
+                <ReferenceBinDirectory>$(ReleaseBuildDirectoryName)</ReferenceBinDirectory>
+            </PropertyGroup>
+        </When>
+    </Choose>
+    <!-- you can override any items above by creating a UserProperties.include file -->
+    <Import Project="UserProperties.include" Condition="Exists('UserProperties.include')"/>
+</Project>

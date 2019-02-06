@@ -1,0 +1,22 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "WatchDog", "WatchDog.vcxproj", "{EE3E13DB-7AB0-4397-8087-0EE9D1F327DF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+		UnicodeRelease|Win32 = UnicodeRelease|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EE3E13DB-7AB0-4397-8087-0EE9D1F327DF}.Debug|Win32.ActiveCfg = Debug|Win32
+		{EE3E13DB-7AB0-4397-8087-0EE9D1F327DF}.Debug|Win32.Build.0 = Debug|Win32
+		{EE3E13DB-7AB0-4397-8087-0EE9D1F327DF}.Release|Win32.ActiveCfg = Release|Win32
+		{EE3E13DB-7AB0-4397-8087-0EE9D1F327DF}.Release|Win32.Build.0 = Release|Win32
+		{EE3E13DB-7AB0-4397-8087-0EE9D1F327DF}.UnicodeRelease|Win32.ActiveCfg = UnicodeRelease|Win32
+		{EE3E13DB-7AB0-4397-8087-0EE9D1F327DF}.UnicodeRelease|Win32.Build.0 = UnicodeRelease|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

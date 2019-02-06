@@ -1,0 +1,24 @@
+--------------------Configuration: ChangeServiceConfiguration - Win32 UnicodeRelease--------------------
+Begining build with project "E:\WFC\Sample\ChangeServiceConfiguration\ChangeServiceConfiguration.dsp", at root.
+Active configuration is Win32 (x86) Console Application (based on Win32 (x86) Console Application)
+
+Project's tools are:
+			"32-bit C/C++ Compiler for 80x86" with flags "/nologo /MD /W4 /GX /O2 /I "E:\wfc\include" /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /D "_AFXDLL" /D "_MBCS" /D "_UNICODE" /Fp"UnicodeRelease/ChangeServiceConfiguration.pch" /YX /Fo"UnicodeRelease/" /Fd"UnicodeRelease/" /FD /EHa /EHc /TP /c "
+			"Win32 Resource Compiler" with flags "/l 0x409 /d "NDEBUG" /d "_AFXDLL" "
+			"Browser Database Maker" with flags "/nologo /o"UnicodeRelease/ChangeServiceConfiguration.bsc" "
+			"COFF Linker for 80x86" with flags "/nologo /subsystem:console /incremental:no /pdb:"UnicodeRelease/ChangeServiceConfiguration.pdb" /machine:I386 /out:"UnicodeRelease/ChangeServiceConfiguration.exe" "
+			"Custom Build" with flags ""
+			"<Component 0xa>" with flags ""
+
+Creating temp file "C:\TEMP\RSP2D.tmp" with contents </nologo /MD /W4 /GX /O2 /I "E:\wfc\include" /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /D "_AFXDLL" /D "_MBCS" /D "_UNICODE" /Fp"UnicodeRelease/ChangeServiceConfiguration.pch" /YX /Fo"UnicodeRelease/" /Fd"UnicodeRelease/" /FD /EHa /EHc /TP /c 
+"E:\WFC\Sample\ChangeServiceConfiguration\ChangeServiceConfiguration.cpp"
+>
+Creating command line "cl.exe @C:\TEMP\RSP2D.tmp" 
+Creating command line "link.exe /nologo /subsystem:console /incremental:no /pdb:"UnicodeRelease/ChangeServiceConfiguration.pdb" /machine:I386 /out:"UnicodeRelease/ChangeServiceConfiguration.exe"  .\UnicodeRelease\ChangeServiceConfiguration.obj" 
+Compiling...
+ChangeServiceConfiguration.cpp
+Linking...
+
+
+
+ChangeServiceConfiguration.exe - 0 error(s), 0 warning(s)

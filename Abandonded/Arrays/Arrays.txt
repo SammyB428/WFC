@@ -1,0 +1,1807 @@
+    class CByteArray
+    {
+    protected:
+
+        std::vector< uint8_t > m_Array;
+
+    public:
+
+        CByteArray(_In_ const CByteArray&) = delete;
+        _Check_return_ CByteArray& operator=(_In_ const CByteArray&) = delete;
+
+        inline  CByteArray(){};
+        inline ~CByteArray(){};
+
+        inline _Check_return_ size_t Add( _In_ const uint8_t new_element ) noexcept
+        {
+            WFC_VALIDATE_POINTER( this );
+            m_Array.push_back( new_element );
+            _ASSERTE( GetSize() > 0 );
+            return( GetUpperBound() );
+        }
+
+        inline void AddEndOfLine( void ) noexcept
+        {
+            m_Array.reserve( m_Array.size() + 2 );
+            m_Array.push_back( static_cast<uint8_t>(CARRIAGE_RETURN) );
+            m_Array.push_back( static_cast<uint8_t>(LINE_FEED) );
+        }
+
+        static inline void append(_Inout_ std::vector<uint8_t>& s, _In_reads_bytes_(number_of_bytes) const uint8_t * __restrict byte_buffer, _In_ const std::size_t number_of_bytes) noexcept
+        {
+            if (byte_buffer == nullptr || number_of_bytes == 0)
+            {
+                return;
+            }
+
+            const std::size_t original_size = s.size();
+
+            s.resize(original_size + number_of_bytes);
+
+            uint8_t * __restrict memory_address = &s[original_size];
+
+            CopyMemory(memory_address, byte_buffer, number_of_bytes);
+        }
+
+        inline void Append(_In_reads_bytes_( number_of_bytes ) const uint8_t * __restrict byte_buffer, _In_ const size_t number_of_bytes ) noexcept
+        {
+            WFC_VALIDATE_POINTER_NULL_OK( byte_buffer );
+
+            append(m_Array, byte_buffer, number_of_bytes);
+        }
+
+        inline void Append( _In_z_ const char * __restrict string ) noexcept
+        {
+            WFC_VALIDATE_POINTER( this );
+
+            if ( string == nullptr || string[ 0 ] == 0x00 )
+            {
+                return;
+            }
+
+            const size_t string_length = strlen( string );
+
+            Append( reinterpret_cast<const uint8_t *>(string), string_length );
+        }
+
+        inline void Fill( _In_ const uint8_t value ) noexcept
+        {
+            const size_t number_of_bytes = m_Array.size();
+
+            if ( number_of_bytes < 1 )
+            {
+                return;
+            }
+
+            uint8_t * memory_address = &m_Array[ 0 ];
+
+            memset( memory_address, value, number_of_bytes );
+        }
+
+        inline void Append( _In_ const CByteArray& source ) noexcept
+        {
+            WFC_VALIDATE_POINTER( this );
+            Append( source.GetData(), source.GetSize() );
+
+#if defined( _DEBUG )
+
+            if ( source.GetSize() > 0 )
+            {
+                _ASSERTE( GetSize() > 0 );
+            }
+
+#endif // _DEBUG
+        }
+
+        inline void Copy( _In_ const CByteArray& source ) noexcept
+        {
+            // 2000-04-01
+            // Thanks go to Fabio (again) for finding a bug here.
+
+            WFC_VALIDATE_POINTER( this );
+            // There ain't no easy way to copy std::vectors
+            if ( source.GetSize() == 0 )
+            {
+                // Empty array copy
+                RemoveAll();
+                return;
+            }
+
+            Copy( source.GetData(), source.GetSize() );
+        }
+
+        inline void Copy(_In_reads_bytes_( number_of_bytes_to_copy ) const uint8_t * __restrict buffer, _In_ const size_t number_of_bytes_to_copy ) noexcept
+        {
+            WFC_VALIDATE_POINTER( this );
+
+            SetSize( number_of_bytes_to_copy );
+
+            CopyMemory( GetData(), buffer, number_of_bytes_to_copy );
+        }
+
+        inline void Copy( _In_z_ const char * __restrict string ) noexcept
+        {
+            WFC_VALIDATE_POINTER( this );
+
+            if ( string == nullptr || string[ 0 ] == 0x00 )
+            {
+                Empty();
+                return;
+            }
+
+            const size_t string_length = strlen( string );
+
+            Copy( reinterpret_cast<const uint8_t *>(string), string_length );
+        }
+
+        inline _Check_return_ int Compare( _In_ const CByteArray& that ) const noexcept
+        {
+            const size_t number_of_bytes = GetSize();
+
+            if ( number_of_bytes != that.GetSize() )
+            {
+                if ( number_of_bytes > that.GetSize() )
+                {
+                    return( I_AM_GREATER_THAN_THAT );
+                }
+
+                return( I_AM_LESS_THAN_THAT );
+            }
+
+            return( ::memcmp( GetData(), that.GetData(), number_of_bytes ) );
+        }
+
+        inline _Check_return_ int CompareNoCase( _In_ const CByteArray& that ) const noexcept
+        {
+            const size_t number_of_bytes = GetSize();
+
+            if ( number_of_bytes != that.GetSize() )
+            {
+                if ( number_of_bytes > that.GetSize() )
+                {
+                    return( I_AM_GREATER_THAN_THAT );
+                }
+
+                return( I_AM_LESS_THAN_THAT );
+            }
+
+            return( ::_memicmp( GetData(), that.GetData(), number_of_bytes ) );
+        }
+
+        inline _Check_return_ uint8_t& ElementAt( _In_ const size_t array_index ) noexcept
+        {
+            WFC_VALIDATE_POINTER( this );
+
+            _ASSERTE( GetSize() > 0 );
+            _ASSERTE( (SSIZE_T) array_index <= GetUpperBound() );
+            _ASSERTE( array_index >= 0 );
+
+            if ( array_index >= 0 && (SSIZE_T) array_index <= GetUpperBound() )
+            {
+                return( m_Array.at( array_index ) );
+            }
+            else
+            {
+                uint8_t dummy = 0;
+                return( dummy ); // Warning 4172, returning the address of a local variable is OK
+            }
+        }
+
+        inline _Check_return_ int64_t Find( _In_ const uint8_t * __restrict pattern, _In_ const size_t pattern_size ) const noexcept
+        {
+            return( find_in_memory( GetData(), GetSize(), pattern, pattern_size ) );
+        }
+
+        inline _Check_return_ int64_t Find( _In_ const CByteArray& pattern ) const noexcept
+        {
+            return( Find( pattern.GetData(), pattern.GetSize() ) );
+        }
+
+        void FromBase64( _In_ const std::wstring& base64 ) noexcept;
+        void FromBase64( _In_ const std::vector<uint8_t>& base64 ) noexcept;
+        void FromHex( _In_z_ LPCWSTR hexadecimal_string ) noexcept;
+
+        inline void FreeExtra( void ) noexcept
+        {
+            WFC_VALIDATE_POINTER( this );
+            m_Array.resize( m_Array.size() );
+            _ASSERTE( GetSize() >= 0 );
+        }
+
+        inline _Check_return_ uint8_t GetAt( _In_ const size_t array_index ) const noexcept
+        {
+            WFC_VALIDATE_POINTER( this );
+
+            if ( array_index >= 0 && (SSIZE_T) array_index <= GetUpperBound() )
+            {
+                return( m_Array.at( array_index ) );
+            }
+
+            return( 0 );
+        }
+
+        inline _Check_return_ size_t GetSize( void ) const noexcept
+        {
+            WFC_VALIDATE_POINTER( this );
+            return( m_Array.size() );
+        }
+
+        inline _Check_return_ SSIZE_T GetUpperBound( void ) const noexcept
+        {
+            WFC_VALIDATE_POINTER( this );
+            return( m_Array.size() - 1 );
+        }
+
+        inline void InsertAt( _In_ const size_t array_index, _In_ const uint8_t new_element, _In_ const size_t number_of_times_to_insert_it = 1 ) noexcept
+        {
+            WFC_VALIDATE_POINTER( this );
+
+            if ( number_of_times_to_insert_it == 0 )
+            {
+                return;
+            }
+
+            if ( (SSIZE_T) array_index > GetUpperBound() )
+            {
+                size_t loop_index = 0;
+
+                while( loop_index < number_of_times_to_insert_it )
+                {
+                    (void) Add( new_element );
+                    loop_index++;
+                }
+
+                return;
+            }
+
+            m_Array.insert( std::begin(m_Array) + array_index, number_of_times_to_insert_it, new_element );
+        }
+
+        inline void InsertAt( _In_ const size_t array_index, _In_ const CByteArray * array_p ) noexcept
+        {
+            WFC_VALIDATE_POINTER( this );
+            WFC_VALIDATE_POINTER( array_p );
+
+            if ( array_p != nullptr )
+            {
+                if ( GetSize() == 0 )
+                {
+                    Append( *array_p );
+                    return;
+                }
+
+                if ( (SSIZE_T) array_index > GetUpperBound() )
+                {
+                    Append( *array_p );
+                    return;
+                }
+
+                if ( array_index >= 0 )
+                {
+                    m_Array.insert( std::begin(m_Array) + array_index, std::cbegin(array_p->m_Array), std::cend(array_p->m_Array) );
+                }
+            }
+        }
+
+        inline void RemoveAll( void ) noexcept
+        {
+            WFC_VALIDATE_POINTER( this );
+            m_Array.clear();
+        }
+
+        inline void Empty( void ) noexcept
+        {
+            WFC_VALIDATE_POINTER( this );
+            m_Array.clear();
+        }
+
+        inline void RemoveAt( _In_ size_t const array_index, _In_ const size_t number_of_elements_to_remove = 1 ) noexcept
+        {
+            WFC_VALIDATE_POINTER( this );
+
+            if ( GetSize() == 0 )
+            {
+                return;
+            }
+
+            const SSIZE_T upper_bound = GetUpperBound();
+
+            if ( (SSIZE_T) array_index > GetUpperBound() )
+            {
+                m_Array.erase( std::begin(m_Array) + upper_bound, std::begin(m_Array) + upper_bound + number_of_elements_to_remove );
+            }
+            else
+            {
+                m_Array.erase( std::begin(m_Array) + array_index, std::begin(m_Array) + array_index + number_of_elements_to_remove );
+            }
+        }
+
+        inline void SetSize( _In_ const size_t new_size, _In_ const uint8_t fill_value = 0 ) noexcept
+        {
+            WFC_VALIDATE_POINTER( this );
+
+            if ( new_size == 0 )
+            {
+                RemoveAll();
+                return;
+            }
+
+            m_Array.resize( new_size, fill_value );
+        }
+
+        inline void SetAt( _In_ const size_t array_index, _In_ const uint8_t new_element ) noexcept
+        {
+            WFC_VALIDATE_POINTER( this );
+
+            if ( array_index >= 0 && (SSIZE_T) array_index <= GetUpperBound() )
+            {
+                m_Array.at( array_index ) = new_element;
+            }
+        }
+
+        inline const _Check_return_ uint8_t * GetData( void ) const noexcept
+        {
+            WFC_VALIDATE_POINTER( this );
+            if ( m_Array.empty() == true )
+            {
+                return( nullptr );
+            }
+
+            return( &m_Array[ 0 ] );
+        }
+
+        inline _Check_return_ uint8_t * GetData( void ) noexcept
+        {
+            WFC_VALIDATE_POINTER( this );
+            if ( m_Array.empty() == true )
+            {
+                return( nullptr );
+            }
+
+            return( &m_Array[ 0 ] );
+        }
+
+        inline _Check_return_ uint8_t operator[]( _In_ const size_t array_index ) const noexcept
+        {
+            WFC_VALIDATE_POINTER( this );
+            return( GetAt( array_index ) );
+        }
+
+        inline _Check_return_ uint8_t& operator[]( _In_ const size_t array_index ) noexcept
+        {
+            WFC_VALIDATE_POINTER( this );
+            return( ElementAt( array_index ) );
+        }
+
+        _Check_return_ bool Save( _In_z_ LPCTSTR filename ) const noexcept;
+        void Load( _In_z_ LPCTSTR filename ) noexcept;
+
+        inline _Check_return_ bool IsAllSpace( void ) const noexcept
+        {
+            return( is_all_space( m_Array ));
+        }
+
+        inline _Check_return_ bool IsAllSpaceOrNull( void ) const noexcept
+        {
+            const size_t number_of_characters = GetSize();
+
+            if ( number_of_characters == 0 )
+            {
+                return( false );
+            }
+
+            const uint8_t * buffer = GetData();
+
+            size_t here = 0;
+
+            char character_to_test = 0;
+
+            while( here < number_of_characters )
+            {
+                character_to_test = buffer[ here ];
+
+                if ( character_to_test == 0x20 ||
+                    character_to_test == TAB_CHARACTER ||
+                    character_to_test == CARRIAGE_RETURN ||
+                    character_to_test == LINE_FEED ||
+                    character_to_test == 0x00 )
+                {
+                    here++;
+                }
+                else
+                {
+                    return( false );
+                }
+            }
+
+            return( true );
+        }
+
+        _Check_return_ bool Protect( void );
+        _Check_return_ bool Unprotect( void );
+    };
+
+        class CStringArray
+    {
+    protected:
+
+        std::vector< CString > m_Array;
+
+    public:
+
+        inline CStringArray(){};
+        inline CStringArray( _In_ const CStringArray& source )
+        {
+            Copy( source );
+        }
+
+        inline ~CStringArray(){};
+
+        inline _Check_return_ size_t Add( _In_ const CString& new_element ) noexcept
+        {
+            m_Array.push_back( new_element );
+            return( GetUpperBound() );
+        }
+
+        inline void Append( _In_ const CStringArray& source ) noexcept
+        {
+            const size_t source_size = source.GetSize();
+
+            m_Array.reserve( m_Array.size() + source_size );
+
+            size_t loop_index = 0;
+
+            while( loop_index < source_size )
+            {
+                m_Array.push_back( source.m_Array.at( loop_index ) );
+                loop_index++;
+            }
+        }
+
+        inline void Copy( _In_ const CStringArray& source ) noexcept
+        {
+            m_Array.clear();
+
+            size_t loop_index = 0;
+
+            const size_t number_of_array_items = source.GetSize();
+
+            while( loop_index < number_of_array_items )
+            {
+                m_Array.push_back( source.m_Array.at( loop_index ) );
+                loop_index++;
+            }
+        }
+
+        inline _Check_return_ CString& ElementAt( _In_ const size_t array_index ) noexcept
+        {
+            if ( array_index >= 0 && (SSIZE_T) array_index <= GetUpperBound() )
+            {
+                return( m_Array.at( array_index ) );
+            }
+
+            // This is bad
+
+            CString temporary_local_variable;
+
+            return( temporary_local_variable );
+        }
+
+        inline void FreeExtra( void ) noexcept
+        {
+            m_Array.resize( m_Array.size() );
+        }
+
+        inline _Check_return_ CString GetAt( _In_ const size_t array_index ) const noexcept
+        {
+            if ( array_index >= 0 && (SSIZE_T) array_index <= GetUpperBound() )
+            {
+                return(  m_Array.at( array_index ) );
+            }
+
+            // This is bad
+
+            CString temporary_local_variable;
+
+            return( temporary_local_variable );
+        }
+
+        inline _Check_return_ size_t GetSize( void ) const noexcept
+        {
+            return( m_Array.size() );
+        }
+
+        inline _Check_return_ SSIZE_T GetUpperBound( void ) const noexcept
+        {
+            return( m_Array.size() - 1 );
+        }
+
+        inline void InsertAt( _In_ const size_t array_index, _In_ const CString& new_element, _In_ const size_t number_of_times_to_insert_it = 1 ) noexcept
+        {
+            if ( number_of_times_to_insert_it == 0 )
+            {
+                return;
+            }
+
+            m_Array.reserve( m_Array.size() + number_of_times_to_insert_it );
+
+            if ( array_index > ( m_Array.size() - 1 ) )
+            {
+                size_t loop_index = 0;
+
+                while( loop_index < number_of_times_to_insert_it )
+                {
+                    m_Array.push_back( new_element );
+                    loop_index++;
+                }
+
+                return;
+            }
+
+            m_Array.insert( std::begin(m_Array) + array_index, number_of_times_to_insert_it, new_element );
+        }
+
+        inline void InsertAt( _In_ const size_t array_index, __inout CStringArray * array_p ) noexcept
+        {
+            if ( array_p != nullptr )
+            {
+                m_Array.insert( std::begin(m_Array) + array_index, std::cbegin(array_p->m_Array), std::cend(array_p->m_Array) );
+            }
+        }
+
+        inline void Remove( _In_z_ LPCTSTR string_to_remove ) noexcept
+        {
+            int array_index = 0;
+
+            if ( string_to_remove == nullptr || string_to_remove[ 0 ] == 0x00 )
+            {
+                while( array_index < (int) GetSize() )
+                {
+                    if ( GetAt( array_index ).IsEmpty() )
+                    {
+                        RemoveAt( array_index );
+                        array_index--;
+                    }
+
+                    array_index++;
+                }
+            }
+            else
+            {
+                CString this_string;
+
+                while( array_index < (int) GetSize() )
+                {
+                    this_string.Copy( GetAt( array_index ) );
+
+                    if ( this_string.CompareNoCase( string_to_remove ) == 0 )
+                    {
+                        RemoveAt( array_index );
+                        array_index--;
+                    }
+
+                    array_index++;
+                }
+            }
+        }
+
+        inline void RemoveAll( void ) noexcept
+        {
+            m_Array.clear();
+        }
+
+        inline void RemoveAt( _In_ const size_t array_index, _In_ const size_t number_of_elements_to_remove = 1 ) noexcept
+        {
+            if ( number_of_elements_to_remove < 1 )
+            {
+                return;
+            }
+
+            if ( array_index >= m_Array.size() )
+            {
+                return;
+            }
+
+            m_Array.erase( std::begin(m_Array) + array_index, std::begin(m_Array) + array_index + number_of_elements_to_remove );
+        }
+
+        inline void SetSize( _In_ const size_t new_size, _In_ const size_t x = 32 ) noexcept
+        {
+            m_Array.resize( new_size );
+        }
+
+        inline void SetAt( _In_ const size_t array_index, _In_ const CString& new_element ) noexcept
+        {
+            if ( array_index >= 0 && (SSIZE_T) array_index <= GetUpperBound() )
+            {
+                m_Array.at( array_index ).Copy( new_element );
+            }
+        }
+
+        inline void Sort( void ) noexcept
+        {
+            std::sort( std::begin(m_Array), std::end(m_Array) );
+        }
+
+        inline static _Check_return_ bool CompareItemsNoCase( _In_ const CString& this_item, _In_ const CString& that_item ) noexcept
+        {
+            return( this_item.CompareNoCase( that_item ) > 0 ? false : true );
+        }
+
+        inline void SortNoCase( void ) noexcept
+        {
+            std::sort( std::begin(m_Array), std::end(m_Array), CompareItemsNoCase );
+        }
+
+        inline void Split( _In_z_ LPCTSTR source, _In_z_ LPCTSTR terminator ) noexcept
+        {
+            if ( source == nullptr || source[ 0 ] == 0x00 ||
+                terminator == nullptr || terminator[ 0 ] == 0x00 )
+            {
+                return;
+            }
+
+            const size_t terminator_length = _tcslen( terminator );
+
+            int source_index = 0;
+
+            CString string_to_add;
+
+            while( source[ source_index ] != 0x00 )
+            {
+                if ( _tcsncicmp( &source[ source_index ], terminator, terminator_length ) == 0 )
+                {
+                    (void) Add( string_to_add );
+                    string_to_add.Empty();
+                    source_index += (int) ( terminator_length - 1 );
+                }
+                else
+                {
+                    string_to_add.Append( source[ source_index ] );
+                }
+
+                source_index++;
+            }
+
+            (void) Add( string_to_add );
+        }
+
+        inline void Split( _In_z_ LPCTSTR source, _In_ const TCHAR character )
+        {
+            if ( source == nullptr || source[ 0 ] == 0x00 )
+            {
+                return;
+            }
+
+            int source_index = 0;
+
+            CString string_to_add;
+
+            while( source[ source_index ] != 0x00 )
+            {
+                if ( source[ source_index ] == character )
+                {
+                    (void) Add( string_to_add );
+                    string_to_add.Empty();
+                }
+                else
+                {
+                    string_to_add.Append( source[ source_index ] );
+                }
+
+                source_index++;
+            }
+
+            (void) Add( string_to_add );
+        }
+
+        inline _Check_return_ CString operator[]( _In_ const size_t array_index ) const noexcept
+        {
+            return( GetAt( array_index ) );
+        }
+
+        inline _Check_return_ CString& operator[]( _In_ const size_t array_index ) noexcept
+        {
+            return( ElementAt( array_index ) );
+        }
+
+        inline _Check_return_ CStringArray& operator=( _In_ const CStringArray& source ) { Copy( source ); return( *this ); }
+    };
+
+        using PTRARRAY_COMPARE_ELEMENTS = int (*)( const VOID *, const VOID * );
+    using PTRARRAY_IS_LESS_THAN = bool (*)( const VOID *, const VOID * );
+
+    class CPtrArray
+    {
+    protected:
+
+        std::vector< VOID * > m_Array;
+
+        inline CPtrArray( const CPtrArray& ){};
+        inline CPtrArray& operator=( const CPtrArray& ){ return( *this ); }
+
+    public:
+
+        inline CPtrArray() {};
+        inline ~CPtrArray() {};
+
+        inline _Check_return_ size_t Add( _In_ VOID * new_element ) noexcept
+        {
+            m_Array.push_back( new_element );
+            return( GetUpperBound() );
+        }
+
+        inline void Append( _In_ const CPtrArray& source ) noexcept
+        {
+            const size_t number_of_element_to_copy = source.GetSize();
+
+            m_Array.reserve( m_Array.size() + number_of_element_to_copy );
+
+            size_t loop_index = 0;
+
+            while( loop_index < number_of_element_to_copy )
+            {
+                m_Array.push_back( source.GetAt( loop_index ) );
+                loop_index++;
+            }
+        }
+
+        _Check_return_ int BinarySearch( _In_ const VOID * needle, PTRARRAY_COMPARE_ELEMENTS comparison_function ) const noexcept
+        {
+            WFC_VALIDATE_POINTER( this );
+
+            if ( comparison_function == nullptr )
+            {
+                return( -1 );
+            }
+
+            SSIZE_T lower_limit = 0;
+            SSIZE_T upper_limit = GetUpperBound();
+
+            if ( upper_limit == (-1) )
+            {
+                return( -1 );
+            }
+
+            SSIZE_T here = upper_limit / 2;
+
+            VOID * entity_in_list;
+
+            int comparison_result = 0;
+
+            do
+            {
+                entity_in_list = GetAt( here );
+
+                comparison_result = comparison_function( needle, entity_in_list );
+
+                if ( comparison_result < 0 )
+                {
+                    upper_limit = here - 1;
+                }
+                else if ( comparison_result > 0 )
+                {
+                    lower_limit = here + 1;
+                }
+                else
+                {
+                    return( (int) here );
+                }
+
+                // Thanks go to Darin Greaham (greaham@cyberramp.net) for finding
+                // where I wasn't calculating a new value for "here". That meant
+                // I went into an endless loop.
+                // 1998-08-10
+
+                here = ( lower_limit + upper_limit ) / 2;
+            }
+            while( lower_limit <= upper_limit );
+
+            return( -1 );
+        }
+
+        inline void Sort( PTRARRAY_IS_LESS_THAN comparison_function ) noexcept
+        {
+            if ( comparison_function == nullptr )
+            {
+                return;
+            }
+
+            std::sort( std::begin(m_Array), std::end(m_Array), comparison_function );
+        }
+
+        inline _Check_return_ VOID * GetData( void ) const
+        {
+            return( m_Array.at(0) );
+        }
+
+        inline void Copy( _In_ const CPtrArray& source ) noexcept
+        {
+            RemoveAll();
+
+            size_t loop_index = 0;
+            const size_t number_of_array_items = source.GetSize();
+
+            while( loop_index < number_of_array_items )
+            {
+                (void) Add( source.GetAt( loop_index ) );
+                loop_index++;
+            }
+        }
+
+        inline _Check_return_ VOID *& ElementAt( _In_ const size_t array_index ) noexcept
+        {
+            if ( array_index >= 0 && (SSIZE_T) array_index <= GetUpperBound() )
+            {
+                return( m_Array.at( array_index ) );
+            }
+            else
+            {
+                VOID * dummy = nullptr;
+                return( dummy ); // Warning 4172, returning the address of a local variable is OK
+            }
+        }
+
+        inline void FreeExtra( void ) noexcept
+        {
+            m_Array.resize( m_Array.size() );
+        }
+
+        inline _Check_return_ VOID * GetAt( _In_ const size_t array_index ) const noexcept
+        {
+            if ( array_index >= 0 && (SSIZE_T) array_index <= GetUpperBound() )
+            {
+                return( m_Array.at( array_index ) );
+            }
+
+            return( nullptr );
+        }
+
+        inline _Check_return_ VOID * GetLast( void ) const noexcept
+        {
+            if ( m_Array.empty() == true )
+            {
+                return( nullptr );
+            }
+
+            return( GetAt( GetUpperBound() ) );
+        }
+
+        inline _Check_return_ size_t GetSize( void ) const noexcept
+        {
+            return( m_Array.size() );
+        }
+
+        inline _Check_return_ SSIZE_T GetUpperBound( void ) const noexcept
+        {
+            return( m_Array.size() - 1 );
+        }
+
+        inline void InsertAt( _In_ const size_t array_index, _In_ VOID * new_element, _In_ const size_t number_of_times_to_insert_it = 1 ) noexcept
+        {
+            if ( number_of_times_to_insert_it <= 0 )
+            {
+                return;
+            }
+
+            if ( (SSIZE_T) array_index > GetUpperBound() )
+            {
+                size_t loop_index = 0;
+
+                while( loop_index < number_of_times_to_insert_it )
+                {
+                    (void) Add( new_element );
+                    loop_index++;
+                }
+
+                return;
+            }
+
+            m_Array.insert( std::begin(m_Array) + array_index, number_of_times_to_insert_it, new_element );
+        }
+
+        inline void InsertAt( _In_ const size_t array_index, _In_ const CPtrArray * array_p ) noexcept
+        {
+            if ( (SSIZE_T) array_index > GetUpperBound() )
+            {
+                Append( *array_p );
+                return;
+            }
+
+            if ( array_p != nullptr )
+            {
+                m_Array.insert( std::begin(m_Array) + array_index, std::cbegin(array_p->m_Array), std::cend(array_p->m_Array) );
+            }
+        }
+
+        inline void RemoveAll( void ) noexcept
+        {
+            m_Array.clear();
+        }
+
+        inline void RemoveAt( _In_ const size_t array_index, _In_ const size_t number_of_elements_to_remove = 1 ) noexcept
+        {
+            m_Array.erase( std::begin(m_Array) + array_index, std::begin(m_Array) + array_index + number_of_elements_to_remove );
+        }
+
+        inline void SetSize( _In_ const size_t new_size, _In_ const size_t x = 32 ) noexcept
+        {
+            m_Array.resize( new_size );
+        }
+
+        inline void SetAt( _In_ const size_t array_index, __in_opt VOID * new_element ) noexcept
+        {
+            if ( array_index >= 0 && (SSIZE_T) array_index <= GetUpperBound() )
+            {
+                m_Array.at( array_index ) = new_element;
+            }
+        }
+
+        inline _Check_return_ VOID * operator[]( _In_ const size_t array_index ) const noexcept
+        {
+            return( GetAt( array_index ) );
+        }
+
+        inline _Check_return_ VOID *& operator[]( _In_ const size_t array_index ) noexcept
+        {
+            return( ElementAt( array_index ) );
+        }
+    };
+
+    class CDWordArray
+    {
+    protected:
+
+        std::vector< DWORD > m_Array;
+
+        inline CDWordArray( const CDWordArray& ){};
+        inline CDWordArray& operator=( const CDWordArray& ){ return( *this ); }
+
+    public:
+
+        inline CDWordArray() {};
+        inline ~CDWordArray() {};
+
+        inline _Check_return_ size_t Add( _In_ const DWORD new_element ) noexcept
+        {
+            m_Array.push_back( new_element );
+            return( GetUpperBound() );
+        }
+
+        inline void Append( __inout CDWordArray& source ) noexcept
+        {
+            const size_t number_of_elements_to_copy = source.GetSize();
+
+            m_Array.reserve( m_Array.size() + number_of_elements_to_copy );
+
+            size_t loop_index = 0;
+
+            while( loop_index < number_of_elements_to_copy )
+            {
+                m_Array.push_back( source.GetAt( loop_index ) );
+                loop_index++;
+            }
+        }
+
+        inline void Copy( _In_ const CDWordArray& source ) noexcept
+        {
+            RemoveAll();
+
+            size_t loop_index = 0;
+
+            const size_t number_of_array_items = source.GetSize();
+
+            while( loop_index < number_of_array_items )
+            {
+                (void) Add( source.GetAt( loop_index ) );
+                loop_index++;
+            }
+        }
+
+        inline _Check_return_ DWORD& ElementAt( _In_ const size_t array_index ) noexcept
+        {
+            if ( array_index >= 0 && (SSIZE_T) array_index <= GetUpperBound() )
+            {
+                return( m_Array.at( array_index ) );
+            }
+            else
+            {
+                DWORD dummy = 0;
+                return( dummy ); // Warning 4172, returning the address of a local variable is OK
+            }
+        }
+
+        inline void FreeExtra( void ) noexcept
+        {
+            m_Array.resize( m_Array.size() );
+        }
+
+        inline _Check_return_ DWORD GetAt( _In_ size_t array_index ) const noexcept
+        {
+            if ( array_index >= 0 && (SSIZE_T) array_index <= GetUpperBound() )
+            {
+                return( m_Array.at( array_index ) );
+            }
+
+            return( 0 );
+        }
+
+        inline _Check_return_ DWORD * GetData( void ) const noexcept
+        {
+            return( const_cast<DWORD *>(&m_Array[ 0 ]) );
+        }
+
+        inline _Check_return_ size_t GetSize( void ) const noexcept
+        {
+            return( m_Array.size() );
+        }
+
+        inline _Check_return_ SSIZE_T GetUpperBound( void ) const noexcept
+        {
+            return( m_Array.size() - 1 );
+        }
+
+        inline void InsertAt( _In_ size_t array_index, _In_ DWORD new_element, _In_ size_t number_of_times_to_insert_it = 1 ) noexcept
+        {
+            if ( number_of_times_to_insert_it <= 0 )
+            {
+                return;
+            }
+
+            if ( (SSIZE_T) array_index > GetUpperBound() )
+            {
+                size_t loop_index = 0;
+
+                while( loop_index < number_of_times_to_insert_it )
+                {
+                    (void) Add( new_element );
+                    loop_index++;
+                }
+
+                return;
+            }
+
+            m_Array.insert( std::begin(m_Array) + array_index, number_of_times_to_insert_it, new_element );
+        }
+
+        inline void InsertAt( _In_ size_t array_index, __inout CDWordArray * array_p ) noexcept
+        {
+            if ( (SSIZE_T) array_index > GetUpperBound() )
+            {
+                Append( *array_p );
+                return;
+            }
+
+            if ( array_p != nullptr )
+            {
+                m_Array.insert( std::begin(m_Array) + array_index, std::cbegin(array_p->m_Array), std::cend(array_p->m_Array) );
+            }
+        }
+
+        inline void RemoveAll( void ) noexcept
+        {
+            m_Array.clear();
+        }
+
+        inline void RemoveAt( _In_ const size_t array_index, _In_ const size_t number_of_elements_to_remove = 1 ) noexcept
+        {
+            m_Array.erase( std::begin(m_Array) + array_index, std::begin(m_Array) + array_index + number_of_elements_to_remove );
+        }
+
+        inline void SetSize( _In_ const size_t new_size, _In_ const size_t x = 32 ) noexcept
+        {
+            m_Array.resize( new_size );
+        }
+
+        inline void SetAt( _In_ const size_t array_index, _In_ const DWORD new_element ) noexcept
+        {
+            if ( array_index >= 0 && (SSIZE_T) array_index <= GetUpperBound() )
+            {
+                m_Array.at( array_index ) = new_element;
+            }
+        }
+
+        inline void Sort( void ) noexcept
+        {
+            std::sort( std::begin(m_Array), std::end(m_Array), std::less<DWORD>() );
+        }
+
+        inline _Check_return_ DWORD operator[]( _In_ const size_t array_index ) const noexcept
+        {
+            return( GetAt( array_index ) );
+        }
+
+        inline _Check_return_ DWORD& operator[]( _In_ const size_t array_index ) noexcept
+        {
+            return( ElementAt( array_index ) );
+        }
+    };
+
+    class CWordArray
+    {
+    protected:
+
+        std::vector< WORD > m_Array;
+
+        inline CWordArray( const CWordArray& ){};
+        inline CWordArray& operator=( const CWordArray& ){ return( *this ); }
+
+    public:
+
+        inline CWordArray() {};
+        inline ~CWordArray() {};
+
+        inline _Check_return_ size_t Add( _In_ const WORD new_element ) noexcept
+        {
+            m_Array.push_back( new_element );
+            return( GetUpperBound() );
+        }
+
+        inline void Append( __inout CWordArray& source ) noexcept
+        {
+            const size_t number_of_elements_to_copy = source.GetSize();
+
+            m_Array.reserve( m_Array.size() + number_of_elements_to_copy );
+
+            size_t loop_index = 0;
+
+            while( loop_index < number_of_elements_to_copy )
+            {
+                m_Array.push_back( source.GetAt( loop_index ) );
+                loop_index++;
+            }
+        }
+
+        inline void Copy( _In_ const CWordArray& source ) noexcept
+        {
+            RemoveAll();
+
+            size_t loop_index            = 0;
+            size_t number_of_array_items = source.GetSize();
+
+            while( loop_index < number_of_array_items )
+            {
+                (void) Add( source.GetAt( loop_index ) );
+                loop_index++;
+            }
+        }
+
+        inline _Check_return_ WORD& ElementAt( _In_ const size_t array_index ) noexcept
+        {
+            if ( array_index >= 0 && (SSIZE_T) array_index <= GetUpperBound() )
+            {
+                return( m_Array.at( array_index ) );
+            }
+            else
+            {
+                WORD dummy = 0;
+                return( dummy ); // Warning 4172, returning the address of a local variable is OK
+            }
+        }
+
+        inline void FreeExtra( void ) noexcept
+        {
+            m_Array.resize( m_Array.size() );
+        }
+
+        inline _Check_return_ WORD GetAt( _In_ size_t array_index ) const noexcept
+        {
+            if ( array_index >= 0 && (SSIZE_T) array_index <= GetUpperBound() )
+            {
+                return( m_Array.at( array_index ) );
+            }
+
+            return( 0 );
+        }
+
+        inline _Check_return_ WORD * GetData( void ) const noexcept
+        {
+            //std::vector< WORD >::pointer return_value = &m_Array[ 0 ];
+            return( const_cast<WORD *>(&m_Array[ 0 ]) );
+        }
+
+        inline _Check_return_ size_t GetSize( void ) const noexcept
+        {
+            return( m_Array.size() );
+        }
+
+        inline _Check_return_ SSIZE_T GetUpperBound( void ) const noexcept
+        {
+            return( m_Array.size() - 1 );
+        }
+
+        inline void InsertAt( _In_ size_t array_index, _In_ WORD new_element, _In_ size_t number_of_times_to_insert_it = 1 ) noexcept
+        {
+            if ( number_of_times_to_insert_it <= 0 )
+            {
+                return;
+            }
+
+            if ( (SSIZE_T) array_index > GetUpperBound() )
+            {
+                size_t loop_index = 0;
+
+                while( loop_index < number_of_times_to_insert_it )
+                {
+                    (void) Add( new_element );
+                    loop_index++;
+                }
+
+                return;
+            }
+
+            m_Array.insert( std::begin(m_Array) + array_index, number_of_times_to_insert_it, new_element );
+        }
+
+        inline void InsertAt( _In_ const size_t array_index, __inout CWordArray * array_p ) noexcept
+        {
+            if ( (SSIZE_T) array_index > GetUpperBound() )
+            {
+                Append( *array_p );
+                return;
+            }
+
+            if ( array_p != nullptr )
+            {
+                m_Array.insert( std::begin(m_Array) + array_index, std::cbegin(array_p->m_Array), std::cend(array_p->m_Array) );
+            }
+        }
+
+        inline void RemoveAll( void ) noexcept
+        {
+            m_Array.clear();
+        }
+
+        inline void RemoveAt( _In_ const size_t array_index, _In_ const size_t number_of_elements_to_remove = 1 ) noexcept
+        {
+            m_Array.erase( std::begin(m_Array) + array_index, std::begin(m_Array) + array_index + number_of_elements_to_remove );
+        }
+
+        inline void SetSize( _In_ const size_t new_size, _In_ const size_t x = 32 ) noexcept
+        {
+            m_Array.resize( new_size );
+        }
+
+        inline void SetAt( _In_ const size_t array_index, _In_ const WORD new_element ) noexcept
+        {
+            if ( array_index >= 0 && (SSIZE_T) array_index <= GetUpperBound() )
+            {
+                m_Array.at( array_index ) = new_element;
+            }
+        }
+
+        inline void Sort( void ) noexcept
+        {
+            std::sort( std::begin(m_Array), std::end(m_Array), std::less<WORD>() );
+        }
+
+        inline _Check_return_ WORD operator[]( _In_ const size_t array_index ) const noexcept
+        {
+            return( GetAt( array_index ) );
+        }
+
+        inline _Check_return_ WORD& operator[]( _In_ const size_t array_index ) noexcept
+        {
+            return( ElementAt( array_index ) );
+        }
+    };
+
+    class CUIntArray
+    {
+    protected:
+
+        std::vector< unsigned int > m_Array;
+
+        inline CUIntArray( const CUIntArray& ){};
+        inline CUIntArray& operator=( const CUIntArray& ){ return( *this ); }
+
+    public:
+
+        inline CUIntArray() {};
+        inline ~CUIntArray() {};
+
+        inline _Check_return_ size_t Add( _In_ const unsigned int new_element ) noexcept
+        {
+            m_Array.push_back( new_element );
+            return( GetUpperBound() );
+        }
+
+        inline void Append( __inout CUIntArray& source ) noexcept
+        {
+            const size_t number_of_elements_to_copy = source.GetSize();
+
+            m_Array.reserve( m_Array.size() + number_of_elements_to_copy );
+
+            size_t loop_index = 0;
+
+            while( loop_index < number_of_elements_to_copy )
+            {
+                m_Array.push_back( source.GetAt( loop_index ) );
+                loop_index++;
+            }
+        }
+
+        inline void Copy( _In_ const CUIntArray& source ) noexcept
+        {
+            RemoveAll();
+
+            size_t loop_index            = 0;
+            size_t number_of_array_items = source.GetSize();
+
+            while( loop_index < number_of_array_items )
+            {
+                (void) Add( source.GetAt( loop_index ) );
+                loop_index++;
+            }
+        }
+
+        inline _Check_return_ unsigned int& ElementAt( _In_ const size_t array_index ) noexcept
+        {
+            if ( array_index >= 0 && (SSIZE_T) array_index <= GetUpperBound() )
+            {
+                return( m_Array.at( array_index ) );
+            }
+            else
+            {
+                unsigned int dummy = 0;
+                return( dummy ); // Warning 4172, returning the address of a local variable is OK
+            }
+        }
+
+        inline void FreeExtra( void ) noexcept
+        {
+            m_Array.resize( m_Array.size() );
+        }
+
+        inline _Check_return_ unsigned int GetAt( _In_ size_t array_index ) const noexcept
+        {
+            if ( array_index >= 0 && (SSIZE_T) array_index <= GetUpperBound() )
+            {
+                return( m_Array.at( array_index ) );
+            }
+
+            return( 0 );
+        }
+
+        inline _Check_return_ unsigned int * GetData( void ) const noexcept
+        {
+            return( (unsigned int  *) &m_Array[ 0 ] );
+        }
+
+        inline _Check_return_ size_t GetSize( void ) const noexcept
+        {
+            return( m_Array.size() );
+        }
+
+        inline _Check_return_ SSIZE_T GetUpperBound( void ) const noexcept
+        {
+            return( m_Array.size() - 1 );
+        }
+
+        inline void InsertAt( _In_ const size_t array_index, _In_ unsigned int new_element, _In_ size_t number_of_times_to_insert_it = 1 ) noexcept
+        {
+            if ( number_of_times_to_insert_it <= 0 )
+            {
+                return;
+            }
+
+            if ( (SSIZE_T) array_index > GetUpperBound() )
+            {
+                size_t loop_index = 0;
+
+                while( loop_index < number_of_times_to_insert_it )
+                {
+                    (void) Add( new_element );
+                    loop_index++;
+                }
+
+                return;
+            }
+
+            m_Array.insert( std::begin(m_Array) + array_index, number_of_times_to_insert_it, new_element );
+        }
+
+        inline void InsertAt( _In_ const size_t array_index, __inout CUIntArray * array_p ) noexcept
+        {
+            if ( (SSIZE_T) array_index > GetUpperBound() )
+            {
+                Append( *array_p );
+                return;
+            }
+
+            if ( array_p != nullptr )
+            {
+                m_Array.insert( std::begin(m_Array) + array_index, std::cbegin(array_p->m_Array), std::cend(array_p->m_Array) );
+            }
+        }
+
+        inline void RemoveAll( void ) noexcept
+        {
+            m_Array.clear();
+        }
+
+        inline void RemoveAt( _In_ const size_t array_index, _In_ const size_t number_of_elements_to_remove = 1 ) noexcept
+        {
+            m_Array.erase( std::begin(m_Array) + array_index, std::begin(m_Array) + array_index + number_of_elements_to_remove );
+        }
+
+        inline void SetSize( _In_ const size_t new_size, _In_ const size_t x = 32 ) noexcept
+        {
+            m_Array.resize( new_size );
+        }
+
+        inline void SetAt( _In_ const size_t array_index, _In_ const unsigned int new_element ) noexcept
+        {
+            if ( array_index >= 0 && (SSIZE_T) array_index <= GetUpperBound() )
+            {
+                m_Array.at( array_index ) = new_element;
+            }
+        }
+
+        inline void Sort( void ) noexcept
+        {
+            std::sort( std::begin(m_Array), std::end(m_Array), std::less<unsigned int>() );
+        }
+
+        inline _Check_return_ unsigned int operator[]( _In_ const size_t array_index ) const noexcept
+        {
+            return( GetAt( array_index ) );
+        }
+
+        inline _Check_return_ unsigned int& operator[]( _In_ const size_t array_index ) noexcept
+        {
+            return( ElementAt( array_index ) );
+        }
+    };
+
+    class CUInt64Array
+    {
+    protected:
+
+        std::vector< uint64_t > m_Array;
+
+        inline CUInt64Array( const CUInt64Array& ){};
+        inline CUInt64Array& operator=( const CUInt64Array& ){ return( *this ); }
+
+    public:
+
+        inline CUInt64Array() {};
+        inline ~CUInt64Array() {};
+
+        inline _Check_return_ size_t Add( _In_ const uint64_t new_element ) noexcept
+        {
+            m_Array.push_back( new_element );
+            return( GetUpperBound() );
+        }
+
+        inline void Append( _In_ const CUInt64Array& source ) noexcept
+        {
+            const size_t number_of_elements_to_copy = source.GetSize();
+
+            m_Array.reserve( m_Array.size() + number_of_elements_to_copy );
+
+            size_t loop_index = 0;
+
+            while( loop_index < number_of_elements_to_copy )
+            {
+                m_Array.push_back( source.GetAt( loop_index ) );
+                loop_index++;
+            }
+        }
+
+        inline void Copy( _In_ const CUInt64Array& source ) noexcept
+        {
+            RemoveAll();
+
+            size_t loop_index            = 0;
+            const size_t number_of_array_items = source.GetSize();
+
+            while( loop_index < number_of_array_items )
+            {
+                (void) Add( source.GetAt( loop_index ) );
+                loop_index++;
+            }
+        }
+
+        inline _Check_return_ uint64_t& ElementAt( _In_ const size_t array_index ) noexcept
+        {
+            if ( array_index >= 0 && (SSIZE_T) array_index <= GetUpperBound() )
+            {
+                return( m_Array.at( array_index ) );
+            }
+            else
+            {
+                uint64_t dummy = 0;
+                return( dummy ); // Warning 4172, returning the address of a local variable is OK
+            }
+        }
+
+        inline void FreeExtra( void ) noexcept
+        {
+            m_Array.resize( m_Array.size() );
+        }
+
+        inline _Check_return_ uint64_t GetAt( _In_ size_t array_index ) const noexcept
+        {
+            if ( array_index >= 0 && (SSIZE_T) array_index <= GetUpperBound() )
+            {
+                return( m_Array.at( array_index ) );
+            }
+
+            return( 0 );
+        }
+
+        inline _Check_return_ uint64_t * GetData( void ) const noexcept
+        {
+            return( (uint64_t *) &m_Array[ 0 ] );
+        }
+
+        inline _Check_return_ size_t GetSize( void ) const noexcept
+        {
+            return( m_Array.size() );
+        }
+
+        inline _Check_return_ SSIZE_T GetUpperBound( void ) const noexcept
+        {
+            return( m_Array.size() - 1 );
+        }
+
+        inline void InsertAt( _In_ const size_t array_index, _In_ uint64_t new_element, _In_ size_t number_of_times_to_insert_it = 1 ) noexcept
+        {
+            if ( number_of_times_to_insert_it <= 0 )
+            {
+                return;
+            }
+
+            if ( (SSIZE_T) array_index > GetUpperBound() )
+            {
+                size_t loop_index = 0;
+
+                while( loop_index < number_of_times_to_insert_it )
+                {
+                    (void) Add( new_element );
+                    loop_index++;
+                }
+
+                return;
+            }
+
+            m_Array.insert( std::begin(m_Array) + array_index, number_of_times_to_insert_it, new_element );
+        }
+
+        inline void InsertAt( _In_ const size_t array_index, _In_ const CUInt64Array * array_p ) noexcept
+        {
+            if ( (SSIZE_T) array_index > GetUpperBound() )
+            {
+                Append( *array_p );
+                return;
+            }
+
+            if ( array_p != nullptr )
+            {
+                m_Array.insert( std::begin(m_Array) + array_index, std::cbegin(array_p->m_Array), std::cend(array_p->m_Array) );
+            }
+        }
+
+        inline void RemoveAll( void ) noexcept
+        {
+            m_Array.clear();
+        }
+
+        inline void RemoveAt( _In_ const size_t array_index, _In_ const size_t number_of_elements_to_remove = 1 ) noexcept
+        {
+            m_Array.erase( std::begin(m_Array) + array_index, std::begin(m_Array) + array_index + number_of_elements_to_remove );
+        }
+
+        inline void SetSize( _In_ const size_t new_size, _In_ const size_t x = 32 ) noexcept
+        {
+            m_Array.resize( new_size );
+        }
+
+        inline void SetAt( _In_ const size_t array_index, _In_ const uint64_t new_element ) noexcept
+        {
+            if ( array_index >= 0 && (SSIZE_T) array_index <= GetUpperBound() )
+            {
+                m_Array.at( array_index ) = new_element;
+            }
+        }
+
+        inline void Sort( void ) noexcept
+        {
+            std::sort( std::begin(m_Array), std::end(m_Array), std::less<uint64_t>() );
+        }
+
+        inline _Check_return_ uint64_t operator[]( _In_ const size_t array_index ) const noexcept
+        {
+            return( GetAt( array_index ) );
+        }
+
+        inline _Check_return_ uint64_t& operator[]( _In_ const size_t array_index ) noexcept
+        {
+            return( ElementAt( array_index ) );
+        }
+    };
+
+void CByteArray::FromBase64( _In_ const std::wstring& base64 ) noexcept
+{
+    CBase64Coding coder;
+
+    (void) coder.Decode( base64, m_Array );
+}
+
+void CByteArray::FromBase64( _In_ const std::vector<uint8_t>& base64 ) noexcept
+{
+    CBase64Coding coder;
+
+    (void) coder.Decode( base64, m_Array );
+}
+
+void CByteArray::FromHex( _In_z_ LPCWSTR hexadecimal_string ) noexcept
+{
+    Empty();
+
+    const size_t string_length = wcslen( hexadecimal_string );
+
+    size_t string_index = 0;
+
+    uint8_t byte_to_add = 0;
+    uint8_t high_nybble = 0;
+    uint8_t low_nybble  = 0;
+
+    while( string_index < string_length )
+    {
+        if ( WFC_IS_HEXADECIMAL( hexadecimal_string[ string_index ] ) )
+        {
+            high_nybble = hex_val( hexadecimal_string[ string_index ] );
+
+            string_index++;
+
+            while( string_index < string_length )
+            {
+                if ( WFC_IS_HEXADECIMAL( hexadecimal_string[ string_index ] ) )
+                {
+                    low_nybble = hex_val( hexadecimal_string[ string_index ] );
+
+                    byte_to_add = (uint8_t) ( ( high_nybble << 4 ) + low_nybble );
+
+                    (void) Add( byte_to_add );
+                    break;
+                }
+
+                string_index++;
+            }
+        }
+
+        string_index++;
+    }
+}
+
+__checkReturn bool CByteArray::Protect( void )
+{
+    if ( GetSize() < 1 )
+    {
+        return( false );
+    }
+
+    size_t size_of_ciphertext_buffer = 0;
+
+    if ( wfc_protect_data( GetData(), GetSize(), nullptr, &size_of_ciphertext_buffer ) == false )
+    {
+        return( false );
+    }
+
+    CByteArray cipher_text;
+
+    cipher_text.SetSize( size_of_ciphertext_buffer );
+
+    if ( wfc_protect_data( GetData(), GetSize(), cipher_text.GetData(), &size_of_ciphertext_buffer ) == false )
+    {
+        return( false );
+    }
+
+    Copy( cipher_text );
+
+    return( true );
+}
+
+__checkReturn bool CByteArray::Unprotect( void )
+{
+    if ( GetSize() < 1 )
+    {
+        return( false );
+    }
+
+    size_t size_of_decrypted = 0;
+
+    if ( wfc_unprotect_data( GetData(), GetSize(), nullptr, &size_of_decrypted ) == false )
+    {
+        return( false );
+    }
+
+    CByteArray plain_text;
+
+    plain_text.SetSize( size_of_decrypted );
+
+    if ( wfc_unprotect_data( GetData(), GetSize(), plain_text.GetData(), &size_of_decrypted ) == false )
+    {
+        return( false );
+    }
+
+    Copy( plain_text );
+
+    return( true );
+}
+
+// Operators
+
+__checkReturn bool CByteArray::Save( _In_z_ LPCTSTR filename ) const noexcept
+{
+    WFC_VALIDATE_POINTER( this );
+    WFC_VALIDATE_POINTER( filename );
+
+    if ( filename == 0 || filename[ 0 ] == 0x00 )
+    {
+        return( false );
+    }
+
+    CFile64 file;
+
+    if ( file.Open( filename, FILE_OPEN_CREATE_FOR_WRITING) == false )
+    {
+        _ASSERT_EXPR( FALSE, _CRT_WIDE( "Cannot open file." ) );
+        return( false );
+    }
+
+    file.Write( GetData(), (UINT) GetSize() );
+    file.Flush();
+    file.Close();
+
+    return( true );
+}
+
+void CByteArray::Load( _In_z_ LPCTSTR filename ) noexcept
+{
+    WFC_VALIDATE_POINTER( this );
+    WFC_VALIDATE_POINTER( filename );
+
+    if ( filename == 0 || filename[ 0 ] == 0x00 )
+    {
+        Empty();
+        return;
+    }
+
+    CFile64 file;
+
+    if ( file.Open( filename, (UINT)( (UINT)CFile64::OpenFlags::modeRead | (UINT) CFile64::OpenFlags::shareDenyNone )) == false )
+    {
+        Empty();
+        return;
+    }
+
+    const size_t read_size = 1024 * 128;
+
+    const uint64_t file_length = file.GetLength();
+
+    SetSize( file_length );
+
+    uint8_t * write_buffer = GetData();
+
+    uint64_t write_buffer_index = 0;
+    uint64_t number_of_bytes_remaining = file_length;
+
+    while( number_of_bytes_remaining > 0 )
+    {
+        const uint64_t number_of_bytes_to_read = std::min( number_of_bytes_remaining, read_size );
+
+        if ( file.Read( &write_buffer[ write_buffer_index ], (UINT) number_of_bytes_to_read ) == 0 )
+        {
+            return;
+        }
+
+        write_buffer_index += number_of_bytes_to_read;
+        number_of_bytes_remaining -= number_of_bytes_to_read;
+    }
+
+    file.Close();
+}
+

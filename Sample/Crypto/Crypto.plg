@@ -1,0 +1,24 @@
+--------------------Configuration: Crypto - Win32 Debug--------------------
+Begining build with project "E:\WFC\Sample\Crypto\Crypto.dsp", at root.
+Active configuration is Win32 (x86) Console Application (based on Win32 (x86) Console Application)
+
+Project's tools are:
+			"32-bit C/C++ Compiler for 80x86" with flags "/nologo /MDd /W4 /Gm /GX /Zi /Od /I "E:\wfc\include" /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_AFXDLL" /D "_MBCS" /Fp".\Debug/Crypto.pch" /YX /Fo".\Debug/" /Fd".\Debug/" /FD /c "
+			"Win32 Resource Compiler" with flags "/l 0x409 /d "_DEBUG" /d "_AFXDLL" "
+			"Browser Database Maker" with flags "/nologo /o".\Debug/Crypto.bsc" "
+			"COFF Linker for 80x86" with flags "/nologo /subsystem:console /incremental:yes /pdb:".\Debug/Crypto.pdb" /debug /machine:I386 /out:".\Debug/Crypto.exe" "
+			"Custom Build" with flags ""
+			"<Component 0xa>" with flags ""
+
+Creating temp file "C:\TEMP\RSP18D.tmp" with contents </nologo /MDd /W4 /Gm /GX /Zi /Od /I "E:\wfc\include" /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_AFXDLL" /D "_MBCS" /Fp".\Debug/Crypto.pch" /YX /Fo".\Debug/" /Fd".\Debug/" /FD /c 
+"E:\WFC\Sample\Crypto\Crypto.cpp"
+>
+Creating command line "cl.exe @C:\TEMP\RSP18D.tmp" 
+Creating command line "link.exe /nologo /subsystem:console /incremental:yes /pdb:".\Debug/Crypto.pdb" /debug /machine:I386 /out:".\Debug/Crypto.exe"  .\Debug\Crypto.obj" 
+Compiling...
+Crypto.cpp
+Linking...
+
+
+
+Crypto.exe - 0 error(s), 0 warning(s)

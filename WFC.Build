@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="15.0">
+    <Import Project="MasterProperties.include"/>
+    <Target Name="compile" >
+        <!-- Build the library -->
+        <MSBuild Projects="LIB\WFC.vcxproj" Properties="Configuration=STL Unicode Release;$(StandardCppProperties)" Condition="!Exists('$(LibDirectory)\UnicodeSTLWFC64.lib')"/>
+
+        <!-- Build the test harness for the library -->
+        <MSBuild Projects="TEST\TEST.vcxproj" Properties="Configuration=STL Unicode Release;$(StandardCppProperties)" Condition="!Exists('Libraries\WFC\TEST\$(Platform)\STL Unicode Release\Test.exe')"/>
+
+        <!-- Now execute that test and fail the build if there's a problem -->
+        <Exec Command="Test.exe" WorkingDirectory="TEST\$(Platform)\STL Unicode Release"/>
+
+        <!-- The library successfully built and passed testing, it is fit for others to use -->
+        <Copy SourceFiles="LIB\UnicodeSTLWFC64.lib" DestinationFolder="$(LibDirectory)" />
+
+        <MSBuild Projects="Sample\XMLCheck\XMLCheck.vcxproj" Properties="Configuration=Release;$(StandardCppProperties)"/>
+        <Copy SourceFiles="Sample\XMLCheck\$(Platform)\Release\XMLCheck.exe" DestinationFolder="$(ReleaseBuildDirectory)" />
+    </Target>
+
+    <Target Name="debug" >
+        <!-- Build the library -->
+        <MSBuild Projects="LIB\WFC.sln" Properties="Configuration=STL Unicode Debug;$(StandardCppProperties)" Condition="!Exists('$(LibDirectory)\DebugBuildOfUnicodeSTLWFC64.lib')"/>
+
+        <!-- Build the test harness -->
+        <MSBuild Projects="TEST\TEST.vcxproj" Properties="Configuration=STL Unicode Debug;$(StandardCppProperties)"/>
+
+        <!-- Execute the test harness -->
+        <Exec Command="Test.exe" WorkingDirectory="TEST\$(Platform)\STL Unicode Debug"/>
+
+        <!-- It successfully built and passed testing. It is OK for others to use it. -->
+        <Copy SourceFiles="LIB\DebugBuildOfUnicodeSTLWFC64.lib" DestinationFolder="$(LibDirectory)" />
+
+        <MSBuild Projects="Sample\XMLCheck\XMLCheck.vcxproj" Properties="Configuration=Debug;$(StandardCppProperties)"/>
+        <Copy SourceFiles="Sample\XMLCheck\$(Platform)\Debug\XMLCheck.exe" DestinationFolder="$(DebugBuildDirectory)" />
+    </Target>
+
+    <Target Name="clean">
+        <Delete Files="LIB\DebugBuildOfUnicodeSTLWFC.lib" />
+        <Delete Files="LIB\DebugBuildOfUnicodeSTLWFC64.lib" />
+        <Delete Files="LIB\UnicodeSTLWFC.lib" />
+        <Delete Files="LIB\UnicodeSTLWFC64.lib" />
+        <Delete Files="LIB\WFC.sdf" />
+        <Delete Files="LIB\WFC.VC.db" />
+        <Delete Files="TEST\TEST.sdf" />
+        <Delete Files="TEST\TEST.VC.db" />
+        <Delete Files="TEST\UpgradeLog.htm" />
+        <Delete Files="Sample\XML\xml.out" />
+        <Delete Files="Sample\Kill\UpgradeLog.htm" />
+        <Delete Files="Sample\Kill\Kill.sdf" />
+        <Delete Files="Sample\XMLCheck\XMLCheck.sdf" />
+        <Delete Files="Sample\XMLCheck\UpgradeLog.htm" />
+        <Delete Files="Sample\XMLExplorer\XMLExplorer.VC.db" />
+        <RemoveDir Directories="$(ReleaseBuildDirectory)" />
+        <RemoveDir Directories="$(DebugBuildDirectory)" />
+        <RemoveDir Directories="LIB\.vs" />
+        <RemoveDir Directories="LIB\_UpgradeReport_Files" />
+        <RemoveDir Directories="LIB\x64" />
+        <RemoveDir Directories="LIB\Debug" />
+        <RemoveDir Directories="LIB\Release" />
+        <RemoveDir Directories="LIB\ipch" />
+        <RemoveDir Directories="LIB\WFC_Win32_STL_Unicode_Release" />
+        <RemoveDir Directories="TEST\Win32_STL_Release" />
+        <RemoveDir Directories="TEST\Win32_STL_Unicode_Release" />
+        <RemoveDir Directories="TEST\TEST_Win32_STL_Unicode_Debug" />
+        <RemoveDir Directories="TEST\TEST_Win32_STL_Debug" />
+        <RemoveDir Directories="TEST\WinDebug" />
+        <RemoveDir Directories="TEST\ipch" />
+        <RemoveDir Directories="TEST\x64" />
+        <RemoveDir Directories="TEST\_UpgradeReport_Files" />
+        <RemoveDir Directories="Sample\ADO2XML\Debug" />
+        <RemoveDir Directories="Sample\ADO2XML\Release" />
+        <RemoveDir Directories="Sample\ADO2XML\WFC_STL_Debug" />
+        <RemoveDir Directories="Sample\ChangeServiceConfiguration\Debug" />
+        <RemoveDir Directories="Sample\ChangeServiceConfiguration\Release" />
+        <RemoveDir Directories="Sample\ChangeServiceConfiguration\UnicodeRelease" />
+        <RemoveDir Directories="Sample\ClockSync\Debug" />
+        <RemoveDir Directories="Sample\ClockSync\Release" />
+        <RemoveDir Directories="Sample\ClockSync\Win32_STL_Release" />
+        <RemoveDir Directories="Sample\COMLOC\Debug" />
+        <RemoveDir Directories="Sample\COMLOC\Release" />
+        <RemoveDir Directories="Sample\Counter\Debug" />
+        <RemoveDir Directories="Sample\Counter\Release" />
+        <RemoveDir Directories="Sample\CPP2HTML\Debug" />
+        <RemoveDir Directories="Sample\CPP2HTML\Release" />
+        <RemoveDir Directories="Sample\Crypto\Debug" />
+        <RemoveDir Directories="Sample\Crypto\Release" />
+        <RemoveDir Directories="Sample\CScript\Debug" />
+        <RemoveDir Directories="Sample\CScript\Release" />
+        <RemoveDir Directories="Sample\Data\Receiver\Debug" />
+        <RemoveDir Directories="Sample\Data\Receiver\Release" />
+        <RemoveDir Directories="Sample\Data\Sender\Debug" />
+        <RemoveDir Directories="Sample\Data\Sender\Release" />
+        <RemoveDir Directories="Sample\DeMangle\Debug" />
+        <RemoveDir Directories="Sample\DeMangle\Release" />
+        <RemoveDir Directories="Sample\DriverMover\Debug" />
+        <RemoveDir Directories="Sample\DriverMover\Release" />
+        <RemoveDir Directories="Sample\DumpEventLog\Debug" />
+        <RemoveDir Directories="Sample\DumpEventLog\Release" />
+        <RemoveDir Directories="Sample\EnableRASLogging\Debug" />
+        <RemoveDir Directories="Sample\EnableRASLogging\Release" />
+        <RemoveDir Directories="Sample\EventPager\Debug" />
+        <RemoveDir Directories="Sample\EventPager\Release" />
+        <RemoveDir Directories="Sample\GetWebPage\Debug" />
+        <RemoveDir Directories="Sample\GetWebPage\Release" />
+        <RemoveDir Directories="Sample\HTML\Debug" />
+        <RemoveDir Directories="Sample\HTML\Release" />
+        <RemoveDir Directories="Sample\JC2HTML\Debug" />
+        <RemoveDir Directories="Sample\JC2HTML\Release" />
+        <RemoveDir Directories="Sample\Kill\_UpgradeReport_Files" />
+        <RemoveDir Directories="Sample\Kill\Debug" />
+        <RemoveDir Directories="Sample\Kill\ipch" />
+        <RemoveDir Directories="Sample\Kill\Release" />
+        <RemoveDir Directories="Sample\KillDoc\Debug" />
+        <RemoveDir Directories="Sample\KillDoc\Release" />
+        <RemoveDir Directories="Sample\LastEvent\Debug" />
+        <RemoveDir Directories="Sample\LastEvent\Release" />
+        <RemoveDir Directories="Sample\LastEvent\UnicodeRelease" />
+        <RemoveDir Directories="Sample\Listen\Debug" />
+        <RemoveDir Directories="Sample\Listen\Release" />
+        <RemoveDir Directories="Sample\ListProcesses\Debug" />
+        <RemoveDir Directories="Sample\ListProcesses\Release" />
+        <RemoveDir Directories="Sample\Map2Def\Debug" />
+        <RemoveDir Directories="Sample\Map2Def\Release" />
+        <RemoveDir Directories="Sample\Microphone\Debug" />
+        <RemoveDir Directories="Sample\Microphone\Release" />
+        <RemoveDir Directories="Sample\MIME2HTML\Debug" />
+        <RemoveDir Directories="Sample\MIME2HTML\Release" />
+        <RemoveDir Directories="Sample\MIME2HTML\Debug" />
+        <RemoveDir Directories="Sample\MIME2HTML\Release" />
+        <RemoveDir Directories="Sample\PasswordFilter\Debug" />
+        <RemoveDir Directories="Sample\PasswordFilter\Release" />
+        <RemoveDir Directories="Sample\PasswordFilter\DLL\Debug" />
+        <RemoveDir Directories="Sample\PasswordFilter\DLL\Release" />
+        <RemoveDir Directories="Sample\Ping\Debug" />
+        <RemoveDir Directories="Sample\Ping\Release" />
+        <RemoveDir Directories="Sample\Pinger\Debug" />
+        <RemoveDir Directories="Sample\Pinger\Release" />
+        <RemoveDir Directories="Sample\RasAdmin\Debug" />
+        <RemoveDir Directories="Sample\RasAdmin\Release" />
+        <RemoveDir Directories="Sample\Retry\Debug" />
+        <RemoveDir Directories="Sample\Retry\Release" />
+        <RemoveDir Directories="Sample\RunningObjectTable\Debug" />
+        <RemoveDir Directories="Sample\RunningObjectTable\Release" />
+        <RemoveDir Directories="Sample\Serial\Debug" />
+        <RemoveDir Directories="Sample\Serial\Release" />
+        <RemoveDir Directories="Sample\SerialTest\Normal\Receiver\Debug" />
+        <RemoveDir Directories="Sample\SerialTest\Normal\Receiver\Release" />
+        <RemoveDir Directories="Sample\SerialTest\Normal\Sender\Debug" />
+        <RemoveDir Directories="Sample\SerialTest\Normal\Sender\Release" />
+        <RemoveDir Directories="Sample\Service\Debug" />
+        <RemoveDir Directories="Sample\Service\Release" />
+        <RemoveDir Directories="Sample\Service\UnicodeDebug" />
+        <RemoveDir Directories="Sample\Service\UnicodeRelease" />
+        <RemoveDir Directories="Sample\Service\WinDebug" />
+        <RemoveDir Directories="Sample\Service\WinRel" />
+        <RemoveDir Directories="Sample\SkyPage\Debug" />
+        <RemoveDir Directories="Sample\SkyPage\Release" />
+        <RemoveDir Directories="Sample\SprintSpectrum\Debug" />
+        <RemoveDir Directories="Sample\SprintSpectrum\Release" />
+        <RemoveDir Directories="Sample\Squiggle\WinDebug" />
+        <RemoveDir Directories="Sample\Squiggle\WinRel" />
+        <RemoveDir Directories="Sample\TortureXML\WinDebug" />
+        <RemoveDir Directories="Sample\TortureXML\WinRel" />
+        <RemoveDir Directories="Sample\TortureXML\Debug" />
+        <RemoveDir Directories="Sample\TortureXML\Release" />
+        <RemoveDir Directories="Sample\TortureXML\StaticDebug" />
+        <RemoveDir Directories="Sample\TortureXML\StaticRelease" />
+        <RemoveDir Directories="Sample\USNOTime\Debug" />
+        <RemoveDir Directories="Sample\USNOTime\Release" />
+        <RemoveDir Directories="Sample\WatchDog\.vs" />
+        <RemoveDir Directories="Sample\WatchDog\Debug" />
+        <RemoveDir Directories="Sample\WatchDog\Release" />
+        <RemoveDir Directories="Sample\WatchDog\WinDebug" />
+        <RemoveDir Directories="Sample\WatchDog\UnicodeRelease" />
+        <RemoveDir Directories="Sample\WatchDog\WinRel" />
+        <RemoveDir Directories="Sample\Wfc2Html\Debug" />
+        <RemoveDir Directories="Sample\Wfc2Html\Release" />
+        <RemoveDir Directories="Sample\WinDebug" />
+        <RemoveDir Directories="Sample\WinPage\Debug" />
+        <RemoveDir Directories="Sample\WinPage\Release" />
+        <RemoveDir Directories="Sample\XML\Debug" />
+        <RemoveDir Directories="Sample\XML\Release" />
+        <RemoveDir Directories="Sample\XML\WinDebug" />
+        <RemoveDir Directories="Sample\XMLCheck\Backup" />
+        <RemoveDir Directories="Sample\XMLCheck\Debug" />
+        <RemoveDir Directories="Sample\XMLCheck\Release" />
+        <RemoveDir Directories="Sample\XMLCheck\WinDebug" />
+        <RemoveDir Directories="Sample\XMLCheck\WinRel" />
+        <RemoveDir Directories="Sample\XMLCheck\x64" />
+        <RemoveDir Directories="Sample\XMLExplorer\Release" />
+        <RemoveDir Directories="Sample\XMLUser\Debug" />
+        <RemoveDir Directories="Sample\XMLUser\Release" />
+    </Target>
+
+    <Target Name="virgin">
+        <CallTarget Targets="clean" />
+        <RemoveDir Directories="LIB\ipch" />
+        <RemoveDir Directories="LIB\x64" />
+        <RemoveDir Directories="LIB\WFC_Win32_STL_Release" />
+        <RemoveDir Directories="LIB\WFC_Win32_STL_Unicode_Release" />
+        <RemoveDir Directories="LIB\WFC_Win32_STL_Unicode_Debug" />
+        <RemoveDir Directories="LIB\WinDebug" />
+    </Target>
+
+    <Target Name="test">
+        <MSBuild Projects="TEST\TEST.vcxproj" Properties="Configuration=STL Unicode Release;$(StandardCppProperties)"/>
+
+        <!-- Now execute that test and fail the build if there's a problem -->
+        <Exec Command="Test.exe" WorkingDirectory="TEST\$(Platform)\STL Unicode Release" />
+    </Target>
+</Project>

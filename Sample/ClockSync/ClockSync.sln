@@ -1,0 +1,24 @@
+Microsoft Visual Studio Solution File, Format Version 8.00
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ClockSync", "ClockSync.vcproj", "{306ABF64-A288-436C-9227-194734B1B023}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfiguration) = preSolution
+		Debug = Debug
+		Release = Release
+		STL Release = STL Release
+	EndGlobalSection
+	GlobalSection(ProjectConfiguration) = postSolution
+		{306ABF64-A288-436C-9227-194734B1B023}.Debug.ActiveCfg = Debug|Win32
+		{306ABF64-A288-436C-9227-194734B1B023}.Debug.Build.0 = Debug|Win32
+		{306ABF64-A288-436C-9227-194734B1B023}.Release.ActiveCfg = Release|Win32
+		{306ABF64-A288-436C-9227-194734B1B023}.Release.Build.0 = Release|Win32
+		{306ABF64-A288-436C-9227-194734B1B023}.STL Release.ActiveCfg = STL Release|Win32
+		{306ABF64-A288-436C-9227-194734B1B023}.STL Release.Build.0 = STL Release|Win32
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+	EndGlobalSection
+	GlobalSection(ExtensibilityAddIns) = postSolution
+	EndGlobalSection
+EndGlobal

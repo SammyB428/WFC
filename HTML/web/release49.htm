@@ -1,0 +1,171 @@
+<HTML>
+
+<HEAD>
+<TITLE>Win32 Foundation Classes Release 49</TITLE>
+</HEAD>
+
+<BODY>
+
+<!-- $Revision: 6 $ -->
+<H1>Release 49</H1>
+2000-09-22<BR>
+
+<P><TABLE BORDER="0" WIDTH="100%" CELLPADDING="0" CELLSPACING="0">
+<TR><TD BGCOLOR="#0" VALIGN="MIDDLE"><FONT FACE="Arial" SIZE="3" COLOR="#FFFFFF">
+&nbsp;<I><B>This Release's Editorial</B></I></FONT></TD></TR></TABLE><P>
+
+Work is getting busy so I haven't had a lot of time to devote to
+WFC. This release is mainly bug fixes. I've been learning a lot
+about creating database driven web sites. The lessons learned so
+far are:
+
+<OL>
+<LI>ISAPI Extension DLLs are very cool
+<LI>ODBC to SQL stored procedures is very cool
+<LI>COM SUCKS!
+<LI>ASP SUCKS!
+<LI>.NET looks promising
+</OL>
+
+How did I come to these conclusions? Well, I was given the task of
+creating a website that can handle medium-grade traffic (thousands of
+simultaneous users, each performing database queries and disk-intensive
+operations). So I started reading the propaganda, er, I mean, articles
+about web site creation. We knew we wanted to scale the web site to
+clusters (database, web server and search engine clusters) to handle
+the traffic. As more users hit the site, more boxes will be added to the
+clusters. Seems like a reasonable design. We came up with two approaches:
+<OL>
+<LI>C++ extension DLLs using ODBC to talk to SQL stored procedures and
+<LI>ASP pages using ADO to talk to SQL server.
+</OL>
+
+<P>
+
+I was on the team doing the extension DLLs and another team did
+ASP pages. In a head to head comparision, extension DLLs were the far
+better solution. To deploy the extension DLL, you need to put one file
+in the <CODE>/inetpub/scripts</CODE> directory. That is all. Now, what
+is all this business about &quot;DLL Hell&quot;? The ASP solution required
+creating a virtual directory and putting several ASP files in it. Where
+things got interesting was in server side charting. One of the requirements
+of the systems was security. This meant no Java, no ActiveX, no DHTML, nothing
+fancy at all. Just &quot;flat&quot; HTML and JPGs flowing to the clients.
+This allows us to work with <I>all</I> browsers. This also meant when the
+user wanted to see a pie chart representation of their data, we had to 
+render the chart on the server and pass down a JPG image of it to the
+browser.
+
+<P>
+
+We first used Office Web Components
+(<A HREF="http://msdn.microsoft.com/library/techart/ofintrowbcom.htm" TARGET="_parent">OWC</A>)
+for charting but in order for it to work, we had to create an ASP page
+to generate the chart and create our own Visual Basic ActiveX control
+to read a binary file (not possible in &quot;ASP Hell,&quot; you can only
+read text files, see
+<A HREF="http://search.support.microsoft.com/kb/z.asp?SD=SO&LN=EN-US" TARGET="_parent">Knowledge Base</A>
+article
+<A HREF="http://support.microsoft.com/support/kb/articles/Q193/9/98.ASP" TARGET="_parent">Q193998</A>).
+
+<P>
+
+The ASP team found and used an OpenGL charting tool from
+<A HREF="http://www.dundas.com/" TARGET="_parent">Dundas Software</A>.
+This looked really sharp so I tried to use it from an ISAPI extension
+DLL. Bad move!
+The Dundas ActiveX requires an installation
+(because COM objects cannot exist without making entries in the registry)
+and has a nasty habit of locking up IIS 5.0 requiring a <B>reboot</B>
+of the server to fix (DLLHOST.EXE goes off into never never land).
+The guy stuck with getting the Dundas tool to a stable point spent
+the better part of a day figuring out that he must assign the return
+value of a function call to an unused variable in an ASP page
+(just calling the function without
+storing its result caused IIS to lockup). We are now trying to buy the source
+to Dundas' charting tool so we can rip out all of that COM crap and get
+out of &quot;ASP Hell&quot;.
+
+<P>
+
+If anyone knows of source code to some OpenGL charting routines, I'd be very
+grateful to hear about it. We want to get back to having a single DLL contain
+the entire site so we can have a single file copy installation procedure.
+We can't afford to get stuck in &quot;COM Hell&quot; if we can avoid it.
+The main lesson learned from this project is &quot;Don't use anything on
+a website that you can't debug.&quot;
+
+<P>
+
+Interestingly enough, Microsoft is trying phase out COM with their new .NET
+framework. I think they've finally come to the same conclusion I did about
+COM, it is too complex. COM does a fantastic job of giving VB scripts access
+to functionality but it is far too fragile to be used for any real work.
+COM has never allowed the granularity of reuse I've needed to get my job
+done. If the producer of a COM object doesn't expose a customization point
+that you need, you cannot use that object in your system. Never mind the
+fact that COM objects require a per-thread initialization that can really
+screw you (that's why you can't use COM objects in ISAPI extension DLLs unless you
+create your own worker thread pool, it is also the reason why you can have only
+60 or so COM objects produced with MFC per NT4 process).
+If you have source code, you can create your own customization points to
+your heart's content.
+
+<P>
+
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="0" CELLSPACING="0">
+<TR><TD BGCOLOR="#0" VALIGN="MIDDLE">
+<FONT FACE="Arial" SIZE="3" COLOR="#FFFFFF">
+&nbsp;<I><B>New</B></I></FONT>
+</TD></TR></TABLE>
+<P>
+
+<B><A HREF="CNetworkUser.htm">CNetworkUsers</A></B> - 
+Added a method named
+<A HREF="CNetworkUser.htm#ExpirePassword">ExpirePassword</A>()
+to expire a user's password. This makes it easy to force all users
+on a domain to change their password at the next logon. Thanks go 
+to Udo Krummrey for suggesting this.<P>
+
+<P>
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="0" CELLSPACING="0">
+<TR><TD BGCOLOR="#0" VALIGN="MIDDLE">
+<FONT FACE="Arial" SIZE="3" COLOR="#FFFFFF">
+&nbsp;<I><B>Modified</B></I></FONT>
+</TD></TR></TABLE>
+<P>
+
+<B><A HREF="CTape.htm">CTape</A></B> - I broke the interface. Please
+accept my humblest apologies. <CODE>Read</CODE> and <CODE>Write</CODE> have been renamed to
+<A HREF="CTape.htm#BackupRead"><CODE>BackupRead</CODE></A>
+and
+<A HREF="CTape.htm#BackupWrite"><CODE>BackupWrite</CODE></A>.
+This is to preserve the interface
+with CFile and give you the ability to read and write raw data to
+the tape.<P>
+
+<P>
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="0" CELLSPACING="0">
+<TR><TD BGCOLOR="#0" VALIGN="MIDDLE">
+<FONT FACE="Arial" SIZE="3" COLOR="#FFFFFF">
+&nbsp;<I><B>Fixed</B></I></FONT>
+</TD></TR></TABLE>
+<P>
+
+<B>CString</B> - Thanks to 
+<A HREF="mailto:LBredehoeft@imandi.com">Larry Bredehoeft</A>, the STL version of 
+the TrimRight() and Right() methods now work
+without relying on exception handling.
+<P>
+
+<B>
+
+<HR>
+<A HREF="release48.htm">Release 48 Notes</A><P>
+<ADDRESS>Sam Blackburn</ADDRESS>
+<ADDRESS><A HREF="mailto:wfc@pobox.com">wfc@pobox.com</A></ADDRESS>
+<A HREF="../index.html" TARGET="_parent">Return to Sam's Home Page</A>
+
+</BODY>
+
+</HTML>

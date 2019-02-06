@@ -1,0 +1,28 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28010.2003
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "WFC", "WFC.vcxproj", "{F805DC15-5143-4F3A-8C60-5C81247E2C7F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+
+		STL Debug|x64 = STL Debug|x64
+		STL Release|x64 = STL Release|x64
+		STL Unicode Debug|x64 = STL Unicode Debug|x64
+		STL Unicode Release|x64 = STL Unicode Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F805DC15-5143-4F3A-8C60-5C81247E2C7F}.STL Debug|x64.ActiveCfg = STL Debug|x64
+		{F805DC15-5143-4F3A-8C60-5C81247E2C7F}.STL Debug|x64.Build.0 = STL Debug|x64
+		{F805DC15-5143-4F3A-8C60-5C81247E2C7F}.STL Release|x64.ActiveCfg = STL Release|x64
+		{F805DC15-5143-4F3A-8C60-5C81247E2C7F}.STL Release|x64.Build.0 = STL Release|x64
+		{F805DC15-5143-4F3A-8C60-5C81247E2C7F}.STL Unicode Debug|x64.ActiveCfg = STL Unicode Debug|x64
+		{F805DC15-5143-4F3A-8C60-5C81247E2C7F}.STL Unicode Debug|x64.Build.0 = STL Unicode Debug|x64
+		{F805DC15-5143-4F3A-8C60-5C81247E2C7F}.STL Unicode Release|x64.ActiveCfg = STL Unicode Release|x64
+		{F805DC15-5143-4F3A-8C60-5C81247E2C7F}.STL Unicode Release|x64.Build.0 = STL Unicode Release|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

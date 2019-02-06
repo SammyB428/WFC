@@ -1,0 +1,76 @@
+<html>
+<body>
+<pre>
+<h1>Build Log</h1>
+<h3>
+--------------------Configuration: ADO2XML - Win32 Debug--------------------
+</h3>
+<h3>Command Lines</h3>
+Creating temporary file "C:\TEMP\RSP36.tmp" with contents
+[
+/nologo /MDd /W4 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /D WINVER=0x401 /Fp"Debug/ADO2XML.pch" /YX /Fo"Debug/" /Fd"Debug/" /FD /GZ /EHa /EHc /TP /c 
+"F:\WFC\Sample\ADO2XML\CDatabaseParameters.cpp"
+"F:\WFC\Sample\ADO2XML\convert_DataTypeEnum_to_string.cpp"
+"F:\WFC\Sample\ADO2XML\convert_desired_tables.cpp"
+"F:\WFC\Sample\ADO2XML\convert_table.cpp"
+"F:\WFC\Sample\ADO2XML\get_blob.cpp"
+"F:\WFC\Sample\ADO2XML\main.cpp"
+"F:\WFC\Sample\ADO2XML\normalize_string.cpp"
+"F:\WFC\Sample\ADO2XML\open_connection_to_database.cpp"
+"F:\WFC\Sample\ADO2XML\output_field.cpp"
+"F:\WFC\Sample\ADO2XML\output_schema.cpp"
+"F:\WFC\Sample\ADO2XML\output_types.cpp"
+"F:\WFC\Sample\ADO2XML\print_COM_error.cpp"
+"F:\WFC\Sample\ADO2XML\print_provider_error.cpp"
+"F:\WFC\Sample\ADO2XML\replace.cpp"
+]
+Creating command line "cl.exe @C:\TEMP\RSP36.tmp" 
+Creating temporary file "C:\TEMP\RSP37.tmp" with contents
+[
+kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /incremental:yes /pdb:"Debug/ADO2XML.pdb" /debug /machine:I386 /out:"Debug/ADO2XML.exe" /pdbtype:sept 
+.\Debug\CDatabaseParameters.obj
+.\Debug\convert_DataTypeEnum_to_string.obj
+.\Debug\convert_desired_tables.obj
+.\Debug\convert_table.obj
+.\Debug\get_blob.obj
+.\Debug\get_table_names.obj
+.\Debug\main.obj
+.\Debug\normalize_string.obj
+.\Debug\open_connection_to_database.obj
+.\Debug\output_field.obj
+.\Debug\output_schema.obj
+.\Debug\output_types.obj
+.\Debug\print_COM_error.obj
+.\Debug\print_provider_error.obj
+.\Debug\replace.obj
+]
+Creating command line "link.exe @C:\TEMP\RSP37.tmp"
+<h3>Output Window</h3>
+Compiling...
+CDatabaseParameters.cpp
+convert_DataTypeEnum_to_string.cpp
+convert_desired_tables.cpp
+convert_table.cpp
+get_blob.cpp
+main.cpp
+F:\WFC\Sample\ADO2XML\main.cpp(39) : warning C4101: 'v' : unreferenced local variable
+normalize_string.cpp
+open_connection_to_database.cpp
+output_field.cpp
+output_schema.cpp
+output_types.cpp
+print_COM_error.cpp
+print_provider_error.cpp
+replace.cpp
+Spawn Time 1:50.9
+Linking...
+Spawn Time 0:07.3
+
+
+
+<h3>Results</h3>
+ADO2XML.exe - 0 error(s), 1 warning(s)
+Build Time 2:04.7
+</pre>
+</body>
+</html>

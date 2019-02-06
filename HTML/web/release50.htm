@@ -1,0 +1,132 @@
+<HTML>
+
+<HEAD>
+<TITLE>Win32 Foundation Classes Release 50</TITLE>
+<!-- Originally downloaded from http://www.samblackburn.com -->
+</HEAD>
+
+<BODY>
+
+<!-- $Revision: 6 $ -->
+<H1>Release 50</H1>
+2000-11-04<BR>
+
+<P><TABLE BORDER="0" WIDTH="100%" CELLPADDING="0" CELLSPACING="0">
+<TR><TD BGCOLOR="#0" VALIGN="MIDDLE"><FONT FACE="Arial" SIZE="3" COLOR="#FFFFFF">
+&nbsp;<I><B>This Release's Editorial</B></I></FONT></TD></TR></TABLE><P>
+
+&quot;Opportunity is missed by most people because it is dressed in overalls
+and looks like work.&quot; -- Thomas Edison<P>
+
+Adding new features to WFC is still low on my priority list.
+My day job continues to challenge me (a database driven website).
+I've learned that the
+<A HREF="http://www.netscape.com">Netscape</A> browser sucks
+(it doesn't deal well with CSS style sheets).
+<P>
+
+I've also fixed all of the broken link errors in the class list web page.
+Since moving to this Unix-based web server, the filenames in URL's are
+case sensitive.
+
+<P>
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="0" CELLSPACING="0">
+<TR><TD BGCOLOR="#0" VALIGN="MIDDLE">
+<FONT FACE="Arial" SIZE="3" COLOR="#FFFFFF">
+&nbsp;<I><B>New</B></I></FONT>
+</TD></TR></TABLE>
+<P>
+
+<A HREF="wfc_get_string_from_clipboard.htm">wfc_get_string_from_clipboard</A> - Grabs
+text from the clipboard and puts it into a CString.<P>
+
+<A HREF="wfc_get_activex_servers.htm">wfc_get_activex_servers</A> - Retrieves
+a list of servers that are safe to download ActiveX controls from and puts it
+into a CStringArray. If a server named <CODE>CODEBASE</CODE> is listed, it means
+your machine is wide open to malicious ActiveX controls.<P>
+
+<A HREF="wfc_set_activex_servers.htm">wfc_set_activex_servers</A> - Tells Win32
+what servers are safe to download ActiveX controls from. If you set a server named
+<CODE>CODEBASE</CODE>, you are leaving yourself vulnerable to malicious ActiveX
+controls.<P>
+
+<P>
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="0" CELLSPACING="0">
+<TR><TD BGCOLOR="#0" VALIGN="MIDDLE">
+<FONT FACE="Arial" SIZE="3" COLOR="#FFFFFF">
+&nbsp;<I><B>Modified</B></I></FONT>
+</TD></TR></TABLE>
+<P>
+
+<A HREF="CExtensibleMarkupLanguageElement.htm">CExtensibleMarkupLanguageElement</A> - Added
+<CODE><A HREF="CExtensibleMarkupLanguageElement.htm#NewChild">NewChild()</A></CODE>
+method. I was generating XML from a SQL query in an ISAPI extension DLL and got
+tired of the error prone way of creating new elements. <CODE>NewChild</CODE>
+takes care of that for me.<P>
+
+<A HREF="CFile64.htm">CFile64</A> - Added methods to allow for complete control over <CODE>CreateFile()</CODE>.
+<P>
+
+<A HREF="CMemoryFile.htm">CMemoryFile</A> - Recoded this class to use
+<A HREF="CFile64.htm">CFile64</A>
+instead of CFile because I needed
+complete control over the <CODE>CreateFile()</CODE> API. In short, I needed the ability
+to memory map a temporary file. When the file is unmapped, the operating system
+deletes it for me (using the <CODE>FILE_FLAG_DELETE_ON_CLOSE</CODE>).
+<P>
+
+<B><A HREF="CNetworkUser.htm">CNetworkUsers</A></B> - 
+Added a method named
+<A HREF="CNetworkUser.htm#ChangePassword">ChangePassword()</A>
+to change a user's password.
+<P>
+
+UNICODE_to_ASCII() - added a code page parameter. The default is to use the
+<CODE>CP_ACP</CODE> code page.
+<P>
+
+<P>
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="0" CELLSPACING="0">
+<TR><TD BGCOLOR="#0" VALIGN="MIDDLE">
+<FONT FACE="Arial" SIZE="3" COLOR="#FFFFFF">
+&nbsp;<I><B>Fixed</B></I></FONT>
+</TD></TR></TABLE>
+<P>
+
+Thanks to Danny Smith, from New Zealand, for sending me a ton of
+bug fixes for use with the <A HREF="http://www.mingw.org/" TARGET="_parent">MinGW</A>
+system which uses the <A HREF="http://gcc.gnu.org/" TARGET="_parent">GCC</A> compiler.
+GCC has several bugs in it that must be coded around. One of the bugs
+is GCC can't handle <CODE>#if 0</CODE> sections in source code. This
+just happens to be where I put the HTML documentation for the classes.
+To fix it, I had to edit every stinking source code file to get rid of
+<CODE>#if 0</CODE>/<CODE>#endif</CODE> sections and replace them with
+comment markers (<CODE>/*</CODE>...<CODE>*/</CODE>). GCC also has a
+problem with the
+<A HREF="http://www.eskimo.com/~scs/cclass/int/sx4eb.html" TARGET="_parent">Conditional
+Operator</A> using macros.
+
+Soon, I will be compiling WFC for use with Intel's
+<A HREF="http://www.intel.com/vtune/" TARGET="_parent">VTune</A> tools.
+No doubt, there will be changes.
+<P>
+
+<A HREF="CExtensibleMarkupLanguageDocument.htm">CExtensibleMarkupLanguageDocument</A> - 
+Thanks go to Larry Bredehoeft for finding a bug where I was not copying a source
+document's element callback functions.
+<P>
+
+<A HREF="CExtensibleMarkupLanguageElement.htm">CExtensibleMarkupLanguageElement</A> - 
+Thanks go to Juro Gottweis, for finding a bug where I was trimming all white space
+elements when the <CODE>WFC_XML_ALLOW_AMPERSANDS_IN_ELEMENTS</CODE> option was specified.
+<P>
+
+<HR>
+<A HREF="release49.htm">Release 49 Notes</A><P>
+<ADDRESS>Sam Blackburn</ADDRESS>
+<ADDRESS><A HREF="mailto:wfc@pobox.com">wfc@pobox.com</A></ADDRESS>
+<A HREF="../index.html" TARGET="_parent">Return to Sam's Home Page</A>
+
+</BODY>
+
+</HTML>

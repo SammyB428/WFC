@@ -1,0 +1,31 @@
+<html><head><title>WFC - Win32 Foundation Classes</title>
+<meta name="keywords" content="WFC, MFC extension library, freeware class library, Win32, push technology, Extensible Markup Language, toolkit" />
+<meta name="description" contents="Freeware C++ class library for Win32" /></head>
+<frameset rows="25%,75%"><frame src="title.htm" />
+<frameset cols="33%,67%"><frame src="classes.htm" /><frame src="release73.htm" name="Explain" />
+</frameset></frameset><noframes><body><h1><center>WFC</center></h1>
+<h2><center>Win32 Foundation Classes</center></h2><p />
+<center><b>This is Release 73, 2004-07-15</b></center><P /><hr /><p /><p />
+What is WFC (Win32 Foundation Classes)? It is a set of C++ classes
+built upon MFC that let you develop Win32 applications. It encapsulates
+different groups of API's (like the Registry) into C++ classes
+to reduce the learning curve. For the most part I don't want to
+overlap MFC in functionality. However, I have a TCP/IP socket
+class and so does MFC (but mine works in Console applications).
+I am not the author of all of the code. If I've seen code that
+I can use I've rolled it into WFC. There's a lot of classes that
+encapsulate data structures. The reason for this is my programmers
+are constantly having problems initializing structures that have
+a data member holding the size of the structure (i.e. cbSize or
+dwLength members). Microsoft doesn't do a real good job of pointing
+out that you need to set the size of data structures <b>before</b>
+calling API's. This leads to a lot of heartache for first-time
+NT programmers (in my experience). Also, all members of the structures
+are zeroed out before use. WFC will be extended as it is used in more and more applications.<p />
+WFC contains no exception handling. Why? I hate exception handling.
+It is a religious issue with me. I prefer to check for failure
+all over the place.<p />How much does WFC cost? Nothing. BSD liscense. Please let me know of bugs or extensions
+so I can roll them into the next release. Feel free to tell me some good news too!
+<h3>What's New in this release:</h3><p />
+<a href="Classes.htm">Classes</a><p />Sam Blackburn<p /><address>Internet: wfc@pobox.com</address>
+<a href="../index.html" target="_parent">Return to Sam's Home Page</a></body></noframes></html>

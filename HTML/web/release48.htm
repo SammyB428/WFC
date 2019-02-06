@@ -1,0 +1,131 @@
+<HTML>
+
+<HEAD>
+<TITLE>Win32 Foundation Classes Release 48</TITLE>
+</HEAD>
+
+<BODY>
+
+<!-- $Revision: 1 $ -->
+<H1>Release 48</H1>
+2000-08-09<BR>
+
+<P>
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="0" CELLSPACING="0">
+<TR><TD BGCOLOR="#0" VALIGN="MIDDLE">
+<FONT FACE="Arial" SIZE="3" COLOR="#FFFFFF">
+&nbsp;<I><B>This Release's Editorial</B></I></FONT>
+</TD></TR></TABLE>
+<P>
+
+I finally gave up on Compuserve. I'll close the account in a few
+months when folks have moved over to this site. If you have a link
+to my website, please update it.<P>
+
+I've started (it's about time) filling in the TEST sample application.
+My goal is to test every method on every class. This is mind numbing
+work but very worthwhile. I've already discovered (and fixed) several
+bugs in <B><A HREF="CBitArray.htm">CBitArray</A></B> because of it.
+Work on WFC has slowed in proportion to the pace of my day job (the
+one that pays the bills). I am very busy during the day so when I
+get home at night, my brain is fried and WFC suffers.<P>
+
+I don't know if it is just me, but do Microsoft products seem to
+degrade over time? My compiler is getting flaky. The latest problem
+is:
+
+<PRE><CODE>F:\WFC\SRC\SOCKETS.CPP(891) : fatal error C1001: INTERNAL COMPILER ERROR
+  (compiler file 'E:\8168\vc98\p2\src\P2\main.c', line 494)
+    Please choose the Technical Support command on the Visual C++
+    Help menu, or open the Technical Support help file for more information
+Error executing cl.exe.</CODE></PRE>
+
+And what obfuscation of code could have caused that? Here it is...
+
+<PRE><CODE>WFCLTRACEINIT( TEXT( &quot;CSimpleSocket::Read()&quot; ) );</CODE></PRE>
+
+Sometimes I get these errors when my disk fills up. However, I've got
+2.69GB free. Even that should be enough. Go figure.
+
+<P>
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="0" CELLSPACING="0">
+<TR><TD BGCOLOR="#0" VALIGN="MIDDLE">
+<FONT FACE="Arial" SIZE="3" COLOR="#FFFFFF">
+&nbsp;<I><B>New</B></I></FONT>
+</TD></TR></TABLE>
+<P>
+
+I bought this really neat book,
+&quot;Windows NT/2000 Native API Reference&quot;
+by Gary Nebbett (ISBN 1-57870-199-6).
+Now I know how Win32 works
+on NT. To make my life easier, I've started creating a set of Native API
+classes. <I>WARNING!</I> I have no doubt that some of these API's will break in
+future versions of NT. However, they will solve a lot of problems today
+so use them at your own risk.<P>
+
+<B><A HREF="wfc_disable_privilege.htm">wfc_disable_privilege</A></B> - 
+Allows you to disable a specified privilege.<P>
+
+<B><A HREF="wfc_get_thread_name.htm">wfc_get_thread_name</A></B> - Retrieves the name of the thread as set
+by <A HREF="wfc_set_thread_name.htm">wfc_set_thread_name()</A>. Thanks go to
+<A HREF="mailto:tony@digitcom.net">Tony Lam</A> for suggesting this.<P>
+
+I've also added <CODE><B>wfc_undocumented_get_system_process_list()</B></CODE> which
+is a function that uses the undocumented
+<CODE><B>NtQuerySystemInformation</B></CODE> API in NTDLL.DLL to get a list
+of processes running on the system. This is the same API that Task Manager
+uses. You will also find my feeble attempt to gather together what is
+known about the Thread Information Block (TIB), also known as the
+Thread Envrionment Block (TEB) into the <CODE><B>WFC_THREAD_INFORMATION_BLOCK</B></CODE>
+data structure. If you know what this structure really looks like, let me
+know and I'll include it in a future release.
+
+<P>
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="0" CELLSPACING="0">
+<TR><TD BGCOLOR="#0" VALIGN="MIDDLE">
+<FONT FACE="Arial" SIZE="3" COLOR="#FFFFFF">
+&nbsp;<I><B>Modified</B></I></FONT>
+</TD></TR></TABLE>
+<P>
+
+<B><A HREF="CBitArray.htm">CBitArray</A></B> - Added methods
+to enumerate ones and zeroes. This allows you to quickly find
+the next 1 or 0 in the array. Also fixed a bug when copying
+a CByteArray. Added a method to copy CDWordArray's. I added this
+feature because I need to keep track of millions of booleans.
+A bit array was perfect. Then I slammed into the wall of trying
+to find out where the next true boolean was.<P>
+
+<B><A HREF="CFileDirectory.htm">CFileDirectory</A></B> - Added
+the capability to set a wildcard so you don't have to enumerate
+<I>all</I> files in the directory. Also added passing the
+<CODE>WIN32_FIND_DATA</CODE> structure to the callback function. And added
+the ability to optionally send directories to the callback.<P>
+
+<B><A HREF="CFileTime.htm">CFileTime</A></B> - Added more methods
+to copy other data types, get the current time, and copy to MS-DOS time.<P>
+
+<B><A HREF="CMemoryFile.htm">CMemoryFile</A></B> - Added a
+<B>FromHandle()</B> method so you can quickly remap portions
+of a file without having to close and reopen the file. This
+eliminates the overhead of repeatedly hitting the filesystem
+to remap a file.<P>
+
+<B>CString</B> - Thanks to 
+<A HREF="mailto:tony@digitcom.net">Tony Lam</A>, the Right() method now works
+the same as Microsoft's CString. My CString is present only in
+STL builds.
+<P>
+
+<B>
+
+<HR>
+<A HREF="release47.htm">Release 47 Notes</A><P>
+<ADDRESS>Sam Blackburn</ADDRESS>
+<ADDRESS><A HREF="mailto:wfc@pobox.com">wfc@pobox.com</A></ADDRESS>
+<A HREF="../index.html" TARGET="_parent">Return to Sam's Home Page</A>
+
+</BODY>
+
+</HTML>

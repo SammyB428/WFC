@@ -1,0 +1,34 @@
+<html>
+<body>
+<pre>
+<h1>Build Log</h1>
+<h3>
+--------------------Configuration: CPP2HTML - Win32 Debug--------------------
+</h3>
+<h3>Command Lines</h3>
+Creating temporary file "C:\TEMP\RSP10F.tmp" with contents
+[
+/nologo /MDd /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /D "_AFXDLL" /Fp"Debug/CPP2HTML.pch" /YX /Fo"Debug/" /Fd"Debug/" /FD /GZ  /c 
+"F:\WFC\Sample\CPP2HTML\main.cpp"
+]
+Creating command line "cl.exe @C:\TEMP\RSP10F.tmp" 
+Creating command line "link.exe /nologo /subsystem:console /incremental:yes /pdb:"Debug/CPP2HTML.pdb" /debug /machine:I386 /out:"Debug/CPP2HTML.exe" /pdbtype:sept  .\Debug\main.obj "
+<h3>Output Window</h3>
+Compiling...
+main.cpp
+WFC Release 50.
+Patch 1.
+Using MFC in a Shared DLL.
+Linking with DebugBuildOfWFC.lib
+Spawn Time 0:38.5
+Linking...
+Spawn Time 0:05.3
+
+
+
+<h3>Results</h3>
+CPP2HTML.exe - 0 error(s), 0 warning(s)
+Build Time 0:47.2
+</pre>
+</body>
+</html>

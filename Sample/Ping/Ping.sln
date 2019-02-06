@@ -1,0 +1,28 @@
+Microsoft Visual Studio Solution File, Format Version 7.00
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Ping", "Ping.vcproj", "{9434E2BE-DEFE-418B-9397-22D52A11187F}"
+EndProject
+Global
+	GlobalSection(SourceCodeControl) = preSolution
+		SccNumberOfProjects = 1
+		SccProjectUniqueName0 = Ping.vcproj
+		SccProjectName0 = \u0022$/Win32\u0020Foundation\u0020Classes/Samples/Ping\u0022,\u0020DRAAAAAA
+		SccLocalPath0 = .
+		SccProvider0 = MSSCCI:Microsoft\u0020Visual\u0020SourceSafe
+	EndGlobalSection
+	GlobalSection(SolutionConfiguration) = preSolution
+		ConfigName.0 = Debug
+		ConfigName.1 = Release
+	EndGlobalSection
+	GlobalSection(ProjectDependencies) = postSolution
+	EndGlobalSection
+	GlobalSection(ProjectConfiguration) = postSolution
+		{9434E2BE-DEFE-418B-9397-22D52A11187F}.Debug.ActiveCfg = Debug|Win32
+		{9434E2BE-DEFE-418B-9397-22D52A11187F}.Debug.Build.0 = Debug|Win32
+		{9434E2BE-DEFE-418B-9397-22D52A11187F}.Release.ActiveCfg = Release|Win32
+		{9434E2BE-DEFE-418B-9397-22D52A11187F}.Release.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+	EndGlobalSection
+	GlobalSection(ExtensibilityAddIns) = postSolution
+	EndGlobalSection
+EndGlobal
