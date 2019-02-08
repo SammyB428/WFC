@@ -59,8 +59,8 @@ class CSimpleSocketFile : public CSimpleSocket
 
       virtual ~CSimpleSocketFile();
 
-      virtual __checkReturn bool Open( void ) noexcept override;
-      virtual __checkReturn bool Open(_In_z_ LPCTSTR channel_name, _In_ const UINT port_number = 23 ) noexcept override;
+      __checkReturn bool Open( void ) noexcept override;
+      __checkReturn bool Open(_In_z_ LPCTSTR channel_name, _In_ const UINT port_number = 23 ) noexcept override;
 };
 
 #endif // SIMPLE_SOCKET_FILE_CLASS_HEADER

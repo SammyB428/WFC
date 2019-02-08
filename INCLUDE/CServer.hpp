@@ -81,7 +81,7 @@ class CServer : public CNetwork
       CServer( _In_opt_z_ LPCWSTR machine_name );
       virtual ~CServer();
 
-      virtual void  Close( void ) noexcept override;
+      void  Close( void ) noexcept override;
       virtual void  GetComment( _Out_ std::wstring& comment ) noexcept;
       virtual void  GetDomain(_Out_ std::wstring& domain ) noexcept;
       virtual void  GetName(_Out_ std::wstring& name ) noexcept;

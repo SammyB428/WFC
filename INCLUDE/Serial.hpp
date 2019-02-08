@@ -137,7 +137,7 @@ class CSerialFile : public CDummyFile
       virtual __checkReturn DWORD NumberOfBytesWaitingToBeRead( void ) noexcept;
       virtual __checkReturn DWORD NumberOfBytesWaitingToBeWritten( void ) noexcept;
       virtual __checkReturn bool  Open( void ) noexcept; // Name already filled, used in re-opening an existing session
-      virtual __checkReturn bool  Open( __in_z LPCTSTR channel_name, __in const UINT open_flags = 0 ) noexcept override;
+      __checkReturn bool  Open( __in_z LPCTSTR channel_name, __in const UINT open_flags = 0 ) noexcept override;
 
       virtual __checkReturn BOOL  Purge( __in const DWORD what_to_purge = purgeAll ) noexcept;
       virtual __checkReturn UINT  Read( __out_bcount( length ) void * buffer, __in const UINT length ) noexcept;
@@ -157,9 +157,9 @@ class CSerialFile : public CDummyFile
       virtual __checkReturn BOOL  TransmitCharacter( __in const char character_to_transmit ) noexcept;
       virtual __checkReturn BOOL  WaitFor( __inout DWORD& stuff_you_can_wait_for ) noexcept;
       virtual __checkReturn bool  WaitForString( __in const std::string& string_to_wait_for, __in const DWORD seconds = 5, __inout_opt std::string * what_was_read = nullptr ) noexcept;
-      virtual void  Write( __in const std::vector<uint8_t>& bytes ) noexcept override;
-      virtual void  Write( __in const std::string& data_to_write ) noexcept override;
-      virtual void  Write( __in_bcount( number_of_bytes ) const void *buffer, __in const UINT number_of_bytes ) noexcept override;
+      void  Write( __in const std::vector<uint8_t>& bytes ) noexcept override;
+      void  Write( __in const std::string& data_to_write ) noexcept override;
+      void  Write( __in_bcount( number_of_bytes ) const void *buffer, __in const UINT number_of_bytes ) noexcept override;
       virtual void  Write( __in const BYTE byte_to_write ) noexcept;
 
 #if defined( _DEBUG ) && ! defined( WFC_NO_DUMPING )

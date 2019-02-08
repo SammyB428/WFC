@@ -464,7 +464,7 @@ _Check_return_ bool CExtensibleMarkupLanguageEntities::Resolve( _In_z_ wchar_t c
          return( false );
       }
 
-      TCHAR number_string[ 12 ] = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }; // insanely large buffer
+      wchar_t number_string[ 12 ] = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }; // insanely large buffer
 
       std::size_t number_index = 0;
 
@@ -480,7 +480,7 @@ _Check_return_ bool CExtensibleMarkupLanguageEntities::Resolve( _In_z_ wchar_t c
 
          for ( auto const loop_index : Range( entity_length - 4 ) )
          {
-            if ( _istxdigit( entity[ loop_index + 3 ] ) == 0 ) // + 3 skips &#x
+            if ( iswdigit( entity[ loop_index + 3 ] ) == 0 ) // + 3 skips &#x
             {
                //WFCTRACEVAL( TEXT( "Ill-formed hexadecimal entity. Character is not a hexadecimal digit at index " ), (uint32_t) ( loop_index + 3 ) );
                text.clear();
@@ -512,7 +512,7 @@ _Check_return_ bool CExtensibleMarkupLanguageEntities::Resolve( _In_z_ wchar_t c
 
          wchar_t * stopped_at_address = nullptr;
 
-         translated_character = _tcstol( number_string, &stopped_at_address, 16 );
+         translated_character = wcstol( number_string, &stopped_at_address, 16 );
 
          text.push_back( (wchar_t) translated_character );
 
@@ -555,7 +555,7 @@ _Check_return_ bool CExtensibleMarkupLanguageEntities::Resolve( _In_z_ wchar_t c
 
          // number_string now contains the decimal number of the character
 
-         translated_character = _ttol( number_string );
+         translated_character = _wtol( number_string );
 
          text.push_back( (wchar_t) translated_character );
 

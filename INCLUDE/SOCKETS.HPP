@@ -222,7 +222,7 @@ class CSimpleSocket : public CDummyFile
       */
 
       virtual __checkReturn bool Open( void ) = 0;
-      virtual __checkReturn bool Open(_In_z_ LPCTSTR channel_name, _In_ const UINT port_number = 23 ) noexcept override = 0;
+      __checkReturn bool Open(_In_z_ LPCTSTR channel_name, _In_ const UINT port_number = 23 ) noexcept override = 0;
       virtual void Close( void ) noexcept;
       virtual __checkReturn DWORD GetOptions( void ) const noexcept;
       virtual __checkReturn BOOL IsBroken( void ) const noexcept;
@@ -240,8 +240,8 @@ class CSimpleSocket : public CDummyFile
 
 #endif // TF_DISCONNECT
 
-      virtual void Write( __in const std::string& data_to_write ) noexcept override;
-      virtual void Write( __in_bcount( number_of_bytes_to_write ) const VOID *buffer, __in const UINT number_of_bytes_to_write ) noexcept override;
+      void Write( __in const std::string& data_to_write ) noexcept override;
+      void Write( __in_bcount( number_of_bytes_to_write ) const VOID *buffer, __in const UINT number_of_bytes_to_write ) noexcept override;
 
       virtual __checkReturn UINT Read( __out_bcount(number_of_bytes_to_read) VOID * buffer, __in const UINT number_of_bytes_to_read ) noexcept;
       virtual __checkReturn bool Read( __out std::string& line_to_read ) noexcept;

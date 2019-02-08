@@ -543,7 +543,7 @@ class CMixerSourceSelector : public CMixerControlInstance
       virtual void  Copy( __in const CMixerSourceSelector& source ) noexcept;
       virtual __checkReturn DWORD GetSource( void ) const noexcept;
       virtual __checkReturn bool  IsSelected( __in const DWORD source ) noexcept;
-      virtual __checkReturn bool  Open( __in UINT_PTR device_id = 0, __in DWORD what_to_notify = 0, __in DWORD_PTR who_to_notify = 0, __in DWORD_PTR notify_data = 0 ) noexcept override;
+      __checkReturn bool  Open( __in UINT_PTR device_id = 0, __in DWORD what_to_notify = 0, __in DWORD_PTR who_to_notify = 0, __in DWORD_PTR notify_data = 0 ) noexcept override;
       virtual __checkReturn bool  Select( __in const DWORD source, __in bool selected = true ) noexcept;
       virtual __checkReturn bool  Unselect( __in const DWORD source ) noexcept;
 
@@ -662,7 +662,7 @@ class CMixerSource : public CMixerControlInstance
 
       virtual void Copy( __in const CMixerSource& source ) noexcept;
       virtual __checkReturn bool GetControl( __out CMixerVolumeControl& control ) noexcept;
-      virtual __checkReturn bool Open( __in UINT_PTR device_id = 0, __in DWORD what_to_notify = 0, __in DWORD_PTR who_to_notify = 0, __in DWORD_PTR notify_data = 0 ) noexcept override;
+      __checkReturn bool Open( __in UINT_PTR device_id = 0, __in DWORD what_to_notify = 0, __in DWORD_PTR who_to_notify = 0, __in DWORD_PTR notify_data = 0 ) noexcept override;
 
       // Operators
 
@@ -698,7 +698,7 @@ class CMixerDestination : public CMixerControlInstance
       virtual void Copy( __in const CMixerDestination& source ) noexcept;
       virtual __checkReturn bool GetSource( __in const DWORD CMixerLineSource, __out CMixerSource& source ) noexcept;
       virtual __checkReturn bool IsSourceSelected( __in const DWORD CMixerLineSource ) noexcept;
-      virtual __checkReturn bool Open( __in UINT_PTR device_id = 0, __in DWORD what_to_notify = 0, __in DWORD_PTR who_to_notify = 0, __in DWORD_PTR notify_data = 0 ) noexcept override;
+      __checkReturn bool Open( __in UINT_PTR device_id = 0, __in DWORD what_to_notify = 0, __in DWORD_PTR who_to_notify = 0, __in DWORD_PTR notify_data = 0 ) noexcept override;
       virtual __checkReturn bool SelectSource( __in const DWORD CMixerLineSource, __in bool new_selection = true ) noexcept;
       virtual __checkReturn bool UnselectSource( __in const DWORD CMixerLineSource ) noexcept;
 
@@ -739,7 +739,7 @@ class CMixerWaveIn : public CMixerDestination
       virtual __checkReturn DWORD GetMinimumGain( void ) const noexcept;
       virtual __checkReturn DWORD GetRecordingGain( void ) noexcept;
       virtual __checkReturn DWORD GetRightChannelRecordingGain( void ) noexcept;
-      virtual __checkReturn bool  Open( __in UINT_PTR device_id = 0, __in DWORD what_to_notify = 0, __in DWORD_PTR who_to_notify = 0, __in DWORD_PTR notify_data = 0 ) noexcept override;
+      __checkReturn bool  Open( __in UINT_PTR device_id = 0, __in DWORD what_to_notify = 0, __in DWORD_PTR who_to_notify = 0, __in DWORD_PTR notify_data = 0 ) noexcept override;
       virtual __checkReturn bool  SetLeftChannelRecordingGain( __in const DWORD new_level ) noexcept;
       virtual __checkReturn bool  SetRecordingGain( __in const DWORD new_level ) noexcept;
       virtual __checkReturn bool  SetRightChannelRecordingGain( __in const DWORD new_level ) noexcept;
@@ -784,7 +784,7 @@ class CMixerSpeakers : public CMixerDestination
       virtual __checkReturn DWORD GetVolume( void ) noexcept;
       virtual __checkReturn bool  IsMuted( void ) noexcept;
       virtual __checkReturn bool  Mute( __in const bool muting = true ) noexcept;
-      virtual __checkReturn bool  Open( __in UINT_PTR device_id = 0, __in DWORD what_to_notify = 0, __in DWORD_PTR who_to_notify = 0, __in DWORD_PTR notify_data = 0 ) noexcept override;
+      __checkReturn bool  Open( __in UINT_PTR device_id = 0, __in DWORD what_to_notify = 0, __in DWORD_PTR who_to_notify = 0, __in DWORD_PTR notify_data = 0 ) noexcept override;
       virtual __checkReturn bool  SetLeftChannelVolume( __in const DWORD new_level ) noexcept;
       virtual __checkReturn bool  SetRightChannelVolume( __in const DWORD new_level ) noexcept;
       virtual __checkReturn bool  SetVolume( __in const DWORD new_level ) noexcept;

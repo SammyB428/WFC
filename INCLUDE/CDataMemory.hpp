@@ -62,20 +62,20 @@ class CDataMemory : public CDataFile
       virtual void  Append( __in const std::vector<uint8_t>&  source ) noexcept;
       virtual void  Append( __in const CDataMemory& source ) noexcept;
       virtual void  AppendTo( __out std::vector<uint8_t>& data ) noexcept;
-      virtual void  Close( void ) noexcept override;
+      void  Close( void ) noexcept override;
       virtual void  Copy( __in_bcount( number_of_bytes ) const uint8_t * buffer, __in const std::size_t number_of_bytes ) noexcept;
       virtual void  Copy( __in const std::vector<uint8_t>& source ) noexcept;
       virtual void  Copy( __in const CDataMemory& source ) noexcept;
       virtual void  CopyTo( __out std::vector<uint8_t>& data ) noexcept;
       virtual void  Empty( void ) noexcept;
-      virtual void  Flush( void ) noexcept override;
+      void  Flush( void ) noexcept override;
       virtual __checkReturn const uint8_t * GetData( void ) const noexcept;
-      virtual __checkReturn uint64_t GetLength( void ) const noexcept override;
-      virtual __checkReturn uint64_t GetPosition( void ) const noexcept override;
-      virtual __checkReturn bool Open( __in_z LPCTSTR filename, __in const UINT mode ) noexcept override;
-      virtual __checkReturn UINT Read( __out_bcount( number_of_bytes_to_read ) void * buffer, __in const UINT number_of_bytes_to_read ) noexcept override;
-      virtual __checkReturn uint64_t Seek( __in const int64_t offset, __in const CFile64::SeekPosition from ) noexcept override;
-      virtual void  Write( __in_bcount( number_of_bytes_to_write ) const void * buffer, __in const UINT number_of_bytes_to_write ) noexcept override;
+      __checkReturn uint64_t GetLength( void ) const noexcept override;
+      __checkReturn uint64_t GetPosition( void ) const noexcept override;
+      __checkReturn bool Open( __in_z LPCTSTR filename, __in const UINT mode ) noexcept override;
+      __checkReturn UINT Read( __out_bcount( number_of_bytes_to_read ) void * buffer, __in const UINT number_of_bytes_to_read ) noexcept override;
+      __checkReturn uint64_t Seek( __in const int64_t offset, __in const CFile64::SeekPosition from ) noexcept override;
+      void  Write( __in_bcount( number_of_bytes_to_write ) const void * buffer, __in const UINT number_of_bytes_to_write ) noexcept override;
 
       virtual __checkReturn const CDataMemory& operator=(  __in const CDataMemory& source ) noexcept;
       virtual __checkReturn const CDataMemory& operator=(  __in const std::vector<uint8_t>&  source ) noexcept;

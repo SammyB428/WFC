@@ -160,8 +160,8 @@ class CNamedPipe : public CDummyFile
       ** API's to make life a little easier 
       */
 
-      virtual __checkReturn bool Open( __in_z LPCTSTR pipe_name, __in const UINT open_flags = PIPE_CLIENT_END ) noexcept override;
-      virtual void Close( void ) noexcept override;
+      __checkReturn bool Open( __in_z LPCTSTR pipe_name, __in const UINT open_flags = PIPE_CLIENT_END ) noexcept override;
+      void Close( void ) noexcept override;
 
 #if defined( _DEBUG ) && ! defined( WFC_NO_DUMPING )
 

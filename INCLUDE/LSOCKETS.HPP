@@ -69,8 +69,8 @@ class CListeningSocket : public CSimpleSocket
       virtual ~CListeningSocket();
 
       virtual void OnNewConnection( __in SOCKET socket_id, __in_z LPCTSTR host_name, __in_z LPCTSTR dotted_ip_address_string ) = 0; // Called by WaitForConnection
-      virtual __checkReturn bool Open( void ) noexcept override;
-      virtual __checkReturn bool Open( __in_z LPCTSTR channel_name, __in const UINT port_number = 23 ) noexcept override;
+      __checkReturn bool Open( void ) noexcept override;
+      __checkReturn bool Open( __in_z LPCTSTR channel_name, __in const UINT port_number = 23 ) noexcept override;
 
       virtual __checkReturn BOOL WaitForConnection( __in_z LPCTSTR p_name ) noexcept;
       virtual __checkReturn BOOL WaitForConnection( __in const int p_number ) noexcept;

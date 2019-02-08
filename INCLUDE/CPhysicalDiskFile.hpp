@@ -79,12 +79,12 @@ class CPhysicalDiskFile : public CFile64
       */
 
       // CFile64 overrides
-      virtual void  Close( void ) noexcept override;
-      virtual _Check_return_ uint64_t GetLength( void ) const noexcept override;
-      virtual _Check_return_ bool Open(_In_z_ LPCTSTR filename, _In_ const UINT open_flags) noexcept override;
-      virtual _Check_return_ UINT Read( __out_bcount( count ) void * buffer, _In_ const UINT count ) noexcept override;
-      virtual void  SetLength( __in const uint64_t length ) noexcept override;
-      virtual void  Write( __in_bcount( count ) const void * buffer, _In_ const UINT count ) noexcept override;
+      void  Close( void ) noexcept override;
+      _Check_return_ uint64_t GetLength( void ) const noexcept override;
+      _Check_return_ bool Open(_In_z_ LPCTSTR filename, _In_ const UINT open_flags) noexcept override;
+      _Check_return_ UINT Read( __out_bcount( count ) void * buffer, _In_ const UINT count ) noexcept override;
+      void  SetLength( __in const uint64_t length ) noexcept override;
+      void  Write( __in_bcount( count ) const void * buffer, _In_ const UINT count ) noexcept override;
 
       // New Methods
       virtual _Check_return_ DWORD GetMediaType( void ) const noexcept;

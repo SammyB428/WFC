@@ -65,10 +65,10 @@ class CTalkingSocket : public CSimpleSocket
 
       virtual ~CTalkingSocket();
 
-      virtual __checkReturn bool Open( void ) noexcept override;
+      __checkReturn bool Open( void ) noexcept override;
       virtual __checkReturn bool Open( __in const std::wstring& address, __in const std::wstring& port_name ) noexcept;
       virtual __checkReturn bool Open( __in const std::wstring& address, __in const short p_number ) noexcept;
-      virtual __checkReturn bool Open( __in_z LPCTSTR name, __in const UINT port_number = 23 ) noexcept override;
+      __checkReturn bool Open( __in_z LPCTSTR name, __in const UINT port_number = 23 ) noexcept override;
 
 #if defined( _DEBUG ) && ! defined( WFC_NO_DUMPING )
 

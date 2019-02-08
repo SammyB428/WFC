@@ -336,8 +336,8 @@ class CPing : public CSimpleSocket
       virtual ~CPing();
 
       virtual void ConvertErrorToString( __in const DWORD error_code, __out std::wstring& meaning ) const noexcept;
-      virtual __checkReturn bool Open( void ) noexcept override;
-      virtual __checkReturn bool Open( __in_z LPCTSTR channel_name, __in const UINT port_number = 23 ) noexcept override;
+      __checkReturn bool Open( void ) noexcept override;
+      __checkReturn bool Open( __in_z LPCTSTR channel_name, __in const UINT port_number = 23 ) noexcept override;
 
       virtual __checkReturn DWORD Ping( __in const std::wstring& name_or_address, __out_opt CPingResults * results_p = nullptr, __in short desired_time_to_live = 255 ) noexcept;
       virtual void SetText( __in_bcount(number_of_bytes ) const uint8_t * bytes, __in const size_t number_of_bytes ) noexcept;

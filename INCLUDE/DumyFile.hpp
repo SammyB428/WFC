@@ -79,11 +79,11 @@ class CDummyFile : public CFile64
       ** Interception functions (would blow up if we let CFile64 get them)
       */
 
-      virtual void  Abort( void ) noexcept override;
-      virtual void  Close( void ) noexcept override;
-      virtual void  Flush( void ) noexcept override;
-      virtual __checkReturn uint64_t GetLength( void ) const noexcept override;
-      virtual __checkReturn uint64_t GetPosition( void ) const noexcept override;
+      void  Abort( void ) noexcept override;
+      void  Close( void ) noexcept override;
+      void  Flush( void ) noexcept override;
+      __checkReturn uint64_t GetLength( void ) const noexcept override;
+      __checkReturn uint64_t GetPosition( void ) const noexcept override;
 
 #if ! defined( WFC_STL )
       virtual __checkReturn BOOL  GetStatus( CFileStatus& status ) noexcept;
@@ -92,18 +92,18 @@ class CDummyFile : public CFile64
 
       virtual void  Remove( __in_z LPCTSTR name ) noexcept;
       virtual void  Rename( __in_z LPCTSTR OldName, __in_z LPCTSTR NewName ) noexcept;
-      virtual __checkReturn uint64_t Seek( __in const int64_t offset, __in const CFile64::SeekPosition from ) noexcept override;
+      __checkReturn uint64_t Seek( __in const int64_t offset, __in const CFile64::SeekPosition from ) noexcept override;
 
-      virtual void SetLength( __in const uint64_t length ) noexcept override;
+      void SetLength( __in const uint64_t length ) noexcept override;
 
-      virtual __checkReturn bool LockRange( __in const uint64_t position, __in const uint64_t number_of_bytes_to_lock ) noexcept override;
-      virtual void UnlockRange( __in const uint64_t position, __in const uint64_t number_of_bytes_to_unlock ) noexcept override;
+      __checkReturn bool LockRange( __in const uint64_t position, __in const uint64_t number_of_bytes_to_lock ) noexcept override;
+      void UnlockRange( __in const uint64_t position, __in const uint64_t number_of_bytes_to_unlock ) noexcept override;
 
       /*
       ** A couple of utility functions to make life easier
       */
 
-      virtual void Write( __in const std::string& string_to_write  ) noexcept override;
+      void Write( __in const std::string& string_to_write  ) noexcept override;
       virtual void Write( __in const std::vector<uint8_t>& data_to_write ) noexcept;
 
       // Abstraction Additions
