@@ -134,7 +134,7 @@ void CWfcTrace::Output( _In_z_ LPCTSTR message ) const noexcept
 
       if ( output_string.length() > 510 )
       {
-         output_string.assign( output_string.substr( 0, 510 ) );
+         output_string.erase(510);
       }
 
       output_string.append( TEXT( "\n" ) );

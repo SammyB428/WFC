@@ -110,7 +110,7 @@ _Check_return_ bool PASCAL Win32FoundationClasses::wfc_delete_oldest_file( _In_z
         return( false );
     }
 
-    mask.assign( mask.substr( 0, mask.length() - 3 ) );
+    mask.erase(mask.length() - 3);
     mask.append( filename );
 
     return_value = DeleteFile( mask.c_str() );

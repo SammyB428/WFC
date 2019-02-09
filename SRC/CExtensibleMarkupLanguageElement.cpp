@@ -3148,7 +3148,7 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::m_ParseTag( _In_ std::wstr
 
             m_Tag.clear();
             //m_Contents.assign( m_Contents.substr( 0, location_of_character ) );
-            m_Contents.erase(std::cbegin(m_Contents) + location_of_character, std::cend(m_Contents));
+            m_Contents.erase(location_of_character);
             did_tag_contain_terminator = true;
 
             return( true );
@@ -3389,7 +3389,7 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::m_ParseTag( _In_ std::wstr
                         }
 
                         //tag_data.assign( tag_data.substr( 0, location_of_entity ) );
-                        tag_data.erase(std::cbegin(tag_data) + location_of_entity, std::cend(tag_data));
+                        tag_data.erase(location_of_entity);
                     }
                     else
                     {
@@ -3427,7 +3427,7 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::m_ParseTag( _In_ std::wstr
                         }
 
                         //tag_data.assign( tag_data.substr( 0, location_of_entity ) );
-                        tag_data.erase(std::cbegin(tag_data) + location_of_entity, std::cend(tag_data));
+                        tag_data.erase(location_of_entity);
                     }
 
                     // 2002-06-29
@@ -4393,7 +4393,7 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::m_TrimQuotesAndSpaces( _In
             if ( value.at( value.length() - 1 ) == quote_to_trim )
             {
                 return_value = true;
-                value.assign(value.substr( value.length() - 1 ));
+                value.erase(0, value.length() - 1 );
             }
         }
 

@@ -103,10 +103,10 @@ _Check_return_ uint32_t PASCAL Win32FoundationClasses::wfc_get_directory_usage_p
 
    // Strip off the "/*.*" from the directory name
 
-   mask.assign( mask.substr( 0, mask.length() - 4 ) );
+   mask.erase(mask.length() - 4);
 
-   ULARGE_INTEGER number_of_free_bytes_on_disk;
-   ULARGE_INTEGER total_number_of_bytes_on_disk;
+   ULARGE_INTEGER number_of_free_bytes_on_disk{ 0, 0 };
+   ULARGE_INTEGER total_number_of_bytes_on_disk{ 0, 0 };
 
    if ( GetDiskFreeSpaceExW( mask.c_str(),
                            &number_of_free_bytes_on_disk,

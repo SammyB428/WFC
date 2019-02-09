@@ -495,7 +495,7 @@ __checkReturn BOOL CNetworkUsers::CreateComputerAccount( __in_z_opt LPCTSTR comp
 
       if ( information.Password.length() > LM20_PWLEN )
       {
-         information.Password.assign( information.Password.substr( 0, LM20_PWLEN ) );
+         information.Password.erase(LM20_PWLEN);
       }
 
       /*
