@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 1995-2018, Samuel R. Blackburn
+** Copyright, 1995-2019, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -49,7 +49,7 @@ class CServiceNameAndStatusA : public _ENUM_SERVICE_STATUSA
 
       CServiceNameAndStatusA();
       virtual ~CServiceNameAndStatusA();
-      virtual void Copy( _In_ const _ENUM_SERVICE_STATUSA * source ) noexcept;
+      virtual void Copy( _In_ _ENUM_SERVICE_STATUSA const * source ) noexcept;
       virtual void Empty( void ) noexcept;
 
 #if defined( _DEBUG ) && ! defined( WFC_NO_DUMPING )
@@ -65,7 +65,7 @@ class CServiceNameAndStatusW : public _ENUM_SERVICE_STATUSW
 
       CServiceNameAndStatusW();
       virtual ~CServiceNameAndStatusW();
-      virtual void Copy(_In_ const _ENUM_SERVICE_STATUSW * source ) noexcept;
+      virtual void Copy(_In_ _ENUM_SERVICE_STATUSW const * source ) noexcept;
       virtual void Empty( void ) noexcept;
 
 #if defined( _DEBUG ) && ! defined( WFC_NO_DUMPING )
@@ -105,10 +105,10 @@ class CServiceControlManager
 
    public:
 
-       CServiceControlManager(_In_ const CServiceControlManager&) = delete;
-       CServiceControlManager& operator=(_In_ const CServiceControlManager&) = delete;
+       CServiceControlManager(_In_ CServiceControlManager const&) = delete;
+       CServiceControlManager& operator=(_In_ CServiceControlManager const&) = delete;
 
-       static inline constexpr const uint32_t QueryStatusPermissions(void) noexcept
+       static inline constexpr uint32_t const QueryStatusPermissions(void) noexcept
        {
            return(READ_CONTROL | SC_MANAGER_CONNECT | SC_MANAGER_ENUMERATE_SERVICE);
        }
@@ -117,38 +117,38 @@ class CServiceControlManager
       virtual ~CServiceControlManager();
 
       void Close( void ) noexcept;
-      __checkReturn bool  Continue( _In_z_ const wchar_t * service_name ) noexcept;
+      __checkReturn bool  Continue( _In_z_ wchar_t const * service_name ) noexcept;
       __checkReturn bool  EnableInteractiveServices( _In_ bool enable_interactive_services = true ) noexcept;
       __checkReturn bool  EnumerateStatus( _In_ uint32_t state = SERVICE_ACTIVE, _In_ uint32_t type = SERVICE_WIN32 ) noexcept;
-      __checkReturn bool  GetConfiguration(_In_z_ const wchar_t * service_name, __out CServiceConfiguration& configuration ) noexcept;
-      __checkReturn bool  GetDependencies(_In_z_ const wchar_t * service_name, __out std::vector<std::wstring>& dependencies ) noexcept;
-      __checkReturn bool  GetDisplayName(_In_z_ const wchar_t * real_name, __out std::wstring& friendly_name ) noexcept;
+      __checkReturn bool  GetConfiguration(_In_z_ wchar_t const * service_name, __out CServiceConfiguration& configuration ) noexcept;
+      __checkReturn bool  GetDependencies(_In_z_ wchar_t const * service_name, __out std::vector<std::wstring>& dependencies ) noexcept;
+      __checkReturn bool  GetDisplayName(_In_z_ wchar_t const * real_name, __out std::wstring& friendly_name ) noexcept;
       __checkReturn uint32_t GetErrorCode( void ) const noexcept;
                     void  GetErrorMessage( __inout std::wstring& error_message ) const noexcept;
       __checkReturn SC_HANDLE GetHandle( void ) const noexcept;
-      __checkReturn bool  GetKeyName(_In_z_ const wchar_t * friendly_name, __out std::wstring& real_name ) noexcept;
+      __checkReturn bool  GetKeyName(_In_z_ wchar_t const * friendly_name, __out std::wstring& real_name ) noexcept;
       __checkReturn bool  GetNext( __out CServiceNameAndStatus& status ) noexcept;
-      __checkReturn bool  Install(_In_z_ const wchar_t * service_name, _In_z_ const wchar_t * friendly_name, __in_z_opt const wchar_t * name_of_executable_file = nullptr ) noexcept;
+      __checkReturn bool  Install(_In_z_ wchar_t const * service_name, _In_z_ wchar_t const * friendly_name, __in_z_opt wchar_t const * name_of_executable_file = nullptr ) noexcept;
       __checkReturn bool  IsDatabaseLocked( __out std::wstring& who_locked_it, __out CTimeSpan& how_long_it_has_been_locked ) noexcept;
       __checkReturn bool  LockDatabase( void ) noexcept;
-      __checkReturn bool  Open( __in const uint32_t what_to_open  = SC_MANAGER_ALL_ACCESS,
-                          __in_z_opt const wchar_t * database_name = nullptr,
-                          __in_z_opt const wchar_t * machine_name  = nullptr ) noexcept;
-      __checkReturn bool  Pause(_In_z_ const wchar_t * service_name ) noexcept;
-      __checkReturn bool  Remove(_In_z_ const wchar_t * service_name ) noexcept;
-      __checkReturn bool  WaitForStop(_In_z_ const wchar_t * service_name) noexcept;
-      __checkReturn bool  SetConfiguration(_In_z_ const wchar_t * service_name,
-                                      _In_ const uint32_t   when_to_start           = SERVICE_NO_CHANGE,
-                                      _In_ const uint32_t   type_of_service         = SERVICE_NO_CHANGE,
-                                      _In_ const uint32_t   error_control           = SERVICE_NO_CHANGE,
-                                      __in_z_opt const wchar_t * name_of_executable_file = nullptr,
-                                      __in_z_opt const wchar_t * load_order_group        = nullptr,
-                                      __in_z_opt const wchar_t * dependencies            = nullptr,
-                                      __in_z_opt const wchar_t * start_name              = nullptr,
-                                      __in_z_opt const wchar_t * password                = nullptr,
-                                      __in_z_opt const wchar_t * display_name            = nullptr ) noexcept;
-      __checkReturn bool  Start(_In_z_ const wchar_t * service_name, _In_ const uint32_t service_argc = 0, __in_ecount_z_opt( service_argc ) const wchar_t * * service_argv = nullptr ) noexcept;
-      __checkReturn bool  Stop(_In_z_ const wchar_t * service_name ) noexcept;
+      __checkReturn bool  Open( __in uint32_t const what_to_open  = SC_MANAGER_ALL_ACCESS,
+                          __in_z_opt wchar_t const * database_name = nullptr,
+                          __in_z_opt wchar_t const * machine_name  = nullptr ) noexcept;
+      __checkReturn bool  Pause(_In_z_ wchar_t const * service_name ) noexcept;
+      __checkReturn bool  Remove(_In_z_ wchar_t const * service_name ) noexcept;
+      __checkReturn bool  WaitForStop(_In_z_ wchar_t const * service_name) noexcept;
+      __checkReturn bool  SetConfiguration(_In_z_ wchar_t const * service_name,
+                                      _In_ uint32_t const  when_to_start           = SERVICE_NO_CHANGE,
+                                      _In_ uint32_t const  type_of_service         = SERVICE_NO_CHANGE,
+                                      _In_ uint32_t const  error_control           = SERVICE_NO_CHANGE,
+                                      __in_z_opt wchar_t const * name_of_executable_file = nullptr,
+                                      __in_z_opt wchar_t const * load_order_group        = nullptr,
+                                      __in_z_opt wchar_t const * dependencies            = nullptr,
+                                      __in_z_opt wchar_t const * start_name              = nullptr,
+                                      __in_z_opt wchar_t const * password                = nullptr,
+                                      __in_z_opt wchar_t const * display_name            = nullptr ) noexcept;
+      __checkReturn bool  Start(_In_z_ wchar_t const * service_name, _In_ uint32_t const service_argc = 0, __in_ecount_z_opt( service_argc ) wchar_t const * * service_argv = nullptr ) noexcept;
+      __checkReturn bool  Stop(_In_z_ wchar_t const * service_name ) noexcept;
       __checkReturn bool  UnlockDatabase( void ) noexcept;
 };
 

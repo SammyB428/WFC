@@ -79,6 +79,7 @@ void CServiceControlManager::Close( void ) noexcept
         if ( ::CloseServiceHandle( m_ManagerHandle ) == FALSE )
         {
             m_ErrorCode = ::GetLastError();
+            wfc_get_error_string(m_ErrorCode, m_ErrorMessage);
             //WFCTRACEERROR( m_ErrorCode );
         }
 
@@ -94,12 +95,14 @@ __checkReturn bool CServiceControlManager::Continue( _In_z_ const wchar_t * serv
     if ( m_ManagerHandle == static_cast< SC_HANDLE >( NULL ) )
     {
         m_ErrorCode = ERROR_INVALID_HANDLE;
+        wfc_get_error_string(m_ErrorCode, m_ErrorMessage);
         return( false );
     }
 
     if ( service_name == nullptr )
     {
         m_ErrorCode = ERROR_INVALID_HANDLE;
+        wfc_get_error_string(m_ErrorCode, m_ErrorMessage);
         return( false );
     }
 
@@ -112,6 +115,7 @@ __checkReturn bool CServiceControlManager::Continue( _In_z_ const wchar_t * serv
         if ( service_handle == static_cast< SC_HANDLE >( NULL ) )
         {
             m_ErrorCode = ::GetLastError();
+            wfc_get_error_string(m_ErrorCode, m_ErrorMessage);
             //WFCTRACEERROR( m_ErrorCode );
             return( false );
         }
@@ -125,6 +129,7 @@ __checkReturn bool CServiceControlManager::Continue( _In_z_ const wchar_t * serv
         if ( return_value == FALSE )
         {
             m_ErrorCode = ::GetLastError();
+            wfc_get_error_string(m_ErrorCode, m_ErrorMessage);
             //WFCTRACEERROR( m_ErrorCode );
         }
         else
@@ -145,6 +150,7 @@ __checkReturn bool CServiceControlManager::Continue( _In_z_ const wchar_t * serv
     WFC_CATCH_ALL
     {
         m_ErrorCode = ERROR_EXCEPTION_IN_SERVICE;
+        wfc_get_error_string(m_ErrorCode, m_ErrorMessage);
         return( false );
     }
     WFC_END_CATCH_ALL
@@ -170,6 +176,7 @@ __checkReturn bool CServiceControlManager::EnableInteractiveServices( _In_ bool 
     if ( return_value == false )
     {
         m_ErrorCode = registry.GetErrorCode();
+        wfc_get_error_string(m_ErrorCode, m_ErrorMessage);
         return( false );
     }
 
@@ -178,6 +185,7 @@ __checkReturn bool CServiceControlManager::EnableInteractiveServices( _In_ bool 
     if ( return_value == false )
     {
         m_ErrorCode = registry.GetErrorCode();
+        wfc_get_error_string(m_ErrorCode, m_ErrorMessage);
         return( false );
     }
 
@@ -197,6 +205,7 @@ __checkReturn bool CServiceControlManager::EnableInteractiveServices( _In_ bool 
     if ( registry.SetValue( TEXT( "NoInteractiveServices" ), no_interactive_services ) == FALSE )
     {
         m_ErrorCode = registry.GetErrorCode();
+        wfc_get_error_string(m_ErrorCode, m_ErrorMessage);
         return( false );
     }
 
@@ -214,6 +223,7 @@ _Check_return_ bool CServiceControlManager::EnumerateStatus( _In_ uint32_t state
     if ( m_ManagerHandle == static_cast< SC_HANDLE >( NULL ) )
     {
         m_ErrorCode = ERROR_INVALID_HANDLE;
+        wfc_get_error_string(m_ErrorCode, m_ErrorMessage);
         return( false );
     }
 
@@ -227,6 +237,7 @@ _Check_return_ bool CServiceControlManager::EnumerateStatus( _In_ uint32_t state
         {
             m_BufferSize = 0;
             m_ErrorCode = ::GetLastError();
+            wfc_get_error_string(m_ErrorCode, m_ErrorMessage);
             //WFCTRACEERROR( m_ErrorCode );
             return( false );
         }
@@ -252,6 +263,7 @@ _Check_return_ bool CServiceControlManager::EnumerateStatus( _In_ uint32_t state
     }
 
     m_ErrorCode = ::GetLastError();
+    wfc_get_error_string(m_ErrorCode, m_ErrorMessage);
     //WFCTRACEERROR( m_ErrorCode );
 
     if ( m_ErrorCode == ERROR_MORE_DATA )
@@ -270,6 +282,7 @@ _Check_return_ bool CServiceControlManager::EnumerateStatus( _In_ uint32_t state
         else
         {
             m_ErrorCode = ::GetLastError();
+            wfc_get_error_string(m_ErrorCode, m_ErrorMessage);
             return( false );
         }
 
@@ -294,6 +307,7 @@ _Check_return_ bool CServiceControlManager::EnumerateStatus( _In_ uint32_t state
         else
         {
             m_ErrorCode = ::GetLastError();
+            wfc_get_error_string(m_ErrorCode, m_ErrorMessage);
             //WFCTRACEERROR( m_ErrorCode );
 
             m_CurrentEntryNumber = 0;
@@ -316,6 +330,7 @@ __checkReturn bool CServiceControlManager::GetConfiguration( __in_z const wchar_
     if ( service_name == nullptr )
     {
         m_ErrorCode = ERROR_INVALID_PARAMETER;
+        wfc_get_error_string(m_ErrorCode, m_ErrorMessage);
         return( false );
     }
 
@@ -328,6 +343,7 @@ __checkReturn bool CServiceControlManager::GetConfiguration( __in_z const wchar_
         if ( m_ManagerHandle == static_cast< SC_HANDLE >( NULL ) )
         {
             m_ErrorCode = ERROR_INVALID_HANDLE;
+            wfc_get_error_string(m_ErrorCode, m_ErrorMessage);
             return( false );
         }
 
@@ -338,6 +354,7 @@ __checkReturn bool CServiceControlManager::GetConfiguration( __in_z const wchar_
         if ( service_handle == static_cast< SC_HANDLE >( NULL ) )
         {
             m_ErrorCode = ::GetLastError();
+            wfc_get_error_string(m_ErrorCode, m_ErrorMessage);
             //WFCTRACEERROR( m_ErrorCode );
             return( false );
         }
@@ -354,6 +371,7 @@ __checkReturn bool CServiceControlManager::GetConfiguration( __in_z const wchar_
         if ( return_value == FALSE )
         {
             m_ErrorCode = ::GetLastError();
+            wfc_get_error_string(m_ErrorCode, m_ErrorMessage);
             //WFCTRACEERROR( m_ErrorCode );
 
             if ( m_ErrorCode == ERROR_INSUFFICIENT_BUFFER )
@@ -381,6 +399,7 @@ __checkReturn bool CServiceControlManager::GetConfiguration( __in_z const wchar_
     WFC_CATCH_ALL
     {
         m_ErrorCode = ERROR_EXCEPTION_IN_SERVICE;
+        wfc_get_error_string(m_ErrorCode, m_ErrorMessage);
         return( false );
     }
     WFC_END_CATCH_ALL
@@ -402,6 +421,7 @@ _Check_return_ bool CServiceControlManager::GetDependencies( _In_z_ const wchar_
         if ( service_handle == static_cast< SC_HANDLE >( NULL ) )
         {
             m_ErrorCode = ::GetLastError();
+            wfc_get_error_string(m_ErrorCode, m_ErrorMessage);
             //WFCTRACEERROR( m_ErrorCode );
             return( false );
         }
@@ -441,6 +461,7 @@ _Check_return_ bool CServiceControlManager::GetDependencies( _In_z_ const wchar_
     WFC_CATCH_ALL
     {
         m_ErrorCode = ERROR_EXCEPTION_IN_SERVICE;
+        wfc_get_error_string(m_ErrorCode, m_ErrorMessage);
         return( false );
     }
     WFC_END_CATCH_ALL
@@ -473,6 +494,7 @@ _Check_return_ bool CServiceControlManager::GetDisplayName( _In_z_ const wchar_t
             else
             {
                 m_ErrorCode = ::GetLastError();
+                wfc_get_error_string(m_ErrorCode, m_ErrorMessage);
                 //WFCTRACEERROR( m_ErrorCode );
             }
 
@@ -486,6 +508,7 @@ _Check_return_ bool CServiceControlManager::GetDisplayName( _In_z_ const wchar_t
     WFC_CATCH_ALL
     {
         m_ErrorCode = ERROR_EXCEPTION_IN_SERVICE;
+        wfc_get_error_string(m_ErrorCode, m_ErrorMessage);
         return( false );
     }
     WFC_END_CATCH_ALL
@@ -530,6 +553,7 @@ __checkReturn bool CServiceControlManager::GetKeyName( __in_z const wchar_t * di
         else
         {
             m_ErrorCode = ::GetLastError();
+            wfc_get_error_string(m_ErrorCode, m_ErrorMessage);
             //WFCTRACEERROR( m_ErrorCode );
         }
 
@@ -543,6 +567,7 @@ __checkReturn bool CServiceControlManager::GetKeyName( __in_z const wchar_t * di
     WFC_CATCH_ALL
     {
         m_ErrorCode = ERROR_EXCEPTION_IN_SERVICE;
+        wfc_get_error_string(m_ErrorCode, m_ErrorMessage);
         return( FALSE );
     }
     WFC_END_CATCH_ALL
@@ -574,6 +599,7 @@ __checkReturn bool CServiceControlManager::Install( __in_z const wchar_t * servi
     if ( service_name  == nullptr || friendly_name == nullptr )
     {
         m_ErrorCode = ERROR_INVALID_PARAMETER;
+        wfc_get_error_string(m_ErrorCode, m_ErrorMessage);
         return( false );
     }
 
@@ -608,7 +634,8 @@ __checkReturn bool CServiceControlManager::Install( __in_z const wchar_t * servi
         if ( normalized_executable_name.empty() == true )
         {
             m_ErrorCode = ERROR_INVALID_PARAMETER;
-            return( FALSE );
+            wfc_get_error_string(m_ErrorCode, m_ErrorMessage);
+            return( false );
         }
 
         if ( normalized_executable_name.find( L" " ) != std::wstring::npos )
@@ -634,6 +661,7 @@ __checkReturn bool CServiceControlManager::Install( __in_z const wchar_t * servi
         if ( m_ManagerHandle == static_cast< SC_HANDLE >( NULL ) )
         {
             m_ErrorCode = ERROR_INVALID_HANDLE;
+            wfc_get_error_string(m_ErrorCode, m_ErrorMessage);
             return( false );
         }
 
@@ -684,6 +712,7 @@ __checkReturn bool CServiceControlManager::Install( __in_z const wchar_t * servi
         if ( service_handle == static_cast< SC_HANDLE >( NULL ) )
         {
             m_ErrorCode = ::GetLastError();
+            wfc_get_error_string(m_ErrorCode, m_ErrorMessage);
             //WFCTRACEERROR( m_ErrorCode );
 
             if ( event_log != nullptr )
@@ -743,6 +772,7 @@ __checkReturn bool CServiceControlManager::Install( __in_z const wchar_t * servi
     WFC_CATCH_ALL
     {
         m_ErrorCode = ERROR_EXCEPTION_IN_SERVICE;
+        wfc_get_error_string(m_ErrorCode, m_ErrorMessage);
         return( false );
     }
     WFC_END_CATCH_ALL
@@ -814,6 +844,7 @@ _Check_return_ bool CServiceControlManager::LockDatabase( void ) noexcept
     if ( m_DatabaseLockHandle == static_cast< SC_LOCK >( NULL ) )
     {
         m_ErrorCode = ::GetLastError();
+        wfc_get_error_string(m_ErrorCode, m_ErrorMessage);
 
         //WFCTRACEERROR( m_ErrorCode );
 
@@ -867,6 +898,7 @@ __checkReturn bool CServiceControlManager::Open( __in const uint32_t what_to_ope
         if ( m_ManagerHandle == static_cast< SC_HANDLE >( NULL ) )
         {
             m_ErrorCode = ::GetLastError();
+            wfc_get_error_string(m_ErrorCode, m_ErrorMessage);
             //WFCTRACEERROR( m_ErrorCode );
             return( false );
         }
@@ -878,6 +910,7 @@ __checkReturn bool CServiceControlManager::Open( __in const uint32_t what_to_ope
     WFC_CATCH_ALL
     {
         m_ErrorCode = ERROR_EXCEPTION_IN_SERVICE;
+        wfc_get_error_string(m_ErrorCode, m_ErrorMessage);
         return( false );
     }
     WFC_END_CATCH_ALL
@@ -891,6 +924,7 @@ __checkReturn bool CServiceControlManager::Pause( __in_z const wchar_t * service
     if ( service_name == nullptr )
     {
         m_ErrorCode = ERROR_INVALID_PARAMETER;
+        wfc_get_error_string(m_ErrorCode, m_ErrorMessage);
         return( false );
     }
 
@@ -903,6 +937,7 @@ __checkReturn bool CServiceControlManager::Pause( __in_z const wchar_t * service
         if ( m_ManagerHandle == static_cast< SC_HANDLE >( NULL ) )
         {
             m_ErrorCode = ERROR_INVALID_HANDLE;
+            wfc_get_error_string(m_ErrorCode, m_ErrorMessage);
             return( false );
         }
 
@@ -911,6 +946,7 @@ __checkReturn bool CServiceControlManager::Pause( __in_z const wchar_t * service
         if ( service_handle == static_cast< SC_HANDLE >( NULL ) )
         {
             m_ErrorCode = ::GetLastError();
+            wfc_get_error_string(m_ErrorCode, m_ErrorMessage);
             //WFCTRACEERROR( m_ErrorCode );
             return( false );
         }
@@ -924,6 +960,7 @@ __checkReturn bool CServiceControlManager::Pause( __in_z const wchar_t * service
         if ( return_value == FALSE )
         {
             m_ErrorCode = ::GetLastError();
+            wfc_get_error_string(m_ErrorCode, m_ErrorMessage);
             //WFCTRACEERROR( m_ErrorCode );
         }
         else
@@ -938,7 +975,8 @@ __checkReturn bool CServiceControlManager::Pause( __in_z const wchar_t * service
     WFC_CATCH_ALL
     {
         m_ErrorCode = ERROR_EXCEPTION_IN_SERVICE;
-        return( FALSE );
+        wfc_get_error_string(m_ErrorCode, m_ErrorMessage);
+        return( false );
     }
     WFC_END_CATCH_ALL
 }
@@ -950,7 +988,7 @@ void CServiceControlManager::GetErrorMessage(__inout std::wstring& error_message
     error_message.assign(m_ErrorMessage);
 }
 
-__checkReturn bool CServiceControlManager::Remove( __in_z const wchar_t * service_name ) noexcept
+__checkReturn bool CServiceControlManager::Remove( __in_z wchar_t const * service_name ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
     WFC_VALIDATE_POINTER( service_name );
@@ -958,6 +996,7 @@ __checkReturn bool CServiceControlManager::Remove( __in_z const wchar_t * servic
     if ( service_name == nullptr )
     {
         m_ErrorCode = ERROR_INVALID_PARAMETER;
+        wfc_get_error_string(m_ErrorCode, m_ErrorMessage);
         return( false );
     }
 
@@ -970,6 +1009,7 @@ __checkReturn bool CServiceControlManager::Remove( __in_z const wchar_t * servic
         if ( m_ManagerHandle == static_cast< SC_HANDLE >( NULL ) )
         {
             m_ErrorCode = ERROR_INVALID_HANDLE;
+            wfc_get_error_string(m_ErrorCode, m_ErrorMessage);
             return( false );
         }
 
@@ -978,8 +1018,7 @@ __checkReturn bool CServiceControlManager::Remove( __in_z const wchar_t * servic
         if ( service_handle == static_cast< SC_HANDLE >( NULL ) )
         {
             m_ErrorCode = ::GetLastError();
-            //WFCTRACEERROR(m_ErrorCode);
-            m_ErrorMessage.assign(L"Can't open service control manager for all access.");
+            wfc_get_error_string(m_ErrorCode, m_ErrorMessage);
             return( false );
         }
 
@@ -1010,6 +1049,7 @@ __checkReturn bool CServiceControlManager::Remove( __in_z const wchar_t * servic
         if ( return_value == FALSE )
         {
             m_ErrorCode = ::GetLastError();
+            wfc_get_error_string(m_ErrorCode, m_ErrorMessage);
             //WFCTRACEERROR( m_ErrorCode );
 
             /*
@@ -1085,6 +1125,7 @@ __checkReturn bool CServiceControlManager::SetConfiguration( __in_z const wchar_
     if ( service_name == nullptr )
     {
         m_ErrorCode = ERROR_INVALID_PARAMETER;
+        wfc_get_error_string(m_ErrorCode, m_ErrorMessage);
         return( false );
     }
 
@@ -1093,6 +1134,7 @@ __checkReturn bool CServiceControlManager::SetConfiguration( __in_z const wchar_
     if ( m_ManagerHandle == static_cast< SC_HANDLE >( NULL ) )
     {
         m_ErrorCode = ERROR_INVALID_HANDLE;
+        wfc_get_error_string(m_ErrorCode, m_ErrorMessage);
         return( false );
     }
 
@@ -1107,6 +1149,7 @@ __checkReturn bool CServiceControlManager::SetConfiguration( __in_z const wchar_
         if ( service_handle == static_cast< SC_HANDLE >( NULL ) )
         {
             m_ErrorCode = ::GetLastError();
+            wfc_get_error_string(m_ErrorCode, m_ErrorMessage);
             //WFCTRACEERROR( m_ErrorCode );
             return( false );
         }
@@ -1168,6 +1211,7 @@ __checkReturn bool CServiceControlManager::SetConfiguration( __in_z const wchar_
             if ( return_value == FALSE )
             {
                 m_ErrorCode = ::GetLastError();
+                wfc_get_error_string(m_ErrorCode, m_ErrorMessage);
                 //WFCTRACEERROR( m_ErrorCode );
             }
             else
@@ -1191,6 +1235,7 @@ __checkReturn bool CServiceControlManager::SetConfiguration( __in_z const wchar_
     WFC_CATCH_ALL
     {
         m_ErrorCode = ERROR_EXCEPTION_IN_SERVICE;
+        wfc_get_error_string(m_ErrorCode, m_ErrorMessage);
         return( false );
     }
     WFC_END_CATCH_ALL
@@ -1204,6 +1249,7 @@ __checkReturn bool CServiceControlManager::Start( __in_z const wchar_t * service
     if ( service_name == nullptr )
     {
         m_ErrorCode = ERROR_INVALID_PARAMETER;
+        wfc_get_error_string(m_ErrorCode, m_ErrorMessage);
         return( false );
     }
 
@@ -1216,7 +1262,8 @@ __checkReturn bool CServiceControlManager::Start( __in_z const wchar_t * service
         if ( m_ManagerHandle == static_cast< SC_HANDLE >( NULL ) )
         {
             m_ErrorCode = ERROR_INVALID_HANDLE;
-            return( FALSE );
+            wfc_get_error_string(m_ErrorCode, m_ErrorMessage);
+            return( false );
         }
 
         SC_HANDLE service_handle = ::OpenServiceW( m_ManagerHandle, service_name, SERVICE_START );
@@ -1224,8 +1271,9 @@ __checkReturn bool CServiceControlManager::Start( __in_z const wchar_t * service
         if ( service_handle == static_cast< SC_HANDLE >( NULL ) )
         {
             m_ErrorCode = ::GetLastError();
+            wfc_get_error_string(m_ErrorCode, m_ErrorMessage);
             //WFCTRACEERROR( m_ErrorCode );
-            return( FALSE );
+            return( false );
         }
 
         BOOL return_value = ::StartService( service_handle, service_argc, service_argv );
@@ -1233,6 +1281,7 @@ __checkReturn bool CServiceControlManager::Start( __in_z const wchar_t * service
         if ( return_value == FALSE )
         {
             m_ErrorCode = ::GetLastError();
+            wfc_get_error_string(m_ErrorCode, m_ErrorMessage);
             //WFCTRACEERROR( m_ErrorCode );
         }
         else
@@ -1242,12 +1291,13 @@ __checkReturn bool CServiceControlManager::Start( __in_z const wchar_t * service
 
         ::CloseServiceHandle( service_handle );
 
-        return( return_value );
+        return( return_value == FALSE ? false : true);
     }
     WFC_CATCH_ALL
     {
         m_ErrorCode = ERROR_EXCEPTION_IN_SERVICE;
-        return( FALSE );
+        wfc_get_error_string(m_ErrorCode, m_ErrorMessage);
+        return( false );
     }
     WFC_END_CATCH_ALL
 }
@@ -1260,6 +1310,7 @@ __checkReturn bool CServiceControlManager::Stop( _In_z_ const wchar_t * service_
     if ( service_name == nullptr )
     {
         m_ErrorCode = ERROR_INVALID_PARAMETER;
+        wfc_get_error_string(m_ErrorCode, m_ErrorMessage);
         return( false );
     }
 
@@ -1272,6 +1323,7 @@ __checkReturn bool CServiceControlManager::Stop( _In_z_ const wchar_t * service_
         if ( m_ManagerHandle == static_cast< SC_HANDLE >( NULL ) )
         {
             m_ErrorCode = ERROR_INVALID_HANDLE;
+            wfc_get_error_string(m_ErrorCode, m_ErrorMessage);
             return( false );
         }
 
@@ -1284,6 +1336,7 @@ __checkReturn bool CServiceControlManager::Stop( _In_z_ const wchar_t * service_
         if ( service_handle == static_cast< SC_HANDLE >( NULL ) )
         {
             m_ErrorCode = ::GetLastError();
+            wfc_get_error_string(m_ErrorCode, m_ErrorMessage);
             //WFCTRACEERROR( m_ErrorCode );
             return( false );
         }
@@ -1297,6 +1350,7 @@ __checkReturn bool CServiceControlManager::Stop( _In_z_ const wchar_t * service_
         if ( return_value == FALSE )
         {
             m_ErrorCode = ::GetLastError();
+            wfc_get_error_string(m_ErrorCode, m_ErrorMessage);
             //WFCTRACEERROR( m_ErrorCode );
             ::CloseServiceHandle( service_handle );
 
@@ -1343,6 +1397,7 @@ __checkReturn bool CServiceControlManager::Stop( _In_z_ const wchar_t * service_
     WFC_CATCH_ALL
     {
         m_ErrorCode = ERROR_EXCEPTION_IN_SERVICE;
+        wfc_get_error_string(m_ErrorCode, m_ErrorMessage);
         return( false );
     }
     WFC_END_CATCH_ALL
@@ -1365,6 +1420,7 @@ __checkReturn bool CServiceControlManager::UnlockDatabase( void ) noexcept
     if ( return_value == FALSE )
     {
         m_ErrorCode = ::GetLastError();
+        wfc_get_error_string(m_ErrorCode, m_ErrorMessage);
         //WFCTRACEERROR( m_ErrorCode );
     }
     else
@@ -1394,6 +1450,7 @@ _Check_return_ bool CServiceControlManager::WaitForStop(_In_z_ const wchar_t * s
     if (service_name == nullptr)
     {
         m_ErrorCode = ERROR_INVALID_PARAMETER;
+        wfc_get_error_string(m_ErrorCode, m_ErrorMessage);
         return(false);
     }
 
@@ -1406,6 +1463,7 @@ _Check_return_ bool CServiceControlManager::WaitForStop(_In_z_ const wchar_t * s
         if (m_ManagerHandle == static_cast<SC_HANDLE>(NULL))
         {
             m_ErrorCode = ERROR_INVALID_HANDLE;
+            wfc_get_error_string(m_ErrorCode, m_ErrorMessage);
             return(false);
         }
 
@@ -1414,6 +1472,7 @@ _Check_return_ bool CServiceControlManager::WaitForStop(_In_z_ const wchar_t * s
         if (service_handle == static_cast<SC_HANDLE>(NULL))
         {
             m_ErrorCode = ::GetLastError();
+            wfc_get_error_string(m_ErrorCode, m_ErrorMessage);
             //WFCTRACEERROR( m_ErrorCode );
             return(false);
         }
@@ -1454,6 +1513,10 @@ _Check_return_ bool CServiceControlManager::WaitForStop(_In_z_ const wchar_t * s
             wfc_close_handle(event_handle);
             return(false);
         }
+        else
+        {
+            wfc_get_error_string(m_ErrorCode, m_ErrorMessage);
+        }
 
         WaitForSingleObjectEx(event_handle, INFINITE, TRUE);
         wfc_close_handle(event_handle);
@@ -1463,6 +1526,7 @@ _Check_return_ bool CServiceControlManager::WaitForStop(_In_z_ const wchar_t * s
         WFC_CATCH_ALL
     {
         m_ErrorCode = ERROR_EXCEPTION_IN_SERVICE;
+        wfc_get_error_string(m_ErrorCode, m_ErrorMessage);
         return(false);
     }
         WFC_END_CATCH_ALL
