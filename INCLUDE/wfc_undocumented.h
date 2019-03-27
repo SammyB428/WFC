@@ -124,14 +124,14 @@ struct WFC_VM_COUNTERS
    DWORD PeakPagefileUsage;
 };
 
-inline _Check_return_ const ::SYSTEM_PROCESS_INFORMATION * GetNext( _In_ const ::SYSTEM_PROCESS_INFORMATION * information_p ) noexcept
+inline _Check_return_ const ::SYSTEM_PROCESS_INFORMATION * GetNext( _In_ ::SYSTEM_PROCESS_INFORMATION const * information_p ) noexcept
 {
     if ( information_p == nullptr || information_p->NextEntryOffset == 0 )
     {
         return( nullptr );
     }
 
-    const ::SYSTEM_PROCESS_INFORMATION * return_value = reinterpret_cast<const ::SYSTEM_PROCESS_INFORMATION *> ( reinterpret_cast<const uint64_t>(information_p) + static_cast<uint64_t>(information_p->NextEntryOffset) );
+    auto return_value = reinterpret_cast<::SYSTEM_PROCESS_INFORMATION const *> ( reinterpret_cast<uint64_t const>(information_p) + static_cast<uint64_t>(information_p->NextEntryOffset) );
 
     return( return_value );
 }

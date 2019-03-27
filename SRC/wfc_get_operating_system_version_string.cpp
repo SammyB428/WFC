@@ -154,15 +154,15 @@ struct BASE_BOARD_INFORMATION
 #define SYSTEM_MANAGEMENT_SYSTEM_INFORMATION (1)
 #define SYSTEM_MANAGEMENT_BIOS_BASE_BOARD_INFORMATION (2)
 
-inline static const _Check_return_ DEVICE_MANAGEMENT_INFORMATION_HEADER * __get_smbios_info( _In_ const uint8_t desired_type, _In_reads_bytes_( buffer_size ) const uint8_t * buffer, _In_ const size_t buffer_size ) noexcept
+inline static const _Check_return_ DEVICE_MANAGEMENT_INFORMATION_HEADER * __get_smbios_info( _In_ uint8_t const desired_type, _In_reads_bytes_( buffer_size ) uint8_t const * buffer, _In_ size_t const buffer_size ) noexcept
 {
     int buffer_index = 0;
 
-    const DEVICE_MANAGEMENT_INFORMATION_HEADER * header = reinterpret_cast<const DEVICE_MANAGEMENT_INFORMATION_HEADER *>(buffer);
+    auto header = reinterpret_cast<DEVICE_MANAGEMENT_INFORMATION_HEADER const *>(buffer);
 
     while( buffer_index < buffer_size )
     {
-        header = reinterpret_cast<const DEVICE_MANAGEMENT_INFORMATION_HEADER *>(&buffer[ buffer_index ]);
+        header = reinterpret_cast<DEVICE_MANAGEMENT_INFORMATION_HEADER const *>(&buffer[ buffer_index ]);
 
         if ( header->type == desired_type )
         {
@@ -182,7 +182,7 @@ inline static const _Check_return_ DEVICE_MANAGEMENT_INFORMATION_HEADER * __get_
     return( nullptr );
 }
 
-static inline void __read_string( _In_ const uint8_t * buffer, _In_ const int desired_string_number, _Out_ std::wstring& output ) noexcept
+static inline void __read_string( _In_ uint8_t const * buffer, _In_ int const desired_string_number, _Out_ std::wstring& output ) noexcept
 {
     output.clear();
 
@@ -236,9 +236,9 @@ void PASCAL Win32FoundationClasses::wfc_get_bios_uuid( _Out_ GUID& uuid ) noexce
 
     (void) ::GetSystemFirmwareTable( 'RSMB', 0, buffer, buffer_size );
 
-    RAW_SYSTEM_MANAGEMENT_BIOS_DATA * data = reinterpret_cast<RAW_SYSTEM_MANAGEMENT_BIOS_DATA *>(buffer);
+    auto data = reinterpret_cast<RAW_SYSTEM_MANAGEMENT_BIOS_DATA *>(buffer);
 
-    const SM_SYSTEM_INFORMATION * header = reinterpret_cast<const SM_SYSTEM_INFORMATION *>(__get_smbios_info( SYSTEM_MANAGEMENT_SYSTEM_INFORMATION, &data->SMBIOSTableData[ 0 ], data->Length ));
+    auto header = reinterpret_cast<SM_SYSTEM_INFORMATION const *>(__get_smbios_info( SYSTEM_MANAGEMENT_SYSTEM_INFORMATION, &data->SMBIOSTableData[ 0 ], data->Length ));
 
     if ( header != nullptr )
     {
@@ -270,9 +270,9 @@ void PASCAL Win32FoundationClasses::wfc_get_bios_serial_number( _Out_ std::wstri
 
     (void) ::GetSystemFirmwareTable( 'RSMB', 0, buffer, buffer_size );
 
-    RAW_SYSTEM_MANAGEMENT_BIOS_DATA * data = reinterpret_cast<RAW_SYSTEM_MANAGEMENT_BIOS_DATA *>(buffer);
+    auto data = reinterpret_cast<RAW_SYSTEM_MANAGEMENT_BIOS_DATA *>(buffer);
 
-    const SM_SYSTEM_INFORMATION * header = reinterpret_cast<const SM_SYSTEM_INFORMATION *>(__get_smbios_info( SYSTEM_MANAGEMENT_SYSTEM_INFORMATION, &data->SMBIOSTableData[ 0 ], data->Length ));
+    auto header = reinterpret_cast<SM_SYSTEM_INFORMATION const *>(__get_smbios_info( SYSTEM_MANAGEMENT_SYSTEM_INFORMATION, &data->SMBIOSTableData[ 0 ], data->Length ));
 
     if ( header != nullptr )
     {

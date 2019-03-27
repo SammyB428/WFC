@@ -63,66 +63,68 @@ class CFileTime : public _FILETIME
 {
     public:
 
+       static constexpr uint64_t const DecThirty1899 = 94353120000000000UI64;
+
        // The number of FILETIME ticks since Jan 1, 2001
-       static constexpr uint64_t JanFirst2001                                    = 126227808000000000I64;
+       static constexpr uint64_t const JanFirst2001                                    = 126227808000000000UI64;
 
        // The number of FILETIME ticks since Jan 1, 1970
-       static constexpr uint64_t JanFirst1970                                    = 116444736000000000I64;
+       static constexpr uint64_t const JanFirst1970                                    = 116444736000000000UI64;
 
        // The number of FILETIME ticks between Jan 1, 1 and Jan 1, 1601
-       static constexpr uint64_t TicksBetween0001And1601                         = 504911232000000000I64;
+       static constexpr uint64_t const TicksBetween0001And1601                         = 504911232000000000I64;
 
        // The number of FILETIME ticks in one microsecond
-       static constexpr uint64_t OneMicrosecond                                  = 10;
+       static constexpr uint64_t const OneMicrosecond                                  = 10;
 
        // The number of FILETIME ticks in one millisecond
-       static constexpr uint64_t NumberOfTicksPerMillisecond                     = 10000;
+       static constexpr uint64_t const NumberOfTicksPerMillisecond                     = 10000;
 
        // The number of milliseconds between Windows (1601) and Unix (1970) epochs
-       static constexpr uint64_t NumberOfMillisecondsBetweenWindowsAndUnixEpochs = 11644473600000I64;
+       static constexpr uint64_t const NumberOfMillisecondsBetweenWindowsAndUnixEpochs = 11644473600000I64;
 
        // The number of milliseconds in one minute
-       static constexpr uint64_t NumberOfMillisecondsInOneMinute                 = 60000I64;
+       static constexpr uint64_t const NumberOfMillisecondsInOneMinute                 = 60000I64;
 
        // The number of milliseconds in one hour
-       static constexpr uint64_t NumberOfMillisecondsInOneHour                   = 3600000I64;
+       static constexpr uint64_t const NumberOfMillisecondsInOneHour                   = 3600000I64;
 
        // The number of milliseconds in one day
-       static constexpr uint64_t NumberOfMillisecondsInOneDay                    = 86400000I64;
+       static constexpr uint64_t const NumberOfMillisecondsInOneDay                    = 86400000I64;
 
        // The number of milliseconds in one week
-       static constexpr uint64_t NumberOfMillisecondsInOneWeek                   = 604800000I64;
+       static constexpr uint64_t const NumberOfMillisecondsInOneWeek                   = 604800000I64;
 
        // The number of nanoseconds in one microsecond
-       static constexpr uint64_t NumberOfNanosecondsInOneMicrosecond             = 1000I64;
+       static constexpr uint64_t const NumberOfNanosecondsInOneMicrosecond             = 1000I64;
 
        // The number of nanoseconds in one FILETIME tick
-       static constexpr uint64_t NumberOfNanosecondsInOneFiletimeTick            = 100I64;
+       static constexpr uint64_t const NumberOfNanosecondsInOneFiletimeTick            = 100I64;
 
        // The number of microseconds in one millisecond
-       static constexpr uint64_t NumberOfMicrosecondsInOneMillisecond            = 1000;
-       static constexpr uint64_t NumberOfMicrosecondsInOneSecond                 = 1000000;
+       static constexpr uint64_t const NumberOfMicrosecondsInOneMillisecond            = 1000;
+       static constexpr uint64_t const NumberOfMicrosecondsInOneSecond                 = 1000000;
 
        // The number of FILETIME ticks in one microsecond
-       static constexpr uint64_t NumberOfFiletimeTicksInOneMicrosecond           = 10;
+       static constexpr uint64_t const NumberOfFiletimeTicksInOneMicrosecond           = 10;
 
        // The number of FILETIME ticks in one millisecond
-       static constexpr uint64_t NumberOfFiletimeTicksInOneMillisecond           = 10000;
+       static constexpr uint64_t const NumberOfFiletimeTicksInOneMillisecond           = 10000;
 
        // The number of FILETIME ticks in one second
-       static constexpr uint64_t NumberOfFiletimeTicksInOneSecond                = 10000000;
+       static constexpr uint64_t const NumberOfFiletimeTicksInOneSecond                = 10000000;
 
        // The number of FILETIME ticks in one minute
-       static constexpr uint64_t NumberOfFiletimeTicksInOneMinute                = 600000000;
+       static constexpr uint64_t const NumberOfFiletimeTicksInOneMinute                = 600000000;
 
        // The number of FILETIME ticks in one hour
-       static constexpr uint64_t NumberOfFiletimeTicksInOneHour                  = 36000000000I64;
+       static constexpr uint64_t const NumberOfFiletimeTicksInOneHour                  = 36000000000I64;
 
        // The number of FILETIME ticks in one day
-       static constexpr uint64_t NumberOfFiletimeTicksInOneDay                   = 864000000000I64;
+       static constexpr uint64_t const NumberOfFiletimeTicksInOneDay                   = 864000000000I64;
 
        // The number of FILETIME ticks in one year
-       static constexpr uint64_t NumberOfFiletimeTicksInOneYear                  = 315360000000000I64;
+       static constexpr uint64_t const NumberOfFiletimeTicksInOneYear                  = 315360000000000I64;
 
        static inline constexpr _Check_return_ int64_t ConvertHoursMinutesToSeconds( _In_ int const hours, _In_ int const minutes ) noexcept
        {
@@ -572,30 +574,15 @@ class CFileTime : public _FILETIME
          dwHighDateTime = ll >> 32;
       }
 
-      inline void CopyCOMDate(_In_ double const stupid_COM_date ) noexcept
+      inline constexpr void CopyCOMDate(_In_ double const stupid_COM_date ) noexcept
       {
-         // Stupid COM dates are the number of days since December 30, 1899.
+          ULARGE_INTEGER li{ 0, 0 };
 
-         double fractional_days = 0.0;
-         double whole_days      = 0.0;
+          li.QuadPart = static_cast<uint64_t>(static_cast<double>(NumberOfFiletimeTicksInOneDay) * stupid_COM_date);
+          li.QuadPart += DecThirty1899;
 
-         fractional_days = ::modf( stupid_COM_date, &whole_days );
-
-         whole_days -= 25569.0;
-
-         // There are 25,569 days between 30 Dec 1899 and 01 Jan 1970
-         // There are 86,400 seconds in one day
-
-         double number_of_seconds_into_the_day = fractional_days * 86400.0;
-
-         time_t unix_time = (long) (whole_days * 86400.0);
-
-         double whole_seconds{ 0.0 };
-         double const fractional_seconds = modf( number_of_seconds_into_the_day, &whole_seconds );
-
-         unix_time += static_cast<long>(whole_seconds);
-
-         CopyUnixTime( unix_time );
+          dwHighDateTime = li.HighPart;
+          dwLowDateTime = li.LowPart;
       }
 
       inline void Set(_In_ int const year, _In_ int const month, _In_ int const day, _In_ int const hour, _In_ int const minute, _In_ int const second, _In_ int const milliseconds = 0 ) noexcept

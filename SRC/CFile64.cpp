@@ -795,7 +795,7 @@ _Check_return_ CFile64 * CFile64::Duplicate( void ) const noexcept
     }
     WFC_END_CATCH_ALL
 
-        HANDLE duplicate_file_handle = static_cast< HANDLE >( INVALID_HANDLE_VALUE );
+    auto duplicate_file_handle = static_cast< HANDLE >( INVALID_HANDLE_VALUE );
 
     if ( ::DuplicateHandle( ::GetCurrentProcess(), m_FileHandle, ::GetCurrentProcess(), &duplicate_file_handle, 0, FALSE, DUPLICATE_SAME_ACCESS ) == FALSE )
     {
@@ -2021,14 +2021,14 @@ _Check_return_ bool CFile64::ProcessContent( _In_ std::size_t const step_size, _
         return( false );
     }
 
-    uint8_t * buffer = reinterpret_cast<uint8_t *>(_aligned_malloc( step_size, 4096 ));
+    auto buffer = reinterpret_cast<uint8_t *>(_aligned_malloc( step_size, 4096 ));
 
     if ( buffer == nullptr )
     {
         return( false );
     }
 
-    const int64_t number_of_bytes_to_process = GetLength();
+    int64_t const number_of_bytes_to_process = GetLength();
     int64_t number_of_bytes_processed = 0;
 
     while( number_of_bytes_processed < number_of_bytes_to_process )

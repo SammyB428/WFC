@@ -268,7 +268,7 @@ __checkReturn CExtensibleMarkupLanguageElement * CXMLArchive::Read(_In_z_ const 
    {
       std::wstring data;
 
-      CExtensibleMarkupLanguageElement * sub_element_p = m_Element_p->GetChild( tag );
+      auto sub_element_p = m_Element_p->GetChild( tag );
 
       if ( sub_element_p != nullptr )
       {
@@ -281,7 +281,7 @@ __checkReturn CExtensibleMarkupLanguageElement * CXMLArchive::Read(_In_z_ const 
 
          while( exit_loop == false )
          {
-             CExtensibleMarkupLanguageElement * entry_p = sub_element_p->GetChild( L"ENTRY", index );
+             auto entry_p = sub_element_p->GetChild( L"ENTRY", index );
 
             if ( entry_p == nullptr )
             {
@@ -361,7 +361,7 @@ _Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Read( _In_z_ cons
    {
       std::wstring data;
 
-      CExtensibleMarkupLanguageElement * sub_element_p = m_Element_p->GetChild( tag );
+      auto sub_element_p = m_Element_p->GetChild( tag );
 
       if ( sub_element_p != nullptr )
       {

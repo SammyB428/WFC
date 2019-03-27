@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 1995-2018, Samuel R. Blackburn
+** Copyright, 1995-2019, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -546,7 +546,7 @@ _Check_return_ std::size_t CExtensibleMarkupLanguageElement::CountChildren( _In_
 
         // Whew! OK, now we need to get that parent
 
-        CExtensibleMarkupLanguageElement * element_p = GetChild( parent_name.c_str() );
+        auto element_p = GetChild( parent_name.c_str() );
 
         if ( element_p == nullptr )
         {
@@ -726,7 +726,7 @@ struct FIND_ANY_CHILD_CONTEXT
 
 static void __find_any_child_callback( void * parameter, _Inout_ CExtensibleMarkupLanguageElement * element_p ) noexcept
 {
-    FIND_ANY_CHILD_CONTEXT * context_p = static_cast<FIND_ANY_CHILD_CONTEXT *>( parameter );
+    auto context_p = static_cast<FIND_ANY_CHILD_CONTEXT *>( parameter );
 
     if ( context_p != nullptr )
     {
@@ -979,7 +979,7 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::GetChildText( _In_z_ wchar
 {
     WFC_VALIDATE_POINTER( this );
 
-    CExtensibleMarkupLanguageElement * child = GetChild( name );
+    auto child = GetChild( name );
 
     if ( child == nullptr )
     {
@@ -1146,7 +1146,7 @@ void CExtensibleMarkupLanguageElement::GetFullyQualifiedName( _Inout_ std::wstri
         parent_child_separator_character = m_Document->GetParentChildSeparatorCharacter();
     }
 
-    CExtensibleMarkupLanguageElement const * parent_element_p = GetParent();
+    auto parent_element_p = GetParent();
 
     while( parent_element_p != nullptr )
     {
@@ -1169,7 +1169,7 @@ _Check_return_ CExtensibleMarkupLanguageElement * CExtensibleMarkupLanguageEleme
 {
     WFC_VALIDATE_POINTER( this );
 
-    CExtensibleMarkupLanguageElement * parent_element_p = GetParent();
+    auto parent_element_p = GetParent();
 
     std::size_t enumerator = 0;
 
@@ -1205,7 +1205,7 @@ _Check_return_ int CExtensibleMarkupLanguageElement::GetInstance( void ) const n
 {
     WFC_VALIDATE_POINTER( this );
 
-    CExtensibleMarkupLanguageElement * parent_element_p = GetParent();
+    auto parent_element_p = GetParent();
 
     std::size_t enumerator = 0;
 
@@ -1421,8 +1421,12 @@ void CExtensibleMarkupLanguageElement::GetText( _Out_ std::wstring& text ) const
     {
         if (child != nullptr)
         {
-            child->GetText(text_segment);
-            text.append(text_segment);
+            if (child->GetType() != ElementType::Comment &&
+                child->GetType() != ElementType::MetaData)
+            {
+                child->GetText(text_segment);
+                text.append(text_segment);
+            }
         }
     }
 }
@@ -4410,7 +4414,7 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::GetChildValue(_In_z_ wchar
 
     value = 0;
 
-    CExtensibleMarkupLanguageElement * child = GetChild( tag_name );
+    auto child = GetChild( tag_name );
 
     if ( child == nullptr )
     {
@@ -4436,7 +4440,7 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::GetChildValue(_In_z_ wchar
 
     value = 0;
 
-    CExtensibleMarkupLanguageElement * child = GetChild( tag_name );
+    auto child = GetChild( tag_name );
 
     if ( child == nullptr )
     {
@@ -4462,7 +4466,7 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::GetChildValue(_In_z_ wchar
 
     value = 0;
 
-    CExtensibleMarkupLanguageElement * child = GetChild( tag_name );
+    auto child = GetChild( tag_name );
 
     if ( child == nullptr )
     {
@@ -4488,7 +4492,7 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::GetChildValue(_In_z_ wchar
 
     value = false;
 
-    CExtensibleMarkupLanguageElement * child = GetChild( tag_name );
+    auto child = GetChild( tag_name );
 
     if ( child == nullptr )
     {
@@ -4531,7 +4535,7 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::GetChildValue(_In_z_ wchar
 
     value.clear();
 
-    CExtensibleMarkupLanguageElement * child = GetChild( tag_name );
+    auto child = GetChild( tag_name );
 
     if ( child == nullptr )
     {
@@ -4550,7 +4554,7 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::GetChildValue( _In_z_ wcha
 
     value.clear();
 
-    CExtensibleMarkupLanguageElement * child = GetChild( tag_name );
+    auto child = GetChild( tag_name );
 
     if ( child == nullptr )
     {

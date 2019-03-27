@@ -2289,7 +2289,7 @@ inline void copy_to_clipboard(_In_ std::wstring const& the_string) noexcept
 
         if (global_memory_handle != NULL)
         {
-            wchar_t * output_string = static_cast<wchar_t *>(GlobalLock(global_memory_handle));
+            auto output_string = static_cast<wchar_t *>(GlobalLock(global_memory_handle));
 
             if (output_string != nullptr)
             {
@@ -2347,15 +2347,15 @@ struct DEFINED_WIDE_STRING
     wchar_t const * StringValue{ nullptr };
 };
 
-inline _Check_return_ int compare_defines(_In_ const void * a, _In_ const void * b) noexcept
+inline _Check_return_ int compare_defines(_In_ void const * a, _In_ void const * b) noexcept
 {
     if (a == nullptr || b == nullptr)
     {
         return(I_AM_EQUAL_TO_THAT);
     }
 
-    const Win32FoundationClasses::DEFINED_WIDE_STRING * defined_a = static_cast<const Win32FoundationClasses::DEFINED_WIDE_STRING *>(a);
-    const Win32FoundationClasses::DEFINED_WIDE_STRING * defined_b = static_cast<const Win32FoundationClasses::DEFINED_WIDE_STRING *>(b);
+    auto defined_a = static_cast<Win32FoundationClasses::DEFINED_WIDE_STRING const *>(a);
+    auto defined_b = static_cast<Win32FoundationClasses::DEFINED_WIDE_STRING const *>(b);
 
     if (defined_a->Constant < defined_b->Constant)
     {
@@ -2381,7 +2381,7 @@ inline _Check_return_ wchar_t const * from_defined_constant(_In_ uint64_t const 
     value_to_find.Constant = value;
     value_to_find.StringValue = nullptr;
 
-    const Win32FoundationClasses::DEFINED_WIDE_STRING * entry = static_cast<const Win32FoundationClasses::DEFINED_WIDE_STRING *>(std::bsearch(&value_to_find, definitions, number_of_definitions, sizeof(Win32FoundationClasses::DEFINED_WIDE_STRING), compare_defines));
+    auto entry = static_cast<Win32FoundationClasses::DEFINED_WIDE_STRING const *>(std::bsearch(&value_to_find, definitions, number_of_definitions, sizeof(Win32FoundationClasses::DEFINED_WIDE_STRING), compare_defines));
 
     if (entry == nullptr)
     {

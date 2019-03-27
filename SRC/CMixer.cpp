@@ -424,27 +424,27 @@ __checkReturn bool CMixer::GetControlDetails(__in const CMixerLine& line, __in c
     {
         CMixerControlDetailsData * data_p = nullptr;
 
-        for ( const auto index : Range(number_of_elements) )
+        for ( auto const index : Range(number_of_elements) )
         {
             CMixerControlDetailsData entry;
 
             if (type_of_details == CMixerControl::unitsBoolean)
             {
-                MIXERCONTROLDETAILS_BOOLEAN * boolean_array = reinterpret_cast<MIXERCONTROLDETAILS_BOOLEAN *>(memory_buffer.get());
+                auto boolean_array = reinterpret_cast<MIXERCONTROLDETAILS_BOOLEAN *>(memory_buffer.get());
 
                 entry.Copy(boolean_array[index]);
             }
             else if (type_of_details == CMixerControl::unitsSigned ||
                     type_of_details == CMixerControl::unitsDecibels)
             {
-               MIXERCONTROLDETAILS_SIGNED * signed_array = reinterpret_cast<MIXERCONTROLDETAILS_SIGNED *>(memory_buffer.get());
+               auto signed_array = reinterpret_cast<MIXERCONTROLDETAILS_SIGNED *>(memory_buffer.get());
 
                entry.Copy(signed_array[index]);
             }
             else if (type_of_details == CMixerControl::unitsUnsigned ||
                     type_of_details == CMixerControl::unitsPercent)
             {
-                MIXERCONTROLDETAILS_UNSIGNED * unsigned_array = reinterpret_cast<MIXERCONTROLDETAILS_UNSIGNED *>(memory_buffer.get());
+                auto unsigned_array = reinterpret_cast<MIXERCONTROLDETAILS_UNSIGNED *>(memory_buffer.get());
 
                 entry.Copy(unsigned_array[index]);
             }
@@ -891,25 +891,25 @@ __checkReturn bool CMixer::SetControlDetails(__in const CMixerLine& line, __in c
 
     std::unique_ptr<uint8_t[]> memory_buffer = std::make_unique<uint8_t[]>(buffer_size);
 
-    for ( const auto loop_index : Range(settings_array.size()))
+    for ( auto const loop_index : Range(settings_array.size()))
     {
         if (type_of_details == CMixerControl::unitsBoolean)
         {
-            MIXERCONTROLDETAILS_BOOLEAN *array = reinterpret_cast<MIXERCONTROLDETAILS_BOOLEAN *>(memory_buffer.get());
+            auto array = reinterpret_cast<MIXERCONTROLDETAILS_BOOLEAN *>(memory_buffer.get());
 
             array[loop_index].fValue = ((settings_array.at(loop_index).Parameter1 == 0) ? FALSE : TRUE);
         }
         else if (type_of_details == CMixerControl::unitsSigned ||
                 type_of_details == CMixerControl::unitsDecibels)
         {
-            MIXERCONTROLDETAILS_SIGNED *array = reinterpret_cast<MIXERCONTROLDETAILS_SIGNED *>(memory_buffer.get());
+            auto array = reinterpret_cast<MIXERCONTROLDETAILS_SIGNED *>(memory_buffer.get());
 
             array[loop_index].lValue = settings_array.at(loop_index).Parameter1;
         }
         else if (type_of_details == CMixerControl::unitsUnsigned ||
                 type_of_details == CMixerControl::unitsPercent)
         {
-            MIXERCONTROLDETAILS_UNSIGNED *array = reinterpret_cast<MIXERCONTROLDETAILS_UNSIGNED *>(memory_buffer.get());
+            auto array = reinterpret_cast<MIXERCONTROLDETAILS_UNSIGNED *>(memory_buffer.get());
 
             array[loop_index].dwValue = settings_array.at(loop_index).Parameter1;
         }

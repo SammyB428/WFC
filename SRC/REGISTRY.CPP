@@ -54,11 +54,11 @@ USING_WFC_NAMESPACE
 #define new DEBUG_NEW
 #endif // _DEBUG
 
-static _Check_return_ LONG _recursively_delete_all_sub_keys( __in HKEY key_handle, __in_z const wchar_t * key_name )
+static _Check_return_ LONG _recursively_delete_all_sub_keys( __in HKEY key_handle, __in_z wchar_t const * key_name )
 {
     WFC_VALIDATE_POINTER( key_name );
 
-    HKEY child_key_handle = static_cast< HKEY >( NULL );
+    auto child_key_handle = static_cast< HKEY >( NULL );
 
     LONG return_value = RegOpenKeyEx( key_handle, key_name, 0, KEY_ALL_ACCESS, &child_key_handle );
 

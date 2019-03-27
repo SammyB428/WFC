@@ -388,7 +388,7 @@ __checkReturn bool CServiceControlManager::GetConfiguration( __in_z const wchar_
         else
         {
             return_value = TRUE;
-            const QUERY_SERVICE_CONFIG * service_configuration_p = reinterpret_cast<const QUERY_SERVICE_CONFIG *>(buffer.get());
+            auto service_configuration_p = reinterpret_cast<QUERY_SERVICE_CONFIG const *>(buffer.get());
             configuration.Copy( service_configuration_p );
         }
 
@@ -581,7 +581,7 @@ __checkReturn bool CServiceControlManager::GetNext( __out CServiceNameAndStatusW
 
     if ( m_CurrentEntryNumber < m_NumberOfEntries )
     {
-        ENUM_SERVICE_STATUS * status_array = reinterpret_cast<ENUM_SERVICE_STATUS *>(m_Buffer.get());
+        auto status_array = reinterpret_cast<ENUM_SERVICE_STATUS *>(m_Buffer.get());
         status.Copy( &status_array[ m_CurrentEntryNumber ] );
         m_CurrentEntryNumber++;
         return( true );
@@ -693,7 +693,7 @@ __checkReturn bool CServiceControlManager::Install( __in_z const wchar_t * servi
             }
         }
 
-        SC_HANDLE service_handle = reinterpret_cast< SC_HANDLE >( NULL );
+        auto service_handle = reinterpret_cast< SC_HANDLE >( NULL );
 
         service_handle = ::CreateServiceW( m_ManagerHandle,
             service_name,
@@ -810,7 +810,7 @@ __checkReturn bool CServiceControlManager::IsDatabaseLocked( __out std::wstring&
     if ( return_value != FALSE )
     {
         // Get the data from the structure
-        LPQUERY_SERVICE_LOCK_STATUS status_p = reinterpret_cast< LPQUERY_SERVICE_LOCK_STATUS >( buffer.get() );
+        auto status_p = reinterpret_cast< LPQUERY_SERVICE_LOCK_STATUS >( buffer.get() );
 
         if ( status_p->fIsLocked != 0 )
         {
@@ -1138,7 +1138,7 @@ __checkReturn bool CServiceControlManager::SetConfiguration( __in_z const wchar_
         return( false );
     }
 
-    SC_HANDLE service_handle = static_cast< SC_HANDLE >( NULL );
+    auto service_handle = static_cast< SC_HANDLE >( NULL );
 
     // We were passed a bunch of pointers, don't trust them
 
@@ -1435,9 +1435,9 @@ __checkReturn bool CServiceControlManager::UnlockDatabase( void ) noexcept
 
 static VOID CALLBACK __stop_notification_callback(PVOID parameter) noexcept
 {
-    SERVICE_NOTIFYW *notify = reinterpret_cast<SERVICE_NOTIFYW *>(parameter);
+    auto notify = reinterpret_cast<SERVICE_NOTIFYW *>(parameter);
 
-    HANDLE event_handle = reinterpret_cast<HANDLE>(notify->pContext);
+    auto event_handle = reinterpret_cast<HANDLE>(notify->pContext);
 
     SetEvent(event_handle);
 }

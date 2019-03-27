@@ -372,7 +372,7 @@ struct CONTAINS_ELEMENT_NAME
 
 void find_element_name( void * parameter, CExtensibleMarkupLanguageElement * element_p ) noexcept
 {
-    CONTAINS_ELEMENT_NAME * context = static_cast<CONTAINS_ELEMENT_NAME *>( parameter );
+    auto context = static_cast<CONTAINS_ELEMENT_NAME *>( parameter );
 
     WFC_VALIDATE_POINTER(context->desired_name);
 

@@ -146,7 +146,7 @@ __checkReturn bool CCryptographicKey::Decrypt(__in const std::vector<uint8_t>&  
     // the possibility of using memory mapped files. Normally, Microsoft
     // would notice something like this. This must be some pinhead's idea.
 
-    HCRYPTHASH hash_handle = static_cast<HCRYPTHASH>(NULL);
+    auto hash_handle = static_cast<HCRYPTHASH>(NULL);
 
     if (hash_p == nullptr)
     {
@@ -368,7 +368,7 @@ __checkReturn bool CCryptographicKey::Encrypt( const std::vector<uint8_t>&      
    // the possibility of using memory mapped files. Normally, Microsoft
    // would notice something like this. This must be some pinhead's idea.
 
-   HCRYPTHASH hash_handle = static_cast< HCRYPTHASH >( NULL );
+   auto hash_handle = static_cast< HCRYPTHASH >( NULL );
 
    if ( hash_p == nullptr )
    {

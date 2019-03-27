@@ -84,7 +84,7 @@ __checkReturn bool PASCAL Win32FoundationClasses::wfc_check_digital_signature( _
        return( false );
     }
 
-    HCATADMIN context = static_cast<HCATADMIN>( NULL );
+    auto context = static_cast<HCATADMIN>( NULL );
 
     if ( ::CryptCATAdminAcquireContext( &context, nullptr, 0 ) == FALSE )
     {
@@ -262,7 +262,7 @@ void PASCAL Win32FoundationClasses::wfc_get_version( _In_z_ const wchar_t * file
          {
             if ( VerQueryValueW( byte_buffer.get(), L"\\", reinterpret_cast<LPVOID *>(&pointer), &number_of_bytes_at_pointer ) != 0 )
             {
-               VS_FIXEDFILEINFO * version_information = reinterpret_cast<VS_FIXEDFILEINFO *>(pointer);
+               auto version_information = reinterpret_cast<VS_FIXEDFILEINFO *>(pointer);
 
                if ( version_information->dwSignature == VS_FFI_SIGNATURE )
                {

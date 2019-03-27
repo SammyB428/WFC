@@ -55,7 +55,7 @@ __checkReturn bool PASCAL Win32FoundationClasses::wfc_enable_privilege( __in_z L
 {
    WFC_TRY
    {
-      HANDLE token_handle = static_cast< HANDLE >( NULL );
+      auto token_handle = static_cast< HANDLE >( NULL );
 
       if ( OpenProcessToken( GetCurrentProcess(), TOKEN_ADJUST_PRIVILEGES | TOKEN_QUERY, &token_handle ) == FALSE )
       {

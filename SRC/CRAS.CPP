@@ -742,7 +742,7 @@ BOOL CRemoteAccessService::Close( LPCTSTR name_of_connection )
       // By now you're wondering, "Why the heck is he closing the connection again?"
       // Because I have an application that *STILL* doesn't hangup! Gawl dang children...
 
-      HRASCONN temp_handle = static_cast< HRASCONN >( NULL );
+      auto temp_handle = static_cast< HRASCONN >( NULL );
 
       do
       {
@@ -909,7 +909,7 @@ HRASCONN CRemoteAccessService::GetConnection( LPCTSTR name_of_connection )
 
       m_GetConnectionsIntoMemory( connections, number_of_entries );
 
-      HRASCONN return_value = static_cast< HRASCONN >( NULL );
+      auto return_value = static_cast< HRASCONN >( NULL );
 
       if ( m_ErrorCode == 0 )
       {
@@ -1662,7 +1662,7 @@ HWND CRemoteAccessService::SetConnectionCallbackWindow( HWND window_handle )
 {
    WFC_VALIDATE_POINTER( this );
 
-   HWND return_value = static_cast< HWND >( NULL );
+   auto return_value = static_cast< HWND >( NULL );
 
    if ( m_NotifierType == 0xFFFFFFFF )
    {

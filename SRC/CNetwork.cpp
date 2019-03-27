@@ -77,7 +77,7 @@ _Check_return_ bool CNetwork::AbortShutdown( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
-   HANDLE token_handle = static_cast< HANDLE >( NULL );
+   auto token_handle = static_cast< HANDLE >( NULL );
 
    if ( ::OpenProcessToken( ::GetCurrentProcess(), TOKEN_ADJUST_PRIVILEGES | TOKEN_QUERY, &token_handle ) == FALSE )
    {
@@ -323,7 +323,7 @@ __checkReturn BOOL CNetwork::GetNext( __inout CPortInformation& port ) noexcept
 
    if ( m_PortNumber < m_NumberOfPorts )
    {
-      PORT_INFO_1 *port_p = reinterpret_cast<PORT_INFO_1 *>(m_PortBuffer.get());
+      auto port_p = reinterpret_cast<PORT_INFO_1 *>(m_PortBuffer.get());
 
       port.Copy( (PORT_INFO_1 *) &port_p[ m_PortNumber ] );
       m_PortNumber++;
@@ -400,7 +400,7 @@ __checkReturn BOOL CNetwork::IsRebootable( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
-   HANDLE token_handle = static_cast< HANDLE >( NULL );
+   auto token_handle = static_cast< HANDLE >( NULL );
 
    if ( ::OpenProcessToken( ::GetCurrentProcess(), TOKEN_ADJUST_PRIVILEGES | TOKEN_QUERY, &token_handle ) == FALSE )
    {
@@ -616,7 +616,7 @@ __checkReturn BOOL CNetwork::SetPrivilege( __in_z LPCTSTR privilege_name, __in c
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( privilege_name );
 
-   HANDLE token_handle = static_cast< HANDLE >( NULL );
+   auto token_handle = static_cast< HANDLE >( NULL );
 
    // We were passed a pointer, don't trust it
 
@@ -713,11 +713,11 @@ __checkReturn BOOL CNetwork::SetPrivilege( __in_z LPCTSTR privilege_name, __in c
    WFC_END_CATCH_ALL
 }
 
-__checkReturn BOOL CNetwork::Shutdown( __in const BOOL reboot, __in const BOOL force_applications_to_close, __in_z_opt LPCTSTR message_to_display, __in const DWORD number_of_seconds_before_shutdown ) noexcept
+__checkReturn BOOL CNetwork::Shutdown( __in BOOL const reboot, __in BOOL const force_applications_to_close, __in_z_opt LPCTSTR message_to_display, __in DWORD const number_of_seconds_before_shutdown ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
-   HANDLE token_handle = static_cast< HANDLE >( NULL );
+   auto token_handle = static_cast< HANDLE >( NULL );
 
    if ( ::OpenProcessToken( ::GetCurrentProcess(), TOKEN_ADJUST_PRIVILEGES | TOKEN_QUERY, &token_handle ) == FALSE )
    {

@@ -182,7 +182,7 @@ using the <B>CloseHandle</B>() Win32 API.
 
    _stprintf( physical_disk, TEXT( &quot;\\\\.\\PHYSICALDRIVE%u&quot; ), _ttoi( command_line_arguments[ 1 ] ) );
 
-   HANDLE disk_handle = static_cast< HANDLE >( NULL );
+   auto disk_handle = static_cast< HANDLE >( NULL );
 
    disk_handle = CreateFile( physical_disk,
                              GENERIC_READ | GENERIC_WRITE,

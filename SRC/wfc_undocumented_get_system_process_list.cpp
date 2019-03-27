@@ -51,7 +51,7 @@ static char THIS_FILE[] = __FILE__;
 
 USING_WFC_NAMESPACE
 
-void Win32FoundationClasses::wfc_debug_error_code( _In_ const DWORD error_code )
+void Win32FoundationClasses::wfc_debug_error_code( _In_ DWORD const error_code )
 {
     std::wstring error_string;
 
@@ -68,7 +68,7 @@ void Win32FoundationClasses::wfc_debug_error_code( _In_ const DWORD error_code )
 
 __checkReturn bool PASCAL Win32FoundationClasses::wfc_undocumented_get_system_process_list( __out_bcount( size_of_buffer ) BYTE * buffer, __in const DWORD size_of_buffer ) noexcept
 {
-    const HMODULE ntdll_module_handle = GetModuleHandle(TEXT("ntdll.dll"));
+    HMODULE const ntdll_module_handle = GetModuleHandle(TEXT("ntdll.dll"));
 
     if (ntdll_module_handle == NULL)
     {
@@ -96,17 +96,17 @@ __checkReturn bool PASCAL Win32FoundationClasses::wfc_undocumented_get_system_pr
     return( true );
 }
 
-_Check_return_ bool PASCAL Win32FoundationClasses::wfc_get_process_command_line(_In_ const HANDLE process_id, _Inout_ std::wstring& command_line)
+_Check_return_ bool PASCAL Win32FoundationClasses::wfc_get_process_command_line(_In_ HANDLE const process_id, _Inout_ std::wstring& command_line)
 {
     // This function has no associated import library. You must use the LoadLibrary and GetProcAddress functions to dynamically link to Ntdll.dll.
 
     command_line.clear();
 
-    HANDLE process_handle = ::OpenProcess(PROCESS_QUERY_INFORMATION | PROCESS_VM_READ, FALSE, (DWORD) process_id);
+    auto process_handle = ::OpenProcess(PROCESS_QUERY_INFORMATION | PROCESS_VM_READ, FALSE, (DWORD) process_id);
 
     if (is_bad_handle(process_handle) == true)
     {
-        const DWORD error_code = GetLastError();
+        DWORD const error_code = GetLastError();
         wfc_debug_error_code(error_code);
         return(false);
     }
@@ -117,7 +117,7 @@ _Check_return_ bool PASCAL Win32FoundationClasses::wfc_get_process_command_line(
 
     ULONG number_of_bytes_written = 0;
 
-    const HMODULE ntdll_module_handle = GetModuleHandle(TEXT("ntdll.dll"));
+    HMODULE const ntdll_module_handle = GetModuleHandle(TEXT("ntdll.dll"));
 
     if (ntdll_module_handle == NULL)
     {
@@ -131,13 +131,13 @@ _Check_return_ bool PASCAL Win32FoundationClasses::wfc_get_process_command_line(
         GetProcAddress(ntdll_module_handle, "NtQueryInformationProcess");
 #pragma warning(default:4191)
 
-    const NTSTATUS return_status = Nt_QueryInformationProcess(process_handle, ProcessBasicInformation, &pbi, sizeof(pbi), &number_of_bytes_written);
+    NTSTATUS const return_status = Nt_QueryInformationProcess(process_handle, ProcessBasicInformation, &pbi, sizeof(pbi), &number_of_bytes_written);
 
     _ASSERTE(return_status == ERROR_SUCCESS);
 
     if (return_status != ERROR_SUCCESS)
     {
-        const DWORD error_code = GetLastError();
+        DWORD const error_code = GetLastError();
         wfc_debug_error_code(error_code);
         return(false);
     }
@@ -151,7 +151,7 @@ _Check_return_ bool PASCAL Win32FoundationClasses::wfc_get_process_command_line(
 
     if (::ReadProcessMemory(process_handle, pbi.PebBaseAddress, &process_environment_block, sizeof(process_environment_block), &number_of_bytes_read) == FALSE)
     {
-        const DWORD error_code = GetLastError();
+        DWORD const error_code = GetLastError();
         wfc_debug_error_code(error_code);
         (void)wfc_close_handle(process_handle);
         return(false);
@@ -163,7 +163,7 @@ _Check_return_ bool PASCAL Win32FoundationClasses::wfc_get_process_command_line(
 
     if (::ReadProcessMemory(process_handle, (LPVOID)process_environment_block.ProcessParameters, &process_parameters, sizeof(process_parameters), &number_of_bytes_read) == FALSE)
     {
-        const DWORD error_code = GetLastError();
+        DWORD const error_code = GetLastError();
         wfc_debug_error_code(error_code);
         (void)wfc_close_handle(process_handle);
         return(false);
@@ -172,7 +172,7 @@ _Check_return_ bool PASCAL Win32FoundationClasses::wfc_get_process_command_line(
     DWORD number_of_characters = 32769;
     DWORD number_of_bytes_in_command_line_string = number_of_characters * sizeof(wchar_t);
 
-    wchar_t * wide_command_line_string = (wchar_t *)_aligned_malloc(number_of_bytes_in_command_line_string, 4096); // Need aligned memory
+    auto wide_command_line_string = (wchar_t *)_aligned_malloc(number_of_bytes_in_command_line_string, 4096); // Need aligned memory
 
     WFC_VALIDATE_POINTER(wide_command_line_string);
 
@@ -189,7 +189,7 @@ _Check_return_ bool PASCAL Win32FoundationClasses::wfc_get_process_command_line(
         std::min((DWORD)process_parameters.CommandLine.Length, (number_of_bytes_in_command_line_string - 2)),
         &number_of_bytes_read) == FALSE)
     {
-        const DWORD error_code = GetLastError();
+        DWORD const error_code = GetLastError();
         wfc_debug_error_code(error_code);
         (void)wfc_close_handle(process_handle);
         _aligned_free(wide_command_line_string);
@@ -204,7 +204,7 @@ _Check_return_ bool PASCAL Win32FoundationClasses::wfc_get_process_command_line(
     return(true);
 }
 
-void PASCAL Win32FoundationClasses::wfc_calculate_lanman_hash(__in_z const char * ascii_string, __out_bcount(16) uint8_t * hash_value)
+void PASCAL Win32FoundationClasses::wfc_calculate_lanman_hash(__in_z char const * ascii_string, __out_bcount(16) uint8_t * hash_value)
 {
     // This function has no associated import library. You must use the LoadLibrary and GetProcAddress functions to dynamically link to Ntdll.dll.
     static HMODULE advapi32_module_handle = NULL;
@@ -249,13 +249,13 @@ void PASCAL Win32FoundationClasses::wfc_calculate_lanman_hash(__in_z const char 
     if (ascii_string[0] == 0x00)
     {
         // Empty hash
-        const NTSTATUS return_status = SystemFunction006(ascii_string, hash_value);
+        NTSTATUS const return_status = SystemFunction006(ascii_string, hash_value);
         _ASSERTE(return_status == ERROR_SUCCESS);
     }
 
     // To duplicate the behavior LanMan hashing, we need to convert the string to upper case
 
-    const size_t upper_case_string_size = strlen(ascii_string) + 1;
+    std::size_t const upper_case_string_size = strlen(ascii_string) + 1;
 
     std::unique_ptr<char []> upper_case_string = std::make_unique<char []>(upper_case_string_size);
 
@@ -267,11 +267,11 @@ void PASCAL Win32FoundationClasses::wfc_calculate_lanman_hash(__in_z const char 
     strcpy_s(upper_case_string.get(), upper_case_string_size, ascii_string);
     _strupr_s(upper_case_string.get(), upper_case_string_size);
 
-    const NTSTATUS return_status = SystemFunction006(upper_case_string.get(), hash_value);
+    NTSTATUS const return_status = SystemFunction006(upper_case_string.get(), hash_value);
     _ASSERTE(return_status == ERROR_SUCCESS);
 }
 
-void PASCAL Win32FoundationClasses::wfc_calculate_nt_hash(__in_z const wchar_t * unicode_string, __out_bcount(16) uint8_t * hash_value)
+void PASCAL Win32FoundationClasses::wfc_calculate_nt_hash(__in_z wchar_t const * unicode_string, __out_bcount(16) uint8_t * hash_value)
 {
     // This function has no associated import library. You must use the LoadLibrary and GetProcAddress functions to dynamically link to Ntdll.dll.
     static HMODULE advapi32_module_handle = NULL;
@@ -319,7 +319,7 @@ void PASCAL Win32FoundationClasses::wfc_calculate_nt_hash(__in_z const wchar_t *
     u.MaximumLength = u.Length;
     u.Buffer = (PWSTR) unicode_string;
 
-    const NTSTATUS return_status = SystemFunction007(&u, hash_value);
+    NTSTATUS const return_status = SystemFunction007(&u, hash_value);
 }
 
 // End of source

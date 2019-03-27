@@ -192,11 +192,11 @@ _Check_return_ bool CRandomNumberGenerator2::Fill( __out_bcount( number_of_bytes
       return( false );
    }
 
-   const size_t number_of_dwords_in_buffer = number_of_bytes / sizeof(uint32_t);
+   std::size_t const number_of_dwords_in_buffer = number_of_bytes / sizeof(uint32_t);
 
-   uint32_t * dwords = reinterpret_cast<uint32_t *>(buffer);
+   auto dwords = reinterpret_cast<uint32_t *>(buffer);
 
-   size_t array_index = 0;
+   std::size_t array_index = 0;
 
    while( array_index < number_of_dwords_in_buffer )
    {

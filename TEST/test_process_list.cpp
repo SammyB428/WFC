@@ -247,7 +247,7 @@ static void print_process_list( BYTE * data_buffer ) noexcept
 {
    try
    {
-      const ::SYSTEM_PROCESS_INFORMATION * information_p = reinterpret_cast<const ::SYSTEM_PROCESS_INFORMATION *>(data_buffer);
+      auto information_p = reinterpret_cast<::SYSTEM_PROCESS_INFORMATION const *>(data_buffer);
 
       while( information_p != nullptr )
       {

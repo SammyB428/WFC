@@ -222,8 +222,8 @@ __checkReturn INT_PTR CService::DialogBoxParam( __in HINSTANCE instance, __in_z 
 
    INT_PTR return_value = 0;
 
-   HDESK old_desktop_handle = static_cast< HDESK >( NULL );
-   HDESK desktop_handle     = static_cast< HDESK >( NULL );
+   auto old_desktop_handle = static_cast< HDESK >( NULL );
+   auto desktop_handle     = static_cast< HDESK >( NULL );
 
    old_desktop_handle = ::GetThreadDesktop( ::GetCurrentThreadId() );
    desktop_handle  = ::OpenInputDesktop( 0, FALSE, DESKTOP_CREATEWINDOW );
@@ -767,11 +767,11 @@ void CALLBACK CService::ServiceControlManagerHandler( __in DWORD control_code )
    (void) m_StaticService_p->SendStatusToServiceControlManager( m_StaticService_p->m_CurrentState );
 }
 
-void CALLBACK CService::ServiceMain( _In_ const DWORD number_of_command_line_arguments, _In_reads_z_( number_of_command_line_arguments ) LPCTSTR command_line_arguments[] )
+void CALLBACK CService::ServiceMain( _In_ DWORD const number_of_command_line_arguments, _In_reads_z_( number_of_command_line_arguments ) LPCTSTR command_line_arguments[] )
 {
    // entry point for service called by SCM when service is started
 
-   HANDLE thread_handle = static_cast< HANDLE >( NULL );
+   auto thread_handle = static_cast< HANDLE >( NULL );
 
    ASSERT( m_StaticService_p != nullptr );
 

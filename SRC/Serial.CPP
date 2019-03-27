@@ -282,7 +282,7 @@ __checkReturn BOOL CSerialFile::ConfigurationDialog( __inout CCommunicationsConf
    // Always, always always zeroize the buffer
    ZeroMemory( buffer, 8192 );
 
-   LPCOMMCONFIG communications_configuration_p = reinterpret_cast< LPCOMMCONFIG >( buffer );
+   auto communications_configuration_p = reinterpret_cast< LPCOMMCONFIG >( buffer );
 
    communications_configuration_p->dwSize        = 8192;
    communications_configuration_p->dcb.DCBlength = sizeof( DCB );
@@ -558,7 +558,7 @@ __checkReturn BOOL CSerialFile::GetConfiguration( __inout CCommunicationsConfigu
    // Always, always always zeroize the buffer
    ZeroMemory( buffer_p, buffer_size );
 
-   LPCOMMCONFIG communications_configuration_p = reinterpret_cast< LPCOMMCONFIG >( buffer_p );
+   auto communications_configuration_p = reinterpret_cast< LPCOMMCONFIG >( buffer_p );
 
    communications_configuration_p->dwSize        = buffer_size;
    communications_configuration_p->dcb.DCBlength = sizeof( DCB );

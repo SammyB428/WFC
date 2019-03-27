@@ -169,14 +169,12 @@ __checkReturn bool PASCAL Win32FoundationClasses::wfc_web_post( __in_z LPCTSTR u
       append_string( boundary_string, bytes_to_send );
       append_string( "--\r\n", bytes_to_send );
 
-      HINTERNET internet_handle = static_cast< HINTERNET >( NULL );
-
       DWORD   internet_open_access_type  = INTERNET_OPEN_TYPE_PRECONFIG;
       LPCTSTR internet_open_proxy        = nullptr;
       LPCTSTR internet_open_proxy_bypass = nullptr;
       DWORD   internet_open_flags        = 0;
 
-      internet_handle = InternetOpenW( L"Mozilla/4.0 (compatible; Win32 Foundation Classes; http://www.samblackburn.com)",
+      auto internet_handle =  InternetOpenW( L"Mozilla/4.0 (compatible; Win32 Foundation Classes; http://www.samblackburn.com)",
                                       internet_open_access_type,
                                       internet_open_proxy,
                                       internet_open_proxy_bypass,
@@ -189,8 +187,6 @@ __checkReturn bool PASCAL Win32FoundationClasses::wfc_web_post( __in_z LPCTSTR u
          return( false );
       }
 
-      HINTERNET internet_connection_handle = static_cast< HINTERNET >( NULL );
-
       INTERNET_PORT internet_connect_port      = INTERNET_DEFAULT_HTTP_PORT;
       LPCTSTR       internet_connect_user_name = nullptr;
       LPCTSTR       internet_connect_password  = nullptr;
@@ -201,7 +197,7 @@ __checkReturn bool PASCAL Win32FoundationClasses::wfc_web_post( __in_z LPCTSTR u
 
       CUniformResourceLocator uniform_resource_locator( url );
 
-      internet_connection_handle = InternetConnectW( internet_handle,
+      auto internet_connection_handle = InternetConnectW( internet_handle,
                                                     uniform_resource_locator.MachineName.c_str(),
                                                     internet_connect_port,
                                                     internet_connect_user_name,
@@ -221,8 +217,6 @@ __checkReturn bool PASCAL Win32FoundationClasses::wfc_web_post( __in_z LPCTSTR u
          return( false );
       }
 
-      HINTERNET http_request_handle = static_cast< HINTERNET >( NULL );
-
       LPCTSTR   http_open_request_verb         = TEXT( "POST" );
       LPCTSTR   http_open_request_object_name  = uniform_resource_locator.PathName.c_str();
       LPCTSTR   http_open_request_version      = nullptr;
@@ -231,7 +225,7 @@ __checkReturn bool PASCAL Win32FoundationClasses::wfc_web_post( __in_z LPCTSTR u
       DWORD     http_open_request_flags        = INTERNET_FLAG_NO_CACHE_WRITE;
       DWORD_PTR http_open_request_context      = 0;
 
-      http_request_handle = HttpOpenRequest( internet_connection_handle,
+      auto http_request_handle = HttpOpenRequest( internet_connection_handle,
                                              http_open_request_verb,
                                              http_open_request_object_name,
                                              http_open_request_version,

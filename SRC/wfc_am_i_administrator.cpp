@@ -55,11 +55,11 @@ __checkReturn bool PASCAL Win32FoundationClasses::wfc_am_i_administrator( void )
 {
    // Plagerized from Microsoft Knowledge Base article Q118626
 
-   HANDLE access_token_handle = static_cast< HANDLE >( NULL );
+   auto access_token_handle = static_cast< HANDLE >( NULL );
 
    BYTE buffer[ 1024 ];
 
-   PTOKEN_GROUPS token_groups_p = (PTOKEN_GROUPS) buffer;
+   auto token_groups_p = reinterpret_cast<PTOKEN_GROUPS>(buffer);
 
    DWORD buffer_size = 0;
 

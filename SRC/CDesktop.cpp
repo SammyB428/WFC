@@ -202,7 +202,7 @@ static BOOL CALLBACK CDesktop__WindowEnumerator( HWND window_handle, LPARAM lPar
 {
    WFC_VALIDATE_POINTER_NULL_OK( lParam );
 
-   std::vector<HWND> * window_array = reinterpret_cast<std::vector<HWND> *>( lParam );
+   auto window_array = reinterpret_cast<std::vector<HWND> *>( lParam );
 
    // We were passed a pointer by the caller, don't trust it
 

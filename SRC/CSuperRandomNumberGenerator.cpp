@@ -115,7 +115,7 @@ __checkReturn DWORD CSuperRandomNumberGenerator::GetInteger( void ) noexcept
    // do a quick and dirty hash of the bytes that make 
    // up the double value
 
-   const BYTE * buffer = reinterpret_cast< const BYTE *>( &value );
+   auto buffer = reinterpret_cast<BYTE const *>( &value );
 
    DWORD hash_value = static_cast< DWORD >( value );
    DWORD temp_value = 0;

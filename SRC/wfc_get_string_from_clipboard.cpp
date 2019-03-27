@@ -60,7 +60,7 @@ __checkReturn bool PASCAL Win32FoundationClasses::wfc_get_string_from_clipboard(
       return( false );
    }
 
-   HANDLE data_handle = static_cast< HANDLE >( NULL );
+   auto data_handle = static_cast< HANDLE >( NULL );
 
    data_handle = GetClipboardData( CF_TEXT );
 

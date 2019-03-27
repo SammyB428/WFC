@@ -6,23 +6,37 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "WFC", "WFC.vcxproj", "{F805
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
-
 		STL Debug|x64 = STL Debug|x64
+		STL Debug|x86 = STL Debug|x86
 		STL Release|x64 = STL Release|x64
+		STL Release|x86 = STL Release|x86
 		STL Unicode Debug|x64 = STL Unicode Debug|x64
+		STL Unicode Debug|x86 = STL Unicode Debug|x86
 		STL Unicode Release|x64 = STL Unicode Release|x64
+		STL Unicode Release|x86 = STL Unicode Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{F805DC15-5143-4F3A-8C60-5C81247E2C7F}.STL Debug|x64.ActiveCfg = STL Debug|x64
 		{F805DC15-5143-4F3A-8C60-5C81247E2C7F}.STL Debug|x64.Build.0 = STL Debug|x64
+		{F805DC15-5143-4F3A-8C60-5C81247E2C7F}.STL Debug|x86.ActiveCfg = STL Debug|Win32
+		{F805DC15-5143-4F3A-8C60-5C81247E2C7F}.STL Debug|x86.Build.0 = STL Debug|Win32
 		{F805DC15-5143-4F3A-8C60-5C81247E2C7F}.STL Release|x64.ActiveCfg = STL Release|x64
 		{F805DC15-5143-4F3A-8C60-5C81247E2C7F}.STL Release|x64.Build.0 = STL Release|x64
+		{F805DC15-5143-4F3A-8C60-5C81247E2C7F}.STL Release|x86.ActiveCfg = STL Release|Win32
+		{F805DC15-5143-4F3A-8C60-5C81247E2C7F}.STL Release|x86.Build.0 = STL Release|Win32
 		{F805DC15-5143-4F3A-8C60-5C81247E2C7F}.STL Unicode Debug|x64.ActiveCfg = STL Unicode Debug|x64
 		{F805DC15-5143-4F3A-8C60-5C81247E2C7F}.STL Unicode Debug|x64.Build.0 = STL Unicode Debug|x64
+		{F805DC15-5143-4F3A-8C60-5C81247E2C7F}.STL Unicode Debug|x86.ActiveCfg = STL Unicode Debug|Win32
+		{F805DC15-5143-4F3A-8C60-5C81247E2C7F}.STL Unicode Debug|x86.Build.0 = STL Unicode Debug|Win32
 		{F805DC15-5143-4F3A-8C60-5C81247E2C7F}.STL Unicode Release|x64.ActiveCfg = STL Unicode Release|x64
 		{F805DC15-5143-4F3A-8C60-5C81247E2C7F}.STL Unicode Release|x64.Build.0 = STL Unicode Release|x64
+		{F805DC15-5143-4F3A-8C60-5C81247E2C7F}.STL Unicode Release|x86.ActiveCfg = STL Unicode Release|Win32
+		{F805DC15-5143-4F3A-8C60-5C81247E2C7F}.STL Unicode Release|x86.Build.0 = STL Unicode Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {4B2B8D93-5495-4697-85B6-DFFAC3002B9C}
 	EndGlobalSection
 EndGlobal

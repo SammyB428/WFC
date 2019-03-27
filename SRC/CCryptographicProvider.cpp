@@ -94,7 +94,7 @@ bool CCryptographicProvider::CreateHash( const CCryptographicAlgorithm& algorith
 {
    WFC_VALIDATE_POINTER( this );
 
-   HCRYPTHASH hash_handle = static_cast< HCRYPTHASH >( NULL );
+   auto hash_handle = static_cast< HCRYPTHASH >( NULL );
 
    BOOL return_value = ::CryptCreateHash( m_CryptographicProvider,
                                      algorithm_that_is_going_to_use_the_hash.Identifier,
@@ -183,7 +183,7 @@ bool CCryptographicProvider::CreateKey( const CCryptographicAlgorithm& algorithm
 
    BOOL return_value = FALSE;
 
-   HCRYPTKEY key_handle = static_cast< HCRYPTKEY >( NULL );
+   auto key_handle = static_cast< HCRYPTKEY >( NULL );
 
    // According to Jeff Spelman (jeffspel@microsoft.com), you
    // can put your request for the number of bits in the key
@@ -284,7 +284,7 @@ bool CCryptographicProvider::CreateKeySet( LPCTSTR container_name, LPCTSTR provi
 
    // We were passed pointers, don't trust them
 
-   HCRYPTPROV temp_handle = static_cast< HCRYPTPROV >( NULL );
+   auto temp_handle = static_cast< HCRYPTPROV >( NULL );
 
    WFC_TRY
    {
@@ -321,7 +321,7 @@ bool CCryptographicProvider::DeriveKey(  const CCryptographicAlgorithm& algorith
 {
    WFC_VALIDATE_POINTER( this );
 
-   HCRYPTKEY key_handle = static_cast< HCRYPTKEY >( NULL );
+   auto key_handle = static_cast< HCRYPTKEY >( NULL );
 
    BOOL return_value = ::CryptDeriveKey( m_CryptographicProvider,
                                     algorithm.Identifier,
@@ -601,7 +601,7 @@ bool CCryptographicProvider::GetUserKey( DWORD which_user_key_to_get, CCryptogra
 {
    WFC_VALIDATE_POINTER( this );
 
-   HCRYPTKEY key_handle = static_cast< HCRYPTKEY >( NULL );
+   auto key_handle = static_cast< HCRYPTKEY >( NULL );
 
    BOOL return_value = ::CryptGetUserKey( m_CryptographicProvider,
                                      which_user_key_to_get,

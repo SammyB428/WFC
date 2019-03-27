@@ -55,7 +55,7 @@ void PASCAL Win32FoundationClasses::wfc_free_unicode_conversion_context( _Inout_
 {
    WFC_VALIDATE_POINTER( unicode_conversion_context );
 
-   IMultiLanguage2 * IMultilanguage2_interface_p = reinterpret_cast<IMultiLanguage2 *>(unicode_conversion_context);
+   auto IMultilanguage2_interface_p = reinterpret_cast<IMultiLanguage2 *>(unicode_conversion_context);
 
    if ( IMultilanguage2_interface_p != nullptr )
    {
@@ -63,7 +63,7 @@ void PASCAL Win32FoundationClasses::wfc_free_unicode_conversion_context( _Inout_
    }
 }
 
-_Check_return_ VOID * PASCAL Win32FoundationClasses::wfc_get_unicode_conversion_context( _In_ const bool is_com_already_started_in_this_thread ) noexcept
+_Check_return_ VOID * PASCAL Win32FoundationClasses::wfc_get_unicode_conversion_context( _In_ bool const is_com_already_started_in_this_thread ) noexcept
 {
    if ( is_com_already_started_in_this_thread == false )
    {
@@ -112,7 +112,7 @@ static inline _Check_return_ bool __detect_code_page(_In_ IMultiLanguage2 * inte
          return( false );
       }
 
-      char * buffer_to_scan = reinterpret_cast<char *>(const_cast<BYTE *>(bytes));
+      auto buffer_to_scan = reinterpret_cast<char *>(const_cast<BYTE *>(bytes));
 
       std::unique_ptr<uint8_t[]> new_buffer;
 
@@ -233,7 +233,7 @@ _Check_return_ bool PASCAL Win32FoundationClasses::wfc_detect_code_page( _Inout_
        return(false);
    }
 
-   IMultiLanguage2 * IMultilanguage2InterfacePointer = reinterpret_cast<IMultiLanguage2 *>(unicode_conversion_context);
+   auto IMultilanguage2InterfacePointer = reinterpret_cast<IMultiLanguage2 *>(unicode_conversion_context);
 
    DWORD other_code_page = 0;
 
@@ -279,7 +279,7 @@ _Check_return_ bool PASCAL Win32FoundationClasses::wfc_convert_to_unicode( _Inou
                                     __out_ecount_z( number_of_wide_characters ) wchar_t *    unicode_string,
                                     _In_ const size_t       number_of_wide_characters,
                                     _In_ const DWORD        suggested_code_page,
-                                    _In_ const DWORD        encoding_hints,
+                                    _In_ DWORD const       encoding_hints,
                                     __out_opt DWORD *      real_code_page_p ) noexcept
 {
    WFC_VALIDATE_POINTER( unicode_conversion_context );
@@ -289,7 +289,7 @@ _Check_return_ bool PASCAL Win32FoundationClasses::wfc_convert_to_unicode( _Inou
        *real_code_page_p = 0;
    }
 
-   IMultiLanguage2 * IMultilanguage2InterfacePointer = reinterpret_cast<IMultiLanguage2 *>(unicode_conversion_context);
+   auto IMultilanguage2InterfacePointer = reinterpret_cast<IMultiLanguage2 *>(unicode_conversion_context);
 
    // We were passed a pointer, don't trust it
 

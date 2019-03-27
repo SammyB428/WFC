@@ -440,7 +440,7 @@ _Check_return_ bool test_CXMLDocument( _Out_ std::string& class_name, _Out_ int&
         return(failure());
     }
 
-    CExtensibleMarkupLanguageElement * mhmd_element = root->GetChild(L"mhmd");
+    auto mhmd_element = root->GetChild(L"mhmd");
 
     if (mhmd_element == nullptr)
     {

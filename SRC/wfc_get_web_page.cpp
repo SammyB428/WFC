@@ -224,9 +224,7 @@ void PASCAL Win32FoundationClasses::wfc_get_web_page( __in const CUniformResourc
 
     //WFCTRACEVAL( TEXT( "Unique ID is " ), temp_string );
 
-    HINTERNET internet_handle = static_cast< HINTERNET >( NULL );
-
-    internet_handle = InternetOpen( TEXT( "Mozilla/4.0 (compatible; Win32 Foundation Classes; http://www.samblackburn.com)" ),
+    auto internet_handle = InternetOpen( TEXT( "Mozilla/4.0 (compatible; Win32 Foundation Classes; http://www.samblackburn.com)" ),
         INTERNET_OPEN_TYPE_PRECONFIG,
         nullptr,
         nullptr,
@@ -239,9 +237,7 @@ void PASCAL Win32FoundationClasses::wfc_get_web_page( __in const CUniformResourc
         return;
     }
 
-    HINTERNET url_handle = static_cast< HINTERNET >( NULL );
-
-    url_handle = InternetOpenUrl( internet_handle,
+    auto url_handle = InternetOpenUrl( internet_handle,
         url,
         nullptr,
         0,
