@@ -237,7 +237,7 @@ __checkReturn UINT CDataMemory::Read(__out_bcount(read_size) void * buffer, __in
          number_of_bytes_to_read = (UINT) ( (LONGLONG) m_Data.size() - m_Position );
       }
 
-      BYTE * byte_buffer = reinterpret_cast<BYTE *>( buffer );
+      auto byte_buffer = reinterpret_cast<BYTE *>( buffer );
 
       if ( number_of_bytes_to_read > 0 )
       {
@@ -317,7 +317,7 @@ void CDataMemory::Write( __in_bcount( number_of_bytes_to_write ) const void * bu
 
    WFC_TRY
    {
-      const BYTE * byte_buffer = reinterpret_cast<const BYTE *>( buffer );
+      auto byte_buffer = reinterpret_cast<BYTE const *>( buffer );
 
       UINT index = 0;
 

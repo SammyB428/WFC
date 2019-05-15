@@ -211,7 +211,7 @@ inline void copy(_Inout_ std::wstring& s, _In_opt_z_ char const * ascii_string_p
     }
 }
 
-inline void copy( _Inout_ std::wstring& s, _In_opt_z_ wchar_t const * string_p, _In_ const SSIZE_T number_of_characters = (-1), _In_ std::size_t const beginning_at = 0) noexcept
+inline void copy( _Inout_ std::wstring& s, _In_opt_z_ wchar_t const * string_p, _In_ SSIZE_T const number_of_characters = (-1), _In_ std::size_t const beginning_at = 0) noexcept
 {
     WFC_VALIDATE_POINTER_NULL_OK(string_p);
 
@@ -947,24 +947,40 @@ inline _Check_return_ int64_t as_integer(_In_ std::string const& s) noexcept
 {
     int radix = 10;
 
-    std::string value(s);
+    std::size_t starting_index = 0;
 
-    trim(value);
-
-    if (starts_with_no_case(value, "0x") == true)
+    while (starting_index < s.length())
     {
-        radix = 16;
-        value.erase(0, 2);
+        if (std::isspace(s.at(starting_index)) == false)
+        {
+            break;
+        }
+
+        starting_index++;
     }
-    else if (starts_with_no_case(value, "x") == true)
+
+    if ((s.length() - starting_index) > 1)
     {
-        radix = 16;
-        value.erase(0, 1);
+        if (s.at(starting_index) == '0' &&
+           (s.at(starting_index + 1) == 'x' ||
+            s.at(starting_index + 1) == 'X'))
+        {
+            radix = 16;
+            starting_index += 2;
+        }
+        else if (s.at(starting_index) == 'x' ||
+                 s.at(starting_index) == 'X')
+        {
+            radix = 16;
+            starting_index++;
+        }
     }
 
     char * unused = nullptr;
 
-    int64_t const return_value = _strtoi64(value.c_str(), &unused, radix);
+    int64_t return_value = 0;
+
+    std::from_chars(s.data() + starting_index, s.data() + (s.length() - starting_index), return_value, radix);
 
     return(return_value);
 }
@@ -1788,11 +1804,11 @@ static inline constexpr _Check_return_ bool it_was_found(_In_ WSTRING_CONST_ITER
 
 inline _Check_return_ SSIZE_T add_to_unique_sorted_vector(_In_ std::wstring const& value_to_add, _Inout_ std::vector<std::wstring>& values) noexcept
 {
-    const WSTRING_CONST_ITERATOR_PAIR p = std::equal_range(std::cbegin(values), std::cend(values), value_to_add);
+    auto const p = std::equal_range(std::cbegin(values), std::cend(values), value_to_add);
 
     if (it_was_found(p) == false)
     {
-        const SSIZE_T return_value = std::distance(std::cbegin(values), p.second);
+        SSIZE_T const return_value = std::distance(std::cbegin(values), p.second);
 
         values.emplace(p.second, value_to_add);
 
@@ -1819,11 +1835,11 @@ static inline constexpr _Check_return_ bool it_was_found(_In_ STRING_CONST_ITERA
 
 inline _Check_return_ SSIZE_T add_to_unique_sorted_vector(_In_ std::string const& value_to_add, _Inout_ std::vector<std::string>& values) noexcept
 {
-    const STRING_CONST_ITERATOR_PAIR p = std::equal_range(std::cbegin(values), std::cend(values), value_to_add);
+    auto const p = std::equal_range(std::cbegin(values), std::cend(values), value_to_add);
 
     if (it_was_found(p) == false)
     {
-        const SSIZE_T return_value = std::distance(std::cbegin(values), p.second);
+        SSIZE_T const return_value = std::distance(std::cbegin(values), p.second);
 
         values.emplace(p.second, value_to_add);
 
@@ -1942,7 +1958,7 @@ inline _Check_return_ bool compare_strings_ignoring_case(_In_ std::string const&
 
 inline _Check_return_ SSIZE_T add_to_unique_sorted_vector_ignore_case(_In_ std::string const& value_to_add, _Inout_ std::vector<std::string>& values) noexcept
 {
-    STRING_CONST_ITERATOR_PAIR const p = std::equal_range(std::cbegin(values), std::cend(values), value_to_add, compare_strings_ignoring_case);
+    auto const p = std::equal_range(std::cbegin(values), std::cend(values), value_to_add, compare_strings_ignoring_case);
 
     if (it_was_found(p) == false)
     {
@@ -1967,7 +1983,7 @@ inline _Check_return_ bool contains_no_case_sorted(_In_ std::vector<std::string>
 
     std::string const right_hand_side(the_string);
 
-    STRING_CONST_ITERATOR_PAIR const p = std::equal_range(std::cbegin(s), std::cend(s), right_hand_side, compare_strings_ignoring_case);
+    auto const p = std::equal_range(std::cbegin(s), std::cend(s), right_hand_side, compare_strings_ignoring_case);
 
     return(it_was_found(p));
 }

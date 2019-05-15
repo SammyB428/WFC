@@ -1067,7 +1067,7 @@ _Check_return_ bool CSimpleSocket::Read( _Out_ std::string& line_to_read ) noexc
    }
 }
 
-void CSimpleSocket::SetAddress( __in_z LPCTSTR address_string ) noexcept
+void CSimpleSocket::SetAddress( _In_z_ LPCTSTR address_string ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( m_Thunk_p );
@@ -1132,7 +1132,7 @@ void CSimpleSocket::SetAddress( __in_z LPCTSTR address_string ) noexcept
 
 #if defined( UNICODE )
 
-      copy( address, ascii_address_string );
+      copy_to( address, ascii_address_string, std::size(ascii_address_string));
 
 #else
 

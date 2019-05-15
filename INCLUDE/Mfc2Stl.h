@@ -56,6 +56,12 @@
 #include <codecvt>
 #include <memory>
 
+// Now try to include stuff is a desparate attempt to get <charconv> to compile
+#include <string_view>
+#include <cstdlib>
+#include <chrono>
+#include <charconv>
+
 #if ! defined( WFC_DONT_USE_NAMESPACES )
 #if ( _MSC_VER > 1000 )
 namespace Win32FoundationClasses

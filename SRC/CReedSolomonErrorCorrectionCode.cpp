@@ -600,12 +600,12 @@ __checkReturn int CReedSolomonErrorCorrectionCode::m_DecodeChunk(__inout std::ve
 
 // data.GetSize() must be equal to m_NumberOfSymbolsPerBlock
 
-__checkReturn bool CReedSolomonErrorCorrectionCode::m_EncodeChunk( __in const std::vector<uint8_t>& data, __out std::vector<uint8_t>& parity ) noexcept
+__checkReturn bool CReedSolomonErrorCorrectionCode::m_EncodeChunk( __in std::vector<uint8_t> const& data, __out std::vector<uint8_t>& parity ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
-   register int i = 0;
-   register int j = 0;
+   int i = 0;
+   int j = 0;
 
    int feedback = 0;
 
@@ -679,8 +679,8 @@ void CReedSolomonErrorCorrectionCode::m_GenerateGaloisField( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
-   register int loop_index = 0;
-   register int mask       = 1;
+   int loop_index = 0;
+   int mask       = 1;
 
    m_Alpha_to[ m_NumberOfBitsPerSymbol ] = 0;
 
@@ -745,8 +745,8 @@ void CReedSolomonErrorCorrectionCode::m_GeneratePolynomial( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
-   register int i = 0;
-   register int j = 0;
+   int i = 0;
+   int j = 0;
 
    m_GeneratorPolynomial[ 0 ] = m_Alpha_to[ 1 ];
    m_GeneratorPolynomial[ 1 ] = 1;   /* g(x) = (X+@**1) initially */

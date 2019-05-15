@@ -838,7 +838,7 @@ inline void from_defined(_Inout_ std::wstring& s, _In_ const uint64_t value, __i
 #include "CFile.hpp"
 #endif // WFC_STL
 
-inline constexpr _Check_return_ bool PASCAL wfc_is_ascii( const uint8_t byte_value ) noexcept
+inline constexpr _Check_return_ bool PASCAL wfc_is_ascii( uint8_t const byte_value ) noexcept
 {
     if ( byte_value == CARRIAGE_RETURN ||
          byte_value == LINE_FEED ||

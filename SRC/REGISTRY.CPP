@@ -1291,7 +1291,7 @@ _Check_return_ bool CRegistry::SetStringValue( _In_z_ const wchar_t * name_of_va
 
     // Thanks to Ravi Kiran (kravi@blr.sni.de) for finding a bug here in the UNICODE build
 
-    return( SetValue( name_of_value, typeString, reinterpret_cast<const uint8_t *>(string_value.c_str()), (DWORD) ( ( string_value.length() + 1 ) * sizeof( wchar_t ) ) ) );
+    return( SetValue( name_of_value, typeString, reinterpret_cast<uint8_t const *>(string_value.c_str()), (DWORD) ( ( string_value.length() + 1 ) * sizeof( wchar_t ) ) ) );
 }
 
 _Check_return_ bool CRegistry::SetStringArrayValue(_In_z_ const wchar_t * name_of_value, _In_ const std::vector<std::wstring>& string_array ) noexcept

@@ -728,7 +728,7 @@ void CDataArchive::Write(__in const double value) noexcept
 
     WFC_TRY
     {
-       const uint8_t * buffer = reinterpret_cast<const uint8_t *>(&value);
+       auto buffer = reinterpret_cast<uint8_t const *>(&value);
 
        int index = 0;
 
@@ -761,7 +761,7 @@ void CDataArchive::Write(__in const uint32_t value) noexcept
 
     WFC_TRY
     {
-       const uint8_t * buffer = reinterpret_cast<const uint8_t *>(&value);
+       auto buffer = reinterpret_cast<uint8_t const *>(&value);
 
        for (const auto index : Range(sizeof(value)))
        {
@@ -791,7 +791,7 @@ void CDataArchive::Write(__in const wchar_t value) noexcept
 
     WFC_TRY
     {
-       const uint8_t * buffer = reinterpret_cast<const uint8_t *>(&value);
+       auto buffer = reinterpret_cast<uint8_t const *>(&value);
 
        int index = 0;
 
@@ -824,7 +824,7 @@ void CDataArchive::Write(__in const float value) noexcept
 
     WFC_TRY
     {
-       const uint8_t * buffer = reinterpret_cast<const uint8_t *>(&value);
+       auto buffer = reinterpret_cast<uint8_t const *>(&value);
 
        int index = 0;
 
@@ -857,7 +857,7 @@ void CDataArchive::Write(__in const int32_t value) noexcept
 
     WFC_TRY
     {
-       const uint8_t * buffer = reinterpret_cast<const uint8_t *>(&value);
+       auto buffer = reinterpret_cast<uint8_t const *>(&value);
 
        for ( const auto index : Range(sizeof(value)))
        {
@@ -887,9 +887,9 @@ void CDataArchive::Write(__in const uint64_t value) noexcept
 
     WFC_TRY
     {
-       const uint8_t * buffer = reinterpret_cast<const uint8_t *>(&value);
+       auto buffer = reinterpret_cast<uint8_t const *>(&value);
 
-       for ( const auto index : Range(sizeof(value)))
+       for (auto const index : Range(sizeof(value)))
        {
           (void) m_WriteToDataChunk_p->Data.push_back(buffer[index]);
        }
@@ -917,9 +917,9 @@ void CDataArchive::Write(__in const uint16_t value) noexcept
 
     WFC_TRY
     {
-       const uint8_t * buffer = reinterpret_cast<const uint8_t *>(&value);
+       auto buffer = reinterpret_cast<uint8_t const *>(&value);
 
-       for ( const auto index : Range(sizeof(value)))
+       for (auto const index : Range(sizeof(value)))
        {
           (void) m_WriteToDataChunk_p->Data.push_back(buffer[index]);
        }

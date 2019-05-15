@@ -47,12 +47,12 @@ class CJulianDate // Don't use this, I'm not finished with it yet
 {
    protected:
 
-      double m_JulianDays;
+       double m_JulianDays{ 0 };
 
    public:
 
       CJulianDate() { m_JulianDays = 0.0; };
-      CJulianDate( __in const CJulianDate& source ) { m_JulianDays = source.m_JulianDays; };
+      CJulianDate( _In_ CJulianDate const& source ) { m_JulianDays = source.m_JulianDays; };
 
       /*
       ** Destructor should be virtual according to MSJ article in Sept 1992
@@ -65,16 +65,16 @@ class CJulianDate // Don't use this, I'm not finished with it yet
       ** Methods
       */
 
-      inline  void   Copy( __in const CJulianDate& source ) noexcept { m_JulianDays = source.m_JulianDays; }; // Don't use this
-      inline  __checkReturn double Get( void ) const noexcept { return( m_JulianDays ); }; // Don't use this
+      inline  void   Copy(_In_ CJulianDate const& source ) noexcept { m_JulianDays = source.m_JulianDays; }; // Don't use this
+      inline  constexpr __checkReturn double Get( void ) const noexcept { return( m_JulianDays ); }; // Don't use this
       virtual __checkReturn int    GetDayOfWeek( void ) const noexcept; // Don't use this
-      virtual __checkReturn bool   Set( __in const int year, __in const int month, __in const int day, __in const int hours = 0, __in const int minutes = 0, __in const int seconds = 0 ) noexcept; // Don't use this
+      virtual __checkReturn bool   Set(_In_ int const year, _In_ int const month, _In_ int const day, _In_ int const hours = 0, _In_ int const minutes = 0, _In_ int const seconds = 0 ) noexcept; // Don't use this
 
       /*
       ** Operators
       */
 
-      inline CJulianDate& operator=( __in const CJulianDate& source ) noexcept { m_JulianDays = source.m_JulianDays; return( *this ); };
+      inline constexpr CJulianDate& operator=( __in  CJulianDate const& source ) noexcept { m_JulianDays = source.m_JulianDays; return( *this ); };
 
 #if defined( _DEBUG ) && ! defined( WFC_NO_DUMPING )
 

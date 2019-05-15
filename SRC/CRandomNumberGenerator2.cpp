@@ -117,12 +117,12 @@ _Check_return_ uint32_t CRandomNumberGenerator2::m_LoadMersenneTwister( void ) n
 {
    WFC_VALIDATE_POINTER( this );
 
-    register uint32_t *p0 = m_State;
-    register uint32_t *p2 = m_State + 2;
-    register uint32_t *pM = m_State + M;
-    register uint32_t s0 = 0;
-    register uint32_t s1 = 0;
-    register int    j = 0;
+    uint32_t *p0 = m_State;
+    uint32_t *p2 = m_State + 2;
+    uint32_t *pM = m_State + M;
+    uint32_t s0 = 0;
+    uint32_t s1 = 0;
+    int    j = 0;
 
     if ( m_Left < (-1) )
     {
@@ -429,9 +429,9 @@ void CRandomNumberGenerator2::SetSeed( _In_ const uint32_t new_seed ) noexcept
     // so-- that's why the only change I made is to restrict to odd seeds.
     //
 
-    register uint32_t x = (new_seed | 1) & 0xFFFFFFFF;
-    register uint32_t *s = m_State;
-    register int    j = 0;
+    uint32_t x = (new_seed | 1) & 0xFFFFFFFF;
+    uint32_t *s = m_State;
+    int    j = 0;
 
     for(m_Left=0, *s++=x, j=N; --j;
         *s++ = (x*=69069U) & 0xFFFFFFFF);

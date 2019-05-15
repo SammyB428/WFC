@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 1995-2018, Samuel R. Blackburn
+** Copyright, 1995-2019, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -70,8 +70,8 @@ public:
     uint64_t Close{ 0 };
     uint64_t BackToBack{ 0 };
 
-    CMatchingCharacters(const CMatchingCharacters&) = delete;
-    CMatchingCharacters& operator=(const CMatchingCharacters&) = delete;
+    CMatchingCharacters(CMatchingCharacters const&) = delete;
+    CMatchingCharacters& operator=(CMatchingCharacters const&) = delete;
 
     inline CMatchingCharacters()
     {
@@ -86,7 +86,7 @@ public:
     }
 };
 
-inline constexpr _Check_return_ bool wfc_is_punctuation( _In_ const uint32_t character )
+inline constexpr _Check_return_ bool wfc_is_punctuation( _In_ uint32_t const character )
 {
     if ( character >= 0x21 && character <= 0x2F )
     {
@@ -137,8 +137,8 @@ public:
     CMatchingCharacters Brackets;
     CMatchingCharacters GreaterThanLessThan;
 
-    CTextStatistics(_In_ const CTextStatistics&) = delete;
-    _Check_return_ CTextStatistics& operator=(_In_ const CTextStatistics&) = delete;
+    CTextStatistics(_In_ CTextStatistics const&) = delete;
+    _Check_return_ CTextStatistics& operator=(_In_ CTextStatistics const&) = delete;
 
     inline CTextStatistics()
     {
@@ -147,14 +147,14 @@ public:
 
     _Check_return_ double AverageLineLength( void ) const noexcept
     {
-        const uint64_t number_of_non_new_line_characters = NumberOfCharactersOutsideASCII + NumberOfSpaces + NumberOfLetters + NumberOfDigits + NumberOfPunctuation;
+        uint64_t const number_of_non_new_line_characters = NumberOfCharactersOutsideASCII + NumberOfSpaces + NumberOfLetters + NumberOfDigits + NumberOfPunctuation;
 
         if ( NumberOfLines == 0 )
         {
             return( (double) number_of_non_new_line_characters );
         }
 
-        const double return_value = (double) ( (double) number_of_non_new_line_characters / (double) NumberOfLines );
+        double const return_value = (double) ( (double) number_of_non_new_line_characters / (double) NumberOfLines );
 
         return( return_value );
     }
@@ -195,14 +195,14 @@ protected:
 
 #if defined( _DEBUG )
 
-    uint64_t m_LastIndex;
-    uint64_t m_NumberOfTimesWeHaveBeenAskedForTheSameIndex;
+    uint64_t m_LastIndex{ 0 };
+    uint64_t m_NumberOfTimesWeHaveBeenAskedForTheSameIndex{ 0 };
 
 #endif // _DEBUG
 
     bool            m_AutomaticallyDelete{ false };
     std::vector<uint8_t> * m_Data{ nullptr };
-    const uint8_t * m_Bytes{ nullptr };
+    uint8_t const * m_Bytes{ nullptr };
     uint64_t        m_NumberOfBytes{ 0 };
     bool            m_IsASCII{ true };
     bool            m_IsBigEndian{ false };
@@ -212,8 +212,8 @@ protected:
 
 public:
 
-    CDataParser(_In_ const CDataParser&) = delete;
-    _Check_return_ CDataParser& operator=(_In_ const CDataParser&) = delete;
+    CDataParser(_In_ CDataParser const&) = delete;
+    _Check_return_ CDataParser& operator=(_In_ CDataParser const&) = delete;
 
     inline CDataParser()
     {
@@ -233,7 +233,7 @@ public:
 #endif // _DEBUG
     }
 
-    inline CDataParser( _In_reads_bytes_( buffer_size ) const uint8_t * buffer, _In_ const uint64_t buffer_size ) noexcept
+    inline CDataParser( _In_reads_bytes_( buffer_size ) uint8_t const * buffer, _In_ uint64_t const buffer_size ) noexcept
     {
         m_AutomaticallyDelete          = false;
         m_Data                         = nullptr;
@@ -272,7 +272,7 @@ public:
         return(1);
     }
 
-    inline void AdvanceByOneCharacter( _Inout_ CParsePoint& parse_point, _In_ const uint32_t character_parameter = 0 ) const noexcept
+    inline void AdvanceByOneCharacter( _Inout_ CParsePoint& parse_point, _In_ uint32_t const character_parameter = 0 ) const noexcept
     {
         try
         {
@@ -288,7 +288,7 @@ public:
                 return;
             }
 
-            const uint64_t last_index = ( parse_point.GetIndex() + NumberOfBytesPerCharacter() );
+            uint64_t const last_index = ( parse_point.GetIndex() + NumberOfBytesPerCharacter() );
 
             if ( last_index >= m_NumberOfBytes )
             {
@@ -299,7 +299,7 @@ public:
 
             uint32_t character = 0;
 
-            const uint8_t little_end = m_Bytes[ parse_point.GetIndex() ];
+            uint8_t const little_end = m_Bytes[ parse_point.GetIndex() ];
 
             if ( IsTextASCII() != true )
             {
@@ -313,7 +313,7 @@ public:
                         return;
                     }
 
-                    const uint8_t big_end = m_Bytes[ parse_point.GetIndex() + 1 ];
+                    uint8_t const big_end = m_Bytes[ parse_point.GetIndex() + 1 ];
 
                     // 2000-10-28
                     // Thanks go to Danny Smith (danny_r_smith_2001@yahoo.co.nz) for
@@ -368,9 +368,9 @@ public:
                         return;
                     }
 
-                    const uint8_t byte_2 = m_Bytes[ parse_point.GetIndex() + 1 ];
-                    const uint8_t byte_3 = m_Bytes[ parse_point.GetIndex() + 2 ];
-                    const uint8_t byte_4 = m_Bytes[ parse_point.GetIndex() + 3 ];
+                    uint8_t const byte_2 = m_Bytes[ parse_point.GetIndex() + 1 ];
+                    uint8_t const byte_3 = m_Bytes[ parse_point.GetIndex() + 2 ];
+                    uint8_t const byte_4 = m_Bytes[ parse_point.GetIndex() + 3 ];
 
                     // Now figure out the order
 
@@ -474,7 +474,7 @@ public:
         }
     }
 
-    inline _Check_return_ bool Find( _In_ const CParsePoint& parse_point, _In_ const uint8_t byte_to_find, _Inout_ CParsePoint& found_at ) const noexcept
+    inline _Check_return_ bool Find( _In_ CParsePoint const& parse_point, _In_ uint8_t const byte_to_find, _Inout_ CParsePoint& found_at ) const noexcept
     {
         try
         {
@@ -515,7 +515,7 @@ public:
         }
     }
 
-    inline _Check_return_ bool Find(_In_ const CParsePoint& parse_point, _In_ const CParsePoint& end_parse_point, _In_ const wchar_t * string_to_find, _In_ const std::size_t number_of_characters, _Inout_ CParsePoint& found_at) const noexcept
+    inline _Check_return_ bool Find(_In_ CParsePoint const& parse_point, _In_ CParsePoint const& end_parse_point, _In_ wchar_t const * string_to_find, _In_ std::size_t const number_of_characters, _Inout_ CParsePoint& found_at) const noexcept
     {
         try
         {
@@ -554,7 +554,7 @@ public:
 
                         uint32_t other_character = 0;
 
-                        for ( const auto loop_index : Range1(number_of_characters))
+                        for (auto const loop_index : Range1(number_of_characters))
                         {
                             // We peek at string_length - 1 because the GetNextCharacter() call above
                             // advances the character index
@@ -602,12 +602,12 @@ public:
         }
     }
 
-    inline _Check_return_ bool Find(_In_ const CParsePoint& parse_point, _In_ const CParsePoint& end_parse_point, _In_ const std::wstring& string_to_find, _Inout_ CParsePoint& found_at) const noexcept
+    inline _Check_return_ bool Find(_In_ CParsePoint const& parse_point, _In_ CParsePoint const& end_parse_point, _In_ std::wstring const& string_to_find, _Inout_ CParsePoint& found_at) const noexcept
     {
         return(Find(parse_point, end_parse_point, string_to_find.c_str(), string_to_find.length(), found_at));
     }
 
-    inline _Check_return_ bool Find(_In_ const CParsePoint& parse_point, _In_ const std::wstring& string_to_find, _Inout_ CParsePoint& found_at) const noexcept
+    inline _Check_return_ bool Find(_In_ CParsePoint const& parse_point, _In_ std::wstring const& string_to_find, _Inout_ CParsePoint& found_at) const noexcept
     {
         CParsePoint end_parse_point;
 
@@ -616,7 +616,7 @@ public:
         return(Find(parse_point, end_parse_point, string_to_find, found_at));
     }
 
-    inline _Check_return_ bool Find(_In_ const CParsePoint& parse_point, _In_ const wchar_t * string_to_find, _Inout_ CParsePoint& found_at) const noexcept
+    inline _Check_return_ bool Find(_In_ CParsePoint const& parse_point, _In_ wchar_t const * string_to_find, _Inout_ CParsePoint& found_at) const noexcept
     {
         CParsePoint end_parse_point;
 
@@ -625,7 +625,7 @@ public:
         return(Find(parse_point, end_parse_point, string_to_find, wcslen(string_to_find), found_at));
     }
 
-    inline _Check_return_ bool Find( _In_ const CParsePoint& parse_point, _In_ const CParsePoint& end_parse_point, _In_ const uint8_t * pattern_buffer, _In_ const std::size_t pattern_length, _Inout_ CParsePoint& found_at ) const noexcept
+    inline _Check_return_ bool Find( _In_ CParsePoint const& parse_point, _In_ CParsePoint const& end_parse_point, _In_ uint8_t const * pattern_buffer, _In_ const std::size_t pattern_length, _Inout_ CParsePoint& found_at ) const noexcept
     {
         try
         {
@@ -670,12 +670,12 @@ public:
         }
     }
 
-    inline _Check_return_ bool Find(_In_ const CParsePoint& parse_point, _In_ const CParsePoint& end_parse_point, _In_ const std::vector<uint8_t>& bytes_to_find, _Inout_ CParsePoint& found_at) const noexcept
+    inline _Check_return_ bool Find(_In_ CParsePoint const& parse_point, _In_ CParsePoint const& end_parse_point, _In_ std::vector<uint8_t> const& bytes_to_find, _Inout_ CParsePoint& found_at) const noexcept
     {
         return(Find(parse_point, end_parse_point, bytes_to_find.data(), bytes_to_find.size(), found_at));
     }
 
-    inline _Check_return_ bool Find(_In_ const CParsePoint& parse_point, _In_ const std::vector<uint8_t>& bytes_to_find, _Inout_ CParsePoint& found_at) const noexcept
+    inline _Check_return_ bool Find(_In_ CParsePoint const& parse_point, _In_ std::vector<uint8_t> const& bytes_to_find, _Inout_ CParsePoint& found_at) const noexcept
     {
         CParsePoint end_parse_point;
 
@@ -684,7 +684,7 @@ public:
         return(Find(parse_point, end_parse_point, bytes_to_find, found_at));
     }
 
-    inline _Check_return_ bool Find(_In_ const CParsePoint& parse_point, _In_ const uint8_t * bytes_to_find, _In_ const std::size_t number_of_bytes_to_find, CParsePoint& found_at) const noexcept
+    inline _Check_return_ bool Find(_In_ CParsePoint const& parse_point, _In_ uint8_t const * bytes_to_find, _In_ std::size_t const number_of_bytes_to_find, CParsePoint& found_at) const noexcept
     {
         CParsePoint end_parse_point;
 
@@ -693,7 +693,7 @@ public:
         return(Find(parse_point, end_parse_point, bytes_to_find, number_of_bytes_to_find, found_at));
     }
 
-    inline _Check_return_ bool FindNoCase( _In_ const CParsePoint& parse_point, _In_ const std::wstring& string_to_find, _Inout_ CParsePoint& found_at ) const noexcept
+    inline _Check_return_ bool FindNoCase( _In_ CParsePoint const& parse_point, _In_ std::wstring const& string_to_find, _Inout_ CParsePoint& found_at ) const noexcept
     {
         try
         {
@@ -711,7 +711,7 @@ public:
                 return( false );
             }
 
-            const std::size_t string_length = string_to_find.length();
+            std::size_t const string_length = string_to_find.length();
 
             if ( string_length == 0 )
             {
@@ -735,7 +735,7 @@ public:
 
                         uint32_t other_character = 0;
 
-                        for ( const auto loop_index : Range1(string_length) )
+                        for ( auto const loop_index : Range1(string_length) )
                         {
                             if ( PeekAtCharacter( found_at, character_to_test, loop_index ) != true )
                             {
@@ -780,7 +780,7 @@ public:
         }
     }
 
-    inline _Check_return_ bool FindNoCase( _In_ const CParsePoint& parse_point, _In_ const std::vector<uint8_t>& bytes_to_find, _Inout_ CParsePoint& found_at ) const noexcept
+    inline _Check_return_ bool FindNoCase( _In_ CParsePoint const& parse_point, _In_ std::vector<uint8_t> const& bytes_to_find, _Inout_ CParsePoint& found_at ) const noexcept
     {
         try
         {
@@ -802,7 +802,7 @@ public:
 
             std::size_t pattern_length = bytes_to_find.size();
 
-            const uint8_t * pattern_buffer = bytes_to_find.data();
+            uint8_t const * pattern_buffer = bytes_to_find.data();
 
             while( ( found_at.GetIndex() + pattern_length ) <= m_NumberOfBytes )
             {
@@ -825,7 +825,7 @@ public:
         }
     }
 
-    inline _Check_return_ bool Get(_Inout_ CParsePoint& parse_point, _In_ const uint32_t length, _Inout_ std::vector<uint8_t>& bytes_to_get) const noexcept
+    inline _Check_return_ bool Get(_Inout_ CParsePoint& parse_point, _In_ uint32_t const length, _Inout_ std::vector<uint8_t>& bytes_to_get) const noexcept
     {
         try
         {
@@ -845,7 +845,7 @@ public:
                 return(false);
             }
 
-            for (const auto index : Range(length))
+            for (auto const index : Range(length))
             {
                 bytes_to_get.push_back(m_Bytes[parse_point.GetIndex()]);
                 parse_point.AutoIncrement(m_Bytes[parse_point.GetIndex()]);
@@ -860,7 +860,7 @@ public:
         }
     }
 
-    inline _Check_return_ bool Get( _Inout_ CParsePoint& parse_point, _In_ const uint32_t length, _Out_writes_bytes_( length ) uint8_t * bytes_to_get ) const noexcept
+    inline _Check_return_ bool Get( _Inout_ CParsePoint& parse_point, _In_ uint32_t const length, _Out_writes_bytes_( length ) uint8_t * bytes_to_get ) const noexcept
     {
         try
         {
@@ -878,7 +878,7 @@ public:
                 return( false );
             }
 
-            for ( const auto index : Range(length) )
+            for ( auto const index : Range(length) )
             {
                 bytes_to_get[ index ] = m_Bytes[ parse_point.GetIndex() ];
                 parse_point.AutoIncrement( m_Bytes[ parse_point.GetIndex() ] );
@@ -893,7 +893,7 @@ public:
         }
     }
 
-    inline _Check_return_ bool Get( _Inout_ CParsePoint& parse_point, _In_ const uint32_t length, _Inout_ std::wstring& string_to_get ) const noexcept
+    inline _Check_return_ bool Get( _Inout_ CParsePoint& parse_point, _In_ uint32_t const length, _Inout_ std::wstring& string_to_get ) const noexcept
     {
         try
         {
@@ -913,7 +913,7 @@ public:
                 return( false );
             }
 
-            for ( const auto loop_index : Range(length) )
+            for ( auto const loop_index : Range(length) )
             {
                 string_to_get.push_back( static_cast< TCHAR > ( m_Bytes[ parse_point.GetIndex() ] ) );
                 parse_point.AutoIncrement( m_Bytes[ parse_point.GetIndex() ] );
@@ -932,17 +932,17 @@ public:
 
     inline _Check_return_ uint8_t ReadByte( _Inout_ CParsePoint& parse_point ) const noexcept
     {
-        const uint8_t byte_1 = GetAt( parse_point.GetIndex() );
+        uint8_t const byte_1 = GetAt( parse_point.GetIndex() );
         parse_point.AutoIncrement( byte_1 );
 
         return( byte_1 );
     }
 
-    inline void ReadBytes( _Inout_ CParsePoint& parse_point, _Out_writes_bytes_( number_of_bytes ) uint8_t * buffer, _In_ const uint64_t number_of_bytes ) const noexcept
+    inline void ReadBytes( _Inout_ CParsePoint& parse_point, _Out_writes_bytes_( number_of_bytes ) uint8_t * buffer, _In_ uint64_t const number_of_bytes ) const noexcept
     {
         WFC_VALIDATE_POINTER( buffer );
 
-        for( const auto loop_index : Range(number_of_bytes) )
+        for( auto const loop_index : Range(number_of_bytes) )
         {
             buffer[ loop_index ] = GetAt( parse_point.GetIndex() );
             parse_point.AutoIncrement( buffer[ loop_index ] );
@@ -951,10 +951,10 @@ public:
 
     inline _Check_return_ bool ReadUInt32BigEndian( _Inout_ CParsePoint& parse_point, _Inout_ uint32_t& value ) const noexcept
     {
-        const uint8_t byte_1 = ReadByte( parse_point );
-        const uint8_t byte_2 = ReadByte( parse_point );
-        const uint8_t byte_3 = ReadByte( parse_point );
-        const uint8_t byte_4 = ReadByte( parse_point );
+        uint8_t const byte_1 = ReadByte( parse_point );
+        uint8_t const byte_2 = ReadByte( parse_point );
+        uint8_t const byte_3 = ReadByte( parse_point );
+        uint8_t const byte_4 = ReadByte( parse_point );
 
         value = MAKE_uint32_t( byte_4, byte_3, byte_2, byte_1 );
 
@@ -977,7 +977,7 @@ public:
     {
         uint32_t first_value = 0;
 
-        const bool return_value = ReadUInt32BigEndian( parse_point, first_value );
+        bool const return_value = ReadUInt32BigEndian( parse_point, first_value );
 
         value = (int32_t) first_value;
 
@@ -998,8 +998,8 @@ public:
 
     inline _Check_return_ bool ReadUInt16LittleEndian( _Inout_ CParsePoint& parse_point, _Inout_ uint16_t& value ) const noexcept
     {
-        const uint8_t byte_1 = ReadByte( parse_point );
-        const uint8_t byte_2 = ReadByte( parse_point );
+        uint8_t const byte_1 = ReadByte( parse_point );
+        uint8_t const byte_2 = ReadByte( parse_point );
 
         value = MAKE_uint16_t( byte_1, byte_2 );
 
@@ -1032,8 +1032,8 @@ public:
 
     inline _Check_return_ bool ReadInt16LittleEndian( _Inout_ CParsePoint& parse_point, _Inout_ int16_t& value ) const noexcept
     {
-        const uint8_t byte_1 = ReadByte( parse_point );
-        const uint8_t byte_2 = ReadByte( parse_point );
+        uint8_t const byte_1 = ReadByte( parse_point );
+        uint8_t const byte_2 = ReadByte( parse_point );
 
         value = (int16_t) MAKE_uint16_t( byte_1, byte_2 );
 
@@ -1042,10 +1042,10 @@ public:
 
     inline _Check_return_ bool ReadUInt32LittleEndian( _Inout_ CParsePoint& parse_point, _Inout_ uint32_t& value ) const noexcept
     {
-        const uint8_t byte_1 = ReadByte( parse_point );
-        const uint8_t byte_2 = ReadByte( parse_point );
-        const uint8_t byte_3 = ReadByte( parse_point );
-        const uint8_t byte_4 = ReadByte( parse_point );
+        uint8_t const byte_1 = ReadByte( parse_point );
+        uint8_t const byte_2 = ReadByte( parse_point );
+        uint8_t const byte_3 = ReadByte( parse_point );
+        uint8_t const byte_4 = ReadByte( parse_point );
 
         value = MAKE_uint32_t( byte_1, byte_2, byte_3, byte_4 );
 
@@ -1068,7 +1068,7 @@ public:
     {
         uint32_t first_value = 0;
 
-        const bool return_value = ReadUInt32LittleEndian( parse_point, first_value );
+        bool const return_value = ReadUInt32LittleEndian( parse_point, first_value );
 
         value = (int32_t) first_value;
 
@@ -1089,14 +1089,14 @@ public:
 
     inline _Check_return_ bool ReadUInt64BigEndian( _Inout_ CParsePoint& parse_point, _Inout_ uint64_t& value ) const noexcept
     {
-        const uint8_t byte_1 = ReadByte( parse_point );
-        const uint8_t byte_2 = ReadByte( parse_point );
-        const uint8_t byte_3 = ReadByte( parse_point );
-        const uint8_t byte_4 = ReadByte( parse_point );
-        const uint8_t byte_5 = ReadByte( parse_point );
-        const uint8_t byte_6 = ReadByte( parse_point );
-        const uint8_t byte_7 = ReadByte( parse_point );
-        const uint8_t byte_8 = ReadByte( parse_point );
+        uint8_t const byte_1 = ReadByte( parse_point );
+        uint8_t const byte_2 = ReadByte( parse_point );
+        uint8_t const byte_3 = ReadByte( parse_point );
+        uint8_t const byte_4 = ReadByte( parse_point );
+        uint8_t const byte_5 = ReadByte( parse_point );
+        uint8_t const byte_6 = ReadByte( parse_point );
+        uint8_t const byte_7 = ReadByte( parse_point );
+        uint8_t const byte_8 = ReadByte( parse_point );
 
         value = MAKE_uint64_t( byte_8, byte_7, byte_6, byte_5, byte_4, byte_3, byte_2, byte_1 );
 
@@ -1107,7 +1107,7 @@ public:
     {
         uint64_t first_value = 0;
 
-        const bool return_value = ReadUInt64BigEndian( parse_point, first_value );
+        bool const return_value = ReadUInt64BigEndian( parse_point, first_value );
 
         value = (int64_t) first_value;
 
@@ -1116,14 +1116,14 @@ public:
 
     inline _Check_return_ bool ReadUInt64LittleEndian( _Inout_ CParsePoint& parse_point, _Inout_ uint64_t& value ) const noexcept
     {
-        const uint8_t byte_1 = ReadByte( parse_point );
-        const uint8_t byte_2 = ReadByte( parse_point );
-        const uint8_t byte_3 = ReadByte( parse_point );
-        const uint8_t byte_4 = ReadByte( parse_point );
-        const uint8_t byte_5 = ReadByte( parse_point );
-        const uint8_t byte_6 = ReadByte( parse_point );
-        const uint8_t byte_7 = ReadByte( parse_point );
-        const uint8_t byte_8 = ReadByte( parse_point );
+        uint8_t const byte_1 = ReadByte( parse_point );
+        uint8_t const byte_2 = ReadByte( parse_point );
+        uint8_t const byte_3 = ReadByte( parse_point );
+        uint8_t const byte_4 = ReadByte( parse_point );
+        uint8_t const byte_5 = ReadByte( parse_point );
+        uint8_t const byte_6 = ReadByte( parse_point );
+        uint8_t const byte_7 = ReadByte( parse_point );
+        uint8_t const byte_8 = ReadByte( parse_point );
 
         value = MAKE_uint64_t( byte_1, byte_2, byte_3, byte_4, byte_5, byte_6, byte_7, byte_8 );
 
@@ -1146,7 +1146,7 @@ public:
     {
         uint64_t first_value = 0;
 
-        const bool return_value = ReadUInt64LittleEndian( parse_point, first_value );
+        bool const return_value = ReadUInt64LittleEndian( parse_point, first_value );
 
         value = (int64_t) first_value;
 
@@ -1165,7 +1165,7 @@ public:
         return( return_value );
     }
 
-    inline _Check_return_ uint64_t ReadInteger( _Inout_ CParsePoint& parse_point, _In_ const uint64_t number_of_characters_in_integer ) const noexcept
+    inline _Check_return_ uint64_t ReadInteger( _Inout_ CParsePoint& parse_point, _In_ uint64_t const number_of_characters_in_integer ) const noexcept
     {
         uint64_t return_value = 0;
 
@@ -1173,7 +1173,7 @@ public:
 
         uint32_t field_character = 0;
 
-        for ( const auto loop_index : Range(number_of_characters_in_integer) )
+        for ( auto const loop_index : Range(number_of_characters_in_integer) )
         {
             (void) GetNextCharacter( parse_point, field_character );
             hex_string.push_back( static_cast<wchar_t>(field_character) );
@@ -1194,7 +1194,7 @@ public:
 
         uint32_t field_character = 0;
 
-        for ( const auto loop_index : Range(number_of_characters_in_integer) )
+        for ( auto const loop_index : Range(number_of_characters_in_integer) )
         {
             (void) GetNextCharacter( parse_point, field_character );
             hex_string.push_back( static_cast<wchar_t>(field_character) );
@@ -1233,7 +1233,7 @@ public:
         return( return_value );
     }
 
-    inline _Check_return_ uint8_t GetAt( _In_ const uint64_t byte_index ) const noexcept
+    inline _Check_return_ uint8_t GetAt( _In_ uint64_t const byte_index ) const noexcept
     {
         try
         {
@@ -1281,7 +1281,7 @@ public:
 
     // Take a look a the current character without advancing the parse point
 
-    inline _Check_return_ DWORD GetCharacter( _In_ const CParsePoint& const_parse_point, _In_ const uint32_t number_of_characters_ahead = 0 ) const noexcept
+    inline _Check_return_ DWORD GetCharacter( _In_ CParsePoint const& const_parse_point, _In_ uint32_t const number_of_characters_ahead = 0 ) const noexcept
     {
         try
         {
@@ -1469,7 +1469,7 @@ public:
         }
     }
 
-    inline _Check_return_ bool GetField( _Inout_ CParsePoint& parse_point, _Inout_ std::vector<uint8_t>& field, _In_ const TCHAR field_separator ) const noexcept
+    inline _Check_return_ bool GetField( _Inout_ CParsePoint& parse_point, _Inout_ std::vector<uint8_t>& field, _In_ wchar_t const field_separator ) const noexcept
     {
         field.clear();
 
@@ -1493,7 +1493,7 @@ public:
         return( false );
     }
 
-    inline _Check_return_ bool GetField( _Inout_ CParsePoint& parse_point, _Inout_ std::wstring& field, _In_ const wchar_t field_separator ) const noexcept
+    inline _Check_return_ bool GetField( _Inout_ CParsePoint& parse_point, _Inout_ std::wstring& field, _In_ wchar_t const field_separator ) const noexcept
     {
         field.clear();
 
@@ -1666,7 +1666,7 @@ public:
         }
     }
 
-    inline _Check_return_ bool SkipLines(_Inout_ CParsePoint& parse_point, _In_ const int number_of_lines) const noexcept
+    inline _Check_return_ bool SkipLines(_Inout_ CParsePoint& parse_point, _In_ int const number_of_lines) const noexcept
     {
         int line_count = 0;
 
@@ -1774,7 +1774,7 @@ public:
         return(false);
     }
 
-    inline _Check_return_ bool GetLine( _Inout_ CParsePoint& parse_point, _Inout_ const uint8_t *& buffer, _Inout_ uint64_t& length ) const noexcept
+    inline _Check_return_ bool GetLine( _Inout_ CParsePoint& parse_point, _Inout_ uint8_t const *& buffer, _Inout_ uint64_t& length ) const noexcept
     {
         buffer = &m_Bytes[ parse_point.GetIndex() ];
         length = 0;
@@ -1832,7 +1832,7 @@ public:
         return( m_NumberOfBytes );
     }
 
-    inline _Check_return_ bool GetUntilAndIncluding( _Inout_ CParsePoint& parse_point, _In_ const uint8_t termination_byte, _Inout_ std::vector<uint8_t>& bytes_to_get ) const noexcept
+    inline _Check_return_ bool GetUntilAndIncluding( _Inout_ CParsePoint& parse_point, _In_ uint8_t const termination_byte, _Inout_ std::vector<uint8_t>& bytes_to_get ) const noexcept
     {
         try
         {
@@ -1877,7 +1877,7 @@ public:
         }
     }
 
-    inline _Check_return_ bool GetUntilAndIncluding(_Inout_ CParsePoint& parse_point, _In_ const uint8_t termination_byte, _Inout_ std::wstring& string_to_get) const noexcept
+    inline _Check_return_ bool GetUntilAndIncluding(_Inout_ CParsePoint& parse_point, _In_ uint8_t const termination_byte, _Inout_ std::wstring& string_to_get) const noexcept
     {
         // 1999-07-01 - Optimized this routine
 
@@ -1948,7 +1948,7 @@ public:
     // 1998-11-21, New for Release 38
     // The following method was added by Jeff Barczewski (jb@snowflight.com)
     // He added to fix a bug in the parsing of comment sections in XML
-    inline _Check_return_ bool GetUntilAndIncluding(_Inout_ CParsePoint& parse_point, _In_ const std::wstring& termination_characters, _Inout_ std::wstring& string_to_get) const noexcept
+    inline _Check_return_ bool GetUntilAndIncluding(_Inout_ CParsePoint& parse_point, _In_ std::wstring const& termination_characters, _Inout_ std::wstring& string_to_get) const noexcept
     {
         try
         {
@@ -2020,8 +2020,8 @@ public:
 
                 if (byte_array.size() >= termination_characters_length)
                 {
-                    const uint8_t * address = byte_array.data();
-                    const uint8_t * address_to_compare = &address[byte_array.size() - (termination_characters_length * sizeof(TCHAR))];
+                    uint8_t const * address = byte_array.data();
+                    uint8_t const * address_to_compare = &address[byte_array.size() - (termination_characters_length * sizeof(TCHAR))];
 
                     // Don't forget to take into account that we may be a UNICODE build so we
                     // need to multiply the number of characters by the number of bytes per
@@ -2033,7 +2033,7 @@ public:
                         (void)byte_array.push_back(0);
 #endif // UNICODE
                         (void)byte_array.push_back(0);
-                        string_to_get.assign((const wchar_t *)byte_array.data());
+                        string_to_get.assign(reinterpret_cast<wchar_t const *>(byte_array.data()));
                         return(true);
                     }
                 }
@@ -2050,7 +2050,7 @@ public:
         }
     }
 
-    inline _Check_return_ bool GetUntilAndIncluding( _Inout_ CParsePoint& parse_point, _In_ const std::vector<uint8_t>& termination_bytes, _Inout_ std::wstring& string_to_get ) const noexcept
+    inline _Check_return_ bool GetUntilAndIncluding( _Inout_ CParsePoint& parse_point, _In_ std::vector<uint8_t> const& termination_bytes, _Inout_ std::wstring& string_to_get ) const noexcept
     {
         try
         {
@@ -2070,9 +2070,9 @@ public:
 
             wchar_t character_to_test = 0;
 
-            const uint8_t * termination_bytes_p = termination_bytes.data();
+            auto termination_bytes_p = termination_bytes.data();
 
-            const std::size_t termination_bytes_length = termination_bytes.size();
+            std::size_t const termination_bytes_length = termination_bytes.size();
 
             do
             {
@@ -2108,7 +2108,7 @@ public:
         }
     }
 
-    inline _Check_return_ bool Initialize(_In_ const std::vector<uint8_t> * data ) noexcept
+    inline _Check_return_ bool Initialize(_In_ std::vector<uint8_t> const * data ) noexcept
     {
         WFC_VALIDATE_POINTER(data);
 
@@ -2132,7 +2132,7 @@ public:
         }
     }
 
-    inline _Check_return_ bool Initialize( _Inout_ std::vector<uint8_t> * data, _In_ const bool automatically_delete = false ) noexcept
+    inline _Check_return_ bool Initialize( _Inout_ std::vector<uint8_t> * data, _In_ bool const automatically_delete = false ) noexcept
     {
         WFC_VALIDATE_POINTER( data );
 
@@ -2162,7 +2162,7 @@ public:
         }
     }
 
-    inline _Check_return_ bool Initialize( _In_reads_bytes_( number_of_bytes ) const uint8_t * data, _In_ const uint64_t number_of_bytes ) noexcept
+    inline _Check_return_ bool Initialize( _In_reads_bytes_( number_of_bytes ) uint8_t const * data, _In_ uint64_t const number_of_bytes ) noexcept
     {
         WFC_VALIDATE_POINTER( data );
 
@@ -2189,7 +2189,7 @@ public:
         }
     }
 
-    inline _Check_return_ bool Initialize(_In_ const std::vector<std::wstring>& strings) noexcept
+    inline _Check_return_ bool Initialize(_In_ std::vector<std::wstring> const& strings) noexcept
     {
         try
         {
@@ -2209,9 +2209,9 @@ public:
                 return(false);
             }
 
-            for (const auto& the_string : strings)
+            for (auto const& the_string : strings)
             {
-                for (const auto& character : the_string)
+                for (auto const& character : the_string)
                 {
                     (void)bytes_p->push_back(static_cast<uint8_t>(character));
                 }
@@ -2230,9 +2230,9 @@ public:
     inline _Check_return_ bool IsTextASCII( void ) const noexcept     { return( ( m_IsASCII     == false ) ? false : ( m_IsUCS4 != false ) ? false : true ); }
     inline _Check_return_ bool IsTextBigEndian( void ) const noexcept { return( ( m_IsBigEndian == false ) ? false : true ); }
     inline _Check_return_ bool IsTextUCS4( void ) const noexcept      { return( ( m_IsUCS4      == false ) ? false : true ); }
-    inline _Check_return_ const uint8_t * GetData( void ) const noexcept { return( m_Bytes ); }
+    inline _Check_return_ uint8_t const * GetData( void ) const noexcept { return( m_Bytes ); }
 
-    inline _Check_return_ bool PeekAtCharacter( _In_ const CParsePoint& const_parse_point, _Inout_ uint32_t& character, _In_ const uint64_t number_of_characters_ahead = 1 ) const noexcept
+    inline _Check_return_ bool PeekAtCharacter( _In_ CParsePoint const& const_parse_point, _Inout_ uint32_t& character, _In_ uint64_t const number_of_characters_ahead = 1 ) const noexcept
     {
         try
         {
@@ -2384,23 +2384,23 @@ public:
         }
     }
 
-    inline _Check_return_ uint32_t PeekCharacter( _In_ const CParsePoint& const_parse_point, _In_ const uint64_t number_of_characters_ahead ) const noexcept
+    inline _Check_return_ uint32_t PeekCharacter( _In_ CParsePoint const& const_parse_point, _In_ uint64_t const number_of_characters_ahead ) const noexcept
     {
         uint32_t return_value = 0;
         (void) PeekAtCharacter(const_parse_point, return_value, number_of_characters_ahead );
         return( return_value );
     }
 
-    inline _Check_return_ bool PeekNextCharacter( _In_ const CParsePoint& const_parse_point, _Out_ uint32_t& character ) const noexcept
+    inline _Check_return_ bool PeekNextCharacter( _In_ CParsePoint const& const_parse_point, _Out_ uint32_t& character ) const noexcept
     {
         character = 0;
         CParsePoint peek_point(const_parse_point);
         return( GetNextCharacter( peek_point, character ) );
     }
 
-    inline _Check_return_ bool PeekAtByte(_In_ const CParsePoint& const_parse_point, _Out_ uint8_t& value) const noexcept
+    inline _Check_return_ bool PeekAtByte(_In_ CParsePoint const& const_parse_point, _Out_ uint8_t& value) const noexcept
     {
-        const uint64_t index = const_parse_point.GetIndex();
+        uint64_t const index = const_parse_point.GetIndex();
 
         if (index >= GetSize())
         {
@@ -2413,20 +2413,20 @@ public:
         return(true);
     }
 
-    inline _Check_return_ bool SetTextToASCII( _In_ const bool text_is_ascii = true ) noexcept
+    inline _Check_return_ bool SetTextToASCII( _In_ bool const text_is_ascii = true ) noexcept
     {
         m_IsASCII = ( text_is_ascii == false ) ? false : true;
         m_IsUCS4 = false;
         return( true );
     }
 
-    inline _Check_return_ bool SetTextToBigEndian( _In_ const bool unicode_is_big_endian = true ) noexcept
+    inline _Check_return_ bool SetTextToBigEndian( _In_ bool const unicode_is_big_endian = true ) noexcept
     {
         m_IsBigEndian = ( unicode_is_big_endian == false ) ? false : true;
         return( true );
     }
 
-    inline _Check_return_ bool SetTextToUCS4( _In_ const bool text_is_ucs4 = true ) noexcept
+    inline _Check_return_ bool SetTextToUCS4( _In_ bool const text_is_ucs4 = true ) noexcept
     {
         if ( text_is_ucs4 == false )
         {
@@ -2441,7 +2441,7 @@ public:
         return( true );
     }
 
-    inline _Check_return_ bool SetUCS4Order( _In_ const uint32_t order = 4321 ) noexcept
+    inline _Check_return_ bool SetUCS4Order( _In_ uint32_t const order = 4321 ) noexcept
     {
         switch( order )
         {
@@ -2462,8 +2462,8 @@ public:
 
     inline void DetectText( _Inout_ CParsePoint& p ) noexcept
     {
-        const uint8_t byte_1 = ReadByte( p );
-        const uint8_t byte_2 = ReadByte( p );
+        uint8_t const byte_1 = ReadByte( p );
+        uint8_t const byte_2 = ReadByte( p );
 
         if ( byte_1 == 0xFF && byte_2 == 0xFE )
         {
@@ -2481,7 +2481,7 @@ public:
             return;
         }
 
-        const uint8_t byte_3 = ReadByte( p );
+        uint8_t const byte_3 = ReadByte( p );
 
         if ( byte_1 == 0xEF &&
             byte_2 == 0xBB &&
@@ -2494,7 +2494,7 @@ public:
 
         // No easy signatures...
 
-        const uint8_t byte_4 = ReadByte( p );
+        uint8_t const byte_4 = ReadByte( p );
 
         if ( wfc_is_ascii( byte_1 ) != false &&
             wfc_is_ascii( byte_2 ) != false &&
@@ -2584,7 +2584,7 @@ public:
         p.SetIndex( 0 );
     }
 
-    inline void SetUnicodeToASCIITranslationFailureCharacter( _In_ const uint8_t ascii_character ) noexcept
+    inline void SetUnicodeToASCIITranslationFailureCharacter( _In_ uint8_t const ascii_character ) noexcept
     {
         _ASSERTE( ascii_character != 0x00 );
         m_UnicodeToASCIIErrorCharacter = ascii_character;
@@ -2604,8 +2604,8 @@ public:
     CDataParser Parser;
     CParsePoint Position;
 
-    BinaryReader(_In_ const BinaryReader&) = delete;
-    _Check_return_ BinaryReader& operator=(_In_ const BinaryReader&) = delete;
+    BinaryReader(_In_ BinaryReader const&) = delete;
+    _Check_return_ BinaryReader& operator=(_In_ BinaryReader const&) = delete;
 
     BinaryReader(){};
     ~BinaryReader(){};
@@ -2620,7 +2620,7 @@ public:
         return( Parser.ReadByte( Position ) );
     }
 
-    inline void ReadBytes(_Out_ uint8_t * buffer, _In_ const uint64_t number_of_bytes ) noexcept
+    inline void ReadBytes(_Out_ uint8_t * buffer, _In_ uint64_t const number_of_bytes ) noexcept
     {
         if ( buffer == nullptr )
         {
@@ -2665,7 +2665,7 @@ public:
         return( Parser.ReadUInt64LittleEndian( Position ) );
     }
 
-    inline void ReadUnicodeLittleEndian(_In_ const uint32_t number_of_bytes, _Inout_ std::wstring& return_value) noexcept
+    inline void ReadUnicodeLittleEndian(_In_ uint32_t const number_of_bytes, _Inout_ std::wstring& return_value) noexcept
     {
         return_value.clear();
 
@@ -2687,7 +2687,7 @@ public:
 
         ReadBytes(buffer.get(), number_of_bytes);
 
-        return_value.assign(reinterpret_cast<const wchar_t *>(buffer.get()));
+        return_value.assign(reinterpret_cast<wchar_t const *>(buffer.get()));
     }
 };
 
