@@ -143,7 +143,7 @@ void CUniversalNamingConvention::Copy( _In_ const CUniformResourceLocator& sourc
    ** Now go through the Path and convert /'s to \'s
    */
 
-   for ( const auto path_index : Range(PathName.length()) )
+   for ( auto const path_index : Range(PathName.length()) )
    {
       if ( PathName.at(path_index) == '/' )
       {

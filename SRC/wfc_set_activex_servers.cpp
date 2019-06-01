@@ -51,12 +51,12 @@ static char THIS_FILE[] = __FILE__;
 
 USING_WFC_NAMESPACE
 
-__checkReturn bool PASCAL Win32FoundationClasses::wfc_set_activex_servers( __in const std::vector<std::wstring>& server_list ) noexcept
+__checkReturn bool PASCAL Win32FoundationClasses::wfc_set_activex_servers( __in std::vector<std::wstring> const& server_list ) noexcept
 {
    std::wstring string_to_put_in_registry;
    std::wstring temp_string;
 
-   for ( const auto loop_index : Range(server_list.size()) )
+   for ( auto const loop_index : Range(server_list.size()) )
    {
       temp_string.assign( server_list.at( loop_index ) );
 

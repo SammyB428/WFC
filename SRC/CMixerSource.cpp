@@ -107,7 +107,7 @@ __checkReturn bool CMixerSource::GetControl( __out CMixerVolumeControl& control 
 
    if ( m_Mixer.GetAllControls( m_MixerLine, controls_array ) != FALSE )
    {
-      for ( const auto& entry : controls_array )
+      for ( auto const& entry : controls_array )
       {
          if (entry.IsFader() )
          {

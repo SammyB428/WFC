@@ -174,7 +174,7 @@ __checkReturn bool CMixerWaveIn::Open( __in UINT_PTR device_number, __in DWORD w
 
    bool control_was_found = false;
 
-   for ( const auto& entry : array )
+   for ( auto const& entry : array )
    {
       if ( entry.Type == CMixerControl::Mixer )
       {

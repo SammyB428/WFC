@@ -101,7 +101,7 @@ void CUniformResourceLocator::Copy(_In_ const CUniformResourceLocator& source ) 
    URL.assign( source.URL );
 }
 
-void CUniformResourceLocator::Copy( __in const CUniversalNamingConvention& source ) noexcept
+void CUniformResourceLocator::Copy( __in CUniversalNamingConvention const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -117,7 +117,7 @@ void CUniformResourceLocator::Copy( __in const CUniversalNamingConvention& sourc
    ** Now go through PathName to make sure it has /'s instead of \'s
    */
 
-   for ( const auto location_of_slash : Range(PathName.length()) )
+   for ( auto const location_of_slash : Range(PathName.length()) )
    {
       if ( PathName.at( location_of_slash ) == '\\' )
       {

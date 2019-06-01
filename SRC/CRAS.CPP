@@ -881,7 +881,7 @@ BOOL CRemoteAccessService::EnableLogging( BOOL enable_logging, LPCTSTR machine_n
       value_to_set = 1;
    }
 
-   if ( registry.SetValue( TEXT( "Logging" ), value_to_set ) == FALSE )
+   if ( registry.SetValue( TEXT( "Logging" ), value_to_set ) == false)
    {
       return( FALSE );
    }
@@ -1695,13 +1695,13 @@ BOOL CRemoteAccessService::SetKeepConnectionsAfterLogoff( BOOL keep_connections,
 
    CRegistry registry;
 
-   if ( registry.Connect( HKEY_LOCAL_MACHINE, machine_name ) == FALSE )
+   if ( registry.Connect( HKEY_LOCAL_MACHINE, machine_name ) == false)
    {
       WFCTRACE( TEXT( "Can't connect to HKEY_LOCAL_MACHINE" ) );
       return( FALSE );
    }
 
-   if ( registry.Open( TEXT( "SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Winlogon" ) ) == FALSE )
+   if ( registry.Open( TEXT( "SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Winlogon" ) ) == false)
    {
       WFCTRACE( TEXT( "Can't open \"SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Winlogon\"" ) );
       return( FALSE );
@@ -1718,7 +1718,7 @@ BOOL CRemoteAccessService::SetKeepConnectionsAfterLogoff( BOOL keep_connections,
       keep_connections_string = TEXT( "1" );
    }
 
-   if ( registry.SetValue( TEXT( "KeepRasConnections" ), keep_connections_string ) == FALSE )
+   if ( registry.SetValue( TEXT( "KeepRasConnections" ), keep_connections_string ) == false)
    {
       // The value doesn't exist, this means the RAS connections will be dropped at logoff
       return( FALSE );

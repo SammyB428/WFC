@@ -511,7 +511,7 @@ void CMTFDateTime::Copy( __in const CMTFDateTime& source ) noexcept
    Copy( (const MTF_DATE_TIME *) &source );
 }
 
-void CMTFDateTime::Copy( __in const MTF_DATE_TIME * source ) noexcept
+void CMTFDateTime::Copy( __in MTF_DATE_TIME const * source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
@@ -526,7 +526,7 @@ void CMTFDateTime::Copy( __in const MTF_DATE_TIME * source ) noexcept
 
    WFC_TRY
    {
-      for ( const auto dt_field_index : Range(sizeof( dt_field )) )
+      for ( auto const dt_field_index : Range(sizeof( dt_field )) )
       {
          dt_field[ dt_field_index ] = source->dt_field[ dt_field_index ];
       }

@@ -249,7 +249,7 @@ void CNetworkUserInformation::Copy( __in const USER_INFO_2 *source ) noexcept
       Privileges          = source->usri2_priv;
       UnitsPerWeek        = source->usri2_units_per_week;
    
-      for ( const auto index : Range(21) )
+      for ( auto const index : Range(21) )
       {
          (void) LogonHours.push_back( source->usri2_logon_hours[ index ] );
       }
@@ -307,7 +307,7 @@ void CNetworkUserInformation::Copy( __in const USER_INFO_3 *source ) noexcept
       UnitsPerWeek        = source->usri3_units_per_week;
       UserID              = source->usri3_user_id;
 
-      for ( const auto index : Range(21) )
+      for ( auto const index : Range(21) )
       {
          (void) LogonHours.push_back( source->usri3_logon_hours[ index ] );
       }
@@ -347,7 +347,7 @@ void CNetworkUserInformation::Copy( __in const USER_INFO_10 *source ) noexcept
    WFC_END_CATCH_ALL
 }
 
-void CNetworkUserInformation::Copy( __in const USER_INFO_11 *source ) noexcept
+void CNetworkUserInformation::Copy( __in USER_INFO_11 const *source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
@@ -384,7 +384,7 @@ void CNetworkUserInformation::Copy( __in const USER_INFO_11 *source ) noexcept
       NumberOfLogons      = source->usri11_num_logons;
       UnitsPerWeek        = source->usri11_units_per_week;
    
-      for ( const auto index : Range(21) )
+      for ( auto const index : Range(21) )
       {
          (void) LogonHours.push_back( source->usri11_logon_hours[ index ] );
       }
@@ -426,7 +426,7 @@ void CNetworkUserInformation::Copy( __in const USER_INFO_20 *source ) noexcept
    WFC_END_CATCH_ALL
 }
 
-void CNetworkUserInformation::Copy( __in const USER_INFO_21 *source ) noexcept
+void CNetworkUserInformation::Copy( __in USER_INFO_21 const *source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
@@ -442,7 +442,7 @@ void CNetworkUserInformation::Copy( __in const USER_INFO_21 *source ) noexcept
 
    WFC_TRY
    {
-      for ( const auto index : Range(ENCRYPTED_PWLEN) )
+      for ( auto const index : Range(ENCRYPTED_PWLEN) )
       {
          (void) EncryptedPassword.push_back( source->usri21_password[ index ] );
       }
@@ -494,12 +494,12 @@ void CNetworkUserInformation::Copy( __in const USER_INFO_22 *source ) noexcept
       Privileges          = source->usri22_priv;
       UnitsPerWeek        = source->usri22_units_per_week;
  
-      for ( const auto index : Range(ENCRYPTED_PWLEN) )
+      for ( auto const index : Range(ENCRYPTED_PWLEN) )
       {
          (void) EncryptedPassword.push_back( source->usri22_password[ index ] );
       }
    
-      for ( const auto index : Range(21) )
+      for ( auto const index : Range(21) )
       {
          (void) LogonHours.push_back( source->usri22_logon_hours[ index ] );
       }
@@ -934,13 +934,13 @@ void CNetworkUserInformation::SetAddDefaults( void ) noexcept
    Workstations.clear();
    LogonServer.clear();
 
-   for ( const auto index : Range(21) )
+   for ( auto const index : Range(21) )
    {
       (void) LogonHours.push_back( 0xFF );
    }
 }
 
-const CNetworkUserInformation& CNetworkUserInformation::operator = ( __in const CNetworkUserInformation& source ) noexcept
+const CNetworkUserInformation& CNetworkUserInformation::operator = ( __in CNetworkUserInformation const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    ASSERT( this != &source );

@@ -127,7 +127,7 @@ void CEventLogRecord::Copy( __in const CEventLogRecord& source ) noexcept
    Strings.assign( source.Strings.cbegin(), source.Strings.cend() );
 }
 
-void CEventLogRecord::Copy( _In_ const EVENTLOGRECORD *source ) noexcept
+void CEventLogRecord::Copy( _In_ EVENTLOGRECORD  const * source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
@@ -166,7 +166,7 @@ void CEventLogRecord::Copy( _In_ const EVENTLOGRECORD *source ) noexcept
 
       DWORD here  = source->UserSidOffset;
 
-      for ( const auto index : Range(source->UserSidLength) )
+      for ( auto const index : Range(source->UserSidLength) )
       {
          byte_to_add = byte_p[ here ];
          (void) UserSID.push_back( byte_to_add );
@@ -175,7 +175,7 @@ void CEventLogRecord::Copy( _In_ const EVENTLOGRECORD *source ) noexcept
 
       here = source->DataOffset;
 
-      for ( const auto index : Range(source->DataLength) )
+      for ( auto const index : Range(source->DataLength) )
       {
          (void) Data.push_back( byte_p[ here ] );
          here++;
@@ -228,7 +228,7 @@ void CEventLogRecord::Copy( _In_ const EVENTLOGRECORD *source ) noexcept
 
       character_pointer = reinterpret_cast<wchar_t *>(&byte_p[ here ]);
 
-      for ( const auto number_of_strings : Range(source->NumStrings) )
+      for (auto const number_of_strings : Range(source->NumStrings) )
       {
          data_string.clear();
 

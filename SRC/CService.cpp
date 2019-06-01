@@ -566,13 +566,13 @@ void CService::OnStop( void ) noexcept
    }
 }
 
-void CService::ParseCommandLineParameters( _In_ const DWORD number_of_command_line_arguments, _In_reads_z_( number_of_command_line_arguments ) LPCTSTR command_line_arguments[] ) noexcept
+void CService::ParseCommandLineParameters( _In_ DWORD const number_of_command_line_arguments, _In_reads_z_( number_of_command_line_arguments ) LPCTSTR command_line_arguments[] ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
    CommandLineParameters.clear();
 
-   for ( const auto argument_number : Range(number_of_command_line_arguments) )
+   for ( auto const argument_number : Range(number_of_command_line_arguments) )
    {
       (void) CommandLineParameters.push_back( command_line_arguments[ argument_number ] );
    }
@@ -580,7 +580,7 @@ void CService::ParseCommandLineParameters( _In_ const DWORD number_of_command_li
    // default implementation
    // parse command line parameters passed via SCM through ServiceMain
 
-   for( const auto argument_number : Range1(number_of_command_line_arguments) )
+   for( auto const argument_number : Range1(number_of_command_line_arguments) )
    {
       if ( command_line_arguments[ argument_number ][ 0 ] == '-' ||
            command_line_arguments[ argument_number ][ 0 ] == '/' )

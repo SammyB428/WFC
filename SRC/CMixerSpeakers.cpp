@@ -202,7 +202,7 @@ __checkReturn bool CMixerSpeakers::Open( __in UINT_PTR device_number, __in DWORD
    bool volume_control_was_found = false;
    bool mute_control_was_found   = false;
  
-   for ( const auto& entry : array )
+   for ( auto const& entry : array )
    {
       if ( entry.Type == CMixerControl::Mixer )
       {

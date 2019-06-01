@@ -72,7 +72,7 @@ _Check_return_ double PASCAL Win32FoundationClasses::wfc_calculate_entropy( __in
 
       size_t number_of_unique_values{ 0 };
 
-      for ( const auto array_index : Range(number_of_counts) )
+      for ( auto const array_index : Range(number_of_counts) )
       {
          if ( counts[ array_index ] > 0 )
          {
@@ -105,7 +105,7 @@ _Check_return_ double PASCAL Win32FoundationClasses::wfc_calculate_entropy( __in
    WFC_END_CATCH_ALL
 }
 
-_Check_return_ double PASCAL Win32FoundationClasses::wfc_calculate_entropy( __in_ecount( number_of_counts ) const uint16_t * counts, _In_ const size_t number_of_counts ) noexcept
+_Check_return_ double PASCAL Win32FoundationClasses::wfc_calculate_entropy( __in_ecount( number_of_counts ) uint16_t const * counts, _In_ std::size_t const number_of_counts ) noexcept
 {
    WFC_VALIDATE_POINTER( counts );
 
@@ -124,7 +124,7 @@ _Check_return_ double PASCAL Win32FoundationClasses::wfc_calculate_entropy( __in
 
       size_t number_of_unique_values{ 0 };
 
-      for ( const auto array_index : Range(number_of_counts) )
+      for ( auto const array_index : Range(number_of_counts) )
       {
          if ( counts[ array_index ] > 0 )
          {
@@ -152,7 +152,7 @@ _Check_return_ double PASCAL Win32FoundationClasses::wfc_calculate_entropy( __in
    WFC_END_CATCH_ALL
 }
 
-_Check_return_ double PASCAL Win32FoundationClasses::wfc_calculate_entropy( __in_ecount( number_of_counts ) const uint32_t * counts, _In_ const size_t number_of_counts ) noexcept
+_Check_return_ double PASCAL Win32FoundationClasses::wfc_calculate_entropy( __in_ecount( number_of_counts ) uint32_t const * counts, _In_ std::size_t const number_of_counts ) noexcept
 {
    WFC_VALIDATE_POINTER( counts );
 
@@ -171,7 +171,7 @@ _Check_return_ double PASCAL Win32FoundationClasses::wfc_calculate_entropy( __in
 
       size_t number_of_unique_values{ 0 };
 
-      for ( const auto array_index : Range(number_of_counts) )
+      for ( auto const array_index : Range(number_of_counts) )
       {
          if ( counts[ array_index ] > 0 )
          {
@@ -199,7 +199,7 @@ _Check_return_ double PASCAL Win32FoundationClasses::wfc_calculate_entropy( __in
    WFC_END_CATCH_ALL
 }
 
-_Check_return_ double Win32FoundationClasses::wfc_get_buffer_entropy(__in_bcount(buffer_size) const uint8_t * buffer, _In_ const size_t buffer_size) noexcept
+_Check_return_ double Win32FoundationClasses::wfc_get_buffer_entropy(__in_bcount(buffer_size) uint8_t const * buffer, _In_ std::size_t const buffer_size) noexcept
 {
     WFC_VALIDATE_POINTER(buffer);
 
@@ -212,7 +212,7 @@ _Check_return_ double Win32FoundationClasses::wfc_get_buffer_entropy(__in_bcount
 
     ZeroMemory(counts, sizeof(counts));
 
-    for ( const auto buffer_index : Range(buffer_size) )
+    for ( auto const buffer_index : Range(buffer_size) )
     {
         counts[buffer[buffer_index]]++;
     }
@@ -220,7 +220,7 @@ _Check_return_ double Win32FoundationClasses::wfc_get_buffer_entropy(__in_bcount
     return(Win32FoundationClasses::wfc_calculate_entropy(counts, std::size(counts)));
 }
 
-__checkReturn bool Win32FoundationClasses::wfcGenRandom( _Out_writes_bytes_(RandomBufferLength) PVOID RandomBuffer, _In_ const ULONG RandomBufferLength ) noexcept
+__checkReturn bool Win32FoundationClasses::wfcGenRandom( _Out_writes_bytes_(RandomBufferLength) PVOID RandomBuffer, _In_ ULONG const RandomBufferLength ) noexcept
 {
    static CRandomNumberGenerator2 * static_rng = nullptr;
 

@@ -274,7 +274,7 @@ __checkReturn bool PASCAL Win32FoundationClasses::wfc_is_dotted_ip_address( __in
     return( true );
 }
 
-__checkReturn bool PASCAL Win32FoundationClasses::wfc_is_guid( __in_z const char * characters ) noexcept
+__checkReturn bool PASCAL Win32FoundationClasses::wfc_is_guid( __in_z char const * characters ) noexcept
 {
     //           11111111112222222222333333333
     // 012345678901234567890123456789012345678
@@ -284,7 +284,7 @@ __checkReturn bool PASCAL Win32FoundationClasses::wfc_is_guid( __in_z const char
         return( false );
     }
 
-    for ( const auto array_index : Range(35) )
+    for ( auto const array_index : Range(35) )
     {
         if ( characters[ array_index ] == 0 )
         {
@@ -313,7 +313,7 @@ __checkReturn bool PASCAL Win32FoundationClasses::wfc_is_guid( __in_z const char
     return( true );
 }
 
-__checkReturn bool PASCAL Win32FoundationClasses::wfc_is_guid( __in_z const wchar_t * characters ) noexcept
+__checkReturn bool PASCAL Win32FoundationClasses::wfc_is_guid( __in_z wchar_t const * characters ) noexcept
 {
     //           11111111112222222222333333333
     // 012345678901234567890123456789012345678
@@ -323,7 +323,7 @@ __checkReturn bool PASCAL Win32FoundationClasses::wfc_is_guid( __in_z const wcha
         return( false );
     }
 
-    for ( const auto array_index : Range(35) )
+    for ( auto const array_index : Range(35) )
     {
         if ( characters[ array_index ] == 0 )
         {
@@ -352,7 +352,7 @@ __checkReturn bool PASCAL Win32FoundationClasses::wfc_is_guid( __in_z const wcha
     return( true );
 }
 
-__checkReturn bool PASCAL Win32FoundationClasses::wfc_is_guid_with_curlies( __in_z const char * characters ) noexcept
+__checkReturn bool PASCAL Win32FoundationClasses::wfc_is_guid_with_curlies( __in_z char const * characters ) noexcept
 {
     //           11111111112222222222333333333
     // 012345678901234567890123456789012345678
@@ -362,7 +362,7 @@ __checkReturn bool PASCAL Win32FoundationClasses::wfc_is_guid_with_curlies( __in
         return( false );
     }
 
-    for( const auto array_index : Range1(38) )
+    for( auto const array_index : Range1(38) )
     {
         if ( array_index == 37 )
         {
@@ -393,7 +393,7 @@ __checkReturn bool PASCAL Win32FoundationClasses::wfc_is_guid_with_curlies( __in
     return( true );
 }
 
-__checkReturn bool PASCAL Win32FoundationClasses::wfc_is_guid_with_curlies( __in_z const wchar_t * characters ) noexcept
+__checkReturn bool PASCAL Win32FoundationClasses::wfc_is_guid_with_curlies( __in_z wchar_t const * characters ) noexcept
 {
     //           11111111112222222222333333333
     // 012345678901234567890123456789012345678
@@ -403,7 +403,7 @@ __checkReturn bool PASCAL Win32FoundationClasses::wfc_is_guid_with_curlies( __in
         return( false );
     }
 
-    for ( const auto array_index : Range1(38) )
+    for ( auto const array_index : Range1(38) )
     {
         if ( array_index == 37 )
         {
@@ -434,14 +434,14 @@ __checkReturn bool PASCAL Win32FoundationClasses::wfc_is_guid_with_curlies( __in
     return( true );
 }
 
-__checkReturn bool PASCAL Win32FoundationClasses::wfc_is_octal( __in_bcount( number_of_bytes ) const uint8_t * buffer, __in const size_t number_of_bytes ) noexcept
+__checkReturn bool PASCAL Win32FoundationClasses::wfc_is_octal( __in_bcount( number_of_bytes ) uint8_t const * buffer, __in std::size_t const number_of_bytes ) noexcept
 {
     if ( buffer == nullptr || number_of_bytes < 1 )
     {
         return( false );
     }
 
-    for ( const auto buffer_index : Range(number_of_bytes) )
+    for ( auto const buffer_index : Range(number_of_bytes) )
     {
         if ( ! WFC_IS_OCTAL( buffer[ buffer_index ] ) )
         {
@@ -452,18 +452,18 @@ __checkReturn bool PASCAL Win32FoundationClasses::wfc_is_octal( __in_bcount( num
     return( true );
 }
 
-__checkReturn bool PASCAL Win32FoundationClasses::wfc_is_wide_octal( __in_bcount( number_of_bytes ) const uint8_t * buffer, __in const size_t number_of_bytes ) noexcept
+__checkReturn bool PASCAL Win32FoundationClasses::wfc_is_wide_octal( __in_bcount( number_of_bytes ) uint8_t const * buffer, __in std::size_t const number_of_bytes ) noexcept
 {
     if ( buffer == nullptr || number_of_bytes < 2 )
     {
         return( false );
     }
 
-    const wchar_t * wide_string = (const wchar_t *) buffer;
+    auto wide_string = reinterpret_cast<wchar_t const *>(buffer);
 
     int buffer_size = (int) ( number_of_bytes / sizeof( wchar_t ) );
 
-    for ( const auto buffer_index : Range(buffer_size) )
+    for ( auto const buffer_index : Range(buffer_size) )
     {
         if ( ! WFC_IS_OCTAL( wide_string[ buffer_index ] ) )
         {
@@ -474,7 +474,7 @@ __checkReturn bool PASCAL Win32FoundationClasses::wfc_is_wide_octal( __in_bcount
     return( true );
 }
 
-__checkReturn bool PASCAL Win32FoundationClasses::wfc_is_octal_then_NULLs( __in_bcount( number_of_bytes ) const uint8_t * buffer, __in const size_t number_of_bytes ) noexcept
+__checkReturn bool PASCAL Win32FoundationClasses::wfc_is_octal_then_NULLs( __in_bcount( number_of_bytes ) uint8_t const * buffer, __in std::size_t const number_of_bytes ) noexcept
 {
     if ( buffer == nullptr || number_of_bytes < 1 )
     {
@@ -483,7 +483,7 @@ __checkReturn bool PASCAL Win32FoundationClasses::wfc_is_octal_then_NULLs( __in_
 
     int parser_state = 0;
 
-    for ( const auto buffer_index : Range(number_of_bytes) )
+    for ( auto const buffer_index : Range(number_of_bytes) )
     {
         switch( parser_state )
         {
@@ -553,13 +553,13 @@ __checkReturn bool PASCAL Win32FoundationClasses::wfc_is_wide_octal_then_NULLs( 
         return( false );
     }
 
-    const wchar_t * wide_string = (const wchar_t *) buffer;
+    auto wide_string = reinterpret_cast<wchar_t const *>(buffer);
 
     const int buffer_size = (int) (number_of_bytes / sizeof( wchar_t ));
 
     int parser_state = 0;
 
-    for ( const auto buffer_index : Range(buffer_size) )
+    for ( auto const buffer_index : Range(buffer_size) )
     {
         switch( parser_state )
         {
@@ -629,7 +629,7 @@ __checkReturn bool PASCAL Win32FoundationClasses::wfc_is_hexadecimal( __in_bcoun
         return( false );
     }
 
-    for ( const auto buffer_index : Range(number_of_bytes) )
+    for ( auto const buffer_index : Range(number_of_bytes) )
     {
         if ( ! WFC_IS_HEXADECIMAL( buffer[ buffer_index ] ) )
         {
@@ -647,11 +647,11 @@ __checkReturn bool PASCAL Win32FoundationClasses::wfc_is_wide_hexadecimal( __in_
         return( false );
     }
 
-    const wchar_t * wide_string = (const wchar_t *) buffer;
+    auto wide_string = reinterpret_cast<wchar_t const *>(buffer);
 
     int buffer_size = (int) (number_of_bytes / sizeof( wchar_t ));
 
-    for ( const auto buffer_index : Range(buffer_size) )
+    for ( auto const buffer_index : Range(buffer_size) )
     {
         if ( ! WFC_IS_HEXADECIMAL( wide_string[ buffer_index ] ) )
         {
@@ -671,7 +671,7 @@ __checkReturn bool PASCAL Win32FoundationClasses::wfc_is_hexadecimal_then_NULLs(
 
     int parser_state = 0;
 
-    for ( const auto buffer_index : Range(number_of_bytes) )
+    for ( auto const buffer_index : Range(number_of_bytes) )
     {
         switch( parser_state )
         {
@@ -741,13 +741,13 @@ __checkReturn bool PASCAL Win32FoundationClasses::wfc_is_wide_hexadecimal_then_N
         return( false );
     }
 
-    const wchar_t * wide_string = (const wchar_t *) buffer;
+    auto wide_string = reinterpret_cast<wchar_t const *>(buffer);
 
     int buffer_size = (int) (number_of_bytes / sizeof( wchar_t ));
 
     int parser_state = 0;
 
-    for ( const auto buffer_index : Range(buffer_size) )
+    for ( auto const buffer_index : Range(buffer_size) )
     {
         switch( parser_state )
         {
@@ -817,7 +817,7 @@ __checkReturn bool PASCAL Win32FoundationClasses::wfc_is_decimal( __in_bcount( n
         return( false );
     }
 
-    for( const auto buffer_index : Range(number_of_bytes) )
+    for( auto const buffer_index : Range(number_of_bytes) )
     {
         if ( ! WFC_IS_DECIMAL( buffer[ buffer_index ] ) )
         {
@@ -835,11 +835,11 @@ __checkReturn bool PASCAL Win32FoundationClasses::wfc_is_wide_decimal( __in_bcou
         return( false );
     }
 
-    const wchar_t * wide_string = (const wchar_t *) buffer;
+    auto wide_string = reinterpret_cast<wchar_t const *>(buffer);
 
     int buffer_size = (int) (number_of_bytes / sizeof( wchar_t ));
 
-    for ( const auto buffer_index : Range(buffer_size) )
+    for ( auto const buffer_index : Range(buffer_size) )
     {
         if ( ! WFC_IS_DECIMAL( wide_string[ buffer_index ] ) )
         {
@@ -859,7 +859,7 @@ __checkReturn bool PASCAL Win32FoundationClasses::wfc_is_decimal_then_NULLs( __i
 
     int parser_state = 0;
 
-    for ( const auto buffer_index : Range(number_of_bytes) )
+    for ( auto const buffer_index : Range(number_of_bytes) )
     {
         switch( parser_state )
         {
@@ -929,13 +929,13 @@ __checkReturn bool PASCAL Win32FoundationClasses::wfc_is_wide_decimal_then_NULLs
         return( false );
     }
 
-    const wchar_t * wide_string = (const wchar_t *) buffer;
+    auto wide_string = reinterpret_cast<wchar_t const *>(buffer);
 
     int buffer_size = (int) (number_of_bytes / sizeof( wchar_t ));
 
     int parser_state = 0;
 
-    for ( const auto buffer_index : Range(buffer_size) )
+    for ( auto const buffer_index : Range(buffer_size) )
     {
         switch( parser_state )
         {
@@ -998,18 +998,18 @@ __checkReturn bool PASCAL Win32FoundationClasses::wfc_is_wide_decimal_then_NULLs
     return( true );
 }
 
-__checkReturn int Win32FoundationClasses::wfc_find_curly_guid( __in_bcount( number_of_bytes_in_buffer ) const uint8_t * buffer, __in const size_t number_of_bytes_in_buffer ) noexcept
+__checkReturn int Win32FoundationClasses::wfc_find_curly_guid( __in_bcount( number_of_bytes_in_buffer ) uint8_t const * buffer, __in std::size_t const number_of_bytes_in_buffer ) noexcept
 {
     if ( buffer == nullptr || number_of_bytes_in_buffer < 38 )
     {
         return( GUID_NOT_FOUND );
     }
 
-    for ( const auto buffer_index : Range( number_of_bytes_in_buffer - 37 ) )
+    for ( auto const buffer_index : Range( number_of_bytes_in_buffer - 37 ) )
     {
         if ( buffer[ buffer_index ] == '{' )
         {
-            if ( Win32FoundationClasses::wfc_is_guid_with_curlies( (const char *) &buffer[ buffer_index ] ) == true )
+            if ( Win32FoundationClasses::wfc_is_guid_with_curlies( reinterpret_cast<char const *>(&buffer[ buffer_index ]) ) == true )
             {
                 return( static_cast<int>(buffer_index) );
             }
@@ -1019,18 +1019,18 @@ __checkReturn int Win32FoundationClasses::wfc_find_curly_guid( __in_bcount( numb
     return( GUID_NOT_FOUND );
 }
 
-__checkReturn int Win32FoundationClasses::wfc_find_wide_curly_guid( __in_bcount( number_of_bytes_in_buffer ) const uint8_t * buffer, __in const size_t number_of_bytes_in_buffer ) noexcept
+__checkReturn int Win32FoundationClasses::wfc_find_wide_curly_guid( __in_bcount( number_of_bytes_in_buffer ) uint8_t const * buffer, __in std::size_t const number_of_bytes_in_buffer ) noexcept
 {
     if ( buffer == nullptr || number_of_bytes_in_buffer < 76 )
     {
         return( GUID_NOT_FOUND );
     }
 
-    for ( const auto buffer_index : Range( number_of_bytes_in_buffer - 75 ) )
+    for ( auto const buffer_index : Range( number_of_bytes_in_buffer - 75 ) )
     {
         if ( buffer[ buffer_index ] == '{' )
         {
-            if ( Win32FoundationClasses::wfc_is_guid_with_curlies( (const wchar_t *) &buffer[ buffer_index ] ) == true )
+            if ( Win32FoundationClasses::wfc_is_guid_with_curlies( reinterpret_cast<wchar_t const *>(&buffer[ buffer_index ]) ) == true )
             {
                 return( static_cast<int>(buffer_index) );
             }

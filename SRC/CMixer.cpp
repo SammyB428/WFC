@@ -202,7 +202,7 @@ __checkReturn bool CMixer::GetAllControls(__in const CMixerLine& line, __out std
     }
     else
     {
-        for ( const auto array_index : Range(control_array.size()) )
+        for ( auto const array_index : Range(control_array.size()) )
         {
             array.at(array_index).Copy(control_array.at(array_index));
         }
@@ -540,7 +540,7 @@ __checkReturn bool CMixer::GetControlListText(__in const CMixerLine& line, __in 
     {
         CMixerControlDetailsData entry;
 
-        for ( const auto index : Range(number_of_elements) )
+        for ( auto const index : Range(number_of_elements) )
         {
            entry.Copy(details_array[index]);
            array.push_back(entry);

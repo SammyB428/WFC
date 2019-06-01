@@ -120,7 +120,7 @@ __checkReturn DWORD CSuperRandomNumberGenerator::GetInteger( void ) noexcept
    DWORD hash_value = static_cast< DWORD >( value );
    DWORD temp_value = 0;
 
-   for ( const auto index : Range(sizeof( value )) )
+   for ( auto const index : Range(sizeof( value )) )
    {
       hash_value = ( hash_value << 4 ) + buffer[ index ];
 

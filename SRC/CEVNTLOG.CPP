@@ -276,7 +276,7 @@ __checkReturn bool CEventLog::CreateApplicationLog( __in_z LPCTSTR application_n
          {
             bool application_was_found = false;
 
-            for ( const auto& entry : sources )
+            for ( auto const& entry : sources )
             {
                if ( entry.compare(application_name) == I_AM_EQUAL_TO_THAT )
                {
@@ -348,7 +348,7 @@ __checkReturn BOOL CEventLog::CreateCustomLog( __in_z LPCTSTR log_name_parameter
 
       CRegistry registry;
 
-      if ( registry.Connect( (HKEY) CRegistry::keyLocalMachine ) == FALSE )
+      if ( registry.Connect( (HKEY) CRegistry::keyLocalMachine ) == false )
       {
          m_ErrorCode = registry.GetErrorCode();
          return( FALSE );
@@ -364,19 +364,19 @@ __checkReturn BOOL CEventLog::CreateCustomLog( __in_z LPCTSTR log_name_parameter
          return( FALSE );
       }
 
-      if ( registry.SetValue( L"File", CRegistry::typeUnexpandedString, reinterpret_cast<const uint8_t *>(log_filename.data()), log_filename.length() * sizeof(wchar_t) ) == FALSE )
+      if ( registry.SetValue( L"File", CRegistry::typeUnexpandedString, reinterpret_cast<uint8_t const *>(log_filename.data()), log_filename.length() * sizeof(wchar_t) ) == false )
       {
          m_ErrorCode = registry.GetErrorCode();
          return( FALSE );
       }
 
-      if ( registry.SetValue( TEXT( "MaxSize" ), maximum_size_in_bytes ) == FALSE )
+      if ( registry.SetValue( TEXT( "MaxSize" ), maximum_size_in_bytes ) == false )
       {
          m_ErrorCode = registry.GetErrorCode();
          return( FALSE );
       }
 
-      if ( registry.SetValue( TEXT( "Retention" ), overwrite_after_this_many_seconds ) == FALSE )
+      if ( registry.SetValue( TEXT( "Retention" ), overwrite_after_this_many_seconds ) == false )
       {
          m_ErrorCode = registry.GetErrorCode();
          return( FALSE );
@@ -384,7 +384,7 @@ __checkReturn BOOL CEventLog::CreateCustomLog( __in_z LPCTSTR log_name_parameter
 
       log_key_name.append( L"\\WFC" );
 
-      if ( registry.Create( log_key_name.c_str() ) == FALSE )
+      if ( registry.Create( log_key_name.c_str() ) == false )
       {
          m_ErrorCode = registry.GetErrorCode();
          return( FALSE );
@@ -514,7 +514,7 @@ _Check_return_ bool CEventLog::DeleteApplicationLog( _In_z_ const wchar_t * appl
          {
             bool application_was_found = false;
 
-            for ( const auto index : Range(sources.size()) )
+            for ( auto const index : Range(sources.size()) )
             {
                if ( sources.at( index ).compare(application_name) == I_AM_EQUAL_TO_THAT )
                {

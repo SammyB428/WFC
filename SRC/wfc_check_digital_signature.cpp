@@ -47,9 +47,9 @@ static char THIS_FILE[] = __FILE__;
 
 USING_WFC_NAMESPACE;
 
-static void _to_hex( __in_bcount( number_of_bytes ) const uint8_t * buffer, __in const size_t number_of_bytes, __out_ecount_z( number_of_characters ) wchar_t * destination_string, __in const size_t number_of_characters )
+static void _to_hex( __in_bcount( number_of_bytes ) uint8_t const * buffer, __in std::size_t const number_of_bytes, __out_ecount_z( number_of_characters ) wchar_t * destination_string, __in std::size_t const number_of_characters )
 {
-    static const wchar_t * static_hex_digits = L"0123456789abcdef";
+    static constexpr wchar_t const * static_hex_digits = L"0123456789abcdef";
 
     destination_string[ 0 ] = 0x00;
 
@@ -57,7 +57,7 @@ static void _to_hex( __in_bcount( number_of_bytes ) const uint8_t * buffer, __in
 
     uint8_t value = 0;
 
-    for ( const auto buffer_index : Range(number_of_bytes) )
+    for ( auto const buffer_index : Range(number_of_bytes) )
     {
         if ( string_index + 2 < ( number_of_characters - 1 ) )
         {

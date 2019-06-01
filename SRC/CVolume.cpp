@@ -297,7 +297,7 @@ __checkReturn bool CVolume::Lock( void ) noexcept
 
    sleep_time = 10000 / 20; // Try 20 times in 10 seconds
 
-   for ( const auto number_of_tries : Range(20) )
+   for ( auto const number_of_tries : Range(20) )
    {
       if ( ::DeviceIoControl( m_Handle,
                               FSCTL_LOCK_VOLUME,

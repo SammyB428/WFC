@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 1995-2018, Samuel R. Blackburn
+** Copyright, 1995-2019, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -73,7 +73,7 @@ CBitArray::CBitArray()
    RemoveAll();
 }
 
-CBitArray::CBitArray( __in const std::size_t initial_size )
+CBitArray::CBitArray( __in std::size_t const initial_size )
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -89,7 +89,7 @@ CBitArray::CBitArray( __in const std::size_t initial_size )
    SetSize( initial_size );
 }
 
-CBitArray::CBitArray( __in const CBitArray& source )
+CBitArray::CBitArray( __in CBitArray const& source )
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -104,7 +104,7 @@ CBitArray::CBitArray( __in const CBitArray& source )
    Copy( source );   
 }
 
-CBitArray::CBitArray( __in const std::vector<uint8_t>& source )
+CBitArray::CBitArray( __in std::vector<uint8_t> const& source )
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -136,7 +136,7 @@ CBitArray::~CBitArray()
 
 // Methods
 
-void CBitArray::ClearRange( __in const std::size_t array_index, __in const std::size_t count ) noexcept
+void CBitArray::ClearRange( __in std::size_t const array_index, __in std::size_t const count ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -176,11 +176,11 @@ void CBitArray::ClearRange( __in const std::size_t array_index, __in const std::
    }
 }
 
-void CBitArray::SetRange( __in const std::size_t array_index, __in const std::size_t count ) noexcept
+void CBitArray::SetRange( __in std::size_t const array_index, __in std::size_t const count ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
-   const std::size_t total_number_of_bits = GetSize();
+   std::size_t const total_number_of_bits = GetSize();
 
    if ( array_index >= total_number_of_bits || ( array_index + count ) > total_number_of_bits )
    {
@@ -216,7 +216,7 @@ void CBitArray::SetRange( __in const std::size_t array_index, __in const std::si
    }
 }
 
-void CBitArray::Add( __in const uint32_t value, __in const std::size_t count ) noexcept
+void CBitArray::Add( __in uint32_t const value, __in std::size_t const count ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -277,23 +277,23 @@ void CBitArray::Add( __in const uint32_t value, __in const std::size_t count ) n
    }
 }
 
-void CBitArray::AddByte( __in const uint8_t value ) noexcept
+void CBitArray::AddByte( __in uint8_t const value ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
    uint32_t dword_value = value;
 
-   Add( _bittest( (const LONG *) &dword_value, 7 ) );
-   Add( _bittest( (const LONG *) &dword_value, 6 ) );
-   Add( _bittest( (const LONG *) &dword_value, 5 ) );
-   Add( _bittest( (const LONG *) &dword_value, 4 ) );
-   Add( _bittest( (const LONG *) &dword_value, 3 ) );
-   Add( _bittest( (const LONG *) &dword_value, 2 ) );
-   Add( _bittest( (const LONG *) &dword_value, 1 ) );
-   Add( _bittest( (const LONG *) &dword_value, 0 ) );
+   Add( _bittest(reinterpret_cast<LONG const *>(&dword_value), 7 ) );
+   Add( _bittest(reinterpret_cast<LONG const *>(&dword_value), 6 ) );
+   Add( _bittest(reinterpret_cast<LONG const *>(&dword_value), 5 ) );
+   Add( _bittest(reinterpret_cast<LONG const *>(&dword_value), 4 ) );
+   Add( _bittest(reinterpret_cast<LONG const *>(&dword_value), 3 ) );
+   Add( _bittest(reinterpret_cast<LONG const *>(&dword_value), 2 ) );
+   Add( _bittest(reinterpret_cast<LONG const *>(&dword_value), 1 ) );
+   Add( _bittest(reinterpret_cast<LONG const *>(&dword_value), 0 ) );
 }
 
-void CBitArray::AddValue( __in const uint32_t value, __in const uint32_t number_of_bits ) noexcept
+void CBitArray::AddValue( __in uint32_t const value, __in uint32_t const number_of_bits ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    ASSERT( number_of_bits < 33 );
@@ -303,7 +303,7 @@ void CBitArray::AddValue( __in const uint32_t value, __in const uint32_t number_
       return;
    }
 
-   for ( const auto index : Range(number_of_bits) )
+   for ( auto const index : Range(number_of_bits) )
    {
       Add( 0 );
    }
@@ -312,9 +312,9 @@ void CBitArray::AddValue( __in const uint32_t value, __in const uint32_t number_
 
    std::size_t starting_bit_location = GetSize() - number_of_bits;
 
-   for ( const auto index : Range(number_of_bits) )
+   for ( auto const index : Range(number_of_bits) )
    {
-      if ( _bittest( (const LONG *) &value, offset ) == 1 )
+      if ( _bittest( reinterpret_cast<LONG const *>(&value), offset ) == 1 )
       {
          // Remember, we added only zeroes above, so we only
          // need to worry about setting one-values.
@@ -326,7 +326,7 @@ void CBitArray::AddValue( __in const uint32_t value, __in const uint32_t number_
    }
 }
 
-void CBitArray::Append( __in const CBitArray& source ) noexcept
+void CBitArray::Append( __in CBitArray const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -335,13 +335,13 @@ void CBitArray::Append( __in const CBitArray& source ) noexcept
    // of m_SizeOfBitRepresentation and append things
    // an element at a time
 
-   for ( const auto index : Range(source.GetSize()))
+   for ( auto const index : Range(source.GetSize()))
    {
       Add( source.GetAt( index ) );
    }
 }
 
-void CBitArray::Append( __in_bcount( number_of_bytes ) const uint8_t * data, __in const std::size_t number_of_bytes ) noexcept
+void CBitArray::Append( __in_bcount( number_of_bytes ) uint8_t const * data, __in std::size_t const number_of_bytes ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( data );
@@ -350,7 +350,7 @@ void CBitArray::Append( __in_bcount( number_of_bytes ) const uint8_t * data, __i
 
    WFC_TRY
    {
-      for ( const auto index : Range(number_of_bytes) )
+      for ( auto const index : Range(number_of_bytes) )
       {
          AddByte( data[ index ] );
       }
@@ -381,7 +381,7 @@ void CBitArray::Complement( void ) noexcept
 
 #endif // AN_ELEMENT_THAT_IS_ALL_ONES
 
-   std::size_t number_of_elements = m_Bits.size();
+   auto number_of_elements = m_Bits.size();
 
    // We set index to the first element that contains good bits.
    // We are skipping any elements at the beginning of m_Bits
@@ -395,7 +395,7 @@ void CBitArray::Complement( void ) noexcept
    }
 }
 
-void CBitArray::Copy( _In_ const CBitArray& source ) noexcept
+void CBitArray::Copy( _In_ CBitArray const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    m_Bits = source.m_Bits;
@@ -403,7 +403,7 @@ void CBitArray::Copy( _In_ const CBitArray& source ) noexcept
    m_IndexOfFirstBit   = source.m_IndexOfFirstBit;
 }
 
-void CBitArray::Copy( __in const std::vector<uint8_t>& source ) noexcept
+void CBitArray::Copy( __in std::vector<uint8_t> const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    RemoveAll();
@@ -433,7 +433,7 @@ void CBitArray::Copy( __in const std::vector<uint8_t>& source ) noexcept
    }
 }
 
-void CBitArray::Copy( _In_ const std::vector<uint32_t>& source ) noexcept
+void CBitArray::Copy( _In_ std::vector<uint32_t> const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -481,7 +481,7 @@ void CBitArray::CopyTo( __inout std::vector<uint8_t>& destination ) noexcept
 
    std::size_t index = 0;
 
-   for ( const auto index : Range(number_of_elements) )
+   for ( auto const index : Range(number_of_elements) )
    {
       bits = m_Bits.at( index );
 
@@ -506,7 +506,7 @@ void CBitArray::CopyTo( __inout std::vector<uint8_t>& destination ) noexcept
    // We may not have needed to do such a thing. Let's see if
    // we can get rid of a couple of bytes.
 
-   std::size_t number_of_bytes = ( GetSize() + 7 ) >> 3; // ">> 3" is the same as saying "/ 8"
+   std::size_t const number_of_bytes = ( GetSize() + 7 ) >> 3; // ">> 3" is the same as saying "/ 8"
 
    destination.resize( number_of_bytes );
 
@@ -627,7 +627,7 @@ __checkReturn bool CBitArray::EnumerateZeroes( __inout std::size_t& enumerator )
    return( false );
 }
 
-__checkReturn bool CBitArray::Find( __in const CBitArray& value, __inout std::size_t& found_at, __in const std::size_t starting_at ) const noexcept
+__checkReturn bool CBitArray::Find( __in CBitArray const& value, __inout std::size_t& found_at, __in std::size_t const starting_at ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
    uint32_t value_to_search_for = 0;
@@ -719,7 +719,7 @@ __checkReturn bool CBitArray::Find( __in const CBitArray& value, __inout std::si
    return( false );
 }
 
-__checkReturn bool CBitArray::Find( __in const uint32_t value, __in const std::size_t number_of_bits_in_value, __inout std::size_t& found_at, __in const std::size_t starting_at ) const noexcept
+__checkReturn bool CBitArray::Find( __in uint32_t const value, __in std::size_t const number_of_bits_in_value, __inout std::size_t& found_at, __in std::size_t const starting_at ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
    // Always start at a known state
@@ -744,9 +744,9 @@ __checkReturn bool CBitArray::Find( __in const uint32_t value, __in const std::s
 
    // Let's count the number of ones and zeroes in the pattern we're searching for
 
-   for ( const auto array_index : Range(number_of_bits_in_value) )
+   for ( auto const array_index : Range(number_of_bits_in_value) )
    {
-      if ( _bittest( (const LONG *) &value, (LONG) array_index ) == 1 )
+      if ( _bittest( reinterpret_cast<LONG const *>(&value), (LONG) array_index ) == 1 )
       {
          desired_number_of_ones++;
       }
@@ -789,9 +789,9 @@ __checkReturn bool CBitArray::Find( __in const uint32_t value, __in const std::s
       number_of_zeroes       = 0;
       number_of_bits_to_skip = 1; // We can always skip one bit
 
-      for ( const auto array_index : Range(number_of_bits_in_value) )
+      for ( auto const array_index : Range(number_of_bits_in_value) )
       {
-         if ( _bittest( (const LONG *) &value_to_test, (LONG) array_index ) == 1 )
+         if ( _bittest( reinterpret_cast<LONG const *>(&value_to_test), (LONG) array_index ) == 1 )
          {
             number_of_ones++;
          }
@@ -882,13 +882,13 @@ void CBitArray::FreeExtra( void ) noexcept
          {
             // Why can't I do a left shift here?
 
-            if ( _bittest( (const LONG *) &this_set_of_bits, bit_index ) != 0 )
+            if ( _bittest( reinterpret_cast<LONG const *>(&this_set_of_bits), bit_index ) != 0 )
             {
-               _bittestandset( (LONG *) &this_set_of_bits, bit_index + 1 );
+               _bittestandset( reinterpret_cast<LONG *>(&this_set_of_bits), bit_index + 1 );
             }
             else
             {
-               _bittestandreset( (LONG *) &this_set_of_bits, bit_index + 1 );
+               _bittestandreset( reinterpret_cast<LONG *>(&this_set_of_bits), bit_index + 1 );
             }
 
             bit_index--;
@@ -904,13 +904,13 @@ void CBitArray::FreeExtra( void ) noexcept
          this_set_of_bits = m_Bits.at( index );
          that_set_of_bits = m_Bits.at( index + 1 );
 
-         if ( _bittest( (const LONG *) &that_set_of_bits, MostSignificantBitLocation() ) == 1 )
+         if ( _bittest( reinterpret_cast<LONG const *>(&that_set_of_bits), MostSignificantBitLocation() ) == 1 )
          {
-            _bittestandset( (LONG *) &this_set_of_bits, 0 );
+            _bittestandset( reinterpret_cast<LONG *>(&this_set_of_bits), 0 );
          }
          else
          {
-            _bittestandreset( (LONG *) &this_set_of_bits, 0 );
+            _bittestandreset( reinterpret_cast<LONG *>(&this_set_of_bits), 0 );
          }
 
          that_set_of_bits <<= 1;
@@ -936,8 +936,8 @@ __checkReturn bool CBitArray::GetNextOne( __inout std::size_t& enumerator ) cons
    {
       // Starting at the beginning, skip all zero-filled members
 
-       SSIZE_T element_index = 0;
-      const SSIZE_T number_of_elements = (SSIZE_T) m_Bits.size();
+      SSIZE_T element_index = 0;
+      SSIZE_T const number_of_elements = (SSIZE_T) m_Bits.size();
 
       while( element_index < ( number_of_elements - 1 ) &&
              m_Bits.at( element_index ) == 0 )
@@ -953,7 +953,7 @@ __checkReturn bool CBitArray::GetNextOne( __inout std::size_t& enumerator ) cons
       SSIZE_T bit_index = element_index * m_SizeOfBitRepresentation;
 #endif // AN_ELEMENT_THAT_IS_ALL_ONES
 
-      const SSIZE_T number_of_bits_in_array = (SSIZE_T) GetSize();
+      SSIZE_T const number_of_bits_in_array = (SSIZE_T) GetSize();
 
       while( bit_index < number_of_bits_in_array && GetAt( bit_index ) == 0 )
       {
@@ -972,7 +972,7 @@ __checkReturn bool CBitArray::GetNextOne( __inout std::size_t& enumerator ) cons
    // We're picking up where we left off from a previous call to GetNextOne().
 
    std::size_t bit_index = enumerator + 1; // Always start after the one we previously found
-   const std::size_t number_of_bits_in_array = GetSize();
+   std::size_t const number_of_bits_in_array = GetSize();
 
    if ( bit_index >= number_of_bits_in_array )
    {
@@ -1041,8 +1041,8 @@ __checkReturn bool CBitArray::GetNextZero( __inout std::size_t& enumerator ) con
    {
       // Starting at the beginning, skip all zero-filled members
 
-       SSIZE_T element_index      = 0;
-      const SSIZE_T number_of_elements = (SSIZE_T) m_Bits.size();
+      SSIZE_T element_index      = 0;
+      SSIZE_T const number_of_elements = (SSIZE_T) m_Bits.size();
 
       while( element_index < ( number_of_elements - 1 ) &&
              m_Bits.at( element_index ) == AN_ELEMENT_THAT_IS_ALL_ONES )
@@ -1058,7 +1058,7 @@ __checkReturn bool CBitArray::GetNextZero( __inout std::size_t& enumerator ) con
       std::size_t bit_index = element_index * m_SizeOfBitRepresentation;
 #endif // AN_ELEMENT_THAT_IS_ALL_ONES
 
-      const std::size_t number_of_bits_in_array = GetSize();
+      std::size_t const number_of_bits_in_array = GetSize();
 
       while( bit_index < number_of_bits_in_array && GetAt( bit_index ) == 1 )
       {
@@ -1077,7 +1077,7 @@ __checkReturn bool CBitArray::GetNextZero( __inout std::size_t& enumerator ) con
    // We're picking up where we left off from a previous call to GetNextZero().
 
    std::size_t bit_index = enumerator + 1; // Always start after the one we previously found
-   const std::size_t number_of_bits_in_array = GetSize();
+   std::size_t const number_of_bits_in_array = GetSize();
 
    if ( bit_index >= number_of_bits_in_array )
    {
@@ -1183,7 +1183,7 @@ __checkReturn std::size_t CBitArray::GetUpperBound( void ) const noexcept
    return( 0 );
 }
 
-__checkReturn uint32_t CBitArray::GetValue( __in const std::size_t starting_bit_location, __in const std::size_t number_of_bits ) const noexcept
+__checkReturn uint32_t CBitArray::GetValue( __in std::size_t const starting_bit_location, __in std::size_t const number_of_bits ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
    ASSERT( number_of_bits < 33 );
@@ -1201,7 +1201,7 @@ __checkReturn uint32_t CBitArray::GetValue( __in const std::size_t starting_bit_
    uint32_t return_value = 0;
    uint32_t bit_value    = 0;
 
-   for ( const auto index : Range(number_of_bits) )
+   for ( auto const index : Range(number_of_bits) )
    {
       return_value <<= 1;
 
@@ -1213,7 +1213,7 @@ __checkReturn uint32_t CBitArray::GetValue( __in const std::size_t starting_bit_
    return( return_value );
 }
 
-void CBitArray::InsertAt( __in const std::size_t bit_location, __in const uint32_t value ) noexcept
+void CBitArray::InsertAt( __in std::size_t const bit_location, __in uint32_t const value ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -1269,19 +1269,19 @@ void CBitArray::InsertAt( __in const std::size_t bit_location, __in const uint32
          // The most significant bit of that set of bit should be equal to
          // the least significant bit of this set of bits.
 
-         if ( _bittest( (const LONG *) &this_set_of_bits, 0 ) == 1 )
+         if ( _bittest( reinterpret_cast<LONG const *>(&this_set_of_bits), 0 ) == 1 )
          {
-            _bittestandset( (LONG *) &that_set_of_bits, MostSignificantBitLocation() );
+            _bittestandset( reinterpret_cast<LONG *>(&that_set_of_bits), MostSignificantBitLocation() );
          }
          else
          {
-            _bittestandreset( (LONG *) &that_set_of_bits, MostSignificantBitLocation() );
+            _bittestandreset( reinterpret_cast<LONG *>(&that_set_of_bits), MostSignificantBitLocation() );
          }
 
          this_set_of_bits >>= 1;
 
-         m_Bits.at( loop_index + 1 ) = (uint32_t) that_set_of_bits;
-         m_Bits.at( loop_index )     = (uint32_t) this_set_of_bits;
+         m_Bits.at( loop_index + 1 ) = static_cast<uint32_t>(that_set_of_bits);
+         m_Bits.at( loop_index )     = static_cast<uint32_t>(this_set_of_bits);
 
          loop_index--;
       }
@@ -1294,13 +1294,13 @@ void CBitArray::InsertAt( __in const std::size_t bit_location, __in const uint32
       {
          that_set_of_bits = m_Bits.at( array_index + 1 );
 
-         if ( _bittest( (const LONG *) &this_set_of_bits, 0 ) == 1 )
+         if ( _bittest( reinterpret_cast<LONG const *>(&this_set_of_bits), 0 ) == 1 )
          {
-            _bittestandset( (LONG *) &that_set_of_bits, MostSignificantBitLocation() );
+            _bittestandset( reinterpret_cast<LONG *>(&that_set_of_bits), MostSignificantBitLocation() );
          }
          else
          {
-            _bittestandreset( (LONG *) &that_set_of_bits, MostSignificantBitLocation() );
+            _bittestandreset( reinterpret_cast<LONG *>(&that_set_of_bits), MostSignificantBitLocation() );
          }
 
          m_Bits.at( array_index + 1 ) = that_set_of_bits;
@@ -1312,31 +1312,31 @@ void CBitArray::InsertAt( __in const std::size_t bit_location, __in const uint32
 
    this_set_of_bits = m_Bits.at( array_index );
 
-   for ( const auto bit_index : Range(bit_number) )
+   for ( auto const bit_index : Range(bit_number) )
    {
-      if ( _bittest( (const LONG *) &this_set_of_bits, static_cast<LONG>(bit_index + 1) ) == 1 )
+      if ( _bittest(reinterpret_cast<LONG const *>(&this_set_of_bits), static_cast<LONG>(bit_index + 1) ) == 1 )
       {
-         _bittestandset( (LONG *) &this_set_of_bits, static_cast<LONG>(bit_index) );
+         _bittestandset(reinterpret_cast<LONG *>(&this_set_of_bits), static_cast<LONG>(bit_index) );
       }
       else
       {
-         _bittestandreset( (LONG *) &this_set_of_bits, static_cast<LONG>(bit_index) );
+         _bittestandreset(reinterpret_cast<LONG *>(&this_set_of_bits), static_cast<LONG>(bit_index) );
       }
    }
 
    if ( value != 0 )
    {
-      _bittestandset( (LONG *) &this_set_of_bits, bit_number );
+      _bittestandset(reinterpret_cast<LONG *>(&this_set_of_bits), bit_number );
    }
    else
    {
-      _bittestandreset( (LONG *) &this_set_of_bits, bit_number );
+      _bittestandreset(reinterpret_cast<LONG *>(&this_set_of_bits), bit_number );
    }
 
    m_Bits.at( array_index ) = this_set_of_bits;
 }
 
-__checkReturn CBitArray CBitArray::Left( __in const std::size_t number_of_bits ) const noexcept
+__checkReturn CBitArray CBitArray::Left( __in std::size_t const number_of_bits ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -1348,7 +1348,7 @@ __checkReturn CBitArray CBitArray::Left( __in const std::size_t number_of_bits )
    }
    else
    {
-      for ( const auto array_index : Range(number_of_bits) )
+      for ( auto const array_index : Range(number_of_bits) )
       {
          return_value.Add( GetAt( array_index ) );
       }
@@ -1357,7 +1357,7 @@ __checkReturn CBitArray CBitArray::Left( __in const std::size_t number_of_bits )
    return( return_value );
 }
 
-void CBitArray::LeftTrim( _In_ const std::size_t number_of_bits ) noexcept
+void CBitArray::LeftTrim( _In_ std::size_t const number_of_bits ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -1375,7 +1375,7 @@ void CBitArray::LeftTrim( _In_ const std::size_t number_of_bits ) noexcept
 // 1998-12-05
 // New calculation provided by Peter Ekberg (peda@sectra.se) to get rid of floating point calculations
 
-__checkReturn bool CBitArray::m_GetElementIndexOfBitLocation( __in const std::size_t bit_location, __out std::size_t& array_index, __out uint32_t& bit_number ) const noexcept
+__checkReturn bool CBitArray::m_GetElementIndexOfBitLocation( __in std::size_t const bit_location, __out std::size_t& array_index, __out uint32_t& bit_number ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -1396,7 +1396,7 @@ __checkReturn bool CBitArray::m_GetElementIndexOfBitLocation( __in const std::si
 
 #endif // _DEBUG
 
-__checkReturn CBitArray CBitArray::Mid( __in const std::size_t starting_at, __in const std::size_t number_of_bits ) const noexcept
+__checkReturn CBitArray CBitArray::Mid( __in std::size_t const starting_at, __in std::size_t const number_of_bits ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -1413,7 +1413,7 @@ __checkReturn CBitArray CBitArray::Mid( __in const std::size_t starting_at, __in
       return( return_value );
    }
 
-   for ( const auto index : Range(number_of_bits) )
+   for ( auto const index : Range(number_of_bits) )
    {
       return_value.Add( GetAt( index + starting_at ) );
    }
@@ -1421,7 +1421,7 @@ __checkReturn CBitArray CBitArray::Mid( __in const std::size_t starting_at, __in
    return( return_value );
 }
 
-void CBitArray::RemoveAt( __in const std::size_t bit_location ) noexcept
+void CBitArray::RemoveAt( __in std::size_t const bit_location ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    ASSERT( GetSize() > 0 );
@@ -1467,13 +1467,13 @@ void CBitArray::RemoveAt( __in const std::size_t bit_location ) noexcept
 
       while( ( bit_index + 1 ) > 0 )
       {
-         if ( _bittest( (const LONG *) &this_set_of_bits, (LONG) bit_index ) == 1 )
+         if ( _bittest( reinterpret_cast<LONG const *>(&this_set_of_bits), (LONG) bit_index ) == 1 )
          {
-            _bittestandset( (LONG *) &this_set_of_bits, (LONG) (bit_index + 1 ) );
+            _bittestandset( reinterpret_cast<LONG *>(&this_set_of_bits), (LONG) (bit_index + 1 ) );
          }
          else
          {
-            _bittestandreset( (LONG *) &this_set_of_bits, (LONG) (bit_index + 1 ) );
+            _bittestandreset( reinterpret_cast<LONG *>(&this_set_of_bits), (LONG) (bit_index + 1 ) );
          }
 
          bit_index--;
@@ -1489,13 +1489,13 @@ void CBitArray::RemoveAt( __in const std::size_t bit_location ) noexcept
       this_set_of_bits = m_Bits.at( index );
       that_set_of_bits = m_Bits.at( index + 1 );
 
-      if ( _bittest( (const LONG *) &that_set_of_bits, MostSignificantBitLocation() ) == 1 )
+      if ( _bittest( reinterpret_cast<const LONG *>(&that_set_of_bits), MostSignificantBitLocation() ) == 1 )
       {
-         _bittestandset( (LONG *) &this_set_of_bits, 0 );
+         _bittestandset( reinterpret_cast<LONG *>(&this_set_of_bits), 0 );
       }
       else
       {
-         _bittestandreset( (LONG *) &this_set_of_bits, 0 );
+         _bittestandreset( reinterpret_cast<LONG *>(&this_set_of_bits), 0 );
       }
 
       that_set_of_bits <<= 1;
@@ -1509,7 +1509,7 @@ void CBitArray::RemoveAt( __in const std::size_t bit_location ) noexcept
    m_TotalNumberOfBits--;
 }
 
-__checkReturn CBitArray CBitArray::Right( _In_ const std::size_t number_of_bits ) const noexcept
+__checkReturn CBitArray CBitArray::Right( _In_ std::size_t const number_of_bits ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -1523,7 +1523,7 @@ __checkReturn CBitArray CBitArray::Right( _In_ const std::size_t number_of_bits 
    {
       std::size_t get_at_index = GetSize() - number_of_bits;
 
-      for ( const auto index :Range(number_of_bits) )
+      for ( auto const index :Range(number_of_bits) )
       {
          return_value.Add( GetAt( get_at_index + index ) );
       }
@@ -1532,7 +1532,7 @@ __checkReturn CBitArray CBitArray::Right( _In_ const std::size_t number_of_bits 
    return( return_value );
 }
 
-void CBitArray::RightTrim( __in const std::size_t number_of_bits ) noexcept
+void CBitArray::RightTrim( __in std::size_t const number_of_bits ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -1547,7 +1547,7 @@ void CBitArray::RightTrim( __in const std::size_t number_of_bits ) noexcept
    // 1998-12-09 Peter Ekberg (peda@sectra.se) found a bug here. I was
    // having a bit of a rounding error (no, I couldn't resist the pun).
 
-   std::size_t number_of_elements = GetSize();
+   auto number_of_elements = GetSize();
 
    number_of_elements += ( SizeOfBitRepresentation() - 1 );
    number_of_elements /= SizeOfBitRepresentation();
@@ -1555,7 +1555,7 @@ void CBitArray::RightTrim( __in const std::size_t number_of_bits ) noexcept
    m_Bits.resize( number_of_elements );
 }
 
-void CBitArray::SetAll( __in const uint32_t value ) noexcept
+void CBitArray::SetAll( __in uint32_t const value ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -1569,7 +1569,7 @@ void CBitArray::SetAll( __in const uint32_t value ) noexcept
    }
 }
 
-void CBitArray::SetAt( __in const std::size_t bit_location, __in const uint32_t value ) noexcept
+void CBitArray::SetAt( __in std::size_t const bit_location, __in uint32_t const value ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -1602,17 +1602,17 @@ void CBitArray::SetAt( __in const std::size_t bit_location, __in const uint32_t 
 
    if ( value != 0 )
    {
-      _bittestandset( (LONG *) &this_set_of_bits, bit_number );
+      _bittestandset( reinterpret_cast<LONG *>(&this_set_of_bits), bit_number );
    }
    else
    {
-      _bittestandreset( (LONG *) &this_set_of_bits, bit_number );
+      _bittestandreset( reinterpret_cast<LONG *>(&this_set_of_bits), bit_number );
    }
 
    m_Bits.at( index ) = this_set_of_bits;
 }
 
-void CBitArray::SetSize( __in const std::size_t number_of_bits ) noexcept
+void CBitArray::SetSize( __in std::size_t const number_of_bits ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -1661,7 +1661,7 @@ void CBitArray::SetSize( __in const std::size_t number_of_bits ) noexcept
    m_TotalNumberOfBits = number_of_bits + m_IndexOfFirstBit;
 }
 
-void CBitArray::SetValue(_In_ const std::size_t starting_bit_location, _In_ const uint32_t value, _In_ const uint32_t number_of_bits ) noexcept
+void CBitArray::SetValue(_In_ std::size_t const starting_bit_location, _In_ uint32_t const value, _In_ uint32_t const number_of_bits ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    ASSERT( number_of_bits <= static_cast<uint32_t>(SizeOfBitRepresentation()) );
@@ -1673,12 +1673,12 @@ void CBitArray::SetValue(_In_ const std::size_t starting_bit_location, _In_ cons
 
    uint32_t offset = number_of_bits - 1;
 
-   for ( const auto index : Range(number_of_bits) )
+   for ( auto const index : Range(number_of_bits) )
    {
       // 1998-12-08 Thanks to Peter Ekberg (peda@sectra.se) for finding
       // a bug here. I had the arguments to bit_test() reversed.
 
-      SetAt( starting_bit_location + index, _bittest( (const LONG *) &value, offset ) );
+      SetAt( starting_bit_location + index, _bittest( reinterpret_cast<LONG const *>(&value), offset ) );
       offset--;
    }
 }

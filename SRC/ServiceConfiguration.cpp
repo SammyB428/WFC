@@ -91,7 +91,7 @@ CServiceConfigurationA::~CServiceConfigurationA()
    Empty();
 }
 
-void CServiceConfigurationA::Copy( __in const CServiceConfigurationA& source ) noexcept
+void CServiceConfigurationA::Copy( __in CServiceConfigurationA const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Empty();
@@ -105,13 +105,13 @@ void CServiceConfigurationA::Copy( __in const CServiceConfigurationA& source ) n
    m_StartName.assign( source.m_StartName );
    m_DisplayName.assign( source.m_DisplayName );
 
-   for( const auto& entry : source.m_Dependencies)
+   for( auto const& entry : source.m_Dependencies)
    {
       m_Dependencies.push_back(entry);
    }
 }
 
-void CServiceConfigurationA::Copy( __in const CServiceConfigurationA * source ) noexcept
+void CServiceConfigurationA::Copy( __in CServiceConfigurationA const * source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
@@ -281,7 +281,7 @@ void CServiceConfigurationA::GetDependencies( __out std::vector<std::string>& de
 
    dependencies.clear();
 
-   for( const auto& entry : m_Dependencies )
+   for( auto const& entry : m_Dependencies )
    {
       (void) dependencies.push_back(entry);
    }
@@ -421,7 +421,7 @@ CServiceConfigurationW::~CServiceConfigurationW()
    Empty();
 }
 
-void CServiceConfigurationW::Copy( __in const CServiceConfigurationW& source ) noexcept
+void CServiceConfigurationW::Copy( __in CServiceConfigurationW const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -436,13 +436,13 @@ void CServiceConfigurationW::Copy( __in const CServiceConfigurationW& source ) n
    m_StartName.assign( source.m_StartName );
    m_DisplayName .assign( source.m_DisplayName );
 
-   for( const auto& entry : source.m_Dependencies)
+   for( auto const& entry : source.m_Dependencies)
    {
       m_Dependencies.push_back( entry );
    }
 }
 
-void CServiceConfigurationW::Copy( __in const CServiceConfigurationW * source ) noexcept
+void CServiceConfigurationW::Copy( __in CServiceConfigurationW const * source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
@@ -621,7 +621,7 @@ void CServiceConfigurationW::GetDependencies( __out std::vector<std::wstring>& d
 
    dependencies.clear();
 
-   for( const auto& entry : m_Dependencies)
+   for( auto const& entry : m_Dependencies)
    {
       dependencies.push_back( entry );
    }

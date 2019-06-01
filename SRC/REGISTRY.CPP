@@ -653,7 +653,7 @@ _Check_return_ bool CRegistry::GetBinaryValue( __in_z const wchar_t * name_of_va
 
         return_array.clear();
 
-        for ( const auto index : Range(size_of_buffer) )
+        for ( auto const index : Range(size_of_buffer) )
         {
             return_array.push_back( memory_buffer[ index ] );
         }
@@ -1218,7 +1218,7 @@ _Check_return_ bool CRegistry::Save( __in_z const wchar_t * name_of_file_to_hold
     WFC_END_CATCH_ALL
 }
 
-_Check_return_ bool CRegistry::SetBinaryValue( __in_z const wchar_t * name_of_value, __in const std::vector<uint8_t>& bytes_to_write ) noexcept
+_Check_return_ bool CRegistry::SetBinaryValue( __in_z wchar_t const * name_of_value, __in std::vector<uint8_t> const& bytes_to_write ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
 
@@ -1233,24 +1233,24 @@ _Check_return_ bool CRegistry::SetBinaryValue( __in_z const wchar_t * name_of_va
         return( false );
     }
 
-    for ( const auto index : Range(size_of_buffer) )
+    for ( auto const index : Range(size_of_buffer) )
     {
         memory_buffer[ index ] = bytes_to_write.at( index );
     }
 
-    const bool return_value = SetValue( name_of_value, typeBinary, memory_buffer.get(), size_of_buffer );
+    bool const return_value = SetValue( name_of_value, typeBinary, memory_buffer.get(), size_of_buffer );
 
     return( return_value );
 }
 
-_Check_return_ bool CRegistry::SetDoubleWordValue( __in_z const wchar_t * name_of_value, __in DWORD value_to_write ) noexcept
+_Check_return_ bool CRegistry::SetDoubleWordValue( __in_z wchar_t const * name_of_value, __in DWORD value_to_write ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
 
-    return( SetValue( name_of_value, typeDoubleWord, (const PBYTE) &value_to_write, sizeof( DWORD ) ) );
+    return( SetValue( name_of_value, typeDoubleWord, reinterpret_cast<PBYTE const>(&value_to_write), sizeof( DWORD ) ) );
 }
 
-_Check_return_ bool CRegistry::SetSecurity( __in const SECURITY_INFORMATION& security_information, __in const PSECURITY_DESCRIPTOR  security_descriptor_p ) noexcept
+_Check_return_ bool CRegistry::SetSecurity( __in SECURITY_INFORMATION const& security_information, __in PSECURITY_DESCRIPTOR const security_descriptor_p ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
     WFC_VALIDATE_POINTER( security_descriptor_p );
@@ -1294,7 +1294,7 @@ _Check_return_ bool CRegistry::SetStringValue( _In_z_ const wchar_t * name_of_va
     return( SetValue( name_of_value, typeString, reinterpret_cast<uint8_t const *>(string_value.c_str()), (DWORD) ( ( string_value.length() + 1 ) * sizeof( wchar_t ) ) ) );
 }
 
-_Check_return_ bool CRegistry::SetStringArrayValue(_In_z_ const wchar_t * name_of_value, _In_ const std::vector<std::wstring>& string_array ) noexcept
+_Check_return_ bool CRegistry::SetStringArrayValue(_In_z_ wchar_t const * name_of_value, _In_ std::vector<std::wstring> const& string_array ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
 
@@ -1308,7 +1308,7 @@ _Check_return_ bool CRegistry::SetStringArrayValue(_In_z_ const wchar_t * name_o
 
     std::wstring temp_string;
 
-    for ( const auto index : Range(number_of_strings) )
+    for ( auto const index : Range(number_of_strings) )
     {
         temp_string.assign( string_array.at( index ) );
 
@@ -1374,38 +1374,38 @@ _Check_return_ bool CRegistry::SetStringArrayValue(_In_z_ const wchar_t * name_o
     return( return_value );
 }
 
-_Check_return_ bool CRegistry::SetValue( __in_z const wchar_t * name_of_value, __in const std::vector<uint8_t>& bytes_to_write ) noexcept
+_Check_return_ bool CRegistry::SetValue( __in_z wchar_t const * name_of_value, __in std::vector<uint8_t> const& bytes_to_write ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
 
     return( SetBinaryValue( name_of_value, bytes_to_write ) );
 }
 
-_Check_return_ bool CRegistry::SetValue( __in_z const wchar_t * name_of_value, __in DWORD value ) noexcept
+_Check_return_ bool CRegistry::SetValue( __in_z wchar_t const * name_of_value, __in DWORD value ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
 
     return( SetDoubleWordValue( name_of_value, value ) );
 }
 
-_Check_return_ bool CRegistry::SetValue( __in_z const wchar_t * name_of_value, __in const std::vector<std::wstring>& strings_to_write ) noexcept
+_Check_return_ bool CRegistry::SetValue( __in_z wchar_t const * name_of_value, __in std::vector<std::wstring> const& strings_to_write ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
 
     return( SetStringArrayValue( name_of_value, strings_to_write ) );
 }
 
-_Check_return_ bool CRegistry::SetValue( __in_z const wchar_t * name_of_value, __in const std::wstring& string_to_write ) noexcept
+_Check_return_ bool CRegistry::SetValue( __in_z wchar_t const * name_of_value, __in std::wstring const& string_to_write ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
 
     return( SetStringValue( name_of_value, string_to_write ) );
 }
 
-_Check_return_ bool CRegistry::SetValue( __in_z const wchar_t * name_of_value, 
-                                       __in const KeyValueTypes type_of_value_to_set, 
-                                       __in_bcount_opt( size_of_data ) const uint8_t * address_of_value_data, 
-                                       __in const std::size_t        size_of_data ) noexcept
+_Check_return_ bool CRegistry::SetValue( __in_z wchar_t const * name_of_value,
+                                       __in KeyValueTypes const type_of_value_to_set, 
+                                       __in_bcount_opt( size_of_data ) uint8_t const* address_of_value_data,
+                                       __in std::size_t const        size_of_data ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
     WFC_VALIDATE_POINTER( name_of_value );

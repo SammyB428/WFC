@@ -123,13 +123,13 @@ __checkReturn DWORD CMixerSourceSelector::GetSource( void ) const noexcept
    return( m_MixerLine.Component );
 }
 
-__checkReturn bool CMixerSourceSelector::IsSelected( __in const DWORD source ) noexcept
+__checkReturn bool CMixerSourceSelector::IsSelected( __in DWORD const source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
    bool return_value = m_GetSettings();
 
-   for ( const auto& entry : m_Settings )
+   for ( auto const& entry : m_Settings )
    {
       if ( entry.Parameter2 == source )
       {
@@ -150,7 +150,7 @@ __checkReturn bool CMixerSourceSelector::m_GetSettings( void ) noexcept
 
    if ( return_value != false )
    {
-      for ( const auto index : Range(array.size()) )
+      for ( auto const index : Range(array.size()) )
       {
          if (index < m_Settings.size() )
          {

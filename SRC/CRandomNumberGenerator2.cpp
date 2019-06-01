@@ -641,29 +641,29 @@ void CRandomNumberGenerator2::Fill( _In_ const FILETIME& min_value, _In_ const F
     destination.dwLowDateTime = return_value.LowPart;
 }
 
-void CRandomNumberGenerator2::Fill( _In_ const uint32_t min_length, _In_ const uint32_t max_length, _Out_ std::wstring& destination ) noexcept
+void CRandomNumberGenerator2::Fill( _In_ uint32_t const min_length, _In_ uint32_t const max_length, _Out_ std::wstring& destination ) noexcept
 {
-    const uint32_t length = Uint32( min_length, max_length );
+    uint32_t const length = Uint32( min_length, max_length );
 
     destination.resize( length );
 
-    const wchar_t * alphabet = L" abcdefghijklmnopqrstuvwxyz 01234567890 .! ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    const uint32_t alphabet_length = (uint32_t) wcslen( alphabet );
+    wchar_t const * alphabet = L" abcdefghijklmnopqrstuvwxyz 01234567890 .! ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    uint32_t const alphabet_length = (uint32_t) wcslen( alphabet );
 
-    for ( const auto loop_index : Range(length) )
+    for ( auto const loop_index : Range(length) )
     {
         destination.at( loop_index ) = alphabet[ GetInteger() % alphabet_length ];
     }
 }
 
-void CRandomNumberGenerator2::Fill( _In_ const uint32_t seed, _Out_ std::wstring& destination ) noexcept // static
+void CRandomNumberGenerator2::Fill( _In_ uint32_t const seed, _Out_ std::wstring& destination ) noexcept // static
 {
-    const uint32_t length = ( seed / 131282527 ) + 3;
+    uint32_t const length = ( seed / 131282527 ) + 3;
 
     destination.resize( length );
 
-    const wchar_t * alphabet = L" abcdefghijklmnopqrstuvwxyz 01234567890 .! ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    const uint32_t alphabet_length = (uint32_t) wcslen( alphabet );
+    wchar_t const * alphabet = L" abcdefghijklmnopqrstuvwxyz 01234567890 .! ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    uint32_t const alphabet_length = (uint32_t) wcslen( alphabet );
 
     uint32_t loop_index = 0;
 

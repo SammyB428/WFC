@@ -61,7 +61,7 @@ CPasswordChangeFilter::~CPasswordChangeFilter()
    WFC_VALIDATE_POINTER( this );
 }
 
-bool CPasswordChangeFilter::AddFilter( _In_ const std::wstring& dll_name ) noexcept
+bool CPasswordChangeFilter::AddFilter( _In_ std::wstring const& dll_name ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -81,7 +81,7 @@ bool CPasswordChangeFilter::AddFilter( _In_ const std::wstring& dll_name ) noexc
 
    GetCurrentFilters( current_filters );
 
-   for ( const auto& entry : current_filters )
+   for ( auto const& entry : current_filters )
    {
       if ( compare_no_case( entry, dll_name ) == I_AM_EQUAL_TO_THAT )
       {

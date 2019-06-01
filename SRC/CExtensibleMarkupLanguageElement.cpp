@@ -1832,7 +1832,7 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::m_ParseCDATASection( _In_ 
 
     uint32_t character = 0x00;
 
-    if ( starts_with(tag, L"<![CDATA[" ) == false)
+    if ( starts_with(tag, L"<![CDATA[", 9 ) == false)
     {
         //WFCTRACEVAL( TEXT( "tag does not begin with \"<![CDATA[\" it begins with " ), temp_string );
         return( false );
@@ -2233,8 +2233,8 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::m_ParseDOCTYPESection( _In
             return( false );
         }
 
-        if ( starts_with( string_to_parse, L"PUBLIC" ) == false &&
-             starts_with( string_to_parse, L"SYSTEM" ) == false)
+        if ( starts_with( string_to_parse, L"PUBLIC", 6 ) == false &&
+             starts_with( string_to_parse, L"SYSTEM", 6 ) == false)
         {
             m_ReportParsingError( L"DOCTYPE ExternalID is not SYSTEM or PUBLIC (Rule 75)." );
             return( false );
@@ -2897,7 +2897,7 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::m_ParseProcessingInstructi
 
     if ( m_Contents.length() > 2 )
     {
-        if ( starts_with_no_case( m_Contents, L"xml" ) == true)
+        if ( starts_with_no_case( m_Contents, L"xml", 3 ) == true)
         {
             return( m_ParseXMLDeclaration( m_Contents ) );
         }
@@ -2933,7 +2933,7 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::m_ParseTag( _In_ std::wstr
 
     if ( tag.length() > 9 )
     {
-        if (starts_with(tag, L"<![CDATA[" ) == true)
+        if (starts_with(tag, L"<![CDATA[", 9 ) == true)
         {
             // Yup, this here is a CDATA section
 
@@ -4511,8 +4511,8 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::GetChildValue(_In_z_ wchar
         return( false );
     }
 
-    if ( starts_with( value_text, L"t" ) == true ||
-        starts_with( value_text, L"y" ) == true )
+    if ( starts_with( value_text, 't' ) == true ||
+         starts_with( value_text, 'y' ) == true )
     {
         value = true;
         return( true );
@@ -5313,7 +5313,7 @@ void CExtensibleMarkupLanguageElement::WriteTo( _Inout_ std::vector<uint8_t>& xm
         // terminated. Yes, this is stupid. Yes, it doesn't fit with the rest
         // of XML syntax. Yes, we have SGML to thank for this.
 
-        if ( m_Contents.length() > 6 && starts_with( m_Contents, L"DOCTYPE" ) == true)
+        if ( m_Contents.length() > 6 && starts_with( m_Contents, L"DOCTYPE", 7 ) == true)
         {
             // Yup, we are a DOCTYPE element
 

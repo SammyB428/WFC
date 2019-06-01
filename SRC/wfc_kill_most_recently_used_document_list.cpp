@@ -80,7 +80,7 @@ __checkReturn bool PASCAL Win32FoundationClasses::wfc_kill_most_recently_used_do
 
    std::vector<uint8_t> unicode_string;
 
-   for ( const auto loop_index : Range(list.length()) )
+   for ( auto const loop_index : Range(list.length()) )
    {
       //name_of_value_to_delete  = TEXT( "Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\RecentDocs\\" );
       name_of_value_to_delete.clear();

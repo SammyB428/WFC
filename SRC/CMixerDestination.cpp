@@ -142,13 +142,13 @@ void CMixerDestination::Dump( CDumpContext& dump_context ) const
 
 #endif // _DEBUG
 
-__checkReturn bool CMixerDestination::GetSource( __in const DWORD type_of_source, __out CMixerSource& source ) noexcept
+__checkReturn bool CMixerDestination::GetSource( __in DWORD const type_of_source, __out CMixerSource& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
    CMixerLine line;
 
-   for ( const auto source_number : Range(m_MixerLine.NumberOfConnections) )
+   for ( auto const source_number : Range(m_MixerLine.NumberOfConnections) )
    {
       if ( m_Mixer.GetByConnection( m_MixerLine.DestinationNumber, static_cast<DWORD>(source_number), line ) != false )
       {

@@ -852,7 +852,7 @@ __checkReturn bool PASCAL Win32FoundationClasses::wfc_parse_xml( __in_z LPCTSTR 
     return( true );
 }
 
-static constexpr uint8_t g_hex_values[256] =
+static constexpr uint8_t const g_hex_values[256] =
 {
     0, 0, 0, 0,  0, 0, 0, 0,  0, 0, 0, 0,  0, 0, 0, 0, //  0 - 15
     0, 0, 0, 0,  0, 0, 0, 0,  0, 0, 0, 0,  0, 0, 0, 0, // 16 - 31
@@ -872,7 +872,7 @@ static constexpr uint8_t g_hex_values[256] =
     0, 0, 0, 0,  0, 0, 0, 0,  0, 0, 0, 0,  0, 0, 0, 0
 };
 
-__checkReturn bool PASCAL Win32FoundationClasses::wfc_parse_hex_string(__in_z const wchar_t * hex_string, _In_ const size_t number_of_characters, __out_bcount(buffer_size) uint8_t * buffer, _In_ const size_t buffer_size) noexcept
+__checkReturn bool PASCAL Win32FoundationClasses::wfc_parse_hex_string(__in_z wchar_t const * hex_string, _In_ std::size_t const number_of_characters, __out_bcount(buffer_size) uint8_t * buffer, _In_ std::size_t const buffer_size) noexcept
 {
     WFC_VALIDATE_POINTER(hex_string);
     WFC_VALIDATE_POINTER(buffer);
@@ -883,9 +883,9 @@ __checkReturn bool PASCAL Win32FoundationClasses::wfc_parse_hex_string(__in_z co
         return(false);
     }
 
-    size_t string_index = 0;
+    std::size_t string_index = 0;
 
-    for ( const auto buffer_index : Range(buffer_size) )
+    for ( auto const buffer_index : Range(buffer_size) )
     {
         buffer[buffer_index] = ((g_hex_values[(uint8_t)hex_string[string_index]]) << 4) | g_hex_values[(uint8_t)hex_string[string_index + 1]];
         string_index += 2;
@@ -894,7 +894,7 @@ __checkReturn bool PASCAL Win32FoundationClasses::wfc_parse_hex_string(__in_z co
     return(true);
 }
 
-__checkReturn bool PASCAL Win32FoundationClasses::wfc_parse_hex_string(__in_z const char * hex_string, _In_ const size_t number_of_characters, __out_bcount(buffer_size) uint8_t * buffer, _In_ const size_t buffer_size) noexcept
+__checkReturn bool PASCAL Win32FoundationClasses::wfc_parse_hex_string(__in_z char const * hex_string, _In_ std::size_t const number_of_characters, __out_bcount(buffer_size) uint8_t * buffer, _In_ std::size_t const buffer_size) noexcept
 {
     WFC_VALIDATE_POINTER(hex_string);
     WFC_VALIDATE_POINTER(buffer);
@@ -907,7 +907,7 @@ __checkReturn bool PASCAL Win32FoundationClasses::wfc_parse_hex_string(__in_z co
 
     size_t string_index = 0;
 
-    for ( const auto buffer_index : Range(buffer_size) )
+    for ( auto const buffer_index : Range(buffer_size) )
     {
         buffer[buffer_index] = ((g_hex_values[hex_string[string_index]]) << 4) | g_hex_values[hex_string[string_index + 1]];
         string_index += 2;

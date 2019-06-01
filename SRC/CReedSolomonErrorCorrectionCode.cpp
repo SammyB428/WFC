@@ -318,7 +318,7 @@ __checkReturn int CReedSolomonErrorCorrectionCode::m_DecodeChunk(__inout std::ve
       {
          tmp = 0;
 
-         for ( const auto j : Range( m_BlockSize) )
+         for ( auto const j : Range( m_BlockSize) )
          {
             if ( recd[ j ] != m_BlockSize ) /* recd[j] in index form */
             {

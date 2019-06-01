@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 1995-2014, Samuel R. Blackburn
+** Copyright, 1995-2019, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -57,7 +57,7 @@ struct WFC_RANGE
 
 USING_WFC_NAMESPACE
 
-static inline __checkReturn bool __wfc_range_check( __in const uint32_t value_to_test, __in_ecount( number_of_ranges ) const WFC_RANGE * range, __in uint32_t number_of_ranges ) noexcept
+static inline constexpr __checkReturn bool __wfc_range_check( __in uint32_t const value_to_test, __in_ecount( number_of_ranges ) WFC_RANGE const * range, __in uint32_t number_of_ranges ) noexcept
 {
    int32_t bottom = 0;
    int32_t top    = number_of_ranges - 1;
@@ -104,11 +104,11 @@ static inline __checkReturn bool __wfc_range_check( __in const uint32_t value_to
    return( false );
 }
 
-__checkReturn bool Win32FoundationClasses::is_xml_BaseChar( __in const uint32_t character_to_test ) noexcept
+__checkReturn bool Win32FoundationClasses::is_xml_BaseChar( __in uint32_t const character_to_test ) noexcept
 {
    // Test according to Rule 85
 
-   static constexpr WFC_RANGE static_basechar_range[ 201 ] =
+   static constexpr WFC_RANGE const static_basechar_range[ 201 ] =
    {
       { 0x41, 0x5A }, // 0
       { 0x61, 0x7A }, // 1
@@ -316,11 +316,11 @@ __checkReturn bool Win32FoundationClasses::is_xml_BaseChar( __in const uint32_t 
    return( __wfc_range_check( character_to_test, static_basechar_range, 201 ) );
 }
 
-__checkReturn bool Win32FoundationClasses::is_xml_Char( __in const uint32_t character_to_test ) noexcept
+__checkReturn bool Win32FoundationClasses::is_xml_Char( __in uint32_t const character_to_test ) noexcept
 {
    // Test according to Rule 2
 
-   static constexpr WFC_RANGE static_char_range[ 6 ] =
+   static constexpr WFC_RANGE const static_char_range[ 6 ] =
    {
       { 0x0009, 0x0009 }, // 0
       { 0x000A, 0x000A }, // 1
@@ -333,11 +333,11 @@ __checkReturn bool Win32FoundationClasses::is_xml_Char( __in const uint32_t char
    return( __wfc_range_check( character_to_test, static_char_range, 6 ) );
 }
 
-__checkReturn bool Win32FoundationClasses::is_xml_CombiningChar( __in const uint32_t character_to_test ) noexcept
+__checkReturn bool Win32FoundationClasses::is_xml_CombiningChar( __in uint32_t const character_to_test ) noexcept
 {
    // Test according to Rule 87
 
-   static constexpr WFC_RANGE static_combiningchar_range[ 96 ] =
+   static constexpr WFC_RANGE const static_combiningchar_range[ 96 ] =
    {
       { 0x0300, 0x0345 }, // 0
       { 0x0360, 0x0361 }, // 1
@@ -439,11 +439,11 @@ __checkReturn bool Win32FoundationClasses::is_xml_CombiningChar( __in const uint
    return( __wfc_range_check( character_to_test, static_combiningchar_range, 96 ) );
 }
 
-__checkReturn bool Win32FoundationClasses::is_xml_Digit( __in const uint32_t character_to_test ) noexcept
+__checkReturn bool Win32FoundationClasses::is_xml_Digit( __in uint32_t const character_to_test ) noexcept
 {
    // Test according to Rule 88
 
-   static constexpr WFC_RANGE static_digit_range[ 15 ] =
+   static constexpr WFC_RANGE const static_digit_range[ 15 ] =
    {
       { 0x0030, 0x0039 }, // 0
       { 0x0660, 0x0669 }, // 1
@@ -465,11 +465,11 @@ __checkReturn bool Win32FoundationClasses::is_xml_Digit( __in const uint32_t cha
    return( __wfc_range_check( character_to_test, static_digit_range, 15 ) );
 }
 
-__checkReturn bool Win32FoundationClasses::is_xml_Extender( __in const uint32_t character_to_test ) noexcept
+__checkReturn bool Win32FoundationClasses::is_xml_Extender( __in uint32_t const character_to_test ) noexcept
 {
    // Test according to Rule 89
 
-   static constexpr WFC_RANGE static_extender_range[ 11 ] =
+   static constexpr WFC_RANGE const static_extender_range[ 11 ] =
    {
       { 0x00B7, 0x00B7 }, // 0
       { 0x02D0, 0x02D0 }, // 1
@@ -487,11 +487,11 @@ __checkReturn bool Win32FoundationClasses::is_xml_Extender( __in const uint32_t 
    return( __wfc_range_check( character_to_test, static_extender_range, 11 ) );
 }
 
-__checkReturn bool Win32FoundationClasses::is_xml_Ideographic( __in const uint32_t character_to_test ) noexcept
+__checkReturn bool Win32FoundationClasses::is_xml_Ideographic( __in uint32_t const character_to_test ) noexcept
 {
    // Test according to Rule 86
 
-   static constexpr WFC_RANGE static_ideographic_range[ 3 ] =
+   static constexpr WFC_RANGE const static_ideographic_range[ 3 ] =
    {
       { 0x3007, 0x3007 }, // 0
       { 0x3021, 0x3029 }, // 1
@@ -501,7 +501,7 @@ __checkReturn bool Win32FoundationClasses::is_xml_Ideographic( __in const uint32
    return( __wfc_range_check( character_to_test, static_ideographic_range, 3 ) );
 }
 
-__checkReturn bool Win32FoundationClasses::is_xml_Letter( __in const uint32_t character_to_test ) noexcept
+__checkReturn bool Win32FoundationClasses::is_xml_Letter( __in uint32_t const character_to_test ) noexcept
 {
    // Test according to Rule 84
 
@@ -518,7 +518,7 @@ __checkReturn bool Win32FoundationClasses::is_xml_Letter( __in const uint32_t ch
    return( false );
 }
 
-__checkReturn bool Win32FoundationClasses::is_xml_NameChar( __in const uint32_t character_to_test ) noexcept
+__checkReturn bool Win32FoundationClasses::is_xml_NameChar( __in uint32_t const character_to_test ) noexcept
 {
    // Test according to Rule 4
 
@@ -553,7 +553,7 @@ __checkReturn bool Win32FoundationClasses::is_xml_NameChar( __in const uint32_t 
    return( false );
 }
 
-__checkReturn bool Win32FoundationClasses::is_xml_PubidChar( __in const uint32_t character_to_test ) noexcept
+__checkReturn bool Win32FoundationClasses::is_xml_PubidChar( __in uint32_t const character_to_test ) noexcept
 {
    // Test according to Rule 13
 
@@ -605,7 +605,7 @@ __checkReturn bool Win32FoundationClasses::is_xml_PubidChar( __in const uint32_t
    return( false );
 }
 
-__checkReturn bool Win32FoundationClasses::is_xml_white_space( __in const uint32_t character_to_test ) noexcept
+__checkReturn bool Win32FoundationClasses::is_xml_white_space( __in uint32_t const character_to_test ) noexcept
 {
    // Test according to Rule 3
 

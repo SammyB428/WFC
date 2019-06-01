@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 1995-2016, Samuel R. Blackburn
+** Copyright, 1995-2019, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -48,33 +48,33 @@ class CParsePoint
    protected:
 
        uint64_t m_ByteIndex{ 0 };
-       uint64_t m_LineIndex{ 0 };
-       uint64_t m_LineNumber{ 0 };
+       uint64_t m_LineIndex{ 1 };
+       uint64_t m_LineNumber{ 1 };
 
    public:
 
-      inline constexpr CParsePoint()
+      inline constexpr CParsePoint() noexcept
       {
          Empty();
       };
 
-      inline constexpr CParsePoint( _In_ const CParsePoint& source )
+      inline constexpr CParsePoint( _In_ const CParsePoint const& source ) noexcept
       {
          Copy( source );
       };
 
-      inline ~CParsePoint()
+      inline ~CParsePoint() noexcept
       {
          Empty();
       };
 
-      inline constexpr _Check_return_ CParsePoint& operator=( _In_ const CParsePoint& source ) noexcept
+      inline constexpr _Check_return_ CParsePoint& operator=( _In_ CParsePoint const& source ) noexcept
       {
          Copy( source );
          return( *this );
       };
 
-      inline constexpr _Check_return_ size_t CalculateLength( _In_ const CParsePoint& source ) const noexcept
+      inline constexpr _Check_return_ std::size_t Distance( _In_ CParsePoint const& source ) const noexcept
       {
          if ( m_ByteIndex > source.m_ByteIndex )
          {
@@ -84,7 +84,7 @@ class CParsePoint
          return( source.m_ByteIndex - m_ByteIndex );
       };
 
-      inline constexpr void Copy( _In_ const CParsePoint& source ) noexcept
+      inline constexpr void Copy( _In_ CParsePoint const& source ) noexcept
       {
          m_ByteIndex  = source.m_ByteIndex;
          m_LineIndex  = source.m_LineIndex;
@@ -98,7 +98,7 @@ class CParsePoint
          m_LineNumber = 1;
       };
 
-      inline constexpr void DecrementIndex(_In_ const uint64_t decrement_by = 1) noexcept
+      inline constexpr void DecrementIndex(_In_ uint64_t const decrement_by = 1) noexcept
       {
           if (decrement_by >= m_ByteIndex)
           {
@@ -125,37 +125,37 @@ class CParsePoint
          return( m_LineNumber );
       };
 
-      inline constexpr void SetIndex( _In_ const uint64_t index ) noexcept
+      inline constexpr void SetIndex( _In_ uint64_t const index ) noexcept
       {
          m_ByteIndex = index;
       };
 
-      inline constexpr void SetLineIndex( _In_ const uint64_t index ) noexcept
+      inline constexpr void SetLineIndex( _In_ uint64_t const index ) noexcept
       {
          m_LineIndex = index;
       };
 
-      inline constexpr void SetLineNumber( _In_ const uint64_t index ) noexcept
+      inline constexpr void SetLineNumber( _In_ uint64_t const index ) noexcept
       {
          m_LineNumber = index;
       };
 
-      inline constexpr void IncrementIndex( _In_ const uint64_t steps = 1 ) noexcept
+      inline constexpr void IncrementIndex( _In_ uint64_t const steps = 1 ) noexcept
       {
          m_ByteIndex += steps;
       };
 
-      inline constexpr void IncrementLineIndex( _In_ const uint64_t steps = 1 ) noexcept
+      inline constexpr void IncrementLineIndex( _In_ uint64_t const steps = 1 ) noexcept
       {
          m_LineIndex += steps;
       };
 
-      inline constexpr void IncrementLineNumber( _In_ const uint64_t steps = 1 ) noexcept
+      inline constexpr void IncrementLineNumber( _In_ uint64_t const steps = 1 ) noexcept
       {
          m_LineNumber += steps;
       };
 
-      inline constexpr void AutoIncrement( _In_ const uint8_t character ) noexcept
+      inline constexpr void AutoIncrement( _In_ uint8_t const character ) noexcept
       {
          m_ByteIndex++;
          m_LineIndex++;

@@ -109,7 +109,7 @@ __checkReturn bool PASCAL Win32FoundationClasses::wfc_enable_all_privileges( voi
 
    bool return_value = true;
 
-   for ( const auto loop_index : Range( std::size( static_PrivilegeNames ) ) )
+   for ( auto const loop_index : Range( std::size( static_PrivilegeNames ) ) )
    {
       if ( Win32FoundationClasses::wfc_enable_privilege( static_PrivilegeNames[ loop_index ] ) == false )
       {

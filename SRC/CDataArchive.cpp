@@ -648,13 +648,13 @@ void CDataArchive::Write(__in const std::vector<uint32_t>& array) noexcept
 
     Write(static_cast<uint32_t>(array.size()));
 
-    for ( const auto entry : array )
+    for ( auto const entry : array )
     {
         Write(entry);
     }
 }
 
-void CDataArchive::Write(__in const std::wstring& value) noexcept
+void CDataArchive::Write(__in std::wstring const& value) noexcept
 {
     WFC_VALIDATE_POINTER(this);
 
@@ -664,7 +664,7 @@ void CDataArchive::Write(__in const std::wstring& value) noexcept
         return;
     }
 
-    for ( const auto entry : value )
+    for ( auto const entry : value )
     {
         Write(entry);
     }
@@ -676,7 +676,7 @@ void CDataArchive::Write(__in const std::wstring& value) noexcept
     Write(character);
 }
 
-void CDataArchive::Write(__in const std::vector<std::wstring>& array) noexcept
+void CDataArchive::Write(__in std::vector<std::wstring> const& array) noexcept
 {
     WFC_VALIDATE_POINTER(this);
 
@@ -688,13 +688,13 @@ void CDataArchive::Write(__in const std::vector<std::wstring>& array) noexcept
 
     Write(static_cast<uint32_t>(array.size()));
 
-    for ( const auto& entry : array)
+    for ( auto const& entry : array)
     {
         Write(entry);
     }
 }
 
-void CDataArchive::Write(__in const std::vector<uint16_t>& array) noexcept
+void CDataArchive::Write(__in std::vector<uint16_t> const& array) noexcept
 {
     WFC_VALIDATE_POINTER(this);
 
@@ -706,13 +706,13 @@ void CDataArchive::Write(__in const std::vector<uint16_t>& array) noexcept
 
     Write(static_cast<uint32_t>(array.size()));
 
-    for (const auto& entry : array)
+    for (auto const entry : array)
     {
         Write(entry);
     }
 }
 
-void CDataArchive::Write(__in const double value) noexcept
+void CDataArchive::Write(__in double const value) noexcept
 {
     WFC_VALIDATE_POINTER(this);
 
@@ -745,7 +745,7 @@ void CDataArchive::Write(__in const double value) noexcept
         WFC_END_CATCH_ALL
 }
 
-void CDataArchive::Write(__in const uint32_t value) noexcept
+void CDataArchive::Write(__in uint32_t const value) noexcept
 {
     WFC_VALIDATE_POINTER(this);
 
@@ -763,7 +763,7 @@ void CDataArchive::Write(__in const uint32_t value) noexcept
     {
        auto buffer = reinterpret_cast<uint8_t const *>(&value);
 
-       for (const auto index : Range(sizeof(value)))
+       for (auto const index : Range(sizeof(value)))
        {
           (void) m_WriteToDataChunk_p->Data.push_back(buffer[index]);
        }
@@ -859,7 +859,7 @@ void CDataArchive::Write(__in const int32_t value) noexcept
     {
        auto buffer = reinterpret_cast<uint8_t const *>(&value);
 
-       for ( const auto index : Range(sizeof(value)))
+       for (auto const index : Range(sizeof(value)))
        {
           (void) m_WriteToDataChunk_p->Data.push_back(buffer[index]);
        }

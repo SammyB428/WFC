@@ -956,7 +956,7 @@ __checkReturn CExtensibleMarkupLanguageElement * CXMLArchive::Write( _In_z_ cons
 
          entry_archiver.WriteTo( sub_element_p );
 
-         for ( const auto array_index : Range(value.size()))
+         for ( auto const array_index : Range(value.size()))
          {
             (void) entry_archiver.Write( L"ENTRY", value.at( array_index ) );
          }

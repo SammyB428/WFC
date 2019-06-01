@@ -202,7 +202,7 @@ __checkReturn bool CServiceControlManager::EnableInteractiveServices( _In_ bool 
         no_interactive_services = 1;
     }
 
-    if ( registry.SetValue( TEXT( "NoInteractiveServices" ), no_interactive_services ) == FALSE )
+    if ( registry.SetValue( TEXT( "NoInteractiveServices" ), no_interactive_services ) == false)
     {
         m_ErrorCode = registry.GetErrorCode();
         wfc_get_error_string(m_ErrorCode, m_ErrorMessage);
@@ -405,7 +405,7 @@ __checkReturn bool CServiceControlManager::GetConfiguration( __in_z const wchar_
     WFC_END_CATCH_ALL
 }
 
-_Check_return_ bool CServiceControlManager::GetDependencies( _In_z_ const wchar_t * service_name, _Out_ std::vector<std::wstring>& dependencies ) noexcept
+_Check_return_ bool CServiceControlManager::GetDependencies( _In_z_ wchar_t const * service_name, _Out_ std::vector<std::wstring>& dependencies ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
     ASSERT( m_ManagerHandle != static_cast< SC_HANDLE >( NULL ) );
@@ -448,7 +448,7 @@ _Check_return_ bool CServiceControlManager::GetDependencies( _In_z_ const wchar_
 
         if ( return_value != FALSE )
         {
-            for ( const auto index : Range(number_of_services_returned) )
+            for ( auto const index : Range(number_of_services_returned) )
             {
                 dependencies.push_back( status_array[ index ].lpServiceName );
             }

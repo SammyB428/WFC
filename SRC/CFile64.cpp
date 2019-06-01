@@ -2181,7 +2181,7 @@ void CFile64::Write( _In_ std::string const& string_to_write ) noexcept
 
 void CFile64::Write( _In_ std::vector<std::string> const& strings, _In_ bool const include_end_of_lines ) noexcept
 {
-    for ( const auto& entry : strings )
+    for ( auto const& entry : strings )
     {
         Write( entry );
 
