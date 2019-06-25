@@ -222,12 +222,10 @@ __checkReturn CExtensibleMarkupLanguageElement * CXMLArchive::Read(_In_z_ const 
 
    WFC_TRY
    {
-      CExtensibleMarkupLanguageElement * sub_element_p = nullptr;
-
       // Always start from a known state
       value.clear();
 
-      sub_element_p = m_Element_p->GetChild( tag );
+      auto sub_element_p = m_Element_p->GetChild( tag );
 
       if ( sub_element_p != nullptr )
       {
@@ -325,9 +323,7 @@ __checkReturn CExtensibleMarkupLanguageElement * CXMLArchive::Read(_In_z_ const 
 
    WFC_TRY
    {
-      CExtensibleMarkupLanguageElement * sub_element_p = nullptr;
-
-      sub_element_p = m_Element_p->GetChild( tag );
+      auto sub_element_p = m_Element_p->GetChild( tag );
 
       if ( sub_element_p != nullptr )
       {
@@ -372,11 +368,9 @@ _Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Read( _In_z_ cons
 
          bool exit_loop = false;
 
-         CExtensibleMarkupLanguageElement * entry_p = nullptr;
-
          while( exit_loop == false )
          {
-            entry_p = sub_element_p->GetChild( L"ENTRY", index );
+            auto entry_p = sub_element_p->GetChild( L"ENTRY", index );
 
             if ( entry_p == nullptr )
             {
@@ -421,9 +415,7 @@ __checkReturn CExtensibleMarkupLanguageElement * CXMLArchive::Read( _In_z_ const
 
    WFC_TRY
    {
-      CExtensibleMarkupLanguageElement * sub_element_p = nullptr;
-
-      sub_element_p = m_Element_p->GetChild( tag );
+      auto sub_element_p = m_Element_p->GetChild( tag );
 
       if ( sub_element_p != nullptr )
       {
@@ -459,9 +451,7 @@ __checkReturn CExtensibleMarkupLanguageElement * CXMLArchive::Read( _In_z_ const
 
    WFC_TRY
    {
-      CExtensibleMarkupLanguageElement * sub_element_p = nullptr;
-
-      sub_element_p = m_Element_p->GetChild( tag );
+      auto sub_element_p = m_Element_p->GetChild( tag );
 
       if ( sub_element_p != nullptr )
       {
@@ -497,9 +487,7 @@ __checkReturn CExtensibleMarkupLanguageElement * CXMLArchive::Read( _In_z_ const
 
    WFC_TRY
    {
-      CExtensibleMarkupLanguageElement * sub_element_p = nullptr;
-
-      sub_element_p = m_Element_p->GetChild( tag );
+      auto sub_element_p = m_Element_p->GetChild( tag );
 
       if ( sub_element_p != nullptr )
       {
@@ -535,9 +523,7 @@ __checkReturn CExtensibleMarkupLanguageElement * CXMLArchive::Read( _In_z_ const
 
    WFC_TRY
    {
-      CExtensibleMarkupLanguageElement * sub_element_p = nullptr;
-
-      sub_element_p = m_Element_p->GetChild( tag );
+      auto sub_element_p = m_Element_p->GetChild( tag );
 
       if ( sub_element_p != nullptr )
       {
@@ -573,9 +559,7 @@ __checkReturn CExtensibleMarkupLanguageElement * CXMLArchive::Read( _In_z_ const
 
    WFC_TRY
    {
-      CExtensibleMarkupLanguageElement * sub_element_p = nullptr;
-
-      sub_element_p = m_Element_p->GetChild( tag );
+      auto sub_element_p = m_Element_p->GetChild( tag );
 
       if ( sub_element_p != nullptr )
       {
@@ -612,9 +596,7 @@ __checkReturn CExtensibleMarkupLanguageElement * CXMLArchive::Read( _In_z_ const
 
    WFC_TRY
    {
-      CExtensibleMarkupLanguageElement * sub_element_p = nullptr;
-
-      sub_element_p = m_Element_p->GetChild( tag );
+      auto sub_element_p = m_Element_p->GetChild( tag );
 
       if ( sub_element_p != nullptr )
       {
@@ -649,9 +631,7 @@ __checkReturn CExtensibleMarkupLanguageElement * CXMLArchive::Read( _In_z_ const
 
    WFC_TRY
    {
-      CExtensibleMarkupLanguageElement * sub_element_p = nullptr;
-
-      sub_element_p = m_Element_p->GetChild( tag );
+      auto sub_element_p = m_Element_p->GetChild( tag );
 
       if ( sub_element_p != nullptr )
       {
@@ -689,9 +669,7 @@ __checkReturn CExtensibleMarkupLanguageElement * CXMLArchive::Read( _In_z_ const
 
    WFC_TRY
    {
-      CExtensibleMarkupLanguageElement * sub_element_p = nullptr;
-
-      sub_element_p = m_Element_p->GetChild( tag );
+      auto sub_element_p = m_Element_p->GetChild( tag );
 
       if ( sub_element_p != nullptr )
       {
@@ -727,9 +705,7 @@ __checkReturn CExtensibleMarkupLanguageElement * CXMLArchive::Read( _In_ const w
 
    WFC_TRY
    {
-      CExtensibleMarkupLanguageElement * sub_element_p = nullptr;
-
-      sub_element_p = m_Element_p->GetChild( tag );
+      auto sub_element_p = m_Element_p->GetChild( tag );
 
       if ( sub_element_p != nullptr )
       {
@@ -764,9 +740,7 @@ __checkReturn CExtensibleMarkupLanguageElement * CXMLArchive::Read( _In_z_ const
 
    WFC_TRY
    {
-      CExtensibleMarkupLanguageElement * sub_element_p = nullptr;
-
-      sub_element_p = m_Element_p->GetChild( tag );
+      auto sub_element_p = m_Element_p->GetChild( tag );
 
       if ( sub_element_p != nullptr )
       {

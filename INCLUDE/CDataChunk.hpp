@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 1995-2014, Samuel R. Blackburn
+** Copyright, 1995-2019, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -63,7 +63,7 @@ class CDataChunk
          Identifier = 0;
       };
 
-      CDataChunk( __in const CDataChunk& source )
+      CDataChunk( __in CDataChunk const& source )
       {
          Copy( source );
       };
@@ -73,15 +73,15 @@ class CDataChunk
          Identifier = 0;
       };
 
-      static void GetIdentifier( __in const uint32_t identifier, __out std::wstring& string ) noexcept;
+      static void GetIdentifier( __in uint32_t const identifier, __out std::wstring& string ) noexcept;
 
-      inline void Copy( __in const CDataChunk& source ) noexcept
+      inline void Copy( __in CDataChunk const& source ) noexcept
       {
          Identifier = source.Identifier;
          Data = source.Data;
       };
 
-      inline void Copy( __in const uint32_t identifier, __in const std::vector<uint8_t>& source ) noexcept
+      inline void Copy( __in uint32_t const identifier, __in const std::vector<uint8_t>& source ) noexcept
       {
          Identifier = identifier;
          Data = source;
@@ -93,7 +93,7 @@ class CDataChunk
          Data.clear();
       };
 
-      inline __checkReturn CDataChunk& operator=( __in const CDataChunk& source ) noexcept
+      inline __checkReturn CDataChunk& operator=( __in CDataChunk const& source ) noexcept
       {
          Copy( source );
          return( *this );

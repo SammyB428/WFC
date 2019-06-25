@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 1995-2016, Samuel R. Blackburn
+** Copyright, 1995-2019, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -54,33 +54,33 @@ class CDataMemory : public CDataFile
    public:
 
       CDataMemory();
-      CDataMemory( __in const CDataMemory& source );
-      CDataMemory( __in_bcount( number_of_bytes ) const uint8_t * buffer_p, __in const std::size_t number_of_bytes );
-      CDataMemory( __in const std::vector<uint8_t>& source );
+      CDataMemory( __in CDataMemory const& source );
+      CDataMemory( __in_bcount( number_of_bytes ) uint8_t const * buffer_p, __in std::size_t const number_of_bytes );
+      CDataMemory( __in std::vector<uint8_t> const& source );
       virtual ~CDataMemory();
 
-      virtual void  Append( __in const std::vector<uint8_t>&  source ) noexcept;
-      virtual void  Append( __in const CDataMemory& source ) noexcept;
+      virtual void  Append( __in std::vector<uint8_t> const&  source ) noexcept;
+      virtual void  Append( __in CDataMemory const& source ) noexcept;
       virtual void  AppendTo( __out std::vector<uint8_t>& data ) noexcept;
       void  Close( void ) noexcept override;
-      virtual void  Copy( __in_bcount( number_of_bytes ) const uint8_t * buffer, __in const std::size_t number_of_bytes ) noexcept;
-      virtual void  Copy( __in const std::vector<uint8_t>& source ) noexcept;
-      virtual void  Copy( __in const CDataMemory& source ) noexcept;
+      virtual void  Copy( __in_bcount( number_of_bytes ) uint8_t const * buffer, __in std::size_t const number_of_bytes ) noexcept;
+      virtual void  Copy( __in std::vector<uint8_t> const& source ) noexcept;
+      virtual void  Copy( __in CDataMemory const& source ) noexcept;
       virtual void  CopyTo( __out std::vector<uint8_t>& data ) noexcept;
       virtual void  Empty( void ) noexcept;
       void  Flush( void ) noexcept override;
-      virtual __checkReturn const uint8_t * GetData( void ) const noexcept;
+      virtual __checkReturn uint8_t const * GetData( void ) const noexcept;
       __checkReturn uint64_t GetLength( void ) const noexcept override;
       __checkReturn uint64_t GetPosition( void ) const noexcept override;
-      __checkReturn bool Open( __in_z LPCTSTR filename, __in const UINT mode ) noexcept override;
+      __checkReturn bool Open( __in_z LPCTSTR filename, __in UINT const mode ) noexcept override;
       __checkReturn UINT Read( __out_bcount( number_of_bytes_to_read ) void * buffer, __in const UINT number_of_bytes_to_read ) noexcept override;
-      __checkReturn uint64_t Seek( __in const int64_t offset, __in const CFile64::SeekPosition from ) noexcept override;
-      void  Write( __in_bcount( number_of_bytes_to_write ) const void * buffer, __in const UINT number_of_bytes_to_write ) noexcept override;
+      __checkReturn uint64_t Seek( __in int64_t const offset, __in CFile64::SeekPosition const from ) noexcept override;
+      void  Write( __in_bcount( number_of_bytes_to_write ) void const * buffer, __in UINT const number_of_bytes_to_write ) noexcept override;
 
-      virtual __checkReturn const CDataMemory& operator=(  __in const CDataMemory& source ) noexcept;
-      virtual __checkReturn const CDataMemory& operator=(  __in const std::vector<uint8_t>&  source ) noexcept;
-      virtual __checkReturn const CDataMemory& operator+=( __in const CDataMemory& source ) noexcept;
-      virtual __checkReturn const CDataMemory& operator+=( __in const std::vector<uint8_t>&  source ) noexcept;
+      virtual __checkReturn CDataMemory const& operator=(  __in CDataMemory const& source ) noexcept;
+      virtual __checkReturn CDataMemory const& operator=(  __in std::vector<uint8_t> const& source ) noexcept;
+      virtual __checkReturn CDataMemory const& operator+=( __in CDataMemory const& source ) noexcept;
+      virtual __checkReturn CDataMemory const& operator+=( __in std::vector<uint8_t> const& source ) noexcept;
 };
 
 #endif // DATA_FILE_CLASS_HEADER

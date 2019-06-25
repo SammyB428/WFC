@@ -1186,7 +1186,7 @@ public:
         return( return_value );
     }
 
-    inline _Check_return_ uint64_t ReadHexadecimalInteger( _Inout_ CParsePoint& parse_point, _In_ const uint64_t number_of_characters_in_integer ) const noexcept
+    inline _Check_return_ uint64_t ReadHexadecimalInteger( _Inout_ CParsePoint& parse_point, _In_ uint64_t const number_of_characters_in_integer ) const noexcept
     {
         uint64_t return_value = 0;
 
@@ -1211,7 +1211,7 @@ public:
     {
         GUID return_value;
 
-        uint8_t * buffer = (uint8_t *) &return_value;
+        auto buffer = reinterpret_cast<uint8_t *>(&return_value);
 
         buffer[  0 ] = ReadByte( parse_point );
         buffer[  1 ] = ReadByte( parse_point );

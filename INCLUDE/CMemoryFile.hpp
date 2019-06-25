@@ -121,22 +121,22 @@ public:
     virtual _Check_return_ void * Map( __in uint64_t const offset, __in std::size_t const length ) noexcept;
     virtual _Check_return_ bool Open( __in_z LPCWSTR filename,
         __in UINT open_flags                     = (UINT)( (UINT)CFile64::OpenFlags::modeRead | (UINT)CFile64::OpenFlags::shareDenyNone),
-        __in const uint64_t beginning_at         = 0,
-        __in const size_t number_of_bytes_to_map = 0,
-        __in_opt const void * desired_address    = nullptr ) noexcept;
+        __in uint64_t const beginning_at         = 0,
+        __in std::size_t const number_of_bytes_to_map = 0,
+        __in_opt void const * desired_address    = nullptr ) noexcept;
     virtual _Check_return_ bool Open( __in_z LPCSTR filename,
-        __in const UINT open_flags               = (UINT)( (UINT)CFile64::OpenFlags::modeRead | (UINT)CFile64::OpenFlags::shareDenyNone),
-        __in const uint64_t beginning_at         = 0,
-        __in const size_t number_of_bytes_to_map = 0,
-        __in_opt const void * desired_address    = nullptr ) noexcept;
+        __in UINT const open_flags               = (UINT)( (UINT)CFile64::OpenFlags::modeRead | (UINT)CFile64::OpenFlags::shareDenyNone),
+        __in uint64_t const beginning_at         = 0,
+        __in std::size_t const number_of_bytes_to_map = 0,
+        __in_opt void const * desired_address    = nullptr ) noexcept;
 
     // New for Release 50, full control of CreateFile!
 
     inline virtual _Check_return_ uint32_t GetAttributes( void ) const noexcept { return( m_Attributes ); }
-    inline virtual void SetAttributes( __in const uint32_t attributes ) noexcept { m_Attributes = attributes; }
+    inline virtual void SetAttributes( __in uint32_t const attributes ) noexcept { m_Attributes = attributes; }
 
     inline virtual _Check_return_ HANDLE GetTemplateFile( void ) const noexcept { return( m_TemplateFile ); }
-    inline virtual void SetTemplateFile( _In_ const HANDLE file_handle ) noexcept { m_TemplateFile = file_handle; };
+    inline virtual void SetTemplateFile( _In_ HANDLE const file_handle ) noexcept { m_TemplateFile = file_handle; };
 
     // Operators
 

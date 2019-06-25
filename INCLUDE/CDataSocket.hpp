@@ -51,16 +51,16 @@ class CDataSocket : public CDataFile
 
    public:
 
-       CDataSocket(__in const CDataSocket&) = delete;
-       CDataSocket& operator=(__in const CDataSocket&) = delete;
+       CDataSocket(__in CDataSocket const&) = delete;
+       CDataSocket& operator=(__in CDataSocket const&) = delete;
        CDataSocket();
       CDataSocket( __inout CSimpleSocket * socket_p );
       virtual ~CDataSocket();
 
       virtual void Attach( __inout CSimpleSocket * socket_p ) noexcept;
-      __checkReturn uint32_t Read( __out_bcount( number_of_bytes_to_read ) void * buffer, __in const uint32_t number_of_bytes_to_read ) noexcept override;
-      __checkReturn uint64_t Seek( __in const int64_t offset, __in const CFile64::SeekPosition from ) noexcept override;
-      void Write( __in_bcount( number_of_bytes_to_write ) const void * buffer, __in const uint32_t number_of_bytes_to_write ) noexcept override;
+      __checkReturn uint32_t Read( __out_bcount( number_of_bytes_to_read ) void * buffer, __in uint32_t const number_of_bytes_to_read ) noexcept override;
+      __checkReturn uint64_t Seek( __in int64_t const offset, __in CFile64::SeekPosition const from ) noexcept override;
+      void Write( __in_bcount( number_of_bytes_to_write ) void const * buffer, __in uint32_t const number_of_bytes_to_write ) noexcept override;
 };
 
 #endif // DATA_SOCKET_CLASS_HEADER

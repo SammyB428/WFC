@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 1995-2016, Samuel R. Blackburn
+** Copyright, 1995-2019, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -65,26 +65,26 @@ class CNamedPipe : public CDummyFile
 
    private:
 
-      void m_Initialize( __in const uint32_t input_buffer_size, __in const uint32_t output_buffer_size ) noexcept;
+      void m_Initialize( __in uint32_t const input_buffer_size, __in uint32_t const output_buffer_size ) noexcept;
 
    protected:
 
-      HANDLE m_PipeHandle;
+       HANDLE m_PipeHandle{ INVALID_HANDLE_VALUE };
 
-      BOOL m_AutomaticallyDelete;
+       bool m_AutomaticallyDelete{ false };
 
       NamedPipeTypes m_TypeOfPipe; // From GetInfo()
 
       std::unique_ptr<uint8_t[]> m_InputBuffer;
       std::unique_ptr<uint8_t[]> m_OutputBuffer;
 
-      DWORD m_MaximumNumberOfInstances; // From GetInfo()
+      DWORD m_MaximumNumberOfInstances{ 0 }; // From GetInfo()
 
-      DWORD m_InputBufferSize;
-      DWORD m_OutputBufferSize;
-      DWORD m_NumberOfBytesToWrite;
-      DWORD m_NumberOfBytesRead;
-      DWORD m_Timeout;
+      DWORD m_InputBufferSize{ 0 };
+      DWORD m_OutputBufferSize{ 0 };
+      DWORD m_NumberOfBytesToWrite{ 0 };
+      DWORD m_NumberOfBytesRead{ 0 };
+      DWORD m_Timeout{ 0 };
 
       std::wstring m_PipeName;
 
@@ -94,19 +94,19 @@ class CNamedPipe : public CDummyFile
       ** Information returned from GetNamedPipeHandleState()
       */
 
-      DWORD m_PipeState;
-      DWORD m_NumberOfInstances;
-      DWORD m_MaximumNumberOfBytesBeforeRemoteTransmission;
-      DWORD m_MaximumNumberOfMillisecondsBeforeRemoteTransmission;
+      DWORD m_PipeState{ 0 };
+      DWORD m_NumberOfInstances{ 0 };
+      DWORD m_MaximumNumberOfBytesBeforeRemoteTransmission{ 0 };
+      DWORD m_MaximumNumberOfMillisecondsBeforeRemoteTransmission{ 0 };
 
       std::wstring m_UserNameOfClientProcess;
       
    public:
 
-       CNamedPipe(const CNamedPipe&) = delete;
-       CNamedPipe& operator=(const CNamedPipe&) = delete;
+       CNamedPipe(CNamedPipe const&) = delete;
+       CNamedPipe& operator=(CNamedPipe const&) = delete;
 
-       CNamedPipe( __in const uint32_t input_buffer_size = 4096, __in const uint32_t output_buffer_size = 4096 );
+       CNamedPipe( __in uint32_t const input_buffer_size = 4096, __in uint32_t const output_buffer_size = 4096 );
 
       /*
       ** Destructor should be virtual according to MSJ article in Sept 1992
@@ -121,19 +121,19 @@ class CNamedPipe : public CDummyFile
 
       virtual __checkReturn BOOL Call( __inout    std::wstring& name_of_pipe,
                                     LPVOID   write_buffer,
-                         __in const DWORD    size_of_write_buffer,
+                         __in DWORD const   size_of_write_buffer,
                                     LPVOID   read_buffer,
-                         __in const DWORD    size_of_read_buffer,
+                         __in DWORD const   size_of_read_buffer,
                                     DWORD   *address_of_number_of_bytes_read,
-                         __in const DWORD    number_of_milliseconds_to_wait = NMPWAIT_WAIT_FOREVER ) noexcept; // CallNamedPipe
+                         __in DWORD const   number_of_milliseconds_to_wait = NMPWAIT_WAIT_FOREVER ) noexcept; // CallNamedPipe
 
       virtual __checkReturn bool Connect( __inout_opt LPOVERLAPPED overlapped_p = nullptr ) noexcept; // ConnectNamedPipe
 
       virtual __checkReturn bool Create( __in_z LPCTSTR server_name,
                            __in_z LPCTSTR name_of_pipe,
-                           __in const DWORD   open_mode       = PIPE_ACCESS_DUPLEX,
-                           __in const DWORD   type_of_pipe    = PIPE_TYPE_BYTE,
-                           __in const DWORD   number_of_pipes = PIPE_UNLIMITED_INSTANCES,
+                           __in DWORD const open_mode       = PIPE_ACCESS_DUPLEX,
+                           __in DWORD const type_of_pipe    = PIPE_TYPE_BYTE,
+                           __in DWORD const number_of_pipes = PIPE_UNLIMITED_INSTANCES,
                            __inout_opt LPSECURITY_ATTRIBUTES security_attributes_p = nullptr ) noexcept;
 
       virtual __checkReturn bool Disconnect( void ) noexcept; // DisconnectNamedPipe
@@ -141,7 +141,7 @@ class CNamedPipe : public CDummyFile
       virtual __checkReturn bool GetInformation( void ) noexcept; // GetNamedPipeInfo
 
       virtual __checkReturn BOOL Peek( __out_bcount( size_of_buffer ) LPVOID buffer_address,
-                         __in const DWORD  size_of_buffer,
+                         __in  DWORD const size_of_buffer,
                          __out DWORD& number_of_bytes_read,
                          __out DWORD& number_of_bytes_available,
                          __out DWORD& number_of_bytes_remaining_in_message ) noexcept;
@@ -154,13 +154,13 @@ class CNamedPipe : public CDummyFile
       
       virtual __checkReturn bool Wait( __in_z_opt LPCTSTR server_name,
                          __in_z LPCTSTR name_of_pipe, 
-                         __in const uint32_t number_of_milliseconds = NMPWAIT_USE_DEFAULT_WAIT ) noexcept;
+                         __in uint32_t const number_of_milliseconds = NMPWAIT_USE_DEFAULT_WAIT ) noexcept;
 
       /*
       ** API's to make life a little easier 
       */
 
-      __checkReturn bool Open( __in_z LPCTSTR pipe_name, __in const UINT open_flags = PIPE_CLIENT_END ) noexcept override;
+      __checkReturn bool Open( __in_z LPCTSTR pipe_name, __in UINT const open_flags = PIPE_CLIENT_END ) noexcept override;
       void Close( void ) noexcept override;
 
 #if defined( _DEBUG ) && ! defined( WFC_NO_DUMPING )

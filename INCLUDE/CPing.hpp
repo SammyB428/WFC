@@ -291,23 +291,23 @@ class CPingResults
    public:
 
       CPingResults();
-      CPingResults( __in const CPingResults&   source );
-      CPingResults( __in const CPingResults *  source );
-      CPingResults( __in const IP_ECHO_REPLY&  source );
-      CPingResults( __in const IP_ECHO_REPLY * source );
+      CPingResults( __in CPingResults const &   source );
+      CPingResults( __in CPingResults const *  source );
+      CPingResults( __in IP_ECHO_REPLY const &  source );
+      CPingResults( __in IP_ECHO_REPLY const * source );
       virtual ~CPingResults();
 
       std::string Address;
-      DWORD   RoundTripTimeInMilliseconds;
-      BYTE    TimeToLive;
+      DWORD       RoundTripTimeInMilliseconds{ 0 };
+      uint8_t     TimeToLive{ 0 };
 
-      virtual void Copy( __in const CPingResults&   source ) noexcept;
-      virtual void Copy( __in const CPingResults *  source ) noexcept;
-      virtual void Copy( __in const IP_ECHO_REPLY&  source ) noexcept;
-      virtual void Copy( __in const IP_ECHO_REPLY * source ) noexcept;
+      virtual void Copy( __in CPingResults const&   source ) noexcept;
+      virtual void Copy( __in CPingResults const *  source ) noexcept;
+      virtual void Copy( __in IP_ECHO_REPLY const&  source ) noexcept;
+      virtual void Copy( __in IP_ECHO_REPLY const * source ) noexcept;
       virtual void Empty( void ) noexcept;
 
-      virtual CPingResults& operator = ( __in const CPingResults& source ) noexcept;
+      virtual CPingResults& operator = ( __in CPingResults const& source ) noexcept;
 
 #if defined( _DEBUG ) && ! defined( WFC_NO_DUMPING )
       virtual void Dump( CDumpContext& dump_context ) const;
@@ -318,10 +318,10 @@ class CPing : public CSimpleSocket
 {
    protected:
 
-      HMODULE m_ICMP_DLL_Instance;
+       HMODULE m_ICMP_DLL_Instance{ nullptr };
 
-      BYTE * m_Text;
-      size_t m_NumberOfTextBytes;
+       uint8_t* m_Text{ nullptr };
+       std::size_t m_NumberOfTextBytes{ 0 };
 
       HANDLE (WINAPI *m_Open)    ( VOID );
       VOID   (WINAPI *m_Close)   ( HANDLE );
@@ -329,18 +329,18 @@ class CPing : public CSimpleSocket
 
    public:
 
-       CPing(const CPing&) = delete;
-       CPing& operator=(const CPing&) = delete;
+       CPing(CPing const&) = delete;
+       CPing& operator=(CPing const&) = delete;
        
        CPing();
       virtual ~CPing();
 
-      virtual void ConvertErrorToString( __in const DWORD error_code, __out std::wstring& meaning ) const noexcept;
+      virtual void ConvertErrorToString( __in DWORD const error_code, __out std::wstring& meaning ) const noexcept;
       __checkReturn bool Open( void ) noexcept override;
-      __checkReturn bool Open( __in_z LPCTSTR channel_name, __in const UINT port_number = 23 ) noexcept override;
+      __checkReturn bool Open( __in_z LPCTSTR channel_name, __in UINT const port_number = 23 ) noexcept override;
 
-      virtual __checkReturn DWORD Ping( __in const std::wstring& name_or_address, __out_opt CPingResults * results_p = nullptr, __in short desired_time_to_live = 255 ) noexcept;
-      virtual void SetText( __in_bcount(number_of_bytes ) const uint8_t * bytes, __in const size_t number_of_bytes ) noexcept;
+      virtual __checkReturn DWORD Ping( __in std::wstring const& name_or_address, __out_opt CPingResults * results_p = nullptr, __in short desired_time_to_live = 255 ) noexcept;
+      virtual void SetText( __in_bcount(number_of_bytes ) uint8_t const * bytes, __in std::size_t const number_of_bytes ) noexcept;
 };
 
 #endif // PING_CLASS_HEADER

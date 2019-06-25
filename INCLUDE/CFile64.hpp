@@ -235,8 +235,8 @@ class CFile64
       virtual _Check_return_ bool                  LockRange(_In_ uint64_t const position, _In_ uint64_t const number_of_bytes_to_lock ) noexcept;
       virtual _Check_return_ bool                  Open( _In_z_ LPCTSTR filename, _In_ UINT const open_flags ) noexcept;
 
-      _Check_return_ uint32_t AtomicRead(_In_ const uint64_t file_offset, __out_bcount( number_of_bytes_to_read ) void * buffer, _In_ uint32_t const number_of_bytes_to_read ) const noexcept;
-      _Check_return_ uint32_t AtomicWrite(_In_ const uint64_t file_offset, __in_bcount(number_of_bytes_to_write) void const * buffer, _In_ uint32_t const number_of_bytes_to_write) const noexcept;
+      _Check_return_ uint32_t AtomicRead(_In_ uint64_t const file_offset, __out_bcount( number_of_bytes_to_read ) void * buffer, _In_ uint32_t const number_of_bytes_to_read ) const noexcept;
+      _Check_return_ uint32_t AtomicWrite(_In_ uint64_t const file_offset, __in_bcount(number_of_bytes_to_write) void const * buffer, _In_ uint32_t const number_of_bytes_to_write) const noexcept;
 
       virtual _Check_return_ uint32_t Read( __out_bcount( number_of_bytes_to_read ) void * buffer, _In_ uint32_t const number_of_bytes_to_read ) noexcept;
       virtual _Check_return_ uint32_t ReadHuge( __out_bcount( number_of_bytes_to_read ) void * buffer, _In_ uint32_t const number_of_bytes_to_read ) noexcept;

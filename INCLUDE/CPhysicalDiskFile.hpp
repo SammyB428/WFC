@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 1995-2016, Samuel R. Blackburn
+** Copyright, 1995-2019, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -50,7 +50,7 @@ class CPhysicalDiskFile : public CFile64
        DWORD m_BufferSize{ 0 };
        DWORD m_BufferOffset{ 0 };
 
-      DISK_GEOMETRY m_DiskGeometry;
+       DISK_GEOMETRY m_DiskGeometry{ {0,0}, MEDIA_TYPE::Unknown, 0, 0, 0 };
 
       uint8_t * m_Buffer{ nullptr };
 
@@ -58,8 +58,8 @@ class CPhysicalDiskFile : public CFile64
 
    public:
 
-       CPhysicalDiskFile(const CPhysicalDiskFile&) = delete;
-       CPhysicalDiskFile& operator=(const CPhysicalDiskFile&) = delete;
+       CPhysicalDiskFile(CPhysicalDiskFile const&) = delete;
+       CPhysicalDiskFile& operator=(CPhysicalDiskFile const&) = delete;
 
       /*
       ** Constructors
@@ -81,18 +81,18 @@ class CPhysicalDiskFile : public CFile64
       // CFile64 overrides
       void  Close( void ) noexcept override;
       _Check_return_ uint64_t GetLength( void ) const noexcept override;
-      _Check_return_ bool Open(_In_z_ LPCTSTR filename, _In_ const UINT open_flags) noexcept override;
-      _Check_return_ UINT Read( __out_bcount( count ) void * buffer, _In_ const UINT count ) noexcept override;
-      void  SetLength( __in const uint64_t length ) noexcept override;
-      void  Write( __in_bcount( count ) const void * buffer, _In_ const UINT count ) noexcept override;
+      _Check_return_ bool Open(_In_z_ LPCTSTR filename, _In_ UINT const open_flags) noexcept override;
+      _Check_return_ UINT Read( __out_bcount( count ) void * buffer, _In_ UINT const count ) noexcept override;
+      void  SetLength( __in uint64_t const length ) noexcept override;
+      void  Write( __in_bcount( count )  void const * buffer, _In_ UINT const count ) noexcept override;
 
       // New Methods
       virtual _Check_return_ DWORD GetMediaType( void ) const noexcept;
-      virtual _Check_return_ bool  GetSectorSize( __out size_t& number_of_bytes_per_sector ) const noexcept;
+      virtual _Check_return_ bool  GetSectorSize( __out std::size_t& number_of_bytes_per_sector ) const noexcept;
       virtual void  GetLength( _Out_ ULARGE_INTEGER& size_in_bytes ) const noexcept;
-      virtual _Check_return_ bool Open(_In_ int physical_disk_number, _In_ const UINT open_flags) noexcept;
+      virtual _Check_return_ bool Open(_In_ int physical_disk_number, _In_ UINT const open_flags) noexcept;
       virtual _Check_return_ bool OpenRead(_In_ int physical_disk_number ) noexcept;
-      virtual _Check_return_ bool OpenRead(_In_z_ const wchar_t * physical_drive_name) noexcept;
+      virtual _Check_return_ bool OpenRead(_In_z_ wchar_t const * physical_drive_name) noexcept;
 
 #if defined( _DEBUG ) && ! defined( WFC_NO_DUMPING )
 

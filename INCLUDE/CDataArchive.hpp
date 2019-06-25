@@ -47,17 +47,17 @@ class CDataArchive
 {
    protected:
 
-      uint32_t m_Position;
+       uint32_t m_Position{ 0 };
 
-      bool m_AmIWriting;
+       bool m_AmIWriting{ false };
 
-      const CDataChunk * m_ReadFromDataChunk_p;
-      CDataChunk * m_WriteToDataChunk_p;
+       CDataChunk const * m_ReadFromDataChunk_p{ nullptr };
+       CDataChunk* m_WriteToDataChunk_p{ nullptr };
 
    public:
 
-       CDataArchive(__in const CDataArchive&) = delete;
-       CDataArchive& operator=(__in const CDataArchive&) = delete;
+       CDataArchive(__in CDataArchive const&) = delete;
+       CDataArchive& operator=(__in CDataArchive const&) = delete;
  
        CDataArchive();
       virtual ~CDataArchive();
@@ -80,22 +80,22 @@ class CDataArchive
       virtual void Read( __out std::vector<uint32_t>& array ) noexcept;
       virtual void Read( __out std::vector<uint16_t>& array ) noexcept;
 
-      virtual void ReadFrom( __in const CDataChunk * chunk_p ) noexcept;
+      virtual void ReadFrom( __in CDataChunk const * chunk_p ) noexcept;
 
-      virtual void Write( __in const char     value ) noexcept;
-      virtual void Write( __in const uint8_t  value ) noexcept;
-      virtual void Write( __in const uint16_t value ) noexcept;
-      virtual void Write( __in const wchar_t  value ) noexcept;
-      virtual void Write( __in const int32_t  value ) noexcept;
-      virtual void Write( __in const uint32_t value ) noexcept;
-      virtual void Write( __in const uint64_t value ) noexcept;
-      virtual void Write( __in const float    value ) noexcept;
-      virtual void Write( __in const double   value ) noexcept;
-      virtual void Write( __in const std::wstring& value ) noexcept;
-      virtual void Write( __in const std::vector<uint8_t>   &   array ) noexcept;
-      virtual void Write( __in const std::vector<std::wstring>& array ) noexcept;
-      virtual void Write( __in const std::vector<uint32_t>& array ) noexcept;
-      virtual void Write( __in const std::vector<uint16_t>& array ) noexcept;
+      virtual void Write( __in char     const value ) noexcept;
+      virtual void Write( __in uint8_t  const value ) noexcept;
+      virtual void Write( __in uint16_t const value ) noexcept;
+      virtual void Write( __in wchar_t  const value ) noexcept;
+      virtual void Write( __in int32_t  const value ) noexcept;
+      virtual void Write( __in uint32_t const value ) noexcept;
+      virtual void Write( __in uint64_t const value ) noexcept;
+      virtual void Write( __in float    const value ) noexcept;
+      virtual void Write( __in double   value ) noexcept;
+      virtual void Write( __in std::wstring const& value ) noexcept;
+      virtual void Write( __in std::vector<uint8_t> const& array ) noexcept;
+      virtual void Write( __in std::vector<std::wstring> const& array ) noexcept;
+      virtual void Write( __in std::vector<uint32_t> const& array ) noexcept;
+      virtual void Write( __in std::vector<uint16_t> const& array ) noexcept;
 
       virtual void WriteTo( __inout CDataChunk * chunk_p ) noexcept;
 };
