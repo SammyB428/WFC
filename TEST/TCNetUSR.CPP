@@ -97,7 +97,7 @@ void test_CNetworkUsers( __in_z LPCTSTR machine_name ) noexcept
          _tprintf( TEXT( " Password Has Expired - %lu\n" ),              user_information.PasswordHasExpired );
          _tprintf( TEXT( " Encrypted Password: " ) );
 
-         for ( const auto index : Range(user_information.EncryptedPassword.size() ))
+         for ( auto const index : Range(user_information.EncryptedPassword.size() ))
          {
             _tprintf( TEXT( "%02X" ), (int) user_information.EncryptedPassword.at( index ) );
          }

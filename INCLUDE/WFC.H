@@ -243,8 +243,8 @@ private:
     std::size_t m_Position{ 0 };
 
 public:
-    constexpr RangeIterator(std::size_t const number_of_values) noexcept
-        : m_Position(number_of_values)
+    constexpr RangeIterator(std::size_t const position) noexcept
+        : m_Position(position)
     {
     }
 
@@ -277,21 +277,22 @@ class Range
 private:
 
     std::size_t const m_NumberOfValues{ 0 };
+    std::size_t const m_StartingPosition{ 0 };
 
 public:
     // This creates a series of std::size_t values ranging from zero to number_of_values
-    inline constexpr Range(std::size_t const number_of_values) noexcept : m_NumberOfValues(number_of_values)
+    inline constexpr Range(std::size_t const number_of_values, std::size_t const starting_position = 0) noexcept : m_NumberOfValues(number_of_values), m_StartingPosition(starting_position)
     {
     }
 
     inline constexpr RangeIterator begin() const noexcept
     {
-        return RangeIterator(0);
+        return RangeIterator(m_StartingPosition);
     }
 
     inline constexpr RangeIterator cbegin() const noexcept
     {
-        return RangeIterator(0);
+        return RangeIterator(m_StartingPosition);
     }
 
     inline constexpr RangeIterator end() const noexcept
@@ -302,74 +303,6 @@ public:
     inline constexpr RangeIterator cend() const noexcept
     {
         return RangeIterator(m_NumberOfValues);
-    }
-};
-
-class Range1Iterator
-{
-private:
-    std::size_t m_Position{ 0 };
-
-public:
-    constexpr Range1Iterator(std::size_t const number_of_values) noexcept
-        : m_Position(number_of_values)
-    {
-    }
-
-    // these three methods form the basis of an iterator for use with
-    // a range-based for loop
-    inline constexpr bool operator!= (Range1Iterator const& other) const noexcept
-    {
-        return m_Position != other.m_Position;
-    }
-
-    // this method must be defined after the definition of IntVector
-    // since it needs to use it
-    inline constexpr std::size_t operator* () const noexcept
-    {
-        return(m_Position);
-    }
-
-    inline constexpr Range1Iterator const& operator++ () noexcept
-    {
-        ++m_Position;
-        // although not strictly necessary for a range-based for loop
-        // following the normal convention of returning a value from
-        // operator++ is a good idea.
-        return *this;
-    }
-};
-
-class Range1
-{
-private:
-
-    std::size_t const m_NumberOfValues{ 0 };
-
-public:
-    // This creates a series of std::size_t values ranging from one to number_of_values
-    inline constexpr Range1(std::size_t const number_of_values) noexcept : m_NumberOfValues(number_of_values)
-    {
-    }
-
-    inline constexpr Range1Iterator begin() const noexcept
-    {
-        return Range1Iterator(1);
-    }
-
-    inline constexpr Range1Iterator cbegin() const noexcept
-    {
-        return Range1Iterator(1);
-    }
-
-    inline constexpr Range1Iterator end() const noexcept
-    {
-        return Range1Iterator(m_NumberOfValues);
-    }
-
-    inline constexpr Range1Iterator cend() const noexcept
-    {
-        return Range1Iterator(m_NumberOfValues);
     }
 };
 
@@ -1148,10 +1081,10 @@ __checkReturn bool PASCAL wfc_get_filename_from_handle( __in const HANDLE file_h
 __checkReturn bool PASCAL wfc_move_file_at_reboot( __in const std::wstring& existing_file, __in const std::wstring& file_to_move ) noexcept;
 __checkReturn bool PASCAL wfc_parse_hex_string(__in_z wchar_t const * hex_string, _In_ std::size_t const number_of_characters, __out_bcount( buffer_size ) uint8_t * buffer, _In_ std::size_t const buffer_size ) noexcept;
 __checkReturn bool PASCAL wfc_parse_hex_string(__in_z char const * hex_string, _In_ std::size_t const number_of_characters, __out_bcount( buffer_size ) uint8_t * buffer, _In_ std::size_t const buffer_size ) noexcept;
-__checkReturn bool PASCAL wfc_parse_iso_8601_string( __in_z const wchar_t * time_string, __out CFileTime&    the_time ) noexcept;
-__checkReturn bool PASCAL wfc_parse_iso_8601_string( __in_z const wchar_t * time_string, __out CSystemTime&  the_time ) noexcept;
-__checkReturn bool PASCAL wfc_process_buffer( __in const uint8_t * buffer, __in const size_t number_of_bytes_in_buffer, __in const size_t step_size, __inout PROCESS_BUFFER_CALLBACK function_to_call, __inout_opt void * callback_context ) noexcept;
-__checkReturn bool wfcGenRandom( _Out_writes_bytes_(RandomBufferLength) PVOID RandomBuffer, _In_ const ULONG RandomBufferLength ) noexcept;
+__checkReturn bool PASCAL wfc_parse_iso_8601_string( __in_z wchar_t const * time_string, __out CFileTime&    the_time ) noexcept;
+__checkReturn bool PASCAL wfc_parse_iso_8601_string( __in_z wchar_t const * time_string, __out CSystemTime&  the_time ) noexcept;
+__checkReturn bool PASCAL wfc_process_buffer( __in uint8_t const * buffer, __in std::size_t const number_of_bytes_in_buffer, __in std::size_t const step_size, __inout PROCESS_BUFFER_CALLBACK function_to_call, __inout_opt void * callback_context ) noexcept;
+__checkReturn bool wfcGenRandom( _Out_writes_bytes_(RandomBufferLength) PVOID RandomBuffer, _In_ ULONG const RandomBufferLength ) noexcept;
 __checkReturn bool PASCAL wfc_parse_iso_8601_string( __in_z LPCTSTR time_string, __out CTime& the_time ) noexcept;
 __checkReturn bool PASCAL wfc_parse_xml( __in_z LPCTSTR filename, __inout CExtensibleMarkupLanguageDocument& xml ) noexcept;
 

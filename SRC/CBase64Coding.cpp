@@ -213,7 +213,7 @@ _Check_return_ std::size_t CBase64Coding::Decode(_In_reads_bytes_(number_of_byte
     uint8_t character_3 = 0;
     uint8_t character_4 = 0;
 
-    std::size_t const required_destination_size = DecodeReserveSize(number_of_bytes);
+    auto const required_destination_size = DecodeReserveSize(number_of_bytes);
 
     _ASSERTE(required_destination_size <= destination_size);
 
@@ -677,7 +677,7 @@ _Check_return_ bool CBase64Coding::Encode( _In_ std::vector<uint8_t> const& sour
    uint8_t byte_2      = 0;
    uint8_t byte_3      = 0;
 
-   uint8_t const * input_buffer = source.data();
+   auto input_buffer = source.data();
 
    WFC_VALIDATE_POINTER( input_buffer );
 

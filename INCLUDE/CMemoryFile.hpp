@@ -60,9 +60,9 @@ protected:
 
     std::wstring m_Filename;
 
-    size_t m_AllocationGranularity{ 0 };
-    size_t m_Length{ 0 };
-    size_t m_MappedLength{ 0 };
+    std::size_t m_AllocationGranularity{ 0 };
+    std::size_t m_Length{ 0 };
+    std::size_t m_MappedLength{ 0 };
 
     uint64_t m_FileLength{ 0 };
 
@@ -78,18 +78,18 @@ protected:
     uint32_t m_LastError{ 0 };
 
     virtual void m_Initialize( void ) noexcept;
-    virtual _Check_return_ bool m_MapTheFile( __in const HANDLE file_handle, __in const UINT open_flags, __in const uint64_t begining_at_offset, __in const size_t number_of_bytes_to_map, __in_opt const void * desired_pointer ) noexcept;
+    virtual _Check_return_ bool m_MapTheFile( __in HANDLE const file_handle, __in UINT const open_flags, __in uint64_t const begining_at_offset, __in std::size_t const number_of_bytes_to_map, __in_opt void const * desired_pointer ) noexcept;
     virtual void m_Uninitialize( void ) noexcept;
 
 public:
 
-    CMemoryFile(_In_ const CMemoryFile&) = delete;
-    const CMemoryFile& operator=(_In_ const CMemoryFile&) = delete;
+    CMemoryFile(_In_ CMemoryFile const&) = delete;
+    const CMemoryFile& operator=(_In_ CMemoryFile const&) = delete;
 
     // Construction
 
     CMemoryFile();
-    CMemoryFile( __in const size_t              allocation_granularity,
+    CMemoryFile( __in std::size_t const allocation_granularity,
         __in_opt SECURITY_ATTRIBUTES * security_attributes = nullptr,
         __in_opt SECURITY_DESCRIPTOR * security_descriptor = nullptr );
 
@@ -97,11 +97,11 @@ public:
 
     // Properties
 
-    size_t Size{ 0 };
+    std::size_t Size{ 0 };
 
     // Methods
 
-    inline _Check_return_ uint32_t GetErrorCode( void ) const noexcept
+    inline constexpr _Check_return_ uint32_t GetErrorCode( void ) const noexcept
     {
         return( m_LastError );
     }
@@ -110,15 +110,15 @@ public:
     virtual _Check_return_ bool Flush( void ) noexcept;
     virtual _Check_return_ bool FromHandle( __in HANDLE file_handle,
         __in UINT open_flags                     = (UINT)( (UINT)CFile64::OpenFlags::modeRead | (UINT)CFile64::OpenFlags::shareDenyNone),
-        __in const uint64_t beginning_at         = 0,
-        __in const size_t number_of_bytes_to_map = 0,
-        __in_opt const void * desired_address    = nullptr ) noexcept;
-    inline  _Check_return_ uint64_t GetFileLength( void ) const noexcept { return( m_FileLength ); }
+        __in uint64_t const beginning_at         = 0,
+        __in std::size_t const number_of_bytes_to_map = 0,
+        __in_opt void const * desired_address    = nullptr ) noexcept;
+    inline  constexpr _Check_return_ uint64_t GetFileLength( void ) const noexcept { return( m_FileLength ); }
     virtual void      GetFilename( __out std::wstring& filename ) const noexcept;
     virtual _Check_return_ bool GetInformation( __inout BY_HANDLE_FILE_INFORMATION& information ) const noexcept;
-    inline  _Check_return_ size_t GetLength( void ) const noexcept { return( m_Length ); };
-    inline  _Check_return_ void * GetPointer( void ) const noexcept { return( m_Pointer ); };
-    virtual _Check_return_ void * Map( __in const uint64_t offset, __in const size_t length ) noexcept;
+    inline  constexpr _Check_return_ std::size_t GetLength( void ) const noexcept { return( m_Length ); };
+    inline  constexpr _Check_return_ void * GetPointer( void ) const noexcept { return( m_Pointer ); };
+    virtual _Check_return_ void * Map( __in uint64_t const offset, __in std::size_t const length ) noexcept;
     virtual _Check_return_ bool Open( __in_z LPCWSTR filename,
         __in UINT open_flags                     = (UINT)( (UINT)CFile64::OpenFlags::modeRead | (UINT)CFile64::OpenFlags::shareDenyNone),
         __in const uint64_t beginning_at         = 0,
@@ -140,7 +140,7 @@ public:
 
     // Operators
 
-    inline operator void * ( void ) const noexcept { return( m_Pointer ); };
+    inline constexpr operator void * ( void ) const noexcept { return( m_Pointer ); };
 };
 
 class CSharedMemory
@@ -149,7 +149,7 @@ protected:
 
     HANDLE m_Handle{ INVALID_HANDLE_VALUE };
 
-    size_t m_Size{ 0 };
+    std::size_t m_Size{ 0 };
 
     uint8_t * m_Buffer{ nullptr };
 
@@ -157,8 +157,8 @@ protected:
 
 public:
 
-    CSharedMemory(_In_ const CSharedMemory&) = delete;
-    const CSharedMemory& operator=(_In_ const CSharedMemory&) = delete;
+    CSharedMemory(_In_ CSharedMemory const&) = delete;
+    CSharedMemory const& operator=(_In_ CSharedMemory const&) = delete;
 
     std::wstring Name;
 
@@ -169,7 +169,7 @@ public:
 
     static inline _Check_return_ bool CreateServiceDACL( _Inout_ SECURITY_ATTRIBUTES * sa) noexcept
     {
-        static const wchar_t *sdd = L"D:"
+        static wchar_t const *sdd = L"D:"
             L"(D;OICI;GA;;;BG)" //Deny guests
             L"(D;OICI;GA;;;AN)" //Deny anonymous
             L"(A;OICI;GRGWGX;;;AU)" //Allow read, write and execute for Users
@@ -180,9 +180,9 @@ public:
         return( ConvertStringSecurityDescriptorToSecurityDescriptorW(sdd, SDDL_REVISION_1, &sa->lpSecurityDescriptor, nullptr) == TRUE );
     }
 
-    _Check_return_ bool Create( __in_z const wchar_t * name, __in const size_t number_of_bytes ) noexcept;
-    _Check_return_ bool Create( __in_z const wchar_t * name, __in const size_t number_of_bytes, __in_opt SECURITY_ATTRIBUTES * security_attributes ) noexcept;
-    _Check_return_ bool Open( __in_z const wchar_t * name, __in const size_t number_of_bytes, __in const bool read_only ) noexcept;
+    _Check_return_ bool Create( __in_z wchar_t const * name, __in std::size_t const number_of_bytes ) noexcept;
+    _Check_return_ bool Create( __in_z wchar_t const * name, __in std::size_t const number_of_bytes, __in_opt SECURITY_ATTRIBUTES * security_attributes = nullptr ) noexcept;
+    _Check_return_ bool Open( __in_z wchar_t const * name, __in std::size_t const number_of_bytes, __in bool const read_only ) noexcept;
 
     void Close( void ) noexcept;
 
@@ -194,22 +194,22 @@ public:
         m_Buffer = nullptr;
     }
 
-    inline _Check_return_ constexpr uint8_t * GetPointer( void ) const noexcept
+    inline constexpr _Check_return_ uint8_t * GetPointer( void ) const noexcept
     {
         return( m_Buffer );
     }
 
-    inline _Check_return_ constexpr size_t GetSize( void ) const noexcept
+    inline constexpr _Check_return_ std::size_t GetSize( void ) const noexcept
     {
         return( m_Size );
     }
 
-    inline _Check_return_ constexpr uint32_t GetErrorCode( void ) const noexcept
+    inline constexpr _Check_return_ uint32_t GetErrorCode( void ) const noexcept
     {
         return( m_LastError );
     }
 
-    inline _Check_return_ constexpr HANDLE GetHandle( void ) const noexcept
+    inline constexpr _Check_return_ HANDLE GetHandle( void ) const noexcept
     {
         return( m_Handle );
     }

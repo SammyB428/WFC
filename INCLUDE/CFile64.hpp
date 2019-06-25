@@ -78,8 +78,8 @@ class CExtensibleMarkupLanguageDocument;
 #define SAFE_WRITE_WAIT (1)
 #define SAFE_WRITE_FAIL (2)
 
-using SAFE_WRITE_CALLBACK = _Check_return_ int (*)( _Inout_ void * parameter, _In_ const uint32_t error_code, _In_z_ LPCTSTR filename );
-using PROCESS_BUFFER_CALLBACK = bool (*)( void * context_p, const uint8_t * buffer, const size_t number_of_bytes_in_buffer );
+using SAFE_WRITE_CALLBACK = _Check_return_ int (*)( _Inout_ void * parameter, _In_ uint32_t const error_code, _In_z_ LPCTSTR filename );
+using PROCESS_BUFFER_CALLBACK = bool (*)( void * context_p, uint8_t const * buffer, std::size_t const number_of_bytes_in_buffer );
 
 class CFile64
 {

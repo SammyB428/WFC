@@ -333,17 +333,17 @@ SEARCH_LAST_BLOCK:
 #else
 
 // This version works
-_Check_return_ static int64_t _find_byte_256( _In_ const uint8_t byte_value, _In_reads_bytes_( buffer_size ) const uint8_t * buffer, _In_ const int64_t buffer_size ) noexcept
+_Check_return_ static int64_t _find_byte_256( _In_ uint8_t const byte_value, _In_reads_bytes_( buffer_size ) uint8_t const * buffer, _In_ int64_t const buffer_size ) noexcept
 {
-    __declspec(align(32)) const __m256i byte_to_find = _mm256_set1_epi8( byte_value ); // AVX2
-    __declspec(align(32)) const __m256i zero = _mm256_setzero_si256(); // AVX2
+    __declspec(align(32)) __m256i const byte_to_find = _mm256_set1_epi8( byte_value ); // AVX2
+    __declspec(align(32)) __m256i const zero = _mm256_setzero_si256(); // AVX2
 
-    const int64_t last_buffer_index = buffer_size - 31;
+    int64_t const last_buffer_index = buffer_size - 31;
 
     int64_t buffer_index = 0;
 
     while( buffer_index < last_buffer_index &&
-        _mm256_testc_si256( zero, _mm256_cmpeq_epi8( byte_to_find, _mm256_loadu_si256((const __m256i *) &buffer[ buffer_index ]))) != 0 ) // _mm256_testc_si256 - AVX2
+        _mm256_testc_si256( zero, _mm256_cmpeq_epi8( byte_to_find, _mm256_loadu_si256((__m256i const *) &buffer[ buffer_index ]))) != 0 ) // _mm256_testc_si256 - AVX2
     {
         buffer_index += 32;
     }
@@ -362,18 +362,18 @@ _Check_return_ static int64_t _find_byte_256( _In_ const uint8_t byte_value, _In
 }
 #endif
 
-_Check_return_ int64_t _find_byte_SSE41(_In_ const uint8_t byte_value, _In_reads_bytes_(buffer_size) const uint8_t * buffer, _In_ const int64_t buffer_size) noexcept
+_Check_return_ int64_t _find_byte_SSE41(_In_ uint8_t const byte_value, _In_reads_bytes_(buffer_size) uint8_t const * buffer, _In_ int64_t const buffer_size) noexcept
 {
-    __declspec(align(16)) const __m128i byte_to_find = _mm_set1_epi8(byte_value); // SSE2
-    __declspec(align(16)) const __m128i zero = _mm_setzero_si128(); // SSE2
+    __declspec(align(16)) __m128i const byte_to_find = _mm_set1_epi8(byte_value); // SSE2
+    __declspec(align(16)) __m128i const zero = _mm_setzero_si128(); // SSE2
 
-    const int64_t last_buffer_index = buffer_size - 15;
+    int64_t const last_buffer_index = buffer_size - 15;
 
     int64_t buffer_index = 0;
 
     if (buffer_size > 15)
     {
-        if (_mm_testc_si128(zero, _mm_cmpeq_epi8(byte_to_find, _mm_loadu_si128((const __m128i *) buffer))) != 0)
+        if (_mm_testc_si128(zero, _mm_cmpeq_epi8(byte_to_find, _mm_loadu_si128((__m128i const *) buffer))) != 0)
         {
             // The desired byte was not found in the first block.
             // Make sure the buffer is aligned on a 16 byte boundary so our main loop can avoid the _mm_loadu_si128 (SSE2) call
@@ -400,7 +400,7 @@ _Check_return_ int64_t _find_byte_SSE41(_In_ const uint8_t byte_value, _In_reads
     _ASSERTE((((int64_t)&buffer[buffer_index]) % 16) == 0);
 
     while (buffer_index < last_buffer_index &&
-        _mm_testc_si128(zero, _mm_cmpeq_epi8(byte_to_find, *((const __m128i *) &buffer[buffer_index]))) != 0) // _mm_cmpeq_epi8-SSE2, _mm_testc_si128-SSE4.1
+        _mm_testc_si128(zero, _mm_cmpeq_epi8(byte_to_find, *((__m128i const *) &buffer[buffer_index]))) != 0) // _mm_cmpeq_epi8-SSE2, _mm_testc_si128-SSE4.1
     {
         buffer_index += 16;
     }
@@ -419,7 +419,7 @@ SEARCH_LAST_BLOCK:
     return(BYTES_NOT_FOUND);
 }
 
-_Check_return_ int64_t _find_byte_using_nothing_but_C( _In_ const uint8_t byte_value, _In_reads_bytes_( buffer_size ) const uint8_t * buffer, _In_ const int64_t buffer_size ) noexcept
+_Check_return_ int64_t _find_byte_using_nothing_but_C( _In_ uint8_t const byte_value, _In_reads_bytes_( buffer_size ) uint8_t const * buffer, _In_ int64_t const buffer_size ) noexcept
 {
     int64_t buffer_index = 0;
 
@@ -436,7 +436,7 @@ _Check_return_ int64_t _find_byte_using_nothing_but_C( _In_ const uint8_t byte_v
     return( BYTES_NOT_FOUND );
 }
 
-_Check_return_ int64_t Win32FoundationClasses::find_byte( _In_ const uint8_t byte_value, _In_reads_bytes_( buffer_size ) const uint8_t * __restrict buffer, _In_ const int64_t buffer_size ) noexcept
+_Check_return_ int64_t Win32FoundationClasses::find_byte( _In_ uint8_t const byte_value, _In_reads_bytes_( buffer_size ) uint8_t const * __restrict buffer, _In_ int64_t const buffer_size ) noexcept
 {
     static FIND_BYTE_FUNCTION find_byte_implementation = nullptr;
 
@@ -463,14 +463,14 @@ _Check_return_ int64_t Win32FoundationClasses::find_byte( _In_ const uint8_t byt
     return( find_byte_implementation( byte_value, buffer, buffer_size ) );
 }
 
-__checkReturn bool Win32FoundationClasses::wfc_process_buffer( __in const uint8_t * buffer, __in const size_t number_of_bytes_in_buffer, __in const size_t step_size, __inout PROCESS_BUFFER_CALLBACK function_to_call, __inout_opt void * callback_context ) noexcept
+__checkReturn bool Win32FoundationClasses::wfc_process_buffer( __in uint8_t const * buffer, __in std::size_t const number_of_bytes_in_buffer, __in std::size_t const step_size, __inout PROCESS_BUFFER_CALLBACK function_to_call, __inout_opt void * callback_context ) noexcept
 {
     if (function_to_call == nullptr )
     {
         return( false );
     }
 
-    const int64_t number_of_bytes_to_process = number_of_bytes_in_buffer;
+    int64_t const number_of_bytes_to_process = number_of_bytes_in_buffer;
     int64_t number_of_bytes_processed = 0;
     int64_t number_of_bytes_to_process_in_this_call = 0;
 

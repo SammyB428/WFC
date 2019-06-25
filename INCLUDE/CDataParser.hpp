@@ -554,7 +554,7 @@ public:
 
                         uint32_t other_character = 0;
 
-                        for (auto const loop_index : Range1(number_of_characters))
+                        for (auto const loop_index : Range(number_of_characters, 1))
                         {
                             // We peek at string_length - 1 because the GetNextCharacter() call above
                             // advances the character index
@@ -735,7 +735,7 @@ public:
 
                         uint32_t other_character = 0;
 
-                        for ( auto const loop_index : Range1(string_length) )
+                        for ( auto const loop_index : Range(string_length, 1) )
                         {
                             if ( PeekAtCharacter( found_at, character_to_test, loop_index ) != true )
                             {
@@ -800,9 +800,9 @@ public:
 
             found_at.Copy( parse_point );
 
-            std::size_t pattern_length = bytes_to_find.size();
+            auto pattern_length = bytes_to_find.size();
 
-            uint8_t const * pattern_buffer = bytes_to_find.data();
+            auto pattern_buffer = bytes_to_find.data();
 
             while( ( found_at.GetIndex() + pattern_length ) <= m_NumberOfBytes )
             {
@@ -2020,7 +2020,7 @@ public:
 
                 if (byte_array.size() >= termination_characters_length)
                 {
-                    uint8_t const * address = byte_array.data();
+                    auto const address = byte_array.data();
                     uint8_t const * address_to_compare = &address[byte_array.size() - (termination_characters_length * sizeof(TCHAR))];
 
                     // Don't forget to take into account that we may be a UNICODE build so we
@@ -2227,10 +2227,10 @@ public:
         }
     }
 
-    inline _Check_return_ bool IsTextASCII( void ) const noexcept     { return( ( m_IsASCII     == false ) ? false : ( m_IsUCS4 != false ) ? false : true ); }
-    inline _Check_return_ bool IsTextBigEndian( void ) const noexcept { return( ( m_IsBigEndian == false ) ? false : true ); }
-    inline _Check_return_ bool IsTextUCS4( void ) const noexcept      { return( ( m_IsUCS4      == false ) ? false : true ); }
-    inline _Check_return_ uint8_t const * GetData( void ) const noexcept { return( m_Bytes ); }
+    inline constexpr _Check_return_ bool IsTextASCII( void ) const noexcept     { return( ( m_IsASCII     == false ) ? false : ( m_IsUCS4 != false ) ? false : true ); }
+    inline constexpr _Check_return_ bool IsTextBigEndian( void ) const noexcept { return( ( m_IsBigEndian == false ) ? false : true ); }
+    inline constexpr _Check_return_ bool IsTextUCS4( void ) const noexcept      { return( ( m_IsUCS4      == false ) ? false : true ); }
+    inline constexpr _Check_return_ uint8_t const * GetData( void ) const noexcept { return( m_Bytes ); }
 
     inline _Check_return_ bool PeekAtCharacter( _In_ CParsePoint const& const_parse_point, _Inout_ uint32_t& character, _In_ uint64_t const number_of_characters_ahead = 1 ) const noexcept
     {

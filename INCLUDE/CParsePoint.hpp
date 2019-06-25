@@ -58,7 +58,7 @@ class CParsePoint
          Empty();
       };
 
-      inline constexpr CParsePoint( _In_ const CParsePoint const& source ) noexcept
+      inline constexpr CParsePoint( _In_ CParsePoint const& source ) noexcept
       {
          Copy( source );
       };

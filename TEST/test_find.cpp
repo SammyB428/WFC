@@ -48,13 +48,13 @@ static char THIS_FILE[] = __FILE__;
 #define HAY (0x55)
 #define NEEDLE (0x5A)
 
-static _Check_return_ size_t fill_buffer_with_test_pattern(_Inout_ uint8_t * buffer, _In_ const size_t buffer_size, _In_ const uint8_t needle, _In_ const size_t test_number) noexcept
+static _Check_return_ size_t fill_buffer_with_test_pattern(_Inout_ uint8_t * buffer, _In_ std::size_t const buffer_size, _In_ const uint8_t needle, _In_ const size_t test_number) noexcept
 {
     std::size_t number_of_bytes_written = 0;
 
     const std::size_t frequency = test_number + 1;
 
-    for ( const auto buffer_index : Range(buffer_size))
+    for ( auto const buffer_index : Range(buffer_size))
     {
         if ((buffer_index % frequency) == 0)
         {

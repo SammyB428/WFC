@@ -145,7 +145,7 @@ __checkReturn bool test_CBitArray( __out std::string& class_name, __out int& tes
         return( failure() );
     }
 
-    for ( const auto array_index : Range(32) )
+    for ( auto const array_index : Range(32) )
     {
         if ( bits.GetAt(array_index) != 1 )
         {
@@ -174,7 +174,7 @@ __checkReturn bool test_CBitArray( __out std::string& class_name, __out int& tes
 
     bits.SetAll( 1 );
 
-    for ( const auto array_index : Range(32) )
+    for ( auto const array_index : Range(32) )
     {
         if ( bits.GetAt(array_index) != 1 )
         {
@@ -187,7 +187,7 @@ __checkReturn bool test_CBitArray( __out std::string& class_name, __out int& tes
 
     // Array should be zeroeized
 
-    for ( const auto array_index : Range(32) )
+    for ( auto const array_index : Range(32) )
     {
         if ( bits.GetAt(array_index) != 0 )
         {
@@ -494,7 +494,7 @@ __checkReturn bool test_CBitArray( __out std::string& class_name, __out int& tes
 
     int number_of_bits_to_insert = 10007;
 
-    for ( const auto array_index : Range(number_of_bits_to_insert) )
+    for ( auto const array_index : Range(number_of_bits_to_insert) )
     {
         bits.InsertAt( 0, 1 );
     }
@@ -541,7 +541,7 @@ __checkReturn bool test_CBitArray( __out std::string& class_name, __out int& tes
         return( FALSE);
     }
 
-    for ( const auto array_index : Range(999) )
+    for ( auto const array_index : Range(999) )
     {
         if ( bits2.GetAt(array_index) != 0 )
         {
@@ -688,7 +688,7 @@ __checkReturn bool test_CBitArray( __out std::string& class_name, __out int& tes
         return( failure() );
     }
 
-    for ( const auto array_index : Range(bits.GetSize()) )
+    for ( auto const array_index : Range(bits.GetSize()) )
     {
         if ( bits.GetAt(array_index) != bits2.GetAt(array_index) )
         {
@@ -749,7 +749,7 @@ __checkReturn bool test_CBitArray( __out std::string& class_name, __out int& tes
 
     int number_of_array_entries = ( random.GetInteger() % 100 ) + 25;
 
-    for ( const auto array_index : Range(number_of_array_entries) )
+    for ( auto const array_index : Range(number_of_array_entries) )
     {
         (void) dword_array.push_back( random.GetInteger() );
     }
@@ -780,7 +780,7 @@ __checkReturn bool test_CBitArray( __out std::string& class_name, __out int& tes
         return( failure() );
     }
 
-    for( const auto array_index : Range(dword_array.size()) )
+    for( auto const array_index : Range(dword_array.size()) )
     {
         if ( dword_array.at(array_index) != dword_array2.at(array_index) )
         {
@@ -795,7 +795,7 @@ __checkReturn bool test_CBitArray( __out std::string& class_name, __out int& tes
 
     //   virtual BOOL      EnumerateOnes( DWORD& enumerator ) const;
 
-    for( const auto array_index : Range(101) )
+    for( auto const array_index : Range(101) )
     {
         bits.AddByte( 0x55 ); // Bit pattern of 01010101
     }
@@ -876,7 +876,7 @@ __checkReturn bool test_CBitArray( __out std::string& class_name, __out int& tes
 
     // Size is 404 bits, that means there should be 202 1's and 202 0's
 
-    for( const auto array_index : Range(50) )
+    for( auto const array_index : Range(50) )
     {
         if ( bits2.GetValue(array_index * 8, 8 ) != 0x55 )
         {
@@ -911,7 +911,7 @@ __checkReturn bool test_CBitArray( __out std::string& class_name, __out int& tes
 
     // Size is 404 bits, that means there should be 202 1's and 202 0's
 
-    for ( const auto array_index : Range(50) )
+    for ( auto const array_index : Range(50) )
     {
         if ( bits2.GetValue(array_index * 8, 8 ) != 0x55 )
         {
@@ -936,7 +936,7 @@ __checkReturn bool test_CBitArray( __out std::string& class_name, __out int& tes
 
     //   virtual BOOL      Find( const CBitArray& value, DWORD& found_at, DWORD starting_at = 0 ) const;
 
-    for ( const auto array_index : Range(100) )
+    for ( auto const array_index : Range(100) )
     {
         bits2.AddByte( 0xAA ); // Bit pattern of 10101010
     }
@@ -1132,7 +1132,7 @@ __checkReturn bool test_CBitArray( __out std::string& class_name, __out int& tes
     bits.RemoveAll();
     bits2.RemoveAll();
 
-    for ( const auto array_index : Range(51) )
+    for ( auto const array_index : Range(51) )
     {
         bits.AddValue( random.GetInteger(), 32 );
     }
@@ -1147,7 +1147,7 @@ __checkReturn bool test_CBitArray( __out std::string& class_name, __out int& tes
         return( failure() );
     }
 
-    for ( const auto array_index : Range(bits.GetSize()) )
+    for ( auto const array_index : Range(bits.GetSize()) )
     {
         if ( bits.GetAt(array_index) != bits2.GetAt(array_index) )
         {
@@ -1158,7 +1158,7 @@ __checkReturn bool test_CBitArray( __out std::string& class_name, __out int& tes
 
     //   virtual DWORD      operator [] ( int index ) const;
 
-    for ( const auto array_index : Range(bits.GetSize()) )
+    for ( auto const array_index : Range(bits.GetSize()) )
     {
         if ( bits[array_index] != bits2[array_index] )
         {
@@ -1302,7 +1302,7 @@ __checkReturn bool test_CBitArray( __out std::string& class_name, __out int& tes
         return( failure() );
     }
 
-    for ( const auto array_index : Range1(29) )
+    for ( auto const array_index : Range(29, 1) )
     {
         if ( bits.GetAt(array_index) != 1 )
         {
@@ -1344,7 +1344,7 @@ __checkReturn bool test_CBitArray( __out std::string& class_name, __out int& tes
         return( failure() );
     }
 
-    for ( const auto array_index : Range1(64) )
+    for ( auto const array_index : Range(64, 1) )
     {
         if ( bits.GetAt(array_index) != 1 )
         {
@@ -1371,7 +1371,7 @@ __checkReturn bool test_CBitArray( __out std::string& class_name, __out int& tes
 
     bits.SetRange( 0, 32 );
 
-    for ( const auto array_index : Range(32) )
+    for ( auto const array_index : Range(32) )
     {
         if ( bits.GetAt(array_index) != 1 )
         {
@@ -1382,7 +1382,7 @@ __checkReturn bool test_CBitArray( __out std::string& class_name, __out int& tes
 
     bits.ClearRange( 0, 32 );
 
-    for ( const auto array_index : Range(32) )
+    for ( auto const array_index : Range(32) )
     {
         if ( bits.GetAt(array_index) != 0 )
         {
@@ -1415,7 +1415,7 @@ __checkReturn bool test_CBitArray( __out std::string& class_name, __out int& tes
         return( failure() );
     }
 
-    for ( const auto array_index : Range(32) )
+    for ( auto const array_index : Range(32) )
     {
         if ( bits.GetAt(array_index) != 1 )
         {
@@ -1442,7 +1442,7 @@ __checkReturn bool test_CBitArray( __out std::string& class_name, __out int& tes
 
     bits.SetRange( 0, 64 );
 
-    for ( const auto array_index : Range(64) )
+    for ( auto const array_index : Range(64) )
     {
         if ( bits.GetAt(array_index) != 1 )
         {

@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 2000-2018, Samuel R. Blackburn
+** Copyright, 2000-2019, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -61,13 +61,13 @@ _Check_return_ bool failure( void ) noexcept
    return( false );
 }
 
-_Check_return_ int _tmain( _In_ const int number_of_command_line_arguments, _In_reads_z_(number_of_command_line_arguments) LPCTSTR command_line_arguments[] )
+_Check_return_ int _tmain( _In_ int const number_of_command_line_arguments, _In_reads_z_(number_of_command_line_arguments) LPCTSTR command_line_arguments[] )
 {
    WFCTRACEINIT( TEXT( "_tmain()" ) );
 
    WFC_INITIALIZE_SINGLE_THREADED_COM();
 
-   IMultiLanguage2 * i = NULL;
+   IMultiLanguage2 * i = nullptr;
 
    const GUID mlang_class_id = { 0x275c23e2, 0x3747, 0x11d0, 0x9f, 0xea, 0x00, 0xaa, 0x00, 0x3f, 0x86, 0x46 };
    const GUID interface_id   = { 0xdccfc164, 0x2b38, 0x11d2, 0xb7, 0xec, 0x00, 0xc0, 0x4f, 0x8f, 0x5d, 0x9a };
@@ -86,6 +86,56 @@ _Check_return_ int _tmain( _In_ const int number_of_command_line_arguments, _In_
    wfc_get_operating_system_version_string( operating_system_version_string );
 
    WFCTRACE( operating_system_version_string.c_str() );
+
+   bool saw_zero = false;
+   bool saw_one = false;
+   bool saw_two = false;
+
+   for (auto const index : Range(3))
+   {
+       if (index == 0)
+       {
+           saw_zero = true;
+       }
+       else if (index == 1)
+       {
+           saw_one = true;
+       }
+       else if (index == 2)
+       {
+           saw_two = true;
+       }
+   }
+
+   if (saw_zero != true || saw_one != true || saw_two != true)
+   {
+       printf("Failed Range test 1\n");
+   }
+
+   saw_zero = false;
+   saw_one = false;
+   saw_two = false;
+
+   for (auto const index : Range(3, 1))
+   {
+       if (index == 0)
+       {
+           saw_zero = true;
+       }
+       else if (index == 1)
+       {
+           saw_one = true;
+       }
+       else if (index == 2)
+       {
+           saw_two = true;
+       }
+   }
+
+   if (saw_zero == true || saw_one != true || saw_two != true)
+   {
+       printf("Failed Range test 2\n");
+   }
 
 //   memory();
 //   test_CloseHandle();
@@ -124,7 +174,7 @@ _Check_return_ int _tmain( _In_ const int number_of_command_line_arguments, _In_
    // before CBase64Coding (higher in the list). This way, if
    // CBase64Coding fails, you know it is not a problem with
 
-   constexpr const TEST_FUNCTION tests[] = 
+   constexpr TEST_FUNCTION const tests[] =
    {
       test_find,
       test_is,
@@ -161,7 +211,7 @@ _Check_return_ int _tmain( _In_ const int number_of_command_line_arguments, _In_
 
    CTimeSpan how_long = time_then - time_now;
 
-   long total_days = how_long.GetDays();
+   auto total_days = how_long.GetDays();
 
    _tprintf( TEXT( "%ld days\n" ), total_days );
 

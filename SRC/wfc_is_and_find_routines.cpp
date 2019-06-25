@@ -362,7 +362,7 @@ __checkReturn bool PASCAL Win32FoundationClasses::wfc_is_guid_with_curlies( __in
         return( false );
     }
 
-    for( auto const array_index : Range1(38) )
+    for( auto const array_index : Range(38, 1) )
     {
         if ( array_index == 37 )
         {
@@ -403,7 +403,7 @@ __checkReturn bool PASCAL Win32FoundationClasses::wfc_is_guid_with_curlies( __in
         return( false );
     }
 
-    for ( auto const array_index : Range1(38) )
+    for ( auto const array_index : Range(38, 1) )
     {
         if ( array_index == 37 )
         {

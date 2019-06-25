@@ -111,7 +111,7 @@ void test_CEventLog( void ) noexcept
       record.Dump( afxDump );
 #endif // _DEBUG
 
-      for( const auto& entry : record.Strings )
+      for( auto const& entry : record.Strings )
       {
          WFCTRACEVAL( TEXT( "String is " ), entry.c_str() );
       }

@@ -2173,7 +2173,7 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::m_ParseDOCTYPESection( _In
 
     // Now let's validate name as being valid characters
 
-    for ( auto const loop_index : Range1(name.length()) )
+    for ( auto const loop_index : Range(name.length(), 1) )
     {
 #if ! defined( UNICODE )
         // ASCII Build
@@ -3584,7 +3584,7 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::m_ParseTag( _In_ std::wstr
         // Thanks go to Jean-Loup Clement (Jean-Loup.Clement@bull.net)
         // for finding out that VC5 doesn't support UINT32.
 
-        for ( auto const name_loop_index : Range1(m_Tag.length()) )
+        for ( auto const name_loop_index : Range(m_Tag.length(), 1) )
         {
             if ( Win32FoundationClasses::is_xml_NameChar( m_Tag[ name_loop_index ] ) == false )
             {
@@ -4156,7 +4156,7 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::m_ParseXMLDeclaration( _In
         {
             legal_characters.assign( L"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789._-" );
 
-            for ( auto const loop_index : Range1(value.length()) )
+            for ( auto const loop_index : Range(value.length(), 1) )
             {
                 if ( legal_characters.find( value.at( loop_index ) ) == std::wstring::npos )
                 {

@@ -52,9 +52,9 @@ class CDataFile : public CFile64
       CDataFile();
       virtual ~CDataFile();
 
-      virtual __checkReturn bool AddData( __in const uint32_t identifier, __in const std::vector<uint8_t>& data ) noexcept;
-      virtual __checkReturn bool AddData( __in const uint32_t identifier, __in_bcount( number_of_bytes ) const uint8_t * data, __in const size_t number_of_bytes ) noexcept;
-      virtual __checkReturn bool AddData( __in const CDataChunk& data ) noexcept;
+      virtual __checkReturn bool AddData( __in uint32_t const identifier, __in  std::vector<uint8_t> const& data ) noexcept;
+      virtual __checkReturn bool AddData( __in uint32_t const identifier, __in_bcount( number_of_bytes ) uint8_t const * data, __in std::size_t const number_of_bytes ) noexcept;
+      virtual __checkReturn bool AddData( __in CDataChunk const& data ) noexcept;
       virtual __checkReturn bool GetData( __out uint32_t& identifier, __out std::vector<uint8_t>& data ) noexcept;
       virtual __checkReturn bool GetData( __out CDataChunk& data ) noexcept;
 };

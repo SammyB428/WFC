@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 1995-2016, Samuel R. Blackburn
+** Copyright, 1995-2019, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -57,20 +57,20 @@ CDataMemory::CDataMemory()
    m_Position = 0;
 }
 
-CDataMemory::CDataMemory( __in const CDataMemory& source )
+CDataMemory::CDataMemory( __in CDataMemory const& source )
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );
 }
 
-CDataMemory::CDataMemory( __in_bcount( number_of_bytes ) const uint8_t * buffer_p, __in const size_t number_of_bytes )
+CDataMemory::CDataMemory( __in_bcount( number_of_bytes ) uint8_t const * buffer_p, __in std::size_t const number_of_bytes )
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER_NULL_OK( buffer_p );
    Copy( buffer_p, number_of_bytes );
 }
 
-CDataMemory::CDataMemory( __in const std::vector<uint8_t>& source )
+CDataMemory::CDataMemory( __in std::vector<uint8_t> const& source )
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );
@@ -82,14 +82,14 @@ CDataMemory::~CDataMemory()
    m_Position = 0;
 }
 
-void CDataMemory::Append( __in const std::vector<uint8_t>& data ) noexcept
+void CDataMemory::Append( __in std::vector<uint8_t> const& data ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    m_Data.insert( std::end(m_Data), std::cbegin(data), std::cend(data) );
    m_Position = m_Data.size();
 }
 
-void CDataMemory::Append( __in const CDataMemory& source ) noexcept
+void CDataMemory::Append( __in CDataMemory const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Append( source.m_Data );
@@ -108,7 +108,7 @@ void CDataMemory::Close( void ) noexcept
    m_Data.clear();
 }
 
-void CDataMemory::Copy( __in_bcount( number_of_bytes ) const uint8_t * buffer_p, __in const size_t number_of_bytes ) noexcept
+void CDataMemory::Copy( __in_bcount( number_of_bytes ) uint8_t const * buffer_p, __in std::size_t const number_of_bytes ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER_NULL_OK( buffer_p );
@@ -133,7 +133,7 @@ void CDataMemory::Copy( __in_bcount( number_of_bytes ) const uint8_t * buffer_p,
    WFC_END_CATCH_ALL
 }
 
-void CDataMemory::Copy( __in const std::vector<uint8_t>& source ) noexcept
+void CDataMemory::Copy( __in std::vector<uint8_t> const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -141,7 +141,7 @@ void CDataMemory::Copy( __in const std::vector<uint8_t>& source ) noexcept
    m_Data = source;
 }
 
-void CDataMemory::Copy( __in const CDataMemory& source ) noexcept
+void CDataMemory::Copy( __in CDataMemory const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -167,7 +167,7 @@ void CDataMemory::Flush( void ) noexcept
    WFC_VALIDATE_POINTER( this );
 }
 
-__checkReturn const BYTE * CDataMemory::GetData( void ) const noexcept
+__checkReturn BYTE const * CDataMemory::GetData( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
    return( m_Data.data() );
@@ -185,7 +185,7 @@ __checkReturn uint64_t CDataMemory::GetPosition( void ) const noexcept
    return( m_Position );
 }
 
-__checkReturn bool CDataMemory::Open( __in_z LPCTSTR filename, __in const UINT mode ) noexcept
+__checkReturn bool CDataMemory::Open( __in_z LPCTSTR filename, __in UINT const mode ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( filename );
@@ -319,16 +319,14 @@ void CDataMemory::Write( __in_bcount( number_of_bytes_to_write ) const void * bu
    {
       auto byte_buffer = reinterpret_cast<BYTE const *>( buffer );
 
-      UINT index = 0;
-
-      while( index < number_of_bytes_to_write )
+      for( auto const index : Range(number_of_bytes_to_write) )
       {
          // Thanks go to Darin Greaham (greaham@cyberramp.net) for finding
          // where I was not incrementing index. That caused an endless loop
          // to occur. DOH!
          // 1998-08-09
 
-         (void) m_Data.push_back( byte_buffer[ index++ ] );
+         (void) m_Data.push_back( byte_buffer[index] );
          // m_Data.Append( (const BYTE *) buffer, number_of_bytes_to_write );
       }
    }

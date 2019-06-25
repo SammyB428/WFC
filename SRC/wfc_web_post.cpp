@@ -382,7 +382,7 @@ __checkReturn bool PASCAL Win32FoundationClasses::wfc_web_post( __in_z LPCTSTR u
 
       if ( response != nullptr && response_buffer != nullptr )
       {
-         copy( *response, reinterpret_cast<const char *>(response_buffer.get()) );
+         copy( *response, reinterpret_cast<char const *>(response_buffer.get()) );
       }
 
       return( true );

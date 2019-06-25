@@ -102,7 +102,7 @@ class CBitArray
       
       inline __checkReturn uint32_t GetAt( __in std::size_t const bit_location ) const noexcept
       {
-         const size_t size = GetSize();
+         std::size_t const size = GetSize();
 
          ASSERT( bit_location < size );
 
@@ -133,11 +133,11 @@ class CBitArray
 
       __checkReturn bool      GetNextOne( __inout std::size_t& enumerator ) const noexcept;
       __checkReturn bool      GetNextZero( __inout std::size_t& enumerator ) const noexcept;
-      __checkReturn size_t    GetNumberOfOnes( void ) const noexcept;
-      __checkReturn size_t    GetNumberOfZeroes( void ) const noexcept;
-      __checkReturn size_t    GetSize( void ) const noexcept;
-      __checkReturn size_t    GetUpperBound( void ) const noexcept;
-      __checkReturn uint32_t     GetValue( __in std::size_t const index, __in std::size_t const length ) const noexcept;
+      __checkReturn std::size_t GetNumberOfOnes( void ) const noexcept;
+      __checkReturn std::size_t GetNumberOfZeroes( void ) const noexcept;
+      __checkReturn std::size_t GetSize( void ) const noexcept;
+      __checkReturn std::size_t GetUpperBound( void ) const noexcept;
+      __checkReturn uint32_t    GetValue( __in std::size_t const index, __in std::size_t const length ) const noexcept;
       void                    InsertAt( __in std::size_t const index, __in uint32_t const value ) noexcept;
       __checkReturn CBitArray Left( __in std::size_t const number_of_bits ) const noexcept;
       void                    LeftTrim( __in std::size_t const number_of_bits ) noexcept;

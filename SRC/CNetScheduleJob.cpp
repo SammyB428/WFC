@@ -222,17 +222,13 @@ void CNetworkScheduleJob::Dump( CDumpContext& dump_context ) const
    std::wstring temp_string;
    std::wstring number_string;
 
-   int index = 0;
-
-   while( index < 32 )
+   for( auto const index : Range(32) )
    {
       if ( bit_test( DaysOfTheMonth, index ) == 1 )
       {
          number_string.Format( TEXT( "%d, " ), index + 1 );
          temp_string += number_string;
       }
-
-      index++;
    }
 
    dump_context << temp_string << TEXT( ")\n" );
