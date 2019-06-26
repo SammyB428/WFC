@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 1995-2014, Samuel R. Blackburn
+** Copyright, 1995-2019, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -47,7 +47,7 @@ class CDummyFile : public CFile64
 {
    protected:
 
-      HANDLE m_TemplateHandle;
+       HANDLE m_TemplateHandle{ INVALID_HANDLE_VALUE };
 
 #if ! defined( WFC_STL )
       // In the STL builds of WFC, CFile has the m_FileHandle member.
@@ -63,8 +63,8 @@ class CDummyFile : public CFile64
 
    public:
 
-       CDummyFile(const CDummyFile&) = delete;
-       CDummyFile& operator=(const CDummyFile&) = delete;
+       CDummyFile(CDummyFile const&) = delete;
+       CDummyFile& operator=(CDummyFile const&) = delete;
 
        CDummyFile();
 
@@ -92,28 +92,28 @@ class CDummyFile : public CFile64
 
       virtual void  Remove( __in_z LPCTSTR name ) noexcept;
       virtual void  Rename( __in_z LPCTSTR OldName, __in_z LPCTSTR NewName ) noexcept;
-      __checkReturn uint64_t Seek( __in const int64_t offset, __in const CFile64::SeekPosition from ) noexcept override;
+      __checkReturn uint64_t Seek( __in int64_t const offset, __in CFile64::SeekPosition const from ) noexcept override;
 
-      void SetLength( __in const uint64_t length ) noexcept override;
+      void SetLength( __in uint64_t const length ) noexcept override;
 
-      __checkReturn bool LockRange( __in const uint64_t position, __in const uint64_t number_of_bytes_to_lock ) noexcept override;
-      void UnlockRange( __in const uint64_t position, __in const uint64_t number_of_bytes_to_unlock ) noexcept override;
+      __checkReturn bool LockRange( __in uint64_t const position, __in uint64_t const number_of_bytes_to_lock ) noexcept override;
+      void UnlockRange( __in uint64_t const position, __in uint64_t const number_of_bytes_to_unlock ) noexcept override;
 
       /*
       ** A couple of utility functions to make life easier
       */
 
-      void Write( __in const std::string& string_to_write  ) noexcept override;
-      virtual void Write( __in const std::vector<uint8_t>& data_to_write ) noexcept;
+      void Write( __in std::string const& string_to_write  ) noexcept override;
+      virtual void Write( __in std::vector<uint8_t> const& data_to_write ) noexcept;
 
       // Abstraction Additions
 
-      inline __checkReturn HANDLE GetHandle( void ) const noexcept { return( m_FileHandle ); }
+      inline constexpr __checkReturn HANDLE GetHandle( void ) const noexcept { return( m_FileHandle ); }
 
 #if defined( WFC_STL )
-      inline void SetHandle( __in HANDLE file_handle ) noexcept { m_FileHandle = (CFILE_HFILE) file_handle; }
+      inline constexpr void SetHandle( __in HANDLE file_handle ) noexcept { m_FileHandle = (CFILE_HFILE) file_handle; }
 #else
-      inline void SetHandle( __in const HANDLE file_handle ) noexcept { m_hFile = (CFILE_HFILE) file_handle; }
+      inline void SetHandle( __in HANDLE const file_handle ) noexcept { m_hFile = (CFILE_HFILE) file_handle; }
 #endif
 
 #if defined( _DEBUG ) && ! defined( WFC_NO_DUMPING )

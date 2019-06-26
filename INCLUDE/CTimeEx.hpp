@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 1995-2016, Samuel R. Blackburn
+** Copyright, 1995-2019, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -49,11 +49,11 @@ class CTimeSpan
 {
    protected:
 
-      time_t m_NumberOfSeconds;
+       time_t m_NumberOfSeconds{ 0 };
 
    public:
 
-      inline  CTimeSpan() { m_NumberOfSeconds = 0; }
+      inline constexpr CTimeSpan() { m_NumberOfSeconds = 0; }
       inline  CTimeSpan( __in const unsigned long number_of_seconds ) { m_NumberOfSeconds = number_of_seconds; }
       inline  CTimeSpan( __in const unsigned long days, __in const unsigned long hours, __in const unsigned long minutes, __in const unsigned long number_of_seconds )
       {
@@ -66,29 +66,29 @@ class CTimeSpan
       inline CTimeSpan( __in const CTimeSpan& source ) { m_NumberOfSeconds = source.m_NumberOfSeconds; }
       inline ~CTimeSpan() { m_NumberOfSeconds = 0; }
 
-      inline void Empty( void ) { m_NumberOfSeconds = 0; }
+      inline constexpr void Empty( void ) { m_NumberOfSeconds = 0; }
 
-      inline __checkReturn long    GetTotalHours( void ) const noexcept { return( (long)( m_NumberOfSeconds / 3600L ) ); }
-      inline __checkReturn long    GetTotalMinutes( void ) const noexcept { return( (long) (m_NumberOfSeconds / 60L ) ); }
-      inline __checkReturn time_t  GetTotalSeconds( void ) const noexcept { return( m_NumberOfSeconds ); }
-      inline __checkReturn int64_t GetTotalTicks( void ) const noexcept { return( (int64_t) ( (int64_t) m_NumberOfSeconds * static_cast<int64_t>(10000000)) ); }
-      inline __checkReturn long    GetDays( void ) const noexcept { return( (long) ( m_NumberOfSeconds / 86400L ) ); }
-      inline __checkReturn long    GetHours( void ) const noexcept { return( GetTotalHours() - ( GetDays() * 24L ) ); }
-      inline __checkReturn long    GetMinutes( void ) const noexcept { return( GetTotalMinutes() - ( GetTotalHours() * 60L ) ); }
-      inline __checkReturn long    GetSeconds( void ) const noexcept { return( (long) ( GetTotalSeconds() - ( GetTotalMinutes() * 60L ) ) ); }
-      inline               void    SetTicks( __in const uint64_t ticks ) noexcept { m_NumberOfSeconds = (time_t) ( ticks / 10000000); }
-      inline __checkReturn CTimeSpan operator-( __in const CTimeSpan& source ) const noexcept { return( CTimeSpan( (unsigned long) ( m_NumberOfSeconds - source.m_NumberOfSeconds ) ) ); }
-      inline __checkReturn CTimeSpan operator+( __in const CTimeSpan& source ) const noexcept { return( CTimeSpan( (unsigned long) ( m_NumberOfSeconds + source.m_NumberOfSeconds ) ) ); }
-      inline __checkReturn const CTimeSpan& operator+=( __in const CTimeSpan& source ) noexcept { m_NumberOfSeconds += source.m_NumberOfSeconds; return( *this ); }
-      inline __checkReturn const CTimeSpan& operator-=( __in const CTimeSpan& source ) noexcept { m_NumberOfSeconds -= source.m_NumberOfSeconds; return( *this ); }
-      inline __checkReturn bool operator == ( __in const CTimeSpan& source ) const noexcept { return( m_NumberOfSeconds == source.m_NumberOfSeconds ); }
-      inline __checkReturn bool operator != ( __in const CTimeSpan& source ) const noexcept { return( m_NumberOfSeconds != source.m_NumberOfSeconds ); }
-      inline __checkReturn bool operator < ( __in const CTimeSpan& source ) const noexcept  { return( m_NumberOfSeconds <  source.m_NumberOfSeconds ); }
-      inline __checkReturn bool operator > ( __in const CTimeSpan& source ) const noexcept  { return( m_NumberOfSeconds >  source.m_NumberOfSeconds ); }
-      inline __checkReturn bool operator <= ( __in const CTimeSpan& source ) const noexcept { return( m_NumberOfSeconds <= source.m_NumberOfSeconds ); }
-      inline __checkReturn bool operator >= ( __in const CTimeSpan& source ) const noexcept { return( m_NumberOfSeconds >= source.m_NumberOfSeconds ); }
+      inline constexpr __checkReturn long    GetTotalHours( void ) const noexcept { return( (long)( m_NumberOfSeconds / 3600L ) ); }
+      inline constexpr __checkReturn long    GetTotalMinutes( void ) const noexcept { return( (long) (m_NumberOfSeconds / 60L ) ); }
+      inline constexpr __checkReturn time_t  GetTotalSeconds( void ) const noexcept { return( m_NumberOfSeconds ); }
+      inline constexpr __checkReturn int64_t GetTotalTicks( void ) const noexcept { return( (int64_t) ( (int64_t) m_NumberOfSeconds * static_cast<int64_t>(10000000)) ); }
+      inline constexpr __checkReturn long    GetDays( void ) const noexcept { return( (long) ( m_NumberOfSeconds / 86400L ) ); }
+      inline constexpr __checkReturn long    GetHours( void ) const noexcept { return( GetTotalHours() - ( GetDays() * 24L ) ); }
+      inline constexpr __checkReturn long    GetMinutes( void ) const noexcept { return( GetTotalMinutes() - ( GetTotalHours() * 60L ) ); }
+      inline constexpr __checkReturn long    GetSeconds( void ) const noexcept { return( (long) ( GetTotalSeconds() - ( GetTotalMinutes() * 60L ) ) ); }
+      inline constexpr               void    SetTicks( __in uint64_t const ticks ) noexcept { m_NumberOfSeconds = (time_t) ( ticks / 10000000); }
+      inline __checkReturn CTimeSpan operator-( __in CTimeSpan const& source ) const noexcept { return( CTimeSpan( (unsigned long) ( m_NumberOfSeconds - source.m_NumberOfSeconds ) ) ); }
+      inline __checkReturn CTimeSpan operator+( __in CTimeSpan const& source ) const noexcept { return( CTimeSpan( (unsigned long) ( m_NumberOfSeconds + source.m_NumberOfSeconds ) ) ); }
+      inline constexpr __checkReturn const CTimeSpan& operator+=( __in CTimeSpan const& source ) noexcept { m_NumberOfSeconds += source.m_NumberOfSeconds; return( *this ); }
+      inline constexpr __checkReturn const CTimeSpan& operator-=( __in CTimeSpan const& source ) noexcept { m_NumberOfSeconds -= source.m_NumberOfSeconds; return( *this ); }
+      inline constexpr __checkReturn bool operator == ( __in CTimeSpan const& source ) const noexcept { return( m_NumberOfSeconds == source.m_NumberOfSeconds ); }
+      inline constexpr __checkReturn bool operator != ( __in CTimeSpan const& source ) const noexcept { return( m_NumberOfSeconds != source.m_NumberOfSeconds ); }
+      inline constexpr __checkReturn bool operator < ( __in CTimeSpan const& source ) const noexcept  { return( m_NumberOfSeconds <  source.m_NumberOfSeconds ); }
+      inline constexpr __checkReturn bool operator > ( __in CTimeSpan const& source ) const noexcept  { return( m_NumberOfSeconds >  source.m_NumberOfSeconds ); }
+      inline constexpr __checkReturn bool operator <= ( __in CTimeSpan const& source ) const noexcept { return( m_NumberOfSeconds <= source.m_NumberOfSeconds ); }
+      inline constexpr __checkReturn bool operator >= ( __in CTimeSpan const& source ) const noexcept { return( m_NumberOfSeconds >= source.m_NumberOfSeconds ); }
 
-      __checkReturn std::wstring Format( _In_z_ const wchar_t * format_string ) const noexcept;
+      __checkReturn std::wstring Format( _In_z_ wchar_t const * format_string ) const noexcept;
 };
 
 #endif // WFC_STL
@@ -97,45 +97,45 @@ class CTimeEx
 {
    protected:
 
-      time_t m_Time;
+       time_t m_Time{ 0 };
 
-      __checkReturn time_t m_Make_time_t( __in const struct tm * time_p ) noexcept;
+      __checkReturn time_t m_Make_time_t( __in struct tm const * time_p ) noexcept;
 
    public:
 
       // Construction
 
       CTimeEx();
-      CTimeEx( __in const CTimeEx&    source );
-      CTimeEx( __in const CTimeEx *   source );
-      CTimeEx( __in const time_t      source );
-      CTimeEx( __in const struct tm * source );
-      CTimeEx( __in const struct tm&  source );
-      CTimeEx( __in const int year, __in const int month, __in const int day, __in const int hour, __in const int minute, __in const int second, __in const int daylight_savings_time = -1 );
-      CTimeEx( __in const FILETIME& source );
-      CTimeEx( __in const FILETIME * source );
+      CTimeEx( __in CTimeEx const&    source );
+      CTimeEx( __in CTimeEx const *   source );
+      CTimeEx( __in time_t const     source );
+      CTimeEx( __in struct tm const * source );
+      CTimeEx( __in struct tm const&  source );
+      CTimeEx( __in int const year, __in int const month, __in int const day, __in int const hour, __in int const minute, __in int const second, __in int const daylight_savings_time = -1 );
+      CTimeEx( __in FILETIME const& source );
+      CTimeEx( __in FILETIME const * source );
      ~CTimeEx();
 
       // Methods
 
       static void GetCurrentTheTime( __out CTimeEx& source ) noexcept;
-      static void GreenwichMeanTime( __in const time_t * address_of_a_time_t, __out struct tm * address_of_a_tm_structure ) noexcept;
+      static void GreenwichMeanTime( __in time_t const * address_of_a_time_t, __out struct tm * address_of_a_tm_structure ) noexcept;
 
-      __checkReturn int Compare( __in const CTimeEx& source ) const noexcept;
-      void   Copy( __in const CTimeEx&    source ) noexcept;
-      void   Copy( __in const CTimeEx *   source ) noexcept;
-      void   Copy( __in const time_t      source ) noexcept;
-      void   Copy( __in const struct tm * source ) noexcept;
-      void   Copy( __in const struct tm&  source ) noexcept;
-      void   Copy( __in const FILETIME&   source ) noexcept;
-      void   Copy( __in const FILETIME *  source ) noexcept;
-      void   CopyModifiedJulianDate( __in const double source ) noexcept;
+      __checkReturn int Compare( __in CTimeEx const& source ) const noexcept;
+      void   Copy( __in CTimeEx const&    source ) noexcept;
+      void   Copy( __in CTimeEx const *   source ) noexcept;
+      void   Copy( __in time_t const     source ) noexcept;
+      void   Copy( __in struct tm const * source ) noexcept;
+      void   Copy( __in struct tm const&  source ) noexcept;
+      void   Copy( __in FILETIME const&   source ) noexcept;
+      void   Copy( __in FILETIME const *  source ) noexcept;
+      void   CopyModifiedJulianDate( __in double const source ) noexcept;
       void   CopyTo( __out time_t&    destination ) const noexcept;
       void   CopyTo( __out struct tm& destination ) const noexcept;
       void   CopyTo(__out std::wstring& iso_8601_date) const noexcept;
       void   Empty( void ) noexcept;
       void   FileNameFormat(_Out_ std::wstring& out_string) const noexcept;
-      __checkReturn std::wstring Format( _In_z_ const wchar_t * format_string ) const noexcept; // same as strftime
+      __checkReturn std::wstring Format( _In_z_ wchar_t const * format_string ) const noexcept; // same as strftime
       __checkReturn int    GetDay( void ) const noexcept;
       __checkReturn int    GetDayOfWeek( void ) const noexcept;
       __checkReturn int    GetDayOfYear( void ) const noexcept;
@@ -148,17 +148,17 @@ class CTimeEx
       __checkReturn time_t GetTotalSeconds( void ) const noexcept;
       __checkReturn int    GetYear( void ) const noexcept;
 
-      inline void AddSeconds( __in const time_t seconds )
+      inline constexpr void AddSeconds( __in time_t const seconds ) noexcept
       {
           m_Time += seconds;
       }
 
-      inline void SubtractSeconds( __in const time_t seconds )
+      inline constexpr void SubtractSeconds( __in time_t const seconds ) noexcept
       {
           m_Time -= seconds;
       }
 
-      inline __checkReturn bool IsAfter( __in const CTimeEx when ) const
+      inline __checkReturn bool IsAfter( __in CTimeEx const& when ) const noexcept
       {
           if ( Compare( when ) > 0 )
           {
@@ -168,7 +168,7 @@ class CTimeEx
           return( false );
       }
 
-      inline __checkReturn bool IsBefore( __in const CTimeEx when ) const
+      inline __checkReturn bool IsBefore( __in CTimeEx const& when ) const noexcept
       {
           if ( Compare( when ) < 0 )
           {
@@ -178,27 +178,27 @@ class CTimeEx
           return( false );
       }
 
-      void Now( void );
+      void Now( void ) noexcept;
       void Set( __in const std::wstring& iso_8601_date ) noexcept;
       void Set( __in int year, __in int month, __in int day, __in int hour, __in int minute, __in int second, __in int daylight_savings_time = -1 ) noexcept;
 
       // Operators
 
-      inline __checkReturn                 operator time_t     ( void                     )      const noexcept { return( m_Time ); };
-      inline __checkReturn       CTimeEx&  operator =          ( __in const CTimeEx&    source )       noexcept { Copy( source ); return( *this ); };
-      inline __checkReturn       CTimeEx&  operator =          ( __in const time_t      source )       noexcept { Copy( source ); return( *this ); };
-      inline __checkReturn       CTimeEx&  operator =          ( __in const struct tm&  source )       noexcept { Copy( source ); return( *this ); };
-      inline __checkReturn       bool      operator ==         ( __in const CTimeEx&    source ) const noexcept { return( ( Compare( source ) == 0   ) ? TRUE  : FALSE ); };
-      inline __checkReturn       bool      operator !=         ( __in const CTimeEx&    source ) const noexcept { return( ( Compare( source ) == 0   ) ? FALSE : TRUE  ); };
-      inline __checkReturn       bool      operator >=         ( __in const CTimeEx&    source ) const noexcept { return( ( Compare( source ) > (-1) ) ? TRUE  : FALSE ); };
-      inline __checkReturn       bool      operator <=         ( __in const CTimeEx&    source ) const noexcept { return( ( Compare( source ) < 1    ) ? TRUE  : FALSE ); };
-      inline __checkReturn       bool      operator >          ( __in const CTimeEx&    source ) const noexcept { return( ( Compare( source ) > 0    ) ? TRUE  : FALSE ); };
-      inline __checkReturn       bool      operator <          ( __in const CTimeEx&    source ) const noexcept { return( ( Compare( source ) < 0    ) ? TRUE  : FALSE ); };
-      inline __checkReturn       CTimeSpan operator -          ( __in const CTimeEx&    source ) const noexcept { return( CTimeSpan( (unsigned long) ( m_Time - source.m_Time ) ) ); };
-      inline __checkReturn       CTimeEx   operator -          ( __in const CTimeSpan&  source ) const noexcept { return( CTimeEx( m_Time - source.GetTotalSeconds() ) ); };
-      inline __checkReturn       CTimeEx   operator +          ( __in const CTimeSpan&  source ) const noexcept { return( CTimeEx( m_Time + source.GetTotalSeconds() ) ); };
-      inline __checkReturn const CTimeEx&  operator +=         ( __in const CTimeSpan&  source )       noexcept { m_Time += source.GetTotalSeconds(); return( *this ); };
-      inline __checkReturn const CTimeEx&  operator -=         ( __in const CTimeSpan&  source )       noexcept { m_Time -= source.GetTotalSeconds(); return( *this ); };
+      inline constexpr __checkReturn                 operator time_t     ( void                     )      const noexcept { return( m_Time ); };
+      inline __checkReturn       CTimeEx&  operator =          ( __in CTimeEx const&    source )       noexcept { Copy( source ); return( *this ); };
+      inline __checkReturn       CTimeEx&  operator =          ( __in time_t const     source )       noexcept { Copy( source ); return( *this ); };
+      inline __checkReturn       CTimeEx&  operator =          ( __in struct tm const&  source )       noexcept { Copy( source ); return( *this ); };
+      inline __checkReturn       bool      operator ==         ( __in CTimeEx const&    source ) const noexcept { return( ( Compare( source ) == 0   ) ? TRUE  : FALSE ); };
+      inline __checkReturn       bool      operator !=         ( __in CTimeEx const&    source ) const noexcept { return( ( Compare( source ) == 0   ) ? FALSE : TRUE  ); };
+      inline __checkReturn       bool      operator >=         ( __in CTimeEx const&    source ) const noexcept { return( ( Compare( source ) > (-1) ) ? TRUE  : FALSE ); };
+      inline __checkReturn       bool      operator <=         ( __in CTimeEx const&    source ) const noexcept { return( ( Compare( source ) < 1    ) ? TRUE  : FALSE ); };
+      inline __checkReturn       bool      operator >          ( __in CTimeEx const&    source ) const noexcept { return( ( Compare( source ) > 0    ) ? TRUE  : FALSE ); };
+      inline __checkReturn       bool      operator <          ( __in CTimeEx const&    source ) const noexcept { return( ( Compare( source ) < 0    ) ? TRUE  : FALSE ); };
+      inline __checkReturn       CTimeSpan operator -          ( __in CTimeEx const&    source ) const noexcept { return( CTimeSpan( (unsigned long) ( m_Time - source.m_Time ) ) ); };
+      inline __checkReturn       CTimeEx   operator -          ( __in CTimeSpan const&  source ) const noexcept { return( CTimeEx( m_Time - source.GetTotalSeconds() ) ); };
+      inline __checkReturn       CTimeEx   operator +          ( __in CTimeSpan const&  source ) const noexcept { return( CTimeEx( m_Time + source.GetTotalSeconds() ) ); };
+      inline __checkReturn CTimeEx const&  operator +=         ( __in CTimeSpan const&  source )       noexcept { m_Time += source.GetTotalSeconds(); return( *this ); };
+      inline __checkReturn CTimeEx const&  operator -=         ( __in CTimeSpan const&  source )       noexcept { m_Time -= source.GetTotalSeconds(); return( *this ); };
 };
 
 #if defined( WFC_STL )

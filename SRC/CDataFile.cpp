@@ -51,7 +51,7 @@ static char THIS_FILE[] = __FILE__;
 
 USING_WFC_NAMESPACE
 
-void CDataChunk::GetIdentifier( __in const uint32_t id, __out std::wstring& string ) noexcept
+void CDataChunk::GetIdentifier( __in uint32_t const id, __out std::wstring& string ) noexcept
 {
    string.clear();
 
@@ -133,19 +133,19 @@ CDataFile::~CDataFile()
    WFC_VALIDATE_POINTER( this );
 }
 
-__checkReturn bool CDataFile::AddData( __in const CDataChunk& data ) noexcept
+__checkReturn bool CDataFile::AddData( __in CDataChunk const& data ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    return( AddData( data.Identifier, data.Data ) );
 }
 
-__checkReturn bool CDataFile::AddData( __in const uint32_t identifier, __in const std::vector<uint8_t>& data ) noexcept
+__checkReturn bool CDataFile::AddData( __in uint32_t const identifier, __in std::vector<uint8_t> const& data ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    return( AddData( identifier, data.data(), data.size() ) );
 }
 
-__checkReturn bool CDataFile::AddData( __in const uint32_t identifier, __in_bcount( number_of_bytes ) const uint8_t * buffer_p, __in const size_t number_of_bytes ) noexcept
+__checkReturn bool CDataFile::AddData( __in uint32_t const identifier, __in_bcount( number_of_bytes ) uint8_t const * buffer_p, __in std::size_t const number_of_bytes ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 

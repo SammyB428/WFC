@@ -154,7 +154,7 @@ void CDataArchive::Read(__out std::vector<uint8_t>& array) noexcept
 
        array.resize(number_of_array_entries);
 
-       const uint8_t * buffer = (const uint8_t *)m_ReadFromDataChunk_p->Data.data();
+       auto buffer = m_ReadFromDataChunk_p->Data.data();
 
        ::memcpy(array.data(), &buffer[m_Position], number_of_array_entries);
 
@@ -199,7 +199,7 @@ void CDataArchive::Read(__out std::vector<uint32_t>& array) noexcept
 
        array.resize(number_of_array_entries);
 
-       const uint8_t * buffer = (const uint8_t *)m_ReadFromDataChunk_p->Data.data();
+       auto buffer = m_ReadFromDataChunk_p->Data.data();
 
        ::memcpy(array.data(), &buffer[m_Position], number_of_array_entries * sizeof(uint32_t));
 
@@ -340,7 +340,7 @@ void CDataArchive::Read(__out std::vector<uint16_t>& array) noexcept
 
        array.resize(number_of_array_entries);
 
-       const uint8_t * buffer = (const uint8_t *)m_ReadFromDataChunk_p->Data.data();
+       auto buffer = m_ReadFromDataChunk_p->Data.data();
 
        ::memcpy(array.data(), &buffer[m_Position], number_of_array_entries * sizeof(uint16_t));
 
@@ -370,7 +370,7 @@ void CDataArchive::Read(__out double& value) noexcept
 
     WFC_TRY
     {
-       const uint8_t * buffer = (const uint8_t *)m_ReadFromDataChunk_p->Data.data();
+       auto buffer = m_ReadFromDataChunk_p->Data.data();
 
        value = *((double *)&buffer[m_Position]);
        m_Position += sizeof(double);
@@ -399,7 +399,7 @@ void CDataArchive::Read(__out uint32_t& value) noexcept
 
     WFC_TRY
     {
-       const uint8_t * buffer = (const uint8_t *)m_ReadFromDataChunk_p->Data.data();
+       auto buffer = m_ReadFromDataChunk_p->Data.data();
 
        value = *((uint32_t *)&buffer[m_Position]);
 
@@ -429,7 +429,7 @@ void CDataArchive::Read(__out float& value) noexcept
 
     WFC_TRY
     {
-       const uint8_t * buffer = (const uint8_t *)m_ReadFromDataChunk_p->Data.data();
+       auto buffer = m_ReadFromDataChunk_p->Data.data();
 
        value = *((float *)&buffer[m_Position]);
        m_Position += sizeof(float);
@@ -458,7 +458,7 @@ void CDataArchive::Read( __out int32_t& value) noexcept
 
     WFC_TRY
     {
-       const uint8_t * buffer = (const uint8_t *)m_ReadFromDataChunk_p->Data.data();
+       auto buffer = m_ReadFromDataChunk_p->Data.data();
 
        value = *((int32_t *)&buffer[m_Position]);
        m_Position += sizeof(int32_t);
@@ -487,7 +487,7 @@ void CDataArchive::Read(__out uint64_t& value) noexcept
 
     WFC_TRY
     {
-       const uint8_t * buffer = (const uint8_t *)m_ReadFromDataChunk_p->Data.data();
+       auto buffer = m_ReadFromDataChunk_p->Data.data();
 
        value = *((uint64_t *)&buffer[m_Position]);
        m_Position += sizeof(uint64_t);
@@ -516,7 +516,7 @@ void CDataArchive::Read(__out uint16_t& value) noexcept
 
     WFC_TRY
     {
-       const uint8_t * buffer = (const uint8_t *)m_ReadFromDataChunk_p->Data.data();
+       auto buffer = m_ReadFromDataChunk_p->Data.data();
 
        value = *((uint16_t *)&buffer[m_Position]);
        m_Position += sizeof(uint16_t);
@@ -545,7 +545,7 @@ void CDataArchive::Read(__out wchar_t& value) noexcept
 
     WFC_TRY
     {
-       const uint8_t * buffer = (const uint8_t *)m_ReadFromDataChunk_p->Data.data();
+       auto buffer = m_ReadFromDataChunk_p->Data.data();
 
        value = *((wchar_t *)&buffer[m_Position]);
        m_Position += sizeof(wchar_t);
@@ -557,7 +557,7 @@ void CDataArchive::Read(__out wchar_t& value) noexcept
         WFC_END_CATCH_ALL
 }
 
-void CDataArchive::ReadFrom(__in const CDataChunk * chunk_p) noexcept
+void CDataArchive::ReadFrom(__in CDataChunk const * chunk_p) noexcept
 {
     WFC_VALIDATE_POINTER(this);
 
@@ -567,7 +567,7 @@ void CDataArchive::ReadFrom(__in const CDataChunk * chunk_p) noexcept
     m_Position = 0;
 }
 
-void CDataArchive::Write( __in const uint8_t value) noexcept
+void CDataArchive::Write( __in uint8_t const value) noexcept
 {
     WFC_VALIDATE_POINTER(this);
 
@@ -871,7 +871,7 @@ void CDataArchive::Write(__in const int32_t value) noexcept
         WFC_END_CATCH_ALL
 }
 
-void CDataArchive::Write(__in const uint64_t value) noexcept
+void CDataArchive::Write(__in uint64_t const value) noexcept
 {
     WFC_VALIDATE_POINTER(this);
 
@@ -901,7 +901,7 @@ void CDataArchive::Write(__in const uint64_t value) noexcept
         WFC_END_CATCH_ALL
 }
 
-void CDataArchive::Write(__in const uint16_t value) noexcept
+void CDataArchive::Write(__in uint16_t const value) noexcept
 {
     WFC_VALIDATE_POINTER(this);
 

@@ -244,7 +244,7 @@ class CRegistry
       virtual __checkReturn bool SetValue( __in_z wchar_t const * name_of_value, __in const std::vector<std::wstring>& strings_to_write ) noexcept;
       virtual __checkReturn bool SetValue( __in_z wchar_t const * name_of_value, __in const std::wstring& string_to_write ) noexcept;
 
-      virtual __checkReturn bool SetValue( __in_z const wchar_t const *             name_of_subkey,
+      virtual __checkReturn bool SetValue( __in_z wchar_t const *             name_of_subkey,
                              __in KeyValueTypes const type_of_value_to_set,
                              __in_bcount_opt( size_of_data ) uint8_t const * address_of_value_data,
                              __in std::size_t const       size_of_data ) noexcept;

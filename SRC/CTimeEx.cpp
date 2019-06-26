@@ -429,7 +429,7 @@ void CTimeEx::GetCurrentTheTime( __out CTimeEx& source ) noexcept
    source.Copy( &time_structure );
 }
 
-void CTimeEx::Now( void )
+void CTimeEx::Now( void ) noexcept
 {
    struct tm time_structure;
 

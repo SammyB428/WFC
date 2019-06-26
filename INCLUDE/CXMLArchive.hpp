@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 1995-2017, Samuel R. Blackburn
+** Copyright, 1995-2019, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -60,61 +60,61 @@ class CXMLArchive
 
    public:
 
-       CXMLArchive(_In_ const CXMLArchive&) = delete;
-       _Check_return_ CXMLArchive& operator=(_In_ const CXMLArchive&) = delete;
+       CXMLArchive(_In_ CXMLArchive const&) = delete;
+       _Check_return_ CXMLArchive& operator=(_In_ CXMLArchive const&) = delete;
  
        CXMLArchive();
       virtual ~CXMLArchive();
 
-      virtual void SetAddNewLineAfterEachElement( __in const bool add_new_line = true ) noexcept;
+      virtual void SetAddNewLineAfterEachElement( __in bool const add_new_line = true ) noexcept;
       virtual __checkReturn bool GetAddNewLineAfterEachElement( void ) const noexcept;
       virtual __checkReturn bool IsLoading( void ) const noexcept;
       virtual __checkReturn bool IsStoring( void ) const noexcept;
       virtual __checkReturn CExtensibleMarkupLanguageElement * GetElement( void ) const noexcept;
 
-      virtual __checkReturn CExtensibleMarkupLanguageElement * Read( _In_z_ const wchar_t * tag, __out bool&             value ) noexcept;
-      virtual __checkReturn CExtensibleMarkupLanguageElement * Read(_In_z_ const wchar_t * tag, __out std::vector<uint8_t>& value ) noexcept;
-      virtual __checkReturn CExtensibleMarkupLanguageElement * Read(_In_z_ const wchar_t * tag, __out std::vector<uint32_t>& value ) noexcept;
-      virtual __checkReturn CExtensibleMarkupLanguageElement * Read(_In_z_ const wchar_t * tag, __out CFileTime&        value ) noexcept;
+      virtual __checkReturn CExtensibleMarkupLanguageElement * Read(_In_z_ wchar_t const * tag, __out bool&             value ) noexcept;
+      virtual __checkReturn CExtensibleMarkupLanguageElement * Read(_In_z_ wchar_t const * tag, __out std::vector<uint8_t>& value ) noexcept;
+      virtual __checkReturn CExtensibleMarkupLanguageElement * Read(_In_z_ wchar_t const * tag, __out std::vector<uint32_t>& value ) noexcept;
+      virtual __checkReturn CExtensibleMarkupLanguageElement * Read(_In_z_ wchar_t const * tag, __out CFileTime&        value ) noexcept;
 
 #if ! defined( WFC_STL )
-      virtual __checkReturn CExtensibleMarkupLanguageElement * Read(_In_z_ const wchar_t * tag, __out COleDateTime&     value ) noexcept;
-      virtual __checkReturn CExtensibleMarkupLanguageElement * Read(_In_z_ const wchar_t * tag, __out COleDateTimeSpan& value ) noexcept;
+      virtual __checkReturn CExtensibleMarkupLanguageElement * Read(_In_z_ wchar_t const * tag, __out COleDateTime&     value ) noexcept;
+      virtual __checkReturn CExtensibleMarkupLanguageElement * Read(_In_z_ wchar_t const * tag, __out COleDateTimeSpan& value ) noexcept;
 #endif // WFC_STL
 
-      virtual __checkReturn CExtensibleMarkupLanguageElement * Read(_In_z_ const wchar_t * tag, __out std::wstring&          value ) noexcept;
-      virtual __checkReturn CExtensibleMarkupLanguageElement * Read(_In_z_ const wchar_t * tag, __out std::vector<std::wstring>& value ) noexcept;
-      virtual __checkReturn CExtensibleMarkupLanguageElement * Read(_In_z_ const wchar_t * tag, __out CSystemTime&      value ) noexcept;
-      virtual __checkReturn CExtensibleMarkupLanguageElement * Read(_In_z_ const wchar_t * tag, __out CTime&            value ) noexcept;
-      virtual __checkReturn CExtensibleMarkupLanguageElement * Read(_In_z_ const wchar_t * tag, __out CTimeSpan&        value ) noexcept;
-      virtual __checkReturn CExtensibleMarkupLanguageElement * Read(_In_z_ const wchar_t * tag, __out double&           value ) noexcept;
-      virtual __checkReturn CExtensibleMarkupLanguageElement * Read(_In_z_ const wchar_t * tag, __out uint32_t&         value ) noexcept;
-      virtual __checkReturn CExtensibleMarkupLanguageElement * Read(_In_z_ const wchar_t * tag, __out int64_t&          value ) noexcept;
-      virtual __checkReturn CExtensibleMarkupLanguageElement * Read(_In_z_ const wchar_t * tag, __out uint64_t&         value ) noexcept;
+      virtual __checkReturn CExtensibleMarkupLanguageElement * Read(_In_z_ wchar_t const * tag, __out std::wstring&          value ) noexcept;
+      virtual __checkReturn CExtensibleMarkupLanguageElement * Read(_In_z_ wchar_t const * tag, __out std::vector<std::wstring>& value ) noexcept;
+      virtual __checkReturn CExtensibleMarkupLanguageElement * Read(_In_z_ wchar_t const * tag, __out CSystemTime&      value ) noexcept;
+      virtual __checkReturn CExtensibleMarkupLanguageElement * Read(_In_z_ wchar_t const * tag, __out CTime&            value ) noexcept;
+      virtual __checkReturn CExtensibleMarkupLanguageElement * Read(_In_z_ wchar_t const * tag, __out CTimeSpan&        value ) noexcept;
+      virtual __checkReturn CExtensibleMarkupLanguageElement * Read(_In_z_ wchar_t const * tag, __out double&           value ) noexcept;
+      virtual __checkReturn CExtensibleMarkupLanguageElement * Read(_In_z_ wchar_t const * tag, __out uint32_t&         value ) noexcept;
+      virtual __checkReturn CExtensibleMarkupLanguageElement * Read(_In_z_ wchar_t const * tag, __out int64_t&          value ) noexcept;
+      virtual __checkReturn CExtensibleMarkupLanguageElement * Read(_In_z_ wchar_t const * tag, __out uint64_t&         value ) noexcept;
 
       virtual void ReadFrom( __inout CExtensibleMarkupLanguageElement * element_p ) noexcept;
 
-      virtual __checkReturn bool SerializeObject( _In_z_ const wchar_t * tag, __inout void * object_p, __callback XML_ARCHIVE_SERIALIZE_OBJECT write_function ) noexcept;
+      virtual __checkReturn bool SerializeObject( _In_z_ wchar_t const * tag, __inout void * object_p, __callback XML_ARCHIVE_SERIALIZE_OBJECT write_function ) noexcept;
 
-      virtual __checkReturn CExtensibleMarkupLanguageElement * Write(_In_z_ const wchar_t * tag, __in const bool              value ) noexcept;
-      virtual __checkReturn CExtensibleMarkupLanguageElement * Write(_In_z_ const wchar_t * tag, __in const std::vector<uint8_t>& value ) noexcept;
-      virtual __checkReturn CExtensibleMarkupLanguageElement * Write(_In_z_ const wchar_t * tag, __in const std::vector<uint32_t>& value ) noexcept;
-      virtual __checkReturn CExtensibleMarkupLanguageElement * Write(_In_z_ const wchar_t * tag, __in const CFileTime&        value ) noexcept;
+      virtual __checkReturn CExtensibleMarkupLanguageElement * Write(_In_z_ wchar_t const * tag, __in bool const             value ) noexcept;
+      virtual __checkReturn CExtensibleMarkupLanguageElement * Write(_In_z_ wchar_t const * tag, __in std::vector<uint8_t> const& value ) noexcept;
+      virtual __checkReturn CExtensibleMarkupLanguageElement * Write(_In_z_ wchar_t const * tag, __in std::vector<uint32_t> const& value ) noexcept;
+      virtual __checkReturn CExtensibleMarkupLanguageElement * Write(_In_z_ wchar_t const * tag, __in CFileTime const&        value ) noexcept;
 
 #if ! defined( WFC_STL )      
-      virtual __checkReturn CExtensibleMarkupLanguageElement * Write(_In_z_ const wchar_t * tag, __in const COleDateTime&     value, BOOL value_is_UTC_time = FALSE ) noexcept;
-      virtual __checkReturn CExtensibleMarkupLanguageElement * Write(_In_z_ const wchar_t * tag, __in const COleDateTimeSpan& value ) noexcept;
+      virtual __checkReturn CExtensibleMarkupLanguageElement * Write(_In_z_ wchar_t const * tag, __in COleDateTime const&     value, BOOL value_is_UTC_time = FALSE ) noexcept;
+      virtual __checkReturn CExtensibleMarkupLanguageElement * Write(_In_z_ wchar_t const * tag, __in COleDateTimeSpan const& value ) noexcept;
 #endif // WFC_STL
 
-      virtual __checkReturn CExtensibleMarkupLanguageElement * Write( _In_z_ const wchar_t * tag, __in const std::wstring&          value ) noexcept;
-      virtual __checkReturn CExtensibleMarkupLanguageElement * Write(_In_z_ const wchar_t * tag, __in const std::vector<std::wstring>& value ) noexcept;
-      virtual __checkReturn CExtensibleMarkupLanguageElement * Write(_In_z_ const wchar_t * tag, __in const CSystemTime&      value ) noexcept;
-      virtual __checkReturn CExtensibleMarkupLanguageElement * Write(_In_z_ const wchar_t * tag, __in const CTime&            value, __in const bool value_is_UTC_time = false ) noexcept;
-      virtual __checkReturn CExtensibleMarkupLanguageElement * Write(_In_z_ const wchar_t * tag, __in const CTimeSpan&        value ) noexcept;
-      virtual __checkReturn CExtensibleMarkupLanguageElement * Write(_In_z_ const wchar_t * tag, __in double                  value ) noexcept;
-      virtual __checkReturn CExtensibleMarkupLanguageElement * Write(_In_z_ const wchar_t * tag, __in const uint32_t          value ) noexcept;
-      virtual __checkReturn CExtensibleMarkupLanguageElement * Write(_In_z_ const wchar_t * tag, __in const int64_t           value ) noexcept;
-      virtual __checkReturn CExtensibleMarkupLanguageElement * Write(_In_z_ const wchar_t * tag, __in const uint64_t          value ) noexcept;
+      virtual __checkReturn CExtensibleMarkupLanguageElement * Write(_In_z_ wchar_t const * tag, __in std::wstring const&          value ) noexcept;
+      virtual __checkReturn CExtensibleMarkupLanguageElement * Write(_In_z_ wchar_t const * tag, __in std::vector<std::wstring> const& value ) noexcept;
+      virtual __checkReturn CExtensibleMarkupLanguageElement * Write(_In_z_ wchar_t const * tag, __in CSystemTime const&      value ) noexcept;
+      virtual __checkReturn CExtensibleMarkupLanguageElement * Write(_In_z_ wchar_t const * tag, __in CTime const&            value, __in bool const value_is_UTC_time = false ) noexcept;
+      virtual __checkReturn CExtensibleMarkupLanguageElement * Write(_In_z_ wchar_t const * tag, __in CTimeSpan const&        value ) noexcept;
+      virtual __checkReturn CExtensibleMarkupLanguageElement * Write(_In_z_ wchar_t const * tag, __in double const            value ) noexcept;
+      virtual __checkReturn CExtensibleMarkupLanguageElement * Write(_In_z_ wchar_t const * tag, __in uint32_t const         value ) noexcept;
+      virtual __checkReturn CExtensibleMarkupLanguageElement * Write(_In_z_ wchar_t const * tag, __in int64_t const          value ) noexcept;
+      virtual __checkReturn CExtensibleMarkupLanguageElement * Write(_In_z_ wchar_t const * tag, __in uint64_t const         value ) noexcept;
 
       virtual void WriteTo( __inout CExtensibleMarkupLanguageElement * element_p ) noexcept;
 };

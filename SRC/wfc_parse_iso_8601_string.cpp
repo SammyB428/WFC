@@ -646,9 +646,9 @@ __checkReturn bool PASCAL Win32FoundationClasses::wfc_parse_iso_8601_string( _In
         return(true);
     }
 
-    const double ticks = static_cast<double>(CFileTime::NumberOfFiletimeTicksInOneSecond) * fraction;
+    double const ticks = static_cast<double>(CFileTime::NumberOfFiletimeTicksInOneSecond) * fraction;
 
-    const uint32_t number_of_ticks = static_cast<uint32_t>(ticks);
+    uint32_t const number_of_ticks = static_cast<uint32_t>(ticks);
 
     if (ticks > 0)
     {
@@ -831,7 +831,7 @@ __checkReturn bool PASCAL Win32FoundationClasses::wfc_parse_xml( __in_z LPCTSTR 
         return( false );
     }
 
-    const uint8_t * pointer = (const uint8_t *) memory_mapped_file.GetPointer();
+    auto pointer = reinterpret_cast<uint8_t const *>(memory_mapped_file.GetPointer());
 
     CDataParser parser;
 

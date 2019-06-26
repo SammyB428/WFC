@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 1995-2017, Samuel R. Blackburn
+** Copyright, 1995-2019, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -435,8 +435,8 @@ namespace Win32FoundationClasses
                 {
                     // Only append a finite number of characters...
 
-                    size_t loop_index   = 0;
-                    size_t string_index = 0;
+                    std::size_t loop_index   = 0;
+                    std::size_t string_index = 0;
 
                     if ( beginning_at > 0 )
                     {
@@ -531,7 +531,7 @@ namespace Win32FoundationClasses
                 {
                     // Only append a finite number of characters...
 
-                    size_t loop_index = 0;
+                    std::size_t loop_index = 0;
 
                     while( (SSIZE_T) loop_index < number_of_characters )
                     {
@@ -556,7 +556,7 @@ namespace Win32FoundationClasses
                     return;
                 }
 
-                size_t number_of_characters_to_copy = 0;
+                std::size_t number_of_characters_to_copy = 0;
 
                 if ( number_of_characters == (-1) )
                 {
@@ -1621,16 +1621,16 @@ namespace Win32FoundationClasses
 
     class CWideString;
 
-    _Check_return_ int64_t find_byte( _In_ const uint8_t byte_value, _In_reads_bytes_( buffer_size ) const uint8_t * __restrict buffer, _In_ const int64_t buffer_size ) noexcept;
+    _Check_return_ int64_t find_byte( _In_ uint8_t const byte_value, _In_reads_bytes_( buffer_size ) uint8_t const * __restrict buffer, _In_ int64_t const buffer_size ) noexcept;
 
-    inline _Check_return_ int64_t find_in_memory(_In_reads_bytes_( buffer_size ) const uint8_t * __restrict buffer, _In_ const int64_t buffer_size, _In_reads_bytes_( pattern_size ) const uint8_t * __restrict pattern, _In_ const int64_t pattern_size ) noexcept
+    inline _Check_return_ int64_t find_in_memory(_In_reads_bytes_( buffer_size ) uint8_t const * __restrict buffer, _In_ int64_t const buffer_size, _In_reads_bytes_( pattern_size ) uint8_t const * __restrict pattern, _In_ int64_t const pattern_size ) noexcept
     {
         if ( buffer == nullptr || buffer_size < 1 || pattern == nullptr || pattern_size < 1 || pattern_size > buffer_size )
         {
             return( BYTES_NOT_FOUND );
         }
 
-        const uint8_t first_byte = pattern[ 0 ];
+        uint8_t const first_byte = pattern[ 0 ];
 
         int64_t buffer_index = 0;
         int64_t found_at = 0;
@@ -1681,7 +1681,7 @@ namespace Win32FoundationClasses
         return( BYTES_NOT_FOUND );
     }
 
-    inline void find_all_in_memory(_In_reads_bytes_(buffer_size) const uint8_t * __restrict buffer, _In_ const int64_t buffer_size, _In_reads_bytes_(pattern_size) const uint8_t * __restrict pattern, _In_ const int64_t pattern_size, std::vector<uint64_t>& results) noexcept
+    inline void find_all_in_memory(_In_reads_bytes_(buffer_size) uint8_t const * __restrict buffer, _In_ const int64_t buffer_size, _In_reads_bytes_(pattern_size) uint8_t const * __restrict pattern, _In_ int64_t const pattern_size, std::vector<uint64_t>& results) noexcept
     {
         results.clear();
 
@@ -1709,18 +1709,18 @@ namespace Win32FoundationClasses
         }
     }
 
-    inline _Check_return_ bool is_all_space( _In_ const std::vector<uint8_t> s ) noexcept
+    inline _Check_return_ bool is_all_space( _In_ std::vector<uint8_t> const& s ) noexcept
     {
-        const std::size_t number_of_characters = s.size();
+        std::size_t const number_of_characters = s.size();
 
         if (number_of_characters == 0)
         {
             return(false);
         }
 
-        const uint8_t * buffer = s.data();
+        auto buffer = s.data();
 
-        size_t here = 0;
+        std::size_t here = 0;
 
         char character_to_test = 0;
 

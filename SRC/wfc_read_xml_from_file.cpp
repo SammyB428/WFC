@@ -61,7 +61,7 @@ _Check_return_ bool PASCAL Win32FoundationClasses::wfc_read_xml_from_file( _In_z
     {
         CDataParser parser;
 
-        if ( parser.Initialize(static_cast<const uint8_t *>(memory_mapped_file.GetPointer()), memory_mapped_file.Size ) == false )
+        if ( parser.Initialize(static_cast<uint8_t const *>(memory_mapped_file.GetPointer()), memory_mapped_file.Size ) == false )
         {
             return( false );
         }

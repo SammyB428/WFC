@@ -71,15 +71,15 @@ static inline void append_buffer( __in_bcount( number_of_bytes ) const uint8_t *
    CopyMemory( &buffer[ current_length ], buffer_parameter, number_of_bytes );
 }
 
-static inline void append_string( __in_z const char * string_p, __inout std::vector<uint8_t>& bytes )
+static inline void append_string( __in_z char const * string_p, __inout std::vector<uint8_t>& bytes ) noexcept
 {
    WFC_VALIDATE_POINTER( string_p );
-   const std::size_t string_length = strlen( string_p );
+   std::size_t const string_length = strlen( string_p );
 
-   append_buffer( (const uint8_t *) string_p, string_length, bytes );
+   append_buffer( reinterpret_cast<uint8_t const *>(string_p), string_length, bytes );
 }
 
-static inline void append_item( __in WFC_WEB_POST_DATA_P item, __in_z const char * boundary, __inout std::vector<uint8_t>& bytes )
+static inline void append_item( __in WFC_WEB_POST_DATA_P item, __in_z char const * boundary, __inout std::vector<uint8_t>& bytes )
 {
    WFC_VALIDATE_POINTER( item );
    WFC_VALIDATE_POINTER( item->variable_name );

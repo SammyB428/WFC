@@ -285,10 +285,10 @@ class CSystemTime : public _SYSTEMTIME
          }
       }
 
-      void Copy( __in const TIME_OF_DAY_INFO const * source ) noexcept;
-      void Copy( __in const TIME_OF_DAY_INFO const&  source ) noexcept;
-      void Copy( __in const TIMESTAMP_STRUCT const * source ) noexcept; // from sqltypes.h
-      void Copy( __in const TIMESTAMP_STRUCT const&  source ) noexcept; // from sqltypes.h
+      void Copy( __in TIME_OF_DAY_INFO const * source ) noexcept;
+      void Copy( __in TIME_OF_DAY_INFO const&  source ) noexcept;
+      void Copy( __in TIMESTAMP_STRUCT const * source ) noexcept; // from sqltypes.h
+      void Copy( __in TIMESTAMP_STRUCT const&  source ) noexcept; // from sqltypes.h
 
 #if ! defined( WFC_STL )
       virtual void CopyTo( COleDateTime&      destination ) const noexcept;

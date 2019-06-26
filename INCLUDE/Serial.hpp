@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 1995-2016, Samuel R. Blackburn
+** Copyright, 1995-2019, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -116,7 +116,7 @@ class CSerialFile : public CDummyFile
 
       std::wstring Name; // COM1:9600,n,8,1
 
-      HANDLE FileHandle;
+      HANDLE FileHandle{ INVALID_HANDLE_VALUE };
 
       virtual __checkReturn BOOL  Attach( __in HANDLE new_handle, __out_opt HANDLE * old_handle ) noexcept;
       virtual __checkReturn BOOL  CancelWaitFor( void ) noexcept;
@@ -137,30 +137,30 @@ class CSerialFile : public CDummyFile
       virtual __checkReturn DWORD NumberOfBytesWaitingToBeRead( void ) noexcept;
       virtual __checkReturn DWORD NumberOfBytesWaitingToBeWritten( void ) noexcept;
       virtual __checkReturn bool  Open( void ) noexcept; // Name already filled, used in re-opening an existing session
-      __checkReturn bool  Open( __in_z LPCTSTR channel_name, __in const UINT open_flags = 0 ) noexcept override;
+      __checkReturn bool  Open( __in_z LPCTSTR channel_name, __in UINT const open_flags = 0 ) noexcept override;
 
-      virtual __checkReturn BOOL  Purge( __in const DWORD what_to_purge = purgeAll ) noexcept;
+      virtual __checkReturn BOOL  Purge( __in DWORD const what_to_purge = purgeAll ) noexcept;
       virtual __checkReturn UINT  Read( __out_bcount( length ) void * buffer, __in const UINT length ) noexcept;
-      virtual void ReplaceGarbledCharacter( __in const bool yes_or_no = TRUE, __in const BYTE character_to_replace_the_garbled_one_with = ' ' ) noexcept;
+      virtual void ReplaceGarbledCharacter( __in bool const yes_or_no = TRUE, __in const BYTE character_to_replace_the_garbled_one_with = ' ' ) noexcept;
 
-      virtual __checkReturn bool  SetBaudRate( __in const uint32_t baud_rate ) noexcept;
+      virtual __checkReturn bool  SetBaudRate( __in uint32_t const baud_rate ) noexcept;
       virtual __checkReturn BOOL  SetBreak( void ) noexcept;
-      virtual __checkReturn BOOL  SetCharacterToWaitFor( __in const BYTE character_to_wait_for ) noexcept;
-      virtual __checkReturn BOOL  SetDataTerminalReady( __in const BOOL set_DTR_on = TRUE ) noexcept;
-      virtual void  SetFlowControl( __in const DWORD flow_control ) noexcept;
-      virtual void  SetInputBufferSize( __in const DWORD buffer_size ) noexcept;
-      virtual void  SetOutputBufferSize( __in const DWORD buffer_size ) noexcept;
-      virtual __checkReturn BOOL  SetPurgeBufferOnError( __in const BOOL purge_buffer = TRUE ) noexcept;
-      virtual __checkReturn BOOL  SetRequestToSend( __in const BOOL set_RTS_on = TRUE ) noexcept;
+      virtual __checkReturn BOOL  SetCharacterToWaitFor( __in BYTE const character_to_wait_for ) noexcept;
+      virtual __checkReturn BOOL  SetDataTerminalReady( __in BOOL const set_DTR_on = TRUE ) noexcept;
+      virtual void  SetFlowControl( __in DWORD const flow_control ) noexcept;
+      virtual void  SetInputBufferSize( __in DWORD const buffer_size ) noexcept;
+      virtual void  SetOutputBufferSize( __in DWORD const buffer_size ) noexcept;
+      virtual __checkReturn BOOL  SetPurgeBufferOnError( __in BOOL const purge_buffer = TRUE ) noexcept;
+      virtual __checkReturn BOOL  SetRequestToSend( __in BOOL const set_RTS_on = TRUE ) noexcept;
       virtual __checkReturn BOOL  SetState( __inout CDeviceControlBlock& device_control_block ) noexcept;
-      virtual __checkReturn BOOL  SetTimeouts( __in_opt const COMMTIMEOUTS * timeouts_p = nullptr ) noexcept;
-      virtual __checkReturn BOOL  TransmitCharacter( __in const char character_to_transmit ) noexcept;
+      virtual __checkReturn BOOL  SetTimeouts( __in_opt COMMTIMEOUTS const * timeouts_p = nullptr ) noexcept;
+      virtual __checkReturn BOOL  TransmitCharacter( __in char const character_to_transmit ) noexcept;
       virtual __checkReturn BOOL  WaitFor( __inout DWORD& stuff_you_can_wait_for ) noexcept;
-      virtual __checkReturn bool  WaitForString( __in const std::string& string_to_wait_for, __in const DWORD seconds = 5, __inout_opt std::string * what_was_read = nullptr ) noexcept;
-      void  Write( __in const std::vector<uint8_t>& bytes ) noexcept override;
-      void  Write( __in const std::string& data_to_write ) noexcept override;
-      void  Write( __in_bcount( number_of_bytes ) const void *buffer, __in const UINT number_of_bytes ) noexcept override;
-      virtual void  Write( __in const BYTE byte_to_write ) noexcept;
+      virtual __checkReturn bool  WaitForString( __in std::string const& string_to_wait_for, __in const DWORD seconds = 5, __inout_opt std::string * what_was_read = nullptr ) noexcept;
+      void  Write( __in std::vector<uint8_t> const& bytes ) noexcept override;
+      void  Write( __in std::string const& data_to_write ) noexcept override;
+      void  Write( __in_bcount( number_of_bytes ) void const * buffer, __in UINT const number_of_bytes ) noexcept override;
+      virtual void  Write( __in BYTE const byte_to_write ) noexcept;
 
 #if defined( _DEBUG ) && ! defined( WFC_NO_DUMPING )
 

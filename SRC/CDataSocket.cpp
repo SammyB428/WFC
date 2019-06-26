@@ -77,7 +77,7 @@ void CDataSocket::Attach(__inout CSimpleSocket * socket_p ) noexcept
    m_Socket_p = socket_p;
 }
 
-__checkReturn uint32_t CDataSocket::Read(__out_bcount(size_of_buffer) void * buffer, __in const uint32_t size_of_buffer ) noexcept
+__checkReturn uint32_t CDataSocket::Read(__out_bcount(size_of_buffer) void * buffer, __in uint32_t const size_of_buffer ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( m_Socket_p );
@@ -140,13 +140,13 @@ __checkReturn uint32_t CDataSocket::Read(__out_bcount(size_of_buffer) void * buf
    WFC_END_CATCH_ALL
 }
 
-_Check_return_ uint64_t CDataSocket::Seek( _In_ const int64_t, _In_ const CFile64::SeekPosition) noexcept
+_Check_return_ uint64_t CDataSocket::Seek( _In_ const int64_t, _In_ CFile64::SeekPosition const) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    return( 0 );
 }
 
-void CDataSocket::Write(__in_bcount(number_of_bytes_to_write) const void * buffer, __in const uint32_t number_of_bytes_to_write) noexcept
+void CDataSocket::Write(__in_bcount(number_of_bytes_to_write) const void * buffer, __in uint32_t const number_of_bytes_to_write) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 

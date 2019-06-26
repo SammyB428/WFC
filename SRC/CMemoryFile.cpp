@@ -207,7 +207,7 @@ _Check_return_ bool CMemoryFile::Flush( void ) noexcept
     return( true );
 }
 
-_Check_return_ bool CMemoryFile::FromHandle( _In_ const HANDLE file_handle, _In_ const UINT open_flags, _In_ const uint64_t beginning_at_offset, _In_ const size_t number_of_bytes_to_map, _In_opt_ const void * desired_address ) noexcept
+_Check_return_ bool CMemoryFile::FromHandle( _In_ HANDLE const file_handle, _In_ UINT const open_flags, _In_ uint64_t const beginning_at_offset, _In_ std::size_t const number_of_bytes_to_map, _In_opt_ void const * desired_address ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
 
@@ -273,7 +273,7 @@ void CMemoryFile::m_Initialize( void ) noexcept
         m_SecurityAttributes_p->bInheritHandle       = TRUE;
 }
 
-_Check_return_ void * CMemoryFile::Map( _In_ const uint64_t offset, _In_ const size_t length ) noexcept
+_Check_return_ void * CMemoryFile::Map( _In_ uint64_t const offset, _In_ std::size_t const length ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
 
@@ -311,7 +311,7 @@ _Check_return_ void * CMemoryFile::Map( _In_ const uint64_t offset, _In_ const s
         large_file_offset.QuadPart -= ( large_file_offset.QuadPart % m_AllocationGranularity );
     }
 
-    m_MappedLength = length + static_cast< size_t >( offset - large_file_offset.QuadPart );
+    m_MappedLength = length + static_cast< std::size_t >( offset - large_file_offset.QuadPart );
 
     _ASSERTE( m_MappedPointer == nullptr );
 
@@ -351,7 +351,7 @@ _Check_return_ void * CMemoryFile::Map( _In_ const uint64_t offset, _In_ const s
     return( m_Pointer );
 }
 
-_Check_return_ bool CMemoryFile::m_MapTheFile( __in const HANDLE file_handle, __in const UINT open_flags, __in const uint64_t beginning_at_offset, __in const size_t number_of_bytes_to_map_parameter, __in_opt const void * desired_address ) noexcept
+_Check_return_ bool CMemoryFile::m_MapTheFile( __in HANDLE const file_handle, __in UINT const open_flags, __in uint64_t const beginning_at_offset, __in std::size_t const number_of_bytes_to_map_parameter, __in_opt void const * desired_address ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
 
@@ -392,7 +392,7 @@ _Check_return_ bool CMemoryFile::m_MapTheFile( __in const HANDLE file_handle, __
     m_Protections = PAGE_READONLY;
     m_Access = FILE_MAP_READ;
 
-    const UINT just_flags = open_flags & 0x0F;
+    UINT const just_flags = open_flags & 0x0F;
 
     if ( just_flags == (UINT) CFile64::OpenFlags::modeRead )
     {
@@ -422,7 +422,7 @@ _Check_return_ bool CMemoryFile::m_MapTheFile( __in const HANDLE file_handle, __
 
     m_FileLength = file_length.QuadPart;
 
-    size_t number_of_bytes_to_map = number_of_bytes_to_map_parameter;
+    std::size_t number_of_bytes_to_map = number_of_bytes_to_map_parameter;
 
     if ( beginning_at_offset > 0 )
     {
@@ -439,7 +439,7 @@ _Check_return_ bool CMemoryFile::m_MapTheFile( __in const HANDLE file_handle, __
             // specified an offset, we need to compute how many bytes
             // are really gonna be mapped.
 
-            number_of_bytes_to_map = static_cast< size_t >( m_FileLength - beginning_at_offset );
+            number_of_bytes_to_map = static_cast< std::size_t >( m_FileLength - beginning_at_offset );
         }
     }
     else
@@ -447,7 +447,7 @@ _Check_return_ bool CMemoryFile::m_MapTheFile( __in const HANDLE file_handle, __
         if ( number_of_bytes_to_map == 0 )
         {
             _ASSERTE( m_FileLength > 0 );
-            number_of_bytes_to_map = static_cast< size_t >( m_FileLength );
+            number_of_bytes_to_map = static_cast< std::size_t >( m_FileLength );
         }
     }
 
@@ -490,7 +490,7 @@ void CMemoryFile::m_Uninitialize( void ) noexcept
     }
 }
 
-_Check_return_ bool CMemoryFile::Open( __in_z LPCWSTR filename, __in const UINT open_flags, __in const uint64_t beginning_at_offset, __in const size_t number_of_bytes_to_map, __in_opt const void * desired_address ) noexcept
+_Check_return_ bool CMemoryFile::Open( __in_z LPCWSTR filename, __in UINT const open_flags, __in uint64_t const beginning_at_offset, __in std::size_t const number_of_bytes_to_map, __in_opt void const * desired_address ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
     WFC_VALIDATE_POINTER( filename );

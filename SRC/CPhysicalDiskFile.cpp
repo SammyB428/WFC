@@ -506,13 +506,13 @@ _Check_return_ UINT CPhysicalDiskFile::Read( __out_bcount( count ) void * buffer
    WFC_END_CATCH_ALL
 }
 
-void CPhysicalDiskFile::SetLength( __in const uint64_t) noexcept
+void CPhysicalDiskFile::SetLength( __in uint64_t const) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    ASSERT( FALSE ); // Unsupported function
 }
 
-void CPhysicalDiskFile::Write( __in_bcount( count ) const void * buffer, __in const UINT count ) noexcept
+void CPhysicalDiskFile::Write( __in_bcount( count ) void const * buffer, __in UINT const count ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER_NULL_OK( buffer );

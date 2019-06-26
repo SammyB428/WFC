@@ -1766,7 +1766,7 @@ _Check_return_ uint32_t CFile64::AtomicWrite(_In_ uint64_t const file_offset, __
 
     // Unfortunately, atomic writes don't work. They reset the file pointer to the offset
     // after the last byte of the write. DOH! Halfway useful...
-    const uint64_t current_file_position = GetPosition();
+    uint64_t const current_file_position = GetPosition();
 
     if (::WriteFile(m_FileHandle, buffer, (DWORD) number_of_bytes_to_write, &number_of_bytes_read, &overlapped) == FALSE)
     {
@@ -2048,7 +2048,7 @@ _Check_return_ bool CFile64::ProcessContent( _In_ std::size_t const step_size, _
         }
 
         // Now read the data.
-        if ( AtomicRead( (const uint64_t) number_of_bytes_processed, (void *) buffer, (const uint32_t) number_of_bytes_to_process_in_this_call ) != number_of_bytes_to_process_in_this_call)
+        if ( AtomicRead( static_cast<uint64_t const>(number_of_bytes_processed), (void *) buffer, (uint32_t const) number_of_bytes_to_process_in_this_call ) != number_of_bytes_to_process_in_this_call)
         {
             _aligned_free( buffer );
             return( false );
@@ -2218,7 +2218,7 @@ _Check_return_ bool CFile64::SetValidData( _In_ int64_t const valid_data_length 
 
     if ( return_value == 0 )
     {
-        const uint32_t last_error = ::GetLastError();
+        uint32_t const last_error = ::GetLastError();
 
         if ( last_error == ERROR_PRIVILEGE_NOT_HELD )
         {

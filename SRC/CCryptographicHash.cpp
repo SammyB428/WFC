@@ -173,7 +173,7 @@ __checkReturn bool CCryptographicHash::GetValue(__out std::vector<uint8_t>& valu
     return(return_value);
 }
 
-__checkReturn bool CCryptographicHash::GetParameter( __in const uint32_t parameter_to_get, __inout_bcount( buffer_length ) uint8_t *buffer, __inout uint32_t& buffer_length, __in const uint32_t flags ) noexcept
+__checkReturn bool CCryptographicHash::GetParameter( __in uint32_t const parameter_to_get, __inout_bcount( buffer_length ) uint8_t *buffer, __inout uint32_t& buffer_length, __in uint32_t const flags ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( buffer );
@@ -198,7 +198,7 @@ __checkReturn bool CCryptographicHash::GetParameter( __in const uint32_t paramet
    return( return_value == FALSE ? false : true );
 }
 
-__checkReturn bool CCryptographicHash::Hash( __in_bcount( buffer_size ) const uint8_t * buffer, __in const DWORD buffer_size, __in const DWORD flags ) noexcept
+__checkReturn bool CCryptographicHash::Hash( __in_bcount( buffer_size ) uint8_t const * buffer, __in DWORD const buffer_size, __in DWORD const flags ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 

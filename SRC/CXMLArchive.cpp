@@ -1363,7 +1363,7 @@ __checkReturn CExtensibleMarkupLanguageElement * CXMLArchive::Write( _In_z_ cons
    WFC_END_CATCH_ALL
 }
 
-__checkReturn CExtensibleMarkupLanguageElement * CXMLArchive::Write( _In_z_ const wchar_t * tag, __in double value ) noexcept
+__checkReturn CExtensibleMarkupLanguageElement * CXMLArchive::Write( _In_z_ const wchar_t * tag, __in double const value ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 

@@ -67,10 +67,10 @@ static inline __checkReturn bool wfc_trim_decrypted_data( __inout std::vector<ui
       return( false );
    }
 
-   const uint8_t byte_1 = decrypted_data.at( 0 );
-   const uint8_t byte_2 = decrypted_data.at( 1 );
-   const uint8_t byte_3 = decrypted_data.at( 2 );
-   const uint8_t byte_4 = decrypted_data.at( 3 );
+   uint8_t const byte_1 = decrypted_data.at( 0 );
+   uint8_t const byte_2 = decrypted_data.at( 1 );
+   uint8_t const byte_3 = decrypted_data.at( 2 );
+   uint8_t const byte_4 = decrypted_data.at( 3 );
 
    std::size_t size_of_plaintext = MAKE_DATA_LENGTH( byte_1, byte_2, byte_3, byte_4 );
 
