@@ -71,12 +71,12 @@ void PASCAL Win32FoundationClasses::wfc_convert_double_null_terminated_UNICODE_s
     {
         while (buffer[0] != 0x00)
         {
-            string_to_add.assign((const wchar_t *)buffer);
+            string_to_add.assign(reinterpret_cast<wchar_t const *>(buffer));
             (void)string_array.emplace_back(string_to_add);
 
             number_of_bytes_in_string_including_null = (string_to_add.length() * sizeof(wchar_t)) + (1 * sizeof(wchar_t));
 
-            buffer = (const WORD *)(((std::size_t)buffer) + number_of_bytes_in_string_including_null);
+            buffer = (WORD const *)(((std::size_t)buffer) + number_of_bytes_in_string_including_null);
         }
     }
         WFC_CATCH_ALL
@@ -86,7 +86,7 @@ void PASCAL Win32FoundationClasses::wfc_convert_double_null_terminated_UNICODE_s
         WFC_END_CATCH_ALL
 }
 
-void PASCAL Win32FoundationClasses::wfc_read_string_array(_In_ const wchar_t * const buffer, _In_ const size_t number_of_characters, _Inout_ std::vector<std::wstring>& string_array) noexcept
+void PASCAL Win32FoundationClasses::wfc_read_string_array(_In_ wchar_t const * const buffer, _In_ std::size_t const number_of_characters, _Inout_ std::vector<std::wstring>& string_array) noexcept
 {
     // Always start with a virgin array
     string_array.clear();
@@ -96,7 +96,7 @@ void PASCAL Win32FoundationClasses::wfc_read_string_array(_In_ const wchar_t * c
         return;
     }
 
-    size_t buffer_index = 0;
+    std::size_t buffer_index = 0;
 
     // We were passed a pointer, don't trust it
 
@@ -106,7 +106,7 @@ void PASCAL Win32FoundationClasses::wfc_read_string_array(_In_ const wchar_t * c
 
         while (buffer_index < number_of_characters)
         {
-            string_to_add.assign((const wchar_t *)&buffer[ buffer_index ]);
+            string_to_add.assign((wchar_t const *)&buffer[ buffer_index ]);
             (void)string_array.push_back(string_to_add);
 
             buffer_index += string_to_add.length() + 1;

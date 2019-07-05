@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 1995-2014, Samuel R. Blackburn
+** Copyright, 1995-2019, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -47,7 +47,7 @@ static char THIS_FILE[] = __FILE__;
 
 USING_WFC_NAMESPACE
 
-__checkReturn bool PASCAL Win32FoundationClasses::wfc_protect_data( __in_bcount( number_of_bytes_in_plaintext ) const BYTE * plaintext_buffer, __in const size_t number_of_bytes_in_plaintext, __inout_opt BYTE * ciphertext_buffer, __inout size_t * address_of_number_of_cipher_bytes ) noexcept
+_Check_return_ bool PASCAL Win32FoundationClasses::wfc_protect_data( __in_bcount( number_of_bytes_in_plaintext ) uint8_t const * plaintext_buffer, __in std::size_t const number_of_bytes_in_plaintext, __inout_opt uint8_t * ciphertext_buffer, __inout std::size_t * address_of_number_of_cipher_bytes ) noexcept
 {
    WFC_VALIDATE_POINTER( address_of_number_of_cipher_bytes );
    WFC_VALIDATE_POINTER_NULL_OK( plaintext_buffer );
@@ -94,7 +94,7 @@ __checkReturn bool PASCAL Win32FoundationClasses::wfc_protect_data( __in_bcount(
    return( true );
 }
 
-__checkReturn bool PASCAL Win32FoundationClasses::wfc_unprotect_data( __in_bcount( number_of_bytes_in_ciphertext ) const BYTE * ciphertext_buffer, __in const size_t number_of_bytes_in_ciphertext, __inout_opt BYTE * plaintext_buffer, __inout size_t * address_of_number_of_plain_bytes ) noexcept
+_Check_return_ bool PASCAL Win32FoundationClasses::wfc_unprotect_data( __in_bcount( number_of_bytes_in_ciphertext ) uint8_t const * ciphertext_buffer, __in std::size_t const number_of_bytes_in_ciphertext, __inout_opt uint8_t* plaintext_buffer, __inout std::size_t * address_of_number_of_plain_bytes ) noexcept
 {
    WFC_VALIDATE_POINTER( address_of_number_of_plain_bytes );
    WFC_VALIDATE_POINTER_NULL_OK( ciphertext_buffer );

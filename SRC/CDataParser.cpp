@@ -355,7 +355,7 @@ Retrieves the <CODE>length</CODE> number of bytes beginning at <CODE>parse_point
 <DT><PRE>BYTE <B><A NAME="GetAt">GetAt</A></B>( DWORD index ) const</PRE><DD>
 Retrieves the byte at the given <CODE>index</CODE>.
 
-<DT><PRE>DWORD <B><A NAME="GetCharacter">GetCharacter</A></B>( const <A HREF="CParsePoint.htm">CParsePoint</A>&amp; const_parse_point, const DWORD number_of_characters_ahead = 0 ) const</PRE><DD>
+<DT><PRE>DWORD <B><A NAME="GetCharacter">GetCharacter</A></B>( const <A HREF="CParsePoint.htm">CParsePoint</A>&amp; const_parse_point, DWORD const number_of_characters_ahead = 0 ) const</PRE><DD>
 Returns a character at the given location. <B>NOTE:<B> Don't assume that characters
 are one byte each like in ASCII. Characters can be made up of multiple bytes
 each. This will happen when <A HREF="#SetTextToASCII">SetTextToASCII()</A> is set to
@@ -409,7 +409,7 @@ underlying characters are treated as UNICODE or ICS-4.
 <DT><PRE>BOOL <B><A NAME="IsTextUCS4">IsTextUCS4</A></B>( void ) const</PRE><DD>
 Returns TRUE if characters are to be treated as four bytes per character.
 
-<DT><PRE>BOOL <B><A NAME="PeekAtCharacter">PeekAtCharacter</A></B>( const <A HREF="CParsePoint.htm">CParsePoint</A>&amp; parse_point, DWORD&amp; character, const DWORD number_of_characters_ahead = 1 ) const</PRE><DD>
+<DT><PRE>BOOL <B><A NAME="PeekAtCharacter">PeekAtCharacter</A></B>( const <A HREF="CParsePoint.htm">CParsePoint</A>&amp; parse_point, DWORD&amp; character, DWORD const number_of_characters_ahead = 1 ) const</PRE><DD>
 Allows you to peek ahead at characters. It will return TRUE if
 <CODE>character</CODE> was filled with a character from the data stream.
 It will return FALSE when you have tried to read passed the end of the stream.

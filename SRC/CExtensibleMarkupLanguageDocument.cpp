@@ -1917,7 +1917,7 @@ If you are a careful programmer, this is perfectly safe to do. Generally
 speaking, you shouldn&#39;t have to copy the callbacks of <CODE>source</CODE>
 because parsing should have already taken place.
 
-<DT><PRE>uint32_t <B><A NAME="CountElements">CountElements</A></B>( const wchar_t * element_name ) const</PRE><DD>
+<DT><PRE>uint32_t <B><A NAME="CountElements">CountElements</A></B>( wchar_t const * element_name ) const</PRE><DD>
 Counts the number of elements. <CODE>element_name</CODE> takes much the
 same form as used in the <B><A HREF="#GetElement">GetElement()</A></B> method.
 Consider the following
@@ -1969,7 +1969,7 @@ indentation.
 <DT><PRE>uint32_t <B><A NAME="GetConversionCodePage">GetConversionCodePage</A></B>( void ) const</PRE><DD>
 Returns the code page that will be used for conversion from UNICODE.
 
-<DT><PRE><A HREF="CExtensibleMarkupLanguageElement.htm">CExtensibleMarkupLanguageElement</A> * <B><A NAME="GetElement">GetElement</A></B>( const wchar_t * element_name ) const</PRE><DD>
+<DT><PRE><A HREF="CExtensibleMarkupLanguageElement.htm">CExtensibleMarkupLanguageElement</A> * <B><A NAME="GetElement">GetElement</A></B>( wchar_t const * element_name ) const</PRE><DD>
 Searches and finds the specified element in the document. The
 <CODE>element_name</CODE> is in the form of &quot;Parent(0).Child(0)&quot;
 Consider the following

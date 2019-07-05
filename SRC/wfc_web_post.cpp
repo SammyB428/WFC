@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 1995-2014, Samuel R. Blackburn
+** Copyright, 1995-2019, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -59,14 +59,14 @@ static char THIS_FILE[] = __FILE__;
 #define DWORD_PTR DWORD
 #endif
 
-static inline void append_buffer( __in_bcount( number_of_bytes ) const uint8_t * buffer_parameter, __in const size_t number_of_bytes, __inout std::vector<uint8_t>& bytes )
+static inline void append_buffer( __in_bcount( number_of_bytes ) uint8_t const * buffer_parameter, __in std::size_t const number_of_bytes, __inout std::vector<uint8_t>& bytes ) noexcept
 {
    WFC_VALIDATE_POINTER( buffer_parameter );
-   const std::size_t current_length = bytes.size();
+   std::size_t const current_length = bytes.size();
 
    bytes.resize( current_length + number_of_bytes );
 
-   uint8_t * buffer = bytes.data();
+   auto buffer = bytes.data();
 
    CopyMemory( &buffer[ current_length ], buffer_parameter, number_of_bytes );
 }
@@ -149,7 +149,7 @@ __checkReturn bool PASCAL Win32FoundationClasses::wfc_web_post( __in_z LPCTSTR u
       return( false );
    }
 
-   const char * boundary_string = "----4225101SRBLLBWFCISFREEFORYOUANDME";
+   char const * boundary_string = "----4225101SRBLLBWFCISFREEFORYOUANDME";
 
    std::vector<uint8_t> bytes_to_send;
 
@@ -357,9 +357,9 @@ __checkReturn bool PASCAL Win32FoundationClasses::wfc_web_post( __in_z LPCTSTR u
 
       number_of_bytes_sent = 0;
 
-      const size_t response_buffer_size = ( 64 * 1024 ) + 1;
+      std::size_t const response_buffer_size = ( 64 * 1024 ) + 1;
 
-      std::unique_ptr<uint8_t[]> response_buffer  = std::make_unique<uint8_t[]>(response_buffer_size);
+      auto response_buffer  = std::make_unique<uint8_t[]>(response_buffer_size);
 
       if ( response_buffer.get() != nullptr )
       {

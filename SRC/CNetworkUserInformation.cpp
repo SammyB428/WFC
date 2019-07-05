@@ -872,13 +872,13 @@ void CNetworkUserInformation::Dump( CDumpContext& dump_context ) const
 
 #endif // _DEBUG
 
-void CNetworkUserInformation::Empty( void )
+void CNetworkUserInformation::Empty( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    m_Initialize();
 }
 
-void CNetworkUserInformation::m_Initialize( void )
+void CNetworkUserInformation::m_Initialize( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 

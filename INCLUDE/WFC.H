@@ -320,7 +320,7 @@ public:
 
 #if defined( _DEBUG ) && ! defined( __MINGW32__ )
 
-inline void * __cdecl operator new( size_t number_of_bytes, LPCSTR filename, int line_number )
+inline void * __cdecl operator new(std::size_t number_of_bytes, LPCSTR filename, int line_number )
 {
    return ::operator new( number_of_bytes, _NORMAL_BLOCK, filename, line_number );
 }
@@ -622,7 +622,7 @@ void PASCAL ASCII_to_UNICODE( __in_z LPCSTR ansi_string, __out_z LPWSTR unicode_
 void PASCAL UNICODE_to_ASCII( __in_z LPCWSTR unicode_string, __out_z LPSTR ansi_string, long number_of_unicode_characters_to_convert = (-1), UINT code_page = CP_ACP ) noexcept;
 #endif
 
-void PASCAL Convert_NERR_Code_to_String( __in const DWORD error_code, __out std::wstring& error_message ) noexcept;
+void PASCAL Convert_NERR_Code_to_String( __in DWORD const error_code, __out std::wstring& error_message ) noexcept;
 void PASCAL wfc_append_text_to_edit_control( __in HWND edit_control_handle, __in_z LPCTSTR text_string ) noexcept;
 
 #include "samtf.h"
@@ -654,7 +654,7 @@ void PASCAL wfc_append_text_to_edit_control( __in HWND edit_control_handle, __in
 #define ECX (2)
 #define EDX (3)
 
- inline __checkReturn bool is_proccessor_feature_supported( __in const int information_type, __in const int which_register, __in const int which_bit ) noexcept
+ inline __checkReturn bool is_proccessor_feature_supported( __in int const information_type, __in int const which_register, __in int const which_bit ) noexcept
 {
     int registers[ 4 ] = { 0, 0, 0, 0 }; // output: eax, ebx, ecx, edx
 
@@ -1078,7 +1078,7 @@ __checkReturn bool PASCAL wfc_enable_all_privileges( void ) noexcept;
 __checkReturn bool PASCAL wfc_get_command_line( __out std::wstring& full_command_line ) noexcept;
 __checkReturn bool PASCAL wfc_get_day_of_week( __in int year_with_century, __in int month, __in int day, __out int& day_of_week ) noexcept;
 __checkReturn bool PASCAL wfc_get_filename_from_handle( __in HANDLE const file_handle, __out std::wstring& filename ) noexcept;
-__checkReturn bool PASCAL wfc_move_file_at_reboot( __in std::wstring const& existing_file, __in const std::wstring& file_to_move ) noexcept;
+__checkReturn bool PASCAL wfc_move_file_at_reboot( __in std::wstring const& existing_file, __in std::wstring const& file_to_move ) noexcept;
 __checkReturn bool PASCAL wfc_parse_hex_string(__in_z wchar_t const * hex_string, _In_ std::size_t const number_of_characters, __out_bcount( buffer_size ) uint8_t * buffer, _In_ std::size_t const buffer_size ) noexcept;
 __checkReturn bool PASCAL wfc_parse_hex_string(__in_z char const * hex_string, _In_ std::size_t const number_of_characters, __out_bcount( buffer_size ) uint8_t * buffer, _In_ std::size_t const buffer_size ) noexcept;
 __checkReturn bool PASCAL wfc_parse_iso_8601_string( __in_z wchar_t const * time_string, __out CFileTime&    the_time ) noexcept;
@@ -1134,8 +1134,8 @@ void PASCAL wfc_get_operating_system_version_string( __out std::wstring& version
 void PASCAL wfc_get_program_data_directory(__out std::wstring& program_data_directory) noexcept;
 __checkReturn bool PASCAL wfc_get_string_from_clipboard( __out std::wstring& string_to_return ) noexcept;
 void PASCAL wfc_get_thread_name( __out std::wstring& thread_name ) noexcept;
-void PASCAL wfc_get_web_page( __in CUniformResourceLocator const& url, __out std::vector<std::wstring>& page_contents, __in const DWORD options = WFC_DEFAULT_WEB_PAGE_OPTIONS ) noexcept;
-void PASCAL wfc_get_web_page( __in CUniformResourceLocator const& url,__out  std::vector<uint8_t>& page_contents, __in const DWORD options = WFC_DEFAULT_WEB_PAGE_OPTIONS ) noexcept;
+void PASCAL wfc_get_web_page( __in CUniformResourceLocator const& url, __out std::vector<std::wstring>& page_contents, __in DWORD const options = WFC_DEFAULT_WEB_PAGE_OPTIONS ) noexcept;
+void PASCAL wfc_get_web_page( __in CUniformResourceLocator const& url,__out  std::vector<uint8_t>& page_contents, __in DWORD const options = WFC_DEFAULT_WEB_PAGE_OPTIONS ) noexcept;
 __checkReturn bool PASCAL wfc_is_dotted_ip_address( __in_z_opt char const * ip_address ) noexcept;
 __checkReturn bool PASCAL wfc_is_dotted_ip_address( __in_z_opt wchar_t const * ip_address ) noexcept;
 __checkReturn bool PASCAL wfc_is_guid( __in_z char const * characters ) noexcept;
@@ -1155,8 +1155,8 @@ __checkReturn bool PASCAL wfc_is_wide_decimal( __in_bcount( number_of_bytes ) ui
 __checkReturn bool PASCAL wfc_is_decimal_then_NULLs( __in_bcount( number_of_bytes ) uint8_t const * buffer, __in std::size_t const number_of_bytes ) noexcept;
 __checkReturn bool PASCAL wfc_is_wide_decimal_then_NULLs( __in_bcount( number_of_bytes ) uint8_t const * buffer, __in std::size_t const number_of_bytes ) noexcept;
 __checkReturn bool PASCAL wfc_make_ntfs_go_fast( void ) noexcept;
-__checkReturn bool PASCAL wfc_protect_data( __in_bcount( number_of_bytes_in_plaintext ) BYTE const * plaintext, __in std::size_t const number_of_bytes_in_plaintext, __inout_opt BYTE * ciphertext, __inout std::size_t * address_of_number_of_cipher_bytes ) noexcept;
-__checkReturn bool PASCAL wfc_unprotect_data( __in_bcount( number_of_bytes_in_ciphertext ) BYTE const * ciphertext, __in std::size_t const number_of_bytes_in_ciphertext,__inout_opt BYTE * plaintext, __inout std::size_t * address_of_number_of_plain_bytes ) noexcept;
+__checkReturn bool PASCAL wfc_protect_data( __in_bcount( number_of_bytes_in_plaintext ) uint8_t const * plaintext, __in std::size_t const number_of_bytes_in_plaintext, __inout_opt uint8_t * ciphertext, __inout std::size_t * address_of_number_of_cipher_bytes ) noexcept;
+__checkReturn bool PASCAL wfc_unprotect_data( __in_bcount( number_of_bytes_in_ciphertext ) uint8_t const * ciphertext, __in std::size_t const number_of_bytes_in_ciphertext,__inout_opt uint8_t * plaintext, __inout std::size_t * address_of_number_of_plain_bytes ) noexcept;
 __checkReturn bool PASCAL wfc_set_activex_servers( __in std::vector<std::wstring> const& server_list ) noexcept;
 __checkReturn uint32_t PASCAL wfc_number_of_files_in_directory( _In_z_ wchar_t const * directory_path ) noexcept;
 __checkReturn uint64_t PASCAL wfc_number_of_bytes_in_directory(_In_z_ wchar_t const * directory_path ) noexcept;

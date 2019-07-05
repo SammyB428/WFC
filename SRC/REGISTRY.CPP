@@ -67,7 +67,7 @@ static _Check_return_ LONG _recursively_delete_all_sub_keys( __in HKEY key_handl
         return( return_value );
     }
 
-    std::unique_ptr<wchar_t[]> temporary_key_name = std::make_unique<wchar_t[]>(MAX_PATH);
+    auto temporary_key_name = std::make_unique<wchar_t[]>(MAX_PATH);
 
     if ( temporary_key_name.get() == nullptr )
     {
@@ -173,7 +173,7 @@ _Check_return_ bool CRegistry::Close( void ) noexcept
     }
 }
 
-_Check_return_ bool CRegistry::Connect( __in HKEY key_to_open, __in_z_opt const wchar_t * name_of_computer ) noexcept
+_Check_return_ bool CRegistry::Connect( __in HKEY key_to_open, __in_z_opt wchar_t const * name_of_computer ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
     WFC_VALIDATE_POINTER_NULL_OK( name_of_computer );
@@ -293,8 +293,8 @@ _Check_return_ bool CRegistry::Connect( __in HKEY key_to_open, __in_z_opt const 
     WFC_END_CATCH_ALL
 }
 
-_Check_return_ bool CRegistry::Create( __in_z const wchar_t *               name_of_subkey, 
-                                     __in_z_opt const wchar_t *               name_of_class,
+_Check_return_ bool CRegistry::Create( __in_z wchar_t const *               name_of_subkey,
+                                     __in_z_opt wchar_t const *               name_of_class,
                                      __in CreateOptions         options, 
                                      __in CreatePermissions     permissions, 
                                      __in_opt LPSECURITY_ATTRIBUTES security_attributes_p,
@@ -360,7 +360,7 @@ _Check_return_ bool CRegistry::Create( __in_z const wchar_t *               name
     WFC_END_CATCH_ALL
 }
 
-_Check_return_ bool CRegistry::DeleteKey( __in_z const wchar_t * name_of_key_to_delete ) noexcept
+_Check_return_ bool CRegistry::DeleteKey( __in_z wchar_t const * name_of_key_to_delete ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
     WFC_VALIDATE_POINTER( name_of_key_to_delete );
@@ -440,7 +440,7 @@ _Check_return_ bool CRegistry::DeleteKey( __in_z const wchar_t * name_of_key_to_
     WFC_END_CATCH_ALL
 }
 
-_Check_return_ bool CRegistry::DeleteValue( __in_z const wchar_t * name_of_value_to_delete ) noexcept
+_Check_return_ bool CRegistry::DeleteValue( __in_z wchar_t const * name_of_value_to_delete ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
 
@@ -501,7 +501,7 @@ void CRegistry::Dump( CDumpContext& dump_context ) const
 
 #endif // _DEBUG
 
-_Check_return_ bool CRegistry::EnumerateKeys( __in const DWORD subkey_index, __out std::wstring& subkey_name, __out std::wstring& class_name ) noexcept
+_Check_return_ bool CRegistry::EnumerateKeys( __in DWORD const subkey_index, __out std::wstring& subkey_name, __out std::wstring& class_name ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
 
@@ -540,8 +540,8 @@ _Check_return_ bool CRegistry::EnumerateKeys( __in const DWORD subkey_index, __o
     }
 }
 
-_Check_return_ bool CRegistry::EnumerateValues( __in const DWORD    value_index, 
-                                              __out std::wstring&       name_of_value, 
+_Check_return_ bool CRegistry::EnumerateValues( __in DWORD const    value_index,
+                                              __out std::wstring&       name_of_value,
                                               __out KeyValueTypes& type_code,
                                               __out_bcount_part( size_of_data_buffer, size_of_data_buffer) LPBYTE data_buffer,
                                               __inout DWORD&         size_of_data_buffer ) noexcept
@@ -614,7 +614,7 @@ _Check_return_ bool CRegistry::Flush( void ) noexcept
     }
 }
 
-_Check_return_ bool CRegistry::GetBinaryValue( __in_z const wchar_t * name_of_value, __out std::vector<uint8_t>& return_array ) noexcept
+_Check_return_ bool CRegistry::GetBinaryValue( __in_z wchar_t const * name_of_value, __out std::vector<uint8_t>& return_array ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
 
@@ -630,9 +630,9 @@ _Check_return_ bool CRegistry::GetBinaryValue( __in_z const wchar_t * name_of_va
 
     std::size_t size_of_buffer = m_LongestValueDataLength;
 
-    std::unique_ptr<uint8_t[]> allocated_buffer = std::make_unique<uint8_t[]>(size_of_buffer);
+    auto allocated_buffer = std::make_unique<uint8_t[]>(size_of_buffer);
 
-    LPBYTE memory_buffer = allocated_buffer.get();
+    auto memory_buffer = allocated_buffer.get();
 
     if ( memory_buffer == nullptr )
     {
@@ -680,7 +680,7 @@ void CRegistry::GetComputerName( _Out_ std::wstring& computer_name ) const noexc
     computer_name.assign( m_ComputerName );
 }
 
-_Check_return_ bool CRegistry::GetDoubleWordValue( _In_z_ const wchar_t * name_of_value, _Out_ DWORD& return_value ) noexcept
+_Check_return_ bool CRegistry::GetDoubleWordValue( _In_z_ wchar_t const * name_of_value, _Out_ DWORD& return_value ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
 
@@ -761,7 +761,7 @@ _Check_return_ bool CRegistry::GetSecurity( __in const SECURITY_INFORMATION what
     WFC_END_CATCH_ALL
 }
 
-_Check_return_ bool CRegistry::GetStringValue(_In_z_ const wchar_t * name_of_value, _Out_ std::wstring& return_string) noexcept
+_Check_return_ bool CRegistry::GetStringValue(_In_z_ wchar_t const * name_of_value, _Out_ std::wstring& return_string) noexcept
 {
     WFC_VALIDATE_POINTER(this);
 
@@ -784,7 +784,7 @@ _Check_return_ bool CRegistry::GetStringValue(_In_z_ const wchar_t * name_of_val
     }
 }
 
-_Check_return_ bool CRegistry::GetStringArrayValue(_In_z_ const wchar_t * name_of_value, _Out_ std::vector<std::wstring>& return_array) noexcept
+_Check_return_ bool CRegistry::GetStringArrayValue(_In_z_ wchar_t const * name_of_value, _Out_ std::vector<std::wstring>& return_array) noexcept
 {
     WFC_VALIDATE_POINTER(this);
 
@@ -819,14 +819,14 @@ _Check_return_ bool CRegistry::GetStringArrayValue(_In_z_ const wchar_t * name_o
         ** We've got data so give it back to the caller
         */
 
-        LPTSTR strings = (LPTSTR)memory_buffer;
+        auto strings = reinterpret_cast<LPTSTR>(memory_buffer);
 
         return_array.clear();
 
         while (strings[0] != 0x00)
         {
-            (void)return_array.push_back((const wchar_t *)strings);
-            strings += (_tcslen((const wchar_t *)strings) + 1); // Paul Ostrowski [postrowski@xantel.com]
+            (void)return_array.push_back(reinterpret_cast<wchar_t const *>(strings));
+            strings += (_tcslen(reinterpret_cast<wchar_t const *>(strings)) + 1); // Paul Ostrowski [postrowski@xantel.com]
         }
 
         return_value = true;
@@ -841,32 +841,32 @@ _Check_return_ bool CRegistry::GetStringArrayValue(_In_z_ const wchar_t * name_o
     return(return_value);
 }
 
-_Check_return_ bool CRegistry::GetValue( __in_z const wchar_t * name_of_value, __out std::vector<uint8_t>& return_array ) noexcept
+_Check_return_ bool CRegistry::GetValue( __in_z wchar_t const * name_of_value, __out std::vector<uint8_t>& return_array ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
 
     return( GetBinaryValue( name_of_value, return_array ) );
 }
 
-_Check_return_ bool CRegistry::GetValue( __in_z const wchar_t * name_of_value, __out DWORD& return_value ) noexcept
+_Check_return_ bool CRegistry::GetValue( __in_z wchar_t const * name_of_value, __out DWORD& return_value ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
     return( GetDoubleWordValue( name_of_value, return_value ) );
 }
 
-_Check_return_ bool CRegistry::GetValue( __in_z const wchar_t * name_of_value, __out std::wstring& return_string ) noexcept
+_Check_return_ bool CRegistry::GetValue( __in_z wchar_t const * name_of_value, __out std::wstring& return_string ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
     return( GetStringValue( name_of_value, return_string ) );
 }
 
-_Check_return_ bool CRegistry::GetValue( __in_z const wchar_t * name_of_value, __out std::vector<std::wstring>& return_array ) noexcept
+_Check_return_ bool CRegistry::GetValue( __in_z wchar_t const * name_of_value, __out std::vector<std::wstring>& return_array ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
     return( GetStringArrayValue( name_of_value, return_array ) );
 }
 
-_Check_return_ bool CRegistry::Load( __in_z const wchar_t * name_of_subkey, __in_z const wchar_t * name_of_file_containing_information ) noexcept
+_Check_return_ bool CRegistry::Load( __in_z wchar_t const * name_of_subkey, __in_z wchar_t const * name_of_file_containing_information ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
     WFC_VALIDATE_POINTER( name_of_subkey );
@@ -926,7 +926,7 @@ _Check_return_ bool CRegistry::NotifyChange( __in const HANDLE             event
     }
 }
 
-_Check_return_ bool CRegistry::Open( __in_z const wchar_t * name_of_subkey_to_open, __in const CreatePermissions security_access_mask ) noexcept
+_Check_return_ bool CRegistry::Open( __in_z wchar_t const * name_of_subkey_to_open, __in CreatePermissions const security_access_mask ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
 
@@ -1003,9 +1003,9 @@ _Check_return_ bool CRegistry::QueryInfo( void ) noexcept
     }
 }
 
-_Check_return_ bool CRegistry::QueryValue( __in_z const wchar_t * name_of_value, 
-                                         __inout KeyValueTypes& value_type, 
-                                         __out_bcount_part( size_of_buffer, size_of_buffer ) LPBYTE address_of_buffer, 
+_Check_return_ bool CRegistry::QueryValue( __in_z wchar_t const * name_of_value,
+                                         __inout KeyValueTypes& value_type,
+                                         __out_bcount_part( size_of_buffer, size_of_buffer ) LPBYTE address_of_buffer,
                                          __inout SIZE_T& size_of_buffer ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
@@ -1047,9 +1047,9 @@ _Check_return_ bool CRegistry::QueryValue( __in_z const wchar_t * name_of_value,
     WFC_END_CATCH_ALL
 }
 
-_Check_return_ bool CRegistry::Replace( __in_z const wchar_t * name_of_subkey,
-                                      __in_z const wchar_t * name_of_file_with_new_data,
-                                      __in_z const wchar_t * name_of_backup_file ) noexcept
+_Check_return_ bool CRegistry::Replace( __in_z wchar_t const * name_of_subkey,
+                                      __in_z wchar_t const * name_of_file_with_new_data,
+                                      __in_z wchar_t const * name_of_backup_file ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
     WFC_VALIDATE_POINTER( name_of_subkey );
@@ -1091,7 +1091,7 @@ _Check_return_ bool CRegistry::Replace( __in_z const wchar_t * name_of_subkey,
     WFC_END_CATCH_ALL
 }
 
-_Check_return_ bool CRegistry::Restore( __in_z const wchar_t * name_of_file_holding_saved_tree, __in const DWORD volatility_flags ) noexcept
+_Check_return_ bool CRegistry::Restore( __in_z wchar_t const * name_of_file_holding_saved_tree, __in DWORD const volatility_flags ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
     WFC_VALIDATE_POINTER( name_of_file_holding_saved_tree );
@@ -1183,7 +1183,7 @@ _Check_return_ bool CRegistry::Restore( __in_z const wchar_t * name_of_file_hold
     WFC_END_CATCH_ALL
 }
 
-_Check_return_ bool CRegistry::Save( __in_z const wchar_t * name_of_file_to_hold_tree, __in_opt LPSECURITY_ATTRIBUTES security_attributes_p ) noexcept
+_Check_return_ bool CRegistry::Save( __in_z wchar_t const * name_of_file_to_hold_tree, __in_opt LPSECURITY_ATTRIBUTES security_attributes_p ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
     WFC_VALIDATE_POINTER( name_of_file_to_hold_tree );
@@ -1224,7 +1224,7 @@ _Check_return_ bool CRegistry::SetBinaryValue( __in_z wchar_t const * name_of_va
 
     DWORD size_of_buffer = (DWORD) bytes_to_write.size();
 
-    std::unique_ptr<uint8_t[]> memory_buffer = std::make_unique<uint8_t[]>(size_of_buffer);
+    auto memory_buffer = std::make_unique<uint8_t[]>(size_of_buffer);
 
     if ( memory_buffer.get() == nullptr )
     {
@@ -1285,7 +1285,7 @@ _Check_return_ bool CRegistry::SetSecurity( __in SECURITY_INFORMATION const& sec
     WFC_END_CATCH_ALL
 }
 
-_Check_return_ bool CRegistry::SetStringValue( _In_z_ const wchar_t * name_of_value, _In_ const std::wstring& string_value ) noexcept
+_Check_return_ bool CRegistry::SetStringValue( _In_z_ wchar_t const * name_of_value, _In_ std::wstring const& string_value ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
 
@@ -1298,7 +1298,7 @@ _Check_return_ bool CRegistry::SetStringArrayValue(_In_z_ wchar_t const * name_o
 {
     WFC_VALIDATE_POINTER( this );
 
-    size_t size_of_buffer = 0;
+    std::size_t size_of_buffer = 0;
 
     /*
     ** Find out how big our buffer needs to be...
@@ -1327,7 +1327,7 @@ _Check_return_ bool CRegistry::SetStringArrayValue(_In_z_ wchar_t const * name_o
 
     size_of_buffer += sizeof( TCHAR );
 
-    std::unique_ptr<uint8_t[]> memory_buffer = std::make_unique<uint8_t[]>(size_of_buffer);
+    auto memory_buffer = std::make_unique<uint8_t[]>(size_of_buffer);
 
     if ( memory_buffer.get() == nullptr )
     {
@@ -1448,7 +1448,7 @@ _Check_return_ bool CRegistry::SetValue( __in_z wchar_t const * name_of_value,
     WFC_END_CATCH_ALL
 }
 
-_Check_return_ bool CRegistry::UnLoad( __in_z const wchar_t * name_of_subkey_to_unload ) noexcept
+_Check_return_ bool CRegistry::UnLoad( __in_z wchar_t const * name_of_subkey_to_unload ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
     WFC_VALIDATE_POINTER( name_of_subkey_to_unload );
@@ -1532,8 +1532,8 @@ Connects to a registry on a computer. The default is to connect to
 the local computer. If <CODE>computer_name</CODE> is not NULL,
 it will connect to that machine on the network.
 
-<DT><PRE>BOOL <B><A NAME="Create">Create</A></B>( const wchar_t *               name_of_subkey,
-const wchar_t *               name_of_class         = nullptr,
+<DT><PRE>BOOL <B><A NAME="Create">Create</A></B>( wchar_t const *               name_of_subkey,
+wchar_t const *               name_of_class         = nullptr,
 CreateOptions         options               = optionsNonVolatile,
 CreatePermissions     permissions           = permissionAllAccess,
 LPSECURITY_ATTRIBUTES security_attributes_p = nullptr,
@@ -1565,24 +1565,24 @@ be one of:
 It returns TRUE on success or FALSE on failure.
 The reason for the failure can be retrieved via <B>GetErrorCode</B>().
 
-<DT><PRE>BOOL <B><A NAME="DeleteKey">DeleteKey</A></B>( const wchar_t * name_of_subkey_to_delete )</PRE><DD>
+<DT><PRE>BOOL <B><A NAME="DeleteKey">DeleteKey</A></B>( wchar_t const * name_of_subkey_to_delete )</PRE><DD>
 Deletes a key and all subkeys (even in NT) of that key.
 It returns TRUE on success or FALSE on failure.
 The reason for the failure can be retrieved via <B>GetErrorCode</B>().
 
-<DT><PRE>BOOL <B><A NAME="DeleteValue">DeleteValue</A></B>( const wchar_t * name_of_value_to_delete )</PRE><DD>
+<DT><PRE>BOOL <B><A NAME="DeleteValue">DeleteValue</A></B>( wchar_t const * name_of_value_to_delete )</PRE><DD>
 Deletes a specific value.
 It returns TRUE on success or FALSE on failure.
 The reason for the failure can be retrieved via <B>GetErrorCode</B>().
 
-<DT><PRE>BOOL <B><A NAME="EnumerateKeys">EnumerateKeys</A></B>( const DWORD subkey_index,
+<DT><PRE>BOOL <B><A NAME="EnumerateKeys">EnumerateKeys</A></B>( DWORD const subkey_index,
 std::wstring&amp;    subkey_name,
 std::wstring&amp;    class_name )</PRE><DD>
 Let's you list the names of the keys.
 It returns TRUE on success or FALSE on failure.
 The reason for the failure can be retrieved via <B>GetErrorCode</B>().
 
-<DT><PRE>BOOL <B><A NAME="EnumerateValues">EnumerateValues</A></B>( const DWORD    value_index,
+<DT><PRE>BOOL <B><A NAME="EnumerateValues">EnumerateValues</A></B>( DWORD const value_index,
 std::wstring&amp;       name_of_value,
 KeyValueTypes&amp; type_code,
 LPBYTE         data_buffer,
@@ -1619,7 +1619,7 @@ DWORD size_of_buffer = 4096;
 
 while( registry.EnumerateValues( enumerator, name, type, buffer, size_of_buffer ) != FALSE )
 {
-_tprintf( TEXT( &quot;Found %s, length is %lu\n&quot; ), (const wchar_t *) name, size_of_buffer );
+_tprintf( TEXT( &quot;Found %s, length is %lu\n&quot; ), (wchar_t const *) name, size_of_buffer );
 size_of_buffer = 4096;
 enumerator++;
 }</CODE></PRE>
@@ -1753,14 +1753,14 @@ The reason for the failure can be retrieved via <B>GetErrorCode</B>().
 <LI>typeString
 </UL>
 
-<DT><PRE>BOOL <B><A NAME="Replace">Replace</A></B>( const wchar_t * name_of_subkey,
-const wchar_t * name_of_file_with_new_data,
-const wchar_t * name_of_backup_file )</PRE><DD>
+<DT><PRE>BOOL <B><A NAME="Replace">Replace</A></B>( wchar_t const * name_of_subkey,
+wchar_t const * name_of_file_with_new_data,
+wchar_t const * name_of_backup_file )</PRE><DD>
 Allows you to replace a subkey with data from a file.
 It returns TRUE on success or FALSE on failure.
 The reason for the failure can be retrieved via <B>GetErrorCode</B>().
 
-<DT><PRE>BOOL <B><A NAME="Restore">Restore</A></B>( const wchar_t * name_of_file_holding_saved_tree, const DWORD volitility_flags = nullptr )</PRE><DD>
+<DT><PRE>BOOL <B><A NAME="Restore">Restore</A></B>( wchar_t const * name_of_file_holding_saved_tree, DWORD const volitility_flags = nullptr )</PRE><DD>
 Restores a subkey that was backed up to a file.
 It returns TRUE on success or FALSE on failure.
 The reason for the failure can be retrieved via <B>GetErrorCode</B>().
@@ -1797,13 +1797,13 @@ It returns TRUE on success or FALSE on failure.
 The reason for the failure can be retrieved via <B>GetErrorCode</B>().
 
 <DT><PRE>BOOL <B><A NAME="SetValue">SetValue</A></B>( const wchar_t * name_of_value, const std::vector&lt;uint8_t&gt;&amp; bytes_to_write );
-BOOL <B>SetValue</B>( const wchar_t * name_of_value, DWORD value );
-BOOL <B>SetValue</B>( const wchar_t * name_of_value, const std::vector&lt;std::wstring&gt;&amp; strings_to_write );
-BOOL <B>SetValue</B>( const wchar_t * name_of_value, const std::wstring&amp; string_to_write );
-BOOL <B>SetValue</B>( const wchar_t *             name_of_subkey,
-const KeyValueTypes type_of_value_to_set,
-CONST PBYTE         address_of_value_data,
-const DWORD         size_of_data )</PRE><DD>
+BOOL <B>SetValue</B>( wchar_t const * name_of_value, DWORD value );
+BOOL <B>SetValue</B>( wchar_t const * name_of_value, const std::vector&lt;std::wstring&gt;&amp; strings_to_write );
+BOOL <B>SetValue</B>( wchar_t const * name_of_value, const std::wstring&amp; string_to_write );
+BOOL <B>SetValue</B>( wchar_t const *             name_of_subkey,
+KeyValueTypes const type_of_value_to_set,
+PBYTE         const address_of_value_data,
+DWORD         const size_of_data )</PRE><DD>
 Overloaded method that figures out what type of value you want to set.
 It returns TRUE on success or FALSE on failure.
 The reason for the failure can be retrieved via <B>GetErrorCode</B>().

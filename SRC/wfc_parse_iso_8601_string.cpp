@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 1995-2016, Samuel R. Blackburn
+** Copyright, 1995-2019, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -612,7 +612,7 @@ static inline _Check_return_ bool __parse_ymdhmsf( _In_z_ LPCTSTR time_string,
     WFC_END_CATCH_ALL
 }
 
-__checkReturn bool PASCAL Win32FoundationClasses::wfc_parse_iso_8601_string( _In_z_ const wchar_t * time_string, __out Win32FoundationClasses::CFileTime& the_time ) noexcept
+__checkReturn bool PASCAL Win32FoundationClasses::wfc_parse_iso_8601_string( _In_z_ wchar_t const * time_string, __out Win32FoundationClasses::CFileTime& the_time ) noexcept
 {
     the_time.Empty();
 
@@ -711,7 +711,7 @@ BOOL PASCAL Win32FoundationClasses::wfc_parse_iso_8601_string( LPCTSTR time_stri
 
 #endif // WFC_STL
 
-__checkReturn bool PASCAL Win32FoundationClasses::wfc_parse_iso_8601_string( _In_z_ const wchar_t * time_string, __out CSystemTime& the_time ) noexcept
+__checkReturn bool PASCAL Win32FoundationClasses::wfc_parse_iso_8601_string( _In_z_ wchar_t const * time_string, __out CSystemTime& the_time ) noexcept
 {
     the_time.Empty();
 
@@ -763,7 +763,7 @@ __checkReturn bool PASCAL Win32FoundationClasses::wfc_parse_iso_8601_string( _In
     return( true );
 }
 
-__checkReturn bool PASCAL Win32FoundationClasses::wfc_parse_iso_8601_string( _In_z_ const wchar_t * time_string, __out CTime& the_time ) noexcept
+__checkReturn bool PASCAL Win32FoundationClasses::wfc_parse_iso_8601_string( _In_z_ wchar_t const * time_string, __out CTime& the_time ) noexcept
 {
     the_time = CTime( static_cast< time_t >( 0 ) );
 
@@ -905,7 +905,7 @@ __checkReturn bool PASCAL Win32FoundationClasses::wfc_parse_hex_string(__in_z ch
         return(false);
     }
 
-    size_t string_index = 0;
+    std::size_t string_index = 0;
 
     for ( auto const buffer_index : Range(buffer_size) )
     {

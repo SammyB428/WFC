@@ -64,19 +64,19 @@ CUUCoding::~CUUCoding()
     WFC_VALIDATE_POINTER( this );
 }
 
-_Check_return_ bool CUUCoding::OutputFilename(_In_ const std::vector<uint8_t>& source, _Out_ std::wstring& filename) const noexcept
+_Check_return_ bool CUUCoding::OutputFilename(_In_ std::vector<uint8_t> const& source, _Out_ std::wstring& filename) const noexcept
 {
     filename.clear();
 
     std::size_t index = 0;
 
-    const std::size_t number_of_bytes_to_decode = source.size();
+    std::size_t const number_of_bytes_to_decode = source.size();
 
     // Since we're decoding, we are most likely in a performance-minded
     // part of an application, let's go for a speedy method for accessing
     // the source data.
 
-    const uint8_t * input_buffer = source.data();
+    auto input_buffer = source.data();
 
     while (index < number_of_bytes_to_decode)
     {
@@ -144,7 +144,7 @@ _Check_return_ bool CUUCoding::OutputFilename(_In_ const std::vector<uint8_t>& s
     return(true);
 }
 
-_Check_return_ bool CUUCoding::Decode(_In_ const std::vector<uint8_t>& source, _Out_ std::vector<uint8_t>& destination) const noexcept
+_Check_return_ bool CUUCoding::Decode(_In_ std::vector<uint8_t> const& source, _Out_ std::vector<uint8_t>& destination) const noexcept
 {
     WFC_VALIDATE_POINTER(this);
 
@@ -167,7 +167,7 @@ _Check_return_ bool CUUCoding::Decode(_In_ const std::vector<uint8_t>& source, _
     // part of an application, let's go for a speedy method for accessing
     // the source data.
 
-    const uint8_t * input_buffer = source.data();
+    auto input_buffer = source.data();
 
     while (index < number_of_bytes_to_decode)
     {
@@ -314,7 +314,7 @@ _Check_return_ bool CUUCoding::Decode(_In_ const std::vector<uint8_t>& source, _
     return(false);
 }
 
-_Check_return_ bool CUUCoding::Decode( _In_ const std::wstring& source, _Out_ std::vector<uint8_t>& destination ) const noexcept
+_Check_return_ bool CUUCoding::Decode( _In_ std::wstring const& source, _Out_ std::vector<uint8_t>& destination ) const noexcept
 {
     WFC_VALIDATE_POINTER( this );
 
@@ -329,13 +329,13 @@ _Check_return_ bool CUUCoding::Decode( _In_ const std::wstring& source, _Out_ st
     // part of an application, let's go for a speedy method for accessing
     // the source data.
 
-    const wchar_t * input_buffer = source.c_str();
+    auto input_buffer = source.c_str();
 
     std::vector<uint8_t> bytes_to_decode;
 
     bytes_to_decode.resize( number_of_bytes_to_decode );
 
-    uint8_t * buffer = bytes_to_decode.data();
+    auto buffer = bytes_to_decode.data();
 
     WFC_TRY
     {
@@ -356,7 +356,7 @@ _Check_return_ bool CUUCoding::Decode( _In_ const std::wstring& source, _Out_ st
     return( return_value );
 }
 
-_Check_return_ bool CUUCoding::Encode( _In_ const std::vector<uint8_t>& source, _Out_ std::vector<uint8_t>& destination ) const noexcept
+_Check_return_ bool CUUCoding::Encode( _In_ std::vector<uint8_t> const& source, _Out_ std::vector<uint8_t>& destination ) const noexcept
 {
     WFC_VALIDATE_POINTER( this );
 
@@ -365,7 +365,7 @@ _Check_return_ bool CUUCoding::Encode( _In_ const std::vector<uint8_t>& source, 
 
     // Output bytes 45 at a time
 
-    const std::size_t number_of_bytes_to_encode = source.size();
+    std::size_t const number_of_bytes_to_encode = source.size();
 
     std::size_t index      = 0;
     std::size_t line_index = 0;
@@ -379,7 +379,7 @@ _Check_return_ bool CUUCoding::Encode( _In_ const std::vector<uint8_t>& source, 
     uint8_t character_to_output_3 = 0;
     uint8_t character_to_output_4 = 0;
 
-    const uint8_t * input_buffer = source.data();
+    auto input_buffer = source.data();
 
     while( index < number_of_bytes_to_encode )
     {
@@ -487,7 +487,7 @@ _Check_return_ bool CUUCoding::Encode( _In_ const std::vector<uint8_t>& source, 
 
 
 #if 0
-_Check_return_ bool CUUCoding::Encode( _In_ const std::vector<uint8_t>& source, _Out_ std::wstring& destination ) const noexcept
+_Check_return_ bool CUUCoding::Encode( _In_ std::vector<uint8_t> const& source, _Out_ std::wstring& destination ) const noexcept
 {
     WFC_VALIDATE_POINTER( this );
 
@@ -504,10 +504,10 @@ _Check_return_ bool CUUCoding::Encode( _In_ const std::vector<uint8_t>& source, 
 
     // We have to do this the slow way to preserve UNICODE...
 
-    size_t loop_index           = 0;
-    const size_t number_of_characters = encoded_bytes.GetSize();
+    std::size_t loop_index           = 0;
+    std::size_t const number_of_characters = encoded_bytes.GetSize();
 
-    const BYTE * encoded_buffer = encoded_bytes.GetData();
+    BYTE const * encoded_buffer = encoded_bytes.GetData();
 
     while( loop_index < number_of_characters )
     {

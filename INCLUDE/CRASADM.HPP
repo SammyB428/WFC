@@ -79,11 +79,11 @@ class CRemoteAccessServiceAdministration
 
       virtual ~CRemoteAccessServiceAdministration();
 
-      virtual void  GetErrorString( __in const UINT error_code, __out std::wstring& error_string ) const noexcept;
+      virtual void  GetErrorString( __in UINT const error_code, __out std::wstring& error_string ) const noexcept;
       virtual DWORD GetErrorCode( void ) const noexcept;
       virtual BOOL  GetUserAccountServer( __out std::wstring& user_account_server_name, __in_z LPCTSTR ras_server_name, __in_z_opt LPCTSTR ras_server_domain_name = nullptr ) noexcept;
-      virtual BOOL  ClearPortStatistics( __in const std::wstring& port_name, __in_z_opt LPCTSTR server_name = nullptr ) noexcept; // Default to this machine
-      virtual BOOL  DisconnectPort( __in const std::wstring& port_name, __in_z_opt LPCTSTR server_name = nullptr ) noexcept; // RasAdminPortDisconnect
+      virtual BOOL  ClearPortStatistics( __in std::wstring const& port_name, __in_z_opt LPCTSTR server_name = nullptr ) noexcept; // Default to this machine
+      virtual BOOL  DisconnectPort( __in std::wstring const& port_name, __in_z_opt LPCTSTR server_name = nullptr ) noexcept; // RasAdminPortDisconnect
       virtual __checkReturn BOOL EnumeratePorts( __in_z_opt LPCTSTR server_name = nullptr ) noexcept; // RasAdminPortEnum
       virtual __checkReturn BOOL GetNext( __out CRemoteAccessServicePort& port ) noexcept;
       //virtual BOOL  GetInformation( CRemoteAccessServicePort& port ); // RasAdminPortGetInfo

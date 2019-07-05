@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 1995-2014, Samuel R. Blackburn
+** Copyright, 1995-2019, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -51,12 +51,12 @@ class CTalkingSocket : public CSimpleSocket
 
    public:
 
-      CTalkingSocket(const CTalkingSocket&) = delete;
-      CTalkingSocket& operator=(const CTalkingSocket&) = delete;
+      CTalkingSocket(CTalkingSocket const&) = delete;
+      CTalkingSocket& operator=(CTalkingSocket const&) = delete;
        
       CTalkingSocket();
-      CTalkingSocket( __in const std::wstring& address, __in const short p );
-      CTalkingSocket( __in const std::wstring& host, __in const std::wstring& p );
+      CTalkingSocket( __in std::wstring const& address, __in short const p );
+      CTalkingSocket( __in std::wstring const& host, __in std::wstring const& p );
 
       /*
       ** Destructor should be virtual according to MSJ article in Sept 1992
@@ -65,10 +65,10 @@ class CTalkingSocket : public CSimpleSocket
 
       virtual ~CTalkingSocket();
 
-      __checkReturn bool Open( void ) noexcept override;
-      virtual __checkReturn bool Open( __in const std::wstring& address, __in const std::wstring& port_name ) noexcept;
-      virtual __checkReturn bool Open( __in const std::wstring& address, __in const short p_number ) noexcept;
-      __checkReturn bool Open( __in_z LPCTSTR name, __in const UINT port_number = 23 ) noexcept override;
+      _Check_return_ bool Open( void ) noexcept override;
+      virtual _Check_return_ bool Open( __in std::wstring const& address, __in std::wstring const& port_name ) noexcept;
+      virtual _Check_return_ bool Open( __in std::wstring const& address, __in short const p_number ) noexcept;
+      _Check_return_ bool Open( __in_z LPCTSTR name, __in UINT const port_number = 23 ) noexcept override;
 
 #if defined( _DEBUG ) && ! defined( WFC_NO_DUMPING )
 

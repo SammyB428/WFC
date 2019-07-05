@@ -120,7 +120,7 @@ class CNetworkShares : public CNetwork
       virtual ~CNetworkShares();
 
       virtual _Check_return_ bool Add( _Inout_ CNetworkShareInformation& share_to_add ) noexcept;
-      virtual _Check_return_ DWORD Check( _In_ const wchar_t * name_of_device ) noexcept;
+      virtual _Check_return_ DWORD Check( _In_ wchar_t const * name_of_device ) noexcept;
       void Close( void ) noexcept override;
       virtual _Check_return_ bool Delete(_Inout_ CNetworkShareInformation& share_to_delete ) noexcept;
       virtual _Check_return_ bool Enumerate( void ) noexcept;

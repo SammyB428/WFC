@@ -142,7 +142,7 @@ void CMixerDestination::Dump( CDumpContext& dump_context ) const
 
 #endif // _DEBUG
 
-__checkReturn bool CMixerDestination::GetSource( __in DWORD const type_of_source, __out CMixerSource& source ) noexcept
+_Check_return_ bool CMixerDestination::GetSource( __in CMixerLine::ComponentType const type_of_source, __out CMixerSource& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -164,7 +164,7 @@ __checkReturn bool CMixerDestination::GetSource( __in DWORD const type_of_source
    return( false );
 }
 
-__checkReturn bool CMixerDestination::IsSourceSelected( __in const DWORD source ) noexcept
+_Check_return_ bool CMixerDestination::IsSourceSelected( __in DWORD const source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( m_SourceSelector_p );
@@ -183,7 +183,7 @@ __checkReturn bool CMixerDestination::IsSourceSelected( __in const DWORD source 
    return( return_value );
 }
 
-__checkReturn bool CMixerDestination::Open( __in UINT_PTR device_number, __in DWORD what_to_notify, __in DWORD_PTR who_to_notify, __in DWORD_PTR notify_data ) noexcept
+_Check_return_ bool CMixerDestination::Open( __in UINT_PTR device_number, __in DWORD what_to_notify, __in DWORD_PTR who_to_notify, __in DWORD_PTR notify_data ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -201,7 +201,7 @@ __checkReturn bool CMixerDestination::Open( __in UINT_PTR device_number, __in DW
    return( return_value );
 }
 
-__checkReturn bool CMixerDestination::SelectSource(__in const DWORD source, __in bool selection) noexcept
+_Check_return_ bool CMixerDestination::SelectSource(__in DWORD const source, __in bool selection) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( m_SourceSelector_p );
@@ -216,7 +216,7 @@ __checkReturn bool CMixerDestination::SelectSource(__in const DWORD source, __in
    return( return_value );
 }
 
-__checkReturn bool CMixerDestination::UnselectSource( __in const DWORD source ) noexcept
+_Check_return_ bool CMixerDestination::UnselectSource( __in DWORD const source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( m_SourceSelector_p );
@@ -231,7 +231,7 @@ __checkReturn bool CMixerDestination::UnselectSource( __in const DWORD source ) 
    return( return_value );
 }
 
-__checkReturn CMixerDestination& CMixerDestination::operator = ( __in const CMixerDestination& source ) noexcept
+_Check_return_ CMixerDestination& CMixerDestination::operator = ( __in CMixerDestination const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );

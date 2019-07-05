@@ -163,7 +163,7 @@ __checkReturn bool CCryptographicHash::GetValue(__out std::vector<uint8_t>& valu
 
     uint32_t buffer_length = (uint32_t)value.size();
 
-    const bool return_value = GetParameter(parameterValue, value.data(), buffer_length);
+    bool const return_value = GetParameter(parameterValue, value.data(), buffer_length);
 
     if (return_value != false)
     {
@@ -228,7 +228,7 @@ __checkReturn bool CCryptographicHash::Hash( __in_bcount( buffer_size ) uint8_t 
    return( return_value == FALSE ? false : true );
 }
 
-__checkReturn bool CCryptographicHash::Hash(__in const std::vector<uint8_t>& data_to_compute_hash_on, __in const DWORD flags) noexcept
+__checkReturn bool CCryptographicHash::Hash(__in std::vector<uint8_t> const& data_to_compute_hash_on, __in DWORD const flags) noexcept
 {
     WFC_VALIDATE_POINTER(this);
 
@@ -237,7 +237,7 @@ __checkReturn bool CCryptographicHash::Hash(__in const std::vector<uint8_t>& dat
     return(Hash(data_to_compute_hash_on.data(), (DWORD)data_to_compute_hash_on.size(), flags));
 }
 
-__checkReturn bool CCryptographicHash::Hash( __in const CCryptographicKey& key_to_hash, __in const DWORD flags ) noexcept
+__checkReturn bool CCryptographicHash::Hash( __in CCryptographicKey const& key_to_hash, __in DWORD const flags ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -256,7 +256,7 @@ __checkReturn bool CCryptographicHash::Hash( __in const CCryptographicKey& key_t
    return( return_value == FALSE ? false : true );
 }
 
-__checkReturn bool CCryptographicHash::SetParameter( __in const DWORD parameter_to_set, __inout BYTE * buffer, __in const DWORD flags ) noexcept
+__checkReturn bool CCryptographicHash::SetParameter( __in DWORD const parameter_to_set, __inout BYTE * buffer, __in DWORD const flags ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( buffer );
@@ -288,7 +288,7 @@ __checkReturn bool CCryptographicHash::SetValue( __inout std::vector<uint8_t>& v
    return( SetParameter( parameterValue, value.data() ) );
 }
 
-__checkReturn bool CCryptographicHash::Sign( __in const DWORD which_key_to_sign_with, __in const std::wstring& password, __inout std::vector<uint8_t>& signed_hash, __in const DWORD flags ) noexcept
+__checkReturn bool CCryptographicHash::Sign( __in DWORD const which_key_to_sign_with, __in std::wstring const& password, __inout std::vector<uint8_t>& signed_hash, __in DWORD const flags ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -333,7 +333,7 @@ __checkReturn bool CCryptographicHash::Sign( __in const DWORD which_key_to_sign_
    return( true );
 }
 
-__checkReturn bool CCryptographicHash::VerifySignature( __inout std::vector<uint8_t>& signature_to_be_verified, __inout CCryptographicKey& public_key_to_verify_with, __inout std::wstring& password, __in const DWORD flags ) noexcept
+__checkReturn bool CCryptographicHash::VerifySignature( __inout std::vector<uint8_t>& signature_to_be_verified, __inout CCryptographicKey& public_key_to_verify_with, __inout std::wstring& password, __in DWORD const flags ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -417,7 +417,7 @@ Retrieves the block length.
 <DT><PRE>BOOL <B><A NAME="GetValue">GetValue</A></B>( std::vector&lt;uint8_t&gt;&amp; hash_result )</PRE><DD>
 Retrieves the hash itself.
 
-<DT><PRE>BOOL <B><A NAME="GetParameter">GetParameter</A></B>( const DWORD parameter_to_get, BYTE *buffer, DWORD&amp; buffer_length, const DWORD flags = 0 )</PRE><DD>
+<DT><PRE>BOOL <B><A NAME="GetParameter">GetParameter</A></B>( DWORD const parameter_to_get, BYTE *buffer, DWORD&amp; buffer_length, DWORD const flags = 0 )</PRE><DD>
 Retrieves one of the following bits of information:
 <UL>
 <LI>parameterAlgorithmIdentifier
@@ -432,7 +432,7 @@ BOOL <B>Hash</B>( const CCryptographicKey&amp; key_to_hash, DWORD flags = 0 )</P
 Computes the hash value from the data block (<CODE>data_to_compute_hash_on</CODE>)or
 the CCryptographicKey (<CODE>key_to_hash</CODE>) given. You can retrieve the hash via <B>GetValue</B>.
 
-<DT><PRE>BOOL <B><A NAME="SetParameter">SetParameter</A></B>( const DWORD parameter_to_set, BYTE *buffer, const DWORD flags = 0 )</PRE><DD>
+<DT><PRE>BOOL <B><A NAME="SetParameter">SetParameter</A></B>( DWORD const parameter_to_set, BYTE *buffer, DWORD const flags = 0 )</PRE><DD>
 Sets a parameter of the key. You can set one of these parameters:
 <UL>
 <LI>parameterValue

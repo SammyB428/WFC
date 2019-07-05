@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 1995-2014, Samuel R. Blackburn
+** Copyright, 1995-2019, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -69,19 +69,19 @@ class CLZFile : public CDummyFile
 
       virtual ~CLZFile();
 
-      static void __stdcall TranslateErrorCode(__in const int error_code, __out std::wstring& error_message) noexcept;
+      static void __stdcall TranslateErrorCode(__in int const error_code, __out std::wstring& error_message) noexcept;
 
       /*
       ** The Win32 API
       */
 
       virtual void Close( void ) noexcept;
-      virtual __checkReturn BOOL Copy( __in const CLZFile&  source ) noexcept;
-      virtual __checkReturn BOOL Copy( __in const CLZFile * source ) noexcept;
-      virtual __checkReturn bool GetExpandedName( __in_z wchar_t * name_of_compressed_file, __out std::wstring& original_file_name ) noexcept;
-      __checkReturn bool Open( __in_z LPCTSTR channel_name, __in const UINT style = OF_READ ) noexcept override;
-      __checkReturn UINT Read( __out_bcount( size_of_buffer ) void * buffer, __in const UINT size_of_buffer ) noexcept override;
-      __checkReturn uint64_t Seek( __in const int64_t offset, __in const CFile64::SeekPosition from ) noexcept override;
+      virtual _Check_return_ BOOL Copy( __in CLZFile const&  source ) noexcept;
+      virtual _Check_return_ BOOL Copy( __in CLZFile const * source ) noexcept;
+      virtual _Check_return_ bool GetExpandedName( __in_z wchar_t * name_of_compressed_file, __out std::wstring& original_file_name ) noexcept;
+      _Check_return_ bool Open( __in_z LPCTSTR channel_name, __in UINT const style = OF_READ ) noexcept override;
+      _Check_return_ UINT Read( __out_bcount( size_of_buffer ) void * buffer, __in UINT const size_of_buffer ) noexcept override;
+      _Check_return_ uint64_t Seek( __in int64_t const offset, __in CFile64::SeekPosition const from ) noexcept override;
 
 #if defined( _DEBUG ) && ! defined( WFC_NO_DUMPING )
 

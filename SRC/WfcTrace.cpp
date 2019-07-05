@@ -55,7 +55,7 @@ int   CWfcTrace::Indent  = 0;
 BOOL  CWfcTrace::Tracing = TRUE;
 DWORD CWfcTrace::Levels  = 1;
 
-CWfcTrace::CWfcTrace( __in_z LPCTSTR function_name, __in const DWORD tracing_level )
+CWfcTrace::CWfcTrace( __in_z LPCTSTR function_name, __in DWORD const tracing_level )
 {
    m_TracingLevel = tracing_level;
 
@@ -322,7 +322,7 @@ void CWfcTrace::Output( __in_z LPCTSTR message, __in const double a_double ) con
    }
 }
 
-void CWfcTrace::Output( __in_z LPCTSTR message, __in const std::wstring& string ) const noexcept
+void CWfcTrace::Output( __in_z LPCTSTR message, __in std::wstring const& string ) const noexcept
 {
    if ( ( Levels & m_TracingLevel ) && Tracing != FALSE )
    {
@@ -1024,7 +1024,7 @@ void CWfcTrace::OutputVariant( __in_z LPCTSTR message, __in const VARIANT* value
    }
 }
 
-void CWfcTrace::ReportError( __in const DWORD error_code ) noexcept
+void CWfcTrace::ReportError( __in DWORD const error_code ) noexcept
 {
    if ( ( Levels & m_TracingLevel ) && Tracing != FALSE )
    {
@@ -1041,7 +1041,7 @@ void CWfcTrace::ReportError( __in const DWORD error_code ) noexcept
    }
 }
 
-void CWfcTrace::ReportSocketError( __in const DWORD error_code ) noexcept
+void CWfcTrace::ReportSocketError( __in DWORD const error_code ) noexcept
 {
    if ( ( Levels & m_TracingLevel ) && Tracing != FALSE )
    {
@@ -1083,25 +1083,25 @@ void CWfcTrace::TraceAllOn( void ) noexcept
    Levels  = 0xFFFFFFFF;
 }
 
-void CWfcTrace::TraceLevelOn( __in const DWORD level ) noexcept
+void CWfcTrace::TraceLevelOn( __in DWORD const level ) noexcept
 {
    if ( level > 31 )
    {
-      _bittestandset( (LONG *) &Levels, 31 );
+      _bittestandset( reinterpret_cast<LONG *>(&Levels), 31 );
       return;
    }
 
-   _bittestandset( (LONG *) &Levels, level );
+   _bittestandset( reinterpret_cast<LONG *>(&Levels), level );
 }
 
-void CWfcTrace::TraceLevelOff( __in const DWORD level ) noexcept
+void CWfcTrace::TraceLevelOff( __in DWORD const level ) noexcept
 {
    if ( level > 31 )
    {
-      _bittestandreset( (LONG *) &Levels, 31 );
+      _bittestandreset(reinterpret_cast<LONG*>(&Levels), 31 );
    }
 
-   _bittestandreset( (LONG *) &Levels, level );
+   _bittestandreset(reinterpret_cast<LONG*>(&Levels), level );
 }
 
 // End of source

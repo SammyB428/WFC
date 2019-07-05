@@ -152,7 +152,7 @@ void CModem::GetPhoneNumber( __out std::string& phone_number ) const noexcept
    phone_number.assign( m_PhoneNumber );
 }
 
-void CModem::SetPhoneNumber( __in const std::string& phone_number ) noexcept
+void CModem::SetPhoneNumber( __in std::string const& phone_number ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    m_PhoneNumber.assign( phone_number );

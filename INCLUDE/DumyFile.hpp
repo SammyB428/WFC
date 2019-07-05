@@ -54,12 +54,12 @@ class CDummyFile : public CFile64
       HANDLE m_FileHandle;
 #endif // WFC_STL
 
-      virtual __checkReturn DWORD m_CreateDesiredAccess( void ) const noexcept;
-      virtual __checkReturn DWORD m_CreateFlagsAndAttributes( void ) const noexcept;
-      virtual __checkReturn DWORD m_CreateShareMode( void ) const noexcept;
-      virtual __checkReturn LPSECURITY_ATTRIBUTES m_CreateSecurityAttributes( void ) const noexcept;
-      virtual __checkReturn DWORD m_CreateCreationDistribution( void ) const noexcept;
-      virtual __checkReturn HANDLE m_CreateTemplateHandle( void ) const noexcept;
+      virtual _Check_return_ DWORD m_CreateDesiredAccess( void ) const noexcept;
+      virtual _Check_return_ DWORD m_CreateFlagsAndAttributes( void ) const noexcept;
+      virtual _Check_return_ DWORD m_CreateShareMode( void ) const noexcept;
+      virtual _Check_return_ LPSECURITY_ATTRIBUTES m_CreateSecurityAttributes( void ) const noexcept;
+      virtual _Check_return_ DWORD m_CreateCreationDistribution( void ) const noexcept;
+      virtual _Check_return_ HANDLE m_CreateTemplateHandle( void ) const noexcept;
 
    public:
 
@@ -82,21 +82,21 @@ class CDummyFile : public CFile64
       void  Abort( void ) noexcept override;
       void  Close( void ) noexcept override;
       void  Flush( void ) noexcept override;
-      __checkReturn uint64_t GetLength( void ) const noexcept override;
-      __checkReturn uint64_t GetPosition( void ) const noexcept override;
+      _Check_return_ uint64_t GetLength( void ) const noexcept override;
+      _Check_return_ uint64_t GetPosition( void ) const noexcept override;
 
 #if ! defined( WFC_STL )
-      virtual __checkReturn BOOL  GetStatus( CFileStatus& status ) noexcept;
-      virtual __checkReturn BOOL  GetStatus( LPCTSTR name, CFileStatus& status ) noexcept;
+      virtual _Check_return_ BOOL  GetStatus( CFileStatus& status ) noexcept;
+      virtual _Check_return_ BOOL  GetStatus( LPCTSTR name, CFileStatus& status ) noexcept;
 #endif // WFC_STL
 
       virtual void  Remove( __in_z LPCTSTR name ) noexcept;
       virtual void  Rename( __in_z LPCTSTR OldName, __in_z LPCTSTR NewName ) noexcept;
-      __checkReturn uint64_t Seek( __in int64_t const offset, __in CFile64::SeekPosition const from ) noexcept override;
+      _Check_return_ uint64_t Seek( __in int64_t const offset, __in CFile64::SeekPosition const from ) noexcept override;
 
       void SetLength( __in uint64_t const length ) noexcept override;
 
-      __checkReturn bool LockRange( __in uint64_t const position, __in uint64_t const number_of_bytes_to_lock ) noexcept override;
+      _Check_return_ bool LockRange( __in uint64_t const position, __in uint64_t const number_of_bytes_to_lock ) noexcept override;
       void UnlockRange( __in uint64_t const position, __in uint64_t const number_of_bytes_to_unlock ) noexcept override;
 
       /*
@@ -107,8 +107,6 @@ class CDummyFile : public CFile64
       virtual void Write( __in std::vector<uint8_t> const& data_to_write ) noexcept;
 
       // Abstraction Additions
-
-      inline constexpr __checkReturn HANDLE GetHandle( void ) const noexcept { return( m_FileHandle ); }
 
 #if defined( WFC_STL )
       inline constexpr void SetHandle( __in HANDLE file_handle ) noexcept { m_FileHandle = (CFILE_HFILE) file_handle; }

@@ -51,7 +51,7 @@ static char THIS_FILE[] = __FILE__;
 
 USING_WFC_NAMESPACE
 
-static inline __checkReturn WFC_THREAD_INFORMATION_BLOCK * get_thread_information_block( void )
+static inline _Check_return_ WFC_THREAD_INFORMATION_BLOCK * get_thread_information_block( void )
 {
    WFC_THREAD_INFORMATION_BLOCK * return_value = nullptr;
 
@@ -86,13 +86,13 @@ static inline __checkReturn WFC_THREAD_INFORMATION_BLOCK * get_thread_informatio
 
 void PASCAL Win32FoundationClasses::wfc_get_thread_name( _Out_ std::wstring& thread_name ) noexcept
 {
-   WFC_THREAD_INFORMATION_BLOCK * thread_information_block_p = get_thread_information_block();
+   auto thread_information_block_p = get_thread_information_block();
 
    WFC_TRY
    {
       if ( thread_information_block_p->Arbitrary != nullptr )
       {
-         thread_name.assign( reinterpret_cast<const wchar_t *>(thread_information_block_p->Arbitrary) );
+         thread_name.assign( static_cast<wchar_t const *>(thread_information_block_p->Arbitrary) );
       }
       else
       {

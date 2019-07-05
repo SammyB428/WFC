@@ -502,7 +502,7 @@ void CFileTransferProtocol::Dump( CDumpContext& dump_context ) const
 
 #endif // _DEBUG
 
-__checkReturn BOOL CFileTransferProtocol::PutFile( __in const CUniformResourceLocator& url, __in const std::vector<uint8_t>& file_contents )
+__checkReturn BOOL CFileTransferProtocol::PutFile( __in CUniformResourceLocator const& url, __in std::vector<uint8_t> const& file_contents )
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -692,13 +692,13 @@ __checkReturn BOOL CFileTransferProtocol::PutFile( __in const CUniformResourceLo
    return( return_value );
 }
 
-void CFileTransferProtocol::SetPassword( const std::wstring& password )
+void CFileTransferProtocol::SetPassword( std::wstring const& password )
 {
    WFC_VALIDATE_POINTER( this );
    m_Password = password;
 }
 
-void CFileTransferProtocol::SetUserName( const std::wstring& user_name )
+void CFileTransferProtocol::SetUserName( std::wstring const& user_name )
 {
    WFC_VALIDATE_POINTER( this );
    m_UserName = user_name;

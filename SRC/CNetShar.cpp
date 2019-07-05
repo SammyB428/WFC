@@ -295,7 +295,7 @@ _Check_return_ bool CNetworkShares::Add(_Inout_ CNetworkShareInformation& share_
    }
 }
 
-_Check_return_ DWORD CNetworkShares::Check( _In_z_ const wchar_t * name_of_device ) noexcept
+_Check_return_ DWORD CNetworkShares::Check( _In_z_ wchar_t const * name_of_device ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 

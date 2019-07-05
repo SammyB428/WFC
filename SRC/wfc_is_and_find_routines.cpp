@@ -160,7 +160,7 @@ __checkReturn bool PASCAL Win32FoundationClasses::wfc_is_dotted_ip_address( __in
     return( true );
 }
 
-__checkReturn bool PASCAL Win32FoundationClasses::wfc_is_dotted_ip_address( __in_z_opt const wchar_t * ip_address ) noexcept
+__checkReturn bool PASCAL Win32FoundationClasses::wfc_is_dotted_ip_address( __in_z_opt wchar_t const * ip_address ) noexcept
 {
     if ( ip_address == nullptr || ip_address[0] == 0x00 )
     {
@@ -546,7 +546,7 @@ __checkReturn bool PASCAL Win32FoundationClasses::wfc_is_octal_then_NULLs( __in_
     return( true );
 }
 
-__checkReturn bool PASCAL Win32FoundationClasses::wfc_is_wide_octal_then_NULLs( __in_bcount( number_of_bytes ) const uint8_t * buffer, __in const size_t number_of_bytes ) noexcept
+__checkReturn bool PASCAL Win32FoundationClasses::wfc_is_wide_octal_then_NULLs( __in_bcount( number_of_bytes ) uint8_t const * buffer, __in std::size_t const number_of_bytes ) noexcept
 {
     if ( buffer == nullptr || number_of_bytes < 2 )
     {
@@ -555,7 +555,7 @@ __checkReturn bool PASCAL Win32FoundationClasses::wfc_is_wide_octal_then_NULLs( 
 
     auto wide_string = reinterpret_cast<wchar_t const *>(buffer);
 
-    const int buffer_size = (int) (number_of_bytes / sizeof( wchar_t ));
+    int const buffer_size = (int) (number_of_bytes / sizeof( wchar_t ));
 
     int parser_state = 0;
 
@@ -622,7 +622,7 @@ __checkReturn bool PASCAL Win32FoundationClasses::wfc_is_wide_octal_then_NULLs( 
     return( true );
 }
 
-__checkReturn bool PASCAL Win32FoundationClasses::wfc_is_hexadecimal( __in_bcount( number_of_bytes ) const uint8_t * buffer, __in const size_t number_of_bytes ) noexcept
+__checkReturn bool PASCAL Win32FoundationClasses::wfc_is_hexadecimal( __in_bcount( number_of_bytes ) uint8_t const * buffer, __in std::size_t const number_of_bytes ) noexcept
 {
     if ( buffer == nullptr || number_of_bytes < 1 )
     {
@@ -640,7 +640,7 @@ __checkReturn bool PASCAL Win32FoundationClasses::wfc_is_hexadecimal( __in_bcoun
     return( true );
 }
 
-__checkReturn bool PASCAL Win32FoundationClasses::wfc_is_wide_hexadecimal( __in_bcount( number_of_bytes ) const uint8_t * buffer, __in const size_t number_of_bytes ) noexcept
+__checkReturn bool PASCAL Win32FoundationClasses::wfc_is_wide_hexadecimal( __in_bcount( number_of_bytes ) uint8_t const * buffer, __in std::size_t const number_of_bytes ) noexcept
 {
     if ( buffer == nullptr || number_of_bytes < 2 )
     {
@@ -662,7 +662,7 @@ __checkReturn bool PASCAL Win32FoundationClasses::wfc_is_wide_hexadecimal( __in_
     return( true );
 }
 
-__checkReturn bool PASCAL Win32FoundationClasses::wfc_is_hexadecimal_then_NULLs( __in_bcount( number_of_bytes ) const uint8_t * buffer, __in const size_t number_of_bytes ) noexcept
+__checkReturn bool PASCAL Win32FoundationClasses::wfc_is_hexadecimal_then_NULLs( __in_bcount( number_of_bytes ) uint8_t const * buffer, __in std::size_t const number_of_bytes ) noexcept
 {
     if ( buffer == nullptr || number_of_bytes < 1 )
     {
@@ -734,7 +734,7 @@ __checkReturn bool PASCAL Win32FoundationClasses::wfc_is_hexadecimal_then_NULLs(
     return( true );
 }
 
-__checkReturn bool PASCAL Win32FoundationClasses::wfc_is_wide_hexadecimal_then_NULLs( __in_bcount( number_of_bytes ) const uint8_t * buffer, __in const size_t number_of_bytes ) noexcept
+__checkReturn bool PASCAL Win32FoundationClasses::wfc_is_wide_hexadecimal_then_NULLs( __in_bcount( number_of_bytes ) uint8_t const * buffer, __in std::size_t const number_of_bytes ) noexcept
 {
     if ( buffer == nullptr || number_of_bytes < 2 )
     {
@@ -810,7 +810,7 @@ __checkReturn bool PASCAL Win32FoundationClasses::wfc_is_wide_hexadecimal_then_N
     return( true );
 }
 
-__checkReturn bool PASCAL Win32FoundationClasses::wfc_is_decimal( __in_bcount( number_of_bytes ) const uint8_t * buffer, __in const size_t number_of_bytes ) noexcept
+__checkReturn bool PASCAL Win32FoundationClasses::wfc_is_decimal( __in_bcount( number_of_bytes ) uint8_t const * buffer, __in std::size_t const number_of_bytes ) noexcept
 {
     if ( buffer == nullptr || number_of_bytes < 1 )
     {
@@ -828,7 +828,7 @@ __checkReturn bool PASCAL Win32FoundationClasses::wfc_is_decimal( __in_bcount( n
     return( true );
 }
 
-__checkReturn bool PASCAL Win32FoundationClasses::wfc_is_wide_decimal( __in_bcount( number_of_bytes ) const uint8_t * buffer, __in const size_t number_of_bytes ) noexcept
+__checkReturn bool PASCAL Win32FoundationClasses::wfc_is_wide_decimal( __in_bcount( number_of_bytes ) uint8_t const * buffer, __in std::size_t const number_of_bytes ) noexcept
 {
     if ( buffer == nullptr || number_of_bytes < 2 )
     {
@@ -850,7 +850,7 @@ __checkReturn bool PASCAL Win32FoundationClasses::wfc_is_wide_decimal( __in_bcou
     return( true );
 }
 
-__checkReturn bool PASCAL Win32FoundationClasses::wfc_is_decimal_then_NULLs( __in_bcount( number_of_bytes ) const uint8_t * buffer, __in const size_t number_of_bytes ) noexcept
+__checkReturn bool PASCAL Win32FoundationClasses::wfc_is_decimal_then_NULLs( __in_bcount( number_of_bytes ) uint8_t const * buffer, __in std::size_t const number_of_bytes ) noexcept
 {
     if ( buffer == nullptr || number_of_bytes < 1 )
     {
@@ -922,7 +922,7 @@ __checkReturn bool PASCAL Win32FoundationClasses::wfc_is_decimal_then_NULLs( __i
     return( true );
 }
 
-__checkReturn bool PASCAL Win32FoundationClasses::wfc_is_wide_decimal_then_NULLs( __in_bcount( number_of_bytes ) const uint8_t * buffer, __in const size_t number_of_bytes ) noexcept
+__checkReturn bool PASCAL Win32FoundationClasses::wfc_is_wide_decimal_then_NULLs( __in_bcount( number_of_bytes ) uint8_t const * buffer, __in std::size_t const number_of_bytes ) noexcept
 {
     if ( buffer == nullptr || number_of_bytes < 2 )
     {

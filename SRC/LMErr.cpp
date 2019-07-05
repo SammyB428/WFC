@@ -53,7 +53,7 @@ USING_WFC_NAMESPACE
 
 // These error codes come from lmerr.h
 
-void PASCAL Win32FoundationClasses::Convert_NERR_Code_to_String( _In_ const DWORD error_code, _Out_ std::wstring& error_message ) noexcept
+void PASCAL Win32FoundationClasses::Convert_NERR_Code_to_String( _In_ DWORD const error_code, _Out_ std::wstring& error_message ) noexcept
 {
    switch( error_code )
    {

@@ -154,7 +154,7 @@ struct BASE_BOARD_INFORMATION
 #define SYSTEM_MANAGEMENT_SYSTEM_INFORMATION (1)
 #define SYSTEM_MANAGEMENT_BIOS_BASE_BOARD_INFORMATION (2)
 
-inline static const _Check_return_ DEVICE_MANAGEMENT_INFORMATION_HEADER * __get_smbios_info( _In_ uint8_t const desired_type, _In_reads_bytes_( buffer_size ) uint8_t const * buffer, _In_ size_t const buffer_size ) noexcept
+inline static const _Check_return_ DEVICE_MANAGEMENT_INFORMATION_HEADER * __get_smbios_info( _In_ uint8_t const desired_type, _In_reads_bytes_( buffer_size ) uint8_t const * buffer, _In_ std::size_t const buffer_size ) noexcept
 {
     int buffer_index = 0;
 
@@ -220,14 +220,14 @@ void PASCAL Win32FoundationClasses::wfc_get_bios_uuid( _Out_ GUID& uuid ) noexce
 
     ZeroMemory( &uuid, sizeof( uuid ) );
 
-    const uint32_t buffer_size = ::GetSystemFirmwareTable( 'RSMB', 0, nullptr, 0 );
+    uint32_t const buffer_size = ::GetSystemFirmwareTable( 'RSMB', 0, nullptr, 0 );
 
     if ( buffer_size == 0 )
     {
         return;
     }
 
-    void * buffer = _aligned_malloc( buffer_size, 4096 );
+    auto buffer = _aligned_malloc( buffer_size, 4096 );
 
     if ( buffer == nullptr )
     {
@@ -254,14 +254,14 @@ void PASCAL Win32FoundationClasses::wfc_get_bios_serial_number( _Out_ std::wstri
 {
     serial_number.clear();
 
-    const uint32_t buffer_size = ::GetSystemFirmwareTable( 'RSMB', 0, nullptr, 0 );
+    uint32_t const buffer_size = ::GetSystemFirmwareTable( 'RSMB', 0, nullptr, 0 );
 
     if ( buffer_size == 0 )
     {
         return;
     }
 
-    void * buffer = _aligned_malloc( buffer_size, 4096 );
+    auto buffer = _aligned_malloc( buffer_size, 4096 );
 
     if ( buffer == nullptr )
     {

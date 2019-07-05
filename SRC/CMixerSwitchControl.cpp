@@ -100,7 +100,7 @@ void CMixerSwitchControl::Dump( CDumpContext& dump_context ) const
 
 #endif // _DEBUG
 
-__checkReturn bool CMixerSwitchControl::GetState( void ) noexcept
+_Check_return_ bool CMixerSwitchControl::GetState( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -114,7 +114,7 @@ __checkReturn bool CMixerSwitchControl::GetState( void ) noexcept
    return( return_value );
 }
 
-__checkReturn bool CMixerSwitchControl::m_GetAll( void ) noexcept
+_Check_return_ bool CMixerSwitchControl::m_GetAll( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -137,7 +137,7 @@ __checkReturn bool CMixerSwitchControl::m_GetAll( void ) noexcept
    return( return_value );
 }
 
-__checkReturn bool CMixerSwitchControl::SetState( __in const BOOL turn_on ) noexcept
+_Check_return_ bool CMixerSwitchControl::SetState( __in bool const turn_on ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -155,7 +155,7 @@ __checkReturn bool CMixerSwitchControl::SetState( __in const BOOL turn_on ) noex
    return( return_value );
 }
 
-__checkReturn bool CMixerSwitchControl::TurnOff( void ) noexcept
+_Check_return_ bool CMixerSwitchControl::TurnOff( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -164,7 +164,7 @@ __checkReturn bool CMixerSwitchControl::TurnOff( void ) noexcept
    return( return_value );
 }
 
-__checkReturn bool CMixerSwitchControl::TurnOn( void ) noexcept
+_Check_return_ bool CMixerSwitchControl::TurnOn( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -173,7 +173,7 @@ __checkReturn bool CMixerSwitchControl::TurnOn( void ) noexcept
    return( return_value );
 }
 
-__checkReturn CMixerSwitchControl& CMixerSwitchControl::operator=( __in const CMixerSwitchControl& source ) noexcept
+_Check_return_ CMixerSwitchControl& CMixerSwitchControl::operator=( __in const CMixerSwitchControl& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );

@@ -607,7 +607,7 @@ void CDataArchive::Write(__in const char value) noexcept
     Write(byte);
 }
 
-void CDataArchive::Write(__in const std::vector<uint8_t>& array) noexcept
+void CDataArchive::Write(__in std::vector<uint8_t> const& array) noexcept
 {
     WFC_VALIDATE_POINTER(this);
 
@@ -636,7 +636,7 @@ void CDataArchive::Write(__in const std::vector<uint8_t>& array) noexcept
     WFC_END_CATCH_ALL
 }
 
-void CDataArchive::Write(__in const std::vector<uint32_t>& array) noexcept
+void CDataArchive::Write(__in std::vector<uint32_t> const& array) noexcept
 {
     WFC_VALIDATE_POINTER(this);
 
@@ -775,7 +775,7 @@ void CDataArchive::Write(__in uint32_t const value) noexcept
         WFC_END_CATCH_ALL
 }
 
-void CDataArchive::Write(__in const wchar_t value) noexcept
+void CDataArchive::Write(__in wchar_t const value) noexcept
 {
     WFC_VALIDATE_POINTER(this);
 
@@ -841,7 +841,7 @@ void CDataArchive::Write(__in const float value) noexcept
         WFC_END_CATCH_ALL
 }
 
-void CDataArchive::Write(__in const int32_t value) noexcept
+void CDataArchive::Write(__in int32_t const value) noexcept
 {
     WFC_VALIDATE_POINTER(this);
 

@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 1995-2016, Samuel R. Blackburn
+** Copyright, 1995-2019, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -71,14 +71,14 @@ void CJulianDate::Dump( CDumpContext& dump_context ) const
 __checkReturn int CJulianDate::GetDayOfWeek( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
-   const long julian_day = (long) ( m_JulianDays + 0.5 );
+   long const julian_day = (long) ( m_JulianDays + 0.5 );
 
-   const int day_of_week = ( ( julian_day % 7L ) + 1 );
+   int const day_of_week = ( ( julian_day % 7L ) + 1 );
 
    return( ( day_of_week == 7 ) ? 0 : day_of_week );
 }
 
-__checkReturn bool CJulianDate::Set( __in const int year, __in const int month, __in const int day_parameter, __in const int hours, __in const int minutes, __in const int seconds ) noexcept
+__checkReturn bool CJulianDate::Set( __in int const year, __in int const month, __in int const day_parameter, __in int const hours, __in int const minutes, __in int const seconds ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 

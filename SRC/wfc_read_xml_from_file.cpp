@@ -51,7 +51,7 @@ static char THIS_FILE[] = __FILE__;
 
 USING_WFC_NAMESPACE
 
-_Check_return_ bool PASCAL Win32FoundationClasses::wfc_read_xml_from_file( _In_z_ const wchar_t * filename, _Inout_ CExtensibleMarkupLanguageDocument& document ) noexcept
+_Check_return_ bool PASCAL Win32FoundationClasses::wfc_read_xml_from_file( _In_z_ wchar_t const * filename, _Inout_ CExtensibleMarkupLanguageDocument& document ) noexcept
 {
     WFC_VALIDATE_POINTER( filename );
 

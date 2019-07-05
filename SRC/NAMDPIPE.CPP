@@ -60,7 +60,7 @@ USING_WFC_NAMESPACE
 ** named pipes are *almost* useful.
 */
 
-CNamedPipe::CNamedPipe( __in const uint32_t _input_buffer_size, __in const uint32_t _output_buffer_size )
+CNamedPipe::CNamedPipe( __in uint32_t const _input_buffer_size, __in uint32_t const _output_buffer_size )
 {
    WFC_VALIDATE_POINTER( this );
    m_Initialize( _input_buffer_size, _output_buffer_size );
@@ -82,7 +82,7 @@ CNamedPipe::~CNamedPipe()
    m_OutputBufferSize = 0L;
 }
 
-void CNamedPipe::m_Initialize( __in const uint32_t _input_buffer_size, __in const uint32_t _output_buffer_size ) noexcept
+void CNamedPipe::m_Initialize( __in uint32_t const _input_buffer_size, __in uint32_t const _output_buffer_size ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    m_AutomaticallyDelete = TRUE;
@@ -124,11 +124,11 @@ void CNamedPipe::Dump( CDumpContext& dump_context ) const
 
 __checkReturn  BOOL CNamedPipe::Call( __inout std::wstring& pipe_name,
                        LPVOID   write_buffer, 
-                 __in const DWORD    size_of_write_buffer, 
+                 __in DWORD const   size_of_write_buffer,
                        LPVOID   read_buffer, 
-                 __in const DWORD    size_of_read_buffer, 
+                 __in DWORD const   size_of_read_buffer,
                        DWORD   *address_of_number_of_bytes_read,
-                 __in const DWORD    number_of_milliseconds_to_wait ) noexcept
+                 __in DWORD const   number_of_milliseconds_to_wait ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( write_buffer );
@@ -204,9 +204,9 @@ __checkReturn bool CNamedPipe::Connect(__inout_opt LPOVERLAPPED overlapped_p ) n
 
 __checkReturn bool CNamedPipe::Create( __in_z LPCTSTR server_name,
                          __in_z LPCTSTR pipe_name,
-                   __in const DWORD   open_mode,
-                   __in const DWORD   type_of_pipe,
-                   __in const DWORD   number_of_pipes,
+                   __in DWORD const  open_mode,
+                   __in DWORD const  type_of_pipe,
+                   __in DWORD const  number_of_pipes,
            __inout_opt LPSECURITY_ATTRIBUTES security_attributes_p ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
@@ -398,8 +398,8 @@ __checkReturn bool CNamedPipe::Open( __in_z LPCTSTR pipe_name, __in const UINT )
    return( Create( unc.ServerName.c_str(), unc.PathName.c_str() ) );
 }
 
-__checkReturn BOOL CNamedPipe::Peek( __out_bcount( size_of_buffer ) LPVOID buffer_address, 
-                 __in const DWORD  size_of_buffer,
+__checkReturn BOOL CNamedPipe::Peek( __out_bcount( size_of_buffer ) LPVOID buffer_address,
+                 __in DWORD const size_of_buffer,
                       __out DWORD& number_of_bytes_read,
                       __out DWORD& number_of_bytes_available,
                       __out DWORD& number_of_bytes_remaining_in_message ) noexcept
@@ -487,7 +487,7 @@ __checkReturn bool CNamedPipe::Transact( __inout_opt LPOVERLAPPED overlapped_p )
    }
 }
 
-__checkReturn bool CNamedPipe::Wait( __in_z_opt LPCTSTR name_of_server, __in_z LPCTSTR name_of_pipe, __in const uint32_t number_of_milliseconds ) noexcept
+__checkReturn bool CNamedPipe::Wait( __in_z_opt LPCTSTR name_of_server, __in_z LPCTSTR name_of_pipe, __in uint32_t const number_of_milliseconds ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( name_of_pipe );

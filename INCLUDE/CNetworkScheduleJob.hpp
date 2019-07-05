@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 1995-2015, Samuel R. Blackburn
+** Copyright, 1995-2019, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -58,16 +58,16 @@ class CNetworkScheduleJob
       ** net API header files...
       */
 
-      CNetworkScheduleJob( __in const AT_ENUM * information_p );
-      CNetworkScheduleJob( __in const AT_INFO * information_p );
-      CNetworkScheduleJob( __in const CNetworkScheduleJob& source );
+      CNetworkScheduleJob( __in AT_ENUM const * information_p );
+      CNetworkScheduleJob( __in AT_INFO const * information_p );
+      CNetworkScheduleJob( __in CNetworkScheduleJob const& source );
       virtual ~CNetworkScheduleJob();
 
-      DWORD   ID;
-      DWORD   NumberOfMillisecondsFromMidnight;
-      DWORD   DaysOfTheMonth;
-      DWORD   DaysOfTheWeek;
-      DWORD   Flags;
+      DWORD   ID{ 0 };
+      DWORD   NumberOfMillisecondsFromMidnight{ 0 };
+      DWORD   DaysOfTheMonth{ 0 };
+      DWORD   DaysOfTheWeek{ 0 };
+      DWORD   Flags{ 0 };
       std::wstring Command;
 
       /*
@@ -75,11 +75,11 @@ class CNetworkScheduleJob
       ** net API header files...
       */
 
-      virtual void Copy( __in const AT_ENUM * source ) noexcept;
-      virtual void Copy( __in const AT_INFO * source ) noexcept;
-      virtual void Copy( __in const CNetworkScheduleJob& source ) noexcept;
-      virtual void Empty( void );
-      virtual const CNetworkScheduleJob& operator = ( __in const CNetworkScheduleJob& source ) noexcept;
+      virtual void Copy( __in AT_ENUM const * source ) noexcept;
+      virtual void Copy( __in AT_INFO const * source ) noexcept;
+      virtual void Copy( __in CNetworkScheduleJob const& source ) noexcept;
+      virtual void Empty( void ) noexcept;
+      virtual const CNetworkScheduleJob& operator = ( __in CNetworkScheduleJob const& source ) noexcept;
 
 #if defined( _DEBUG ) && ! defined( WFC_NO_DUMPING )
       virtual void Dump( CDumpContext& dump_context ) const;

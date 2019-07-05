@@ -62,12 +62,12 @@ class CSerialFile : public CDummyFile
 
       COMSTAT m_CommunicationsStatus;
 
-      virtual void m_ClearError( __in const int line_number = 0 ) noexcept;
+      virtual void m_ClearError( __in int const line_number = 0 ) noexcept;
 
    public:
 
-       CSerialFile(const CSerialFile&) = delete;
-       CSerialFile& operator=(const CSerialFile&) = delete;
+       CSerialFile(CSerialFile const&) = delete;
+       CSerialFile& operator=(CSerialFile const&) = delete;
        
        CSerialFile();
 
@@ -118,45 +118,45 @@ class CSerialFile : public CDummyFile
 
       HANDLE FileHandle{ INVALID_HANDLE_VALUE };
 
-      virtual __checkReturn BOOL  Attach( __in HANDLE new_handle, __out_opt HANDLE * old_handle ) noexcept;
-      virtual __checkReturn BOOL  CancelWaitFor( void ) noexcept;
-      virtual __checkReturn BOOL  ClearBreak( void ) noexcept;
+      virtual _Check_return_ BOOL  Attach( __in HANDLE new_handle, __out_opt HANDLE * old_handle ) noexcept;
+      virtual _Check_return_ BOOL  CancelWaitFor( void ) noexcept;
+      virtual _Check_return_ BOOL  ClearBreak( void ) noexcept;
       virtual void  Close( void ) noexcept;
-      virtual __checkReturn BOOL  ConfigurationDialog( __inout CCommunicationsConfiguration& configuration, __in const BOOL save_changes = TRUE, __in const HWND parent_window_handle = static_cast< HWND >( NULL ) ) noexcept;
-      virtual __checkReturn HANDLE Detach( void ) noexcept;
-      virtual __checkReturn DWORD GetBaudRate( void ) noexcept;
-      virtual __checkReturn BOOL  GetConfiguration( __inout CCommunicationsConfiguration& configuration ) noexcept;
-      virtual __checkReturn DWORD GetFlowControl( void ) noexcept;
-      virtual __checkReturn DWORD GetInputBufferSize( void ) noexcept;
-      virtual __checkReturn DWORD GetModemStatus( void ) noexcept;
-      virtual __checkReturn DWORD GetOutputBufferSize( void ) noexcept;
-      virtual __checkReturn BOOL  GetProperties( __inout CCommunicationProperties& properties ) noexcept;
-      virtual __checkReturn BOOL  GetState( __inout CDeviceControlBlock& device_control_block ) noexcept;
-      virtual __checkReturn BOOL  GetTimeouts( __inout COMMTIMEOUTS& timeouts ) noexcept;
-      virtual __checkReturn bool  IsDataWaiting( void ) noexcept;
-      virtual __checkReturn DWORD NumberOfBytesWaitingToBeRead( void ) noexcept;
-      virtual __checkReturn DWORD NumberOfBytesWaitingToBeWritten( void ) noexcept;
-      virtual __checkReturn bool  Open( void ) noexcept; // Name already filled, used in re-opening an existing session
-      __checkReturn bool  Open( __in_z LPCTSTR channel_name, __in UINT const open_flags = 0 ) noexcept override;
+      virtual _Check_return_ BOOL  ConfigurationDialog( __inout CCommunicationsConfiguration& configuration, __in const BOOL save_changes = TRUE, __in const HWND parent_window_handle = static_cast< HWND >( NULL ) ) noexcept;
+      virtual _Check_return_ HANDLE Detach( void ) noexcept;
+      virtual _Check_return_ DWORD GetBaudRate( void ) noexcept;
+      virtual _Check_return_ BOOL  GetConfiguration( __inout CCommunicationsConfiguration& configuration ) noexcept;
+      virtual _Check_return_ DWORD GetFlowControl( void ) noexcept;
+      virtual _Check_return_ DWORD GetInputBufferSize( void ) noexcept;
+      virtual _Check_return_ DWORD GetModemStatus( void ) noexcept;
+      virtual _Check_return_ DWORD GetOutputBufferSize( void ) noexcept;
+      virtual _Check_return_ BOOL  GetProperties( __inout CCommunicationProperties& properties ) noexcept;
+      virtual _Check_return_ BOOL  GetState( __inout CDeviceControlBlock& device_control_block ) noexcept;
+      virtual _Check_return_ BOOL  GetTimeouts( __inout COMMTIMEOUTS& timeouts ) noexcept;
+      virtual _Check_return_ bool  IsDataWaiting( void ) noexcept;
+      virtual _Check_return_ DWORD NumberOfBytesWaitingToBeRead( void ) noexcept;
+      virtual _Check_return_ DWORD NumberOfBytesWaitingToBeWritten( void ) noexcept;
+      virtual _Check_return_ bool  Open( void ) noexcept; // Name already filled, used in re-opening an existing session
+      _Check_return_ bool  Open( __in_z LPCTSTR channel_name, __in UINT const open_flags = 0 ) noexcept override;
 
-      virtual __checkReturn BOOL  Purge( __in DWORD const what_to_purge = purgeAll ) noexcept;
-      virtual __checkReturn UINT  Read( __out_bcount( length ) void * buffer, __in const UINT length ) noexcept;
+      virtual _Check_return_ BOOL  Purge( __in DWORD const what_to_purge = purgeAll ) noexcept;
+      virtual _Check_return_ UINT  Read( __out_bcount( length ) void * buffer, __in const UINT length ) noexcept;
       virtual void ReplaceGarbledCharacter( __in bool const yes_or_no = TRUE, __in const BYTE character_to_replace_the_garbled_one_with = ' ' ) noexcept;
 
-      virtual __checkReturn bool  SetBaudRate( __in uint32_t const baud_rate ) noexcept;
-      virtual __checkReturn BOOL  SetBreak( void ) noexcept;
-      virtual __checkReturn BOOL  SetCharacterToWaitFor( __in BYTE const character_to_wait_for ) noexcept;
-      virtual __checkReturn BOOL  SetDataTerminalReady( __in BOOL const set_DTR_on = TRUE ) noexcept;
+      virtual _Check_return_ bool  SetBaudRate( __in uint32_t const baud_rate ) noexcept;
+      virtual _Check_return_ BOOL  SetBreak( void ) noexcept;
+      virtual _Check_return_ BOOL  SetCharacterToWaitFor( __in BYTE const character_to_wait_for ) noexcept;
+      virtual _Check_return_ BOOL  SetDataTerminalReady( __in BOOL const set_DTR_on = TRUE ) noexcept;
       virtual void  SetFlowControl( __in DWORD const flow_control ) noexcept;
       virtual void  SetInputBufferSize( __in DWORD const buffer_size ) noexcept;
       virtual void  SetOutputBufferSize( __in DWORD const buffer_size ) noexcept;
-      virtual __checkReturn BOOL  SetPurgeBufferOnError( __in BOOL const purge_buffer = TRUE ) noexcept;
-      virtual __checkReturn BOOL  SetRequestToSend( __in BOOL const set_RTS_on = TRUE ) noexcept;
-      virtual __checkReturn BOOL  SetState( __inout CDeviceControlBlock& device_control_block ) noexcept;
-      virtual __checkReturn BOOL  SetTimeouts( __in_opt COMMTIMEOUTS const * timeouts_p = nullptr ) noexcept;
-      virtual __checkReturn BOOL  TransmitCharacter( __in char const character_to_transmit ) noexcept;
-      virtual __checkReturn BOOL  WaitFor( __inout DWORD& stuff_you_can_wait_for ) noexcept;
-      virtual __checkReturn bool  WaitForString( __in std::string const& string_to_wait_for, __in const DWORD seconds = 5, __inout_opt std::string * what_was_read = nullptr ) noexcept;
+      virtual _Check_return_ BOOL  SetPurgeBufferOnError( __in BOOL const purge_buffer = TRUE ) noexcept;
+      virtual _Check_return_ BOOL  SetRequestToSend( __in BOOL const set_RTS_on = TRUE ) noexcept;
+      virtual _Check_return_ BOOL  SetState( __inout CDeviceControlBlock& device_control_block ) noexcept;
+      virtual _Check_return_ BOOL  SetTimeouts( __in_opt COMMTIMEOUTS const * timeouts_p = nullptr ) noexcept;
+      virtual _Check_return_ BOOL  TransmitCharacter( __in char const character_to_transmit ) noexcept;
+      virtual _Check_return_ BOOL  WaitFor( __inout DWORD& stuff_you_can_wait_for ) noexcept;
+      virtual _Check_return_ bool  WaitForString( __in std::string const& string_to_wait_for, __in DWORD const seconds = 5, __inout_opt std::string * what_was_read = nullptr ) noexcept;
       void  Write( __in std::vector<uint8_t> const& bytes ) noexcept override;
       void  Write( __in std::string const& data_to_write ) noexcept override;
       void  Write( __in_bcount( number_of_bytes ) void const * buffer, __in UINT const number_of_bytes ) noexcept override;

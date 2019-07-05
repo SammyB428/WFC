@@ -130,7 +130,7 @@ __checkReturn uint64_t CDummyFile::GetPosition( void ) const noexcept
    return( 0 );
 }
 
-__checkReturn bool CDummyFile::LockRange( __in const uint64_t /* position */, __in const uint64_t /* number_of_bytes_to_lock */ ) noexcept
+__checkReturn bool CDummyFile::LockRange( __in uint64_t const /* position */, __in uint64_t const /* number_of_bytes_to_lock */ ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    ASSERT( FALSE ); // Unsupported function
@@ -187,7 +187,7 @@ void CDummyFile::Rename( __in_z LPCTSTR OldName, __in_z LPCTSTR NewName ) noexce
 
 #pragma warning( disable : 4100 )
 
-__checkReturn uint64_t CDummyFile::Seek( __in const int64_t /* Offset */, __in const SeekPosition /* From */ ) noexcept
+__checkReturn uint64_t CDummyFile::Seek( __in int64_t const /* Offset */, __in SeekPosition const /* From */ ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    ASSERT( FALSE ); // Unsupported function
@@ -198,7 +198,7 @@ __checkReturn uint64_t CDummyFile::Seek( __in const int64_t /* Offset */, __in c
 
 #pragma warning( disable : 4100 )
 
-void CDummyFile::SetLength( __in const uint64_t /* length */ ) noexcept
+void CDummyFile::SetLength( __in uint64_t const /* length */ ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    ASSERT( FALSE ); // Unsupported function
@@ -206,26 +206,26 @@ void CDummyFile::SetLength( __in const uint64_t /* length */ ) noexcept
 
 #if ! defined( WFC_STL )
 
-void CDummyFile::SetStatus( __in_z LPCTSTR /* name */, __in const CFileStatus& /* status */ )
+void CDummyFile::SetStatus( __in_z LPCTSTR /* name */, __in CFileStatus const& /* status */ )
 {
    WFC_VALIDATE_POINTER( this );
 }
 
 #endif // WFC_STL
 
-void CDummyFile::UnlockRange(_In_ const uint64_t /* position */, _In_ const uint64_t /* number_of_bytes_to_unlock */ ) noexcept
+void CDummyFile::UnlockRange(_In_ uint64_t const /* position */, _In_ uint64_t const /* number_of_bytes_to_unlock */ ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    ASSERT( FALSE ); // Unsupported function
 }
 
-void CDummyFile::Write( _In_ const std::string& string_to_write ) noexcept
+void CDummyFile::Write( _In_ std::string const& string_to_write ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    CFile64::Write( (const void *) string_to_write.c_str(), static_cast<UINT>(string_to_write.length()));
 }
 
-void CDummyFile::Write(_In_ const std::vector<uint8_t>& data_to_write ) noexcept
+void CDummyFile::Write(_In_ std::vector<uint8_t> const& data_to_write ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -234,9 +234,9 @@ void CDummyFile::Write(_In_ const std::vector<uint8_t>& data_to_write ) noexcept
    // Well whaddya know, there's an undocumented yet "public" function
    // that let's us have quick access to the raw bytes...
 
-   const uint8_t * buffer = data_to_write.data();
+   auto buffer = data_to_write.data();
 
-   CFile64::Write( (const void *) buffer, number_of_bytes_to_write );
+   CFile64::Write( static_cast<void const *>(buffer), number_of_bytes_to_write );
 }
 
 #pragma warning( default : 4100 )

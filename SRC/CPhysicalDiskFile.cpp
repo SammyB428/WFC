@@ -224,7 +224,7 @@ _Check_return_ DWORD CPhysicalDiskFile::GetMediaType( void ) const noexcept
    return( m_DiskGeometry.MediaType );
 }
 
-_Check_return_ bool CPhysicalDiskFile::GetSectorSize( _Out_ size_t& number_of_bytes_per_sector ) const noexcept
+_Check_return_ bool CPhysicalDiskFile::GetSectorSize( _Out_ std::size_t& number_of_bytes_per_sector ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -366,7 +366,7 @@ _Check_return_ bool CPhysicalDiskFile::Open( _In_z_ LPCTSTR drive_letter, _In_ c
    return( false );
 }
 
-_Check_return_ bool CPhysicalDiskFile::Open( _In_ const int physical_disk_number, _In_ const UINT ) noexcept
+_Check_return_ bool CPhysicalDiskFile::Open( _In_ int const physical_disk_number, _In_ UINT const) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -409,7 +409,7 @@ _Check_return_ bool CPhysicalDiskFile::Open( _In_ const int physical_disk_number
    return( true );
 }
 
-_Check_return_ bool CPhysicalDiskFile::OpenRead(_In_z_ const wchar_t * physical_drive_name) noexcept
+_Check_return_ bool CPhysicalDiskFile::OpenRead(_In_z_ wchar_t const * physical_drive_name) noexcept
 {
     WFC_VALIDATE_POINTER(this);
     WFC_VALIDATE_POINTER(physical_drive_name);
@@ -449,7 +449,7 @@ _Check_return_ bool CPhysicalDiskFile::OpenRead(_In_z_ const wchar_t * physical_
     return(true);
 }
 
-_Check_return_ bool CPhysicalDiskFile::OpenRead(_In_ const int physical_disk_number ) noexcept
+_Check_return_ bool CPhysicalDiskFile::OpenRead(_In_ int const physical_disk_number ) noexcept
 {
     WFC_VALIDATE_POINTER(this);
 
@@ -460,7 +460,7 @@ _Check_return_ bool CPhysicalDiskFile::OpenRead(_In_ const int physical_disk_num
     return(OpenRead(filename.c_str()));
 }
 
-_Check_return_ UINT CPhysicalDiskFile::Read( __out_bcount( count ) void * buffer, _In_ const UINT count ) noexcept
+_Check_return_ UINT CPhysicalDiskFile::Read( __out_bcount( count ) void * buffer, _In_ UINT const count ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER_NULL_OK( buffer );

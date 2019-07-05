@@ -51,27 +51,27 @@ static char THIS_FILE[] = __FILE__;
 
 USING_WFC_NAMESPACE
 
-void PASCAL Win32FoundationClasses::wfc_append_string_to_byte_array( _In_ const std::wstring& string_to_append, __out std::vector<uint8_t>& bytes ) noexcept
+void PASCAL Win32FoundationClasses::wfc_append_string_to_byte_array( _In_ std::wstring const& string_to_append, __out std::vector<uint8_t>& bytes ) noexcept
 {
    wfc_append_unicode_string_to_byte_array( string_to_append.c_str(), bytes );
 }
 
-void PASCAL Win32FoundationClasses::wfc_append_ascii_string_to_byte_array( __in_z const char * string_to_append, __inout std::vector<uint8_t>& bytes ) noexcept
+void PASCAL Win32FoundationClasses::wfc_append_ascii_string_to_byte_array( __in_z char const * string_to_append, __inout std::vector<uint8_t>& bytes ) noexcept
 {
-   const std::size_t string_length = strlen( string_to_append );
-   const std::size_t original_array_size = bytes.size();
+   std::size_t const string_length = strlen( string_to_append );
+   std::size_t const original_array_size = bytes.size();
 
    bytes.resize( string_length + original_array_size );
 
-   uint8_t * buffer = bytes.data();
+   auto buffer = bytes.data();
 
    CopyMemory( &buffer[ original_array_size ], string_to_append, string_length );
 }
 
-void PASCAL Win32FoundationClasses::wfc_append_unicode_string_to_byte_array( __in_z const wchar_t * string_to_append, __inout std::vector<uint8_t>& bytes ) noexcept
+void PASCAL Win32FoundationClasses::wfc_append_unicode_string_to_byte_array( __in_z wchar_t const * string_to_append, __inout std::vector<uint8_t>& bytes ) noexcept
 {
-   const std::size_t string_length = wcslen( string_to_append ) * sizeof( wchar_t );
-   const std::size_t original_array_size = bytes.size();
+   std::size_t const string_length = wcslen( string_to_append ) * sizeof( wchar_t );
+   std::size_t const original_array_size = bytes.size();
 
    bytes.resize( string_length + original_array_size );
 

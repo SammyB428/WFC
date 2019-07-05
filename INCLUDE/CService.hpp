@@ -4,7 +4,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 1995-2016, Samuel R. Blackburn
+** Copyright, 1995-2019, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -67,10 +67,10 @@ class CService
 
       static CService * m_StaticService_p;
 
-      CService(__in const CService&) = delete;
-      CService& operator=(__in const CService&) = delete;
+      CService(__in CService const&) = delete;
+      CService& operator=(__in CService const&) = delete;
 
-      CService( __callback LPTHREAD_START_ROUTINE thread_start_routine, __in const DWORD accepted_controls = ACCEPT_FLAGS, __in const DWORD wait_hint = 30011 );
+      CService( __callback LPTHREAD_START_ROUTINE thread_start_routine, __in DWORD const accepted_controls = ACCEPT_FLAGS, __in DWORD const wait_hint = 30011 );
 
       /*
       ** Destructor should be virtual according to MSJ article in Sept 1992
@@ -81,15 +81,15 @@ class CService
 
       std::vector<std::wstring> CommandLineParameters;
 
-      static __checkReturn HANDLE CreateConfigurationFile( __in_z LPCTSTR filename ) noexcept;
-      static __checkReturn bool   SpawnProcess( __in_z LPCTSTR command_line, __in_z LPCTSTR current_directory, __out DWORD& last_error ) noexcept;
+      static _Check_return_ HANDLE CreateConfigurationFile( __in_z LPCTSTR filename ) noexcept;
+      static _Check_return_ bool   SpawnProcess( __in_z LPCTSTR command_line, __in_z LPCTSTR current_directory, __out DWORD& last_error ) noexcept;
 
-      virtual __checkReturn BOOL Initialize( __in_z LPCWSTR name_of_service ) noexcept;
+      virtual _Check_return_ BOOL Initialize( __in_z LPCWSTR name_of_service ) noexcept;
       void LogEvent( __in WORD event_type = EVENTLOG_ERROR_TYPE, __in_z_opt LPCTSTR message_string = nullptr, __in DWORD error_code = NO_ERROR ) noexcept;
-      virtual __checkReturn INT_PTR DialogBoxParam( __in HINSTANCE instance, __in_z LPCTSTR template_name, __in HWND parent_window, __callback DLGPROC dialogbox_procedure, __in LPARAM lParam = 0 ) noexcept;
+      virtual _Check_return_ INT_PTR DialogBoxParam( __in HINSTANCE instance, __in_z LPCTSTR template_name, __in HWND parent_window, __callback DLGPROC dialogbox_procedure, __in LPARAM lParam = 0 ) noexcept;
 
       // 2012-05-128 - MessageBox gets #defined to MessageBoxW which causes problems in managed C++ builds
-      virtual __checkReturn int ShowMessageBox( __in_z_opt LPCTSTR text, __in_z_opt LPCTSTR caption, __in UINT type ) noexcept;
+      virtual _Check_return_ int ShowMessageBox( __in_z_opt LPCTSTR text, __in_z_opt LPCTSTR caption, __in UINT type ) noexcept;
 
       /// <summary>Sets the parameter used in the OnxxxCallback methods</summary>
       inline void SetCallbackParameter( __in void * parameter ) noexcept
@@ -142,13 +142,13 @@ class CService
       wchar_t * m_ServiceName{ nullptr };
 
       static void CALLBACK ServiceControlManagerHandler( _In_ DWORD control_code );
-      static void CALLBACK ServiceMain( _In_ const DWORD argc, _In_reads_z_( argc ) LPCTSTR argv[] );
+      static void CALLBACK ServiceMain( _In_ DWORD const argc, _In_reads_z_( argc ) LPCTSTR argv[] );
 
-      virtual void ParseCommandLineParameters( _In_ const DWORD argc, _In_reads_z_( argc ) LPCTSTR argv[] ) noexcept;
+      virtual void ParseCommandLineParameters( _In_ DWORD const argc, _In_reads_z_( argc ) LPCTSTR argv[] ) noexcept;
       virtual void OnControlCode( _In_ DWORD control_code ) noexcept;
       virtual void OnShutdown( void ) noexcept;
       virtual void OnStop( void ) noexcept;
-      virtual __checkReturn BOOL OnPrepareServiceThread( void ) noexcept;
+      virtual _Check_return_ BOOL OnPrepareServiceThread( void ) noexcept;
       virtual void OnPause( void ) noexcept;
       virtual void OnContinue( void ) noexcept;
 
@@ -159,7 +159,7 @@ class CService
 
       virtual void Exit( void ) noexcept;
 
-      virtual __checkReturn BOOL SendStatusToServiceControlManager( __in DWORD current_state,
+      virtual _Check_return_ BOOL SendStatusToServiceControlManager( __in DWORD current_state,
                                                       __in DWORD win32_exit_code = NO_ERROR,
                                                       __in DWORD check_point = 0, 
                                                       __in DWORD wait_hint = 0,

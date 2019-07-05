@@ -523,13 +523,13 @@ bool CCryptographicProvider::GetNext( DWORD& flags, CCryptographicAlgorithm& alg
    return( false );
 }
 
-bool CCryptographicProvider::GetParameter( const DWORD parameter_to_get, std::vector<uint8_t>& buffer, const DWORD flags ) noexcept
+bool CCryptographicProvider::GetParameter( DWORD const parameter_to_get, std::vector<uint8_t>& buffer, DWORD const flags ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
    buffer.resize( 4096 );
 
-   DWORD size_of_buffer = (DWORD) buffer.size();
+   DWORD size_of_buffer = static_cast<DWORD>(buffer.size());
 
    if ( ::CryptGetProvParam( m_CryptographicProvider, parameter_to_get, buffer.data(), &size_of_buffer, flags ) == FALSE )
    {
@@ -958,11 +958,11 @@ __checkReturn bool CCryptographicProvider::Open(__in_z_opt LPCTSTR container_nam
    WFC_END_CATCH_ALL
 }
 
-bool CCryptographicProvider::SetDefault( const std::wstring& name, DWORD type ) noexcept
+bool CCryptographicProvider::SetDefault( std::wstring const& name, DWORD type ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
-   const BOOL return_value = ::CryptSetProviderW( name.c_str(), type );
+   BOOL const return_value = ::CryptSetProviderW( name.c_str(), type );
 
    if ( return_value == FALSE )
    {
@@ -1078,7 +1078,7 @@ zero, the bytes in <CODE>bytes</CODE> will be overwritten with random bytes.
 <DT><PRE>BOOL <B><A NAME="GetNext">GetNext</A></B>( DWORD&amp; enumerator, CCryptographicAlgorithm&amp; algorithm )</PRE><DD>
 Used to walk the list of enumerated thingies.
 
-<DT><PRE>BOOL <B><A NAME="GetParameter">GetParameter</A></B>( const DWORD what_to_get, std::vector&lt;uint8_t&gt;&amp; buffer, const DWORD flags )</PRE><DD>
+<DT><PRE>BOOL <B><A NAME="GetParameter">GetParameter</A></B>( DWORD const what_to_get, std::vector&lt;uint8_t&gt;&amp; buffer, DWORD const flags )</PRE><DD>
 Retrieves information about the crypto.
 <CODE>what_to_get</CODE> may be one of the following:
 <UL>

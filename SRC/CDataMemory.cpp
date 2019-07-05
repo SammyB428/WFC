@@ -230,7 +230,7 @@ __checkReturn UINT CDataMemory::Read(__out_bcount(read_size) void * buffer, __in
 
    WFC_TRY
    {
-      size_t number_of_bytes_read = 0;
+      std::size_t number_of_bytes_read = 0;
 
       if ( ( m_Position + number_of_bytes_to_read ) > (DWORD) m_Data.size() )
       {
@@ -263,7 +263,7 @@ __checkReturn UINT CDataMemory::Read(__out_bcount(read_size) void * buffer, __in
    WFC_END_CATCH_ALL
 }
 
-_Check_return_ uint64_t CDataMemory::Seek(_In_ const int64_t offset, _In_ const CFile64::SeekPosition from ) noexcept
+_Check_return_ uint64_t CDataMemory::Seek(_In_ int64_t const offset, _In_ CFile64::SeekPosition const from ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -298,7 +298,7 @@ _Check_return_ uint64_t CDataMemory::Seek(_In_ const int64_t offset, _In_ const 
    return( m_Position );
 }
 
-void CDataMemory::Write( __in_bcount( number_of_bytes_to_write ) const void * buffer, __in const UINT number_of_bytes_to_write ) noexcept
+void CDataMemory::Write( __in_bcount( number_of_bytes_to_write ) void const * buffer, __in UINT const number_of_bytes_to_write ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER_NULL_OK( buffer );
@@ -337,28 +337,28 @@ void CDataMemory::Write( __in_bcount( number_of_bytes_to_write ) const void * bu
    WFC_END_CATCH_ALL
 }
 
-__checkReturn const CDataMemory& CDataMemory::operator=( __in const CDataMemory& source ) noexcept
+__checkReturn CDataMemory const& CDataMemory::operator=( __in CDataMemory const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );
    return( *this );
 }
 
-__checkReturn const CDataMemory& CDataMemory::operator=( __in const std::vector<uint8_t>& source ) noexcept
+__checkReturn CDataMemory const& CDataMemory::operator=( __in std::vector<uint8_t> const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );
    return( *this );
 }
 
-__checkReturn const CDataMemory& CDataMemory::operator+=( __in const std::vector<uint8_t>& source ) noexcept
+__checkReturn CDataMemory const& CDataMemory::operator+=( __in std::vector<uint8_t> const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Append( source );
    return( *this );
 }
 
-__checkReturn const CDataMemory& CDataMemory::operator+=( __in const CDataMemory& source ) noexcept
+__checkReturn CDataMemory const& CDataMemory::operator+=( __in CDataMemory const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Append( source );

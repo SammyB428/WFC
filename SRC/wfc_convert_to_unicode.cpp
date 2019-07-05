@@ -89,7 +89,7 @@ _Check_return_ VOID * PASCAL Win32FoundationClasses::wfc_get_unicode_conversion_
 
 #define MINIMUM_CODE_PAGE_DETECTION_BUFFER_SIZE (512)
 
-static inline _Check_return_ bool __detect_code_page(_In_ IMultiLanguage2 * interface_pointer, _In_reads_bytes_( number_of_bytes_in_buffer ) const BYTE * bytes, _In_ size_t number_of_bytes_in_buffer, __in DWORD encoding_hints, _Out_ DWORD& detected_code_page ) noexcept
+static inline _Check_return_ bool __detect_code_page(_In_ IMultiLanguage2 * interface_pointer, _In_reads_bytes_( number_of_bytes_in_buffer ) uint8_t const * bytes, _In_ std::size_t number_of_bytes_in_buffer, __in DWORD encoding_hints, _Out_ DWORD& detected_code_page ) noexcept
 {
    WFC_VALIDATE_POINTER( interface_pointer );
    WFC_VALIDATE_POINTER( bytes );
@@ -103,9 +103,9 @@ static inline _Check_return_ bool __detect_code_page(_In_ IMultiLanguage2 * inte
           return(false);
       }
 
-      const DWORD number_of_encodings = 100;
+      DWORD const number_of_encodings = 100;
 
-      std::unique_ptr<DetectEncodingInfo[]> encodings = std::make_unique<DetectEncodingInfo[]>(number_of_encodings);
+      auto encodings = std::make_unique<DetectEncodingInfo[]>(number_of_encodings);
 
       if ( encodings.get() == nullptr )
       {
@@ -120,9 +120,9 @@ static inline _Check_return_ bool __detect_code_page(_In_ IMultiLanguage2 * inte
 
       if (number_of_bytes < MINIMUM_CODE_PAGE_DETECTION_BUFFER_SIZE)
       {
-          const int number_of_copies = (MINIMUM_CODE_PAGE_DETECTION_BUFFER_SIZE / number_of_bytes) + 1;
+          int const number_of_copies = (MINIMUM_CODE_PAGE_DETECTION_BUFFER_SIZE / number_of_bytes) + 1;
 
-          const int new_buffer_size = static_cast<int>((number_of_copies * static_cast<int>(number_of_bytes_in_buffer)) + number_of_copies);
+          int const new_buffer_size = static_cast<int>((number_of_copies * static_cast<int>(number_of_bytes_in_buffer)) + number_of_copies);
 
           new_buffer = std::make_unique<uint8_t []>(new_buffer_size);
 
@@ -162,7 +162,7 @@ static inline _Check_return_ bool __detect_code_page(_In_ IMultiLanguage2 * inte
                                                                    encodings.get(),
                                                                   &array_size );
 
-      const DWORD error_code = ::GetLastError();
+      DWORD const error_code = ::GetLastError();
 
       if ( ole_result != S_OK )
       {
@@ -224,7 +224,7 @@ static inline _Check_return_ bool __detect_code_page(_In_ IMultiLanguage2 * inte
    return( false );
 }
 
-_Check_return_ bool PASCAL Win32FoundationClasses::wfc_detect_code_page( _Inout_ VOID * unicode_conversion_context, _In_reads_bytes_( number_of_bytes_in_buffer ) const uint8_t * buffer, _In_ const size_t number_of_bytes_in_buffer, _In_ const uint32_t encoding_hints, _Out_ uint32_t& code_page ) noexcept
+_Check_return_ bool PASCAL Win32FoundationClasses::wfc_detect_code_page( _Inout_ VOID * unicode_conversion_context, _In_reads_bytes_( number_of_bytes_in_buffer ) uint8_t const * buffer, _In_ std::size_t const number_of_bytes_in_buffer, _In_ uint32_t const encoding_hints, _Out_ uint32_t& code_page ) noexcept
 {
    code_page = 0;
 
@@ -261,11 +261,11 @@ _Check_return_ bool PASCAL Win32FoundationClasses::wfc_detect_code_page( _Inout_
 
 _Check_return_ bool PASCAL Win32FoundationClasses::wfc_convert_to_unicode(
                                    _Inout_ VOID *            unicode_conversion_context, 
-                                   _In_  const std::vector<uint8_t>& bytes,
+                                   _In_  std::vector<uint8_t> const& bytes,
                                    __out_ecount_z( number_of_wide_characters ) wchar_t * unicode_string,
-                                   _In_ const size_t            number_of_wide_characters,
-                                   _In_ const DWORD             suggested_code_page,
-                                   _In_ const DWORD             encoding_hints,
+                                   _In_ std::size_t const            number_of_wide_characters,
+                                   _In_ DWORD const            suggested_code_page,
+                                   _In_ DWORD const            encoding_hints,
                                    __out_opt DWORD *           real_code_page_p ) noexcept
 {
    WFC_VALIDATE_POINTER( unicode_conversion_context );
@@ -274,11 +274,11 @@ _Check_return_ bool PASCAL Win32FoundationClasses::wfc_convert_to_unicode(
 }
 
 _Check_return_ bool PASCAL Win32FoundationClasses::wfc_convert_to_unicode( _Inout_ VOID *       unicode_conversion_context,
-                                    _In_reads_bytes_( number_of_bytes_in_buffer ) const BYTE * bytes,
-                                    _In_ const size_t       number_of_bytes_in_buffer,
+                                    _In_reads_bytes_( number_of_bytes_in_buffer ) BYTE const * bytes,
+                                    _In_ std::size_t const       number_of_bytes_in_buffer,
                                     __out_ecount_z( number_of_wide_characters ) wchar_t *    unicode_string,
-                                    _In_ const size_t       number_of_wide_characters,
-                                    _In_ const DWORD        suggested_code_page,
+                                    _In_ std::size_t const       number_of_wide_characters,
+                                    _In_ DWORD const       suggested_code_page,
                                     _In_ DWORD const       encoding_hints,
                                     __out_opt DWORD *      real_code_page_p ) noexcept
 {

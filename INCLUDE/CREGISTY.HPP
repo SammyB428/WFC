@@ -231,18 +231,18 @@ class CRegistry
       virtual __checkReturn bool Replace( __in_z wchar_t const * name_of_subkey,
                             __in_z wchar_t const * name_of_file_with_new_data,
                             __in_z wchar_t const * name_of_backup_file ) noexcept;
-      virtual __checkReturn bool Restore( __in_z wchar_t const * name_of_file_holding_saved_tree, __in const DWORD volitility_flags = 0 ) noexcept;
+      virtual __checkReturn bool Restore( __in_z wchar_t const * name_of_file_holding_saved_tree, __in DWORD const volitility_flags = 0 ) noexcept;
       virtual __checkReturn bool Save( __in_z wchar_t const * name_of_file_to_hold_tree, __in_opt LPSECURITY_ATTRIBUTES security_attributes_p = nullptr ) noexcept;
-      virtual __checkReturn bool SetBinaryValue( __in_z wchar_t const * name_of_value, __in const std::vector<uint8_t>& bytes_to_write ) noexcept;
+      virtual __checkReturn bool SetBinaryValue( __in_z wchar_t const * name_of_value, __in std::vector<uint8_t> const& bytes_to_write ) noexcept;
       virtual __checkReturn bool SetDoubleWordValue( __in_z wchar_t const * name_of_value, __in DWORD value_to_write ) noexcept;
       virtual __checkReturn bool SetSecurity( __in const SECURITY_INFORMATION& security_information,
                                 __in PSECURITY_DESCRIPTOR const security_descriptor_p ) noexcept;
-      virtual __checkReturn bool SetStringValue( __in_z wchar_t const * name_of_value, __in const std::wstring& string_value ) noexcept;
-      virtual __checkReturn bool SetStringArrayValue( __in_z wchar_t const * name_of_value, __in const std::vector<std::wstring>& string_array ) noexcept;
-      virtual __checkReturn bool SetValue( __in_z wchar_t const * name_of_value, __in const std::vector<uint8_t>& bytes_to_write ) noexcept;
+      virtual __checkReturn bool SetStringValue( __in_z wchar_t const * name_of_value, __in std::wstring const& string_value ) noexcept;
+      virtual __checkReturn bool SetStringArrayValue( __in_z wchar_t const * name_of_value, __in std::vector<std::wstring> const& string_array ) noexcept;
+      virtual __checkReturn bool SetValue( __in_z wchar_t const * name_of_value, __in std::vector<uint8_t> const& bytes_to_write ) noexcept;
       virtual __checkReturn bool SetValue( __in_z wchar_t const * name_of_value, __in DWORD value ) noexcept;
-      virtual __checkReturn bool SetValue( __in_z wchar_t const * name_of_value, __in const std::vector<std::wstring>& strings_to_write ) noexcept;
-      virtual __checkReturn bool SetValue( __in_z wchar_t const * name_of_value, __in const std::wstring& string_to_write ) noexcept;
+      virtual __checkReturn bool SetValue( __in_z wchar_t const * name_of_value, __in std::vector<std::wstring> const& strings_to_write ) noexcept;
+      virtual __checkReturn bool SetValue( __in_z wchar_t const * name_of_value, __in std::wstring const& string_to_write ) noexcept;
 
       virtual __checkReturn bool SetValue( __in_z wchar_t const *             name_of_subkey,
                              __in KeyValueTypes const type_of_value_to_set,

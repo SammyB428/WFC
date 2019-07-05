@@ -200,7 +200,7 @@ __checkReturn bool CMixerVolumeControl::m_GetAll( void ) noexcept
    return( return_value );
 }
 
-__checkReturn bool CMixerVolumeControl::SetLeftChannelVolume( __in const DWORD desired_level ) noexcept
+__checkReturn bool CMixerVolumeControl::SetLeftChannelVolume( __in DWORD const desired_level ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -230,7 +230,7 @@ __checkReturn bool CMixerVolumeControl::SetLeftChannelVolume( __in const DWORD d
    return( return_value );
 }
 
-__checkReturn bool CMixerVolumeControl::SetVolume( __in const DWORD desired_level ) noexcept
+__checkReturn bool CMixerVolumeControl::SetVolume( __in DWORD const desired_level ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -259,7 +259,7 @@ __checkReturn bool CMixerVolumeControl::SetVolume( __in const DWORD desired_leve
    return( return_value );
 }
 
-__checkReturn bool CMixerVolumeControl::SetRightChannelVolume( __in const DWORD desired_level ) noexcept
+__checkReturn bool CMixerVolumeControl::SetRightChannelVolume( __in DWORD const desired_level ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 

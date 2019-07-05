@@ -125,7 +125,7 @@ _Check_return_ bool PASCAL Win32FoundationClasses::wfc_delete_oldest_file( _In_z
     }
 }
 
-_Check_return_ uint32_t PASCAL Win32FoundationClasses::wfc_number_of_files_in_directory( _In_z_ const wchar_t * directory_path ) noexcept
+_Check_return_ uint32_t PASCAL Win32FoundationClasses::wfc_number_of_files_in_directory( _In_z_ wchar_t const * directory_path ) noexcept
 {
     uint32_t number_of_files = 0;
 
@@ -174,7 +174,7 @@ _Check_return_ uint32_t PASCAL Win32FoundationClasses::wfc_number_of_files_in_di
     return( number_of_files );
 }
 
-_Check_return_ uint64_t PASCAL Win32FoundationClasses::wfc_number_of_bytes_in_directory( _In_z_ const wchar_t * directory_path ) noexcept
+_Check_return_ uint64_t PASCAL Win32FoundationClasses::wfc_number_of_bytes_in_directory( _In_z_ wchar_t const * directory_path ) noexcept
 {
     uint64_t number_of_bytes = 0;
 

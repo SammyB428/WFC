@@ -218,32 +218,32 @@ class CTape : public CDummyFile
       */
 
       virtual __checkReturn BOOL BackupRead( __out_bcount( number_of_bytes_to_read ) LPBYTE      buffer,
-                               __in const DWORD number_of_bytes_to_read,
+                               __in DWORD const number_of_bytes_to_read,
                                __out LPDWORD     number_of_bytes_read,
                                __in BOOL        abort = FALSE,
                                __in BOOL        restore_security_data = TRUE ) noexcept; // BackupRead
 
-      virtual __checkReturn BOOL BackupSeek( __in const DWORD seek_low,
-                               __in const DWORD seek_high,
+      virtual __checkReturn BOOL BackupSeek( __in DWORD const seek_low,
+                               __in DWORD const seek_high,
                                __out LPDWORD seeked_low,
                                __out LPDWORD seeked_high ) noexcept; // BackupSeek
 
       virtual __checkReturn BOOL BackupWrite( __in_bcount( number_of_bytes_to_write ) LPBYTE buffer,
-                                __in const DWORD number_of_bytes_to_write,
+                                __in DWORD const number_of_bytes_to_write,
                                 __out LPDWORD     number_of_bytes_written,
                                 __in BOOL        abort = FALSE,
                                 __in BOOL        restore_security_data = TRUE ) noexcept; // BackupWrite
 
-      virtual BOOL CreatePartition( __in const TypeOfPartition type_of_partition,
-                                    __in const DWORD number_of_partitions,
-                                    __in const DWORD number_of_megabytes_in_each_partition ) noexcept; // CreateTapePartition
+      virtual BOOL CreatePartition( __in TypeOfPartition const type_of_partition,
+                                    __in DWORD const number_of_partitions,
+                                    __in DWORD const number_of_megabytes_in_each_partition ) noexcept; // CreateTapePartition
 
-      virtual BOOL Erase( __in const TypeOfErasure type_of_erasure, __in const BOOL return_immediately = FALSE ) noexcept; // EraseTape
+      virtual BOOL Erase( __in TypeOfErasure const type_of_erasure, __in BOOL const return_immediately = FALSE ) noexcept; // EraseTape
 
       virtual BOOL GetParameters( __out CTapeGetDriveParameters& parameters ) noexcept; // GetTapeParameters
       virtual BOOL GetParameters( __out CTapeGetMediaParameters& parameters ) noexcept;
 
-      virtual BOOL GetPosition( __in const Position type_of_position_to_get,
+      virtual BOOL GetPosition( __in Position const type_of_position_to_get,
                                 __out DWORD& partition_number,
                                 __out DWORD& position_low,
                                 __out DWORD& position_high ) noexcept; // GetTapePosition
@@ -251,29 +251,29 @@ class CTape : public CDummyFile
       virtual __checkReturn DWORD GetStatus( void ) const noexcept; // GetTapeStatus
       virtual __checkReturn DWORD GetDriveNumber( void ) const noexcept;
 
-      virtual __checkReturn BOOL Prepare( __in const Operation what_to_do, __in const BOOL return_immediately = FALSE ) noexcept; // PrepareTape
+      virtual __checkReturn BOOL Prepare( __in Operation const what_to_do, __in BOOL const return_immediately = FALSE ) noexcept; // PrepareTape
 
       virtual __checkReturn BOOL Rewind( void ) noexcept;
 
       virtual __checkReturn BOOL SetAutomaticallyClose( __in BOOL auto_close ) noexcept; // returns previous setting
-      virtual __checkReturn BOOL SetParameters( __in const CTapeSetDriveParameters& parameters ) noexcept; // SetTapeParameters
-      virtual __checkReturn BOOL SetParameters( __in const CTapeSetMediaParameters& parameters ) noexcept;
+      virtual __checkReturn BOOL SetParameters( __in CTapeSetDriveParameters const& parameters ) noexcept; // SetTapeParameters
+      virtual __checkReturn BOOL SetParameters( __in CTapeSetMediaParameters const& parameters ) noexcept;
 
-      virtual __checkReturn BOOL SetPosition( __in const PositionMethod how_to_get_there,
-                                __in const DWORD          partition_number,
-                                __in const DWORD          position_low,
-                                __in const DWORD          position_high,
-                                __in const BOOL           return_immediately = FALSE ) noexcept; // SetTapePosition
+      virtual __checkReturn BOOL SetPosition( __in PositionMethod const how_to_get_there,
+                                __in DWORD const         partition_number,
+                                __in DWORD const         position_low,
+                                __in DWORD const         position_high,
+                                __in BOOL const          return_immediately = FALSE ) noexcept; // SetTapePosition
 
-      virtual __checkReturn BOOL Mark( __in const TypeOfMark type_of_mark,
-                         __in const DWORD      number_of_marks_to_write, 
-                         __in const BOOL       return_immediately = FALSE ) noexcept; // WriteTapemark
+      virtual __checkReturn BOOL Mark( __in TypeOfMark const type_of_mark,
+                         __in DWORD const     number_of_marks_to_write,
+                         __in BOOL const      return_immediately = FALSE ) noexcept; // WriteTapemark
 
       /*
       ** API's to make life easier
       */
 
-      virtual __checkReturn BOOL Open( __in const UINT tape_drive_number_starting_at_zero = 0 ) noexcept;
+      virtual __checkReturn BOOL Open( __in UINT const tape_drive_number_starting_at_zero = 0 ) noexcept;
       virtual __checkReturn BOOL Load( void ) noexcept;
       virtual __checkReturn BOOL Lock( void ) noexcept;
       virtual __checkReturn BOOL Unload( void ) noexcept;

@@ -171,14 +171,14 @@ class CFile64
 
       static _Check_return_ bool Exists( _In_z_ LPCWSTR file_name ) noexcept
       {
-          const DWORD attributes = ::GetFileAttributesW( file_name );
+          auto const attributes = ::GetFileAttributesW( file_name );
 
           return( attributes == INVALID_FILE_ATTRIBUTES ? false : true );
       }
 
       static _Check_return_ bool Exists( _In_z_ LPCSTR file_name ) noexcept
       {
-          const DWORD attributes = ::GetFileAttributesA( file_name );
+          auto const attributes = ::GetFileAttributesA( file_name );
 
           return( attributes == INVALID_FILE_ATTRIBUTES ? false : true );
       }
@@ -187,7 +187,7 @@ class CFile64
 
       static _Check_return_ bool IsDirectory( _In_z_ LPCWSTR file_name ) noexcept
       {
-          const DWORD attributes = ::GetFileAttributesW( file_name );
+          auto const attributes = ::GetFileAttributesW( file_name );
 
           if ( attributes == INVALID_FILE_ATTRIBUTES )
           {
@@ -204,7 +204,7 @@ class CFile64
 
       static _Check_return_ bool IsDirectory( __in_z LPCSTR file_name ) noexcept
       {
-          const DWORD attributes = ::GetFileAttributesA( file_name );
+          auto const attributes = ::GetFileAttributesA( file_name );
 
           if ( attributes == INVALID_FILE_ATTRIBUTES )
           {

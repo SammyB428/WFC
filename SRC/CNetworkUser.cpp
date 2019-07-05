@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 1995-2016, Samuel R. Blackburn
+** Copyright, 1995-2019, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -75,7 +75,7 @@ CNetworkUsers::~CNetworkUsers()
    m_Initialize();
 }
 
-bool CNetworkUsers::Add( __in const CNetworkUserInformation& user_to_add ) noexcept
+bool CNetworkUsers::Add( __in CNetworkUserInformation const& user_to_add ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -344,7 +344,7 @@ bool CNetworkUsers::Add( __in const CNetworkUserInformation& user_to_add ) noexc
    return( true );
 }
 
-__checkReturn BOOL CNetworkUsers::ChangePassword( __in const std::wstring& user_name, __in const std::wstring& old_password, __in const std::wstring& new_password ) noexcept
+_Check_return_ BOOL CNetworkUsers::ChangePassword( __in std::wstring const& user_name, __in std::wstring const& old_password, __in std::wstring const& new_password ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    //WFCTRACEVAL( TEXT( "Changing password for " ), user_name );
@@ -423,7 +423,7 @@ void CNetworkUsers::Close( void ) noexcept
    }
 }
 
-__checkReturn BOOL CNetworkUsers::CreateComputerAccount( __in_z_opt LPCTSTR computer_name, __in DWORD type_of_account ) noexcept
+_Check_return_ BOOL CNetworkUsers::CreateComputerAccount( __in_z_opt LPCTSTR computer_name, __in DWORD type_of_account ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER_NULL_OK( computer_name );
@@ -618,7 +618,7 @@ BOOL CNetworkUsers::Delete( __in const std::wstring& user_to_delete ) noexcept
    return( Delete( user ) );
 }
 
-__checkReturn BOOL CNetworkUsers::Enumerate( void ) noexcept
+_Check_return_ bool CNetworkUsers::Enumerate( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -687,7 +687,7 @@ __checkReturn BOOL CNetworkUsers::Enumerate( void ) noexcept
    return( m_GetChunk() );
 }
 
-BOOL CNetworkUsers::ExpirePassword( __in const std::wstring& user_name ) noexcept
+bool CNetworkUsers::ExpirePassword( __in std::wstring const& user_name ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -734,7 +734,7 @@ BOOL CNetworkUsers::ExpirePassword( __in const std::wstring& user_name ) noexcep
          {
             ::NetApiBufferFree( user_information_p );
             user_information_p = nullptr;
-            return( TRUE );
+            return( true );
          }
 
          ::NetApiBufferFree( user_information_p );
@@ -890,10 +890,10 @@ BOOL CNetworkUsers::ExpirePassword( __in const std::wstring& user_name ) noexcep
       }
    }
 
-   return( FALSE );
+   return( false );
 }
 
-__checkReturn DWORD CNetworkUsers::GetLevel( void ) const noexcept
+_Check_return_ DWORD CNetworkUsers::GetLevel( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -925,7 +925,7 @@ __checkReturn DWORD CNetworkUsers::GetLevel( void ) const noexcept
    return( 0xFFFFFFFF );
 }
 
-__checkReturn BOOL CNetworkUsers::GetNext( __inout CNetworkUserInformation& information ) noexcept
+_Check_return_ bool CNetworkUsers::GetNext( __inout CNetworkUserInformation& information ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -943,19 +943,19 @@ __checkReturn BOOL CNetworkUsers::GetNext( __inout CNetworkUserInformation& info
          information.Copy( &m_3InformationBuffer[ m_3Index ] );
          m_3Index++;
 
-         return( TRUE );
+         return( true );
       }
       else
       {
          // We need another chunk
 
-         if ( m_GetChunk() != FALSE )
+         if ( m_GetChunk() != false )
          {
             return( GetNext( information ) );
          }
          else
          {
-            return( FALSE );
+            return( false );
          }
       }
    }
@@ -965,19 +965,19 @@ __checkReturn BOOL CNetworkUsers::GetNext( __inout CNetworkUserInformation& info
       {
          information.Copy( &m_2InformationBuffer[ m_2Index ] );
          m_2Index++;
-         return( TRUE );
+         return( true );
       }
       else
       {
          // We need another chunk
 
-         if ( m_GetChunk() != FALSE )
+         if ( m_GetChunk() != false )
          {
             return( GetNext( information ) );
          }
          else
          {
-            return( FALSE );
+            return( false );
          }
       }
    }
@@ -987,19 +987,19 @@ __checkReturn BOOL CNetworkUsers::GetNext( __inout CNetworkUserInformation& info
       {
          information.Copy( &m_1InformationBuffer[ m_1Index ] );
          m_1Index++;
-         return( TRUE );
+         return( true );
       }
       else
       {
          // We need another chunk
 
-         if ( m_GetChunk() != FALSE )
+         if ( m_GetChunk() != false )
          {
             return( GetNext( information ) );
          }
          else
          {
-            return( FALSE );
+            return( false );
          }
       }
    }
@@ -1009,19 +1009,19 @@ __checkReturn BOOL CNetworkUsers::GetNext( __inout CNetworkUserInformation& info
       {
          information.Copy( &m_10InformationBuffer[ m_10Index ] );
          m_10Index++;
-         return( TRUE );
+         return( true );
       }
       else
       {
          // We need another chunk
 
-         if ( m_GetChunk() != FALSE )
+         if ( m_GetChunk() != false )
          {
             return( GetNext( information ) );
          }
          else
          {
-            return( FALSE );
+            return( false );
          }
       }
    }
@@ -1031,28 +1031,28 @@ __checkReturn BOOL CNetworkUsers::GetNext( __inout CNetworkUserInformation& info
       {
          information.Copy( &m_0InformationBuffer[ m_0Index ] );
          m_0Index++;
-         return( TRUE );
+         return( true );
       }
       else
       {
          // We need another chunk
 
-         if ( m_GetChunk() != FALSE )
+         if ( m_GetChunk() != false )
          {
             return( GetNext( information ) );
          }
          else
          {
-            return( FALSE );
+            return( false );
          }
       }
    }
 
    information.Empty();
-   return( FALSE );
+   return( false );
 }
 
-__checkReturn BOOL CNetworkUsers::m_GetChunk( void ) noexcept
+_Check_return_ bool CNetworkUsers::m_GetChunk( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -1072,7 +1072,7 @@ __checkReturn BOOL CNetworkUsers::m_GetChunk( void ) noexcept
       m_3NumberOfEntriesRead      = 0;
       m_3ResumeHandle             = 0;
       m_3TotalNumberOfEntries     = 0;
-      return( FALSE );
+      return( false );
    }
 
    m_ErrorCode = ::NetUserEnum( m_WideDoubleBackslashPreceededMachineName.get(),
@@ -1095,7 +1095,7 @@ __checkReturn BOOL CNetworkUsers::m_GetChunk( void ) noexcept
          m_3ResumeHandle = 0;
       }
 
-      return( TRUE );
+      return( true );
    }
     
    if ( m_3InformationBuffer == nullptr )
@@ -1118,7 +1118,7 @@ __checkReturn BOOL CNetworkUsers::m_GetChunk( void ) noexcept
 
    if ( m_ErrorCode != ERROR_ACCESS_DENIED )
    {
-      return( FALSE );
+      return( false );
    }
 
    m_2Index = 0;
@@ -1134,7 +1134,7 @@ __checkReturn BOOL CNetworkUsers::m_GetChunk( void ) noexcept
       m_2NumberOfEntriesRead      = 0;
       m_2ResumeHandle             = 0;
       m_2TotalNumberOfEntries     = 0;
-      return( FALSE );
+      return( false );
    }
 
    m_ErrorCode = ::NetUserEnum(           m_WideDoubleBackslashPreceededMachineName.get(),
@@ -1157,7 +1157,7 @@ __checkReturn BOOL CNetworkUsers::m_GetChunk( void ) noexcept
          m_2ResumeHandle = 0;
       }
 
-      return( TRUE );
+      return( true );
    }
 
    // Make really sure the OS didn't modify our variables...
@@ -1175,7 +1175,7 @@ __checkReturn BOOL CNetworkUsers::m_GetChunk( void ) noexcept
 
    if ( m_ErrorCode != ERROR_ACCESS_DENIED )
    {
-      return( FALSE );
+      return( false );
    }
 
    m_1Index = 0;
@@ -1191,7 +1191,7 @@ __checkReturn BOOL CNetworkUsers::m_GetChunk( void ) noexcept
       m_1NumberOfEntriesRead      = 0;
       m_1ResumeHandle             = 0;
       m_1TotalNumberOfEntries     = 0;
-      return( FALSE );
+      return( false );
    }
 
    m_ErrorCode = ::NetUserEnum(           m_WideDoubleBackslashPreceededMachineName.get(),
@@ -1214,7 +1214,7 @@ __checkReturn BOOL CNetworkUsers::m_GetChunk( void ) noexcept
          m_1ResumeHandle = 0;
       }
 
-      return( TRUE );
+      return( true );
    }
 
    // Make really sure the OS didn't modify our variables...
@@ -1232,7 +1232,7 @@ __checkReturn BOOL CNetworkUsers::m_GetChunk( void ) noexcept
 
    if ( m_ErrorCode != ERROR_ACCESS_DENIED )
    {
-      return( FALSE );
+      return( false );
    }
 
    // Go after level 10 data
@@ -1249,7 +1249,7 @@ __checkReturn BOOL CNetworkUsers::m_GetChunk( void ) noexcept
       m_10NumberOfEntriesRead      = 0;
       m_10ResumeHandle             = 0;
       m_10TotalNumberOfEntries     = 0;
-      return( FALSE );
+      return( false );
    }
 
    m_ErrorCode = ::NetUserEnum(          m_WideDoubleBackslashPreceededMachineName.get(),
@@ -1272,7 +1272,7 @@ __checkReturn BOOL CNetworkUsers::m_GetChunk( void ) noexcept
          m_10ResumeHandle = 0;
       }
 
-      return( TRUE );
+      return( true );
    }
 
    // Make really sure the OS didn't modify our variables...
@@ -1290,7 +1290,7 @@ __checkReturn BOOL CNetworkUsers::m_GetChunk( void ) noexcept
 
    if ( m_ErrorCode != ERROR_ACCESS_DENIED )
    {
-      return( FALSE );
+      return( false );
    }
 
    // Go after level 0 data
@@ -1307,7 +1307,7 @@ __checkReturn BOOL CNetworkUsers::m_GetChunk( void ) noexcept
       m_0NumberOfEntriesRead      = 0;
       m_0ResumeHandle             = 0;
       m_0TotalNumberOfEntries     = 0;
-      return( FALSE );
+      return( false );
    }
 
    m_ErrorCode = ::NetUserEnum(          m_WideDoubleBackslashPreceededMachineName.get(),
@@ -1330,7 +1330,7 @@ __checkReturn BOOL CNetworkUsers::m_GetChunk( void ) noexcept
          m_0ResumeHandle = 0;
       }
 
-      return( TRUE );
+      return( true );
    }
 
    // Make really sure the OS didn't modify our variables...
@@ -1346,7 +1346,7 @@ __checkReturn BOOL CNetworkUsers::m_GetChunk( void ) noexcept
    m_0ResumeHandle         = 0;
    m_0TotalNumberOfEntries = 0;
 
-   return( FALSE );
+   return( false );
 }
 
 void CNetworkUsers::m_Initialize( void ) noexcept

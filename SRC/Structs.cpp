@@ -219,7 +219,7 @@ void CAccessAllowedEntry::Empty( void )
    SidStart        = 0;
 }
 
-__checkReturn CAccessAllowedEntry& CAccessAllowedEntry::operator=( __in const CAccessAllowedEntry& source )
+_Check_return_ CAccessAllowedEntry& CAccessAllowedEntry::operator=( __in const CAccessAllowedEntry& source )
 {
    Copy( source );
    return( *this );
@@ -384,7 +384,7 @@ void CAccessControlEntryHeader::Empty( void )
    AceSize  = 0;
 }
 
-__checkReturn CAccessControlEntryHeader& CAccessControlEntryHeader::operator=( __in const CAccessControlEntryHeader& source )
+_Check_return_ CAccessControlEntryHeader& CAccessControlEntryHeader::operator=( __in const CAccessControlEntryHeader& source )
 {
    Copy( source );
    return( *this );
@@ -469,7 +469,7 @@ void CAccessControlList::Empty( void )
    Sbz2        = 0;
 }
 
-__checkReturn CAccessControlList& CAccessControlList::operator=( __in const CAccessControlList& source )
+_Check_return_ CAccessControlList& CAccessControlList::operator=( __in const CAccessControlList& source )
 {
    Copy( source );
    return( *this );
@@ -643,7 +643,7 @@ void CAccessDeniedEntry::Empty( void )
    SidStart        = 0;
 }
 
-__checkReturn CAccessDeniedEntry& CAccessDeniedEntry::operator=( __in const CAccessDeniedEntry& source )
+_Check_return_ CAccessDeniedEntry& CAccessDeniedEntry::operator=( __in const CAccessDeniedEntry& source )
 {
    Copy( source );
    return( *this );
@@ -728,7 +728,7 @@ void CBitmapCoreHeader::Empty( void )
    bcBitCount = 0;
 }
 
-__checkReturn CBitmapCoreHeader& CBitmapCoreHeader::operator=( __in const CBitmapCoreHeader& source )
+_Check_return_ CBitmapCoreHeader& CBitmapCoreHeader::operator=( __in const CBitmapCoreHeader& source )
 {
    Copy( source );
    return( *this );
@@ -816,7 +816,7 @@ void CBitmapFileHeader::Empty( void )
    bfOffBits   = 0;
 }
 
-__checkReturn CBitmapFileHeader& CBitmapFileHeader::operator=( __in const CBitmapFileHeader& source )
+_Check_return_ CBitmapFileHeader& CBitmapFileHeader::operator=( __in const CBitmapFileHeader& source )
 {
    Copy( source );
    return( *this );
@@ -923,7 +923,7 @@ void CBitmapInfoHeader::Empty( void )
    biClrImportant  = 0;
 }
 
-__checkReturn CBitmapInfoHeader& CBitmapInfoHeader::operator=( __in const CBitmapInfoHeader& source )
+_Check_return_ CBitmapInfoHeader& CBitmapInfoHeader::operator=( __in const CBitmapInfoHeader& source )
 {
    Copy( source );
    return( *this );
@@ -1033,7 +1033,7 @@ void CColorAdjustment::Empty( void )
    caRedGreenTint    = 0;
 }
 
-__checkReturn CColorAdjustment& CColorAdjustment::operator=( __in const CColorAdjustment& source )
+_Check_return_ CColorAdjustment& CColorAdjustment::operator=( __in const CColorAdjustment& source )
 {
    Copy( source );
    return( *this );
@@ -1274,13 +1274,13 @@ void CCommunicationsConfiguration::Empty( void )
    ZeroMemory( &dcb, sizeof( dcb ) );
 }
 
-__checkReturn CCommunicationsConfiguration& CCommunicationsConfiguration::operator=( __in const CCommunicationsConfiguration& source )
+_Check_return_ CCommunicationsConfiguration& CCommunicationsConfiguration::operator=( __in const CCommunicationsConfiguration& source )
 {
    Copy( source );
    return( *this );
 }
 
-__checkReturn CCommunicationsConfiguration& CCommunicationsConfiguration::operator=( __in const COMMCONFIG& source )
+_Check_return_ CCommunicationsConfiguration& CCommunicationsConfiguration::operator=( __in const COMMCONFIG& source )
 {
    Copy( source );
    return( *this );
@@ -1300,7 +1300,7 @@ CCommunicationProperties::CCommunicationProperties( __in const CCommunicationPro
    Copy( source );
 }
 
-CCommunicationProperties::CCommunicationProperties( __in const _COMMPROP& source )
+CCommunicationProperties::CCommunicationProperties( __in _COMMPROP const& source )
 {
    Copy( source );
 }
@@ -1310,7 +1310,7 @@ CCommunicationProperties::~CCommunicationProperties()
    Empty();
 }
 
-void CCommunicationProperties::ConvertBaudRateToString( __in const DWORD baud_rate, __out std::wstring& human_readable_string ) const
+void CCommunicationProperties::ConvertBaudRateToString( __in DWORD const baud_rate, __out std::wstring& human_readable_string ) const noexcept
 {
    switch( baud_rate )
    {
@@ -1421,7 +1421,7 @@ void CCommunicationProperties::ConvertBaudRateToString( __in const DWORD baud_ra
    }
 }
 
-void CCommunicationProperties::ConvertBaudRateListToString( __in const DWORD baud_rate, __out std::wstring& human_readable_string ) const
+void CCommunicationProperties::ConvertBaudRateListToString( __in DWORD const baud_rate, __out std::wstring& human_readable_string ) const noexcept
 {
    human_readable_string.clear();
 
@@ -1621,7 +1621,7 @@ void CCommunicationProperties::ConvertBaudRateListToString( __in const DWORD bau
    }
 }
 
-void CCommunicationProperties::ConvertDataBitsToString( __in const DWORD data_bits, __out std::wstring& human_readable_string ) const
+void CCommunicationProperties::ConvertDataBitsToString( __in DWORD const data_bits, __out std::wstring& human_readable_string ) const noexcept
 {
    human_readable_string.clear();
 
@@ -1681,7 +1681,7 @@ void CCommunicationProperties::ConvertDataBitsToString( __in const DWORD data_bi
    }
 }
 
-void CCommunicationProperties::ConvertProviderCapabilitiesToString( __in const DWORD capabilities, __out std::wstring& human_readable_string ) const
+void CCommunicationProperties::ConvertProviderCapabilitiesToString( __in DWORD const capabilities, __out std::wstring& human_readable_string ) const noexcept
 {
    human_readable_string.clear();
 
@@ -1781,7 +1781,7 @@ void CCommunicationProperties::ConvertProviderCapabilitiesToString( __in const D
    }
 }
 
-void CCommunicationProperties::ConvertProviderSubtypeToString( __in const DWORD type, __out std::wstring& human_readable_string ) const
+void CCommunicationProperties::ConvertProviderSubtypeToString( __in DWORD const type, __out std::wstring& human_readable_string ) const noexcept
 {
    switch( type )
    {
@@ -1857,7 +1857,7 @@ void CCommunicationProperties::ConvertProviderSubtypeToString( __in const DWORD 
    }
 }
 
-void CCommunicationProperties::ConvertSettableParametersToString( __in const DWORD parameters, __out std::wstring& human_readable_string ) const
+void CCommunicationProperties::ConvertSettableParametersToString( __in DWORD const parameters, __out std::wstring& human_readable_string ) const noexcept
 {
    human_readable_string.clear();
 
@@ -1927,7 +1927,7 @@ void CCommunicationProperties::ConvertSettableParametersToString( __in const DWO
    }
 }
 
-void CCommunicationProperties::ConvertStopParityToString( __in const DWORD stop_parity, __out std::wstring& human_readable_string ) const
+void CCommunicationProperties::ConvertStopParityToString( __in DWORD const stop_parity, __out std::wstring& human_readable_string ) const noexcept
 {
    human_readable_string.clear();
 
@@ -2007,7 +2007,7 @@ void CCommunicationProperties::ConvertStopParityToString( __in const DWORD stop_
    }
 }
 
-void CCommunicationProperties::Copy( _In_ const CCommunicationProperties& source )
+void CCommunicationProperties::Copy( _In_ CCommunicationProperties const& source ) noexcept
 {
    ASSERT( &source != this );
 
@@ -2036,7 +2036,7 @@ void CCommunicationProperties::Copy( _In_ const CCommunicationProperties& source
    wcProvChar[ 0 ]     = source.wcProvChar[ 0 ];
 }
 
-void CCommunicationProperties::Copy( __in const _COMMPROP& source )
+void CCommunicationProperties::Copy( __in _COMMPROP const& source ) noexcept
 {
    wPacketLength       = source.wPacketLength;
    wPacketVersion      = source.wPacketVersion;
@@ -2096,7 +2096,7 @@ void CCommunicationProperties::Dump( CDumpContext& dump_context ) const
 
 #endif // _DEBUG
 
-void CCommunicationProperties::Empty( void )
+void CCommunicationProperties::Empty( void ) noexcept
 {
    wPacketLength       = 0;
    wPacketVersion      = 0;
@@ -2118,13 +2118,13 @@ void CCommunicationProperties::Empty( void )
    wcProvChar[ 0 ]     = 0;
 }
 
-__checkReturn CCommunicationProperties& CCommunicationProperties::operator=( __in const CCommunicationProperties& source )
+_Check_return_ CCommunicationProperties& CCommunicationProperties::operator=( __in CCommunicationProperties const& source ) noexcept
 {
    Copy( source );
    return( *this );
 }
 
-__checkReturn CCommunicationProperties& CCommunicationProperties::operator=( __in const _COMMPROP& source )
+_Check_return_ CCommunicationProperties& CCommunicationProperties::operator=( __in _COMMPROP const& source ) noexcept
 {
    Copy( source );
    return( *this );
@@ -2139,13 +2139,13 @@ CMemoryStatus::CMemoryStatus()
    Empty();
 }
 
-CMemoryStatus::CMemoryStatus( __in const CMemoryStatus& source )
+CMemoryStatus::CMemoryStatus( __in CMemoryStatus const& source )
 {
    Empty();
    Copy( source );
 }
 
-CMemoryStatus::CMemoryStatus( __in const MEMORYSTATUS * source )
+CMemoryStatus::CMemoryStatus( __in MEMORYSTATUS const * source )
 {
    Empty();
    Copy( source );
@@ -2156,12 +2156,12 @@ CMemoryStatus::~CMemoryStatus()
    Empty();
 }
 
-void CMemoryStatus::Copy( __in const CMemoryStatus& source )
+void CMemoryStatus::Copy( __in CMemoryStatus const& source )
 {
-   Copy( (const MEMORYSTATUS *) &source );
+   Copy( reinterpret_cast<MEMORYSTATUS const *>(&source) );
 }
 
-void CMemoryStatus::Copy( __in const MEMORYSTATUS * source )
+void CMemoryStatus::Copy( __in MEMORYSTATUS const * source )
 {
    WFC_VALIDATE_POINTER( source );
 
@@ -2221,7 +2221,7 @@ void CMemoryStatus::Empty( void )
    dwAvailVirtual  = 0;
 }
 
-__checkReturn CMemoryStatus& CMemoryStatus::operator=( __in const CMemoryStatus& source )
+_Check_return_ CMemoryStatus& CMemoryStatus::operator=( __in const CMemoryStatus& source )
 {
    Copy( source );
    return( *this );
@@ -2320,7 +2320,7 @@ void COFStruct::Empty( void )
    }
 }
 
-__checkReturn COFStruct& COFStruct::operator=( __in const COFStruct& source )
+_Check_return_ COFStruct& COFStruct::operator=( __in const COFStruct& source )
 {
    Copy( source );
    return( *this );
@@ -2352,12 +2352,12 @@ COutlineTextMetricA::~COutlineTextMetricA()
    Empty();
 }
 
-void COutlineTextMetricA::Copy( __in const COutlineTextMetricA& source )
+void COutlineTextMetricA::Copy( __in COutlineTextMetricA const& source ) noexcept
 {
    Copy( (const _OUTLINETEXTMETRICA *) &source );
 }
 
-void COutlineTextMetricA::Copy( __in const _OUTLINETEXTMETRICA * source )
+void COutlineTextMetricA::Copy( __in _OUTLINETEXTMETRICA const * source ) noexcept
 {
    WFC_VALIDATE_POINTER( source );
    ASSERT( source != this );
@@ -2536,7 +2536,7 @@ void COutlineTextMetricA::Dump( CDumpContext& dump_context ) const
 
 #endif // _DEBUG
 
-void COutlineTextMetricA::Empty( void )
+void COutlineTextMetricA::Empty( void ) noexcept
 {
    otmSize = sizeof( _OUTLINETEXTMETRICA );
 
@@ -2619,7 +2619,7 @@ void COutlineTextMetricA::Empty( void )
    otmpFullName           = nullptr;
 }
 
-__checkReturn COutlineTextMetricA& COutlineTextMetricA::operator=( __in const COutlineTextMetricA& source )
+_Check_return_ COutlineTextMetricA& COutlineTextMetricA::operator=( __in COutlineTextMetricA const& source ) noexcept
 {
    Copy( source );
    return( *this );
@@ -2647,12 +2647,12 @@ COutlineTextMetricW::~COutlineTextMetricW()
    Empty();
 }
 
-void COutlineTextMetricW::Copy( __in const COutlineTextMetricW& source )
+void COutlineTextMetricW::Copy( __in COutlineTextMetricW const& source ) noexcept
 {
    Copy( (const _OUTLINETEXTMETRICW *) &source );
 }
 
-void COutlineTextMetricW::Copy( __in const _OUTLINETEXTMETRICW * source )
+void COutlineTextMetricW::Copy( __in _OUTLINETEXTMETRICW const * source ) noexcept
 {
    WFC_VALIDATE_POINTER( source );
    ASSERT( source != this );
@@ -2831,7 +2831,7 @@ void COutlineTextMetricW::Dump( CDumpContext& dump_context ) const
 
 #endif // _DEBUG
 
-void COutlineTextMetricW::Empty( void )
+void COutlineTextMetricW::Empty( void ) noexcept
 {
    otmSize = sizeof( _OUTLINETEXTMETRICW );
 
@@ -2914,7 +2914,7 @@ void COutlineTextMetricW::Empty( void )
    otmpFullName           = nullptr;
 }
 
-__checkReturn COutlineTextMetricW& COutlineTextMetricW::operator=( __in const COutlineTextMetricW& source )
+_Check_return_ COutlineTextMetricW& COutlineTextMetricW::operator=( __in COutlineTextMetricW const& source ) noexcept
 {
    Copy( source );
    return( *this );
@@ -3232,7 +3232,7 @@ void CPixelFormatDescriptor::Empty( void )
    dwDamageMask    = 0;
 }
 
-__checkReturn CPixelFormatDescriptor& CPixelFormatDescriptor::operator=( __in const CPixelFormatDescriptor& source )
+_Check_return_ CPixelFormatDescriptor& CPixelFormatDescriptor::operator=( __in const CPixelFormatDescriptor& source )
 {
    Copy( source );
    return( *this );
@@ -3472,7 +3472,7 @@ void CSystemAuditEntry::Empty( void )
    SidStart        = 0;
 }
 
-__checkReturn CSystemAuditEntry& CSystemAuditEntry::operator=( __in const CSystemAuditEntry& source )
+_Check_return_ CSystemAuditEntry& CSystemAuditEntry::operator=( __in const CSystemAuditEntry& source )
 {
    Copy( source );
    return( *this );
@@ -3606,7 +3606,7 @@ void CTextMetricA::Empty( void )
    tmCharSet          = 0;
 }
 
-__checkReturn CTextMetricA& CTextMetricA::operator=( __in const CTextMetricA& source )
+_Check_return_ CTextMetricA& CTextMetricA::operator=( __in const CTextMetricA& source )
 {
    Copy( source );
    return( *this );
@@ -3740,7 +3740,7 @@ void CTextMetricW::Empty( void )
    tmCharSet          = 0;
 }
 
-__checkReturn CTextMetricW& CTextMetricW::operator=( __in const CTextMetricW& source )
+_Check_return_ CTextMetricW& CTextMetricW::operator=( __in const CTextMetricW& source )
 {
    Copy( source );
    return( *this );
@@ -3929,7 +3929,7 @@ void CWindowPlacement::Empty( void )
    rcNormalPosition.bottom = 0;
 }
 
-__checkReturn CWindowPlacement& CWindowPlacement::operator=( __in const CWindowPlacement& source )
+_Check_return_ CWindowPlacement& CWindowPlacement::operator=( __in const CWindowPlacement& source )
 {
    Copy( source );
    return( *this );

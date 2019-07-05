@@ -116,7 +116,7 @@ __checkReturn DWORD CMixerWaveIn::GetLeftChannelRecordingGain( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
-   const DWORD gain = m_RecordingGain.GetLeftChannelVolume();
+   auto const gain = m_RecordingGain.GetLeftChannelVolume();
 
    return( gain );
 }
@@ -125,7 +125,7 @@ __checkReturn DWORD CMixerWaveIn::GetRecordingGain( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
-   const DWORD gain = m_RecordingGain.GetVolume();
+   auto const gain = m_RecordingGain.GetVolume();
 
    return( gain );
 }
@@ -134,7 +134,7 @@ __checkReturn DWORD CMixerWaveIn::GetRightChannelRecordingGain( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
-   const DWORD gain = m_RecordingGain.GetRightChannelVolume();
+   auto const gain = m_RecordingGain.GetRightChannelVolume();
 
    return( gain );
 }
@@ -154,7 +154,7 @@ __checkReturn bool CMixerWaveIn::Open( __in UINT_PTR device_number, __in DWORD w
       return( false );
    }
 
-   return_value = m_Mixer.GetByComponent( CMixerLine::destinationWaveIn, m_MixerLine );
+   return_value = m_Mixer.GetByComponent( CMixerLine::ComponentType::destinationWaveIn, m_MixerLine );
 
    if ( return_value == false )
    {
@@ -176,7 +176,7 @@ __checkReturn bool CMixerWaveIn::Open( __in UINT_PTR device_number, __in DWORD w
 
    for ( auto const& entry : array )
    {
-      if ( entry.Type == CMixerControl::Mixer )
+      if ( entry.Type == CMixerControl::ControlType::Mixer )
       {
          WFC_TRY
          {
@@ -197,7 +197,7 @@ __checkReturn bool CMixerWaveIn::Open( __in UINT_PTR device_number, __in DWORD w
          }
       }
 
-      if ( entry.Type == CMixerControl::Volume )
+      if ( entry.Type == CMixerControl::ControlType::Volume )
       {
          if ( control_was_found == false )
          {
@@ -218,7 +218,7 @@ __checkReturn bool CMixerWaveIn::Open( __in UINT_PTR device_number, __in DWORD w
    return( return_value );
 }
 
-__checkReturn bool CMixerWaveIn::SetLeftChannelRecordingGain( __in const DWORD desired_level ) noexcept
+__checkReturn bool CMixerWaveIn::SetLeftChannelRecordingGain( __in DWORD const desired_level ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -227,7 +227,7 @@ __checkReturn bool CMixerWaveIn::SetLeftChannelRecordingGain( __in const DWORD d
    return( return_value );
 }
 
-__checkReturn bool CMixerWaveIn::SetRecordingGain( __in const DWORD desired_level ) noexcept
+__checkReturn bool CMixerWaveIn::SetRecordingGain( __in DWORD const desired_level ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -236,7 +236,7 @@ __checkReturn bool CMixerWaveIn::SetRecordingGain( __in const DWORD desired_leve
    return( return_value );
 }
 
-__checkReturn bool CMixerWaveIn::SetRightChannelRecordingGain( __in const DWORD desired_level ) noexcept
+__checkReturn bool CMixerWaveIn::SetRightChannelRecordingGain( __in DWORD const desired_level ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 

@@ -64,7 +64,7 @@ USING_WFC_NAMESPACE
 
 #if defined( WFC_STL )
 
-_Check_return_ std::wstring CTimeSpan::Format( _In_z_ const wchar_t * format_string ) const noexcept
+_Check_return_ std::wstring CTimeSpan::Format( _In_z_ wchar_t const * format_string ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( format_string );
@@ -171,25 +171,25 @@ CTimeEx::CTimeEx( __in const struct tm * time_p )
    Copy( time_p );
 }
 
-CTimeEx::CTimeEx( __in const struct tm& time_structure )
+CTimeEx::CTimeEx( __in struct tm const& time_structure )
 {
    WFC_VALIDATE_POINTER( this );
    Copy( time_structure );
 }
 
-CTimeEx::CTimeEx( __in const int year, __in const int month, __in const int day, __in const int hour, __in const int minute, __in const int second, __in const int daylight_savings_time )
+CTimeEx::CTimeEx( __in int const year, __in int const month, __in int const day, __in int const hour, __in int const minute, __in int const second, __in int const daylight_savings_time )
 {
    WFC_VALIDATE_POINTER( this );
    Set( year, month, day, hour, minute, second, daylight_savings_time );
 }
 
-CTimeEx::CTimeEx( __in const FILETIME& file_time )
+CTimeEx::CTimeEx( __in FILETIME const& file_time )
 {
    WFC_VALIDATE_POINTER( this );
    Copy( file_time );
 }
 
-CTimeEx::CTimeEx( __in const FILETIME * file_time )
+CTimeEx::CTimeEx( __in FILETIME const * file_time )
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( file_time );
@@ -203,7 +203,7 @@ CTimeEx::~CTimeEx()
    Empty();
 }
 
-__checkReturn int CTimeEx::Compare( __in const CTimeEx& source ) const noexcept
+_Check_return_ int CTimeEx::Compare( __in CTimeEx const& source ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -240,13 +240,13 @@ __checkReturn int CTimeEx::Compare( __in const CTimeEx& source ) const noexcept
    return(I_AM_EQUAL_TO_THAT);
 }
 
-void CTimeEx::Copy( __in const CTimeEx& source ) noexcept
+void CTimeEx::Copy( __in CTimeEx const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    m_Time  = source.m_Time;
 }
 
-void CTimeEx::Copy( __in const CTimeEx * source ) noexcept
+void CTimeEx::Copy( __in CTimeEx const * source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER_NULL_OK( source );
@@ -263,14 +263,14 @@ void CTimeEx::Copy( __in const CTimeEx * source ) noexcept
    }
 }
 
-void CTimeEx::Copy( __in const time_t source ) noexcept
+void CTimeEx::Copy( __in time_t const source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
    m_Time = source;
 }
 
-void CTimeEx::Copy( __in const struct tm * time_p ) noexcept
+void CTimeEx::Copy( __in struct tm const * time_p ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER_NULL_OK( time_p );
@@ -283,13 +283,13 @@ void CTimeEx::Copy( __in const struct tm * time_p ) noexcept
    }
 }
 
-void CTimeEx::Copy( __in const struct tm& source ) noexcept
+void CTimeEx::Copy( __in struct tm const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Copy( &source );
 }
 
-void CTimeEx::Copy( __in const FILETIME& source ) noexcept
+void CTimeEx::Copy( __in FILETIME const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -302,7 +302,7 @@ void CTimeEx::Copy( __in const FILETIME& source ) noexcept
    m_Time = (time_t) ( ll / CFileTime::NumberOfFiletimeTicksInOneSecond);
 }
 
-void CTimeEx::Copy( __in const FILETIME * source ) noexcept
+void CTimeEx::Copy( __in FILETIME const * source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
@@ -317,7 +317,7 @@ void CTimeEx::Copy( __in const FILETIME * source ) noexcept
    }
 }
 
-void CTimeEx::CopyModifiedJulianDate( __in const double number_of_days_since_17_november_1858 ) noexcept
+void CTimeEx::CopyModifiedJulianDate( __in double const number_of_days_since_17_november_1858 ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -375,7 +375,7 @@ void CTimeEx::Empty( void ) noexcept
    m_Time  = 0;
 }
 
-__checkReturn std::wstring CTimeEx::Format( _In_z_ const wchar_t * format_string ) const noexcept
+_Check_return_ std::wstring CTimeEx::Format( _In_z_ wchar_t const * format_string ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( format_string );
@@ -444,7 +444,7 @@ void CTimeEx::Now( void ) noexcept
    Copy( &time_structure );
 }
 
-__checkReturn int CTimeEx::GetDay( void ) const noexcept
+_Check_return_ int CTimeEx::GetDay( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -455,7 +455,7 @@ __checkReturn int CTimeEx::GetDay( void ) const noexcept
    return( time_structure.tm_mday );
 }
 
-__checkReturn int CTimeEx::GetDayOfWeek( void ) const noexcept // 1=Sunday
+_Check_return_ int CTimeEx::GetDayOfWeek( void ) const noexcept // 1=Sunday
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -466,7 +466,7 @@ __checkReturn int CTimeEx::GetDayOfWeek( void ) const noexcept // 1=Sunday
    return( time_structure.tm_wday + 1 );
 }
 
-__checkReturn int CTimeEx::GetDayOfYear( void ) const noexcept
+_Check_return_ int CTimeEx::GetDayOfYear( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -477,7 +477,7 @@ __checkReturn int CTimeEx::GetDayOfYear( void ) const noexcept
    return( time_structure.tm_yday + 1 );
 }
 
-__checkReturn int CTimeEx::GetMinuteOfDay( void ) const noexcept
+_Check_return_ int CTimeEx::GetMinuteOfDay( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -485,12 +485,12 @@ __checkReturn int CTimeEx::GetMinuteOfDay( void ) const noexcept
 
    GetTime( time_structure );
 
-   const int minutes = ( time_structure.tm_hour * 60 ) + time_structure.tm_min;
+   int const minutes = ( time_structure.tm_hour * 60 ) + time_structure.tm_min;
 
    return( minutes );
 }
 
-__checkReturn int CTimeEx::GetHour( void ) const noexcept
+_Check_return_ int CTimeEx::GetHour( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -501,7 +501,7 @@ __checkReturn int CTimeEx::GetHour( void ) const noexcept
    return( time_structure.tm_hour );
 }
 
-__checkReturn int CTimeEx::GetMinute( void ) const noexcept
+_Check_return_ int CTimeEx::GetMinute( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -512,7 +512,7 @@ __checkReturn int CTimeEx::GetMinute( void ) const noexcept
    return( time_structure.tm_min );
 }
 
-__checkReturn int CTimeEx::GetMonth( void ) const noexcept
+_Check_return_ int CTimeEx::GetMonth( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -523,7 +523,7 @@ __checkReturn int CTimeEx::GetMonth( void ) const noexcept
    return( time_structure.tm_mon + 1 );
 }
 
-__checkReturn int CTimeEx::GetSecond( void ) const noexcept
+_Check_return_ int CTimeEx::GetSecond( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -534,7 +534,7 @@ __checkReturn int CTimeEx::GetSecond( void ) const noexcept
    return( time_structure.tm_sec );
 }
 
-__checkReturn time_t CTimeEx::GetTotalSeconds( void ) const noexcept
+_Check_return_ time_t CTimeEx::GetTotalSeconds( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
    return( m_Time );
@@ -547,7 +547,7 @@ void CTimeEx::GetTime( __out struct tm& time_structure ) const noexcept
    GreenwichMeanTime( &m_Time, &time_structure );
 }
 
-__checkReturn int CTimeEx::GetYear( void ) const noexcept
+_Check_return_ int CTimeEx::GetYear( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -713,7 +713,7 @@ void CTimeEx::GreenwichMeanTime( __in const time_t *time_t_pointer, __out struct
    tm_structure_p->tm_isdst = 0;
 }
 
-__checkReturn time_t CTimeEx::m_Make_time_t( __in const struct tm *time_parameter ) noexcept
+_Check_return_ time_t CTimeEx::m_Make_time_t( __in const struct tm *time_parameter ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -890,7 +890,7 @@ __checkReturn time_t CTimeEx::m_Make_time_t( __in const struct tm *time_paramete
    return( (time_t) time_1 );
 }
 
-void CTimeEx::Set( __in const int year, __in const int month, __in const int day, __in const int hour, __in const int minute, __in const int second, __in const int daylight_savings_time ) noexcept
+void CTimeEx::Set( __in int const year, __in int const month, __in int const day, __in int const hour, __in int const minute, __in int const second, __in int const daylight_savings_time ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -918,7 +918,7 @@ void CTimeEx::Set( __in const int year, __in const int month, __in const int day
    }
 }
 
-void CTimeEx::Set( __in const std::wstring& iso_8601_string ) noexcept
+void CTimeEx::Set( __in std::wstring const& iso_8601_string ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -1220,7 +1220,7 @@ void CTimeEx::Set( __in const std::wstring& iso_8601_string ) noexcept
 
    if ( character == '.' )
    {
-      const std::size_t character_index = temp_string.find_first_of( L"Z+-" );
+      std::size_t const character_index = temp_string.find_first_of( L"Z+-" );
 
       if ( character_index == std::wstring::npos )
       {

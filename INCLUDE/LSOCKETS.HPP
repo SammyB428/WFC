@@ -69,21 +69,21 @@ class CListeningSocket : public CSimpleSocket
       virtual ~CListeningSocket();
 
       virtual void OnNewConnection( __in SOCKET socket_id, __in_z LPCTSTR host_name, __in_z LPCTSTR dotted_ip_address_string ) = 0; // Called by WaitForConnection
-      __checkReturn bool Open( void ) noexcept override;
-      __checkReturn bool Open( __in_z LPCTSTR channel_name, __in const UINT port_number = 23 ) noexcept override;
+      _Check_return_ bool Open( void ) noexcept override;
+      _Check_return_ bool Open( __in_z LPCTSTR channel_name, __in const UINT port_number = 23 ) noexcept override;
 
-      virtual __checkReturn BOOL WaitForConnection( __in_z LPCTSTR p_name ) noexcept;
-      virtual __checkReturn BOOL WaitForConnection( __in const int p_number ) noexcept;
-      virtual __checkReturn BOOL WaitForConnection( void ) noexcept;
+      virtual _Check_return_ BOOL WaitForConnection( __in_z LPCTSTR p_name ) noexcept;
+      virtual _Check_return_ BOOL WaitForConnection( __in int const p_number ) noexcept;
+      virtual _Check_return_ BOOL WaitForConnection( void ) noexcept;
 
       // 2000-02-13
       // Good addition suggested by Scott Kolek (scott@skm-software.com)
 
-      virtual void SetBindToAddress( __in const unsigned long address = INADDR_ANY ) noexcept;
-      virtual __checkReturn unsigned long GetBindToAddress( void ) const noexcept;
+      virtual void SetBindToAddress( __in unsigned long const address = INADDR_ANY ) noexcept;
+      virtual _Check_return_ unsigned long GetBindToAddress( void ) const noexcept;
 
-      virtual void SetConnectionBacklog( __in const int backlog ) noexcept;
-      virtual __checkReturn int GetConnectionBacklog( void ) const noexcept;
+      virtual void SetConnectionBacklog( __in int const backlog ) noexcept;
+      virtual _Check_return_ int GetConnectionBacklog( void ) const noexcept;
 
 #if defined( _DEBUG ) && ! defined( WFC_NO_DUMPING )
 

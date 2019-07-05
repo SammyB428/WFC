@@ -61,10 +61,10 @@ class CUUCoding
 
       virtual ~CUUCoding();
 
-      _Check_return_ bool OutputFilename(_In_ const std::vector<uint8_t>& source, _Out_ std::wstring& destination) const noexcept;
-      _Check_return_ bool Decode(_In_ const std::vector<uint8_t>& source, _Out_ std::vector<uint8_t>& destination) const noexcept;
-      _Check_return_ bool Decode(_In_ const std::wstring& source, _Out_ std::vector<uint8_t>& destination ) const noexcept;
-      _Check_return_ bool Encode(_In_ const std::vector<uint8_t>& source, _Out_ std::vector<uint8_t>& destination ) const noexcept;
+      _Check_return_ bool OutputFilename(_In_ std::vector<uint8_t> const& source, _Out_ std::wstring& destination) const noexcept;
+      _Check_return_ bool Decode(_In_ std::vector<uint8_t> const& source, _Out_ std::vector<uint8_t>& destination) const noexcept;
+      _Check_return_ bool Decode(_In_ std::wstring const& source, _Out_ std::vector<uint8_t>& destination ) const noexcept;
+      _Check_return_ bool Encode(_In_ std::vector<uint8_t> const& source, _Out_ std::vector<uint8_t>& destination ) const noexcept;
 };
 
 #endif // UU_CODING_CLASS_HEADER

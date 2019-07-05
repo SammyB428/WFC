@@ -53,7 +53,7 @@ USING_WFC_NAMESPACE
 // Define log( 2.0 )
 #define WFC_LOG2 (0.693147180559945309417232121458176568075500134360255254120680009493393621969L)
 
-_Check_return_ double PASCAL Win32FoundationClasses::wfc_calculate_entropy( __in_ecount( number_of_counts ) const uint64_t * counts, _In_ const size_t number_of_counts ) noexcept
+_Check_return_ double PASCAL Win32FoundationClasses::wfc_calculate_entropy( __in_ecount( number_of_counts ) uint64_t const * counts, _In_ std::size_t const number_of_counts ) noexcept
 {
    WFC_VALIDATE_POINTER( counts );
 
@@ -70,7 +70,7 @@ _Check_return_ double PASCAL Win32FoundationClasses::wfc_calculate_entropy( __in
 
       int64_t sum{ 0 };
 
-      size_t number_of_unique_values{ 0 };
+      std::size_t number_of_unique_values{ 0 };
 
       for ( auto const array_index : Range(number_of_counts) )
       {
@@ -122,7 +122,7 @@ _Check_return_ double PASCAL Win32FoundationClasses::wfc_calculate_entropy( __in
 
       int64_t sum{ 0 };
 
-      size_t number_of_unique_values{ 0 };
+      std::size_t number_of_unique_values{ 0 };
 
       for ( auto const array_index : Range(number_of_counts) )
       {
@@ -169,7 +169,7 @@ _Check_return_ double PASCAL Win32FoundationClasses::wfc_calculate_entropy( __in
 
       int64_t sum{ 0 };
 
-      size_t number_of_unique_values{ 0 };
+      std::size_t number_of_unique_values{ 0 };
 
       for ( auto const array_index : Range(number_of_counts) )
       {
@@ -268,25 +268,25 @@ __checkReturn bool Win32FoundationClasses::wfcGenRandom( _Out_writes_bytes_(Rand
    return( false );
 }
 
-using FIND_BYTE_FUNCTION = int64_t (*)( __in const uint8_t byte_value, __in_bcount( buffer_size ) const uint8_t * buffer, __in const int64_t buffer_size );
+using FIND_BYTE_FUNCTION = int64_t (*)( __in uint8_t const byte_value, __in_bcount( buffer_size ) uint8_t const * buffer, __in int64_t const buffer_size );
 
 #if 0
 // This is the super optimized version 
 // 2016-05-30 - SRB - I cannot get this version to work on our Jenkins build server.
 // A stand-alone project with this code works fine but refuses to work during the build.
 // This version fails the test where the desired byte was found at offset 16 in the 32-byte test buffer.
-_Check_return_ static int64_t _find_byte_256(_In_ const uint8_t byte_value, _In_reads_bytes_(buffer_size) const uint8_t * buffer, _In_ const int64_t buffer_size) noexcept
+_Check_return_ static int64_t _find_byte_256(_In_ uint8_t const byte_value, _In_reads_bytes_(buffer_size) uint8_t const * buffer, _In_ int64_t const buffer_size) noexcept
 {
-    __declspec(align(32)) const __m256i byte_to_find = _mm256_set1_epi8(byte_value); // AVX2
-    __declspec(align(32)) const __m256i zero = _mm256_setzero_si256(); // AVX2
+    __declspec(align(32)) __m256i const byte_to_find = _mm256_set1_epi8(byte_value); // AVX2
+    __declspec(align(32)) __m256i const zero = _mm256_setzero_si256(); // AVX2
 
-    const int64_t last_buffer_index = buffer_size - 31;
+    int64_t const last_buffer_index = buffer_size - 31;
 
     int64_t buffer_index = 0;
 
     if (buffer_size > 31)
     {
-        if (_mm256_testc_si256(zero, _mm256_cmpeq_epi8(byte_to_find, _mm256_loadu_si256((const __m256i *) buffer))) != 0)
+        if (_mm256_testc_si256(zero, _mm256_cmpeq_epi8(byte_to_find, _mm256_loadu_si256((__m256i const *) buffer))) != 0)
         {
             // The desired byte was not found in the first block.
             // Make sure the buffer is aligned on a 32 byte boundary so our main loop can avoid the _mm256_loadu_si256 (AVX2) call
@@ -311,7 +311,7 @@ _Check_return_ static int64_t _find_byte_256(_In_ const uint8_t byte_value, _In_
     }
 
     while (buffer_index < last_buffer_index &&
-        _mm256_testc_si256(zero, _mm256_cmpeq_epi8(byte_to_find, *((const __m256i *) &buffer[buffer_index]))) != 0) // _mm256_testc_si256 - AVX2
+        _mm256_testc_si256(zero, _mm256_cmpeq_epi8(byte_to_find, *((__m256i const *) &buffer[buffer_index]))) != 0) // _mm256_testc_si256 - AVX2
     {
         buffer_index += 32;
     }
@@ -518,7 +518,7 @@ __checkReturn bool Win32FoundationClasses::wfc_process_buffer( __in uint8_t cons
 $Revision: 24 $<HR>
 
 <H2>Declaration</H2>
-<PRE><CODE>double <B>wfc_calculate_entropy</B>( const uint64_t * counts, size_t number_of_counts )</CODE></PRE>
+<PRE><CODE>double <B>wfc_calculate_entropy</B>( uint64_t const * counts, std::size_t number_of_counts )</CODE></PRE>
 
 <H2>Description</H2>
 This function takes a url and retrieves it from Internet. What you get is an

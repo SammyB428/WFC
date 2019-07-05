@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 1995-2014, Samuel R. Blackburn
+** Copyright, 1995-2019, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -57,7 +57,7 @@ CTalkingSocket::CTalkingSocket()
    m_Initialize();
 }
 
-CTalkingSocket::CTalkingSocket( __in const std::wstring& a_host_name, __in const std::wstring& p_name )
+CTalkingSocket::CTalkingSocket( __in std::wstring const& a_host_name, __in std::wstring const& p_name )
 {
    WFC_VALIDATE_POINTER( this );
    m_Initialize();
@@ -66,7 +66,7 @@ CTalkingSocket::CTalkingSocket( __in const std::wstring& a_host_name, __in const
    SetPort( p_name.c_str() );
 }
 
-CTalkingSocket::CTalkingSocket( __in const std::wstring& address, __in const short p_number )
+CTalkingSocket::CTalkingSocket( __in std::wstring const& address, __in short const p_number )
 {
    WFC_VALIDATE_POINTER( this );
    m_Initialize();
@@ -216,7 +216,7 @@ __checkReturn bool CTalkingSocket::Open( __in_z LPCTSTR a, __in const UINT port_
 
 #pragma warning( default : 4100 )
 
-__checkReturn bool CTalkingSocket::Open( __in const std::wstring& a, __in const short p ) noexcept
+__checkReturn bool CTalkingSocket::Open( __in std::wstring const& a, __in short const p ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    ASSERT( p > 0 );
@@ -227,7 +227,7 @@ __checkReturn bool CTalkingSocket::Open( __in const std::wstring& a, __in const 
    return( Open() );
 }
 
-__checkReturn bool CTalkingSocket::Open( __in const std::wstring& _host_name, __in const std::wstring& _port_name ) noexcept
+__checkReturn bool CTalkingSocket::Open( __in std::wstring const& _host_name, __in std::wstring const& _port_name ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 

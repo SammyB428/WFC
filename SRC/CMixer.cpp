@@ -213,7 +213,7 @@ __checkReturn bool CMixer::GetAllControls(__in const CMixerLine& line, __out std
     return(return_value);
 }
 
-__checkReturn bool CMixer::GetByComponent(__in const DWORD component, __out CMixerLine& line) noexcept
+__checkReturn bool CMixer::GetByComponent(__in CMixerLine::ComponentType const component, __out CMixerLine& line) noexcept
 {
     WFC_VALIDATE_POINTER(this);
 
@@ -222,9 +222,9 @@ __checkReturn bool CMixer::GetByComponent(__in const DWORD component, __out CMix
     ::ZeroMemory(&mixer_line, sizeof(mixer_line));
 
     mixer_line.cbStruct = sizeof(mixer_line);
-    mixer_line.dwComponentType = component;
+    mixer_line.dwComponentType = static_cast<uint32_t>(component);
 
-    DWORD flags = static_cast<DWORD>(Notifiers::notifyMixerNumber) | MIXER_GETLINEINFOF_COMPONENTTYPE;
+    DWORD const flags = static_cast<DWORD>(Notifiers::notifyMixerNumber) | MIXER_GETLINEINFOF_COMPONENTTYPE;
 
     m_ErrorCode = ::mixerGetLineInfo((HMIXEROBJ)m_DeviceID, &mixer_line, flags);
 
@@ -239,7 +239,7 @@ __checkReturn bool CMixer::GetByComponent(__in const DWORD component, __out CMix
     return(true);
 }
 
-__checkReturn bool CMixer::GetByDestination(__in const DWORD destination, __out CMixerLine& line) noexcept
+__checkReturn bool CMixer::GetByDestination(__in DWORD const destination, __out CMixerLine& line) noexcept
 {
     WFC_VALIDATE_POINTER(this);
 
@@ -265,7 +265,7 @@ __checkReturn bool CMixer::GetByDestination(__in const DWORD destination, __out 
     return(true);
 }
 
-__checkReturn bool CMixer::GetByID(__in const DWORD id, __out CMixerLine& line) noexcept
+__checkReturn bool CMixer::GetByID(__in DWORD const id, __out CMixerLine& line) noexcept
 {
     WFC_VALIDATE_POINTER(this);
 
@@ -291,7 +291,7 @@ __checkReturn bool CMixer::GetByID(__in const DWORD id, __out CMixerLine& line) 
     return(true);
 }
 
-__checkReturn bool CMixer::GetByConnection( __in const DWORD destination, __in const DWORD source, __out CMixerLine& line) noexcept
+__checkReturn bool CMixer::GetByConnection( __in DWORD const destination, __in DWORD const source, __out CMixerLine& line) noexcept
 {
     WFC_VALIDATE_POINTER(this);
 
@@ -328,23 +328,21 @@ __checkReturn bool CMixer::GetControlDetails(__in const CMixerLine& line, __in c
 
     ::ZeroMemory(&control_details, sizeof(control_details));
 
-    DWORD type_of_details = 0;
-
-    type_of_details = control.GetUnits();
+    auto type_of_details = control.GetUnits();
 
     DWORD size_of_element = 0;
 
-    if (type_of_details == CMixerControl::unitsBoolean)
+    if (type_of_details == CMixerControl::Units::Boolean)
     {
         size_of_element = sizeof(MIXERCONTROLDETAILS_BOOLEAN);
     }
-    else if (type_of_details == CMixerControl::unitsSigned ||
-        type_of_details == CMixerControl::unitsDecibels)
+    else if (type_of_details == CMixerControl::Units::Signed ||
+        type_of_details == CMixerControl::Units::Decibels)
     {
         size_of_element = sizeof(MIXERCONTROLDETAILS_SIGNED);
     }
-    else if (type_of_details == CMixerControl::unitsUnsigned ||
-        type_of_details == CMixerControl::unitsPercent)
+    else if (type_of_details == CMixerControl::Units::Unsigned ||
+        type_of_details == CMixerControl::Units::Percent)
     {
         size_of_element = sizeof(MIXERCONTROLDETAILS_UNSIGNED);
     }
@@ -362,7 +360,7 @@ __checkReturn bool CMixer::GetControlDetails(__in const CMixerLine& line, __in c
         number_of_items_per_channel = 1;
         number_of_channels = 1;
 
-        if (type_of_details == CMixerControl::unitsBoolean)
+        if (type_of_details == CMixerControl::Units::Boolean)
         {
             number_of_items_per_channel = 0;
         }
@@ -383,7 +381,7 @@ __checkReturn bool CMixer::GetControlDetails(__in const CMixerLine& line, __in c
 
     DWORD buffer_size = number_of_elements * size_of_element;
 
-    std::unique_ptr<uint8_t[]> memory_buffer = std::make_unique<uint8_t[]>(buffer_size);
+    auto memory_buffer = std::make_unique<uint8_t[]>(buffer_size);
 
     ASSERT(memory_buffer.get() != nullptr);
 
@@ -422,27 +420,27 @@ __checkReturn bool CMixer::GetControlDetails(__in const CMixerLine& line, __in c
     }
     else
     {
-        CMixerControlDetailsData * data_p = nullptr;
+        //CMixerControlDetailsData * data_p = nullptr;
 
         for ( auto const index : Range(number_of_elements) )
         {
             CMixerControlDetailsData entry;
 
-            if (type_of_details == CMixerControl::unitsBoolean)
+            if (type_of_details == CMixerControl::Units::Boolean)
             {
                 auto boolean_array = reinterpret_cast<MIXERCONTROLDETAILS_BOOLEAN *>(memory_buffer.get());
 
                 entry.Copy(boolean_array[index]);
             }
-            else if (type_of_details == CMixerControl::unitsSigned ||
-                    type_of_details == CMixerControl::unitsDecibels)
+            else if (type_of_details == CMixerControl::Units::Signed ||
+                    type_of_details == CMixerControl::Units::Decibels)
             {
                auto signed_array = reinterpret_cast<MIXERCONTROLDETAILS_SIGNED *>(memory_buffer.get());
 
                entry.Copy(signed_array[index]);
             }
-            else if (type_of_details == CMixerControl::unitsUnsigned ||
-                    type_of_details == CMixerControl::unitsPercent)
+            else if (type_of_details == CMixerControl::Units::Unsigned ||
+                    type_of_details == CMixerControl::Units::Percent)
             {
                 auto unsigned_array = reinterpret_cast<MIXERCONTROLDETAILS_UNSIGNED *>(memory_buffer.get());
 
@@ -511,7 +509,7 @@ __checkReturn bool CMixer::GetControlListText(__in const CMixerLine& line, __in 
 
     number_of_elements = number_of_channels * number_of_items_per_channel;
 
-    std::unique_ptr<MIXERCONTROLDETAILS_LISTTEXT[]> details_array = std::make_unique<MIXERCONTROLDETAILS_LISTTEXT[]>(number_of_elements);
+    auto details_array = std::make_unique<MIXERCONTROLDETAILS_LISTTEXT[]>(number_of_elements);
 
     control_details.cbStruct = sizeof(control_details);
     control_details.dwControlID = control.ID;
@@ -805,11 +803,11 @@ __checkReturn HMIXEROBJ CMixer::GetHandle(void) const noexcept
     return((HMIXEROBJ)m_Handle);
 }
 
-__checkReturn size_t CMixer::GetNumberOfDevices(void) const noexcept
+__checkReturn std::size_t CMixer::GetNumberOfDevices(void) const noexcept
 {
     WFC_VALIDATE_POINTER(this);
 
-    size_t return_value = ::mixerGetNumDevs();
+    std::size_t return_value = ::mixerGetNumDevs();
 
     return(return_value);
 }
@@ -830,25 +828,25 @@ __checkReturn bool CMixer::Open(__in UINT_PTR device_id, __in DWORD what_to_noti
     return(true);
 }
 
-__checkReturn bool CMixer::SetControlDetails(__in const CMixerLine& line, __in const CMixerControl& control, __in const std::vector<CMixerControlDetailsData>& settings_array) noexcept
+__checkReturn bool CMixer::SetControlDetails(__in CMixerLine const& line, __in CMixerControl const& control, __in std::vector<CMixerControlDetailsData> const& settings_array) noexcept
 {
     WFC_VALIDATE_POINTER(this);
 
-    const DWORD type_of_details = control.GetUnits();
+    auto const type_of_details = control.GetUnits();
 
     DWORD size_of_element = 0;
 
-    if (type_of_details == CMixerControl::unitsBoolean)
+    if (type_of_details == CMixerControl::Units::Boolean)
     {
         size_of_element = sizeof(MIXERCONTROLDETAILS_BOOLEAN);
     }
-    else if (type_of_details == CMixerControl::unitsSigned ||
-        type_of_details == CMixerControl::unitsDecibels)
+    else if (type_of_details == CMixerControl::Units::Signed ||
+        type_of_details == CMixerControl::Units::Decibels)
     {
         size_of_element = sizeof(MIXERCONTROLDETAILS_SIGNED);
     }
-    else if (type_of_details == CMixerControl::unitsUnsigned ||
-        type_of_details == CMixerControl::unitsPercent)
+    else if (type_of_details == CMixerControl::Units::Unsigned ||
+        type_of_details == CMixerControl::Units::Percent)
     {
         size_of_element = sizeof(MIXERCONTROLDETAILS_UNSIGNED);
     }
@@ -866,7 +864,7 @@ __checkReturn bool CMixer::SetControlDetails(__in const CMixerLine& line, __in c
         number_of_items_per_channel = 1;
         number_of_channels = 1;
 
-        if (type_of_details == CMixerControl::unitsBoolean)
+        if (type_of_details == CMixerControl::Units::Boolean)
         {
             number_of_items_per_channel = 0;
         }
@@ -881,33 +879,31 @@ __checkReturn bool CMixer::SetControlDetails(__in const CMixerLine& line, __in c
         number_of_items_per_channel = control.NumberOfItemsPerChannel;
     }
 
-    size_t number_of_elements = 0;
-
-    number_of_elements = number_of_channels * ((number_of_items_per_channel == 0) ? 1 : number_of_items_per_channel);
+    std::size_t number_of_elements = number_of_channels * ((number_of_items_per_channel == 0) ? 1 : number_of_items_per_channel);
 
     //WFCTRACEVAL( TEXT( "Number of elements is " ), (DWORD) number_of_elements );
 
-    size_t buffer_size = number_of_elements * size_of_element;
+    std::size_t const buffer_size = number_of_elements * size_of_element;
 
-    std::unique_ptr<uint8_t[]> memory_buffer = std::make_unique<uint8_t[]>(buffer_size);
+    auto memory_buffer = std::make_unique<uint8_t[]>(buffer_size);
 
     for ( auto const loop_index : Range(settings_array.size()))
     {
-        if (type_of_details == CMixerControl::unitsBoolean)
+        if (type_of_details == CMixerControl::Units::Boolean)
         {
             auto array = reinterpret_cast<MIXERCONTROLDETAILS_BOOLEAN *>(memory_buffer.get());
 
             array[loop_index].fValue = ((settings_array.at(loop_index).Parameter1 == 0) ? FALSE : TRUE);
         }
-        else if (type_of_details == CMixerControl::unitsSigned ||
-                type_of_details == CMixerControl::unitsDecibels)
+        else if (type_of_details == CMixerControl::Units::Signed ||
+                type_of_details == CMixerControl::Units::Decibels)
         {
             auto array = reinterpret_cast<MIXERCONTROLDETAILS_SIGNED *>(memory_buffer.get());
 
             array[loop_index].lValue = settings_array.at(loop_index).Parameter1;
         }
-        else if (type_of_details == CMixerControl::unitsUnsigned ||
-                type_of_details == CMixerControl::unitsPercent)
+        else if (type_of_details == CMixerControl::Units::Unsigned ||
+                type_of_details == CMixerControl::Units::Percent)
         {
             auto array = reinterpret_cast<MIXERCONTROLDETAILS_UNSIGNED *>(memory_buffer.get());
 

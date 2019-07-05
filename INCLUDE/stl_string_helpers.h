@@ -252,7 +252,7 @@ inline void copy(_Inout_ std::wstring& s, _In_ int const code_page, _In_reads_by
 
     std::size_t const new_buffer_size = (number_of_bytes * 3) + 2;
 
-    std::unique_ptr<wchar_t[]> output_buffer = std::make_unique<wchar_t[]>(new_buffer_size);
+    auto output_buffer = std::make_unique<wchar_t[]>(new_buffer_size);
 
     ZeroMemory(output_buffer.get(), new_buffer_size * 2);
 
@@ -305,7 +305,7 @@ inline void copy_to(_In_ std::wstring const& s, _Out_ char* ascii_buffer, _In_ s
 #if defined( _DEBUG )
     if (number_of_bytes_written == 0)
     {
-        const DWORD last_error = ::GetLastError();
+        DWORD const last_error = ::GetLastError();
         WFCTRACEINIT(L"ss");
         WFCTRACEERROR(last_error);
     }

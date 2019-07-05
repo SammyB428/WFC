@@ -625,7 +625,7 @@ public:
         return(Find(parse_point, end_parse_point, string_to_find, wcslen(string_to_find), found_at));
     }
 
-    inline _Check_return_ bool Find( _In_ CParsePoint const& parse_point, _In_ CParsePoint const& end_parse_point, _In_ uint8_t const * pattern_buffer, _In_ const std::size_t pattern_length, _Inout_ CParsePoint& found_at ) const noexcept
+    inline _Check_return_ bool Find( _In_ CParsePoint const& parse_point, _In_ CParsePoint const& end_parse_point, _In_ uint8_t const * pattern_buffer, _In_ std::size_t const pattern_length, _Inout_ CParsePoint& found_at ) const noexcept
     {
         try
         {
@@ -2676,7 +2676,7 @@ public:
 
         uint32_t buffer_size = number_of_bytes + 2; // Leave room for the zero terminator
 
-        std::unique_ptr<uint8_t []> buffer = std::make_unique<uint8_t []>(buffer_size);
+        auto buffer = std::make_unique<uint8_t []>(buffer_size);
 
         if (buffer.get() == nullptr)
         {

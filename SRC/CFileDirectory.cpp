@@ -70,7 +70,7 @@ void CFileDirectory::Close(void) noexcept
     m_Name.clear();
 }
 
-__checkReturn bool CFileDirectory::Open(_In_z_ const wchar_t * const directory_name) noexcept
+_Check_return_ bool CFileDirectory::Open(_In_z_ wchar_t const * const directory_name) noexcept
 {
     WFC_VALIDATE_POINTER(this);
 
@@ -90,7 +90,7 @@ __checkReturn bool CFileDirectory::Open(_In_z_ const wchar_t * const directory_n
     return(false); // User passed us an empty string
 }
 
-__checkReturn bool CFileDirectory::Read(_Out_ std::vector<std::wstring>& filenames) noexcept
+_Check_return_ bool CFileDirectory::Read(_Out_ std::vector<std::wstring>& filenames) noexcept
 {
     WFC_VALIDATE_POINTER(this);
 
@@ -149,7 +149,7 @@ __checkReturn bool CFileDirectory::Read(_Out_ std::vector<std::wstring>& filenam
     return(false);
 }
 
-__checkReturn bool CFileDirectory::Read(__callback WIDE_FILE_ACTION_FUNCTION action_to_take, __in void * action_parameter) noexcept
+_Check_return_ bool CFileDirectory::Read(__callback WIDE_FILE_ACTION_FUNCTION action_to_take, __in void * action_parameter) noexcept
 {
     WFC_VALIDATE_POINTER(this);
     WFC_VALIDATE_POINTER(action_to_take);
@@ -269,7 +269,7 @@ __checkReturn bool CFileDirectory::Read(__callback WIDE_FILE_ACTION_FUNCTION act
 
 typedef struct _recursive_directory_read_parameters
 {
-    HANDLE find_file_handle;
+    HANDLE find_file_handle{ INVALID_HANDLE_VALUE };
     WIN32_FIND_DATA find_data;
     std::wstring complete_filename;
     std::wstring directory_to_open;
@@ -278,9 +278,9 @@ typedef struct _recursive_directory_read_parameters
 }
 RECURSIVE_DIRECTORY_READ_PARAMETERS;
 
-static void PASCAL __read_recursively(__in const std::wstring& directory_name, _In_ const std::wstring& wildcard, _Out_ std::vector<std::wstring>& filenames)
+static void PASCAL __read_recursively(__in std::wstring const& directory_name, _In_ std::wstring const& wildcard, _Out_ std::vector<std::wstring>& filenames)
 {
-    std::unique_ptr<RECURSIVE_DIRECTORY_READ_PARAMETERS> parameters_p = std::make_unique<RECURSIVE_DIRECTORY_READ_PARAMETERS>();
+    auto parameters_p = std::make_unique<RECURSIVE_DIRECTORY_READ_PARAMETERS>();
 
     if (parameters_p == nullptr)
     {
@@ -370,7 +370,7 @@ static void PASCAL __read_recursively(__in const std::wstring& directory_name, _
 
 typedef struct _wide_recursive_directory_read_parameters
 {
-    HANDLE find_file_handle;
+    HANDLE find_file_handle{ INVALID_HANDLE_VALUE };
     WIN32_FIND_DATAW find_data;
     std::wstring complete_filename;
     std::wstring directory_to_open;
@@ -379,9 +379,9 @@ typedef struct _wide_recursive_directory_read_parameters
 }
 WIDE_RECURSIVE_DIRECTORY_READ_PARAMETERS;
 
-void PASCAL __wide_read_recursively(_In_ const std::wstring& directory_name, _In_ const std::wstring& wildcard, __out std::vector<std::wstring>& filenames)
+void PASCAL __wide_read_recursively(_In_ std::wstring const& directory_name, _In_ std::wstring const& wildcard, __out std::vector<std::wstring>& filenames)
 {
-    std::unique_ptr<WIDE_RECURSIVE_DIRECTORY_READ_PARAMETERS> parameters_p = std::make_unique<WIDE_RECURSIVE_DIRECTORY_READ_PARAMETERS>();
+    auto parameters_p = std::make_unique<WIDE_RECURSIVE_DIRECTORY_READ_PARAMETERS>();
 
     ZeroMemory(&parameters_p->find_data, sizeof(parameters_p->find_data));
 
@@ -465,11 +465,11 @@ void PASCAL __wide_read_recursively(_In_ const std::wstring& directory_name, _In
     }
 }
 
-static __checkReturn bool PASCAL __wide_read_recursively(_In_ const std::wstring& directory_name, _In_ const std::wstring& wildcard, _In_ const BOOL include_directories, __callback WIDE_FILE_ACTION_FUNCTION action_to_take, __in void * action_parameter)
+static _Check_return_ bool PASCAL __wide_read_recursively(_In_ const std::wstring& directory_name, _In_ const std::wstring& wildcard, _In_ const BOOL include_directories, __callback WIDE_FILE_ACTION_FUNCTION action_to_take, __in void * action_parameter)
 {
     WFC_VALIDATE_POINTER(action_to_take);
 
-    std::unique_ptr<WIDE_RECURSIVE_DIRECTORY_READ_PARAMETERS> parameters_p = std::make_unique<WIDE_RECURSIVE_DIRECTORY_READ_PARAMETERS>();
+    auto parameters_p = std::make_unique<WIDE_RECURSIVE_DIRECTORY_READ_PARAMETERS>();
 
     ZeroMemory(&parameters_p->find_data, sizeof(parameters_p->find_data));
 
@@ -646,7 +646,7 @@ static __checkReturn bool PASCAL __wide_read_recursively(_In_ const std::wstring
     return(true);
 }
 
-__checkReturn bool CFileDirectory::ReadRecursively(__callback WIDE_FILE_ACTION_FUNCTION action_to_take, __in void * action_parameter) noexcept
+_Check_return_ bool CFileDirectory::ReadRecursively(__callback WIDE_FILE_ACTION_FUNCTION action_to_take, __in void * action_parameter) noexcept
 {
     WFC_VALIDATE_POINTER(this);
     WFC_VALIDATE_POINTER(action_to_take);
@@ -815,7 +815,7 @@ __checkReturn bool CFileDirectory::ReadRecursively(__callback WIDE_FILE_ACTION_F
     return(false);
 }
 
-__checkReturn bool CFileDirectory::ReadRecursively(_Out_ std::vector<std::wstring>& filenames) noexcept
+_Check_return_ bool CFileDirectory::ReadRecursively(_Out_ std::vector<std::wstring>& filenames) noexcept
 {
     WFC_VALIDATE_POINTER(this);
 
@@ -897,7 +897,7 @@ __checkReturn bool CFileDirectory::ReadRecursively(_Out_ std::vector<std::wstrin
     return(false);
 }
 
-void CFileDirectory::SetWildcard(_In_ const wchar_t * const wildcard) noexcept
+void CFileDirectory::SetWildcard(_In_ wchar_t const * const wildcard) noexcept
 {
     WFC_VALIDATE_POINTER(this);
     m_Wildcard.assign(wildcard);
@@ -915,7 +915,7 @@ void CFileDirectory::SetIncludeDirectoriesInCallback(__in const bool include_dir
     m_IncludeDirectoriesInCallback = include_directories;
 }
 
-__checkReturn bool CFileDirectory::GetIncludeDirectoriesInCallback(void) const noexcept
+_Check_return_ bool CFileDirectory::GetIncludeDirectoriesInCallback(void) const noexcept
 {
     WFC_VALIDATE_POINTER(this);
     return(m_IncludeDirectoriesInCallback);
@@ -928,9 +928,9 @@ typedef struct _sum_count
 }
 SUM_COUNT;
 
-static __checkReturn bool sum_action(__in void * parameter, __in const wchar_t * const filename, __in const WIN32_FIND_DATA * data_p) noexcept
+static _Check_return_ bool sum_action(__in void * parameter, __in wchar_t const * const filename, __in WIN32_FIND_DATA const * data_p) noexcept
 {
-    SUM_COUNT * sum_count = (SUM_COUNT *)parameter;
+    SUM_COUNT * sum_count = static_cast<SUM_COUNT *>(parameter);
 
     sum_count->number_of_files++;
 
@@ -959,7 +959,7 @@ void CFileDirectory::GetStatistics(__out uint64_t& number_of_files, __out uint64
     sum = sum_count.sum_of_file_sizes;
 }
 
-static _Check_return_ bool __delete_file_action(_Inout_ void * parameter, _In_z_ const wchar_t * const filename, _In_ const WIN32_FIND_DATAW * data_p) noexcept
+static _Check_return_ bool __delete_file_action(_Inout_ void * parameter, _In_z_ wchar_t const * const filename, _In_ const WIN32_FIND_DATAW * data_p) noexcept
 {
     if (data_p->dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)
     {
@@ -973,7 +973,7 @@ static _Check_return_ bool __delete_file_action(_Inout_ void * parameter, _In_z_
     return(true);
 }
 
-__checkReturn bool CFileDirectory::RecursivelyDestroy(_In_z_ const wchar_t * const folder_name) noexcept// static
+_Check_return_ bool CFileDirectory::RecursivelyDestroy(_In_z_ wchar_t const * const folder_name) noexcept// static
 {
     if (folder_name == nullptr || folder_name[0] == 0x00)
     {

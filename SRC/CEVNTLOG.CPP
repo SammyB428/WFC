@@ -400,7 +400,7 @@ __checkReturn BOOL CEventLog::CreateCustomLog( __in_z LPCTSTR log_name_parameter
    WFC_END_CATCH_ALL
 }
 
-_Check_return_ bool CEventLog::Delete( _In_z_ const wchar_t * log_name ) noexcept
+_Check_return_ bool CEventLog::Delete( _In_z_ wchar_t const * log_name ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( log_name );
@@ -456,7 +456,7 @@ _Check_return_ bool CEventLog::Delete( _In_z_ const wchar_t * log_name ) noexcep
    WFC_END_CATCH_ALL
 }
 
-_Check_return_ bool CEventLog::DeleteApplicationLog( _In_z_ const wchar_t * application_name ) noexcept
+_Check_return_ bool CEventLog::DeleteApplicationLog( _In_z_ wchar_t const * application_name ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( application_name );
@@ -912,9 +912,9 @@ __checkReturn BOOL CEventLog::Read( __in DWORD record_number, __out CEventLogRec
 
       // m_NumberOfBytesInNextRecord now contains the size our buffer should be
 
-      std::unique_ptr<uint8_t[]> allocated_buffer = std::make_unique<uint8_t[]>(m_NumberOfBytesInNextRecord);
+      auto allocated_buffer = std::make_unique<uint8_t[]>(m_NumberOfBytesInNextRecord);
 
-      if (allocated_buffer.get() == nullptr )
+      if (allocated_buffer.get() == nullptr)
       {
          return( FALSE );
       }

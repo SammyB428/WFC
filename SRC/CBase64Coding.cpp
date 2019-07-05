@@ -992,7 +992,7 @@ _Check_return_ bool CBase64Coding::Encode(__in_bcount(number_of_bytes_to_encode)
 }
 
 // Perform a single 3 to 4 conversion
-static inline void __encode(_In_ uint8_t const * input_buffer, _In_ const std::size_t number_of_bytes, _Out_ uint8_t * output_buffer) noexcept
+static inline void __encode(_In_ uint8_t const * input_buffer, _In_ std::size_t const number_of_bytes, _Out_ uint8_t * output_buffer) noexcept
 {
     char const alphabet[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
 

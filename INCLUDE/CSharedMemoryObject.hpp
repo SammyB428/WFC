@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 1995-2016, Samuel R. Blackburn
+** Copyright, 1995-2019, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -57,18 +57,18 @@ class CSharedMemoryObject
 
    public:
 
-       CSharedMemoryObject(const CSharedMemoryObject&) = delete;
-       CSharedMemoryObject& operator=(const CSharedMemoryObject&) = delete;
+       CSharedMemoryObject(CSharedMemoryObject const&) = delete;
+       CSharedMemoryObject& operator=(CSharedMemoryObject const&) = delete;
  
        CSharedMemoryObject();
      ~CSharedMemoryObject();
 
       void          Close( void ) noexcept;
-      __checkReturn bool  Create( __in const std::wstring& object_name, __in const std::size_t size_in_bytes ) noexcept;
-      inline __checkReturn HANDLE GetHandle( void ) const noexcept        { return( m_MapHandle ); };
+      _Check_return_ bool  Create( __in std::wstring const& object_name, __in std::size_t const size_in_bytes ) noexcept;
+      inline constexpr _Check_return_ HANDLE GetHandle( void ) const noexcept { return( m_MapHandle ); };
       inline void   GetName( __out std::wstring& name ) const noexcept { name.assign( m_Name ); };
-      inline __checkReturn void * GetPointer( void ) const noexcept       { return( m_Pointer ); };
-      inline __checkReturn std::size_t GetSize( void ) const noexcept          { return( m_Size ); }
+      inline constexpr _Check_return_ void * GetPointer( void ) const noexcept   { return( m_Pointer ); };
+      inline constexpr _Check_return_ std::size_t GetSize( void ) const noexcept { return( m_Size ); }
 };
 
 #endif // SHARED_MEMORY_OBJECT_CLASS_HEADER

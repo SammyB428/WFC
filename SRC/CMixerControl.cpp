@@ -106,7 +106,7 @@ void CMixerControl::Copy( __in const MIXERCONTROL& source ) noexcept
 
    Empty();
    ID                      = source.dwControlID;
-   Type                    = source.dwControlType;
+   Type                    = static_cast<CMixerControl::ControlType>(source.dwControlType);
    StatusFlags             = source.fdwControl;
    NumberOfItemsPerChannel = source.cMultipleItems;
    ShortName.assign(source.szShortName);
@@ -411,33 +411,33 @@ void CMixerControl::Empty( void ) noexcept
    Maximum                 = 0;
    Minimum                 = 0;
    StatusFlags             = 0;
-   Type                    = 0;
+   Type                    = ControlType::Unknown;
    ShortName.clear();
    Name.clear();
    Data.clear();
 }
 
-__checkReturn uint32_t CMixerControl::GetType( void ) const noexcept
+__checkReturn CMixerControl::Types CMixerControl::GetType( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
-   const uint32_t type = Type & MIXERCONTROL_CT_CLASS_MASK;
+   CMixerControl::Types const type = static_cast<CMixerControl::Types>(static_cast<uint32_t>(Type) & MIXERCONTROL_CT_CLASS_MASK);
 
    switch( type )
    {
-      case typeFader:
-      case typeList:
-      case typeMeter:
-      case typeNumber:
-      case typeSlider:
-      case typeSwitch:
-      case typeTime:
+   case CMixerControl::Types::Fader:
+      case CMixerControl::Types::List:
+      case CMixerControl::Types::Meter:
+      case CMixerControl::Types::Number:
+      case CMixerControl::Types::Slider:
+      case CMixerControl::Types::Switch:
+      case CMixerControl::Types::Time:
 
          return( type );
 
       default:
 
-         return( typeCustom );
+         return(CMixerControl::Types::Custom);
    }
 }
 
@@ -447,152 +447,152 @@ void CMixerControl::GetTypeName( _Out_ std::wstring& name ) const noexcept
 
    switch( Type )
    {
-      case Custom:
+       case CMixerControl::ControlType::Custom:
 
          name.assign(L"Custom");
          break;
 
-      case Bass:
+      case CMixerControl::ControlType::Bass:
 
          name.assign(L"Bass Fader");
          break;
 
-      case Equalizer:
+      case CMixerControl::ControlType::Equalizer:
 
          name.assign(L"Equalizer Fader" );
          break;
 
-      case Fader:
+      case CMixerControl::ControlType::Fader:
 
          name.assign( L"Fader" );
          break;
 
-      case Treble:
+      case CMixerControl::ControlType::Treble:
 
          name.assign(L"Treble Fader" );
          break;
 
-      case Volume:
+      case CMixerControl::ControlType::Volume:
 
          name.assign(L"Volume Fader" );
          break;
 
-      case Mixer:
+      case CMixerControl::ControlType::Mixer:
 
          name.assign(L"Mixer List" );
          break;
 
-      case MultipleSelect:
+      case CMixerControl::ControlType::MultipleSelect:
 
          name.assign(L"Multiple-Select List" );
          break;
 
-      case Mux:
+      case CMixerControl::ControlType::Mux:
 
          name.assign(L"Mux List" );
          break;
 
-      case SingleSelect:
+      case CMixerControl::ControlType::SingleSelect:
 
          name.assign(L"Single-Select List" );
          break;
 
-      case BooleanMeter:
+      case CMixerControl::ControlType::BooleanMeter:
 
          name.assign(L"Boolean Meter" );
          break;
 
-      case PeakMeter:
+      case CMixerControl::ControlType::PeakMeter:
 
          name.assign(L"Peak Meter" );
          break;
 
-      case SignedMeter:
+      case CMixerControl::ControlType::SignedMeter:
 
          name.assign(L"Signed Meter" );
          break;
 
-      case UnsignedMeter:
+      case CMixerControl::ControlType::UnsignedMeter:
 
           name.assign(L"Unsigned Meter" );
          break;
 
-      case Decibels:
+      case CMixerControl::ControlType::Decibels:
 
           name.assign(L"Decibels Number" );
          break;
 
-      case Percent:
+      case CMixerControl::ControlType::Percent:
 
           name.assign(L"Percent Number" );
          break;
 
-      case Signed:
+      case CMixerControl::ControlType::Signed:
 
           name.assign( L"Signed Number" );
          break;
 
-      case Unsigned:
+      case CMixerControl::ControlType::Unsigned:
 
           name.assign(L"Unsigned Number" );
          break;
 
-      case Pan:
+      case CMixerControl::ControlType::Pan:
 
           name.assign(L"Pan Slider" );
          break;
 
-      case QSoundPan:
+      case CMixerControl::ControlType::QSoundPan:
 
           name.assign(L"Q-Sound Pan Slider" );
          break;
 
-      case Slider:
+      case CMixerControl::ControlType::Slider:
 
           name.assign(L"Slider" );
          break;
 
-      case Boolean:
+      case CMixerControl::ControlType::Boolean:
 
           name.assign( L"Boolean" );
          break;
 
-      case Button:
+      case CMixerControl::ControlType::Button:
 
          name.assign( L"Button" );
          break;
 
-      case Loudness:
+      case CMixerControl::ControlType::Loudness:
 
           name.assign( L"Loudness Switch" );
          break;
 
-      case Mono:
+      case CMixerControl::ControlType::Mono:
 
           name.assign(L"Mono Switch" );
          break;
 
-      case Mute:
+      case CMixerControl::ControlType::Mute:
 
           name.assign(L"Mute Switch" );
          break;
 
-      case OnOff:
+      case CMixerControl::ControlType::OnOff:
 
           name.assign(L"On/Off Switch" );
          break;
 
-      case StereoEnhance:
+      case CMixerControl::ControlType::StereoEnhance:
 
           name.assign(L"Stereo Enhance Switch" );
          break;
 
-      case MicroTime:
+      case CMixerControl::ControlType::MicroTime:
 
           name.assign(L"Microsecond Time" );
          break;
 
-      case MilliTime:
+      case CMixerControl::ControlType::MilliTime:
 
           name.assign( L"Millisecond Time" );
          break;
@@ -604,25 +604,25 @@ void CMixerControl::GetTypeName( _Out_ std::wstring& name ) const noexcept
    }
 }
 
-__checkReturn uint32_t CMixerControl::GetUnits( void ) const noexcept
+__checkReturn CMixerControl::Units CMixerControl::GetUnits( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
-   const uint32_t units = Type & MIXERCONTROL_CT_UNITS_MASK;
+   uint32_t const units = static_cast<uint32_t>( static_cast<uint32_t>(Type) & MIXERCONTROL_CT_UNITS_MASK);
 
    switch( units )
    {
-      case unitsBoolean:
-      case unitsSigned:
-      case unitsUnsigned:
-      case unitsDecibels:
-      case unitsPercent:
+      case static_cast<uint32_t>(CMixerControl::Units::Boolean):
+      case static_cast<uint32_t>(CMixerControl::Units::Signed):
+      case static_cast<uint32_t>(CMixerControl::Units::Unsigned):
+      case static_cast<uint32_t>(CMixerControl::Units::Decibels):
+      case static_cast<uint32_t>(CMixerControl::Units::Percent):
 
-         return( units );
+         return( static_cast<CMixerControl::Units>(units) );
 
       default:
 
-         return( unitsCustom );
+         return(CMixerControl::Units::Custom);
    }
 }
 
@@ -630,7 +630,7 @@ __checkReturn bool CMixerControl::IsBooleanUnits( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
-   if ( GetUnits() == unitsBoolean )
+   if ( GetUnits() == CMixerControl::Units::Boolean )
    {
       return( true );
    }
@@ -642,7 +642,7 @@ __checkReturn bool CMixerControl::IsCustom( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
-   if ( GetType() == typeCustom )
+   if ( GetType() == CMixerControl::Types::Custom )
    {
       return( true );
    }
@@ -654,7 +654,7 @@ __checkReturn bool CMixerControl::IsCustomUnits( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
-   if ( GetUnits() == unitsCustom )
+   if ( GetUnits() == CMixerControl::Units::Custom )
    {
       return( true );
    }
@@ -666,7 +666,7 @@ __checkReturn bool CMixerControl::IsDecibelsUnits( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
-   if ( GetUnits() == unitsDecibels )
+   if ( GetUnits() == CMixerControl::Units::Decibels )
    {
       return( true );
    }
@@ -678,7 +678,7 @@ __checkReturn bool CMixerControl::IsDisabled( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
-   const DWORD status = ( StatusFlags & statusDisabled );
+   DWORD const status = ( StatusFlags & static_cast<uint32_t>(CMixerControl::StatusFlags::Disabled) );
 
    if ( status != 0 )
    {
@@ -692,7 +692,7 @@ __checkReturn bool CMixerControl::IsFader( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
-   if ( GetType() == typeFader )
+   if ( GetType() == CMixerControl::Types::Fader )
    {
       return( true );
    }
@@ -704,7 +704,7 @@ __checkReturn bool CMixerControl::IsList( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
-   if ( GetType() == typeList )
+   if ( GetType() == CMixerControl::Types::List )
    {
       return( true );
    }
@@ -716,7 +716,7 @@ __checkReturn bool CMixerControl::IsMeter( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
-   if ( GetType() == typeMeter )
+   if ( GetType() == CMixerControl::Types::Meter )
    {
       return( true );
    }
@@ -728,7 +728,7 @@ __checkReturn bool CMixerControl::IsMultiple( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
-   const DWORD multiple = ( StatusFlags & statusMultiple );
+   DWORD const multiple = ( StatusFlags & static_cast<uint32_t>(CMixerControl::StatusFlags::Multiple) );
 
    if ( multiple != 0 )
    {
@@ -742,7 +742,7 @@ __checkReturn bool CMixerControl::IsNumber( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
-   if ( GetType() == typeNumber )
+   if ( GetType() == CMixerControl::Types::Number )
    {
       return( true );
    }
@@ -754,7 +754,7 @@ __checkReturn bool CMixerControl::IsPercentUnits( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
-   if ( GetUnits() == unitsPercent )
+   if ( GetUnits() == CMixerControl::Units::Percent )
    {
       return( true );
    }
@@ -766,7 +766,7 @@ __checkReturn bool CMixerControl::IsSignedUnits( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
-   if ( GetUnits() == unitsSigned )
+   if ( GetUnits() == CMixerControl::Units::Signed )
    {
       return( true );
    }
@@ -778,7 +778,7 @@ __checkReturn bool CMixerControl::IsSlider( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
-   if ( GetType() == typeSlider )
+   if ( GetType() == CMixerControl::Types::Slider )
    {
       return( true );
    }
@@ -790,7 +790,7 @@ __checkReturn bool CMixerControl::IsSwitch( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
-   if ( GetType() == typeSwitch )
+   if ( GetType() == CMixerControl::Types::Switch )
    {
       return( true );
    }
@@ -802,7 +802,7 @@ __checkReturn bool CMixerControl::IsTime( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
-   if ( GetType() == typeTime )
+   if ( GetType() == CMixerControl::Types::Time )
    {
       return( true );
    }
@@ -814,7 +814,7 @@ __checkReturn bool CMixerControl::IsUniform( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
-   const DWORD uniform = ( StatusFlags & statusUniform );
+   DWORD const uniform = ( StatusFlags & static_cast<uint32_t>(CMixerControl::StatusFlags::Uniform) );
 
    if ( uniform != 0 )
    {
@@ -828,7 +828,7 @@ __checkReturn bool CMixerControl::IsUnsignedUnits( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
-   if ( GetUnits() == unitsUnsigned )
+   if ( GetUnits() == CMixerControl::Units::Unsigned )
    {
       return( true );
    }
@@ -838,14 +838,14 @@ __checkReturn bool CMixerControl::IsUnsignedUnits( void ) const noexcept
 
 // Operators
 
-CMixerControl& CMixerControl::operator=( __in const CMixerControl& source ) noexcept
+CMixerControl& CMixerControl::operator=( __in CMixerControl const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );
    return( *this );
 }
 
-CMixerControl& CMixerControl::operator=( __in const MIXERCONTROL& source ) noexcept
+CMixerControl& CMixerControl::operator=( __in MIXERCONTROL const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );

@@ -615,7 +615,7 @@ namespace Win32FoundationClasses
                 return( (int) m_String.length() );
             }
 
-            const int number_of_characters_remaining = (int)( (int) m_String.length() - index );
+            int const number_of_characters_remaining = (int)( (int) m_String.length() - index );
 
             if ( number_of_characters_to_delete > number_of_characters_remaining )
             {
@@ -1345,11 +1345,11 @@ namespace Win32FoundationClasses
         {
             WFC_VALIDATE_POINTER( this );
 
-            size_t string_length = m_String.length();
+            std::size_t string_length = m_String.length();
 
             if ( string_length > 0 )
             {
-                size_t number_of_elements_to_erase = 0;
+                std::size_t number_of_elements_to_erase = 0;
 
                 while( number_of_elements_to_erase < string_length &&
                     _istspace( m_String.at( number_of_elements_to_erase ) ) )
@@ -1372,11 +1372,11 @@ namespace Win32FoundationClasses
         {
             WFC_VALIDATE_POINTER( this );
 
-            size_t string_length = m_String.length();
+            std::size_t string_length = m_String.length();
 
             if ( string_length > 0 )
             {
-                size_t number_of_elements_to_erase = 0;
+                std::size_t number_of_elements_to_erase = 0;
 
                 while( number_of_elements_to_erase < string_length &&
                     character == m_String.at( number_of_elements_to_erase ) )
@@ -1681,7 +1681,7 @@ namespace Win32FoundationClasses
         return( BYTES_NOT_FOUND );
     }
 
-    inline void find_all_in_memory(_In_reads_bytes_(buffer_size) uint8_t const * __restrict buffer, _In_ const int64_t buffer_size, _In_reads_bytes_(pattern_size) uint8_t const * __restrict pattern, _In_ int64_t const pattern_size, std::vector<uint64_t>& results) noexcept
+    inline void find_all_in_memory(_In_reads_bytes_(buffer_size) uint8_t const * __restrict buffer, _In_ int64_t const buffer_size, _In_reads_bytes_(pattern_size) uint8_t const * __restrict pattern, _In_ int64_t const pattern_size, std::vector<uint64_t>& results) noexcept
     {
         results.clear();
 

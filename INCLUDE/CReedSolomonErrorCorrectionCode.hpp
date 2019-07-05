@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 1995-2016, Samuel R. Blackburn
+** Copyright, 1995-2019, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -69,8 +69,8 @@ class CReedSolomonErrorCorrectionCode
 {
    protected:
 
-      static const int m_NumberOfBitsPerSymbol; // 8 bits per symbol
-      static const int m_BlockSize; // 255
+      static int const m_NumberOfBitsPerSymbol; // 8 bits per symbol
+      static int const m_BlockSize; // 255
 
       int   m_NumberOfSymbolsPerBlock;
       std::unique_ptr<int[]> m_Alpha_to; // array of integers of size (m_BlockSize + 1) elements
@@ -79,20 +79,20 @@ class CReedSolomonErrorCorrectionCode
 
       int m_PrimitivePolynomials[9]{ 0 }; // Array of integers
 
-      virtual __checkReturn bool m_EncodeChunk( __in const std::vector<uint8_t>& input, __out std::vector<uint8_t>& parity ) noexcept;
-      virtual __checkReturn int  m_DecodeChunk( __inout std::vector<uint8_t>& chunk, __out std::vector<int>& error_polynomials, __in int no_eras = 1 ) noexcept;
+      virtual _Check_return_ bool m_EncodeChunk( __in std::vector<uint8_t> const& input, __out std::vector<uint8_t>& parity ) noexcept;
+      virtual _Check_return_ int  m_DecodeChunk( __inout std::vector<uint8_t>& chunk, __out std::vector<int>& error_polynomials, __in int no_eras = 1 ) noexcept;
       virtual void m_GenerateGaloisField( void ) noexcept;
       virtual void m_GeneratePolynomial( void ) noexcept;
       virtual void m_Initialize( __in int number_of_symbols_per_block ) noexcept;
-      inline  __checkReturn int m_Mod( __in int x ) noexcept;
+      inline  _Check_return_ int m_Mod( __in int x ) noexcept;
 
    public:
 
       CReedSolomonErrorCorrectionCode();
       virtual ~CReedSolomonErrorCorrectionCode();
 
-      virtual __checkReturn SSIZE_T Decode( __in const std::vector<uint8_t>& encoded_data, __out std::vector<uint8_t>& decoded_data ) noexcept;
-      virtual __checkReturn bool    Encode( __in const std::vector<uint8_t>& data, __out std::vector<uint8_t>& encoded_data ) noexcept;
+      virtual _Check_return_ SSIZE_T Decode( __in std::vector<uint8_t> const& encoded_data, __out std::vector<uint8_t>& decoded_data ) noexcept;
+      virtual _Check_return_ bool    Encode( __in std::vector<uint8_t> const& data, __out std::vector<uint8_t>& encoded_data ) noexcept;
 };
 
 #endif // REED_SOLOMON_ERROR_CORRECTION_CODE_CLASS_HEADER

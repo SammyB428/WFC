@@ -74,7 +74,7 @@ class CModem : public CSerialFile
       virtual __checkReturn bool Disconnect( void ) noexcept; // Sends +++ATH
       virtual __checkReturn bool IsConnected( void ) const noexcept;
       virtual void GetPhoneNumber( __out std::string& phone_number_to_dial ) const noexcept;
-      virtual void SetPhoneNumber( __in const std::string& phone_number_to_dial ) noexcept;
+      virtual void SetPhoneNumber( __in std::string const& phone_number_to_dial ) noexcept;
       
 #if defined( _DEBUG ) && ! defined( WFC_NO_DUMPING )
 

@@ -77,7 +77,7 @@ CRemoteAccessServiceAdministration::~CRemoteAccessServiceAdministration()
    m_Initialize();
 }
 
-BOOL CRemoteAccessServiceAdministration::ClearPortStatistics( const std::wstring& port_name, LPCTSTR server_name )
+BOOL CRemoteAccessServiceAdministration::ClearPortStatistics( std::wstring const& port_name, LPCTSTR server_name )
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER_NULL_OK( server_name );
@@ -137,7 +137,7 @@ BOOL CRemoteAccessServiceAdministration::ClearPortStatistics( const std::wstring
    WFC_END_CATCH_ALL
 }
 
-BOOL CRemoteAccessServiceAdministration::DisconnectPort( const std::wstring& port_name, LPCTSTR server_name )
+BOOL CRemoteAccessServiceAdministration::DisconnectPort( std::wstring const& port_name, LPCTSTR server_name )
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER_NULL_OK( server_name );

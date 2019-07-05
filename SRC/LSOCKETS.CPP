@@ -78,14 +78,14 @@ void CListeningSocket::Dump( CDumpContext &dump_context ) const
 
 #endif // _DEBUG
 
-__checkReturn unsigned long CListeningSocket::GetBindToAddress( void ) const noexcept
+_Check_return_ unsigned long CListeningSocket::GetBindToAddress( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
    return( m_BindToAddress );
 }
 
-__checkReturn int CListeningSocket::GetConnectionBacklog( void ) const noexcept
+_Check_return_ int CListeningSocket::GetConnectionBacklog( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -105,7 +105,7 @@ void CListeningSocket::m_Initialize( void ) noexcept
    m_BindToAddress                      = INADDR_ANY;
 }
 
-__checkReturn bool CListeningSocket::Open( void ) noexcept
+_Check_return_ bool CListeningSocket::Open( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( m_Thunk_p );
@@ -177,7 +177,7 @@ __checkReturn bool CListeningSocket::Open( void ) noexcept
 
 #pragma warning( disable : 4100 )
 
-__checkReturn bool CListeningSocket::Open( __in_z LPCTSTR ChannelName, __in const UINT port_number ) noexcept
+_Check_return_ bool CListeningSocket::Open( __in_z LPCTSTR ChannelName, __in const UINT port_number ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -186,13 +186,13 @@ __checkReturn bool CListeningSocket::Open( __in_z LPCTSTR ChannelName, __in cons
    return( Open() );
 }
 
-void CListeningSocket::SetBindToAddress( __in const unsigned long address ) noexcept
+void CListeningSocket::SetBindToAddress( __in unsigned long const address ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    m_BindToAddress = address;
 }
 
-void CListeningSocket::SetConnectionBacklog( __in const int backlog ) noexcept
+void CListeningSocket::SetConnectionBacklog( __in int const backlog ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    m_NumberOfSimultaneousSocketsToAllow = backlog;
@@ -200,7 +200,7 @@ void CListeningSocket::SetConnectionBacklog( __in const int backlog ) noexcept
 
 #pragma warning( default : 4100 )
 
-__checkReturn BOOL CListeningSocket::WaitForConnection( void ) noexcept
+_Check_return_ BOOL CListeningSocket::WaitForConnection( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( m_Thunk_p );
@@ -339,7 +339,7 @@ __checkReturn BOOL CListeningSocket::WaitForConnection( void ) noexcept
    return( TRUE );
 }
 
-__checkReturn BOOL CListeningSocket::WaitForConnection( __in const int port_number ) noexcept
+_Check_return_ BOOL CListeningSocket::WaitForConnection( __in int const port_number ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    ASSERT( port_number > 0 );
@@ -349,7 +349,7 @@ __checkReturn BOOL CListeningSocket::WaitForConnection( __in const int port_numb
    return( WaitForConnection() );
 }
 
-__checkReturn BOOL CListeningSocket::WaitForConnection( __in_z LPCTSTR port_name ) noexcept
+_Check_return_ BOOL CListeningSocket::WaitForConnection( __in_z LPCTSTR port_name ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( port_name );

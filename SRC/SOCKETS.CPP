@@ -360,8 +360,8 @@ void CSimpleSocket::Dump( CDumpContext &dump_context ) const
    dump_context << TEXT( "m_SocketID                     = "   ) << m_SocketID       << TEXT( "\n" );
    dump_context << TEXT( "m_ReferenceCount               = "   ) << m_ReferenceCount << TEXT( "\n" );
 
-   size_t loop_index        = 0;
-   size_t number_of_aliases = AliasList.GetSize();
+   std::size_t loop_index        = 0;
+   std::size_t number_of_aliases = AliasList.GetSize();
 
    dump_context << TEXT( "AliasList conains " ) << (long) number_of_aliases << TEXT( " aliases.\n" );
 
@@ -1308,7 +1308,7 @@ void CSimpleSocket::SetName( __in_z LPCTSTR host_string ) noexcept
    WFC_END_CATCH_ALL
 }
 
-void CSimpleSocket::SetOptions( __in const DWORD new_options ) noexcept
+void CSimpleSocket::SetOptions( __in DWORD const new_options ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -1398,7 +1398,7 @@ void CSimpleSocket::SetPort( __in_z LPCTSTR name_string ) noexcept
    WFC_END_CATCH_ALL
 }
 
-void CSimpleSocket::SetPort( __in const short p ) noexcept
+void CSimpleSocket::SetPort( __in short const p ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( m_Thunk_p );
@@ -1440,15 +1440,15 @@ void CSimpleSocket::SetPort( __in const short p ) noexcept
    }
 }
 
-__checkReturn BOOL CSimpleSocket::SetReadTimeout( __in const DWORD number_of_milliseconds ) noexcept
+__checkReturn BOOL CSimpleSocket::SetReadTimeout( __in DWORD const number_of_milliseconds ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    ASSERT( m_SocketID != INVALID_SOCKET );
 
-   return( SetSocketOption( SOL_SOCKET, SO_RCVTIMEO, (const char *) &number_of_milliseconds, sizeof( number_of_milliseconds ) ) );
+   return( SetSocketOption( SOL_SOCKET, SO_RCVTIMEO, reinterpret_cast<char const *>(&number_of_milliseconds), sizeof( number_of_milliseconds ) ) );
 }
 
-__checkReturn BOOL CSimpleSocket::SetSocketOption( __in const int level, __in const int option_name, __in_z const char * option_value, __in const int option_length ) noexcept
+__checkReturn BOOL CSimpleSocket::SetSocketOption( __in int const level, __in int const option_name, __in_z char const * option_value, __in int const option_length ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( m_Thunk_p );
@@ -1486,19 +1486,19 @@ __checkReturn BOOL CSimpleSocket::SetSocketOption( __in const int level, __in co
    return( TRUE );
 }
 
-void CSimpleSocket::SetStringReadTerminatorCharacter( __in const TCHAR terminator ) noexcept
+void CSimpleSocket::SetStringReadTerminatorCharacter( __in TCHAR const terminator ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
    m_StringReadTerminatorCharacter = terminator;
 }
 
-__checkReturn BOOL CSimpleSocket::SetWriteTimeout( __in const DWORD number_of_milliseconds ) noexcept
+__checkReturn BOOL CSimpleSocket::SetWriteTimeout( __in DWORD const number_of_milliseconds ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    ASSERT( m_SocketID != INVALID_SOCKET );
 
-   return( SetSocketOption( SOL_SOCKET, SO_SNDTIMEO, (const char *) &number_of_milliseconds, sizeof( number_of_milliseconds ) ) );
+   return( SetSocketOption( SOL_SOCKET, SO_SNDTIMEO, reinterpret_cast<char const *>(&number_of_milliseconds), sizeof( number_of_milliseconds ) ) );
 }
 
 void __stdcall CSimpleSocket::StartWindowsSockets( void ) noexcept
@@ -1556,7 +1556,7 @@ void __stdcall CSimpleSocket::StopWindowsSockets( void ) noexcept
    }
 }
 
-void __stdcall CSimpleSocket::TranslateErrorCode( __in const DWORD error_code, __out_z LPTSTR destination_string, __in const DWORD size_of_destination_string ) noexcept
+void __stdcall CSimpleSocket::TranslateErrorCode( __in DWORD const error_code, __out_z LPTSTR destination_string, __in DWORD const size_of_destination_string ) noexcept
 {
    // We were passed a pointer, don't trust it
 
@@ -1902,7 +1902,7 @@ void __stdcall CSimpleSocket::TranslateErrorCode( __in const DWORD error_code, _
 
 #if defined( TF_DISCONNECT )
 
-__checkReturn BOOL CSimpleSocket::Transmit( __inout CFile64& file_to_send, __in const DWORD flags, __in_opt std::vector<uint8_t> * send_before, __in_opt std::vector<uint8_t> * send_after ) noexcept
+__checkReturn BOOL CSimpleSocket::Transmit( __inout CFile64& file_to_send, __in DWORD const flags, __in_opt std::vector<uint8_t> * send_before, __in_opt std::vector<uint8_t> * send_after ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER_NULL_OK( send_before );

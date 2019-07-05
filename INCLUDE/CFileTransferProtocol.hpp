@@ -65,13 +65,13 @@ class CFileTransferProtocol
 
       virtual ~CFileTransferProtocol();
 
-      virtual void GetDirectory( __in const CUniformResourceLocator& source, __inout std::vector<std::wstring>& directory_contents, __in_z_opt LPCTSTR filter = nullptr ) noexcept;
-      virtual void GetFile( __in const CUniformResourceLocator& source, __inout std::vector<uint8_t>& file_contents ) noexcept;
+      virtual void GetDirectory( __in CUniformResourceLocator const& source, __inout std::vector<std::wstring>& directory_contents, __in_z_opt LPCTSTR filter = nullptr ) noexcept;
+      virtual void GetFile( __in CUniformResourceLocator const& source, __inout std::vector<uint8_t>& file_contents ) noexcept;
       virtual void GetPassword( __inout std::wstring& password ) const noexcept;
       virtual void GetUserName( __inout std::wstring& account  ) const noexcept;
-      virtual BOOL PutFile( __in const CUniformResourceLocator& url, __in const std::vector<uint8_t>& file_contents ) noexcept;
-      virtual void SetPassword( __in const std::wstring& password ) noexcept;
-      virtual void SetUserName( __in const std::wstring& account  ) noexcept;
+      virtual BOOL PutFile( __in CUniformResourceLocator const& url, __in std::vector<uint8_t> const& file_contents ) noexcept;
+      virtual void SetPassword( __in std::wstring const& password ) noexcept;
+      virtual void SetUserName( __in std::wstring const& account  ) noexcept;
 
 #if defined( _DEBUG ) && ! defined( WFC_NO_DUMPING )
 

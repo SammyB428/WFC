@@ -84,8 +84,8 @@ inline __checkReturn int CReedSolomonErrorCorrectionCode::m_Mod( __in int x ) no
 
 // The class
 
-const int CReedSolomonErrorCorrectionCode::m_NumberOfBitsPerSymbol = 8;
-const int CReedSolomonErrorCorrectionCode::m_BlockSize             = 255; // (1 << m_NumberOfBitsPerSymbol) - 1
+int const CReedSolomonErrorCorrectionCode::m_NumberOfBitsPerSymbol = 8;
+int const CReedSolomonErrorCorrectionCode::m_BlockSize             = 255; // (1 << m_NumberOfBitsPerSymbol) - 1
 
 CReedSolomonErrorCorrectionCode::CReedSolomonErrorCorrectionCode()
 {
@@ -119,7 +119,7 @@ CReedSolomonErrorCorrectionCode::~CReedSolomonErrorCorrectionCode()
    WFC_VALIDATE_POINTER( this );
 }
 
-__checkReturn SSIZE_T CReedSolomonErrorCorrectionCode::Decode( __in const std::vector<uint8_t>& encoded_data, __out std::vector<uint8_t>& decoded_data ) noexcept
+__checkReturn SSIZE_T CReedSolomonErrorCorrectionCode::Decode( __in std::vector<uint8_t> const& encoded_data, __out std::vector<uint8_t>& decoded_data ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -184,7 +184,7 @@ __checkReturn SSIZE_T CReedSolomonErrorCorrectionCode::Decode( __in const std::v
    return( number_of_errors_corrected );
 }
 
-__checkReturn bool CReedSolomonErrorCorrectionCode::Encode( __in const std::vector<uint8_t>& data, __out std::vector<uint8_t>& encoded_data ) noexcept
+__checkReturn bool CReedSolomonErrorCorrectionCode::Encode( __in std::vector<uint8_t> const& data, __out std::vector<uint8_t>& encoded_data ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -289,16 +289,16 @@ __checkReturn int CReedSolomonErrorCorrectionCode::m_DecodeChunk(__inout std::ve
 
    WFC_TRY
    {
-      std::unique_ptr<int[]> recd   = std::make_unique<int[]>(m_BlockSize);
-      std::unique_ptr<int[]> lambda = std::make_unique<int[]>(m_BlockSize - m_NumberOfSymbolsPerBlock + 1);
-      std::unique_ptr<int[]> s      = std::make_unique<int[]>(m_BlockSize - m_NumberOfSymbolsPerBlock + 1);
+      auto recd   = std::make_unique<int[]>(m_BlockSize);
+      auto lambda = std::make_unique<int[]>(m_BlockSize - m_NumberOfSymbolsPerBlock + 1);
+      auto s      = std::make_unique<int[]>(m_BlockSize - m_NumberOfSymbolsPerBlock + 1);
       /* Err+Eras Locator poly and syndrome poly */
-      std::unique_ptr<int[]> b      = std::make_unique<int[]>(m_BlockSize - m_NumberOfSymbolsPerBlock + 1);
-      std::unique_ptr<int[]> t      = std::make_unique<int[]>(m_BlockSize - m_NumberOfSymbolsPerBlock + 1);
-      std::unique_ptr<int[]> omega  = std::make_unique<int[]>(m_BlockSize - m_NumberOfSymbolsPerBlock + 1);
-      std::unique_ptr<int[]> root   = std::make_unique<int[]>(m_BlockSize - m_NumberOfSymbolsPerBlock    );
-      std::unique_ptr<int[]> reg    = std::make_unique<int[]>(m_BlockSize - m_NumberOfSymbolsPerBlock + 1);
-      std::unique_ptr<int[]> loc    = std::make_unique<int[]>(m_BlockSize - m_NumberOfSymbolsPerBlock    );
+      auto b      = std::make_unique<int[]>(m_BlockSize - m_NumberOfSymbolsPerBlock + 1);
+      auto t      = std::make_unique<int[]>(m_BlockSize - m_NumberOfSymbolsPerBlock + 1);
+      auto omega  = std::make_unique<int[]>(m_BlockSize - m_NumberOfSymbolsPerBlock + 1);
+      auto root   = std::make_unique<int[]>(m_BlockSize - m_NumberOfSymbolsPerBlock    );
+      auto reg    = std::make_unique<int[]>(m_BlockSize - m_NumberOfSymbolsPerBlock + 1);
+      auto loc    = std::make_unique<int[]>(m_BlockSize - m_NumberOfSymbolsPerBlock    );
 
       eras_pos.resize( m_BlockSize - m_NumberOfSymbolsPerBlock );
 

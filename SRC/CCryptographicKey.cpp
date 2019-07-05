@@ -86,7 +86,7 @@ static inline __checkReturn bool wfc_trim_decrypted_data( __inout std::vector<ui
 
    // Now strip off that nasty padding....
 
-   const std::size_t number_of_bytes_to_strip = decrypted_data.size() - size_of_plaintext;
+   std::size_t const number_of_bytes_to_strip = decrypted_data.size() - size_of_plaintext;
 
    remove_at( decrypted_data, decrypted_data.size() - number_of_bytes_to_strip, number_of_bytes_to_strip );
 
@@ -129,12 +129,12 @@ CCryptographicKey::~CCryptographicKey()
 
 // Methods
 
-__checkReturn bool CCryptographicKey::Decrypt(__in const std::vector<uint8_t>&          data_to_decrypt,
+__checkReturn bool CCryptographicKey::Decrypt(__in std::vector<uint8_t> const&          data_to_decrypt,
     __out std::vector<uint8_t>&          decrypted_data,
-    __in const bool                 this_is_the_last_chunk_of_data_to_be_decrypted,
+    __in bool const                 this_is_the_last_chunk_of_data_to_be_decrypted,
     __in_opt CCryptographicHash * hash_p,
-    __in const DWORD                flags,
-    __in const bool                 use_wfc_trim) noexcept
+    __in DWORD const               flags,
+    __in bool const                use_wfc_trim) noexcept
 {
     WFC_VALIDATE_POINTER(this);
     WFC_VALIDATE_POINTER_NULL_OK(hash_p);
@@ -351,7 +351,7 @@ __checkReturn bool CCryptographicKey::Destroy( void ) noexcept
    return( return_value == FALSE ? false : true );
 }
 
-__checkReturn bool CCryptographicKey::Encrypt( const std::vector<uint8_t>&          data_to_encrypt,
+__checkReturn bool CCryptographicKey::Encrypt( std::vector<uint8_t> const&          data_to_encrypt,
     std::vector<uint8_t>&          encrypted_data,
                                        bool                 this_is_the_last_chunk_of_data_to_be_encrypted,
                                        CCryptographicHash * hash_p,
@@ -726,7 +726,7 @@ __checkReturn HCRYPTKEY CCryptographicKey::GetHandle( void ) const noexcept
    return( m_Key );
 }
 
-__checkReturn bool CCryptographicKey::GetParameter( __in const DWORD parameter_to_get, __inout_bcount( buffer_length ) BYTE *buffer, __inout DWORD& buffer_length, __in const DWORD flags ) noexcept
+__checkReturn bool CCryptographicKey::GetParameter( __in DWORD const parameter_to_get, __inout_bcount( buffer_length ) BYTE *buffer, __inout DWORD& buffer_length, __in DWORD const flags ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( buffer );
@@ -830,7 +830,7 @@ __checkReturn bool CCryptographicKey::GetInitializationVector( __out std::vector
 
    DWORD buffer_length = static_cast<DWORD>(initialization_vector.size());
 
-   const bool return_value = GetParameter( parameterInitializationVector, initialization_vector.data(), buffer_length );
+   bool const return_value = GetParameter( parameterInitializationVector, initialization_vector.data(), buffer_length );
 
    if ( return_value != false )
    {
@@ -875,7 +875,7 @@ __checkReturn bool CCryptographicKey::GetSalt( __out std::vector<uint8_t>& salt 
 
    DWORD buffer_length = (DWORD) salt.size();
 
-   const bool return_value = GetParameter( parameterSalt, salt.data(), buffer_length );
+   bool const return_value = GetParameter( parameterSalt, salt.data(), buffer_length );
 
    if ( return_value != false )
    {
@@ -885,14 +885,14 @@ __checkReturn bool CCryptographicKey::GetSalt( __out std::vector<uint8_t>& salt 
    return( return_value );
 }
 
-__checkReturn bool CCryptographicKey::SetCipherMode( __in const DWORD mode ) noexcept
+__checkReturn bool CCryptographicKey::SetCipherMode( __in DWORD const mode ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
    return( SetParameter( parameterCipherMode, (BYTE *) &mode ) );
 }
 
-__checkReturn bool CCryptographicKey::SetInitializationVector( __in const BYTE * buffer ) noexcept
+__checkReturn bool CCryptographicKey::SetInitializationVector( __in BYTE const * buffer ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER_NULL_OK( this );
@@ -900,21 +900,21 @@ __checkReturn bool CCryptographicKey::SetInitializationVector( __in const BYTE *
    return( SetParameter( parameterInitializationVector, buffer ) );
 }
 
-__checkReturn bool CCryptographicKey::SetNumberOfBitsProcessedPerCycle( __in const DWORD number_of_bits ) noexcept
+__checkReturn bool CCryptographicKey::SetNumberOfBitsProcessedPerCycle( __in DWORD const number_of_bits ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
    return( SetParameter( parameterNumberOfBitsProcessedPerCycle, (BYTE *) &number_of_bits ) );
 }
 
-__checkReturn bool CCryptographicKey::SetPaddingMode( __in const DWORD mode ) noexcept
+__checkReturn bool CCryptographicKey::SetPaddingMode( __in DWORD const mode ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
-   return( SetParameter( parameterPaddingMode, (const BYTE *) &mode ) );
+   return( SetParameter( parameterPaddingMode, (BYTE const *) &mode ) );
 }
 
-__checkReturn bool CCryptographicKey::SetParameter( __in const DWORD parameter_to_set, __in const BYTE *buffer, __in const DWORD flags ) noexcept
+__checkReturn bool CCryptographicKey::SetParameter( __in DWORD const parameter_to_set, __in BYTE const * buffer, __in DWORD const flags ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER_NULL_OK( buffer );
@@ -999,7 +999,7 @@ __checkReturn bool CCryptographicKey::SetPermissions( __in DWORD permissions ) n
    return( SetParameter( parameterPermissions, (BYTE *) permissions ) );
 }
 
-__checkReturn bool CCryptographicKey::SetSalt( __in const BYTE * buffer ) noexcept
+__checkReturn bool CCryptographicKey::SetSalt( __in BYTE const * buffer ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -1106,7 +1106,7 @@ modeOutputFeedback.
 <DT><PRE>BOOL <B><A NAME="GetPaddingMode">GetPaddingMode</A></B>( DWORD&amp; padding_mode )</PRE><DD>
 Retrieves the padding mode. Currently the only padding mode is PKCS5_PADDING.
 
-<DT><PRE>BOOL <B><A NAME="GetParameter">GetParameter</A></B>( const DWORD parameter_to_get, BYTE *buffer, DWORD&amp; buffer_length, const DWORD flags = 0 )</PRE><DD>
+<DT><PRE>BOOL <B><A NAME="GetParameter">GetParameter</A></B>( DWORD const parameter_to_get, BYTE *buffer, DWORD&amp; buffer_length, DWORD const flags = 0 )</PRE><DD>
 Retrieves one of the following bits of information (i.e. 
 <CODE>parameter_to_get</CODE> can be one of):
 <UL>
@@ -1147,7 +1147,7 @@ or modeOutputFeedback.
 <DT><PRE>BOOL <B><A NAME="SetPaddingMode">SetPaddingMode</A></B>( DWORD mode )</PRE><DD>
 Sets the padding mode to be used by the cipher.
 
-<DT><PRE>BOOL <B><A NAME="SetParameter">SetParameter</A></B>( const DWORD parameter_to_set, BYTE * buffer, const DWORD flags = 0 )</PRE><DD>
+<DT><PRE>BOOL <B><A NAME="SetParameter">SetParameter</A></B>( DWORD const parameter_to_set, BYTE * buffer, DWORD const flags = 0 )</PRE><DD>
 Sets a parameter of the key. You can set one of these parameters
 (i.e. <CODE>parameter_to_set</CODE> can be one of these values):
 <UL>

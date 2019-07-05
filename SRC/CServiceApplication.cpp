@@ -51,7 +51,7 @@ static char THIS_FILE[] = __FILE__;
 
 USING_WFC_NAMESPACE
 
-CServiceApplication::CServiceApplication(__in const int number_of_command_line_arguments,
+CServiceApplication::CServiceApplication(__in int const number_of_command_line_arguments,
     __in_ecount_z_opt(number_of_command_line_arguments) LPCTSTR command_line_arguments[],
     __in_z LPCTSTR service_name,
     __in_z LPCTSTR friendly_service_name,
@@ -59,7 +59,7 @@ CServiceApplication::CServiceApplication(__in const int number_of_command_line_a
     __callback LPTHREAD_START_ROUTINE worker_thread,
     __callback SHOW_USAGE_ROUTINE show_usage,
     __callback SET_DEFAULTS_ROUTINE set_defaults,
-    __in const DWORD installation_configuration)
+    __in DWORD const installation_configuration)
 {
     WFC_VALIDATE_POINTER(this);
     WFC_VALIDATE_POINTER(worker_thread);
@@ -80,12 +80,12 @@ CServiceApplication::~CServiceApplication(void)
     WFC_VALIDATE_POINTER(this);
 }
 
-__checkReturn int CServiceApplication::m_Main(__in const int number_of_command_line_arguments,
+_Check_return_ int CServiceApplication::m_Main(__in int const number_of_command_line_arguments,
     __in_ecount_z_opt(number_of_command_line_arguments) LPCTSTR command_line_arguments[],
     __in_z LPCTSTR service_name,
     __in_z LPCTSTR friendly_service_name,
     __in_z LPCTSTR executable_path,
-    __in const DWORD installation_configuration,
+    __in DWORD const installation_configuration,
     __callback LPTHREAD_START_ROUTINE worker_thread,
     __callback SHOW_USAGE_ROUTINE show_usage,
     __callback SET_DEFAULTS_ROUTINE set_defaults) noexcept
@@ -152,7 +152,7 @@ __checkReturn int CServiceApplication::m_Main(__in const int number_of_command_l
         {
             CServiceControlManager service_control_manager;
 
-            if (service_control_manager.Open() == FALSE)
+            if (service_control_manager.Open() == false)
             {
                 //WFCTRACEERROR( service_control_manager.GetErrorCode() );
                 _tprintf(TEXT("Can't open service control manager, attempting to carry on...\n"));

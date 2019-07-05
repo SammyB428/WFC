@@ -88,7 +88,7 @@ CMemoryFile::CMemoryFile()
     ZeroMemory( &m_FileInformation, sizeof( m_FileInformation ) );
 }
 
-CMemoryFile::CMemoryFile( __in const size_t              allocation_granularity,
+CMemoryFile::CMemoryFile( __in std::size_t const allocation_granularity,
                          __in_opt SECURITY_ATTRIBUTES * security_attributes,
                          __in_opt SECURITY_DESCRIPTOR * security_descriptor )
 {
@@ -539,7 +539,7 @@ _Check_return_ bool CMemoryFile::Open( __in_z LPCWSTR filename, __in UINT const 
         return( false );
 }
 
-_Check_return_ bool CMemoryFile::Open( _In_z_ LPCSTR filename, _In_ const UINT open_flags, _In_ const uint64_t beginning_at_offset, _In_ const size_t number_of_bytes_to_map, _In_opt_ const void * desired_address ) noexcept
+_Check_return_ bool CMemoryFile::Open( _In_z_ LPCSTR filename, _In_ UINT const open_flags, _In_ uint64_t const beginning_at_offset, _In_ std::size_t const number_of_bytes_to_map, _In_opt_ void const * desired_address ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
     WFC_VALIDATE_POINTER( filename );
@@ -631,7 +631,7 @@ void CSharedMemory::Close(void) noexcept
 
 static _Check_return_ bool CreateDACL(_Inout_ SECURITY_ATTRIBUTES *sa) noexcept
 {
-    const wchar_t *sdd = L"D:"
+    wchar_t const *sdd = L"D:"
         L"(D;OICI;GA;;;BG)" //Deny guests
         L"(D;OICI;GA;;;AN)" //Deny anonymous
         L"(A;OICI;GRGWGX;;;AU)" //Allow read, write and execute for Users
@@ -642,12 +642,12 @@ static _Check_return_ bool CreateDACL(_Inout_ SECURITY_ATTRIBUTES *sa) noexcept
 
 static _Check_return_ bool CreateLowIntegritySACL( _Inout_ SECURITY_ATTRIBUTES *sa ) noexcept
 {
-    const wchar_t *sdd = L"S:(ML;;NW;;;LW)";
+    wchar_t const * sdd = L"S:(ML;;NW;;;LW)";
 
     return ConvertStringSecurityDescriptorToSecurityDescriptor(sdd, SDDL_REVISION_1, &sa->lpSecurityDescriptor, nullptr) == TRUE;
 }
 
-_Check_return_ bool CSharedMemory::Create( _In_z_ const wchar_t * name, _In_ const size_t number_of_bytes ) noexcept
+_Check_return_ bool CSharedMemory::Create( _In_z_ wchar_t const * name, _In_ std::size_t const number_of_bytes ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
     WFC_VALIDATE_POINTER( name );
@@ -673,7 +673,7 @@ _Check_return_ bool CSharedMemory::Create( _In_z_ const wchar_t * name, _In_ con
     return( return_value );
 }
 
-_Check_return_ bool CSharedMemory::Create( _In_z_ const wchar_t * name, _In_ const size_t number_of_bytes, _In_opt_ SECURITY_ATTRIBUTES * security_attributes ) noexcept
+_Check_return_ bool CSharedMemory::Create( _In_z_ wchar_t const * name, _In_ std::size_t const number_of_bytes, _In_opt_ SECURITY_ATTRIBUTES * security_attributes ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
     WFC_VALIDATE_POINTER( name );
@@ -723,7 +723,7 @@ _Check_return_ bool CSharedMemory::Create( _In_z_ const wchar_t * name, _In_ con
     return( true );
 }
 
-_Check_return_ bool CSharedMemory::Open( _In_z_ const wchar_t * name, _In_ const size_t number_of_bytes, _In_ const bool read_only ) noexcept
+_Check_return_ bool CSharedMemory::Open( _In_z_ wchar_t const * name, _In_ std::size_t const number_of_bytes, _In_ const bool read_only ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
     WFC_VALIDATE_POINTER( name );

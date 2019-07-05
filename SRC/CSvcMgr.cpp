@@ -87,7 +87,7 @@ void CServiceControlManager::Close( void ) noexcept
     }
 }
 
-__checkReturn bool CServiceControlManager::Continue( _In_z_ const wchar_t * service_name ) noexcept
+_Check_return_ bool CServiceControlManager::Continue( _In_z_ wchar_t const * service_name ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
     WFC_VALIDATE_POINTER( service_name );
@@ -156,7 +156,7 @@ __checkReturn bool CServiceControlManager::Continue( _In_z_ const wchar_t * serv
     WFC_END_CATCH_ALL
 }
 
-__checkReturn bool CServiceControlManager::EnableInteractiveServices( _In_ bool enable_interactive_services ) noexcept
+_Check_return_ bool CServiceControlManager::EnableInteractiveServices( _In_ bool enable_interactive_services ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
 
@@ -320,7 +320,7 @@ _Check_return_ bool CServiceControlManager::EnumerateStatus( _In_ uint32_t state
     return( false );
 }
 
-__checkReturn bool CServiceControlManager::GetConfiguration( __in_z const wchar_t * service_name, __out CServiceConfigurationW& configuration ) noexcept
+_Check_return_ bool CServiceControlManager::GetConfiguration( __in_z wchar_t const * service_name, __out CServiceConfigurationW& configuration ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
     WFC_VALIDATE_POINTER( service_name );
@@ -359,7 +359,7 @@ __checkReturn bool CServiceControlManager::GetConfiguration( __in_z const wchar_
             return( false );
         }
 
-        std::unique_ptr<uint8_t[]> buffer = std::make_unique<uint8_t[]>(4000);
+        auto buffer = std::make_unique<uint8_t[]>(4000);
 
         DWORD number_of_bytes_needed = 0;
 
@@ -430,8 +430,7 @@ _Check_return_ bool CServiceControlManager::GetDependencies( _In_z_ wchar_t cons
         DWORD number_of_bytes_needed      = 0;
         DWORD buffer_size                 = 0;
 
-
-        std::unique_ptr<ENUM_SERVICE_STATUS[]> status_array = std::make_unique<ENUM_SERVICE_STATUS[]>(512); // an insane amount
+        auto status_array = std::make_unique<ENUM_SERVICE_STATUS[]>(512); // an insane amount
 
         buffer_size = 512 * sizeof( ENUM_SERVICE_STATUS );
 
@@ -467,7 +466,7 @@ _Check_return_ bool CServiceControlManager::GetDependencies( _In_z_ wchar_t cons
     WFC_END_CATCH_ALL
 }
 
-_Check_return_ bool CServiceControlManager::GetDisplayName( _In_z_ const wchar_t * key_name, _Out_ std::wstring& display_name ) noexcept
+_Check_return_ bool CServiceControlManager::GetDisplayName( _In_z_ wchar_t const * key_name, _Out_ std::wstring& display_name ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
     ASSERT( m_ManagerHandle != static_cast< SC_HANDLE >( NULL ) );
@@ -480,7 +479,7 @@ _Check_return_ bool CServiceControlManager::GetDisplayName( _In_z_ const wchar_t
     {
         DWORD buffer_size = 8192; // insanely large buffer
 
-        std::unique_ptr<wchar_t[]> display_string = std::make_unique<wchar_t[]>(buffer_size);
+    auto display_string = std::make_unique<wchar_t[]>(buffer_size);
 
         BOOL return_value = ::GetServiceDisplayName( m_ManagerHandle,
                 key_name,
@@ -514,19 +513,19 @@ _Check_return_ bool CServiceControlManager::GetDisplayName( _In_z_ const wchar_t
     WFC_END_CATCH_ALL
 }
 
-__checkReturn uint32_t CServiceControlManager::GetErrorCode( void ) const noexcept
+_Check_return_ uint32_t CServiceControlManager::GetErrorCode( void ) const noexcept
 {
     WFC_VALIDATE_POINTER( this );
     return( m_ErrorCode );
 }
 
-__checkReturn SC_HANDLE CServiceControlManager::GetHandle( void ) const noexcept
+_Check_return_ SC_HANDLE CServiceControlManager::GetHandle( void ) const noexcept
 {
     WFC_VALIDATE_POINTER( this );
     return( m_ManagerHandle );
 }
 
-__checkReturn bool CServiceControlManager::GetKeyName( __in_z const wchar_t * display_name, __out std::wstring& key_name ) noexcept
+_Check_return_ bool CServiceControlManager::GetKeyName( __in_z wchar_t const * display_name, __out std::wstring& key_name ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
     ASSERT( m_ManagerHandle != static_cast< SC_HANDLE >( NULL ) );
@@ -539,7 +538,7 @@ __checkReturn bool CServiceControlManager::GetKeyName( __in_z const wchar_t * di
 
         DWORD buffer_size = 8192; // insanely large buffer
 
-        std::unique_ptr<wchar_t[]> key_string = std::make_unique<wchar_t[]>(buffer_size);
+        auto key_string = std::make_unique<wchar_t[]>(buffer_size);
 
         BOOL return_value = ::GetServiceKeyNameW( m_ManagerHandle,
                 display_name,
@@ -573,7 +572,7 @@ __checkReturn bool CServiceControlManager::GetKeyName( __in_z const wchar_t * di
     WFC_END_CATCH_ALL
 }
 
-__checkReturn bool CServiceControlManager::GetNext( __out CServiceNameAndStatusW& status ) noexcept
+_Check_return_ bool CServiceControlManager::GetNext( __out CServiceNameAndStatusW& status ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
 
@@ -590,7 +589,7 @@ __checkReturn bool CServiceControlManager::GetNext( __out CServiceNameAndStatusW
     return( false );
 }
 
-__checkReturn bool CServiceControlManager::Install( __in_z const wchar_t * service_name, __in_z const wchar_t * friendly_name, __in_z_opt const wchar_t * executable_file ) noexcept
+_Check_return_ bool CServiceControlManager::Install( __in_z wchar_t const * service_name, __in_z wchar_t const * friendly_name, __in_z_opt wchar_t const * executable_file ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
     WFC_VALIDATE_POINTER( service_name );
@@ -675,7 +674,7 @@ __checkReturn bool CServiceControlManager::Install( __in_z const wchar_t * servi
         // Install() would fail in unattended installations. Event logging
         // is now a non-fatal error
 
-        std::unique_ptr<CEventLog> event_log = std::make_unique<CEventLog>();
+        auto event_log = std::make_unique<CEventLog>();
 
         if ( event_log.get() != nullptr )
         {
@@ -778,7 +777,7 @@ __checkReturn bool CServiceControlManager::Install( __in_z const wchar_t * servi
     WFC_END_CATCH_ALL
 }
 
-__checkReturn bool CServiceControlManager::IsDatabaseLocked( __out std::wstring& who_locked_it, __out CTimeSpan& how_long_it_has_been_locked ) noexcept
+_Check_return_ bool CServiceControlManager::IsDatabaseLocked( __out std::wstring& who_locked_it, __out CTimeSpan& how_long_it_has_been_locked ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
     ASSERT( m_ManagerHandle != static_cast< SC_HANDLE >( NULL ) );
@@ -796,7 +795,7 @@ __checkReturn bool CServiceControlManager::IsDatabaseLocked( __out std::wstring&
     DWORD buffer_size            = 8192; // insanely large buffer
     DWORD number_of_bytes_needed = 0;
 
-    std::unique_ptr<uint8_t[]> buffer = std::make_unique<uint8_t[]>(buffer_size);
+    auto buffer = std::make_unique<uint8_t[]>(buffer_size);
 
     // Always always always zero buffers
 
@@ -867,7 +866,7 @@ void CServiceControlManager::m_Initialize( void ) noexcept
     m_DatabaseLockHandle = reinterpret_cast< SC_LOCK >( NULL );
 }
 
-__checkReturn bool CServiceControlManager::Open( __in const uint32_t what_to_open, __in_z_opt const wchar_t * database_name, __in_z_opt const wchar_t * machine_name ) noexcept
+_Check_return_ bool CServiceControlManager::Open( __in uint32_t const what_to_open, __in_z_opt wchar_t const * database_name, __in_z_opt wchar_t const * machine_name ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
 
@@ -916,7 +915,7 @@ __checkReturn bool CServiceControlManager::Open( __in const uint32_t what_to_ope
     WFC_END_CATCH_ALL
 }
 
-__checkReturn bool CServiceControlManager::Pause( __in_z const wchar_t * service_name ) noexcept
+_Check_return_ bool CServiceControlManager::Pause( __in_z wchar_t const * service_name ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
     WFC_VALIDATE_POINTER( service_name );
@@ -988,7 +987,7 @@ void CServiceControlManager::GetErrorMessage(__inout std::wstring& error_message
     error_message.assign(m_ErrorMessage);
 }
 
-__checkReturn bool CServiceControlManager::Remove( __in_z wchar_t const * service_name ) noexcept
+_Check_return_ bool CServiceControlManager::Remove( __in_z wchar_t const * service_name ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
     WFC_VALIDATE_POINTER( service_name );
@@ -1108,16 +1107,16 @@ __checkReturn bool CServiceControlManager::Remove( __in_z wchar_t const * servic
     WFC_END_CATCH_ALL
 }
 
-__checkReturn bool CServiceControlManager::SetConfiguration( __in_z const wchar_t * service_name,
-                                                            __in const uint32_t   when_to_start,
-                                                            __in const uint32_t   type_of_service,
-                                                            __in const uint32_t   error_control,
-                                                            __in_z_opt const wchar_t * name_of_executable_file,
-                                                            __in_z_opt const wchar_t * load_order_group,
-                                                            __in_z_opt const wchar_t * dependencies,
-                                                            __in_z_opt const wchar_t * start_name,
-                                                            __in_z_opt const wchar_t * password,
-                                                            __in_z_opt const wchar_t * display_name ) noexcept
+_Check_return_ bool CServiceControlManager::SetConfiguration( __in_z wchar_t const * service_name,
+                                                            __in uint32_t const  when_to_start,
+                                                            __in uint32_t const  type_of_service,
+                                                            __in uint32_t const  error_control,
+                                                            __in_z_opt wchar_t const * name_of_executable_file,
+                                                            __in_z_opt wchar_t const * load_order_group,
+                                                            __in_z_opt wchar_t const * dependencies,
+                                                            __in_z_opt wchar_t const * start_name,
+                                                            __in_z_opt wchar_t const * password,
+                                                            __in_z_opt wchar_t const * display_name ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
     WFC_VALIDATE_POINTER( service_name );
@@ -1241,7 +1240,7 @@ __checkReturn bool CServiceControlManager::SetConfiguration( __in_z const wchar_
     WFC_END_CATCH_ALL
 }
 
-__checkReturn bool CServiceControlManager::Start( __in_z const wchar_t * service_name, __in const uint32_t service_argc, __in_ecount_z_opt( service_argc ) const wchar_t * * service_argv ) noexcept
+_Check_return_ bool CServiceControlManager::Start( __in_z wchar_t const * service_name, __in uint32_t const service_argc, __in_ecount_z_opt( service_argc ) wchar_t const * * service_argv ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
     WFC_VALIDATE_POINTER( service_name );
@@ -1266,7 +1265,7 @@ __checkReturn bool CServiceControlManager::Start( __in_z const wchar_t * service
             return( false );
         }
 
-        SC_HANDLE service_handle = ::OpenServiceW( m_ManagerHandle, service_name, SERVICE_START );
+        auto service_handle = ::OpenServiceW( m_ManagerHandle, service_name, SERVICE_START );
 
         if ( service_handle == static_cast< SC_HANDLE >( NULL ) )
         {
@@ -1302,7 +1301,7 @@ __checkReturn bool CServiceControlManager::Start( __in_z const wchar_t * service
     WFC_END_CATCH_ALL
 }
 
-__checkReturn bool CServiceControlManager::Stop( _In_z_ const wchar_t * service_name ) noexcept
+_Check_return_ bool CServiceControlManager::Stop( _In_z_ wchar_t const * service_name ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
     WFC_VALIDATE_POINTER( service_name );
@@ -1403,7 +1402,7 @@ __checkReturn bool CServiceControlManager::Stop( _In_z_ const wchar_t * service_
     WFC_END_CATCH_ALL
 }
 
-__checkReturn bool CServiceControlManager::UnlockDatabase( void ) noexcept
+_Check_return_ bool CServiceControlManager::UnlockDatabase( void ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
 
@@ -1442,7 +1441,7 @@ static VOID CALLBACK __stop_notification_callback(PVOID parameter) noexcept
     SetEvent(event_handle);
 }
 
-_Check_return_ bool CServiceControlManager::WaitForStop(_In_z_ const wchar_t * service_name) noexcept
+_Check_return_ bool CServiceControlManager::WaitForStop(_In_z_ wchar_t const * service_name) noexcept
 {
     WFC_VALIDATE_POINTER(this);
     WFC_VALIDATE_POINTER(service_name);

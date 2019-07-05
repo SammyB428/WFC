@@ -228,7 +228,7 @@ void CNetwork::Dump( CDumpContext& dump_context ) const
 
 #endif // _DEBUG
 
-__checkReturn BOOL CNetwork::EnumeratePorts( void ) noexcept
+_Check_return_ bool CNetwork::EnumeratePorts( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -244,9 +244,7 @@ __checkReturn BOOL CNetwork::EnumeratePorts( void ) noexcept
 
    DWORD number_of_bytes_needed = 0;
 
-   BYTE pseudo_buffer[ 10 ];
-
-   BOOL return_value = FALSE;
+   BYTE pseudo_buffer[10]{ 0 };
 
    // EnumPorts is not const correct, therefore we have to code around it...
 
@@ -256,7 +254,7 @@ __checkReturn BOOL CNetwork::EnumeratePorts( void ) noexcept
 
    wcscpy_s( machine_name, std::size( machine_name ), m_WideDoubleBackslashPreceededMachineName.get() );
 
-   return_value = ::EnumPortsW( machine_name,
+   auto result = ::EnumPortsW( machine_name,
                                1,
                                pseudo_buffer,
                                sizeof( pseudo_buffer ),
@@ -265,18 +263,18 @@ __checkReturn BOOL CNetwork::EnumeratePorts( void ) noexcept
 
    m_ErrorCode = ::GetLastError();
 
-   if ( return_value != FALSE )
+   if (result != FALSE )
    {
       //WFCTRACEERROR( m_ErrorCode );
       // Something bad wrong here...
 
-      return( FALSE );
+      return( false );
    }
 
    if ( m_ErrorCode != ERROR_INSUFFICIENT_BUFFER )
    {
       //WFCTRACEERROR( m_ErrorCode );
-      return( FALSE );
+      return( false );
    }
 
    m_PortBuffer = std::make_unique<uint8_t[]>(number_of_bytes_needed);
@@ -287,47 +285,44 @@ __checkReturn BOOL CNetwork::EnumeratePorts( void ) noexcept
    {
       m_ErrorCode = ::GetLastError();
       //WFCTRACEERROR( m_ErrorCode );
-      return( FALSE );
+      return( false );
    }
 
-   return_value = ::EnumPorts( machine_name,
-                               1,
-                               m_PortBuffer.get(),
-                               number_of_bytes_needed,
-                              &number_of_bytes_needed,
-                              &m_NumberOfPorts );
+   result = ::EnumPortsW( machine_name,
+                          1,
+                          m_PortBuffer.get(),
+                          number_of_bytes_needed,
+                         &number_of_bytes_needed,
+                         &m_NumberOfPorts );
 
-   if ( return_value == FALSE )
+   if ( result == FALSE )
    {
       m_ErrorCode = ::GetLastError();
       //WFCTRACEERROR( m_ErrorCode );
       m_PortBuffer.release();
       m_NumberOfPorts = 0;
-   }
-   else
-   {
-      return_value = TRUE;
+      return(false);
    }
 
-   return( return_value );
+   return( true );
 }
 
-__checkReturn BOOL CNetwork::GetNext( __inout CPortInformation& port ) noexcept
+_Check_return_ bool CNetwork::GetNext( __inout CPortInformation& port ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
    if ( m_PortBuffer == nullptr )
    {
-      return( FALSE );
+      return( false );
    }
 
    if ( m_PortNumber < m_NumberOfPorts )
    {
       auto port_p = reinterpret_cast<PORT_INFO_1 *>(m_PortBuffer.get());
 
-      port.Copy( (PORT_INFO_1 *) &port_p[ m_PortNumber ] );
+      port.Copy( &port_p[ m_PortNumber ] );
       m_PortNumber++;
-      return( TRUE );
+      return( true );
    }
    else
    {
@@ -336,11 +331,11 @@ __checkReturn BOOL CNetwork::GetNext( __inout CPortInformation& port ) noexcept
       m_PortBuffer.release();
       m_PortNumber    = 0;
       m_NumberOfPorts = 0;
-      return( FALSE );
+      return( false );
    }
 }
 
-__checkReturn DWORD CNetwork::GetErrorCode( void ) const noexcept
+_Check_return_ DWORD CNetwork::GetErrorCode( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
    return( m_ErrorCode );
@@ -358,45 +353,47 @@ _Check_return_ LPCWSTR CNetwork::GetMachineName( void ) const noexcept
    return( m_MachineName.c_str() );
 }
 
-_Check_return_ BOOL CNetwork::GetTime(_Inout_ CTime& machine_time ) noexcept
+_Check_return_ bool CNetwork::GetTime(_Inout_ CTime& machine_time ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
    TIME_OF_DAY_INFO * time_of_day = nullptr;
 
-   if ( ::NetRemoteTOD( m_WideMachineName.get(), (LPBYTE *) &time_of_day ) == NERR_Success )
+   if ( ::NetRemoteTOD( m_WideMachineName.get(), reinterpret_cast<LPBYTE *>(&time_of_day) ) == NERR_Success )
    {
       machine_time = CTime( time_of_day->tod_elapsedt );
-      return( TRUE );
+      return( true );
    }
    else
    {
       m_ErrorCode = ::GetLastError();
+      machine_time.Empty();
       //WFCTRACEERROR( m_ErrorCode );
-      return( FALSE );
+      return( false );
    }
 }
 
-BOOL CNetwork::GetTime(__inout CSystemTime& machine_time ) noexcept
+_Check_return_ bool CNetwork::GetTime(__inout CSystemTime& machine_time ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
    TIME_OF_DAY_INFO * time_of_day = nullptr;
 
-   if ( ::NetRemoteTOD( m_WideMachineName.get(), (LPBYTE *) &time_of_day ) == NERR_Success )
+   if ( ::NetRemoteTOD( m_WideMachineName.get(), reinterpret_cast<LPBYTE *>(&time_of_day) ) == NERR_Success )
    {
       machine_time.Copy( time_of_day );
-      return( TRUE );
+      return( true );
    }
    else
    {
-      m_ErrorCode = ::GetLastError();
+       m_ErrorCode = ::GetLastError();
+       machine_time.Empty();
       //WFCTRACEERROR( m_ErrorCode );
-      return( FALSE );
+      return( false );
    }
 }
 
-__checkReturn BOOL CNetwork::IsRebootable( void ) noexcept
+_Check_return_ bool CNetwork::IsRebootable( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -406,7 +403,7 @@ __checkReturn BOOL CNetwork::IsRebootable( void ) noexcept
    {
       m_ErrorCode = ::GetLastError();
       //WFCTRACEERROR( m_ErrorCode );
-      return( FALSE );
+      return( false );
    }
 
    TOKEN_PRIVILEGES token_privileges;
@@ -427,7 +424,7 @@ __checkReturn BOOL CNetwork::IsRebootable( void ) noexcept
    {
       m_ErrorCode = ::GetLastError();
       //WFCTRACEERROR( m_ErrorCode );
-      return( FALSE );
+      return( false );
    }
 
    // Something changed in service pack 3 for NT 3.51. You used to be able
@@ -449,7 +446,7 @@ __checkReturn BOOL CNetwork::IsRebootable( void ) noexcept
       {
          m_ErrorCode = ::GetLastError();
          //WFCTRACEERROR( m_ErrorCode );
-         return( FALSE );
+         return( false );
       }
    }
    else
@@ -460,7 +457,7 @@ __checkReturn BOOL CNetwork::IsRebootable( void ) noexcept
       {
          m_ErrorCode = ::GetLastError();
          //WFCTRACEERROR( m_ErrorCode );
-         return( FALSE );
+         return( false );
       }
    }
 
@@ -471,12 +468,12 @@ __checkReturn BOOL CNetwork::IsRebootable( void ) noexcept
    {
       m_ErrorCode = ::GetLastError();
       //WFCTRACEERROR( m_ErrorCode );
-      return( FALSE );
+      return( false );
    }
 
    // If we get this far it means we can reboot the machine...
 
-   return( TRUE );
+   return( true );
 }
 
 void CNetwork::m_Initialize( void ) noexcept
@@ -537,7 +534,7 @@ void CNetwork::Open( __in_z_opt LPCTSTR machine_name ) noexcept
 
          m_FriendlyMachineName.assign( temporary_machine_name );
 
-         const std::size_t number_of_characters_in_wide_machine_name = temporary_machine_name.length() + additional_characters + 1;
+         std::size_t const number_of_characters_in_wide_machine_name = temporary_machine_name.length() + additional_characters + 1;
 
          m_WideMachineName = std::make_unique<wchar_t[]>(number_of_characters_in_wide_machine_name);
 
@@ -557,7 +554,7 @@ void CNetwork::Open( __in_z_opt LPCTSTR machine_name ) noexcept
          temporary_machine_name.assign( L"\\\\" );
          temporary_machine_name.append( m_FriendlyMachineName );
 
-         const std::size_t number_of_characters_in_m_WideDoubleBackslashPreceededMachineName = temporary_machine_name.length() + 1;
+         std::size_t const number_of_characters_in_m_WideDoubleBackslashPreceededMachineName = temporary_machine_name.length() + 1;
 
          m_WideDoubleBackslashPreceededMachineName = std::make_unique<wchar_t[]>(number_of_characters_in_m_WideDoubleBackslashPreceededMachineName);
 
@@ -586,7 +583,7 @@ void CNetwork::Open( __in_z_opt LPCTSTR machine_name ) noexcept
          {
             // CRAP! The computer name is too long.
 
-            std::unique_ptr<wchar_t []> new_string = std::make_unique<wchar_t []>(string_size + 1);
+            auto new_string = std::make_unique<wchar_t []>(string_size + 1);
 
             string_size++;
 
@@ -611,7 +608,7 @@ void CNetwork::Open( __in_z_opt LPCTSTR machine_name ) noexcept
    WFC_END_CATCH_ALL
 }
 
-__checkReturn BOOL CNetwork::SetPrivilege( __in_z LPCTSTR privilege_name, __in const BOOL add_privilege ) noexcept
+_Check_return_ bool CNetwork::SetPrivilege( __in_z LPCTSTR privilege_name, __in bool const add_privilege ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( privilege_name );
@@ -627,7 +624,7 @@ __checkReturn BOOL CNetwork::SetPrivilege( __in_z LPCTSTR privilege_name, __in c
          m_ErrorCode = ::GetLastError();
          //WFCTRACE( TEXT( "Can't OpenProcessToken" ) );
          //WFCTRACEERROR( m_ErrorCode );
-         return( FALSE );
+         return( false );
       }
 
       TOKEN_PRIVILEGES token_privileges;
@@ -646,7 +643,7 @@ __checkReturn BOOL CNetwork::SetPrivilege( __in_z LPCTSTR privilege_name, __in c
          //WFCTRACEERROR( m_ErrorCode );
          (void) Win32FoundationClasses::wfc_close_handle( token_handle );
          token_handle = static_cast< HANDLE >( NULL );
-         return( FALSE );
+         return( false );
       }
 
       token_privileges.PrivilegeCount             = 1;
@@ -655,9 +652,9 @@ __checkReturn BOOL CNetwork::SetPrivilege( __in_z LPCTSTR privilege_name, __in c
 
       DWORD sizeof_previous_token_privileges = sizeof( previous_token_privileges );
 
-      if ( ::AdjustTokenPrivileges( token_handle, 
-                                    FALSE, 
-                                   &token_privileges, 
+      if ( ::AdjustTokenPrivileges( token_handle,
+                                    FALSE,
+                                   &token_privileges,
                                     sizeof( token_privileges ),
                                    &previous_token_privileges,
                                    &sizeof_previous_token_privileges ) == FALSE )
@@ -667,13 +664,13 @@ __checkReturn BOOL CNetwork::SetPrivilege( __in_z LPCTSTR privilege_name, __in c
          //WFCTRACEERROR( m_ErrorCode );
          (void) Win32FoundationClasses::wfc_close_handle( token_handle );
          token_handle = static_cast< HANDLE >( NULL );
-         return( FALSE );
+         return( false );
       }
 
       previous_token_privileges.PrivilegeCount       = 1;
       previous_token_privileges.Privileges[ 0 ].Luid = locally_unique_identifier;
       
-      if ( add_privilege != FALSE )
+      if ( add_privilege != false )
       {
          previous_token_privileges.Privileges[ 0 ].Attributes |= (SE_PRIVILEGE_ENABLED);
       }
@@ -682,9 +679,9 @@ __checkReturn BOOL CNetwork::SetPrivilege( __in_z LPCTSTR privilege_name, __in c
          previous_token_privileges.Privileges[ 0 ].Attributes ^= ( (SE_PRIVILEGE_ENABLED) & previous_token_privileges.Privileges[ 0 ].Attributes );
       }
 
-      if ( ::AdjustTokenPrivileges( token_handle, 
-                                    FALSE, 
-                                   &previous_token_privileges, 
+      if ( ::AdjustTokenPrivileges( token_handle,
+                                    FALSE,
+                                   &previous_token_privileges,
                                     sizeof_previous_token_privileges,
                                     nullptr,
                                     nullptr ) == FALSE )
@@ -694,7 +691,7 @@ __checkReturn BOOL CNetwork::SetPrivilege( __in_z LPCTSTR privilege_name, __in c
          //WFCTRACEERROR( m_ErrorCode );
          (void) Win32FoundationClasses::wfc_close_handle( token_handle );
          token_handle = static_cast< HANDLE >( NULL );
-         return( FALSE );
+         return( false );
       }
 
       // YIPPEE! We succeeded!
@@ -702,18 +699,18 @@ __checkReturn BOOL CNetwork::SetPrivilege( __in_z LPCTSTR privilege_name, __in c
       (void) Win32FoundationClasses::wfc_close_handle( token_handle );
       token_handle = static_cast< HANDLE >( NULL );
 
-      return( TRUE );
+      return( true );
    }
    WFC_CATCH_ALL
    {
       // Let the caller know an exception occurred
       m_ErrorCode = ERROR_EXCEPTION_IN_SERVICE;
-      return( FALSE );
+      return( false );
    }
    WFC_END_CATCH_ALL
 }
 
-__checkReturn BOOL CNetwork::Shutdown( __in BOOL const reboot, __in BOOL const force_applications_to_close, __in_z_opt LPCTSTR message_to_display, __in DWORD const number_of_seconds_before_shutdown ) noexcept
+_Check_return_ bool CNetwork::Shutdown( __in bool const reboot, __in bool const force_applications_to_close, __in_z_opt LPCTSTR message_to_display, __in DWORD const number_of_seconds_before_shutdown ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -723,7 +720,7 @@ __checkReturn BOOL CNetwork::Shutdown( __in BOOL const reboot, __in BOOL const f
    {
       m_ErrorCode = ::GetLastError();
       //WFCTRACEERROR( m_ErrorCode );
-      return( FALSE );
+      return( false );
    }
 
    TOKEN_PRIVILEGES token_privileges;
@@ -750,7 +747,7 @@ __checkReturn BOOL CNetwork::Shutdown( __in BOOL const reboot, __in BOOL const f
       //WFCTRACEERROR( m_ErrorCode );
       (void) Win32FoundationClasses::wfc_close_handle( token_handle );
       token_handle = static_cast< HANDLE >( NULL );
-      return( FALSE );
+      return( false );
    }
 
    // Something changed in service pack 3 for NT 3.51. You used to be able
@@ -778,7 +775,7 @@ __checkReturn BOOL CNetwork::Shutdown( __in BOOL const reboot, __in BOOL const f
          //WFCTRACEERROR( m_ErrorCode );
          (void) Win32FoundationClasses::wfc_close_handle( token_handle );
          token_handle = static_cast< HANDLE >( NULL );
-         return( FALSE );
+         return( false );
       }
    }
    else
@@ -791,7 +788,7 @@ __checkReturn BOOL CNetwork::Shutdown( __in BOOL const reboot, __in BOOL const f
          //WFCTRACEERROR( m_ErrorCode );
          (void) Win32FoundationClasses::wfc_close_handle( token_handle );
          token_handle = static_cast< HANDLE >( NULL );
-         return( FALSE );
+         return( false );
       }
    }
 
@@ -804,7 +801,7 @@ __checkReturn BOOL CNetwork::Shutdown( __in BOOL const reboot, __in BOOL const f
       //WFCTRACEERROR( m_ErrorCode );
       (void) Win32FoundationClasses::wfc_close_handle( token_handle );
       token_handle = static_cast< HANDLE >( NULL );
-      return( FALSE );
+      return( false );
    }
 
    // Whoever wrote InitiateSystemShutdown() (nor the QA/tester) didn't understand the
@@ -852,7 +849,7 @@ __checkReturn BOOL CNetwork::Shutdown( __in BOOL const reboot, __in BOOL const f
             //WFCTRACEERROR( m_ErrorCode );
             (void) Win32FoundationClasses::wfc_close_handle( token_handle );
             token_handle = static_cast< HANDLE >( NULL );
-            return( FALSE );
+            return( false );
          }
       }
       else
@@ -863,20 +860,20 @@ __checkReturn BOOL CNetwork::Shutdown( __in BOOL const reboot, __in BOOL const f
             //WFCTRACEERROR( m_ErrorCode );
             (void) Win32FoundationClasses::wfc_close_handle( token_handle );
             token_handle = static_cast< HANDLE >( NULL );
-            return( FALSE );
+            return( false );
          }
       }
 
       (void) Win32FoundationClasses::wfc_close_handle( token_handle );
       token_handle = static_cast< HANDLE >( NULL );
-      return( TRUE );
+      return( true );
    }
    WFC_CATCH_ALL
    {
       m_ErrorCode = ERROR_EXCEPTION_IN_SERVICE;
       (void) Win32FoundationClasses::wfc_close_handle( token_handle );
       token_handle = static_cast< HANDLE >( NULL );
-      return( FALSE );
+      return( false );
    }
    WFC_END_CATCH_ALL
 }

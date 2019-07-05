@@ -45,7 +45,7 @@
 
 class CXMLArchive; // Catch-22 here
 
-using XML_ARCHIVE_SERIALIZE_OBJECT = bool (*)( __inout CXMLArchive * archive_p, __in const wchar_t * name, __inout void * parameter );
+using XML_ARCHIVE_SERIALIZE_OBJECT = bool (*)( __inout CXMLArchive * archive_p, __in wchar_t const * name, __inout void * parameter );
 
 class CXMLArchive
 {

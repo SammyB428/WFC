@@ -232,7 +232,7 @@ __checkReturn UINT CLZFile::Read( __out_bcount( size_of_buffer ) void * buffer, 
    WFC_END_CATCH_ALL
 }
 
-_Check_return_ uint64_t CLZFile::Seek(_In_ const int64_t offset, _In_ const CFile64::SeekPosition from ) noexcept
+_Check_return_ uint64_t CLZFile::Seek(_In_ int64_t const offset, _In_ CFile64::SeekPosition const from ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -254,7 +254,7 @@ _Check_return_ uint64_t CLZFile::Seek(_In_ const int64_t offset, _In_ const CFil
 	return( offset_from_beginning_of_file );
 }
 
-void CLZFile::TranslateErrorCode( __in const int error_code, __out std::wstring& error_message ) noexcept
+void CLZFile::TranslateErrorCode( __in int const error_code, __out std::wstring& error_message ) noexcept
 {
    switch( error_code )
    {

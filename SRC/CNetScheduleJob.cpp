@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 1995-2016, Samuel R. Blackburn
+** Copyright, 1995-2019, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -64,19 +64,19 @@ CNetworkScheduleJob::CNetworkScheduleJob()
    m_Initialize();
 }
 
-CNetworkScheduleJob::CNetworkScheduleJob( __in const AT_ENUM *source )
+CNetworkScheduleJob::CNetworkScheduleJob( __in AT_ENUM const * source )
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );
 }
 
-CNetworkScheduleJob::CNetworkScheduleJob( __in const AT_INFO *source )
+CNetworkScheduleJob::CNetworkScheduleJob( __in AT_INFO const * source )
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );
 }
 
-CNetworkScheduleJob::CNetworkScheduleJob( __in const CNetworkScheduleJob& source )
+CNetworkScheduleJob::CNetworkScheduleJob( __in CNetworkScheduleJob const& source )
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );
@@ -88,7 +88,7 @@ CNetworkScheduleJob::~CNetworkScheduleJob()
    m_Initialize();
 }
 
-void CNetworkScheduleJob::Copy( __in const AT_ENUM *source ) noexcept
+void CNetworkScheduleJob::Copy( __in AT_ENUM const * source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
@@ -137,7 +137,7 @@ void CNetworkScheduleJob::Copy( __in const AT_ENUM *source ) noexcept
    WFC_END_CATCH_ALL
 }
 
-void CNetworkScheduleJob::Copy( __in const AT_INFO *source ) noexcept
+void CNetworkScheduleJob::Copy( __in AT_INFO const * source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
@@ -186,7 +186,7 @@ void CNetworkScheduleJob::Copy( __in const AT_INFO *source ) noexcept
    WFC_END_CATCH_ALL
 }
 
-void CNetworkScheduleJob::Copy( __in const CNetworkScheduleJob& source ) noexcept
+void CNetworkScheduleJob::Copy( __in CNetworkScheduleJob const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    ASSERT( this != &source );
@@ -373,7 +373,7 @@ void CNetworkScheduleJob::Dump( CDumpContext& dump_context ) const
 
 #endif // _DEBUG
 
-void CNetworkScheduleJob::Empty( void )
+void CNetworkScheduleJob::Empty( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    m_Initialize();
@@ -391,7 +391,7 @@ void CNetworkScheduleJob::m_Initialize( void ) noexcept
    Command.clear();
 }
 
-const CNetworkScheduleJob& CNetworkScheduleJob::operator = ( __in const CNetworkScheduleJob& source ) noexcept
+const CNetworkScheduleJob& CNetworkScheduleJob::operator = ( __in CNetworkScheduleJob const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    ASSERT( this != &source );

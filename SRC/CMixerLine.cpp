@@ -109,7 +109,7 @@ void CMixerLine::Copy( __in const CMixerLine& source ) noexcept
    TargetName.assign(source.TargetName);
 }
 
-void CMixerLine::Copy( __in const MIXERLINE& source ) noexcept
+void CMixerLine::Copy( __in MIXERLINE const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -118,11 +118,11 @@ void CMixerLine::Copy( __in const MIXERLINE& source ) noexcept
    ID                  = source.dwLineID;
    Status              = source.fdwLine;
    Reserved            = source.dwUser;
-   Component           = source.dwComponentType;
+   Component           = static_cast<CMixerLine::ComponentType>(source.dwComponentType);
    NumberOfChannels    = source.cChannels;
    NumberOfConnections = source.cConnections;
    NumberOfControls    = source.cControls;
-   Target              = source.Target.dwType;
+   Target              = static_cast<CMixerLine::TargetType>(source.Target.dwType);
    TargetDeviceID      = source.Target.dwDeviceID;
    TargetManufacturer  = source.Target.wMid;
    TargetProduct       = source.Target.wPid;
@@ -177,11 +177,11 @@ void CMixerLine::Empty( void ) noexcept
    ID                  = 0;
    Status              = 0;
    Reserved            = 0;
-   Component           = 0;
+   Component           = CMixerLine::ComponentType::destinationUndefined;
    NumberOfChannels    = 0;
    NumberOfConnections = 0;
    NumberOfControls    = 0;
-   Target              = 0;
+   Target              = CMixerLine::TargetType::Undefined;
    TargetDeviceID      = 0;
    TargetManufacturer  = 0;
    TargetProduct       = 0;
@@ -197,109 +197,109 @@ void CMixerLine::GetComponent( _Out_ std::wstring& component_string ) const noex
 
    switch( Component )
    {
-      case destinationUndefined:
+   case CMixerLine::ComponentType::destinationUndefined:
 
          component_string.assign(L"Undefined Destination" );
          break;
 
-      case destinationDigital:
+      case CMixerLine::ComponentType::destinationDigital:
 
          component_string.assign(L"Digital Destination" );
          break;
 
-      case destinationLine:
+      case CMixerLine::ComponentType::destinationLine:
 
          component_string.assign(L"Line Destination" );
          break;
 
-      case destinationMonitor:
+      case CMixerLine::ComponentType::destinationMonitor:
 
          component_string.assign(L"Monitor Destination" );
          break;
 
-      case destinationSpeakers:
+      case CMixerLine::ComponentType::destinationSpeakers:
 
          component_string.assign(L"Speakers Destination" );
          break;
 
-      case destinationHeadphones:
+      case CMixerLine::ComponentType::destinationHeadphones:
 
          component_string.assign(L"Headphones Destination" );
          break;
 
-      case destinationTelephone:
+      case CMixerLine::ComponentType::destinationTelephone:
 
          component_string.assign(L"Telephone Destination" );
          break;
 
-      case destinationWaveIn:
+      case CMixerLine::ComponentType::destinationWaveIn:
 
          component_string.assign(L"Wave In Destination" );
          break;
 
-      case destinationVoiceIn:
+      case CMixerLine::ComponentType::destinationVoiceIn:
 
          component_string.assign(L"Voice In Destination" );
          break;
 
-      case sourceUndefined:
+      case CMixerLine::ComponentType::sourceUndefined:
 
          component_string.assign(L"Undefined Source" );
          break;
 
-      case sourceDigital:
+      case CMixerLine::ComponentType::sourceDigital:
 
          component_string.assign(L"Digital Source" );
          break;
 
-      case sourceLine:
+      case CMixerLine::ComponentType::sourceLine:
 
          component_string.assign(L"Line Source" );
          break;
 
-      case sourceMicrophone:
+      case CMixerLine::ComponentType::sourceMicrophone:
 
          component_string.assign(L"Microphone Source" );
          break;
 
-      case sourceSynthesizer:
+      case CMixerLine::ComponentType::sourceSynthesizer:
 
          component_string.assign(L"Synthesizer Source" );
          break;
 
-      case sourceCompactDisc:
+      case CMixerLine::ComponentType::sourceCompactDisc:
 
          component_string.assign(L"Compact Disc Source" );
          break;
 
-      case sourceTelephone:
+      case CMixerLine::ComponentType::sourceTelephone:
 
          component_string.assign(L"Telephone Source" );
          break;
 
-      case sourcePCSpeaker:
+      case CMixerLine::ComponentType::sourcePCSpeaker:
 
          component_string.assign(L"PC Speaker Source" );
          break;
 
-      case sourceWaveOut:
+      case CMixerLine::ComponentType::sourceWaveOut:
 
          component_string.assign(L"Wave Out Source" );
          break;
 
-      case sourceAuxillary:
+      case CMixerLine::ComponentType::sourceAuxillary:
 
          component_string.assign(L"Auxillary Source" );
          break;
 
-      case sourceAnalog:
+      case CMixerLine::ComponentType::sourceAnalog:
 
          component_string.assign(L"Analog Source" );
          break;
 
       default:
 
-         format( component_string, L"Unknown (%lu)", Component );
+         format( component_string, L"Unknown (%lu)", static_cast<uint32_t>(Component) );
          break;
    }
 }
@@ -310,12 +310,12 @@ void CMixerLine::GetStatus( _Out_ std::wstring& status_string ) const noexcept
 
    status_string.clear();
 
-   if ( Status & statusActive )
+   if ( Status & static_cast<uint32_t>(CMixerLine::Status::Active) )
    {
       status_string.assign(L"Active" );
    }
 
-   if ( Status & statusDisconnected )
+   if ( Status & static_cast<uint32_t>(CMixerLine::Status::Disconnected) )
    {
       if ( status_string.empty() == false )
       {
@@ -325,7 +325,7 @@ void CMixerLine::GetStatus( _Out_ std::wstring& status_string ) const noexcept
       status_string.append( L"Disconnected" );
    }
 
-   if ( Status & statusSource )
+   if ( Status & static_cast<uint32_t>(CMixerLine::Status::Source) )
    {
       if ( status_string.empty() == false )
       {
@@ -342,32 +342,32 @@ void CMixerLine::GetTarget( _Out_ std::wstring& target_string ) const noexcept
 
    switch( Target )
    {
-      case targetUndefined:
+   case CMixerLine::TargetType::Undefined:
 
          target_string.assign(L"Undefined" );
          break;
 
-      case targetWaveOut:
+      case CMixerLine::TargetType::WaveOut:
 
          target_string.assign(L"Wave Out" );
          break;
 
-      case targetWaveIn:
+      case CMixerLine::TargetType::WaveIn:
 
          target_string.assign(L"Wave In" );
          break;
 
-      case targetMidiOut:
+      case CMixerLine::TargetType::MidiOut:
 
          target_string.assign(L"MIDI Out" );
          break;
 
-      case targetMidiIn:
+      case CMixerLine::TargetType::MidiIn:
 
          target_string.assign(L"MIDI In" );
          break;
 
-      case targetAuxillary:
+      case CMixerLine::TargetType::Auxillary:
 
          target_string.assign(L"Aux" );
          break;
@@ -383,7 +383,7 @@ __checkReturn bool CMixerLine::IsActive( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
-   const DWORD active = ( Status & statusActive );
+   DWORD const active = ( Status & static_cast<uint32_t>(CMixerLine::Status::Active) );
 
    if ( active != 0 )
    {
@@ -397,7 +397,7 @@ __checkReturn bool CMixerLine::IsDisconnected( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
-   const DWORD disconnected = ( Status & statusDisconnected );
+   DWORD const disconnected = ( Status & static_cast<uint32_t>(CMixerLine::Status::Disconnected) );
 
    if ( disconnected != 0 )
    {
@@ -411,7 +411,7 @@ __checkReturn bool CMixerLine::IsSource( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
-   const DWORD source = ( Status & statusSource );
+   auto const source = ( Status & static_cast<uint32_t>(CMixerLine::Status::Source) );
 
    if ( source != 0 )
    {
@@ -421,14 +421,14 @@ __checkReturn bool CMixerLine::IsSource( void ) const noexcept
    return( false );
 }
 
-__checkReturn CMixerLine& CMixerLine::operator=( __in const CMixerLine& source ) noexcept
+__checkReturn CMixerLine& CMixerLine::operator=( __in CMixerLine const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );
    return( *this );
 }
 
-__checkReturn CMixerLine& CMixerLine::operator=( __in const MIXERLINE& source ) noexcept
+__checkReturn CMixerLine& CMixerLine::operator=( __in MIXERLINE const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );

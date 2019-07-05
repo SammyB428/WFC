@@ -128,7 +128,7 @@ __checkReturn bool CDesktop::Close( void ) noexcept
    return( return_value == FALSE ? false : true );
 }
 
-__checkReturn bool CDesktop::Create( __in const std::wstring& name_of_desktop, __in DWORD desired_access, __in_opt LPSECURITY_ATTRIBUTES security_attributes_p, __in DWORD flags ) noexcept
+__checkReturn bool CDesktop::Create( __in std::wstring const& name_of_desktop, __in DWORD desired_access, __in_opt LPSECURITY_ATTRIBUTES security_attributes_p, __in DWORD flags ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER_NULL_OK( security_attributes_p );
@@ -181,7 +181,7 @@ __checkReturn bool CDesktop::Create( __in const std::wstring& name_of_desktop, _
    WFC_CATCH_ALL
    {
       m_ErrorCode = ERROR_EXCEPTION_IN_SERVICE;
-      return( FALSE );
+      return( false );
    }
    WFC_END_CATCH_ALL
 }
@@ -229,7 +229,7 @@ __checkReturn bool CDesktop::GetWindows( _Out_ std::vector<HWND>& window_handles
 
    window_handles.clear();
 
-   BOOL return_value = FALSE;
+   bool return_value = false;
 
    if ( m_DesktopHandle == static_cast<HDESK>( NULL ) )
    {
@@ -240,17 +240,17 @@ __checkReturn bool CDesktop::GetWindows( _Out_ std::vector<HWND>& window_handles
 
    return_value = ::EnumDesktopWindows( m_DesktopHandle, CDesktop__WindowEnumerator, (LPARAM) &window_handles );
 
-   if ( return_value == FALSE )
+   if ( return_value == false )
    {
       m_ErrorCode = ::GetLastError();
       //WFCTRACEERROR( m_ErrorCode );
    }
    else
    {
-      return_value = TRUE;
+      return_value = true;
    }
 
-   return( return_value == FALSE ? false : true );
+   return( return_value );
 }
 
 __checkReturn DWORD CDesktop::GetErrorCode( void ) const noexcept
@@ -273,7 +273,7 @@ void CDesktop::GetThread( __in DWORD thread_id ) noexcept
    }
 }
 
-__checkReturn bool CDesktop::Open( __in const std::wstring& name_of_desktop, __in DWORD desired_access, __in DWORD flags, __in bool inheritable ) noexcept
+__checkReturn bool CDesktop::Open( __in std::wstring const& name_of_desktop, __in DWORD desired_access, __in DWORD flags, __in bool inheritable ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 

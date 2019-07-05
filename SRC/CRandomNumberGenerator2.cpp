@@ -160,7 +160,7 @@ CRandomNumberGenerator2::CRandomNumberGenerator2() noexcept
    InitializeSeed();
 }
 
-CRandomNumberGenerator2::CRandomNumberGenerator2( _In_ const uint32_t new_seed ) noexcept
+CRandomNumberGenerator2::CRandomNumberGenerator2( _In_ uint32_t const new_seed ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    ZeroMemory( m_State, sizeof( m_State ) );
@@ -176,13 +176,13 @@ CRandomNumberGenerator2::~CRandomNumberGenerator2() noexcept
    WFC_VALIDATE_POINTER( this );
 }
 
-void CRandomNumberGenerator2::Disable( _In_ const bool disable ) noexcept
+void CRandomNumberGenerator2::Disable( _In_ bool const disable ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    m_Disabled = ( disable == false ) ? false : true;
 }
 
-_Check_return_ bool CRandomNumberGenerator2::Fill( __out_bcount( number_of_bytes ) uint8_t * buffer, _In_ const size_t number_of_bytes ) noexcept
+_Check_return_ bool CRandomNumberGenerator2::Fill( __out_bcount( number_of_bytes ) uint8_t * buffer, _In_ std::size_t const number_of_bytes ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER_NULL_OK( buffer );
@@ -379,7 +379,7 @@ _Check_return_ double CRandomNumberGenerator2::GetFloat( void ) noexcept
    return( x.return_value );
 }
 
-void CRandomNumberGenerator2::SetSeed( _In_ const uint32_t new_seed ) noexcept
+void CRandomNumberGenerator2::SetSeed( _In_ uint32_t const new_seed ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -538,7 +538,7 @@ _Check_return_ double CRandomNumberGenerator2::Double(_In_ const double min_valu
     return(return_value);
 }
 
-_Check_return_ uint32_t CRandomNumberGenerator2::Uint32( _In_ const uint32_t min_value, _In_ const uint32_t max_value ) noexcept
+_Check_return_ uint32_t CRandomNumberGenerator2::Uint32( _In_ uint32_t const min_value, _In_ uint32_t const max_value ) noexcept
 {
     uint32_t minimum_value = min_value;
     uint32_t maximum_value = max_value;
@@ -554,14 +554,14 @@ _Check_return_ uint32_t CRandomNumberGenerator2::Uint32( _In_ const uint32_t min
         maximum_value = min_value;
     }
 
-    const uint32_t number_of_values = (maximum_value - minimum_value) + 1;
+    uint32_t const number_of_values = (maximum_value - minimum_value) + 1;
 
     uint32_t return_value = ( GetInteger() % number_of_values ) + minimum_value;
 
     return( return_value );
 }
 
-_Check_return_ uint64_t CRandomNumberGenerator2::Uint64( _In_ const uint64_t min_value, _In_ const uint64_t max_value ) noexcept
+_Check_return_ uint64_t CRandomNumberGenerator2::Uint64( _In_ uint64_t const min_value, _In_ uint64_t const max_value ) noexcept
 {
     uint64_t minimum_value = min_value;
     uint64_t maximum_value = max_value;
@@ -577,14 +577,14 @@ _Check_return_ uint64_t CRandomNumberGenerator2::Uint64( _In_ const uint64_t min
         maximum_value = min_value;
     }
 
-    const uint64_t number_of_values = (maximum_value - minimum_value) + 1;
+    uint64_t const number_of_values = (maximum_value - minimum_value) + 1;
 
     uint64_t return_value = ( Integer64() % number_of_values ) + minimum_value;
 
     return( return_value );
 }
 
-_Check_return_ uint64_t CRandomNumberGenerator2::Uint64(__in_ecount(number_of_values) const VALUE_RANGE * values, _In_ const size_t number_of_values) noexcept
+_Check_return_ uint64_t CRandomNumberGenerator2::Uint64(__in_ecount(number_of_values) VALUE_RANGE const * values, _In_ std::size_t const number_of_values) noexcept
 {
     WFC_VALIDATE_POINTER(this);
     WFC_VALIDATE_POINTER(values);
@@ -594,12 +594,12 @@ _Check_return_ uint64_t CRandomNumberGenerator2::Uint64(__in_ecount(number_of_va
         return(Integer64());
     }
 
-    size_t value_index = Integer64() % number_of_values;
+    std::size_t value_index = Integer64() % number_of_values;
 
     return(Uint64(values[value_index].low, values[value_index].high));
 }
 
-_Check_return_ bool CRandomNumberGenerator2::IsTrue( _In_ const double percentage ) noexcept
+_Check_return_ bool CRandomNumberGenerator2::IsTrue( _In_ double const percentage ) noexcept
 {
     if ( percentage >= 100.0 )
     {
@@ -622,7 +622,7 @@ _Check_return_ bool CRandomNumberGenerator2::IsTrue( _In_ const double percentag
     return( false );
 }
 
-void CRandomNumberGenerator2::Fill( _In_ const FILETIME& min_value, _In_ const FILETIME& max_value, _Out_ FILETIME& destination ) noexcept
+void CRandomNumberGenerator2::Fill( _In_ FILETIME const& min_value, _In_ FILETIME const& max_value, _Out_ FILETIME& destination ) noexcept
 {
     ULARGE_INTEGER a;
     ULARGE_INTEGER b;
@@ -682,12 +682,12 @@ void CRandomNumberGenerator2::Fill( _In_ uint32_t const seed, _Out_ std::wstring
     }
 }
 
-_Check_return_ uint32_t CRandomNumberGenerator2::OneOf( _In_reads_( number_of_values ) const uint32_t * values, _In_ const size_t number_of_values ) noexcept
+_Check_return_ uint32_t CRandomNumberGenerator2::OneOf( _In_reads_( number_of_values ) uint32_t const * values, _In_ std::size_t const number_of_values ) noexcept
 {
     return( values[ GetInteger() % number_of_values ] );
 }
 
-_Check_return_ uint64_t CRandomNumberGenerator2::OneOf(_In_reads_( number_of_values ) const uint64_t * values, _In_ const size_t number_of_values ) noexcept
+_Check_return_ uint64_t CRandomNumberGenerator2::OneOf(_In_reads_( number_of_values ) uint64_t const * values, _In_ std::size_t const number_of_values ) noexcept
 {
     return( values[ GetInteger() % number_of_values ] );
 }

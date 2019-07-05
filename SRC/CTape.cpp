@@ -953,9 +953,9 @@ void CTape::Close( void ) noexcept
    }
 }
 
-BOOL CTape::CreatePartition( __in const TypeOfPartition type_of_partition, 
-                             __in const DWORD           number_of_partitions, 
-                             __in const DWORD           number_of_megabytes_in_each_partition ) noexcept
+BOOL CTape::CreatePartition( __in TypeOfPartition const type_of_partition, 
+                             __in DWORD           const number_of_partitions, 
+                             __in DWORD           const number_of_megabytes_in_each_partition ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -1049,19 +1049,19 @@ BOOL CTape::GetPosition( __in const Position type_of_position_to_get, __out DWOR
    }
 }
 
-__checkReturn DWORD CTape::GetStatus( void ) const noexcept
+_Check_return_ DWORD CTape::GetStatus( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
    return( ::GetTapeStatus( m_FileHandle ) );
 }
 
-__checkReturn DWORD CTape::GetDriveNumber( void ) const noexcept
+_Check_return_ DWORD CTape::GetDriveNumber( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
    return( m_TapeDriveNumberStartingAtZero );
 }
 
-__checkReturn BOOL CTape::Mark( __in const TypeOfMark type_of_mark, __in const DWORD number_of_marks, __in const BOOL return_immediately ) noexcept
+_Check_return_ BOOL CTape::Mark( __in TypeOfMark const type_of_mark, __in DWORD const number_of_marks, __in BOOL const return_immediately ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -1077,19 +1077,19 @@ __checkReturn BOOL CTape::Mark( __in const TypeOfMark type_of_mark, __in const D
    }
 }
 
-__checkReturn BOOL CTape::Load( void ) noexcept
+_Check_return_ BOOL CTape::Load( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    return( Prepare( LoadTape ) );
 }
 
-__checkReturn BOOL CTape::Lock( void ) noexcept
+_Check_return_ BOOL CTape::Lock( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    return( Prepare( LockTape ) );
 }
 
-__checkReturn BOOL CTape::Open( __in const UINT tape_drive_number_starting_at_zero ) noexcept
+_Check_return_ BOOL CTape::Open( __in const UINT tape_drive_number_starting_at_zero ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -1136,7 +1136,7 @@ __checkReturn BOOL CTape::Open( __in const UINT tape_drive_number_starting_at_ze
    return( TRUE );
 }
 
-__checkReturn BOOL CTape::Prepare( __in const Operation what_to_do, __in const BOOL return_immediately ) noexcept
+_Check_return_ BOOL CTape::Prepare( __in const Operation what_to_do, __in const BOOL return_immediately ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -1152,7 +1152,7 @@ __checkReturn BOOL CTape::Prepare( __in const Operation what_to_do, __in const B
    }
 }
 
-__checkReturn BOOL CTape::BackupRead(__out_bcount(number_of_bytes_to_read) LPBYTE buffer, __in const DWORD number_of_bytes_to_read, __out LPDWORD number_of_bytes_read, __in BOOL abort, __in BOOL restore_security_data ) noexcept
+_Check_return_ BOOL CTape::BackupRead(__out_bcount(number_of_bytes_to_read) LPBYTE buffer, __in DWORD const number_of_bytes_to_read, __out LPDWORD number_of_bytes_read, __in BOOL abort, __in BOOL restore_security_data ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -1188,13 +1188,13 @@ __checkReturn BOOL CTape::BackupRead(__out_bcount(number_of_bytes_to_read) LPBYT
    WFC_END_CATCH_ALL
 }
 
-__checkReturn BOOL CTape::Rewind( void ) noexcept
+_Check_return_ BOOL CTape::Rewind( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    return( SetPosition( RewindTape, 0, 0, 0, FALSE ) );
 }
 
-__checkReturn BOOL CTape::BackupSeek( __in const DWORD seek_low, __in const DWORD seek_high, __out LPDWORD seeked_low, __out LPDWORD seeked_high ) noexcept
+_Check_return_ BOOL CTape::BackupSeek( __in DWORD const seek_low, __in DWORD const seek_high, __out LPDWORD seeked_low, __out LPDWORD seeked_high ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -1224,7 +1224,7 @@ __checkReturn BOOL CTape::BackupSeek( __in const DWORD seek_low, __in const DWOR
    WFC_END_CATCH_ALL
 }
 
-__checkReturn BOOL CTape::SetAutomaticallyClose( __in BOOL auto_close ) noexcept
+_Check_return_ BOOL CTape::SetAutomaticallyClose( __in BOOL auto_close ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -1235,7 +1235,7 @@ __checkReturn BOOL CTape::SetAutomaticallyClose( __in BOOL auto_close ) noexcept
    return( return_value );
 }
 
-__checkReturn BOOL CTape::SetParameters( __in const CTapeSetMediaParameters& parameters ) noexcept
+_Check_return_ BOOL CTape::SetParameters( __in const CTapeSetMediaParameters& parameters ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -1253,7 +1253,7 @@ __checkReturn BOOL CTape::SetParameters( __in const CTapeSetMediaParameters& par
    }
 }
 
-__checkReturn BOOL CTape::SetParameters( __in const CTapeSetDriveParameters& parameters ) noexcept
+_Check_return_ BOOL CTape::SetParameters( __in const CTapeSetDriveParameters& parameters ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -1271,7 +1271,7 @@ __checkReturn BOOL CTape::SetParameters( __in const CTapeSetDriveParameters& par
    }
 }
 
-__checkReturn BOOL CTape::SetPosition( __in const PositionMethod how_to_get_there, __in const DWORD partition_number, __in const DWORD position_low, __in const DWORD position_high, __in const BOOL return_immediately ) noexcept
+_Check_return_ BOOL CTape::SetPosition( __in PositionMethod const how_to_get_there, __in DWORD const partition_number, __in DWORD const position_low, __in DWORD const position_high, __in BOOL const return_immediately ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -1287,19 +1287,19 @@ __checkReturn BOOL CTape::SetPosition( __in const PositionMethod how_to_get_ther
    }
 }
 
-__checkReturn BOOL CTape::Unload( void ) noexcept
+_Check_return_ BOOL CTape::Unload( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    return( Prepare( UnloadTape ) );
 }
 
-__checkReturn BOOL CTape::Unlock( void ) noexcept
+_Check_return_ BOOL CTape::Unlock( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    return( Prepare( UnlockTape ) );
 }
 
-__checkReturn BOOL CTape::BackupWrite(__in_bcount(number_of_bytes_to_write) LPBYTE buffer, __in const DWORD number_of_bytes_to_write, __out LPDWORD number_of_bytes_written, __in BOOL abort, __in BOOL restore_security_data ) noexcept
+_Check_return_ BOOL CTape::BackupWrite(__in_bcount(number_of_bytes_to_write) LPBYTE buffer, __in DWORD const number_of_bytes_to_write, __out LPDWORD number_of_bytes_written, __in BOOL abort, __in BOOL restore_security_data ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -1364,21 +1364,21 @@ None.
 <DL COMPACT>
 
 <DT><PRE>BOOL <B><A NAME="BackupRead">BackupRead</A></B>( LPBYTE      buffer, 
-           const DWORD number_of_bytes_to_read,
+           DWORD const number_of_bytes_to_read,
            LPDWORD     number_of_bytes_read,
            BOOL        abort = FALSE,
            BOOL        restore_security_data = TRUE )</PRE><DD>
 Reads data from the tape.
 If you want to read raw data from the tape, use the CFile::Read() method.
 
-<DT><PRE>BOOL <B><A NAME="BackupSeek">BackupSeek</A></B>( const DWORD seek_low,
-           const DWORD seek_high,
+<DT><PRE>BOOL <B><A NAME="BackupSeek">BackupSeek</A></B>( DWORD const seek_low,
+           DWORD const seek_high,
            LPDWORD seeked_low,
            LPDWORD seeked_high )</PRE><DD>
 Repositions the tape for reading/writing.
 
 <DT><PRE>BOOL <B><A NAME="BackupWrite">BackupWrite</A></B>( LPBYTE      buffer,
-            const DWORD number_of_bytes_to_write,
+            DWORD const number_of_bytes_to_write,
             LPDWORD     number_of_bytes_written,
             BOOL        abort = FALSE,
             BOOL        restore_security_data = TRUE )</PRE><DD>
@@ -1388,9 +1388,9 @@ If you want to write raw data to the tape, use the CFile::Write() method.
 <DT><PRE>void <B><A NAME="Close">Close</A></B>( void )</PRE><DD>
 Closes the tape drive. Basically calls <B><A HREF="#Prepare">Prepare</A></B>( UnloadTape ).
 
-<DT><PRE>BOOL <B><A NAME="CreatePartition">CreatePartition</A></B>( const TypeOfPartition type_of_partition,
-                      const DWORD number_of_partitions,
-                      const DWORD number_of_megabytes_in_each_partition )</PRE><DD>
+<DT><PRE>BOOL <B><A NAME="CreatePartition">CreatePartition</A></B>( TypeOfPartition const type_of_partition,
+                      DWORD const number_of_partitions,
+                      DWORD const number_of_megabytes_in_each_partition )</PRE><DD>
 Creates a tape partition. <CODE>type_of_partition</CODE> can be one of the following:
 
 <UL>
@@ -1430,9 +1430,9 @@ Loads a tape.
 <DT><PRE>BOOL <B><A NAME="Lock">Lock</A></B>( void )</PRE><DD>
 Locks the tape into place.
 
-<DT><PRE>BOOL <B><A NAME="Mark">Mark</A></B>( const TypeOfMark type_of_mark, 
-           const DWORD      number_of_marks_to_write, 
-           const BOOL       return_immediately = FALSE )</PRE><DD>
+<DT><PRE>BOOL <B><A NAME="Mark">Mark</A></B>( TypeOfMark const type_of_mark, 
+           DWORD const      number_of_marks_to_write, 
+           BOOL const      return_immediately = FALSE )</PRE><DD>
 Makes tape marks. <CODE>type_of_mark</CODE> can be one of the following:
 <UL>
 <LI>File<LI>LongFile<LI>Set<LI>ShortFile
@@ -1463,11 +1463,11 @@ the previous setting.
 BOOL <B>SetParameters</B>( cosnt CTapeSetMediaParameters&amp; parameters )</PRE><DD>
 Sets either the drive or media parameters.
 
-<DT><PRE>BOOL <B><A NAME="SetPosition">SetPosition</A></B>( const PositionMethod how_to_get_there, 
-                  const DWORD          partition_number,
-                  const DWORD          position_low,
-                  const DWORD          position_high,
-                  const BOOL           return_immediately = FALSE )</PRE><DD>
+<DT><PRE>BOOL <B><A NAME="SetPosition">SetPosition</A></B>( PositionMethod const how_to_get_there, 
+                  DWORD const         partition_number,
+                  DWORD const         position_low,
+                  DWORD const         position_high,
+                  BOOL  const         return_immediately = FALSE )</PRE><DD>
 Repositions the tape for reading/writing. <CODE>how_to_get_there</CODE>
 can be one of the following:
 

@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 1995-2017, Samuel R. Blackburn
+** Copyright, 1995-2019, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -51,7 +51,7 @@ static char THIS_FILE[] = __FILE__;
 
 USING_WFC_NAMESPACE
 
-void PASCAL Win32FoundationClasses::wfc_get_error_string( _In_ const DWORD error_code, _Out_ std::wstring& error_string ) noexcept
+void PASCAL Win32FoundationClasses::wfc_get_error_string( _In_ DWORD const error_code, _Out_ std::wstring& error_string ) noexcept
 {
    error_string.clear();
 
@@ -67,7 +67,7 @@ void PASCAL Win32FoundationClasses::wfc_get_error_string( _In_ const DWORD error
                     0,
                     nullptr );
 
-   error_string.assign( (const wchar_t *) message_buffer );
+   error_string.assign( static_cast<wchar_t const *>(message_buffer) );
 
    ::LocalFree( message_buffer );
    message_buffer = nullptr;

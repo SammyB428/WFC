@@ -140,7 +140,7 @@ void CBitArray::ClearRange( __in std::size_t const array_index, __in std::size_t
 {
    WFC_VALIDATE_POINTER( this );
 
-   const std::size_t total_number_of_bits = GetSize();
+   auto const total_number_of_bits = GetSize();
 
    if ( array_index >= total_number_of_bits || ( array_index + count ) > total_number_of_bits )
    {
@@ -473,7 +473,7 @@ void CBitArray::CopyTo( __inout std::vector<uint8_t>& destination ) noexcept
 
    // Get a raw pointer. This is the fastest way to access memory
 
-   uint8_t * buffer_pointer = destination.data();
+   auto buffer_pointer = destination.data();
 
    WFC_VALIDATE_POINTER( buffer_pointer );
 

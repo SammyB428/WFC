@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 1995-2017, Samuel R. Blackburn
+** Copyright, 1995-2019, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -62,23 +62,23 @@ protected:
 
     void * * m_Items{ nullptr };
 
-    size_t m_AddIndex{ 0 };
-    size_t m_GetIndex{ 0 };
-    size_t m_Size{ 0 };
+    std::size_t m_AddIndex{ 0 };
+    std::size_t m_GetIndex{ 0 };
+    std::size_t m_Size{ 0 };
 
     HANDLE m_Heap{ INVALID_HANDLE_VALUE };
 
-    inline void m_GrowBy(_In_ const size_t number_of_new_items) noexcept;
+    inline void m_GrowBy(_In_ std::size_t const number_of_new_items) noexcept;
 
 public:
 
-    CQueue(const CQueue&) = delete;
-    CQueue& operator = (const CQueue&) = delete;
+    CQueue(CQueue const&) = delete;
+    CQueue& operator = (CQueue const&) = delete;
 
-    inline  CQueue(_In_ size_t initial_size = WFC_QUEUE_DEFAULT_NUMBER_OF_ITEMS) noexcept;
+    inline  CQueue(_In_ std::size_t initial_size = WFC_QUEUE_DEFAULT_NUMBER_OF_ITEMS) noexcept;
     inline ~CQueue() noexcept;
 
-    inline _Check_return_ bool Add(_In_ size_t new_item) noexcept { return(Add((void *)new_item)); };
+    inline _Check_return_ bool Add(_In_ std::size_t new_item) noexcept { return(Add((void *)new_item)); };
     inline _Check_return_ bool Add(_In_ void * new_item) noexcept;
     inline void Empty(void) noexcept
     {
@@ -89,12 +89,12 @@ public:
         ::LeaveCriticalSection(&m_GetCriticalSection);
         ::LeaveCriticalSection(&m_AddCriticalSection);
     };
-    inline _Check_return_ bool  Get(_Out_ size_t& item) noexcept { return(Get(reinterpret_cast<void *&>(item))); };
+    inline _Check_return_ bool  Get(_Out_ std::size_t& item) noexcept { return(Get(reinterpret_cast<void *&>(item))); };
     inline _Check_return_ bool  Get(_Out_ void * & item) noexcept;
-    inline _Check_return_ bool  TryGet(_Out_ size_t& item) noexcept { return(TryGet(reinterpret_cast<void *&>(item))); };
+    inline _Check_return_ bool  TryGet(_Out_ std::size_t& item) noexcept { return(TryGet(reinterpret_cast<void *&>(item))); };
     inline _Check_return_ bool  TryGet(_Out_ void * & item) noexcept;
-    inline _Check_return_ size_t GetLength(void) const noexcept;
-    inline _Check_return_ size_t GetMaximumLength(void) const noexcept { return(m_Size); };
+    inline _Check_return_ std::size_t GetLength(void) const noexcept;
+    inline constexpr _Check_return_ std::size_t GetMaximumLength(void) const noexcept { return(m_Size); };
 
 #if defined( _DEBUG ) && ! defined( WFC_NO_DUMPING )
 
@@ -103,7 +103,7 @@ public:
 #endif // _DEBUG
 };
 
-inline CQueue::CQueue(_In_ size_t initial_size) noexcept
+inline CQueue::CQueue(_In_ std::size_t initial_size) noexcept
 {
     // TryEnterCriticalSection is snapped to NTDLL.RtlTryEnterCriticalSection but we
     // will stick to the published specification. We go to this trouble so programs
@@ -183,7 +183,7 @@ inline _Check_return_ bool CQueue::Add(_In_ void * item) noexcept
 
     // Make sure m_AddIndex is never invalid
 
-    size_t new_add_index = ((m_AddIndex + 1) >= m_Size) ? 0 : m_AddIndex + 1;
+    std::size_t new_add_index = ((m_AddIndex + 1) >= m_Size) ? 0 : m_AddIndex + 1;
 
     if (new_add_index == m_GetIndex)
     {
@@ -360,12 +360,12 @@ inline _Check_return_ bool CQueue::Get(_Out_ void * & item) noexcept
     return(true);
 }
 
-inline _Check_return_ size_t CQueue::GetLength(void) const noexcept
+inline _Check_return_ std::size_t CQueue::GetLength(void) const noexcept
 {
     // This is a very expensive process!
     // No one can call Add() or Get() while we're computing this
 
-    size_t number_of_items_in_the_queue = 0;
+    std::size_t number_of_items_in_the_queue = 0;
 
     ::EnterCriticalSection(const_cast<CRITICAL_SECTION *>(&m_AddCriticalSection));
     ::EnterCriticalSection(const_cast<CRITICAL_SECTION *>(&m_GetCriticalSection));
@@ -380,28 +380,25 @@ inline _Check_return_ size_t CQueue::GetLength(void) const noexcept
     return(number_of_items_in_the_queue);
 }
 
-inline void CQueue::m_GrowBy(_In_ size_t number_of_new_items) noexcept
+inline void CQueue::m_GrowBy(_In_ std::size_t number_of_new_items) noexcept
 {
     // We don't need to worry about critical sections because they
     // have both already been entered.
     // m_GrowBy() is only called from Add();
-
-    void * * new_array = nullptr;
-    void * * pointer_to_free = nullptr;
 
     if (number_of_new_items > CQUEUE_MAX_GROW_SIZE)
     {
         number_of_new_items = CQUEUE_MAX_GROW_SIZE;
     }
 
-    const size_t new_size = m_Size + number_of_new_items;
+    std::size_t const new_size = m_Size + number_of_new_items;
 
     // 2000-05-16
     // Thanks go to Royce Mitchell III (royce3@aim-controls.com) for finding
     // a HUGE bug here. I was using HeapReAlloc as a short cut but my logic
     // was flawed. In certain circumstances, queue items were being dropped.
 
-    new_array = (void **) ::HeapAlloc(m_Heap, HEAP_NO_SERIALIZE | HEAP_CREATE_ALIGN_16, new_size * sizeof(void *));
+    void**  new_array = (void **) ::HeapAlloc(m_Heap, HEAP_NO_SERIALIZE | HEAP_CREATE_ALIGN_16, new_size * sizeof(void *));
 
     if (new_array != nullptr)
     {
@@ -416,7 +413,7 @@ inline void CQueue::m_GrowBy(_In_ size_t number_of_new_items) noexcept
         m_AddIndex = m_Size;
         m_GetIndex = 0;
         m_Size = new_size;
-        pointer_to_free = m_Items;
+        void** pointer_to_free = m_Items;
         m_Items = new_array;
 
         ::HeapFree(m_Heap, HEAP_NO_SERIALIZE, pointer_to_free);

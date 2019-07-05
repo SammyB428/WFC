@@ -232,21 +232,21 @@ class CCommunicationProperties : public _COMMPROP
    public:
 
       CCommunicationProperties();
-      CCommunicationProperties( __in const CCommunicationProperties& source );
-      CCommunicationProperties( __in const _COMMPROP& source );
+      CCommunicationProperties( __in CCommunicationProperties const& source );
+      CCommunicationProperties( __in _COMMPROP const& source );
       virtual ~CCommunicationProperties();
-      virtual void ConvertBaudRateToString( __in const DWORD baud_rate, __out std::wstring& human_readable_string ) const;
-      virtual void ConvertBaudRateListToString( __in const DWORD baud_rate, __out std::wstring& human_readable_string ) const;
-      virtual void ConvertDataBitsToString( __in const DWORD data_bits, __out std::wstring& human_readable_string ) const;
-      virtual void ConvertProviderCapabilitiesToString( __in const DWORD capabilities, __out std::wstring& human_readable_string ) const;
-      virtual void ConvertProviderSubtypeToString( __in const DWORD baud_rate, __out std::wstring& human_readable_string ) const;
-      virtual void ConvertSettableParametersToString( __in const DWORD parameters, __out std::wstring& human_readable_string ) const;
-      virtual void ConvertStopParityToString( __in const DWORD stop_parity, __out std::wstring& human_readable_string ) const;
-      virtual void Copy( __in const CCommunicationProperties& source );
-      virtual void Copy( __in const _COMMPROP& source );
-      virtual void Empty( void );
-      virtual __checkReturn CCommunicationProperties& operator=( __in const CCommunicationProperties& source );
-      virtual __checkReturn CCommunicationProperties& operator=( __in const _COMMPROP& source );
+      virtual void ConvertBaudRateToString( __in DWORD const baud_rate, __out std::wstring& human_readable_string ) const noexcept;
+      virtual void ConvertBaudRateListToString( __in DWORD const baud_rate, __out std::wstring& human_readable_string ) const noexcept;
+      virtual void ConvertDataBitsToString( __in DWORD const data_bits, __out std::wstring& human_readable_string ) const noexcept;
+      virtual void ConvertProviderCapabilitiesToString( __in DWORD const capabilities, __out std::wstring& human_readable_string ) const noexcept;
+      virtual void ConvertProviderSubtypeToString( __in DWORD const baud_rate, __out std::wstring& human_readable_string ) const noexcept;
+      virtual void ConvertSettableParametersToString( __in DWORD const parameters, __out std::wstring& human_readable_string ) const noexcept;
+      virtual void ConvertStopParityToString( __in DWORD const stop_parity, __out std::wstring& human_readable_string ) const noexcept;
+      virtual void Copy( __in CCommunicationProperties const& source ) noexcept;
+      virtual void Copy( __in  _COMMPROP const& source ) noexcept;
+      virtual void Empty( void ) noexcept;
+      virtual __checkReturn CCommunicationProperties& operator=( __in CCommunicationProperties const& source ) noexcept;
+      virtual __checkReturn CCommunicationProperties& operator=( __in _COMMPROP const& source ) noexcept;
 
 #if defined( _DEBUG ) && ! defined( WFC_NO_DUMPING )
 
@@ -260,13 +260,13 @@ class COutlineTextMetricA : public _OUTLINETEXTMETRICA
    public:
 
       COutlineTextMetricA();
-      COutlineTextMetricA( __in const COutlineTextMetricA& source );
-      COutlineTextMetricA( __in const _OUTLINETEXTMETRICA * source );
+      COutlineTextMetricA( __in COutlineTextMetricA const& source );
+      COutlineTextMetricA( __in _OUTLINETEXTMETRICA const * source );
       virtual ~COutlineTextMetricA();
-      virtual void Copy( __in const COutlineTextMetricA& source );
-      virtual void Copy( __in const _OUTLINETEXTMETRICA * source );
-      virtual void Empty( void );
-      virtual __checkReturn COutlineTextMetricA& operator=( __in const COutlineTextMetricA& source );
+      virtual void Copy( __in COutlineTextMetricA const& source ) noexcept;
+      virtual void Copy( __in _OUTLINETEXTMETRICA const * source ) noexcept;
+      virtual void Empty( void ) noexcept;
+      virtual __checkReturn COutlineTextMetricA& operator=( __in COutlineTextMetricA const& source ) noexcept;
 
 #if defined( _DEBUG ) && ! defined( WFC_NO_DUMPING )
 
@@ -280,13 +280,13 @@ class COutlineTextMetricW : public _OUTLINETEXTMETRICW
    public:
 
       COutlineTextMetricW();
-      COutlineTextMetricW( __in const COutlineTextMetricW& source );
-      COutlineTextMetricW( __in const _OUTLINETEXTMETRICW * source );
+      COutlineTextMetricW( __in COutlineTextMetricW const& source );
+      COutlineTextMetricW( __in _OUTLINETEXTMETRICW const * source );
       virtual ~COutlineTextMetricW();
-      virtual void Copy( __in const COutlineTextMetricW& source );
-      virtual void Copy( __in const _OUTLINETEXTMETRICW * source );
-      virtual void Empty( void );
-      virtual __checkReturn COutlineTextMetricW& operator=( __in const COutlineTextMetricW& source );
+      virtual void Copy( __in COutlineTextMetricW const& source ) noexcept;
+      virtual void Copy( __in _OUTLINETEXTMETRICW const * source ) noexcept;
+      virtual void Empty( void ) noexcept;
+      virtual __checkReturn COutlineTextMetricW& operator=( __in COutlineTextMetricW const& source ) noexcept;
 
 #if defined( _DEBUG ) && ! defined( WFC_NO_DUMPING )
 

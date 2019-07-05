@@ -81,7 +81,7 @@ class CDataChunk
          Data = source.Data;
       };
 
-      inline void Copy( __in uint32_t const identifier, __in const std::vector<uint8_t>& source ) noexcept
+      inline void Copy( __in uint32_t const identifier, __in std::vector<uint8_t> const& source ) noexcept
       {
          Identifier = identifier;
          Data = source;

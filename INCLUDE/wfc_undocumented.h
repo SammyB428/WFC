@@ -136,10 +136,10 @@ inline _Check_return_ const ::SYSTEM_PROCESS_INFORMATION * GetNext( _In_ ::SYSTE
     return( return_value );
 }
 
-_Check_return_ bool PASCAL wfc_undocumented_get_system_process_list( __out_bcount( size_of_buffer ) BYTE * buffer, __in const DWORD size_of_buffer ) noexcept;
-_Check_return_ bool PASCAL wfc_get_process_command_line(_In_ const HANDLE process_id, __inout std::wstring& command_line);
-void PASCAL wfc_calculate_lanman_hash(__in_z const char * ascii_string, __out_bcount(16) uint8_t * hash_value);
-void PASCAL wfc_calculate_nt_hash(__in_z const wchar_t * unicode_string, __out_bcount(16) uint8_t * hash_value);
-void PASCAL wfc_debug_error_code( __in const DWORD error_code );
+_Check_return_ bool PASCAL wfc_undocumented_get_system_process_list( __out_bcount( size_of_buffer ) BYTE * buffer, __in DWORD const size_of_buffer ) noexcept;
+_Check_return_ bool PASCAL wfc_get_process_command_line(_In_ HANDLE const process_id, __inout std::wstring& command_line) noexcept;
+void PASCAL wfc_calculate_lanman_hash(__in_z char const * ascii_string, __out_bcount(16) uint8_t * hash_value) noexcept;
+void PASCAL wfc_calculate_nt_hash(__in_z wchar_t const * unicode_string, __out_bcount(16) uint8_t * hash_value) noexcept;
+void PASCAL wfc_debug_error_code( __in DWORD const error_code ) noexcept;
 
 #endif // WFC_UNDOCUMENTED_HEADER_FILE

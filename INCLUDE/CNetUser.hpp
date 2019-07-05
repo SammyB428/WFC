@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 1995-2014, Samuel R. Blackburn
+** Copyright, 1995-2019, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -47,22 +47,22 @@ class CNetworkUserInformation
 {
    private:
 
-      void m_Initialize( void );
+      void m_Initialize( void ) noexcept;
 
    public:
 
       CNetworkUserInformation();
-      CNetworkUserInformation( __in const USER_INFO_0  * information_p );
-      CNetworkUserInformation( __in const USER_INFO_1  * information_p );
-      CNetworkUserInformation( __in const USER_INFO_2  * information_p );
-      CNetworkUserInformation( __in const USER_INFO_3  * information_p );
-      CNetworkUserInformation( __in const USER_INFO_10 * information_p );
-      CNetworkUserInformation( __in const USER_INFO_11 * information_p );
-      CNetworkUserInformation( __in const USER_INFO_20 * information_p );
-      CNetworkUserInformation( __in const USER_INFO_21 * information_p );
-      CNetworkUserInformation( __in const USER_INFO_22 * information_p );
-      CNetworkUserInformation( __in const CNetworkUserInformation&  source );
-      CNetworkUserInformation( __in const CNetworkUserInformation * source );
+      CNetworkUserInformation( __in USER_INFO_0  const * information_p );
+      CNetworkUserInformation( __in USER_INFO_1  const * information_p );
+      CNetworkUserInformation( __in USER_INFO_2  const * information_p );
+      CNetworkUserInformation( __in USER_INFO_3  const * information_p );
+      CNetworkUserInformation( __in USER_INFO_10 const * information_p );
+      CNetworkUserInformation( __in USER_INFO_11 const * information_p );
+      CNetworkUserInformation( __in USER_INFO_20 const * information_p );
+      CNetworkUserInformation( __in USER_INFO_21 const * information_p );
+      CNetworkUserInformation( __in USER_INFO_22 const * information_p );
+      CNetworkUserInformation( __in CNetworkUserInformation const&  source );
+      CNetworkUserInformation( __in CNetworkUserInformation const * source );
 
       virtual ~CNetworkUserInformation();
 
@@ -77,12 +77,12 @@ class CNetworkUserInformation
       std::wstring Password;
       std::vector<uint8_t>   EncryptedPassword;
       CTimeSpan    PasswordAge;
-      DWORD        Privileges;
+      DWORD        Privileges{ 0 };
       std::wstring HomeDirectory;
       std::wstring Comment;
-      DWORD        Flags;
+      DWORD        Flags{ 0 };
       std::wstring ScriptPath;
-      DWORD        AuthenticationFlags;
+      DWORD        AuthenticationFlags{ 0 };
       std::wstring FullName;
       std::wstring UserComment;
       std::wstring Parameters;
@@ -90,39 +90,39 @@ class CNetworkUserInformation
       CTime        LastLogon;
       CTime        LastLogoff;
       CTime        AccountExpires;
-      DWORD        MaximumStorage;
-      DWORD        UnitsPerWeek;
-      std::vector<uint8_t>   LogonHours;
-      DWORD        BadPasswordCount;
-      DWORD        NumberOfLogons;
+      DWORD        MaximumStorage{ 0 };
+      DWORD        UnitsPerWeek{ 0 };
+      std::vector<uint8_t> LogonHours;
+      DWORD        BadPasswordCount{ 0 };
+      DWORD        NumberOfLogons{ 0 };
       std::wstring LogonServer;
-      DWORD        CountryCode;
-      DWORD        CodePage;
-      DWORD        UserID;
-      DWORD        PrimaryGroupID;
+      DWORD        CountryCode{ 0 };
+      DWORD        CodePage{ 0 };
+      DWORD        UserID{ 0 };
+      DWORD        PrimaryGroupID{ 0 };
       std::wstring HomeDirectoryDrive;
       std::wstring Profile;
-      DWORD        PasswordHasExpired;
+      DWORD        PasswordHasExpired{ 0 };
 
       /*
       ** Can't make Copy take a const pointer because Microsoft screwed up the 
       ** net API header files...
       */
 
-      virtual void Copy( __in const USER_INFO_0  * source ) noexcept;
-      virtual void Copy( __in const USER_INFO_1  * source ) noexcept;
-      virtual void Copy( __in const USER_INFO_2  * source ) noexcept;
-      virtual void Copy( __in const USER_INFO_3  * source ) noexcept;
-      virtual void Copy( __in const USER_INFO_10 * source ) noexcept;
-      virtual void Copy( __in const USER_INFO_11 * source ) noexcept;
-      virtual void Copy( __in const USER_INFO_20 * source ) noexcept;
-      virtual void Copy( __in const USER_INFO_21 * source ) noexcept;
-      virtual void Copy( __in const USER_INFO_22 * source ) noexcept;
-      virtual void Copy( __in const CNetworkUserInformation&  source ) noexcept;
-      virtual void Copy( __in const CNetworkUserInformation * source ) noexcept;
-      virtual void Empty( void );
+      virtual void Copy( __in USER_INFO_0  const * source ) noexcept;
+      virtual void Copy( __in USER_INFO_1  const * source ) noexcept;
+      virtual void Copy( __in USER_INFO_2  const * source ) noexcept;
+      virtual void Copy( __in USER_INFO_3  const * source ) noexcept;
+      virtual void Copy( __in USER_INFO_10 const * source ) noexcept;
+      virtual void Copy( __in USER_INFO_11 const * source ) noexcept;
+      virtual void Copy( __in USER_INFO_20 const * source ) noexcept;
+      virtual void Copy( __in USER_INFO_21 const * source ) noexcept;
+      virtual void Copy( __in USER_INFO_22 const * source ) noexcept;
+      virtual void Copy( __in CNetworkUserInformation const&  source ) noexcept;
+      virtual void Copy( __in CNetworkUserInformation const * source ) noexcept;
+      virtual void Empty( void ) noexcept;
       virtual void SetAddDefaults( void ) noexcept;
-      virtual const CNetworkUserInformation& operator = ( __in const CNetworkUserInformation& source ) noexcept;
+      virtual const CNetworkUserInformation& operator = ( __in CNetworkUserInformation const& source ) noexcept;
 
 #if defined( _DEBUG ) && ! defined( WFC_NO_DUMPING )
       virtual void Dump( CDumpContext& dump_context ) const;
@@ -181,12 +181,12 @@ class CNetworkUsers : public CNetwork
       DWORD m_10NumberOfEntriesRead{ 0 };
       DWORD m_10TotalNumberOfEntries{ 0 };
 
-      __checkReturn BOOL m_GetChunk( void ) noexcept;
+      _Check_return_ bool m_GetChunk( void ) noexcept;
 
    public:
 
-       CNetworkUsers(__in const CNetworkUsers&) = delete;
-       CNetworkUsers& operator=(__in const CNetworkUsers&) = delete;
+       CNetworkUsers(__in CNetworkUsers const&) = delete;
+       CNetworkUsers& operator=(__in CNetworkUsers const&) = delete;
        CNetworkUsers();
       CNetworkUsers( __in_z_opt LPCTSTR machine_name );
       virtual ~CNetworkUsers();
@@ -198,16 +198,16 @@ class CNetworkUsers : public CNetwork
          accountInterdomain            = UF_INTERDOMAIN_TRUST_ACCOUNT
       };
 
-      virtual bool  Add( __in const CNetworkUserInformation& user_to_add ) noexcept;
-      virtual __checkReturn BOOL ChangePassword( __in const std::wstring& user_name, __in const std::wstring& old_password, __in const std::wstring& new_password ) noexcept;
+      virtual bool  Add( __in CNetworkUserInformation const& user_to_add ) noexcept;
+      virtual _Check_return_ BOOL ChangePassword( __in std::wstring const& user_name, __in std::wstring const& old_password, __in std::wstring const& new_password ) noexcept;
       virtual void  Close( void ) noexcept;
-      virtual __checkReturn BOOL CreateComputerAccount( __in_z_opt LPCTSTR computer_name = nullptr, __in DWORD type = accountMachine ) noexcept;
-      virtual BOOL  Delete( __in const CNetworkUserInformation& user_to_delete ) noexcept;
-      virtual BOOL  Delete( __in const std::wstring& user_to_delete ) noexcept;
-      virtual __checkReturn BOOL Enumerate( void ) noexcept;
-      virtual BOOL  ExpirePassword( __in const std::wstring& user_name ) noexcept;
-      virtual __checkReturn DWORD GetLevel( void ) const noexcept;
-      virtual __checkReturn BOOL  GetNext( __inout CNetworkUserInformation& information ) noexcept;
+      virtual _Check_return_ BOOL CreateComputerAccount( __in_z_opt LPCTSTR computer_name = nullptr, __in DWORD type = accountMachine ) noexcept;
+      virtual BOOL  Delete( __in CNetworkUserInformation const& user_to_delete ) noexcept;
+      virtual BOOL  Delete( __in std::wstring const& user_to_delete ) noexcept;
+      virtual _Check_return_ bool Enumerate( void ) noexcept;
+      virtual bool  ExpirePassword( __in std::wstring const& user_name ) noexcept;
+      virtual _Check_return_ DWORD GetLevel( void ) const noexcept;
+      virtual _Check_return_ bool  GetNext( __inout CNetworkUserInformation& information ) noexcept;
 };
 
 #endif // NETWORK_USER_CLASS_HEADER

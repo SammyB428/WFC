@@ -63,17 +63,17 @@ class CVolume
        CVolume();
       virtual ~CVolume();
 
-      __checkReturn bool   AutomaticallyEject( void ) noexcept;
-      __checkReturn bool   Close( void ) noexcept;
-      __checkReturn bool   Dismount( void ) noexcept;
-      __checkReturn bool   Eject( void ) noexcept;
-      __checkReturn HANDLE GetHandle( void ) const noexcept;
-      __checkReturn bool   GetType( __out UINT& drive_type ) noexcept;
-      __checkReturn bool   Load( void ) noexcept;
-      __checkReturn bool   Lock( void ) noexcept;
-      __checkReturn bool   Open( __in const wchar_t drive_letter ) noexcept;
-      __checkReturn bool   PreventRemoval( __in const bool prevent_removal = TRUE ) noexcept;
-      __checkReturn bool   Unlock( void ) noexcept;
+      _Check_return_ bool   AutomaticallyEject( void ) noexcept;
+      _Check_return_ bool   Close( void ) noexcept;
+      _Check_return_ bool   Dismount( void ) noexcept;
+      _Check_return_ bool   Eject( void ) noexcept;
+      _Check_return_ HANDLE GetHandle( void ) const noexcept;
+      _Check_return_ bool   GetType( __out UINT& drive_type ) noexcept;
+      _Check_return_ bool   Load( void ) noexcept;
+      _Check_return_ bool   Lock( void ) noexcept;
+      _Check_return_ bool   Open( __in wchar_t const drive_letter ) noexcept;
+      _Check_return_ bool   PreventRemoval( __in const bool prevent_removal = true ) noexcept;
+      _Check_return_ bool   Unlock( void ) noexcept;
 
 #if defined( _DEBUG ) && ! defined( WFC_NO_DUMPING )
 

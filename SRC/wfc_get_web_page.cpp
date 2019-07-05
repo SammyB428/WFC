@@ -55,7 +55,7 @@ USING_WFC_NAMESPACE
 
     // MFC Version
 
-    void PASCAL Win32FoundationClasses::wfc_get_web_page( __in const CUniformResourceLocator& url, __out std::vector<std::wstring>& page_contents, __in const DWORD options )
+    void PASCAL Win32FoundationClasses::wfc_get_web_page( __in CUniformResourceLocator const& url, __out std::vector<std::wstring>& page_contents, __in DWORD const options )
 {
     CInternetSession * internet_session_p = nullptr;
 
@@ -188,7 +188,7 @@ USING_WFC_NAMESPACE
     WFC_END_CATCH_ALL
 }
 
-void PASCAL Win32FoundationClasses::wfc_get_web_page( __in const CUniformResourceLocator& url, __out std::vector<uint8_t>& page_contents, __in const DWORD options )
+void PASCAL Win32FoundationClasses::wfc_get_web_page( __in CUniformResourceLocator const& url, __out std::vector<uint8_t>& page_contents, __in DWORD const options )
 {
     page_contents.clear();
 
@@ -211,7 +211,7 @@ void PASCAL Win32FoundationClasses::wfc_get_web_page( __in const CUniformResourc
 
 USING_WFC_NAMESPACE
 
-void PASCAL Win32FoundationClasses::wfc_get_web_page( __in const CUniformResourceLocator& url, __out std::vector<uint8_t>& page_contents, __in const DWORD options ) noexcept
+void PASCAL Win32FoundationClasses::wfc_get_web_page( __in CUniformResourceLocator const& url, __out std::vector<uint8_t>& page_contents, __in DWORD const options ) noexcept
 {
     page_contents.clear();
 
@@ -281,7 +281,7 @@ void PASCAL Win32FoundationClasses::wfc_get_web_page( __in const CUniformResourc
     InternetCloseHandle( internet_handle );
 }
 
-void PASCAL Win32FoundationClasses::wfc_get_web_page( __in const CUniformResourceLocator& url, __out std::vector<std::wstring>& page_contents, __in const DWORD options ) noexcept
+void PASCAL Win32FoundationClasses::wfc_get_web_page( __in CUniformResourceLocator const& url, __out std::vector<std::wstring>& page_contents, __in DWORD const options ) noexcept
 {
     page_contents.clear();
 

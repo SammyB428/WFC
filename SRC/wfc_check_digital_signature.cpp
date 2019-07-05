@@ -237,7 +237,7 @@ __checkReturn bool PASCAL Win32FoundationClasses::wfc_check_digital_signature( _
     return( return_flag == FALSE ? false : true );
 }
 
-void PASCAL Win32FoundationClasses::wfc_get_version( _In_z_ const wchar_t * file_name, _Out_ uint16_t& major, _Out_ uint16_t& minor, _Out_ uint16_t& build, _Out_ uint16_t& revision ) noexcept
+void PASCAL Win32FoundationClasses::wfc_get_version( _In_z_ wchar_t const * file_name, _Out_ uint16_t& major, _Out_ uint16_t& minor, _Out_ uint16_t& build, _Out_ uint16_t& revision ) noexcept
 {
    major = 0;
    minor = 0;
@@ -246,11 +246,11 @@ void PASCAL Win32FoundationClasses::wfc_get_version( _In_z_ const wchar_t * file
 
    DWORD handle = 0;
 
-   const uint32_t number_of_bytes_to_allocate = GetFileVersionInfoSizeW( file_name, &handle );
+   uint32_t const number_of_bytes_to_allocate = GetFileVersionInfoSizeW( file_name, &handle );
 
    if ( number_of_bytes_to_allocate > 0 )
    {
-      std::unique_ptr<uint8_t []> byte_buffer = std::make_unique<uint8_t []>(number_of_bytes_to_allocate);
+       auto byte_buffer = std::make_unique<uint8_t []>(number_of_bytes_to_allocate);
 
       if ( byte_buffer.get() != nullptr )
       {

@@ -100,20 +100,20 @@ class CNetwork
 
       virtual _Check_return_ bool AbortShutdown( void ) noexcept;
       virtual void    Close( void ) noexcept;
-      virtual _Check_return_ BOOL  EnumeratePorts( void ) noexcept;
+      virtual _Check_return_ bool  EnumeratePorts( void ) noexcept;
       virtual _Check_return_ DWORD GetErrorCode( void ) const noexcept;
       virtual _Check_return_ LPCWSTR GetMachineName( void ) const noexcept;
       virtual void    GetFriendlyMachineName( _Out_ std::wstring& name ) const noexcept;
-      virtual _Check_return_ BOOL GetNext( _Inout_ CPortInformation& port ) noexcept;
-      virtual BOOL    GetTime(_Inout_ CTime& machine_time ) noexcept;
-      virtual BOOL    GetTime(_Inout_ CSystemTime& machine_time ) noexcept;
-      virtual _Check_return_ BOOL IsRebootable( void ) noexcept;
+      virtual _Check_return_ bool GetNext( _Inout_ CPortInformation& port ) noexcept;
+      virtual _Check_return_ bool GetTime(_Inout_ CTime& machine_time ) noexcept;
+      virtual _Check_return_ bool GetTime(_Inout_ CSystemTime& machine_time ) noexcept;
+      virtual _Check_return_ bool IsRebootable( void ) noexcept;
       virtual void    Open(_In_opt_z_ LPCWSTR machine_name = nullptr ) noexcept;
-      virtual _Check_return_ BOOL SetPrivilege( _In_z_ LPCWSTR privilege_name, _In_ const BOOL add_privilege = TRUE ) noexcept;
-      virtual _Check_return_ BOOL Shutdown( _In_ const BOOL reboot                            = TRUE,
-                                            _In_ const BOOL    force_applications_to_close       = TRUE,
+      virtual _Check_return_ bool SetPrivilege( _In_z_ LPCWSTR privilege_name, _In_ bool const add_privilege = true ) noexcept;
+      virtual _Check_return_ bool Shutdown( _In_ bool const reboot                            = true,
+                                            _In_ bool const force_applications_to_close       = true,
                                       _In_opt_z_ LPCWSTR message_to_display                = nullptr,
-                                            _In_ const DWORD   number_of_seconds_before_shutdown = 0 ) noexcept;
+                                            _In_ DWORD const  number_of_seconds_before_shutdown = 0 ) noexcept;
       operator LPCWSTR() const noexcept { return( m_WideMachineName.get() ); }
       operator LPWSTR()  const noexcept { return( m_WideMachineName.get() ); }
 

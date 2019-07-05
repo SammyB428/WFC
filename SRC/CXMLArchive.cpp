@@ -125,19 +125,19 @@ CXMLArchive::~CXMLArchive()
    m_Element_p  = nullptr;
 }
 
-__checkReturn bool CXMLArchive::GetAddNewLineAfterEachElement( void ) const noexcept
+_Check_return_ bool CXMLArchive::GetAddNewLineAfterEachElement( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
    return( m_AddNewLineAfterEachElement );
 }
 
-__checkReturn CExtensibleMarkupLanguageElement * CXMLArchive::GetElement( void ) const noexcept
+_Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::GetElement( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
    return( m_Element_p );
 }
 
-__checkReturn bool CXMLArchive::IsLoading( void ) const noexcept
+_Check_return_ bool CXMLArchive::IsLoading( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -149,7 +149,7 @@ __checkReturn bool CXMLArchive::IsLoading( void ) const noexcept
    return( false );
 }
 
-__checkReturn bool CXMLArchive::IsStoring( void ) const noexcept
+_Check_return_ bool CXMLArchive::IsStoring( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -161,7 +161,7 @@ __checkReturn bool CXMLArchive::IsStoring( void ) const noexcept
    return( false );
 }
 
-__checkReturn CExtensibleMarkupLanguageElement * CXMLArchive::Read(_In_z_ const wchar_t * tag, __out bool& value ) noexcept
+_Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Read(_In_z_ wchar_t const * tag, __out bool& value ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER(tag);
@@ -206,7 +206,7 @@ __checkReturn CExtensibleMarkupLanguageElement * CXMLArchive::Read(_In_z_ const 
    WFC_END_CATCH_ALL
 }
 
-__checkReturn CExtensibleMarkupLanguageElement * CXMLArchive::Read(_In_z_ const wchar_t * tag, __out std::vector<uint8_t>& value ) noexcept
+_Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Read(_In_z_ wchar_t const * tag, __out std::vector<uint8_t>& value ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER(tag);
@@ -247,7 +247,7 @@ __checkReturn CExtensibleMarkupLanguageElement * CXMLArchive::Read(_In_z_ const 
    WFC_END_CATCH_ALL
 }
 
-__checkReturn CExtensibleMarkupLanguageElement * CXMLArchive::Read(_In_z_ const wchar_t * tag, __out std::vector<uint32_t>& value ) noexcept
+_Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Read(_In_z_ wchar_t const * tag, __out std::vector<uint32_t>& value ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER(tag);
@@ -307,7 +307,7 @@ __checkReturn CExtensibleMarkupLanguageElement * CXMLArchive::Read(_In_z_ const 
    WFC_END_CATCH_ALL
 }
 
-__checkReturn CExtensibleMarkupLanguageElement * CXMLArchive::Read(_In_z_ const wchar_t * tag, _Out_ std::wstring& value ) noexcept
+_Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Read(_In_z_ wchar_t const * tag, _Out_ std::wstring& value ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER(tag);
@@ -339,7 +339,7 @@ __checkReturn CExtensibleMarkupLanguageElement * CXMLArchive::Read(_In_z_ const 
    WFC_END_CATCH_ALL
 }
 
-_Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Read( _In_z_ const wchar_t * tag, __out std::vector<std::wstring>& value ) noexcept
+_Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Read( _In_z_ wchar_t const * tag, __out std::vector<std::wstring>& value ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER(tag);
@@ -397,7 +397,7 @@ _Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Read( _In_z_ cons
    WFC_END_CATCH_ALL
 }
 
-__checkReturn CExtensibleMarkupLanguageElement * CXMLArchive::Read( _In_z_ const wchar_t * tag, __out double& value ) noexcept
+_Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Read( _In_z_ wchar_t const * tag, __out double& value ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER(tag);
@@ -435,7 +435,7 @@ __checkReturn CExtensibleMarkupLanguageElement * CXMLArchive::Read( _In_z_ const
    WFC_END_CATCH_ALL
 }
 
-__checkReturn CExtensibleMarkupLanguageElement * CXMLArchive::Read( _In_z_ const wchar_t * tag, __out uint32_t& value ) noexcept
+_Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Read( _In_z_ wchar_t const * tag, __out uint32_t& value ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER(tag);
@@ -471,7 +471,7 @@ __checkReturn CExtensibleMarkupLanguageElement * CXMLArchive::Read( _In_z_ const
    WFC_END_CATCH_ALL
 }
 
-__checkReturn CExtensibleMarkupLanguageElement * CXMLArchive::Read( _In_z_ const wchar_t * tag, __out int64_t& value ) noexcept
+_Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Read( _In_z_ wchar_t const * tag, __out int64_t& value ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER(tag);
@@ -507,7 +507,7 @@ __checkReturn CExtensibleMarkupLanguageElement * CXMLArchive::Read( _In_z_ const
    WFC_END_CATCH_ALL
 }
 
-__checkReturn CExtensibleMarkupLanguageElement * CXMLArchive::Read( _In_z_ const wchar_t * tag, __out uint64_t& value ) noexcept
+_Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Read( _In_z_ wchar_t const * tag, __out uint64_t& value ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER(tag);
@@ -543,7 +543,7 @@ __checkReturn CExtensibleMarkupLanguageElement * CXMLArchive::Read( _In_z_ const
    WFC_END_CATCH_ALL
 }
 
-__checkReturn CExtensibleMarkupLanguageElement * CXMLArchive::Read( _In_z_ const wchar_t * tag, __out Win32FoundationClasses::CFileTime& value ) noexcept
+_Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Read( _In_z_ wchar_t const * tag, __out Win32FoundationClasses::CFileTime& value ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER(tag);
@@ -581,7 +581,7 @@ __checkReturn CExtensibleMarkupLanguageElement * CXMLArchive::Read( _In_z_ const
 
 #if ! defined( WFC_STL )
 
-__checkReturn CExtensibleMarkupLanguageElement * CXMLArchive::Read( _In_z_ const wchar_t * tag, __out COleDateTime& value )
+_Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Read( _In_z_ wchar_t const * tag, __out COleDateTime& value )
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER(tag);
@@ -616,7 +616,7 @@ __checkReturn CExtensibleMarkupLanguageElement * CXMLArchive::Read( _In_z_ const
    WFC_END_CATCH_ALL
 }
 
-__checkReturn CExtensibleMarkupLanguageElement * CXMLArchive::Read( _In_z_ const wchar_t * tag, __out COleDateTimeSpan& value )
+_Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Read( _In_z_ wchar_t const * tag, __out COleDateTimeSpan& value )
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER(tag);
@@ -653,7 +653,7 @@ __checkReturn CExtensibleMarkupLanguageElement * CXMLArchive::Read( _In_z_ const
 
 #endif // WFC_STL
 
-__checkReturn CExtensibleMarkupLanguageElement * CXMLArchive::Read( _In_z_ const wchar_t * tag, __out CSystemTime& value ) noexcept
+_Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Read( _In_z_ wchar_t const * tag, __out CSystemTime& value ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER(tag);
@@ -689,7 +689,7 @@ __checkReturn CExtensibleMarkupLanguageElement * CXMLArchive::Read( _In_z_ const
    WFC_END_CATCH_ALL
 }
 
-__checkReturn CExtensibleMarkupLanguageElement * CXMLArchive::Read( _In_ const wchar_t * tag, __out CTime& value ) noexcept
+_Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Read( _In_ wchar_t const * tag, __out CTime& value ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER(tag);
@@ -725,7 +725,7 @@ __checkReturn CExtensibleMarkupLanguageElement * CXMLArchive::Read( _In_ const w
    WFC_END_CATCH_ALL
 }
 
-__checkReturn CExtensibleMarkupLanguageElement * CXMLArchive::Read( _In_z_ const wchar_t * tag, __out CTimeSpan& value ) noexcept
+_Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Read( _In_z_ wchar_t const * tag, __out CTimeSpan& value ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -768,7 +768,7 @@ void CXMLArchive::ReadFrom( __inout CExtensibleMarkupLanguageElement * element_p
    m_Element_p  = element_p;
 }
 
-__checkReturn bool CXMLArchive::SerializeObject( _In_z_ const wchar_t * tag, __inout void * object_p, __callback XML_ARCHIVE_SERIALIZE_OBJECT serialize_function ) noexcept
+_Check_return_ bool CXMLArchive::SerializeObject( _In_z_ wchar_t const * tag, __inout void * object_p, __callback XML_ARCHIVE_SERIALIZE_OBJECT serialize_function ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -807,13 +807,13 @@ __checkReturn bool CXMLArchive::SerializeObject( _In_z_ const wchar_t * tag, __i
    return( return_value );
 }
 
-void CXMLArchive::SetAddNewLineAfterEachElement( __in const bool add_new_line ) noexcept
+void CXMLArchive::SetAddNewLineAfterEachElement( __in bool const add_new_line ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    m_AddNewLineAfterEachElement = add_new_line;
 }
 
-__checkReturn CExtensibleMarkupLanguageElement * CXMLArchive::Write( _In_z_ const wchar_t * tag, __in const bool value ) noexcept
+_Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Write( _In_z_ wchar_t const * tag, __in const bool value ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -859,7 +859,7 @@ __checkReturn CExtensibleMarkupLanguageElement * CXMLArchive::Write( _In_z_ cons
    WFC_END_CATCH_ALL
 }
 
-__checkReturn CExtensibleMarkupLanguageElement * CXMLArchive::Write( _In_z_ const wchar_t * tag, __in const std::vector<uint8_t>& value ) noexcept
+_Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Write( _In_z_ wchar_t const * tag, __in std::vector<uint8_t> const& value ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -901,7 +901,7 @@ __checkReturn CExtensibleMarkupLanguageElement * CXMLArchive::Write( _In_z_ cons
    WFC_END_CATCH_ALL
 }
 
-__checkReturn CExtensibleMarkupLanguageElement * CXMLArchive::Write( _In_z_ const wchar_t * tag, __in const std::vector<uint32_t>& value ) noexcept
+_Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Write( _In_z_ wchar_t const * tag, __in std::vector<uint32_t> const& value ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -945,7 +945,7 @@ __checkReturn CExtensibleMarkupLanguageElement * CXMLArchive::Write( _In_z_ cons
    WFC_END_CATCH_ALL
 }
 
-__checkReturn CExtensibleMarkupLanguageElement * CXMLArchive::Write( _In_z_ const wchar_t * tag, __in const Win32FoundationClasses::CFileTime& value ) noexcept
+_Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Write( _In_z_ wchar_t const * tag, __in const Win32FoundationClasses::CFileTime& value ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -1004,7 +1004,7 @@ __checkReturn CExtensibleMarkupLanguageElement * CXMLArchive::Write( _In_z_ cons
 
 #if ! defined( WFC_STL )
 
-__checkReturn CExtensibleMarkupLanguageElement * CXMLArchive::Write( _In_z_ const wchar_t * tag, __in const COleDateTime& value, BOOL value_is_UTC_time )
+_Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Write( _In_z_ wchar_t const * tag, __in const COleDateTime& value, BOOL value_is_UTC_time )
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -1067,7 +1067,7 @@ __checkReturn CExtensibleMarkupLanguageElement * CXMLArchive::Write( _In_z_ cons
    WFC_END_CATCH_ALL
 }
 
-__checkReturn CExtensibleMarkupLanguageElement * CXMLArchive::Write( _In_z_ const wchar_t * tag, __in const COleDateTimeSpan& value )
+_Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Write( _In_z_ wchar_t const * tag, __in const COleDateTimeSpan& value )
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -1117,7 +1117,7 @@ __checkReturn CExtensibleMarkupLanguageElement * CXMLArchive::Write( _In_z_ cons
 
 #endif // WFC_STL
 
-__checkReturn CExtensibleMarkupLanguageElement * CXMLArchive::Write( _In_z_ const wchar_t * tag, __in const std::wstring& value ) noexcept
+_Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Write( _In_z_ wchar_t const * tag, __in std::wstring const& value ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -1151,7 +1151,7 @@ __checkReturn CExtensibleMarkupLanguageElement * CXMLArchive::Write( _In_z_ cons
    WFC_END_CATCH_ALL
 }
 
-__checkReturn CExtensibleMarkupLanguageElement * CXMLArchive::Write( _In_z_ const wchar_t * tag, __in const std::vector<std::wstring>& value ) noexcept
+_Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Write( _In_z_ wchar_t const * tag, __in std::vector<std::wstring> const& value ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -1199,7 +1199,7 @@ __checkReturn CExtensibleMarkupLanguageElement * CXMLArchive::Write( _In_z_ cons
    WFC_END_CATCH_ALL
 }
 
-__checkReturn CExtensibleMarkupLanguageElement * CXMLArchive::Write( _In_z_ const wchar_t * tag, __in const CSystemTime& value ) noexcept
+_Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Write( _In_z_ wchar_t const * tag, __in const CSystemTime& value ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -1252,7 +1252,7 @@ __checkReturn CExtensibleMarkupLanguageElement * CXMLArchive::Write( _In_z_ cons
    WFC_END_CATCH_ALL
 }
 
-__checkReturn CExtensibleMarkupLanguageElement * CXMLArchive::Write( _In_z_ const wchar_t * tag, __in const CTime& value, __in const bool value_is_UTC_time ) noexcept
+_Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Write( _In_z_ wchar_t const * tag, __in const CTime& value, __in const bool value_is_UTC_time ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -1314,7 +1314,7 @@ __checkReturn CExtensibleMarkupLanguageElement * CXMLArchive::Write( _In_z_ cons
    WFC_END_CATCH_ALL
 }
 
-__checkReturn CExtensibleMarkupLanguageElement * CXMLArchive::Write( _In_z_ const wchar_t * tag, __in const CTimeSpan& value ) noexcept
+_Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Write( _In_z_ wchar_t const * tag, __in const CTimeSpan& value ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -1363,7 +1363,7 @@ __checkReturn CExtensibleMarkupLanguageElement * CXMLArchive::Write( _In_z_ cons
    WFC_END_CATCH_ALL
 }
 
-__checkReturn CExtensibleMarkupLanguageElement * CXMLArchive::Write( _In_z_ const wchar_t * tag, __in double const value ) noexcept
+_Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Write( _In_z_ wchar_t const * tag, __in double const value ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -1440,7 +1440,7 @@ __checkReturn CExtensibleMarkupLanguageElement * CXMLArchive::Write( _In_z_ cons
    WFC_END_CATCH_ALL
 }
 
-__checkReturn CExtensibleMarkupLanguageElement * CXMLArchive::Write( _In_z_ const wchar_t * tag, __in const uint32_t value ) noexcept
+_Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Write( _In_z_ wchar_t const * tag, __in uint32_t const value ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -1489,7 +1489,7 @@ __checkReturn CExtensibleMarkupLanguageElement * CXMLArchive::Write( _In_z_ cons
    WFC_END_CATCH_ALL
 }
 
-__checkReturn CExtensibleMarkupLanguageElement * CXMLArchive::Write( _In_z_ const wchar_t * tag, __in const int64_t value ) noexcept
+_Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Write( _In_z_ wchar_t const * tag, __in int64_t const value ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -1537,7 +1537,7 @@ __checkReturn CExtensibleMarkupLanguageElement * CXMLArchive::Write( _In_z_ cons
    WFC_END_CATCH_ALL
 }
 
-__checkReturn CExtensibleMarkupLanguageElement * CXMLArchive::Write( _In_z_ const wchar_t * tag, __in const uint64_t value ) noexcept
+_Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Write( _In_z_ wchar_t const * tag, __in uint64_t const value ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 

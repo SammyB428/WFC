@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 2000-2014, Samuel R. Blackburn
+** Copyright, 2000-2019, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -99,42 +99,42 @@ class CWfcTrace
       static BOOL  Tracing;
 
       CWfcTrace() = delete;
-      CWfcTrace(const CWfcTrace&) = delete;
-      CWfcTrace& operator=(CWfcTrace&) = delete;
+      CWfcTrace(CWfcTrace const&) = delete;
+      CWfcTrace& operator=(CWfcTrace const&) = delete;
 
-      CWfcTrace( __in_z LPCTSTR function_name, __in const DWORD tracing_level );
+      CWfcTrace( __in_z LPCTSTR function_name, __in DWORD const tracing_level );
 
       virtual ~CWfcTrace();
 
       static void TraceAllOn( void ) noexcept;
       static void TraceAllOff( void ) noexcept;
-      static void TraceLevelOn( __in const DWORD level ) noexcept;
-      static void TraceLevelOff( __in const DWORD level ) noexcept;
+      static void TraceLevelOn( __in DWORD const level ) noexcept;
+      static void TraceLevelOff( __in DWORD const level ) noexcept;
       static void TraceOn( void ) noexcept;
       static void TraceOff( void ) noexcept;
       void Output( __in_z LPCTSTR message ) __in const noexcept;
-      void Output( __in_z LPCTSTR message, __in const int integer      ) const noexcept;
-      void Output( __in_z LPCTSTR message, __in const UINT integer     ) const noexcept;
-      void Output( __in_z LPCTSTR message, __in const long a_long      ) const noexcept;
-      void Output( __in_z LPCTSTR message, __in const ULONG a_long     ) const noexcept;
-      void Output( __in_z LPCTSTR message, __in const LONGLONG a_long  ) const noexcept;
-      void Output( __in_z LPCTSTR message, __in const ULONGLONG a_long ) const noexcept;
-      void Output( __in_z LPCTSTR message, __in const double a_double  ) const noexcept;
-      void Output( __in_z LPCTSTR message, __in const std::wstring& string  ) const noexcept;
-      void Output( __in_z LPCTSTR message, __in const VOID * pointer   ) const noexcept;
-      void Output( __in_z LPCTSTR message, __in const LARGE_INTEGER& value ) const noexcept;
-      void Output( __in_z LPCTSTR message, __in const ULARGE_INTEGER& value ) const noexcept;
-      void Output( __in_z LPCTSTR message, __in const RECT& value ) const noexcept;
-      void Output( __in_z LPCTSTR message, __in const POINT& value ) const noexcept;
-      void Output( __in_z LPCTSTR message, __in const SIZE& value ) const noexcept;
-      void Output( __in_z LPCTSTR message, __in const GUID& value ) const noexcept; // New for Release 52
-      void Output( __in_z LPCTSTR message, __in const FILETIME& value ) const noexcept; // New for Release 52
-      void Output( __in_z LPCTSTR message, __in const SYSTEMTIME& value ) const noexcept; // New for Release 52
-      void OutputBinary( __in_z LPCTSTR message, __in const ULONG a_long ) const noexcept;
-      void OutputVariant( __in_z LPCTSTR message, __in const VARIANT& value ) const noexcept;
-      void OutputVariant( __in_z LPCTSTR message, __in const VARIANT* value ) const noexcept;
-      void ReportError( __in const DWORD error_code ) noexcept;
-      void ReportSocketError( __in const DWORD error_code ) noexcept;
+      void Output( __in_z LPCTSTR message, __in int const integer      ) const noexcept;
+      void Output( __in_z LPCTSTR message, __in UINT const integer     ) const noexcept;
+      void Output( __in_z LPCTSTR message, __in long const a_long      ) const noexcept;
+      void Output( __in_z LPCTSTR message, __in ULONG const a_long     ) const noexcept;
+      void Output( __in_z LPCTSTR message, __in LONGLONG const a_long  ) const noexcept;
+      void Output( __in_z LPCTSTR message, __in ULONGLONG const a_long ) const noexcept;
+      void Output( __in_z LPCTSTR message, __in double const a_double  ) const noexcept;
+      void Output( __in_z LPCTSTR message, __in std::wstring const& string  ) const noexcept;
+      void Output( __in_z LPCTSTR message, __in VOID const * pointer   ) const noexcept;
+      void Output( __in_z LPCTSTR message, __in LARGE_INTEGER const& value ) const noexcept;
+      void Output( __in_z LPCTSTR message, __in ULARGE_INTEGER const& value ) const noexcept;
+      void Output( __in_z LPCTSTR message, __in RECT const& value ) const noexcept;
+      void Output( __in_z LPCTSTR message, __in POINT const& value ) const noexcept;
+      void Output( __in_z LPCTSTR message, __in SIZE const& value ) const noexcept;
+      void Output( __in_z LPCTSTR message, __in GUID const& value ) const noexcept; // New for Release 52
+      void Output( __in_z LPCTSTR message, __in FILETIME const& value ) const noexcept; // New for Release 52
+      void Output( __in_z LPCTSTR message, __in SYSTEMTIME const& value ) const noexcept; // New for Release 52
+      void OutputBinary( __in_z LPCTSTR message, __in ULONG const a_long ) const noexcept;
+      void OutputVariant( __in_z LPCTSTR message, __in VARIANT const& value ) const noexcept;
+      void OutputVariant( __in_z LPCTSTR message, __in VARIANT const * value ) const noexcept;
+      void ReportError( __in DWORD const error_code ) noexcept;
+      void ReportSocketError( __in DWORD const error_code ) noexcept;
 };
 
 #endif // WFC_TRACE_CLASS_HEADER

@@ -789,9 +789,9 @@ __checkReturn BOOL CSerialFile::GetTimeouts( __inout COMMTIMEOUTS& timeouts ) no
 }
 
 #if defined( _DEBUG )
-void CSerialFile::m_ClearError( __in const int line_number ) noexcept
+void CSerialFile::m_ClearError( __in int const line_number ) noexcept
 #else
-void CSerialFile::m_ClearError(__in const int ) noexcept
+void CSerialFile::m_ClearError(__in int const ) noexcept
 #endif // _DEBUG
 {
    WFC_VALIDATE_POINTER( this );
@@ -1086,7 +1086,7 @@ __checkReturn bool CSerialFile::Open( void ) noexcept
       }
    }
 
-   const int port_number = _wtoi( number_string.c_str() );
+   int const port_number = _wtoi( number_string.c_str() );
 
    if ( port_number > 0 && port_number < 10 )
    {
@@ -1274,7 +1274,7 @@ __checkReturn UINT CSerialFile::Read( __out_bcount( length ) void * buffer, __in
    WFC_END_CATCH_ALL
 }
 
-__checkReturn BOOL CSerialFile::Purge( __in const DWORD what_to_purge ) noexcept
+__checkReturn BOOL CSerialFile::Purge( __in DWORD const what_to_purge ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -1336,7 +1336,7 @@ void CSerialFile::ReplaceGarbledCharacter( __in const bool yes_or_no, __in const
    }
 }
 
-__checkReturn bool CSerialFile::SetBaudRate( __in const uint32_t baud_rate ) noexcept
+__checkReturn bool CSerialFile::SetBaudRate( __in uint32_t const baud_rate ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -1487,7 +1487,7 @@ __checkReturn BOOL CSerialFile::SetDataTerminalReady( __in const BOOL set_DTR_on
    return( return_value );
 }
 
-void CSerialFile::SetFlowControl( __in const DWORD flow_control ) noexcept
+void CSerialFile::SetFlowControl( __in DWORD const flow_control ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -1567,14 +1567,14 @@ void CSerialFile::SetFlowControl( __in const DWORD flow_control ) noexcept
    }
 }
 
-void CSerialFile::SetInputBufferSize( __in const DWORD buffer_size ) noexcept
+void CSerialFile::SetInputBufferSize( __in DWORD const buffer_size ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
    m_InputBufferSize = buffer_size;
 }
 
-void CSerialFile::SetOutputBufferSize( __in const DWORD buffer_size ) noexcept
+void CSerialFile::SetOutputBufferSize( __in DWORD const buffer_size ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -1802,7 +1802,7 @@ __checkReturn BOOL CSerialFile::WaitFor(__inout DWORD& what_to_wait_for ) noexce
    return( return_value );
 }
 
-__checkReturn bool CSerialFile::WaitForString( __in const std::string& string_to_wait_for, __in const DWORD seconds_to_wait, __inout_opt std::string * string_p ) noexcept
+__checkReturn bool CSerialFile::WaitForString( __in std::string const& string_to_wait_for, __in DWORD const seconds_to_wait, __inout_opt std::string * string_p ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -1823,7 +1823,7 @@ __checkReturn bool CSerialFile::WaitForString( __in const std::string& string_to
 
    bool time_expired = false;
 
-   const std::size_t length_of_string_to_wait_for = string_to_wait_for.length();
+   std::size_t const length_of_string_to_wait_for = string_to_wait_for.length();
 
    CTime current_time = CTime::GetCurrentTime();
 
@@ -1984,7 +1984,7 @@ void CSerialFile::Write( __in_bcount( length ) const void * buffer, __in const U
    WFC_END_CATCH_ALL
 }
 
-void CSerialFile::Write( __in const std::string& string_to_write ) noexcept
+void CSerialFile::Write( __in std::string const& string_to_write ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -2001,7 +2001,7 @@ void CSerialFile::Write( __in const std::string& string_to_write ) noexcept
    }
 }
 
-void CSerialFile::Write( __in const std::vector<uint8_t>& bytes ) noexcept
+void CSerialFile::Write( __in std::vector<uint8_t> const& bytes ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    CDummyFile::Write( bytes );

@@ -61,7 +61,7 @@ static char THIS_FILE[] = __FILE__;
 // were dropped from September 1752. What are they teaching in schools
 // these days?? This method uses Zeller's Conguruence.
 
-static inline __checkReturn uint16_t __get_day_of_week( __in int year, __in int month, __in const int day )
+static inline __checkReturn uint16_t __get_day_of_week( __in int year, __in int month, __in int const day )
 {
    if ( month <= 2 )
    {
@@ -507,7 +507,7 @@ __checkReturn uint32_t CSystemTime::NumberOfMinutesSinceMonday( void ) const noe
       days_from_monday += 7;
    }
 
-   const uint32_t return_value = (days_from_monday * NUMBER_OF_MINUTES_IN_ONE_DAY) + (wHour * 60) + wMinute;
+   uint32_t const return_value = (days_from_monday * NUMBER_OF_MINUTES_IN_ONE_DAY) + (wHour * 60) + wMinute;
 
    return( return_value );
 }

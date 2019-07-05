@@ -96,7 +96,7 @@ CPing::~CPing()
     m_NumberOfTextBytes = 0;
 }
 
-void CPing::ConvertErrorToString(__in const DWORD error_code, __out std::wstring& meaning) const noexcept
+void CPing::ConvertErrorToString(__in DWORD const error_code, __out std::wstring& meaning) const noexcept
 {
     WFC_VALIDATE_POINTER(this);
 
@@ -229,7 +229,7 @@ void CPing::ConvertErrorToString(__in const DWORD error_code, __out std::wstring
     }
 }
 
-__checkReturn DWORD CPing::Ping( __in const std::wstring& name_or_address, __out_opt CPingResults * results_p, __in short desired_time_to_live) noexcept
+__checkReturn DWORD CPing::Ping( __in std::wstring const& name_or_address, __out_opt CPingResults * results_p, __in short desired_time_to_live) noexcept
 {
     WFC_VALIDATE_POINTER(this);
 
@@ -364,13 +364,13 @@ __checkReturn bool CPing::Open(void) noexcept
     return(true);
 }
 
-__checkReturn bool CPing::Open(__in_z LPCTSTR, __in const UINT) noexcept
+__checkReturn bool CPing::Open(__in_z LPCTSTR, __in UINT const) noexcept
 {
     WFC_VALIDATE_POINTER(this);
     return(true);
 }
 
-void CPing::SetText(__in_bcount(number_of_bytes) const uint8_t * bytes, __in const size_t number_of_bytes) noexcept
+void CPing::SetText(__in_bcount(number_of_bytes) uint8_t const * bytes, __in std::size_t const number_of_bytes) noexcept
 {
     WFC_VALIDATE_POINTER(this);
 
@@ -384,7 +384,7 @@ void CPing::SetText(__in_bcount(number_of_bytes) const uint8_t * bytes, __in con
 
     if (bytes != nullptr && number_of_bytes > 0)
     {
-        m_Text = (BYTE *)malloc(number_of_bytes);
+        m_Text = reinterpret_cast<uint8_t *>(malloc(number_of_bytes));
 
         if (m_Text != nullptr)
         {
