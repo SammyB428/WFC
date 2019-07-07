@@ -73,12 +73,12 @@ CAccessAllowedEntry::~CAccessAllowedEntry()
    Empty();
 }
 
-void CAccessAllowedEntry::Copy( __in const CAccessAllowedEntry& source )
+void CAccessAllowedEntry::Copy( __in CAccessAllowedEntry const& source ) noexcept
 {
    Copy( (const ACCESS_ALLOWED_ACE *) &source );
 }
 
-void CAccessAllowedEntry::Copy( __in const ACCESS_ALLOWED_ACE * source )
+void CAccessAllowedEntry::Copy( __in ACCESS_ALLOWED_ACE const * source ) noexcept
 {
    WFC_VALIDATE_POINTER( source );
    ASSERT( source != this );
@@ -207,7 +207,7 @@ void CAccessAllowedEntry::Dump( CDumpContext& dump_context ) const
 
 #endif // _DEBUG
 
-void CAccessAllowedEntry::Empty( void )
+void CAccessAllowedEntry::Empty( void ) noexcept
 {
    // ACE_HEADER
    Header.AceType  = 0;
@@ -219,7 +219,7 @@ void CAccessAllowedEntry::Empty( void )
    SidStart        = 0;
 }
 
-_Check_return_ CAccessAllowedEntry& CAccessAllowedEntry::operator=( __in const CAccessAllowedEntry& source )
+_Check_return_ CAccessAllowedEntry& CAccessAllowedEntry::operator=( __in CAccessAllowedEntry const& source ) noexcept
 {
    Copy( source );
    return( *this );
@@ -247,12 +247,12 @@ CAccessControlEntryHeader::~CAccessControlEntryHeader()
    Empty();
 }
 
-void CAccessControlEntryHeader::Copy( __in const CAccessControlEntryHeader& source )
+void CAccessControlEntryHeader::Copy( __in CAccessControlEntryHeader const& source ) noexcept
 {
-   Copy( (const ACE_HEADER *) &source );
+   Copy( reinterpret_cast<ACE_HEADER const *>(&source) );
 }
 
-void CAccessControlEntryHeader::Copy( __in const ACE_HEADER * source )
+void CAccessControlEntryHeader::Copy( __in ACE_HEADER const * source ) noexcept
 {
    WFC_VALIDATE_POINTER( source );
    ASSERT( source != this );
@@ -377,14 +377,14 @@ void CAccessControlEntryHeader::Dump( CDumpContext& dump_context ) const
 
 #endif // _DEBUG
 
-void CAccessControlEntryHeader::Empty( void )
+void CAccessControlEntryHeader::Empty( void ) noexcept
 {
    AceType  = 0;
    AceFlags = 0;
    AceSize  = 0;
 }
 
-_Check_return_ CAccessControlEntryHeader& CAccessControlEntryHeader::operator=( __in const CAccessControlEntryHeader& source )
+_Check_return_ CAccessControlEntryHeader& CAccessControlEntryHeader::operator=( __in CAccessControlEntryHeader const& source ) noexcept
 {
    Copy( source );
    return( *this );
@@ -412,12 +412,12 @@ CAccessControlList::~CAccessControlList()
    Empty();
 }
 
-void CAccessControlList::Copy( __in const CAccessControlList& source )
+void CAccessControlList::Copy( __in CAccessControlList const& source ) noexcept
 {
-   Copy( (const ACL *) &source );
+   Copy( reinterpret_cast<ACL const *>(&source) );
 }
 
-void CAccessControlList::Copy( __in const ACL * source )
+void CAccessControlList::Copy( __in ACL const * source ) noexcept
 {
    WFC_VALIDATE_POINTER( source );
    ASSERT( source != this );
@@ -460,7 +460,7 @@ void CAccessControlList::Dump( CDumpContext& dump_context ) const
 
 #endif // _DEBUG
 
-void CAccessControlList::Empty( void )
+void CAccessControlList::Empty( void ) noexcept
 {
    AclRevision = ACL_REVISION;
    Sbz1        = 0;
@@ -469,7 +469,7 @@ void CAccessControlList::Empty( void )
    Sbz2        = 0;
 }
 
-_Check_return_ CAccessControlList& CAccessControlList::operator=( __in const CAccessControlList& source )
+_Check_return_ CAccessControlList& CAccessControlList::operator=( __in CAccessControlList const& source ) noexcept
 {
    Copy( source );
    return( *this );
@@ -497,12 +497,12 @@ CAccessDeniedEntry::~CAccessDeniedEntry()
    Empty();
 }
 
-void CAccessDeniedEntry::Copy( __in const CAccessDeniedEntry& source )
+void CAccessDeniedEntry::Copy( __in CAccessDeniedEntry const& source ) noexcept
 {
-   Copy( (const ACCESS_DENIED_ACE *) &source );
+   Copy( reinterpret_cast<ACCESS_DENIED_ACE const*>(&source) );
 }
 
-void CAccessDeniedEntry::Copy( __in const ACCESS_DENIED_ACE * source )
+void CAccessDeniedEntry::Copy( __in ACCESS_DENIED_ACE const * source ) noexcept
 {
    WFC_VALIDATE_POINTER( source );
    ASSERT( source != this );
@@ -631,7 +631,7 @@ void CAccessDeniedEntry::Dump( CDumpContext& dump_context ) const
 
 #endif // _DEBUG
 
-void CAccessDeniedEntry::Empty( void )
+void CAccessDeniedEntry::Empty( void ) noexcept
 {
    // ACE_HEADER
    Header.AceType  = 0;
@@ -643,7 +643,7 @@ void CAccessDeniedEntry::Empty( void )
    SidStart        = 0;
 }
 
-_Check_return_ CAccessDeniedEntry& CAccessDeniedEntry::operator=( __in const CAccessDeniedEntry& source )
+_Check_return_ CAccessDeniedEntry& CAccessDeniedEntry::operator=( __in CAccessDeniedEntry const& source ) noexcept
 {
    Copy( source );
    return( *this );
@@ -671,12 +671,12 @@ CBitmapCoreHeader::~CBitmapCoreHeader()
    Empty();
 }
 
-void CBitmapCoreHeader::Copy( __in const CBitmapCoreHeader& source )
+void CBitmapCoreHeader::Copy( __in CBitmapCoreHeader const& source ) noexcept
 {
    Copy( (const CBitmapCoreHeader *) &source );
 }
 
-void CBitmapCoreHeader::Copy( __in const tagBITMAPCOREHEADER * source )
+void CBitmapCoreHeader::Copy( __in tagBITMAPCOREHEADER const * source ) noexcept
 {
    WFC_VALIDATE_POINTER( source );
    ASSERT( source != this );
@@ -719,7 +719,7 @@ void CBitmapCoreHeader::Dump( CDumpContext& dump_context ) const
 
 #endif // _DEBUG
 
-void CBitmapCoreHeader::Empty( void )
+void CBitmapCoreHeader::Empty( void ) noexcept
 {
    bcSize     = sizeof( tagBITMAPCOREHEADER );
    bcWidth    = 0;
@@ -728,7 +728,7 @@ void CBitmapCoreHeader::Empty( void )
    bcBitCount = 0;
 }
 
-_Check_return_ CBitmapCoreHeader& CBitmapCoreHeader::operator=( __in const CBitmapCoreHeader& source )
+_Check_return_ CBitmapCoreHeader& CBitmapCoreHeader::operator=( __in CBitmapCoreHeader const& source ) noexcept
 {
    Copy( source );
    return( *this );
@@ -756,12 +756,12 @@ CBitmapFileHeader::~CBitmapFileHeader()
    Empty();
 }
 
-void CBitmapFileHeader::Copy( __in const CBitmapFileHeader& source )
+void CBitmapFileHeader::Copy( __in CBitmapFileHeader const& source ) noexcept
 {
    Copy( (const tagBITMAPFILEHEADER *) &source );
 }
 
-void CBitmapFileHeader::Copy( __in const tagBITMAPFILEHEADER * source )
+void CBitmapFileHeader::Copy( __in tagBITMAPFILEHEADER const * source ) noexcept
 {
    WFC_VALIDATE_POINTER( source );
    ASSERT( source != this );
@@ -804,7 +804,7 @@ void CBitmapFileHeader::Dump( CDumpContext& dump_context ) const
 
 #endif // _DEBUG
 
-void CBitmapFileHeader::Empty( void )
+void CBitmapFileHeader::Empty( void ) noexcept
 {
    // 2000-11-06
    // Thanks go to Danny Smith for finding a bug in GCC here
@@ -816,7 +816,7 @@ void CBitmapFileHeader::Empty( void )
    bfOffBits   = 0;
 }
 
-_Check_return_ CBitmapFileHeader& CBitmapFileHeader::operator=( __in const CBitmapFileHeader& source )
+_Check_return_ CBitmapFileHeader& CBitmapFileHeader::operator=( __in CBitmapFileHeader const& source ) noexcept
 {
    Copy( source );
    return( *this );
@@ -848,12 +848,12 @@ CBitmapInfoHeader::~CBitmapInfoHeader()
    Empty();
 }
 
-void CBitmapInfoHeader::Copy( __in const CBitmapInfoHeader& source )
+void CBitmapInfoHeader::Copy( __in CBitmapInfoHeader const& source ) noexcept
 {
    Copy( (const tagBITMAPINFOHEADER * ) &source );
 }
 
-void CBitmapInfoHeader::Copy( __in const tagBITMAPINFOHEADER * source )
+void CBitmapInfoHeader::Copy( __in tagBITMAPINFOHEADER const * source ) noexcept
 {
    WFC_VALIDATE_POINTER( source );
    ASSERT( source != this );
@@ -908,7 +908,7 @@ void CBitmapInfoHeader::Dump( CDumpContext& dump_context ) const
 
 #endif // _DEBUG
 
-void CBitmapInfoHeader::Empty( void )
+void CBitmapInfoHeader::Empty( void ) noexcept
 {
    biSize          = sizeof( tagBITMAPINFOHEADER );
    biWidth         = 0;
@@ -923,7 +923,7 @@ void CBitmapInfoHeader::Empty( void )
    biClrImportant  = 0;
 }
 
-_Check_return_ CBitmapInfoHeader& CBitmapInfoHeader::operator=( __in const CBitmapInfoHeader& source )
+_Check_return_ CBitmapInfoHeader& CBitmapInfoHeader::operator=( __in CBitmapInfoHeader const& source ) noexcept
 {
    Copy( source );
    return( *this );
@@ -955,12 +955,12 @@ CColorAdjustment::~CColorAdjustment()
    Empty();
 }
 
-void CColorAdjustment::Copy( __in const CColorAdjustment& source )
+void CColorAdjustment::Copy( __in CColorAdjustment const& source ) noexcept
 {
    Copy( (const tagCOLORADJUSTMENT *) &source );
 }
 
-void CColorAdjustment::Copy( __in const tagCOLORADJUSTMENT * source )
+void CColorAdjustment::Copy( __in tagCOLORADJUSTMENT const * source ) noexcept
 {
    WFC_VALIDATE_POINTER( source );
    ASSERT( source != this );
@@ -1017,7 +1017,7 @@ void CColorAdjustment::Dump( CDumpContext& dump_context ) const
 
 #endif // _DEBUG
 
-void CColorAdjustment::Empty( void )
+void CColorAdjustment::Empty( void ) noexcept
 {
    caSize            = sizeof( tagCOLORADJUSTMENT );
    caFlags           = 0;
@@ -1033,7 +1033,7 @@ void CColorAdjustment::Empty( void )
    caRedGreenTint    = 0;
 }
 
-_Check_return_ CColorAdjustment& CColorAdjustment::operator=( __in const CColorAdjustment& source )
+_Check_return_ CColorAdjustment& CColorAdjustment::operator=( __in CColorAdjustment const& source ) noexcept
 {
    Copy( source );
    return( *this );
@@ -1071,7 +1071,7 @@ CCommunicationsConfiguration::~CCommunicationsConfiguration()
    Empty();
 }
 
-void CCommunicationsConfiguration::Copy( __in const CCommunicationsConfiguration& source )
+void CCommunicationsConfiguration::Copy( __in CCommunicationsConfiguration const& source ) noexcept
 {
    ASSERT( &source != this );
 
@@ -1120,7 +1120,7 @@ void CCommunicationsConfiguration::Copy( __in const CCommunicationsConfiguration
    dwProviderSize    = source.dwProviderSize;
 }
 
-void CCommunicationsConfiguration::Copy( __in const COMMCONFIG& source )
+void CCommunicationsConfiguration::Copy( __in COMMCONFIG const& source ) noexcept
 {
    dwSize    = source.dwSize;
    wVersion  = source.wVersion;
@@ -1262,7 +1262,7 @@ void CCommunicationsConfiguration::Dump( CDumpContext& dump_context ) const
 
 #endif // _DEBUG
 
-void CCommunicationsConfiguration::Empty( void )
+void CCommunicationsConfiguration::Empty( void ) noexcept
 {
    dwSize              = 0;
    wVersion            = 0;
@@ -1274,13 +1274,13 @@ void CCommunicationsConfiguration::Empty( void )
    ZeroMemory( &dcb, sizeof( dcb ) );
 }
 
-_Check_return_ CCommunicationsConfiguration& CCommunicationsConfiguration::operator=( __in const CCommunicationsConfiguration& source )
+_Check_return_ CCommunicationsConfiguration& CCommunicationsConfiguration::operator=( __in CCommunicationsConfiguration const& source ) noexcept
 {
    Copy( source );
    return( *this );
 }
 
-_Check_return_ CCommunicationsConfiguration& CCommunicationsConfiguration::operator=( __in const COMMCONFIG& source )
+_Check_return_ CCommunicationsConfiguration& CCommunicationsConfiguration::operator=( __in COMMCONFIG const& source ) noexcept
 {
    Copy( source );
    return( *this );
@@ -2986,12 +2986,12 @@ CPixelFormatDescriptor::~CPixelFormatDescriptor()
    Empty();
 }
 
-void CPixelFormatDescriptor::Copy( __in const CPixelFormatDescriptor& source )
+void CPixelFormatDescriptor::Copy( __in CPixelFormatDescriptor const& source ) noexcept
 {
-   Copy( (const tagPIXELFORMATDESCRIPTOR *) &source );
+   Copy( reinterpret_cast<tagPIXELFORMATDESCRIPTOR const *>(&source) );
 }
 
-void CPixelFormatDescriptor::Copy( __in const tagPIXELFORMATDESCRIPTOR * source )
+void CPixelFormatDescriptor::Copy( __in tagPIXELFORMATDESCRIPTOR const * source ) noexcept
 {
    WFC_VALIDATE_POINTER( source );
    ASSERT( source != this );
@@ -3202,7 +3202,7 @@ void CPixelFormatDescriptor::Dump( CDumpContext& dump_context ) const
 
 #endif // _DEBUG
 
-void CPixelFormatDescriptor::Empty( void )
+void CPixelFormatDescriptor::Empty( void ) noexcept
 {
    nSize           = sizeof( tagPIXELFORMATDESCRIPTOR );
    nVersion        = 0;
@@ -3232,7 +3232,7 @@ void CPixelFormatDescriptor::Empty( void )
    dwDamageMask    = 0;
 }
 
-_Check_return_ CPixelFormatDescriptor& CPixelFormatDescriptor::operator=( __in const CPixelFormatDescriptor& source )
+_Check_return_ CPixelFormatDescriptor& CPixelFormatDescriptor::operator=( __in CPixelFormatDescriptor const& source ) noexcept
 {
    Copy( source );
    return( *this );
