@@ -312,7 +312,7 @@ _Check_return_ bool CPhysicalDiskFile::m_SetSectorSize( void ) noexcept
    return( true );
 }
 
-_Check_return_ bool CPhysicalDiskFile::Open( _In_z_ LPCTSTR drive_letter, _In_ const UINT ) noexcept
+_Check_return_ bool CPhysicalDiskFile::Open( _In_z_ LPCTSTR drive_letter, _In_ UINT const) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 

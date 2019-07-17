@@ -60,14 +60,14 @@ CEventLogRecord::CEventLogRecord()
    Empty();
 }
 
-CEventLogRecord::CEventLogRecord( __in const CEventLogRecord& source )
+CEventLogRecord::CEventLogRecord( __in CEventLogRecord const& source )
 {
    WFC_VALIDATE_POINTER( this );
    Empty();
    Copy( source );
 }
 
-CEventLogRecord::CEventLogRecord( __in const EVENTLOGRECORD * source )
+CEventLogRecord::CEventLogRecord( __in EVENTLOGRECORD const * source )
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
@@ -81,7 +81,7 @@ CEventLogRecord::~CEventLogRecord()
    Empty();
 }
 
-__checkReturn int CEventLogRecord::Compare( __in const CEventLogRecord& source ) const noexcept
+_Check_return_ int CEventLogRecord::Compare( __in CEventLogRecord const& source ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -99,7 +99,7 @@ __checkReturn int CEventLogRecord::Compare( __in const CEventLogRecord& source )
    return( return_value );
 }
 
-void CEventLogRecord::Copy( __in const CEventLogRecord& source ) noexcept
+void CEventLogRecord::Copy( __in CEventLogRecord const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -307,14 +307,14 @@ void CEventLogRecord::Empty( void ) noexcept
    Strings.clear();
 }
 
-__checkReturn CEventLogRecord& CEventLogRecord::operator = ( __in const CEventLogRecord& source ) noexcept
+_Check_return_ CEventLogRecord& CEventLogRecord::operator = ( __in CEventLogRecord const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );
    return( *this );
 }
 
-__checkReturn bool CEventLogRecord::operator == ( __in const CEventLogRecord& right_record ) const noexcept
+_Check_return_ bool CEventLogRecord::operator == ( __in CEventLogRecord const& right_record ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 

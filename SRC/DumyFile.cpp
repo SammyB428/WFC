@@ -117,57 +117,57 @@ void CDummyFile::Flush( void ) noexcept
    WFC_VALIDATE_POINTER( this );
 }
 
-__checkReturn uint64_t CDummyFile::GetLength( void ) const noexcept
+_Check_return_ uint64_t CDummyFile::GetLength( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
    return( 0 );
 }
 
-__checkReturn uint64_t CDummyFile::GetPosition( void ) const noexcept
+_Check_return_ uint64_t CDummyFile::GetPosition( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
    ASSERT( FALSE ); // Unsupported function
    return( 0 );
 }
 
-__checkReturn bool CDummyFile::LockRange( __in uint64_t const /* position */, __in uint64_t const /* number_of_bytes_to_lock */ ) noexcept
+_Check_return_ bool CDummyFile::LockRange( __in uint64_t const /* position */, __in uint64_t const /* number_of_bytes_to_lock */ ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    ASSERT( FALSE ); // Unsupported function
    return( false );
 }
 
-__checkReturn DWORD CDummyFile::m_CreateCreationDistribution( void ) const noexcept
+_Check_return_ DWORD CDummyFile::m_CreateCreationDistribution( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
    return( OPEN_EXISTING );
 }
 
-__checkReturn DWORD CDummyFile::m_CreateDesiredAccess( void ) const noexcept
+_Check_return_ DWORD CDummyFile::m_CreateDesiredAccess( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
    return( GENERIC_READ | GENERIC_WRITE );
 }
 
-__checkReturn DWORD CDummyFile::m_CreateFlagsAndAttributes( void ) const noexcept
+_Check_return_ DWORD CDummyFile::m_CreateFlagsAndAttributes( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
    return( 0 );
 }
 
-__checkReturn LPSECURITY_ATTRIBUTES CDummyFile::m_CreateSecurityAttributes( void ) const noexcept
+_Check_return_ LPSECURITY_ATTRIBUTES CDummyFile::m_CreateSecurityAttributes( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
    return( nullptr );
 }
 
-__checkReturn DWORD CDummyFile::m_CreateShareMode( void ) const noexcept
+_Check_return_ DWORD CDummyFile::m_CreateShareMode( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
    return( 0 );
 }
 
-__checkReturn HANDLE CDummyFile::m_CreateTemplateHandle( void ) const noexcept
+_Check_return_ HANDLE CDummyFile::m_CreateTemplateHandle( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
    return( m_TemplateHandle );
@@ -187,7 +187,7 @@ void CDummyFile::Rename( __in_z LPCTSTR OldName, __in_z LPCTSTR NewName ) noexce
 
 #pragma warning( disable : 4100 )
 
-__checkReturn uint64_t CDummyFile::Seek( __in int64_t const /* Offset */, __in SeekPosition const /* From */ ) noexcept
+_Check_return_ uint64_t CDummyFile::Seek( __in int64_t const /* Offset */, __in SeekPosition const /* From */ ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    ASSERT( FALSE ); // Unsupported function
@@ -222,7 +222,7 @@ void CDummyFile::UnlockRange(_In_ uint64_t const /* position */, _In_ uint64_t c
 void CDummyFile::Write( _In_ std::string const& string_to_write ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
-   CFile64::Write( (const void *) string_to_write.c_str(), static_cast<UINT>(string_to_write.length()));
+   CFile64::Write( static_cast<void const *>(string_to_write.c_str()), static_cast<UINT>(string_to_write.length()));
 }
 
 void CDummyFile::Write(_In_ std::vector<uint8_t> const& data_to_write ) noexcept

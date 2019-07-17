@@ -48,17 +48,17 @@ class CTapeGetDriveParameters : public _TAPE_GET_DRIVE_PARAMETERS
    public:
 
       CTapeGetDriveParameters();
-      CTapeGetDriveParameters( __in const CTapeGetDriveParameters& source );
-      CTapeGetDriveParameters( __in const TAPE_GET_DRIVE_PARAMETERS * source );
+      CTapeGetDriveParameters( __in CTapeGetDriveParameters const& source );
+      CTapeGetDriveParameters( __in TAPE_GET_DRIVE_PARAMETERS const * source );
 
       virtual ~CTapeGetDriveParameters();
 
-      virtual void Copy( __in const CTapeGetDriveParameters& source ) noexcept;
-      virtual void Copy( __in const TAPE_GET_DRIVE_PARAMETERS * source ) noexcept;
+      virtual void Copy( __in CTapeGetDriveParameters const& source ) noexcept;
+      virtual void Copy( __in TAPE_GET_DRIVE_PARAMETERS const * source ) noexcept;
       virtual void Empty( void ) noexcept;
 
-      virtual CTapeGetDriveParameters& operator=( __in const CTapeGetDriveParameters&   source ) noexcept;
-      virtual CTapeGetDriveParameters& operator=( __in const TAPE_GET_DRIVE_PARAMETERS& source ) noexcept;
+      virtual CTapeGetDriveParameters& operator=( __in CTapeGetDriveParameters const&   source ) noexcept;
+      virtual CTapeGetDriveParameters& operator=( __in TAPE_GET_DRIVE_PARAMETERS const& source ) noexcept;
 
 #if defined( _DEBUG ) && ! defined( WFC_NO_DUMPING )
 
@@ -72,17 +72,17 @@ class CTapeGetMediaParameters : public _TAPE_GET_MEDIA_PARAMETERS
    public:
 
       CTapeGetMediaParameters();
-      CTapeGetMediaParameters( __in const CTapeGetMediaParameters& source );
-      CTapeGetMediaParameters( __in const TAPE_GET_MEDIA_PARAMETERS * source );
+      CTapeGetMediaParameters( __in CTapeGetMediaParameters const& source );
+      CTapeGetMediaParameters( __in TAPE_GET_MEDIA_PARAMETERS const * source );
 
       virtual ~CTapeGetMediaParameters();
 
-      virtual void Copy( __in const CTapeGetMediaParameters& source ) noexcept;
-      virtual void Copy( __in const TAPE_GET_MEDIA_PARAMETERS * source ) noexcept;
+      virtual void Copy( __in CTapeGetMediaParameters const& source ) noexcept;
+      virtual void Copy( __in TAPE_GET_MEDIA_PARAMETERS const * source ) noexcept;
       virtual void Empty( void ) noexcept;
 
-      virtual CTapeGetMediaParameters& operator = ( __in const CTapeGetMediaParameters&   source ) noexcept;
-      virtual CTapeGetMediaParameters& operator = ( __in const TAPE_GET_MEDIA_PARAMETERS& source ) noexcept;
+      virtual CTapeGetMediaParameters& operator = ( __in CTapeGetMediaParameters const&   source ) noexcept;
+      virtual CTapeGetMediaParameters& operator = ( __in TAPE_GET_MEDIA_PARAMETERS const& source ) noexcept;
 
 #if defined( _DEBUG ) && ! defined( WFC_NO_DUMPING )
 
@@ -96,17 +96,17 @@ class CTapeSetDriveParameters : public _TAPE_SET_DRIVE_PARAMETERS
    public:
 
       CTapeSetDriveParameters();
-      CTapeSetDriveParameters( __in const CTapeSetDriveParameters& source );
-      CTapeSetDriveParameters( __in const TAPE_SET_DRIVE_PARAMETERS * source );
+      CTapeSetDriveParameters( __in CTapeSetDriveParameters const& source );
+      CTapeSetDriveParameters( __in TAPE_SET_DRIVE_PARAMETERS const * source );
 
       virtual ~CTapeSetDriveParameters();
 
-      virtual void Copy( __in const CTapeSetDriveParameters& source ) noexcept;
-      virtual void Copy( __in const TAPE_SET_DRIVE_PARAMETERS * source ) noexcept;
+      virtual void Copy( __in CTapeSetDriveParameters const& source ) noexcept;
+      virtual void Copy( __in TAPE_SET_DRIVE_PARAMETERS const * source ) noexcept;
       virtual void Empty( void ) noexcept;
 
-      virtual CTapeSetDriveParameters& operator=( __in const CTapeSetDriveParameters&   source ) noexcept;
-      virtual CTapeSetDriveParameters& operator=( __in const TAPE_SET_DRIVE_PARAMETERS& source ) noexcept;
+      virtual CTapeSetDriveParameters& operator=( __in CTapeSetDriveParameters const&   source ) noexcept;
+      virtual CTapeSetDriveParameters& operator=( __in TAPE_SET_DRIVE_PARAMETERS const& source ) noexcept;
 
 #if defined( _DEBUG ) && ! defined( WFC_NO_DUMPING )
 
@@ -120,17 +120,17 @@ class CTapeSetMediaParameters : public _TAPE_SET_MEDIA_PARAMETERS
    public:
 
       CTapeSetMediaParameters();
-      CTapeSetMediaParameters( __in const CTapeSetMediaParameters& source );
-      CTapeSetMediaParameters( __in const TAPE_SET_MEDIA_PARAMETERS * source );
+      CTapeSetMediaParameters( __in CTapeSetMediaParameters const& source );
+      CTapeSetMediaParameters( __in TAPE_SET_MEDIA_PARAMETERS const * source );
 
       virtual ~CTapeSetMediaParameters();
 
-      virtual void Copy( __in const CTapeSetMediaParameters& source ) noexcept;
-      virtual void Copy( __in const TAPE_SET_MEDIA_PARAMETERS * source ) noexcept;
+      virtual void Copy( __in CTapeSetMediaParameters const& source ) noexcept;
+      virtual void Copy( __in TAPE_SET_MEDIA_PARAMETERS const * source ) noexcept;
       virtual void Empty( void ) noexcept;
 
-      virtual CTapeSetMediaParameters& operator=( __in const CTapeSetMediaParameters&   source ) noexcept;
-      virtual CTapeSetMediaParameters& operator=( __in const TAPE_SET_MEDIA_PARAMETERS& source ) noexcept;
+      virtual CTapeSetMediaParameters& operator=( __in CTapeSetMediaParameters const&   source ) noexcept;
+      virtual CTapeSetMediaParameters& operator=( __in TAPE_SET_MEDIA_PARAMETERS const& source ) noexcept;
 
 #if defined( _DEBUG ) && ! defined( WFC_NO_DUMPING )
 
@@ -147,36 +147,36 @@ class CTape : public CDummyFile
 
    protected:
 
-      LPVOID m_BackupReadContextPointer;
-      LPVOID m_BackupWriteContextPointer;
+       LPVOID m_BackupReadContextPointer{ nullptr };
+       LPVOID m_BackupWriteContextPointer{ nullptr };
 
-      BOOL m_AutomaticallyClose;
+       BOOL m_AutomaticallyClose{ FALSE };
 
-      DWORD m_TapeDriveNumberStartingAtZero;
+       DWORD m_TapeDriveNumberStartingAtZero{ 0 };
 
    public:
 
-       CTape(__in const CTape&) = delete;
-       CTape& operator=(__in const CTape&) = delete;
+       CTape(__in CTape const&) = delete;
+       CTape& operator=(__in CTape const&) = delete;
  
        CTape();
 
       virtual ~CTape();
 
-      enum TypeOfPartition
+      enum class TypeOfPartition : uint32_t
       {
          Fixed     = TAPE_FIXED_PARTITIONS,
          Initiator = TAPE_INITIATOR_PARTITIONS,
          Select    = TAPE_SELECT_PARTITIONS 
       };
 
-      enum TypeOfErasure
+      enum class TypeOfErasure : uint32_t
       {
          Long  = TAPE_ERASE_LONG,
          Short = TAPE_ERASE_SHORT
       };
 
-      enum TypeOfMark
+      enum class TypeOfMark : uint32_t
       {
          File      = TAPE_FILEMARKS,
          LongFile  = TAPE_LONG_FILEMARKS,
@@ -184,13 +184,13 @@ class CTape : public CDummyFile
          ShortFile = TAPE_SHORT_FILEMARKS
       };
 
-      enum Position
+      enum class Position : uint32_t
       {
          Absolute = TAPE_ABSOLUTE_POSITION,
          Logical  = TAPE_LOGICAL_POSITION
       };
 
-      enum PositionMethod
+      enum class PositionMethod : uint32_t
       {
          AbsoluteBlock       = TAPE_ABSOLUTE_BLOCK,
          LogicalBlock        = TAPE_LOGICAL_BLOCK,
@@ -203,7 +203,7 @@ class CTape : public CDummyFile
          SetMarks            = TAPE_SPACE_SETMARKS
       };
 
-      enum Operation
+      enum class Operation : uint32_t
       {
          FormatTape  = TAPE_FORMAT,
          LoadTape    = TAPE_LOAD,
@@ -217,18 +217,18 @@ class CTape : public CDummyFile
       ** The Win32 API
       */
 
-      virtual __checkReturn BOOL BackupRead( __out_bcount( number_of_bytes_to_read ) LPBYTE      buffer,
+      virtual _Check_return_ BOOL BackupRead( __out_bcount( number_of_bytes_to_read ) LPBYTE      buffer,
                                __in DWORD const number_of_bytes_to_read,
                                __out LPDWORD     number_of_bytes_read,
                                __in BOOL        abort = FALSE,
                                __in BOOL        restore_security_data = TRUE ) noexcept; // BackupRead
 
-      virtual __checkReturn BOOL BackupSeek( __in DWORD const seek_low,
+      virtual _Check_return_ BOOL BackupSeek( __in DWORD const seek_low,
                                __in DWORD const seek_high,
                                __out LPDWORD seeked_low,
                                __out LPDWORD seeked_high ) noexcept; // BackupSeek
 
-      virtual __checkReturn BOOL BackupWrite( __in_bcount( number_of_bytes_to_write ) LPBYTE buffer,
+      virtual _Check_return_ BOOL BackupWrite( __in_bcount( number_of_bytes_to_write ) LPBYTE buffer,
                                 __in DWORD const number_of_bytes_to_write,
                                 __out LPDWORD     number_of_bytes_written,
                                 __in BOOL        abort = FALSE,
@@ -248,24 +248,24 @@ class CTape : public CDummyFile
                                 __out DWORD& position_low,
                                 __out DWORD& position_high ) noexcept; // GetTapePosition
 
-      virtual __checkReturn DWORD GetStatus( void ) const noexcept; // GetTapeStatus
-      virtual __checkReturn DWORD GetDriveNumber( void ) const noexcept;
+      virtual _Check_return_ DWORD GetStatus( void ) const noexcept; // GetTapeStatus
+      virtual _Check_return_ DWORD GetDriveNumber( void ) const noexcept;
 
-      virtual __checkReturn BOOL Prepare( __in Operation const what_to_do, __in BOOL const return_immediately = FALSE ) noexcept; // PrepareTape
+      virtual _Check_return_ BOOL Prepare( __in Operation const what_to_do, __in BOOL const return_immediately = FALSE ) noexcept; // PrepareTape
 
-      virtual __checkReturn BOOL Rewind( void ) noexcept;
+      virtual _Check_return_ BOOL Rewind( void ) noexcept;
 
-      virtual __checkReturn BOOL SetAutomaticallyClose( __in BOOL auto_close ) noexcept; // returns previous setting
-      virtual __checkReturn BOOL SetParameters( __in CTapeSetDriveParameters const& parameters ) noexcept; // SetTapeParameters
-      virtual __checkReturn BOOL SetParameters( __in CTapeSetMediaParameters const& parameters ) noexcept;
+      virtual _Check_return_ BOOL SetAutomaticallyClose( __in BOOL auto_close ) noexcept; // returns previous setting
+      virtual _Check_return_ BOOL SetParameters( __in CTapeSetDriveParameters const& parameters ) noexcept; // SetTapeParameters
+      virtual _Check_return_ BOOL SetParameters( __in CTapeSetMediaParameters const& parameters ) noexcept;
 
-      virtual __checkReturn BOOL SetPosition( __in PositionMethod const how_to_get_there,
+      virtual _Check_return_ BOOL SetPosition( __in PositionMethod const how_to_get_there,
                                 __in DWORD const         partition_number,
                                 __in DWORD const         position_low,
                                 __in DWORD const         position_high,
                                 __in BOOL const          return_immediately = FALSE ) noexcept; // SetTapePosition
 
-      virtual __checkReturn BOOL Mark( __in TypeOfMark const type_of_mark,
+      virtual _Check_return_ BOOL Mark( __in TypeOfMark const type_of_mark,
                          __in DWORD const     number_of_marks_to_write,
                          __in BOOL const      return_immediately = FALSE ) noexcept; // WriteTapemark
 
@@ -273,11 +273,11 @@ class CTape : public CDummyFile
       ** API's to make life easier
       */
 
-      virtual __checkReturn BOOL Open( __in UINT const tape_drive_number_starting_at_zero = 0 ) noexcept;
-      virtual __checkReturn BOOL Load( void ) noexcept;
-      virtual __checkReturn BOOL Lock( void ) noexcept;
-      virtual __checkReturn BOOL Unload( void ) noexcept;
-      virtual __checkReturn BOOL Unlock( void ) noexcept;
+      virtual _Check_return_ bool Open( __in UINT const tape_drive_number_starting_at_zero = 0 ) noexcept;
+      virtual _Check_return_ BOOL Load( void ) noexcept;
+      virtual _Check_return_ BOOL Lock( void ) noexcept;
+      virtual _Check_return_ BOOL Unload( void ) noexcept;
+      virtual _Check_return_ BOOL Unlock( void ) noexcept;
       virtual void Close( void ) noexcept; // Calls Prepare( TAPE_UNLOAD )
 };
 

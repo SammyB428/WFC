@@ -71,7 +71,7 @@ CDataArchive::~CDataArchive()
     m_Position = 0;
 }
 
-__checkReturn bool CDataArchive::IsLoading(void) const noexcept
+_Check_return_ bool CDataArchive::IsLoading(void) const noexcept
 {
     WFC_VALIDATE_POINTER(this);
 
@@ -83,7 +83,7 @@ __checkReturn bool CDataArchive::IsLoading(void) const noexcept
     return(false);
 }
 
-__checkReturn bool CDataArchive::IsStoring(void) const noexcept
+_Check_return_ bool CDataArchive::IsStoring(void) const noexcept
 {
     WFC_VALIDATE_POINTER(this);
 
@@ -592,7 +592,7 @@ void CDataArchive::Write( __in uint8_t const value) noexcept
         WFC_END_CATCH_ALL
 }
 
-void CDataArchive::Write(__in const char value) noexcept
+void CDataArchive::Write(__in char const value) noexcept
 {
     WFC_VALIDATE_POINTER(this);
 
@@ -808,7 +808,7 @@ void CDataArchive::Write(__in wchar_t const value) noexcept
         WFC_END_CATCH_ALL
 }
 
-void CDataArchive::Write(__in const float value) noexcept
+void CDataArchive::Write(__in float const value) noexcept
 {
     WFC_VALIDATE_POINTER(this);
 

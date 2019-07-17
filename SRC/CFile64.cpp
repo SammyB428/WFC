@@ -65,7 +65,7 @@ static inline _Check_return_ constexpr bool __is_wide_directory_separation_chara
     return( character_to_test == L'\\' || character_to_test == L'/' );
 }
 
-static inline _Check_return_ UINT __GetFileName( _In_z_ LPCTSTR path_name_parameter, __out_ecount_opt( maximum_number_of_characters ) LPTSTR title_parameter, _In_ const UINT maximum_number_of_characters ) noexcept
+static inline _Check_return_ UINT __GetFileName( _In_z_ LPCTSTR path_name_parameter, __out_ecount_opt( maximum_number_of_characters ) LPTSTR title_parameter, _In_ UINT const maximum_number_of_characters ) noexcept
 {
     WFC_VALIDATE_POINTER( path_name_parameter );
     WFC_VALIDATE_POINTER_NULL_OK( title_parameter );
@@ -215,7 +215,7 @@ static inline _Check_return_ bool __FullPath( _Out_ wchar_t * lpszPathOut, _In_z
     {
         WIN32_FIND_DATA data;
 
-        const HANDLE h = FindFirstFile( lpszFileIn, &data );
+        auto const h = FindFirstFile( lpszFileIn, &data );
 
         if ( h != static_cast< HANDLE >( INVALID_HANDLE_VALUE ) )
         {
@@ -227,7 +227,7 @@ static inline _Check_return_ bool __FullPath( _Out_ wchar_t * lpszPathOut, _In_z
     return( true );
 }
 
-static inline _Check_return_ std::size_t __GetFileTitle( _In_z_ wchar_t const * path_name, __out_ecount_opt( nMax ) wchar_t * title, _In_ const UINT nMax) noexcept
+static inline _Check_return_ std::size_t __GetFileTitle( _In_z_ wchar_t const * path_name, __out_ecount_opt( nMax ) wchar_t * title, _In_ UINT const nMax) noexcept
 {
     WFC_VALIDATE_POINTER( path_name );
     WFC_VALIDATE_POINTER_NULL_OK( title );
@@ -1053,7 +1053,7 @@ _Check_return_ BOOL PASCAL CFile64::GetStatus( _In_z_ LPCTSTR filename, __out CF
 
     WIN32_FIND_DATA find_data;
 
-    const HANDLE find_handle = ::FindFirstFile( (LPTSTR) filename, &find_data );
+    auto const find_handle = ::FindFirstFile( (LPTSTR) filename, &find_data );
 
     if ( find_handle == static_cast< HANDLE >( INVALID_HANDLE_VALUE ) )
     {

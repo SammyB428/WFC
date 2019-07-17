@@ -58,7 +58,7 @@ CMixerSpeakers::CMixerSpeakers()
    WFC_VALIDATE_POINTER( this );
 }
 
-CMixerSpeakers::CMixerSpeakers( __in const CMixerSpeakers& source )
+CMixerSpeakers::CMixerSpeakers( __in CMixerSpeakers const& source )
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );
@@ -71,7 +71,7 @@ CMixerSpeakers::~CMixerSpeakers()
 
 // Methods
 
-void CMixerSpeakers::Copy( __in const CMixerSpeakers& source ) noexcept
+void CMixerSpeakers::Copy( __in CMixerSpeakers const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -157,7 +157,7 @@ _Check_return_ bool CMixerSpeakers::IsMuted( void ) noexcept
    return( false );
 }
 
-_Check_return_ bool CMixerSpeakers::Mute( __in const bool mute_on ) noexcept
+_Check_return_ bool CMixerSpeakers::Mute( __in bool const mute_on ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 

@@ -143,11 +143,11 @@ void CWfcTrace::Output( _In_z_ LPCTSTR message ) const noexcept
    }
 }
 
-void CWfcTrace::Output( __in_z LPCTSTR message, __in const int integer ) const noexcept
+void CWfcTrace::Output( __in_z LPCTSTR message, __in int const integer ) const noexcept
 {
    if ( ( Levels & m_TracingLevel ) && Tracing != FALSE )
    {
-      TCHAR temp_string[ 11 ];
+       TCHAR temp_string[11]{ 0 };
 
       ::ZeroMemory( temp_string, sizeof( temp_string ) );
       _itot_s( integer, temp_string, std::size( temp_string ), 10 );
@@ -160,7 +160,7 @@ void CWfcTrace::Output( __in_z LPCTSTR message, __in const int integer ) const n
    }
 }
 
-void CWfcTrace::Output( __in_z LPCTSTR message, __in const UINT integer ) const noexcept
+void CWfcTrace::Output( __in_z LPCTSTR message, __in UINT const integer ) const noexcept
 {
    if ( ( Levels & m_TracingLevel ) && Tracing != FALSE )
    {
@@ -168,7 +168,7 @@ void CWfcTrace::Output( __in_z LPCTSTR message, __in const UINT integer ) const 
    }
 }
 
-void CWfcTrace::Output( __in_z LPCTSTR message, __in const long a_long ) const noexcept
+void CWfcTrace::Output( __in_z LPCTSTR message, __in long const a_long ) const noexcept
 {
    if ( ( Levels & m_TracingLevel ) && Tracing != FALSE )
    {
@@ -185,7 +185,7 @@ void CWfcTrace::Output( __in_z LPCTSTR message, __in const long a_long ) const n
    }
 }
 
-void CWfcTrace::Output( __in_z LPCTSTR message, __in const ULONG a_long ) const noexcept
+void CWfcTrace::Output( __in_z LPCTSTR message, __in ULONG const a_long ) const noexcept
 {
    if ( ( Levels & m_TracingLevel ) && Tracing != FALSE )
    {
@@ -202,7 +202,7 @@ void CWfcTrace::Output( __in_z LPCTSTR message, __in const ULONG a_long ) const 
    }
 }
 
-void CWfcTrace::Output( __in_z LPCTSTR message, __in const LONGLONG a_long ) const noexcept
+void CWfcTrace::Output( __in_z LPCTSTR message, __in LONGLONG const a_long ) const noexcept
 {
    if ( ( Levels & m_TracingLevel ) && Tracing != FALSE )
    {
@@ -219,7 +219,7 @@ void CWfcTrace::Output( __in_z LPCTSTR message, __in const LONGLONG a_long ) con
    }
 }
 
-void CWfcTrace::Output( __in_z LPCTSTR message, __in const ULONGLONG a_long ) const noexcept
+void CWfcTrace::Output( __in_z LPCTSTR message, __in ULONGLONG const a_long ) const noexcept
 {
    if ( ( Levels & m_TracingLevel ) && Tracing != FALSE )
    {
@@ -236,7 +236,7 @@ void CWfcTrace::Output( __in_z LPCTSTR message, __in const ULONGLONG a_long ) co
    }
 }
 
-void CWfcTrace::Output( __in_z LPCTSTR message, __in const double a_double ) const noexcept
+void CWfcTrace::Output( __in_z LPCTSTR message, __in double const a_double ) const noexcept
 {
    if ( ( Levels & m_TracingLevel ) && Tracing != FALSE )
    {
@@ -332,7 +332,7 @@ void CWfcTrace::Output( __in_z LPCTSTR message, __in std::wstring const& string 
    }
 }
 
-void CWfcTrace::Output( __in_z LPCTSTR message, __in const VOID * pointer ) const noexcept
+void CWfcTrace::Output( __in_z LPCTSTR message, __in VOID const * pointer ) const noexcept
 {
    if ( ( Levels & m_TracingLevel ) && Tracing != FALSE )
    {
@@ -344,7 +344,7 @@ void CWfcTrace::Output( __in_z LPCTSTR message, __in const VOID * pointer ) cons
    }
 }
 
-void CWfcTrace::Output( __in_z LPCTSTR message, __in const LARGE_INTEGER& value ) const noexcept
+void CWfcTrace::Output( __in_z LPCTSTR message, __in LARGE_INTEGER const& value ) const noexcept
 {
    if ( ( Levels & m_TracingLevel ) && Tracing != FALSE )
    {
@@ -357,7 +357,7 @@ void CWfcTrace::Output( __in_z LPCTSTR message, __in const LARGE_INTEGER& value 
    }
 }
 
-void CWfcTrace::Output( __in_z LPCTSTR message, __in const ULARGE_INTEGER& value ) const noexcept
+void CWfcTrace::Output( __in_z LPCTSTR message, __in ULARGE_INTEGER const& value ) const noexcept
 {
    if ( ( Levels & m_TracingLevel ) && Tracing != FALSE )
    {
@@ -370,7 +370,7 @@ void CWfcTrace::Output( __in_z LPCTSTR message, __in const ULARGE_INTEGER& value
    }
 }
 
-void CWfcTrace::Output( __in_z LPCTSTR message, __in const RECT& value ) const noexcept
+void CWfcTrace::Output( __in_z LPCTSTR message, __in RECT const& value ) const noexcept
 {
    if ( ( Levels & m_TracingLevel ) && Tracing != FALSE )
    {
@@ -383,7 +383,7 @@ void CWfcTrace::Output( __in_z LPCTSTR message, __in const RECT& value ) const n
    }
 }
 
-void CWfcTrace::Output( __in_z LPCTSTR message, __in const POINT& value ) const noexcept
+void CWfcTrace::Output( __in_z LPCTSTR message, __in POINT const& value ) const noexcept
 {
    if ( ( Levels & m_TracingLevel ) && Tracing != FALSE )
    {
@@ -396,7 +396,7 @@ void CWfcTrace::Output( __in_z LPCTSTR message, __in const POINT& value ) const 
    }
 }
 
-void CWfcTrace::Output( __in_z LPCTSTR message, __in const SIZE& value ) const noexcept
+void CWfcTrace::Output( __in_z LPCTSTR message, __in SIZE const& value ) const noexcept
 {
    if ( ( Levels & m_TracingLevel ) && Tracing != FALSE )
    {
@@ -409,7 +409,7 @@ void CWfcTrace::Output( __in_z LPCTSTR message, __in const SIZE& value ) const n
    }
 }
 
-void CWfcTrace::Output( __in_z LPCTSTR message, __in const GUID& value ) const  noexcept // New for Release 52
+void CWfcTrace::Output( __in_z LPCTSTR message, __in GUID const& value ) const  noexcept // New for Release 52
 {
    if ( ( Levels & m_TracingLevel ) && Tracing != FALSE )
    {
@@ -432,7 +432,7 @@ void CWfcTrace::Output( __in_z LPCTSTR message, __in const GUID& value ) const  
    }
 }
 
-void CWfcTrace::Output( __in_z LPCTSTR message, __in const FILETIME& value ) const  noexcept // New for Release 52
+void CWfcTrace::Output( __in_z LPCTSTR message, __in FILETIME const& value ) const noexcept // New for Release 52
 {
    if ( ( Levels & m_TracingLevel ) && Tracing != FALSE )
    {
@@ -467,7 +467,7 @@ void CWfcTrace::Output( __in_z LPCTSTR message, __in const FILETIME& value ) con
    }
 }
 
-void CWfcTrace::Output( __in_z LPCTSTR message, __in const SYSTEMTIME& value ) const noexcept // New for Release 52
+void CWfcTrace::Output( __in_z LPCTSTR message, __in SYSTEMTIME const& value ) const noexcept // New for Release 52
 {
    if ( ( Levels & m_TracingLevel ) && Tracing != FALSE )
    {
@@ -487,7 +487,7 @@ void CWfcTrace::Output( __in_z LPCTSTR message, __in const SYSTEMTIME& value ) c
    }
 }
 
-void CWfcTrace::OutputBinary( __in_z LPCTSTR message, __in const ULONG a_long ) const noexcept
+void CWfcTrace::OutputBinary( __in_z LPCTSTR message, __in ULONG const a_long ) const noexcept
 {
    if ( ( Levels & m_TracingLevel ) && Tracing != FALSE )
    {
@@ -497,7 +497,7 @@ void CWfcTrace::OutputBinary( __in_z LPCTSTR message, __in const ULONG a_long ) 
 
       while( index >= 0 )
       {
-         if ( _bittest( (const LONG *) &a_long, index ) == 1 )
+         if ( _bittest( reinterpret_cast<LONG const *>(&a_long), index ) == 1 )
          {
             bit_string.push_back( '1' );
          }
@@ -520,7 +520,7 @@ void CWfcTrace::OutputBinary( __in_z LPCTSTR message, __in const ULONG a_long ) 
    }
 }
 
-void CWfcTrace::OutputVariant( __in_z LPCTSTR message, __in const VARIANT& value ) const noexcept
+void CWfcTrace::OutputVariant( __in_z LPCTSTR message, __in VARIANT const& value ) const noexcept
 {
    if ( ( Levels & m_TracingLevel ) && Tracing != FALSE )
    {
@@ -528,7 +528,7 @@ void CWfcTrace::OutputVariant( __in_z LPCTSTR message, __in const VARIANT& value
    }
 }
 
-void CWfcTrace::OutputVariant( __in_z LPCTSTR message, __in const VARIANT* value ) const noexcept
+void CWfcTrace::OutputVariant( __in_z LPCTSTR message, __in VARIANT const * value ) const noexcept
 {
    if ( ( Levels & m_TracingLevel ) && Tracing != FALSE )
    {
@@ -1200,7 +1200,7 @@ void Output( LPCTSTR message, const LONGLONG a_long ) const
 void Output( LPCTSTR message, const ULONGLONG a_long ) const
 void Output( LPCTSTR message, const double a_double ) const
 void Output( LPCTSTR message, LPCTSTR string ) const
-void Output( LPCTSTR message, const CObject * object ) const
+void Output( LPCTSTR message, CObject const * object ) const
 void Output( LPCTSTR message, const VOID * pointer ) const
 void Output( LPCTSTR message, const CObject&amp; object ) const
 void Output( LPCTSTR message, const LARGE_INTEGER&amp; value ) const

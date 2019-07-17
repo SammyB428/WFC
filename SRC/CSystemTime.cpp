@@ -61,7 +61,7 @@ static char THIS_FILE[] = __FILE__;
 // were dropped from September 1752. What are they teaching in schools
 // these days?? This method uses Zeller's Conguruence.
 
-static inline __checkReturn uint16_t __get_day_of_week( __in int year, __in int month, __in int const day )
+static inline _Check_return_ uint16_t __get_day_of_week( __in int year, __in int month, __in int const day )
 {
    if ( month <= 2 )
    {
@@ -106,7 +106,7 @@ static inline __checkReturn uint16_t __get_day_of_week( __in int year, __in int 
 
 #if ! defined( WFC_STL )
 
-CSystemTime::CSystemTime( __in const COleDateTime& source )
+CSystemTime::CSystemTime( __in COleDateTime const& source )
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );
@@ -114,7 +114,7 @@ CSystemTime::CSystemTime( __in const COleDateTime& source )
 
 #endif // WFC_STL
 
-__checkReturn LONG CSystemTime::Compare( __in const CSystemTime& source ) const noexcept
+_Check_return_ LONG CSystemTime::Compare( __in CSystemTime const& source ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -191,7 +191,7 @@ __checkReturn LONG CSystemTime::Compare( __in const CSystemTime& source ) const 
    return( I_AM_EQUAL_TO_THAT );
 }
 
-void CSystemTime::Copy( __in const FILETIME * source ) noexcept
+void CSystemTime::Copy( __in FILETIME const * source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
@@ -224,7 +224,7 @@ void CSystemTime::Copy( __in const FILETIME * source ) noexcept
    WFC_END_CATCH_ALL
 }
 
-void CSystemTime::Copy( __in const Win32FoundationClasses::CFileTime& source ) noexcept
+void CSystemTime::Copy( __in Win32FoundationClasses::CFileTime const& source ) noexcept
 {
    FILETIME ft;
 
@@ -244,7 +244,7 @@ void CSystemTime::Copy( __in const Win32FoundationClasses::CFileTime& source ) n
    }
 }
 
-void CSystemTime::Copy( __in const CTime& source ) noexcept
+void CSystemTime::Copy( __in CTime const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -262,7 +262,7 @@ void CSystemTime::Copy( __in const CTime& source ) noexcept
 
 #if ! defined( WFC_STL )
 
-void CSystemTime::Copy( __in const COleDateTime& source )
+void CSystemTime::Copy( __in COleDateTime const& source )
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -286,7 +286,7 @@ void CSystemTime::Copy( __in const COleDateTime& source )
 
 #endif // WFC_STL
 
-void CSystemTime::Copy( __in const TIME_OF_DAY_INFO * source ) noexcept
+void CSystemTime::Copy( __in TIME_OF_DAY_INFO const * source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
@@ -318,7 +318,7 @@ void CSystemTime::Copy( __in const TIME_OF_DAY_INFO * source ) noexcept
    WFC_END_CATCH_ALL
 }
 
-void CSystemTime::Copy( __in const TIME_OF_DAY_INFO& source ) noexcept
+void CSystemTime::Copy( __in TIME_OF_DAY_INFO const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -333,7 +333,7 @@ void CSystemTime::Copy( __in const TIME_OF_DAY_INFO& source ) noexcept
    wDayOfWeek = __get_day_of_week( wYear, wMonth, wDay );
 }
 
-void CSystemTime::Copy( __in const TIMESTAMP_STRUCT * source ) noexcept
+void CSystemTime::Copy( __in TIMESTAMP_STRUCT const * source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
@@ -365,7 +365,7 @@ void CSystemTime::Copy( __in const TIMESTAMP_STRUCT * source ) noexcept
    WFC_END_CATCH_ALL
 }
 
-void CSystemTime::Copy( __in const TIMESTAMP_STRUCT& source ) noexcept
+void CSystemTime::Copy( __in TIMESTAMP_STRUCT const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -494,7 +494,7 @@ void CSystemTime::CopyTo( __out SYSTEMTIME& destination ) const noexcept
    destination.wMilliseconds = wMilliseconds;
 }
 
-__checkReturn uint32_t CSystemTime::NumberOfMinutesSinceMonday( void ) const noexcept
+_Check_return_ uint32_t CSystemTime::NumberOfMinutesSinceMonday( void ) const noexcept
 {
    CTimeEx now( wYear, wMonth, wDay, wHour, wMinute, wSecond );
 
@@ -512,7 +512,7 @@ __checkReturn uint32_t CSystemTime::NumberOfMinutesSinceMonday( void ) const noe
    return( return_value );
 }
 
-__checkReturn BOOL CSystemTime::Set( void ) const noexcept
+_Check_return_ BOOL CSystemTime::Set( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -578,14 +578,14 @@ __checkReturn BOOL CSystemTime::Set( void ) const noexcept
 ** Operators
 */
 
-__checkReturn CSystemTime& CSystemTime::operator = ( __in const Win32FoundationClasses::CFileTime& source ) noexcept
+_Check_return_ CSystemTime& CSystemTime::operator = ( __in Win32FoundationClasses::CFileTime const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );
    return( *this );
 }
 
-__checkReturn CSystemTime& CSystemTime::operator = ( __in const CTime& source ) noexcept
+_Check_return_ CSystemTime& CSystemTime::operator = ( __in CTime const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );
@@ -594,7 +594,7 @@ __checkReturn CSystemTime& CSystemTime::operator = ( __in const CTime& source ) 
 
 #if ! defined( WFC_STL )
 
-__checkReturn CSystemTime& CSystemTime::operator = ( __in const COleDateTime& source )
+_Check_return_ CSystemTime& CSystemTime::operator = ( __in COleDateTime const& source )
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );
@@ -603,7 +603,7 @@ __checkReturn CSystemTime& CSystemTime::operator = ( __in const COleDateTime& so
 
 #endif // WFC_STL
 
-__checkReturn bool CSystemTime::operator == ( __in const CSystemTime& source ) const noexcept
+_Check_return_ bool CSystemTime::operator == ( __in CSystemTime const& source ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -615,7 +615,7 @@ __checkReturn bool CSystemTime::operator == ( __in const CSystemTime& source ) c
    return( FALSE );
 }
 
-__checkReturn bool CSystemTime::operator != ( __in const CSystemTime& source ) const noexcept
+_Check_return_ bool CSystemTime::operator != ( __in CSystemTime const& source ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -627,7 +627,7 @@ __checkReturn bool CSystemTime::operator != ( __in const CSystemTime& source ) c
    return( FALSE );
 }
 
-__checkReturn bool CSystemTime::operator > ( __in const CSystemTime& source ) const noexcept
+_Check_return_ bool CSystemTime::operator > ( __in CSystemTime const& source ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -641,7 +641,7 @@ __checkReturn bool CSystemTime::operator > ( __in const CSystemTime& source ) co
    }
 }
 
-__checkReturn bool CSystemTime::operator < ( __in const CSystemTime& source ) const noexcept
+_Check_return_ bool CSystemTime::operator < ( __in CSystemTime const& source ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -716,7 +716,7 @@ void CSystemTime::Dump( CDumpContext& dump_context ) const
 
 #endif // _DEBUG
 
-__checkReturn FILETIME CSystemTime::AsFiletime() const noexcept
+_Check_return_ FILETIME CSystemTime::AsFiletime() const noexcept
 {
     FILETIME return_value = { 0, 0 };
 

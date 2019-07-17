@@ -60,61 +60,61 @@ class CSystemTime : public _SYSTEMTIME
          Empty();
       }
 
-      inline CSystemTime( __in const CSystemTime& source )
+      inline CSystemTime( __in CSystemTime const& source )
       {
          Copy( source );
       }
 
-      inline CSystemTime( __in const CFileTime& source )
+      inline CSystemTime( __in CFileTime const& source )
       {
          Copy( source );
       }
 
-      inline CSystemTime( __in const CTime& source )
+      inline CSystemTime( __in CTime const& source )
       {
          Copy( source );
       }
 
 #if ! defined( WFC_STL )
-      CSystemTime( const COleDateTime& source );
+      CSystemTime( _In_ COleDateTime const& source );
 #endif // WFC_STL
 
-      inline CSystemTime( __in const SYSTEMTIME * source )
+      inline CSystemTime( __in SYSTEMTIME const * source )
       {
          Copy( source );
       }
 
-      inline CSystemTime( __in const SYSTEMTIME& source )
+      inline CSystemTime( __in SYSTEMTIME const& source )
       {
          Copy( source );
       }
 
-      inline CSystemTime( __in const FILETIME * source )
+      inline CSystemTime( __in FILETIME const * source )
       {
          Copy( source );
       }
 
-      inline CSystemTime( __in const FILETIME& source )
+      inline CSystemTime( __in FILETIME const& source )
       {
          Copy( source );
       }
 
-      inline CSystemTime( __in const TIME_OF_DAY_INFO * source )
+      inline CSystemTime( __in TIME_OF_DAY_INFO const * source )
       {
          Copy( source );
       }
 
-      inline CSystemTime( __in const TIME_OF_DAY_INFO& source )
+      inline CSystemTime( __in TIME_OF_DAY_INFO const& source )
       {
          Copy( source );
       }
 
-      inline CSystemTime( __in const TIMESTAMP_STRUCT * source ) // from sqltypes.h
+      inline CSystemTime( __in TIMESTAMP_STRUCT const * source ) // from sqltypes.h
       {
          Copy( source );
       }
 
-      inline CSystemTime( __in const TIMESTAMP_STRUCT& source ) // from sqltypes.h
+      inline CSystemTime( __in TIMESTAMP_STRUCT const& source ) // from sqltypes.h
       {
          Copy( source );
       }
@@ -129,7 +129,7 @@ class CSystemTime : public _SYSTEMTIME
       ** because Microsoft #define's it in winbase.h and it royally screws me.
       */
 
-      inline static __checkReturn CSystemTime GetCurrentUTCTime( void ) noexcept
+      inline static _Check_return_ CSystemTime GetCurrentUTCTime( void ) noexcept
       {
          SYSTEMTIME system_time;
 
@@ -138,7 +138,7 @@ class CSystemTime : public _SYSTEMTIME
          return( CSystemTime( &system_time ) );
       }
 
-      inline static __checkReturn CSystemTime GetCurrentLocalTime( void ) noexcept
+      inline static _Check_return_ CSystemTime GetCurrentLocalTime( void ) noexcept
       {
          SYSTEMTIME system_time;
 
@@ -147,15 +147,15 @@ class CSystemTime : public _SYSTEMTIME
          return( CSystemTime( &system_time ) );
       }
 
-      inline static __checkReturn uint32_t GetMinutesSinceMondayUTC( void ) noexcept
+      inline static _Check_return_ uint32_t GetMinutesSinceMondayUTC( void ) noexcept
       {
          SYSTEMTIME system_time;
 
          ::GetSystemTime( &system_time );
 
-         const CTimeEx now( system_time.wYear, system_time.wMonth, system_time.wDay, system_time.wHour, system_time.wMinute, system_time.wSecond );
+         CTimeEx const now( system_time.wYear, system_time.wMonth, system_time.wDay, system_time.wHour, system_time.wMinute, system_time.wSecond );
 
-         int day_of_week = now.GetDayOfWeek(); // 1 == Sunday, 2  == Monday
+         int const day_of_week = now.GetDayOfWeek(); // 1 == Sunday, 2  == Monday
 
          int days_from_monday = day_of_week - 2;
 
@@ -169,7 +169,7 @@ class CSystemTime : public _SYSTEMTIME
          return( return_value );
       }
 
-      inline static __checkReturn uint32_t GetMinutesSinceMondayLocal( void ) noexcept
+      inline static _Check_return_ uint32_t GetMinutesSinceMondayLocal( void ) noexcept
       {
          SYSTEMTIME system_time;
 
@@ -221,7 +221,7 @@ class CSystemTime : public _SYSTEMTIME
           return(true);
       }
 
-      __checkReturn LONG Compare( __in CSystemTime const& source ) const noexcept;
+      _Check_return_ LONG Compare( __in CSystemTime const& source ) const noexcept;
 
       inline constexpr void Copy( __in CSystemTime const& source ) noexcept
       {
@@ -312,10 +312,10 @@ class CSystemTime : public _SYSTEMTIME
          Copy( GetCurrentLocalTime() );
       }
 
-      __checkReturn uint32_t NumberOfMinutesSinceMonday( void ) const noexcept;
-      __checkReturn BOOL Set( void ) const noexcept;
+      _Check_return_ uint32_t NumberOfMinutesSinceMonday( void ) const noexcept;
+      _Check_return_ BOOL Set( void ) const noexcept;
 
-      inline __checkReturn int64_t Ticks( void ) const noexcept
+      inline _Check_return_ int64_t Ticks( void ) const noexcept
       {
           FILETIME ft = { 0, 0 };
 
@@ -336,23 +336,23 @@ class CSystemTime : public _SYSTEMTIME
       ** Operators
       */
 
-      inline constexpr __checkReturn CSystemTime& operator = ( __in CSystemTime const& source ) noexcept
+      inline constexpr _Check_return_ CSystemTime& operator = ( __in CSystemTime const& source ) noexcept
       {
          Copy( source );
          return( *this );
       }
 
-      __checkReturn CSystemTime& operator = ( __in CFileTime const&    source ) noexcept;
-      __checkReturn CSystemTime& operator = ( __in CTime const&        source ) noexcept;
+      _Check_return_ CSystemTime& operator = ( __in CFileTime const&    source ) noexcept;
+      _Check_return_ CSystemTime& operator = ( __in CTime const&        source ) noexcept;
 
 #if ! defined( WFC_STL )
-      __checkReturn CSystemTime& operator = ( __in COleDateTime const& source ) noexcept;
+      _Check_return_ CSystemTime& operator = ( __in COleDateTime const& source ) noexcept;
 #endif // WFC_STL
 
-      __checkReturn bool operator == ( __in CSystemTime const& source ) const noexcept;
-      __checkReturn bool operator != ( __in CSystemTime const& source ) const noexcept;
-      __checkReturn bool operator >  ( __in CSystemTime const& source ) const noexcept;
-      __checkReturn bool operator <  ( __in CSystemTime const& source ) const noexcept;
+      _Check_return_ bool operator == ( __in CSystemTime const& source ) const noexcept;
+      _Check_return_ bool operator != ( __in CSystemTime const& source ) const noexcept;
+      _Check_return_ bool operator >  ( __in CSystemTime const& source ) const noexcept;
+      _Check_return_ bool operator <  ( __in CSystemTime const& source ) const noexcept;
 
 #if defined( _DEBUG ) && ! defined( WFC_NO_DUMPING )
 
@@ -360,7 +360,7 @@ class CSystemTime : public _SYSTEMTIME
 
 #endif // _DEBUG
 
-      __checkReturn FILETIME AsFiletime() const noexcept;
+      _Check_return_ FILETIME AsFiletime() const noexcept;
 };
 
 #endif // SYSTEM_TIME_CLASS_HEADER

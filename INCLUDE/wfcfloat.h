@@ -61,6 +61,6 @@
 
 #endif // _UNICODE
 
-__checkReturn double wfc_unicode_atof( __in_z LPCWSTR unicode_string ) noexcept;
+_Check_return_ double wfc_unicode_atof( __in_z LPCWSTR unicode_string ) noexcept;
 
 #endif // WFC_FLOAT_HEADER_FILE

@@ -71,7 +71,7 @@ USING_WFC_NAMESPACE
       (a)[ci] = (b)[ci];\
    }
 
-inline __checkReturn int CReedSolomonErrorCorrectionCode::m_Mod( __in int x ) noexcept
+inline _Check_return_ int CReedSolomonErrorCorrectionCode::m_Mod( __in int x ) noexcept
 {
    while ( x >= m_BlockSize )
    {
@@ -119,7 +119,7 @@ CReedSolomonErrorCorrectionCode::~CReedSolomonErrorCorrectionCode()
    WFC_VALIDATE_POINTER( this );
 }
 
-__checkReturn SSIZE_T CReedSolomonErrorCorrectionCode::Decode( __in std::vector<uint8_t> const& encoded_data, __out std::vector<uint8_t>& decoded_data ) noexcept
+_Check_return_ SSIZE_T CReedSolomonErrorCorrectionCode::Decode( __in std::vector<uint8_t> const& encoded_data, __out std::vector<uint8_t>& decoded_data ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -184,7 +184,7 @@ __checkReturn SSIZE_T CReedSolomonErrorCorrectionCode::Decode( __in std::vector<
    return( number_of_errors_corrected );
 }
 
-__checkReturn bool CReedSolomonErrorCorrectionCode::Encode( __in std::vector<uint8_t> const& data, __out std::vector<uint8_t>& encoded_data ) noexcept
+_Check_return_ bool CReedSolomonErrorCorrectionCode::Encode( __in std::vector<uint8_t> const& data, __out std::vector<uint8_t>& encoded_data ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -263,7 +263,7 @@ __checkReturn bool CReedSolomonErrorCorrectionCode::Encode( __in std::vector<uin
  * in R. Blahut's "Theory ... of Error-Correcting Codes".
  */
 
-__checkReturn int CReedSolomonErrorCorrectionCode::m_DecodeChunk(__inout std::vector<uint8_t>& data, __out std::vector<int>& eras_pos, __in int no_eras ) noexcept
+_Check_return_ int CReedSolomonErrorCorrectionCode::m_DecodeChunk(__inout std::vector<uint8_t>& data, __out std::vector<int>& eras_pos, __in int no_eras ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -600,7 +600,7 @@ __checkReturn int CReedSolomonErrorCorrectionCode::m_DecodeChunk(__inout std::ve
 
 // data.GetSize() must be equal to m_NumberOfSymbolsPerBlock
 
-__checkReturn bool CReedSolomonErrorCorrectionCode::m_EncodeChunk( __in std::vector<uint8_t> const& data, __out std::vector<uint8_t>& parity ) noexcept
+_Check_return_ bool CReedSolomonErrorCorrectionCode::m_EncodeChunk( __in std::vector<uint8_t> const& data, __out std::vector<uint8_t>& parity ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 

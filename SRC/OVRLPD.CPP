@@ -62,10 +62,10 @@ COverlapped::COverlapped()
    Offset       = 0;
    OffsetHigh   = 0;
    hEvent       = MANUAL_RESET_EVENT();
-   m_AutomaticallyDelete = TRUE;
+   m_AutomaticallyDelete = true;
 }
 
-COverlapped::COverlapped( __in const OVERLAPPED * source )
+COverlapped::COverlapped( __in OVERLAPPED const * source )
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
@@ -75,12 +75,12 @@ COverlapped::COverlapped( __in const OVERLAPPED * source )
    Offset       = 0;
    OffsetHigh   = 0;
    hEvent       = static_cast< HANDLE >( NULL );
-   m_AutomaticallyDelete = FALSE;
+   m_AutomaticallyDelete = false;
 
    Copy( source );
 }
 
-COverlapped::COverlapped( __in const OVERLAPPED& source )
+COverlapped::COverlapped( __in OVERLAPPED const& source )
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -89,12 +89,12 @@ COverlapped::COverlapped( __in const OVERLAPPED& source )
    Offset       = 0;
    OffsetHigh   = 0;
    hEvent       = static_cast< HANDLE >( NULL );
-   m_AutomaticallyDelete = FALSE;
+   m_AutomaticallyDelete = false;
 
    Copy( source );
 }
 
-COverlapped::COverlapped( __in const COverlapped& source )
+COverlapped::COverlapped( __in COverlapped const& source )
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -103,7 +103,7 @@ COverlapped::COverlapped( __in const COverlapped& source )
    Offset       = 0;
    OffsetHigh   = 0;
    hEvent       = static_cast< HANDLE >( NULL );
-   m_AutomaticallyDelete = FALSE;
+   m_AutomaticallyDelete = false;
 
    Copy( source );
 }
@@ -116,7 +116,7 @@ COverlapped::~COverlapped()
 
 // Methods
 
-void COverlapped::Copy( __in const COverlapped& source ) noexcept
+void COverlapped::Copy( __in COverlapped const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -127,10 +127,10 @@ void COverlapped::Copy( __in const COverlapped& source ) noexcept
    Offset       = source.Offset;
    OffsetHigh   = source.OffsetHigh;
    hEvent       = source.hEvent;
-   SetAutomaticallyDelete( FALSE );
+   SetAutomaticallyDelete( false );
 }
 
-void COverlapped::Copy( __in const OVERLAPPED * source ) noexcept
+void COverlapped::Copy( __in OVERLAPPED const * source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
@@ -146,7 +146,7 @@ void COverlapped::Copy( __in const OVERLAPPED * source ) noexcept
       Offset       = source->Offset;
       OffsetHigh   = source->OffsetHigh;
       hEvent       = source->hEvent;
-      SetAutomaticallyDelete( FALSE );
+      SetAutomaticallyDelete( false );
    }
    WFC_CATCH_ALL
    {
@@ -155,7 +155,7 @@ void COverlapped::Copy( __in const OVERLAPPED * source ) noexcept
    WFC_END_CATCH_ALL
 }
 
-void COverlapped::Copy( __in const OVERLAPPED& source ) noexcept
+void COverlapped::Copy( __in OVERLAPPED const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -173,7 +173,7 @@ void COverlapped::Empty( void ) noexcept
    Offset       = 0;
    OffsetHigh   = 0;
 
-   if ( m_AutomaticallyDelete != FALSE && hEvent != static_cast< HANDLE >( NULL ) )
+   if ( m_AutomaticallyDelete != false && hEvent != static_cast< HANDLE >( NULL ) )
    {
       (void) Win32FoundationClasses::wfc_close_handle( hEvent );
    }
@@ -181,17 +181,17 @@ void COverlapped::Empty( void ) noexcept
    hEvent = static_cast< HANDLE >( NULL );
 }
 
-void COverlapped::SetAutomaticallyDelete( __in const BOOL automatically_delete ) noexcept
+void COverlapped::SetAutomaticallyDelete( __in bool const automatically_delete ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
-   m_AutomaticallyDelete = ( automatically_delete == FALSE ) ? FALSE : TRUE;
+   m_AutomaticallyDelete = automatically_delete;
 }
 
 void COverlapped::SetEvent( __in HANDLE new_event_handle ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
-   if ( m_AutomaticallyDelete != FALSE && hEvent != static_cast< HANDLE >( NULL ) )
+   if ( m_AutomaticallyDelete != false && hEvent != static_cast< HANDLE >( NULL ) )
    {
       (void) Win32FoundationClasses::wfc_close_handle( hEvent );
       hEvent = static_cast< HANDLE >( NULL );
@@ -200,19 +200,19 @@ void COverlapped::SetEvent( __in HANDLE new_event_handle ) noexcept
    hEvent = new_event_handle;
 
    // We didn't create this event so don't automatically delete it
-   SetAutomaticallyDelete( FALSE );
+   SetAutomaticallyDelete( false );
 }
 
 // Operators
 
-__checkReturn COverlapped& COverlapped::operator=( __in const COverlapped& source ) noexcept
+_Check_return_ COverlapped& COverlapped::operator=( __in COverlapped const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );
    return( *this );
 }
 
-__checkReturn COverlapped& COverlapped::operator=( __in const OVERLAPPED& source ) noexcept
+_Check_return_ COverlapped& COverlapped::operator=( __in OVERLAPPED const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );

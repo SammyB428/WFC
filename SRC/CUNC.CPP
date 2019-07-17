@@ -60,13 +60,13 @@ CUniversalNamingConvention::CUniversalNamingConvention()
    Empty();
 }
 
-CUniversalNamingConvention::CUniversalNamingConvention( __in const CUniversalNamingConvention& source )
+CUniversalNamingConvention::CUniversalNamingConvention( __in CUniversalNamingConvention const& source )
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );
 }
 
-CUniversalNamingConvention::CUniversalNamingConvention( __in const CUniformResourceLocator& source )
+CUniversalNamingConvention::CUniversalNamingConvention( __in CUniformResourceLocator const& source )
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );
@@ -85,7 +85,7 @@ CUniversalNamingConvention::~CUniversalNamingConvention()
    Empty();
 }
 
-__checkReturn int CUniversalNamingConvention::Compare( _In_ const CUniversalNamingConvention& source ) const noexcept
+_Check_return_ int CUniversalNamingConvention::Compare( _In_ CUniversalNamingConvention const& source ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -97,7 +97,7 @@ __checkReturn int CUniversalNamingConvention::Compare( _In_ const CUniversalNami
    return( compare_no_case( UNC, source.UNC ) );
 }
 
-void CUniversalNamingConvention::Copy( __in const CUniversalNamingConvention& source ) noexcept
+void CUniversalNamingConvention::Copy( __in CUniversalNamingConvention const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    ASSERT( this != &source );
@@ -122,7 +122,7 @@ void CUniversalNamingConvention::Copy( __in const CUniversalNamingConvention& so
    Make();
 }
 
-void CUniversalNamingConvention::Copy( _In_ const CUniformResourceLocator& source ) noexcept
+void CUniversalNamingConvention::Copy( _In_ CUniformResourceLocator const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -277,21 +277,21 @@ void CUniversalNamingConvention::Make( void ) noexcept
    UNC.append( PathName );
 }
 
-__checkReturn CUniversalNamingConvention& CUniversalNamingConvention::operator = ( _In_ const CUniversalNamingConvention& source ) noexcept
+_Check_return_ CUniversalNamingConvention& CUniversalNamingConvention::operator = ( _In_ CUniversalNamingConvention const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );
    return( *this );
 }
 
-__checkReturn CUniversalNamingConvention& CUniversalNamingConvention::operator = ( __in const CUniformResourceLocator& source ) noexcept
+_Check_return_ CUniversalNamingConvention& CUniversalNamingConvention::operator = ( __in CUniformResourceLocator const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );
    return( *this );
 }
 
-__checkReturn CUniversalNamingConvention& CUniversalNamingConvention::operator = ( __in_z LPCTSTR source ) noexcept
+_Check_return_ CUniversalNamingConvention& CUniversalNamingConvention::operator = ( __in_z LPCTSTR source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
@@ -299,7 +299,7 @@ __checkReturn CUniversalNamingConvention& CUniversalNamingConvention::operator =
    return( *this );
 }
 
-__checkReturn bool CUniversalNamingConvention::operator == ( __in const CUniversalNamingConvention& right_unc ) const noexcept
+_Check_return_ bool CUniversalNamingConvention::operator == ( __in CUniversalNamingConvention const& right_unc ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 

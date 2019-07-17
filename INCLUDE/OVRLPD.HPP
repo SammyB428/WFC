@@ -47,16 +47,16 @@ class COverlapped : public _OVERLAPPED
 {
    protected:
 
-      BOOL m_AutomaticallyDelete;
+       bool m_AutomaticallyDelete{ false };
 
    public:
 
       // Construction
 
       COverlapped();
-      COverlapped( __in const COverlapped& source );
-      COverlapped( __in const OVERLAPPED&  source );
-      COverlapped( __in const OVERLAPPED * source );
+      COverlapped( __in COverlapped const& source );
+      COverlapped( __in OVERLAPPED const&  source );
+      COverlapped( __in OVERLAPPED const * source );
 
       /*
       ** Destructor should be virtual according to MSJ article in Sept 1992
@@ -69,19 +69,19 @@ class COverlapped : public _OVERLAPPED
       ** Methods
       */
 
-      virtual void Copy( __in const COverlapped& source ) noexcept;
-      virtual void Copy( __in const OVERLAPPED&  source ) noexcept;
-      virtual void Copy( __in const OVERLAPPED * source ) noexcept;
+      virtual void Copy( __in COverlapped const& source ) noexcept;
+      virtual void Copy( __in OVERLAPPED const&  source ) noexcept;
+      virtual void Copy( __in OVERLAPPED const * source ) noexcept;
       virtual void Empty( void ) noexcept;
       virtual void SetEvent( __in HANDLE event_handle ) noexcept;
-      virtual void SetAutomaticallyDelete( __in const BOOL automatically_delete = TRUE ) noexcept;
+      virtual void SetAutomaticallyDelete( __in bool const automatically_delete = true ) noexcept;
 
       /*
       ** Operators
       */
 
-      __checkReturn COverlapped& operator=( __in const COverlapped& source ) noexcept;
-      __checkReturn COverlapped& operator=( __in const OVERLAPPED&  source ) noexcept;
+      _Check_return_ COverlapped& operator=( __in COverlapped const& source ) noexcept;
+      _Check_return_ COverlapped& operator=( __in OVERLAPPED const&  source ) noexcept;
 };
 
 #endif // OVERLAPPED_CLASS_HEADER

@@ -102,7 +102,7 @@ void CNetworkConnections::Dump( CDumpContext& dump_context ) const
 
 #endif // _DEBUG
 
-__checkReturn bool CNetworkConnections::Enumerate(__in_z_opt LPCTSTR share_or_computer_name ) noexcept
+_Check_return_ bool CNetworkConnections::Enumerate(__in_z_opt LPCTSTR share_or_computer_name ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( share_or_computer_name );
@@ -145,7 +145,7 @@ __checkReturn bool CNetworkConnections::Enumerate(__in_z_opt LPCTSTR share_or_co
    WFC_END_CATCH_ALL
 }
 
-__checkReturn bool CNetworkConnections::GetNext( __out CNetworkConnectionInformation& information ) noexcept
+_Check_return_ bool CNetworkConnections::GetNext( __out CNetworkConnectionInformation& information ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -179,7 +179,7 @@ __checkReturn bool CNetworkConnections::GetNext( __out CNetworkConnectionInforma
    return( false );
 }
 
-__checkReturn bool CNetworkConnections::m_GetChunk( void ) noexcept
+_Check_return_ bool CNetworkConnections::m_GetChunk( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 

@@ -177,7 +177,7 @@ _Check_return_ bool CListeningSocket::Open( void ) noexcept
 
 #pragma warning( disable : 4100 )
 
-_Check_return_ bool CListeningSocket::Open( __in_z LPCTSTR ChannelName, __in const UINT port_number ) noexcept
+_Check_return_ bool CListeningSocket::Open( __in_z LPCTSTR ChannelName, __in UINT const port_number ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -317,9 +317,7 @@ _Check_return_ BOOL CListeningSocket::WaitForConnection( void ) noexcept
       return( TRUE );
    }
 
-   LPHOSTENT host_entry_p = nullptr;
-
-   host_entry_p = m_Thunk_p->gethostbyaddr( (const char *) &temp_long, 4, PF_INET );
+   auto host_entry_p = m_Thunk_p->gethostbyaddr( reinterpret_cast<char const *>(&temp_long), 4, PF_INET );
 
    if ( host_entry_p == nullptr )
    {
@@ -459,7 +457,7 @@ void CTimeSocket::OnNewConnection( SOCKET socket_id, const char *host_name, cons
 
    number_of_seconds_since_1970 time_now.GetTime();
 
-   socket.Write( (const VOID *) &number_of_seconds_since_1970, (long) 4 );
+   socket.Write( (VOID const *) &number_of_seconds_since_1970, (long) 4 );
    // the socket is closed in the CSimpleSocketFile class destructor
 }
 

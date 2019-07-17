@@ -77,7 +77,7 @@ void CDataSocket::Attach(__inout CSimpleSocket * socket_p ) noexcept
    m_Socket_p = socket_p;
 }
 
-__checkReturn uint32_t CDataSocket::Read(__out_bcount(size_of_buffer) void * buffer, __in uint32_t const size_of_buffer ) noexcept
+_Check_return_ uint32_t CDataSocket::Read(__out_bcount(size_of_buffer) void * buffer, __in uint32_t const size_of_buffer ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( m_Socket_p );

@@ -145,26 +145,26 @@ CTimeEx::CTimeEx()
    Empty();
 }
 
-CTimeEx::CTimeEx( __in const CTimeEx& source )
+CTimeEx::CTimeEx( __in CTimeEx const& source )
 {
    Copy( source );
    WFC_VALIDATE_POINTER( this );
 }
 
-CTimeEx::CTimeEx( __in const CTimeEx * source )
+CTimeEx::CTimeEx( __in CTimeEx const * source )
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
    Copy( source );
 }
 
-CTimeEx::CTimeEx( __in const time_t source )
+CTimeEx::CTimeEx( __in time_t const source )
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );
 }
 
-CTimeEx::CTimeEx( __in const struct tm * time_p )
+CTimeEx::CTimeEx( __in struct tm const * time_p )
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( time_p );
@@ -563,7 +563,7 @@ _Check_return_ int CTimeEx::GetYear( void ) const noexcept
 #define NUMBER_OF_SECONDS_IN_FOUR_YEARS     (1461L * NUMBER_OF_SECONDS_IN_A_DAY)   /* secs in a 4 year interval */
 #define BASE_DAY_OF_THE_WEEK          4                    /* 01-01-70 was a Thursday */
 
-void CTimeEx::GreenwichMeanTime( __in const time_t *time_t_pointer, __out struct tm * tm_structure_p ) noexcept
+void CTimeEx::GreenwichMeanTime( __in time_t const * time_t_pointer, __out struct tm * tm_structure_p ) noexcept
 {
    // This method is here because there is not a reliable gmtime() method for
    // all operating systems. Some aren't thread safe. The One of the standard
@@ -713,7 +713,7 @@ void CTimeEx::GreenwichMeanTime( __in const time_t *time_t_pointer, __out struct
    tm_structure_p->tm_isdst = 0;
 }
 
-_Check_return_ time_t CTimeEx::m_Make_time_t( __in const struct tm *time_parameter ) noexcept
+_Check_return_ time_t CTimeEx::m_Make_time_t( __in struct tm const * time_parameter ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -788,7 +788,7 @@ _Check_return_ time_t CTimeEx::m_Make_time_t( __in const struct tm *time_paramet
     * month. Check for leap year and adjust if necessary.
     */
 
-   const int days[ 13 ] = { -1, 30, 58, 89, 119, 150, 180, 211, 242, 272, 303, 333, 364 };
+   constexpr int const days[ 13 ] = { -1, 30, 58, 89, 119, 150, 180, 211, 242, 272, 303, 333, 364 };
 
    time_2 = days[ tm_time.tm_mon ];
 
@@ -931,27 +931,16 @@ void CTimeEx::Set( __in std::wstring const& iso_8601_string ) noexcept
 
    std::wstring temp_string( iso_8601_string );
 
-   int year    = 0;
-   int month   = 0;
-   int day     = 0;
-   int hours   = 0;
-   int minutes = 0;
-   int seconds = 0;
-
-   unsigned long nanoseconds = 0;
-
-   std::size_t string_length = temp_string.length();
+   std::size_t const string_length = temp_string.length();
 
    if ( string_length < 4 )
    {
       return;
    }
 
-   std::wstring value;
+   std::wstring value( temp_string.substr( 0, 4 ) );
 
-   value.assign( temp_string.substr( 0, 4 ) );
-
-   year = _wtoi( value.c_str() );
+   int const year = _wtoi( value.c_str() );
 
    temp_string.erase(0, 4);
 
@@ -998,7 +987,7 @@ void CTimeEx::Set( __in std::wstring const& iso_8601_string ) noexcept
 
    temp_string.erase(0, 2);
 
-   month = _wtoi( value.c_str() );
+   int const month = _wtoi( value.c_str() );
 
    // Now let's idiot proof the month
 
@@ -1051,7 +1040,7 @@ void CTimeEx::Set( __in std::wstring const& iso_8601_string ) noexcept
 
    temp_string.erase(0, 2);
 
-   day = _wtoi( value.c_str() );
+   int const day = _wtoi( value.c_str() );
 
    // Now let's idiot proof the day
 
@@ -1102,7 +1091,7 @@ void CTimeEx::Set( __in std::wstring const& iso_8601_string ) noexcept
 
    value.assign( temp_string.substr( 0, 2 ) );
 
-   hours = _wtoi( value.c_str() );
+   int const hours = _wtoi( value.c_str() );
 
    if ( hours > 24 )
    {
@@ -1145,7 +1134,7 @@ void CTimeEx::Set( __in std::wstring const& iso_8601_string ) noexcept
 
    value.assign( temp_string.substr( 0, 2 ) );
 
-   minutes = _wtoi( value.c_str() );
+   int minutes = _wtoi( value.c_str() );
 
    if ( minutes > 59 )
    {
@@ -1194,7 +1183,7 @@ void CTimeEx::Set( __in std::wstring const& iso_8601_string ) noexcept
 
    value.assign( temp_string.substr( 0, 2 ) );
 
-   seconds = _wtoi( value.c_str() );
+   int seconds = _wtoi( value.c_str() );
 
    temp_string.erase(0, 2);
 
@@ -1206,7 +1195,7 @@ void CTimeEx::Set( __in std::wstring const& iso_8601_string ) noexcept
       return;
    }
 
-   char character = (char) temp_string.at( 0 );
+   char const character = static_cast<char>(temp_string.at( 0 ));
 
    // Here's where it gets interesting, this can be the
    // end of the string or a fractional second
@@ -1217,6 +1206,8 @@ void CTimeEx::Set( __in std::wstring const& iso_8601_string ) noexcept
       Set( year, month, day, hours, minutes, seconds );
       return;
    }
+
+   unsigned long nanoseconds = 0;
 
    if ( character == '.' )
    {
@@ -1231,13 +1222,11 @@ void CTimeEx::Set( __in std::wstring const& iso_8601_string ) noexcept
       value.assign( L"0." );
       value.append( temp_string.substr( 0, character_index ) );
 
-      double fractional_second = 0.0;
+      double fractional_second = fractional_second = _wtof( value.c_str() );
 
-      fractional_second = _wtof( value.c_str() );
+      fractional_second *= static_cast<double>(NUMBER_OF_NANOSECONDS_IN_ONE_SECOND);
 
-      fractional_second *= (double) NUMBER_OF_NANOSECONDS_IN_ONE_SECOND;
-
-      nanoseconds = (unsigned long) fractional_second;
+      nanoseconds = static_cast<unsigned long>(fractional_second);
 
       Set( year, month, day, hours, minutes, seconds, nanoseconds );
 
@@ -1280,13 +1269,10 @@ void CTimeEx::Set( __in std::wstring const& iso_8601_string ) noexcept
       return;
    }
 
-   int offset_hours   = 0;
-   int offset_minutes = 0;
+   int const offset_hours   = _wtoi( temp_string.substr( 1, 2 ).c_str() );
+   int const offset_minutes = _wtoi( temp_string.substr( 4, 2 ).c_str() );
 
-   offset_hours   = _wtoi( temp_string.substr( 1, 2 ).c_str() );
-   offset_minutes = _wtoi( temp_string.substr( 4, 2 ).c_str() );
-
-   CTimeSpan time_span( 0, offset_hours, offset_minutes, 0 );
+   CTimeSpan const time_span( 0, offset_hours, offset_minutes, 0 );
 
    if ( temp_string.at( 0 ) == '-' )
    {
@@ -1543,7 +1529,7 @@ Allows you to decrement this CTimeEx object by the amount of time in <CODE>value
 
    time_string = how_long_i_have_been_alive.Format( &quot;%D days, %H hours, %M minutes, %S seconds&quot; );
 
-   printf( &quot;%s\n&quot;, (const char *) time_string );
+   printf( &quot;%s\n&quot;, (char const *) time_string );
 
    <A HREF="CTimeSpan.htm">CTimeSpan</A> one_thousand_hours( 0, 1000, 0, 0 );
 
@@ -1551,13 +1537,13 @@ Allows you to decrement this CTimeEx object by the amount of time in <CODE>value
 
    time_string = current_time.Format( &quot;%x %X&quot; );
 
-   printf( &quot;A thousand hours from now is %s\n&quot;, (const char *) time_string );
+   printf( &quot;A thousand hours from now is %s\n&quot;, (char const *) time_string );
 
    std::wstring iso_date;
 
    current_time.CopyTo( iso_date );
 
-   printf( &quot;Standard Date: %s\n&quot;, (const char *) iso_date );
+   printf( &quot;Standard Date: %s\n&quot;, (char const *) iso_date );
 }</CODE></PRE>
 
 <H2>API&#39;s Used</H2>

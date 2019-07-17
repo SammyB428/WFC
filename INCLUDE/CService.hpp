@@ -65,7 +65,7 @@ class CService
 
    public:
 
-      static CService * m_StaticService_p;
+       static CService* m_StaticService_p;
 
       CService(__in CService const&) = delete;
       CService& operator=(__in CService const&) = delete;
@@ -92,27 +92,27 @@ class CService
       virtual _Check_return_ int ShowMessageBox( __in_z_opt LPCTSTR text, __in_z_opt LPCTSTR caption, __in UINT type ) noexcept;
 
       /// <summary>Sets the parameter used in the OnxxxCallback methods</summary>
-      inline void SetCallbackParameter( __in void * parameter ) noexcept
+      inline constexpr void SetCallbackParameter( __in void * parameter ) noexcept
       {
          m_ServiceControlManagerCallbackParameter = parameter;
       }
 
-      inline void SetOnShutdownCallback( __in SERVICE_CONTROL_MANAGER_MESSAGE_CALLBACK callback ) noexcept
+      inline constexpr void SetOnShutdownCallback( __in SERVICE_CONTROL_MANAGER_MESSAGE_CALLBACK callback ) noexcept
       {
          m_OnShutdown = callback;
       }
 
-      inline void SetOnStopcallback( __in SERVICE_CONTROL_MANAGER_MESSAGE_CALLBACK callback ) noexcept
+      inline constexpr void SetOnStopcallback( __in SERVICE_CONTROL_MANAGER_MESSAGE_CALLBACK callback ) noexcept
       {
          m_OnStop = callback;
       }
 
-      inline void SetOnPauseCallback( __in SERVICE_CONTROL_MANAGER_MESSAGE_CALLBACK callback ) noexcept
+      inline constexpr void SetOnPauseCallback( __in SERVICE_CONTROL_MANAGER_MESSAGE_CALLBACK callback ) noexcept
       {
          m_OnPause = callback;
       }
 
-      inline void SetOnContinueCallback( __in SERVICE_CONTROL_MANAGER_MESSAGE_CALLBACK callback ) noexcept
+      inline constexpr void SetOnContinueCallback( __in SERVICE_CONTROL_MANAGER_MESSAGE_CALLBACK callback ) noexcept
       {
          m_OnContinue = callback;
       }

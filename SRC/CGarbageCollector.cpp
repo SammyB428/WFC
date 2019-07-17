@@ -98,13 +98,13 @@ void CGarbageCollector::Dump( CDumpContext& dump_context ) const
 
 #endif // _DEBUG
 
-__checkReturn long CGarbageCollector::GetReferenceCount( void ) const noexcept
+_Check_return_ long CGarbageCollector::GetReferenceCount( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
    return( m_ReferenceCount );
 }
 
-__checkReturn bool CGarbageCollector::GetSelfDestruct( void ) const noexcept
+_Check_return_ bool CGarbageCollector::GetSelfDestruct( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
    return( m_SelfDestruct );
@@ -156,7 +156,7 @@ void CGarbageCollector::Release(__out_opt bool * object_was_deleted ) noexcept
    WFC_END_CATCH_ALL
 }
 
-void CGarbageCollector::SetSelfDestruct( __in const bool self_destruct ) noexcept
+void CGarbageCollector::SetSelfDestruct( __in bool const self_destruct ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -231,7 +231,7 @@ class CThreadData : public <B>CGarbageCollector</B>
 {
    protected:
 
-      DWORD m_Data;
+      DWORD m_Data{0};
 
    public:
 

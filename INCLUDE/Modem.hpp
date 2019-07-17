@@ -51,15 +51,15 @@ class CModem : public CSerialFile
 
    protected:
 
-      bool m_IsConnected;
-      bool m_UsePulseDialing;
+       bool m_IsConnected{ false };
+       bool m_UsePulseDialing{ false };
 
       std::string m_PhoneNumber;
 
    public:
 
-       CModem(const CModem&) = delete;
-       CModem& operator=(const CModem&) = delete;
+       CModem(CModem const&) = delete;
+       CModem& operator=(CModem const&) = delete;
 
        CModem();
 
@@ -70,9 +70,9 @@ class CModem : public CSerialFile
 
       virtual ~CModem();
 
-      virtual __checkReturn bool Connect( __in DWORD number_of_seonds_to_wait = 30 ) noexcept;
-      virtual __checkReturn bool Disconnect( void ) noexcept; // Sends +++ATH
-      virtual __checkReturn bool IsConnected( void ) const noexcept;
+      virtual _Check_return_ bool Connect( __in DWORD number_of_seonds_to_wait = 30 ) noexcept;
+      virtual _Check_return_ bool Disconnect( void ) noexcept; // Sends +++ATH
+      virtual _Check_return_ bool IsConnected( void ) const noexcept;
       virtual void GetPhoneNumber( __out std::string& phone_number_to_dial ) const noexcept;
       virtual void SetPhoneNumber( __in std::string const& phone_number_to_dial ) noexcept;
       

@@ -507,7 +507,7 @@ CRandomNumberGenerator2::operator double() noexcept
    return( GetFloat() );
 }
 
-_Check_return_ double CRandomNumberGenerator2::Double(_In_ const double min_value, _In_ const double max_value) noexcept
+_Check_return_ double CRandomNumberGenerator2::Double(_In_ double const min_value, _In_ double const max_value) noexcept
 {
     double minimum_value = min_value;
     double maximum_value = max_value;
@@ -523,14 +523,14 @@ _Check_return_ double CRandomNumberGenerator2::Double(_In_ const double min_valu
         maximum_value = min_value;
     }
 
-    const double number_of_values = fabs( maximum_value - minimum_value);
+    double const number_of_values = std::fabs( maximum_value - minimum_value);
 
     // Now randomly choose a value below number_of_values
 
     double return_value = fabs( GetFloat() );
 
     double integer_part = 0.0;
-    const double fraction_part = modf(return_value, &integer_part);
+    double const fraction_part = modf(return_value, &integer_part);
 
     return_value = number_of_values * fraction_part;
     return_value += minimum_value;
@@ -556,7 +556,7 @@ _Check_return_ uint32_t CRandomNumberGenerator2::Uint32( _In_ uint32_t const min
 
     uint32_t const number_of_values = (maximum_value - minimum_value) + 1;
 
-    uint32_t return_value = ( GetInteger() % number_of_values ) + minimum_value;
+    uint32_t const return_value = ( GetInteger() % number_of_values ) + minimum_value;
 
     return( return_value );
 }
@@ -579,7 +579,7 @@ _Check_return_ uint64_t CRandomNumberGenerator2::Uint64( _In_ uint64_t const min
 
     uint64_t const number_of_values = (maximum_value - minimum_value) + 1;
 
-    uint64_t return_value = ( Integer64() % number_of_values ) + minimum_value;
+    uint64_t const return_value = ( Integer64() % number_of_values ) + minimum_value;
 
     return( return_value );
 }
@@ -594,7 +594,7 @@ _Check_return_ uint64_t CRandomNumberGenerator2::Uint64(__in_ecount(number_of_va
         return(Integer64());
     }
 
-    std::size_t value_index = Integer64() % number_of_values;
+    std::size_t const value_index = Integer64() % number_of_values;
 
     return(Uint64(values[value_index].low, values[value_index].high));
 }
@@ -612,9 +612,9 @@ _Check_return_ bool CRandomNumberGenerator2::IsTrue( _In_ double const percentag
     }
 
 #undef max
-    double number_of_true_values = ( (double) ( (double) percentage / (double) 100.0 ) * (double)std::numeric_limits<std::uint32_t>::max());
+    double const number_of_true_values = ( (double) ( (double) percentage / (double) 100.0 ) * (double)std::numeric_limits<std::uint32_t>::max());
 
-    if ( (uint32_t) GetInteger() <= (uint32_t) number_of_true_values )
+    if ( static_cast<uint32_t>(GetInteger()) <= static_cast<uint32_t>(number_of_true_values) )
     {
         return( true );
     }
@@ -648,7 +648,7 @@ void CRandomNumberGenerator2::Fill( _In_ uint32_t const min_length, _In_ uint32_
     destination.resize( length );
 
     wchar_t const * alphabet = L" abcdefghijklmnopqrstuvwxyz 01234567890 .! ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    uint32_t const alphabet_length = (uint32_t) wcslen( alphabet );
+    uint32_t const alphabet_length = static_cast<uint32_t>(wcslen( alphabet ));
 
     for ( auto const loop_index : Range(length) )
     {
@@ -663,7 +663,7 @@ void CRandomNumberGenerator2::Fill( _In_ uint32_t const seed, _Out_ std::wstring
     destination.resize( length );
 
     wchar_t const * alphabet = L" abcdefghijklmnopqrstuvwxyz 01234567890 .! ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    uint32_t const alphabet_length = (uint32_t) wcslen( alphabet );
+    uint32_t const alphabet_length = static_cast<uint32_t>(wcslen( alphabet ));
 
     uint32_t loop_index = 0;
 

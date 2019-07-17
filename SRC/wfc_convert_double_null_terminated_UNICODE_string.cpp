@@ -51,7 +51,7 @@ static char THIS_FILE[] = __FILE__;
 
 USING_WFC_NAMESPACE
 
-void PASCAL Win32FoundationClasses::wfc_convert_double_null_terminated_UNICODE_string(_In_ const WORD * buffer, _Inout_ std::vector<std::wstring>& string_array) noexcept
+void PASCAL Win32FoundationClasses::wfc_convert_double_null_terminated_UNICODE_string(_In_ WORD const * buffer, _Inout_ std::vector<std::wstring>& string_array) noexcept
 {
     // Always start with a virgin array
     string_array.clear();
@@ -121,7 +121,7 @@ void PASCAL Win32FoundationClasses::wfc_read_string_array(_In_ wchar_t const * c
 }
 
 #if 0
-void PASCAL Win32FoundationClasses::wfc_convert_double_null_terminated_UNICODE_string( __in const WORD * buffer, __inout std::vector<std::wstring> & string_array )
+void PASCAL Win32FoundationClasses::wfc_convert_double_null_terminated_UNICODE_string( __in WORD const * buffer, __inout std::vector<std::wstring> & string_array ) noexcept
 {
    // Always start with a virgin array
    string_array.RemoveAll();
@@ -145,7 +145,7 @@ void PASCAL Win32FoundationClasses::wfc_convert_double_null_terminated_UNICODE_s
 
          number_of_bytes_in_string_including_null = ( lstrlenW( (LPCWSTR) buffer ) * sizeof( WCHAR ) ) + ( 1 * sizeof( WCHAR ) );
 
-         buffer = (const WORD *)( ( (SIZE_T) buffer ) + number_of_bytes_in_string_including_null );
+         buffer = reinterpret_cast<WORD const *>( ( (SIZE_T) buffer ) + number_of_bytes_in_string_including_null );
       }
    }
    WFC_CATCH_ALL

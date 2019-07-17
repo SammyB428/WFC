@@ -330,7 +330,7 @@ _Check_return_ bool CRegistry::Create( __in_z wchar_t const *               name
             name_of_subkey,
             (DWORD) 0,
             (LPTSTR) name_of_class, // Paul Ostrowski [postrowski@xantel.com]
-            options,
+            static_cast<DWORD>(options),
             permissions,
             security_attributes_p,
             &m_KeyHandle,
@@ -552,10 +552,10 @@ _Check_return_ bool CRegistry::EnumerateValues( __in DWORD const    value_index,
     ** data_buffer and size_of_data_buffer can be nullptr
     */
 
-    type_code = KeyValueTypes::typeNone;
+    type_code = KeyValueTypes::None;
     name_of_value.clear();
 
-    DWORD temp_type_code = type_code;
+    DWORD temp_type_code = static_cast<DWORD>(type_code);
 
     wchar_t temp_name[ 2048 ];
 
@@ -578,7 +578,7 @@ _Check_return_ bool CRegistry::EnumerateValues( __in DWORD const    value_index,
 
         if ( m_ErrorCode == ERROR_SUCCESS )
         {
-            type_code     = (KeyValueTypes) temp_type_code;
+            type_code     = static_cast<KeyValueTypes>(temp_type_code);
             name_of_value.assign( temp_name );
 
             return( true );
@@ -643,7 +643,7 @@ _Check_return_ bool CRegistry::GetBinaryValue( __in_z wchar_t const * name_of_va
 
     bool return_value = true;
 
-    KeyValueTypes type = typeBinary;
+    auto type = KeyValueTypes::Binary;
 
     if ( QueryValue( name_of_value, type, memory_buffer, size_of_buffer ) != false )
     {
@@ -686,9 +686,9 @@ _Check_return_ bool CRegistry::GetDoubleWordValue( _In_z_ wchar_t const * name_o
 
     SIZE_T size_of_buffer = sizeof( DWORD );
 
-    KeyValueTypes type = typeDoubleWord;
+    auto type = KeyValueTypes::DoubleWord;
 
-    return( QueryValue( name_of_value, type, (LPBYTE) &return_value, size_of_buffer ) );
+    return( QueryValue( name_of_value, type, reinterpret_cast<LPBYTE>(&return_value), size_of_buffer ) );
 }
 
 _Check_return_ DWORD CRegistry::GetErrorCode( void ) const noexcept
@@ -721,7 +721,7 @@ void CRegistry::GetRegistryName( _Out_ std::wstring& registry_name ) const noexc
     registry_name.assign( m_RegistryName );
 }
 
-_Check_return_ bool CRegistry::GetSecurity( __in const SECURITY_INFORMATION what_you_want_to_know,
+_Check_return_ bool CRegistry::GetSecurity( __in SECURITY_INFORMATION const what_you_want_to_know,
                                           __out_bcount_part( size_of_data_buffer, size_of_data_buffer ) PSECURITY_DESCRIPTOR data_buffer,
                                           __inout DWORD&                     size_of_data_buffer ) noexcept
 {
@@ -770,9 +770,9 @@ _Check_return_ bool CRegistry::GetStringValue(_In_z_ wchar_t const * name_of_val
 
     ::ZeroMemory(temp_string, sizeof(temp_string));
 
-    KeyValueTypes type = typeString;
+    auto type = KeyValueTypes::String;
 
-    if (QueryValue(name_of_value, type, (LPBYTE)temp_string, size_of_buffer) != false)
+    if (QueryValue(name_of_value, type, reinterpret_cast<LPBYTE>(temp_string), size_of_buffer) != false)
     {
         return_string.assign(temp_string);
         return(true);
@@ -811,7 +811,7 @@ _Check_return_ bool CRegistry::GetStringArrayValue(_In_z_ wchar_t const * name_o
 
     bool return_value = true;
 
-    KeyValueTypes type = typeMultipleString; // A double NULL terminated string
+    auto type = KeyValueTypes::MultipleString; // A double NULL terminated string
 
     if (QueryValue(name_of_value, type, memory_buffer, size_of_buffer) != false)
     {
@@ -902,15 +902,15 @@ _Check_return_ bool CRegistry::Load( __in_z wchar_t const * name_of_subkey, __in
     WFC_END_CATCH_ALL
 }
 
-_Check_return_ bool CRegistry::NotifyChange( __in const HANDLE             event_handle, 
-                                           __in const NotifyChangeFilter changes_to_be_reported,
-                                           __in const bool               this_subkey_or_all_subkeys,
-                                           __in const bool               wait_for_change_or_signal_event ) noexcept
+_Check_return_ bool CRegistry::NotifyChange( __in HANDLE const           event_handle,
+                                           __in NotifyChangeFilter const changes_to_be_reported,
+                                           __in NotifyChangeFlag const   this_subkey_or_all_subkeys,
+                                           __in bool const               wait_for_change_or_signal_event ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
 
     m_ErrorCode = ::RegNotifyChangeKeyValue( m_KeyHandle,
-        this_subkey_or_all_subkeys,
+        static_cast<BOOL>(this_subkey_or_all_subkeys),
         changes_to_be_reported,
         event_handle,
         wait_for_change_or_signal_event );
@@ -1238,7 +1238,7 @@ _Check_return_ bool CRegistry::SetBinaryValue( __in_z wchar_t const * name_of_va
         memory_buffer[ index ] = bytes_to_write.at( index );
     }
 
-    bool const return_value = SetValue( name_of_value, typeBinary, memory_buffer.get(), size_of_buffer );
+    bool const return_value = SetValue( name_of_value, KeyValueTypes::Binary, memory_buffer.get(), size_of_buffer );
 
     return( return_value );
 }
@@ -1247,7 +1247,7 @@ _Check_return_ bool CRegistry::SetDoubleWordValue( __in_z wchar_t const * name_o
 {
     WFC_VALIDATE_POINTER( this );
 
-    return( SetValue( name_of_value, typeDoubleWord, reinterpret_cast<PBYTE const>(&value_to_write), sizeof( DWORD ) ) );
+    return( SetValue( name_of_value, KeyValueTypes::DoubleWord, reinterpret_cast<PBYTE const>(&value_to_write), sizeof( DWORD ) ) );
 }
 
 _Check_return_ bool CRegistry::SetSecurity( __in SECURITY_INFORMATION const& security_information, __in PSECURITY_DESCRIPTOR const security_descriptor_p ) noexcept
@@ -1291,7 +1291,7 @@ _Check_return_ bool CRegistry::SetStringValue( _In_z_ wchar_t const * name_of_va
 
     // Thanks to Ravi Kiran (kravi@blr.sni.de) for finding a bug here in the UNICODE build
 
-    return( SetValue( name_of_value, typeString, reinterpret_cast<uint8_t const *>(string_value.c_str()), (DWORD) ( ( string_value.length() + 1 ) * sizeof( wchar_t ) ) ) );
+    return( SetValue( name_of_value, KeyValueTypes::String, reinterpret_cast<uint8_t const *>(string_value.c_str()), (DWORD) ( ( string_value.length() + 1 ) * sizeof( wchar_t ) ) ) );
 }
 
 _Check_return_ bool CRegistry::SetStringArrayValue(_In_z_ wchar_t const * name_of_value, _In_ std::vector<std::wstring> const& string_array ) noexcept
@@ -1364,7 +1364,7 @@ _Check_return_ bool CRegistry::SetStringArrayValue(_In_z_ wchar_t const * name_o
 
     bool return_value = true;
 
-    KeyValueTypes type = typeMultipleString; // A double NULL terminated string
+    auto type = KeyValueTypes::MultipleString; // A double NULL terminated string
 
     if ( SetValue( name_of_value, type, memory_buffer.get(), size_of_buffer ) == false )
     {
@@ -1426,9 +1426,9 @@ _Check_return_ bool CRegistry::SetValue( __in_z wchar_t const * name_of_value,
         m_ErrorCode = ::RegSetValueEx( m_KeyHandle,
             name_of_value,
             0,
-            type_of_value_to_set,
+            static_cast<DWORD>(type_of_value_to_set),
             address_of_value_data,
-            (DWORD) size_of_data );
+            static_cast<DWORD>(size_of_data) );
 
         if ( m_ErrorCode == ERROR_SUCCESS )
         {
@@ -1707,7 +1707,7 @@ The reason for the failure can be retrieved via <B>GetErrorCode</B>().
 </UL>
 
 <DT><PRE>BOOL <B><A NAME="Open">Open</A></B>( const wchar_t * name_of_subkey_to_open,
-const CreatePermissions security_access_mask = permissionAllAccess )</PRE><DD>
+CreatePermissions const security_access_mask = permissionAllAccess )</PRE><DD>
 Opens a subkey.
 It returns TRUE on success or FALSE on failure.
 The reason for the failure can be retrieved via <B>GetErrorCode</B>().
@@ -1859,7 +1859,7 @@ while( index &lt; number_of_strings )
 {
 temp_string = string_array[ index ];
 
-TRACE2( TEXT( &quot;%d - \&quot;%s\&quot;\n&quot; ), index + 1, (const wchar_t *) temp_string );
+TRACE2( TEXT( &quot;%d - \&quot;%s\&quot;\n&quot; ), index + 1, (wchar_t const *) temp_string );
 index++;
 }
 
@@ -1894,7 +1894,7 @@ TRACE( TEXT( &quot;GetValue OK\n&quot; ) );
 }
 else
 {
-TRACE1( TEXT( &quot;FAIL! QFile is \&quot;%s\&quot;\n&quot; ), (const wchar_t *) temp_sammy );
+TRACE1( TEXT( &quot;FAIL! QFile is \&quot;%s\&quot;\n&quot; ), (wchar_t const *) temp_sammy );
 }
 }
 }</CODE></PRE>

@@ -55,7 +55,7 @@ class CCryptography
 {
    protected:
 
-      DWORD m_ErrorCode;
+       DWORD m_ErrorCode{ 0 };
 
    public:
 
@@ -78,8 +78,8 @@ class CCryptographicHash : public CCryptography
 
    public:
 
-       CCryptographicHash(__in const CCryptographicHash&) = delete;
-       CCryptographicHash& operator=(__in const CCryptographicHash&) = delete;
+       CCryptographicHash(__in CCryptographicHash const&) = delete;
+       CCryptographicHash& operator=(__in CCryptographicHash const&) = delete;
        
        // Construction
 
@@ -258,7 +258,7 @@ class CCryptographicKey : public CCryptography
 {
    protected:
 
-      HCRYPTKEY m_Key;
+       HCRYPTKEY m_Key{ 0 };
 
       bool m_AutomaticallyDestroy{ false };
 
@@ -325,18 +325,18 @@ class CCryptographicKey : public CCryptography
 #endif // KP_HIGHEST_VERSION
       };
 
-      enum _CipherModes
+      enum class CipherMode : uint32_t
       {
-         modeElectronicCodebook                             = CRYPT_MODE_ECB,
-         modeCipherBlockChaining                            = CRYPT_MODE_CBC,
-         modeOutputFeedback                                 = CRYPT_MODE_OFB,
-         modeCipherFeedback                                 = CRYPT_MODE_CFB,
-         modeCiphertextStealing                             = CRYPT_MODE_CTS,
-         modeAnsiCipherBlockChaningInterleaved              = CRYPT_MODE_CBCI,
-         modeAnsiCipherFeedbackPipelined                    = CRYPT_MODE_CFBP,
-         modeAnsiOutputFeedbackPipelined                    = CRYPT_MODE_OFBP,
-         modeAnsiCipherBlockChainingAndOFMasking            = CRYPT_MODE_CBCOFM,
-         modeAnsiCipherBlockChainingAndOFMaskingInterleaved = CRYPT_MODE_CBCOFMI
+         ElectronicCodebook                             = CRYPT_MODE_ECB,
+         CipherBlockChaining                            = CRYPT_MODE_CBC,
+         OutputFeedback                                 = CRYPT_MODE_OFB,
+         CipherFeedback                                 = CRYPT_MODE_CFB,
+         CiphertextStealing                             = CRYPT_MODE_CTS,
+         AnsiCipherBlockChaningInterleaved              = CRYPT_MODE_CBCI,
+         AnsiCipherFeedbackPipelined                    = CRYPT_MODE_CFBP,
+         AnsiOutputFeedbackPipelined                    = CRYPT_MODE_OFBP,
+         AnsiCipherBlockChainingAndOFMasking            = CRYPT_MODE_CBCOFM,
+         AnsiCipherBlockChainingAndOFMaskingInterleaved = CRYPT_MODE_CBCOFMI
       };
 
       enum _Permissions
@@ -356,11 +356,11 @@ class CCryptographicKey : public CCryptography
 #endif // CRYPT_ARCHIVE
       };
 
-      enum _KeyFormats
+      enum class KeyFormat : uint32_t
       {
-         formatSimple     = SIMPLEBLOB,
-         formatPublicKey  = PUBLICKEYBLOB,
-         formatPrivateKey = PRIVATEKEYBLOB
+         Simple     = SIMPLEBLOB,
+         PublicKey  = PUBLICKEYBLOB,
+         PrivateKey = PRIVATEKEYBLOB
       };
 
       // Methods
@@ -383,7 +383,7 @@ class CCryptographicKey : public CCryptography
 
       virtual _Check_return_ bool Export( CCryptographicKey& key_for_whoever_we_are_exporting_to,
           std::vector<uint8_t>& key_in_exported_form,
-                           DWORD       export_format = formatSimple,
+          KeyFormat export_format = KeyFormat::Simple,
                            DWORD       flags         = 0 ) noexcept;
       virtual _Check_return_ bool FromHandle( __in HCRYPTKEY source_handle, __in bool automatically_destroy = TRUE ) noexcept;
       virtual _Check_return_ HCRYPTKEY GetHandle( void ) const noexcept;
@@ -430,7 +430,7 @@ class CCryptographicProvider : public CCryptography
 {
    protected:
 
-      HCRYPTPROV m_CryptographicProvider;
+       HCRYPTPROV m_CryptographicProvider{ 0 };
 
       void m_Initialize( void ) noexcept;
 
@@ -562,7 +562,7 @@ class CCryptographicProvider : public CCryptography
 
       virtual bool  ImportKey(std::vector<uint8_t>& exported_key_data,
                                CCryptographicKey& key,
-                               DWORD       format = CCryptographicKey::formatSimple,
+          CCryptographicKey::KeyFormat format = CCryptographicKey::KeyFormat::Simple,
                                DWORD       flags  = 0 ) noexcept; // CryptImportKey
 
       virtual bool  DeriveKey( CCryptographicAlgorithm const& algorithm,

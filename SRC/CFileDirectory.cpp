@@ -465,7 +465,7 @@ void PASCAL __wide_read_recursively(_In_ std::wstring const& directory_name, _In
     }
 }
 
-static _Check_return_ bool PASCAL __wide_read_recursively(_In_ const std::wstring& directory_name, _In_ const std::wstring& wildcard, _In_ const BOOL include_directories, __callback WIDE_FILE_ACTION_FUNCTION action_to_take, __in void * action_parameter)
+static _Check_return_ bool PASCAL __wide_read_recursively(_In_ std::wstring const& directory_name, _In_ std::wstring const& wildcard, _In_ BOOL const include_directories, __callback WIDE_FILE_ACTION_FUNCTION action_to_take, __in void * action_parameter)
 {
     WFC_VALIDATE_POINTER(action_to_take);
 
@@ -909,7 +909,7 @@ void CFileDirectory::GetWildcard(_Out_ std::wstring& wildcard) const noexcept
     wildcard.assign(m_Wildcard);
 }
 
-void CFileDirectory::SetIncludeDirectoriesInCallback(__in const bool include_directories) noexcept
+void CFileDirectory::SetIncludeDirectoriesInCallback(__in bool const include_directories) noexcept
 {
     WFC_VALIDATE_POINTER(this);
     m_IncludeDirectoriesInCallback = include_directories;
@@ -959,7 +959,7 @@ void CFileDirectory::GetStatistics(__out uint64_t& number_of_files, __out uint64
     sum = sum_count.sum_of_file_sizes;
 }
 
-static _Check_return_ bool __delete_file_action(_Inout_ void * parameter, _In_z_ wchar_t const * const filename, _In_ const WIN32_FIND_DATAW * data_p) noexcept
+static _Check_return_ bool __delete_file_action(_Inout_ void * parameter, _In_z_ wchar_t const * const filename, _In_ WIN32_FIND_DATAW const * data_p) noexcept
 {
     if (data_p->dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)
     {

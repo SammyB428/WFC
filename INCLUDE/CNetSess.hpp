@@ -52,8 +52,8 @@ class CNetworkSessionInformation
    public:
 
       CNetworkSessionInformation();
-      CNetworkSessionInformation( __in const SESSION_INFO_502 * source );
-      CNetworkSessionInformation( __in const CNetworkSessionInformation& source );
+      CNetworkSessionInformation( __in SESSION_INFO_502 const * source );
+      CNetworkSessionInformation( __in CNetworkSessionInformation const& source );
       virtual ~CNetworkSessionInformation();
 
       /*
@@ -62,10 +62,10 @@ class CNetworkSessionInformation
 
       std::wstring   ClientName;
       std::wstring   UserName;
-      DWORD     NumberOfOpens;
+      DWORD     NumberOfOpens{ 0 };
       CTimeSpan Time;
       CTimeSpan IdleTime;
-      DWORD     UserFlags;
+      DWORD     UserFlags{ 0 };
       std::wstring   ClientTypeName;
       std::wstring   Transport;
 
@@ -74,11 +74,11 @@ class CNetworkSessionInformation
       ** net API header files...
       */
 
-      virtual void Copy( __in const SESSION_INFO_502 * source ) noexcept;
-      virtual void Copy( __in const CNetworkSessionInformation& source ) noexcept;
+      virtual void Copy( __in SESSION_INFO_502 const * source ) noexcept;
+      virtual void Copy( __in CNetworkSessionInformation const& source ) noexcept;
       virtual void Empty( void ) noexcept;
 
-      virtual CNetworkSessionInformation& operator=( __in const CNetworkSessionInformation& ) noexcept;
+      virtual CNetworkSessionInformation& operator=( __in CNetworkSessionInformation const& ) noexcept;
 };
 
 class CNetworkSessions : public CNetwork
@@ -92,13 +92,13 @@ class CNetworkSessions : public CNetwork
       std::wstring m_ServerName;
       std::wstring m_ClientName;
 
-      BOOL m_Retrieved0;
-      BOOL m_Retrieved1;
-      BOOL m_Retrieved2;
-      BOOL m_Retrieved10;
-      BOOL m_Retrieved502;
+      BOOL m_Retrieved0{ FALSE };
+      BOOL m_Retrieved1{ FALSE };
+      BOOL m_Retrieved2{ FALSE };
+      BOOL m_Retrieved10{ FALSE };
+      BOOL m_Retrieved502{ FALSE };
 
-      DWORD m_ResumeHandle;
+      DWORD m_ResumeHandle{ 0 };
 
       virtual void m_Get_0_Data( void ) noexcept;
       virtual void m_Get_1_Data( void ) noexcept;
@@ -108,16 +108,16 @@ class CNetworkSessions : public CNetwork
 
    public:
 
-       CNetworkSessions(const CNetworkSessions&) = delete;
-       CNetworkSessions& operator=(const CNetworkSessions&) = delete;
+       CNetworkSessions(CNetworkSessions const&) = delete;
+       CNetworkSessions& operator=(CNetworkSessions const&) = delete;
        CNetworkSessions();
       CNetworkSessions( __in_z_opt LPCTSTR machine_name );
       virtual ~CNetworkSessions();
 
       virtual void  Close( void ) noexcept;
-      virtual __checkReturn bool Delete( __inout CNetworkSessionInformation& session_to_delete ) noexcept;
-      virtual __checkReturn bool Enumerate( __inout CNetworkSessionInformation& information ) noexcept;
-      virtual __checkReturn bool GetNext( __inout CNetworkSessionInformation& information ) noexcept;
+      virtual _Check_return_ bool Delete( __inout CNetworkSessionInformation& session_to_delete ) noexcept;
+      virtual _Check_return_ bool Enumerate( __inout CNetworkSessionInformation& information ) noexcept;
+      virtual _Check_return_ bool GetNext( __inout CNetworkSessionInformation& information ) noexcept;
 };
 
 #endif // NET_SESSION_CLASS_HEADER

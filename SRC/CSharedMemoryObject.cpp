@@ -100,7 +100,7 @@ void CSharedMemoryObject::Close( void ) noexcept
    m_Name.clear();
 }
 
-__checkReturn bool CSharedMemoryObject::Create( __in std::wstring const& object_name, __in std::size_t const size_in_bytes ) noexcept
+_Check_return_ bool CSharedMemoryObject::Create( __in std::wstring const& object_name, __in std::size_t const size_in_bytes ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 

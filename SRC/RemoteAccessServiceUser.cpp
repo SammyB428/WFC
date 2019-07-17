@@ -67,13 +67,13 @@ CRemoteAccessServiceUser::CRemoteAccessServiceUser()
    Empty();
 }
 
-CRemoteAccessServiceUser::CRemoteAccessServiceUser( const CRemoteAccessServiceUser& source )
+CRemoteAccessServiceUser::CRemoteAccessServiceUser( CRemoteAccessServiceUser const& source )
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );
 }
 
-CRemoteAccessServiceUser::CRemoteAccessServiceUser( const RAS_USER_0 * source )
+CRemoteAccessServiceUser::CRemoteAccessServiceUser( RAS_USER_0 const * source )
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
@@ -86,7 +86,7 @@ CRemoteAccessServiceUser::~CRemoteAccessServiceUser()
    Empty();
 }
 
-void CRemoteAccessServiceUser::Copy( const RAS_USER_0 * source )
+void CRemoteAccessServiceUser::Copy( RAS_USER_0 const * source )
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
@@ -112,7 +112,7 @@ void CRemoteAccessServiceUser::Copy( const RAS_USER_0 * source )
    WFC_END_CATCH_ALL
 }
 
-void CRemoteAccessServiceUser::Copy( const CRemoteAccessServiceUser& source )
+void CRemoteAccessServiceUser::Copy( CRemoteAccessServiceUser const& source )
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -138,7 +138,7 @@ void CRemoteAccessServiceUser::Empty( void )
 // Thanks go to Vagif Abilov (vagif@online.no) for finding a bug here.
 // I had forgotten to put in the assignment operator
 
-CRemoteAccessServiceUser& CRemoteAccessServiceUser::operator = ( const CRemoteAccessServiceUser& source )
+CRemoteAccessServiceUser& CRemoteAccessServiceUser::operator = ( CRemoteAccessServiceUser const& source )
 {
    WFC_VALIDATE_POINTER( this );
 

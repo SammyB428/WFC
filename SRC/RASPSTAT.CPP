@@ -62,14 +62,14 @@ CRemoteAccessServicePortStatistics::CRemoteAccessServicePortStatistics()
    Empty();
 }
 
-CRemoteAccessServicePortStatistics::CRemoteAccessServicePortStatistics( const CRemoteAccessServicePortStatistics& source )
+CRemoteAccessServicePortStatistics::CRemoteAccessServicePortStatistics( CRemoteAccessServicePortStatistics const& source )
 {
    WFC_VALIDATE_POINTER( this );
    Empty();
    Copy( source );
 }
 
-CRemoteAccessServicePortStatistics::CRemoteAccessServicePortStatistics( const RAS_PORT_STATISTICS * source )
+CRemoteAccessServicePortStatistics::CRemoteAccessServicePortStatistics( RAS_PORT_STATISTICS const * source )
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
@@ -83,7 +83,7 @@ CRemoteAccessServicePortStatistics::~CRemoteAccessServicePortStatistics()
    Empty();
 }
 
-__checkReturn int CRemoteAccessServicePortStatistics::Compare( __in const CRemoteAccessServicePortStatistics& right_port ) const
+_Check_return_ int CRemoteAccessServicePortStatistics::Compare( __in CRemoteAccessServicePortStatistics const& right_port ) const
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -256,7 +256,7 @@ void CRemoteAccessServicePortStatistics::Copy( const RAS_PORT_STATISTICS * sourc
    WFC_END_CATCH_ALL
 }
 
-void CRemoteAccessServicePortStatistics::Copy( const CRemoteAccessServicePortStatistics& source )
+void CRemoteAccessServicePortStatistics::Copy( CRemoteAccessServicePortStatistics const& source )
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -327,42 +327,42 @@ void CRemoteAccessServicePortStatistics::Empty( void )
    NumberOfBytesReceivedCompressed      = 0;
 }
 
-CRemoteAccessServicePortStatistics& CRemoteAccessServicePortStatistics::operator = ( const CRemoteAccessServicePortStatistics& source )
+CRemoteAccessServicePortStatistics& CRemoteAccessServicePortStatistics::operator = ( CRemoteAccessServicePortStatistics const& source )
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );
    return( *this );
 }
 
-__checkReturn bool CRemoteAccessServicePortStatistics::operator==( __in const CRemoteAccessServicePortStatistics& right_side ) const
+_Check_return_ bool CRemoteAccessServicePortStatistics::operator==( __in CRemoteAccessServicePortStatistics const& right_side ) const
 {
    WFC_VALIDATE_POINTER( this );
 
    return( Compare( right_side ) == I_AM_EQUAL_TO_THAT ? true : false );
 }
 
-__checkReturn bool CRemoteAccessServicePortStatistics::operator<( const CRemoteAccessServicePortStatistics& right_side ) const
+_Check_return_ bool CRemoteAccessServicePortStatistics::operator<( CRemoteAccessServicePortStatistics const& right_side ) const
 {
    WFC_VALIDATE_POINTER( this );
 
    return(Compare(right_side) == I_AM_LESS_THAN_THAT ? true : false);
    }
 
-__checkReturn bool CRemoteAccessServicePortStatistics::operator>( const CRemoteAccessServicePortStatistics& right_side ) const
+_Check_return_ bool CRemoteAccessServicePortStatistics::operator>( CRemoteAccessServicePortStatistics const& right_side ) const
 {
    WFC_VALIDATE_POINTER( this );
 
    return (Compare(right_side) == I_AM_GREATER_THAN_THAT ? true : false);
 }
 
-__checkReturn bool CRemoteAccessServicePortStatistics::operator<=( const CRemoteAccessServicePortStatistics& right_side ) const
+_Check_return_ bool CRemoteAccessServicePortStatistics::operator<=( CRemoteAccessServicePortStatistics const& right_side ) const
 {
    WFC_VALIDATE_POINTER( this );
 
    return(Compare(right_side) < I_AM_GREATER_THAN_THAT ? true : false);
 }
 
-__checkReturn bool CRemoteAccessServicePortStatistics::operator>=( const CRemoteAccessServicePortStatistics& right_side ) const
+_Check_return_ bool CRemoteAccessServicePortStatistics::operator>=( CRemoteAccessServicePortStatistics const& right_side ) const
 {
    WFC_VALIDATE_POINTER( this );
 

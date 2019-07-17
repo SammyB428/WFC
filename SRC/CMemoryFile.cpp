@@ -723,7 +723,7 @@ _Check_return_ bool CSharedMemory::Create( _In_z_ wchar_t const * name, _In_ std
     return( true );
 }
 
-_Check_return_ bool CSharedMemory::Open( _In_z_ wchar_t const * name, _In_ std::size_t const number_of_bytes, _In_ const bool read_only ) noexcept
+_Check_return_ bool CSharedMemory::Open( _In_z_ wchar_t const * name, _In_ std::size_t const number_of_bytes, _In_ bool const read_only ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
     WFC_VALIDATE_POINTER( name );

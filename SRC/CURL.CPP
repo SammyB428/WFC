@@ -60,13 +60,13 @@ CUniformResourceLocator::CUniformResourceLocator()
    Empty();
 }
 
-CUniformResourceLocator::CUniformResourceLocator( __in const CUniformResourceLocator& source )
+CUniformResourceLocator::CUniformResourceLocator( __in CUniformResourceLocator const& source )
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );
 }
 
-CUniformResourceLocator::CUniformResourceLocator( __in const CUniversalNamingConvention& source )
+CUniformResourceLocator::CUniformResourceLocator( __in CUniversalNamingConvention const& source )
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );
@@ -85,13 +85,13 @@ CUniformResourceLocator::~CUniformResourceLocator()
    Empty();
 }
 
-__checkReturn int CUniformResourceLocator::Compare( _In_ const CUniformResourceLocator& source ) const noexcept
+_Check_return_ int CUniformResourceLocator::Compare( _In_ CUniformResourceLocator const& source ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
    return( compare_no_case( URL, source.URL ) );
 }
 
-void CUniformResourceLocator::Copy(_In_ const CUniformResourceLocator& source ) noexcept
+void CUniformResourceLocator::Copy(_In_ CUniformResourceLocator const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    ProtocolName.assign( source.ProtocolName );
@@ -223,21 +223,21 @@ void CUniformResourceLocator::Make( void ) noexcept
    URL.append( PathName );
 }
 
-__checkReturn CUniformResourceLocator& CUniformResourceLocator::operator = ( __in const CUniformResourceLocator& source ) noexcept
+_Check_return_ CUniformResourceLocator& CUniformResourceLocator::operator = ( __in CUniformResourceLocator const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );
    return( *this );
 }
 
-__checkReturn CUniformResourceLocator& CUniformResourceLocator::operator = ( __in const CUniversalNamingConvention& source ) noexcept
+_Check_return_ CUniformResourceLocator& CUniformResourceLocator::operator = ( __in CUniversalNamingConvention const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );
    return( *this );
 }
 
-__checkReturn CUniformResourceLocator& CUniformResourceLocator::operator = ( __in_z LPCTSTR source ) noexcept
+_Check_return_ CUniformResourceLocator& CUniformResourceLocator::operator = ( __in_z LPCTSTR source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
@@ -245,7 +245,7 @@ __checkReturn CUniformResourceLocator& CUniformResourceLocator::operator = ( __i
    return( *this );
 }
 
-__checkReturn bool CUniformResourceLocator::operator == ( __in const CUniformResourceLocator& right_url ) const noexcept
+_Check_return_ bool CUniformResourceLocator::operator == ( __in CUniformResourceLocator const& right_url ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 

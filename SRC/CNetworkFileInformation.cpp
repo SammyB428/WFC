@@ -60,14 +60,14 @@ CNetworkFileInformation::CNetworkFileInformation()
    m_Initialize();
 }
 
-CNetworkFileInformation::CNetworkFileInformation( __in const FILE_INFO_3 *source )
+CNetworkFileInformation::CNetworkFileInformation( __in FILE_INFO_3 const * source )
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
    Copy( source );
 }
 
-CNetworkFileInformation::CNetworkFileInformation( __in const CNetworkFileInformation& source )
+CNetworkFileInformation::CNetworkFileInformation( __in CNetworkFileInformation const& source )
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );
@@ -79,7 +79,7 @@ CNetworkFileInformation::~CNetworkFileInformation()
    m_Initialize();
 }
 
-void CNetworkFileInformation::Copy( __in const FILE_INFO_3 *source ) noexcept
+void CNetworkFileInformation::Copy( __in FILE_INFO_3 const * source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
@@ -109,7 +109,7 @@ void CNetworkFileInformation::Copy( __in const FILE_INFO_3 *source ) noexcept
    WFC_END_CATCH_ALL
 }
 
-void CNetworkFileInformation::Copy( __in const CNetworkFileInformation& source ) noexcept
+void CNetworkFileInformation::Copy( __in CNetworkFileInformation const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    ASSERT( this != &source );
@@ -147,7 +147,7 @@ void CNetworkFileInformation::m_Initialize( void ) noexcept
    NumberOfLocks = 0;
 }
 
-const CNetworkFileInformation& CNetworkFileInformation::operator = ( __in const CNetworkFileInformation& source ) noexcept
+CNetworkFileInformation const& CNetworkFileInformation::operator = ( __in CNetworkFileInformation const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    ASSERT( this != &source );

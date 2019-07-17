@@ -58,15 +58,15 @@ class CNetworkConnectionInformation
       ** net API header files...
       */
 
-      CNetworkConnectionInformation( __in const CONNECTION_INFO_1 *information_p );
-      CNetworkConnectionInformation( __in const CNetworkConnectionInformation& source );
+      CNetworkConnectionInformation( __in CONNECTION_INFO_1 const * information_p );
+      CNetworkConnectionInformation( __in CNetworkConnectionInformation const& source );
       virtual ~CNetworkConnectionInformation();
 
-      DWORD   ID;
-      DWORD   Type;
-      DWORD   NumberOfUsers;
-      DWORD   NumberOfOpens;
-      DWORD   Time;
+      DWORD   ID{ 0 };
+      DWORD   Type{ 0 };
+      DWORD   NumberOfUsers{ 0 };
+      DWORD   NumberOfOpens{ 0 };
+      DWORD   Time{ 0 };
       std::wstring UserName;
       std::wstring NetName;
 
@@ -75,11 +75,11 @@ class CNetworkConnectionInformation
       ** net API header files...
       */
 
-      virtual void Copy( __in const CONNECTION_INFO_1 *source ) noexcept;
-      virtual void Copy( __in const CNetworkConnectionInformation& source ) noexcept;
+      virtual void Copy( __in CONNECTION_INFO_1 const * source ) noexcept;
+      virtual void Copy( __in CNetworkConnectionInformation const& source ) noexcept;
       virtual void Empty( void ) noexcept;
 
-      virtual const CNetworkConnectionInformation& operator=( __in const CNetworkConnectionInformation& source ) noexcept;
+      virtual CNetworkConnectionInformation const& operator=( __in CNetworkConnectionInformation const& source ) noexcept;
 
 #if defined( _DEBUG ) && ! defined( WFC_NO_DUMPING )
       virtual void Dump( CDumpContext& dump_context ) const;
@@ -98,33 +98,33 @@ class CNetworkConnections : public CNetwork
       ** Connection information variables
       */
 
-      CONNECTION_INFO_1 * m_1InformationBuffer;
+       CONNECTION_INFO_1 * m_1InformationBuffer{ nullptr };
 
       /*
       ** File Information enumeration variables
       */
 
-      DWORD m_1Index;
-      DWORD m_1ResumeHandle;
-      DWORD m_1CurrentEntryNumber;
-      DWORD m_1NumberOfEntriesRead;
-      DWORD m_1TotalNumberOfEntries;
+       DWORD m_1Index{ 0 };
+       DWORD m_1ResumeHandle{ 0 };
+       DWORD m_1CurrentEntryNumber{ 0 };
+       DWORD m_1NumberOfEntriesRead{ 0 };
+       DWORD m_1TotalNumberOfEntries{ 0 };
 
-      __checkReturn bool m_GetChunk( void ) noexcept;
+      _Check_return_ bool m_GetChunk( void ) noexcept;
 
-      WCHAR m_WideShareOrComputerName[ MAX_PATH ];
+      WCHAR m_WideShareOrComputerName[MAX_PATH]{ 0 };
 
 public:
 
-    CNetworkConnections(__in const CNetworkConnections&) = delete;
-    CNetworkConnections& operator=(__in const CNetworkConnections&) = delete;
+    CNetworkConnections(__in CNetworkConnections const&) = delete;
+    CNetworkConnections& operator=(__in CNetworkConnections const&) = delete;
     CNetworkConnections();
       CNetworkConnections( __in_z_opt LPCTSTR machine_name );
       virtual ~CNetworkConnections();
 
       virtual void Close( void ) noexcept;
-      virtual __checkReturn bool Enumerate( __in_z_opt LPCTSTR share_or_computer_name ) noexcept;
-      virtual __checkReturn bool GetNext( __out CNetworkConnectionInformation& information ) noexcept;
+      virtual _Check_return_ bool Enumerate( __in_z_opt LPCTSTR share_or_computer_name ) noexcept;
+      virtual _Check_return_ bool GetNext( __out CNetworkConnectionInformation& information ) noexcept;
 
 #if defined( _DEBUG ) && ! defined( WFC_NO_DUMPING )
       virtual void Dump( CDumpContext& dump_context ) const;

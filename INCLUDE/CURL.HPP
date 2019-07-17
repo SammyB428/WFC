@@ -50,8 +50,8 @@ class CUniformResourceLocator
    public:
 
       CUniformResourceLocator();
-      CUniformResourceLocator( __in const CUniversalNamingConvention& source );
-      CUniformResourceLocator( __in const CUniformResourceLocator& source );
+      CUniformResourceLocator( __in CUniversalNamingConvention const& source );
+      CUniformResourceLocator( __in CUniformResourceLocator const& source );
       CUniformResourceLocator( __in_z LPCTSTR source );
 
       /*
@@ -82,19 +82,19 @@ class CUniformResourceLocator
       ** Methods
       */
 
-      virtual __checkReturn int Compare( __in const CUniformResourceLocator& source ) const noexcept;
-      virtual void Copy( __in const CUniformResourceLocator& source ) noexcept;
-      virtual void Copy( __in const CUniversalNamingConvention& source ) noexcept;
+      virtual _Check_return_ int Compare( __in CUniformResourceLocator const& source ) const noexcept;
+      virtual void Copy( __in CUniformResourceLocator const& source ) noexcept;
+      virtual void Copy( __in CUniversalNamingConvention const& source ) noexcept;
       virtual void Copy( __in_z LPCTSTR source ) noexcept;
       virtual void Empty( void ) noexcept;
       virtual void Make( void ) noexcept;
 
-      virtual __checkReturn bool operator == ( __in const CUniformResourceLocator& right_url ) const noexcept;
-      virtual __checkReturn CUniformResourceLocator& operator = ( __in const CUniversalNamingConvention& source ) noexcept;
-      virtual __checkReturn CUniformResourceLocator& operator = ( __in const CUniformResourceLocator& source ) noexcept;
-      virtual __checkReturn CUniformResourceLocator& operator = ( __in_z LPCTSTR source ) noexcept;
+      virtual _Check_return_ bool operator == ( __in CUniformResourceLocator const& right_url ) const noexcept;
+      virtual _Check_return_ CUniformResourceLocator& operator = ( __in CUniversalNamingConvention const& source ) noexcept;
+      virtual _Check_return_ CUniformResourceLocator& operator = ( __in CUniformResourceLocator const& source ) noexcept;
+      virtual _Check_return_ CUniformResourceLocator& operator = ( __in_z LPCTSTR source ) noexcept;
 
-      __checkReturn operator LPCTSTR() const noexcept { return( URL.c_str() ); }
+      _Check_return_ operator LPCTSTR() const noexcept { return( URL.c_str() ); }
 
 #if defined( _DEBUG ) && ! defined( WFC_NO_DUMPING )
       virtual void Dump( CDumpContext& dump_context ) const;

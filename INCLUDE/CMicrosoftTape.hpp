@@ -55,16 +55,16 @@ class CMicrosoftTape : public CTape
 
    public:
 
-       CMicrosoftTape(const CMicrosoftTape&) = delete;
-       CMicrosoftTape& operator=(const CMicrosoftTape&) = delete;
+       CMicrosoftTape(CMicrosoftTape const&) = delete;
+       CMicrosoftTape& operator=(CMicrosoftTape const&) = delete;
        CMicrosoftTape();
 
       virtual ~CMicrosoftTape();
 
       virtual void Empty( void ) noexcept;
-      virtual __checkReturn BOOL EnumerateSets( void ) noexcept;
-      virtual __checkReturn BOOL Open( __in const UINT tape_drive_number_starting_at_zero ) noexcept;
-      virtual __checkReturn BOOL ReadHeader( void ) noexcept;
+      virtual _Check_return_ bool EnumerateSets( void ) noexcept;
+      virtual _Check_return_ bool Open( __in UINT const tape_drive_number_starting_at_zero ) noexcept;
+      virtual _Check_return_ bool ReadHeader( void ) noexcept;
 
 #if defined( _DEBUG ) && ! defined( WFC_NO_DUMPING )
 

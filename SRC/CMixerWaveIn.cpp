@@ -58,7 +58,7 @@ CMixerWaveIn::CMixerWaveIn()
    WFC_VALIDATE_POINTER( this );
 }
 
-CMixerWaveIn::CMixerWaveIn( __in const CMixerWaveIn& source )
+CMixerWaveIn::CMixerWaveIn( __in CMixerWaveIn const& source )
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );
@@ -72,7 +72,7 @@ CMixerWaveIn::~CMixerWaveIn()
 
 // Methods
 
-void CMixerWaveIn::Copy( __in const CMixerWaveIn& source ) noexcept
+void CMixerWaveIn::Copy( __in CMixerWaveIn const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -100,19 +100,19 @@ void CMixerWaveIn::Dump( CDumpContext& dump_context ) const
 
 #endif // _DEBUG
 
-__checkReturn DWORD CMixerWaveIn::GetMaximumGain( void ) const noexcept
+_Check_return_ DWORD CMixerWaveIn::GetMaximumGain( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
    return( m_RecordingGain.GetMaximum() ) ;
 }
 
-__checkReturn DWORD CMixerWaveIn::GetMinimumGain( void ) const noexcept
+_Check_return_ DWORD CMixerWaveIn::GetMinimumGain( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
    return( m_RecordingGain.GetMinimum() );
 }
 
-__checkReturn DWORD CMixerWaveIn::GetLeftChannelRecordingGain( void ) noexcept
+_Check_return_ DWORD CMixerWaveIn::GetLeftChannelRecordingGain( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -121,7 +121,7 @@ __checkReturn DWORD CMixerWaveIn::GetLeftChannelRecordingGain( void ) noexcept
    return( gain );
 }
 
-__checkReturn DWORD CMixerWaveIn::GetRecordingGain( void ) noexcept
+_Check_return_ DWORD CMixerWaveIn::GetRecordingGain( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -130,7 +130,7 @@ __checkReturn DWORD CMixerWaveIn::GetRecordingGain( void ) noexcept
    return( gain );
 }
 
-__checkReturn DWORD CMixerWaveIn::GetRightChannelRecordingGain( void ) noexcept
+_Check_return_ DWORD CMixerWaveIn::GetRightChannelRecordingGain( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -139,7 +139,7 @@ __checkReturn DWORD CMixerWaveIn::GetRightChannelRecordingGain( void ) noexcept
    return( gain );
 }
 
-__checkReturn bool CMixerWaveIn::Open( __in UINT_PTR device_number, __in DWORD what_to_notify, __in DWORD_PTR who_to_notify, __in DWORD_PTR notify_data ) noexcept
+_Check_return_ bool CMixerWaveIn::Open( __in UINT_PTR device_number, __in DWORD what_to_notify, __in DWORD_PTR who_to_notify, __in DWORD_PTR notify_data ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -218,7 +218,7 @@ __checkReturn bool CMixerWaveIn::Open( __in UINT_PTR device_number, __in DWORD w
    return( return_value );
 }
 
-__checkReturn bool CMixerWaveIn::SetLeftChannelRecordingGain( __in DWORD const desired_level ) noexcept
+_Check_return_ bool CMixerWaveIn::SetLeftChannelRecordingGain( __in DWORD const desired_level ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -227,7 +227,7 @@ __checkReturn bool CMixerWaveIn::SetLeftChannelRecordingGain( __in DWORD const d
    return( return_value );
 }
 
-__checkReturn bool CMixerWaveIn::SetRecordingGain( __in DWORD const desired_level ) noexcept
+_Check_return_ bool CMixerWaveIn::SetRecordingGain( __in DWORD const desired_level ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -236,7 +236,7 @@ __checkReturn bool CMixerWaveIn::SetRecordingGain( __in DWORD const desired_leve
    return( return_value );
 }
 
-__checkReturn bool CMixerWaveIn::SetRightChannelRecordingGain( __in DWORD const desired_level ) noexcept
+_Check_return_ bool CMixerWaveIn::SetRightChannelRecordingGain( __in DWORD const desired_level ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -245,7 +245,7 @@ __checkReturn bool CMixerWaveIn::SetRightChannelRecordingGain( __in DWORD const 
    return( return_value );
 }
 
-__checkReturn CMixerWaveIn& CMixerWaveIn::operator=( __in const CMixerWaveIn& source ) noexcept
+_Check_return_ CMixerWaveIn& CMixerWaveIn::operator=( __in CMixerWaveIn const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );

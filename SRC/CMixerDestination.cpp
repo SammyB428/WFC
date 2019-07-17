@@ -59,7 +59,7 @@ CMixerDestination::CMixerDestination()
    m_SourceSelector_p = nullptr;
 }
 
-CMixerDestination::CMixerDestination( __in const CMixerDestination& source )
+CMixerDestination::CMixerDestination( __in CMixerDestination const& source )
 {
    WFC_VALIDATE_POINTER( this );
    m_SourceSelector_p = nullptr;
@@ -88,7 +88,7 @@ CMixerDestination::~CMixerDestination()
 
 // Methods
 
-void CMixerDestination::Copy( __in const CMixerDestination& source ) noexcept
+void CMixerDestination::Copy( __in CMixerDestination const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER_NULL_OK( m_SourceSelector_p );

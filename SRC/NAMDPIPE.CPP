@@ -122,7 +122,7 @@ void CNamedPipe::Dump( CDumpContext& dump_context ) const
 
 #endif // _DEBUG
 
-__checkReturn  BOOL CNamedPipe::Call( __inout std::wstring& pipe_name,
+_Check_return_  BOOL CNamedPipe::Call( __inout std::wstring& pipe_name,
                        LPVOID   write_buffer, 
                  __in DWORD const   size_of_write_buffer,
                        LPVOID   read_buffer, 
@@ -178,7 +178,7 @@ void CNamedPipe::Close( void ) noexcept
    }
 }
 
-__checkReturn bool CNamedPipe::Connect(__inout_opt LPOVERLAPPED overlapped_p ) noexcept
+_Check_return_ bool CNamedPipe::Connect(__inout_opt LPOVERLAPPED overlapped_p ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER_NULL_OK( overlapped_p );
@@ -202,7 +202,7 @@ __checkReturn bool CNamedPipe::Connect(__inout_opt LPOVERLAPPED overlapped_p ) n
    }
 }
 
-__checkReturn bool CNamedPipe::Create( __in_z LPCTSTR server_name,
+_Check_return_ bool CNamedPipe::Create( __in_z LPCTSTR server_name,
                          __in_z LPCTSTR pipe_name,
                    __in DWORD const  open_mode,
                    __in DWORD const  type_of_pipe,
@@ -271,7 +271,7 @@ __checkReturn bool CNamedPipe::Create( __in_z LPCTSTR server_name,
    }
 }
 
-__checkReturn bool CNamedPipe::Disconnect( void ) noexcept
+_Check_return_ bool CNamedPipe::Disconnect( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -290,7 +290,7 @@ __checkReturn bool CNamedPipe::Disconnect( void ) noexcept
    }
 }
 
-__checkReturn bool CNamedPipe::GetInformation( void ) noexcept
+_Check_return_ bool CNamedPipe::GetInformation( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -320,7 +320,7 @@ __checkReturn bool CNamedPipe::GetInformation( void ) noexcept
    }
 }
 
-__checkReturn bool CNamedPipe::GetState( void ) noexcept
+_Check_return_ bool CNamedPipe::GetState( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -351,7 +351,7 @@ __checkReturn bool CNamedPipe::GetState( void ) noexcept
    }
 }
 
-__checkReturn bool CNamedPipe::Open( __in_z LPCTSTR pipe_name, __in const UINT ) noexcept
+_Check_return_ bool CNamedPipe::Open( __in_z LPCTSTR pipe_name, __in UINT const) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( pipe_name );
@@ -398,7 +398,7 @@ __checkReturn bool CNamedPipe::Open( __in_z LPCTSTR pipe_name, __in const UINT )
    return( Create( unc.ServerName.c_str(), unc.PathName.c_str() ) );
 }
 
-__checkReturn BOOL CNamedPipe::Peek( __out_bcount( size_of_buffer ) LPVOID buffer_address,
+_Check_return_ BOOL CNamedPipe::Peek( __out_bcount( size_of_buffer ) LPVOID buffer_address,
                  __in DWORD const size_of_buffer,
                       __out DWORD& number_of_bytes_read,
                       __out DWORD& number_of_bytes_available,
@@ -431,7 +431,7 @@ __checkReturn BOOL CNamedPipe::Peek( __out_bcount( size_of_buffer ) LPVOID buffe
    }
 }
 
-__checkReturn bool CNamedPipe::SetState( __in uint32_t new_pipe_mode, 
+_Check_return_ bool CNamedPipe::SetState( __in uint32_t new_pipe_mode, 
                            __in uint32_t maximum_number_of_bytes_before_transmission,
                            __in uint32_t maximum_number_of_milliseconds_before_transmission ) noexcept
 {
@@ -459,7 +459,7 @@ __checkReturn bool CNamedPipe::SetState( __in uint32_t new_pipe_mode,
    }
 }
 
-__checkReturn bool CNamedPipe::Transact( __inout_opt LPOVERLAPPED overlapped_p ) noexcept
+_Check_return_ bool CNamedPipe::Transact( __inout_opt LPOVERLAPPED overlapped_p ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER_NULL_OK( overlapped_p );
@@ -487,7 +487,7 @@ __checkReturn bool CNamedPipe::Transact( __inout_opt LPOVERLAPPED overlapped_p )
    }
 }
 
-__checkReturn bool CNamedPipe::Wait( __in_z_opt LPCTSTR name_of_server, __in_z LPCTSTR name_of_pipe, __in uint32_t const number_of_milliseconds ) noexcept
+_Check_return_ bool CNamedPipe::Wait( __in_z_opt LPCTSTR name_of_server, __in_z LPCTSTR name_of_pipe, __in uint32_t const number_of_milliseconds ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( name_of_pipe );

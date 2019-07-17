@@ -64,21 +64,21 @@ CRemoteAccessServicePort::CRemoteAccessServicePort()
    Empty();
 }
 
-CRemoteAccessServicePort::CRemoteAccessServicePort( const CRemoteAccessServicePort& source )
+CRemoteAccessServicePort::CRemoteAccessServicePort( CRemoteAccessServicePort const& source )
 {
    WFC_VALIDATE_POINTER( this );
    Empty();
    Copy( source );
 }
 
-CRemoteAccessServicePort::CRemoteAccessServicePort( const RAS_PORT_0 * source )
+CRemoteAccessServicePort::CRemoteAccessServicePort( RAS_PORT_0 const * source )
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
    Copy( source );
 }
 
-CRemoteAccessServicePort::CRemoteAccessServicePort( const RAS_PORT_1 * source )
+CRemoteAccessServicePort::CRemoteAccessServicePort( RAS_PORT_1 const * source )
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
@@ -93,7 +93,7 @@ CRemoteAccessServicePort::~CRemoteAccessServicePort()
 
 // Methods
 
-void CRemoteAccessServicePort::Copy( const RAS_PORT_0 * source )
+void CRemoteAccessServicePort::Copy( RAS_PORT_0 const * source )
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
@@ -153,7 +153,7 @@ void CRemoteAccessServicePort::Copy( const RAS_PORT_0 * source )
    WFC_END_CATCH_ALL
 }
 
-void CRemoteAccessServicePort::Copy( __in const RAS_PORT_1 * source )
+void CRemoteAccessServicePort::Copy( __in RAS_PORT_1 const * source )
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
@@ -187,7 +187,7 @@ void CRemoteAccessServicePort::Copy( __in const RAS_PORT_1 * source )
    WFC_END_CATCH_ALL
 }
 
-void CRemoteAccessServicePort::Copy( __in const CRemoteAccessServicePort& source )
+void CRemoteAccessServicePort::Copy( __in CRemoteAccessServicePort const& source )
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -372,7 +372,7 @@ void CRemoteAccessServicePort::Empty( void )
 
 // Operators
 
-CRemoteAccessServicePort& CRemoteAccessServicePort::operator=( __in const CRemoteAccessServicePort& source )
+CRemoteAccessServicePort& CRemoteAccessServicePort::operator=( __in CRemoteAccessServicePort const& source )
 {
    Copy( source );
    WFC_VALIDATE_POINTER( this );

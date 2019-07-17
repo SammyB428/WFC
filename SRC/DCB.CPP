@@ -59,7 +59,7 @@ CDeviceControlBlock::CDeviceControlBlock()
    fBinary = TRUE; // Always TRUE for NT
 }
 
-CDeviceControlBlock::CDeviceControlBlock( __in const DCB * source )
+CDeviceControlBlock::CDeviceControlBlock( __in DCB const * source )
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
@@ -69,7 +69,7 @@ CDeviceControlBlock::CDeviceControlBlock( __in const DCB * source )
    Copy( source );
 }
 
-CDeviceControlBlock::CDeviceControlBlock( __in const DCB& source )
+CDeviceControlBlock::CDeviceControlBlock( __in DCB const& source )
 {
    WFC_VALIDATE_POINTER( this );
    DCBlength = sizeof( DCB );
@@ -77,7 +77,7 @@ CDeviceControlBlock::CDeviceControlBlock( __in const DCB& source )
    Copy( source );
 }
 
-CDeviceControlBlock::CDeviceControlBlock( __in const CDeviceControlBlock& source )
+CDeviceControlBlock::CDeviceControlBlock( __in CDeviceControlBlock const& source )
 {
    WFC_VALIDATE_POINTER( this );
    DCBlength = sizeof( DCB );
@@ -91,19 +91,19 @@ CDeviceControlBlock::~CDeviceControlBlock()
    DCBlength = 0;
 }
 
-void CDeviceControlBlock::Copy( __in const CDeviceControlBlock& source ) noexcept
+void CDeviceControlBlock::Copy( __in CDeviceControlBlock const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Copy( (DCB *) &source );
 }
 
-void CDeviceControlBlock::Copy( __in const DCB& source ) noexcept
+void CDeviceControlBlock::Copy( __in DCB const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Copy( &source );
 }
 
-void CDeviceControlBlock::Copy( __in const DCB* source ) noexcept
+void CDeviceControlBlock::Copy( __in DCB const * source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
@@ -377,14 +377,14 @@ void CDeviceControlBlock::Dump( CDumpContext& dump_context ) const
 
 #endif // _DEBUG
 
-CDeviceControlBlock& CDeviceControlBlock::operator=( __in const CDeviceControlBlock& source ) noexcept
+CDeviceControlBlock& CDeviceControlBlock::operator=( __in CDeviceControlBlock const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );
    return( *this );
 }
 
-CDeviceControlBlock& CDeviceControlBlock::operator=( __in const DCB& source ) noexcept
+CDeviceControlBlock& CDeviceControlBlock::operator=( __in DCB const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );

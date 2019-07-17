@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 1995-2016, Samuel R. Blackburn
+** Copyright, 1995-2019, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -55,12 +55,12 @@ class CCriticalSection
 
       // Construction
 
-      inline CCriticalSection()
+      inline CCriticalSection() noexcept
       {
          ::InitializeCriticalSection( &m_CriticalSection );
       }
 
-      inline ~CCriticalSection()
+      inline ~CCriticalSection() noexcept
       {
          ::DeleteCriticalSection( &m_CriticalSection );
       }
@@ -83,7 +83,7 @@ class CCriticalSection
 
 #if( _WIN32_WINNT >= 0x0400 )
 
-      inline __checkReturn bool TryToEnter( void ) noexcept
+      inline _Check_return_ bool TryToEnter( void ) noexcept
       {
          return( ( ::TryEnterCriticalSection( &m_CriticalSection ) == FALSE ) ? false : true );
       }

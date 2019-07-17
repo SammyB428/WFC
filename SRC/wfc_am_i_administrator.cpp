@@ -51,7 +51,7 @@ static char THIS_FILE[] = __FILE__;
 
 USING_WFC_NAMESPACE
 
-__checkReturn bool PASCAL Win32FoundationClasses::wfc_am_i_administrator( void ) noexcept
+_Check_return_ bool PASCAL Win32FoundationClasses::wfc_am_i_administrator( void ) noexcept
 {
    // Plagerized from Microsoft Knowledge Base article Q118626
 

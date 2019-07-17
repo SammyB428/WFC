@@ -56,12 +56,12 @@ CTapeGetMediaParameters::CTapeGetMediaParameters()
    Empty();
 }
 
-CTapeGetMediaParameters::CTapeGetMediaParameters( __in const CTapeGetMediaParameters& source )
+CTapeGetMediaParameters::CTapeGetMediaParameters( __in CTapeGetMediaParameters const& source )
 {
    Copy( source );
 }
 
-CTapeGetMediaParameters::CTapeGetMediaParameters( __in const TAPE_GET_MEDIA_PARAMETERS * source )
+CTapeGetMediaParameters::CTapeGetMediaParameters( __in TAPE_GET_MEDIA_PARAMETERS const * source )
 {
    Copy( source );
 }
@@ -71,12 +71,12 @@ CTapeGetMediaParameters::~CTapeGetMediaParameters()
    Empty();
 }
 
-void CTapeGetMediaParameters::Copy( __in const CTapeGetMediaParameters& source ) noexcept
+void CTapeGetMediaParameters::Copy( __in CTapeGetMediaParameters const& source ) noexcept
 {
-   Copy( (const TAPE_GET_MEDIA_PARAMETERS *) &source );
+   Copy( reinterpret_cast<TAPE_GET_MEDIA_PARAMETERS const *>(&source) );
 }
 
-void CTapeGetMediaParameters::Copy( __in const TAPE_GET_MEDIA_PARAMETERS *source ) noexcept
+void CTapeGetMediaParameters::Copy( __in TAPE_GET_MEDIA_PARAMETERS const * source ) noexcept
 {
    ASSERT( source != nullptr );
 
@@ -134,13 +134,13 @@ void CTapeGetMediaParameters::Empty( void ) noexcept
    WriteProtected     = 0;
 }
 
-CTapeGetMediaParameters& CTapeGetMediaParameters::operator=( __in const CTapeGetMediaParameters& source ) noexcept
+CTapeGetMediaParameters& CTapeGetMediaParameters::operator=( __in CTapeGetMediaParameters const& source ) noexcept
 {
    Copy( source );
    return( *this );
 }
 
-CTapeGetMediaParameters& CTapeGetMediaParameters::operator=( __in const TAPE_GET_MEDIA_PARAMETERS& source ) noexcept
+CTapeGetMediaParameters& CTapeGetMediaParameters::operator=( __in TAPE_GET_MEDIA_PARAMETERS const& source ) noexcept
 {
    Copy( &source );
    return( *this );

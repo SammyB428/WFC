@@ -51,25 +51,23 @@ static char THIS_FILE[] = __FILE__;
 
 USING_WFC_NAMESPACE
 
-_Check_return_ bool PASCAL Win32FoundationClasses::wfc_get_filename_from_handle( _In_ const HANDLE file_handle, _Out_ std::wstring& filename ) noexcept
+_Check_return_ bool PASCAL Win32FoundationClasses::wfc_get_filename_from_handle( _In_ HANDLE const file_handle, _Out_ std::wstring& filename ) noexcept
 {
-    typedef struct _io_status_block
+    struct MY_IO_STATUS_BLOCK
     {
-        DWORD Status;
-        DWORD Information;
-    }
-    MY_IO_STATUS_BLOCK;
+        DWORD Status{ 0 };
+        DWORD Information{ 0 };
+    };
 
-    typedef struct _file_name_information
+    struct MY_FILE_NAME_INFORMATION
     {
-        DWORD FileNameLength;
-        wchar_t FileName[ 4096 ];
-    }
-    MY_FILE_NAME_INFORMATION;
+        DWORD FileNameLength{ 0 };
+        wchar_t FileName[4096]{ 0 };
+    } ;
 
     filename.clear();
 
-    const HMODULE ntdll_module_handle = GetModuleHandleW(L"ntdll.dll");
+    HMODULE const ntdll_module_handle = GetModuleHandleW(L"ntdll.dll");
 
     if (ntdll_module_handle == NULL)
     {

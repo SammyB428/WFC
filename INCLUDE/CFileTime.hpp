@@ -509,7 +509,7 @@ class CFileTime : public _FILETIME
           Copy( reinterpret_cast<DBTIMESTAMP const *>(source) );
       }
 
-      inline void Copy(_In_ const TIMESTAMP_STRUCT& source ) noexcept
+      inline void Copy(_In_ TIMESTAMP_STRUCT const& source ) noexcept
       {
          Copy( reinterpret_cast<DBTIMESTAMP const *>(&source) );
       }

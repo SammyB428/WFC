@@ -271,7 +271,7 @@ BOOL CRemoteAccessServiceAdministration::EnumeratePorts( LPCTSTR server_name )
    WFC_END_CATCH_ALL
 }
 
-__checkReturn DWORD CRemoteAccessServiceAdministration::GetErrorCode( void ) const
+_Check_return_ DWORD CRemoteAccessServiceAdministration::GetErrorCode( void ) const
 {
    WFC_VALIDATE_POINTER( this );
    return( m_ErrorCode );

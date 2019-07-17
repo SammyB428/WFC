@@ -52,8 +52,8 @@ class CNetworkResourceInformation
    public:
 
       CNetworkResourceInformation();
-      CNetworkResourceInformation( __in const NETRESOURCE * source );
-      CNetworkResourceInformation( __in const CNetworkResourceInformation& source );
+      CNetworkResourceInformation( __in NETRESOURCE const * source );
+      CNetworkResourceInformation( __in CNetworkResourceInformation const& source );
 
       virtual ~CNetworkResourceInformation();
 
@@ -65,13 +65,13 @@ class CNetworkResourceInformation
       std::wstring   RemoteName;
       std::wstring   Comment;
       std::wstring   Provider;
-      DWORD     Scope;
-      DWORD     Type;
-      DWORD     DisplayType;
-      DWORD     Usage;
+      DWORD     Scope{ 0 };
+      DWORD     Type{ 0 };
+      DWORD     DisplayType{ 0 };
+      DWORD     Usage{ 0 };
 
-      virtual void Copy( __in const NETRESOURCE * source ) noexcept;
-      virtual void Copy( __in const CNetworkResourceInformation& source ) noexcept;
+      virtual void Copy( __in NETRESOURCE const * source ) noexcept;
+      virtual void Copy( __in CNetworkResourceInformation const& source ) noexcept;
       virtual void Empty( void ) noexcept;
 };
 
@@ -83,19 +83,20 @@ class CNetworkResources : public CNetwork
 
    protected:
 
-      HANDLE m_ResumeHandle;
+       HANDLE m_ResumeHandle{ nullptr };
 
-      NETRESOURCE m_NetResource;
+       NETRESOURCE m_NetResource{ 0 };
 
    public:
 
-      enum Scope {
-                    scopeConnected  = RESOURCE_CONNECTED,
-                    scopeAll        = RESOURCE_GLOBALNET,
-                    scopePersistent = RESOURCE_REMEMBERED,
-                    scopeRecent     = RESOURCE_RECENT,
-                    scopeContext    = RESOURCE_CONTEXT
-                 };
+       enum class Scope
+       {
+           Connected = RESOURCE_CONNECTED,
+           All = RESOURCE_GLOBALNET,
+           Persistent = RESOURCE_REMEMBERED,
+           Recent = RESOURCE_RECENT,
+           Context = RESOURCE_CONTEXT
+       };
 
       enum Type  {
                     typeAny      = RESOURCETYPE_ANY,
@@ -115,14 +116,14 @@ class CNetworkResources : public CNetwork
                     usageReserved      = RESOURCEUSAGE_RESERVED
                  };
 
-      CNetworkResources(__in const CNetworkResources&) = delete;
-      CNetworkResources& operator=(__in const CNetworkResources&) = delete;
+      CNetworkResources(__in CNetworkResources const&) = delete;
+      CNetworkResources& operator=(__in CNetworkResources const&) = delete;
       CNetworkResources();
       CNetworkResources( __in_z_opt LPCTSTR machine_name );
       virtual ~CNetworkResources();
 
-      virtual __checkReturn bool Enumerate( __inout CNetworkResourceInformation& information ) noexcept;
-      virtual __checkReturn bool GetNext( __inout CNetworkResourceInformation& information ) noexcept;
+      virtual _Check_return_ bool Enumerate( __inout CNetworkResourceInformation& information ) noexcept;
+      virtual _Check_return_ bool GetNext( __inout CNetworkResourceInformation& information ) noexcept;
 };
 
 #endif // NET_RESOURCE_CLASS_HEADER

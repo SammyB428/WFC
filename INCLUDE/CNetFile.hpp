@@ -58,13 +58,13 @@ class CNetworkFileInformation
       ** net API header files...
       */
 
-      CNetworkFileInformation( __in const FILE_INFO_3 *information_p );
-      CNetworkFileInformation( __in const CNetworkFileInformation& source );
+      CNetworkFileInformation( __in FILE_INFO_3 const * information_p );
+      CNetworkFileInformation( __in CNetworkFileInformation const& source );
       virtual ~CNetworkFileInformation();
 
-      DWORD   ID;
-      DWORD   Permissions;
-      DWORD   NumberOfLocks;
+      DWORD   ID{ 0 };
+      DWORD   Permissions{ 0 };
+      DWORD   NumberOfLocks{ 0 };
       std::wstring PathName;
       std::wstring UserName;
 
@@ -73,10 +73,10 @@ class CNetworkFileInformation
       ** net API header files...
       */
 
-      virtual void Copy( __in const FILE_INFO_3 * source ) noexcept;
-      virtual void Copy( __in const CNetworkFileInformation& source ) noexcept;
+      virtual void Copy( __in FILE_INFO_3 const * source ) noexcept;
+      virtual void Copy( __in CNetworkFileInformation const& source ) noexcept;
       virtual void Empty( void ) noexcept;
-      virtual const CNetworkFileInformation& operator = ( __in const CNetworkFileInformation& source ) noexcept;
+      virtual CNetworkFileInformation const& operator = ( __in CNetworkFileInformation const& source ) noexcept;
 };
 
 class CNetworkFiles : public CNetwork
@@ -91,32 +91,32 @@ class CNetworkFiles : public CNetwork
       ** Workstation information variables
       */
 
-      FILE_INFO_3 * m_103InformationBuffer;
+       FILE_INFO_3 * m_103InformationBuffer{ nullptr };
 
       /*
       ** File Information enumeration variables
       */
 
-      DWORD m_103Index;
-      DWORD m_103ResumeHandle;
-      DWORD m_103CurrentEntryNumber;
-      DWORD m_103NumberOfEntriesRead;
-      DWORD m_103TotalNumberOfEntries;
+       DWORD m_103Index{ 0 };
+       DWORD m_103ResumeHandle{ 0 };
+       DWORD m_103CurrentEntryNumber{ 0 };
+       DWORD m_103NumberOfEntriesRead{ 0 };
+       DWORD m_103TotalNumberOfEntries{ 0 };
 
       bool m_GetChunk( void ) noexcept;
 
    public:
 
-       CNetworkFiles(const CNetworkFiles&) = delete;
-       CNetworkFiles& operator=(const CNetworkFiles&) = delete;
+       CNetworkFiles(CNetworkFiles const&) = delete;
+       CNetworkFiles& operator=(CNetworkFiles const&) = delete;
        CNetworkFiles();
       CNetworkFiles( __in_z_opt LPCTSTR machine_name );
       virtual ~CNetworkFiles();
 
       virtual void  Close( void ) noexcept;
       virtual bool  Close( __inout CNetworkFileInformation& file_to_close ) noexcept;
-      virtual __checkReturn bool  Enumerate( void ) noexcept;
-      virtual __checkReturn bool  GetNext( __inout CNetworkFileInformation& information ) noexcept;
+      virtual _Check_return_ bool  Enumerate( void ) noexcept;
+      virtual _Check_return_ bool  GetNext( __inout CNetworkFileInformation& information ) noexcept;
 };
 
 #endif // NETWORK_FILE_CLASS_HEADER

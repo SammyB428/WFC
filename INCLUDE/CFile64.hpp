@@ -306,7 +306,7 @@ class CFile64
 
       _Check_return_ bool OpenWide( __in_z wchar_t const * unicode_filename, __in UINT const open_flags ) noexcept;
       virtual _Check_return_ bool SetShortName( __in_z LPCTSTR new_short_name ) noexcept; // New for 73
-      virtual __checkReturn bool SetValidData( __in int64_t const valid_data_length ) noexcept; // New for 73
+      virtual _Check_return_ bool SetValidData( __in int64_t const valid_data_length ) noexcept; // New for 73
 
       /*
       Generating SDDL strings is a royal pain. The easiest way to do it is to use

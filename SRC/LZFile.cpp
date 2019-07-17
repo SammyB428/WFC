@@ -81,14 +81,14 @@ void CLZFile::Close( void ) noexcept
    m_Initialize();
 }
 
-__checkReturn BOOL CLZFile::Copy( __in const CLZFile * source_p ) noexcept
+_Check_return_ BOOL CLZFile::Copy( __in CLZFile const * source_p ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source_p );
    return( Copy( *source_p ) );
 }
 
-__checkReturn BOOL CLZFile::Copy( __in const CLZFile& source ) noexcept
+_Check_return_ BOOL CLZFile::Copy( __in CLZFile const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -118,7 +118,7 @@ void CLZFile::Dump( CDumpContext& dump_context ) const
 
 #endif // _DEBUG
 
-__checkReturn bool CLZFile::GetExpandedName( __in_z wchar_t * name_of_compressed_file, __out std::wstring& original_file_name ) noexcept
+_Check_return_ bool CLZFile::GetExpandedName( __in_z wchar_t * name_of_compressed_file, __out std::wstring& original_file_name ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( name_of_compressed_file );
@@ -158,7 +158,7 @@ void CLZFile::m_Initialize( void ) noexcept
    WFC_VALIDATE_POINTER( this );
 }
 
-__checkReturn bool CLZFile::Open( __in_z LPCTSTR file_name, __in const UINT style ) noexcept
+_Check_return_ bool CLZFile::Open( __in_z LPCTSTR file_name, __in UINT const style ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( file_name );
@@ -196,7 +196,7 @@ __checkReturn bool CLZFile::Open( __in_z LPCTSTR file_name, __in const UINT styl
    WFC_END_CATCH_ALL
 }
 
-__checkReturn UINT CLZFile::Read( __out_bcount( size_of_buffer ) void * buffer, __in const UINT size_of_buffer ) noexcept
+_Check_return_ UINT CLZFile::Read( __out_bcount( size_of_buffer ) void * buffer, __in UINT const size_of_buffer ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER_NULL_OK( buffer );

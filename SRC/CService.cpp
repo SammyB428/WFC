@@ -132,7 +132,7 @@ void CService::AssertValid( void ) const
 
 #endif // _DEBUG
 
-__checkReturn HANDLE CService::CreateConfigurationFile( __in_z LPCTSTR filename )  noexcept // static
+_Check_return_ HANDLE CService::CreateConfigurationFile( __in_z LPCTSTR filename )  noexcept // static
 {
    WFC_VALIDATE_POINTER( filename );
 
@@ -151,7 +151,7 @@ __checkReturn HANDLE CService::CreateConfigurationFile( __in_z LPCTSTR filename 
       return( INVALID_HANDLE_VALUE );
    }
 
-   const HANDLE file_handle = CreateFile( filename,
+   auto const file_handle = CreateFile( filename,
                                     GENERIC_WRITE,
                                     FILE_SHARE_READ,
                                    &security_attributes,
@@ -164,7 +164,7 @@ __checkReturn HANDLE CService::CreateConfigurationFile( __in_z LPCTSTR filename 
    return( file_handle );
 }
 
-__checkReturn bool CService::SpawnProcess( __in_z LPCTSTR command_line, __in_z LPCTSTR current_directory, __out DWORD& last_error ) noexcept // static
+_Check_return_ bool CService::SpawnProcess( __in_z LPCTSTR command_line, __in_z LPCTSTR current_directory, __out DWORD& last_error ) noexcept // static
 {
    TCHAR non_const_command_line[ 2048 ];
 
@@ -214,7 +214,7 @@ __checkReturn bool CService::SpawnProcess( __in_z LPCTSTR command_line, __in_z L
    return( true );
 }
 
-__checkReturn INT_PTR CService::DialogBoxParam( __in HINSTANCE instance, __in_z LPCTSTR template_name, __in HWND parent_window, __callback DLGPROC dialogbox_procedure, __in LPARAM lParam ) noexcept
+_Check_return_ INT_PTR CService::DialogBoxParam( __in HINSTANCE instance, __in_z LPCTSTR template_name, __in HWND parent_window, __callback DLGPROC dialogbox_procedure, __in LPARAM lParam ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -381,7 +381,7 @@ void CService::Exit( void ) noexcept
    }
 }
 
-__checkReturn BOOL CService::Initialize( __in_z LPCWSTR name_of_service ) noexcept
+_Check_return_ BOOL CService::Initialize( __in_z LPCWSTR name_of_service ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( name_of_service );
@@ -452,7 +452,7 @@ void CService::LogEvent( __in WORD event_type, __in_z_opt LPCTSTR message_string
 
 #pragma warning( default : 4100 )
 
-__checkReturn int CService::ShowMessageBox(__in_z_opt LPCTSTR text, __in_z_opt LPCTSTR caption, __in UINT type ) noexcept
+_Check_return_ int CService::ShowMessageBox(__in_z_opt LPCTSTR text, __in_z_opt LPCTSTR caption, __in UINT type ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -524,7 +524,7 @@ void CService::OnPause( void ) noexcept
    log.ReportInformation( TEXT( "Service Paused" ) );
 }
 
-__checkReturn BOOL CService::OnPrepareServiceThread( void ) noexcept
+_Check_return_ BOOL CService::OnPrepareServiceThread( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    return( TRUE );
@@ -614,7 +614,7 @@ void CService::ParseCommandLineParameters( _In_ DWORD const number_of_command_li
    }
 }
 
-__checkReturn BOOL CService::SendStatusToServiceControlManager( __in DWORD current_state, 
+_Check_return_ BOOL CService::SendStatusToServiceControlManager( __in DWORD current_state, 
                                                                 __in DWORD win32_exit_code,
                                                                 __in DWORD check_point,
                                                                 __in DWORD wait_hint,

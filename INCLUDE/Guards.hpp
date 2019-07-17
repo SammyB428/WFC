@@ -51,8 +51,8 @@ class CCriticalSectionGuard
 
    public:
 
-       CCriticalSectionGuard(__in const CCriticalSectionGuard&) = delete;
-       CCriticalSectionGuard& operator=(__in const CCriticalSectionGuard&) = delete;
+       CCriticalSectionGuard(__in CCriticalSectionGuard const&) = delete;
+       CCriticalSectionGuard& operator=(__in CCriticalSectionGuard const&) = delete;
  
        inline CCriticalSectionGuard( __inout CCriticalSection * section ) noexcept
       {

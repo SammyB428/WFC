@@ -813,7 +813,7 @@ void CXMLArchive::SetAddNewLineAfterEachElement( __in bool const add_new_line ) 
    m_AddNewLineAfterEachElement = add_new_line;
 }
 
-_Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Write( _In_z_ wchar_t const * tag, __in const bool value ) noexcept
+_Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Write( _In_z_ wchar_t const * tag, __in bool const value ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -945,7 +945,7 @@ _Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Write( _In_z_ wch
    WFC_END_CATCH_ALL
 }
 
-_Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Write( _In_z_ wchar_t const * tag, __in const Win32FoundationClasses::CFileTime& value ) noexcept
+_Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Write( _In_z_ wchar_t const * tag, __in Win32FoundationClasses::CFileTime const& value ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -1004,7 +1004,7 @@ _Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Write( _In_z_ wch
 
 #if ! defined( WFC_STL )
 
-_Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Write( _In_z_ wchar_t const * tag, __in const COleDateTime& value, BOOL value_is_UTC_time )
+_Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Write( _In_z_ wchar_t const * tag, __in COleDateTime const& value, BOOL value_is_UTC_time )
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -1067,7 +1067,7 @@ _Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Write( _In_z_ wch
    WFC_END_CATCH_ALL
 }
 
-_Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Write( _In_z_ wchar_t const * tag, __in const COleDateTimeSpan& value )
+_Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Write( _In_z_ wchar_t const * tag, __in COleDateTimeSpan const& value )
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -1199,7 +1199,7 @@ _Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Write( _In_z_ wch
    WFC_END_CATCH_ALL
 }
 
-_Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Write( _In_z_ wchar_t const * tag, __in const CSystemTime& value ) noexcept
+_Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Write( _In_z_ wchar_t const * tag, __in CSystemTime const& value ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -1252,7 +1252,7 @@ _Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Write( _In_z_ wch
    WFC_END_CATCH_ALL
 }
 
-_Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Write( _In_z_ wchar_t const * tag, __in const CTime& value, __in const bool value_is_UTC_time ) noexcept
+_Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Write( _In_z_ wchar_t const * tag, __in CTime const& value, __in bool const value_is_UTC_time ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -1314,7 +1314,7 @@ _Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Write( _In_z_ wch
    WFC_END_CATCH_ALL
 }
 
-_Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Write( _In_z_ wchar_t const * tag, __in const CTimeSpan& value ) noexcept
+_Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Write( _In_z_ wchar_t const * tag, __in CTimeSpan const& value ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 

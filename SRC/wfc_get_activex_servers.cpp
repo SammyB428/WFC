@@ -51,7 +51,7 @@ static char THIS_FILE[] = __FILE__;
 
 USING_WFC_NAMESPACE
 
-__checkReturn bool PASCAL Win32FoundationClasses::wfc_get_activex_servers( __out std::vector<std::wstring>& server_list ) noexcept
+_Check_return_ bool PASCAL Win32FoundationClasses::wfc_get_activex_servers( __out std::vector<std::wstring>& server_list ) noexcept
 {
    server_list.clear();
 

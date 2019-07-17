@@ -43,7 +43,7 @@
 
 #define FILE_DIRECTORY_CLASS_HEADER
 
-using WIDE_FILE_ACTION_FUNCTION = _Check_return_ bool (*)( _Inout_ void * parameter, _In_z_ wchar_t const * const filename, _In_ const WIN32_FIND_DATAW * data_p );
+using WIDE_FILE_ACTION_FUNCTION = _Check_return_ bool (*)( _Inout_ void * parameter, _In_z_ wchar_t const * const filename, _In_ WIN32_FIND_DATAW const * data_p );
 
 class CFileDirectory
 {

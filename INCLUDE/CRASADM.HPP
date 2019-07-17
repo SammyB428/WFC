@@ -56,19 +56,19 @@ class CRemoteAccessServiceAdministration
 {
    protected:
 
-      RAS_PORT_0 * m_PortArray;
+       RAS_PORT_0* m_PortArray{ nullptr };
 
-      WORD m_TotalNumberOfEntries;
-      WORD m_CurrentEntryNumber;
+       WORD m_TotalNumberOfEntries{ 0 };
+       WORD m_CurrentEntryNumber{ 0 };
 
-      UINT m_ErrorCode;
+       UINT m_ErrorCode{ 0 };
 
       virtual void m_Initialize( void ) noexcept;
 
    public:
 
-       CRemoteAccessServiceAdministration(const CRemoteAccessServiceAdministration&) = delete;
-       CRemoteAccessServiceAdministration& operator=(const CRemoteAccessServiceAdministration&) = delete;
+       CRemoteAccessServiceAdministration(CRemoteAccessServiceAdministration const&) = delete;
+       CRemoteAccessServiceAdministration& operator=(CRemoteAccessServiceAdministration const&) = delete;
        
        CRemoteAccessServiceAdministration();
 
@@ -84,8 +84,8 @@ class CRemoteAccessServiceAdministration
       virtual BOOL  GetUserAccountServer( __out std::wstring& user_account_server_name, __in_z LPCTSTR ras_server_name, __in_z_opt LPCTSTR ras_server_domain_name = nullptr ) noexcept;
       virtual BOOL  ClearPortStatistics( __in std::wstring const& port_name, __in_z_opt LPCTSTR server_name = nullptr ) noexcept; // Default to this machine
       virtual BOOL  DisconnectPort( __in std::wstring const& port_name, __in_z_opt LPCTSTR server_name = nullptr ) noexcept; // RasAdminPortDisconnect
-      virtual __checkReturn BOOL EnumeratePorts( __in_z_opt LPCTSTR server_name = nullptr ) noexcept; // RasAdminPortEnum
-      virtual __checkReturn BOOL GetNext( __out CRemoteAccessServicePort& port ) noexcept;
+      virtual _Check_return_ BOOL EnumeratePorts( __in_z_opt LPCTSTR server_name = nullptr ) noexcept; // RasAdminPortEnum
+      virtual _Check_return_ BOOL GetNext( __out CRemoteAccessServicePort& port ) noexcept;
       //virtual BOOL  GetInformation( CRemoteAccessServicePort& port ); // RasAdminPortGetInfo
       //virtual BOOL  GetInformation(); // RasAdminServerGetInfo
       //virtual BOOL  GetInformation(); // RasAdminUserGetInfo

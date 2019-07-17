@@ -192,7 +192,7 @@ void CRandomNumberGenerator::InitializeSeed( void ) noexcept
    SetSeed( ( MAKELONG( low_word, high_word ) ^ ( ::GetCurrentThreadId() << 11 ) ) );
 }
 
-__checkReturn DWORD CRandomNumberGenerator::GetInteger( void ) noexcept
+_Check_return_ DWORD CRandomNumberGenerator::GetInteger( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -231,7 +231,7 @@ __checkReturn DWORD CRandomNumberGenerator::GetInteger( void ) noexcept
    return( return_value );
 }
 
-__checkReturn double CRandomNumberGenerator::GetFloat( void ) noexcept
+_Check_return_ double CRandomNumberGenerator::GetFloat( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 

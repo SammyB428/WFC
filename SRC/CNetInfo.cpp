@@ -61,14 +61,14 @@ CNetworkInformation::CNetworkInformation()
    Empty();
 }
 
-CNetworkInformation::CNetworkInformation( __in const NETINFOSTRUCT *source )
+CNetworkInformation::CNetworkInformation( __in NETINFOSTRUCT const * source )
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
    Copy( source );
 }
 
-CNetworkInformation::CNetworkInformation( __in const CNetworkInformation& source )
+CNetworkInformation::CNetworkInformation( __in CNetworkInformation const& source )
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );
@@ -80,7 +80,7 @@ CNetworkInformation::~CNetworkInformation()
    Empty();
 }
 
-void CNetworkInformation::Copy( __in const NETINFOSTRUCT * source ) noexcept
+void CNetworkInformation::Copy( __in NETINFOSTRUCT const * source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
@@ -111,7 +111,7 @@ void CNetworkInformation::Copy( __in const NETINFOSTRUCT * source ) noexcept
    WFC_END_CATCH_ALL
 }
 
-void CNetworkInformation::Copy( __in const CNetworkInformation& source ) noexcept
+void CNetworkInformation::Copy( __in CNetworkInformation const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -122,7 +122,7 @@ void CNetworkInformation::Copy( __in const CNetworkInformation& source ) noexcep
       return;
    }
 
-   Copy( (const NETINFOSTRUCT *) &source );
+   Copy( reinterpret_cast<NETINFOSTRUCT const *>(&source) );
 }
 
 #if defined( _DEBUG ) && ! defined( WFC_NO_DUMPING )
@@ -158,7 +158,7 @@ void CNetworkInformation::Empty( void ) noexcept
    dwDrives          = 0;
 }
 
-const CNetworkInformation& CNetworkInformation::operator = ( __in const CNetworkInformation& source ) noexcept
+CNetworkInformation const& CNetworkInformation::operator = ( __in CNetworkInformation const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 

@@ -60,14 +60,14 @@ CNetworkResourceInformation::CNetworkResourceInformation()
    m_Initialize();
 }
 
-CNetworkResourceInformation::CNetworkResourceInformation( __in const NETRESOURCE *source )
+CNetworkResourceInformation::CNetworkResourceInformation( __in NETRESOURCE const * source )
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
    Copy( source );
 }
 
-CNetworkResourceInformation::CNetworkResourceInformation( __in const CNetworkResourceInformation& source )
+CNetworkResourceInformation::CNetworkResourceInformation( __in CNetworkResourceInformation const& source )
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );
@@ -79,7 +79,7 @@ CNetworkResourceInformation::~CNetworkResourceInformation()
    m_Initialize();
 }
 
-void CNetworkResourceInformation::Copy( __in const NETRESOURCE *source ) noexcept
+void CNetworkResourceInformation::Copy( __in NETRESOURCE const * source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
@@ -150,7 +150,7 @@ void CNetworkResourceInformation::Copy( __in const NETRESOURCE *source ) noexcep
    WFC_END_CATCH_ALL
 }
 
-void CNetworkResourceInformation::Copy( __in const CNetworkResourceInformation& source ) noexcept
+void CNetworkResourceInformation::Copy( __in CNetworkResourceInformation const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    ASSERT( this != &source );

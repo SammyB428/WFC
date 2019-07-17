@@ -112,7 +112,7 @@ class CWfcTrace
       static void TraceLevelOff( __in DWORD const level ) noexcept;
       static void TraceOn( void ) noexcept;
       static void TraceOff( void ) noexcept;
-      void Output( __in_z LPCTSTR message ) __in const noexcept;
+      void Output( __in_z LPCTSTR message ) const noexcept;
       void Output( __in_z LPCTSTR message, __in int const integer      ) const noexcept;
       void Output( __in_z LPCTSTR message, __in UINT const integer     ) const noexcept;
       void Output( __in_z LPCTSTR message, __in long const a_long      ) const noexcept;

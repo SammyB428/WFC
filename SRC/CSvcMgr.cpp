@@ -730,7 +730,7 @@ _Check_return_ bool CServiceControlManager::Install( __in_z wchar_t const * serv
                 {
                     std::wstring temp_string;
 
-                    format( temp_string, L"Can't create service because %s at line %d of CSvcMgr.cpp", (const TCHAR *) message_buffer, __LINE__ );
+                    format( temp_string, L"Can't create service because %s at line %d of CSvcMgr.cpp", reinterpret_cast<TCHAR const *>(message_buffer), __LINE__ );
 
                     event_log->ReportError( temp_string.c_str() );
 
@@ -1069,7 +1069,7 @@ _Check_return_ bool CServiceControlManager::Remove( __in_z wchar_t const * servi
             {
                 TCHAR temp_string[ 255 ];
 
-                _stprintf_s( temp_string, std::size( temp_string ), TEXT( "Can't delete service because %s" ), (const TCHAR *) message_buffer );
+                _stprintf_s( temp_string, std::size( temp_string ), TEXT( "Can't delete service because %s" ), reinterpret_cast<TCHAR const *>(message_buffer) );
 
                 m_ErrorMessage.assign(temp_string);
 
@@ -1492,7 +1492,7 @@ _Check_return_ bool CServiceControlManager::WaitForStop(_In_z_ wchar_t const * s
             return(true);
         }
 
-        const HANDLE event_handle = MANUAL_RESET_EVENT();
+        auto const event_handle = MANUAL_RESET_EVENT();
 
         // The service is running
 
@@ -1543,7 +1543,7 @@ CServiceNameAndStatusA::~CServiceNameAndStatusA()
     Empty();
 }
 
-void CServiceNameAndStatusA::Copy( __in const _ENUM_SERVICE_STATUSA * source_p ) noexcept
+void CServiceNameAndStatusA::Copy( __in _ENUM_SERVICE_STATUSA const * source_p ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
     WFC_VALIDATE_POINTER( source_p );
@@ -1749,7 +1749,7 @@ CServiceNameAndStatusW::~CServiceNameAndStatusW()
     Empty();
 }
 
-void CServiceNameAndStatusW::Copy( __in const _ENUM_SERVICE_STATUSW *source_p ) noexcept
+void CServiceNameAndStatusW::Copy( __in _ENUM_SERVICE_STATUSW const * source_p ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
     WFC_VALIDATE_POINTER( source_p );

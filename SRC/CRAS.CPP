@@ -57,7 +57,7 @@ USING_WFC_NAMESPACE
 
 #if defined( _DEBUG )
 
-static inline __out_z __checkReturn LPCTSTR __convert_RASCONNSTATE_to_string( __in DWORD ras_state )
+static inline __out_z _Check_return_ LPCTSTR __convert_RASCONNSTATE_to_string( __in DWORD ras_state )
 {
    switch( ras_state )
    {
@@ -207,14 +207,14 @@ CRemoteAccessServiceAuthenticationMessageBlock::CRemoteAccessServiceAuthenticati
    m_Initialize();
 }
 
-CRemoteAccessServiceAuthenticationMessageBlock::CRemoteAccessServiceAuthenticationMessageBlock( const RASAMB *source )
+CRemoteAccessServiceAuthenticationMessageBlock::CRemoteAccessServiceAuthenticationMessageBlock( RASAMB const * source )
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
    Copy( source );
 }
 
-CRemoteAccessServiceAuthenticationMessageBlock::CRemoteAccessServiceAuthenticationMessageBlock( const CRemoteAccessServiceAuthenticationMessageBlock& source )
+CRemoteAccessServiceAuthenticationMessageBlock::CRemoteAccessServiceAuthenticationMessageBlock( CRemoteAccessServiceAuthenticationMessageBlock const& source )
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );
@@ -260,7 +260,7 @@ void CRemoteAccessServiceAuthenticationMessageBlock::Copy( const RASAMB *source 
    WFC_END_CATCH_ALL
 }
 
-void CRemoteAccessServiceAuthenticationMessageBlock::Copy( const CRemoteAccessServiceAuthenticationMessageBlock& source )
+void CRemoteAccessServiceAuthenticationMessageBlock::Copy( CRemoteAccessServiceAuthenticationMessageBlock const& source )
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -294,7 +294,7 @@ void CRemoteAccessServiceAuthenticationMessageBlock::GetErrorString(std::wstring
    return_string = szNetBiosError;
 }
 
-CRemoteAccessServiceAuthenticationMessageBlock& CRemoteAccessServiceAuthenticationMessageBlock::operator=( const CRemoteAccessServiceAuthenticationMessageBlock& source )
+CRemoteAccessServiceAuthenticationMessageBlock& CRemoteAccessServiceAuthenticationMessageBlock::operator=( CRemoteAccessServiceAuthenticationMessageBlock const& source )
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );
@@ -311,14 +311,14 @@ CRemoteAccessServiceNetBEUIFramer::CRemoteAccessServiceNetBEUIFramer()
    m_Initialize();
 }
 
-CRemoteAccessServiceNetBEUIFramer::CRemoteAccessServiceNetBEUIFramer( const RASPPPNBF *source )
+CRemoteAccessServiceNetBEUIFramer::CRemoteAccessServiceNetBEUIFramer( RASPPPNBF const * source )
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
    Copy( source );
 }
 
-CRemoteAccessServiceNetBEUIFramer::CRemoteAccessServiceNetBEUIFramer( const CRemoteAccessServiceNetBEUIFramer& source )
+CRemoteAccessServiceNetBEUIFramer::CRemoteAccessServiceNetBEUIFramer( CRemoteAccessServiceNetBEUIFramer const& source )
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );
@@ -366,7 +366,7 @@ void CRemoteAccessServiceNetBEUIFramer::Copy( const RASPPPNBF *source )
    WFC_END_CATCH_ALL
 }
 
-void CRemoteAccessServiceNetBEUIFramer::Copy( const CRemoteAccessServiceNetBEUIFramer& source )
+void CRemoteAccessServiceNetBEUIFramer::Copy( CRemoteAccessServiceNetBEUIFramer const& source )
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -390,13 +390,13 @@ BYTE CRemoteAccessServiceNetBEUIFramer::GetLana( void ) const
    return( bLana );
 }
 
-__checkReturn DWORD CRemoteAccessServiceNetBEUIFramer::GetErrorCode( void ) const
+_Check_return_ DWORD CRemoteAccessServiceNetBEUIFramer::GetErrorCode( void ) const
 {
    WFC_VALIDATE_POINTER( this );
    return( dwError );
 }
 
-__checkReturn DWORD CRemoteAccessServiceNetBEUIFramer::GetNetBiosErrorCode( void ) const
+_Check_return_ DWORD CRemoteAccessServiceNetBEUIFramer::GetNetBiosErrorCode( void ) const
 {
    WFC_VALIDATE_POINTER( this );
    return( dwNetBiosError );
@@ -414,7 +414,7 @@ void CRemoteAccessServiceNetBEUIFramer::GetWorkstationName(std::wstring& return_
    return_string = szWorkstationName;
 }
 
-CRemoteAccessServiceNetBEUIFramer& CRemoteAccessServiceNetBEUIFramer::operator=( const CRemoteAccessServiceNetBEUIFramer& source )
+CRemoteAccessServiceNetBEUIFramer& CRemoteAccessServiceNetBEUIFramer::operator=( CRemoteAccessServiceNetBEUIFramer const& source )
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );
@@ -431,14 +431,14 @@ CRemoteAccessServiceInternetworkPacketExchange::CRemoteAccessServiceInternetwork
    m_Initialize();
 }
 
-CRemoteAccessServiceInternetworkPacketExchange::CRemoteAccessServiceInternetworkPacketExchange( const RASPPPIPX * source )
+CRemoteAccessServiceInternetworkPacketExchange::CRemoteAccessServiceInternetworkPacketExchange( RASPPPIPX const * source )
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
    Copy( source );
 }
 
-CRemoteAccessServiceInternetworkPacketExchange::CRemoteAccessServiceInternetworkPacketExchange( const CRemoteAccessServiceInternetworkPacketExchange& source )
+CRemoteAccessServiceInternetworkPacketExchange::CRemoteAccessServiceInternetworkPacketExchange( CRemoteAccessServiceInternetworkPacketExchange const& source )
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );
@@ -482,7 +482,7 @@ void CRemoteAccessServiceInternetworkPacketExchange::Copy( const RASPPPIPX * sou
    WFC_END_CATCH_ALL
 }
 
-void CRemoteAccessServiceInternetworkPacketExchange::Copy( const CRemoteAccessServiceInternetworkPacketExchange& source )
+void CRemoteAccessServiceInternetworkPacketExchange::Copy( CRemoteAccessServiceInternetworkPacketExchange const& source )
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -509,7 +509,7 @@ void CRemoteAccessServiceInternetworkPacketExchange::GetIPXAddress(std::wstring&
    return_string = szIpxAddress;
 }
 
-CRemoteAccessServiceInternetworkPacketExchange& CRemoteAccessServiceInternetworkPacketExchange::operator=( const CRemoteAccessServiceInternetworkPacketExchange& source )
+CRemoteAccessServiceInternetworkPacketExchange& CRemoteAccessServiceInternetworkPacketExchange::operator=( CRemoteAccessServiceInternetworkPacketExchange const& source )
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );
@@ -526,14 +526,14 @@ CRemoteAccessServiceInternetProtocol::CRemoteAccessServiceInternetProtocol()
    m_Initialize();
 }
 
-CRemoteAccessServiceInternetProtocol::CRemoteAccessServiceInternetProtocol( const RASPPPIP * source )
+CRemoteAccessServiceInternetProtocol::CRemoteAccessServiceInternetProtocol( RASPPPIP const * source )
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
    Copy( source );
 }
 
-CRemoteAccessServiceInternetProtocol::CRemoteAccessServiceInternetProtocol( const CRemoteAccessServiceInternetProtocol& source )
+CRemoteAccessServiceInternetProtocol::CRemoteAccessServiceInternetProtocol( CRemoteAccessServiceInternetProtocol const& source )
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );
@@ -583,7 +583,7 @@ void CRemoteAccessServiceInternetProtocol::Copy( const RASPPPIP * source )
    WFC_END_CATCH_ALL
 }
 
-void CRemoteAccessServiceInternetProtocol::Copy( const CRemoteAccessServiceInternetProtocol& source )
+void CRemoteAccessServiceInternetProtocol::Copy( CRemoteAccessServiceInternetProtocol const& source )
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -626,7 +626,7 @@ void CRemoteAccessServiceInternetProtocol::GetServerIPAddress(std::wstring& retu
 
 #endif // WINNT35COMPATIBLE
 
-CRemoteAccessServiceInternetProtocol& CRemoteAccessServiceInternetProtocol::operator=( const CRemoteAccessServiceInternetProtocol& source )
+CRemoteAccessServiceInternetProtocol& CRemoteAccessServiceInternetProtocol::operator=( CRemoteAccessServiceInternetProtocol const& source )
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );

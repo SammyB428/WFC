@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 1995-2014, Samuel R. Blackburn
+** Copyright, 1995-2019, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -61,29 +61,29 @@ class CServiceConfigurationA
    public:
 
       CServiceConfigurationA();
-      CServiceConfigurationA( __in const _QUERY_SERVICE_CONFIGA& source );
-      CServiceConfigurationA( __in const _QUERY_SERVICE_CONFIGA * source );
-      CServiceConfigurationA( __in const CServiceConfigurationA& source );
-      CServiceConfigurationA( __in const CServiceConfigurationA * source );
+      CServiceConfigurationA( __in _QUERY_SERVICE_CONFIGA const& source );
+      CServiceConfigurationA( __in _QUERY_SERVICE_CONFIGA const * source );
+      CServiceConfigurationA( __in CServiceConfigurationA const& source );
+      CServiceConfigurationA( __in CServiceConfigurationA const * source );
       virtual ~CServiceConfigurationA();
 
-      virtual void  Copy( __in const _QUERY_SERVICE_CONFIGA&  source ) noexcept;
-      virtual void  Copy( __in const _QUERY_SERVICE_CONFIGA * source ) noexcept;
-      virtual void  Copy( __in const CServiceConfigurationA&  source ) noexcept;
-      virtual void  Copy( __in const CServiceConfigurationA * source ) noexcept;
+      virtual void  Copy( __in _QUERY_SERVICE_CONFIGA const&  source ) noexcept;
+      virtual void  Copy( __in _QUERY_SERVICE_CONFIGA const * source ) noexcept;
+      virtual void  Copy( __in CServiceConfigurationA const&  source ) noexcept;
+      virtual void  Copy( __in CServiceConfigurationA const * source ) noexcept;
       virtual void  Empty( void ) noexcept;
       virtual void  GetDependencies( __out std::vector<std::string>& dependencies ) const noexcept;
       virtual void  GetDisplayName( __out std::string& display_name ) const noexcept;
-      virtual __checkReturn DWORD GetErrorControl( void ) const noexcept;
+      virtual _Check_return_ DWORD GetErrorControl( void ) const noexcept;
       virtual void  GetLoadOrderGroup( __out std::string& load_order_group ) const noexcept;
       virtual void  GetNameOfExecutableFile( __out std::string& name_of_executable ) const noexcept;
       virtual void  GetStartName( __out std::string& start_name ) const noexcept;
-      virtual __checkReturn DWORD GetTag( void ) const noexcept;
-      virtual __checkReturn DWORD GetTypeOfService( void ) const noexcept;
-      virtual __checkReturn DWORD GetWhenToStart( void ) const noexcept;
+      virtual _Check_return_ DWORD GetTag( void ) const noexcept;
+      virtual _Check_return_ DWORD GetTypeOfService( void ) const noexcept;
+      virtual _Check_return_ DWORD GetWhenToStart( void ) const noexcept;
 
-      virtual __checkReturn CServiceConfigurationA& operator=( __in const CServiceConfigurationA& source ) noexcept;
-      virtual __checkReturn CServiceConfigurationA& operator=( __in const _QUERY_SERVICE_CONFIGA& source ) noexcept;
+      virtual _Check_return_ CServiceConfigurationA& operator=( __in CServiceConfigurationA const& source ) noexcept;
+      virtual _Check_return_ CServiceConfigurationA& operator=( __in _QUERY_SERVICE_CONFIGA const& source ) noexcept;
 
 #if defined( _DEBUG ) && ! defined( WFC_NO_DUMPING )
       virtual void Dump( CDumpContext& dump_context ) const;
@@ -94,10 +94,10 @@ class CServiceConfigurationW
 {
    protected:
 
-       DWORD   m_TypeOfService{};
-       DWORD   m_WhenToStart{};
-       DWORD   m_ErrorControl{};
-       DWORD   m_Tag{};
+       DWORD   m_TypeOfService{0};
+       DWORD   m_WhenToStart{0};
+       DWORD   m_ErrorControl{0};
+       DWORD   m_Tag{0};
       std::wstring m_NameOfExecutableFile;
       std::wstring m_LoadOrderGroup;
       std::wstring m_StartName;
@@ -108,29 +108,29 @@ class CServiceConfigurationW
    public:
 
       CServiceConfigurationW();
-      CServiceConfigurationW( __in const _QUERY_SERVICE_CONFIGW&  source );
-      CServiceConfigurationW( __in const _QUERY_SERVICE_CONFIGW * source );
-      CServiceConfigurationW( __in const CServiceConfigurationW&  source );
-      CServiceConfigurationW( __in const CServiceConfigurationW * source );
+      CServiceConfigurationW( __in _QUERY_SERVICE_CONFIGW const&  source );
+      CServiceConfigurationW( __in _QUERY_SERVICE_CONFIGW const * source );
+      CServiceConfigurationW( __in CServiceConfigurationW const&  source );
+      CServiceConfigurationW( __in CServiceConfigurationW const * source );
       virtual ~CServiceConfigurationW();
 
-      virtual void  Copy( __in const _QUERY_SERVICE_CONFIGW&  source ) noexcept;
-      virtual void  Copy( __in const _QUERY_SERVICE_CONFIGW * source ) noexcept;
-      virtual void  Copy( __in const CServiceConfigurationW&  source ) noexcept;
-      virtual void  Copy( __in const CServiceConfigurationW * source ) noexcept;
+      virtual void  Copy( __in _QUERY_SERVICE_CONFIGW const&  source ) noexcept;
+      virtual void  Copy( __in _QUERY_SERVICE_CONFIGW const * source ) noexcept;
+      virtual void  Copy( __in CServiceConfigurationW const&  source ) noexcept;
+      virtual void  Copy( __in CServiceConfigurationW const * source ) noexcept;
       virtual void  Empty( void ) noexcept;
       virtual void  GetDependencies( __out std::vector<std::wstring>& dependencies ) const noexcept;
       virtual void  GetDisplayName( __out std::wstring& display_name ) const noexcept;
-      virtual __checkReturn DWORD GetErrorControl( void ) const noexcept;
+      virtual _Check_return_ DWORD GetErrorControl( void ) const noexcept;
       virtual void  GetLoadOrderGroup( __out std::wstring& load_order_group ) const noexcept;
       virtual void  GetNameOfExecutableFile( __out std::wstring& name_of_executable ) const noexcept;
       virtual void  GetStartName( __out std::wstring& start_name ) const noexcept;
-      virtual __checkReturn DWORD GetTag( void ) const noexcept;
-      virtual __checkReturn DWORD GetTypeOfService( void ) const noexcept;
-      virtual __checkReturn DWORD GetWhenToStart( void ) const noexcept;
+      virtual _Check_return_ DWORD GetTag( void ) const noexcept;
+      virtual _Check_return_ DWORD GetTypeOfService( void ) const noexcept;
+      virtual _Check_return_ DWORD GetWhenToStart( void ) const noexcept;
 
-      virtual __checkReturn CServiceConfigurationW& operator=( __in const CServiceConfigurationW& source ) noexcept;
-      virtual __checkReturn CServiceConfigurationW& operator=( __in const _QUERY_SERVICE_CONFIGW& source ) noexcept;
+      virtual _Check_return_ CServiceConfigurationW& operator=( __in CServiceConfigurationW const& source ) noexcept;
+      virtual _Check_return_ CServiceConfigurationW& operator=( __in _QUERY_SERVICE_CONFIGW const& source ) noexcept;
 
 #if defined( _DEBUG ) && ! defined( WFC_NO_DUMPING )
       virtual void Dump( CDumpContext& dump_context ) const;

@@ -54,8 +54,8 @@ class CFileTransferProtocol
 
    public:
 
-       CFileTransferProtocol(const CFileTransferProtocol&) = delete;
-       CFileTransferProtocol& operator=(const CFileTransferProtocol&) = delete;
+       CFileTransferProtocol(CFileTransferProtocol const&) = delete;
+       CFileTransferProtocol& operator=(CFileTransferProtocol const&) = delete;
        CFileTransferProtocol( __in_z_opt LPCTSTR user_name = nullptr, __in_z_opt LPCTSTR password = nullptr );
 
       /*

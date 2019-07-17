@@ -93,7 +93,7 @@ class CDataChunk
          Data.clear();
       };
 
-      inline __checkReturn CDataChunk& operator=( __in CDataChunk const& source ) noexcept
+      inline _Check_return_ CDataChunk& operator=( __in CDataChunk const& source ) noexcept
       {
          Copy( source );
          return( *this );

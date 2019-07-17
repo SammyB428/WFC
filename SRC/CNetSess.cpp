@@ -80,7 +80,7 @@ void CNetworkSessions::Close( void ) noexcept
    m_Initialize();
 }
 
-__checkReturn bool CNetworkSessions::Delete( __inout CNetworkSessionInformation& information ) noexcept
+_Check_return_ bool CNetworkSessions::Delete( __inout CNetworkSessionInformation& information ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -129,7 +129,7 @@ __checkReturn bool CNetworkSessions::Delete( __inout CNetworkSessionInformation&
    }
 }
 
-__checkReturn bool CNetworkSessions::Enumerate( __inout CNetworkSessionInformation& information ) noexcept
+_Check_return_ bool CNetworkSessions::Enumerate( __inout CNetworkSessionInformation& information ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -164,7 +164,7 @@ __checkReturn bool CNetworkSessions::Enumerate( __inout CNetworkSessionInformati
    return( false );
 }
 
-__checkReturn bool CNetworkSessions::GetNext( __inout CNetworkSessionInformation& information ) noexcept
+_Check_return_ bool CNetworkSessions::GetNext( __inout CNetworkSessionInformation& information ) noexcept
 {
    return( Enumerate( information ) );
 }

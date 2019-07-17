@@ -60,77 +60,77 @@ CNetworkUserInformation::CNetworkUserInformation()
    m_Initialize();
 }
 
-CNetworkUserInformation::CNetworkUserInformation( __in const USER_INFO_0 *source )
+CNetworkUserInformation::CNetworkUserInformation( __in USER_INFO_0 const *source )
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
    Copy( source );
 }
 
-CNetworkUserInformation::CNetworkUserInformation( __in const USER_INFO_1 *source )
+CNetworkUserInformation::CNetworkUserInformation( __in USER_INFO_1 const *source )
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
    Copy( source );
 }
 
-CNetworkUserInformation::CNetworkUserInformation( __in const USER_INFO_2 *source )
+CNetworkUserInformation::CNetworkUserInformation( __in USER_INFO_2 const *source )
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
    Copy( source );
 }
 
-CNetworkUserInformation::CNetworkUserInformation( __in const USER_INFO_3 *source )
+CNetworkUserInformation::CNetworkUserInformation( __in USER_INFO_3 const *source )
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
    Copy( source );
 }
 
-CNetworkUserInformation::CNetworkUserInformation( __in const USER_INFO_10 *source )
+CNetworkUserInformation::CNetworkUserInformation( __in USER_INFO_10 const *source )
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
    Copy( source );
 }
 
-CNetworkUserInformation::CNetworkUserInformation( __in const USER_INFO_11 *source )
+CNetworkUserInformation::CNetworkUserInformation( __in USER_INFO_11 const *source )
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
    Copy( source );
 }
 
-CNetworkUserInformation::CNetworkUserInformation( __in const USER_INFO_20 *source )
+CNetworkUserInformation::CNetworkUserInformation( __in USER_INFO_20 const *source )
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
    Copy( source );
 }
 
-CNetworkUserInformation::CNetworkUserInformation( __in const USER_INFO_21 *source )
+CNetworkUserInformation::CNetworkUserInformation( __in USER_INFO_21 const *source )
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
    Copy( source );
 }
 
-CNetworkUserInformation::CNetworkUserInformation( __in const USER_INFO_22 *source )
+CNetworkUserInformation::CNetworkUserInformation( __in USER_INFO_22 const *source )
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
    Copy( source );
 }
 
-CNetworkUserInformation::CNetworkUserInformation( __in const CNetworkUserInformation *source )
+CNetworkUserInformation::CNetworkUserInformation( __in CNetworkUserInformation const *source )
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
    Copy( source );
 }
 
-CNetworkUserInformation::CNetworkUserInformation( __in const CNetworkUserInformation& source )
+CNetworkUserInformation::CNetworkUserInformation( __in CNetworkUserInformation const& source )
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );
@@ -142,7 +142,7 @@ CNetworkUserInformation::~CNetworkUserInformation()
    m_Initialize();
 }
 
-void CNetworkUserInformation::Copy( __in const USER_INFO_0 *source ) noexcept
+void CNetworkUserInformation::Copy( __in USER_INFO_0 const *source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
@@ -175,7 +175,7 @@ void CNetworkUserInformation::Copy( __in const USER_INFO_0 *source ) noexcept
    WFC_END_CATCH_ALL
 }
 
-void CNetworkUserInformation::Copy( __in const USER_INFO_1 *source ) noexcept
+void CNetworkUserInformation::Copy( __in USER_INFO_1 const *source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
@@ -208,7 +208,7 @@ void CNetworkUserInformation::Copy( __in const USER_INFO_1 *source ) noexcept
    WFC_END_CATCH_ALL
 }
 
-void CNetworkUserInformation::Copy( __in const USER_INFO_2 *source ) noexcept
+void CNetworkUserInformation::Copy( __in USER_INFO_2 const *source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
@@ -261,7 +261,7 @@ void CNetworkUserInformation::Copy( __in const USER_INFO_2 *source ) noexcept
    WFC_END_CATCH_ALL
 }
 
-void CNetworkUserInformation::Copy( __in const USER_INFO_3 *source ) noexcept
+void CNetworkUserInformation::Copy( __in USER_INFO_3 const * source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
@@ -319,7 +319,7 @@ void CNetworkUserInformation::Copy( __in const USER_INFO_3 *source ) noexcept
    WFC_END_CATCH_ALL
 }
 
-void CNetworkUserInformation::Copy( __in const USER_INFO_10 *source ) noexcept
+void CNetworkUserInformation::Copy( __in USER_INFO_10 const * source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
@@ -396,7 +396,7 @@ void CNetworkUserInformation::Copy( __in USER_INFO_11 const *source ) noexcept
    WFC_END_CATCH_ALL
 }
 
-void CNetworkUserInformation::Copy( __in const USER_INFO_20 *source ) noexcept
+void CNetworkUserInformation::Copy( __in USER_INFO_20 const * source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
@@ -454,7 +454,7 @@ void CNetworkUserInformation::Copy( __in USER_INFO_21 const *source ) noexcept
    WFC_END_CATCH_ALL
 }
 
-void CNetworkUserInformation::Copy( __in const USER_INFO_22 *source ) noexcept
+void CNetworkUserInformation::Copy( __in USER_INFO_22 const * source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
@@ -511,7 +511,7 @@ void CNetworkUserInformation::Copy( __in const USER_INFO_22 *source ) noexcept
    WFC_END_CATCH_ALL
 }
 
-void CNetworkUserInformation::Copy( __in const CNetworkUserInformation *source ) noexcept
+void CNetworkUserInformation::Copy( __in CNetworkUserInformation const * source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
@@ -538,7 +538,7 @@ void CNetworkUserInformation::Copy( __in const CNetworkUserInformation *source )
    WFC_END_CATCH_ALL
 }
 
-void CNetworkUserInformation::Copy( __in const CNetworkUserInformation& source ) noexcept
+void CNetworkUserInformation::Copy( __in CNetworkUserInformation const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    ASSERT( this != &source );
@@ -940,7 +940,7 @@ void CNetworkUserInformation::SetAddDefaults( void ) noexcept
    }
 }
 
-const CNetworkUserInformation& CNetworkUserInformation::operator = ( __in CNetworkUserInformation const& source ) noexcept
+CNetworkUserInformation const& CNetworkUserInformation::operator = ( __in CNetworkUserInformation const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    ASSERT( this != &source );

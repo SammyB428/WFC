@@ -45,9 +45,9 @@
 
 typedef struct __password_filter_unicode_string
 {
-   USHORT  Length;
-   USHORT  MaximumLength;
-   WCHAR * UnicodeString;
+    USHORT  Length{ 0 };
+    USHORT  MaximumLength{ 0 };
+    WCHAR* UnicodeString{ nullptr };
 }
 PASSWORD_FILTER_STRING, * PASSWORD_FILTER_STRING_P;
 
@@ -55,8 +55,8 @@ class CPasswordChangeFilter
 {
    public:
 
-       CPasswordChangeFilter(__in const CPasswordChangeFilter&) = delete;
-       CPasswordChangeFilter& operator=(__in const CPasswordChangeFilter&) = delete;
+       CPasswordChangeFilter(__in CPasswordChangeFilter const&) = delete;
+       CPasswordChangeFilter& operator=(__in CPasswordChangeFilter const&) = delete;
        
        CPasswordChangeFilter();
 

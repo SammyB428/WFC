@@ -60,7 +60,7 @@ CMixerControlInstance::CMixerControlInstance()
    m_NotifyData   = 0;
 }
 
-CMixerControlInstance::CMixerControlInstance( __in const CMixerControlInstance& source )
+CMixerControlInstance::CMixerControlInstance( __in CMixerControlInstance const& source )
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -80,7 +80,7 @@ CMixerControlInstance::~CMixerControlInstance()
    m_NotifyData   = 0;
 }
 
-void CMixerControlInstance::Copy( __in const CMixerControlInstance& source ) noexcept
+void CMixerControlInstance::Copy( __in CMixerControlInstance const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -121,7 +121,7 @@ void CMixerControlInstance::Dump( CDumpContext& dump_context ) const
 
 #endif // _DEBUG
 
-__checkReturn bool CMixerControlInstance::Open( __in UINT_PTR device_number, __in DWORD what_to_notify, __in DWORD_PTR who_to_notify, __in DWORD_PTR notify_data ) noexcept
+_Check_return_ bool CMixerControlInstance::Open( __in UINT_PTR device_number, __in DWORD what_to_notify, __in DWORD_PTR who_to_notify, __in DWORD_PTR notify_data ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -139,19 +139,19 @@ __checkReturn bool CMixerControlInstance::Open( __in UINT_PTR device_number, __i
    return( true );
 }
 
-void CMixerControlInstance::SetLine( __in const CMixerLine& line ) noexcept
+void CMixerControlInstance::SetLine( __in CMixerLine const& line ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    m_MixerLine.Copy( line );
 }
 
-void CMixerControlInstance::SetControl( __in const CMixerControl& control ) noexcept
+void CMixerControlInstance::SetControl( __in CMixerControl const& control ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    m_MixerControl.Copy( control );
 }
 
-CMixerControlInstance& CMixerControlInstance::operator=( __in const CMixerControlInstance& source ) noexcept
+CMixerControlInstance& CMixerControlInstance::operator=( __in CMixerControlInstance const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );

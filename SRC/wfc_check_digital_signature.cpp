@@ -77,7 +77,7 @@ static void _to_hex( __in_bcount( number_of_bytes ) uint8_t const * buffer, __in
 
 // http://forum.sysinternals.com/howto-verify-the-digital-signature-of-a-file_topic19247.html
 
-__checkReturn bool PASCAL Win32FoundationClasses::wfc_check_digital_signature( __in_z LPCTSTR filename ) noexcept
+_Check_return_ bool PASCAL Win32FoundationClasses::wfc_check_digital_signature( __in_z LPCTSTR filename ) noexcept
 {
     if ( filename == nullptr || filename[ 0 ] == 0x0 )
     {
@@ -306,7 +306,7 @@ void PASCAL Win32FoundationClasses::wfc_get_my_version(_Inout_ std::wstring& ver
     format(version, L"%d.%d.%d.%d", (int)major, (int)minor, (int)build, (int)revision);
 }
 
-__checkReturn uint64_t PASCAL Win32FoundationClasses::wfc_get_my_packed_version( void ) noexcept
+_Check_return_ uint64_t PASCAL Win32FoundationClasses::wfc_get_my_packed_version( void ) noexcept
 {
    uint16_t major = 0;
    uint16_t minor = 0;

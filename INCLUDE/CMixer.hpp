@@ -684,7 +684,7 @@ class CMixerDestination : public CMixerControlInstance
 
       // Properties
 
-       CMixerSourceSelector* m_SourceSelector_p{ nullptr };
+       CMixerSourceSelector * m_SourceSelector_p{ nullptr };
 
    public:
 

@@ -47,7 +47,7 @@ class CDataMemory : public CDataFile
 {
    protected:
 
-      uint64_t m_Position;
+       uint64_t m_Position{ 0 };
 
       std::vector<uint8_t> m_Data;
 
@@ -69,18 +69,18 @@ class CDataMemory : public CDataFile
       virtual void  CopyTo( __out std::vector<uint8_t>& data ) noexcept;
       virtual void  Empty( void ) noexcept;
       void  Flush( void ) noexcept override;
-      virtual __checkReturn uint8_t const * GetData( void ) const noexcept;
-      __checkReturn uint64_t GetLength( void ) const noexcept override;
-      __checkReturn uint64_t GetPosition( void ) const noexcept override;
-      __checkReturn bool Open( __in_z LPCTSTR filename, __in UINT const mode ) noexcept override;
-      __checkReturn UINT Read( __out_bcount( number_of_bytes_to_read ) void * buffer, __in const UINT number_of_bytes_to_read ) noexcept override;
-      __checkReturn uint64_t Seek( __in int64_t const offset, __in CFile64::SeekPosition const from ) noexcept override;
+      virtual _Check_return_ uint8_t const * GetData( void ) const noexcept;
+      _Check_return_ uint64_t GetLength( void ) const noexcept override;
+      _Check_return_ uint64_t GetPosition( void ) const noexcept override;
+      _Check_return_ bool Open( __in_z LPCTSTR filename, __in UINT const mode ) noexcept override;
+      _Check_return_ UINT Read( __out_bcount( number_of_bytes_to_read ) void * buffer, __in UINT const number_of_bytes_to_read ) noexcept override;
+      _Check_return_ uint64_t Seek( __in int64_t const offset, __in CFile64::SeekPosition const from ) noexcept override;
       void  Write( __in_bcount( number_of_bytes_to_write ) void const * buffer, __in UINT const number_of_bytes_to_write ) noexcept override;
 
-      virtual __checkReturn CDataMemory const& operator=(  __in CDataMemory const& source ) noexcept;
-      virtual __checkReturn CDataMemory const& operator=(  __in std::vector<uint8_t> const& source ) noexcept;
-      virtual __checkReturn CDataMemory const& operator+=( __in CDataMemory const& source ) noexcept;
-      virtual __checkReturn CDataMemory const& operator+=( __in std::vector<uint8_t> const& source ) noexcept;
+      virtual _Check_return_ CDataMemory const& operator=(  __in CDataMemory const& source ) noexcept;
+      virtual _Check_return_ CDataMemory const& operator=(  __in std::vector<uint8_t> const& source ) noexcept;
+      virtual _Check_return_ CDataMemory const& operator+=( __in CDataMemory const& source ) noexcept;
+      virtual _Check_return_ CDataMemory const& operator+=( __in std::vector<uint8_t> const& source ) noexcept;
 };
 
 #endif // DATA_FILE_CLASS_HEADER

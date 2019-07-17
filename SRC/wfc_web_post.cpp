@@ -138,7 +138,7 @@ static inline void append_item( __in WFC_WEB_POST_DATA_P item, __in_z char const
    append_string( "\r\n", bytes );
 }
 
-__checkReturn bool PASCAL Win32FoundationClasses::wfc_web_post( __in_z LPCTSTR url, __in WFC_WEB_POST_DATA_P * data, __inout_opt std::wstring * response ) noexcept
+_Check_return_ bool PASCAL Win32FoundationClasses::wfc_web_post( __in_z LPCTSTR url, __in WFC_WEB_POST_DATA_P * data, __inout_opt std::wstring * response ) noexcept
 {
    WFC_VALIDATE_POINTER( url );
    WFC_VALIDATE_POINTER( data );

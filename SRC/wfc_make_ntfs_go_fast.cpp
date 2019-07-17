@@ -50,7 +50,7 @@ static char THIS_FILE[] = __FILE__;
 #define new DEBUG_NEW
 #endif // _DEBUG
 
-__checkReturn bool PASCAL Win32FoundationClasses::wfc_make_ntfs_go_fast( void ) noexcept
+_Check_return_ bool PASCAL Win32FoundationClasses::wfc_make_ntfs_go_fast( void ) noexcept
 {
    CRegistry registry;
 

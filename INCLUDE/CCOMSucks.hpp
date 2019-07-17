@@ -59,8 +59,8 @@ class CCOMSucks
 {
    public:
 
-       CCOMSucks(const CCOMSucks&) = delete;
-       CCOMSucks& operator=(const CCOMSucks&) = delete;
+       CCOMSucks(CCOMSucks const&) = delete;
+       CCOMSucks& operator=(CCOMSucks const&) = delete;
        
        CCOMSucks();
 

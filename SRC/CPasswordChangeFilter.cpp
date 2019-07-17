@@ -145,7 +145,7 @@ bool CPasswordChangeFilter::OnInitialize( void ) noexcept
    return( true );
 }
 
-__checkReturn bool CPasswordChangeFilter::RemoveFilter( __in std::wstring const& dll_name ) noexcept
+_Check_return_ bool CPasswordChangeFilter::RemoveFilter( __in std::wstring const& dll_name ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 

@@ -51,7 +51,7 @@ static char THIS_FILE[] = __FILE__;
 
 USING_WFC_NAMESPACE
 
-__checkReturn bool PASCAL Win32FoundationClasses::wfc_enable_privilege( __in_z LPCTSTR privilege_name ) noexcept
+_Check_return_ bool PASCAL Win32FoundationClasses::wfc_enable_privilege( __in_z LPCTSTR privilege_name ) noexcept
 {
    WFC_TRY
    {

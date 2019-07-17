@@ -97,7 +97,7 @@ class CRandomNumberGenerator2
       _Check_return_ uint32_t Uint32( __in uint32_t const minimum_value, __in uint32_t const maximum_value ) noexcept;
       _Check_return_ uint64_t Uint64( __in uint64_t const minimum_value, __in uint64_t const maximum_value ) noexcept;
       _Check_return_ uint64_t Uint64(__in_ecount(number_of_values) VALUE_RANGE const * values, _In_ std::size_t const number_of_values) noexcept;
-      _Check_return_ bool IsTrue( __in const double percentage ) noexcept;
+      _Check_return_ bool IsTrue( __in double const percentage ) noexcept;
       void Fill( __in uint32_t const minimum_length, __in uint32_t const maximum_length, __out std::wstring& destination ) noexcept;
       void Fill( __in FILETIME const& minimum_value, __in FILETIME const& maximum_value, __out FILETIME& destination ) noexcept;
       _Check_return_ uint32_t OneOf( __in_ecount( number_of_values ) uint32_t const * values, __in std::size_t number_of_values ) noexcept;

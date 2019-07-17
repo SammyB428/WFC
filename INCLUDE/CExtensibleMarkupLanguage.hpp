@@ -457,7 +457,7 @@ class CExtensibleMarkupLanguageDocument
       virtual void  GetAutomaticIndentation( _Out_ bool& automatically_indent, _Out_ uint32_t& level, _Out_ uint32_t& indent_by ) const noexcept;
       inline  constexpr _Check_return_ uint32_t GetConversionCodePage( void ) const noexcept { return( m_ConversionCodePage ); }
       virtual void  GetEncoding( _Out_ std::wstring& encoding ) const noexcept;
-      virtual _Check_return_ const CExtensibleMarkupLanguageEntities& GetEntities( void ) const noexcept;
+      virtual _Check_return_ CExtensibleMarkupLanguageEntities const& GetEntities( void ) const noexcept;
       virtual _Check_return_ bool GetIgnoreWhiteSpace( void ) const noexcept;
       virtual void  GetNamespace( _Out_ std::wstring& name_space ) const noexcept;
       virtual _Check_return_ std::size_t GetNumberOfElements( void ) const noexcept;

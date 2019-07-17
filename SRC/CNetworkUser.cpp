@@ -575,7 +575,7 @@ _Check_return_ BOOL CNetworkUsers::CreateComputerAccount( __in_z_opt LPCTSTR com
    WFC_END_CATCH_ALL
 }
 
-BOOL CNetworkUsers::Delete( __in const CNetworkUserInformation& user_to_delete ) noexcept
+BOOL CNetworkUsers::Delete( __in CNetworkUserInformation const& user_to_delete ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -607,7 +607,7 @@ BOOL CNetworkUsers::Delete( __in const CNetworkUserInformation& user_to_delete )
    return( FALSE );
 }
 
-BOOL CNetworkUsers::Delete( __in const std::wstring& user_to_delete ) noexcept
+BOOL CNetworkUsers::Delete( __in std::wstring const& user_to_delete ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 

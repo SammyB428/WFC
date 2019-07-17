@@ -98,7 +98,7 @@ void CTalkingSocket::m_Initialize( void ) noexcept
 ** The Socket manipulation routines
 */
 
-__checkReturn bool CTalkingSocket::Open( void ) noexcept
+_Check_return_ bool CTalkingSocket::Open( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( m_Thunk_p );
@@ -146,7 +146,7 @@ __checkReturn bool CTalkingSocket::Open( void ) noexcept
 
 #if ! defined( UNICODE )
 
-   server_address.sin_addr.s_addr = m_Thunk_p->inet_addr( (const char *) Address );
+   server_address.sin_addr.s_addr = m_Thunk_p->inet_addr( reinterpret_cast<char const *>(Address) );
 
 #else
 
@@ -197,7 +197,7 @@ __checkReturn bool CTalkingSocket::Open( void ) noexcept
 
 #pragma warning( disable : 4100 )
 
-__checkReturn bool CTalkingSocket::Open( __in_z LPCTSTR a, __in const UINT port_number ) noexcept
+_Check_return_ bool CTalkingSocket::Open( __in_z LPCTSTR a, __in UINT const port_number ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( a );
@@ -216,7 +216,7 @@ __checkReturn bool CTalkingSocket::Open( __in_z LPCTSTR a, __in const UINT port_
 
 #pragma warning( default : 4100 )
 
-__checkReturn bool CTalkingSocket::Open( __in std::wstring const& a, __in short const p ) noexcept
+_Check_return_ bool CTalkingSocket::Open( __in std::wstring const& a, __in short const p ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    ASSERT( p > 0 );
@@ -227,7 +227,7 @@ __checkReturn bool CTalkingSocket::Open( __in std::wstring const& a, __in short 
    return( Open() );
 }
 
-__checkReturn bool CTalkingSocket::Open( __in std::wstring const& _host_name, __in std::wstring const& _port_name ) noexcept
+_Check_return_ bool CTalkingSocket::Open( __in std::wstring const& _host_name, __in std::wstring const& _port_name ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 

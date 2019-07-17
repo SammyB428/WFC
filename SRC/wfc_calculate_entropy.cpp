@@ -220,7 +220,7 @@ _Check_return_ double Win32FoundationClasses::wfc_get_buffer_entropy(__in_bcount
     return(Win32FoundationClasses::wfc_calculate_entropy(counts, std::size(counts)));
 }
 
-__checkReturn bool Win32FoundationClasses::wfcGenRandom( _Out_writes_bytes_(RandomBufferLength) PVOID RandomBuffer, _In_ ULONG const RandomBufferLength ) noexcept
+_Check_return_ bool Win32FoundationClasses::wfcGenRandom( _Out_writes_bytes_(RandomBufferLength) PVOID RandomBuffer, _In_ ULONG const RandomBufferLength ) noexcept
 {
    static CRandomNumberGenerator2 * static_rng = nullptr;
 
@@ -463,7 +463,7 @@ _Check_return_ int64_t Win32FoundationClasses::find_byte( _In_ uint8_t const byt
     return( find_byte_implementation( byte_value, buffer, buffer_size ) );
 }
 
-__checkReturn bool Win32FoundationClasses::wfc_process_buffer( __in uint8_t const * buffer, __in std::size_t const number_of_bytes_in_buffer, __in std::size_t const step_size, __inout PROCESS_BUFFER_CALLBACK function_to_call, __inout_opt void * callback_context ) noexcept
+_Check_return_ bool Win32FoundationClasses::wfc_process_buffer( __in uint8_t const * buffer, __in std::size_t const number_of_bytes_in_buffer, __in std::size_t const step_size, __inout PROCESS_BUFFER_CALLBACK function_to_call, __inout_opt void * callback_context ) noexcept
 {
     if (function_to_call == nullptr )
     {

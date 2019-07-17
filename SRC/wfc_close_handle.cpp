@@ -51,7 +51,7 @@ static char THIS_FILE[] = __FILE__;
 
 USING_WFC_NAMESPACE
 
-__checkReturn bool PASCAL Win32FoundationClasses::wfc_close_handle( __in_opt HANDLE handle ) noexcept
+_Check_return_ bool PASCAL Win32FoundationClasses::wfc_close_handle( __in_opt HANDLE handle ) noexcept
 {
     if (handle == 0 || handle == INVALID_HANDLE_VALUE)
     {
@@ -70,7 +70,7 @@ __checkReturn bool PASCAL Win32FoundationClasses::wfc_close_handle( __in_opt HAN
    return( false );
 }
 
-__checkReturn SECURITY_DESCRIPTOR * Win32FoundationClasses::wfc_create_null_dacl( void ) noexcept
+_Check_return_ SECURITY_DESCRIPTOR * Win32FoundationClasses::wfc_create_null_dacl( void ) noexcept
 {
    // We need to create a file that *ANY* process on the system can
    // open. To do this we, we need to create the file with a NULL DACL.

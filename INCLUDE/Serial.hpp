@@ -53,12 +53,12 @@ class CSerialFile : public CDummyFile
 
    protected:
 
-      bool m_IsOpen;
-      bool m_PurgeBufferOnError;
+       bool m_IsOpen{ false };
+       bool m_PurgeBufferOnError{ false };
 
-      DWORD m_CommunicationErrorCodes;
-      DWORD m_InputBufferSize;
-      DWORD m_OutputBufferSize;
+       DWORD m_CommunicationErrorCodes{ 0 };
+       DWORD m_InputBufferSize{ 0 };
+       DWORD m_OutputBufferSize{ 0 };
 
       COMSTAT m_CommunicationsStatus;
 
@@ -122,7 +122,7 @@ class CSerialFile : public CDummyFile
       virtual _Check_return_ BOOL  CancelWaitFor( void ) noexcept;
       virtual _Check_return_ BOOL  ClearBreak( void ) noexcept;
       virtual void  Close( void ) noexcept;
-      virtual _Check_return_ BOOL  ConfigurationDialog( __inout CCommunicationsConfiguration& configuration, __in const BOOL save_changes = TRUE, __in const HWND parent_window_handle = static_cast< HWND >( NULL ) ) noexcept;
+      virtual _Check_return_ BOOL  ConfigurationDialog( __inout CCommunicationsConfiguration& configuration, __in BOOL const save_changes = TRUE, __in HWND const parent_window_handle = static_cast< HWND >( NULL ) ) noexcept;
       virtual _Check_return_ HANDLE Detach( void ) noexcept;
       virtual _Check_return_ DWORD GetBaudRate( void ) noexcept;
       virtual _Check_return_ BOOL  GetConfiguration( __inout CCommunicationsConfiguration& configuration ) noexcept;
@@ -140,12 +140,12 @@ class CSerialFile : public CDummyFile
       _Check_return_ bool  Open( __in_z LPCTSTR channel_name, __in UINT const open_flags = 0 ) noexcept override;
 
       virtual _Check_return_ BOOL  Purge( __in DWORD const what_to_purge = purgeAll ) noexcept;
-      virtual _Check_return_ UINT  Read( __out_bcount( length ) void * buffer, __in const UINT length ) noexcept;
-      virtual void ReplaceGarbledCharacter( __in bool const yes_or_no = TRUE, __in const BYTE character_to_replace_the_garbled_one_with = ' ' ) noexcept;
+      virtual _Check_return_ UINT  Read( __out_bcount( length ) void * buffer, __in UINT const length ) noexcept;
+      virtual void ReplaceGarbledCharacter( __in bool const yes_or_no = TRUE, __in uint8_t const character_to_replace_the_garbled_one_with = ' ' ) noexcept;
 
       virtual _Check_return_ bool  SetBaudRate( __in uint32_t const baud_rate ) noexcept;
       virtual _Check_return_ BOOL  SetBreak( void ) noexcept;
-      virtual _Check_return_ BOOL  SetCharacterToWaitFor( __in BYTE const character_to_wait_for ) noexcept;
+      virtual _Check_return_ BOOL  SetCharacterToWaitFor( __in uint8_t const character_to_wait_for ) noexcept;
       virtual _Check_return_ BOOL  SetDataTerminalReady( __in BOOL const set_DTR_on = TRUE ) noexcept;
       virtual void  SetFlowControl( __in DWORD const flow_control ) noexcept;
       virtual void  SetInputBufferSize( __in DWORD const buffer_size ) noexcept;

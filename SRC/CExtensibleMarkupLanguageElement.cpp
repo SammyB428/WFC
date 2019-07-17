@@ -992,7 +992,7 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::GetChildText( _In_z_ wchar
 
     child->GetBeginning( beginning );
 
-    CExtensibleMarkupLanguageElement const * first_child = child->GetTheFirstChild();
+    auto const first_child = child->GetTheFirstChild();
 
     if ( first_child != nullptr )
     {

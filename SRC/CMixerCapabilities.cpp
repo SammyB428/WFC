@@ -57,13 +57,13 @@ CMixerCapabilities::CMixerCapabilities()
    Empty();
 }
 
-CMixerCapabilities::CMixerCapabilities( __in const CMixerCapabilities& source )
+CMixerCapabilities::CMixerCapabilities( __in CMixerCapabilities const& source )
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );
 }
 
-CMixerCapabilities::CMixerCapabilities( __in const MIXERCAPS& source )
+CMixerCapabilities::CMixerCapabilities( __in MIXERCAPS const& source )
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );
@@ -75,7 +75,7 @@ CMixerCapabilities::~CMixerCapabilities()
    Empty();
 }
 
-void CMixerCapabilities::Copy( __in const CMixerCapabilities& source ) noexcept
+void CMixerCapabilities::Copy( __in CMixerCapabilities const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -95,7 +95,7 @@ void CMixerCapabilities::Copy( __in const CMixerCapabilities& source ) noexcept
    NumberOfDestinations = source.NumberOfDestinations;
 }
 
-void CMixerCapabilities::Copy( __in const MIXERCAPS& source ) noexcept
+void CMixerCapabilities::Copy( __in MIXERCAPS const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -135,7 +135,7 @@ void CMixerCapabilities::Empty( void ) noexcept
    NumberOfDestinations = 0;
 }
 
-__checkReturn bool CMixerCapabilities::Get( __in const UINT device_number ) noexcept
+_Check_return_ bool CMixerCapabilities::Get( __in UINT const device_number ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -157,14 +157,14 @@ __checkReturn bool CMixerCapabilities::Get( __in const UINT device_number ) noex
    return( true );
 }
 
-CMixerCapabilities& CMixerCapabilities::operator = ( __in const CMixerCapabilities& source ) noexcept
+CMixerCapabilities& CMixerCapabilities::operator = ( __in CMixerCapabilities const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );
    return( *this );
 }
 
-CMixerCapabilities& CMixerCapabilities::operator = ( __in const MIXERCAPS& source ) noexcept
+CMixerCapabilities& CMixerCapabilities::operator = ( __in MIXERCAPS const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );

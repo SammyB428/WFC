@@ -117,27 +117,27 @@ class CServiceControlManager
       virtual ~CServiceControlManager();
 
       void Close( void ) noexcept;
-      __checkReturn bool  Continue( _In_z_ wchar_t const * service_name ) noexcept;
-      __checkReturn bool  EnableInteractiveServices( _In_ bool enable_interactive_services = true ) noexcept;
-      __checkReturn bool  EnumerateStatus( _In_ uint32_t state = SERVICE_ACTIVE, _In_ uint32_t type = SERVICE_WIN32 ) noexcept;
-      __checkReturn bool  GetConfiguration(_In_z_ wchar_t const * service_name, __out CServiceConfiguration& configuration ) noexcept;
-      __checkReturn bool  GetDependencies(_In_z_ wchar_t const * service_name, __out std::vector<std::wstring>& dependencies ) noexcept;
-      __checkReturn bool  GetDisplayName(_In_z_ wchar_t const * real_name, __out std::wstring& friendly_name ) noexcept;
-      __checkReturn uint32_t GetErrorCode( void ) const noexcept;
+      _Check_return_ bool  Continue( _In_z_ wchar_t const * service_name ) noexcept;
+      _Check_return_ bool  EnableInteractiveServices( _In_ bool enable_interactive_services = true ) noexcept;
+      _Check_return_ bool  EnumerateStatus( _In_ uint32_t state = SERVICE_ACTIVE, _In_ uint32_t type = SERVICE_WIN32 ) noexcept;
+      _Check_return_ bool  GetConfiguration(_In_z_ wchar_t const * service_name, __out CServiceConfiguration& configuration ) noexcept;
+      _Check_return_ bool  GetDependencies(_In_z_ wchar_t const * service_name, __out std::vector<std::wstring>& dependencies ) noexcept;
+      _Check_return_ bool  GetDisplayName(_In_z_ wchar_t const * real_name, __out std::wstring& friendly_name ) noexcept;
+      _Check_return_ uint32_t GetErrorCode( void ) const noexcept;
                     void  GetErrorMessage( __inout std::wstring& error_message ) const noexcept;
-      __checkReturn SC_HANDLE GetHandle( void ) const noexcept;
-      __checkReturn bool  GetKeyName(_In_z_ wchar_t const * friendly_name, __out std::wstring& real_name ) noexcept;
-      __checkReturn bool  GetNext( __out CServiceNameAndStatus& status ) noexcept;
-      __checkReturn bool  Install(_In_z_ wchar_t const * service_name, _In_z_ wchar_t const * friendly_name, __in_z_opt wchar_t const * name_of_executable_file = nullptr ) noexcept;
-      __checkReturn bool  IsDatabaseLocked( __out std::wstring& who_locked_it, __out CTimeSpan& how_long_it_has_been_locked ) noexcept;
-      __checkReturn bool  LockDatabase( void ) noexcept;
-      __checkReturn bool  Open( __in uint32_t const what_to_open  = SC_MANAGER_ALL_ACCESS,
+      _Check_return_ SC_HANDLE GetHandle( void ) const noexcept;
+      _Check_return_ bool  GetKeyName(_In_z_ wchar_t const * friendly_name, __out std::wstring& real_name ) noexcept;
+      _Check_return_ bool  GetNext( __out CServiceNameAndStatus& status ) noexcept;
+      _Check_return_ bool  Install(_In_z_ wchar_t const * service_name, _In_z_ wchar_t const * friendly_name, __in_z_opt wchar_t const * name_of_executable_file = nullptr ) noexcept;
+      _Check_return_ bool  IsDatabaseLocked( __out std::wstring& who_locked_it, __out CTimeSpan& how_long_it_has_been_locked ) noexcept;
+      _Check_return_ bool  LockDatabase( void ) noexcept;
+      _Check_return_ bool  Open( __in uint32_t const what_to_open  = SC_MANAGER_ALL_ACCESS,
                           __in_z_opt wchar_t const * database_name = nullptr,
                           __in_z_opt wchar_t const * machine_name  = nullptr ) noexcept;
-      __checkReturn bool  Pause(_In_z_ wchar_t const * service_name ) noexcept;
-      __checkReturn bool  Remove(_In_z_ wchar_t const * service_name ) noexcept;
-      __checkReturn bool  WaitForStop(_In_z_ wchar_t const * service_name) noexcept;
-      __checkReturn bool  SetConfiguration(_In_z_ wchar_t const * service_name,
+      _Check_return_ bool  Pause(_In_z_ wchar_t const * service_name ) noexcept;
+      _Check_return_ bool  Remove(_In_z_ wchar_t const * service_name ) noexcept;
+      _Check_return_ bool  WaitForStop(_In_z_ wchar_t const * service_name) noexcept;
+      _Check_return_ bool  SetConfiguration(_In_z_ wchar_t const * service_name,
                                       _In_ uint32_t const  when_to_start           = SERVICE_NO_CHANGE,
                                       _In_ uint32_t const  type_of_service         = SERVICE_NO_CHANGE,
                                       _In_ uint32_t const  error_control           = SERVICE_NO_CHANGE,
@@ -147,9 +147,9 @@ class CServiceControlManager
                                       __in_z_opt wchar_t const * start_name              = nullptr,
                                       __in_z_opt wchar_t const * password                = nullptr,
                                       __in_z_opt wchar_t const * display_name            = nullptr ) noexcept;
-      __checkReturn bool  Start(_In_z_ wchar_t const * service_name, _In_ uint32_t const service_argc = 0, __in_ecount_z_opt( service_argc ) wchar_t const * * service_argv = nullptr ) noexcept;
-      __checkReturn bool  Stop(_In_z_ wchar_t const * service_name ) noexcept;
-      __checkReturn bool  UnlockDatabase( void ) noexcept;
+      _Check_return_ bool  Start(_In_z_ wchar_t const * service_name, _In_ uint32_t const service_argc = 0, __in_ecount_z_opt( service_argc ) wchar_t const * * service_argv = nullptr ) noexcept;
+      _Check_return_ bool  Stop(_In_z_ wchar_t const * service_name ) noexcept;
+      _Check_return_ bool  UnlockDatabase( void ) noexcept;
 };
 
 #endif // SERVICE_MANAGER_CLASS_HEADER

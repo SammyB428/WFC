@@ -58,8 +58,8 @@ class CWorkstationUser
       ** net API header files...
       */
 
-      CWorkstationUser( __in const WKSTA_USER_INFO_1 * source );
-      CWorkstationUser( __in const CWorkstationUser& source );
+      CWorkstationUser( __in WKSTA_USER_INFO_1 const * source );
+      CWorkstationUser( __in CWorkstationUser const& source );
       virtual ~CWorkstationUser();
 
       /*
@@ -76,10 +76,10 @@ class CWorkstationUser
       ** net API header files...
       */
 
-      virtual void Copy( __in const WKSTA_USER_INFO_1 * source ) noexcept;
-      virtual void Copy( __in const CWorkstationUser& source ) noexcept;
+      virtual void Copy( __in WKSTA_USER_INFO_1 const * source ) noexcept;
+      virtual void Copy( __in CWorkstationUser const& source ) noexcept;
       virtual void Empty( void ) noexcept;
-      virtual const CWorkstationUser& operator = ( __in const CWorkstationUser& source ) noexcept;
+      virtual CWorkstationUser const& operator = ( __in CWorkstationUser const& source ) noexcept;
 };
 
 class CWorkstationInformation
@@ -97,35 +97,35 @@ class CWorkstationInformation
       ** net API header files...
       */
 
-      CWorkstationInformation( __in const WKSTA_INFO_100 * source );
-      CWorkstationInformation( __in const WKSTA_INFO_101 * source );
-      CWorkstationInformation( __in const WKSTA_INFO_102 * source );
-      CWorkstationInformation( __in const CWorkstationInformation& source );
+      CWorkstationInformation( __in WKSTA_INFO_100 const * source );
+      CWorkstationInformation( __in WKSTA_INFO_101 const * source );
+      CWorkstationInformation( __in WKSTA_INFO_102 const * source );
+      CWorkstationInformation( __in CWorkstationInformation const& source );
       virtual ~CWorkstationInformation();
 
       /*
       ** Patterned after WKSTA_INFO_102
       */
 
-      DWORD   PlatformID;
+      DWORD   PlatformID{ 0 };
       std::wstring ComputerName;
       std::wstring LANGroup;
-      DWORD   MajorVersion;
-      DWORD   MinorVersion;
+      DWORD   MajorVersion{ 0 };
+      DWORD   MinorVersion{ 0 };
       std::wstring LANRoot;
-      DWORD   NumberOfLoggedOnUsers;
+      DWORD   NumberOfLoggedOnUsers{ 0 };
 
       /*
       ** Can't make Copy take a const pointer because Microsoft screwed up the 
       ** net API header files...
       */
 
-      virtual void Copy( __in const WKSTA_INFO_100 * source ) noexcept;
-      virtual void Copy( __in const WKSTA_INFO_101 * source ) noexcept;
-      virtual void Copy( __in const WKSTA_INFO_102 * source ) noexcept;
-      virtual void Copy( __in const CWorkstationInformation& source ) noexcept;
+      virtual void Copy( __in WKSTA_INFO_100 const * source ) noexcept;
+      virtual void Copy( __in WKSTA_INFO_101 const * source ) noexcept;
+      virtual void Copy( __in WKSTA_INFO_102 const * source ) noexcept;
+      virtual void Copy( __in CWorkstationInformation const& source ) noexcept;
       virtual void Empty( void ) noexcept;
-      virtual const CWorkstationInformation& operator = ( __in const CWorkstationInformation& source ) noexcept;
+      virtual CWorkstationInformation const& operator = ( __in CWorkstationInformation const& source ) noexcept;
 };
 
 class CWorkstationTransport
@@ -143,29 +143,29 @@ class CWorkstationTransport
       ** net API header files...
       */
 
-      CWorkstationTransport( __in const WKSTA_TRANSPORT_INFO_0 * source );
-      CWorkstationTransport( __in const CWorkstationTransport& source );
+      CWorkstationTransport( __in WKSTA_TRANSPORT_INFO_0 const * source );
+      CWorkstationTransport( __in CWorkstationTransport const& source );
       virtual ~CWorkstationTransport();
 
       /*
       ** Patterned after WKSTA_USER_INFO_1
       */
 
-      DWORD   QualityOfService;
-      DWORD   NumberOfVirtualCircuits;
+      DWORD   QualityOfService{ 0 };
+      DWORD   NumberOfVirtualCircuits{ 0 };
       std::wstring Name;
       std::wstring Address;
-      BOOL    WANish;
+      BOOL    WANish{ FALSE };
 
       /*
       ** Can't make Copy take a const pointer because Microsoft screwed up the 
       ** net API header files...
       */
 
-      virtual void Copy( __in const WKSTA_TRANSPORT_INFO_0 * source ) noexcept;
-      virtual void Copy( __in const CWorkstationTransport& source ) noexcept;
+      virtual void Copy( __in WKSTA_TRANSPORT_INFO_0 const * source ) noexcept;
+      virtual void Copy( __in CWorkstationTransport const& source ) noexcept;
       virtual void Empty( void )  noexcept;
-      virtual const CWorkstationTransport& operator = ( __in const CWorkstationTransport& source ) noexcept;
+      virtual CWorkstationTransport const& operator = ( __in CWorkstationTransport const& source ) noexcept;
 };
 
 class CNetWorkstation : public CNetwork
@@ -180,46 +180,46 @@ class CNetWorkstation : public CNetwork
       ** Workstation information variables
       */
 
-      WKSTA_INFO_100 * m_InformationBuffer100;
-      WKSTA_INFO_101 * m_InformationBuffer101;
-      WKSTA_INFO_102 * m_InformationBuffer102;
+       WKSTA_INFO_100 * m_InformationBuffer100{ nullptr };
+       WKSTA_INFO_101 * m_InformationBuffer101{ nullptr };
+       WKSTA_INFO_102 * m_InformationBuffer102{ nullptr };
 
       /*
       ** Transport enumeration variables
       */
 
-      WKSTA_TRANSPORT_INFO_0 * m_TransportBuffer;
-      DWORD m_TransportResumeHandle;
-      DWORD m_TransportCurrentEntryNumber;
-      DWORD m_TransportNumberOfEntriesRead;
-      DWORD m_TransportTotalNumberOfEntries;
+       WKSTA_TRANSPORT_INFO_0 * m_TransportBuffer{ nullptr };
+       DWORD m_TransportResumeHandle{ 0 };
+       DWORD m_TransportCurrentEntryNumber{ 0 };
+       DWORD m_TransportNumberOfEntriesRead{ 0 };
+       DWORD m_TransportTotalNumberOfEntries{ 0 };
 
       /*
       ** User enumeration variables
       */
 
-      WKSTA_USER_INFO_1 * m_UserBuffer;
-      DWORD m_UserResumeHandle;
-      DWORD m_UserCurrentEntryNumber;
-      DWORD m_UserNumberOfEntriesRead;
-      DWORD m_UserTotalNumberOfEntries;
+       WKSTA_USER_INFO_1 * m_UserBuffer{ nullptr };
+       DWORD m_UserResumeHandle{ 0 };
+       DWORD m_UserCurrentEntryNumber{ 0 };
+       DWORD m_UserNumberOfEntriesRead{ 0 };
+       DWORD m_UserTotalNumberOfEntries{ 0 };
 
    public:
 
-       CNetWorkstation(__in const CNetWorkstation&) = delete;
-       CNetWorkstation& operator=(__in const CNetWorkstation&) = delete;
+       CNetWorkstation(__in CNetWorkstation const&) = delete;
+       CNetWorkstation& operator=(__in CNetWorkstation const&) = delete;
        CNetWorkstation();
       CNetWorkstation( __in_z_opt LPCTSTR machine_name );
       virtual ~CNetWorkstation();
 
       virtual void Close( void ) noexcept;
-      virtual __checkReturn BOOL EnumerateInformation( void ) noexcept;
-      virtual __checkReturn BOOL EnumerateTransports( void ) noexcept;
-      virtual __checkReturn BOOL EnumerateUsers( void ) noexcept;
-      virtual __checkReturn BOOL GetCurrentUser( __inout CWorkstationUser& information ) noexcept;
-      virtual __checkReturn BOOL GetNext( __inout CWorkstationInformation& information ) noexcept;
-      virtual __checkReturn BOOL GetNext( __inout CWorkstationTransport& information ) noexcept;
-      virtual __checkReturn BOOL GetNext( __inout CWorkstationUser& information ) noexcept;
+      virtual _Check_return_ BOOL EnumerateInformation( void ) noexcept;
+      virtual _Check_return_ BOOL EnumerateTransports( void ) noexcept;
+      virtual _Check_return_ BOOL EnumerateUsers( void ) noexcept;
+      virtual _Check_return_ BOOL GetCurrentUser( __inout CWorkstationUser& information ) noexcept;
+      virtual _Check_return_ BOOL GetNext( __inout CWorkstationInformation& information ) noexcept;
+      virtual _Check_return_ BOOL GetNext( __inout CWorkstationTransport& information ) noexcept;
+      virtual _Check_return_ BOOL GetNext( __inout CWorkstationUser& information ) noexcept;
 };
 
 #endif // NET_WORKSTATION_CLASS_HEADER

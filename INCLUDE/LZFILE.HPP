@@ -51,14 +51,14 @@ class CLZFile : public CDummyFile
 
    protected:
 
-      INT m_LZFileHandle;
+       INT m_LZFileHandle{ 0 };
 
       COFStruct m_OpenFileStructure;
       
    public:
 
-       CLZFile(const CLZFile&) = delete;
-       CLZFile& operator=(const CLZFile&) = delete;
+       CLZFile(CLZFile const&) = delete;
+       CLZFile& operator=(CLZFile const&) = delete;
 
        CLZFile();
 

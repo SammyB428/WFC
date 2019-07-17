@@ -79,7 +79,7 @@ class CNetworkScheduleJob
       virtual void Copy( __in AT_INFO const * source ) noexcept;
       virtual void Copy( __in CNetworkScheduleJob const& source ) noexcept;
       virtual void Empty( void ) noexcept;
-      virtual const CNetworkScheduleJob& operator = ( __in CNetworkScheduleJob const& source ) noexcept;
+      virtual CNetworkScheduleJob const& operator = ( __in CNetworkScheduleJob const& source ) noexcept;
 
 #if defined( _DEBUG ) && ! defined( WFC_NO_DUMPING )
       virtual void Dump( CDumpContext& dump_context ) const;
@@ -99,24 +99,24 @@ class CNetworkScheduler : public CNetwork
       ** Workstation information variables
       */
 
-      FILE_INFO_3 * m_103InformationBuffer;
+       FILE_INFO_3* m_103InformationBuffer{ nullptr };
 
       /*
       ** File Information enumeration variables
       */
 
-      DWORD m_103Index;
-      DWORD m_103ResumeHandle;
-      DWORD m_103CurrentEntryNumber;
-      DWORD m_103NumberOfEntriesRead;
-      DWORD m_103TotalNumberOfEntries;
+       DWORD m_103Index{ 0 };
+       DWORD m_103ResumeHandle{ 0 };
+       DWORD m_103CurrentEntryNumber{ 0 };
+       DWORD m_103NumberOfEntriesRead{ 0 };
+       DWORD m_103TotalNumberOfEntries{ 0 };
 
       BOOL m_GetChunk( void ) noexcept;
 
    public:
 
-       CNetworkFiles(const CNetworkFiles&) = delete;
-       CNetworkFiles& operator=(const CNetworkFiles&) = delete;
+       CNetworkFiles(CNetworkFiles const&) = delete;
+       CNetworkFiles& operator=(CNetworkFiles const&) = delete;
        CNetworkFiles();
       CNetworkFiles( LPCTSTR machine_name );
       virtual ~CNetworkFiles();

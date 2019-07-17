@@ -62,14 +62,14 @@ CInternetProtocolProjectionResult::CInternetProtocolProjectionResult()
    Empty();
 }
 
-CInternetProtocolProjectionResult::CInternetProtocolProjectionResult( const CInternetProtocolProjectionResult& source )
+CInternetProtocolProjectionResult::CInternetProtocolProjectionResult( CInternetProtocolProjectionResult const& source )
 {
    WFC_VALIDATE_POINTER( this );
    Empty();
    Copy( source );
 }
 
-CInternetProtocolProjectionResult::CInternetProtocolProjectionResult( const CRemoteAccessServiceConnectionProjection& source )
+CInternetProtocolProjectionResult::CInternetProtocolProjectionResult( CRemoteAccessServiceConnectionProjection const& source )
 {
    WFC_VALIDATE_POINTER( this );
    Empty();
@@ -91,14 +91,14 @@ CInternetProtocolProjectionResult::~CInternetProtocolProjectionResult()
    Empty();
 }
 
-void CInternetProtocolProjectionResult::Copy( const CInternetProtocolProjectionResult& source )
+void CInternetProtocolProjectionResult::Copy( CInternetProtocolProjectionResult const& source )
 {
    WFC_VALIDATE_POINTER( this );
    ErrorCode = source.ErrorCode;
    Address   = source.Address;
 }
 
-void CInternetProtocolProjectionResult::Copy( const CRemoteAccessServiceConnectionProjection& source )
+void CInternetProtocolProjectionResult::Copy( CRemoteAccessServiceConnectionProjection const& source )
 {
    WFC_VALIDATE_POINTER( this );
    Empty();
@@ -152,7 +152,7 @@ void CInternetProtocolProjectionResult::Empty( void )
    Address.Empty();
 }
 
-CInternetProtocolProjectionResult& CInternetProtocolProjectionResult::operator = ( const CInternetProtocolProjectionResult& source )
+CInternetProtocolProjectionResult& CInternetProtocolProjectionResult::operator = ( CInternetProtocolProjectionResult const& source )
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );

@@ -73,12 +73,12 @@ public:
     CMatchingCharacters(CMatchingCharacters const&) = delete;
     CMatchingCharacters& operator=(CMatchingCharacters const&) = delete;
 
-    inline CMatchingCharacters()
+    inline constexpr CMatchingCharacters() noexcept
     {
         Empty();
     }
 
-    inline void Empty()
+    inline constexpr void Empty( void ) noexcept
     {
         Open = 0;
         Close = 0;
@@ -86,7 +86,7 @@ public:
     }
 };
 
-inline constexpr _Check_return_ bool wfc_is_punctuation( _In_ uint32_t const character )
+inline constexpr _Check_return_ bool wfc_is_punctuation( _In_ uint32_t const character ) noexcept
 {
     if ( character >= 0x21 && character <= 0x2F )
     {
@@ -145,7 +145,7 @@ public:
         Empty();
     }
 
-    _Check_return_ double AverageLineLength( void ) const noexcept
+    inline constexpr _Check_return_ double AverageLineLength( void ) const noexcept
     {
         uint64_t const number_of_non_new_line_characters = NumberOfCharactersOutsideASCII + NumberOfSpaces + NumberOfLetters + NumberOfDigits + NumberOfPunctuation;
 
@@ -154,12 +154,12 @@ public:
             return( (double) number_of_non_new_line_characters );
         }
 
-        double const return_value = (double) ( (double) number_of_non_new_line_characters / (double) NumberOfLines );
+        double const return_value = static_cast<double>( (double) number_of_non_new_line_characters / (double) NumberOfLines );
 
         return( return_value );
     }
 
-    inline void Empty() noexcept
+    inline constexpr void Empty() noexcept
     {
         NumberOfCharacters      = 0;
         NumberOfCharactersOutsideASCII = 0;
@@ -215,7 +215,7 @@ public:
     CDataParser(_In_ CDataParser const&) = delete;
     _Check_return_ CDataParser& operator=(_In_ CDataParser const&) = delete;
 
-    inline CDataParser()
+    inline constexpr CDataParser() noexcept
     {
         m_AutomaticallyDelete          = false;
         m_Data                         = nullptr;
@@ -258,7 +258,7 @@ public:
         Empty();
     }
 
-    inline _Check_return_ std::size_t NumberOfBytesPerCharacter(void) const noexcept
+    inline constexpr _Check_return_ std::size_t NumberOfBytesPerCharacter(void) const noexcept
     {
         if (IsTextUCS4())
         {
@@ -800,7 +800,7 @@ public:
 
             found_at.Copy( parse_point );
 
-            auto pattern_length = bytes_to_find.size();
+            auto const pattern_length = bytes_to_find.size();
 
             auto pattern_buffer = bytes_to_find.data();
 
@@ -1070,7 +1070,7 @@ public:
 
         bool const return_value = ReadUInt32LittleEndian( parse_point, first_value );
 
-        value = (int32_t) first_value;
+        value = static_cast<int32_t>(first_value);
 
         return( return_value );
     }
@@ -1109,7 +1109,7 @@ public:
 
         bool const return_value = ReadUInt64BigEndian( parse_point, first_value );
 
-        value = (int64_t) first_value;
+        value = static_cast<int64_t>(first_value);
 
         return( return_value );
     }
@@ -1148,7 +1148,7 @@ public:
 
         bool const return_value = ReadUInt64LittleEndian( parse_point, first_value );
 
-        value = (int64_t) first_value;
+        value = static_cast<int64_t>(first_value);
 
         return( return_value );
     }
@@ -1316,7 +1316,7 @@ public:
 
             number_of_bytes_to_skip_ahead += ( number_of_bytes_per_character - 1 );
 
-            uint64_t last_index = ( parse_point.GetIndex() + number_of_bytes_to_skip_ahead );
+            uint64_t const last_index = ( parse_point.GetIndex() + number_of_bytes_to_skip_ahead );
 
             if ( last_index >= m_NumberOfBytes )
             {
@@ -1350,7 +1350,7 @@ public:
                         return( 0 );
                     }
 
-                    uint8_t big_end = m_Bytes[ parse_point.GetIndex() ];
+                    uint8_t const big_end = m_Bytes[ parse_point.GetIndex() ];
                     parse_point.AutoIncrement( big_end );
 
 #if defined( _MSC_VER )
@@ -1395,7 +1395,7 @@ public:
                         return( 0 );
                     }
 
-                    uint8_t byte_2 = m_Bytes[ parse_point.GetIndex() ];
+                    uint8_t const byte_2 = m_Bytes[ parse_point.GetIndex() ];
                     parse_point.AutoIncrement( byte_2 );
 
                     if ( parse_point.GetIndex() >= m_NumberOfBytes )
@@ -1404,7 +1404,7 @@ public:
                         return( 0 );
                     }
 
-                    uint8_t byte_3 = m_Bytes[ parse_point.GetIndex() ];
+                    uint8_t const byte_3 = m_Bytes[ parse_point.GetIndex() ];
                     parse_point.AutoIncrement( byte_3 );
 
                     if ( parse_point.GetIndex() >= m_NumberOfBytes )
@@ -1413,7 +1413,7 @@ public:
                         return( 0 );
                     }
 
-                    uint8_t byte_4 = m_Bytes[ parse_point.GetIndex() ];
+                    uint8_t const byte_4 = m_Bytes[ parse_point.GetIndex() ];
                     parse_point.AutoIncrement( byte_4 );
 
                     // Now figure out the order
@@ -1482,7 +1482,7 @@ public:
                 return( true );
             }
 
-            (void) field.push_back( (uint8_t) field_character );
+            (void) field.push_back( static_cast<uint8_t>(field_character) );
         }
 
         if ( field.empty() == false )
@@ -1543,7 +1543,7 @@ public:
                         return( false );
                     }
 
-                    uint8_t big_end = m_Bytes[ parse_point.GetIndex() ];
+                    uint8_t const big_end = m_Bytes[ parse_point.GetIndex() ];
                     parse_point.AutoIncrement( big_end );
 
 #if defined( _MSC_VER )
@@ -1763,7 +1763,7 @@ public:
                 return(true);
             }
 
-            line.push_back((uint8_t)line_character);
+            line.push_back(static_cast<uint8_t>(line_character));
         }
 
         if (line.empty() == false)
@@ -1817,17 +1817,17 @@ public:
         return( true );
     }
 
-    inline _Check_return_ uint32_t GetUCS4Order( void ) const noexcept
+    inline constexpr _Check_return_ uint32_t GetUCS4Order( void ) const noexcept
     {
         return( m_UCS4Order );
     }
 
-    inline _Check_return_ uint8_t GetUnicodeToASCIITranslationFailureCharacter( void ) const noexcept
+    inline constexpr _Check_return_ uint8_t GetUnicodeToASCIITranslationFailureCharacter( void ) const noexcept
     {
         return( m_UnicodeToASCIIErrorCharacter );
     }
 
-    inline _Check_return_ uint64_t GetSize( void ) const noexcept
+    inline constexpr _Check_return_ uint64_t GetSize( void ) const noexcept
     {
         return( m_NumberOfBytes );
     }
@@ -2264,8 +2264,8 @@ public:
             // We must calculate the number of bytes to skip until we reach
             // the first byte of the desired character
 
-            uint64_t number_of_bytes_to_skip_ahead = number_of_bytes_per_character * number_of_characters_ahead;
-            uint64_t last_index = ( parse_point.GetIndex() + number_of_bytes_to_skip_ahead );
+            uint64_t const number_of_bytes_to_skip_ahead = number_of_bytes_per_character * number_of_characters_ahead;
+            uint64_t const last_index = ( parse_point.GetIndex() + number_of_bytes_to_skip_ahead );
 
             if ( last_index >= m_NumberOfBytes )
             {
@@ -2299,7 +2299,7 @@ public:
                         return( false );
                     }
 
-                    uint8_t big_end = m_Bytes[ parse_point.GetIndex() ];
+                    uint8_t const big_end = m_Bytes[ parse_point.GetIndex() ];
 
                     character = IsTextBigEndian() ? MAKEWORD( big_end, little_end ) : MAKEWORD( little_end, big_end );
 
@@ -2413,20 +2413,20 @@ public:
         return(true);
     }
 
-    inline _Check_return_ bool SetTextToASCII( _In_ bool const text_is_ascii = true ) noexcept
+    inline constexpr _Check_return_ bool SetTextToASCII( _In_ bool const text_is_ascii = true ) noexcept
     {
         m_IsASCII = ( text_is_ascii == false ) ? false : true;
         m_IsUCS4 = false;
         return( true );
     }
 
-    inline _Check_return_ bool SetTextToBigEndian( _In_ bool const unicode_is_big_endian = true ) noexcept
+    inline constexpr _Check_return_ bool SetTextToBigEndian( _In_ bool const unicode_is_big_endian = true ) noexcept
     {
         m_IsBigEndian = ( unicode_is_big_endian == false ) ? false : true;
         return( true );
     }
 
-    inline _Check_return_ bool SetTextToUCS4( _In_ bool const text_is_ucs4 = true ) noexcept
+    inline constexpr _Check_return_ bool SetTextToUCS4( _In_ bool const text_is_ucs4 = true ) noexcept
     {
         if ( text_is_ucs4 == false )
         {
@@ -2441,7 +2441,7 @@ public:
         return( true );
     }
 
-    inline _Check_return_ bool SetUCS4Order( _In_ uint32_t const order = 4321 ) noexcept
+    inline constexpr _Check_return_ bool SetUCS4Order( _In_ uint32_t const order = 4321 ) noexcept
     {
         switch( order )
         {
@@ -2584,7 +2584,7 @@ public:
         p.SetIndex( 0 );
     }
 
-    inline void SetUnicodeToASCIITranslationFailureCharacter( _In_ uint8_t const ascii_character ) noexcept
+    inline constexpr void SetUnicodeToASCIITranslationFailureCharacter( _In_ uint8_t const ascii_character ) noexcept
     {
         _ASSERTE( ascii_character != 0x00 );
         m_UnicodeToASCIIErrorCharacter = ascii_character;
@@ -2674,7 +2674,7 @@ public:
             return;
         }
 
-        uint32_t buffer_size = number_of_bytes + 2; // Leave room for the zero terminator
+        uint32_t const buffer_size = number_of_bytes + 2; // Leave room for the zero terminator
 
         auto buffer = std::make_unique<uint8_t []>(buffer_size);
 

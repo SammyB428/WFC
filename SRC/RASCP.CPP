@@ -62,7 +62,7 @@ CRemoteAccessServiceConnectionProjection::CRemoteAccessServiceConnectionProjecti
    Empty();
 }
 
-CRemoteAccessServiceConnectionProjection::CRemoteAccessServiceConnectionProjection( const CRemoteAccessServiceConnectionProjection& source )
+CRemoteAccessServiceConnectionProjection::CRemoteAccessServiceConnectionProjection( CRemoteAccessServiceConnectionProjection const& source )
 {
    WFC_VALIDATE_POINTER( this );
    Empty();
@@ -75,7 +75,7 @@ CRemoteAccessServiceConnectionProjection::~CRemoteAccessServiceConnectionProject
    Empty();
 }
 
-void CRemoteAccessServiceConnectionProjection::Copy( const CRemoteAccessServiceConnectionProjection& source )
+void CRemoteAccessServiceConnectionProjection::Copy( CRemoteAccessServiceConnectionProjection const& source )
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -106,7 +106,7 @@ void CRemoteAccessServiceConnectionProjection::Empty( void )
    ErrorCode = 0;
 }
 
-CRemoteAccessServiceConnectionProjection& CRemoteAccessServiceConnectionProjection::operator = ( const CRemoteAccessServiceConnectionProjection& source )
+CRemoteAccessServiceConnectionProjection& CRemoteAccessServiceConnectionProjection::operator = ( CRemoteAccessServiceConnectionProjection const& source )
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );

@@ -47,8 +47,8 @@ class CUUCoding
 {
    public:
 
-       CUUCoding(const CUUCoding&) = delete;
-       CUUCoding& operator=(const CUUCoding&) = delete;
+       CUUCoding(CUUCoding const&) = delete;
+       CUUCoding& operator=(CUUCoding const&) = delete;
        
        // Construction
 

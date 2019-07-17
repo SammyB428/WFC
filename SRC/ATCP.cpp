@@ -62,14 +62,14 @@ CAppleTalkProjectionResult::CAppleTalkProjectionResult()
    Empty();
 }
 
-CAppleTalkProjectionResult::CAppleTalkProjectionResult( const CAppleTalkProjectionResult& source )
+CAppleTalkProjectionResult::CAppleTalkProjectionResult( CAppleTalkProjectionResult const& source )
 {
    WFC_VALIDATE_POINTER( this );
    Empty();
    Copy( source );
 }
 
-CAppleTalkProjectionResult::CAppleTalkProjectionResult( const RAS_PPP_ATCP_RESULT * source )
+CAppleTalkProjectionResult::CAppleTalkProjectionResult( RAS_PPP_ATCP_RESULT const * source )
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
@@ -77,7 +77,7 @@ CAppleTalkProjectionResult::CAppleTalkProjectionResult( const RAS_PPP_ATCP_RESUL
    Copy( source );
 }
 
-CAppleTalkProjectionResult::CAppleTalkProjectionResult( const CRemoteAccessServiceConnectionProjection& source )
+CAppleTalkProjectionResult::CAppleTalkProjectionResult( CRemoteAccessServiceConnectionProjection const& source )
 {
    WFC_VALIDATE_POINTER( this );
    Empty();
@@ -90,13 +90,13 @@ CAppleTalkProjectionResult::~CAppleTalkProjectionResult()
    Empty();
 }
 
-void CAppleTalkProjectionResult::Copy( const CAppleTalkProjectionResult& source )
+void CAppleTalkProjectionResult::Copy( CAppleTalkProjectionResult const& source )
 {
    ErrorCode = source.ErrorCode;
    Address   = source.Address;
 }
 
-void CAppleTalkProjectionResult::Copy( const CRemoteAccessServiceConnectionProjection& source )
+void CAppleTalkProjectionResult::Copy( CRemoteAccessServiceConnectionProjection const& source )
 {
    WFC_VALIDATE_POINTER( this );
    Empty();
@@ -151,7 +151,7 @@ void CAppleTalkProjectionResult::Empty( void )
    Address.Empty();
 }
 
-CAppleTalkProjectionResult& CAppleTalkProjectionResult::operator = ( const CAppleTalkProjectionResult& source )
+CAppleTalkProjectionResult& CAppleTalkProjectionResult::operator = ( CAppleTalkProjectionResult const& source )
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );

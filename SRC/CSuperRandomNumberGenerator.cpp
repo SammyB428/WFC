@@ -103,7 +103,7 @@ void CSuperRandomNumberGenerator::Dump( CDumpContext& dump_context ) const
 
 #endif // _DEBUG
 
-__checkReturn DWORD CSuperRandomNumberGenerator::GetInteger( void ) noexcept
+_Check_return_ DWORD CSuperRandomNumberGenerator::GetInteger( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    double value = GetValue();
@@ -141,7 +141,7 @@ __checkReturn DWORD CSuperRandomNumberGenerator::GetInteger( void ) noexcept
    return( return_value );
 }
 
-__checkReturn double CSuperRandomNumberGenerator::GetValue( void ) noexcept
+_Check_return_ double CSuperRandomNumberGenerator::GetValue( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    double temporary_value = 0.0;

@@ -62,14 +62,14 @@ CNetBEUIFramerProjectionResult::CNetBEUIFramerProjectionResult()
    Empty();
 }
 
-CNetBEUIFramerProjectionResult::CNetBEUIFramerProjectionResult( const CNetBEUIFramerProjectionResult& source )
+CNetBEUIFramerProjectionResult::CNetBEUIFramerProjectionResult( CNetBEUIFramerProjectionResult const& source )
 {
    WFC_VALIDATE_POINTER( this );
    Empty();
    Copy( source );
 }
 
-CNetBEUIFramerProjectionResult::CNetBEUIFramerProjectionResult( const RAS_PPP_NBFCP_RESULT * source )
+CNetBEUIFramerProjectionResult::CNetBEUIFramerProjectionResult( RAS_PPP_NBFCP_RESULT const * source )
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
@@ -90,7 +90,7 @@ CNetBEUIFramerProjectionResult::~CNetBEUIFramerProjectionResult()
    Empty();
 }
 
-void CNetBEUIFramerProjectionResult::Copy( const CNetBEUIFramerProjectionResult& source )
+void CNetBEUIFramerProjectionResult::Copy( CNetBEUIFramerProjectionResult const& source )
 {
    WFC_VALIDATE_POINTER( this );
    ErrorCode       = source.ErrorCode;
@@ -99,14 +99,14 @@ void CNetBEUIFramerProjectionResult::Copy( const CNetBEUIFramerProjectionResult&
    WorkstationName = source.WorkstationName;
 }
 
-void CNetBEUIFramerProjectionResult::Copy( const CRemoteAccessServiceConnectionProjection& source )
+void CNetBEUIFramerProjectionResult::Copy( CRemoteAccessServiceConnectionProjection const& source )
 {
    WFC_VALIDATE_POINTER( this );
    Empty();
    CRemoteAccessServiceConnectionProjection::Copy( source );
 }
 
-void CNetBEUIFramerProjectionResult::Copy( const RAS_PPP_NBFCP_RESULT * source )
+void CNetBEUIFramerProjectionResult::Copy( RAS_PPP_NBFCP_RESULT const * source )
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
@@ -159,7 +159,7 @@ void CNetBEUIFramerProjectionResult::Empty( void )
    WorkstationName.Empty();
 }
 
-CNetBEUIFramerProjectionResult& CNetBEUIFramerProjectionResult::operator = ( const CNetBEUIFramerProjectionResult& source )
+CNetBEUIFramerProjectionResult& CNetBEUIFramerProjectionResult::operator = ( CNetBEUIFramerProjectionResult const& source )
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );

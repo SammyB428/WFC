@@ -115,13 +115,13 @@ void CMixerSourceSelector::Dump( CDumpContext& dump_context ) const
 
 #endif // _DEBUG
 
-__checkReturn CMixerLine::ComponentType CMixerSourceSelector::GetSource( void ) const noexcept
+_Check_return_ CMixerLine::ComponentType CMixerSourceSelector::GetSource( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
    return( m_MixerLine.Component );
 }
 
-__checkReturn bool CMixerSourceSelector::IsSelected( __in DWORD const source ) noexcept
+_Check_return_ bool CMixerSourceSelector::IsSelected( __in DWORD const source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -138,7 +138,7 @@ __checkReturn bool CMixerSourceSelector::IsSelected( __in DWORD const source ) n
    return( return_value );
 }
 
-__checkReturn bool CMixerSourceSelector::m_GetSettings( void ) noexcept
+_Check_return_ bool CMixerSourceSelector::m_GetSettings( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -160,7 +160,7 @@ __checkReturn bool CMixerSourceSelector::m_GetSettings( void ) noexcept
    return( return_value );
 }
 
-__checkReturn bool CMixerSourceSelector::m_SetSettings( void ) noexcept
+_Check_return_ bool CMixerSourceSelector::m_SetSettings( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -169,7 +169,7 @@ __checkReturn bool CMixerSourceSelector::m_SetSettings( void ) noexcept
    return( return_value );
 }
 
-__checkReturn bool CMixerSourceSelector::Open( __in UINT_PTR device_number, __in DWORD what_to_notify, __in DWORD_PTR who_to_notify, __in DWORD_PTR notify_data ) noexcept
+_Check_return_ bool CMixerSourceSelector::Open( __in UINT_PTR device_number, __in DWORD what_to_notify, __in DWORD_PTR who_to_notify, __in DWORD_PTR notify_data ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -198,7 +198,7 @@ __checkReturn bool CMixerSourceSelector::Open( __in UINT_PTR device_number, __in
    return( return_value );
 }
 
-__checkReturn bool CMixerSourceSelector::Select( __in DWORD const source, __in bool selected ) noexcept
+_Check_return_ bool CMixerSourceSelector::Select( __in DWORD const source, __in bool selected ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -227,7 +227,7 @@ __checkReturn bool CMixerSourceSelector::Select( __in DWORD const source, __in b
    return( return_value );
 }
 
-__checkReturn bool CMixerSourceSelector::Unselect( __in DWORD const source ) noexcept
+_Check_return_ bool CMixerSourceSelector::Unselect( __in DWORD const source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 

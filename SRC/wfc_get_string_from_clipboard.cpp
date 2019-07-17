@@ -51,7 +51,7 @@ static char THIS_FILE[] = __FILE__;
 
 USING_WFC_NAMESPACE
 
-__checkReturn bool PASCAL Win32FoundationClasses::wfc_get_string_from_clipboard( _Out_ std::wstring& string_to_return ) noexcept
+_Check_return_ bool PASCAL Win32FoundationClasses::wfc_get_string_from_clipboard( _Out_ std::wstring& string_to_return ) noexcept
 {
    if ( OpenClipboard( static_cast< HWND >( NULL ) ) == FALSE )
    {

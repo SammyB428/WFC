@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 1995-2016, Samuel R. Blackburn
+** Copyright, 1995-2019, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -94,28 +94,28 @@ void CMicrosoftTape::Empty( void ) noexcept
    WFC_VALIDATE_POINTER( this );
 }
 
-__checkReturn BOOL CMicrosoftTape::EnumerateSets( void ) noexcept
+_Check_return_ bool CMicrosoftTape::EnumerateSets( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
-   return( TRUE );
+   return( true );
 }
 
-__checkReturn BOOL CMicrosoftTape::Open( __in const UINT tape_drive_number_starting_at_zero ) noexcept
+_Check_return_ bool CMicrosoftTape::Open( __in UINT const tape_drive_number_starting_at_zero ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
-   if ( CTape::Open( tape_drive_number_starting_at_zero ) != FALSE )
+   if ( CTape::Open( tape_drive_number_starting_at_zero ) == true )
    {
       (void) ReadHeader();
-      return( TRUE );
+      return( true );
    }
    else
    {
-      return( FALSE );
+      return( false );
    }
 }
 
-__checkReturn BOOL CMicrosoftTape::ReadHeader( void ) noexcept
+_Check_return_ bool CMicrosoftTape::ReadHeader( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -134,7 +134,7 @@ __checkReturn BOOL CMicrosoftTape::ReadHeader( void ) noexcept
        INVALID_HANDLE_VALUE )
    {
       m_LastError = ERROR_SUCCESS;
-      return( FALSE );
+      return( false );
    }
 
    //Rewind();
@@ -143,10 +143,10 @@ __checkReturn BOOL CMicrosoftTape::ReadHeader( void ) noexcept
 
    if ( ::ReadFile( m_FileHandle, (LPVOID) (MTF_TAPE *) &m_TapeHeader, sizeof( MTF_TAPE ), &number_of_bytes_read, nullptr ) == FALSE )
    {
-      return( FALSE );
+      return( false );
    }
 
-   return( TRUE );
+   return( true );
 }
 
 // End of source

@@ -60,14 +60,14 @@ CNetworkSessionInformation::CNetworkSessionInformation()
    m_Initialize();
 }
 
-CNetworkSessionInformation::CNetworkSessionInformation( __in const SESSION_INFO_502 *source )
+CNetworkSessionInformation::CNetworkSessionInformation( __in SESSION_INFO_502 const * source )
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
    Copy( source );
 }
 
-CNetworkSessionInformation::CNetworkSessionInformation( __in const CNetworkSessionInformation& source )
+CNetworkSessionInformation::CNetworkSessionInformation( __in CNetworkSessionInformation const& source )
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );
@@ -79,7 +79,7 @@ CNetworkSessionInformation::~CNetworkSessionInformation()
    m_Initialize();
 }
 
-void CNetworkSessionInformation::Copy( __in const SESSION_INFO_502 *source ) noexcept
+void CNetworkSessionInformation::Copy( __in SESSION_INFO_502 const * source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
@@ -116,7 +116,7 @@ void CNetworkSessionInformation::Copy( __in const SESSION_INFO_502 *source ) noe
    WFC_END_CATCH_ALL
 }
 
-void CNetworkSessionInformation::Copy( __in const CNetworkSessionInformation& source ) noexcept
+void CNetworkSessionInformation::Copy( __in CNetworkSessionInformation const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    ASSERT( this != &source );
@@ -163,7 +163,7 @@ void CNetworkSessionInformation::m_Initialize( void ) noexcept
 // 2000-05-29
 // Thanks go to Nathan Brown (nathanbrown@letu.edu) for noticing I had a missing = operator
 
-CNetworkSessionInformation& CNetworkSessionInformation::operator=( __in const CNetworkSessionInformation& source ) noexcept
+CNetworkSessionInformation& CNetworkSessionInformation::operator=( __in CNetworkSessionInformation const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );

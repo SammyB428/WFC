@@ -47,10 +47,10 @@ class CSimpleSocketFile : public CSimpleSocket
 {
    public:
 
-       CSimpleSocketFile(_In_ const CSimpleSocketFile&) = delete;
-       CSimpleSocketFile& operator=(_In_ const CSimpleSocketFile&) = delete;
+       CSimpleSocketFile(_In_ CSimpleSocketFile const&) = delete;
+       CSimpleSocketFile& operator=(_In_ CSimpleSocketFile const&) = delete;
        
-       CSimpleSocketFile(_In_ const SOCKET client_id, _In_z_ LPCTSTR host_name, _In_z_ LPCTSTR dotted_ip_address_string );
+       CSimpleSocketFile(_In_ SOCKET const client_id, _In_z_ LPCTSTR host_name, _In_z_ LPCTSTR dotted_ip_address_string );
 
       /*
       ** Destructor should be virtual according to MSJ article in Sept 1992
@@ -59,8 +59,8 @@ class CSimpleSocketFile : public CSimpleSocket
 
       virtual ~CSimpleSocketFile();
 
-      __checkReturn bool Open( void ) noexcept override;
-      __checkReturn bool Open(_In_z_ LPCTSTR channel_name, _In_ const UINT port_number = 23 ) noexcept override;
+      _Check_return_ bool Open( void ) noexcept override;
+      _Check_return_ bool Open(_In_z_ LPCTSTR channel_name, _In_ UINT const port_number = 23 ) noexcept override;
 };
 
 #endif // SIMPLE_SOCKET_FILE_CLASS_HEADER

@@ -122,7 +122,7 @@ class CNetworkUserInformation
       virtual void Copy( __in CNetworkUserInformation const * source ) noexcept;
       virtual void Empty( void ) noexcept;
       virtual void SetAddDefaults( void ) noexcept;
-      virtual const CNetworkUserInformation& operator = ( __in CNetworkUserInformation const& source ) noexcept;
+      virtual CNetworkUserInformation const& operator = ( __in CNetworkUserInformation const& source ) noexcept;
 
 #if defined( _DEBUG ) && ! defined( WFC_NO_DUMPING )
       virtual void Dump( CDumpContext& dump_context ) const;

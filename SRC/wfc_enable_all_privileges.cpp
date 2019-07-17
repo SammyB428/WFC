@@ -51,7 +51,7 @@ static char THIS_FILE[] = __FILE__;
 
 USING_WFC_NAMESPACE
 
-__checkReturn bool PASCAL Win32FoundationClasses::wfc_enable_all_privileges( void ) noexcept
+_Check_return_ bool PASCAL Win32FoundationClasses::wfc_enable_all_privileges( void ) noexcept
 {
    static constexpr LPCTSTR static_PrivilegeNames[] =
    {

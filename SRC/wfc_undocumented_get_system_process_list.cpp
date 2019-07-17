@@ -66,7 +66,7 @@ void Win32FoundationClasses::wfc_debug_error_code( _In_ DWORD const error_code )
     OutputDebugStringW( error_message.c_str() );
 }
 
-__checkReturn bool PASCAL Win32FoundationClasses::wfc_undocumented_get_system_process_list( __out_bcount( size_of_buffer ) BYTE * buffer, __in DWORD const size_of_buffer ) noexcept
+_Check_return_ bool PASCAL Win32FoundationClasses::wfc_undocumented_get_system_process_list( __out_bcount( size_of_buffer ) BYTE * buffer, __in DWORD const size_of_buffer ) noexcept
 {
     HMODULE const ntdll_module_handle = GetModuleHandle(TEXT("ntdll.dll"));
 

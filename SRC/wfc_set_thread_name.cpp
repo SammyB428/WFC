@@ -87,7 +87,7 @@ static void __stdcall __set_visual_studio_thread_name( __in_z LPCSTR thread_name
 
 #endif // _MSC_VER >= 1300
 
-static inline __checkReturn WFC_THREAD_INFORMATION_BLOCK * get_thread_information_block( void )
+static inline _Check_return_ WFC_THREAD_INFORMATION_BLOCK * get_thread_information_block( void )
 {
    WFC_THREAD_INFORMATION_BLOCK * return_value = nullptr;
 

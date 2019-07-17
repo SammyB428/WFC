@@ -60,14 +60,14 @@ CNetworkConnectionInformation::CNetworkConnectionInformation()
    m_Initialize();
 }
 
-CNetworkConnectionInformation::CNetworkConnectionInformation( __in const CONNECTION_INFO_1 *source )
+CNetworkConnectionInformation::CNetworkConnectionInformation( __in CONNECTION_INFO_1 const * source )
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
    Copy( source );
 }
 
-CNetworkConnectionInformation::CNetworkConnectionInformation( __in const CNetworkConnectionInformation& source )
+CNetworkConnectionInformation::CNetworkConnectionInformation( __in CNetworkConnectionInformation const& source )
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );
@@ -79,7 +79,7 @@ CNetworkConnectionInformation::~CNetworkConnectionInformation()
    m_Initialize();
 }
 
-void CNetworkConnectionInformation::Copy( __in const CONNECTION_INFO_1 *source ) noexcept
+void CNetworkConnectionInformation::Copy( __in CONNECTION_INFO_1 const * source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
@@ -110,7 +110,7 @@ void CNetworkConnectionInformation::Copy( __in const CONNECTION_INFO_1 *source )
    WFC_END_CATCH_ALL
 }
 
-void CNetworkConnectionInformation::Copy( __in const CNetworkConnectionInformation& source ) noexcept
+void CNetworkConnectionInformation::Copy( __in CNetworkConnectionInformation const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    ASSERT( this != &source );
@@ -169,7 +169,7 @@ void CNetworkConnectionInformation::m_Initialize( void ) noexcept
    Time          = 0;
 }
 
-const CNetworkConnectionInformation& CNetworkConnectionInformation::operator=( __in const CNetworkConnectionInformation& source ) noexcept
+CNetworkConnectionInformation const& CNetworkConnectionInformation::operator=( __in CNetworkConnectionInformation const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    ASSERT( this != &source );

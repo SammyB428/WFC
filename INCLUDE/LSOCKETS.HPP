@@ -47,16 +47,16 @@ class CListeningSocket : public CSimpleSocket
 {
    private:
 
-      int m_NumberOfSimultaneousSocketsToAllow;
+       int m_NumberOfSimultaneousSocketsToAllow{ 0 };
 
-      unsigned long m_BindToAddress;
+      unsigned long m_BindToAddress{ 0 };
 
       void m_Initialize( void ) noexcept;
 
    public:
 
-       CListeningSocket(const CListeningSocket&) = delete;
-       CListeningSocket& operator=(const CListeningSocket&) = delete;
+       CListeningSocket(CListeningSocket const&) = delete;
+       CListeningSocket& operator=(CListeningSocket const&) = delete;
        
        CListeningSocket();
       CListeningSocket( __in SOCKET client_id );
@@ -70,7 +70,7 @@ class CListeningSocket : public CSimpleSocket
 
       virtual void OnNewConnection( __in SOCKET socket_id, __in_z LPCTSTR host_name, __in_z LPCTSTR dotted_ip_address_string ) = 0; // Called by WaitForConnection
       _Check_return_ bool Open( void ) noexcept override;
-      _Check_return_ bool Open( __in_z LPCTSTR channel_name, __in const UINT port_number = 23 ) noexcept override;
+      _Check_return_ bool Open( __in_z LPCTSTR channel_name, __in UINT const port_number = 23 ) noexcept override;
 
       virtual _Check_return_ BOOL WaitForConnection( __in_z LPCTSTR p_name ) noexcept;
       virtual _Check_return_ BOOL WaitForConnection( __in int const p_number ) noexcept;

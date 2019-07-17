@@ -229,7 +229,7 @@ void CPing::ConvertErrorToString(__in DWORD const error_code, __out std::wstring
     }
 }
 
-__checkReturn DWORD CPing::Ping( __in std::wstring const& name_or_address, __out_opt CPingResults * results_p, __in short desired_time_to_live) noexcept
+_Check_return_ DWORD CPing::Ping( __in std::wstring const& name_or_address, __out_opt CPingResults * results_p, __in short desired_time_to_live) noexcept
 {
     WFC_VALIDATE_POINTER(this);
 
@@ -304,12 +304,12 @@ __checkReturn DWORD CPing::Ping( __in std::wstring const& name_or_address, __out
 
              copy_to( Address, address, sizeof(address));
 
-             internet_address = m_Thunk_p->inet_addr((const char *)address);
+             internet_address = m_Thunk_p->inet_addr(reinterpret_cast<char const *>(address));
           }
 
  #else
 
-          internet_address = m_Thunk_p->inet_addr((const char *)Address);
+          internet_address = m_Thunk_p->inet_addr(reinterpret_cast<char const *>(Address));
 
  #endif // _UNICODE
 
@@ -358,13 +358,13 @@ __checkReturn DWORD CPing::Ping( __in std::wstring const& name_or_address, __out
         WFC_END_CATCH_ALL
 }
 
-__checkReturn bool CPing::Open(void) noexcept
+_Check_return_ bool CPing::Open(void) noexcept
 {
     WFC_VALIDATE_POINTER(this);
     return(true);
 }
 
-__checkReturn bool CPing::Open(__in_z LPCTSTR, __in UINT const) noexcept
+_Check_return_ bool CPing::Open(__in_z LPCTSTR, __in UINT const) noexcept
 {
     WFC_VALIDATE_POINTER(this);
     return(true);

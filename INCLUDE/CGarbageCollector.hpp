@@ -47,14 +47,14 @@ class CGarbageCollector
 {
    protected:
 
-      volatile long m_ReferenceCount;
+       volatile long m_ReferenceCount{ 0 };
 
-      bool m_SelfDestruct;
+       bool m_SelfDestruct{ false };
 
    public:
 
-       CGarbageCollector(const CGarbageCollector&) = delete;
-       virtual CGarbageCollector& operator = (const CGarbageCollector&) = delete;
+       CGarbageCollector(CGarbageCollector const&) = delete;
+       virtual CGarbageCollector& operator = (CGarbageCollector const&) = delete;
        
        CGarbageCollector();
 
@@ -66,10 +66,10 @@ class CGarbageCollector
       virtual ~CGarbageCollector();
 
       virtual void AddReference( void ) noexcept;
-      virtual __checkReturn long GetReferenceCount( void ) const noexcept;
-      virtual __checkReturn bool GetSelfDestruct( void ) const noexcept;
+      virtual _Check_return_ long GetReferenceCount( void ) const noexcept;
+      virtual _Check_return_ bool GetSelfDestruct( void ) const noexcept;
       virtual void Release( __out_opt bool * deleted = nullptr ) noexcept;
-      virtual void SetSelfDestruct( __in const bool self_destruct = true ) noexcept;
+      virtual void SetSelfDestruct( __in bool const self_destruct = true ) noexcept;
 
 #if defined( _DEBUG ) && ! defined( WFC_NO_DUMPING )
 

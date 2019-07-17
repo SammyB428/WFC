@@ -67,7 +67,7 @@ class CNetwork
 
    public:
 
-      enum NetworkType //  From WINNETWK.H
+      enum class NetworkType : uint32_t//  From WINNETWK.H
       {
          MSNet      = WNNC_NET_MSNET,
          LanMan     = WNNC_NET_LANMAN,
@@ -93,8 +93,8 @@ class CNetwork
          ClearCase  = WNNC_NET_CLEARCASE
       };
 
-      CNetwork(_In_ const CNetwork&) = delete;
-      _Check_return_ CNetwork& operator=(_In_ const CNetwork&) = delete;
+      CNetwork(_In_ CNetwork const&) = delete;
+      _Check_return_ CNetwork& operator=(_In_ CNetwork const&) = delete;
       CNetwork(_In_opt_z_ LPCWSTR machine_name = nullptr );
       virtual ~CNetwork();
 

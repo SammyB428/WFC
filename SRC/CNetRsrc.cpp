@@ -85,7 +85,7 @@ void CNetworkResources::m_Initialize( void ) noexcept
    ::ZeroMemory( &m_NetResource, sizeof( m_NetResource ) );
 }
 
-__checkReturn bool CNetworkResources::Enumerate( __inout CNetworkResourceInformation& information ) noexcept
+_Check_return_ bool CNetworkResources::Enumerate( __inout CNetworkResourceInformation& information ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -99,7 +99,7 @@ __checkReturn bool CNetworkResources::Enumerate( __inout CNetworkResourceInforma
    ::ZeroMemory( &m_NetResource, sizeof( m_NetResource ) );
    m_NetResource.dwUsage = usageContainer;
 
-   NETRESOURCE *net_resource_parameter = (NETRESOURCE *) nullptr;
+   NETRESOURCE *net_resource_parameter = nullptr;
 
    /*
    ** Let's see what we want to enumerate
@@ -107,15 +107,15 @@ __checkReturn bool CNetworkResources::Enumerate( __inout CNetworkResourceInforma
 
    switch( information.Scope )
    {
-      case scopeConnected: // information.Usage is ignored
+   case static_cast<DWORD>(Scope::Connected): // information.Usage is ignored
 
          break;
             
-      case scopePersistent:  // information.Usage is ignored
+      case static_cast<DWORD>(Scope::Persistent):  // information.Usage is ignored
 
          break;
 
-      case scopeAll:
+      case static_cast<DWORD>(Scope::All):
 
          break;
 
@@ -129,7 +129,7 @@ __checkReturn bool CNetworkResources::Enumerate( __inout CNetworkResourceInforma
    {
       case usageAll:
 
-         net_resource_parameter = (NETRESOURCE *) nullptr;
+         net_resource_parameter = nullptr;
          break;
 
       case usageConnectable:
@@ -164,7 +164,7 @@ __checkReturn bool CNetworkResources::Enumerate( __inout CNetworkResourceInforma
    return( false );
 }
 
-__checkReturn bool CNetworkResources::GetNext( __inout CNetworkResourceInformation& information ) noexcept
+_Check_return_ bool CNetworkResources::GetNext( __inout CNetworkResourceInformation& information ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 

@@ -83,6 +83,6 @@ typedef struct _wfc_web_post_data
 }
 WFC_WEB_POST_DATA, *WFC_WEB_POST_DATA_P;
 
-__checkReturn bool PASCAL wfc_web_post( __in_z LPCTSTR url, __in WFC_WEB_POST_DATA_P * data, __inout_opt std::wstring * response = nullptr ) noexcept;
+_Check_return_ bool PASCAL wfc_web_post( __in_z LPCTSTR url, __in WFC_WEB_POST_DATA_P * data, __inout_opt std::wstring * response = nullptr ) noexcept;
 
 #endif // WFC_WEB_POST_HEADER_FILE

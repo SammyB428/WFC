@@ -1502,8 +1502,6 @@ _Check_return_ bool CExtensibleMarkupLanguageDocument::RemoveCallback( _In_z_ wc
 
    std::wstring const name( element_name );
 
-   XML_ELEMENT_CALLBACK_ENTRY * entry_p = nullptr;
-
    while( loop_index < number_of_entries )
    {
       if (m_Callbacks[loop_index].callback  == callback &&

@@ -51,7 +51,7 @@ static char THIS_FILE[] = __FILE__;
 
 USING_WFC_NAMESPACE
 
-__checkReturn bool PASCAL Win32FoundationClasses::wfc_create_hard_link( __in_z LPCTSTR new_filename, __in_z LPCTSTR existing_filename, __in_opt LPSECURITY_ATTRIBUTES sa ) noexcept
+_Check_return_ bool PASCAL Win32FoundationClasses::wfc_create_hard_link( __in_z LPCTSTR new_filename, __in_z LPCTSTR existing_filename, __in_opt LPSECURITY_ATTRIBUTES sa ) noexcept
 {
    WFC_TRY
    {

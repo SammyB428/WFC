@@ -65,8 +65,8 @@ class CRandomNumberGenerator
       ** Methods
       */
 
-      __checkReturn DWORD  GetInteger( void ) noexcept;
-      __checkReturn double GetFloat( void ) noexcept;
+      _Check_return_ DWORD  GetInteger( void ) noexcept;
+      _Check_return_ double GetFloat( void ) noexcept;
       void   InitializeSeed( void ) noexcept;
       void   SetSeed( __in DWORD new_seed ) noexcept;
 

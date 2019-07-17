@@ -76,8 +76,8 @@ class CSuperRandomNumberGenerator
       CSuperRandomNumberGenerator( __in DWORD seed = 0 );
      ~CSuperRandomNumberGenerator();
 
-      __checkReturn double GetValue( void ) noexcept;
-      __checkReturn DWORD  GetInteger( void ) noexcept;
+      _Check_return_ double GetValue( void ) noexcept;
+      _Check_return_ DWORD  GetInteger( void ) noexcept;
       void SetSeed( __in DWORD seed ) noexcept;
 
 #if defined( _DEBUG ) && ! defined( WFC_NO_DUMPING )

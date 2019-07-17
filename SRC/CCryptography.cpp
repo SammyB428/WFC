@@ -75,7 +75,7 @@ CCryptography::~CCryptography()
 
 // Methods
 
-__checkReturn DWORD CCryptography::GetErrorCode( void ) const noexcept
+_Check_return_ DWORD CCryptography::GetErrorCode( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
    return( m_ErrorCode );

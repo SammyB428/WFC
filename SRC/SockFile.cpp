@@ -51,7 +51,7 @@ static char THIS_FILE[] = __FILE__;
 
 USING_WFC_NAMESPACE
 
-CSimpleSocketFile::CSimpleSocketFile( __in const SOCKET client_id, __in_z LPCTSTR name, __in_z LPCTSTR dotted_ip_address )
+CSimpleSocketFile::CSimpleSocketFile( __in SOCKET const client_id, __in_z LPCTSTR name, __in_z LPCTSTR dotted_ip_address )
 {
     WFC_VALIDATE_POINTER( this );
 
@@ -97,7 +97,7 @@ CSimpleSocketFile::~CSimpleSocketFile()
     Close();
 }
 
-__checkReturn bool CSimpleSocketFile::Open( void ) noexcept
+_Check_return_ bool CSimpleSocketFile::Open( void ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
     return( true );
@@ -105,7 +105,7 @@ __checkReturn bool CSimpleSocketFile::Open( void ) noexcept
 
 #pragma warning( disable : 4100 )
 
-__checkReturn bool CSimpleSocketFile::Open( __in_z LPCTSTR name, __in const UINT port ) noexcept
+_Check_return_ bool CSimpleSocketFile::Open( __in_z LPCTSTR name, __in UINT const port ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
     return( true );

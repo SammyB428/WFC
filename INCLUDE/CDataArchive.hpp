@@ -62,8 +62,8 @@ class CDataArchive
        CDataArchive();
       virtual ~CDataArchive();
 
-      virtual __checkReturn bool IsLoading( void ) const noexcept;
-      virtual __checkReturn bool IsStoring( void ) const noexcept;
+      virtual _Check_return_ bool IsLoading( void ) const noexcept;
+      virtual _Check_return_ bool IsStoring( void ) const noexcept;
 
       virtual void Read( __out char&     value ) noexcept;
       virtual void Read( __out uint8_t&  value ) noexcept;

@@ -90,11 +90,11 @@ CCOMSucks::CCOMSucks()
 {
     DWORD thread_id = 0;
 
-    const HANDLE event_handle = MANUAL_RESET_EVENT();
+    auto const event_handle = MANUAL_RESET_EVENT();
 
     if (event_handle != NULL)
     {
-        const HANDLE thread_handle = ::CreateThread(nullptr,
+        auto const thread_handle = ::CreateThread(nullptr,
             0,
             com_sucks_message_pump_thread,
             reinterpret_cast<LPVOID>(event_handle),

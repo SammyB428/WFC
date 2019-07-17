@@ -72,7 +72,7 @@ CModem::~CModem()
    m_Initialize();
 }
 
-__checkReturn bool CModem::Connect( __in DWORD number_of_seconds_to_wait ) noexcept
+_Check_return_ bool CModem::Connect( __in DWORD number_of_seconds_to_wait ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    ASSERT( m_IsOpen != false );
@@ -132,7 +132,7 @@ _Check_return_ bool CModem::Disconnect( void ) noexcept
    return( true );
 }
 
-__checkReturn bool CModem::IsConnected( void ) const noexcept
+_Check_return_ bool CModem::IsConnected( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
    return( m_IsConnected );

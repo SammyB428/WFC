@@ -51,7 +51,7 @@ static char THIS_FILE[] = __FILE__;
 
 USING_WFC_NAMESPACE
 
-__checkReturn bool PASCAL Win32FoundationClasses::wfc_kill_most_recently_used_document_list( void ) noexcept
+_Check_return_ bool PASCAL Win32FoundationClasses::wfc_kill_most_recently_used_document_list( void ) noexcept
 {
    CRegistry registry;
 

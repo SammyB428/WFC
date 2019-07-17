@@ -64,21 +64,21 @@ CNetworkShareInformation::CNetworkShareInformation()
    m_Initialize();
 }
 
-CNetworkShareInformation::CNetworkShareInformation( _In_ const SHARE_INFO_1 *source )
+CNetworkShareInformation::CNetworkShareInformation( _In_ SHARE_INFO_1 const * source )
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
    Copy( source );
 }
 
-CNetworkShareInformation::CNetworkShareInformation( _In_ const SHARE_INFO_2 *source )
+CNetworkShareInformation::CNetworkShareInformation( _In_ SHARE_INFO_2 const * source )
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
    Copy( source );
 }
 
-CNetworkShareInformation::CNetworkShareInformation( _In_ const CNetworkShareInformation& source )
+CNetworkShareInformation::CNetworkShareInformation( _In_ CNetworkShareInformation const& source )
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );
@@ -90,7 +90,7 @@ CNetworkShareInformation::~CNetworkShareInformation()
    m_Initialize();
 }
 
-void CNetworkShareInformation::Copy( _In_ const SHARE_INFO_1 *source ) noexcept
+void CNetworkShareInformation::Copy( _In_ SHARE_INFO_1 const * source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
@@ -118,7 +118,7 @@ void CNetworkShareInformation::Copy( _In_ const SHARE_INFO_1 *source ) noexcept
    WFC_END_CATCH_ALL
 }
 
-void CNetworkShareInformation::Copy( _In_ const SHARE_INFO_2 *source ) noexcept
+void CNetworkShareInformation::Copy( _In_ SHARE_INFO_2 const * source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
@@ -150,7 +150,7 @@ void CNetworkShareInformation::Copy( _In_ const SHARE_INFO_2 *source ) noexcept
    WFC_END_CATCH_ALL
 }
 
-void CNetworkShareInformation::Copy( _In_ const CNetworkShareInformation& source ) noexcept
+void CNetworkShareInformation::Copy( _In_ CNetworkShareInformation const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    ASSERT( this != &source );
@@ -194,7 +194,7 @@ void CNetworkShareInformation::m_Initialize( void ) noexcept
    Password.clear();
 }
 
-const CNetworkShareInformation& CNetworkShareInformation::operator = ( _In_ const CNetworkShareInformation& source ) noexcept
+CNetworkShareInformation const& CNetworkShareInformation::operator = ( _In_ CNetworkShareInformation const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    ASSERT( this != &source );
@@ -252,10 +252,10 @@ _Check_return_ bool CNetworkShares::Add(_Inout_ CNetworkShareInformation& share_
    // Thanks go to Mark Brakstor (markb@vdr.com) for finding a bug here.
 
 #if ! defined( UNICODE )
-   ::ASCII_to_UNICODE( (const char *) share_to_add.NetworkName, wide_network_name );
-   ::ASCII_to_UNICODE( (const char *) share_to_add.Remark,      wide_remark       );
-   ::ASCII_to_UNICODE( (const char *) share_to_add.PathName,    wide_path         );
-   ::ASCII_to_UNICODE( (const char *) share_to_add.Password,    wide_password     );
+   ::ASCII_to_UNICODE( reinterpret_cast<char const *>(share_to_add.NetworkName), wide_network_name );
+   ::ASCII_to_UNICODE( reinterpret_cast<char const *>(share_to_add.Remark),      wide_remark       );
+   ::ASCII_to_UNICODE( reinterpret_cast<char const *>(share_to_add.PathName),    wide_path         );
+   ::ASCII_to_UNICODE( reinterpret_cast<char const *>(share_to_add.Password),    wide_password     );
 #endif // UNICODE
 
    SHARE_INFO_2 share_info_2;
@@ -309,7 +309,7 @@ _Check_return_ DWORD CNetworkShares::Check( _In_z_ wchar_t const * name_of_devic
    _tcscpy_s( (LPTSTR) wide_device_name, std::size( wide_device_name ), name_of_device );
 
 #if ! defined( UNICODE )
-   ::ASCII_to_UNICODE( (const char *) name_of_device, wide_device_name );
+   ::ASCII_to_UNICODE(reinterpret_cast<char const*>(name_of_device), wide_device_name );
 #endif // UNICODE
 
    DWORD device_type = 0;
@@ -359,7 +359,7 @@ _Check_return_ bool CNetworkShares::Delete( _Inout_ CNetworkShareInformation& sh
    wcscpy_s( wide_network_name, std::size( wide_network_name ), share_to_delete.NetworkName.c_str() );
 
 #if ! defined( UNICODE )
-   ::ASCII_to_UNICODE( (const char *) share_to_delete.NetworkName, wide_network_name );
+   ::ASCII_to_UNICODE(reinterpret_cast<char const*>(share_to_delete.NetworkName), wide_network_name );
 #endif // UNICODE
 
    m_ErrorCode = ::NetShareDel( (LMSTR) m_WideMachineName.get(),

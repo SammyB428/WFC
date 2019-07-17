@@ -57,21 +57,21 @@ CPortInformation::CPortInformation()
    Empty();
 }
 
-CPortInformation::CPortInformation( __in const PORT_INFO_1 * source )
+CPortInformation::CPortInformation( __in PORT_INFO_1 const * source )
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
    Copy( source );
 }
 
-CPortInformation::CPortInformation( __in const PORT_INFO_2 * source )
+CPortInformation::CPortInformation( __in PORT_INFO_2 const * source )
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
    Copy( source );
 }
 
-CPortInformation::CPortInformation( __in const CPortInformation& source )
+CPortInformation::CPortInformation( __in CPortInformation const& source )
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );
@@ -83,7 +83,7 @@ CPortInformation::~CPortInformation()
    Empty();
 }
 
-void CPortInformation::Copy( __in const PORT_INFO_1 * source ) noexcept
+void CPortInformation::Copy( __in PORT_INFO_1 const * source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
@@ -111,7 +111,7 @@ void CPortInformation::Copy( __in const PORT_INFO_1 * source ) noexcept
    WFC_END_CATCH_ALL
 }
 
-void CPortInformation::Copy( __in const PORT_INFO_2 * source ) noexcept
+void CPortInformation::Copy( __in PORT_INFO_2 const * source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
@@ -153,7 +153,7 @@ void CPortInformation::Copy( __in const PORT_INFO_2 * source ) noexcept
    WFC_END_CATCH_ALL
 }
 
-void CPortInformation::Copy( _In_ const CPortInformation& source ) noexcept
+void CPortInformation::Copy( _In_ CPortInformation const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -215,7 +215,7 @@ void CPortInformation::TypeToString( __in DWORD type, __out std::wstring& string
    }
 }
 
-CPortInformation& CPortInformation::operator = ( _In_ const CPortInformation& source ) noexcept
+CPortInformation& CPortInformation::operator = ( _In_ CPortInformation const& source ) noexcept
 {
    Copy( source );
    WFC_VALIDATE_POINTER( this );

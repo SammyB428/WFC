@@ -57,13 +57,13 @@ CMixerControl::CMixerControl()
    Empty();
 }
 
-CMixerControl::CMixerControl( __in const CMixerControl& source )
+CMixerControl::CMixerControl( __in CMixerControl const& source )
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );
 }
 
-CMixerControl::CMixerControl( __in const MIXERCONTROL& source )
+CMixerControl::CMixerControl( __in MIXERCONTROL const& source )
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );
@@ -75,7 +75,7 @@ CMixerControl::~CMixerControl()
    Empty();
 }
 
-void CMixerControl::Copy( __in const CMixerControl& source ) noexcept
+void CMixerControl::Copy( __in CMixerControl const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -100,7 +100,7 @@ void CMixerControl::Copy( __in const CMixerControl& source ) noexcept
    Data = source.Data;
 }
 
-void CMixerControl::Copy( __in const MIXERCONTROL& source ) noexcept
+void CMixerControl::Copy( __in MIXERCONTROL const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -417,7 +417,7 @@ void CMixerControl::Empty( void ) noexcept
    Data.clear();
 }
 
-__checkReturn CMixerControl::Types CMixerControl::GetType( void ) const noexcept
+_Check_return_ CMixerControl::Types CMixerControl::GetType( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -604,7 +604,7 @@ void CMixerControl::GetTypeName( _Out_ std::wstring& name ) const noexcept
    }
 }
 
-__checkReturn CMixerControl::Units CMixerControl::GetUnits( void ) const noexcept
+_Check_return_ CMixerControl::Units CMixerControl::GetUnits( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -626,7 +626,7 @@ __checkReturn CMixerControl::Units CMixerControl::GetUnits( void ) const noexcep
    }
 }
 
-__checkReturn bool CMixerControl::IsBooleanUnits( void ) const noexcept
+_Check_return_ bool CMixerControl::IsBooleanUnits( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -638,7 +638,7 @@ __checkReturn bool CMixerControl::IsBooleanUnits( void ) const noexcept
    return( false );
 }
 
-__checkReturn bool CMixerControl::IsCustom( void ) const noexcept
+_Check_return_ bool CMixerControl::IsCustom( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -650,7 +650,7 @@ __checkReturn bool CMixerControl::IsCustom( void ) const noexcept
    return( false );
 }
 
-__checkReturn bool CMixerControl::IsCustomUnits( void ) const noexcept
+_Check_return_ bool CMixerControl::IsCustomUnits( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -662,7 +662,7 @@ __checkReturn bool CMixerControl::IsCustomUnits( void ) const noexcept
    return( false );
 }
 
-__checkReturn bool CMixerControl::IsDecibelsUnits( void ) const noexcept
+_Check_return_ bool CMixerControl::IsDecibelsUnits( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -674,7 +674,7 @@ __checkReturn bool CMixerControl::IsDecibelsUnits( void ) const noexcept
    return( false );
 }
 
-__checkReturn bool CMixerControl::IsDisabled( void ) const noexcept
+_Check_return_ bool CMixerControl::IsDisabled( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -688,7 +688,7 @@ __checkReturn bool CMixerControl::IsDisabled( void ) const noexcept
    return( false );
 }
 
-__checkReturn bool CMixerControl::IsFader( void ) const noexcept
+_Check_return_ bool CMixerControl::IsFader( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -700,7 +700,7 @@ __checkReturn bool CMixerControl::IsFader( void ) const noexcept
    return( false );
 }
 
-__checkReturn bool CMixerControl::IsList( void ) const noexcept
+_Check_return_ bool CMixerControl::IsList( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -712,7 +712,7 @@ __checkReturn bool CMixerControl::IsList( void ) const noexcept
    return( false );
 }
 
-__checkReturn bool CMixerControl::IsMeter( void ) const noexcept
+_Check_return_ bool CMixerControl::IsMeter( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -724,7 +724,7 @@ __checkReturn bool CMixerControl::IsMeter( void ) const noexcept
    return( false );
 }
 
-__checkReturn bool CMixerControl::IsMultiple( void ) const noexcept
+_Check_return_ bool CMixerControl::IsMultiple( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -738,7 +738,7 @@ __checkReturn bool CMixerControl::IsMultiple( void ) const noexcept
    return( false );
 }
 
-__checkReturn bool CMixerControl::IsNumber( void ) const noexcept
+_Check_return_ bool CMixerControl::IsNumber( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -750,7 +750,7 @@ __checkReturn bool CMixerControl::IsNumber( void ) const noexcept
    return( false );
 }
 
-__checkReturn bool CMixerControl::IsPercentUnits( void ) const noexcept
+_Check_return_ bool CMixerControl::IsPercentUnits( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -762,7 +762,7 @@ __checkReturn bool CMixerControl::IsPercentUnits( void ) const noexcept
    return( false );
 }
 
-__checkReturn bool CMixerControl::IsSignedUnits( void ) const noexcept
+_Check_return_ bool CMixerControl::IsSignedUnits( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -774,7 +774,7 @@ __checkReturn bool CMixerControl::IsSignedUnits( void ) const noexcept
    return( false );
 }
 
-__checkReturn bool CMixerControl::IsSlider( void ) const noexcept
+_Check_return_ bool CMixerControl::IsSlider( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -786,7 +786,7 @@ __checkReturn bool CMixerControl::IsSlider( void ) const noexcept
    return( false );
 }
 
-__checkReturn bool CMixerControl::IsSwitch( void ) const noexcept
+_Check_return_ bool CMixerControl::IsSwitch( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -798,7 +798,7 @@ __checkReturn bool CMixerControl::IsSwitch( void ) const noexcept
    return( false );
 }
 
-__checkReturn bool CMixerControl::IsTime( void ) const noexcept
+_Check_return_ bool CMixerControl::IsTime( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -810,7 +810,7 @@ __checkReturn bool CMixerControl::IsTime( void ) const noexcept
    return( false );
 }
 
-__checkReturn bool CMixerControl::IsUniform( void ) const noexcept
+_Check_return_ bool CMixerControl::IsUniform( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -824,7 +824,7 @@ __checkReturn bool CMixerControl::IsUniform( void ) const noexcept
    return( false );
 }
 
-__checkReturn bool CMixerControl::IsUnsignedUnits( void ) const noexcept
+_Check_return_ bool CMixerControl::IsUnsignedUnits( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 

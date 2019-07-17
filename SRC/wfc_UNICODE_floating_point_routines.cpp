@@ -51,7 +51,7 @@ static char THIS_FILE[] = __FILE__;
 
 USING_WFC_NAMESPACE
 
-__checkReturn double Win32FoundationClasses::wfc_unicode_atof( __in_z LPCWSTR unicode_string ) noexcept
+_Check_return_ double Win32FoundationClasses::wfc_unicode_atof( __in_z LPCWSTR unicode_string ) noexcept
 {
    char ascii_string[ 4096 ];
 

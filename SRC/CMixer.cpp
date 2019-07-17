@@ -135,7 +135,7 @@ void CMixer::Dump(CDumpContext& dump_context) const
 
 #endif // _DEBUG
 
-__checkReturn bool CMixer::Get(__out CMixerCapabilities& capabilities) noexcept
+_Check_return_ bool CMixer::Get(__out CMixerCapabilities& capabilities) noexcept
 {
     WFC_VALIDATE_POINTER(this);
 
@@ -156,7 +156,7 @@ __checkReturn bool CMixer::Get(__out CMixerCapabilities& capabilities) noexcept
     return(true);
 }
 
-__checkReturn bool CMixer::GetAllControls(__in const CMixerLine& line, __out std::vector<CMixerControl>& array) noexcept
+_Check_return_ bool CMixer::GetAllControls(__in CMixerLine const& line, __out std::vector<CMixerControl>& array) noexcept
 {
     WFC_VALIDATE_POINTER(this);
 
@@ -213,7 +213,7 @@ __checkReturn bool CMixer::GetAllControls(__in const CMixerLine& line, __out std
     return(return_value);
 }
 
-__checkReturn bool CMixer::GetByComponent(__in CMixerLine::ComponentType const component, __out CMixerLine& line) noexcept
+_Check_return_ bool CMixer::GetByComponent(__in CMixerLine::ComponentType const component, __out CMixerLine& line) noexcept
 {
     WFC_VALIDATE_POINTER(this);
 
@@ -239,7 +239,7 @@ __checkReturn bool CMixer::GetByComponent(__in CMixerLine::ComponentType const c
     return(true);
 }
 
-__checkReturn bool CMixer::GetByDestination(__in DWORD const destination, __out CMixerLine& line) noexcept
+_Check_return_ bool CMixer::GetByDestination(__in DWORD const destination, __out CMixerLine& line) noexcept
 {
     WFC_VALIDATE_POINTER(this);
 
@@ -265,7 +265,7 @@ __checkReturn bool CMixer::GetByDestination(__in DWORD const destination, __out 
     return(true);
 }
 
-__checkReturn bool CMixer::GetByID(__in DWORD const id, __out CMixerLine& line) noexcept
+_Check_return_ bool CMixer::GetByID(__in DWORD const id, __out CMixerLine& line) noexcept
 {
     WFC_VALIDATE_POINTER(this);
 
@@ -291,7 +291,7 @@ __checkReturn bool CMixer::GetByID(__in DWORD const id, __out CMixerLine& line) 
     return(true);
 }
 
-__checkReturn bool CMixer::GetByConnection( __in DWORD const destination, __in DWORD const source, __out CMixerLine& line) noexcept
+_Check_return_ bool CMixer::GetByConnection( __in DWORD const destination, __in DWORD const source, __out CMixerLine& line) noexcept
 {
     WFC_VALIDATE_POINTER(this);
 
@@ -318,7 +318,7 @@ __checkReturn bool CMixer::GetByConnection( __in DWORD const destination, __in D
     return(true);
 }
 
-__checkReturn bool CMixer::GetControlDetails(__in const CMixerLine& line, __in const CMixerControl& control, __out std::vector<CMixerControlDetailsData>& array) noexcept
+_Check_return_ bool CMixer::GetControlDetails(__in CMixerLine const& line, __in CMixerControl const& control, __out std::vector<CMixerControlDetailsData>& array) noexcept
 {
     WFC_VALIDATE_POINTER(this);
 
@@ -462,7 +462,7 @@ __checkReturn bool CMixer::GetControlDetails(__in const CMixerLine& line, __in c
     return(return_value);
 }
 
-__checkReturn bool CMixer::GetControlListText(__in const CMixerLine& line, __in const CMixerControl& control, __out std::vector<CMixerControlDetailsData>& array) noexcept
+_Check_return_ bool CMixer::GetControlListText(__in CMixerLine const& line, __in CMixerControl const& control, __out std::vector<CMixerControlDetailsData>& array) noexcept
 {
     WFC_VALIDATE_POINTER(this);
 
@@ -550,13 +550,13 @@ __checkReturn bool CMixer::GetControlListText(__in const CMixerLine& line, __in 
     return(return_value);
 }
 
-__checkReturn UINT_PTR CMixer::GetDeviceID(void) const noexcept
+_Check_return_ UINT_PTR CMixer::GetDeviceID(void) const noexcept
 {
     WFC_VALIDATE_POINTER(this);
     return(m_DeviceID);
 }
 
-__checkReturn DWORD CMixer::GetErrorCode(void) const noexcept
+_Check_return_ DWORD CMixer::GetErrorCode(void) const noexcept
 {
     WFC_VALIDATE_POINTER(this);
     return(m_ErrorCode);
@@ -797,13 +797,13 @@ void CMixer::GetErrorString(_Out_ std::wstring& error_string) const noexcept
     }
 }
 
-__checkReturn HMIXEROBJ CMixer::GetHandle(void) const noexcept
+_Check_return_ HMIXEROBJ CMixer::GetHandle(void) const noexcept
 {
     WFC_VALIDATE_POINTER(this);
     return((HMIXEROBJ)m_Handle);
 }
 
-__checkReturn std::size_t CMixer::GetNumberOfDevices(void) const noexcept
+_Check_return_ std::size_t CMixer::GetNumberOfDevices(void) const noexcept
 {
     WFC_VALIDATE_POINTER(this);
 
@@ -812,7 +812,7 @@ __checkReturn std::size_t CMixer::GetNumberOfDevices(void) const noexcept
     return(return_value);
 }
 
-__checkReturn bool CMixer::Open(__in UINT_PTR device_id, __in DWORD what_to_notify, __in DWORD_PTR who_to_notify, __in DWORD_PTR notify_data) noexcept
+_Check_return_ bool CMixer::Open(__in UINT_PTR device_id, __in DWORD what_to_notify, __in DWORD_PTR who_to_notify, __in DWORD_PTR notify_data) noexcept
 {
     WFC_VALIDATE_POINTER(this);
 
@@ -828,7 +828,7 @@ __checkReturn bool CMixer::Open(__in UINT_PTR device_id, __in DWORD what_to_noti
     return(true);
 }
 
-__checkReturn bool CMixer::SetControlDetails(__in CMixerLine const& line, __in CMixerControl const& control, __in std::vector<CMixerControlDetailsData> const& settings_array) noexcept
+_Check_return_ bool CMixer::SetControlDetails(__in CMixerLine const& line, __in CMixerControl const& control, __in std::vector<CMixerControlDetailsData> const& settings_array) noexcept
 {
     WFC_VALIDATE_POINTER(this);
 

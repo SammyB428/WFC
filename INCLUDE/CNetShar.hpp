@@ -52,17 +52,17 @@ class CNetworkShareInformation
    public:
 
       CNetworkShareInformation();
-      CNetworkShareInformation(_In_ const SHARE_INFO_1 * information_p );
-      CNetworkShareInformation(_In_ const SHARE_INFO_2 * information_p );
-      CNetworkShareInformation(_In_ const CNetworkShareInformation& source );
+      CNetworkShareInformation(_In_ SHARE_INFO_1 const * information_p );
+      CNetworkShareInformation(_In_ SHARE_INFO_2 const * information_p );
+      CNetworkShareInformation(_In_ CNetworkShareInformation const& source );
       virtual ~CNetworkShareInformation();
 
       std::wstring NetworkName;
-      DWORD   Type;
+      DWORD   Type{ 0 };
       std::wstring Remark;
-      DWORD   Permissions;
-      DWORD   MaximumNumberOfUses;
-      DWORD   CurrentNumberOfUses;
+      DWORD   Permissions{ 0 };
+      DWORD   MaximumNumberOfUses{ 0 };
+      DWORD   CurrentNumberOfUses{ 0 };
       std::wstring PathName;
       std::wstring Password;
 
@@ -71,11 +71,11 @@ class CNetworkShareInformation
       ** net API header files...
       */
 
-      virtual void Copy( _In_ const SHARE_INFO_1 * source ) noexcept;
-      virtual void Copy(_In_ const SHARE_INFO_2 * source ) noexcept;
-      virtual void Copy(_In_ const CNetworkShareInformation& source ) noexcept;
+      virtual void Copy( _In_ SHARE_INFO_1 const * source ) noexcept;
+      virtual void Copy(_In_ SHARE_INFO_2 const * source ) noexcept;
+      virtual void Copy(_In_ CNetworkShareInformation const& source ) noexcept;
       virtual void Empty( void ) noexcept;
-      virtual const CNetworkShareInformation& operator = (_In_ const CNetworkShareInformation& source ) noexcept;
+      virtual CNetworkShareInformation const& operator = (_In_ CNetworkShareInformation const& source ) noexcept;
 };
 
 class CNetworkShares : public CNetwork
@@ -90,38 +90,38 @@ class CNetworkShares : public CNetwork
       ** Connection information variables
       */
 
-      SHARE_INFO_1 * m_1InformationBuffer;
-      SHARE_INFO_2 * m_2InformationBuffer;
+       SHARE_INFO_1* m_1InformationBuffer{ nullptr };
+       SHARE_INFO_2* m_2InformationBuffer{ nullptr };
 
       /*
       ** File Information enumeration variables
       */
 
-      DWORD m_1Index;
-      DWORD m_1ResumeHandle;
-      DWORD m_1CurrentEntryNumber;
-      DWORD m_1NumberOfEntriesRead;
-      DWORD m_1TotalNumberOfEntries;
+       DWORD m_1Index{ 0 };
+       DWORD m_1ResumeHandle{ 0 };
+       DWORD m_1CurrentEntryNumber{ 0 };
+       DWORD m_1NumberOfEntriesRead{ 0 };
+       DWORD m_1TotalNumberOfEntries{ 0 };
 
-      DWORD m_2Index;
-      DWORD m_2ResumeHandle;
-      DWORD m_2CurrentEntryNumber;
-      DWORD m_2NumberOfEntriesRead;
-      DWORD m_2TotalNumberOfEntries;
+       DWORD m_2Index{ 0 };
+       DWORD m_2ResumeHandle{ 0 };
+       DWORD m_2CurrentEntryNumber{ 0 };
+       DWORD m_2NumberOfEntriesRead{ 0 };
+       DWORD m_2TotalNumberOfEntries{ 0 };
 
-      __checkReturn bool m_GetChunk( void ) noexcept;
+      _Check_return_ bool m_GetChunk( void ) noexcept;
 
    public:
 
-       CNetworkShares(_In_ const CNetworkShares&) = delete;
-       _Check_return_ CNetworkShares& operator=(_In_ const CNetworkShares&) = delete;
+       CNetworkShares(_In_ CNetworkShares const&) = delete;
+       _Check_return_ CNetworkShares& operator=(_In_ CNetworkShares const&) = delete;
        CNetworkShares();
       CNetworkShares( _In_opt_z_ LPCWSTR machine_name );
       virtual ~CNetworkShares();
 
       virtual _Check_return_ bool Add( _Inout_ CNetworkShareInformation& share_to_add ) noexcept;
       virtual _Check_return_ DWORD Check( _In_ wchar_t const * name_of_device ) noexcept;
-      void Close( void ) noexcept override;
+      virtual void Close( void ) noexcept override;
       virtual _Check_return_ bool Delete(_Inout_ CNetworkShareInformation& share_to_delete ) noexcept;
       virtual _Check_return_ bool Enumerate( void ) noexcept;
       virtual _Check_return_ bool GetNext(_Inout_ CNetworkShareInformation& information ) noexcept;

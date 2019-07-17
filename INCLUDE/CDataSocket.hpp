@@ -58,8 +58,8 @@ class CDataSocket : public CDataFile
       virtual ~CDataSocket();
 
       virtual void Attach( __inout CSimpleSocket * socket_p ) noexcept;
-      __checkReturn uint32_t Read( __out_bcount( number_of_bytes_to_read ) void * buffer, __in uint32_t const number_of_bytes_to_read ) noexcept override;
-      __checkReturn uint64_t Seek( __in int64_t const offset, __in CFile64::SeekPosition const from ) noexcept override;
+      _Check_return_ uint32_t Read( __out_bcount( number_of_bytes_to_read ) void * buffer, __in uint32_t const number_of_bytes_to_read ) noexcept override;
+      _Check_return_ uint64_t Seek( __in int64_t const offset, __in CFile64::SeekPosition const from ) noexcept override;
       void Write( __in_bcount( number_of_bytes_to_write ) void const * buffer, __in uint32_t const number_of_bytes_to_write ) noexcept override;
 };
 

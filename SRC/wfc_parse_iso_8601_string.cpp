@@ -612,7 +612,7 @@ static inline _Check_return_ bool __parse_ymdhmsf( _In_z_ LPCTSTR time_string,
     WFC_END_CATCH_ALL
 }
 
-__checkReturn bool PASCAL Win32FoundationClasses::wfc_parse_iso_8601_string( _In_z_ wchar_t const * time_string, __out Win32FoundationClasses::CFileTime& the_time ) noexcept
+_Check_return_ bool PASCAL Win32FoundationClasses::wfc_parse_iso_8601_string( _In_z_ wchar_t const * time_string, __out Win32FoundationClasses::CFileTime& the_time ) noexcept
 {
     the_time.Empty();
 
@@ -711,7 +711,7 @@ BOOL PASCAL Win32FoundationClasses::wfc_parse_iso_8601_string( LPCTSTR time_stri
 
 #endif // WFC_STL
 
-__checkReturn bool PASCAL Win32FoundationClasses::wfc_parse_iso_8601_string( _In_z_ wchar_t const * time_string, __out CSystemTime& the_time ) noexcept
+_Check_return_ bool PASCAL Win32FoundationClasses::wfc_parse_iso_8601_string( _In_z_ wchar_t const * time_string, __out CSystemTime& the_time ) noexcept
 {
     the_time.Empty();
 
@@ -763,7 +763,7 @@ __checkReturn bool PASCAL Win32FoundationClasses::wfc_parse_iso_8601_string( _In
     return( true );
 }
 
-__checkReturn bool PASCAL Win32FoundationClasses::wfc_parse_iso_8601_string( _In_z_ wchar_t const * time_string, __out CTime& the_time ) noexcept
+_Check_return_ bool PASCAL Win32FoundationClasses::wfc_parse_iso_8601_string( _In_z_ wchar_t const * time_string, __out CTime& the_time ) noexcept
 {
     the_time = CTime( static_cast< time_t >( 0 ) );
 
@@ -813,7 +813,7 @@ __checkReturn bool PASCAL Win32FoundationClasses::wfc_parse_iso_8601_string( _In
     return( true );
 }
 
-__checkReturn bool PASCAL Win32FoundationClasses::wfc_parse_xml( __in_z LPCTSTR filename, __inout CExtensibleMarkupLanguageDocument& xml ) noexcept
+_Check_return_ bool PASCAL Win32FoundationClasses::wfc_parse_xml( __in_z LPCTSTR filename, __inout CExtensibleMarkupLanguageDocument& xml ) noexcept
 {
     WFC_VALIDATE_POINTER( filename );
 
@@ -872,7 +872,7 @@ static constexpr uint8_t const g_hex_values[256] =
     0, 0, 0, 0,  0, 0, 0, 0,  0, 0, 0, 0,  0, 0, 0, 0
 };
 
-__checkReturn bool PASCAL Win32FoundationClasses::wfc_parse_hex_string(__in_z wchar_t const * hex_string, _In_ std::size_t const number_of_characters, __out_bcount(buffer_size) uint8_t * buffer, _In_ std::size_t const buffer_size) noexcept
+_Check_return_ bool PASCAL Win32FoundationClasses::wfc_parse_hex_string(__in_z wchar_t const * hex_string, _In_ std::size_t const number_of_characters, __out_bcount(buffer_size) uint8_t * buffer, _In_ std::size_t const buffer_size) noexcept
 {
     WFC_VALIDATE_POINTER(hex_string);
     WFC_VALIDATE_POINTER(buffer);
@@ -894,7 +894,7 @@ __checkReturn bool PASCAL Win32FoundationClasses::wfc_parse_hex_string(__in_z wc
     return(true);
 }
 
-__checkReturn bool PASCAL Win32FoundationClasses::wfc_parse_hex_string(__in_z char const * hex_string, _In_ std::size_t const number_of_characters, __out_bcount(buffer_size) uint8_t * buffer, _In_ std::size_t const buffer_size) noexcept
+_Check_return_ bool PASCAL Win32FoundationClasses::wfc_parse_hex_string(__in_z char const * hex_string, _In_ std::size_t const number_of_characters, __out_bcount(buffer_size) uint8_t * buffer, _In_ std::size_t const buffer_size) noexcept
 {
     WFC_VALIDATE_POINTER(hex_string);
     WFC_VALIDATE_POINTER(buffer);

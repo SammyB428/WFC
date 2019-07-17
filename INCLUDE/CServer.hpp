@@ -55,17 +55,17 @@ class CServer : public CNetwork
       std::wstring m_UserPath;
       std::wstring m_Domain;
 
-      bool m_Retrieved102;
-      bool m_Retrieved503;
-      bool m_Retrieved599;
+      bool m_Retrieved102{ false };
+      bool m_Retrieved503{ false };
+      bool m_Retrieved599{ false };
 
-      DWORD m_MajorVersion;
-      DWORD m_MinorVersion;
-      DWORD m_NumberOfUsers;
-      DWORD m_NumberOfOpens;
-      DWORD m_Platform;
-      DWORD m_Type;
-      DWORD m_Users;
+      DWORD m_MajorVersion{ 0 };
+      DWORD m_MinorVersion{ 0 };
+      DWORD m_NumberOfUsers{ 0 };
+      DWORD m_NumberOfOpens{ 0 };
+      DWORD m_Platform{ 0 };
+      DWORD m_Type{ 0 };
+      DWORD m_Users{ 0 };
 
       virtual void m_Get_102_Data( void ) noexcept;
       virtual void m_Get_503_Data( void ) noexcept;
@@ -74,8 +74,8 @@ class CServer : public CNetwork
    public:
 
 
-       CServer(__in const CServer&) = delete;
-       _Check_return_ CServer& operator=(__in const CServer&) = delete;
+       CServer(__in CServer const&) = delete;
+       _Check_return_ CServer& operator=(__in CServer const&) = delete;
        
        CServer();
       CServer( _In_opt_z_ LPCWSTR machine_name );

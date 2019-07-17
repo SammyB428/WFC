@@ -133,19 +133,19 @@ CDataFile::~CDataFile()
    WFC_VALIDATE_POINTER( this );
 }
 
-__checkReturn bool CDataFile::AddData( __in CDataChunk const& data ) noexcept
+_Check_return_ bool CDataFile::AddData( __in CDataChunk const& data ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    return( AddData( data.Identifier, data.Data ) );
 }
 
-__checkReturn bool CDataFile::AddData( __in uint32_t const identifier, __in std::vector<uint8_t> const& data ) noexcept
+_Check_return_ bool CDataFile::AddData( __in uint32_t const identifier, __in std::vector<uint8_t> const& data ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    return( AddData( identifier, data.data(), data.size() ) );
 }
 
-__checkReturn bool CDataFile::AddData( __in uint32_t const identifier, __in_bcount( number_of_bytes ) uint8_t const * buffer_p, __in std::size_t const number_of_bytes ) noexcept
+_Check_return_ bool CDataFile::AddData( __in uint32_t const identifier, __in_bcount( number_of_bytes ) uint8_t const * buffer_p, __in std::size_t const number_of_bytes ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -209,13 +209,13 @@ __checkReturn bool CDataFile::AddData( __in uint32_t const identifier, __in_bcou
    return( true );
 }
 
-__checkReturn bool CDataFile::GetData( __out CDataChunk& data ) noexcept
+_Check_return_ bool CDataFile::GetData( __out CDataChunk& data ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    return( GetData( data.Identifier, data.Data ) );
 }
 
-__checkReturn bool CDataFile::GetData( __out uint32_t& identifier, __out std::vector<uint8_t>& data ) noexcept
+_Check_return_ bool CDataFile::GetData( __out uint32_t& identifier, __out std::vector<uint8_t>& data ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 

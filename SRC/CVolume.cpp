@@ -67,7 +67,7 @@ CVolume::~CVolume()
    (void) Close();
 }
 
-__checkReturn bool CVolume::AutomaticallyEject( void ) noexcept
+_Check_return_ bool CVolume::AutomaticallyEject( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -91,7 +91,7 @@ __checkReturn bool CVolume::AutomaticallyEject( void ) noexcept
    return( return_value == FALSE ? false : true );
 }
 
-__checkReturn bool CVolume::Close( void ) noexcept
+_Check_return_ bool CVolume::Close( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -109,7 +109,7 @@ __checkReturn bool CVolume::Close( void ) noexcept
    return( true );
 }
 
-__checkReturn bool CVolume::Dismount( void ) noexcept
+_Check_return_ bool CVolume::Dismount( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -201,7 +201,7 @@ void CVolume::Dump( CDumpContext& dump_context ) const
 
 #endif // _DEBUG
 
-__checkReturn bool CVolume::Eject( void ) noexcept
+_Check_return_ bool CVolume::Eject( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -237,13 +237,13 @@ __checkReturn bool CVolume::Eject( void ) noexcept
    return( true );
 }
 
-__checkReturn HANDLE CVolume::GetHandle( void ) const noexcept
+_Check_return_ HANDLE CVolume::GetHandle( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
    return( m_Handle );
 }
 
-__checkReturn bool CVolume::GetType( __out UINT& drive_type ) noexcept
+_Check_return_ bool CVolume::GetType( __out UINT& drive_type ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -258,7 +258,7 @@ __checkReturn bool CVolume::GetType( __out UINT& drive_type ) noexcept
    return( true );
 }
 
-__checkReturn bool CVolume::Load( void ) noexcept
+_Check_return_ bool CVolume::Load( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -282,7 +282,7 @@ __checkReturn bool CVolume::Load( void ) noexcept
    return( return_value == FALSE ? false : true );
 }
 
-__checkReturn bool CVolume::Lock( void ) noexcept
+_Check_return_ bool CVolume::Lock( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -317,7 +317,7 @@ __checkReturn bool CVolume::Lock( void ) noexcept
    return( false );
 }
 
-__checkReturn bool CVolume::Open( __in const TCHAR drive_letter ) noexcept
+_Check_return_ bool CVolume::Open( __in TCHAR const drive_letter ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -374,7 +374,7 @@ __checkReturn bool CVolume::Open( __in const TCHAR drive_letter ) noexcept
    return( true );
 }
 
-__checkReturn bool CVolume::PreventRemoval( __in const bool prevent_removal ) noexcept
+_Check_return_ bool CVolume::PreventRemoval( __in bool const prevent_removal ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -403,7 +403,7 @@ __checkReturn bool CVolume::PreventRemoval( __in const bool prevent_removal ) no
    return(return_value == FALSE ? false : true );
 }
 
-__checkReturn bool CVolume::Unlock( void ) noexcept
+_Check_return_ bool CVolume::Unlock( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 

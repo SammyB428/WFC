@@ -59,13 +59,13 @@ CMixerControlDetails::CMixerControlDetails()
    Empty();
 }
 
-CMixerControlDetails::CMixerControlDetails( __in const CMixerControlDetails& source )
+CMixerControlDetails::CMixerControlDetails( __in CMixerControlDetails const& source )
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );
 }
 
-CMixerControlDetails::CMixerControlDetails( __in const MIXERCONTROLDETAILS& source )
+CMixerControlDetails::CMixerControlDetails( __in MIXERCONTROLDETAILS const& source )
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );
@@ -79,7 +79,7 @@ CMixerControlDetails::~CMixerControlDetails()
 
 // Methods
 
-void CMixerControlDetails::Copy( __in const CMixerControlDetails& source ) noexcept
+void CMixerControlDetails::Copy( __in CMixerControlDetails const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -96,7 +96,7 @@ void CMixerControlDetails::Copy( __in const CMixerControlDetails& source ) noexc
    NumberOfMultipleItemsPerChannel = source.NumberOfMultipleItemsPerChannel;
 }
 
-void CMixerControlDetails::Copy( __in const MIXERCONTROLDETAILS& source ) noexcept
+void CMixerControlDetails::Copy( __in MIXERCONTROLDETAILS const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -135,14 +135,14 @@ void CMixerControlDetails::Empty( void ) noexcept
 
 // Operators
 
-CMixerControlDetails& CMixerControlDetails::operator=( __in const CMixerControlDetails& source ) noexcept
+CMixerControlDetails& CMixerControlDetails::operator=( __in CMixerControlDetails const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );
    return( *this );
 }
 
-CMixerControlDetails& CMixerControlDetails::operator=( __in const MIXERCONTROLDETAILS& source ) noexcept
+CMixerControlDetails& CMixerControlDetails::operator=( __in MIXERCONTROLDETAILS const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );

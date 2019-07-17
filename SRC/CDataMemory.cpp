@@ -167,25 +167,25 @@ void CDataMemory::Flush( void ) noexcept
    WFC_VALIDATE_POINTER( this );
 }
 
-__checkReturn BYTE const * CDataMemory::GetData( void ) const noexcept
+_Check_return_ BYTE const * CDataMemory::GetData( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
    return( m_Data.data() );
 }
 
-__checkReturn uint64_t CDataMemory::GetLength( void ) const noexcept
+_Check_return_ uint64_t CDataMemory::GetLength( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
    return( m_Data.size() );
 }
 
-__checkReturn uint64_t CDataMemory::GetPosition( void ) const noexcept
+_Check_return_ uint64_t CDataMemory::GetPosition( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
    return( m_Position );
 }
 
-__checkReturn bool CDataMemory::Open( __in_z LPCTSTR filename, __in UINT const mode ) noexcept
+_Check_return_ bool CDataMemory::Open( __in_z LPCTSTR filename, __in UINT const mode ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( filename );
@@ -209,7 +209,7 @@ __checkReturn bool CDataMemory::Open( __in_z LPCTSTR filename, __in UINT const m
    WFC_END_CATCH_ALL
 }
 
-__checkReturn UINT CDataMemory::Read(__out_bcount(read_size) void * buffer, __in const UINT read_size ) noexcept
+_Check_return_ UINT CDataMemory::Read(__out_bcount(read_size) void * buffer, __in UINT const read_size ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER_NULL_OK( buffer );
@@ -327,7 +327,6 @@ void CDataMemory::Write( __in_bcount( number_of_bytes_to_write ) void const * bu
          // 1998-08-09
 
          (void) m_Data.push_back( byte_buffer[index] );
-         // m_Data.Append( (const BYTE *) buffer, number_of_bytes_to_write );
       }
    }
    WFC_CATCH_ALL
@@ -337,28 +336,28 @@ void CDataMemory::Write( __in_bcount( number_of_bytes_to_write ) void const * bu
    WFC_END_CATCH_ALL
 }
 
-__checkReturn CDataMemory const& CDataMemory::operator=( __in CDataMemory const& source ) noexcept
+_Check_return_ CDataMemory const& CDataMemory::operator=( __in CDataMemory const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );
    return( *this );
 }
 
-__checkReturn CDataMemory const& CDataMemory::operator=( __in std::vector<uint8_t> const& source ) noexcept
+_Check_return_ CDataMemory const& CDataMemory::operator=( __in std::vector<uint8_t> const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );
    return( *this );
 }
 
-__checkReturn CDataMemory const& CDataMemory::operator+=( __in std::vector<uint8_t> const& source ) noexcept
+_Check_return_ CDataMemory const& CDataMemory::operator+=( __in std::vector<uint8_t> const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Append( source );
    return( *this );
 }
 
-__checkReturn CDataMemory const& CDataMemory::operator+=( __in CDataMemory const& source ) noexcept
+_Check_return_ CDataMemory const& CDataMemory::operator+=( __in CDataMemory const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Append( source );

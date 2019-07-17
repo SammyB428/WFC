@@ -59,7 +59,7 @@ CMixerSwitchControl::CMixerSwitchControl()
    (void) m_Array.push_back( m_Switch );
 }
 
-CMixerSwitchControl::CMixerSwitchControl( __in const CMixerSwitchControl& source )
+CMixerSwitchControl::CMixerSwitchControl( __in CMixerSwitchControl const& source )
 {
    WFC_VALIDATE_POINTER( this );
    m_Array.push_back( m_Switch );
@@ -73,7 +73,7 @@ CMixerSwitchControl::~CMixerSwitchControl()
 
 // Methods
 
-void CMixerSwitchControl::Copy( __in const CMixerSwitchControl& source ) noexcept
+void CMixerSwitchControl::Copy( __in CMixerSwitchControl const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -173,7 +173,7 @@ _Check_return_ bool CMixerSwitchControl::TurnOn( void ) noexcept
    return( return_value );
 }
 
-_Check_return_ CMixerSwitchControl& CMixerSwitchControl::operator=( __in const CMixerSwitchControl& source ) noexcept
+_Check_return_ CMixerSwitchControl& CMixerSwitchControl::operator=( __in CMixerSwitchControl const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );

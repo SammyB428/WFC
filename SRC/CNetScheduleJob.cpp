@@ -391,7 +391,7 @@ void CNetworkScheduleJob::m_Initialize( void ) noexcept
    Command.clear();
 }
 
-const CNetworkScheduleJob& CNetworkScheduleJob::operator = ( __in CNetworkScheduleJob const& source ) noexcept
+CNetworkScheduleJob const& CNetworkScheduleJob::operator = ( __in CNetworkScheduleJob const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    ASSERT( this != &source );

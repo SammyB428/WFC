@@ -56,13 +56,13 @@ CAccessAllowedEntry::CAccessAllowedEntry()
    Empty();
 }
 
-CAccessAllowedEntry::CAccessAllowedEntry( __in const CAccessAllowedEntry& source )
+CAccessAllowedEntry::CAccessAllowedEntry( __in CAccessAllowedEntry const& source )
 {
    Empty();
    Copy( source );
 }
 
-CAccessAllowedEntry::CAccessAllowedEntry( __in const ACCESS_ALLOWED_ACE * source )
+CAccessAllowedEntry::CAccessAllowedEntry( __in ACCESS_ALLOWED_ACE const * source )
 {
    Empty();
    Copy( source );
@@ -75,7 +75,7 @@ CAccessAllowedEntry::~CAccessAllowedEntry()
 
 void CAccessAllowedEntry::Copy( __in CAccessAllowedEntry const& source ) noexcept
 {
-   Copy( (const ACCESS_ALLOWED_ACE *) &source );
+   Copy( reinterpret_cast<ACCESS_ALLOWED_ACE const *>(&source) );
 }
 
 void CAccessAllowedEntry::Copy( __in ACCESS_ALLOWED_ACE const * source ) noexcept
@@ -230,13 +230,13 @@ CAccessControlEntryHeader::CAccessControlEntryHeader()
    Empty();
 }
 
-CAccessControlEntryHeader::CAccessControlEntryHeader( __in const CAccessControlEntryHeader& source )
+CAccessControlEntryHeader::CAccessControlEntryHeader( __in CAccessControlEntryHeader const& source )
 {
    Empty();
    Copy( source );
 }
 
-CAccessControlEntryHeader::CAccessControlEntryHeader( __in const ACE_HEADER * source )
+CAccessControlEntryHeader::CAccessControlEntryHeader( __in ACE_HEADER const * source )
 {
    Empty();
    Copy( source );
@@ -395,13 +395,13 @@ CAccessControlList::CAccessControlList()
    Empty();
 }
 
-CAccessControlList::CAccessControlList( __in const CAccessControlList& source )
+CAccessControlList::CAccessControlList( __in CAccessControlList const& source )
 {
    Empty();
    Copy( source );
 }
 
-CAccessControlList::CAccessControlList( __in const ACL * source )
+CAccessControlList::CAccessControlList( __in ACL const * source )
 {
    Empty();
    Copy( source );
@@ -480,13 +480,13 @@ CAccessDeniedEntry::CAccessDeniedEntry()
    Empty();
 }
 
-CAccessDeniedEntry::CAccessDeniedEntry( __in const CAccessDeniedEntry& source )
+CAccessDeniedEntry::CAccessDeniedEntry( __in CAccessDeniedEntry const& source )
 {
    Empty();
    Copy( source );
 }
 
-CAccessDeniedEntry::CAccessDeniedEntry( __in const ACCESS_DENIED_ACE * source )
+CAccessDeniedEntry::CAccessDeniedEntry( __in ACCESS_DENIED_ACE const * source )
 {
    Empty();
    Copy( source );
@@ -654,13 +654,13 @@ CBitmapCoreHeader::CBitmapCoreHeader()
    Empty();
 }
 
-CBitmapCoreHeader::CBitmapCoreHeader( __in const CBitmapCoreHeader& source )
+CBitmapCoreHeader::CBitmapCoreHeader( __in CBitmapCoreHeader const& source )
 {
    Empty();
    Copy( source );
 }
 
-CBitmapCoreHeader::CBitmapCoreHeader( __in const tagBITMAPCOREHEADER * source )
+CBitmapCoreHeader::CBitmapCoreHeader( __in tagBITMAPCOREHEADER const * source )
 {
    Empty();
    Copy( source );
@@ -673,7 +673,7 @@ CBitmapCoreHeader::~CBitmapCoreHeader()
 
 void CBitmapCoreHeader::Copy( __in CBitmapCoreHeader const& source ) noexcept
 {
-   Copy( (const CBitmapCoreHeader *) &source );
+   Copy( reinterpret_cast<CBitmapCoreHeader const *>(&source) );
 }
 
 void CBitmapCoreHeader::Copy( __in tagBITMAPCOREHEADER const * source ) noexcept
@@ -739,13 +739,13 @@ CBitmapFileHeader::CBitmapFileHeader()
    Empty();
 }
 
-CBitmapFileHeader::CBitmapFileHeader( __in const CBitmapFileHeader& source )
+CBitmapFileHeader::CBitmapFileHeader( __in CBitmapFileHeader const& source )
 {
    Empty();
    Copy( source );
 }
 
-CBitmapFileHeader::CBitmapFileHeader( __in const tagBITMAPFILEHEADER * source )
+CBitmapFileHeader::CBitmapFileHeader( __in tagBITMAPFILEHEADER const * source )
 {
    Empty();
    Copy( source );
@@ -758,7 +758,7 @@ CBitmapFileHeader::~CBitmapFileHeader()
 
 void CBitmapFileHeader::Copy( __in CBitmapFileHeader const& source ) noexcept
 {
-   Copy( (const tagBITMAPFILEHEADER *) &source );
+   Copy( reinterpret_cast<tagBITMAPFILEHEADER const *>(&source) );
 }
 
 void CBitmapFileHeader::Copy( __in tagBITMAPFILEHEADER const * source ) noexcept
@@ -831,13 +831,13 @@ CBitmapInfoHeader::CBitmapInfoHeader()
    Empty();
 }
 
-CBitmapInfoHeader::CBitmapInfoHeader( __in const CBitmapInfoHeader& source )
+CBitmapInfoHeader::CBitmapInfoHeader( __in CBitmapInfoHeader const& source )
 {
    Empty();
    Copy( source );
 }
 
-CBitmapInfoHeader::CBitmapInfoHeader( __in const tagBITMAPINFOHEADER * source )
+CBitmapInfoHeader::CBitmapInfoHeader( __in tagBITMAPINFOHEADER const * source )
 {
    Empty();
    Copy( source );
@@ -850,7 +850,7 @@ CBitmapInfoHeader::~CBitmapInfoHeader()
 
 void CBitmapInfoHeader::Copy( __in CBitmapInfoHeader const& source ) noexcept
 {
-   Copy( (const tagBITMAPINFOHEADER * ) &source );
+   Copy( reinterpret_cast<tagBITMAPINFOHEADER const *>(&source) );
 }
 
 void CBitmapInfoHeader::Copy( __in tagBITMAPINFOHEADER const * source ) noexcept
@@ -938,13 +938,13 @@ CColorAdjustment::CColorAdjustment()
    Empty();
 }
 
-CColorAdjustment::CColorAdjustment( __in const CColorAdjustment& source )
+CColorAdjustment::CColorAdjustment( __in CColorAdjustment const& source )
 {
    Empty();
    Copy( source );
 }
 
-CColorAdjustment::CColorAdjustment( __in const tagCOLORADJUSTMENT * source )
+CColorAdjustment::CColorAdjustment( __in tagCOLORADJUSTMENT const * source )
 {
    Empty();
    Copy( source );
@@ -957,7 +957,7 @@ CColorAdjustment::~CColorAdjustment()
 
 void CColorAdjustment::Copy( __in CColorAdjustment const& source ) noexcept
 {
-   Copy( (const tagCOLORADJUSTMENT *) &source );
+   Copy( reinterpret_cast<tagCOLORADJUSTMENT const *>(&source) );
 }
 
 void CColorAdjustment::Copy( __in tagCOLORADJUSTMENT const * source ) noexcept
@@ -1050,7 +1050,7 @@ CCommunicationsConfiguration::CCommunicationsConfiguration()
    dcb.DCBlength = sizeof( DCB );
 }
 
-CCommunicationsConfiguration::CCommunicationsConfiguration( __in const CCommunicationsConfiguration& source )
+CCommunicationsConfiguration::CCommunicationsConfiguration( __in CCommunicationsConfiguration const& source )
 {
    Empty();
    dwSize        = sizeof( COMMCONFIG );
@@ -1058,7 +1058,7 @@ CCommunicationsConfiguration::CCommunicationsConfiguration( __in const CCommunic
    Copy( source );
 }
 
-CCommunicationsConfiguration::CCommunicationsConfiguration( __in const COMMCONFIG& source )
+CCommunicationsConfiguration::CCommunicationsConfiguration( __in COMMCONFIG const& source )
 {
    Empty();
    dwSize        = sizeof( COMMCONFIG );
@@ -1295,7 +1295,7 @@ CCommunicationProperties::CCommunicationProperties()
    Empty();
 }
 
-CCommunicationProperties::CCommunicationProperties( __in const CCommunicationProperties& source )
+CCommunicationProperties::CCommunicationProperties( __in CCommunicationProperties const& source )
 {
    Copy( source );
 }
@@ -2156,12 +2156,12 @@ CMemoryStatus::~CMemoryStatus()
    Empty();
 }
 
-void CMemoryStatus::Copy( __in CMemoryStatus const& source )
+void CMemoryStatus::Copy( __in CMemoryStatus const& source ) noexcept
 {
    Copy( reinterpret_cast<MEMORYSTATUS const *>(&source) );
 }
 
-void CMemoryStatus::Copy( __in MEMORYSTATUS const * source )
+void CMemoryStatus::Copy( __in MEMORYSTATUS const * source ) noexcept
 {
    WFC_VALIDATE_POINTER( source );
 
@@ -2209,7 +2209,7 @@ void CMemoryStatus::Dump( CDumpContext& dump_context ) const
 
 #endif // _DEBUG
 
-void CMemoryStatus::Empty( void )
+void CMemoryStatus::Empty( void ) noexcept
 {
    dwLength        = sizeof( MEMORYSTATUS );
    dwMemoryLoad    = 0;
@@ -2221,7 +2221,7 @@ void CMemoryStatus::Empty( void )
    dwAvailVirtual  = 0;
 }
 
-_Check_return_ CMemoryStatus& CMemoryStatus::operator=( __in const CMemoryStatus& source )
+_Check_return_ CMemoryStatus& CMemoryStatus::operator=( __in CMemoryStatus const& source ) noexcept
 {
    Copy( source );
    return( *this );
@@ -2236,13 +2236,13 @@ COFStruct::COFStruct()
    Empty();
 }
 
-COFStruct::COFStruct( __in const COFStruct& source )
+COFStruct::COFStruct( __in COFStruct const& source )
 {
    Empty();
    Copy( source );
 }
 
-COFStruct::COFStruct( __in const _OFSTRUCT * source )
+COFStruct::COFStruct( __in _OFSTRUCT const * source )
 {
    Empty();
    Copy( source );
@@ -2253,12 +2253,12 @@ COFStruct::~COFStruct()
    Empty();
 }
 
-void COFStruct::Copy( __in const COFStruct& source )
+void COFStruct::Copy( __in COFStruct const& source ) noexcept
 {
-   Copy( (const _OFSTRUCT *) &source );
+   Copy( reinterpret_cast<_OFSTRUCT const *>(&source) );
 }
 
-void COFStruct::Copy( __in const _OFSTRUCT * source )
+void COFStruct::Copy( __in _OFSTRUCT const * source ) noexcept
 {
    WFC_VALIDATE_POINTER( source );
    ASSERT( source != this );
@@ -2303,7 +2303,7 @@ void COFStruct::Dump( CDumpContext& dump_context ) const
 
 #endif // _DEBUG
 
-void COFStruct::Empty( void )
+void COFStruct::Empty( void ) noexcept
 {
    cBytes     = sizeof( _OFSTRUCT );
    fFixedDisk = 0;
@@ -2311,16 +2311,13 @@ void COFStruct::Empty( void )
    Reserved1  = 0;
    Reserved2  = 0;
 
-   int index = 0;
-
-   while( index < OFS_MAXPATHNAME )
+   for( auto const index : Range(OFS_MAXPATHNAME) )
    {
       szPathName[ index ] = 0;
-      index++;
    }
 }
 
-_Check_return_ COFStruct& COFStruct::operator=( __in const COFStruct& source )
+_Check_return_ COFStruct& COFStruct::operator=( __in COFStruct const& source ) noexcept
 {
    Copy( source );
    return( *this );
@@ -2335,13 +2332,13 @@ COutlineTextMetricA::COutlineTextMetricA()
    Empty();
 }
 
-COutlineTextMetricA::COutlineTextMetricA( __in const COutlineTextMetricA& source )
+COutlineTextMetricA::COutlineTextMetricA( __in COutlineTextMetricA const& source )
 {
    Empty();
    Copy( source );
 }
 
-COutlineTextMetricA::COutlineTextMetricA( __in const _OUTLINETEXTMETRICA * source )
+COutlineTextMetricA::COutlineTextMetricA( __in _OUTLINETEXTMETRICA const * source )
 {
    Empty();
    Copy( source );
@@ -2354,7 +2351,7 @@ COutlineTextMetricA::~COutlineTextMetricA()
 
 void COutlineTextMetricA::Copy( __in COutlineTextMetricA const& source ) noexcept
 {
-   Copy( (const _OUTLINETEXTMETRICA *) &source );
+   Copy( reinterpret_cast<_OUTLINETEXTMETRICA const *>(&source) );
 }
 
 void COutlineTextMetricA::Copy( __in _OUTLINETEXTMETRICA const * source ) noexcept
@@ -2630,13 +2627,13 @@ COutlineTextMetricW::COutlineTextMetricW()
    Empty();
 }
 
-COutlineTextMetricW::COutlineTextMetricW( __in const COutlineTextMetricW& source )
+COutlineTextMetricW::COutlineTextMetricW( __in COutlineTextMetricW const& source )
 {
    Empty();
    Copy( source );
 }
 
-COutlineTextMetricW::COutlineTextMetricW( __in const _OUTLINETEXTMETRICW * source )
+COutlineTextMetricW::COutlineTextMetricW( __in _OUTLINETEXTMETRICW const * source )
 {
    Empty();
    Copy( source );
@@ -2649,7 +2646,7 @@ COutlineTextMetricW::~COutlineTextMetricW()
 
 void COutlineTextMetricW::Copy( __in COutlineTextMetricW const& source ) noexcept
 {
-   Copy( (const _OUTLINETEXTMETRICW *) &source );
+   Copy( reinterpret_cast<_OUTLINETEXTMETRICW const *>(&source) );
 }
 
 void COutlineTextMetricW::Copy( __in _OUTLINETEXTMETRICW const * source ) noexcept
@@ -2930,7 +2927,7 @@ CPerfCounterDefinition::~CPerfCounterDefinition()
    Empty();
 }
 
-void CPerfCounterDefinition::Empty( void )
+void CPerfCounterDefinition::Empty( void ) noexcept
 {
    ByteLength            = sizeof( PERF_COUNTER_DEFINITION );
    CounterNameTitleIndex = 0;
@@ -2954,7 +2951,7 @@ CPerfInstanceDefinition::~CPerfInstanceDefinition()
    Empty();
 }
 
-void CPerfInstanceDefinition::Empty( void )
+void CPerfInstanceDefinition::Empty( void ) noexcept
 {
    ByteLength             = sizeof( PERF_INSTANCE_DEFINITION );
    ParentObjectTitleIndex = 0;
@@ -2969,13 +2966,13 @@ CPixelFormatDescriptor::CPixelFormatDescriptor()
    Empty();
 }
 
-CPixelFormatDescriptor::CPixelFormatDescriptor( __in const CPixelFormatDescriptor& source )
+CPixelFormatDescriptor::CPixelFormatDescriptor( __in CPixelFormatDescriptor const& source )
 {
    Empty();
    Copy( source );
 }
 
-CPixelFormatDescriptor::CPixelFormatDescriptor( __in const tagPIXELFORMATDESCRIPTOR * source )
+CPixelFormatDescriptor::CPixelFormatDescriptor( __in tagPIXELFORMATDESCRIPTOR const * source )
 {
    Empty();
    Copy( source );
@@ -3248,7 +3245,7 @@ CRasterizerStatus::~CRasterizerStatus()
    Empty();
 }
 
-void CRasterizerStatus::Empty( void )
+void CRasterizerStatus::Empty( void ) noexcept
 {
    nSize       = sizeof( _RASTERIZER_STATUS );
    wFlags      = 0;
@@ -3282,7 +3279,7 @@ CSecurityQualityOfService::~CSecurityQualityOfService()
    Empty();
 }
 
-void CSecurityQualityOfService::Empty( void )
+void CSecurityQualityOfService::Empty( void ) noexcept
 {
    Length = sizeof( SECURITY_QUALITY_OF_SERVICE );
 
@@ -3305,13 +3302,13 @@ CSystemAuditEntry::CSystemAuditEntry()
    Empty();
 }
 
-CSystemAuditEntry::CSystemAuditEntry( __in const CSystemAuditEntry& source )
+CSystemAuditEntry::CSystemAuditEntry( __in CSystemAuditEntry const& source )
 {
    Empty();
    Copy( source );
 }
 
-CSystemAuditEntry::CSystemAuditEntry( __in const _SYSTEM_AUDIT_ACE * source )
+CSystemAuditEntry::CSystemAuditEntry( __in _SYSTEM_AUDIT_ACE const * source )
 {
    Empty();
    Copy( source );
@@ -3322,12 +3319,12 @@ CSystemAuditEntry::~CSystemAuditEntry()
    Empty();
 }
 
-void CSystemAuditEntry::Copy( __in const CSystemAuditEntry& source )
+void CSystemAuditEntry::Copy( __in CSystemAuditEntry const& source ) noexcept
 {
-   Copy( (const _SYSTEM_AUDIT_ACE *) &source );
+   Copy( reinterpret_cast<_SYSTEM_AUDIT_ACE const *>(&source) );
 }
 
-void CSystemAuditEntry::Copy( __in const _SYSTEM_AUDIT_ACE * source )
+void CSystemAuditEntry::Copy( __in _SYSTEM_AUDIT_ACE const * source ) noexcept
 {
    WFC_VALIDATE_POINTER( source );
    ASSERT( source != this );
@@ -3459,7 +3456,7 @@ void CSystemAuditEntry::Dump( CDumpContext& dump_context ) const
 
 #endif // _DEBUG
 
-void CSystemAuditEntry::Empty( void )
+void CSystemAuditEntry::Empty( void ) noexcept
 {
    // ACE_HEADER
    Header.AceType  = 0;
@@ -3472,7 +3469,7 @@ void CSystemAuditEntry::Empty( void )
    SidStart        = 0;
 }
 
-_Check_return_ CSystemAuditEntry& CSystemAuditEntry::operator=( __in const CSystemAuditEntry& source )
+_Check_return_ CSystemAuditEntry& CSystemAuditEntry::operator=( __in CSystemAuditEntry const& source ) noexcept
 {
    Copy( source );
    return( *this );
@@ -3487,13 +3484,13 @@ CTextMetricA::CTextMetricA()
    Empty();
 }
 
-CTextMetricA::CTextMetricA( __in const CTextMetricA& source )
+CTextMetricA::CTextMetricA( __in CTextMetricA const& source )
 {
    Empty();
    Copy( source );
 }
 
-CTextMetricA::CTextMetricA( __in const tagTEXTMETRICA * source )
+CTextMetricA::CTextMetricA( __in tagTEXTMETRICA const * source )
 {
    Empty();
    Copy( source );
@@ -3504,12 +3501,12 @@ CTextMetricA::~CTextMetricA()
    Empty();
 }
 
-void CTextMetricA::Copy( __in const CTextMetricA& source )
+void CTextMetricA::Copy( __in CTextMetricA const& source ) noexcept
 {
-   Copy( (const tagTEXTMETRICA *) &source );
+   Copy( reinterpret_cast<tagTEXTMETRICA const *>(&source) );
 }
 
-void CTextMetricA::Copy( __in const tagTEXTMETRICA * source )
+void CTextMetricA::Copy( __in tagTEXTMETRICA const * source ) noexcept
 {
    WFC_VALIDATE_POINTER( source );
    ASSERT( source != this );
@@ -3582,7 +3579,7 @@ void CTextMetricA::Dump( CDumpContext& dump_context ) const
 
 #endif // _DEBUG
 
-void CTextMetricA::Empty( void )
+void CTextMetricA::Empty( void ) noexcept
 {
    tmHeight           = 0;
    tmAscent           = 0;
@@ -3606,7 +3603,7 @@ void CTextMetricA::Empty( void )
    tmCharSet          = 0;
 }
 
-_Check_return_ CTextMetricA& CTextMetricA::operator=( __in const CTextMetricA& source )
+_Check_return_ CTextMetricA& CTextMetricA::operator=( __in CTextMetricA const& source ) noexcept
 {
    Copy( source );
    return( *this );
@@ -3621,13 +3618,13 @@ CTextMetricW::CTextMetricW()
    Empty();
 }
 
-CTextMetricW::CTextMetricW( __in const CTextMetricW& source )
+CTextMetricW::CTextMetricW( __in CTextMetricW const& source )
 {
    Empty();
    Copy( source );
 }
 
-CTextMetricW::CTextMetricW( __in const tagTEXTMETRICW * source )
+CTextMetricW::CTextMetricW( __in tagTEXTMETRICW const * source )
 {
    Empty();
    Copy( source );
@@ -3638,12 +3635,12 @@ CTextMetricW::~CTextMetricW()
    Empty();
 }
 
-void CTextMetricW::Copy( __in const CTextMetricW& source )
+void CTextMetricW::Copy( __in CTextMetricW const& source ) noexcept
 {
-   Copy( (const tagTEXTMETRICW *) &source );
+   Copy( reinterpret_cast<tagTEXTMETRICW const *>(&source) );
 }
 
-void CTextMetricW::Copy( __in const tagTEXTMETRICW * source )
+void CTextMetricW::Copy( __in tagTEXTMETRICW const * source ) noexcept
 {
    WFC_VALIDATE_POINTER( source );
    ASSERT( source != this );
@@ -3716,7 +3713,7 @@ void CTextMetricW::Dump( CDumpContext& dump_context ) const
 
 #endif // _DEBUG
 
-void CTextMetricW::Empty( void )
+void CTextMetricW::Empty( void ) noexcept
 {
    tmHeight           = 0;
    tmAscent           = 0;
@@ -3740,7 +3737,7 @@ void CTextMetricW::Empty( void )
    tmCharSet          = 0;
 }
 
-_Check_return_ CTextMetricW& CTextMetricW::operator=( __in const CTextMetricW& source )
+_Check_return_ CTextMetricW& CTextMetricW::operator=( __in CTextMetricW const& source ) noexcept
 {
    Copy( source );
    return( *this );
@@ -3751,13 +3748,13 @@ CWindowPlacement::CWindowPlacement()
    Empty();
 }
 
-CWindowPlacement::CWindowPlacement( __in const CWindowPlacement& source )
+CWindowPlacement::CWindowPlacement( __in CWindowPlacement const& source )
 {
    Empty();
    Copy( source );
 }
 
-CWindowPlacement::CWindowPlacement( __in const tagWINDOWPLACEMENT * source )
+CWindowPlacement::CWindowPlacement( __in tagWINDOWPLACEMENT const * source )
 {
    Empty();
    Copy( source );
@@ -3768,12 +3765,12 @@ CWindowPlacement::~CWindowPlacement()
    Empty();
 }
 
-void CWindowPlacement::Copy( __in const CWindowPlacement& source )
+void CWindowPlacement::Copy( __in CWindowPlacement const& source ) noexcept
 {
-   Copy( (const tagWINDOWPLACEMENT *) &source );
+   Copy( reinterpret_cast<tagWINDOWPLACEMENT const *>(&source) );
 }
 
-void CWindowPlacement::Copy( __in const tagWINDOWPLACEMENT * source )
+void CWindowPlacement::Copy( __in tagWINDOWPLACEMENT const * source ) noexcept
 {
    WFC_VALIDATE_POINTER( source );
    ASSERT( source != this );
@@ -3910,7 +3907,7 @@ void CWindowPlacement::Dump( CDumpContext& dump_context ) const
 
 #endif // _DEBUG
 
-void CWindowPlacement::Empty( void )
+void CWindowPlacement::Empty( void ) noexcept
 {
    length  = sizeof( tagWINDOWPLACEMENT );
    flags   = 0;
@@ -3929,7 +3926,7 @@ void CWindowPlacement::Empty( void )
    rcNormalPosition.bottom = 0;
 }
 
-_Check_return_ CWindowPlacement& CWindowPlacement::operator=( __in const CWindowPlacement& source )
+_Check_return_ CWindowPlacement& CWindowPlacement::operator=( __in CWindowPlacement const& source ) noexcept
 {
    Copy( source );
    return( *this );

@@ -60,26 +60,26 @@ CPingResults::CPingResults()
    Empty();
 }
 
-CPingResults::CPingResults( __in const CPingResults& source )
+CPingResults::CPingResults( __in CPingResults const& source )
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );
 }
 
-CPingResults::CPingResults( __in const CPingResults * source )
+CPingResults::CPingResults( __in CPingResults const * source )
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
    Copy( source );
 }
 
-CPingResults::CPingResults( __in const IP_ECHO_REPLY& source )
+CPingResults::CPingResults( __in IP_ECHO_REPLY const& source )
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );
 }
 
-CPingResults::CPingResults( __in const IP_ECHO_REPLY * source )
+CPingResults::CPingResults( __in IP_ECHO_REPLY const * source )
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
@@ -92,7 +92,7 @@ CPingResults::~CPingResults()
    Empty();
 }
 
-void CPingResults::Copy( __in const CPingResults& source ) noexcept
+void CPingResults::Copy( __in CPingResults const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -108,7 +108,7 @@ void CPingResults::Copy( __in const CPingResults& source ) noexcept
    TimeToLive                  = source.TimeToLive;
 }
 
-void CPingResults::Copy( __in const CPingResults * source ) noexcept
+void CPingResults::Copy( __in CPingResults const * source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
@@ -133,7 +133,7 @@ void CPingResults::Copy( __in const CPingResults * source ) noexcept
    WFC_END_CATCH_ALL
 }
 
-void CPingResults::Copy( __in const IP_ECHO_REPLY& source ) noexcept
+void CPingResults::Copy( __in IP_ECHO_REPLY const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -146,7 +146,7 @@ void CPingResults::Copy( __in const IP_ECHO_REPLY& source ) noexcept
    TimeToLive                  = source.Options.Ttl;
 }
 
-void CPingResults::Copy( __in const IP_ECHO_REPLY * source ) noexcept
+void CPingResults::Copy( __in IP_ECHO_REPLY const * source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
@@ -179,7 +179,7 @@ void CPingResults::Empty( void ) noexcept
    TimeToLive = 0;
 }
 
-CPingResults& CPingResults::operator = ( __in const CPingResults& source ) noexcept
+CPingResults& CPingResults::operator = ( __in CPingResults const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );

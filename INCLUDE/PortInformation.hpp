@@ -48,25 +48,25 @@ class CPortInformation
    public:
 
       CPortInformation();
-      CPortInformation( __in const PORT_INFO_1 * source );
-      CPortInformation( __in const PORT_INFO_2 * source );
-      CPortInformation( __in const CPortInformation& source );
+      CPortInformation( __in PORT_INFO_1 const * source );
+      CPortInformation( __in PORT_INFO_2 const * source );
+      CPortInformation( __in CPortInformation const& source );
 
       virtual ~CPortInformation();
 
       std::wstring Name;
       std::wstring Monitor;
       std::wstring Description;
-      DWORD   Type;
+      DWORD   Type{ 0 };
       std::wstring TypeName;
 
-      virtual void Copy( __in const PORT_INFO_1 * source ) noexcept;
-      virtual void Copy( __in const PORT_INFO_2 * source ) noexcept;
-      virtual void Copy( __in const CPortInformation& source ) noexcept;
+      virtual void Copy( __in PORT_INFO_1 const * source ) noexcept;
+      virtual void Copy( __in PORT_INFO_2 const * source ) noexcept;
+      virtual void Copy( __in CPortInformation const& source ) noexcept;
       virtual void Empty( void ) noexcept;
       virtual void TypeToString( __in DWORD type, __out std::wstring& string ) const noexcept;
 
-      virtual CPortInformation& operator = ( __in const CPortInformation& source ) noexcept;
+      virtual CPortInformation& operator = ( __in CPortInformation const& source ) noexcept;
 
 #if defined( _DEBUG ) && ! defined( WFC_NO_DUMPING )
       virtual void Dump( CDumpContext& dump_context ) const;

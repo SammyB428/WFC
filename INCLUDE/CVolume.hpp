@@ -47,18 +47,18 @@ class CVolume
 {
    protected:
 
-      HANDLE m_Handle;
+       HANDLE m_Handle{ nullptr };
 
-      UINT m_DriveType;
+      UINT m_DriveType{ 0 };
 
       std::wstring m_Name;
 
-      wchar_t m_DriveLetter;
+      wchar_t m_DriveLetter{ 0 };
 
    public:
 
-       CVolume(const CVolume&) = delete;
-       CVolume& operator=(const CVolume&) = delete;
+       CVolume(CVolume const&) = delete;
+       CVolume& operator=(CVolume const&) = delete;
  
        CVolume();
       virtual ~CVolume();
@@ -72,7 +72,7 @@ class CVolume
       _Check_return_ bool   Load( void ) noexcept;
       _Check_return_ bool   Lock( void ) noexcept;
       _Check_return_ bool   Open( __in wchar_t const drive_letter ) noexcept;
-      _Check_return_ bool   PreventRemoval( __in const bool prevent_removal = true ) noexcept;
+      _Check_return_ bool   PreventRemoval( __in bool const prevent_removal = true ) noexcept;
       _Check_return_ bool   Unlock( void ) noexcept;
 
 #if defined( _DEBUG ) && ! defined( WFC_NO_DUMPING )

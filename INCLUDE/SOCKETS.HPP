@@ -146,13 +146,13 @@ class CSimpleSocket : public CDummyFile
 
       std::wstring m_PortName;
 
-      short m_PortNumberInNetworkByteOrder;
+      short m_PortNumberInNetworkByteOrder{ 0 };
 
-      SOCKET m_SocketID;
+      SOCKET m_SocketID{ 0 };
 
-      TCHAR m_StringReadTerminatorCharacter;
+      TCHAR m_StringReadTerminatorCharacter{ 0 };
 
-      DWORD m_Options;
+      DWORD m_Options{ 0 };
 
       static long m_ReferenceCount;
 
@@ -175,7 +175,7 @@ class CSimpleSocket : public CDummyFile
       CSimpleSocket& operator=(CSimpleSocket const&) = delete;
 
       CSimpleSocket();
-      CSimpleSocket( __in const SOCKET client_id );
+      CSimpleSocket( __in SOCKET const client_id );
 
       /*
       ** Destructor should be virtual according to MSJ article in Sept 1992

@@ -66,9 +66,9 @@ class CJulianDate // Don't use this, I'm not finished with it yet
       */
 
       inline  void   Copy(_In_ CJulianDate const& source ) noexcept { m_JulianDays = source.m_JulianDays; }; // Don't use this
-      inline  constexpr __checkReturn double Get( void ) const noexcept { return( m_JulianDays ); }; // Don't use this
-      virtual __checkReturn int    GetDayOfWeek( void ) const noexcept; // Don't use this
-      virtual __checkReturn bool   Set(_In_ int const year, _In_ int const month, _In_ int const day, _In_ int const hours = 0, _In_ int const minutes = 0, _In_ int const seconds = 0 ) noexcept; // Don't use this
+      inline  constexpr _Check_return_ double Get( void ) const noexcept { return( m_JulianDays ); }; // Don't use this
+      virtual _Check_return_ int    GetDayOfWeek( void ) const noexcept; // Don't use this
+      virtual _Check_return_ bool   Set(_In_ int const year, _In_ int const month, _In_ int const day, _In_ int const hours = 0, _In_ int const minutes = 0, _In_ int const seconds = 0 ) noexcept; // Don't use this
 
       /*
       ** Operators

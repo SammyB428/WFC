@@ -211,7 +211,7 @@ inline void copy(_Inout_ std::wstring& s, _In_opt_z_ char const* ascii_string_p,
     }
 }
 
-inline void copy(_Inout_ std::wstring& s, _In_opt_z_ wchar_t const* string_p, _In_ const SSIZE_T number_of_characters = (-1), _In_ std::size_t const beginning_at = 0) noexcept
+inline void copy(_Inout_ std::wstring& s, _In_opt_z_ wchar_t const * string_p, _In_ SSIZE_T const number_of_characters = (-1), _In_ std::size_t const beginning_at = 0) noexcept
 {
     WFC_VALIDATE_POINTER_NULL_OK(string_p);
 
@@ -2252,14 +2252,14 @@ inline void append_to_bytes(_In_ std::wstring const& source, _Inout_ std::vector
     CopyMemory(&buffer[original_array_size], source.c_str(), number_of_bytes_in_string);
 }
 
-inline _Check_return_ bool constexpr is_null_or_empty(_In_opt_z_ wchar_t const* s) noexcept
+inline _Check_return_ bool constexpr is_null_or_empty(_In_opt_z_ wchar_t const * s) noexcept
 {
     return (s == nullptr || s[0] == 0x00) ? true : false;
 }
 
 inline void append(_Inout_ std::wstring& s, _In_ int const integer) noexcept
 {
-    wchar_t integer_string[40];
+    wchar_t integer_string[40]{ 0 };
 
     _itow_s(integer, integer_string, std::size(integer_string), 10);
 
@@ -2268,16 +2268,16 @@ inline void append(_Inout_ std::wstring& s, _In_ int const integer) noexcept
 
 inline void append(_Inout_ std::wstring& s, _In_ long const integer) noexcept
 {
-    wchar_t integer_string[40];
+    wchar_t integer_string[40]{ 0 };
 
     _ltow_s(integer, integer_string, std::size(integer_string), 10);
 
     s.append(integer_string);
 }
 
-inline void append(_Inout_ std::wstring& s, _In_ const unsigned long integer) noexcept
+inline void append(_Inout_ std::wstring& s, _In_ unsigned long const integer) noexcept
 {
-    wchar_t integer_string[40];
+    wchar_t integer_string[40]{ 0 };
 
     _ultow_s(integer, integer_string, std::size(integer_string), 10);
 
@@ -2296,7 +2296,7 @@ inline _Check_return_ wchar_t last_character(_In_ std::wstring const& s) noexcep
 
 inline void append_integer(_Inout_ std::wstring& s, _In_ uint64_t const value) noexcept
 {
-    wchar_t number_string[65];
+    wchar_t number_string[65]{ 0 };
     (void)_ui64tow_s(value, number_string, std::size(number_string), 10);
 
     s.append(number_string);

@@ -58,7 +58,7 @@ CMixerSource::CMixerSource()
    WFC_VALIDATE_POINTER( this );
 }
 
-CMixerSource::CMixerSource( __in const CMixerSource& source )
+CMixerSource::CMixerSource( __in CMixerSource const& source )
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );
@@ -71,7 +71,7 @@ CMixerSource::~CMixerSource()
 
 // Methods
 
-void CMixerSource::Copy( __in const CMixerSource& source ) noexcept
+void CMixerSource::Copy( __in CMixerSource const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -97,7 +97,7 @@ void CMixerSource::Dump( CDumpContext& dump_context ) const
 
 #endif // _DEBUG
 
-__checkReturn bool CMixerSource::GetControl( __out CMixerVolumeControl& control ) noexcept
+_Check_return_ bool CMixerSource::GetControl( __out CMixerVolumeControl& control ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -130,7 +130,7 @@ __checkReturn bool CMixerSource::GetControl( __out CMixerVolumeControl& control 
    return( return_value );
 }
 
-__checkReturn bool CMixerSource::Open( __in UINT_PTR device_number, __in DWORD what_to_notify, __in DWORD_PTR who_to_notify, __in DWORD_PTR notify_data ) noexcept
+_Check_return_ bool CMixerSource::Open( __in UINT_PTR device_number, __in DWORD what_to_notify, __in DWORD_PTR who_to_notify, __in DWORD_PTR notify_data ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -148,7 +148,7 @@ __checkReturn bool CMixerSource::Open( __in UINT_PTR device_number, __in DWORD w
    return( true );
 }
 
-CMixerSource& CMixerSource::operator=( __in const CMixerSource& source ) noexcept
+CMixerSource& CMixerSource::operator=( __in CMixerSource const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );

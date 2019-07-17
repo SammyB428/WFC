@@ -65,13 +65,13 @@ CCryptographicAlgorithm::CCryptographicAlgorithm()
    Empty();
 }
 
-CCryptographicAlgorithm::CCryptographicAlgorithm( __in const CCryptographicAlgorithm& source )
+CCryptographicAlgorithm::CCryptographicAlgorithm( __in CCryptographicAlgorithm const& source )
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );
 }
 
-CCryptographicAlgorithm::CCryptographicAlgorithm( __in const PROV_ENUMALGS& source )
+CCryptographicAlgorithm::CCryptographicAlgorithm( __in PROV_ENUMALGS const& source )
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );
@@ -85,7 +85,7 @@ CCryptographicAlgorithm::~CCryptographicAlgorithm()
 
 // Methods
 
-void CCryptographicAlgorithm::Copy( __in const CCryptographicAlgorithm& source ) noexcept
+void CCryptographicAlgorithm::Copy( __in CCryptographicAlgorithm const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -102,7 +102,7 @@ void CCryptographicAlgorithm::Copy( __in const CCryptographicAlgorithm& source )
    Name.assign( source.Name );
 }
 
-void CCryptographicAlgorithm::Copy( __in const PROV_ENUMALGS& source ) noexcept
+void CCryptographicAlgorithm::Copy( __in PROV_ENUMALGS const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -111,7 +111,7 @@ void CCryptographicAlgorithm::Copy( __in const PROV_ENUMALGS& source ) noexcept
    copy( Name, source.szName );
 }
 
-void CCryptographicAlgorithm::Copy( __in const PROV_ENUMALGS * source ) noexcept
+void CCryptographicAlgorithm::Copy( __in PROV_ENUMALGS const * source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
@@ -148,7 +148,7 @@ void CCryptographicAlgorithm::Empty( void ) noexcept
    Name.clear();
 }
 
-__checkReturn bool CCryptographicAlgorithm::IsDataEncrypt( void ) const noexcept
+_Check_return_ bool CCryptographicAlgorithm::IsDataEncrypt( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -161,7 +161,7 @@ __checkReturn bool CCryptographicAlgorithm::IsDataEncrypt( void ) const noexcept
    return( false );
 }
 
-__checkReturn bool CCryptographicAlgorithm::IsHash( void ) const noexcept
+_Check_return_ bool CCryptographicAlgorithm::IsHash( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -173,7 +173,7 @@ __checkReturn bool CCryptographicAlgorithm::IsHash( void ) const noexcept
    return( false );
 }
 
-__checkReturn bool CCryptographicAlgorithm::IsKeyExchange( void ) const noexcept
+_Check_return_ bool CCryptographicAlgorithm::IsKeyExchange( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -185,7 +185,7 @@ __checkReturn bool CCryptographicAlgorithm::IsKeyExchange( void ) const noexcept
    return( false );
 }
 
-__checkReturn bool CCryptographicAlgorithm::IsMessageEncrypt( void ) const noexcept
+_Check_return_ bool CCryptographicAlgorithm::IsMessageEncrypt( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -197,7 +197,7 @@ __checkReturn bool CCryptographicAlgorithm::IsMessageEncrypt( void ) const noexc
    return( false );
 }
 
-__checkReturn bool CCryptographicAlgorithm::IsSignature( void ) const noexcept
+_Check_return_ bool CCryptographicAlgorithm::IsSignature( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -211,14 +211,14 @@ __checkReturn bool CCryptographicAlgorithm::IsSignature( void ) const noexcept
 
 // Operators
 
-__checkReturn CCryptographicAlgorithm& CCryptographicAlgorithm::operator=( __in const CCryptographicAlgorithm& source ) noexcept
+_Check_return_ CCryptographicAlgorithm& CCryptographicAlgorithm::operator=( __in CCryptographicAlgorithm const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );
    return( *this );
 }
 
-__checkReturn CCryptographicAlgorithm& CCryptographicAlgorithm::operator=( __in const PROV_ENUMALGS& source ) noexcept
+_Check_return_ CCryptographicAlgorithm& CCryptographicAlgorithm::operator=( __in PROV_ENUMALGS const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );

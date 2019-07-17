@@ -88,7 +88,7 @@ void PASCAL Win32FoundationClasses::ASCII_to_UNICODE( __in_z LPCSTR ansi_string,
    WFC_END_CATCH_ALL
 }
 
-void PASCAL Win32FoundationClasses::UNICODE_to_ASCII( __in_z LPCWSTR unicode_string, __out_z LPSTR ansi_string, __in SSIZE_T number_of_unicode_characters_to_convert, __in const UINT code_page ) noexcept
+void PASCAL Win32FoundationClasses::UNICODE_to_ASCII( __in_z LPCWSTR unicode_string, __out_z LPSTR ansi_string, __in SSIZE_T number_of_unicode_characters_to_convert, __in UINT const code_page ) noexcept
 {
    WFC_VALIDATE_POINTER_NULL_OK( unicode_string );
    WFC_VALIDATE_POINTER_NULL_OK( ansi_string );

@@ -47,16 +47,16 @@ class CDataFile : public CFile64
 {
    public:
 
-      CDataFile(const CDataFile&) = delete;
-      CDataFile& operator=(const CDataFile&) = delete;
+      CDataFile(CDataFile const&) = delete;
+      CDataFile& operator=(CDataFile const&) = delete;
       CDataFile();
       virtual ~CDataFile();
 
-      virtual __checkReturn bool AddData( __in uint32_t const identifier, __in  std::vector<uint8_t> const& data ) noexcept;
-      virtual __checkReturn bool AddData( __in uint32_t const identifier, __in_bcount( number_of_bytes ) uint8_t const * data, __in std::size_t const number_of_bytes ) noexcept;
-      virtual __checkReturn bool AddData( __in CDataChunk const& data ) noexcept;
-      virtual __checkReturn bool GetData( __out uint32_t& identifier, __out std::vector<uint8_t>& data ) noexcept;
-      virtual __checkReturn bool GetData( __out CDataChunk& data ) noexcept;
+      virtual _Check_return_ bool AddData( __in uint32_t const identifier, __in  std::vector<uint8_t> const& data ) noexcept;
+      virtual _Check_return_ bool AddData( __in uint32_t const identifier, __in_bcount( number_of_bytes ) uint8_t const * data, __in std::size_t const number_of_bytes ) noexcept;
+      virtual _Check_return_ bool AddData( __in CDataChunk const& data ) noexcept;
+      virtual _Check_return_ bool GetData( __out uint32_t& identifier, __out std::vector<uint8_t>& data ) noexcept;
+      virtual _Check_return_ bool GetData( __out CDataChunk& data ) noexcept;
 };
 
 #endif // DATA_FILE_CLASS_HEADER

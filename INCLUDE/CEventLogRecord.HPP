@@ -48,8 +48,8 @@ class CEventLogRecord
    public:
 
       CEventLogRecord();
-      CEventLogRecord( __in const CEventLogRecord& source );
-      CEventLogRecord( __in const EVENTLOGRECORD * source );
+      CEventLogRecord( __in CEventLogRecord const& source );
+      CEventLogRecord( __in EVENTLOGRECORD const * source );
 
       /*
       ** Destructor should be virtual according to MSJ article in Sept 1992
@@ -64,15 +64,15 @@ class CEventLogRecord
 
       std::wstring Source;
       std::wstring ComputerName;
-      DWORD      RecordNumber;
-      DWORD      Reserved;
+      DWORD      RecordNumber{ 0 };
+      DWORD      Reserved{ 0 };
       CTime      TimeGenerated;
       CTime      TimeWritten;
-      DWORD      EventID;
-      WORD       EventType;
-      WORD       EventCategory;
-      WORD       PairedEventFlags;
-      DWORD      ClosingRecordNumber;
+      DWORD      EventID{ 0 };
+      WORD       EventType{ 0 };
+      WORD       EventCategory{ 0 };
+      WORD       PairedEventFlags{ 0 };
+      DWORD      ClosingRecordNumber{ 0 };
       std::vector<uint8_t> UserSID;
       std::vector<uint8_t> Data;
 
@@ -82,12 +82,12 @@ class CEventLogRecord
       ** Methods
       */
 
-      virtual __checkReturn int Compare( __in const CEventLogRecord& source ) const noexcept;
-      virtual void Copy( __in const EVENTLOGRECORD * source ) noexcept;
-      virtual void Copy( __in const CEventLogRecord& source ) noexcept;
+      virtual _Check_return_ int Compare( __in CEventLogRecord const& source ) const noexcept;
+      virtual void Copy( __in EVENTLOGRECORD const * source ) noexcept;
+      virtual void Copy( __in CEventLogRecord const& source ) noexcept;
       virtual void Empty( void ) noexcept;
-      virtual __checkReturn bool operator == ( __in const CEventLogRecord& right_record ) const noexcept;
-      virtual __checkReturn CEventLogRecord& operator = ( __in const CEventLogRecord& source ) noexcept;
+      virtual _Check_return_ bool operator == ( __in CEventLogRecord const& right_record ) const noexcept;
+      virtual _Check_return_ CEventLogRecord& operator = ( __in CEventLogRecord const& source ) noexcept;
 
 #if defined( _DEBUG ) && ! defined( WFC_NO_DUMPING )
 

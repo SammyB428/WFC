@@ -151,8 +151,8 @@ class CBitmapFileHeader : public tagBITMAPFILEHEADER
       CBitmapFileHeader( __in CBitmapFileHeader const& source );
       CBitmapFileHeader( __in tagBITMAPFILEHEADER const * source );
       virtual ~CBitmapFileHeader();
-      virtual void Copy( __in const CBitmapFileHeader const& source ) noexcept;
-       virtual void Copy( __in const tagBITMAPFILEHEADER const * source ) noexcept;
+      virtual void Copy( __in CBitmapFileHeader const& source ) noexcept;
+       virtual void Copy( __in tagBITMAPFILEHEADER const * source ) noexcept;
       virtual void Empty( void ) noexcept;
       virtual _Check_return_ CBitmapFileHeader& operator=( __in CBitmapFileHeader const& source ) noexcept;
 
@@ -212,8 +212,8 @@ class CCommunicationsConfiguration : public _COMMCONFIG
       CCommunicationsConfiguration( __in COMMCONFIG const& source );
       virtual ~CCommunicationsConfiguration();
 
-      virtual void Copy( __in const CCommunicationsConfiguration const& source ) noexcept;
-      virtual void Copy( __in const COMMCONFIG const& source ) noexcept;
+      virtual void Copy( __in CCommunicationsConfiguration const& source ) noexcept;
+      virtual void Copy( __in COMMCONFIG const& source ) noexcept;
       virtual void Empty( void ) noexcept;
 
       virtual _Check_return_ CCommunicationsConfiguration& operator=( __in CCommunicationsConfiguration const& source ) noexcept;
@@ -309,8 +309,8 @@ class CPixelFormatDescriptor : public tagPIXELFORMATDESCRIPTOR
       CPixelFormatDescriptor( __in CPixelFormatDescriptor const& source );
       CPixelFormatDescriptor( __in tagPIXELFORMATDESCRIPTOR const * source );
       virtual ~CPixelFormatDescriptor();
-      virtual void Copy( __in const CPixelFormatDescriptor const& source ) noexcept;
-      virtual void Copy( __in const tagPIXELFORMATDESCRIPTOR const * source ) noexcept;
+      virtual void Copy( __in CPixelFormatDescriptor const& source ) noexcept;
+      virtual void Copy( __in tagPIXELFORMATDESCRIPTOR const * source ) noexcept;
       virtual void Empty( void ) noexcept;
       virtual _Check_return_ CPixelFormatDescriptor& operator=( __in CPixelFormatDescriptor const& source ) noexcept;
 
@@ -327,7 +327,7 @@ class CRasterizerStatus : public _RASTERIZER_STATUS
 
       CRasterizerStatus();
       virtual ~CRasterizerStatus();
-      virtual void Empty( void );
+      virtual void Empty( void ) noexcept;
 };
 
 class CTextMetricA : public tagTEXTMETRICA
@@ -335,13 +335,13 @@ class CTextMetricA : public tagTEXTMETRICA
    public:
 
       CTextMetricA();
-      CTextMetricA( __in const CTextMetricA& source );
-      CTextMetricA( __in const tagTEXTMETRICA * source );
+      CTextMetricA( __in CTextMetricA const& source );
+      CTextMetricA( __in tagTEXTMETRICA const * source );
       virtual ~CTextMetricA();
-      virtual void Copy( __in const CTextMetricA& source );
-      virtual void Copy( __in const tagTEXTMETRICA * source );
-      virtual void Empty( void );
-      virtual _Check_return_ CTextMetricA& operator=( __in const CTextMetricA& source );
+      virtual void Copy( __in CTextMetricA const& source ) noexcept;
+      virtual void Copy( __in tagTEXTMETRICA const * source ) noexcept;
+      virtual void Empty( void ) noexcept;
+      virtual _Check_return_ CTextMetricA& operator=( __in CTextMetricA const& source ) noexcept;
 
 #if defined( _DEBUG ) && ! defined( WFC_NO_DUMPING )
 
@@ -355,13 +355,13 @@ class CTextMetricW : public tagTEXTMETRICW
    public:
 
       CTextMetricW();
-      CTextMetricW( __in const CTextMetricW& source );
-      CTextMetricW( __in const tagTEXTMETRICW * source );
+      CTextMetricW( __in CTextMetricW const& source );
+      CTextMetricW( __in tagTEXTMETRICW const * source );
       virtual ~CTextMetricW();
-      virtual void Copy( __in const CTextMetricW& source );
-      virtual void Copy( __in const tagTEXTMETRICW * source );
-      virtual void Empty( void );
-      virtual _Check_return_ CTextMetricW& operator=( __in const CTextMetricW& source );
+      virtual void Copy( __in CTextMetricW const& source ) noexcept;
+      virtual void Copy( __in tagTEXTMETRICW const * source ) noexcept;
+      virtual void Empty( void ) noexcept;
+      virtual _Check_return_ CTextMetricW& operator=( __in CTextMetricW const& source ) noexcept;
 
 #if defined( _DEBUG ) && ! defined( WFC_NO_DUMPING )
 
@@ -381,13 +381,13 @@ class COFStruct : public _OFSTRUCT
    public:
 
       COFStruct();
-      COFStruct( __in const COFStruct& source );
-      COFStruct( __in const _OFSTRUCT * source );
+      COFStruct( __in COFStruct const& source );
+      COFStruct( __in _OFSTRUCT const * source );
       virtual ~COFStruct();
-      virtual void Copy( __in const COFStruct& source );
-      virtual void Copy( __in const _OFSTRUCT * source );
-      virtual void Empty( void );
-      virtual _Check_return_ COFStruct& operator=( __in const COFStruct& source );
+      virtual void Copy( __in COFStruct const& source ) noexcept;
+      virtual void Copy( __in _OFSTRUCT const * source ) noexcept;
+      virtual void Empty( void ) noexcept;
+      virtual _Check_return_ COFStruct& operator=( __in COFStruct const& source ) noexcept;
 
 #if defined( _DEBUG ) && ! defined( WFC_NO_DUMPING )
 
@@ -401,13 +401,13 @@ class CMemoryStatus : public _MEMORYSTATUS
    public:
 
       CMemoryStatus();
-      CMemoryStatus( __in const CMemoryStatus& source );
-      CMemoryStatus( __in const MEMORYSTATUS * source );
+      CMemoryStatus( __in CMemoryStatus const& source );
+      CMemoryStatus( __in MEMORYSTATUS const * source );
       virtual ~CMemoryStatus();
-      virtual void Copy( __in const CMemoryStatus & source );
-      virtual void Copy( __in const MEMORYSTATUS * source );
-      virtual void Empty( void );
-      virtual _Check_return_ CMemoryStatus& operator=( __in const CMemoryStatus& source );
+      virtual void Copy( __in CMemoryStatus const& source ) noexcept;
+      virtual void Copy( __in MEMORYSTATUS const * source ) noexcept;
+      virtual void Empty( void ) noexcept;
+      virtual _Check_return_ CMemoryStatus& operator=( __in CMemoryStatus const& source ) noexcept;
 
 #if defined( _DEBUG ) && ! defined( WFC_NO_DUMPING )
 
@@ -422,7 +422,7 @@ class CSecurityQualityOfService : public _SECURITY_QUALITY_OF_SERVICE
 
       CSecurityQualityOfService();
       virtual ~CSecurityQualityOfService();
-      virtual void Empty( void );
+      virtual void Empty( void ) noexcept;
 };
 
 class CPerfCounterDefinition : public _PERF_COUNTER_DEFINITION
@@ -431,7 +431,7 @@ class CPerfCounterDefinition : public _PERF_COUNTER_DEFINITION
 
       CPerfCounterDefinition();
       virtual ~CPerfCounterDefinition();
-      virtual void Empty( void );
+      virtual void Empty( void ) noexcept;
 };
 
 class CPerfInstanceDefinition : public _PERF_INSTANCE_DEFINITION
@@ -440,7 +440,7 @@ class CPerfInstanceDefinition : public _PERF_INSTANCE_DEFINITION
 
       CPerfInstanceDefinition();
       virtual ~CPerfInstanceDefinition();
-      virtual void Empty( void );
+      virtual void Empty( void ) noexcept;
 };
 
 class CWindowPlacement : public tagWINDOWPLACEMENT
@@ -448,13 +448,13 @@ class CWindowPlacement : public tagWINDOWPLACEMENT
    public:
 
       CWindowPlacement();
-      CWindowPlacement( __in const CWindowPlacement& source );
-      CWindowPlacement( __in const tagWINDOWPLACEMENT * source );
+      CWindowPlacement( __in CWindowPlacement const& source );
+      CWindowPlacement( __in tagWINDOWPLACEMENT const * source );
       virtual ~CWindowPlacement();
-      virtual void Copy( __in const CWindowPlacement& source );
-      virtual void Copy( __in const tagWINDOWPLACEMENT * source );
-      virtual void Empty( void );
-      virtual _Check_return_ CWindowPlacement& operator=( __in const CWindowPlacement& source );
+      virtual void Copy( __in CWindowPlacement const& source ) noexcept;
+      virtual void Copy( __in tagWINDOWPLACEMENT const * source ) noexcept;
+      virtual void Empty( void ) noexcept;
+      virtual _Check_return_ CWindowPlacement& operator=( __in CWindowPlacement const& source ) noexcept;
 
 #if defined( _DEBUG ) && ! defined( WFC_NO_DUMPING )
 
@@ -477,13 +477,13 @@ class CSystemAuditEntry : public _SYSTEM_AUDIT_ACE
    public:
 
       CSystemAuditEntry();
-      CSystemAuditEntry( __in const CSystemAuditEntry& source );
-      CSystemAuditEntry( __in const _SYSTEM_AUDIT_ACE * source );
+      CSystemAuditEntry( __in CSystemAuditEntry const& source );
+      CSystemAuditEntry( __in _SYSTEM_AUDIT_ACE const * source );
       virtual ~CSystemAuditEntry();
-      virtual void Copy( __in const CSystemAuditEntry& source );
-      virtual void Copy( __in const _SYSTEM_AUDIT_ACE * source );
-      virtual void Empty( void );
-      virtual _Check_return_ CSystemAuditEntry& operator=( __in const CSystemAuditEntry& source );
+      virtual void Copy( __in CSystemAuditEntry const& source ) noexcept;
+      virtual void Copy( __in _SYSTEM_AUDIT_ACE const * source ) noexcept;
+      virtual void Empty( void ) noexcept;
+      virtual _Check_return_ CSystemAuditEntry& operator=( __in CSystemAuditEntry const& source ) noexcept;
 
 #if defined( _DEBUG ) && ! defined( WFC_NO_DUMPING )
 

@@ -54,22 +54,22 @@ class CUINT64 : public ___SIXTY_FOUR_BIT_UNSIGNED_INTEGER
       // Construction
 
       CUINT64();
-      CUINT64( __in const CUINT64& source );
-      CUINT64( __in const SIXTY_FOUR_BIT_UNSIGNED_INTEGER&  source );
-      CUINT64( __in const SIXTY_FOUR_BIT_UNSIGNED_INTEGER * source );
+      CUINT64( __in CUINT64 const& source );
+      CUINT64( __in SIXTY_FOUR_BIT_UNSIGNED_INTEGER const&  source );
+      CUINT64( __in SIXTY_FOUR_BIT_UNSIGNED_INTEGER const * source );
       virtual ~CUINT64();
 
       // Methods
 
-      virtual void Copy( __in const CUINT64& source ) noexcept;
-      virtual void Copy( __in const SIXTY_FOUR_BIT_UNSIGNED_INTEGER * source ) noexcept;
-      virtual void Copy( __in const SIXTY_FOUR_BIT_UNSIGNED_INTEGER&  source ) noexcept;
+      virtual void Copy( __in CUINT64 const& source ) noexcept;
+      virtual void Copy( __in SIXTY_FOUR_BIT_UNSIGNED_INTEGER const * source ) noexcept;
+      virtual void Copy( __in SIXTY_FOUR_BIT_UNSIGNED_INTEGER const&  source ) noexcept;
       virtual void Empty( void ) noexcept;
 
       // Operators
 
-      __checkReturn CUINT64& operator=( __in const CUINT64& source ) noexcept;
-      __checkReturn CUINT64& operator=( __in const SIXTY_FOUR_BIT_UNSIGNED_INTEGER& source ) noexcept;
+      _Check_return_ CUINT64& operator=( __in CUINT64 const& source ) noexcept;
+      _Check_return_ CUINT64& operator=( __in SIXTY_FOUR_BIT_UNSIGNED_INTEGER const& source ) noexcept;
 
       // Instrumentation
 
@@ -87,25 +87,25 @@ class CMTFDateTime : public ___MTF_DATE_TIME
       // Construction
 
       CMTFDateTime();
-      CMTFDateTime( __in const CMTFDateTime&   source );
-      CMTFDateTime( __in const MTF_DATE_TIME * source );
-      CMTFDateTime( __in const MTF_DATE_TIME&  source );
-      CMTFDateTime( __in const CTime&          source );
+      CMTFDateTime( __in CMTFDateTime const&   source );
+      CMTFDateTime( __in MTF_DATE_TIME const * source );
+      CMTFDateTime( __in MTF_DATE_TIME const&  source );
+      CMTFDateTime( __in CTime const&          source );
       virtual ~CMTFDateTime();
 
       // Methods
 
       virtual void Convert( __out CTime& destination ) const noexcept;
-      virtual void Copy( __in const CMTFDateTime& source ) noexcept;
-      virtual void Copy( __in const MTF_DATE_TIME * source ) noexcept;
-      virtual void Copy( __in const CTime& source ) noexcept;
+      virtual void Copy( __in CMTFDateTime const& source ) noexcept;
+      virtual void Copy( __in MTF_DATE_TIME const * source ) noexcept;
+      virtual void Copy( __in CTime const& source ) noexcept;
       virtual void Empty( void ) noexcept;
 
       // Operators
 
-      CMTFDateTime& operator=( __in const CMTFDateTime&  source ) noexcept;
-      CMTFDateTime& operator=( __in const MTF_DATE_TIME& source ) noexcept;
-      CMTFDateTime& operator=( __in const CTime&         source ) noexcept;
+      CMTFDateTime& operator=( __in CMTFDateTime const&  source ) noexcept;
+      CMTFDateTime& operator=( __in MTF_DATE_TIME const& source ) noexcept;
+      CMTFDateTime& operator=( __in CTime const&         source ) noexcept;
 
       // Instrumentation
 
@@ -123,14 +123,14 @@ class CMTFTapeAddress : public ___MTF_TAPE_ADDRESS
       // Construction
 
       CMTFTapeAddress();
-      CMTFTapeAddress( __in const CMTFTapeAddress& source );
-      CMTFTapeAddress( __in const MTF_TAPE_ADDRESS * source );
+      CMTFTapeAddress( __in CMTFTapeAddress const& source );
+      CMTFTapeAddress( __in MTF_TAPE_ADDRESS const * source );
       virtual ~CMTFTapeAddress();
 
       // Methods
 
-      virtual void Copy( __in const CMTFTapeAddress& source ) noexcept;
-      virtual void Copy( __in const MTF_TAPE_ADDRESS * source ) noexcept;
+      virtual void Copy( __in CMTFTapeAddress const& source ) noexcept;
+      virtual void Copy( __in MTF_TAPE_ADDRESS const * source ) noexcept;
       virtual void Empty( void ) noexcept;
 
 #if defined( _DEBUG ) && ! defined( WFC_NO_DUMPING )
@@ -147,14 +147,14 @@ class CMTFDataBlockHeader : public ___MTF_DB_HDR
       // Construction
 
       CMTFDataBlockHeader();
-      CMTFDataBlockHeader( __in const CMTFDataBlockHeader& source );
-      CMTFDataBlockHeader( __in const MTF_DB_HDR * source );
+      CMTFDataBlockHeader( __in CMTFDataBlockHeader const& source );
+      CMTFDataBlockHeader( __in MTF_DB_HDR const * source );
       virtual ~CMTFDataBlockHeader();
 
       // Methods
 
-      virtual void Copy( __in const CMTFDataBlockHeader& source ) noexcept;
-      virtual void Copy( __in const MTF_DB_HDR * source ) noexcept;
+      virtual void Copy( __in CMTFDataBlockHeader const& source ) noexcept;
+      virtual void Copy( __in MTF_DB_HDR const * source ) noexcept;
       virtual void Empty( void ) noexcept;
 
 #if defined( _DEBUG ) && ! defined( WFC_NO_DUMPING )
@@ -171,14 +171,14 @@ class CMTFTape : public ___MTF_TAPE
       // Construction
 
       CMTFTape();
-      CMTFTape( __in const CMTFTape& source );
-      CMTFTape( __in const MTF_TAPE * source );
+      CMTFTape( __in CMTFTape const& source );
+      CMTFTape( __in MTF_TAPE const * source );
       virtual ~CMTFTape();
 
       // Methods
 
-      virtual void Copy( __in const CMTFTape& source ) noexcept;
-      virtual void Copy( __in const MTF_TAPE * source ) noexcept;
+      virtual void Copy( __in CMTFTape const& source ) noexcept;
+      virtual void Copy( __in MTF_TAPE const * source ) noexcept;
       virtual void Empty( void ) noexcept;
 
 #if defined( _DEBUG ) && ! defined( WFC_NO_DUMPING )

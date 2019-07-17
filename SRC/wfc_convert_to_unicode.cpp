@@ -70,15 +70,15 @@ _Check_return_ VOID * PASCAL Win32FoundationClasses::wfc_get_unicode_conversion_
       (void) WFC_INITIALIZE_SINGLE_THREADED_COM_NO_DDE();
    }
 
-   const GUID mlang_class_id               = { 0x275C23E2, 0x3747, 0x11D0, 0x9F, 0xEA, 0x00, 0xAA, 0x00, 0x3F, 0x86, 0x46 };
-   const GUID imultilanguage2_interface_id = { 0xDCCFC164, 0x2B38, 0x11D2, 0xB7, 0xEC, 0x00, 0xC0, 0x4F, 0x8F, 0x5D, 0x9A };
+   GUID const mlang_class_id               = { 0x275C23E2, 0x3747, 0x11D0, 0x9F, 0xEA, 0x00, 0xAA, 0x00, 0x3F, 0x86, 0x46 };
+   GUID const imultilanguage2_interface_id = { 0xDCCFC164, 0x2B38, 0x11D2, 0xB7, 0xEC, 0x00, 0xC0, 0x4F, 0x8F, 0x5D, 0x9A };
 
    //WFCTRACEVAL( TEXT( "mlang_class_id is " ), mlang_class_id );
    //WFCTRACEVAL( TEXT( "imultilanguage2_interface_id is " ), imultilanguage2_interface_id );
 
    VOID * return_value = nullptr;
 
-   const HRESULT result_code = ::CoCreateInstance( mlang_class_id,
+   auto const result_code = ::CoCreateInstance( mlang_class_id,
                                    nullptr,
                                    CLSCTX_INPROC_SERVER | CLSCTX_LOCAL_SERVER,
                                    imultilanguage2_interface_id,

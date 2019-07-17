@@ -601,7 +601,7 @@ void CBitArray::Dump( CDumpContext& dump_context ) const
 
 #endif // _DEBUG
 
-__checkReturn bool CBitArray::EnumerateOnes( __inout std::size_t& enumerator ) const noexcept
+_Check_return_ bool CBitArray::EnumerateOnes( __inout std::size_t& enumerator ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
    enumerator = 0xFFFFFFFF;
@@ -614,7 +614,7 @@ __checkReturn bool CBitArray::EnumerateOnes( __inout std::size_t& enumerator ) c
    return( false );
 }
 
-__checkReturn bool CBitArray::EnumerateZeroes( __inout std::size_t& enumerator ) const noexcept
+_Check_return_ bool CBitArray::EnumerateZeroes( __inout std::size_t& enumerator ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
    enumerator = 0xFFFFFFFF;
@@ -627,7 +627,7 @@ __checkReturn bool CBitArray::EnumerateZeroes( __inout std::size_t& enumerator )
    return( false );
 }
 
-__checkReturn bool CBitArray::Find( __in CBitArray const& value, __inout std::size_t& found_at, __in std::size_t const starting_at ) const noexcept
+_Check_return_ bool CBitArray::Find( __in CBitArray const& value, __inout std::size_t& found_at, __in std::size_t const starting_at ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
    uint32_t value_to_search_for = 0;
@@ -719,7 +719,7 @@ __checkReturn bool CBitArray::Find( __in CBitArray const& value, __inout std::si
    return( false );
 }
 
-__checkReturn bool CBitArray::Find( __in uint32_t const value, __in std::size_t const number_of_bits_in_value, __inout std::size_t& found_at, __in std::size_t const starting_at ) const noexcept
+_Check_return_ bool CBitArray::Find( __in uint32_t const value, __in std::size_t const number_of_bits_in_value, __inout std::size_t& found_at, __in std::size_t const starting_at ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
    // Always start at a known state
@@ -928,7 +928,7 @@ void CBitArray::FreeExtra( void ) noexcept
    m_IndexOfFirstBit = 0;
 }
 
-__checkReturn bool CBitArray::GetNextOne( __inout std::size_t& enumerator ) const noexcept
+_Check_return_ bool CBitArray::GetNextOne( __inout std::size_t& enumerator ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -1033,7 +1033,7 @@ __checkReturn bool CBitArray::GetNextOne( __inout std::size_t& enumerator ) cons
    return( true );
 }
 
-__checkReturn bool CBitArray::GetNextZero( __inout std::size_t& enumerator ) const noexcept
+_Check_return_ bool CBitArray::GetNextZero( __inout std::size_t& enumerator ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -1138,7 +1138,7 @@ __checkReturn bool CBitArray::GetNextZero( __inout std::size_t& enumerator ) con
    return( true );
 }
 
-__checkReturn std::size_t CBitArray::GetNumberOfOnes( void ) const noexcept
+_Check_return_ std::size_t CBitArray::GetNumberOfOnes( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -1159,19 +1159,19 @@ __checkReturn std::size_t CBitArray::GetNumberOfOnes( void ) const noexcept
    return( number_of_ones );
 }
 
-__checkReturn std::size_t CBitArray::GetNumberOfZeroes( void ) const noexcept
+_Check_return_ std::size_t CBitArray::GetNumberOfZeroes( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
    return( GetSize() - GetNumberOfOnes() );
 }
 
-__checkReturn std::size_t CBitArray::GetSize( void ) const noexcept
+_Check_return_ std::size_t CBitArray::GetSize( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
    return( m_TotalNumberOfBits - m_IndexOfFirstBit );
 }
 
-__checkReturn std::size_t CBitArray::GetUpperBound( void ) const noexcept
+_Check_return_ std::size_t CBitArray::GetUpperBound( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -1183,7 +1183,7 @@ __checkReturn std::size_t CBitArray::GetUpperBound( void ) const noexcept
    return( 0 );
 }
 
-__checkReturn uint32_t CBitArray::GetValue( __in std::size_t const starting_bit_location, __in std::size_t const number_of_bits ) const noexcept
+_Check_return_ uint32_t CBitArray::GetValue( __in std::size_t const starting_bit_location, __in std::size_t const number_of_bits ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
    ASSERT( number_of_bits < 33 );
@@ -1336,7 +1336,7 @@ void CBitArray::InsertAt( __in std::size_t const bit_location, __in uint32_t con
    m_Bits.at( array_index ) = this_set_of_bits;
 }
 
-__checkReturn CBitArray CBitArray::Left( __in std::size_t const number_of_bits ) const noexcept
+_Check_return_ CBitArray CBitArray::Left( __in std::size_t const number_of_bits ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -1375,7 +1375,7 @@ void CBitArray::LeftTrim( _In_ std::size_t const number_of_bits ) noexcept
 // 1998-12-05
 // New calculation provided by Peter Ekberg (peda@sectra.se) to get rid of floating point calculations
 
-__checkReturn bool CBitArray::m_GetElementIndexOfBitLocation( __in std::size_t const bit_location, __out std::size_t& array_index, __out uint32_t& bit_number ) const noexcept
+_Check_return_ bool CBitArray::m_GetElementIndexOfBitLocation( __in std::size_t const bit_location, __out std::size_t& array_index, __out uint32_t& bit_number ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -1396,7 +1396,7 @@ __checkReturn bool CBitArray::m_GetElementIndexOfBitLocation( __in std::size_t c
 
 #endif // _DEBUG
 
-__checkReturn CBitArray CBitArray::Mid( __in std::size_t const starting_at, __in std::size_t const number_of_bits ) const noexcept
+_Check_return_ CBitArray CBitArray::Mid( __in std::size_t const starting_at, __in std::size_t const number_of_bits ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -1509,7 +1509,7 @@ void CBitArray::RemoveAt( __in std::size_t const bit_location ) noexcept
    m_TotalNumberOfBits--;
 }
 
-__checkReturn CBitArray CBitArray::Right( _In_ std::size_t const number_of_bits ) const noexcept
+_Check_return_ CBitArray CBitArray::Right( _In_ std::size_t const number_of_bits ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -1710,8 +1710,8 @@ This class treats bits like they were an integral type.
 
 <DT><PRE><B>CBitArray</B>()
 <B>CBitArray</B>( uint32_t initial_size )
-<B>CBitArray</B>( const CBitArray&amp; source )
-<B>CBitArray</B>( const std::vector&lt;uint8_t&gt;&amp; source )<DD>
+<B>CBitArray</B>( CBitArray const&amp; source )
+<B>CBitArray</B>( std::vector&lt;uint8_t&gt; const&amp; source )<DD>
 Constructs this object.
 
 </DL>

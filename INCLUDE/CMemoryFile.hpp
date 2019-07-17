@@ -84,7 +84,7 @@ protected:
 public:
 
     CMemoryFile(_In_ CMemoryFile const&) = delete;
-    const CMemoryFile& operator=(_In_ CMemoryFile const&) = delete;
+    CMemoryFile const& operator=(_In_ CMemoryFile const&) = delete;
 
     // Construction
 

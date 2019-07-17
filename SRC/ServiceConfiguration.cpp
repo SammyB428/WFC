@@ -59,26 +59,26 @@ CServiceConfigurationA::CServiceConfigurationA()
    Empty();
 }
 
-CServiceConfigurationA::CServiceConfigurationA( __in const CServiceConfigurationA& source )
+CServiceConfigurationA::CServiceConfigurationA( __in CServiceConfigurationA const& source )
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );
 }
 
-CServiceConfigurationA::CServiceConfigurationA( __in const CServiceConfigurationA * source )
+CServiceConfigurationA::CServiceConfigurationA( __in CServiceConfigurationA const * source )
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
    Copy( source );
 }
 
-CServiceConfigurationA::CServiceConfigurationA( __in const _QUERY_SERVICE_CONFIGA& source )
+CServiceConfigurationA::CServiceConfigurationA( __in _QUERY_SERVICE_CONFIGA const& source )
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );
 }
 
-CServiceConfigurationA::CServiceConfigurationA( __in const _QUERY_SERVICE_CONFIGA * source )
+CServiceConfigurationA::CServiceConfigurationA( __in _QUERY_SERVICE_CONFIGA const * source )
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
@@ -142,7 +142,7 @@ void CServiceConfigurationA::Copy( __in CServiceConfigurationA const * source ) 
    WFC_END_CATCH_ALL
 }
 
-void CServiceConfigurationA::Copy( __in const _QUERY_SERVICE_CONFIGA& source ) noexcept
+void CServiceConfigurationA::Copy( __in _QUERY_SERVICE_CONFIGA const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -223,7 +223,7 @@ void CServiceConfigurationA::Copy( __in const _QUERY_SERVICE_CONFIGA& source ) n
    WFC_END_CATCH_ALL
 }
 
-void CServiceConfigurationA::Copy( __in const _QUERY_SERVICE_CONFIGA * source ) noexcept
+void CServiceConfigurationA::Copy( __in _QUERY_SERVICE_CONFIGA const * source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
@@ -293,7 +293,7 @@ void CServiceConfigurationA::GetDisplayName( __out std::string& display_name ) c
    display_name.assign( m_DisplayName );
 }
 
-__checkReturn DWORD CServiceConfigurationA::GetErrorControl( void ) const noexcept
+_Check_return_ DWORD CServiceConfigurationA::GetErrorControl( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
    return( m_ErrorControl );
@@ -317,19 +317,19 @@ void CServiceConfigurationA::GetStartName( __out std::string& start_name ) const
    start_name.assign( m_StartName );
 }
 
-__checkReturn DWORD CServiceConfigurationA::GetTag( void ) const noexcept
+_Check_return_ DWORD CServiceConfigurationA::GetTag( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
    return( m_Tag );
 }
 
-__checkReturn DWORD CServiceConfigurationA::GetTypeOfService( void ) const noexcept
+_Check_return_ DWORD CServiceConfigurationA::GetTypeOfService( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
    return( m_TypeOfService );
 }
 
-__checkReturn DWORD CServiceConfigurationA::GetWhenToStart( void ) const noexcept
+_Check_return_ DWORD CServiceConfigurationA::GetWhenToStart( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
    return( m_WhenToStart );
@@ -338,14 +338,14 @@ __checkReturn DWORD CServiceConfigurationA::GetWhenToStart( void ) const noexcep
 // Thanks go to Ullrich Pollaehne [Ullrich_Pollaehne@ka2.maus.de] for
 // pointing out I had no implementation for these guys.
 
-__checkReturn CServiceConfigurationA& CServiceConfigurationA::operator=( __in const CServiceConfigurationA& source ) noexcept
+_Check_return_ CServiceConfigurationA& CServiceConfigurationA::operator=( __in CServiceConfigurationA const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );
    return( *this );
 }
 
-__checkReturn CServiceConfigurationA& CServiceConfigurationA::operator=( __in const _QUERY_SERVICE_CONFIGA& source ) noexcept
+_Check_return_ CServiceConfigurationA& CServiceConfigurationA::operator=( __in _QUERY_SERVICE_CONFIGA const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );
@@ -389,26 +389,26 @@ CServiceConfigurationW::CServiceConfigurationW()
    Empty();
 }
 
-CServiceConfigurationW::CServiceConfigurationW( __in const CServiceConfigurationW& source )
+CServiceConfigurationW::CServiceConfigurationW( __in CServiceConfigurationW const& source )
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );
 }
 
-CServiceConfigurationW::CServiceConfigurationW( __in const CServiceConfigurationW * source )
+CServiceConfigurationW::CServiceConfigurationW( __in CServiceConfigurationW const * source )
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
    Copy( source );
 }
 
-CServiceConfigurationW::CServiceConfigurationW( __in const QUERY_SERVICE_CONFIGW& source )
+CServiceConfigurationW::CServiceConfigurationW( __in QUERY_SERVICE_CONFIGW const& source )
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );
 }
 
-CServiceConfigurationW::CServiceConfigurationW( __in const QUERY_SERVICE_CONFIGW * source )
+CServiceConfigurationW::CServiceConfigurationW( __in QUERY_SERVICE_CONFIGW const * source )
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
@@ -473,7 +473,7 @@ void CServiceConfigurationW::Copy( __in CServiceConfigurationW const * source ) 
    WFC_END_CATCH_ALL
 }
 
-void CServiceConfigurationW::Copy( __in const QUERY_SERVICE_CONFIGW& source ) noexcept
+void CServiceConfigurationW::Copy( __in QUERY_SERVICE_CONFIGW const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -563,7 +563,7 @@ void CServiceConfigurationW::Copy( __in const QUERY_SERVICE_CONFIGW& source ) no
    WFC_END_CATCH_ALL
 }
 
-void CServiceConfigurationW::Copy( __in const QUERY_SERVICE_CONFIGW * source ) noexcept
+void CServiceConfigurationW::Copy( __in QUERY_SERVICE_CONFIGW const * source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
@@ -633,7 +633,7 @@ void CServiceConfigurationW::GetDisplayName( __out std::wstring& display_name ) 
    display_name.assign( m_DisplayName );
 }
 
-__checkReturn DWORD CServiceConfigurationW::GetErrorControl( void ) const noexcept
+_Check_return_ DWORD CServiceConfigurationW::GetErrorControl( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
    return( m_ErrorControl );
@@ -657,19 +657,19 @@ void CServiceConfigurationW::GetStartName( __out std::wstring& start_name ) cons
    start_name.assign( m_StartName );
 }
 
-__checkReturn DWORD CServiceConfigurationW::GetTag( void ) const noexcept
+_Check_return_ DWORD CServiceConfigurationW::GetTag( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
    return( m_Tag );
 }
 
-__checkReturn DWORD CServiceConfigurationW::GetTypeOfService( void ) const noexcept
+_Check_return_ DWORD CServiceConfigurationW::GetTypeOfService( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
    return( m_TypeOfService );
 }
 
-__checkReturn DWORD CServiceConfigurationW::GetWhenToStart( void ) const noexcept
+_Check_return_ DWORD CServiceConfigurationW::GetWhenToStart( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
    return( m_WhenToStart );
@@ -678,14 +678,14 @@ __checkReturn DWORD CServiceConfigurationW::GetWhenToStart( void ) const noexcep
 // Thanks go to Ullrich Pollaehne [Ullrich_Pollaehne@ka2.maus.de] for
 // pointing out I had no implementation for these guys.
 
-__checkReturn CServiceConfigurationW& CServiceConfigurationW::operator=( __in const CServiceConfigurationW& source ) noexcept
+_Check_return_ CServiceConfigurationW& CServiceConfigurationW::operator=( __in CServiceConfigurationW const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );
    return( *this );
 }
 
-__checkReturn CServiceConfigurationW& CServiceConfigurationW::operator=( __in const _QUERY_SERVICE_CONFIGW& source ) noexcept
+_Check_return_ CServiceConfigurationW& CServiceConfigurationW::operator=( __in _QUERY_SERVICE_CONFIGW const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );

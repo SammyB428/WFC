@@ -654,7 +654,7 @@ void PASCAL wfc_append_text_to_edit_control( __in HWND edit_control_handle, __in
 #define ECX (2)
 #define EDX (3)
 
- inline __checkReturn bool is_proccessor_feature_supported( __in int const information_type, __in int const which_register, __in int const which_bit ) noexcept
+ inline _Check_return_ bool is_proccessor_feature_supported( __in int const information_type, __in int const which_register, __in int const which_bit ) noexcept
 {
     int registers[ 4 ] = { 0, 0, 0, 0 }; // output: eax, ebx, ecx, edx
 
@@ -668,22 +668,22 @@ void PASCAL wfc_append_text_to_edit_control( __in HWND edit_control_handle, __in
     return( false );
 }
 
-inline __checkReturn bool is_sse41_supported( void ) noexcept
+inline _Check_return_ bool is_sse41_supported( void ) noexcept
 {
     return( is_proccessor_feature_supported( 1, ECX, 19 ) );
 }
 
-inline __checkReturn bool is_avx2_supported( void ) noexcept
+inline _Check_return_ bool is_avx2_supported( void ) noexcept
 {
     return( is_proccessor_feature_supported( 7, EBX, 5 ) );
 }
 
-inline __checkReturn bool is_cpu_sha_supported( void ) noexcept
+inline _Check_return_ bool is_cpu_sha_supported( void ) noexcept
 {
     return( is_proccessor_feature_supported( 7, EBX, 29 ) );
 }
 
-inline __checkReturn bool is_avx_supported( void ) noexcept
+inline _Check_return_ bool is_avx_supported( void ) noexcept
 {
     // http://insufficientlycomplicated.wordpress.com/2011/11/07/detecting-intel-advanced-vector-extensions-avx-in-visual-studio/
 
@@ -704,12 +704,12 @@ inline __checkReturn bool is_avx_supported( void ) noexcept
     return( false );
 }
 
-inline __checkReturn bool is_cpu_aes_supported( void ) noexcept
+inline _Check_return_ bool is_cpu_aes_supported( void ) noexcept
 {
     return( is_proccessor_feature_supported( 1, ECX, 25 ) );
 }
 
-inline __checkReturn bool is_sse2_supported( void ) noexcept
+inline _Check_return_ bool is_sse2_supported( void ) noexcept
 {
     return( ::IsProcessorFeaturePresent( PF_XMMI64_INSTRUCTIONS_AVAILABLE ) != 0 ? true : false );
 }
@@ -1066,29 +1066,29 @@ inline constexpr _Check_return_ uint8_t hex_val( _In_ wchar_t const character ) 
     return( 0 );
 }
 
-__checkReturn bool PASCAL wfc_am_i_administrator( void ) noexcept;
-__checkReturn bool PASCAL wfc_close_handle( __in_opt HANDLE handle ) noexcept;
-__checkReturn bool PASCAL wfc_create_hard_link( __in_z LPCTSTR new_filename, __in_z LPCTSTR existing_filename, __in_opt LPSECURITY_ATTRIBUTES security_attributes_p ) noexcept;
-__checkReturn SECURITY_DESCRIPTOR * PASCAL wfc_create_null_dacl( void ) noexcept;
+_Check_return_ bool PASCAL wfc_am_i_administrator( void ) noexcept;
+_Check_return_ bool PASCAL wfc_close_handle( __in_opt HANDLE handle ) noexcept;
+_Check_return_ bool PASCAL wfc_create_hard_link( __in_z LPCTSTR new_filename, __in_z LPCTSTR existing_filename, __in_opt LPSECURITY_ATTRIBUTES security_attributes_p ) noexcept;
+_Check_return_ SECURITY_DESCRIPTOR * PASCAL wfc_create_null_dacl( void ) noexcept;
 _Check_return_ bool PASCAL wfc_delete_oldest_file( _In_z_ wchar_t const * directory_path ) noexcept;
               void PASCAL wfc_destroy_null_dacl( __in_opt void * null_dacl ) noexcept;
-__checkReturn bool PASCAL wfc_disable_privilege( __in_z LPCTSTR privilege_name ) noexcept;
-__checkReturn bool PASCAL wfc_enable_privilege( __in_z LPCTSTR privilege_name ) noexcept;
-__checkReturn bool PASCAL wfc_enable_all_privileges( void ) noexcept;
-__checkReturn bool PASCAL wfc_get_command_line( __out std::wstring& full_command_line ) noexcept;
-__checkReturn bool PASCAL wfc_get_day_of_week( __in int year_with_century, __in int month, __in int day, __out int& day_of_week ) noexcept;
-__checkReturn bool PASCAL wfc_get_filename_from_handle( __in HANDLE const file_handle, __out std::wstring& filename ) noexcept;
-__checkReturn bool PASCAL wfc_move_file_at_reboot( __in std::wstring const& existing_file, __in std::wstring const& file_to_move ) noexcept;
-__checkReturn bool PASCAL wfc_parse_hex_string(__in_z wchar_t const * hex_string, _In_ std::size_t const number_of_characters, __out_bcount( buffer_size ) uint8_t * buffer, _In_ std::size_t const buffer_size ) noexcept;
-__checkReturn bool PASCAL wfc_parse_hex_string(__in_z char const * hex_string, _In_ std::size_t const number_of_characters, __out_bcount( buffer_size ) uint8_t * buffer, _In_ std::size_t const buffer_size ) noexcept;
-__checkReturn bool PASCAL wfc_parse_iso_8601_string( __in_z wchar_t const * time_string, __out CFileTime&    the_time ) noexcept;
-__checkReturn bool PASCAL wfc_parse_iso_8601_string( __in_z wchar_t const * time_string, __out CSystemTime&  the_time ) noexcept;
-__checkReturn bool PASCAL wfc_process_buffer( __in uint8_t const * buffer, __in std::size_t const number_of_bytes_in_buffer, __in std::size_t const step_size, __inout PROCESS_BUFFER_CALLBACK function_to_call, __inout_opt void * callback_context ) noexcept;
-__checkReturn bool wfcGenRandom( _Out_writes_bytes_(RandomBufferLength) PVOID RandomBuffer, _In_ ULONG const RandomBufferLength ) noexcept;
-__checkReturn bool PASCAL wfc_parse_iso_8601_string( __in_z LPCTSTR time_string, __out CTime& the_time ) noexcept;
-__checkReturn bool PASCAL wfc_parse_xml( __in_z LPCTSTR filename, __inout CExtensibleMarkupLanguageDocument& xml ) noexcept;
+_Check_return_ bool PASCAL wfc_disable_privilege( __in_z LPCTSTR privilege_name ) noexcept;
+_Check_return_ bool PASCAL wfc_enable_privilege( __in_z LPCTSTR privilege_name ) noexcept;
+_Check_return_ bool PASCAL wfc_enable_all_privileges( void ) noexcept;
+_Check_return_ bool PASCAL wfc_get_command_line( __out std::wstring& full_command_line ) noexcept;
+_Check_return_ bool PASCAL wfc_get_day_of_week( __in int year_with_century, __in int month, __in int day, __out int& day_of_week ) noexcept;
+_Check_return_ bool PASCAL wfc_get_filename_from_handle( __in HANDLE const file_handle, __out std::wstring& filename ) noexcept;
+_Check_return_ bool PASCAL wfc_move_file_at_reboot( __in std::wstring const& existing_file, __in std::wstring const& file_to_move ) noexcept;
+_Check_return_ bool PASCAL wfc_parse_hex_string(__in_z wchar_t const * hex_string, _In_ std::size_t const number_of_characters, __out_bcount( buffer_size ) uint8_t * buffer, _In_ std::size_t const buffer_size ) noexcept;
+_Check_return_ bool PASCAL wfc_parse_hex_string(__in_z char const * hex_string, _In_ std::size_t const number_of_characters, __out_bcount( buffer_size ) uint8_t * buffer, _In_ std::size_t const buffer_size ) noexcept;
+_Check_return_ bool PASCAL wfc_parse_iso_8601_string( __in_z wchar_t const * time_string, __out CFileTime&    the_time ) noexcept;
+_Check_return_ bool PASCAL wfc_parse_iso_8601_string( __in_z wchar_t const * time_string, __out CSystemTime&  the_time ) noexcept;
+_Check_return_ bool PASCAL wfc_process_buffer( __in uint8_t const * buffer, __in std::size_t const number_of_bytes_in_buffer, __in std::size_t const step_size, __inout PROCESS_BUFFER_CALLBACK function_to_call, __inout_opt void * callback_context ) noexcept;
+_Check_return_ bool wfcGenRandom( _Out_writes_bytes_(RandomBufferLength) PVOID RandomBuffer, _In_ ULONG const RandomBufferLength ) noexcept;
+_Check_return_ bool PASCAL wfc_parse_iso_8601_string( __in_z LPCTSTR time_string, __out CTime& the_time ) noexcept;
+_Check_return_ bool PASCAL wfc_parse_xml( __in_z LPCTSTR filename, __inout CExtensibleMarkupLanguageDocument& xml ) noexcept;
 
-__checkReturn uint32_t PASCAL wfc_get_directory_usage_percentage( __in std::wstring const& directory_path ) noexcept;
+_Check_return_ uint32_t PASCAL wfc_get_directory_usage_percentage( __in std::wstring const& directory_path ) noexcept;
 
 void PASCAL wfc_append_string_to_byte_array( __in std::wstring const& string_to_append, __out std::vector<uint8_t>& bytes ) noexcept;
 void PASCAL wfc_append_ascii_string_to_byte_array( __in_z char const * string_to_append, __inout std::vector<uint8_t>& bytes ) noexcept;
@@ -1112,15 +1112,15 @@ _Check_return_ double PASCAL wfc_calculate_entropy(__in_ecount(number_of_counts)
 _Check_return_ double PASCAL wfc_calculate_entropy(__in_ecount(number_of_counts) uint32_t const* counts, _In_ std::size_t const number_of_counts) noexcept; // New for 52
 _Check_return_ double PASCAL wfc_calculate_entropy( __in_ecount( number_of_counts ) uint16_t const * counts, _In_ std::size_t const number_of_counts ) noexcept; // New for 52
 _Check_return_ double PASCAL wfc_get_buffer_entropy(__in_bcount(buffer_size) uint8_t const * buffer, _In_ std::size_t const buffer_size) noexcept;
-__checkReturn bool PASCAL wfc_check_digital_signature( __in_z LPCTSTR filename ) noexcept;
+_Check_return_ bool PASCAL wfc_check_digital_signature( __in_z LPCTSTR filename ) noexcept;
 void PASCAL wfc_convert_double_null_terminated_UNICODE_string(__in WORD const * const buffer, __inout std::vector<std::wstring>& string_array) noexcept; // New for 45
 void PASCAL wfc_read_string_array(_In_ wchar_t const * const buffer, _In_ std::size_t const number_of_characters, _Inout_ std::vector<std::wstring>& string_array) noexcept;
-__checkReturn bool PASCAL wfc_create_path( __in_z LPCTSTR path_name, __in_opt LPSECURITY_ATTRIBUTES const security_attributes_p = nullptr ) noexcept; // New for 51
-__checkReturn bool PASCAL wfc_create_wide_path( __in_z wchar_t const * path_name, __in_opt LPSECURITY_ATTRIBUTES const security_attributes_p = nullptr ) noexcept; // New for 52
+_Check_return_ bool PASCAL wfc_create_path( __in_z LPCTSTR path_name, __in_opt LPSECURITY_ATTRIBUTES const security_attributes_p = nullptr ) noexcept; // New for 51
+_Check_return_ bool PASCAL wfc_create_wide_path( __in_z wchar_t const * path_name, __in_opt LPSECURITY_ATTRIBUTES const security_attributes_p = nullptr ) noexcept; // New for 52
 void PASCAL wfc_exit_process_and_delete_exe( void ) noexcept;
-__checkReturn int  PASCAL wfc_find_curly_guid( __in_bcount( number_of_bytes_in_buffer ) uint8_t const * buffer, __in std::size_t const number_of_bytes_in_buffer ) noexcept;
-__checkReturn int  PASCAL wfc_find_wide_curly_guid( __in_bcount( number_of_bytes_in_buffer ) uint8_t const * buffer, __in std::size_t const number_of_bytes_in_buffer ) noexcept;
-__checkReturn bool PASCAL wfc_get_activex_servers(_Out_ std::vector<std::wstring>& server_list ) noexcept;
+_Check_return_ int  PASCAL wfc_find_curly_guid( __in_bcount( number_of_bytes_in_buffer ) uint8_t const * buffer, __in std::size_t const number_of_bytes_in_buffer ) noexcept;
+_Check_return_ int  PASCAL wfc_find_wide_curly_guid( __in_bcount( number_of_bytes_in_buffer ) uint8_t const * buffer, __in std::size_t const number_of_bytes_in_buffer ) noexcept;
+_Check_return_ bool PASCAL wfc_get_activex_servers(_Out_ std::vector<std::wstring>& server_list ) noexcept;
 void PASCAL wfc_get_bios_serial_number(_Out_ std::wstring& serial_number ) noexcept;
 void PASCAL wfc_get_bios_uuid(_Out_ GUID& uuid ) noexcept;
 void PASCAL wfc_get_error_string( _In_ DWORD const error_code, _Out_ std::wstring& error_string ) noexcept;
@@ -1129,42 +1129,42 @@ void PASCAL wfc_get_dll_directory(_Out_ std::wstring& directory_name_ending_in_a
 void PASCAL wfc_get_version( _In_z_ wchar_t const * file_name, _Out_ uint16_t& major, _Out_ uint16_t& minor, _Out_ uint16_t& build, _Out_ uint16_t& revision ) noexcept;
 void PASCAL wfc_get_my_version(_Out_ uint16_t& major, _Out_ uint16_t& minor, _Out_ uint16_t& build, _Out_ uint16_t& revision ) noexcept;
 void PASCAL wfc_get_my_version(_Inout_ std::wstring& version ) noexcept;
-__checkReturn uint64_t PASCAL wfc_get_my_packed_version( void ) noexcept;
+_Check_return_ uint64_t PASCAL wfc_get_my_packed_version( void ) noexcept;
 void PASCAL wfc_get_operating_system_version_string( __out std::wstring& version_string ) noexcept;
 void PASCAL wfc_get_program_data_directory(__out std::wstring& program_data_directory) noexcept;
-__checkReturn bool PASCAL wfc_get_string_from_clipboard( __out std::wstring& string_to_return ) noexcept;
+_Check_return_ bool PASCAL wfc_get_string_from_clipboard( __out std::wstring& string_to_return ) noexcept;
 void PASCAL wfc_get_thread_name( __out std::wstring& thread_name ) noexcept;
 void PASCAL wfc_get_web_page( __in CUniformResourceLocator const& url, __out std::vector<std::wstring>& page_contents, __in DWORD const options = WFC_DEFAULT_WEB_PAGE_OPTIONS ) noexcept;
 void PASCAL wfc_get_web_page( __in CUniformResourceLocator const& url,__out  std::vector<uint8_t>& page_contents, __in DWORD const options = WFC_DEFAULT_WEB_PAGE_OPTIONS ) noexcept;
-__checkReturn bool PASCAL wfc_is_dotted_ip_address( __in_z_opt char const * ip_address ) noexcept;
-__checkReturn bool PASCAL wfc_is_dotted_ip_address( __in_z_opt wchar_t const * ip_address ) noexcept;
-__checkReturn bool PASCAL wfc_is_guid( __in_z char const * characters ) noexcept;
-__checkReturn bool PASCAL wfc_is_guid( __in_z wchar_t const * character ) noexcept;
-__checkReturn bool PASCAL wfc_is_guid_with_curlies( __in_z char const * characters ) noexcept;
-__checkReturn bool PASCAL wfc_is_guid_with_curlies( __in_z wchar_t const * character ) noexcept;
-__checkReturn bool PASCAL wfc_is_octal( __in_bcount( number_of_bytes ) uint8_t const * buffer, __in std::size_t const number_of_bytes ) noexcept;
-__checkReturn bool PASCAL wfc_is_wide_octal( __in_bcount( number_of_bytes ) uint8_t const * buffer, __in std::size_t const number_of_bytes ) noexcept;
-__checkReturn bool PASCAL wfc_is_octal_then_NULLs( __in_bcount( number_of_bytes ) uint8_t const * buffer, __in std::size_t const number_of_bytes ) noexcept;
-__checkReturn bool PASCAL wfc_is_wide_octal_then_NULLs( __in_bcount( number_of_bytes ) uint8_t const * buffer, __in std::size_t const number_of_bytes ) noexcept;
-__checkReturn bool PASCAL wfc_is_hexadecimal( __in_bcount( number_of_bytes ) uint8_t const * buffer, __in std::size_t const number_of_bytes ) noexcept;
-__checkReturn bool PASCAL wfc_is_wide_hexadecimal( __in_bcount( number_of_bytes ) uint8_t const * buffer, __in std::size_t const number_of_bytes ) noexcept;
-__checkReturn bool PASCAL wfc_is_hexadecimal_then_NULLs( __in_bcount( number_of_bytes ) uint8_t const * buffer, __in std::size_t const number_of_bytes ) noexcept;
-__checkReturn bool PASCAL wfc_is_wide_hexadecimal_then_NULLs( __in_bcount( number_of_bytes ) uint8_t const * buffer, __in std::size_t const number_of_bytes ) noexcept;
-__checkReturn bool PASCAL wfc_is_decimal( __in_bcount( number_of_bytes ) uint8_t const * buffer, __in std::size_t const number_of_bytes ) noexcept;
-__checkReturn bool PASCAL wfc_is_wide_decimal( __in_bcount( number_of_bytes ) uint8_t const * buffer, __in std::size_t const number_of_bytes ) noexcept;
-__checkReturn bool PASCAL wfc_is_decimal_then_NULLs( __in_bcount( number_of_bytes ) uint8_t const * buffer, __in std::size_t const number_of_bytes ) noexcept;
-__checkReturn bool PASCAL wfc_is_wide_decimal_then_NULLs( __in_bcount( number_of_bytes ) uint8_t const * buffer, __in std::size_t const number_of_bytes ) noexcept;
-__checkReturn bool PASCAL wfc_make_ntfs_go_fast( void ) noexcept;
-__checkReturn bool PASCAL wfc_protect_data( __in_bcount( number_of_bytes_in_plaintext ) uint8_t const * plaintext, __in std::size_t const number_of_bytes_in_plaintext, __inout_opt uint8_t * ciphertext, __inout std::size_t * address_of_number_of_cipher_bytes ) noexcept;
-__checkReturn bool PASCAL wfc_unprotect_data( __in_bcount( number_of_bytes_in_ciphertext ) uint8_t const * ciphertext, __in std::size_t const number_of_bytes_in_ciphertext,__inout_opt uint8_t * plaintext, __inout std::size_t * address_of_number_of_plain_bytes ) noexcept;
-__checkReturn bool PASCAL wfc_set_activex_servers( __in std::vector<std::wstring> const& server_list ) noexcept;
-__checkReturn uint32_t PASCAL wfc_number_of_files_in_directory( _In_z_ wchar_t const * directory_path ) noexcept;
-__checkReturn uint64_t PASCAL wfc_number_of_bytes_in_directory(_In_z_ wchar_t const * directory_path ) noexcept;
+_Check_return_ bool PASCAL wfc_is_dotted_ip_address( __in_z_opt char const * ip_address ) noexcept;
+_Check_return_ bool PASCAL wfc_is_dotted_ip_address( __in_z_opt wchar_t const * ip_address ) noexcept;
+_Check_return_ bool PASCAL wfc_is_guid( __in_z char const * characters ) noexcept;
+_Check_return_ bool PASCAL wfc_is_guid( __in_z wchar_t const * character ) noexcept;
+_Check_return_ bool PASCAL wfc_is_guid_with_curlies( __in_z char const * characters ) noexcept;
+_Check_return_ bool PASCAL wfc_is_guid_with_curlies( __in_z wchar_t const * character ) noexcept;
+_Check_return_ bool PASCAL wfc_is_octal( __in_bcount( number_of_bytes ) uint8_t const * buffer, __in std::size_t const number_of_bytes ) noexcept;
+_Check_return_ bool PASCAL wfc_is_wide_octal( __in_bcount( number_of_bytes ) uint8_t const * buffer, __in std::size_t const number_of_bytes ) noexcept;
+_Check_return_ bool PASCAL wfc_is_octal_then_NULLs( __in_bcount( number_of_bytes ) uint8_t const * buffer, __in std::size_t const number_of_bytes ) noexcept;
+_Check_return_ bool PASCAL wfc_is_wide_octal_then_NULLs( __in_bcount( number_of_bytes ) uint8_t const * buffer, __in std::size_t const number_of_bytes ) noexcept;
+_Check_return_ bool PASCAL wfc_is_hexadecimal( __in_bcount( number_of_bytes ) uint8_t const * buffer, __in std::size_t const number_of_bytes ) noexcept;
+_Check_return_ bool PASCAL wfc_is_wide_hexadecimal( __in_bcount( number_of_bytes ) uint8_t const * buffer, __in std::size_t const number_of_bytes ) noexcept;
+_Check_return_ bool PASCAL wfc_is_hexadecimal_then_NULLs( __in_bcount( number_of_bytes ) uint8_t const * buffer, __in std::size_t const number_of_bytes ) noexcept;
+_Check_return_ bool PASCAL wfc_is_wide_hexadecimal_then_NULLs( __in_bcount( number_of_bytes ) uint8_t const * buffer, __in std::size_t const number_of_bytes ) noexcept;
+_Check_return_ bool PASCAL wfc_is_decimal( __in_bcount( number_of_bytes ) uint8_t const * buffer, __in std::size_t const number_of_bytes ) noexcept;
+_Check_return_ bool PASCAL wfc_is_wide_decimal( __in_bcount( number_of_bytes ) uint8_t const * buffer, __in std::size_t const number_of_bytes ) noexcept;
+_Check_return_ bool PASCAL wfc_is_decimal_then_NULLs( __in_bcount( number_of_bytes ) uint8_t const * buffer, __in std::size_t const number_of_bytes ) noexcept;
+_Check_return_ bool PASCAL wfc_is_wide_decimal_then_NULLs( __in_bcount( number_of_bytes ) uint8_t const * buffer, __in std::size_t const number_of_bytes ) noexcept;
+_Check_return_ bool PASCAL wfc_make_ntfs_go_fast( void ) noexcept;
+_Check_return_ bool PASCAL wfc_protect_data( __in_bcount( number_of_bytes_in_plaintext ) uint8_t const * plaintext, __in std::size_t const number_of_bytes_in_plaintext, __inout_opt uint8_t * ciphertext, __inout std::size_t * address_of_number_of_cipher_bytes ) noexcept;
+_Check_return_ bool PASCAL wfc_unprotect_data( __in_bcount( number_of_bytes_in_ciphertext ) uint8_t const * ciphertext, __in std::size_t const number_of_bytes_in_ciphertext,__inout_opt uint8_t * plaintext, __inout std::size_t * address_of_number_of_plain_bytes ) noexcept;
+_Check_return_ bool PASCAL wfc_set_activex_servers( __in std::vector<std::wstring> const& server_list ) noexcept;
+_Check_return_ uint32_t PASCAL wfc_number_of_files_in_directory( _In_z_ wchar_t const * directory_path ) noexcept;
+_Check_return_ uint64_t PASCAL wfc_number_of_bytes_in_directory(_In_z_ wchar_t const * directory_path ) noexcept;
 void PASCAL wfc_set_thread_name( __in_z LPCSTR thread_name ) noexcept;
 void PASCAL wfc_start_screen_saver( void ) noexcept;
-__checkReturn bool PASCAL wfc_kill_most_recently_used_document_list( void ) noexcept;
+_Check_return_ bool PASCAL wfc_kill_most_recently_used_document_list( void ) noexcept;
 
-inline __checkReturn bool PASCAL wfc_does_file_exist( __in_z LPCTSTR file_name ) noexcept
+inline _Check_return_ bool PASCAL wfc_does_file_exist( __in_z LPCTSTR file_name ) noexcept
 {
     return( CFile64::Exists( file_name ) );
 }

@@ -59,13 +59,13 @@ CMixerLine::CMixerLine()
    Empty();
 }
 
-CMixerLine::CMixerLine( __in const CMixerLine& source )
+CMixerLine::CMixerLine( __in CMixerLine const& source )
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );
 }
 
-CMixerLine::CMixerLine( __in const MIXERLINE& source )
+CMixerLine::CMixerLine( __in MIXERLINE const& source )
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );
@@ -79,7 +79,7 @@ CMixerLine::~CMixerLine()
 
 // Methods
 
-void CMixerLine::Copy( __in const CMixerLine& source ) noexcept
+void CMixerLine::Copy( __in CMixerLine const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -379,7 +379,7 @@ void CMixerLine::GetTarget( _Out_ std::wstring& target_string ) const noexcept
    }
 }
 
-__checkReturn bool CMixerLine::IsActive( void ) const noexcept
+_Check_return_ bool CMixerLine::IsActive( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -393,7 +393,7 @@ __checkReturn bool CMixerLine::IsActive( void ) const noexcept
    return( false );
 }
 
-__checkReturn bool CMixerLine::IsDisconnected( void ) const noexcept
+_Check_return_ bool CMixerLine::IsDisconnected( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -407,7 +407,7 @@ __checkReturn bool CMixerLine::IsDisconnected( void ) const noexcept
    return( false );
 }
 
-__checkReturn bool CMixerLine::IsSource( void ) const noexcept
+_Check_return_ bool CMixerLine::IsSource( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -421,14 +421,14 @@ __checkReturn bool CMixerLine::IsSource( void ) const noexcept
    return( false );
 }
 
-__checkReturn CMixerLine& CMixerLine::operator=( __in CMixerLine const& source ) noexcept
+_Check_return_ CMixerLine& CMixerLine::operator=( __in CMixerLine const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );
    return( *this );
 }
 
-__checkReturn CMixerLine& CMixerLine::operator=( __in MIXERLINE const& source ) noexcept
+_Check_return_ CMixerLine& CMixerLine::operator=( __in MIXERLINE const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );

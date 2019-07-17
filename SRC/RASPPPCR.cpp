@@ -62,14 +62,14 @@ CPointToPointProtocolProjectionResult::CPointToPointProtocolProjectionResult()
    Empty();
 }
 
-CPointToPointProtocolProjectionResult::CPointToPointProtocolProjectionResult( const CPointToPointProtocolProjectionResult& source )
+CPointToPointProtocolProjectionResult::CPointToPointProtocolProjectionResult( CPointToPointProtocolProjectionResult const& source )
 {
    WFC_VALIDATE_POINTER( this );
    Empty();
    Copy( source );
 }
 
-CPointToPointProtocolProjectionResult::CPointToPointProtocolProjectionResult( const RAS_PPP_PROJECTION_RESULT * source )
+CPointToPointProtocolProjectionResult::CPointToPointProtocolProjectionResult( RAS_PPP_PROJECTION_RESULT const * source )
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
@@ -83,7 +83,7 @@ CPointToPointProtocolProjectionResult::~CPointToPointProtocolProjectionResult()
    Empty();
 }
 
-void CPointToPointProtocolProjectionResult::Copy( const CPointToPointProtocolProjectionResult& source )
+void CPointToPointProtocolProjectionResult::Copy( CPointToPointProtocolProjectionResult const& source )
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -101,7 +101,7 @@ void CPointToPointProtocolProjectionResult::Copy( const CPointToPointProtocolPro
    NetBEUI.Copy( source.NetBEUI );
 }
 
-void CPointToPointProtocolProjectionResult::Copy( __in const RAS_PPP_PROJECTION_RESULT * source )
+void CPointToPointProtocolProjectionResult::Copy( __in RAS_PPP_PROJECTION_RESULT const * source )
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
@@ -163,7 +163,7 @@ void CPointToPointProtocolProjectionResult::Empty( void )
    NetBEUI.Empty();
 }
 
-CPointToPointProtocolProjectionResult& CPointToPointProtocolProjectionResult::operator = ( const CPointToPointProtocolProjectionResult& source )
+CPointToPointProtocolProjectionResult& CPointToPointProtocolProjectionResult::operator = ( CPointToPointProtocolProjectionResult const& source )
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );

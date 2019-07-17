@@ -62,14 +62,14 @@ CInternetworkPacketExchangeProjectionResult::CInternetworkPacketExchangeProjecti
    Empty();
 }
 
-CInternetworkPacketExchangeProjectionResult::CInternetworkPacketExchangeProjectionResult( const CInternetworkPacketExchangeProjectionResult& source )
+CInternetworkPacketExchangeProjectionResult::CInternetworkPacketExchangeProjectionResult( CInternetworkPacketExchangeProjectionResult const& source )
 {
    WFC_VALIDATE_POINTER( this );
    Empty();
    Copy( source );
 }
 
-CInternetworkPacketExchangeProjectionResult::CInternetworkPacketExchangeProjectionResult( const RAS_PPP_IPXCP_RESULT * source )
+CInternetworkPacketExchangeProjectionResult::CInternetworkPacketExchangeProjectionResult( RAS_PPP_IPXCP_RESULT const * source )
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
@@ -77,7 +77,7 @@ CInternetworkPacketExchangeProjectionResult::CInternetworkPacketExchangeProjecti
    Copy( source );
 }
 
-CInternetworkPacketExchangeProjectionResult::CInternetworkPacketExchangeProjectionResult( const CRemoteAccessServiceConnectionProjection& source )
+CInternetworkPacketExchangeProjectionResult::CInternetworkPacketExchangeProjectionResult( CRemoteAccessServiceConnectionProjection const& source )
 {
    WFC_VALIDATE_POINTER( this );
    Empty();
@@ -90,14 +90,14 @@ CInternetworkPacketExchangeProjectionResult::~CInternetworkPacketExchangeProject
    Empty();
 }
 
-void CInternetworkPacketExchangeProjectionResult::Copy( __in const CInternetworkPacketExchangeProjectionResult& source )
+void CInternetworkPacketExchangeProjectionResult::Copy( __in CInternetworkPacketExchangeProjectionResult const& source )
 {
    WFC_VALIDATE_POINTER( this );
    ErrorCode = source.ErrorCode;
    Address   = source.Address;
 }
 
-void CInternetworkPacketExchangeProjectionResult::Copy( const CRemoteAccessServiceConnectionProjection& source )
+void CInternetworkPacketExchangeProjectionResult::Copy( CRemoteAccessServiceConnectionProjection const& source )
 {
    WFC_VALIDATE_POINTER( this );
    Empty();
@@ -151,7 +151,7 @@ void CInternetworkPacketExchangeProjectionResult::Empty( void )
    Address.Empty();
 }
 
-CInternetworkPacketExchangeProjectionResult& CInternetworkPacketExchangeProjectionResult::operator = ( const CInternetworkPacketExchangeProjectionResult& source )
+CInternetworkPacketExchangeProjectionResult& CInternetworkPacketExchangeProjectionResult::operator = ( CInternetworkPacketExchangeProjectionResult const& source )
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );

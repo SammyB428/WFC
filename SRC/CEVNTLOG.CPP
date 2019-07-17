@@ -100,7 +100,7 @@ void CEventLog::m_Initialize( void )
    m_NumberOfBytesInNextRecord = 0;
 }
 
-__checkReturn bool CEventLog::Backup( __in_z LPCTSTR name_of_backup_file ) noexcept
+_Check_return_ bool CEventLog::Backup( __in_z LPCTSTR name_of_backup_file ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( name_of_backup_file );
@@ -137,7 +137,7 @@ __checkReturn bool CEventLog::Backup( __in_z LPCTSTR name_of_backup_file ) noexc
    WFC_END_CATCH_ALL
 }
 
-__checkReturn BOOL CEventLog::Clear( __in_z LPCTSTR name_of_backup_file ) noexcept
+_Check_return_ bool CEventLog::Clear( __in_z LPCTSTR name_of_backup_file ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER_NULL_OK( name_of_backup_file );
@@ -163,50 +163,44 @@ __checkReturn BOOL CEventLog::Clear( __in_z LPCTSTR name_of_backup_file ) noexce
 
 #endif // _DEBUG
 
-      BOOL return_value = ::ClearEventLog( m_LogHandle, name_of_backup_file );
+      BOOL const return_value = ::ClearEventLog( m_LogHandle, name_of_backup_file );
 
       if ( return_value == FALSE )
       {
          m_ErrorCode = ::GetLastError();
          //WFCTRACEERROR( m_ErrorCode );
-      }
-      else
-      {
-         return_value = TRUE;
+         return(false);
       }
 
-      return( return_value );
+      return( true );
    }
    WFC_CATCH_ALL
    {
       m_ErrorCode = ERROR_EXCEPTION_IN_SERVICE;
-      return( FALSE );
+      return( false );
    }
    WFC_END_CATCH_ALL
 }
 
-__checkReturn BOOL CEventLog::Close( void ) noexcept
+_Check_return_ bool CEventLog::Close( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
-   BOOL return_value = ::CloseEventLog( m_LogHandle );
+   BOOL const return_value = ::CloseEventLog( m_LogHandle );
+
+   m_LogHandle = static_cast<HANDLE>(INVALID_HANDLE_VALUE);
 
    if ( return_value == FALSE )
    {
       m_ErrorCode = ::GetLastError();
       //WFCTRACEERROR( m_ErrorCode );
-   }
-   else
-   {
-      return_value = TRUE;
+      return(false);
    }
 
-   m_LogHandle = static_cast< HANDLE >( INVALID_HANDLE_VALUE );
-
-   return( return_value );
+   return( true );
 }
 
-__checkReturn bool CEventLog::CreateApplicationLog( __in_z LPCTSTR application_name, __in_z LPCTSTR message_resource_file, __in DWORD supported_types ) noexcept
+_Check_return_ bool CEventLog::CreateApplicationLog( __in_z LPCTSTR application_name, __in_z LPCTSTR message_resource_file, __in DWORD supported_types ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( application_name );
@@ -249,7 +243,7 @@ __checkReturn bool CEventLog::CreateApplicationLog( __in_z LPCTSTR application_n
       // Thanks go to Donald Hartzog (donhartzog@usa.net) for finding a UNICODE
       // bug here. I was assuming _tcslen() == sizeof() a string. DOH!
 
-      if ( registry.SetValue( L"EventMessageFile", CRegistry::typeUnexpandedString, (LPBYTE) message_resource_file, ( _tcslen( message_resource_file ) + 1 ) * sizeof( TCHAR ) ) == false )
+      if ( registry.SetValue( L"EventMessageFile", CRegistry::KeyValueTypes::UnexpandedString, (LPBYTE) message_resource_file, ( _tcslen( message_resource_file ) + 1 ) * sizeof( TCHAR ) ) == false )
       {
          m_ErrorCode = registry.GetErrorCode();
          return( false );
@@ -305,7 +299,7 @@ __checkReturn bool CEventLog::CreateApplicationLog( __in_z LPCTSTR application_n
    WFC_END_CATCH_ALL
 }
 
-__checkReturn BOOL CEventLog::CreateCustomLog( __in_z LPCTSTR log_name_parameter, __in_z_opt LPCTSTR log_filename_parameter, __in DWORD maximum_size_in_bytes, __in DWORD overwrite_after_this_many_seconds ) noexcept
+_Check_return_ bool CEventLog::CreateCustomLog( __in_z LPCTSTR log_name_parameter, __in_z_opt LPCTSTR log_filename_parameter, __in DWORD maximum_size_in_bytes, __in DWORD overwrite_after_this_many_seconds ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( log_name_parameter );
@@ -314,7 +308,7 @@ __checkReturn BOOL CEventLog::CreateCustomLog( __in_z LPCTSTR log_name_parameter
    if ( log_name_parameter == nullptr )
    {
       m_ErrorCode = ERROR_INVALID_PARAMETER;
-      return( FALSE );
+      return( false );
    }
 
    // Let's normallize the file size to a 64K boundary (round up if needed)
@@ -351,7 +345,7 @@ __checkReturn BOOL CEventLog::CreateCustomLog( __in_z LPCTSTR log_name_parameter
       if ( registry.Connect( (HKEY) CRegistry::keyLocalMachine ) == false )
       {
          m_ErrorCode = registry.GetErrorCode();
-         return( FALSE );
+         return( false );
       }
 
       std::wstring log_key_name( L"SYSTEM\\CurrentControlSet\\Services\\EventLog\\" );
@@ -361,25 +355,25 @@ __checkReturn BOOL CEventLog::CreateCustomLog( __in_z LPCTSTR log_name_parameter
       if ( registry.Create( log_key_name.c_str() ) == false )
       {
          m_ErrorCode = registry.GetErrorCode();
-         return( FALSE );
+         return( false );
       }
 
-      if ( registry.SetValue( L"File", CRegistry::typeUnexpandedString, reinterpret_cast<uint8_t const *>(log_filename.data()), log_filename.length() * sizeof(wchar_t) ) == false )
+      if ( registry.SetValue( L"File", CRegistry::KeyValueTypes::UnexpandedString, reinterpret_cast<uint8_t const *>(log_filename.data()), log_filename.length() * sizeof(wchar_t) ) == false )
       {
          m_ErrorCode = registry.GetErrorCode();
-         return( FALSE );
+         return( false );
       }
 
       if ( registry.SetValue( TEXT( "MaxSize" ), maximum_size_in_bytes ) == false )
       {
          m_ErrorCode = registry.GetErrorCode();
-         return( FALSE );
+         return( false );
       }
 
       if ( registry.SetValue( TEXT( "Retention" ), overwrite_after_this_many_seconds ) == false )
       {
          m_ErrorCode = registry.GetErrorCode();
-         return( FALSE );
+         return( false );
       }
 
       log_key_name.append( L"\\WFC" );
@@ -387,15 +381,15 @@ __checkReturn BOOL CEventLog::CreateCustomLog( __in_z LPCTSTR log_name_parameter
       if ( registry.Create( log_key_name.c_str() ) == false )
       {
          m_ErrorCode = registry.GetErrorCode();
-         return( FALSE );
+         return( false );
       }
 
-      return( TRUE );
+      return( true );
    }
    WFC_CATCH_ALL
    {
       m_ErrorCode = ERROR_EXCEPTION_IN_SERVICE;
-      return( FALSE );
+      return( false );
    }
    WFC_END_CATCH_ALL
 }
@@ -541,30 +535,25 @@ _Check_return_ bool CEventLog::DeleteApplicationLog( _In_z_ wchar_t const * appl
    WFC_END_CATCH_ALL
 }
 
-__checkReturn BOOL CEventLog::DeregisterSource( void ) noexcept
+_Check_return_ bool CEventLog::DeregisterSource( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
-   BOOL return_value = TRUE;
-
    if ( m_EventSourceHandle != static_cast< HANDLE >( INVALID_HANDLE_VALUE ) )
    {
-      return_value = ::DeregisterEventSource( m_EventSourceHandle );
+      BOOL const return_value = ::DeregisterEventSource( m_EventSourceHandle );
+
+      m_EventSourceHandle = static_cast<HANDLE>(INVALID_HANDLE_VALUE);
 
       if ( return_value == FALSE )
       {
          m_ErrorCode = ::GetLastError();
          //WFCTRACEERROR( m_ErrorCode );
+         return(false);
       }
-      else
-      {
-         return_value = TRUE;
-      }
-
-      m_EventSourceHandle = static_cast< HANDLE >( INVALID_HANDLE_VALUE );
    }
 
-   return( return_value );
+   return(true);
 }
 
 #if defined( _DEBUG ) && ! defined( WFC_NO_DUMPING )
@@ -584,26 +573,26 @@ void CEventLog::Dump( CDumpContext& dump_context ) const
 
 #endif // _DEBUG
 
-__checkReturn BOOL CEventLog::EnumerateLogs( __out DWORD& enumerator ) const noexcept
+_Check_return_ bool CEventLog::EnumerateLogs( __out DWORD& enumerator ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
    enumerator = 0;
-   return( TRUE );
+   return( true );
 }
 
-__checkReturn DWORD CEventLog::GetErrorCode( void ) const noexcept
+_Check_return_ DWORD CEventLog::GetErrorCode( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
    return( m_ErrorCode );
 }
 
-__checkReturn HANDLE CEventLog::GetHandle( void ) const noexcept
+_Check_return_ HANDLE CEventLog::GetHandle( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
    return( m_LogHandle );
 }
 
-__checkReturn BOOL CEventLog::GetNextLog( __inout DWORD& enumerator, __out std::wstring& log_name ) noexcept
+_Check_return_ bool CEventLog::GetNextLog( __inout DWORD& enumerator, __out std::wstring& log_name ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -615,7 +604,7 @@ __checkReturn BOOL CEventLog::GetNextLog( __inout DWORD& enumerator, __out std::
 
    if ( ComputerName.empty() == false )
    {
-       return_value = registry.Connect((HKEY)CRegistry::keyLocalMachine, ComputerName.c_str() );
+      return_value = registry.Connect((HKEY)CRegistry::keyLocalMachine, ComputerName.c_str() );
    }
    else
    {
@@ -626,10 +615,10 @@ __checkReturn BOOL CEventLog::GetNextLog( __inout DWORD& enumerator, __out std::
    {
       m_ErrorCode = registry.GetErrorCode();
       //WFCTRACEERROR( m_ErrorCode ); 
-      return( FALSE );
+      return( false );
    }
 
-   DWORD permissions = CRegistry::permissionEnumerateSubKeys | CRegistry::permissionRead;
+   DWORD const permissions = CRegistry::permissionEnumerateSubKeys | CRegistry::permissionRead;
 
    return_value = registry.Open( TEXT( "SYSTEM\\CurrentControlSet\\Services\\EventLog" ), static_cast< CRegistry::CreatePermissions >( permissions ) );
 
@@ -637,19 +626,19 @@ __checkReturn BOOL CEventLog::GetNextLog( __inout DWORD& enumerator, __out std::
    {
       m_ErrorCode = registry.GetErrorCode();
       //WFCTRACEERROR( m_ErrorCode ); 
-      return( FALSE );
+      return( false );
    }
 
    DWORD key_index = 0;
 
    std::wstring class_name;
 
-   while( registry.EnumerateKeys( key_index, log_name, class_name ) != FALSE )
+   while( registry.EnumerateKeys( key_index, log_name, class_name ) == true )
    {
       if ( key_index == enumerator )
       {
          enumerator++;
-         return( TRUE );
+         return( true );
       }
 
       key_index++;
@@ -657,32 +646,29 @@ __checkReturn BOOL CEventLog::GetNextLog( __inout DWORD& enumerator, __out std::
 
    enumerator++;
 
-   return( FALSE );
+   return( false );
 }
 
-__checkReturn BOOL CEventLog::GetNumberOfRecords( __out DWORD& number_of_records ) noexcept
+_Check_return_ bool CEventLog::GetNumberOfRecords( __out DWORD& number_of_records ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
    number_of_records = 0; // Always start at a known state
 
-   BOOL return_value = ::GetNumberOfEventLogRecords( m_LogHandle, &number_of_records );
+   BOOL const return_value = ::GetNumberOfEventLogRecords( m_LogHandle, &number_of_records );
 
    if ( return_value == FALSE )
    {
       m_ErrorCode = ::GetLastError();
       //WFCTRACEVAL( TEXT( "GetNumberOfEventLogRecords() failed with " ), m_ErrorCode );
       //WFCTRACEERROR( m_ErrorCode );
-   }
-   else
-   {
-      return_value = TRUE;
+      return(false);
    }
 
-   return( return_value );
+   return( true );
 }
 
-__checkReturn DWORD CEventLog::GetOldestRecordNumber( void ) noexcept
+_Check_return_ DWORD CEventLog::GetOldestRecordNumber( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -701,7 +687,7 @@ __checkReturn DWORD CEventLog::GetOldestRecordNumber( void ) noexcept
    return( 0 );
 }
 
-__checkReturn BOOL CEventLog::NotifyChange( __in HANDLE event_handle, __in_opt HANDLE user_log_handle ) noexcept
+_Check_return_ bool CEventLog::NotifyChange( __in HANDLE event_handle, __in_opt HANDLE user_log_handle ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    ASSERT( event_handle != static_cast< HANDLE >( INVALID_HANDLE_VALUE ) );
@@ -709,7 +695,7 @@ __checkReturn BOOL CEventLog::NotifyChange( __in HANDLE event_handle, __in_opt H
    if ( event_handle == static_cast< HANDLE >( INVALID_HANDLE_VALUE ) )
    {
       m_ErrorCode = ERROR_INVALID_PARAMETER;
-      return( FALSE );
+      return( false );
    }
 
    if ( is_bad_handle( user_log_handle ) == true )
@@ -717,22 +703,19 @@ __checkReturn BOOL CEventLog::NotifyChange( __in HANDLE event_handle, __in_opt H
       user_log_handle = m_LogHandle;
    }
 
-   BOOL return_value = ::NotifyChangeEventLog( user_log_handle, event_handle );
+   BOOL const return_value = ::NotifyChangeEventLog( user_log_handle, event_handle );
 
    if ( return_value == FALSE )
    {
       m_ErrorCode = ::GetLastError();
       //WFCTRACEERROR( m_ErrorCode );
-   }
-   else
-   {
-      return_value = TRUE;
+      return(false);
    }
 
-   return( return_value );
+   return( true );
 }
 
-__checkReturn BOOL CEventLog::Open( __in_z LPCTSTR log_name, __in_z_opt LPCTSTR name_of_computer ) noexcept
+_Check_return_ bool CEventLog::Open( __in_z LPCTSTR log_name, __in_z_opt LPCTSTR name_of_computer ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( log_name );
@@ -749,10 +732,8 @@ __checkReturn BOOL CEventLog::Open( __in_z LPCTSTR log_name, __in_z_opt LPCTSTR 
       if ( log_name == nullptr )
       {
          m_ErrorCode = ERROR_INVALID_PARAMETER;
-         return( FALSE );
+         return( false );
       }
-
-      BOOL return_value = TRUE;
 
       m_LogHandle = ::OpenEventLog( name_of_computer, log_name );
 
@@ -760,9 +741,10 @@ __checkReturn BOOL CEventLog::Open( __in_z LPCTSTR log_name, __in_z_opt LPCTSTR 
       {
          m_ErrorCode  = ::GetLastError();
          m_LogHandle  = static_cast< HANDLE >( INVALID_HANDLE_VALUE );
-         return_value = FALSE;
 
          //WFCTRACEERROR( m_ErrorCode );
+
+         return(false);
       }
       else
       {
@@ -789,17 +771,17 @@ __checkReturn BOOL CEventLog::Open( __in_z LPCTSTR log_name, __in_z_opt LPCTSTR 
          }
       }
 
-      return( return_value );
+      return( true );
    }
    WFC_CATCH_ALL
    {
       m_ErrorCode = ERROR_EXCEPTION_IN_SERVICE;
-      return( FALSE );
+      return( false );
    }
    WFC_END_CATCH_ALL
 }
 
-__checkReturn BOOL CEventLog::OpenBackup( __in_z LPCTSTR name_of_backup_file, __in_z_opt LPCTSTR name_of_computer ) noexcept
+_Check_return_ bool CEventLog::OpenBackup( __in_z LPCTSTR name_of_backup_file, __in_z_opt LPCTSTR name_of_computer ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( name_of_backup_file );
@@ -815,10 +797,8 @@ __checkReturn BOOL CEventLog::OpenBackup( __in_z LPCTSTR name_of_backup_file, __
       if ( name_of_backup_file == nullptr )
       {
          m_ErrorCode = ERROR_INVALID_PARAMETER;
-         return( FALSE );
+         return( false );
       }
-
-      BOOL return_value = TRUE;
 
       m_LogHandle = ::OpenBackupEventLog( name_of_computer, name_of_backup_file );
 
@@ -827,7 +807,7 @@ __checkReturn BOOL CEventLog::OpenBackup( __in_z LPCTSTR name_of_backup_file, __
          m_LogHandle = static_cast< HANDLE >( INVALID_HANDLE_VALUE );
          m_ErrorCode = ::GetLastError();
          //WFCTRACEERROR( m_ErrorCode );
-         return_value = FALSE;
+         return(false);
       }
       else
       {
@@ -854,17 +834,17 @@ __checkReturn BOOL CEventLog::OpenBackup( __in_z LPCTSTR name_of_backup_file, __
          }
       }
 
-      return( return_value );
+      return( true );
    }
    WFC_CATCH_ALL
    {
       m_ErrorCode = ERROR_EXCEPTION_IN_SERVICE;
-      return( FALSE );
+      return( false );
    }
    WFC_END_CATCH_ALL
 }
 
-__checkReturn BOOL CEventLog::Read( __in DWORD record_number, __out CEventLogRecord& record, __in DWORD how_to_read ) noexcept
+_Check_return_ bool CEventLog::Read( __in DWORD record_number, __out CEventLogRecord& record, __in DWORD how_to_read ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    ASSERT( is_bad_handle( m_LogHandle ) == false );
@@ -878,7 +858,7 @@ __checkReturn BOOL CEventLog::Read( __in DWORD record_number, __out CEventLogRec
       if ( is_bad_handle( m_LogHandle ) == true )
       {
          m_ErrorCode = ERROR_INVALID_PARAMETER;
-         return( FALSE );
+         return( false );
       }
 
       /*
@@ -890,22 +870,20 @@ __checkReturn BOOL CEventLog::Read( __in DWORD record_number, __out CEventLogRec
       ** is an awfully inefficient way of doing it but it is simple.
       */
 
-      BOOL return_value = FALSE;
-
       // First, find out how many bytes we need for this record
 
       BYTE temporary_buffer[ 1 ]; // a throw-away valid memory address
 
       DWORD number_of_bytes_to_read = 0;
 
-      return_value = Read( record_number, temporary_buffer, number_of_bytes_to_read, how_to_read );
+      bool return_value = Read( record_number, temporary_buffer, number_of_bytes_to_read, how_to_read );
 
       m_ErrorCode = ::GetLastError();
 
-      if ( return_value == FALSE && m_ErrorCode != ERROR_INSUFFICIENT_BUFFER )
+      if ( return_value == false && m_ErrorCode != ERROR_INSUFFICIENT_BUFFER )
       {
          //WFCTRACEERROR( m_ErrorCode );
-         return( FALSE );
+         return( false );
       }
 
       m_ErrorCode = 0;
@@ -916,7 +894,7 @@ __checkReturn BOOL CEventLog::Read( __in DWORD record_number, __out CEventLogRec
 
       if (allocated_buffer.get() == nullptr)
       {
-         return( FALSE );
+         return( false );
       }
 
       // Always always always zero your buffers
@@ -925,27 +903,28 @@ __checkReturn BOOL CEventLog::Read( __in DWORD record_number, __out CEventLogRec
 
       return_value = Read( record_number, allocated_buffer.get(), m_NumberOfBytesInNextRecord, how_to_read );
 
-      if ( return_value == FALSE )
+      if ( return_value == false )
       {
          m_ErrorCode = ::GetLastError();
          //WFCTRACEERROR( m_ErrorCode );
+         return(false);
       }
       else
       {
          record.Copy( reinterpret_cast<EVENTLOGRECORD *>(allocated_buffer.get()) );
       }
 
-      return( return_value );
+      return( true );
    }
    WFC_CATCH_ALL
    {
       m_ErrorCode = ERROR_EXCEPTION_IN_SERVICE;
-      return( FALSE );
+      return( false );
    }
    WFC_END_CATCH_ALL
 }
 
-__checkReturn BOOL CEventLog::Read( __in DWORD record_number, __out_bcount_part( number_of_bytes_to_read, number_of_bytes_to_read ) LPVOID buffer, __inout DWORD& number_of_bytes_to_read, __in DWORD how_to_read ) noexcept
+_Check_return_ bool CEventLog::Read( __in DWORD record_number, __out_bcount_part( number_of_bytes_to_read, number_of_bytes_to_read ) LPVOID buffer, __inout DWORD& number_of_bytes_to_read, __in DWORD how_to_read ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( buffer );
@@ -958,7 +937,7 @@ __checkReturn BOOL CEventLog::Read( __in DWORD record_number, __out_bcount_part(
       if ( buffer == nullptr || m_LogHandle == static_cast< HANDLE >( INVALID_HANDLE_VALUE ) )
       {
          m_ErrorCode = ERROR_INVALID_PARAMETER;
-         return( FALSE );
+         return( false );
       }
 
       BOOL return_value = ::ReadEventLog( m_LogHandle,
@@ -973,13 +952,10 @@ __checkReturn BOOL CEventLog::Read( __in DWORD record_number, __out_bcount_part(
       {
          m_ErrorCode = ::GetLastError();
          //WFCTRACEERROR( m_ErrorCode );
-      }
-      else
-      {
-         return_value = TRUE;
+         return(false);
       }
 
-      return( return_value );
+      return( true );
    }
    WFC_CATCH_ALL
    {
@@ -989,7 +965,7 @@ __checkReturn BOOL CEventLog::Read( __in DWORD record_number, __out_bcount_part(
    WFC_END_CATCH_ALL
 }
 
-__checkReturn BOOL CEventLog::RegisterSource( __in_z LPCTSTR source_name, __in_z_opt LPCTSTR name_of_computer ) noexcept
+_Check_return_ bool CEventLog::RegisterSource( __in_z LPCTSTR source_name, __in_z_opt LPCTSTR name_of_computer ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source_name );
@@ -1006,10 +982,8 @@ __checkReturn BOOL CEventLog::RegisterSource( __in_z LPCTSTR source_name, __in_z
       if ( source_name == nullptr )
       {
          m_ErrorCode = ERROR_INVALID_PARAMETER;
-         return( FALSE );
+         return( false );
       }
-
-      BOOL return_value = TRUE;
 
       if ( m_EventSourceHandle != static_cast< HANDLE >( INVALID_HANDLE_VALUE ) )
       {
@@ -1024,20 +998,20 @@ __checkReturn BOOL CEventLog::RegisterSource( __in_z LPCTSTR source_name, __in_z
          //WFCTRACE( TEXT( "RegisterEventSource returned NULL" ) );
          //WFCTRACEERROR( m_ErrorCode );
          m_EventSourceHandle = static_cast< HANDLE >( INVALID_HANDLE_VALUE );
-         return_value        = FALSE;
+         return( false );
       }
 
-      return( return_value );
+      return( true );
    }
    WFC_CATCH_ALL
    {
       m_ErrorCode = ERROR_EXCEPTION_IN_SERVICE;
-      return( FALSE );
+      return( false );
    }
    WFC_END_CATCH_ALL
 }
 
-__checkReturn BOOL CEventLog::Report( __in EventType event_type,
+_Check_return_ bool CEventLog::Report( __in EventType event_type,
                         __in WORD      category,
                         __in DWORD     event_identifier,
                         __in WORD      number_of_strings,
@@ -1104,28 +1078,26 @@ __checkReturn BOOL CEventLog::Report( __in EventType event_type,
          {
             m_ErrorCode = ::GetLastError();
             //WFCTRACEERROR( m_ErrorCode );
-         }
-         else
-         {
-            return_value = TRUE;
+            return(false);
          }
       }
       else
       {
          m_ErrorCode = ERROR_INVALID_HANDLE;
+         return(false);
       }
 
-     return( return_value );
+     return( true );
    }
    WFC_CATCH_ALL
    {
       m_ErrorCode = ERROR_EXCEPTION_IN_SERVICE;
-      return( FALSE );
+      return( false );
    }
    WFC_END_CATCH_ALL
 }
 
-__checkReturn BOOL CEventLog::Report( __in_z LPCTSTR log_name, __in DWORD message_string_resource_identifier, __in WORD number_of_strings, __in_ecount_z_opt( number_of_strings ) LPCTSTR * string_array ) noexcept
+_Check_return_ bool CEventLog::Report( __in_z LPCTSTR log_name, __in DWORD message_string_resource_identifier, __in WORD number_of_strings, __in_ecount_z_opt( number_of_strings ) LPCTSTR * string_array ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( log_name );
@@ -1134,7 +1106,7 @@ __checkReturn BOOL CEventLog::Report( __in_z LPCTSTR log_name, __in DWORD messag
    if ( log_name == nullptr )
    {
       m_ErrorCode = ERROR_INVALID_PARAMETER;
-      return( FALSE );
+      return( false );
    }
 
    // We were passed a pointer, don't trust it
@@ -1144,30 +1116,30 @@ __checkReturn BOOL CEventLog::Report( __in_z LPCTSTR log_name, __in DWORD messag
       if ( string_array == nullptr )
       {
          m_ErrorCode = ERROR_INVALID_HANDLE;
-         return( FALSE );
+         return( false );
       }
 
-      if ( RegisterSource( log_name ) != FALSE )
+      if ( RegisterSource( log_name ) == true )
       {
-         if ( Report( eventError, 0, message_string_resource_identifier, number_of_strings, string_array ) == FALSE )
+         if ( Report( eventError, 0, message_string_resource_identifier, number_of_strings, string_array ) == false )
          {
             (void) DeregisterSource();
-            return( FALSE );
+            return( false );
          }
 
          (void) DeregisterSource();
       }
       else
       {
-         return( FALSE );
+         return( false );
       }
 
-      return( TRUE );
+      return( true );
    }
    WFC_CATCH_ALL
    {
       m_ErrorCode = ERROR_EXCEPTION_IN_SERVICE;
-      return( FALSE );
+      return( false );
    }
    WFC_END_CATCH_ALL
 }

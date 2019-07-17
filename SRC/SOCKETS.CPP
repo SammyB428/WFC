@@ -54,7 +54,7 @@ USING_WFC_NAMESPACE
 long CSimpleSocket::m_ReferenceCount = 0;
 WFC_SOCKET_THUNK_P CSimpleSocket::m_Thunk_p = nullptr;
 
-static __checkReturn HANDLE inline _create_socket_thunk_mutex( void )
+static _Check_return_ HANDLE inline _create_socket_thunk_mutex( void )
 {
    // We need to create a mutex that *ANY* process on the system can
    // get a handle to regardless of security. To do this, we need to
@@ -81,7 +81,7 @@ static __checkReturn HANDLE inline _create_socket_thunk_mutex( void )
    security_attributes.lpSecurityDescriptor = security_descriptor_p;
    security_attributes.bInheritHandle       = TRUE;
 
-   const HANDLE mutex_handle = CreateMutex( &security_attributes, FALSE, mutex_name );
+   auto const mutex_handle = CreateMutex( &security_attributes, FALSE, mutex_name );
 
    wfc_destroy_null_dacl( security_descriptor_p );
 
@@ -106,7 +106,7 @@ CSimpleSocket::CSimpleSocket()
 
    if ( m_ReferenceCount == 0 )
    {
-      const HANDLE mutex_handle = _create_socket_thunk_mutex();
+      auto const mutex_handle = _create_socket_thunk_mutex();
 
       if ( mutex_handle != static_cast< HANDLE >( NULL ) )
       {
@@ -175,7 +175,7 @@ CSimpleSocket::CSimpleSocket()
    m_ReferenceCount++;
 }
 
-CSimpleSocket::CSimpleSocket( __in const SOCKET socket_id )
+CSimpleSocket::CSimpleSocket( __in SOCKET const socket_id )
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -183,7 +183,7 @@ CSimpleSocket::CSimpleSocket( __in const SOCKET socket_id )
 
    if ( m_ReferenceCount == 0 )
    {
-      const HANDLE mutex_handle = _create_socket_thunk_mutex();
+      HANDLE const mutex_handle = _create_socket_thunk_mutex();
 
       if ( mutex_handle != static_cast< HANDLE >( NULL ) )
       {
@@ -265,7 +265,7 @@ CSimpleSocket::~CSimpleSocket()
 
    if ( m_ReferenceCount == 0 )
    {
-      const HANDLE mutex_handle = _create_socket_thunk_mutex();
+      HANDLE const mutex_handle = _create_socket_thunk_mutex();
 
       if ( mutex_handle != static_cast< HANDLE >( NULL ) )
       {
@@ -385,7 +385,7 @@ void CSimpleSocket::GetAddress( __out std::wstring& _address ) const noexcept
    _address.assign( Address );
 }
 
-__checkReturn SOCKET CSimpleSocket::GetID( void ) const noexcept
+_Check_return_ SOCKET CSimpleSocket::GetID( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -653,7 +653,7 @@ void CSimpleSocket::GetName( _Out_ std::wstring& _host_name ) const noexcept
    _host_name.assign( Name );
 }
 
-__checkReturn DWORD CSimpleSocket::GetOptions( void ) const noexcept
+_Check_return_ DWORD CSimpleSocket::GetOptions( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
    return( m_Options );
@@ -673,14 +673,14 @@ void CSimpleSocket::GetPort( _Out_ std::wstring& _port_name ) const noexcept
    _port_name.assign( m_PortName );
 }
 
-__checkReturn TCHAR CSimpleSocket::GetStringReadTerminatorCharacter( void ) const noexcept
+_Check_return_ TCHAR CSimpleSocket::GetStringReadTerminatorCharacter( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
    return( m_StringReadTerminatorCharacter );
 }
 
-__checkReturn BOOL CSimpleSocket::IsBroken( void ) const noexcept
+_Check_return_ BOOL CSimpleSocket::IsBroken( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -692,7 +692,7 @@ __checkReturn BOOL CSimpleSocket::IsBroken( void ) const noexcept
    return( FALSE );
 }
 
-__checkReturn BOOL CSimpleSocket::IsDataWaiting( void ) noexcept
+_Check_return_ BOOL CSimpleSocket::IsDataWaiting( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( m_Thunk_p );
@@ -941,7 +941,7 @@ void CSimpleSocket::m_InitializeThunk( void ) noexcept
 #pragma warning(default:4191)
 }
 
-__checkReturn UINT CSimpleSocket::Read( __out_bcount(size_of_buffer) VOID * buffer, __in const UINT size_of_buffer ) noexcept
+_Check_return_ UINT CSimpleSocket::Read( __out_bcount(size_of_buffer) VOID * buffer, __in UINT const size_of_buffer ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( m_Thunk_p );
@@ -1178,7 +1178,7 @@ void CSimpleSocket::SetAddress( _In_z_ LPCTSTR address_string ) noexcept
             ULONG internet_address = 0L;
 
             internet_address = m_Thunk_p->inet_addr( ascii_address_string );
-            host_entry_p = m_Thunk_p->gethostbyaddr( (const char *) &internet_address, 4, PF_INET );
+            host_entry_p = m_Thunk_p->gethostbyaddr( reinterpret_cast<char const *>(&internet_address), 4, PF_INET );
          }
       }
 
@@ -1270,7 +1270,7 @@ void CSimpleSocket::SetAddress( _In_z_ LPCTSTR address_string ) noexcept
    WFC_END_CATCH_ALL
 }
 
-void CSimpleSocket::SetID( __in const SOCKET id ) noexcept
+void CSimpleSocket::SetID( __in SOCKET const id ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -1440,7 +1440,7 @@ void CSimpleSocket::SetPort( __in short const p ) noexcept
    }
 }
 
-__checkReturn BOOL CSimpleSocket::SetReadTimeout( __in DWORD const number_of_milliseconds ) noexcept
+_Check_return_ BOOL CSimpleSocket::SetReadTimeout( __in DWORD const number_of_milliseconds ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    ASSERT( m_SocketID != INVALID_SOCKET );
@@ -1448,7 +1448,7 @@ __checkReturn BOOL CSimpleSocket::SetReadTimeout( __in DWORD const number_of_mil
    return( SetSocketOption( SOL_SOCKET, SO_RCVTIMEO, reinterpret_cast<char const *>(&number_of_milliseconds), sizeof( number_of_milliseconds ) ) );
 }
 
-__checkReturn BOOL CSimpleSocket::SetSocketOption( __in int const level, __in int const option_name, __in_z char const * option_value, __in int const option_length ) noexcept
+_Check_return_ BOOL CSimpleSocket::SetSocketOption( __in int const level, __in int const option_name, __in_z char const * option_value, __in int const option_length ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( m_Thunk_p );
@@ -1462,8 +1462,8 @@ __checkReturn BOOL CSimpleSocket::SetSocketOption( __in int const level, __in in
    // One popular mistake with using setsockopt is to use BOOL types like the
    // documentation seems to say. What they really mean is "address of a BOOL"
 
-   ASSERT( option_value != (const char *) 0 );
-   ASSERT( option_value != (const char *) 1 );
+   ASSERT( option_value != reinterpret_cast<char const *>(0) );
+   ASSERT( option_value != reinterpret_cast<char const *>(1) );
 
    // We were passed a pointer, don't trust it
 
@@ -1493,7 +1493,7 @@ void CSimpleSocket::SetStringReadTerminatorCharacter( __in TCHAR const terminato
    m_StringReadTerminatorCharacter = terminator;
 }
 
-__checkReturn BOOL CSimpleSocket::SetWriteTimeout( __in DWORD const number_of_milliseconds ) noexcept
+_Check_return_ BOOL CSimpleSocket::SetWriteTimeout( __in DWORD const number_of_milliseconds ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    ASSERT( m_SocketID != INVALID_SOCKET );
@@ -1902,7 +1902,7 @@ void __stdcall CSimpleSocket::TranslateErrorCode( __in DWORD const error_code, _
 
 #if defined( TF_DISCONNECT )
 
-__checkReturn BOOL CSimpleSocket::Transmit( __inout CFile64& file_to_send, __in DWORD const flags, __in_opt std::vector<uint8_t> * send_before, __in_opt std::vector<uint8_t> * send_after ) noexcept
+_Check_return_ BOOL CSimpleSocket::Transmit( __inout CFile64& file_to_send, __in DWORD const flags, __in_opt std::vector<uint8_t> * send_before, __in_opt std::vector<uint8_t> * send_after ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER_NULL_OK( send_before );
@@ -1961,7 +1961,7 @@ __checkReturn BOOL CSimpleSocket::Transmit( __inout CFile64& file_to_send, __in 
 
 #endif // TF_DISCONNECT
 
-void CSimpleSocket::Write( __in_bcount( number_of_bytes_to_write ) const VOID * buffer, __in const UINT number_of_bytes_to_write ) noexcept
+void CSimpleSocket::Write( __in_bcount( number_of_bytes_to_write ) VOID const * buffer, __in UINT const number_of_bytes_to_write ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( buffer );
@@ -2004,7 +2004,7 @@ void CSimpleSocket::Write( __in_bcount( number_of_bytes_to_write ) const VOID * 
 
       while( bytes_were_sent == FALSE && loop_count < 100 )
       {
-         number_of_bytes_sent = m_Thunk_p->send( m_SocketID, (const char *) byte_buffer, number_of_bytes_to_write, 0 );
+         number_of_bytes_sent = m_Thunk_p->send( m_SocketID, reinterpret_cast<char const *>(byte_buffer), number_of_bytes_to_write, 0 );
 
          if ( number_of_bytes_sent == SOCKET_ERROR )
          {
@@ -2045,7 +2045,7 @@ void CSimpleSocket::Write( __in_bcount( number_of_bytes_to_write ) const VOID * 
    WFC_END_CATCH_ALL
 }
 
-void CSimpleSocket::Write( __in const std::string& string_to_write ) noexcept
+void CSimpleSocket::Write( __in std::string const& string_to_write ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( m_Thunk_p );

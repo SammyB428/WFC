@@ -75,7 +75,7 @@ CSerialFile::~CSerialFile()
    Close();
 }
 
-__checkReturn BOOL CSerialFile::Attach( __in HANDLE new_handle, __out_opt HANDLE * old_handle_p ) noexcept
+_Check_return_ BOOL CSerialFile::Attach( __in HANDLE new_handle, __out_opt HANDLE * old_handle_p ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER_NULL_OK( old_handle_p );
@@ -131,7 +131,7 @@ __checkReturn BOOL CSerialFile::Attach( __in HANDLE new_handle, __out_opt HANDLE
    return( TRUE );
 }
 
-__checkReturn BOOL CSerialFile::CancelWaitFor( void ) noexcept
+_Check_return_ BOOL CSerialFile::CancelWaitFor( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -149,7 +149,7 @@ __checkReturn BOOL CSerialFile::CancelWaitFor( void ) noexcept
    return( return_value );
 }
 
-__checkReturn BOOL CSerialFile::ClearBreak( void ) noexcept
+_Check_return_ BOOL CSerialFile::ClearBreak( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -219,7 +219,7 @@ void CSerialFile::Close( void ) noexcept
    m_IsOpen   = FALSE;
 }
 
-__checkReturn BOOL CSerialFile::ConfigurationDialog( __inout CCommunicationsConfiguration& configuration, __in const BOOL save_changes, __in const HWND parent_window_handle ) noexcept
+_Check_return_ BOOL CSerialFile::ConfigurationDialog( __inout CCommunicationsConfiguration& configuration, __in BOOL const save_changes, __in HWND const parent_window_handle ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -352,7 +352,7 @@ __checkReturn BOOL CSerialFile::ConfigurationDialog( __inout CCommunicationsConf
    return( TRUE );
 }
 
-__checkReturn HANDLE CSerialFile::Detach( void ) noexcept
+_Check_return_ HANDLE CSerialFile::Detach( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -487,7 +487,7 @@ void CSerialFile::Dump( CDumpContext& dump_context ) const
 
 #endif // _DEBUG
 
-__checkReturn DWORD CSerialFile::GetBaudRate( void ) noexcept
+_Check_return_ DWORD CSerialFile::GetBaudRate( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -516,7 +516,7 @@ __checkReturn DWORD CSerialFile::GetBaudRate( void ) noexcept
    return( device_control_block.BaudRate );
 }
 
-__checkReturn BOOL CSerialFile::GetConfiguration( __inout CCommunicationsConfiguration& configuration ) noexcept
+_Check_return_ BOOL CSerialFile::GetConfiguration( __inout CCommunicationsConfiguration& configuration ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -582,7 +582,7 @@ __checkReturn BOOL CSerialFile::GetConfiguration( __inout CCommunicationsConfigu
    return( TRUE );
 }
 
-__checkReturn DWORD CSerialFile::GetFlowControl( void ) noexcept
+_Check_return_ DWORD CSerialFile::GetFlowControl( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -625,7 +625,7 @@ __checkReturn DWORD CSerialFile::GetFlowControl( void ) noexcept
    return( flow_control );
 }
 
-__checkReturn DWORD CSerialFile::GetInputBufferSize( void ) noexcept
+_Check_return_ DWORD CSerialFile::GetInputBufferSize( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -644,7 +644,7 @@ __checkReturn DWORD CSerialFile::GetInputBufferSize( void ) noexcept
    }
 }
 
-__checkReturn DWORD CSerialFile::GetModemStatus( void ) noexcept
+_Check_return_ DWORD CSerialFile::GetModemStatus( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -679,7 +679,7 @@ __checkReturn DWORD CSerialFile::GetModemStatus( void ) noexcept
    return( 0 );
 }
 
-__checkReturn DWORD CSerialFile::GetOutputBufferSize( void ) noexcept
+_Check_return_ DWORD CSerialFile::GetOutputBufferSize( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -698,7 +698,7 @@ __checkReturn DWORD CSerialFile::GetOutputBufferSize( void ) noexcept
    }
 }
 
-__checkReturn BOOL CSerialFile::GetProperties( __inout CCommunicationProperties& properties ) noexcept
+_Check_return_ BOOL CSerialFile::GetProperties( __inout CCommunicationProperties& properties ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -732,7 +732,7 @@ __checkReturn BOOL CSerialFile::GetProperties( __inout CCommunicationProperties&
    return( TRUE );
 }
 
-__checkReturn BOOL CSerialFile::GetState( __inout CDeviceControlBlock& device_control_block ) noexcept
+_Check_return_ BOOL CSerialFile::GetState( __inout CDeviceControlBlock& device_control_block ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -752,7 +752,7 @@ __checkReturn BOOL CSerialFile::GetState( __inout CDeviceControlBlock& device_co
    return( TRUE );
 }
 
-__checkReturn BOOL CSerialFile::GetTimeouts( __inout COMMTIMEOUTS& timeouts ) noexcept
+_Check_return_ BOOL CSerialFile::GetTimeouts( __inout COMMTIMEOUTS& timeouts ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -922,7 +922,7 @@ void CSerialFile::m_ClearError(__in int const ) noexcept
    }
 }
 
-__checkReturn bool CSerialFile::IsDataWaiting( void ) noexcept
+_Check_return_ bool CSerialFile::IsDataWaiting( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -950,7 +950,7 @@ __checkReturn bool CSerialFile::IsDataWaiting( void ) noexcept
    }
 }
 
-__checkReturn DWORD CSerialFile::NumberOfBytesWaitingToBeRead( void ) noexcept
+_Check_return_ DWORD CSerialFile::NumberOfBytesWaitingToBeRead( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -971,7 +971,7 @@ __checkReturn DWORD CSerialFile::NumberOfBytesWaitingToBeRead( void ) noexcept
    return( m_CommunicationsStatus.cbInQue );
 }
 
-__checkReturn DWORD CSerialFile::NumberOfBytesWaitingToBeWritten( void ) noexcept
+_Check_return_ DWORD CSerialFile::NumberOfBytesWaitingToBeWritten( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -994,7 +994,7 @@ __checkReturn DWORD CSerialFile::NumberOfBytesWaitingToBeWritten( void ) noexcep
 
 #pragma warning( disable : 4100 )
 
-__checkReturn bool CSerialFile::Open(__in_z LPCTSTR channel_name, __in const UINT open_flags ) noexcept
+_Check_return_ bool CSerialFile::Open(__in_z LPCTSTR channel_name, __in UINT const open_flags ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( channel_name );
@@ -1030,7 +1030,7 @@ __checkReturn bool CSerialFile::Open(__in_z LPCTSTR channel_name, __in const UIN
 
 #pragma warning( default : 4100 )
 
-__checkReturn bool CSerialFile::Open( void ) noexcept
+_Check_return_ bool CSerialFile::Open( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -1239,7 +1239,7 @@ __checkReturn bool CSerialFile::Open( void ) noexcept
    return( true );
 }
 
-__checkReturn UINT CSerialFile::Read( __out_bcount( length ) void * buffer, __in const UINT length ) noexcept
+_Check_return_ UINT CSerialFile::Read( __out_bcount( length ) void * buffer, __in UINT const length ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( buffer );
@@ -1274,7 +1274,7 @@ __checkReturn UINT CSerialFile::Read( __out_bcount( length ) void * buffer, __in
    WFC_END_CATCH_ALL
 }
 
-__checkReturn BOOL CSerialFile::Purge( __in DWORD const what_to_purge ) noexcept
+_Check_return_ BOOL CSerialFile::Purge( __in DWORD const what_to_purge ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -1312,7 +1312,7 @@ __checkReturn BOOL CSerialFile::Purge( __in DWORD const what_to_purge ) noexcept
    return( return_value );
 }
 
-void CSerialFile::ReplaceGarbledCharacter( __in const bool yes_or_no, __in const BYTE character_to_replace_the_garbled_one_with ) noexcept
+void CSerialFile::ReplaceGarbledCharacter( __in bool const yes_or_no, __in uint8_t const character_to_replace_the_garbled_one_with ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -1336,7 +1336,7 @@ void CSerialFile::ReplaceGarbledCharacter( __in const bool yes_or_no, __in const
    }
 }
 
-__checkReturn bool CSerialFile::SetBaudRate( __in uint32_t const baud_rate ) noexcept
+_Check_return_ bool CSerialFile::SetBaudRate( __in uint32_t const baud_rate ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -1373,7 +1373,7 @@ __checkReturn bool CSerialFile::SetBaudRate( __in uint32_t const baud_rate ) noe
    return( true );
 }
 
-__checkReturn BOOL CSerialFile::SetBreak( void ) noexcept
+_Check_return_ BOOL CSerialFile::SetBreak( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -1406,7 +1406,7 @@ __checkReturn BOOL CSerialFile::SetBreak( void ) noexcept
    return( return_value );
 }
 
-__checkReturn BOOL CSerialFile::SetCharacterToWaitFor( __in const BYTE character_to_wait_for ) noexcept
+_Check_return_ BOOL CSerialFile::SetCharacterToWaitFor( __in uint8_t const character_to_wait_for ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -1443,7 +1443,7 @@ __checkReturn BOOL CSerialFile::SetCharacterToWaitFor( __in const BYTE character
    return( TRUE );
 }
 
-__checkReturn BOOL CSerialFile::SetDataTerminalReady( __in const BOOL set_DTR_on ) noexcept
+_Check_return_ BOOL CSerialFile::SetDataTerminalReady( __in BOOL const set_DTR_on ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -1581,7 +1581,7 @@ void CSerialFile::SetOutputBufferSize( __in DWORD const buffer_size ) noexcept
    m_OutputBufferSize = buffer_size;
 }
 
-__checkReturn BOOL CSerialFile::SetPurgeBufferOnError( __in const BOOL purge_buffer ) noexcept
+_Check_return_ BOOL CSerialFile::SetPurgeBufferOnError( __in BOOL const purge_buffer ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -1592,7 +1592,7 @@ __checkReturn BOOL CSerialFile::SetPurgeBufferOnError( __in const BOOL purge_buf
    return( return_value );
 }
 
-__checkReturn BOOL CSerialFile::SetRequestToSend( __in const BOOL set_RTS_on ) noexcept
+_Check_return_ BOOL CSerialFile::SetRequestToSend( __in BOOL const set_RTS_on ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -1634,7 +1634,7 @@ __checkReturn BOOL CSerialFile::SetRequestToSend( __in const BOOL set_RTS_on ) n
    return( return_value );
 }
 
-__checkReturn BOOL CSerialFile::SetState(__inout CDeviceControlBlock& device_control_block ) noexcept
+_Check_return_ BOOL CSerialFile::SetState(__inout CDeviceControlBlock& device_control_block ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -1648,7 +1648,7 @@ __checkReturn BOOL CSerialFile::SetState(__inout CDeviceControlBlock& device_con
    return( TRUE );
 }
 
-__checkReturn BOOL CSerialFile::SetTimeouts( __in_opt const COMMTIMEOUTS * timeouts_p ) noexcept
+_Check_return_ BOOL CSerialFile::SetTimeouts( __in_opt COMMTIMEOUTS const * timeouts_p ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER_NULL_OK( timeouts_p );
@@ -1720,7 +1720,7 @@ __checkReturn BOOL CSerialFile::SetTimeouts( __in_opt const COMMTIMEOUTS * timeo
    return( return_value );
 }
 
-__checkReturn BOOL CSerialFile::TransmitCharacter( __in const char character_to_transmit ) noexcept
+_Check_return_ BOOL CSerialFile::TransmitCharacter( __in char const character_to_transmit ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -1756,7 +1756,7 @@ __checkReturn BOOL CSerialFile::TransmitCharacter( __in const char character_to_
    return( return_value );
 }
 
-__checkReturn BOOL CSerialFile::WaitFor(__inout DWORD& what_to_wait_for ) noexcept
+_Check_return_ BOOL CSerialFile::WaitFor(__inout DWORD& what_to_wait_for ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -1802,7 +1802,7 @@ __checkReturn BOOL CSerialFile::WaitFor(__inout DWORD& what_to_wait_for ) noexce
    return( return_value );
 }
 
-__checkReturn bool CSerialFile::WaitForString( __in std::string const& string_to_wait_for, __in DWORD const seconds_to_wait, __inout_opt std::string * string_p ) noexcept
+_Check_return_ bool CSerialFile::WaitForString( __in std::string const& string_to_wait_for, __in DWORD const seconds_to_wait, __inout_opt std::string * string_p ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -1819,7 +1819,7 @@ __checkReturn bool CSerialFile::WaitForString( __in std::string const& string_to
 
    std::string response( "" );
 
-   BYTE buffer[ 1 ];
+   BYTE buffer[1]{ 0 };
 
    bool time_expired = false;
 
@@ -1904,14 +1904,14 @@ __checkReturn bool CSerialFile::WaitForString( __in std::string const& string_to
    return( false );
 }
 
-void CSerialFile::Write( __in const BYTE byte_to_write ) noexcept
+void CSerialFile::Write( __in BYTE const byte_to_write ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
    Write( &byte_to_write, 1 );
 }
 
-void CSerialFile::Write( __in_bcount( length ) const void * buffer, __in const UINT length ) noexcept
+void CSerialFile::Write( __in_bcount( length ) void const * buffer, __in UINT const length ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( buffer );
@@ -2148,7 +2148,7 @@ Halts transmission of data. You must call
 have a lot of processing you need to perform on the data received from the
 serial port.
 
-<DT><PRE>BOOL <B><A NAME="SetCharacterToWaitFor">SetCharacterToWaitFor</A></B>( BYTE character_to_wait_for )</PRE><DD>
+<DT><PRE>BOOL <B><A NAME="SetCharacterToWaitFor">SetCharacterToWaitFor</A></B>( uint8_t character_to_wait_for )</PRE><DD>
 Sets the character to wait for when you <B>WaitFor</B>() with
 <CODE>waitParticularCharacterReceived</CODE> flag.
 

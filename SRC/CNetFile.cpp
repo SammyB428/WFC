@@ -117,7 +117,7 @@ void CNetworkFiles::m_Initialize( void ) noexcept
    m_103TotalNumberOfEntries = 0;
 }
 
-__checkReturn bool CNetworkFiles::Enumerate( void ) noexcept
+_Check_return_ bool CNetworkFiles::Enumerate( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -136,7 +136,7 @@ __checkReturn bool CNetworkFiles::Enumerate( void ) noexcept
    return( m_GetChunk() );
 }
 
-__checkReturn bool CNetworkFiles::GetNext( __inout CNetworkFileInformation& information ) noexcept
+_Check_return_ bool CNetworkFiles::GetNext( __inout CNetworkFileInformation& information ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 

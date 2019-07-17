@@ -87,10 +87,10 @@ void CCryptographicProvider::Close( void ) noexcept
    m_CryptographicProvider = static_cast< HCRYPTPROV >( NULL );
 }
 
-bool CCryptographicProvider::CreateHash( const CCryptographicAlgorithm& algorithm_that_is_going_to_use_the_hash,
-                                         const CCryptographicKey&       key_for_hash_algorithms_that_need_it,
-                                               CCryptographicHash&      hash,
-                                               DWORD                    creation_flags ) noexcept
+bool CCryptographicProvider::CreateHash( CCryptographicAlgorithm const& algorithm_that_is_going_to_use_the_hash,
+                                         CCryptographicKey const&       key_for_hash_algorithms_that_need_it,
+                                         CCryptographicHash&      hash,
+                                         DWORD                    creation_flags ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -174,10 +174,10 @@ bool CCryptographicProvider::CreateHash( const CCryptographicAlgorithm& algorith
    return( return_value == FALSE ? false : true );
 }
 
-bool CCryptographicProvider::CreateKey( const CCryptographicAlgorithm& algorithm_that_is_going_to_use_the_key,
-                                              CCryptographicKey&       key,
-                                              DWORD                    creation_flags,
-                                              WORD                     number_of_bits_in_key ) noexcept
+bool CCryptographicProvider::CreateKey( CCryptographicAlgorithm const& algorithm_that_is_going_to_use_the_key,
+                                        CCryptographicKey&       key,
+                                        DWORD                    creation_flags,
+                                        WORD                     number_of_bits_in_key ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -314,10 +314,10 @@ bool CCryptographicProvider::CreateKeySet( LPCTSTR container_name, LPCTSTR provi
    WFC_END_CATCH_ALL
 }
 
-bool CCryptographicProvider::DeriveKey(  const CCryptographicAlgorithm& algorithm, 
-                                         const CCryptographicHash&      hash,
-                                               CCryptographicKey&       key,
-                                               DWORD                    flags ) noexcept
+bool CCryptographicProvider::DeriveKey( CCryptographicAlgorithm const& algorithm,
+                                        CCryptographicHash const&      hash,
+                                        CCryptographicKey&             key,
+                                        DWORD                          flags ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -669,7 +669,7 @@ bool CCryptographicProvider::GetUserKey( DWORD which_user_key_to_get, CCryptogra
    return( return_value == FALSE ? false : true );
 }
 
-bool CCryptographicProvider::ImportKey(std::vector<uint8_t>& exported_key_data, CCryptographicKey& key, DWORD key_format, DWORD flags) noexcept
+bool CCryptographicProvider::ImportKey(std::vector<uint8_t>& exported_key_data, CCryptographicKey& key, CCryptographicKey::KeyFormat key_format, DWORD flags) noexcept
 {
     WFC_VALIDATE_POINTER(this);
 
@@ -684,7 +684,7 @@ bool CCryptographicProvider::ImportKey(std::vector<uint8_t>& exported_key_data, 
     BOOL return_value = ::CryptImportKey(m_CryptographicProvider,
         exported_key_data.data(),
         (DWORD)exported_key_data.size(),
-        (HCRYPTKEY)key_format,
+        static_cast<HCRYPTKEY>(key_format),
         flags,
         &key_handle);
 
@@ -771,7 +771,7 @@ void CCryptographicProvider::m_Initialize( void ) noexcept
    m_CryptographicProvider = static_cast< HCRYPTPROV >( NULL );
 }
 
-__checkReturn bool CCryptographicProvider::Open(__in_z_opt LPCTSTR container_name, __in_z_opt LPCTSTR provider_name, __in DWORD provider_type, __in DWORD flags ) noexcept
+_Check_return_ bool CCryptographicProvider::Open(__in_z_opt LPCTSTR container_name, __in_z_opt LPCTSTR provider_name, __in DWORD provider_type, __in DWORD flags ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER_NULL_OK( container_name );
