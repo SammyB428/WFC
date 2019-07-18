@@ -59,7 +59,7 @@ USING_WFC_NAMESPACE
 
 // Construction
 
-CCryptographicHash::CCryptographicHash()
+CCryptographicHash::CCryptographicHash() noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -67,7 +67,7 @@ CCryptographicHash::CCryptographicHash()
    m_AutomaticallyDestroy = FALSE;
 }
 
-CCryptographicHash::CCryptographicHash( __in HCRYPTHASH source_handle, __in bool automatically_destroy )
+CCryptographicHash::CCryptographicHash( __in HCRYPTHASH source_handle, __in bool automatically_destroy ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -77,7 +77,7 @@ CCryptographicHash::CCryptographicHash( __in HCRYPTHASH source_handle, __in bool
    (void) FromHandle( source_handle, automatically_destroy );
 }
 
-CCryptographicHash::~CCryptographicHash()
+CCryptographicHash::~CCryptographicHash() noexcept
 {
    WFC_VALIDATE_POINTER( this );
 

@@ -59,25 +59,25 @@ USING_WFC_NAMESPACE
 
 // Construction
 
-CCryptographicAlgorithm::CCryptographicAlgorithm()
+CCryptographicAlgorithm::CCryptographicAlgorithm() noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Empty();
 }
 
-CCryptographicAlgorithm::CCryptographicAlgorithm( __in CCryptographicAlgorithm const& source )
+CCryptographicAlgorithm::CCryptographicAlgorithm( __in CCryptographicAlgorithm const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );
 }
 
-CCryptographicAlgorithm::CCryptographicAlgorithm( __in PROV_ENUMALGS const& source )
+CCryptographicAlgorithm::CCryptographicAlgorithm( __in PROV_ENUMALGS const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );
 }
 
-CCryptographicAlgorithm::~CCryptographicAlgorithm()
+CCryptographicAlgorithm::~CCryptographicAlgorithm() noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Empty();

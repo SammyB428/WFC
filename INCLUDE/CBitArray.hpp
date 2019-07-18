@@ -71,12 +71,12 @@ class CBitArray
 
       // Construction
 
-      CBitArray();
-      CBitArray( _In_ std::size_t const initial_size );
-      CBitArray(_In_ CBitArray const&  source );
-      CBitArray(_In_ std::vector<uint8_t> const& source );
+      CBitArray() noexcept;
+      CBitArray( _In_ std::size_t const initial_size ) noexcept;
+      CBitArray(_In_ CBitArray const&  source ) noexcept;
+      CBitArray(_In_ std::vector<uint8_t> const& source ) noexcept;
 
-      virtual ~CBitArray();
+      virtual ~CBitArray() noexcept;
 
       static inline constexpr int SizeOfBitRepresentation(void) noexcept { return(32); }
       static inline constexpr int MostSignificantBitLocation(void) noexcept { return(31); }

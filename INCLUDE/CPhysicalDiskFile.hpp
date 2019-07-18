@@ -65,14 +65,14 @@ class CPhysicalDiskFile : public CFile64
       ** Constructors
       */
 
-      CPhysicalDiskFile();
+      CPhysicalDiskFile() noexcept;
 
       /*
       ** Destructor should be virtual according to MSJ article in Sept 1992
       ** "Do More with Less Code:..."
       */
 
-      virtual ~CPhysicalDiskFile();
+      virtual ~CPhysicalDiskFile() noexcept;
 
       /*
       ** Methods

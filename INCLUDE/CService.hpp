@@ -70,14 +70,14 @@ class CService
       CService(__in CService const&) = delete;
       CService& operator=(__in CService const&) = delete;
 
-      CService( __callback LPTHREAD_START_ROUTINE thread_start_routine, __in DWORD const accepted_controls = ACCEPT_FLAGS, __in DWORD const wait_hint = 30011 );
+      CService( __callback LPTHREAD_START_ROUTINE thread_start_routine, __in DWORD const accepted_controls = ACCEPT_FLAGS, __in DWORD const wait_hint = 30011 ) noexcept;
 
       /*
       ** Destructor should be virtual according to MSJ article in Sept 1992
       ** "Do More with Less Code:..."
       */
 
-      virtual ~CService( void );
+      virtual ~CService( void ) noexcept;
 
       std::vector<std::wstring> CommandLineParameters;
 

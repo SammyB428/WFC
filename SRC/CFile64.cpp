@@ -282,7 +282,7 @@ void CFile64::CreatePathTo(_In_z_ LPCWSTR full_pathname) noexcept
     }
 }
 
-CFile64::CFile64()
+CFile64::CFile64() noexcept
 {
     WFC_VALIDATE_POINTER( this );
 
@@ -302,7 +302,7 @@ CFile64::CFile64()
     m_Initialize();
 }
 
-CFile64::CFile64( _In_ HANDLE const file_handle )
+CFile64::CFile64( _In_ HANDLE const file_handle ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
     _ASSERTE(file_handle != INVALID_HANDLE_VALUE);
@@ -320,7 +320,7 @@ CFile64::CFile64( _In_ HANDLE const file_handle )
     m_CloseOnDelete = false;
 }
 
-CFile64::CFile64( _In_z_ LPCTSTR filename, _In_ UINT const open_flags )
+CFile64::CFile64( _In_z_ LPCTSTR filename, _In_ UINT const open_flags ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
     WFC_VALIDATE_POINTER( filename );
@@ -336,7 +336,7 @@ CFile64::CFile64( _In_z_ LPCTSTR filename, _In_ UINT const open_flags )
     (void) Open( filename, open_flags );
 }
 
-CFile64::~CFile64()
+CFile64::~CFile64() noexcept
 {
     WFC_VALIDATE_POINTER( this );
 

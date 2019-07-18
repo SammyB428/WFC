@@ -51,15 +51,15 @@ class CJulianDate // Don't use this, I'm not finished with it yet
 
    public:
 
-      CJulianDate() { m_JulianDays = 0.0; };
-      CJulianDate( _In_ CJulianDate const& source ) { m_JulianDays = source.m_JulianDays; };
+      CJulianDate() noexcept { m_JulianDays = 0.0; };
+      CJulianDate( _In_ CJulianDate const& source ) noexcept { m_JulianDays = source.m_JulianDays; };
 
       /*
       ** Destructor should be virtual according to MSJ article in Sept 1992
       ** "Do More with Less Code:..."
       */
 
-      virtual ~CJulianDate();
+      virtual ~CJulianDate() noexcept;
 
       /*
       ** Methods

@@ -54,20 +54,20 @@ USING_WFC_NAMESPACE
 #define new DEBUG_NEW
 #endif // _DEBUG
 
-CEventLogRecord::CEventLogRecord()
+CEventLogRecord::CEventLogRecord() noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Empty();
 }
 
-CEventLogRecord::CEventLogRecord( __in CEventLogRecord const& source )
+CEventLogRecord::CEventLogRecord( __in CEventLogRecord const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Empty();
    Copy( source );
 }
 
-CEventLogRecord::CEventLogRecord( __in EVENTLOGRECORD const * source )
+CEventLogRecord::CEventLogRecord( __in EVENTLOGRECORD const * source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
@@ -75,7 +75,7 @@ CEventLogRecord::CEventLogRecord( __in EVENTLOGRECORD const * source )
    Copy( source );
 }
 
-CEventLogRecord::~CEventLogRecord()
+CEventLogRecord::~CEventLogRecord() noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Empty();

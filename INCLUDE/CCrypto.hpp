@@ -59,8 +59,8 @@ class CCryptography
 
    public:
 
-      CCryptography();
-      virtual ~CCryptography();
+      CCryptography() noexcept;
+      virtual ~CCryptography() noexcept;
 
       virtual _Check_return_ DWORD GetErrorCode( void ) const noexcept;
 };
@@ -83,9 +83,9 @@ class CCryptographicHash : public CCryptography
        
        // Construction
 
-      CCryptographicHash();
-      CCryptographicHash( __in HCRYPTHASH source_handle, __in bool automatically_destroy = true );
-      virtual ~CCryptographicHash();
+      CCryptographicHash() noexcept;
+      CCryptographicHash( __in HCRYPTHASH source_handle, __in bool automatically_destroy = true ) noexcept;
+      virtual ~CCryptographicHash() noexcept;
 
       static constexpr DWORD const MD2  = CALG_MD2;
       static constexpr DWORD const MD4  = CALG_MD4;
@@ -143,10 +143,10 @@ class CCryptographicAlgorithm
 
       // Construction
 
-      CCryptographicAlgorithm();
-      CCryptographicAlgorithm( __in CCryptographicAlgorithm const& source );
-      CCryptographicAlgorithm( __in PROV_ENUMALGS const& source );
-      virtual ~CCryptographicAlgorithm();
+      CCryptographicAlgorithm() noexcept;
+      CCryptographicAlgorithm( __in CCryptographicAlgorithm const& source ) noexcept;
+      CCryptographicAlgorithm( __in PROV_ENUMALGS const& source ) noexcept;
+      virtual ~CCryptographicAlgorithm() noexcept;
 
       // Properties
 
@@ -269,59 +269,59 @@ class CCryptographicKey : public CCryptography
        
        // Construction
 
-      CCryptographicKey();
-      CCryptographicKey( __in HCRYPTKEY source_handle, __in bool automatically_destroy = true );
-      virtual ~CCryptographicKey();
+      CCryptographicKey() noexcept;
+      CCryptographicKey( __in HCRYPTKEY source_handle, __in bool automatically_destroy = true )  noexcept;
+      virtual ~CCryptographicKey() noexcept;
 
       // Properties
-      enum _Parameters
+      enum class Parameter : uint32_t
       {
-         parameterAlgorithmIdentifier           = KP_ALGID,
-         parameterBlockLengthInBytes            = KP_BLOCKLEN,
-         parameterSalt                          = KP_SALT,
-         parameterPermissions                   = KP_PERMISSIONS,
-         parameterInitializationVector          = KP_IV,
-         parameterPaddingMode                   = KP_PADDING,
-         parameterCipherMode                    = KP_MODE,
-         parameterNumberOfBitsProcessedPerCycle = KP_MODE_BITS,
+         AlgorithmIdentifier           = KP_ALGID,
+         BlockLengthInBytes            = KP_BLOCKLEN,
+         Salt                          = KP_SALT,
+         Permissions                   = KP_PERMISSIONS,
+         InitializationVector          = KP_IV,
+         PaddingMode                   = KP_PADDING,
+         CipherMode                    = KP_MODE,
+         NumberOfBitsProcessedPerCycle = KP_MODE_BITS,
 
 #if defined( KP_PUB_EX_VAL )
          // New Parameters
-         parameterKeyLengthInBits                  = KP_KEYLEN,
-         parameterLengthOfSaltInBytes              = KP_SALT_EX,
-         parameterDSSDiffieHellmanPValue           = KP_P,
-         parameterDSSDiffieHellmanGValue           = KP_G,
-         parameterDSSQValue                        = KP_Q,
-         parameterDiffieHellmanXValue              = KP_X,
-         parameterYValue                           = KP_Y,
-         parameterFortezzaRAValue                  = KP_RA,
-         parameterFortezzaRBValue                  = KP_RB,
-         parameterRSAEnvelopeInformation           = KP_INFO,
-         parameterRC2EffectiveKeyLength            = KP_EFFECTIVE_KEYLEN,
-         parameterSecureChannelAlgorithm           = KP_SCHANNEL_ALG,
-         parameterSecureChannelClientRandomData    = KP_CLIENT_RANDOM,
-         parameterSecureChannelServerRandomData    = KP_SERVER_RANDOM,
-         parameterRP                               = KP_RP,
-         parameterPrecompiledMD5                   = KP_PRECOMP_MD5,
-         parameterPrecmopiledSHA                   = KP_PRECOMP_SHA,
-         parameterSecureChannelCertificateDataPCT1 = KP_CERTIFICATE,
-         parameterSecureChannelClearKeyDataPCT1    = KP_CLEAR_KEY,
-         parameterPubExLength                      = KP_PUB_EX_LEN,
-         parameterPubExValue                       = KP_PUB_EX_VAL,
+         KeyLengthInBits                  = KP_KEYLEN,
+         LengthOfSaltInBytes              = KP_SALT_EX,
+         DSSDiffieHellmanPValue           = KP_P,
+         DSSDiffieHellmanGValue           = KP_G,
+         DSSQValue                        = KP_Q,
+         DiffieHellmanXValue              = KP_X,
+         YValue                           = KP_Y,
+         FortezzaRAValue                  = KP_RA,
+         FortezzaRBValue                  = KP_RB,
+         RSAEnvelopeInformation           = KP_INFO,
+         RC2EffectiveKeyLength            = KP_EFFECTIVE_KEYLEN,
+         SecureChannelAlgorithm           = KP_SCHANNEL_ALG,
+         SecureChannelClientRandomData    = KP_CLIENT_RANDOM,
+         SecureChannelServerRandomData    = KP_SERVER_RANDOM,
+         RP                               = KP_RP,
+         PrecompiledMD5                   = KP_PRECOMP_MD5,
+         PrecmopiledSHA                   = KP_PRECOMP_SHA,
+         SecureChannelCertificateDataPCT1 = KP_CERTIFICATE,
+         SecureChannelClearKeyDataPCT1    = KP_CLEAR_KEY,
+         PubExLength                      = KP_PUB_EX_LEN,
+         PubExValue                       = KP_PUB_EX_VAL,
 #endif // KP_PUB_EX_VAL
 
 #if defined( KP_HIGHEST_VERSION ) // New for 52
-         parameterKeyVal                           = KP_KEYVAL,
-         parameterAdministratorPin                 = KP_ADMIN_PIN,
-         parameterKeyExchangePin                   = KP_KEYEXCHANGE_PIN,
-         parameterSignaturePin                     = KP_SIGNATURE_PIN,
-         parameterPreHash                          = KP_PREHASH,
-         parameterOptimalAsymmetricEncryptionPadding = KP_OAEP_PARAMS,
-         parameterCryptographicMessageSyntaxKeyInformation = KP_CMS_KEY_INFO,
-         parameterCryptographicMessageSyntaxDiffieHellmanKeyInformation = KP_CMS_DH_KEY_INFO,
-         parameterPublic                           = KP_PUB_PARAMS,
-         parameterVerify                           = KP_VERIFY_PARAMS,
-         parameterHighestVersion                   = KP_HIGHEST_VERSION,
+         KeyVal                           = KP_KEYVAL,
+         AdministratorPin                 = KP_ADMIN_PIN,
+         KeyExchangePin                   = KP_KEYEXCHANGE_PIN,
+         SignaturePin                     = KP_SIGNATURE_PIN,
+         PreHash                          = KP_PREHASH,
+         OptimalAsymmetricEncryptionPadding = KP_OAEP_PARAMS,
+         CryptographicMessageSyntaxKeyInformation = KP_CMS_KEY_INFO,
+         CryptographicMessageSyntaxDiffieHellmanKeyInformation = KP_CMS_DH_KEY_INFO,
+         Public                           = KP_PUB_PARAMS,
+         Verify                           = KP_VERIFY_PARAMS,
+         HighestVersion                   = KP_HIGHEST_VERSION,
 #endif // KP_HIGHEST_VERSION
       };
 
@@ -387,7 +387,7 @@ class CCryptographicKey : public CCryptography
                            DWORD       flags         = 0 ) noexcept;
       virtual _Check_return_ bool FromHandle( __in HCRYPTKEY source_handle, __in bool automatically_destroy = TRUE ) noexcept;
       virtual _Check_return_ HCRYPTKEY GetHandle( void ) const noexcept;
-      virtual _Check_return_ bool GetParameter( __in DWORD const parameter_to_get, __inout_bcount( buffer_length ) BYTE * buffer, __inout DWORD& buffer_length, __in DWORD const flags = 0 ) noexcept; // CryptGetKeyParam
+      virtual _Check_return_ bool GetParameter( __in Parameter const parameter_to_get, __inout_bcount( buffer_length ) uint8_t * buffer, __inout DWORD& buffer_length, __in DWORD const flags = 0 ) noexcept; // CryptGetKeyParam
 
       // Helpers for GetParameter
 
@@ -404,11 +404,11 @@ class CCryptographicKey : public CCryptography
       // the CryptSetKeyParam() API is mis-typed. The buffer parameter should
       // be const but it is not. Looks like they didn't think it through enough.
 
-      virtual _Check_return_ bool SetParameter( __in DWORD const parameter_to_set, __in BYTE const * buffer, __in DWORD const flags = 0 ) noexcept; // CryptSetKeyParam
+      virtual _Check_return_ bool SetParameter( __in Parameter const parameter_to_set, __in uint8_t const * buffer, __in DWORD const flags = 0 ) noexcept; // CryptSetKeyParam
 
       // Helpers for SetParameter
       virtual _Check_return_ bool SetPermissions( __in DWORD const permissions ) noexcept;
-      virtual _Check_return_ bool SetSalt( __in BYTE const * buffer ) noexcept;
+      virtual _Check_return_ bool SetSalt( __in uint8_t const * buffer ) noexcept;
       virtual _Check_return_ bool SetInitializationVector( __in BYTE const * buffer ) noexcept;
       virtual _Check_return_ bool SetPaddingMode( __in DWORD const mode ) noexcept;
       virtual _Check_return_ bool SetCipherMode( __in DWORD const mode ) noexcept;
@@ -441,8 +441,8 @@ class CCryptographicProvider : public CCryptography
  
        // Construction
 
-      CCryptographicProvider();
-      virtual ~CCryptographicProvider();
+      CCryptographicProvider() noexcept;
+      virtual ~CCryptographicProvider() noexcept;
 
       // Properties
 

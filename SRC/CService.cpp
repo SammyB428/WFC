@@ -55,7 +55,7 @@ CRITICAL_SECTION Win32FoundationClasses::g_ServiceCriticalSection;
 
 Win32FoundationClasses::CService *Win32FoundationClasses::CService::m_StaticService_p = 0;
 
-CService::CService( __callback LPTHREAD_START_ROUTINE thread_start_routine, __in DWORD const controls_accepted, __in DWORD const wait_hint )
+CService::CService( __callback LPTHREAD_START_ROUTINE thread_start_routine, __in DWORD const controls_accepted, __in DWORD const wait_hint ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( thread_start_routine );
@@ -92,7 +92,7 @@ CService::CService( __callback LPTHREAD_START_ROUTINE thread_start_routine, __in
    ZeroMemory( m_ServiceName, (SERVICE_NAME_LEN + 1) * sizeof(wchar_t));
 }
 
-CService::~CService( void )
+CService::~CService( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 

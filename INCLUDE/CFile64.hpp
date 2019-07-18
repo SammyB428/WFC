@@ -164,10 +164,10 @@ class CFile64
       CFile64(_In_ CFile64 const&) = delete;
       _Check_return_ CFile64& operator=(_In_ CFile64 const&) = delete;
 
-      CFile64();
-      CFile64( _In_ HANDLE const file_handle );
-      CFile64( _In_z_ LPCTSTR filename, _In_ UINT const open_flags );
-      virtual ~CFile64();
+      CFile64() noexcept;
+      CFile64( _In_ HANDLE const file_handle ) noexcept;
+      CFile64( _In_z_ LPCTSTR filename, _In_ UINT const open_flags ) noexcept;
+      virtual ~CFile64() noexcept;
 
       static _Check_return_ bool Exists( _In_z_ LPCWSTR file_name ) noexcept
       {

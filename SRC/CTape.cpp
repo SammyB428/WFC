@@ -721,26 +721,26 @@ CTapeGetDriveParameters& CTapeGetDriveParameters::operator=( __in TAPE_GET_DRIVE
 ** CTapeSetDriveParameters
 */
 
-CTapeSetDriveParameters::CTapeSetDriveParameters()
+CTapeSetDriveParameters::CTapeSetDriveParameters() noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Empty();
 }
 
-CTapeSetDriveParameters::CTapeSetDriveParameters( __in CTapeSetDriveParameters const& source )
+CTapeSetDriveParameters::CTapeSetDriveParameters( __in CTapeSetDriveParameters const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );
 }
 
-CTapeSetDriveParameters::CTapeSetDriveParameters( __in TAPE_SET_DRIVE_PARAMETERS const * source )
+CTapeSetDriveParameters::CTapeSetDriveParameters( __in TAPE_SET_DRIVE_PARAMETERS const * source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
    Copy( source );
 }
 
-CTapeSetDriveParameters::~CTapeSetDriveParameters()
+CTapeSetDriveParameters::~CTapeSetDriveParameters() noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Empty();
@@ -823,26 +823,26 @@ CTapeSetDriveParameters& CTapeSetDriveParameters::operator=( __in TAPE_SET_DRIVE
 ** CTapeSetMediaParameters
 */
 
-CTapeSetMediaParameters::CTapeSetMediaParameters()
+CTapeSetMediaParameters::CTapeSetMediaParameters() noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Empty();
 }
 
-CTapeSetMediaParameters::CTapeSetMediaParameters( __in CTapeSetMediaParameters const& source )
+CTapeSetMediaParameters::CTapeSetMediaParameters( __in CTapeSetMediaParameters const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );
 }
 
-CTapeSetMediaParameters::CTapeSetMediaParameters( __in TAPE_SET_MEDIA_PARAMETERS const * source )
+CTapeSetMediaParameters::CTapeSetMediaParameters( __in TAPE_SET_MEDIA_PARAMETERS const * source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
    Copy( source );
 }
 
-CTapeSetMediaParameters::~CTapeSetMediaParameters()
+CTapeSetMediaParameters::~CTapeSetMediaParameters() noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Empty();
@@ -914,14 +914,14 @@ CTapeSetMediaParameters& CTapeSetMediaParameters::operator=( __in TAPE_SET_MEDIA
 ** CTape
 */
 
-CTape::CTape()
+CTape::CTape() noexcept
 {
    WFC_VALIDATE_POINTER( this );
    m_Initialize();
    m_AutomaticallyClose = FALSE;
 }
 
-CTape::~CTape()
+CTape::~CTape() noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -953,7 +953,7 @@ void CTape::Close( void ) noexcept
    }
 }
 
-BOOL CTape::CreatePartition( __in TypeOfPartition const type_of_partition, 
+bool CTape::CreatePartition( __in TypeOfPartition const type_of_partition, 
                              __in DWORD           const number_of_partitions, 
                              __in DWORD           const number_of_megabytes_in_each_partition ) noexcept
 {
@@ -963,15 +963,13 @@ BOOL CTape::CreatePartition( __in TypeOfPartition const type_of_partition,
 
    if ( m_LastError == NO_ERROR )
    {
-      return( TRUE );
+      return( true );
    }
-   else
-   {
-      return( FALSE );
-   }
+
+   return( false );
 }
 
-BOOL CTape::Erase( __in TypeOfErasure const type_of_erasure, __in BOOL const return_immediately ) noexcept
+bool CTape::Erase( __in TypeOfErasure const type_of_erasure, __in bool const return_immediately ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -979,15 +977,13 @@ BOOL CTape::Erase( __in TypeOfErasure const type_of_erasure, __in BOOL const ret
 
    if ( m_LastError == NO_ERROR )
    {
-      return( TRUE );
+      return( true );
    }
-   else
-   {
-      return( FALSE );
-   }
+
+   return( false );
 }
 
-BOOL CTape::GetParameters( __out CTapeGetDriveParameters& parameters ) noexcept
+bool CTape::GetParameters( __out CTapeGetDriveParameters& parameters ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -1002,15 +998,13 @@ BOOL CTape::GetParameters( __out CTapeGetDriveParameters& parameters ) noexcept
    if ( m_LastError == NO_ERROR )
    {
       parameters.Copy( &drive_parameters );
-      return( TRUE );
+      return( true );
    }
-   else
-   {
-      return( FALSE );
-   }
+
+   return( false );
 }
 
-BOOL CTape::GetParameters( __out CTapeGetMediaParameters& parameters ) noexcept
+bool CTape::GetParameters( __out CTapeGetMediaParameters& parameters ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -1025,15 +1019,13 @@ BOOL CTape::GetParameters( __out CTapeGetMediaParameters& parameters ) noexcept
    if ( m_LastError == NO_ERROR )
    {
       parameters.Copy( &media_parameters );
-      return( TRUE );
+      return( true );
    }
-   else
-   {
-      return( FALSE );
-   }
+
+   return( false );
 }
 
-BOOL CTape::GetPosition( __in Position const type_of_position_to_get, __out DWORD& partition_number, __out DWORD& position_low, __out DWORD& position_high ) noexcept
+bool CTape::GetPosition( __in Position const type_of_position_to_get, __out DWORD& partition_number, __out DWORD& position_low, __out DWORD& position_high ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -1041,12 +1033,10 @@ BOOL CTape::GetPosition( __in Position const type_of_position_to_get, __out DWOR
 
    if ( m_LastError == NO_ERROR )
    {
-      return( TRUE );
+      return( true );
    }
-   else
-   {
-      return( FALSE );
-   }
+
+   return( false );
 }
 
 _Check_return_ DWORD CTape::GetStatus( void ) const noexcept
@@ -1061,29 +1051,27 @@ _Check_return_ DWORD CTape::GetDriveNumber( void ) const noexcept
    return( m_TapeDriveNumberStartingAtZero );
 }
 
-_Check_return_ BOOL CTape::Mark( __in TypeOfMark const type_of_mark, __in DWORD const number_of_marks, __in BOOL const return_immediately ) noexcept
+_Check_return_ bool CTape::Mark( __in TypeOfMark const type_of_mark, __in DWORD const number_of_marks, __in bool const return_immediately ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
-   m_LastError = ::WriteTapemark( m_FileHandle, static_cast<DWORD>(type_of_mark), number_of_marks, return_immediately );
+   m_LastError = ::WriteTapemark( m_FileHandle, static_cast<DWORD>(type_of_mark), number_of_marks, return_immediately == true ? TRUE : FALSE );
 
    if ( m_LastError == NO_ERROR )
    {
-      return( TRUE );
+      return( true );
    }
-   else
-   {
-      return( FALSE );
-   }
+
+   return( false );
 }
 
-_Check_return_ BOOL CTape::Load( void ) noexcept
+_Check_return_ bool CTape::Load( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    return( Prepare(Operation::LoadTape) );
 }
 
-_Check_return_ BOOL CTape::Lock( void ) noexcept
+_Check_return_ bool CTape::Lock( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    return( Prepare(Operation::LockTape) );
@@ -1099,7 +1087,7 @@ _Check_return_ bool CTape::Open( __in UINT const tape_drive_number_starting_at_z
 
    _stprintf_s( tape_drive_name, std::size( tape_drive_name ), TEXT( "\\\\.\\TAPE%u" ), tape_drive_number_starting_at_zero );
 
-   HANDLE file_handle = ::CreateFile( tape_drive_name,
+   HANDLE const file_handle = ::CreateFile( tape_drive_name,
                                GENERIC_READ | GENERIC_WRITE,
                                0,
                                nullptr,
@@ -1136,23 +1124,23 @@ _Check_return_ bool CTape::Open( __in UINT const tape_drive_number_starting_at_z
    return( true );
 }
 
-_Check_return_ BOOL CTape::Prepare( __in Operation const what_to_do, __in BOOL const return_immediately ) noexcept
+_Check_return_ bool CTape::Prepare( __in Operation const what_to_do, __in bool const return_immediately ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
-   m_LastError = ::PrepareTape( m_FileHandle, static_cast<DWORD>(what_to_do), return_immediately );
+   m_LastError = ::PrepareTape( m_FileHandle, static_cast<DWORD>(what_to_do), return_immediately == true ? TRUE : FALSE );
 
    if ( m_LastError == NO_ERROR )
    {
-      return( TRUE );
+      return( true );
    }
    else
    {
-      return( FALSE );
+      return( false );
    }
 }
 
-_Check_return_ BOOL CTape::BackupRead(__out_bcount(number_of_bytes_to_read) LPBYTE buffer, __in DWORD const number_of_bytes_to_read, __out LPDWORD number_of_bytes_read, __in BOOL abort, __in BOOL restore_security_data ) noexcept
+_Check_return_ bool CTape::BackupRead(__out_bcount(number_of_bytes_to_read) uint8_t * buffer, __in DWORD const number_of_bytes_to_read, __out LPDWORD number_of_bytes_read, __in bool abort, __in bool restore_security_data ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -1164,37 +1152,34 @@ _Check_return_ BOOL CTape::BackupRead(__out_bcount(number_of_bytes_to_read) LPBY
                                         buffer,
                                         number_of_bytes_to_read,
                                         number_of_bytes_read,
-                                        abort,
-                                        restore_security_data,
+                                        abort == true ? TRUE : FALSE,
+                                        restore_security_data == true ? TRUE : FALSE,
                                        &m_BackupReadContextPointer );
 
       if ( return_value == FALSE )
       {
          m_LastError = ::GetLastError();
          //WFCTRACEERROR( m_LastError );
-      }
-      else
-      {
-         return_value = TRUE;
+         return(false);
       }
 
-      return( return_value );
+      return( true );
    }
    WFC_CATCH_ALL
    {
       m_LastError = ERROR_EXCEPTION_IN_SERVICE;
-      return( FALSE );
+      return( false );
    }
    WFC_END_CATCH_ALL
 }
 
-_Check_return_ BOOL CTape::Rewind( void ) noexcept
+_Check_return_ bool CTape::Rewind( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
-   return( SetPosition(PositionMethod::RewindTape, 0, 0, 0, FALSE ) );
+   return( SetPosition(PositionMethod::RewindTape, 0, 0, 0, false ) );
 }
 
-_Check_return_ BOOL CTape::BackupSeek( __in DWORD const seek_low, __in DWORD const seek_high, __out LPDWORD seeked_low, __out LPDWORD seeked_high ) noexcept
+_Check_return_ bool CTape::BackupSeek( __in DWORD const seek_low, __in DWORD const seek_high, __out LPDWORD seeked_low, __out LPDWORD seeked_high ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -1208,98 +1193,91 @@ _Check_return_ BOOL CTape::BackupSeek( __in DWORD const seek_low, __in DWORD con
       {
          m_LastError = ::GetLastError();
          //WFCTRACEERROR( m_LastError );
-      }
-      else
-      {
-         return_value = TRUE;
+         return(false);
       }
 
-      return( return_value );
+      return( true );
    }
    WFC_CATCH_ALL
    {
       m_LastError = ERROR_EXCEPTION_IN_SERVICE;
-      return( FALSE );
+      return( false );
    }
    WFC_END_CATCH_ALL
 }
 
-_Check_return_ BOOL CTape::SetAutomaticallyClose( __in BOOL auto_close ) noexcept
+_Check_return_ bool CTape::SetAutomaticallyClose( __in bool auto_close ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
-   BOOL return_value = m_AutomaticallyClose;
+   bool const return_value = m_AutomaticallyClose;
 
    m_AutomaticallyClose = auto_close;
 
    return( return_value );
 }
 
-_Check_return_ BOOL CTape::SetParameters( __in CTapeSetMediaParameters const& parameters ) noexcept
+_Check_return_ bool CTape::SetParameters( __in CTapeSetMediaParameters const& parameters ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
    CTapeSetMediaParameters media_parameters( parameters );
 
-   m_LastError = ::SetTapeParameters( m_FileHandle, SET_TAPE_MEDIA_INFORMATION, (TAPE_SET_MEDIA_PARAMETERS *) &media_parameters );
+   m_LastError = ::SetTapeParameters( m_FileHandle, SET_TAPE_MEDIA_INFORMATION, static_cast<TAPE_SET_MEDIA_PARAMETERS *>(&media_parameters) );
 
    if ( m_LastError == NO_ERROR )
    {
-      return( TRUE );
+      return( true );
    }
-   else
-   {
-      return( FALSE );
-   }
+
+   return( false );
 }
 
-_Check_return_ BOOL CTape::SetParameters( __in CTapeSetDriveParameters const& parameters ) noexcept
+_Check_return_ bool CTape::SetParameters( __in CTapeSetDriveParameters const& parameters ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
    CTapeSetDriveParameters drive_parameters( parameters );
 
-   m_LastError = ::SetTapeParameters( m_FileHandle, SET_TAPE_DRIVE_INFORMATION, (TAPE_SET_DRIVE_PARAMETERS *) &drive_parameters );
+   m_LastError = ::SetTapeParameters( m_FileHandle, SET_TAPE_DRIVE_INFORMATION, static_cast<TAPE_SET_DRIVE_PARAMETERS *>(&drive_parameters) );
 
    if ( m_LastError == NO_ERROR )
    {
-      return( TRUE );
+      return( true );
    }
-   else
-   {
-      return( FALSE );
-   }
+
+   return( false );
 }
 
-_Check_return_ BOOL CTape::SetPosition( __in PositionMethod const how_to_get_there, __in DWORD const partition_number, __in DWORD const position_low, __in DWORD const position_high, __in BOOL const return_immediately ) noexcept
+_Check_return_ bool CTape::SetPosition( __in PositionMethod const how_to_get_there, __in DWORD const partition_number, __in DWORD const position_low, __in DWORD const position_high, __in bool const return_immediately ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
-   m_LastError = ::SetTapePosition( m_FileHandle, static_cast<DWORD>(how_to_get_there), partition_number, position_low, position_high, return_immediately );
+   m_LastError = ::SetTapePosition( m_FileHandle, static_cast<DWORD>(how_to_get_there), partition_number, position_low, position_high, return_immediately == true ? TRUE : FALSE );
 
    if ( m_LastError == NO_ERROR )
    {
-      return( TRUE );
+      return( true );
    }
    else
    {
-      return( FALSE );
+      return( false );
    }
 }
 
-_Check_return_ BOOL CTape::Unload( void ) noexcept
+_Check_return_ bool CTape::Unload( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    return( Prepare( Operation::UnloadTape ) );
 }
 
-_Check_return_ BOOL CTape::Unlock( void ) noexcept
+_Check_return_ bool CTape::Unlock( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    return( Prepare( Operation::UnlockTape ) );
 }
 
-_Check_return_ BOOL CTape::BackupWrite(__in_bcount(number_of_bytes_to_write) LPBYTE buffer, __in DWORD const number_of_bytes_to_write, __out LPDWORD number_of_bytes_written, __in BOOL abort, __in BOOL restore_security_data ) noexcept
+_Check_return_ bool CTape::BackupWrite(__in_bcount(number_of_bytes_to_write) LPBYTE buffer, __in DWORD const number_of_bytes_to_write, __out LPDWORD number_of_bytes_written, __in bool abort, __in bool restore_security_data ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -1307,29 +1285,26 @@ _Check_return_ BOOL CTape::BackupWrite(__in_bcount(number_of_bytes_to_write) LPB
 
    WFC_TRY
    {
-      BOOL return_value = ::BackupWrite( m_FileHandle,
+      BOOL const return_value = ::BackupWrite( m_FileHandle,
                                          buffer,
                                          number_of_bytes_to_write,
                                          number_of_bytes_written,
-                                         abort,
-                                         restore_security_data,
+                                         abort == true ? TRUE : FALSE,
+                                         restore_security_data == true ? TRUE : FALSE,
                                         &m_BackupWriteContextPointer );
       if ( return_value == FALSE )
       {
          m_LastError = ::GetLastError();
          //WFCTRACEERROR( m_LastError );
-      }
-      else
-      {
-         return_value = TRUE;
+         return(false);
       }
 
-      return( return_value );
+      return( true );
    }
    WFC_CATCH_ALL
    {
       m_LastError = ERROR_EXCEPTION_IN_SERVICE;
-      return( FALSE );
+      return( false );
    }
    WFC_END_CATCH_ALL
 }

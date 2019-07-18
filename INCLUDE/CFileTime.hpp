@@ -182,7 +182,7 @@ class CFileTime : public _FILETIME
           Copy( source );
        }
 
-       inline constexpr CFileTime( _In_ FILETIME const& source )
+       inline constexpr CFileTime( _In_ FILETIME const& source ) noexcept
        {
            dwLowDateTime = source.dwLowDateTime;
            dwHighDateTime = source.dwHighDateTime;
@@ -255,7 +255,7 @@ class CFileTime : public _FILETIME
       ** "Do More with Less Code:..."
       */
 
-      virtual ~CFileTime()
+      virtual ~CFileTime() noexcept
       {
          Empty();
       }

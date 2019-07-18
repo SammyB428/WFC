@@ -59,14 +59,14 @@ USING_WFC_NAMESPACE
 
 // Construction
 
-CCryptography::CCryptography()
+CCryptography::CCryptography() noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
    m_ErrorCode = 0;
 }
 
-CCryptography::~CCryptography()
+CCryptography::~CCryptography() noexcept
 {
    WFC_VALIDATE_POINTER( this );
 

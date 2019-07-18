@@ -59,13 +59,13 @@ USING_WFC_NAMESPACE
 
 // Construction
 
-CCryptographicProvider::CCryptographicProvider()
+CCryptographicProvider::CCryptographicProvider() noexcept
 {
    WFC_VALIDATE_POINTER( this );
    m_Initialize();
 }
 
-CCryptographicProvider::~CCryptographicProvider()
+CCryptographicProvider::~CCryptographicProvider() noexcept
 {
    WFC_VALIDATE_POINTER( this );
 

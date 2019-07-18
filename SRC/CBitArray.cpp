@@ -58,7 +58,7 @@ USING_WFC_NAMESPACE
 
 // Construction
 
-CBitArray::CBitArray()
+CBitArray::CBitArray() noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -73,7 +73,7 @@ CBitArray::CBitArray()
    RemoveAll();
 }
 
-CBitArray::CBitArray( __in std::size_t const initial_size )
+CBitArray::CBitArray( __in std::size_t const initial_size ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -89,7 +89,7 @@ CBitArray::CBitArray( __in std::size_t const initial_size )
    SetSize( initial_size );
 }
 
-CBitArray::CBitArray( __in CBitArray const& source )
+CBitArray::CBitArray( __in CBitArray const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -104,7 +104,7 @@ CBitArray::CBitArray( __in CBitArray const& source )
    Copy( source );   
 }
 
-CBitArray::CBitArray( __in std::vector<uint8_t> const& source )
+CBitArray::CBitArray( __in std::vector<uint8_t> const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -116,10 +116,10 @@ CBitArray::CBitArray( __in std::vector<uint8_t> const& source )
    m_IndexOfFirstBit   = 0;
    m_TotalNumberOfBits = 0;
 
-   Copy( source );   
+   Copy( source );
 }
 
-CBitArray::~CBitArray()
+CBitArray::~CBitArray() noexcept
 {
    WFC_VALIDATE_POINTER( this );
 

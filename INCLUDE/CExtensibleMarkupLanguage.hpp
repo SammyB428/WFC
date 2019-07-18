@@ -129,14 +129,14 @@ class CExtensibleMarkupLanguageAttribute
 
       // Construction
 
-      CExtensibleMarkupLanguageAttribute() {};
-      inline CExtensibleMarkupLanguageAttribute(_In_ CExtensibleMarkupLanguageAttribute const& source)
+      CExtensibleMarkupLanguageAttribute() noexcept {};
+      inline CExtensibleMarkupLanguageAttribute(_In_ CExtensibleMarkupLanguageAttribute const& source) noexcept
       {
           Name = source.Name;
           Value = source.Value;
       }
 
-      inline ~CExtensibleMarkupLanguageAttribute() {};
+      inline ~CExtensibleMarkupLanguageAttribute() noexcept {};
 
       // Properties
 
@@ -174,6 +174,7 @@ class CExtensibleMarkupLanguageAttribute
           Value = source.Value;
           NameOffset = source.NameOffset;
           ValueOffset = source.ValueOffset;
+          return(*this);
       }
 
 #if defined( _DEBUG ) && ! defined( WFC_NO_DUMPING )

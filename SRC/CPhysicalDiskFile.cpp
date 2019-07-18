@@ -51,7 +51,7 @@ static char THIS_FILE[] = __FILE__;
 
 USING_WFC_NAMESPACE
 
-CPhysicalDiskFile::CPhysicalDiskFile()
+CPhysicalDiskFile::CPhysicalDiskFile() noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -62,7 +62,7 @@ CPhysicalDiskFile::CPhysicalDiskFile()
    ::ZeroMemory( &m_DiskGeometry, sizeof( m_DiskGeometry ) );
 }
 
-CPhysicalDiskFile::~CPhysicalDiskFile()
+CPhysicalDiskFile::~CPhysicalDiskFile() noexcept
 {
    WFC_VALIDATE_POINTER( this );
 

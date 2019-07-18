@@ -47,16 +47,16 @@ class CEventLogRecord
 {
    public:
 
-      CEventLogRecord();
-      CEventLogRecord( __in CEventLogRecord const& source );
-      CEventLogRecord( __in EVENTLOGRECORD const * source );
+      CEventLogRecord() noexcept;
+      CEventLogRecord( __in CEventLogRecord const& source ) noexcept;
+      CEventLogRecord( __in EVENTLOGRECORD const * source ) noexcept;
 
       /*
       ** Destructor should be virtual according to MSJ article in Sept 1992
       ** "Do More with Less Code:..."
       */
 
-      virtual ~CEventLogRecord();
+      virtual ~CEventLogRecord() noexcept;
 
       /*
       ** Data

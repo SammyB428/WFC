@@ -51,7 +51,7 @@ static char THIS_FILE[] = __FILE__;
 
 USING_WFC_NAMESPACE
 
-CJulianDate::~CJulianDate()
+CJulianDate::~CJulianDate() noexcept
 {
    WFC_VALIDATE_POINTER( this );
    m_JulianDays = 0.0;
