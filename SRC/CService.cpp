@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 1995-2016, Samuel R. Blackburn
+** Copyright, 1995-2019, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -67,10 +67,10 @@ CService::CService( __callback LPTHREAD_START_ROUTINE thread_start_routine, __in
    m_ExitEventHandle     = static_cast< HANDLE >( NULL );
    m_ServiceStatusHandle = 0;
    m_ErrorCode           = NO_ERROR;
-   m_Running             = FALSE;
-   m_Paused              = FALSE;
-   m_Exiting             = FALSE;
-   m_Debugging           = 0;
+   m_Running             = false;
+   m_Paused              = false;
+   m_Exiting             = false;
+   m_Debugging           = false;
    m_ControlsAccepted    = controls_accepted;
    m_WaitHint            = wait_hint;
    m_CurrentState        = SERVICE_START_PENDING;
@@ -123,7 +123,7 @@ CService::~CService( void ) noexcept
 
 void CService::AssertValid( void ) const
 {
-   ASSERT( m_Exiting             == FALSE );
+   ASSERT( m_Exiting             == false );
    ASSERT( m_ExitEventHandle     != static_cast< HANDLE >( NULL )  );
    ASSERT( m_ServiceStatusHandle != 0     );
    ASSERT( m_ThreadHandle        != static_cast< HANDLE >( NULL )  );
@@ -369,9 +369,9 @@ void CService::Exit( void ) noexcept
 
    ::EnterCriticalSection( &g_ServiceCriticalSection );
 
-   m_Running      = FALSE;
+   m_Running      = false;
    m_CurrentState = SERVICE_STOPPED;
-   m_Exiting      = TRUE;
+   m_Exiting      = true;
 
    ::LeaveCriticalSection( &g_ServiceCriticalSection );
 
@@ -381,7 +381,7 @@ void CService::Exit( void ) noexcept
    }
 }
 
-_Check_return_ BOOL CService::Initialize( __in_z LPCWSTR name_of_service ) noexcept
+_Check_return_ bool CService::Initialize( __in_z LPCWSTR name_of_service ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( name_of_service );
@@ -394,8 +394,6 @@ _Check_return_ BOOL CService::Initialize( __in_z LPCWSTR name_of_service ) noexc
 
    WFC_TRY
    {
-      BOOL return_value = TRUE;
-
       // initialize m_ServiceTable
 
       _tcsncpy_s( m_ServiceName, SERVICE_NAME_LEN, name_of_service, SERVICE_NAME_LEN );
@@ -411,16 +409,16 @@ _Check_return_ BOOL CService::Initialize( __in_z LPCWSTR name_of_service ) noexc
       {
          m_ErrorCode = ::GetLastError();
          //WFCTRACEERROR( m_ErrorCode );
-         return_value = FALSE;
          LogEvent();
+         return(false);
       }
 
-      return( return_value );
+      return( true );
    }
    WFC_CATCH_ALL
    {
       m_ErrorCode = ERROR_EXCEPTION_IN_SERVICE;
-      return( FALSE );
+      return( false );
    }
    WFC_END_CATCH_ALL
 }
@@ -591,7 +589,7 @@ void CService::ParseCommandLineParameters( _In_ DWORD const number_of_command_li
             case TEXT( 'D' ):
 
                ::EnterCriticalSection( &g_ServiceCriticalSection );
-               m_Debugging = 1;
+               m_Debugging = true;
                ::LeaveCriticalSection( &g_ServiceCriticalSection );
 
                break;
@@ -614,15 +612,13 @@ void CService::ParseCommandLineParameters( _In_ DWORD const number_of_command_li
    }
 }
 
-_Check_return_ BOOL CService::SendStatusToServiceControlManager( __in DWORD current_state, 
+_Check_return_ bool CService::SendStatusToServiceControlManager( __in DWORD current_state, 
                                                                 __in DWORD win32_exit_code,
                                                                 __in DWORD check_point,
                                                                 __in DWORD wait_hint,
                                                                 __in DWORD service_specific_code ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
-
-   BOOL return_value = FALSE;
 
    SERVICE_STATUS service_status;
 
@@ -658,17 +654,16 @@ _Check_return_ BOOL CService::SendStatusToServiceControlManager( __in DWORD curr
    DumpStatus( &service_status );
 #endif
 
-   return_value = ::SetServiceStatus( m_ServiceStatusHandle, &service_status );
-
-   if ( return_value == FALSE )
+   if ( ::SetServiceStatus( m_ServiceStatusHandle, &service_status ) == FALSE )
    {
       m_ErrorCode = ::GetLastError();
       //WFCTRACEERROR( m_ErrorCode );
       LogEvent();
       Exit();
+      return(false);
    }
 
-   return( return_value );
+   return( true );
 }
 
 void CALLBACK CService::ServiceControlManagerHandler( __in DWORD control_code )
@@ -684,7 +679,7 @@ void CALLBACK CService::ServiceControlManagerHandler( __in DWORD control_code )
          (void) m_StaticService_p->SendStatusToServiceControlManager( SERVICE_STOP_PENDING, NO_ERROR, 1, m_StaticService_p->m_WaitHint );
 
          ::EnterCriticalSection( &g_ServiceCriticalSection );
-         m_StaticService_p->m_Running      = FALSE;
+         m_StaticService_p->m_Running      = false;
          m_StaticService_p->m_CurrentState = SERVICE_STOPPED;
          ::LeaveCriticalSection( &g_ServiceCriticalSection );
 
@@ -695,7 +690,7 @@ void CALLBACK CService::ServiceControlManagerHandler( __in DWORD control_code )
 
       case SERVICE_CONTROL_PAUSE:
 
-         if ( m_StaticService_p->m_Running != FALSE && m_StaticService_p->m_Paused == FALSE )
+         if ( m_StaticService_p->m_Running == true && m_StaticService_p->m_Paused == false )
          {
             if ( m_StaticService_p->SendStatusToServiceControlManager( SERVICE_PAUSE_PENDING, NO_ERROR, 1, m_StaticService_p->m_WaitHint ) == FALSE )
             {
@@ -703,7 +698,7 @@ void CALLBACK CService::ServiceControlManagerHandler( __in DWORD control_code )
             }
 
             ::EnterCriticalSection( &g_ServiceCriticalSection );
-            m_StaticService_p->m_Paused = TRUE;
+            m_StaticService_p->m_Paused = true;
             ::LeaveCriticalSection( &g_ServiceCriticalSection );
 
             m_StaticService_p->OnPause();
@@ -718,7 +713,7 @@ void CALLBACK CService::ServiceControlManagerHandler( __in DWORD control_code )
 
       case SERVICE_CONTROL_CONTINUE:
 
-         if ( m_StaticService_p->m_Running != FALSE && m_StaticService_p->m_Paused != FALSE )
+         if ( m_StaticService_p->m_Running == true && m_StaticService_p->m_Paused == true )
          {
             if ( m_StaticService_p->SendStatusToServiceControlManager( SERVICE_CONTINUE_PENDING, NO_ERROR, 1, m_StaticService_p->m_WaitHint ) == FALSE )
             {
@@ -726,7 +721,7 @@ void CALLBACK CService::ServiceControlManagerHandler( __in DWORD control_code )
             }
 
             ::EnterCriticalSection( &g_ServiceCriticalSection );
-            m_StaticService_p->m_Paused = FALSE;
+            m_StaticService_p->m_Paused = false;
             ::LeaveCriticalSection( &g_ServiceCriticalSection );
 
             ::ResumeThread( m_StaticService_p->m_ThreadHandle );
@@ -748,7 +743,7 @@ void CALLBACK CService::ServiceControlManagerHandler( __in DWORD control_code )
          (void) m_StaticService_p->SendStatusToServiceControlManager( SERVICE_STOP_PENDING, NO_ERROR, 1, m_StaticService_p->m_WaitHint );
 
          ::EnterCriticalSection( &g_ServiceCriticalSection );
-         m_StaticService_p->m_Running      = FALSE;
+         m_StaticService_p->m_Running      = false;
          m_StaticService_p->m_CurrentState = SERVICE_STOPPED;
          ::LeaveCriticalSection( &g_ServiceCriticalSection );
 
@@ -844,7 +839,7 @@ void CALLBACK CService::ServiceMain( _In_ DWORD const number_of_command_line_arg
             else
             {
                ::EnterCriticalSection( &g_ServiceCriticalSection );
-               m_StaticService_p->m_Running = TRUE;
+               m_StaticService_p->m_Running = true;
                ::LeaveCriticalSection( &g_ServiceCriticalSection );
 
                if ( m_StaticService_p->SendStatusToServiceControlManager( SERVICE_RUNNING ) == FALSE )

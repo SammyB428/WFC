@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 1995-2016, Samuel R. Blackburn
+** Copyright, 1995-2019, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -54,7 +54,7 @@ USING_WFC_NAMESPACE
 long CSimpleSocket::m_ReferenceCount = 0;
 WFC_SOCKET_THUNK_P CSimpleSocket::m_Thunk_p = nullptr;
 
-static _Check_return_ HANDLE inline _create_socket_thunk_mutex( void )
+static _Check_return_ HANDLE inline _create_socket_thunk_mutex( void ) noexcept
 {
    // We need to create a mutex that *ANY* process on the system can
    // get a handle to regardless of security. To do this, we need to
@@ -98,7 +98,7 @@ static _Check_return_ HANDLE inline _create_socket_thunk_mutex( void )
    return( mutex_handle );
 }
 
-CSimpleSocket::CSimpleSocket()
+CSimpleSocket::CSimpleSocket() noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -175,7 +175,7 @@ CSimpleSocket::CSimpleSocket()
    m_ReferenceCount++;
 }
 
-CSimpleSocket::CSimpleSocket( __in SOCKET const socket_id )
+CSimpleSocket::CSimpleSocket( __in SOCKET const socket_id ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -255,7 +255,7 @@ CSimpleSocket::CSimpleSocket( __in SOCKET const socket_id )
    SetID( socket_id );
 }
 
-CSimpleSocket::~CSimpleSocket()
+CSimpleSocket::~CSimpleSocket() noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -680,26 +680,26 @@ _Check_return_ TCHAR CSimpleSocket::GetStringReadTerminatorCharacter( void ) con
    return( m_StringReadTerminatorCharacter );
 }
 
-_Check_return_ BOOL CSimpleSocket::IsBroken( void ) const noexcept
+_Check_return_ bool CSimpleSocket::IsBroken( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
    if ( m_SocketID == INVALID_SOCKET )
    {
-      return( TRUE );
+      return( true );
    }
 
-   return( FALSE );
+   return( false );
 }
 
-_Check_return_ BOOL CSimpleSocket::IsDataWaiting( void ) noexcept
+_Check_return_ bool CSimpleSocket::IsDataWaiting( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( m_Thunk_p );
 
    if ( m_SocketID == INVALID_SOCKET )
    {
-      return( FALSE );
+      return( false );
    }
 
    int bytes_for_this_socket = 0;
@@ -734,7 +734,7 @@ _Check_return_ BOOL CSimpleSocket::IsDataWaiting( void ) noexcept
    {
       m_LastError = m_Thunk_p->WSAGetLastError();
       //WFCTRACESOCKETERROR( m_LastError );
-      return( FALSE );
+      return( false );
    }
 
    if ( socket_status == 0 )
@@ -743,7 +743,7 @@ _Check_return_ BOOL CSimpleSocket::IsDataWaiting( void ) noexcept
       ** No Data is waiting on any socket in the OS
       */
 
-      return( FALSE );
+      return( false );
    }
 
    /*
@@ -759,10 +759,10 @@ _Check_return_ BOOL CSimpleSocket::IsDataWaiting( void ) noexcept
       ** There is data for a socket somewhere in the system but not for our socket
       */
 
-      return( FALSE );
+      return( false );
    }
 
-   return( TRUE );
+   return( true );
 }
 
 void CSimpleSocket::m_Initialize( void ) noexcept
@@ -1440,7 +1440,7 @@ void CSimpleSocket::SetPort( __in short const p ) noexcept
    }
 }
 
-_Check_return_ BOOL CSimpleSocket::SetReadTimeout( __in DWORD const number_of_milliseconds ) noexcept
+_Check_return_ bool CSimpleSocket::SetReadTimeout( __in DWORD const number_of_milliseconds ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    ASSERT( m_SocketID != INVALID_SOCKET );
@@ -1448,7 +1448,7 @@ _Check_return_ BOOL CSimpleSocket::SetReadTimeout( __in DWORD const number_of_mi
    return( SetSocketOption( SOL_SOCKET, SO_RCVTIMEO, reinterpret_cast<char const *>(&number_of_milliseconds), sizeof( number_of_milliseconds ) ) );
 }
 
-_Check_return_ BOOL CSimpleSocket::SetSocketOption( __in int const level, __in int const option_name, __in_z char const * option_value, __in int const option_length ) noexcept
+_Check_return_ bool CSimpleSocket::SetSocketOption( __in int const level, __in int const option_name, __in_z char const * option_value, __in int const option_length ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( m_Thunk_p );
@@ -1456,7 +1456,7 @@ _Check_return_ BOOL CSimpleSocket::SetSocketOption( __in int const level, __in i
    if ( m_Thunk_p == nullptr )
    {
       //WFCTRACE( TEXT( "Thunk not yet initialized." ) );
-      return( FALSE );
+      return( false );
    }
 
    // One popular mistake with using setsockopt is to use BOOL types like the
@@ -1473,17 +1473,17 @@ _Check_return_ BOOL CSimpleSocket::SetSocketOption( __in int const level, __in i
       {
          m_LastError = m_Thunk_p->WSAGetLastError();
          //WFCTRACESOCKETERROR( m_LastError );
-         return( FALSE );
+         return( false );
       }
    }
    WFC_CATCH_ALL
    {
       m_LastError = ERROR_EXCEPTION_IN_SERVICE;
-      return( FALSE );
+      return( false );
    }
    WFC_END_CATCH_ALL
 
-   return( TRUE );
+   return( true );
 }
 
 void CSimpleSocket::SetStringReadTerminatorCharacter( __in TCHAR const terminator ) noexcept
@@ -1493,7 +1493,7 @@ void CSimpleSocket::SetStringReadTerminatorCharacter( __in TCHAR const terminato
    m_StringReadTerminatorCharacter = terminator;
 }
 
-_Check_return_ BOOL CSimpleSocket::SetWriteTimeout( __in DWORD const number_of_milliseconds ) noexcept
+_Check_return_ bool CSimpleSocket::SetWriteTimeout( __in DWORD const number_of_milliseconds ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    ASSERT( m_SocketID != INVALID_SOCKET );
@@ -1902,7 +1902,7 @@ void __stdcall CSimpleSocket::TranslateErrorCode( __in DWORD const error_code, _
 
 #if defined( TF_DISCONNECT )
 
-_Check_return_ BOOL CSimpleSocket::Transmit( __inout CFile64& file_to_send, __in DWORD const flags, __in_opt std::vector<uint8_t> * send_before, __in_opt std::vector<uint8_t> * send_after ) noexcept
+_Check_return_ bool CSimpleSocket::Transmit( __inout CFile64& file_to_send, __in DWORD const flags, __in_opt std::vector<uint8_t> * send_before, __in_opt std::vector<uint8_t> * send_after ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER_NULL_OK( send_before );
@@ -1944,17 +1944,14 @@ _Check_return_ BOOL CSimpleSocket::Transmit( __inout CFile64& file_to_send, __in
       {
          m_LastError = ::GetLastError();
          //WFCTRACEERROR( m_LastError );
-      }
-      else
-      {
-         return_value = TRUE;
+         return(false);
       }
 
-      return( return_value );
+      return( true );
    }
    WFC_CATCH_ALL
    {
-      return( FALSE );
+      return( false );
    }
    WFC_END_CATCH_ALL
 }

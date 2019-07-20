@@ -340,20 +340,20 @@ CWorkstationInformation const& CWorkstationInformation::operator = ( __in CWorks
 ** CWorkstationTransport stuff
 */
 
-CWorkstationTransport::CWorkstationTransport()
+CWorkstationTransport::CWorkstationTransport() noexcept
 {
    WFC_VALIDATE_POINTER( this );
    m_Initialize();
 }
 
-CWorkstationTransport::CWorkstationTransport( __in WKSTA_TRANSPORT_INFO_0 const * source )
+CWorkstationTransport::CWorkstationTransport( __in WKSTA_TRANSPORT_INFO_0 const * source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
    Copy( source );
 }
 
-CWorkstationTransport::CWorkstationTransport( __in CWorkstationTransport const& source )
+CWorkstationTransport::CWorkstationTransport( __in CWorkstationTransport const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );
@@ -385,7 +385,7 @@ void CWorkstationTransport::Copy( __in WKSTA_TRANSPORT_INFO_0 const * source ) n
 
       QualityOfService        = source->wkti0_quality_of_service;
       NumberOfVirtualCircuits = source->wkti0_number_of_vcs;
-      WANish                  = source->wkti0_wan_ish;
+      WANish                  = source->wkti0_wan_ish == TRUE ? true : false;
    }
    WFC_CATCH_ALL
    {
@@ -429,7 +429,7 @@ void CWorkstationTransport::m_Initialize( void ) noexcept
    NumberOfVirtualCircuits = 0;
    Name.clear();
    Address.clear();
-   WANish = FALSE;
+   WANish = false;
 }
 
 CWorkstationTransport const& CWorkstationTransport::operator = ( __in CWorkstationTransport const& source ) noexcept

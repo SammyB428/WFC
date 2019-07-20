@@ -136,26 +136,26 @@ class CWorkstationTransport
 
    public:
 
-      CWorkstationTransport();
+      CWorkstationTransport() noexcept;
 
       /*
       ** Can't make Copy take a const pointer because Microsoft screwed up the 
       ** net API header files...
       */
 
-      CWorkstationTransport( __in WKSTA_TRANSPORT_INFO_0 const * source );
-      CWorkstationTransport( __in CWorkstationTransport const& source );
-      virtual ~CWorkstationTransport();
+      CWorkstationTransport( __in WKSTA_TRANSPORT_INFO_0 const * source ) noexcept;
+      CWorkstationTransport( __in CWorkstationTransport const& source ) noexcept;
+      virtual ~CWorkstationTransport() noexcept;
 
       /*
       ** Patterned after WKSTA_USER_INFO_1
       */
 
-      DWORD   QualityOfService{ 0 };
-      DWORD   NumberOfVirtualCircuits{ 0 };
+      DWORD QualityOfService{ 0 };
+      DWORD NumberOfVirtualCircuits{ 0 };
       std::wstring Name;
       std::wstring Address;
-      BOOL    WANish{ FALSE };
+      bool  WANish{ false };
 
       /*
       ** Can't make Copy take a const pointer because Microsoft screwed up the 

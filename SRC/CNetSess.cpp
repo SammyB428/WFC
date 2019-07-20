@@ -54,20 +54,20 @@ USING_WFC_NAMESPACE
 #define new DEBUG_NEW
 #endif // _DEBUG
 
-CNetworkSessions::CNetworkSessions()
+CNetworkSessions::CNetworkSessions() noexcept
 {
    WFC_VALIDATE_POINTER( this );
    m_Initialize();
 }
 
-CNetworkSessions::CNetworkSessions( __in_z_opt LPCTSTR machine_name )
+CNetworkSessions::CNetworkSessions( __in_z_opt LPCTSTR machine_name ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER_NULL_OK( machine_name );
    Open( machine_name );
 }
 
-CNetworkSessions::~CNetworkSessions()
+CNetworkSessions::~CNetworkSessions() noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Close();
@@ -121,11 +121,11 @@ _Check_return_ bool CNetworkSessions::Delete( __inout CNetworkSessionInformation
    
    if ( m_ErrorCode == NERR_Success )
    {
-      return( TRUE );
+      return( true );
    }
    else
    {
-      return( FALSE );
+      return( false );
    }
 }
 
@@ -186,14 +186,14 @@ void CNetworkSessions::m_Get_0_Data( void ) noexcept
 
    if ( buffer != nullptr )
    {
-      SESSION_INFO_0 * information_p = (SESSION_INFO_0 *) buffer;
+      auto information_p = reinterpret_cast<SESSION_INFO_0 const *>(buffer);
 
       /*
       ** Now store the info we want...
       */
 
       m_ServerName.assign( information_p->sesi0_cname );
-      m_Retrieved0 = TRUE;
+      m_Retrieved0 = true;
    }
 }
 
@@ -224,11 +224,11 @@ void CNetworkSessions::m_Initialize( void ) noexcept
    m_ServerName.clear();
    m_ClientName.clear();
 
-   m_Retrieved0   = FALSE;
-   m_Retrieved1   = FALSE;
-   m_Retrieved2   = FALSE;
-   m_Retrieved10  = FALSE;
-   m_Retrieved502 = FALSE;
+   m_Retrieved0   = false;
+   m_Retrieved1   = false;
+   m_Retrieved2   = false;
+   m_Retrieved10  = false;
+   m_Retrieved502 = false;
 
    m_ErrorCode    = 0;
    m_ResumeHandle = 0;

@@ -92,11 +92,11 @@ class CNetworkSessions : public CNetwork
       std::wstring m_ServerName;
       std::wstring m_ClientName;
 
-      BOOL m_Retrieved0{ FALSE };
-      BOOL m_Retrieved1{ FALSE };
-      BOOL m_Retrieved2{ FALSE };
-      BOOL m_Retrieved10{ FALSE };
-      BOOL m_Retrieved502{ FALSE };
+      bool m_Retrieved0{ false };
+      bool m_Retrieved1{ false };
+      bool m_Retrieved2{ false };
+      bool m_Retrieved10{ false };
+      bool m_Retrieved502{ false };
 
       DWORD m_ResumeHandle{ 0 };
 
@@ -110,9 +110,9 @@ class CNetworkSessions : public CNetwork
 
        CNetworkSessions(CNetworkSessions const&) = delete;
        CNetworkSessions& operator=(CNetworkSessions const&) = delete;
-       CNetworkSessions();
-      CNetworkSessions( __in_z_opt LPCTSTR machine_name );
-      virtual ~CNetworkSessions();
+       CNetworkSessions() noexcept;
+      CNetworkSessions( __in_z_opt LPCTSTR machine_name ) noexcept;
+      virtual ~CNetworkSessions() noexcept;
 
       virtual void  Close( void ) noexcept;
       virtual _Check_return_ bool Delete( __inout CNetworkSessionInformation& session_to_delete ) noexcept;

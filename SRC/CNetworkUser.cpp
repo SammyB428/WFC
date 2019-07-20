@@ -54,13 +54,13 @@ USING_WFC_NAMESPACE
 #define new DEBUG_NEW
 #endif // _DEBUG
 
-CNetworkUsers::CNetworkUsers()
+CNetworkUsers::CNetworkUsers() noexcept
 {
    WFC_VALIDATE_POINTER( this );
    m_Initialize();
 }
 
-CNetworkUsers::CNetworkUsers(__in_z_opt LPCTSTR machine_name )
+CNetworkUsers::CNetworkUsers(__in_z_opt LPCTSTR machine_name ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER_NULL_OK( machine_name );
@@ -68,7 +68,7 @@ CNetworkUsers::CNetworkUsers(__in_z_opt LPCTSTR machine_name )
    Open( machine_name );
 }
 
-CNetworkUsers::~CNetworkUsers()
+CNetworkUsers::~CNetworkUsers() noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Close();
@@ -163,29 +163,26 @@ bool CNetworkUsers::Add( __in CNetworkUserInformation const& user_to_add ) noexc
 
    BYTE logon_hours[ 21 ];
 
-   std::size_t index = 0;
-
-   while( index < user_to_add.LogonHours.size() ) // Can't be converted to range loop
+   for ( auto const index : Range(user_to_add.LogonHours.size()) )
    {
       if ( index < 21 )
       {
          logon_hours[ index ] = user_to_add.LogonHours.at( index );
       }
-
-      index++;
    }
 
-   while( index < 21 ) // Can't be converted to range loop
+   std::size_t index = user_to_add.LogonHours.size();
+
+   while(index < 21) // Can't be converted to range loop
    {
-      logon_hours[ index ] = 0xFF;
-      index++;
+      logon_hours[index] = 0xFF;
    }
 
    DWORD parameter_causing_the_error = 0;
 
    m_ErrorCode = ::NetUserAdd( m_WideDoubleBackslashPreceededMachineName.get(),
                                2,
-                     (BYTE *) &user_information,
+                     reinterpret_cast<BYTE *>(&user_information),
                               &parameter_causing_the_error );
 
    if ( m_ErrorCode != NERR_Success ) 
@@ -344,7 +341,7 @@ bool CNetworkUsers::Add( __in CNetworkUserInformation const& user_to_add ) noexc
    return( true );
 }
 
-_Check_return_ BOOL CNetworkUsers::ChangePassword( __in std::wstring const& user_name, __in std::wstring const& old_password, __in std::wstring const& new_password ) noexcept
+_Check_return_ bool CNetworkUsers::ChangePassword( __in std::wstring const& user_name, __in std::wstring const& old_password, __in std::wstring const& new_password ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    //WFCTRACEVAL( TEXT( "Changing password for " ), user_name );
@@ -380,10 +377,10 @@ _Check_return_ BOOL CNetworkUsers::ChangePassword( __in std::wstring const& user
 
    if ( m_ErrorCode == NERR_Success )
    {
-      return( TRUE );
+      return( true );
    }
 
-   return( FALSE );
+   return( false );
 }
 
 void CNetworkUsers::Close( void ) noexcept
@@ -423,7 +420,7 @@ void CNetworkUsers::Close( void ) noexcept
    }
 }
 
-_Check_return_ BOOL CNetworkUsers::CreateComputerAccount( __in_z_opt LPCTSTR computer_name, __in DWORD type_of_account ) noexcept
+_Check_return_ bool CNetworkUsers::CreateComputerAccount( __in_z_opt LPCTSTR computer_name, __in DWORD type_of_account ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER_NULL_OK( computer_name );
@@ -440,7 +437,7 @@ _Check_return_ BOOL CNetworkUsers::CreateComputerAccount( __in_z_opt LPCTSTR com
         type_of_account != accountInterdomain )
    {
       m_ErrorCode = ERROR_INVALID_PARAMETER;
-      return( FALSE );
+      return( false );
    }
 
    std::wstring account_name;
@@ -473,7 +470,7 @@ _Check_return_ BOOL CNetworkUsers::CreateComputerAccount( __in_z_opt LPCTSTR com
       if ( information.Name.length() > MAX_COMPUTERNAME_LENGTH )
       {
          m_ErrorCode = ERROR_INVALID_ACCOUNT_NAME;
-         return( FALSE );
+         return( false );
       }
 
       /*
@@ -528,7 +525,7 @@ _Check_return_ BOOL CNetworkUsers::CreateComputerAccount( __in_z_opt LPCTSTR com
 
       if ( ::NetGetDCName( nullptr, nullptr, &buffer_p ) != NERR_Success )
       {
-         return( FALSE );
+         return( false );
       }
 
       information.Privileges = USER_PRIV_USER;
@@ -557,25 +554,25 @@ _Check_return_ BOOL CNetworkUsers::CreateComputerAccount( __in_z_opt LPCTSTR com
 
       CNetworkUsers user_to_add( primary_domain_controller.c_str() );
 
-      (void) user_to_add.SetPrivilege( SE_MACHINE_ACCOUNT_NAME, TRUE );
+      (void) user_to_add.SetPrivilege( SE_MACHINE_ACCOUNT_NAME, true );
       
       if ( user_to_add.Add( information ) == false )
       {
          m_ErrorCode = user_to_add.GetErrorCode();
-         return( FALSE );
+         return( false );
       }
 
-      return( TRUE );
+      return( true );
    }
    WFC_CATCH_ALL
    {
       m_ErrorCode = ERROR_EXCEPTION_IN_SERVICE;
-      return( FALSE );
+      return( false );
    }
    WFC_END_CATCH_ALL
 }
 
-BOOL CNetworkUsers::Delete( __in CNetworkUserInformation const& user_to_delete ) noexcept
+bool CNetworkUsers::Delete( __in CNetworkUserInformation const& user_to_delete ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -601,13 +598,13 @@ BOOL CNetworkUsers::Delete( __in CNetworkUserInformation const& user_to_delete )
 
    if ( m_ErrorCode == NERR_Success )
    {
-      return( TRUE );
+      return( true );
    }
 
-   return( FALSE );
+   return( false );
 }
 
-BOOL CNetworkUsers::Delete( __in std::wstring const& user_to_delete ) noexcept
+bool CNetworkUsers::Delete( __in std::wstring const& user_to_delete ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 

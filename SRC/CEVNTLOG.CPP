@@ -1024,7 +1024,7 @@ _Check_return_ bool CEventLog::Report( __in EventType event_type,
    WFC_VALIDATE_POINTER_NULL_OK( string_array );
    WFC_VALIDATE_POINTER_NULL_OK( raw_data_buffer );
 
-   BYTE security_identifier_buffer[ 4096 ];
+   uint8_t security_identifier_buffer[ 4096 ];
 
    DWORD size_of_security_identifier_buffer = sizeof( security_identifier_buffer );
 

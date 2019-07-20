@@ -88,28 +88,28 @@ class CWfcTrace
    protected:
 
       LPCTSTR m_FunctionName;
-      DWORD   m_TracingLevel;
+      std::size_t m_TracingLevel;
 
-      void m_Indent( void ) const;
+      void m_Indent( void ) const noexcept;
 
    public:
 
       static int   Indent;
-      static DWORD Levels;
-      static BOOL  Tracing;
+      static std::size_t Levels;
+      static bool  Tracing;
 
       CWfcTrace() = delete;
       CWfcTrace(CWfcTrace const&) = delete;
       CWfcTrace& operator=(CWfcTrace const&) = delete;
 
-      CWfcTrace( __in_z LPCTSTR function_name, __in DWORD const tracing_level );
+      CWfcTrace( __in_z LPCTSTR function_name, __in std::size_t const tracing_level ) noexcept;
 
-      virtual ~CWfcTrace();
+      virtual ~CWfcTrace() noexcept;
 
       static void TraceAllOn( void ) noexcept;
       static void TraceAllOff( void ) noexcept;
-      static void TraceLevelOn( __in DWORD const level ) noexcept;
-      static void TraceLevelOff( __in DWORD const level ) noexcept;
+      static void TraceLevelOn( __in std::size_t const level ) noexcept;
+      static void TraceLevelOff( __in std::size_t const level ) noexcept;
       static void TraceOn( void ) noexcept;
       static void TraceOff( void ) noexcept;
       void Output( __in_z LPCTSTR message ) const noexcept;

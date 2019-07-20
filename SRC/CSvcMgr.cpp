@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 1995-2018, Samuel R. Blackburn
+** Copyright, 1995-2019, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -51,13 +51,13 @@ static char THIS_FILE[] = __FILE__;
 
 USING_WFC_NAMESPACE
 
-CServiceControlManager::CServiceControlManager()
+CServiceControlManager::CServiceControlManager() noexcept
 {
     WFC_VALIDATE_POINTER( this );
     m_Initialize();
 }
 
-CServiceControlManager::~CServiceControlManager()
+CServiceControlManager::~CServiceControlManager() noexcept
 {
     WFC_VALIDATE_POINTER( this );
 
@@ -513,12 +513,6 @@ _Check_return_ bool CServiceControlManager::GetDisplayName( _In_z_ wchar_t const
     WFC_END_CATCH_ALL
 }
 
-_Check_return_ uint32_t CServiceControlManager::GetErrorCode( void ) const noexcept
-{
-    WFC_VALIDATE_POINTER( this );
-    return( m_ErrorCode );
-}
-
 _Check_return_ SC_HANDLE CServiceControlManager::GetHandle( void ) const noexcept
 {
     WFC_VALIDATE_POINTER( this );
@@ -664,7 +658,7 @@ _Check_return_ bool CServiceControlManager::Install( __in_z wchar_t const * serv
             return( false );
         }
 
-        DWORD supported_types = EVENTLOG_ERROR_TYPE | 
+        DWORD const supported_types = EVENTLOG_ERROR_TYPE | 
             EVENTLOG_WARNING_TYPE     |
             EVENTLOG_INFORMATION_TYPE |
             EVENTLOG_AUDIT_SUCCESS    |
@@ -978,13 +972,6 @@ _Check_return_ bool CServiceControlManager::Pause( __in_z wchar_t const * servic
         return( false );
     }
     WFC_END_CATCH_ALL
-}
-
-void CServiceControlManager::GetErrorMessage(__inout std::wstring& error_message) const noexcept
-{
-    WFC_VALIDATE_POINTER(this);
-
-    error_message.assign(m_ErrorMessage);
 }
 
 _Check_return_ bool CServiceControlManager::Remove( __in_z wchar_t const * service_name ) noexcept

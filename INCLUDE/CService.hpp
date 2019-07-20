@@ -84,7 +84,7 @@ class CService
       static _Check_return_ HANDLE CreateConfigurationFile( __in_z LPCTSTR filename ) noexcept;
       static _Check_return_ bool   SpawnProcess( __in_z LPCTSTR command_line, __in_z LPCTSTR current_directory, __out DWORD& last_error ) noexcept;
 
-      virtual _Check_return_ BOOL Initialize( __in_z LPCWSTR name_of_service ) noexcept;
+      virtual _Check_return_ bool Initialize( __in_z LPCWSTR name_of_service ) noexcept;
       void LogEvent( __in WORD event_type = EVENTLOG_ERROR_TYPE, __in_z_opt LPCTSTR message_string = nullptr, __in DWORD error_code = NO_ERROR ) noexcept;
       virtual _Check_return_ INT_PTR DialogBoxParam( __in HINSTANCE instance, __in_z LPCTSTR template_name, __in HWND parent_window, __callback DLGPROC dialogbox_procedure, __in LPARAM lParam = 0 ) noexcept;
 
@@ -132,10 +132,10 @@ class CService
 
       SERVICE_STATUS_HANDLE m_ServiceStatusHandle{ nullptr };
 
-      BOOL m_Debugging{ FALSE };
-      BOOL m_Running{ FALSE };
-      BOOL m_Paused{ FALSE };
-      BOOL m_Exiting{ FALSE };
+      bool m_Debugging{ false };
+      bool m_Running{ false };
+      bool m_Paused{ false };
+      bool m_Exiting{ false };
 
       __declspec(align(16)) SERVICE_TABLE_ENTRYW m_ServiceTable[ 2 ];
 
@@ -159,7 +159,7 @@ class CService
 
       virtual void Exit( void ) noexcept;
 
-      virtual _Check_return_ BOOL SendStatusToServiceControlManager( __in DWORD current_state,
+      virtual _Check_return_ bool SendStatusToServiceControlManager( __in DWORD current_state,
                                                       __in DWORD win32_exit_code = NO_ERROR,
                                                       __in DWORD check_point = 0, 
                                                       __in DWORD wait_hint = 0,

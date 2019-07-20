@@ -113,8 +113,8 @@ class CServiceControlManager
            return(READ_CONTROL | SC_MANAGER_CONNECT | SC_MANAGER_ENUMERATE_SERVICE);
        }
 
-       CServiceControlManager();
-      virtual ~CServiceControlManager();
+       CServiceControlManager() noexcept;
+      virtual ~CServiceControlManager() noexcept;
 
       void Close( void ) noexcept;
       _Check_return_ bool  Continue( _In_z_ wchar_t const * service_name ) noexcept;
@@ -123,8 +123,8 @@ class CServiceControlManager
       _Check_return_ bool  GetConfiguration(_In_z_ wchar_t const * service_name, __out CServiceConfiguration& configuration ) noexcept;
       _Check_return_ bool  GetDependencies(_In_z_ wchar_t const * service_name, __out std::vector<std::wstring>& dependencies ) noexcept;
       _Check_return_ bool  GetDisplayName(_In_z_ wchar_t const * real_name, __out std::wstring& friendly_name ) noexcept;
-      _Check_return_ uint32_t GetErrorCode( void ) const noexcept;
-                    void  GetErrorMessage( __inout std::wstring& error_message ) const noexcept;
+      inline constexpr _Check_return_ uint32_t GetErrorCode(void) const noexcept { return(m_ErrorCode); }
+      inline void GetErrorMessage(__inout std::wstring& error_message) const noexcept { error_message.assign(m_ErrorMessage); }
       _Check_return_ SC_HANDLE GetHandle( void ) const noexcept;
       _Check_return_ bool  GetKeyName(_In_z_ wchar_t const * friendly_name, __out std::wstring& real_name ) noexcept;
       _Check_return_ bool  GetNext( __out CServiceNameAndStatus& status ) noexcept;

@@ -187,23 +187,25 @@ class CNetworkUsers : public CNetwork
 
        CNetworkUsers(__in CNetworkUsers const&) = delete;
        CNetworkUsers& operator=(__in CNetworkUsers const&) = delete;
-       CNetworkUsers();
-      CNetworkUsers( __in_z_opt LPCTSTR machine_name );
-      virtual ~CNetworkUsers();
+       CNetworkUsers() noexcept;
+      CNetworkUsers( __in_z_opt LPCTSTR machine_name ) noexcept;
+      virtual ~CNetworkUsers() noexcept;
 
       enum _AccountTypes
       {
+         accountTemporaryDuplicate     = UF_TEMP_DUPLICATE_ACCOUNT,
+         accountNormal                 = UF_NORMAL_ACCOUNT,
          accountBackupDomainController = UF_SERVER_TRUST_ACCOUNT,
          accountMachine                = UF_WORKSTATION_TRUST_ACCOUNT,
          accountInterdomain            = UF_INTERDOMAIN_TRUST_ACCOUNT
       };
 
       virtual bool  Add( __in CNetworkUserInformation const& user_to_add ) noexcept;
-      virtual _Check_return_ BOOL ChangePassword( __in std::wstring const& user_name, __in std::wstring const& old_password, __in std::wstring const& new_password ) noexcept;
+      virtual _Check_return_ bool ChangePassword( __in std::wstring const& user_name, __in std::wstring const& old_password, __in std::wstring const& new_password ) noexcept;
       virtual void  Close( void ) noexcept;
-      virtual _Check_return_ BOOL CreateComputerAccount( __in_z_opt LPCTSTR computer_name = nullptr, __in DWORD type = accountMachine ) noexcept;
-      virtual BOOL  Delete( __in CNetworkUserInformation const& user_to_delete ) noexcept;
-      virtual BOOL  Delete( __in std::wstring const& user_to_delete ) noexcept;
+      virtual _Check_return_ bool CreateComputerAccount( __in_z_opt LPCTSTR computer_name = nullptr, __in DWORD type = accountMachine ) noexcept;
+      virtual bool  Delete( __in CNetworkUserInformation const& user_to_delete ) noexcept;
+      virtual bool  Delete( __in std::wstring const& user_to_delete ) noexcept;
       virtual _Check_return_ bool Enumerate( void ) noexcept;
       virtual bool  ExpirePassword( __in std::wstring const& user_name ) noexcept;
       virtual _Check_return_ DWORD GetLevel( void ) const noexcept;

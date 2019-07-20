@@ -174,15 +174,15 @@ class CSimpleSocket : public CDummyFile
       CSimpleSocket(CSimpleSocket const&) = delete;
       CSimpleSocket& operator=(CSimpleSocket const&) = delete;
 
-      CSimpleSocket();
-      CSimpleSocket( __in SOCKET const client_id );
+      CSimpleSocket() noexcept;
+      CSimpleSocket( __in SOCKET const client_id ) noexcept;
 
       /*
       ** Destructor should be virtual according to MSJ article in Sept 1992
       ** "Do More with Less Code:..."
       */
 
-      virtual ~CSimpleSocket();
+      virtual ~CSimpleSocket() noexcept;
 
       std::wstring      Address;
       std::wstring      Name;
@@ -225,18 +225,18 @@ class CSimpleSocket : public CDummyFile
       _Check_return_ bool Open(_In_z_ LPCTSTR channel_name, _In_ UINT const port_number = 23 ) noexcept override = 0;
       virtual void Close( void ) noexcept;
       virtual _Check_return_ DWORD GetOptions( void ) const noexcept;
-      virtual _Check_return_ BOOL IsBroken( void ) const noexcept;
-      virtual _Check_return_ BOOL IsDataWaiting( void ) noexcept;
+      virtual _Check_return_ bool IsBroken( void ) const noexcept;
+      virtual _Check_return_ bool IsDataWaiting( void ) noexcept;
       virtual void SetOptions( __in DWORD const new_options ) noexcept;
-      virtual _Check_return_ BOOL SetSocketOption( __in int const level, __in int const option_name, __in_z char const * option_value, __in int const option_length ) noexcept;
-      virtual _Check_return_ BOOL SetReadTimeout( __in DWORD const number_of_milliseconds ) noexcept;
-      virtual _Check_return_ BOOL SetWriteTimeout(__in DWORD const number_of_milliseconds ) noexcept;
+      virtual _Check_return_ bool SetSocketOption( __in int const level, __in int const option_name, __in_z char const * option_value, __in int const option_length ) noexcept;
+      virtual _Check_return_ bool SetReadTimeout( __in DWORD const number_of_milliseconds ) noexcept;
+      virtual _Check_return_ bool SetWriteTimeout(__in DWORD const number_of_milliseconds ) noexcept;
 
       // Not all versions of Visual C++ have TF_DISCONNECT defined
 
 #if defined( TF_DISCONNECT )
 
-      virtual _Check_return_ BOOL Transmit( __inout CFile64& file_to_send, __in DWORD const flags = TF_DISCONNECT, __in_opt std::vector<uint8_t> * send_before = nullptr, __in_opt std::vector<uint8_t> * send_after = nullptr ) noexcept;
+      virtual _Check_return_ bool Transmit( __inout CFile64& file_to_send, __in DWORD const flags = TF_DISCONNECT, __in_opt std::vector<uint8_t> * send_before = nullptr, __in_opt std::vector<uint8_t> * send_after = nullptr ) noexcept;
 
 #endif // TF_DISCONNECT
 
