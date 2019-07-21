@@ -208,18 +208,18 @@ class CNetWorkstation : public CNetwork
 
        CNetWorkstation(__in CNetWorkstation const&) = delete;
        CNetWorkstation& operator=(__in CNetWorkstation const&) = delete;
-       CNetWorkstation();
-      CNetWorkstation( __in_z_opt LPCTSTR machine_name );
-      virtual ~CNetWorkstation();
+       CNetWorkstation() noexcept;
+      CNetWorkstation( __in_z_opt LPCTSTR machine_name ) noexcept;
+      virtual ~CNetWorkstation() noexcept;
 
       virtual void Close( void ) noexcept;
-      virtual _Check_return_ BOOL EnumerateInformation( void ) noexcept;
-      virtual _Check_return_ BOOL EnumerateTransports( void ) noexcept;
-      virtual _Check_return_ BOOL EnumerateUsers( void ) noexcept;
-      virtual _Check_return_ BOOL GetCurrentUser( __inout CWorkstationUser& information ) noexcept;
-      virtual _Check_return_ BOOL GetNext( __inout CWorkstationInformation& information ) noexcept;
-      virtual _Check_return_ BOOL GetNext( __inout CWorkstationTransport& information ) noexcept;
-      virtual _Check_return_ BOOL GetNext( __inout CWorkstationUser& information ) noexcept;
+      virtual _Check_return_ bool EnumerateInformation( void ) noexcept;
+      virtual _Check_return_ bool EnumerateTransports( void ) noexcept;
+      virtual _Check_return_ bool EnumerateUsers( void ) noexcept;
+      virtual _Check_return_ bool GetCurrentUser( __inout CWorkstationUser& information ) noexcept;
+      virtual _Check_return_ bool GetNext( __inout CWorkstationInformation& information ) noexcept;
+      virtual _Check_return_ bool GetNext( __inout CWorkstationTransport& information ) noexcept;
+      virtual _Check_return_ bool GetNext( __inout CWorkstationUser& information ) noexcept;
 };
 
 #endif // NET_WORKSTATION_CLASS_HEADER

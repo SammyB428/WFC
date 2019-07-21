@@ -51,13 +51,13 @@ static char THIS_FILE[] = __FILE__;
 
 USING_WFC_NAMESPACE
 
-CLZFile::CLZFile()
+CLZFile::CLZFile() noexcept
 {
    WFC_VALIDATE_POINTER( this );
    m_Initialize();
 }
 
-CLZFile::~CLZFile()
+CLZFile::~CLZFile() noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Close();
@@ -81,14 +81,14 @@ void CLZFile::Close( void ) noexcept
    m_Initialize();
 }
 
-_Check_return_ BOOL CLZFile::Copy( __in CLZFile const * source_p ) noexcept
+_Check_return_ bool CLZFile::Copy( __in CLZFile const * source_p ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source_p );
    return( Copy( *source_p ) );
 }
 
-_Check_return_ BOOL CLZFile::Copy( __in CLZFile const& source ) noexcept
+_Check_return_ bool CLZFile::Copy( __in CLZFile const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -99,10 +99,10 @@ _Check_return_ BOOL CLZFile::Copy( __in CLZFile const& source ) noexcept
    if ( size_of_destination_file < 0 )
    {
       m_LastError = size_of_destination_file;
-      return( FALSE );
+      return( false );
    }
 
-   return( TRUE );
+   return( true );
 }
 
 #if defined( _DEBUG ) && ! defined( WFC_NO_DUMPING )
@@ -214,7 +214,7 @@ _Check_return_ UINT CLZFile::Read( __out_bcount( size_of_buffer ) void * buffer,
 
    WFC_TRY
    {
-      number_of_bytes_read = ::LZRead( m_LZFileHandle, (char *) buffer, size_of_buffer );
+      number_of_bytes_read = ::LZRead( m_LZFileHandle, static_cast<char *>(buffer), size_of_buffer );
 
       if ( number_of_bytes_read < 0 )
       {
@@ -241,17 +241,17 @@ _Check_return_ uint64_t CLZFile::Seek(_In_ int64_t const offset, _In_ CFile64::S
 #else
    ASSERT( m_hFile != (CFILE_HFILE) CFile::hFileNull );
 #endif
-	ASSERT( from == CFile64::SeekPosition::begin || from == CFile64::SeekPosition::end || from == CFile64::SeekPosition::current );
-	ASSERT((int)CFile64::SeekPosition::begin == FILE_BEGIN && (int)CFile64::SeekPosition::end == FILE_END && (int)CFile64::SeekPosition::current == FILE_CURRENT );
+  ASSERT( from == CFile64::SeekPosition::begin || from == CFile64::SeekPosition::end || from == CFile64::SeekPosition::current );
+  ASSERT((int)CFile64::SeekPosition::begin == FILE_BEGIN && (int)CFile64::SeekPosition::end == FILE_END && (int)CFile64::SeekPosition::current == FILE_CURRENT );
 
-	LONG offset_from_beginning_of_file = ::LZSeek( m_LZFileHandle, (LONG) offset, (INT) from );
+   LONG const offset_from_beginning_of_file = ::LZSeek( m_LZFileHandle, (LONG) offset, (INT) from );
 
    if ( offset_from_beginning_of_file < 0 )
    {
       m_LastError = offset_from_beginning_of_file;
    }
 
-	return( offset_from_beginning_of_file );
+   return( offset_from_beginning_of_file );
 }
 
 void CLZFile::TranslateErrorCode( __in int const error_code, __out std::wstring& error_message ) noexcept

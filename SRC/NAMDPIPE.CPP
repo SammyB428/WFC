@@ -60,7 +60,7 @@ USING_WFC_NAMESPACE
 ** named pipes are *almost* useful.
 */
 
-CNamedPipe::CNamedPipe( __in uint32_t const _input_buffer_size, __in uint32_t const _output_buffer_size )
+CNamedPipe::CNamedPipe( __in uint32_t const _input_buffer_size, __in uint32_t const _output_buffer_size ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    m_Initialize( _input_buffer_size, _output_buffer_size );
@@ -122,7 +122,7 @@ void CNamedPipe::Dump( CDumpContext& dump_context ) const
 
 #endif // _DEBUG
 
-_Check_return_  BOOL CNamedPipe::Call( __inout std::wstring& pipe_name,
+_Check_return_  bool CNamedPipe::Call( __inout std::wstring& pipe_name,
                        LPVOID   write_buffer, 
                  __in DWORD const   size_of_write_buffer,
                        LPVOID   read_buffer, 
@@ -137,16 +137,14 @@ _Check_return_  BOOL CNamedPipe::Call( __inout std::wstring& pipe_name,
    if ( write_buffer == nullptr || read_buffer == nullptr )
    {
       m_LastError = ERROR_INVALID_PARAMETER;
-      return( FALSE );
+      return( false );
    }
 
    /*
    ** Writes to the pipe then reads from it
    */
 
-   BOOL return_value = FALSE;
-
-   return_value = ::CallNamedPipeW( pipe_name.c_str(), 
+   BOOL const return_value = ::CallNamedPipeW( pipe_name.c_str(), 
                                    write_buffer,
                                    size_of_write_buffer,
                                    read_buffer,
@@ -154,17 +152,15 @@ _Check_return_  BOOL CNamedPipe::Call( __inout std::wstring& pipe_name,
                                    address_of_number_of_bytes_read,
                                    number_of_milliseconds_to_wait );
 
-   if ( return_value == FALSE )
+   if ( return_value == false )
    {
       m_LastError = ::GetLastError();
       //WFCTRACEERROR( m_LastError );
 
-      return( FALSE );
+      return( false );
    }
-   else
-   {
-      return( TRUE );
-   }
+
+   return( true );
 }
 
 void CNamedPipe::Close( void ) noexcept
@@ -185,9 +181,7 @@ _Check_return_ bool CNamedPipe::Connect(__inout_opt LPOVERLAPPED overlapped_p ) 
 
    // overlapped_p can be nullptr
 
-   BOOL return_value = FALSE;
-
-   return_value = ::ConnectNamedPipe( m_PipeHandle, overlapped_p );
+   BOOL const return_value = ::ConnectNamedPipe( m_PipeHandle, overlapped_p );
 
    if ( return_value == FALSE )
    {
@@ -196,17 +190,15 @@ _Check_return_ bool CNamedPipe::Connect(__inout_opt LPOVERLAPPED overlapped_p ) 
 
       return( false );
    }
-   else
-   {
-      return( true );
-   }
+
+   return( true );
 }
 
 _Check_return_ bool CNamedPipe::Create( __in_z LPCTSTR server_name,
                          __in_z LPCTSTR pipe_name,
-                   __in DWORD const  open_mode,
-                   __in DWORD const  type_of_pipe,
-                   __in DWORD const  number_of_pipes,
+                   __in DWORD const open_mode,
+                   __in DWORD const type_of_pipe,
+                   __in DWORD const number_of_pipes,
            __inout_opt LPSECURITY_ATTRIBUTES security_attributes_p ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
@@ -265,17 +257,15 @@ _Check_return_ bool CNamedPipe::Create( __in_z LPCTSTR server_name,
 
       return( false );
    }
-   else
-   {
-      return( true );
-   }
+
+   return( true );
 }
 
 _Check_return_ bool CNamedPipe::Disconnect( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
-   BOOL return_value = ::DisconnectNamedPipe( m_PipeHandle );
+   BOOL const return_value = ::DisconnectNamedPipe( m_PipeHandle );
 
    if ( return_value == FALSE )
    {
@@ -284,24 +274,20 @@ _Check_return_ bool CNamedPipe::Disconnect( void ) noexcept
 
       return( false );
    }
-   else
-   {
-      return( true );
-   }
+
+   return( true );
 }
 
 _Check_return_ bool CNamedPipe::GetInformation( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
-   BOOL return_value = FALSE;
-
    DWORD type_of_pipe                = 0;
    DWORD size_of_output_buffer       = 0;
    DWORD size_of_input_buffer        = 0;
    DWORD maximum_number_of_instances = 0;
 
-   return_value = ::GetNamedPipeInfo( m_PipeHandle,
+   BOOL const return_value = ::GetNamedPipeInfo( m_PipeHandle,
                                      &type_of_pipe,
                                      &size_of_output_buffer,
                                      &size_of_input_buffer,
@@ -314,10 +300,8 @@ _Check_return_ bool CNamedPipe::GetInformation( void ) noexcept
 
       return( false );
    }
-   else
-   {
-      return( true );
-   }
+
+   return( true );
 }
 
 _Check_return_ bool CNamedPipe::GetState( void ) noexcept
@@ -328,7 +312,7 @@ _Check_return_ bool CNamedPipe::GetState( void ) noexcept
 
    ::ZeroMemory( temp_string, sizeof( temp_string ) );
 
-   BOOL return_value = ::GetNamedPipeHandleStateW( m_PipeHandle,
+   BOOL const return_value = ::GetNamedPipeHandleStateW( m_PipeHandle,
                                             &m_PipeState,
                                             &m_NumberOfInstances,
                                             &m_MaximumNumberOfBytesBeforeRemoteTransmission,
@@ -345,10 +329,8 @@ _Check_return_ bool CNamedPipe::GetState( void ) noexcept
 
       return( false );
    }
-   else
-   {
-      return( true );
-   }
+
+   return( true );
 }
 
 _Check_return_ bool CNamedPipe::Open( __in_z LPCTSTR pipe_name, __in UINT const) noexcept
@@ -398,7 +380,7 @@ _Check_return_ bool CNamedPipe::Open( __in_z LPCTSTR pipe_name, __in UINT const)
    return( Create( unc.ServerName.c_str(), unc.PathName.c_str() ) );
 }
 
-_Check_return_ BOOL CNamedPipe::Peek( __out_bcount( size_of_buffer ) LPVOID buffer_address,
+_Check_return_ bool CNamedPipe::Peek( __out_bcount( size_of_buffer ) LPVOID buffer_address,
                  __in DWORD const size_of_buffer,
                       __out DWORD& number_of_bytes_read,
                       __out DWORD& number_of_bytes_available,
@@ -411,7 +393,7 @@ _Check_return_ BOOL CNamedPipe::Peek( __out_bcount( size_of_buffer ) LPVOID buff
    ** buffer_address can be nullptr
    */
 
-   BOOL return_value = ::PeekNamedPipe( m_PipeHandle, 
+   BOOL const return_value = ::PeekNamedPipe( m_PipeHandle, 
                                    buffer_address, 
                                    size_of_buffer, 
                                   &number_of_bytes_read,
@@ -423,15 +405,13 @@ _Check_return_ BOOL CNamedPipe::Peek( __out_bcount( size_of_buffer ) LPVOID buff
       m_LastError = ::GetLastError();
       //WFCTRACEERROR( m_LastError );
 
-      return( FALSE );
+      return( false );
    }
-   else
-   {
-      return( TRUE );
-   }
+
+   return( true );
 }
 
-_Check_return_ bool CNamedPipe::SetState( __in uint32_t new_pipe_mode, 
+_Check_return_ bool CNamedPipe::SetState( __in uint32_t new_pipe_mode,
                            __in uint32_t maximum_number_of_bytes_before_transmission,
                            __in uint32_t maximum_number_of_milliseconds_before_transmission ) noexcept
 {
@@ -441,7 +421,7 @@ _Check_return_ bool CNamedPipe::SetState( __in uint32_t new_pipe_mode,
    DWORD mnbbt = maximum_number_of_bytes_before_transmission;
    DWORD mnmbt = maximum_number_of_milliseconds_before_transmission;
 
-   BOOL return_value = ::SetNamedPipeHandleState( m_PipeHandle,
+   BOOL const return_value = ::SetNamedPipeHandleState( m_PipeHandle,
                                             &npm,
                                             &mnbbt,
                                             &mnmbt);
@@ -453,10 +433,8 @@ _Check_return_ bool CNamedPipe::SetState( __in uint32_t new_pipe_mode,
 
       return( false );
    }
-   else
-   {
-      return( true );
-   }
+
+   return( true );
 }
 
 _Check_return_ bool CNamedPipe::Transact( __inout_opt LPOVERLAPPED overlapped_p ) noexcept
@@ -466,7 +444,7 @@ _Check_return_ bool CNamedPipe::Transact( __inout_opt LPOVERLAPPED overlapped_p 
 
    // overlapped_p can be nullptr
 
-   BOOL return_value = ::TransactNamedPipe( m_PipeHandle,
+   BOOL const return_value = ::TransactNamedPipe( m_PipeHandle,
                                        m_OutputBuffer.get(),
                                        m_NumberOfBytesToWrite,
                                        m_InputBuffer.get(),
@@ -481,10 +459,8 @@ _Check_return_ bool CNamedPipe::Transact( __inout_opt LPOVERLAPPED overlapped_p 
 
       return( false );
    }
-   else
-   {
-      return( true );
-   }
+
+   return( true );
 }
 
 _Check_return_ bool CNamedPipe::Wait( __in_z_opt LPCTSTR name_of_server, __in_z LPCTSTR name_of_pipe, __in uint32_t const number_of_milliseconds ) noexcept
@@ -516,7 +492,7 @@ _Check_return_ bool CNamedPipe::Wait( __in_z_opt LPCTSTR name_of_server, __in_z 
    full_pipe_name.append( TEXT( "\\pipe\\" ) );
    full_pipe_name.append( name_of_pipe );
 
-   BOOL return_value = ::WaitNamedPipeW( full_pipe_name.c_str(), number_of_milliseconds );
+   BOOL const return_value = ::WaitNamedPipeW( full_pipe_name.c_str(), number_of_milliseconds );
 
    if ( return_value == FALSE )
    {
@@ -525,10 +501,8 @@ _Check_return_ bool CNamedPipe::Wait( __in_z_opt LPCTSTR name_of_server, __in_z 
 
       return(false);
    }
-   else
-   {
-      return( true );
-   }
+
+   return( true );
 }
 
 // End of source

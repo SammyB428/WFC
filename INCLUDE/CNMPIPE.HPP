@@ -84,7 +84,7 @@ class CNamedPipe : public CDummyFile
       DWORD m_OutputBufferSize{ 0 };
       DWORD m_NumberOfBytesToWrite{ 0 };
       DWORD m_NumberOfBytesRead{ 0 };
-      DWORD m_Timeout{ 0 };
+      DWORD m_Timeout{ NMPWAIT_USE_DEFAULT_WAIT };
 
       std::wstring m_PipeName;
 
@@ -106,20 +106,20 @@ class CNamedPipe : public CDummyFile
        CNamedPipe(CNamedPipe const&) = delete;
        CNamedPipe& operator=(CNamedPipe const&) = delete;
 
-       CNamedPipe( __in uint32_t const input_buffer_size = 4096, __in uint32_t const output_buffer_size = 4096 );
+       CNamedPipe( __in uint32_t const input_buffer_size = 4096, __in uint32_t const output_buffer_size = 4096 ) noexcept;
 
       /*
       ** Destructor should be virtual according to MSJ article in Sept 1992
       ** "Do More with Less Code:..."
       */
 
-      virtual ~CNamedPipe();
+      virtual ~CNamedPipe() noexcept;
 
       /*
       ** The Win32 API
       */
 
-      virtual _Check_return_ BOOL Call( __inout    std::wstring& name_of_pipe,
+      virtual _Check_return_ bool Call( __inout    std::wstring& name_of_pipe,
                                     LPVOID   write_buffer,
                          __in DWORD const   size_of_write_buffer,
                                     LPVOID   read_buffer,
@@ -140,7 +140,7 @@ class CNamedPipe : public CDummyFile
       virtual _Check_return_ bool GetState( void ) noexcept; // GetNamedPipeHandleState
       virtual _Check_return_ bool GetInformation( void ) noexcept; // GetNamedPipeInfo
 
-      virtual _Check_return_ BOOL Peek( __out_bcount( size_of_buffer ) LPVOID buffer_address,
+      virtual _Check_return_ bool Peek( __out_bcount( size_of_buffer ) LPVOID buffer_address,
                          __in  DWORD const size_of_buffer,
                          __out DWORD& number_of_bytes_read,
                          __out DWORD& number_of_bytes_available,

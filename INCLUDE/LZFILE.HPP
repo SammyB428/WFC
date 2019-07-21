@@ -54,20 +54,20 @@ class CLZFile : public CDummyFile
        INT m_LZFileHandle{ 0 };
 
       COFStruct m_OpenFileStructure;
-      
+
    public:
 
        CLZFile(CLZFile const&) = delete;
        CLZFile& operator=(CLZFile const&) = delete;
 
-       CLZFile();
+       CLZFile() noexcept;
 
       /*
       ** Destructor should be virtual according to MSJ article in Sept 1992
       ** "Do More with Less Code:..."
       */
 
-      virtual ~CLZFile();
+      virtual ~CLZFile() noexcept;
 
       static void __stdcall TranslateErrorCode(__in int const error_code, __out std::wstring& error_message) noexcept;
 
@@ -76,8 +76,8 @@ class CLZFile : public CDummyFile
       */
 
       virtual void Close( void ) noexcept;
-      virtual _Check_return_ BOOL Copy( __in CLZFile const&  source ) noexcept;
-      virtual _Check_return_ BOOL Copy( __in CLZFile const * source ) noexcept;
+      virtual _Check_return_ bool Copy( __in CLZFile const&  source ) noexcept;
+      virtual _Check_return_ bool Copy( __in CLZFile const * source ) noexcept;
       virtual _Check_return_ bool GetExpandedName( __in_z wchar_t * name_of_compressed_file, __out std::wstring& original_file_name ) noexcept;
       _Check_return_ bool Open( __in_z LPCTSTR channel_name, __in UINT const style = OF_READ ) noexcept override;
       _Check_return_ UINT Read( __out_bcount( size_of_buffer ) void * buffer, __in UINT const size_of_buffer ) noexcept override;

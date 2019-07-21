@@ -1112,6 +1112,7 @@ _Check_return_ bool CServiceControlManager::SetConfiguration( __in_z wchar_t con
     {
         m_ErrorCode = ERROR_INVALID_PARAMETER;
         wfc_get_error_string(m_ErrorCode, m_ErrorMessage);
+        m_ErrorMessage.append(L" because service_name parameter is null.");
         return( false );
     }
 
@@ -1121,32 +1122,30 @@ _Check_return_ bool CServiceControlManager::SetConfiguration( __in_z wchar_t con
     {
         m_ErrorCode = ERROR_INVALID_HANDLE;
         wfc_get_error_string(m_ErrorCode, m_ErrorMessage);
+        m_ErrorMessage.append(L" because the manager handle is invalid.");
         return( false );
     }
-
-    auto service_handle = static_cast< SC_HANDLE >( NULL );
 
     // We were passed a bunch of pointers, don't trust them
 
     WFC_TRY
     {
-        service_handle = ::OpenServiceW( m_ManagerHandle, service_name, SERVICE_ALL_ACCESS );
+        auto const service_handle = ::OpenServiceW( m_ManagerHandle, service_name, SERVICE_CHANGE_CONFIG);
 
         if ( service_handle == static_cast< SC_HANDLE >( NULL ) )
         {
             m_ErrorCode = ::GetLastError();
             wfc_get_error_string(m_ErrorCode, m_ErrorMessage);
             //WFCTRACEERROR( m_ErrorCode );
+            m_ErrorMessage.append(L" because the manager handle is invalid Can't open for config Access.");
             return( false );
         }
 
         // Lock the database so we can safely make the changes
 
-        BOOL return_value = FALSE;
+        bool return_value = LockDatabase();
 
-        return_value = LockDatabase();
-
-        if ( return_value != FALSE )
+        if ( return_value == true )
         {
             // Microsoft has a bug in NT. I know what you're thinking, "THAT'S IMPOSSIBLE"
             // The programmers at Microsoft are only human so things slip through.
@@ -1182,7 +1181,7 @@ _Check_return_ bool CServiceControlManager::SetConfiguration( __in_z wchar_t con
                 }
             }
 
-            return_value = ::ChangeServiceConfigW( service_handle,
+            BOOL const api_return_value = ::ChangeServiceConfigW( service_handle,
                 type_of_service,
                 when_to_start,
                 error_control,
@@ -1194,27 +1193,30 @@ _Check_return_ bool CServiceControlManager::SetConfiguration( __in_z wchar_t con
                 password,
                 display_name );
 
-            if ( return_value == FALSE )
+            if (api_return_value == FALSE )
             {
                 m_ErrorCode = ::GetLastError();
                 wfc_get_error_string(m_ErrorCode, m_ErrorMessage);
                 //WFCTRACEERROR( m_ErrorCode );
+                m_ErrorMessage.append(L" while calling ChangeServiceConfigW API.");
+                return_value = false;
             }
             else
             {
-                return_value = TRUE;
+                return_value = true;
             }
 
             (void) UnlockDatabase();
 
             ::CloseServiceHandle( service_handle );
-            return( return_value == FALSE ? false : true );
+            return( return_value );
         }
         else
         {
             // LockDatabase already set m_ErrorCode
 
             ::CloseServiceHandle( service_handle );
+            m_ErrorMessage.append(L" while locking database to change service config.");
             return( false );
         }
     }

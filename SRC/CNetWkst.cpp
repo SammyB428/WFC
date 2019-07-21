@@ -443,13 +443,13 @@ CWorkstationTransport const& CWorkstationTransport::operator = ( __in CWorkstati
 ** CNetWorkstation Stuff
 */
 
-CNetWorkstation::CNetWorkstation()
+CNetWorkstation::CNetWorkstation() noexcept
 {
    WFC_VALIDATE_POINTER( this );
    m_Initialize();
 }
 
-CNetWorkstation::CNetWorkstation(__in_z_opt LPCTSTR machine_name )
+CNetWorkstation::CNetWorkstation(__in_z_opt LPCTSTR machine_name ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER_NULL_OK( machine_name );
@@ -458,7 +458,7 @@ CNetWorkstation::CNetWorkstation(__in_z_opt LPCTSTR machine_name )
    Open( machine_name );
 }
 
-CNetWorkstation::~CNetWorkstation()
+CNetWorkstation::~CNetWorkstation() noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Close();
@@ -524,7 +524,7 @@ void CNetWorkstation::m_Initialize( void ) noexcept
    m_UserTotalNumberOfEntries      = 0;
 }
 
-_Check_return_ BOOL CNetWorkstation::EnumerateInformation( void ) noexcept
+_Check_return_ bool CNetWorkstation::EnumerateInformation( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -558,23 +558,23 @@ _Check_return_ BOOL CNetWorkstation::EnumerateInformation( void ) noexcept
 
          if ( m_ErrorCode != NERR_Success || m_InformationBuffer100 == nullptr )
          {
-            return( FALSE );
+            return( false );
          }
       }
       else if ( m_ErrorCode != NERR_Success || m_InformationBuffer101 == nullptr )
       {
-         return( FALSE );
+         return( false );
       }
    }
    else if ( m_ErrorCode != NERR_Success || m_InformationBuffer102 == nullptr )
    {
-      return( FALSE );
+      return( false );
    }
 
-   return( TRUE );
+   return( true );
 }
 
-_Check_return_ BOOL CNetWorkstation::EnumerateTransports( void ) noexcept
+_Check_return_ bool CNetWorkstation::EnumerateTransports( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -599,13 +599,13 @@ _Check_return_ BOOL CNetWorkstation::EnumerateTransports( void ) noexcept
 
    if ( m_ErrorCode != NERR_Success || m_TransportBuffer == nullptr || m_TransportNumberOfEntriesRead == 0 )
    {
-      return( FALSE );
+      return( false );
    }
 
-   return( TRUE );
+   return( true );
 }
 
-_Check_return_ BOOL CNetWorkstation::EnumerateUsers( void ) noexcept
+_Check_return_ bool CNetWorkstation::EnumerateUsers( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -630,13 +630,13 @@ _Check_return_ BOOL CNetWorkstation::EnumerateUsers( void ) noexcept
 
    if ( m_ErrorCode != NERR_Success || m_UserBuffer == nullptr || m_UserNumberOfEntriesRead == 0 )
    {
-      return( FALSE );
+      return( false );
    }
 
-   return( TRUE );
+   return( true );
 }
 
-_Check_return_ BOOL CNetWorkstation::GetCurrentUser( __inout CWorkstationUser& information ) noexcept
+_Check_return_ bool CNetWorkstation::GetCurrentUser( __inout CWorkstationUser& information ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -647,17 +647,17 @@ _Check_return_ BOOL CNetWorkstation::GetCurrentUser( __inout CWorkstationUser& i
    if ( m_ErrorCode != NERR_Success || buffer == nullptr )
    {
       information.Empty();
-      return( FALSE );
+      return( false );
    }
 
    information.Copy( buffer );
 
-   ::NetApiBufferFree( buffer );
+   (void) ::NetApiBufferFree( buffer );
 
-   return( TRUE );
+   return( true );
 }
 
-_Check_return_ BOOL CNetWorkstation::GetNext( __inout CWorkstationInformation& information ) noexcept
+_Check_return_ bool CNetWorkstation::GetNext( __inout CWorkstationInformation& information ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -666,7 +666,7 @@ _Check_return_ BOOL CNetWorkstation::GetNext( __inout CWorkstationInformation& i
       information.Copy( m_InformationBuffer102 );
       ::NetApiBufferFree( m_InformationBuffer102 );
       m_InformationBuffer102 = nullptr;
-      return( TRUE );
+      return( true );
    }
 
    if ( m_InformationBuffer101 != nullptr )
@@ -674,7 +674,7 @@ _Check_return_ BOOL CNetWorkstation::GetNext( __inout CWorkstationInformation& i
       information.Copy( m_InformationBuffer101 );
       ::NetApiBufferFree( m_InformationBuffer101 );
       m_InformationBuffer101 = nullptr;
-      return( TRUE );
+      return( true );
    }
 
    if ( m_InformationBuffer100 != nullptr )
@@ -682,15 +682,15 @@ _Check_return_ BOOL CNetWorkstation::GetNext( __inout CWorkstationInformation& i
       information.Copy( m_InformationBuffer100 );
       ::NetApiBufferFree( m_InformationBuffer100 );
       m_InformationBuffer100 = nullptr;
-      return( TRUE );
+      return( true );
    }
 
    information.Empty();
 
-   return( FALSE );
+   return( false );
 }
 
-_Check_return_ BOOL CNetWorkstation::GetNext( __inout CWorkstationTransport& information ) noexcept
+_Check_return_ bool CNetWorkstation::GetNext( __inout CWorkstationTransport& information ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -698,7 +698,7 @@ _Check_return_ BOOL CNetWorkstation::GetNext( __inout CWorkstationTransport& inf
    {
       information.Copy( &m_TransportBuffer[ m_TransportCurrentEntryNumber ] );
       m_TransportCurrentEntryNumber++;
-      return( TRUE );
+      return( true );
    }
 
    information.Empty();
@@ -715,10 +715,10 @@ _Check_return_ BOOL CNetWorkstation::GetNext( __inout CWorkstationTransport& inf
    m_TransportNumberOfEntriesRead  = 0;
    m_TransportTotalNumberOfEntries = 0;
 
-   return( FALSE );
+   return( false );
 }
 
-_Check_return_ BOOL CNetWorkstation::GetNext( __inout CWorkstationUser& information ) noexcept
+_Check_return_ bool CNetWorkstation::GetNext( __inout CWorkstationUser& information ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -726,11 +726,11 @@ _Check_return_ BOOL CNetWorkstation::GetNext( __inout CWorkstationUser& informat
    {
       information.Copy( &m_UserBuffer[ m_UserCurrentEntryNumber ] );
       m_UserCurrentEntryNumber++;
-      return( TRUE );
+      return( true );
    }
 
    information.Empty();
-   return( FALSE );
+   return( false );
 }
 
 // End of source
