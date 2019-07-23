@@ -1354,7 +1354,7 @@ _Check_return_ bool CServiceControlManager::Stop( _In_z_ wchar_t const * service
 
             // Stop pestering the service with status requests
 
-            ::Sleep( service_status.dwWaitHint );
+            std::this_thread::sleep_for(std::chrono::milliseconds(service_status.dwWaitHint));
 
             if ( ::QueryServiceStatus( service_handle, &service_status ) == FALSE )
             {
@@ -2194,7 +2194,7 @@ int number_of_services_to_keep_alive = names_of_services_to_keep_alive.GetSize()
 ** we begin restarting stopped services.
 &#42;/
 
-Sleep( 60 );
+std::this_thread::sleep_for(std::chrono::milliseconds(60));
 
 do
 {
@@ -2267,7 +2267,7 @@ alive_index++;
 
 service_control_manager.Close();
 
-Sleep( sleep_time );
+std::this_thread::sleep_for(std::chrono::milliseconds(sleep_time));
 }
 while( 1 );
 

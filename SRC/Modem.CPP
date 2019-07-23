@@ -87,7 +87,7 @@ _Check_return_ bool CModem::Connect( __in DWORD number_of_seconds_to_wait ) noex
 
    Write( string_to_send_to_modem );
 
-   ::Sleep( 500 );
+   std::this_thread::sleep_for(std::chrono::milliseconds(500));
 
    string_to_send_to_modem.assign("ATDT");
    string_to_send_to_modem.append( m_PhoneNumber );

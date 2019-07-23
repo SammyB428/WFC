@@ -311,13 +311,13 @@ _Check_return_ bool CVolume::Lock( void ) noexcept
          return( true );
       }
 
-      ::Sleep( sleep_time );
+      std::this_thread::sleep_for(std::chrono::milliseconds(sleep_time));
    }
 
    return( false );
 }
 
-_Check_return_ bool CVolume::Open( __in TCHAR const drive_letter ) noexcept
+_Check_return_ bool CVolume::Open( _In_ TCHAR const drive_letter ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 

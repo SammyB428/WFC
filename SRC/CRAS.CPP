@@ -704,7 +704,7 @@ BOOL CRemoteAccessService::Close( LPCTSTR name_of_connection )
                number_of_tries++;
 #endif
                // Surrender the rest of our thread's time slice and a little more
-               ::Sleep( 250 );
+               std::this_thread::sleep_for(std::chrono::milliseconds(250));
             }
 
             WFCTRACEVAL( TEXT( "Hung up, it took this number of tries: " ), number_of_tries );
@@ -732,7 +732,7 @@ BOOL CRemoteAccessService::Close( LPCTSTR name_of_connection )
                number_of_tries++;
 #endif
                // Surrender the rest of our thread's time slice
-               ::Sleep( 250 );
+               std::this_thread::sleep_for(std::chrono::milliseconds(250));
             }
 
             WFCTRACEVAL( TEXT( "Hung up, it took this number of tries: " ), number_of_tries );
@@ -752,7 +752,7 @@ BOOL CRemoteAccessService::Close( LPCTSTR name_of_connection )
          {
             WFCTRACE( TEXT( "Well whaddya know, the connection is still there..." ) );
             m_Thunk_p->RasHangUp( temp_handle );
-            ::Sleep( 1000 );
+            std::this_thread::sleep_for(std::chrono::seconds(1));
          }
       }
       while( temp_handle != static_cast< HRASCONN >( NULL ) );
@@ -1579,7 +1579,7 @@ BOOL CRemoteAccessService::Open( LPCTSTR who_to_dial )
          // respond to all of our GetConnectionStatus() calls. We are hammering RAS
          // when we call that function.
 
-         ::Sleep( 6000 ); // six seconds
+         std::this_thread::sleep_for(std::chrono::seconds(6));
 
          // Now start hammering RAS for the status
 
@@ -1601,7 +1601,7 @@ BOOL CRemoteAccessService::Open( LPCTSTR who_to_dial )
 
                // only ask RAS about 4 times per second... (i.e. be nice)
 
-               ::Sleep( 250 );
+               std::this_thread::sleep_for(std::chrono::milliseconds(250));
             }
             else
             {

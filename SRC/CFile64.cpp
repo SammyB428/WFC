@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 1995-2018, Samuel R. Blackburn
+** Copyright, 1995-2019, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -53,14 +53,14 @@ USING_WFC_NAMESPACE
 
 #pragma warning( disable : 4302 )
 
-    // Helper functions
+// Helper functions
 
-static inline _Check_return_ constexpr bool __is_directory_separation_character( _In_ wchar_t const character_to_test ) noexcept
+static inline constexpr _Check_return_ bool __is_directory_separation_character( _In_ wchar_t const character_to_test ) noexcept
 {
     return( character_to_test == '\\' || character_to_test == '/' );
 }
 
-static inline _Check_return_ constexpr bool __is_wide_directory_separation_character( _In_ wchar_t const character_to_test ) noexcept
+static inline constexpr _Check_return_ bool __is_wide_directory_separation_character( _In_ wchar_t const character_to_test ) noexcept
 {
     return( character_to_test == L'\\' || character_to_test == L'/' );
 }
@@ -2111,16 +2111,17 @@ void CFile64::Write( __in_bcount( number_of_bytes_to_write ) void const * buffer
 
         if ( m_SafeWriteCallback != nullptr )
         {
-            int return_value = m_SafeWriteCallback( m_SafeWriteContext, error_code, m_FileName.c_str() );
+            int const return_value = m_SafeWriteCallback( m_SafeWriteContext, error_code, m_FileName.c_str() );
 
             switch( return_value )
             {
             case SAFE_WRITE_WAIT:
 
 #if defined( _DEBUG )
-                ::Sleep( 15233 );
+                std::this_thread::sleep_for(std::chrono::milliseconds(15233));
+
 #else
-                ::Sleep( 120011 ); // Sleep for two minutes
+                std::this_thread::sleep_for(std::chrono::milliseconds(120011));
 #endif
                 break;
 

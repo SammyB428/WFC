@@ -1,3 +1,4 @@
+#include <charconv>
 #if ! defined( STL_STRING_HELPERS_HEADER_FILE )
 
 #define STL_STRING_HELPERS_HEADER_FILE
@@ -1010,30 +1011,50 @@ inline _Check_return_ double as_double(_In_ std::string const& s) noexcept
     return(atof(s.c_str()));
 }
 
+inline _Check_return_ int64_t ascii_string_to_integer( _In_ char const * ascii_string, _In_ std::size_t string_length, _In_ int radix ) noexcept
+{
+    int64_t return_value = 0;
+
+    (void) std::from_chars(ascii_string, &ascii_string[string_length], return_value, radix);
+
+    return(return_value);
+}
+
 inline _Check_return_ int64_t as_integer(_In_ std::string const& s) noexcept
 {
     int radix = 10;
 
-    std::string value(s);
+    auto buffer = s.data();
+    auto const buffer_size = s.length();
 
-    trim(value);
+    std::size_t offset_of_first_digit = 0;
 
-    if (starts_with_no_case(value, "0x", 2) == true)
+    while (is_space_character(buffer[offset_of_first_digit]) == true)
     {
-        radix = 16;
-        value.erase(0, 2);
-    }
-    else if (starts_with_no_case(value, "x", 1) == true)
-    {
-        radix = 16;
-        value.erase(0, 1);
+        offset_of_first_digit++;
     }
 
-    char* unused = nullptr;
+    if (offset_of_first_digit >= buffer_size)
+    {
+        return(0);
+    }
 
-    int64_t const return_value = _strtoi64(value.c_str(), &unused, radix);
+    if ((buffer_size - offset_of_first_digit) > 1)
+    {
+        if (buffer[offset_of_first_digit] == '0' &&
+            (buffer[offset_of_first_digit + 1] == 'x' || buffer[offset_of_first_digit + 1] == 'X'))
+        {
+            radix = 16;
+            offset_of_first_digit += 2;
+        }
+        else if (buffer[offset_of_first_digit] == 'x' || buffer[offset_of_first_digit] == 'X')
+        {
+            radix = 16;
+            offset_of_first_digit++;
+        }
+    }
 
-    return(return_value);
+    return(ascii_string_to_integer(&buffer[offset_of_first_digit], buffer_size - offset_of_first_digit, radix));
 }
 
 inline _Check_return_ int64_t as_integer(_In_ std::wstring const& s) noexcept

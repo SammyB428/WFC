@@ -1872,7 +1872,7 @@ _Check_return_ bool CSerialFile::WaitForString( __in std::string const& string_t
          // I/O but MFC doesn't support overlapped I/O because only NT
          // supports it.
 
-         ::Sleep( 500 );
+          std::this_thread::sleep_for(std::chrono::milliseconds(500));
       }
 
       current_time = CTime::GetCurrentTime();
@@ -2246,7 +2246,7 @@ the byte to be transmitted.
                _tprintf( TEXT( &quot;Didn't get RING, going to sleep \&quot;%s\&quot;\n&quot; ), (LPCTSTR) response );
             }
 
-            Sleep( 10000 );
+            std::this_thread::sleep_for(std::chrono::milliseconds(10000));
          }
 
          _tprintf( TEXT( &quot;Received a RING, waiting for them to end\n&quot; ) );
@@ -2262,7 +2262,7 @@ the byte to be transmitted.
 
          CTime time_now( CTime::GetCurrentTime() );
 
-         Sleep( 1000 );
+         std::this_thread::sleep_for(std::chrono::milliseconds(1000));
 
          std::wstring message;
 
@@ -2281,7 +2281,7 @@ the byte to be transmitted.
          _tprintf( TEXT( &quot;Can't open serial port\n&quot; ) );
       }
 
-      Sleep( 1000 );
+      std::this_thread::sleep_for(std::chrono::milliseconds(1000));
    }
 }</CODE></PRE>
 

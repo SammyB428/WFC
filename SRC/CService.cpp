@@ -1053,7 +1053,7 @@ DWORD WINAPI worker_thread( LPVOID )
    ** we begin restarting stopped services.
    &#42;/
 
-   Sleep( 60000 );
+   std::this_thread::sleep_for(std::chrono::milliseconds(60000));
 
    do
    {
@@ -1126,7 +1126,7 @@ DWORD WINAPI worker_thread( LPVOID )
 
       service_control_manager.Close();
 
-      Sleep( sleep_time );
+      std::this_thread::sleep_for(std::chrono::milliseconds(sleep_time));
    }
    while( 1 );
 

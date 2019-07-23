@@ -65,10 +65,10 @@ class CNetworkResourceInformation
       std::wstring   RemoteName;
       std::wstring   Comment;
       std::wstring   Provider;
-      DWORD     Scope{ 0 };
-      DWORD     Type{ 0 };
-      DWORD     DisplayType{ 0 };
-      DWORD     Usage{ 0 };
+      DWORD Scope{ 0 };
+      DWORD Type{ 0 };
+      DWORD DisplayType{ 0 };
+      DWORD Usage{ 0 };
 
       virtual void Copy( __in NETRESOURCE const * source ) noexcept;
       virtual void Copy( __in CNetworkResourceInformation const& source ) noexcept;

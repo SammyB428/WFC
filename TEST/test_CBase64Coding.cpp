@@ -161,7 +161,7 @@ _Check_return_ bool test_CBase64Coding( _Out_ std::string& class_name, _Out_ int
         // Prepare to test
 
         bytes_to_encode.clear();
-        encoded_string.empty();
+        encoded_string.clear();
         decoded_bytes.clear();
 
         // Generate some test data

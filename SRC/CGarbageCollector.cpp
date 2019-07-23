@@ -250,7 +250,7 @@ void worker_thread( void * parameter )
 
    // Go do something that takes a really long time
 
-   Sleep( 10000 );
+   std::this_thread::sleep_for(std::chrono::milliseconds(10000));
 
    thread_data-&gt;Release();
 }
@@ -276,7 +276,7 @@ void start_thread( void )
 
    _beginthread( worker_thread, DEFAULT_THREAD_STACK_SIZE, data_p );
 
-   Sleep( 0 );
+   std::this_thread::sleep_for(std::chrono::milliseconds(1));
 
    data_p-&gt;Release();
 }</CODE></PRE>

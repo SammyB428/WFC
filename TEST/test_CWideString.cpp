@@ -1419,10 +1419,10 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
         return( failure() );
     }
 
-    static constexpr const wchar_t * flags[] =
+    static constexpr wchar_t const * flags[] =
     {
         L"0",
-        NULL,
+        nullptr,
         L"2",
         L"3",
         L"4",
@@ -1968,6 +1968,61 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
         return(failure());
     }
 
-    test_number_that_failed = 277;
+    // Now test the ASCII as_integer
+
+    std::string a_string(" x16 ");
+
+    test_value = as_integer(a_string);
+
+    if (test_value != 22)
+    {
+        wprintf(L"\"%S\" evaluated to %I64d not 22\n", a_string.c_str(), test_value);
+        test_number_that_failed = 278;
+        return(failure());
+    }
+
+    a_string.assign(" 0x17 ");
+
+    test_value = as_integer(a_string);
+
+    if (test_value != 23)
+    {
+        wprintf(L"\"%S\" evaluated to %I64d not 23\n", a_string.c_str(), test_value);
+        test_number_that_failed = 279;
+        return(failure());
+    }
+
+    a_string.assign("24");
+
+    test_value = as_integer(a_string);
+
+    if (test_value != 24)
+    {
+        wprintf(L"\"%S\" evaluated to %I64d not 24\n", a_string.c_str(), test_value);
+        test_number_that_failed = 280;
+        return(failure());
+    }
+
+    test_value = ascii_string_to_integer("567", 2, 10);
+
+    if (test_value != 56)
+    {
+        wprintf(L"\"567\" evaluated to %I64d not 56\n", test_value);
+        test_number_that_failed = 281;
+        return(failure());
+    }
+
+    a_string.assign("X24");
+
+    test_value = as_integer(a_string);
+
+    if (test_value != 36)
+    {
+        wprintf(L"\"%S\" evaluated to %I64d not 36\n", a_string.c_str(), test_value);
+        test_number_that_failed = 282;
+        return(failure());
+    }
+
+    test_number_that_failed = 282;
     return( true );
 }

@@ -68,7 +68,7 @@ _Check_return_ bool test_CNetResource( _Out_ std::string& class_name, _Out_ int&
 
    CNetworkResourceInformation information;
 
-   information.Scope = CNetworkResources::scopeAll;
+   information.Scope = static_cast<DWORD>(CNetworkResources::Scope::All);
    information.Usage = CNetworkResources::usageConnectable | CNetworkResources::usageContainer;
    information.Type  = CNetworkResources::typeDisk;
 
