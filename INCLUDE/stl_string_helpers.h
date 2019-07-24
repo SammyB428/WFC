@@ -833,7 +833,7 @@ inline _Check_return_ bool starts_with_no_case(_In_ std::wstring const& s, _In_z
         return(false);
     }
 
-    wchar_t const* our_string = s.c_str();
+    auto our_string = s.c_str();
 
     wchar_t this_character = 0;
     wchar_t that_character = 0;
@@ -859,7 +859,7 @@ inline _Check_return_ bool starts_with_no_case(_In_ std::string const& s, _In_z_
         return(false);
     }
 
-    char const* our_string = s.c_str();
+    auto our_string = s.c_str();
 
     wchar_t this_character = 0;
     wchar_t that_character = 0;
@@ -1001,14 +1001,39 @@ inline _Check_return_ bool is_all_decimal_digits(_In_ std::string const& s) noex
     return((number_of_decimal_digits(s) == s.length()) ? true : false);
 }
 
-inline _Check_return_ double as_double(_In_ std::wstring const& s) noexcept
+inline _Check_return_ double as_double(_In_z_ char const * const buffer, _In_ std::size_t buffer_size) noexcept
 {
-    return(_wtof(s.c_str()));
+    double return_value = 0.0;
+
+    (void)std::from_chars(buffer, &buffer[buffer_size], return_value);
+
+    return(return_value);
 }
 
 inline _Check_return_ double as_double(_In_ std::string const& s) noexcept
 {
-    return(atof(s.c_str()));
+   return(as_double(s.data(), s.length()));
+}
+
+inline _Check_return_ double as_double(_In_ std::wstring const& s) noexcept
+{
+    // See if we can optimize for small strings
+
+    std::size_t string_length = s.length();
+
+    if (string_length < 26)
+    {
+        char ascii_string[27]; // Deliberately NOT initializing for speed, we don't need null termination
+
+        for (auto const string_index : Range(string_length))
+        {
+            ascii_string[string_index] = static_cast<char>(s[string_index]);
+        }
+
+        return(as_double(ascii_string, string_length));
+    }
+
+    return(_wtof(s.c_str()));
 }
 
 inline _Check_return_ int64_t ascii_string_to_integer( _In_ char const * ascii_string, _In_ std::size_t string_length, _In_ int radix ) noexcept
@@ -1020,12 +1045,18 @@ inline _Check_return_ int64_t ascii_string_to_integer( _In_ char const * ascii_s
     return(return_value);
 }
 
-inline _Check_return_ int64_t as_integer(_In_ std::string const& s) noexcept
+inline _Check_return_ uint64_t ascii_string_to_unsigned_integer(_In_ char const* ascii_string, _In_ std::size_t string_length, _In_ int radix) noexcept
+{
+    uint64_t return_value = 0;
+
+    (void)std::from_chars(ascii_string, &ascii_string[string_length], return_value, radix);
+
+    return(return_value);
+}
+
+inline _Check_return_ int64_t as_integer(_In_z_ char const * const buffer, _In_ std::size_t const buffer_size) noexcept
 {
     int radix = 10;
-
-    auto buffer = s.data();
-    auto const buffer_size = s.length();
 
     std::size_t offset_of_first_digit = 0;
 
@@ -1057,8 +1088,68 @@ inline _Check_return_ int64_t as_integer(_In_ std::string const& s) noexcept
     return(ascii_string_to_integer(&buffer[offset_of_first_digit], buffer_size - offset_of_first_digit, radix));
 }
 
+inline _Check_return_ uint64_t as_unsigned_integer(_In_z_ char const* const buffer, _In_ std::size_t const buffer_size) noexcept
+{
+    int radix = 10;
+
+    std::size_t offset_of_first_digit = 0;
+
+    while (is_space_character(buffer[offset_of_first_digit]) == true)
+    {
+        offset_of_first_digit++;
+    }
+
+    if (offset_of_first_digit >= buffer_size)
+    {
+        return(0);
+    }
+
+    if ((buffer_size - offset_of_first_digit) > 1)
+    {
+        if (buffer[offset_of_first_digit] == '0' &&
+            (buffer[offset_of_first_digit + 1] == 'x' || buffer[offset_of_first_digit + 1] == 'X'))
+        {
+            radix = 16;
+            offset_of_first_digit += 2;
+        }
+        else if (buffer[offset_of_first_digit] == 'x' || buffer[offset_of_first_digit] == 'X')
+        {
+            radix = 16;
+            offset_of_first_digit++;
+        }
+    }
+
+    return(ascii_string_to_unsigned_integer(&buffer[offset_of_first_digit], buffer_size - offset_of_first_digit, radix));
+}
+
+inline _Check_return_ int64_t as_integer(_In_ std::string const& s) noexcept
+{
+    return(as_integer(s.data(), s.length()));
+}
+
+inline _Check_return_ int64_t as_unsigned_integer(_In_ std::string const& s) noexcept
+{
+    return(as_unsigned_integer(s.data(), s.length()));
+}
+
 inline _Check_return_ int64_t as_integer(_In_ std::wstring const& s) noexcept
 {
+    // See if we can optimize for small strings
+
+    std::size_t string_length = s.length();
+
+    if (string_length < 26)
+    {
+        char ascii_string[27]; // Deliberately NOT initializing for speed, we don't need null termination
+
+        for (auto const string_index : Range(string_length))
+        {
+            ascii_string[string_index] = static_cast<char>(s[string_index]);
+        }
+
+        return(as_integer(ascii_string, string_length));
+    }
+
     int radix = 10;
 
     std::wstring value(s);
@@ -1076,7 +1167,7 @@ inline _Check_return_ int64_t as_integer(_In_ std::wstring const& s) noexcept
         value.erase(0, 1);
     }
 
-    wchar_t* unused = nullptr;
+    wchar_t * unused = nullptr;
 
     int64_t const return_value = _wcstoi64(value.c_str(), &unused, radix);
 
@@ -1085,6 +1176,22 @@ inline _Check_return_ int64_t as_integer(_In_ std::wstring const& s) noexcept
 
 inline _Check_return_ uint64_t as_unsigned_integer(_In_ std::wstring const& s) noexcept
 {
+    // See if we can optimize for small strings
+
+    std::size_t string_length = s.length();
+
+    if (string_length < 26)
+    {
+        char ascii_string[27]; // Deliberately NOT initializing for speed, we don't need null termination
+
+        for (auto const string_index : Range(string_length))
+        {
+            ascii_string[string_index] = static_cast<char>(s[string_index]);
+        }
+
+        return(as_unsigned_integer(ascii_string, string_length));
+    }
+
     int radix = 10;
 
     std::wstring value(s);
@@ -1102,9 +1209,9 @@ inline _Check_return_ uint64_t as_unsigned_integer(_In_ std::wstring const& s) n
         value.erase(0, 1);
     }
 
-    wchar_t* unused = nullptr;
+    wchar_t * unused = nullptr;
 
-    int64_t const return_value = _wcstoui64(value.c_str(), &unused, radix);
+    uint64_t const return_value = _wcstoui64(value.c_str(), &unused, radix);
 
     return(return_value);
 }
