@@ -99,7 +99,7 @@ class CTapeSetDriveParameters : public _TAPE_SET_DRIVE_PARAMETERS
       CTapeSetDriveParameters( __in CTapeSetDriveParameters const& source ) noexcept;
       CTapeSetDriveParameters( __in TAPE_SET_DRIVE_PARAMETERS const * source ) noexcept;
 
-      virtual ~CTapeSetDriveParameters() noexcept;
+      virtual ~CTapeSetDriveParameters();
 
       virtual void Copy( __in CTapeSetDriveParameters const& source ) noexcept;
       virtual void Copy( __in TAPE_SET_DRIVE_PARAMETERS const * source ) noexcept;
@@ -123,7 +123,7 @@ class CTapeSetMediaParameters : public _TAPE_SET_MEDIA_PARAMETERS
       CTapeSetMediaParameters( __in CTapeSetMediaParameters const& source ) noexcept;
       CTapeSetMediaParameters( __in TAPE_SET_MEDIA_PARAMETERS const * source ) noexcept;
 
-      virtual ~CTapeSetMediaParameters() noexcept;
+      virtual ~CTapeSetMediaParameters();
 
       virtual void Copy( __in CTapeSetMediaParameters const& source ) noexcept;
       virtual void Copy( __in TAPE_SET_MEDIA_PARAMETERS const * source ) noexcept;
@@ -161,7 +161,7 @@ class CTape : public CDummyFile
  
        CTape() noexcept;
 
-      virtual ~CTape() noexcept;
+      virtual ~CTape();
 
       enum class TypeOfPartition : uint32_t
       {

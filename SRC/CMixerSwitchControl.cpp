@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 1995-2016, Samuel R. Blackburn
+** Copyright, 1995-2019, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -104,9 +104,9 @@ _Check_return_ bool CMixerSwitchControl::GetState( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
-   const bool return_value = m_GetAll();
+   bool const return_value = m_GetAll();
 
-   if ( return_value != false )
+   if ( return_value == true )
    {
       return( ( ( m_Switch.Parameter1 == 0 ) ? false : true ) );
    }
@@ -120,7 +120,7 @@ _Check_return_ bool CMixerSwitchControl::m_GetAll( void ) noexcept
 
    std::vector<CMixerControlDetailsData> array;
 
-   const bool return_value = m_Mixer.GetControlDetails( m_MixerLine, m_MixerControl, array );
+   bool const return_value = m_Mixer.GetControlDetails( m_MixerLine, m_MixerControl, array );
 
    if ( return_value == false )
    {
@@ -147,7 +147,7 @@ _Check_return_ bool CMixerSwitchControl::SetState( __in bool const turn_on ) noe
 
    bool return_value = m_Mixer.SetControlDetails( m_MixerLine, m_MixerControl, m_Array );
 
-   if ( return_value != false )
+   if ( return_value == true )
    {
       (void) m_GetAll();
    }
@@ -159,7 +159,7 @@ _Check_return_ bool CMixerSwitchControl::TurnOff( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
-   const bool return_value = SetState( false );
+   bool const return_value = SetState( false );
 
    return( return_value );
 }
@@ -168,7 +168,7 @@ _Check_return_ bool CMixerSwitchControl::TurnOn( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
-   const bool return_value = SetState( true );
+   bool const return_value = SetState( true );
 
    return( return_value );
 }

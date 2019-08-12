@@ -78,6 +78,10 @@ public:
         Empty();
     }
 
+    inline constexpr CMatchingCharacters(uint64_t o, uint64_t c, uint64_t b) noexcept : Open(o), Close(c), BackToBack(b)
+    {
+    }
+
     inline constexpr void Empty( void ) noexcept
     {
         Open = 0;
@@ -140,7 +144,7 @@ public:
     CTextStatistics(_In_ CTextStatistics const&) = delete;
     _Check_return_ CTextStatistics& operator=(_In_ CTextStatistics const&) = delete;
 
-    inline CTextStatistics()
+    inline constexpr CTextStatistics() noexcept
     {
         Empty();
     }
@@ -253,7 +257,7 @@ public:
         (void) Initialize( buffer, buffer_size );
     }
 
-    inline ~CDataParser() noexcept
+    inline ~CDataParser()
     {
         Empty();
     }
@@ -272,10 +276,8 @@ public:
         return(1);
     }
 
-    inline void AdvanceByOneCharacter( _Inout_ CParsePoint& parse_point, _In_ uint32_t const character_parameter = 0 ) const noexcept
+    inline constexpr void AdvanceByOneCharacter( _Inout_ CParsePoint& parse_point, _In_ uint32_t const character_parameter = 0 ) const noexcept
     {
-        try
-        {
             if ( m_Bytes == nullptr )
             {
                 WFC_SET_LAST_ERROR( ERROR_INVALID_ADDRESS );
@@ -301,7 +303,7 @@ public:
 
             uint8_t const little_end = m_Bytes[ parse_point.GetIndex() ];
 
-            if ( IsTextASCII() != true )
+            if ( IsTextASCII() == false)
             {
                 if ( IsTextUCS4() == false )
                 {
@@ -327,7 +329,7 @@ public:
                     // complicated for it (i.e. exposed a bug). This version does the
                     // same thing.
 
-                    if ( IsTextBigEndian() != true )
+                    if ( IsTextBigEndian() == false)
                     {
                         // Intel Format
                         character = MAKEWORD( little_end, big_end );
@@ -432,18 +434,13 @@ public:
             {
                 parse_point.AutoIncrement( static_cast< uint8_t >( character_parameter ) );
             }
-        }
-        catch( ... )
-        {
-            return;
-        }
     }
 
     inline void Empty( void ) noexcept
     {
         try
         {
-            if ( m_AutomaticallyDelete != false )
+            if ( m_AutomaticallyDelete == true )
             {
                 if ( m_Data != nullptr )
                 {
@@ -474,10 +471,8 @@ public:
         }
     }
 
-    inline _Check_return_ bool Find( _In_ CParsePoint const& parse_point, _In_ uint8_t const byte_to_find, _Inout_ CParsePoint& found_at ) const noexcept
+    inline constexpr _Check_return_ bool Find( _In_ CParsePoint const& parse_point, _In_ uint8_t const byte_to_find, _Inout_ CParsePoint& found_at ) const noexcept
     {
-        try
-        {
             found_at.Copy( parse_point );
 
             if ( m_Bytes == nullptr )
@@ -508,17 +503,10 @@ public:
 
             WFC_SET_LAST_ERROR( NO_ERROR );
             return( false );
-        }
-        catch( ... )
-        {
-            return( false );
-        }
     }
 
-    inline _Check_return_ bool Find(_In_ CParsePoint const& parse_point, _In_ CParsePoint const& end_parse_point, _In_ wchar_t const * string_to_find, _In_ std::size_t const number_of_characters, _Inout_ CParsePoint& found_at) const noexcept
+    inline constexpr _Check_return_ bool Find(_In_ CParsePoint const& parse_point, _In_ CParsePoint const& end_parse_point, _In_ wchar_t const * string_to_find, _In_ std::size_t const number_of_characters, _Inout_ CParsePoint& found_at) const noexcept
     {
-        try
-        {
             found_at.Copy(parse_point);
 
             if (m_Bytes == nullptr)
@@ -546,7 +534,7 @@ public:
 
             while ((found_at.GetIndex() + number_of_characters) <= end_parse_point.GetIndex())
             {
-                if (PeekAtCharacter(found_at, character_to_test, 0) != false)
+                if (PeekAtCharacter(found_at, character_to_test, 0) == true)
                 {
                     if (character_to_test == static_cast< uint32_t >(string_to_find[0]))
                     {
@@ -559,7 +547,7 @@ public:
                             // We peek at string_length - 1 because the GetNextCharacter() call above
                             // advances the character index
 
-                            if (PeekAtCharacter(found_at, character_to_test, loop_index) != true)
+                            if (PeekAtCharacter(found_at, character_to_test, loop_index) == false)
                             {
                                 found_at.Empty();
                                 return(false);
@@ -574,7 +562,7 @@ public:
                             }
                         }
 
-                        if (string_was_found != false)
+                        if (string_was_found == true)
                         {
                             return(true);
                         }
@@ -595,11 +583,6 @@ public:
 
             WFC_SET_LAST_ERROR(NO_ERROR);
             return(false);
-        }
-        catch (...)
-        {
-            return(false);
-        }
     }
 
     inline _Check_return_ bool Find(_In_ CParsePoint const& parse_point, _In_ CParsePoint const& end_parse_point, _In_ std::wstring const& string_to_find, _Inout_ CParsePoint& found_at) const noexcept
@@ -651,7 +634,7 @@ public:
 
             while( ( found_at.GetIndex() + pattern_length ) <= end_parse_point.GetIndex())
             {
-                if ( ::memcmp( &m_Bytes[ found_at.GetIndex() ], pattern_buffer, pattern_length ) == 0 )
+                if ( ::memcmp( &m_Bytes[ found_at.GetIndex() ], pattern_buffer, pattern_length ) == I_AM_EQUAL_TO_THAT )
                 {
                     return( true );
                 }
@@ -727,7 +710,7 @@ public:
 
             while( ( found_at.GetIndex() + string_length ) <= m_NumberOfBytes )
             {
-                if ( PeekAtCharacter( found_at, character_to_test, 0 ) != false )
+                if ( PeekAtCharacter( found_at, character_to_test, 0 ) == true )
                 {
                     if ( tolower( character_to_test ) == first_character_of_string )
                     {
@@ -737,7 +720,7 @@ public:
 
                         for ( auto const loop_index : Range(string_length, 1) )
                         {
-                            if ( PeekAtCharacter( found_at, character_to_test, loop_index ) != true )
+                            if ( PeekAtCharacter( found_at, character_to_test, loop_index ) == false)
                             {
                                 found_at.Empty();
                                 return( false );
@@ -806,7 +789,7 @@ public:
 
             while( ( found_at.GetIndex() + pattern_length ) <= m_NumberOfBytes )
             {
-                if ( ::_memicmp( &m_Bytes[ found_at.GetIndex() ], pattern_buffer, pattern_length ) == 0 )
+                if ( ::_memicmp( &m_Bytes[ found_at.GetIndex() ], pattern_buffer, pattern_length ) == I_AM_EQUAL_TO_THAT)
                 {
                     return( true );
                 }
@@ -930,7 +913,7 @@ public:
 
     void GetTextStatistics( _In_ CParsePoint& parse_point, _Inout_ CTextStatistics& statistics ) const noexcept;
 
-    inline _Check_return_ uint8_t ReadByte( _Inout_ CParsePoint& parse_point ) const noexcept
+    inline constexpr _Check_return_ uint8_t ReadByte( _Inout_ CParsePoint& parse_point ) const noexcept
     {
         uint8_t const byte_1 = GetAt( parse_point.GetIndex() );
         parse_point.AutoIncrement( byte_1 );
@@ -938,7 +921,7 @@ public:
         return( byte_1 );
     }
 
-    inline void ReadBytes( _Inout_ CParsePoint& parse_point, _Out_writes_bytes_( number_of_bytes ) uint8_t * buffer, _In_ uint64_t const number_of_bytes ) const noexcept
+    inline constexpr void ReadBytes( _Inout_ CParsePoint& parse_point, _Out_writes_bytes_( number_of_bytes ) uint8_t * buffer, _In_ uint64_t const number_of_bytes ) const noexcept
     {
         WFC_VALIDATE_POINTER( buffer );
 
@@ -949,7 +932,7 @@ public:
         }
     }
 
-    inline _Check_return_ bool ReadUInt32BigEndian( _Inout_ CParsePoint& parse_point, _Inout_ uint32_t& value ) const noexcept
+    inline constexpr _Check_return_ bool ReadUInt32BigEndian( _Inout_ CParsePoint& parse_point, _Inout_ uint32_t& value ) const noexcept
     {
         uint8_t const byte_1 = ReadByte( parse_point );
         uint8_t const byte_2 = ReadByte( parse_point );
@@ -961,7 +944,7 @@ public:
         return( true );
     }
 
-    inline _Check_return_ uint32_t ReadUInt32BigEndian( _Inout_ CParsePoint& parse_point ) const noexcept
+    inline constexpr _Check_return_ uint32_t ReadUInt32BigEndian( _Inout_ CParsePoint& parse_point ) const noexcept
     {
         uint32_t return_value = 0;
 
@@ -973,7 +956,7 @@ public:
         return( return_value );
     }
 
-    inline _Check_return_ bool ReadtInt32BigEndian( _Inout_ CParsePoint& parse_point, _Inout_ int32_t& value ) const noexcept
+    inline constexpr _Check_return_ bool ReadtInt32BigEndian( _Inout_ CParsePoint& parse_point, _Inout_ int32_t& value ) const noexcept
     {
         uint32_t first_value = 0;
 
@@ -984,7 +967,7 @@ public:
         return( return_value );
     }
 
-    inline _Check_return_ int32_t ReadInt32BigEndian( _Inout_ CParsePoint& parse_point ) const noexcept
+    inline constexpr _Check_return_ int32_t ReadInt32BigEndian( _Inout_ CParsePoint& parse_point ) const noexcept
     {
         int32_t return_value = 0;
 
@@ -996,7 +979,7 @@ public:
         return( return_value );
     }
 
-    inline _Check_return_ bool ReadUInt16LittleEndian( _Inout_ CParsePoint& parse_point, _Inout_ uint16_t& value ) const noexcept
+    inline constexpr _Check_return_ bool ReadUInt16LittleEndian( _Inout_ CParsePoint& parse_point, _Inout_ uint16_t& value ) const noexcept
     {
         uint8_t const byte_1 = ReadByte( parse_point );
         uint8_t const byte_2 = ReadByte( parse_point );
@@ -1006,7 +989,7 @@ public:
         return( true );
     }
 
-    inline _Check_return_ uint16_t ReadUInt16LittleEndian( _Inout_ CParsePoint& parse_point ) const noexcept
+    inline constexpr _Check_return_ uint16_t ReadUInt16LittleEndian( _Inout_ CParsePoint& parse_point ) const noexcept
     {
         uint16_t return_value = 0;
 
@@ -1018,7 +1001,7 @@ public:
         return( return_value );
     }
 
-    inline _Check_return_ int16_t ReadInt16LittleEndian( _Inout_ CParsePoint& parse_point ) const noexcept
+    inline constexpr _Check_return_ int16_t ReadInt16LittleEndian( _Inout_ CParsePoint& parse_point ) const noexcept
     {
         uint16_t return_value = 0;
 
@@ -1030,7 +1013,7 @@ public:
         return( return_value );
     }
 
-    inline _Check_return_ bool ReadInt16LittleEndian( _Inout_ CParsePoint& parse_point, _Inout_ int16_t& value ) const noexcept
+    inline constexpr _Check_return_ bool ReadInt16LittleEndian( _Inout_ CParsePoint& parse_point, _Inout_ int16_t& value ) const noexcept
     {
         uint8_t const byte_1 = ReadByte( parse_point );
         uint8_t const byte_2 = ReadByte( parse_point );
@@ -1040,7 +1023,7 @@ public:
         return( true );
     }
 
-    inline _Check_return_ bool ReadUInt32LittleEndian( _Inout_ CParsePoint& parse_point, _Inout_ uint32_t& value ) const noexcept
+    inline constexpr _Check_return_ bool ReadUInt32LittleEndian( _Inout_ CParsePoint& parse_point, _Inout_ uint32_t& value ) const noexcept
     {
         uint8_t const byte_1 = ReadByte( parse_point );
         uint8_t const byte_2 = ReadByte( parse_point );
@@ -1052,7 +1035,7 @@ public:
         return( true );
     }
 
-    inline _Check_return_ uint32_t ReadUInt32LittleEndian( _Inout_ CParsePoint& parse_point ) const noexcept
+    inline constexpr _Check_return_ uint32_t ReadUInt32LittleEndian( _Inout_ CParsePoint& parse_point ) const noexcept
     {
         uint32_t return_value = 0;
 
@@ -1064,7 +1047,7 @@ public:
         return( return_value );
     }
 
-    inline _Check_return_ bool ReadInt32LittleEndian( _Inout_ CParsePoint& parse_point, _Inout_ int32_t& value ) const noexcept
+    inline constexpr _Check_return_ bool ReadInt32LittleEndian( _Inout_ CParsePoint& parse_point, _Inout_ int32_t& value ) const noexcept
     {
         uint32_t first_value = 0;
 
@@ -1075,7 +1058,7 @@ public:
         return( return_value );
     }
 
-    inline _Check_return_ uint32_t ReadInt32LittleEndian( _Inout_ CParsePoint& parse_point ) const noexcept
+    inline constexpr _Check_return_ uint32_t ReadInt32LittleEndian( _Inout_ CParsePoint& parse_point ) const noexcept
     {
         int32_t return_value = 0;
 
@@ -1087,7 +1070,7 @@ public:
         return( return_value );
     }
 
-    inline _Check_return_ bool ReadUInt64BigEndian( _Inout_ CParsePoint& parse_point, _Inout_ uint64_t& value ) const noexcept
+    inline constexpr _Check_return_ bool ReadUInt64BigEndian( _Inout_ CParsePoint& parse_point, _Inout_ uint64_t& value ) const noexcept
     {
         uint8_t const byte_1 = ReadByte( parse_point );
         uint8_t const byte_2 = ReadByte( parse_point );
@@ -1103,7 +1086,7 @@ public:
         return( true );
     }
 
-    inline _Check_return_ bool ReadInt64BigEndian( _Inout_ CParsePoint& parse_point, _Inout_ int64_t& value ) const noexcept
+    inline constexpr _Check_return_ bool ReadInt64BigEndian( _Inout_ CParsePoint& parse_point, _Inout_ int64_t& value ) const noexcept
     {
         uint64_t first_value = 0;
 
@@ -1114,7 +1097,7 @@ public:
         return( return_value );
     }
 
-    inline _Check_return_ bool ReadUInt64LittleEndian( _Inout_ CParsePoint& parse_point, _Inout_ uint64_t& value ) const noexcept
+    inline constexpr _Check_return_ bool ReadUInt64LittleEndian( _Inout_ CParsePoint& parse_point, _Inout_ uint64_t& value ) const noexcept
     {
         uint8_t const byte_1 = ReadByte( parse_point );
         uint8_t const byte_2 = ReadByte( parse_point );
@@ -1130,7 +1113,7 @@ public:
         return( true );
     }
 
-    inline _Check_return_ uint64_t ReadUInt64LittleEndian( _Inout_ CParsePoint& parse_point ) const noexcept
+    inline constexpr _Check_return_ uint64_t ReadUInt64LittleEndian( _Inout_ CParsePoint& parse_point ) const noexcept
     {
         uint64_t return_value = 0;
 
@@ -1142,7 +1125,7 @@ public:
         return( return_value );
     }
 
-    inline _Check_return_ bool ReadInt64LittleEndian( _Inout_ CParsePoint& parse_point, _Inout_ int64_t& value ) const noexcept
+    inline constexpr _Check_return_ bool ReadInt64LittleEndian( _Inout_ CParsePoint& parse_point, _Inout_ int64_t& value ) const noexcept
     {
         uint64_t first_value = 0;
 
@@ -1153,7 +1136,7 @@ public:
         return( return_value );
     }
 
-    inline _Check_return_ int64_t ReadInt64LittleEndian( _Inout_ CParsePoint& parse_point ) const noexcept
+    inline constexpr _Check_return_ int64_t ReadInt64LittleEndian( _Inout_ CParsePoint& parse_point ) const noexcept
     {
         int64_t return_value = 0;
 
@@ -1233,11 +1216,8 @@ public:
         return( return_value );
     }
 
-    inline _Check_return_ uint8_t GetAt( _In_ uint64_t const byte_index ) const noexcept
+    inline constexpr _Check_return_ uint8_t GetAt( _In_ uint64_t const byte_index ) const noexcept
     {
-        try
-        {
-
 #if defined( _DEBUG )
 
             if ( byte_index == m_LastIndex )
@@ -1272,26 +1252,19 @@ public:
             }
 
             return( m_Bytes[ byte_index ] );
-        }
-        catch( ... )
-        {
-            return( 0 );
-        }
     }
 
     // Take a look a the current character without advancing the parse point
 
-    inline _Check_return_ DWORD GetCharacter( _In_ CParsePoint const& const_parse_point, _In_ uint32_t const number_of_characters_ahead = 0 ) const noexcept
+    inline constexpr _Check_return_ DWORD GetCharacter( _In_ CParsePoint const& const_parse_point, _In_ uint32_t const number_of_characters_ahead = 0 ) const noexcept
     {
-        try
-        {
             if ( m_Bytes == nullptr )
             {
                 WFC_SET_LAST_ERROR( ERROR_INVALID_ADDRESS );
                 return( 0 );
             }
 
-            CParsePoint parse_point( const_parse_point );
+            CParsePoint parse_point(const_parse_point);
 
             if ( parse_point.GetIndex() >= m_NumberOfBytes )
             {
@@ -1338,7 +1311,7 @@ public:
 
             uint32_t character = 0;
 
-            if ( IsTextASCII() != true )
+            if ( IsTextASCII() == false)
             {
                 if ( IsTextUCS4() == false )
                 {
@@ -1360,7 +1333,7 @@ public:
                     // This version is for the GCC compiler. The above line was too
                     // complicated for it (i.e. exposed a bug). This version does the
                     // same thing.
-                    if ( IsTextBigEndian() != true )
+                    if ( IsTextBigEndian() == false)
                     {
                         // Intel Format
                         character = MAKEWORD( little_end, big_end );
@@ -1462,11 +1435,6 @@ public:
 
             WFC_SET_LAST_ERROR( NO_ERROR );
             return( little_end );
-        }
-        catch( ... )
-        {
-            return( 0 );
-        }
     }
 
     inline _Check_return_ bool GetField( _Inout_ CParsePoint& parse_point, _Inout_ std::vector<uint8_t>& field, _In_ wchar_t const field_separator ) const noexcept
@@ -1475,7 +1443,7 @@ public:
 
         uint32_t field_character = 0;
 
-        while( GetNextCharacter( parse_point, field_character ) != false )
+        while( GetNextCharacter( parse_point, field_character ) == true )
         {
             if ( field_character == field_separator )
             {
@@ -1499,7 +1467,7 @@ public:
 
         uint32_t field_character = 0;
 
-        while( GetNextCharacter( parse_point, field_character ) != false )
+        while( GetNextCharacter( parse_point, field_character ) == true )
         {
             if ( field_character == field_separator )
             {
@@ -1512,10 +1480,8 @@ public:
         return (field.empty() == true ? false : true);
     }
 
-    inline _Check_return_ bool GetNextCharacter( _Inout_ CParsePoint& parse_point, _Inout_ uint32_t& character ) const noexcept
+    inline constexpr _Check_return_ bool GetNextCharacter( _Inout_ CParsePoint& parse_point, _Inout_ uint32_t& character ) const noexcept
     {
-        try
-        {
             if ( m_Bytes == nullptr )
             {
                 WFC_SET_LAST_ERROR( ERROR_INVALID_ADDRESS );
@@ -1531,7 +1497,7 @@ public:
             uint8_t little_end = m_Bytes[ parse_point.GetIndex() ];
             parse_point.AutoIncrement( little_end );
 
-            if ( IsTextASCII() != true )
+            if ( IsTextASCII() == false)
             {
                 if ( IsTextUCS4() == false )
                 {
@@ -1554,7 +1520,7 @@ public:
                     // complicated for it (i.e. exposed a bug). This version does the
                     // same thing.
 
-                    if ( IsTextBigEndian() != true )
+                    if ( IsTextBigEndian() == false)
                     {
                         // Intel Format
 
@@ -1659,14 +1625,9 @@ public:
             character = little_end;
             WFC_SET_LAST_ERROR( NO_ERROR );
             return( true );
-        }
-        catch( ... )
-        {
-            return( false );
-        }
     }
 
-    inline _Check_return_ bool SkipLines(_Inout_ CParsePoint& parse_point, _In_ int const number_of_lines) const noexcept
+    inline constexpr _Check_return_ bool SkipLines(_Inout_ CParsePoint& parse_point, _In_ int const number_of_lines) const noexcept
     {
         int line_count = 0;
 
@@ -1739,13 +1700,13 @@ public:
 
         uint32_t line_character = 0;
 
-        while (GetNextCharacter(parse_point, line_character) != false)
+        while (GetNextCharacter(parse_point, line_character) == true)
         {
             if (line_character == CARRIAGE_RETURN || line_character == 0x00)
             {
                 // Now take a look a the current character without advancing the parse point
 
-                if (PeekNextCharacter(parse_point, line_character) != false)
+                if (PeekNextCharacter(parse_point, line_character) == true)
                 {
                     if (line_character == LINE_FEED)
                     {
@@ -1781,13 +1742,13 @@ public:
 
         uint32_t line_character = 0;
 
-        while( GetNextCharacter( parse_point, line_character ) != false )
+        while( GetNextCharacter( parse_point, line_character ) == true )
         {
             if ( line_character == CARRIAGE_RETURN )
             {
                 // Now take a look a the current character without advancing the parse point
 
-                if ( PeekNextCharacter( parse_point, line_character ) != false )
+                if ( PeekNextCharacter( parse_point, line_character ) == true )
                 {
                     if ( line_character == LINE_FEED || line_character == 0x00 )
                     {
@@ -1974,7 +1935,7 @@ public:
 
 #if defined( CSTRING_APPENDING_IS_FAST )
 
-            while (GetNextCharacter(parse_point, character) != false)
+            while (GetNextCharacter(parse_point, character) == true)
             {
 #if ! defined( UNICODE )
                 // ASCII build, check for UNICODE translation problem
@@ -2000,7 +1961,7 @@ public:
 
             std::vector<uint8_t> byte_array;
 
-            while (GetNextCharacter(parse_point, character) != false)
+            while (GetNextCharacter(parse_point, character) == true)
             {
 #if ! defined( UNICODE )
                 // ASCII build, check for UNICODE translation problem
@@ -2027,7 +1988,7 @@ public:
                     // need to multiply the number of characters by the number of bytes per
                     // character to get the memcmp() to work properly.
 
-                    if (::memcmp(address_to_compare, termination_characters.c_str(), termination_characters_length * sizeof(wchar_t)) == 0)
+                    if (::memcmp(address_to_compare, termination_characters.c_str(), termination_characters_length * sizeof(wchar_t)) == I_AM_EQUAL_TO_THAT)
                     {
 #if defined( UNICODE )
                         (void)byte_array.push_back(0);
@@ -2088,9 +2049,9 @@ public:
                     return( false );
                 }
             }
-            while( 0 != ::memcmp( &m_Bytes[ parse_point.GetIndex() ], termination_bytes_p, termination_bytes_length ) );
+            while(I_AM_EQUAL_TO_THAT != ::memcmp( &m_Bytes[ parse_point.GetIndex() ], termination_bytes_p, termination_bytes_length ) );
 
-            for( uint32_t loop_index = 0; loop_index < termination_bytes_length; loop_index++ )
+            for( auto const loop_index : Range(termination_bytes_length) )
             {
                 //move to the end of the string
                 character_to_test = m_Bytes[ parse_point.GetIndex() ];
@@ -2227,15 +2188,13 @@ public:
         }
     }
 
-    inline constexpr _Check_return_ bool IsTextASCII( void ) const noexcept     { return( ( m_IsASCII     == false ) ? false : ( m_IsUCS4 != false ) ? false : true ); }
+    inline constexpr _Check_return_ bool IsTextASCII( void ) const noexcept     { return( ( m_IsASCII     == false ) ? false : ( m_IsUCS4 == true ) ? false : true ); }
     inline constexpr _Check_return_ bool IsTextBigEndian( void ) const noexcept { return( ( m_IsBigEndian == false ) ? false : true ); }
     inline constexpr _Check_return_ bool IsTextUCS4( void ) const noexcept      { return( ( m_IsUCS4      == false ) ? false : true ); }
     inline constexpr _Check_return_ uint8_t const * GetData( void ) const noexcept { return( m_Bytes ); }
 
-    inline _Check_return_ bool PeekAtCharacter( _In_ CParsePoint const& const_parse_point, _Inout_ uint32_t& character, _In_ uint64_t const number_of_characters_ahead = 1 ) const noexcept
+    inline constexpr _Check_return_ bool PeekAtCharacter( _In_ CParsePoint const& const_parse_point, _Inout_ uint32_t& character, _In_ uint64_t const number_of_characters_ahead = 1 ) const noexcept
     {
-        try
-        {
             if ( m_Bytes == nullptr )
             {
                 WFC_SET_LAST_ERROR( ERROR_INVALID_ADDRESS );
@@ -2287,7 +2246,7 @@ public:
 
             // Get the first byte of the character
 
-            if ( IsTextASCII() != true )
+            if ( IsTextASCII() == false )
             {
                 if ( IsTextUCS4() == false )
                 {
@@ -2377,28 +2336,23 @@ public:
             character = little_end;
             WFC_SET_LAST_ERROR( NO_ERROR );
             return( true );
-        }
-        catch( ... )
-        {
-            return( false );
-        }
     }
 
-    inline _Check_return_ uint32_t PeekCharacter( _In_ CParsePoint const& const_parse_point, _In_ uint64_t const number_of_characters_ahead ) const noexcept
+    inline constexpr _Check_return_ uint32_t PeekCharacter( _In_ CParsePoint const& const_parse_point, _In_ uint64_t const number_of_characters_ahead ) const noexcept
     {
         uint32_t return_value = 0;
         (void) PeekAtCharacter(const_parse_point, return_value, number_of_characters_ahead );
         return( return_value );
     }
 
-    inline _Check_return_ bool PeekNextCharacter( _In_ CParsePoint const& const_parse_point, _Out_ uint32_t& character ) const noexcept
+    inline constexpr _Check_return_ bool PeekNextCharacter( _In_ CParsePoint const& const_parse_point, _Out_ uint32_t& character ) const noexcept
     {
         character = 0;
         CParsePoint peek_point(const_parse_point);
         return( GetNextCharacter( peek_point, character ) );
     }
 
-    inline _Check_return_ bool PeekAtByte(_In_ CParsePoint const& const_parse_point, _Out_ uint8_t& value) const noexcept
+    inline constexpr _Check_return_ bool PeekAtByte(_In_ CParsePoint const& const_parse_point, _Out_ uint8_t& value) const noexcept
     {
         uint64_t const index = const_parse_point.GetIndex();
 
@@ -2460,7 +2414,7 @@ public:
         }
     }
 
-    inline void DetectText( _Inout_ CParsePoint& p ) noexcept
+    inline constexpr void DetectText( _Inout_ CParsePoint& p ) noexcept
     {
         uint8_t const byte_1 = ReadByte( p );
         uint8_t const byte_2 = ReadByte( p );
@@ -2496,10 +2450,10 @@ public:
 
         uint8_t const byte_4 = ReadByte( p );
 
-        if ( wfc_is_ascii( byte_1 ) != false &&
-            wfc_is_ascii( byte_2 ) != false &&
-            wfc_is_ascii( byte_3 ) != false &&
-            wfc_is_ascii( byte_4 ) != false )
+        if ( Win32FoundationClasses::wfc_is_ascii( byte_1 ) == true &&
+            Win32FoundationClasses::wfc_is_ascii( byte_2 ) == true &&
+            Win32FoundationClasses::wfc_is_ascii( byte_3 ) == true &&
+            Win32FoundationClasses::wfc_is_ascii( byte_4 ) == true)
         {
             // all 4 are ascii
             (void) SetTextToASCII( true );
@@ -2509,8 +2463,8 @@ public:
 
         if ( byte_2 == 0x00 &&
             byte_4 == 0x00 &&
-            wfc_is_ascii( byte_1 ) != false &&
-            wfc_is_ascii( byte_3 ) != false )
+            wfc_is_ascii( byte_1 ) == true &&
+            wfc_is_ascii( byte_3 ) == true)
         {
             // UTF-16, Big Endian
             (void) SetTextToASCII( false );
@@ -2520,9 +2474,9 @@ public:
         }
 
         if ( byte_1 == 0x00 &&
-            wfc_is_ascii( byte_2 ) != false &&
+            wfc_is_ascii( byte_2 ) == true &&
             byte_3 == 0x00 &&
-            wfc_is_ascii( byte_4 ) != false )
+            wfc_is_ascii( byte_4 ) == true)
         {
             // UTF-16, Big Endian
             (void) SetTextToASCII( false );
@@ -2607,20 +2561,20 @@ public:
     BinaryReader(_In_ BinaryReader const&) = delete;
     _Check_return_ BinaryReader& operator=(_In_ BinaryReader const&) = delete;
 
-    BinaryReader(){};
+    inline constexpr BinaryReader() noexcept {};
     ~BinaryReader(){};
 
-    inline _Check_return_ uint8_t ReadByte( void ) noexcept
+    inline constexpr _Check_return_ uint8_t ReadByte( void ) noexcept
     {
         return( Parser.ReadByte( Position ) );
     }
 
-    inline _Check_return_ uint8_t ReadInt8( void ) noexcept
+    inline constexpr _Check_return_ uint8_t ReadInt8( void ) noexcept
     {
         return( Parser.ReadByte( Position ) );
     }
 
-    inline void ReadBytes(_Out_ uint8_t * buffer, _In_ uint64_t const number_of_bytes ) noexcept
+    inline constexpr void ReadBytes(_Out_ uint8_t * buffer, _In_ uint64_t const number_of_bytes ) noexcept
     {
         if ( buffer == nullptr )
         {
@@ -2635,32 +2589,32 @@ public:
         return( Parser.ReadGUID( Position ) );
     }
 
-    inline _Check_return_ int16_t ReadInt16( void ) noexcept
+    inline constexpr _Check_return_ int16_t ReadInt16( void ) noexcept
     {
         return( Parser.ReadInt16LittleEndian( Position ) );
     }
 
-    inline _Check_return_ int32_t ReadInt32( void ) noexcept
+    inline constexpr _Check_return_ int32_t ReadInt32( void ) noexcept
     {
         return( Parser.ReadInt32LittleEndian( Position ) );
     }
 
-    inline _Check_return_ int64_t ReadInt64( void ) noexcept
+    inline constexpr _Check_return_ int64_t ReadInt64( void ) noexcept
     {
         return( Parser.ReadInt64LittleEndian( Position ) );
     }
 
-    inline _Check_return_ uint16_t ReadUInt16( void ) noexcept
+    inline constexpr _Check_return_ uint16_t ReadUInt16( void ) noexcept
     {
         return( Parser.ReadUInt16LittleEndian( Position ) );
     }
 
-    inline _Check_return_ uint32_t ReadUInt32( void ) noexcept
+    inline constexpr _Check_return_ uint32_t ReadUInt32( void ) noexcept
     {
         return( Parser.ReadUInt32LittleEndian( Position ) );
     }
 
-    inline _Check_return_ uint64_t ReadUInt64( void ) noexcept
+    inline constexpr _Check_return_ uint64_t ReadUInt64( void ) noexcept
     {
         return( Parser.ReadUInt64LittleEndian( Position ) );
     }

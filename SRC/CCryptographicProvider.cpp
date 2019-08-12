@@ -508,7 +508,7 @@ bool CCryptographicProvider::GetNext( DWORD& flags, CCryptographicAlgorithm& alg
 
    std::vector<uint8_t> buffer;
 
-   if ( GetParameter( parameterEnumerateAlgorithms, buffer, flags ) != false )
+   if ( GetParameter( parameterEnumerateAlgorithms, buffer, flags ) == true)
    {
       algorithm.Copy( reinterpret_cast<PROV_ENUMALGS *>( buffer.data() ) );
 

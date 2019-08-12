@@ -53,14 +53,14 @@ USING_WFC_NAMESPACE
 
 // Construction
 
-CMixerVolumeControl::CMixerVolumeControl()
+CMixerVolumeControl::CMixerVolumeControl() noexcept
 {
    WFC_VALIDATE_POINTER( this );
    (void) m_Channels.push_back( m_LeftChannel );
    (void) m_Channels.push_back( m_RightChannel );
 }
 
-CMixerVolumeControl::CMixerVolumeControl( __in CMixerVolumeControl const& source )
+CMixerVolumeControl::CMixerVolumeControl( __in CMixerVolumeControl const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    m_Channels.push_back( m_LeftChannel );
@@ -68,7 +68,7 @@ CMixerVolumeControl::CMixerVolumeControl( __in CMixerVolumeControl const& source
    Copy( source );
 }
 
-CMixerVolumeControl::~CMixerVolumeControl()
+CMixerVolumeControl::~CMixerVolumeControl() noexcept
 {
    WFC_VALIDATE_POINTER( this );
 }
@@ -128,7 +128,7 @@ _Check_return_ DWORD CMixerVolumeControl::GetLeftChannelVolume( void ) noexcept
 
    DWORD gain = 0;
 
-   if ( m_GetAll() != false )
+   if ( m_GetAll() == true )
    {
       gain = m_LeftChannel.Parameter1;
    }
@@ -142,7 +142,7 @@ _Check_return_ DWORD CMixerVolumeControl::GetVolume( void ) noexcept
 
    DWORD gain = 0;
 
-   if ( m_GetAll() != false )
+   if ( m_GetAll() == true )
    {
       gain = m_BothChannels.Parameter1;
    }
@@ -156,7 +156,7 @@ _Check_return_ DWORD CMixerVolumeControl::GetRightChannelVolume( void ) noexcept
 
    DWORD gain = 0;
 
-   if ( m_GetAll() != false )
+   if ( m_GetAll() == true )
    {
       gain = m_RightChannel.Parameter1;
    }
@@ -170,7 +170,7 @@ _Check_return_ bool CMixerVolumeControl::m_GetAll( void ) noexcept
 
    std::vector<CMixerControlDetailsData> array;
 
-   const bool return_value = m_Mixer.GetControlDetails( m_MixerLine, m_MixerControl, array );
+   bool const return_value = m_Mixer.GetControlDetails( m_MixerLine, m_MixerControl, array );
 
    if ( return_value == false )
    {
@@ -220,7 +220,7 @@ _Check_return_ bool CMixerVolumeControl::SetLeftChannelVolume( __in DWORD const 
 
    m_LeftChannel.Parameter1 = new_level;
 
-   const bool return_value = m_Mixer.SetControlDetails( m_MixerLine, m_MixerControl, m_Channels );
+   bool const return_value = m_Mixer.SetControlDetails( m_MixerLine, m_MixerControl, m_Channels );
 
    if ( return_value != FALSE )
    {
@@ -249,9 +249,9 @@ _Check_return_ bool CMixerVolumeControl::SetVolume( __in DWORD const desired_lev
    m_LeftChannel.Parameter1  = new_level;
    m_RightChannel.Parameter1 = new_level;
 
-   const bool return_value = m_Mixer.SetControlDetails( m_MixerLine, m_MixerControl, m_Channels );
+   bool const return_value = m_Mixer.SetControlDetails( m_MixerLine, m_MixerControl, m_Channels );
 
-   if ( return_value != false )
+   if ( return_value == true )
    {
       (void) m_GetAll();
    }
@@ -279,9 +279,9 @@ _Check_return_ bool CMixerVolumeControl::SetRightChannelVolume( __in DWORD const
 
    m_RightChannel.Parameter1 = new_level;
 
-   const bool return_value = m_Mixer.SetControlDetails( m_MixerLine, m_MixerControl, m_Channels );
+   bool const return_value = m_Mixer.SetControlDetails( m_MixerLine, m_MixerControl, m_Channels );
 
-   if ( return_value != false )
+   if ( return_value == true)
    {
       (void) m_GetAll();
    }

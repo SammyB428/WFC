@@ -88,10 +88,10 @@ public:
 
     // Construction
 
-    CMemoryFile();
+    CMemoryFile() noexcept;
     CMemoryFile( __in std::size_t const allocation_granularity,
         __in_opt SECURITY_ATTRIBUTES * security_attributes = nullptr,
-        __in_opt SECURITY_DESCRIPTOR * security_descriptor = nullptr );
+        __in_opt SECURITY_DESCRIPTOR * security_descriptor = nullptr ) noexcept;
 
     virtual ~CMemoryFile();
 
@@ -164,12 +164,12 @@ public:
 
     // Construction
 
-    CSharedMemory();
+    CSharedMemory() noexcept;
     virtual ~CSharedMemory();
 
     static inline _Check_return_ bool CreateServiceDACL( _Inout_ SECURITY_ATTRIBUTES * sa) noexcept
     {
-        static wchar_t const *sdd = L"D:"
+        static constexpr wchar_t const *sdd = L"D:"
             L"(D;OICI;GA;;;BG)" //Deny guests
             L"(D;OICI;GA;;;AN)" //Deny anonymous
             L"(A;OICI;GRGWGX;;;AU)" //Allow read, write and execute for Users
@@ -187,7 +187,7 @@ public:
     void Close( void ) noexcept;
 
     // We no longer want CSharedMemory to manage the lifetime of the shared memory. I hope you called GetHandle otherwise you will leak a resource.
-    inline void Detach( void ) noexcept
+    inline constexpr void Detach( void ) noexcept
     {
         m_Handle = INVALID_HANDLE_VALUE;
         m_Size = 0;

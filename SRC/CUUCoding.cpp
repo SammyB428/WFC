@@ -322,8 +322,7 @@ _Check_return_ bool CUUCoding::Decode( _In_ std::wstring const& source, _Out_ st
 
     bool return_value = false;
 
-    std::size_t loop_index                = 0;
-    std::size_t number_of_bytes_to_decode = source.length();
+    std::size_t const number_of_bytes_to_decode = source.length();
 
     // Since we're decoding, we are most likely in a performance-minded
     // part of an application, let's go for a speedy method for accessing
@@ -339,10 +338,9 @@ _Check_return_ bool CUUCoding::Decode( _In_ std::wstring const& source, _Out_ st
 
     WFC_TRY
     {
-        while( loop_index < number_of_bytes_to_decode )
+        for ( auto const loop_index : Range(number_of_bytes_to_decode) )
         {
             buffer[ loop_index ] = static_cast< uint8_t >( input_buffer[ loop_index ] );
-            loop_index++;
         }
 
         return_value = Decode( bytes_to_decode, destination );
@@ -381,7 +379,7 @@ _Check_return_ bool CUUCoding::Encode( _In_ std::vector<uint8_t> const& source, 
 
     auto input_buffer = source.data();
 
-    while( index < number_of_bytes_to_encode )
+    while( index < number_of_bytes_to_encode ) // Cannot be converted to a Range loop
     {
         line_index = 0;
 
@@ -395,7 +393,7 @@ _Check_return_ bool CUUCoding::Encode( _In_ std::vector<uint8_t> const& source, 
             // Output the number of bytes in this line
             destination.push_back( UU_ENCODE_BYTE( 45 ) );
 
-            while( line_index < 45 )
+            while( line_index < 45 ) // Cannot be converted to a Range loop
             {
                 byte_to_encode_1 = input_buffer[ index ];
                 line_index++;
@@ -432,7 +430,7 @@ _Check_return_ bool CUUCoding::Encode( _In_ std::vector<uint8_t> const& source, 
             // Output the number of bytes in this line
             destination.push_back( UU_ENCODE_BYTE( number_of_bytes_to_encode - index ) );
 
-            while( index < number_of_bytes_to_encode )
+            while( index < number_of_bytes_to_encode ) // Cannot be converted to a Range loop
             {
                 if ( index < number_of_bytes_to_encode )
                 {

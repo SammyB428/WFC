@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 1995-2016, Samuel R. Blackburn
+** Copyright, 1995-2019, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -221,7 +221,80 @@ class CSystemTime : public _SYSTEMTIME
           return(true);
       }
 
-      _Check_return_ LONG Compare( __in CSystemTime const& source ) const noexcept;
+      inline constexpr _Check_return_ LONG Compare(__in CSystemTime const& source) const noexcept
+      {
+          if (wYear < source.wYear)
+          {
+              return(I_AM_LESS_THAN_THAT);
+          }
+
+          if (wYear > source.wYear)
+          {
+              return(I_AM_GREATER_THAN_THAT);
+          }
+
+          if (wMonth < source.wMonth)
+          {
+              return(I_AM_LESS_THAN_THAT);
+          }
+
+          if (wMonth > source.wMonth)
+          {
+              return(I_AM_GREATER_THAN_THAT);
+          }
+
+          if (wDay < source.wDay)
+          {
+              return(I_AM_LESS_THAN_THAT);
+          }
+
+          if (wDay > source.wDay)
+          {
+              return(I_AM_GREATER_THAN_THAT);
+          }
+
+          if (wHour < source.wHour)
+          {
+              return(I_AM_LESS_THAN_THAT);
+          }
+
+          if (wHour > source.wHour)
+          {
+              return(I_AM_GREATER_THAN_THAT);
+          }
+
+          if (wMinute < source.wMinute)
+          {
+              return(I_AM_LESS_THAN_THAT);
+          }
+
+          if (wMinute > source.wMinute)
+          {
+              return(I_AM_GREATER_THAN_THAT);
+          }
+
+          if (wSecond < source.wSecond)
+          {
+              return(I_AM_LESS_THAN_THAT);
+          }
+
+          if (wSecond > source.wSecond)
+          {
+              return(I_AM_GREATER_THAN_THAT);
+          }
+
+          if (wMilliseconds < source.wMilliseconds)
+          {
+              return(I_AM_LESS_THAN_THAT);
+          }
+
+          if (wMilliseconds > source.wMilliseconds)
+          {
+              return(I_AM_GREATER_THAN_THAT);
+          }
+
+          return(I_AM_EQUAL_TO_THAT);
+      }
 
       inline constexpr void Copy( __in CSystemTime const& source ) noexcept
       {
@@ -313,7 +386,7 @@ class CSystemTime : public _SYSTEMTIME
       }
 
       _Check_return_ uint32_t NumberOfMinutesSinceMonday( void ) const noexcept;
-      _Check_return_ BOOL Set( void ) const noexcept;
+      _Check_return_ bool Set( void ) const noexcept;
 
       inline _Check_return_ int64_t Ticks( void ) const noexcept
       {

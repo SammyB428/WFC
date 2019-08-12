@@ -114,7 +114,7 @@ class CServiceControlManager
        }
 
        CServiceControlManager() noexcept;
-      virtual ~CServiceControlManager() noexcept;
+      virtual ~CServiceControlManager();
 
       void Close( void ) noexcept;
       _Check_return_ bool  Continue( _In_z_ wchar_t const * service_name ) noexcept;

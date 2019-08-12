@@ -64,7 +64,7 @@ class CBase64Coding
 
        // Construction
 
-      CBase64Coding();
+      CBase64Coding() noexcept;
 
       /*
       ** Destructor should be virtual according to MSJ article in Sept 1992

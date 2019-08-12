@@ -66,7 +66,7 @@ class CCriticalSectionGuard
          m_CriticalSection->Enter();
       };
 
-      inline ~CCriticalSectionGuard() noexcept
+      inline ~CCriticalSectionGuard()
       {
          m_CriticalSection->Exit();
       };

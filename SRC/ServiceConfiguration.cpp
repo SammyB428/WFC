@@ -368,12 +368,9 @@ void CServiceConfigurationA::Dump( CDumpContext& dump_context ) const
    dump_context << TEXT( "   m_StartName is            \"" ) << m_StartName            << TEXT( "\"\n" );
    dump_context << TEXT( "   m_DisplayName is          \"" ) << m_DisplayName          << TEXT( "\"\n" );
 
-   int index = 0;
-
-   while( index < m_Dependencies.GetSize() )
+   for ( auto const index : Range(m_Dependencies.GetSize()) )
    {
       dump_context << TEXT( "   m_Dependencies[ " ) << index << TEXT( " ] is \"" ) << m_Dependencies.GetAt( index ) << TEXT( "\"\n" );
-      index++;
    }
 
    dump_context << TEXT( "}\n" );

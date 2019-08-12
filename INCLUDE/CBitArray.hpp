@@ -43,6 +43,8 @@
 
 #define BIT_ARRAY_CLASS_HEADER
 
+#define AN_ELEMENT_THAT_IS_ALL_ONES (0xFFFFFFFF)
+
 class CBitArray
 {
    protected:
@@ -52,13 +54,20 @@ class CBitArray
       std::size_t m_TotalNumberOfBits{ 0 };
       std::size_t m_IndexOfFirstBit{ 0 };
 
-#if ! defined( _DEBUG )
+      inline constexpr _Check_return_ bool m_GetElementIndexOfBitLocation(__in std::size_t const bit_location, __out std::size_t& index, __out uint32_t& bit_number) const noexcept
+      {
+          // 1998-12-05
+          // New calculation provided by Peter Ekberg (peda@sectra.se) to get rid of floating point calculations
 
-      inline
+          // If we are using 32 bits per element, we can optimize the
+          // division to right shifting. Right shifting by 5 is the
+          // same as dividing by 32 ( (x/32) == (x>>5) )
+          // This formula is optimized for m_SizeOfBitRepresentation == 32
+          index = (bit_location + m_IndexOfFirstBit) >> 5;
 
-#endif // _DEBUG
-
-      _Check_return_ bool m_GetElementIndexOfBitLocation( __in std::size_t const bit_location, __out std::size_t& index, __out uint32_t& bit_number_in_element ) const noexcept;
+          bit_number = static_cast<uint32_t>(MostSignificantBitLocation() - ((bit_location + m_IndexOfFirstBit) % SizeOfBitRepresentation()));
+          return(true);
+}
 
 #if defined( _DEBUG )
 
@@ -73,10 +82,10 @@ class CBitArray
 
       CBitArray() noexcept;
       CBitArray( _In_ std::size_t const initial_size ) noexcept;
-      CBitArray(_In_ CBitArray const&  source ) noexcept;
+      CBitArray(_In_ CBitArray const& source ) noexcept;
       CBitArray(_In_ std::vector<uint8_t> const& source ) noexcept;
 
-      virtual ~CBitArray() noexcept;
+      virtual ~CBitArray();
 
       static inline constexpr int SizeOfBitRepresentation(void) noexcept { return(32); }
       static inline constexpr int MostSignificantBitLocation(void) noexcept { return(31); }
@@ -181,20 +190,5 @@ class CBitArray
 
 #endif // _DEBUG
 };
-
-#if ! defined( _DEBUG )
-
-inline _Check_return_ bool CBitArray::m_GetElementIndexOfBitLocation( __in std::size_t const bit_location, __out std::size_t& index, __out uint32_t& bit_number ) const noexcept
-{
-   // index = ( bit_location + m_IndexOfFirstBit ) / m_SizeOfBitRepresentation;
-
-   // This formula is optimized for m_SizeOfBitRepresentation == 32
-   index = ( bit_location + m_IndexOfFirstBit ) >> 5;
-
-   bit_number = (uint32_t) ( MostSignificantBitLocation() - ( ( bit_location + m_IndexOfFirstBit ) % SizeOfBitRepresentation() ) );
-   return( true );
-}
-
-#endif // _DEBUG
 
 #endif // BIT_ARRAY_CLASS_HEADER

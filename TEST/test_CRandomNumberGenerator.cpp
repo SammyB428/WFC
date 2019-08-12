@@ -48,9 +48,8 @@ static char THIS_FILE[] = __FILE__;
 #define new DEBUG_NEW
 #endif // _DEBUG
 
-static _Check_return_ bool count_ones_and_zeroes( _In_ const DWORD number_of_dwords_to_test ) noexcept
+static _Check_return_ bool count_ones_and_zeroes( _In_ DWORD const number_of_dwords_to_test ) noexcept
 {
-   DWORD loop_index                         = 0;
    DWORD number_of_ones                     = 0;
    DWORD number_of_zeroes                   = 0;
    DWORD length_of_longest_series_of_ones   = 0;
@@ -58,7 +57,6 @@ static _Check_return_ bool count_ones_and_zeroes( _In_ const DWORD number_of_dwo
    DWORD number_of_consecutive_ones         = 0;
    DWORD number_of_consecutive_zeroes       = 0;
    DWORD last_bit                           = 0;
-   DWORD bit_number                         = 0;
    DWORD random_value                       = 0;
    DWORD bit                                = 0;
    DWORD maximum_number_of_ones             = 0;
@@ -66,15 +64,10 @@ static _Check_return_ bool count_ones_and_zeroes( _In_ const DWORD number_of_dwo
 
    DWORD one_bits[ 32 ]; // Count the one-bits in the locations
 
-   bit_number = 0;
-
-   while( bit_number < std::size( one_bits ) )
+   for ( auto const bit_number : Range(std::size( one_bits )) )
    {
       one_bits[ bit_number ] = 0;
-      bit_number++;
    }
-
-   bit_number = 0;
 
    CRandomNumberGenerator2 generator;
    //CRandomNumberGenerator generator;
@@ -82,15 +75,13 @@ static _Check_return_ bool count_ones_and_zeroes( _In_ const DWORD number_of_dwo
 
    _tprintf( TEXT( "Testing %lu bits\n" ), number_of_dwords_to_test * 32 );
 
-   while( loop_index < number_of_dwords_to_test )
+   for ( auto const loop_index : Range(number_of_dwords_to_test) )
    {
       random_value = generator.GetInteger();
 
-      bit_number = 0;
-
-      while( bit_number < 32 )
+      for ( auto const bit_number : Range(32) )
       {
-         bit = _bittest( (const LONG *) &random_value, bit_number );
+         bit = _bittest( reinterpret_cast<LONG const *>(&random_value), static_cast<LONG>(bit_number) );
 
          if ( bit == 0 )
          {
@@ -134,11 +125,7 @@ static _Check_return_ bool count_ones_and_zeroes( _In_ const DWORD number_of_dwo
          }
 
          last_bit = bit;
-      
-         bit_number++;
       }
-
-      loop_index++;
    }
 
    // Now that we've collected our statistics, let's report them
@@ -154,11 +141,10 @@ static _Check_return_ bool count_ones_and_zeroes( _In_ const DWORD number_of_dwo
   // _tprintf( TEXT( "Longest series of zeroes %lu\n" ), length_of_longest_series_of_zeroes );
 
   // _tprintf( TEXT( "\nDistribution of 1's in location:\n" ), length_of_longest_series_of_zeroes );
-   bit_number = 0;
 
    std::wstring output_string;
 
-   while( bit_number < std::size( one_bits ) )
+   for( auto const bit_number : Range(std::size( one_bits )) )
    {
       if ( one_bits[ bit_number ] > maximum_number_of_ones )
       {
@@ -173,18 +159,17 @@ static _Check_return_ bool count_ones_and_zeroes( _In_ const DWORD number_of_dwo
       format( output_string, L"bit%lu = %lu", bit_number, one_bits[ bit_number ] );
     //  _tprintf( TEXT( "%s\n" ), (LPCTSTR) output_string );
       //WFCTRACEVAL( TEXT( " " ), output_string );
-      bit_number++;
    }
 
    // The last test we perform is to determine an even distribution of ones over the 32 bit positions.
    // Arbitrarily chosen to be a deviation of no more than 1%
 
-   DWORD distance = maximum_number_of_ones - minimum_number_of_ones;
+   DWORD const distance = maximum_number_of_ones - minimum_number_of_ones;
 
    // We had two choices for the value of the bit, 1 or 0. We can assume that roughly
    // half the values will turn out to be 1. This means our distance should be
    // calculated using the assumed total number of 1's.
-   DWORD half_the_sample_size = number_of_dwords_to_test / 2; // We had two choices for the
+   DWORD const half_the_sample_size = number_of_dwords_to_test / 2; // We had two choices for the
 
    double percentage = (double) ( (double) distance / (double) half_the_sample_size ) * (double) 100.0;
 
@@ -223,14 +208,11 @@ _Check_return_ bool test_CRandomNumberGenerator( _Out_ std::string& class_name, 
 
    class_name.assign( "CRandomNumberGenerator" );
 
-   int index = 0;
-
    double temp_double = 0.0;
 
-   while( index < 20000 )
+   for ( auto const index : Range(20000) )
    {
       temp_double = random_number.GetFloat();
-      index++;
    }
 
    temp_double = 4096.0 * 4096.0;
@@ -296,21 +278,21 @@ _Check_return_ bool test_CRandomNumberGenerator( _Out_ std::string& class_name, 
    // Don't let the generator produce truely random values.
    generator.Disable(true);
 
-   const DWORD seed = ::GetTickCount();
+   DWORD const seed = ::GetTickCount();
 
    generator.SetSeed(seed);
 
-   size_t loop_index = 0;
-   const size_t number_of_tests = 1000033;
+   std::size_t loop_index = 0;
+   std::size_t const number_of_tests = 1000033;
 
    uint32_t test_integer = 0;
    double test_double = 0.0;
 
-   const uint32_t minimum_integer = 137;
-   const uint32_t maximum_integer = 2115485863;
+   uint32_t const minimum_integer = 137;
+   uint32_t const maximum_integer = 2115485863;
    
-   const double minimum_double = 1.33;
-   const double maximum_double = 2115485863.19630502;
+   double const minimum_double = 1.33;
+   double const maximum_double = 2115485863.19630502;
 
    while (loop_index < number_of_tests)
    {

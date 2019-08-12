@@ -189,7 +189,7 @@ class CNetworkUsers : public CNetwork
        CNetworkUsers& operator=(__in CNetworkUsers const&) = delete;
        CNetworkUsers() noexcept;
       CNetworkUsers( __in_z_opt LPCTSTR machine_name ) noexcept;
-      virtual ~CNetworkUsers() noexcept;
+      virtual ~CNetworkUsers();
 
       enum _AccountTypes
       {

@@ -56,7 +56,7 @@ __checkReturn bool test_CJulianDate( __out std::string& class_name, __out int& t
 
    (void) date.Set( 2003, 11, 24 );
 
-   const double julian_date = date.Get();
+   double const julian_date = date.Get();
 
    if (julian_date != (double) 2452967.5)
    {

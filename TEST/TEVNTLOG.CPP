@@ -68,31 +68,31 @@ void test_CEventLog( void ) noexcept
 
    DWORD enumerator = 0;
 
-   if ( log.EnumerateLogs( enumerator ) == FALSE )
+   if ( log.EnumerateLogs( enumerator ) == false )
    {
       WFCTRACE( TEXT( "Can't enumerate logs.\n" ) );
    }
 
    std::wstring log_name;
 
-   while( log.GetNextLog( enumerator, log_name ) != FALSE )
+   while( log.GetNextLog( enumerator, log_name ) == true )
    {
       WFCTRACEVAL( TEXT( "Log: " ), log_name.c_str() );
    }
 
-   if ( log.CreateCustomLog( TEXT( "WFC" ) ) == FALSE )
+   if ( log.CreateCustomLog( TEXT( "WFC" ) ) == false )
    {
       WFCTRACE( TEXT( "Can't create WFC event log because" ) );
       WFCTRACEERROR( log.GetErrorCode() );
    }
 
-   if ( log.Open( TEXT( "WFC" ) ) == FALSE )
+   if ( log.Open( TEXT( "WFC" ) ) == false )
    {
       WFCTRACE( TEXT( "Can't Open WFC event log because" ) );
       WFCTRACEERROR( log.GetErrorCode() );
    }
 
-   if ( log.RegisterSource( TEXT( "WFC" ) ) == FALSE )
+   if ( log.RegisterSource( TEXT( "WFC" ) ) == false )
    {
       WFCTRACE( TEXT( "Can't Open WFC event log because" ) );
       WFCTRACEERROR( log.GetErrorCode() );
@@ -105,7 +105,7 @@ void test_CEventLog( void ) noexcept
 
    DWORD loop_index = 0;
 
-   while( log.Read( loop_index, record ) != FALSE )
+   while( log.Read( loop_index, record ) == true )
    {
 #if defined( _DEBUG ) && ! defined( WFC_STL )
       record.Dump( afxDump );
@@ -122,7 +122,7 @@ void test_CEventLog( void ) noexcept
    ASSERT( loop_index != 0 );
 
 #if 1
-   if ( log.Delete( TEXT( "WFC" ) ) == FALSE )
+   if ( log.Delete( TEXT( "WFC" ) ) == false )
    {
       WFCTRACE( TEXT( "Can't delete WFC event log because" ) );
       WFCTRACEERROR( log.GetErrorCode() );

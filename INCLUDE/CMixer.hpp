@@ -495,17 +495,32 @@ class CMixerControlInstance
 
       // Construction
 
-      CMixerControlInstance();
-      CMixerControlInstance( __in CMixerControlInstance const& source );
-      virtual ~CMixerControlInstance();
+       inline CMixerControlInstance() noexcept
+       {
+           m_WhatToNotify = 0;
+           m_WhoToNotify = 0;
+           m_NotifyData = 0;
+       }
+
+       inline CMixerControlInstance(__in CMixerControlInstance const& source) noexcept
+       {
+           Copy(source);
+       }
+
+       inline virtual ~CMixerControlInstance() noexcept
+       {
+           m_WhatToNotify = 0;
+           m_WhoToNotify = 0;
+           m_NotifyData = 0;
+       }
 
       // Methods
 
-      virtual void  Close( void ) noexcept;
-      virtual void  Copy( __in CMixerControlInstance const& source ) noexcept;
+      virtual void Close( void ) noexcept;
+      virtual void Copy( __in CMixerControlInstance const& source ) noexcept;
       virtual _Check_return_ bool Open( __in UINT_PTR device_id = 0, __in DWORD what_to_notify = 0, __in DWORD_PTR who_to_notify = 0, __in DWORD_PTR notify_data = 0 ) noexcept;
-      virtual void  SetLine( __in CMixerLine const& line ) noexcept;
-      virtual void  SetControl( __in CMixerControl const& control ) noexcept;
+      virtual void SetLine( __in CMixerLine const& line ) noexcept;
+      virtual void SetControl( __in CMixerControl const& control ) noexcept;
 
       // Operators
 
@@ -535,9 +550,19 @@ class CMixerSourceSelector : public CMixerControlInstance
 
       // Construction
 
-      CMixerSourceSelector( __in CMixerSourceSelector const& source );
-      CMixerSourceSelector( __in CMixerLine const& destination, __in CMixerControl const& mixer_control );
-      virtual ~CMixerSourceSelector();
+       inline CMixerSourceSelector(__in CMixerSourceSelector const& source) noexcept { Copy(source); }
+       inline CMixerSourceSelector(__in CMixerLine const& destination, __in CMixerControl const& mixer_control) noexcept
+       {
+           if (m_MixerControl.Type != CMixerControl::ControlType::Mixer)
+           {
+               m_MixerLine.Empty();
+           }
+
+           SetLine(destination);
+           SetControl(mixer_control);
+       }
+
+       inline virtual ~CMixerSourceSelector() noexcept { Close(); }
 
       // Methods
 
@@ -579,8 +604,8 @@ class CMixerVolumeControl : public CMixerControlInstance
 
       // Construction
 
-      CMixerVolumeControl();
-      CMixerVolumeControl( __in CMixerVolumeControl const& source );
+      CMixerVolumeControl() noexcept;
+      CMixerVolumeControl( __in CMixerVolumeControl const& source ) noexcept;
       virtual ~CMixerVolumeControl();
 
       // Methods
@@ -655,9 +680,9 @@ class CMixerSource : public CMixerControlInstance
 
       // Construction
 
-      CMixerSource();
-      CMixerSource( __in CMixerSource const& source );
-      virtual ~CMixerSource();
+       inline CMixerSource() noexcept {}
+       inline CMixerSource(__in CMixerSource const& source) noexcept { Copy(source); }
+       inline virtual ~CMixerSource() {};
 
       // Methods
 
@@ -684,15 +709,15 @@ class CMixerDestination : public CMixerControlInstance
 
       // Properties
 
-       CMixerSourceSelector * m_SourceSelector_p{ nullptr };
+       std::unique_ptr<CMixerSourceSelector> m_SourceSelector;
 
    public:
 
       // Construction
 
-      CMixerDestination();
-      CMixerDestination( __in CMixerDestination const& source );
-      virtual ~CMixerDestination();
+       inline CMixerDestination() noexcept {};
+       inline CMixerDestination(__in CMixerDestination const& source) noexcept { Copy(source); }
+       inline virtual ~CMixerDestination() {}
 
       // Methods
 
@@ -771,9 +796,9 @@ class CMixerSpeakers : public CMixerDestination
 
       // Construction
 
-      CMixerSpeakers();
-      CMixerSpeakers( __in CMixerSpeakers const& source );
-      virtual ~CMixerSpeakers();
+       inline CMixerSpeakers() noexcept {};
+       inline CMixerSpeakers(__in CMixerSpeakers const& source) noexcept { Copy(source); }
+       inline virtual ~CMixerSpeakers() {};
 
       // Methods
 

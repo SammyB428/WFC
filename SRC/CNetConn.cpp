@@ -164,7 +164,7 @@ _Check_return_ bool CNetworkConnections::GetNext( __out CNetworkConnectionInform
       {
          // We need another chunk
 
-         if ( m_GetChunk() != false )
+         if ( m_GetChunk() == true)
          {
             return( GetNext( information ) );
          }

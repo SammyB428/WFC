@@ -64,7 +64,7 @@ CModem::~CModem()
 {
    WFC_VALIDATE_POINTER( this );
 
-   if ( IsConnected() != false )
+   if ( IsConnected() == true )
    {
       (void) Disconnect();
    }
@@ -75,7 +75,7 @@ CModem::~CModem()
 _Check_return_ bool CModem::Connect( __in DWORD number_of_seconds_to_wait ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
-   ASSERT( m_IsOpen != false );
+   ASSERT( m_IsOpen == true );
 
    if ( m_IsOpen == false )
    {
@@ -117,9 +117,9 @@ _Check_return_ bool CModem::Connect( __in DWORD number_of_seconds_to_wait ) noex
 _Check_return_ bool CModem::Disconnect( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
-   ASSERT( m_IsOpen != false );
+   ASSERT( m_IsOpen == true );
 
-   if ( m_IsOpen != false )
+   if ( m_IsOpen == true )
    {
        std::string string_to_send( "+++ATH\r\n" );
 

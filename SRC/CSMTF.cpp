@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 1995-2016, Samuel R. Blackburn
+** Copyright, 1995-2019, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -57,20 +57,20 @@ USING_WFC_NAMESPACE
 
 // Construction
 
-CUINT64::CUINT64()
+CUINT64::CUINT64() noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Empty();
 }
 
-CUINT64::CUINT64( __in CUINT64 const& source )
+CUINT64::CUINT64( __in CUINT64 const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Empty();
    Copy( source );
 }
 
-CUINT64::CUINT64( __in SIXTY_FOUR_BIT_UNSIGNED_INTEGER const * source )
+CUINT64::CUINT64( __in SIXTY_FOUR_BIT_UNSIGNED_INTEGER const * source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
@@ -78,7 +78,7 @@ CUINT64::CUINT64( __in SIXTY_FOUR_BIT_UNSIGNED_INTEGER const * source )
    Copy( source );
 }
 
-CUINT64::~CUINT64()
+CUINT64::~CUINT64() noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Empty();
@@ -165,20 +165,20 @@ _Check_return_ CUINT64& CUINT64::operator=( __in SIXTY_FOUR_BIT_UNSIGNED_INTEGER
 
 // Construction
 
-CMTFDateTime::CMTFDateTime()
+CMTFDateTime::CMTFDateTime() noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Empty();
 }
 
-CMTFDateTime::CMTFDateTime( __in CMTFDateTime const& source )
+CMTFDateTime::CMTFDateTime( __in CMTFDateTime const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Empty();
    Copy( source );
 }
 
-CMTFDateTime::CMTFDateTime( __in MTF_DATE_TIME const * source )
+CMTFDateTime::CMTFDateTime( __in MTF_DATE_TIME const * source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
@@ -186,21 +186,21 @@ CMTFDateTime::CMTFDateTime( __in MTF_DATE_TIME const * source )
    Copy( source );
 }
 
-CMTFDateTime::CMTFDateTime( __in MTF_DATE_TIME const& source )
+CMTFDateTime::CMTFDateTime( __in MTF_DATE_TIME const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Empty();
    Copy( &source );
 }
 
-CMTFDateTime::CMTFDateTime( __in CTime const& source )
+CMTFDateTime::CMTFDateTime( __in CTime const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Empty();
    Copy( source );
 }
 
-CMTFDateTime::~CMTFDateTime()
+CMTFDateTime::~CMTFDateTime() noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Empty();

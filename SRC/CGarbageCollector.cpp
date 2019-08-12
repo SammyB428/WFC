@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 1995-2016, Samuel R. Blackburn
+** Copyright, 1995-2019, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -51,7 +51,7 @@ static char THIS_FILE[] = __FILE__;
 
 USING_WFC_NAMESPACE
 
-CGarbageCollector::CGarbageCollector()
+CGarbageCollector::CGarbageCollector() noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -59,7 +59,7 @@ CGarbageCollector::CGarbageCollector()
    m_SelfDestruct   = FALSE;
 }
 
-CGarbageCollector::~CGarbageCollector()
+CGarbageCollector::~CGarbageCollector() noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -122,9 +122,9 @@ void CGarbageCollector::Release(__out_opt bool * object_was_deleted ) noexcept
 
    WFC_TRY
    {
-      if ( _InterlockedDecrement( (long *) &m_ReferenceCount ) == 0 )
+      if ( _InterlockedDecrement( &m_ReferenceCount ) == 0 )
       {
-         if ( m_SelfDestruct != false )
+         if ( m_SelfDestruct == true)
          {
             if ( object_was_deleted != nullptr )
             {
@@ -160,7 +160,7 @@ void CGarbageCollector::SetSelfDestruct( __in bool const self_destruct ) noexcep
 {
    WFC_VALIDATE_POINTER( this );
 
-   if ( self_destruct != false )
+   if ( self_destruct == true )
    {
       m_SelfDestruct = true;
    }

@@ -340,7 +340,7 @@ CFile64::~CFile64() noexcept
 {
     WFC_VALIDATE_POINTER( this );
 
-    if ( m_FileHandle != static_cast< HANDLE >( INVALID_HANDLE_VALUE ) && m_CloseOnDelete != false )
+    if ( m_FileHandle != static_cast< HANDLE >( INVALID_HANDLE_VALUE ) && m_CloseOnDelete == true)
     {
         Close();
     }
@@ -1613,7 +1613,7 @@ _Check_return_ bool CFile64::Read( _Inout_ std::vector<std::string>& array ) noe
 
     std::string string_from_file;
 
-    while( Read( string_from_file ) != false )
+    while( Read( string_from_file ) == true )
     {
         (void) array.push_back( string_from_file );
     }
@@ -1627,7 +1627,7 @@ _Check_return_ bool CFile64::Read(_Inout_ std::vector<std::wstring>& array) noex
 
     std::wstring string_from_file;
 
-    while (Read(string_from_file) != false)
+    while (Read(string_from_file) == true)
     {
         array.push_back(string_from_file);
     }
@@ -1811,7 +1811,7 @@ void PASCAL CFile64::Remove( _In_z_ LPCTSTR filename ) noexcept // static
 
         // Try to delete the file with DELETE ON CLOSE semantics.
 
-        if (file.Open(filename, (UINT)((UINT)CFile64::OpenFlags::modeRead | (UINT)CFile64::OpenFlags::shareDenyNone | (UINT)CFile64::OpenFlags::wfcDeleteOnClose)) != false)
+        if (file.Open(filename, (UINT)((UINT)CFile64::OpenFlags::modeRead | (UINT)CFile64::OpenFlags::shareDenyNone | (UINT)CFile64::OpenFlags::wfcDeleteOnClose)) == true)
         {
             file.Close();
         }
@@ -2021,7 +2021,7 @@ _Check_return_ bool CFile64::ProcessContent( _In_ std::size_t const step_size, _
         return( false );
     }
 
-    auto buffer = reinterpret_cast<uint8_t *>(_aligned_malloc( step_size, 4096 ));
+    auto buffer = static_cast<uint8_t *>(_aligned_malloc( step_size, 4096 ));
 
     if ( buffer == nullptr )
     {
@@ -2031,7 +2031,7 @@ _Check_return_ bool CFile64::ProcessContent( _In_ std::size_t const step_size, _
     int64_t const number_of_bytes_to_process = GetLength();
     int64_t number_of_bytes_processed = 0;
 
-    while( number_of_bytes_processed < number_of_bytes_to_process )
+    while( number_of_bytes_processed < number_of_bytes_to_process ) // Cannot be converted to a Range loop
     {
         int64_t number_of_bytes_to_process_in_this_call = number_of_bytes_to_process - number_of_bytes_processed;
 
@@ -2186,7 +2186,7 @@ void CFile64::Write( _In_ std::vector<std::string> const& strings, _In_ bool con
     {
         Write( entry );
 
-        if ( include_end_of_lines != false )
+        if ( include_end_of_lines == true)
         {
             uint8_t end_of_line[ 2 ] = { CARRIAGE_RETURN, LINE_FEED };
             Write( end_of_line, 2 );
@@ -2200,7 +2200,7 @@ void CFile64::Write(_In_ std::vector<std::wstring> const& strings, _In_ bool con
     {
         Write(entry.c_str(), static_cast<UINT>(entry.length() * sizeof(wchar_t)));
 
-        if (include_end_of_lines != false)
+        if (include_end_of_lines == true)
         {
             wchar_t end_of_line[2] = { CARRIAGE_RETURN, LINE_FEED };
             Write(end_of_line, 2);
@@ -2215,7 +2215,7 @@ _Check_return_ bool CFile64::SetShortName( _In_z_ LPCTSTR new_short_name )  noex
 
 _Check_return_ bool CFile64::SetValidData( _In_ int64_t const valid_data_length )  noexcept// New for 73
 {
-    int return_value = SetFileValidData( m_FileHandle, valid_data_length );
+    int return_value = ::SetFileValidData( m_FileHandle, valid_data_length );
 
     if ( return_value == 0 )
     {
@@ -2223,7 +2223,7 @@ _Check_return_ bool CFile64::SetValidData( _In_ int64_t const valid_data_length 
 
         if ( last_error == ERROR_PRIVILEGE_NOT_HELD )
         {
-            if ( Win32FoundationClasses::wfc_enable_privilege( SE_MANAGE_VOLUME_NAME ) != false )
+            if ( Win32FoundationClasses::wfc_enable_privilege( SE_MANAGE_VOLUME_NAME ) == true)
             {
                 return( SetFileValidData( m_FileHandle, valid_data_length ) == 0 ? false : true );
             }

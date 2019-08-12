@@ -153,7 +153,7 @@ _Check_return_ bool CXMLArchive::IsStoring( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
-   if ( m_AmIWriting != false )
+   if ( m_AmIWriting == true)
    {
       return( true );
    }
@@ -168,7 +168,7 @@ _Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Read(_In_z_ wchar
 
    value = false;
 
-   if ( m_AmIWriting != false || m_Element_p == nullptr )
+   if ( m_AmIWriting == true || m_Element_p == nullptr )
    {
       return( nullptr );
    }
@@ -211,7 +211,7 @@ _Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Read(_In_z_ wchar
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER(tag);
 
-   if ( m_AmIWriting != false || m_Element_p == nullptr )
+   if ( m_AmIWriting == true || m_Element_p == nullptr )
    {
       //WFCTRACE( TEXT( "You haven't called ReadFrom() or you passed a NULL to ReadFrom()" ) );
       value.clear();
@@ -254,7 +254,7 @@ _Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Read(_In_z_ wchar
 
    value.clear();
 
-   if ( m_AmIWriting != false || m_Element_p == nullptr )
+   if ( m_AmIWriting == true || m_Element_p == nullptr )
    {
       //WFCTRACE( TEXT( "You haven't called ReadFrom() or you passed a NULL to ReadFrom()" ) );
       return( nullptr );
@@ -314,7 +314,7 @@ _Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Read(_In_z_ wchar
 
    value.clear();
 
-   if ( m_AmIWriting != false || m_Element_p == nullptr )
+   if ( m_AmIWriting == true || m_Element_p == nullptr )
    {
       return( nullptr );
    }
@@ -346,7 +346,7 @@ _Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Read( _In_z_ wcha
 
    value.clear();
 
-   if ( m_AmIWriting != false || m_Element_p == nullptr )
+   if ( m_AmIWriting == true || m_Element_p == nullptr )
    {
       return( nullptr );
    }
@@ -402,7 +402,7 @@ _Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Read( _In_z_ wcha
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER(tag);
 
-   if ( m_AmIWriting != false || m_Element_p == nullptr )
+   if ( m_AmIWriting == true || m_Element_p == nullptr )
    {
        value = 0.0;
       return( nullptr );
@@ -442,7 +442,7 @@ _Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Read( _In_z_ wcha
 
    value = 0;
 
-   if ( m_AmIWriting != false || m_Element_p == nullptr )
+   if ( m_AmIWriting == true || m_Element_p == nullptr )
    {
       return( nullptr );
    }
@@ -478,7 +478,7 @@ _Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Read( _In_z_ wcha
 
    value = 0;
 
-   if ( m_AmIWriting != false || m_Element_p == nullptr )
+   if ( m_AmIWriting == true || m_Element_p == nullptr )
    {
       return( nullptr );
    }
@@ -514,7 +514,7 @@ _Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Read( _In_z_ wcha
 
    value = 0;
 
-   if ( m_AmIWriting != false || m_Element_p == nullptr )
+   if ( m_AmIWriting == true || m_Element_p == nullptr )
    {
       return( nullptr );
    }
@@ -550,7 +550,7 @@ _Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Read( _In_z_ wcha
 
    value.Empty();
 
-   if ( m_AmIWriting != false || m_Element_p == nullptr )
+   if ( m_AmIWriting == true || m_Element_p == nullptr )
    {
       return( nullptr );
    }
@@ -586,7 +586,7 @@ _Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Read( _In_z_ wcha
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER(tag);
 
-   if ( m_AmIWriting != false || m_Element_p == nullptr )
+   if ( m_AmIWriting == true || m_Element_p == nullptr )
    {
       //WFCTRACE( TEXT( "You haven't called ReadFrom() or you passed a NULL to ReadFrom()" ) );
       return( nullptr );
@@ -621,7 +621,7 @@ _Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Read( _In_z_ wcha
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER(tag);
 
-   if ( m_AmIWriting != false || m_Element_p == nullptr )
+   if ( m_AmIWriting == true || m_Element_p == nullptr )
    {
       //WFCTRACE( TEXT( "You haven't called ReadFrom() or you passed a NULL to ReadFrom()" ) );
       return( nullptr );
@@ -660,7 +660,7 @@ _Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Read( _In_z_ wcha
 
    value.Empty();
 
-   if ( m_AmIWriting != false || m_Element_p == nullptr )
+   if ( m_AmIWriting == true || m_Element_p == nullptr )
    {
       return( nullptr );
    }
@@ -696,7 +696,7 @@ _Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Read( _In_ wchar_
 
    value.Empty();
 
-   if ( m_AmIWriting != false || m_Element_p == nullptr )
+   if ( m_AmIWriting == true || m_Element_p == nullptr )
    {
       return( nullptr );
    }
@@ -731,7 +731,7 @@ _Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Read( _In_z_ wcha
 
    value.Empty();
 
-   if ( m_AmIWriting != false || m_Element_p == nullptr )
+   if ( m_AmIWriting == true || m_Element_p == nullptr )
    {
       return( nullptr );
    }
@@ -844,7 +844,7 @@ _Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Write( _In_z_ wch
             (void) sub_element_p->AddText( L"1" );
          }
 
-         if ( m_AddNewLineAfterEachElement != false )
+         if ( m_AddNewLineAfterEachElement == true )
          {
             (void) m_Element_p->AddText( TEXT( "\n" ) );
          }
@@ -886,7 +886,7 @@ _Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Write( _In_z_ wch
          sub_element_p->SetTag( tag );
          (void) sub_element_p->AddText( contents.c_str() );
 
-         if ( m_AddNewLineAfterEachElement != false )
+         if ( m_AddNewLineAfterEachElement == true )
          {
             (void) m_Element_p->AddText( TEXT( "\n" ) );
          }
@@ -919,7 +919,7 @@ _Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Write( _In_z_ wch
       {
          sub_element_p->SetTag( tag );
 
-         if ( m_AddNewLineAfterEachElement != false )
+         if ( m_AddNewLineAfterEachElement == true )
          {
             (void) m_Element_p->AddText( TEXT( "\n" ) );
          }
@@ -987,7 +987,7 @@ _Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Write( _In_z_ wch
          sub_element_p->SetTag( tag );
          (void) sub_element_p->AddText( contents.c_str() );
 
-         if ( m_AddNewLineAfterEachElement != false )
+         if ( m_AddNewLineAfterEachElement == true )
          {
             (void) m_Element_p->AddText( TEXT( "\n" ) );
          }
@@ -1052,7 +1052,7 @@ _Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Write( _In_z_ wch
          sub_element_p->SetTag( tag );
          sub_element_p->AddText( contents );
 
-         if ( m_AddNewLineAfterEachElement != false )
+         if ( m_AddNewLineAfterEachElement == true )
          {
             m_Element_p->AddText( TEXT( "\n" ) );
          }
@@ -1100,7 +1100,7 @@ _Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Write( _In_z_ wch
          sub_element_p->SetTag( tag );
          sub_element_p->AddText( contents );
 
-         if ( m_AddNewLineAfterEachElement != false )
+         if ( m_AddNewLineAfterEachElement == true )
          {
             m_Element_p->AddText( TEXT( "\n" ) );
          }
@@ -1136,7 +1136,7 @@ _Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Write( _In_z_ wch
          sub_element_p->SetTag( tag );
          (void) sub_element_p->AddText( value.c_str() );
 
-         if ( m_AddNewLineAfterEachElement != false )
+         if ( m_AddNewLineAfterEachElement == true )
          {
             (void) m_Element_p->AddText( L"\n" );
          }
@@ -1169,7 +1169,7 @@ _Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Write( _In_z_ wch
       {
          sub_element_p->SetTag( tag );
 
-         if ( m_AddNewLineAfterEachElement != false )
+         if ( m_AddNewLineAfterEachElement == true )
          {
             (void) m_Element_p->AddText( TEXT( "\n" ) );
          }
@@ -1180,13 +1180,9 @@ _Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Write( _In_z_ wch
 
          entry_archiver.WriteTo( sub_element_p );
 
-         std::size_t array_index       = 0;
-         std::size_t number_of_entries = value.size();
-
-         while( array_index < number_of_entries )
+         for ( auto const array_index : Range(value.size()) )
          {
             (void) entry_archiver.Write( L"ENTRY", value.at( array_index ) );
-            array_index++;
          }
       }
 
@@ -1237,7 +1233,7 @@ _Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Write( _In_z_ wch
          sub_element_p->SetTag( tag );
          (void) sub_element_p->AddText( contents.c_str() );
 
-         if ( m_AddNewLineAfterEachElement != false )
+         if ( m_AddNewLineAfterEachElement == true )
          {
             (void) m_Element_p->AddText( L"\n" );
          }
@@ -1299,7 +1295,7 @@ _Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Write( _In_z_ wch
          sub_element_p->SetTag( tag );
          (void) sub_element_p->AddText( contents.c_str() );
 
-         if ( m_AddNewLineAfterEachElement != false )
+         if ( m_AddNewLineAfterEachElement == true )
          {
             (void) m_Element_p->AddText( L"\n" );
          }
@@ -1348,7 +1344,7 @@ _Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Write( _In_z_ wch
          sub_element_p->SetTag( tag );
          (void) sub_element_p->AddText( contents.c_str() );
 
-         if ( m_AddNewLineAfterEachElement != false )
+         if ( m_AddNewLineAfterEachElement == true )
          {
             (void) m_Element_p->AddText( TEXT( "\n" ) );
          }
@@ -1425,7 +1421,7 @@ _Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Write( _In_z_ wch
          sub_element_p->SetTag( tag );
          (void) sub_element_p->AddText( contents.c_str() );
 
-         if ( m_AddNewLineAfterEachElement != false )
+         if ( m_AddNewLineAfterEachElement == true )
          {
             (void) m_Element_p->AddText( TEXT( "\n" ) );
          }
@@ -1474,7 +1470,7 @@ _Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Write( _In_z_ wch
          sub_element_p->SetTag( tag );
          (void) sub_element_p->AddText( contents.c_str() );
 
-         if ( m_AddNewLineAfterEachElement != false )
+         if ( m_AddNewLineAfterEachElement == true )
          {
             (void) m_Element_p->AddText( TEXT( "\n" ) );
          }
@@ -1522,7 +1518,7 @@ _Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Write( _In_z_ wch
          sub_element_p->SetTag( tag );
          (void) sub_element_p->AddText( contents.c_str() );
 
-         if ( m_AddNewLineAfterEachElement != false )
+         if ( m_AddNewLineAfterEachElement == true )
          {
             (void) m_Element_p->AddText( TEXT( "\n" ) );
          }
@@ -1571,7 +1567,7 @@ _Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Write( _In_z_ wch
          sub_element_p->SetTag( tag );
          (void) sub_element_p->AddText( contents.c_str() );
 
-         if ( m_AddNewLineAfterEachElement != false )
+         if ( m_AddNewLineAfterEachElement == true )
          {
             (void) m_Element_p->AddText( TEXT( "\n" ) );
          }

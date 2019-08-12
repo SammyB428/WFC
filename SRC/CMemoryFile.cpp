@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 1995-2017, Samuel R. Blackburn
+** Copyright, 1995-2019, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -51,7 +51,7 @@ static char THIS_FILE[] = __FILE__;
 
 USING_WFC_NAMESPACE
 
-CMemoryFile::CMemoryFile()
+CMemoryFile::CMemoryFile() noexcept
 {
     WFC_VALIDATE_POINTER( this );
 
@@ -81,8 +81,8 @@ CMemoryFile::CMemoryFile()
     ** finding that I wasn't initializing all members here. DOH!
     */
 
-    m_SecurityAttributes_p = (SECURITY_ATTRIBUTES *) nullptr;
-    m_SecurityDescriptor_p = (SECURITY_DESCRIPTOR *) nullptr;
+    m_SecurityAttributes_p = static_cast<SECURITY_ATTRIBUTES *>(nullptr);
+    m_SecurityDescriptor_p = static_cast<SECURITY_DESCRIPTOR *>(nullptr);
     m_MapHandle            = static_cast< HANDLE >( INVALID_HANDLE_VALUE );
 
     ZeroMemory( &m_FileInformation, sizeof( m_FileInformation ) );
@@ -90,7 +90,7 @@ CMemoryFile::CMemoryFile()
 
 CMemoryFile::CMemoryFile( __in std::size_t const allocation_granularity,
                          __in_opt SECURITY_ATTRIBUTES * security_attributes,
-                         __in_opt SECURITY_DESCRIPTOR * security_descriptor )
+                         __in_opt SECURITY_DESCRIPTOR * security_descriptor ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
 
@@ -124,7 +124,7 @@ CMemoryFile::CMemoryFile( __in std::size_t const allocation_granularity,
     ZeroMemory( &m_FileInformation, sizeof( m_FileInformation ) );
 }
 
-CMemoryFile::~CMemoryFile()
+CMemoryFile::~CMemoryFile() noexcept
 {
     WFC_VALIDATE_POINTER( this );
 
@@ -211,7 +211,7 @@ _Check_return_ bool CMemoryFile::FromHandle( _In_ HANDLE const file_handle, _In_
 {
     WFC_VALIDATE_POINTER( this );
 
-    const bool return_value = m_MapTheFile( file_handle, open_flags, beginning_at_offset, number_of_bytes_to_map, desired_address );
+    bool const return_value = m_MapTheFile( file_handle, open_flags, beginning_at_offset, number_of_bytes_to_map, desired_address );
 
     return( return_value );
 }
@@ -591,7 +591,7 @@ _Check_return_ bool CMemoryFile::Open( _In_z_ LPCSTR filename, _In_ UINT const o
     return( false );
 }
 
-CSharedMemory::CSharedMemory()
+CSharedMemory::CSharedMemory() noexcept
 {
     WFC_VALIDATE_POINTER( this );
 
@@ -601,7 +601,7 @@ CSharedMemory::CSharedMemory()
     m_LastError = 0;
 }
 
-CSharedMemory::~CSharedMemory()
+CSharedMemory::~CSharedMemory() noexcept
 {
     WFC_VALIDATE_POINTER( this );
 
@@ -657,7 +657,7 @@ _Check_return_ bool CSharedMemory::Create( _In_z_ wchar_t const * name, _In_ std
     SECURITY_ATTRIBUTES security_attributes;
 
     security_attributes.nLength              = sizeof( security_attributes );
-    security_attributes.lpSecurityDescriptor = (void *) wfc_create_null_dacl();
+    security_attributes.lpSecurityDescriptor = static_cast<void *>(wfc_create_null_dacl());
     security_attributes.lpSecurityDescriptor = nullptr;
     security_attributes.bInheritHandle       = TRUE;
 
@@ -666,7 +666,7 @@ _Check_return_ bool CSharedMemory::Create( _In_z_ wchar_t const * name, _In_ std
     //security_access_created = CreateDACL( &security_attributes );
     //security_access_created = CreateLowIntegritySACL( &security_attributes );
 
-    const bool return_value = Create( name, number_of_bytes, &security_attributes );
+    bool const return_value = Create( name, number_of_bytes, &security_attributes );
 
     wfc_destroy_null_dacl( security_attributes.lpSecurityDescriptor );
 
@@ -705,7 +705,7 @@ _Check_return_ bool CSharedMemory::Create( _In_z_ wchar_t const * name, _In_ std
         return( false );
     }
 
-    m_Buffer = (BYTE *) ::MapViewOfFile( m_Handle, FILE_MAP_ALL_ACCESS, 0, 0, number_of_bytes );
+    m_Buffer = static_cast<uint8_t *>(::MapViewOfFile( m_Handle, FILE_MAP_ALL_ACCESS, 0, 0, number_of_bytes ));
 
     if ( m_Buffer == nullptr )
     {

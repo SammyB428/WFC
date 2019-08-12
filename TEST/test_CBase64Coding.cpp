@@ -83,7 +83,7 @@ _Check_return_ bool test_CBase64Coding( _Out_ std::string& class_name, _Out_ int
 
     std::vector<uint8_t> data;
 
-    for ( size_t string_index = 0; string_index < data_string.length(); string_index++ )
+    for ( auto const string_index : Range(data_string.length()))
     {
 #if defined( WFC_STL )
         (void) data.push_back( (uint8_t) data_string[ string_index ] );
@@ -101,13 +101,11 @@ _Check_return_ bool test_CBase64Coding( _Out_ std::string& class_name, _Out_ int
 
     CRandomNumberGenerator2 random;
 
-    int test_index      = 3;
     int number_of_tests = 72 * 5; // 72 characters per line
-    int loop_index      = 0;
 
-    test_number_that_failed = test_index;
+    test_number_that_failed = 3;
 
-    while( test_index < number_of_tests )
+    for ( auto const test_index : Range(number_of_tests, 3) )
     {
         // Prepare to test
 
@@ -117,12 +115,9 @@ _Check_return_ bool test_CBase64Coding( _Out_ std::string& class_name, _Out_ int
 
         // Generate some test data
 
-        loop_index = 0;
-
-        while( loop_index < test_index )
+        for( auto const loop_index : Range(test_index) )
         {
             (void) bytes_to_encode.push_back( static_cast< uint8_t >( random.GetInteger() ) );
-            loop_index++;
         }
 
         // Encode the test data
@@ -138,25 +133,18 @@ _Check_return_ bool test_CBase64Coding( _Out_ std::string& class_name, _Out_ int
             return( failure() );
         }
 
-        loop_index = 0;
-
-        while( loop_index < (int) decoded_bytes.size() )
+        for( auto const loop_index : Range(decoded_bytes.size()) )
         {
             if ( decoded_bytes.at( loop_index ) != bytes_to_encode.at( loop_index ) )
             {
                 return( failure() );
             }
-
-            loop_index++;
         }
 
         test_number_that_failed++;
-        test_index++;
     }
 
-    test_index = 2;
-
-    while( test_index < number_of_tests )
+    for ( auto const test_index : Range(number_of_tests, 2) )
     {
         // Prepare to test
 
@@ -166,12 +154,9 @@ _Check_return_ bool test_CBase64Coding( _Out_ std::string& class_name, _Out_ int
 
         // Generate some test data
 
-        loop_index = 0;
-
-        while( loop_index < test_index )
+        for ( auto const loop_index : Range(test_index) )
         {
             (void) bytes_to_encode.push_back( static_cast< uint8_t >( random.GetInteger() ) );
-            loop_index++;
         }
 
         // Encode the test data
@@ -187,20 +172,15 @@ _Check_return_ bool test_CBase64Coding( _Out_ std::string& class_name, _Out_ int
             return( failure() );
         }
 
-        loop_index = 0;
-
-        while( loop_index < (int) decoded_bytes.size() )
+        for ( auto const loop_index : Range(decoded_bytes.size()) )
         {
             if ( decoded_bytes.at( loop_index ) != bytes_to_encode.at( loop_index ) )
             {
                 return( failure() );
             }
-
-            loop_index++;
         }
 
         test_number_that_failed++;
-        test_index++;
     }
 
     char const * ascii_hex_string = "0001FFfE";
@@ -276,12 +256,10 @@ _Check_return_ bool test_CBase64Coding( _Out_ std::string& class_name, _Out_ int
     }
 
     bytes_to_encode.clear();
-    loop_index = 0;
 
-    while (loop_index < 75)
+    for ( auto const loop_index : Range(75) )
     {
         (void)bytes_to_encode.push_back(static_cast<uint8_t>(random.GetInteger()));
-        loop_index++;
     }
 
     std::string encoded_buffer;
@@ -289,108 +267,89 @@ _Check_return_ bool test_CBase64Coding( _Out_ std::string& class_name, _Out_ int
     coder.Encode(bytes_to_encode.data(), bytes_to_encode.size(), encoded_buffer);
 
     std::size_t number_of_bytes_to_allocate = CBase64Coding::DecodeReserveSize(encoded_buffer.size());
-    uint8_t * decoded_buffer = static_cast<uint8_t *>(malloc(number_of_bytes_to_allocate));
+    auto decoded_buffer = std::make_unique<uint8_t[]>(number_of_bytes_to_allocate);
 
-    ZeroMemory(decoded_buffer, number_of_bytes_to_allocate);
+    ZeroMemory(decoded_buffer.get(), number_of_bytes_to_allocate);
 
-    std::size_t number_of_bytes_decoded = coder.Decode(reinterpret_cast<uint8_t const *>(encoded_buffer.data()), encoded_buffer.size(), decoded_buffer, number_of_bytes_to_allocate);
+    std::size_t number_of_bytes_decoded = coder.Decode(reinterpret_cast<uint8_t const *>(encoded_buffer.data()), encoded_buffer.size(), decoded_buffer.get(), number_of_bytes_to_allocate);
 
-    if (memcmp(bytes_to_encode.data(), decoded_buffer, bytes_to_encode.size()) != I_AM_EQUAL_TO_THAT)
+    if (memcmp(bytes_to_encode.data(), decoded_buffer.get(), bytes_to_encode.size()) != I_AM_EQUAL_TO_THAT)
     {
-        free(decoded_buffer);
         test_number_that_failed = 48;
         return(failure());
     }
 
-    free(decoded_buffer);
-    decoded_buffer = nullptr;
     encoded_buffer.clear();
 
     bytes_to_encode.clear();
-    loop_index = 0;
 
-    while (loop_index < 76)
+    for ( auto const loop_index : Range(76) )
     {
         (void)bytes_to_encode.push_back(static_cast<uint8_t>(random.GetInteger()));
-        loop_index++;
     }
 
     coder.Encode(bytes_to_encode.data(), bytes_to_encode.size(), encoded_buffer);
 
     number_of_bytes_to_allocate = CBase64Coding::DecodeReserveSize(encoded_buffer.size());
-    decoded_buffer = static_cast<uint8_t *>(malloc(number_of_bytes_to_allocate));
+    decoded_buffer = std::make_unique<uint8_t[]>(number_of_bytes_to_allocate);
 
-    ZeroMemory(decoded_buffer, number_of_bytes_to_allocate);
+    ZeroMemory(decoded_buffer.get(), number_of_bytes_to_allocate);
 
-    number_of_bytes_decoded = coder.Decode(reinterpret_cast<uint8_t const *>(encoded_buffer.data()), encoded_buffer.size(), decoded_buffer, number_of_bytes_to_allocate);
+    number_of_bytes_decoded = coder.Decode(reinterpret_cast<uint8_t const *>(encoded_buffer.data()), encoded_buffer.size(), decoded_buffer.get(), number_of_bytes_to_allocate);
 
-    if (memcmp(bytes_to_encode.data(), decoded_buffer, bytes_to_encode.size()) != I_AM_EQUAL_TO_THAT)
+    if (memcmp(bytes_to_encode.data(), decoded_buffer.get(), bytes_to_encode.size()) != I_AM_EQUAL_TO_THAT)
     {
-        free(decoded_buffer);
         test_number_that_failed = 49;
         return(failure());
     }
 
-    free(decoded_buffer);
-    decoded_buffer = nullptr;
     encoded_buffer.clear();
-
     bytes_to_encode.clear();
-    loop_index = 0;
 
-    while (loop_index < 77)
+    for ( auto const loop_index : Range(77) )
     {
         (void)bytes_to_encode.push_back(static_cast<uint8_t>(random.GetInteger()));
-        loop_index++;
     }
 
     coder.Encode(bytes_to_encode.data(), bytes_to_encode.size(), encoded_buffer);
 
     number_of_bytes_to_allocate = CBase64Coding::DecodeReserveSize(encoded_buffer.size());
-    decoded_buffer = static_cast<uint8_t *>(malloc(number_of_bytes_to_allocate));
+    decoded_buffer = std::make_unique<uint8_t[]>(number_of_bytes_to_allocate);
 
-    ZeroMemory(decoded_buffer, number_of_bytes_to_allocate);
+    ZeroMemory(decoded_buffer.get(), number_of_bytes_to_allocate);
 
-    number_of_bytes_decoded = coder.Decode(reinterpret_cast<uint8_t const *>(encoded_buffer.data()), encoded_buffer.size(), decoded_buffer, number_of_bytes_to_allocate);
+    number_of_bytes_decoded = coder.Decode(reinterpret_cast<uint8_t const *>(encoded_buffer.data()), encoded_buffer.size(), decoded_buffer.get(), number_of_bytes_to_allocate);
 
-    if (memcmp(bytes_to_encode.data(), decoded_buffer, bytes_to_encode.size()) != I_AM_EQUAL_TO_THAT)
+    if (memcmp(bytes_to_encode.data(), decoded_buffer.get(), bytes_to_encode.size()) != I_AM_EQUAL_TO_THAT)
     {
-        free(decoded_buffer);
         test_number_that_failed = 50;
         return(failure());
     }
 
-    free(decoded_buffer);
-    decoded_buffer = nullptr;
     encoded_buffer.clear();
 
     bytes_to_encode.clear();
-    loop_index = 0;
 
-    while (loop_index < 78)
+    for ( auto const loop_index : Range(78) )
     {
         (void)bytes_to_encode.push_back(static_cast<uint8_t>(random.GetInteger()));
-        loop_index++;
     }
 
     coder.Encode(bytes_to_encode.data(), bytes_to_encode.size(), encoded_buffer);
 
     number_of_bytes_to_allocate = CBase64Coding::DecodeReserveSize(encoded_buffer.size());
-    decoded_buffer = static_cast<uint8_t *>(malloc(number_of_bytes_to_allocate));
+    decoded_buffer = std::make_unique<uint8_t[]>(number_of_bytes_to_allocate);
 
-    ZeroMemory(decoded_buffer, number_of_bytes_to_allocate);
+    ZeroMemory(decoded_buffer.get(), number_of_bytes_to_allocate);
 
-    number_of_bytes_decoded = coder.Decode(reinterpret_cast<uint8_t const *>(encoded_buffer.data()), encoded_buffer.size(), decoded_buffer, number_of_bytes_to_allocate);
+    number_of_bytes_decoded = coder.Decode(reinterpret_cast<uint8_t const *>(encoded_buffer.data()), encoded_buffer.size(), decoded_buffer.get(), number_of_bytes_to_allocate);
 
-    if (memcmp(bytes_to_encode.data(), decoded_buffer, bytes_to_encode.size()) != I_AM_EQUAL_TO_THAT)
+    if (memcmp(bytes_to_encode.data(), decoded_buffer.get(), bytes_to_encode.size()) != I_AM_EQUAL_TO_THAT)
     {
-        free(decoded_buffer);
         test_number_that_failed = 51;
         return(failure());
     }
 
-    free(decoded_buffer);
-    decoded_buffer = nullptr;
     encoded_buffer.clear();
 
     return( true );

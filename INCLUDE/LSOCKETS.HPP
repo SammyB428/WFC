@@ -57,9 +57,9 @@ class CListeningSocket : public CSimpleSocket
 
        CListeningSocket(CListeningSocket const&) = delete;
        CListeningSocket& operator=(CListeningSocket const&) = delete;
-       
-       CListeningSocket();
-      CListeningSocket( __in SOCKET client_id );
+
+       CListeningSocket() noexcept;
+      //CListeningSocket( __in SOCKET client_id ) noexcept;
 
       /*
       ** Destructor should be virtual according to MSJ article in Sept 1992
@@ -72,9 +72,9 @@ class CListeningSocket : public CSimpleSocket
       _Check_return_ bool Open( void ) noexcept override;
       _Check_return_ bool Open( __in_z LPCTSTR channel_name, __in UINT const port_number = 23 ) noexcept override;
 
-      virtual _Check_return_ BOOL WaitForConnection( __in_z LPCTSTR p_name ) noexcept;
-      virtual _Check_return_ BOOL WaitForConnection( __in int const p_number ) noexcept;
-      virtual _Check_return_ BOOL WaitForConnection( void ) noexcept;
+      virtual _Check_return_ bool WaitForConnection( __in_z LPCTSTR p_name ) noexcept;
+      virtual _Check_return_ bool WaitForConnection( __in int const p_number ) noexcept;
+      virtual _Check_return_ bool WaitForConnection( void ) noexcept;
 
       // 2000-02-13
       // Good addition suggested by Scott Kolek (scott@skm-software.com)

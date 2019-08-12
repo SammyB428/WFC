@@ -60,7 +60,7 @@ class CSharedMemoryObject
        CSharedMemoryObject(CSharedMemoryObject const&) = delete;
        CSharedMemoryObject& operator=(CSharedMemoryObject const&) = delete;
  
-       CSharedMemoryObject();
+       CSharedMemoryObject() noexcept;
      ~CSharedMemoryObject();
 
       void          Close( void ) noexcept;

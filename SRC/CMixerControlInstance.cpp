@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 1995-2016, Samuel R. Blackburn
+** Copyright, 1995-2019, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -50,35 +50,6 @@ static char THIS_FILE[] = __FILE__;
 #endif // _DEBUG
 
 USING_WFC_NAMESPACE
-
-CMixerControlInstance::CMixerControlInstance()
-{
-   WFC_VALIDATE_POINTER( this );
-
-   m_WhatToNotify = 0;
-   m_WhoToNotify  = 0;
-   m_NotifyData   = 0;
-}
-
-CMixerControlInstance::CMixerControlInstance( __in CMixerControlInstance const& source )
-{
-   WFC_VALIDATE_POINTER( this );
-
-   m_WhatToNotify = 0;
-   m_WhoToNotify  = 0;
-   m_NotifyData   = 0;
-
-   Copy( source );
-}
-
-CMixerControlInstance::~CMixerControlInstance()
-{
-   WFC_VALIDATE_POINTER( this );
-
-   m_WhatToNotify = 0;
-   m_WhoToNotify  = 0;
-   m_NotifyData   = 0;
-}
 
 void CMixerControlInstance::Copy( __in CMixerControlInstance const& source ) noexcept
 {
@@ -129,7 +100,7 @@ _Check_return_ bool CMixerControlInstance::Open( __in UINT_PTR device_number, __
    m_WhoToNotify  = who_to_notify;
    m_NotifyData   = notify_data;
 
-   const bool return_value = m_Mixer.Open( device_number, what_to_notify, who_to_notify, notify_data );
+   bool const return_value = m_Mixer.Open( device_number, what_to_notify, who_to_notify, notify_data );
 
    if ( return_value == false )
    {

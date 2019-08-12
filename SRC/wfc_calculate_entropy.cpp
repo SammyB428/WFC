@@ -421,16 +421,12 @@ SEARCH_LAST_BLOCK:
 
 _Check_return_ int64_t _find_byte_using_nothing_but_C( _In_ uint8_t const byte_value, _In_reads_bytes_( buffer_size ) uint8_t const * buffer, _In_ int64_t const buffer_size ) noexcept
 {
-    int64_t buffer_index = 0;
-
-    while( buffer_index < buffer_size )
+    for ( auto const buffer_index : Range(buffer_size) )
     {
         if ( buffer[ buffer_index ] == byte_value )
         {
             return( buffer_index );
         }
-
-        buffer_index++;
     }
 
     return( BYTES_NOT_FOUND );

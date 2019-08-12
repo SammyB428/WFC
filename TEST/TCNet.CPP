@@ -60,11 +60,11 @@ _Check_return_ bool test_CNetWorkstation( _Out_ std::string& class_name, _Out_ i
 
    CWorkstationInformation workstation_information;
 
-   if ( workstation.EnumerateInformation() != FALSE )
+   if ( workstation.EnumerateInformation() == true )
    {
       //_tprintf( TEXT( "Workstation Machine Information:\n" ) );
 
-      while( workstation.GetNext( workstation_information ) != FALSE )
+      while( workstation.GetNext( workstation_information ) == true )
       {
 #if 0
          _tprintf( TEXT( " PlatformID            - %d\n" ),               workstation_information.PlatformID            );
@@ -92,7 +92,7 @@ _Check_return_ bool test_CNetWorkstation( _Out_ std::string& class_name, _Out_ i
 
    CWorkstationUser user_information;
 
-   if ( workstation.EnumerateUsers() != FALSE )
+   if ( workstation.EnumerateUsers() == true )
    {
       // _tprintf( TEXT( "\nWorkstation User Information:\n" ) );
 
@@ -104,7 +104,7 @@ _Check_return_ bool test_CNetWorkstation( _Out_ std::string& class_name, _Out_ i
       ZeroMemory( wide_machine_name, sizeof( wide_machine_name ) );
       ZeroMemory( wide_domain_name,  sizeof( wide_domain_name  ) );
 
-      while( workstation.GetNext( user_information ) != FALSE )
+      while( workstation.GetNext( user_information ) == true )
       {
 #if 0
          ASCII_to_UNICODE( (LPCTSTR) user_information.LogonServer, wide_machine_name );
@@ -158,11 +158,11 @@ _Check_return_ bool test_CNetWorkstation( _Out_ std::string& class_name, _Out_ i
 
    CWorkstationTransport transport_information;
 
-   if ( workstation.EnumerateTransports() != FALSE )
+   if ( workstation.EnumerateTransports() == true )
    {
       //_tprintf( TEXT( "\nWorkstation Transport Information:\n" ) );
 
-      while( workstation.GetNext( transport_information ) != FALSE )
+      while( workstation.GetNext( transport_information ) == true )
       {
 #if 0
          _tprintf( TEXT( " Quality of Service         - %d\n" ), transport_information.QualityOfService        );

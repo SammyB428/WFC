@@ -86,7 +86,7 @@ static DWORD WINAPI com_sucks_message_pump_thread(VOID * parameter)
     return(0);
 }
 
-CCOMSucks::CCOMSucks()
+CCOMSucks::CCOMSucks() noexcept
 {
     DWORD thread_id = 0;
 
@@ -111,7 +111,7 @@ CCOMSucks::CCOMSucks()
     (void) wfc_close_handle(event_handle);
 }
 
-CCOMSucks::~CCOMSucks()
+CCOMSucks::~CCOMSucks() noexcept
 {
 }
 

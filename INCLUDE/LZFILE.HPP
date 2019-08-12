@@ -67,7 +67,7 @@ class CLZFile : public CDummyFile
       ** "Do More with Less Code:..."
       */
 
-      virtual ~CLZFile() noexcept;
+      virtual ~CLZFile();
 
       static void __stdcall TranslateErrorCode(__in int const error_code, __out std::wstring& error_message) noexcept;
 

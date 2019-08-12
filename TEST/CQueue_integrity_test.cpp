@@ -71,13 +71,12 @@ void queue_integrity_add_thread( void * p ) noexcept
 
    CQueue * queue_p = workspace_p->queue_p;
 
-   DWORD loop_index     = 0;
    DWORD item           = 0;
    DWORD checksum_index = 0;
 
    CRandomNumberGenerator2 random;
 
-   while( loop_index < workspace_p->number_of_loops )
+   for( auto const loop_index : Range(workspace_p->number_of_loops) )
    {
       item = random.GetInteger();
 
@@ -87,7 +86,7 @@ void queue_integrity_add_thread( void * p ) noexcept
 
       checksum_index = 0;
 
-      while( _bittest( (const LONG *) &workspace_p->checksum, 31 ) == 0 &&
+      while( _bittest( reinterpret_cast<LONG const *>(&workspace_p->checksum), 31 ) == 0 &&
              checksum_index < 32 )
       {
          workspace_p->checksum <<= 1;
@@ -95,11 +94,10 @@ void queue_integrity_add_thread( void * p ) noexcept
       }
 
       workspace_p->checksum ^= item;
-      loop_index++;
    }
 
    _tprintf( TEXT( "Add: %lu items checksummed to %08lX\n" ),
-             loop_index,
+             workspace_p->number_of_loops,
              workspace_p->checksum );
 
    workspace_p->thread_exitted = true;
@@ -118,14 +116,13 @@ void queue_integrity_get_thread( void * p ) noexcept
    workspace_p->checksum                      = 0;
    workspace_p->thread_exitted                = false;
 
-   CQueue * queue_p = workspace_p->queue_p;
+   auto queue_p = workspace_p->queue_p;
 
-   DWORD loop_index     = 0;
    DWORD checksum_index = 0;
 
-   SIZE_T item          = 0;
+   SIZE_T item = 0;
 
-   while( loop_index < workspace_p->number_of_loops )
+   for( auto const loop_index : Range(workspace_p->number_of_loops) )
    {
       // Only process items that we got. We need to account for
       // getting from an empty queue.
@@ -135,7 +132,7 @@ void queue_integrity_get_thread( void * p ) noexcept
 
          checksum_index = 0;
 
-         while( _bittest( (const LONG *) &workspace_p->checksum, 31 ) == 0 &&
+         while( _bittest( reinterpret_cast<LONG const *>(&workspace_p->checksum), 31 ) == 0 &&
                 checksum_index < 32 )
          {
             workspace_p->checksum <<= 1;
@@ -143,7 +140,6 @@ void queue_integrity_get_thread( void * p ) noexcept
          }
 
          workspace_p->checksum ^= item;
-         loop_index++;
       }
       else
       {
@@ -153,7 +149,7 @@ void queue_integrity_get_thread( void * p ) noexcept
    }
 
    _tprintf( TEXT( "Get: %lu items checksummed to %08lX\n" ),
-             loop_index,
+             workspace_p->number_of_loops,
              workspace_p->checksum );
 
    workspace_p->thread_exitted = true;

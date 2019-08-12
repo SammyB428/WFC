@@ -72,11 +72,11 @@ _Check_return_ bool test_CNetResource( _Out_ std::string& class_name, _Out_ int&
    information.Usage = CNetworkResources::usageConnectable | CNetworkResources::usageContainer;
    information.Type  = CNetworkResources::typeDisk;
 
-   if ( net_resource.Enumerate( information ) != FALSE )
+   if ( net_resource.Enumerate( information ) == true )
    {
       print_resource( information );
 
-      while( net_resource.GetNext( information ) != FALSE )
+      while( net_resource.GetNext( information ) == true )
       {
          print_resource( information );
       }

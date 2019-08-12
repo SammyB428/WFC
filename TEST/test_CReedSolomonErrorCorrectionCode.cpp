@@ -58,17 +58,15 @@ __checkReturn bool test_CReedSolomonErrorCorrectionCode( __out std::string& clas
 
     CRandomNumberGenerator2 random_number; // 1853265048
 
-    int loop_index    = 0;
     int test_set_size = 4096;
 
     std::vector<uint8_t> data;
 
     data.resize( test_set_size ); // for speed
 
-    while( loop_index < test_set_size )
+    for ( auto const loop_index : Range(test_set_size) )
     {
         (void) data.push_back( static_cast< BYTE >( random_number.GetInteger() ) );
-        loop_index++;
     }
 
     std::vector<uint8_t> encoded_data;
@@ -92,19 +90,19 @@ __checkReturn bool test_CReedSolomonErrorCorrectionCode( __out std::string& clas
 
     DWORD value = 0;
 
-    while( error_number < number_of_errors_to_introduce )
+    while( error_number < number_of_errors_to_introduce ) // Cannot be converted to a Range loop
     {
         value = encoded_data.at( error_number );
 
         bit_number_to_smash = random_number.GetInteger() % 8;
 
-        if ( _bittest( (const LONG *) &value, bit_number_to_smash ) == 0 )
+        if ( _bittest( reinterpret_cast<LONG const *>(&value), bit_number_to_smash ) == 0 )
         {
-            _bittestandset( (LONG *) &value, bit_number_to_smash );
+            _bittestandset(reinterpret_cast<LONG *>(&value), bit_number_to_smash );
         }
         else
         {
-            _bittestandreset( (LONG *) &value, bit_number_to_smash );
+            _bittestandreset(reinterpret_cast<LONG *>(&value), bit_number_to_smash );
         }
 
         ASSERT( value != encoded_data.at( error_number ) );
@@ -141,16 +139,12 @@ __checkReturn bool test_CReedSolomonErrorCorrectionCode( __out std::string& clas
         //WFCTRACEVAL( TEXT( "Decoded length was " ), decoded_data.GetSize() );
     }
 
-    loop_index = 0;
-
-    while( loop_index < (int) decoded_data.size() )
+    for ( auto const loop_index : Range(decoded_data.size()) )
     {
         if ( data.at( loop_index ) != decoded_data.at( loop_index ) )
         {
             //WFCTRACEVAL( TEXT( "Comparison failed at byte " ), loop_index );
         }
-
-        loop_index++;
     }
 
     return( failure() );

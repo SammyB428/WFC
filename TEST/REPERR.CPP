@@ -48,7 +48,7 @@ static char THIS_FILE[] = __FILE__;
 #define new DEBUG_NEW
 #endif // _DEBUG
 
-void ReportError( __in const DWORD error_code ) noexcept
+void ReportError( __in DWORD const error_code ) noexcept
 {
    LPVOID lpMessageBuffer;
    FormatMessage(

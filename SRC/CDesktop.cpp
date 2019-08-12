@@ -51,7 +51,7 @@ static char THIS_FILE[] = __FILE__;
 
 USING_WFC_NAMESPACE
 
-CDesktop::CDesktop()
+CDesktop::CDesktop() noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -60,7 +60,7 @@ CDesktop::CDesktop()
    m_ErrorCode          = 0;
 }
 
-CDesktop::CDesktop( __in HDESK desktop_handle )
+CDesktop::CDesktop( __in HDESK desktop_handle ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -71,11 +71,11 @@ CDesktop::CDesktop( __in HDESK desktop_handle )
    Attach( desktop_handle );
 }
 
-CDesktop::~CDesktop()
+CDesktop::~CDesktop() noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
-   if ( m_AutomaticallyClose != false )
+   if ( m_AutomaticallyClose == true)
    {
       (void) Close();
    }
@@ -89,7 +89,7 @@ void CDesktop::Attach( __in HDESK desktop_handle ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
-   if ( m_DesktopHandle != static_cast< HDESK >( NULL ) && m_AutomaticallyClose != false )
+   if ( m_DesktopHandle != static_cast< HDESK >( NULL ) && m_AutomaticallyClose == true)
    {
       (void) Close();
    }
@@ -135,7 +135,7 @@ _Check_return_ bool CDesktop::Create( __in std::wstring const& name_of_desktop, 
 
    bool return_value = false;
 
-   if ( m_DesktopHandle != static_cast< HDESK >( NULL ) && m_AutomaticallyClose != false )
+   if ( m_DesktopHandle != static_cast< HDESK >( NULL ) && m_AutomaticallyClose == true)
    {
       (void) Close();
    }
@@ -279,7 +279,7 @@ _Check_return_ bool CDesktop::Open( __in std::wstring const& name_of_desktop, __
 
    bool return_value = FALSE;
 
-   if ( m_DesktopHandle != static_cast< HDESK >( NULL ) && m_AutomaticallyClose != false )
+   if ( m_DesktopHandle != static_cast< HDESK >( NULL ) && m_AutomaticallyClose == true)
    {
       (void) Close();
    }
@@ -319,7 +319,7 @@ _Check_return_ bool CDesktop::OpenInput( __in DWORD desired_access, __in DWORD f
 
    bool return_value = FALSE;
 
-   if ( m_DesktopHandle != static_cast< HDESK >( NULL ) && m_AutomaticallyClose != false )
+   if ( m_DesktopHandle != static_cast< HDESK >( NULL ) && m_AutomaticallyClose == true)
    {
       (void) Close();
    }

@@ -112,7 +112,7 @@ class CNetworkSessions : public CNetwork
        CNetworkSessions& operator=(CNetworkSessions const&) = delete;
        CNetworkSessions() noexcept;
       CNetworkSessions( __in_z_opt LPCTSTR machine_name ) noexcept;
-      virtual ~CNetworkSessions() noexcept;
+      virtual ~CNetworkSessions();
 
       virtual void  Close( void ) noexcept;
       virtual _Check_return_ bool Delete( __inout CNetworkSessionInformation& session_to_delete ) noexcept;

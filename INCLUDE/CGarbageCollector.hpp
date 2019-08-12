@@ -55,8 +55,8 @@ class CGarbageCollector
 
        CGarbageCollector(CGarbageCollector const&) = delete;
        virtual CGarbageCollector& operator = (CGarbageCollector const&) = delete;
-       
-       CGarbageCollector();
+
+       CGarbageCollector() noexcept;
 
       /*
       ** Destructor should be virtual according to MSJ article in Sept 1992

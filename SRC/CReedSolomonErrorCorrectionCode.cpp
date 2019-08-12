@@ -172,7 +172,7 @@ _Check_return_ SSIZE_T CReedSolomonErrorCorrectionCode::Decode( __in std::vector
       chunk_length = chunk.at( 0 );
       chunk_index  = 0;
 
-      while( chunk_index < chunk_length )
+      while( chunk_index < chunk_length ) // Cannot be converted to a Range loop
       {
          (void) decoded_data.push_back( chunk.at( chunk_index + 1 ) );
          chunk_index++;
@@ -198,15 +198,13 @@ _Check_return_ bool CReedSolomonErrorCorrectionCode::Encode( __in std::vector<ui
    // We must chunkify the data into 222 byte pieces. This leaves us room for
    // a one-byte data-length value and 1 bit per byte parity (255 bits == 32 bytes)
 
-   std::size_t data_length = data.size();
+   std::size_t const data_length = data.size();
    std::size_t data_index  = 0;
-   std::size_t chunk_index = 0;
 
    uint8_t chunk_length = 0;
 
-   while( data_index < data_length )
+   while( data_index < data_length ) // Cannot be converted to a Range loop
    {
-      chunk_index  = 0;
       chunk_length = 0;
 
       chunk.clear();
@@ -214,7 +212,7 @@ _Check_return_ bool CReedSolomonErrorCorrectionCode::Encode( __in std::vector<ui
 
       (void) chunk.push_back( 0 ); // Place holder for packet length
 
-      while( chunk_index < 222 )
+      for ( auto const chunk_index : Range(222) )
       {
          if ( ( chunk_index + data_index ) < data_length )
          {
@@ -225,8 +223,6 @@ _Check_return_ bool CReedSolomonErrorCorrectionCode::Encode( __in std::vector<ui
          {
             (void) chunk.push_back( 0 ); // Filler byte
          }
-
-         chunk_index++;
       }
 
       // Now set the number of user bytes in this packet
@@ -679,15 +675,14 @@ void CReedSolomonErrorCorrectionCode::m_GenerateGaloisField( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
-   int loop_index = 0;
-   int mask       = 1;
+   int mask = 1;
 
    m_Alpha_to[ m_NumberOfBitsPerSymbol ] = 0;
 
-   for ( loop_index = 0; loop_index < m_NumberOfBitsPerSymbol; loop_index++ )
+   for ( auto const loop_index : Range(m_NumberOfBitsPerSymbol) )
    {
       m_Alpha_to[ loop_index ] = mask;
-      m_Index_of[ m_Alpha_to[ loop_index ] ] = loop_index;
+      m_Index_of[ m_Alpha_to[ loop_index ] ] = static_cast<int>(loop_index);
 
       /* If PrimitivePolynomials[loop_index] == 1 then, term @^loop_index occurs in poly-repr of @^m_NumberOfBitsPerSymbol */
 
@@ -709,7 +704,7 @@ void CReedSolomonErrorCorrectionCode::m_GenerateGaloisField( void ) noexcept
 
    mask >>= 1;
 
-   for ( loop_index = m_NumberOfBitsPerSymbol + 1; loop_index < m_BlockSize; loop_index++ )
+   for ( auto const loop_index : Range( m_BlockSize, m_NumberOfBitsPerSymbol + 1) )
    {
       if ( m_Alpha_to[ loop_index - 1 ] >= mask )
       {
@@ -720,7 +715,7 @@ void CReedSolomonErrorCorrectionCode::m_GenerateGaloisField( void ) noexcept
          m_Alpha_to[ loop_index ] = m_Alpha_to[ loop_index - 1 ] << 1;
       }
 
-      m_Index_of[ m_Alpha_to[ loop_index ] ] = loop_index;
+      m_Index_of[ m_Alpha_to[ loop_index ] ] = static_cast<int>(loop_index);
    }
 
    m_Index_of[ 0 ] = m_BlockSize;

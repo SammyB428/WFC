@@ -153,7 +153,7 @@ _Check_return_ bool CNetworkFiles::GetNext( __inout CNetworkFileInformation& inf
       {
          // We need another chunk
 
-         if ( m_GetChunk() != false )
+         if ( m_GetChunk() == true)
          {
             return( GetNext( information ) );
          }

@@ -54,7 +54,21 @@ _Check_return_ bool is_xml_Ideographic(   _In_ uint32_t const character_to_test 
 _Check_return_ bool is_xml_Letter(        _In_ uint32_t const character_to_test ) noexcept;
 _Check_return_ bool is_xml_NameChar(      _In_ uint32_t const character_to_test ) noexcept;
 _Check_return_ bool is_xml_PubidChar(     _In_ uint32_t const character_to_test ) noexcept;
-_Check_return_ bool is_xml_white_space(   _In_ uint32_t const character_to_test ) noexcept;
+
+inline constexpr _Check_return_ bool is_xml_white_space(_In_ uint32_t const character_to_test) noexcept
+{
+    // Test according to Rule 3
+
+    if (character_to_test == 0x0020 ||
+        character_to_test == 0x000D ||
+        character_to_test == 0x000A ||
+        character_to_test == 0x0009)
+    {
+        return(true);
+    }
+
+    return(false);
+}
 
 // An Entity (as described in the XML specification section 4.2) is "An
 // entity reference refers to the content of a named entity." Doesn't that
@@ -82,7 +96,7 @@ class CExtensibleMarkupLanguageEntities
 
       CExtensibleMarkupLanguageEntities() noexcept;
       CExtensibleMarkupLanguageEntities( _In_ CExtensibleMarkupLanguageEntities const& source ) noexcept;
-      ~CExtensibleMarkupLanguageEntities() noexcept;
+      ~CExtensibleMarkupLanguageEntities();
 
       // Methods
 
@@ -136,7 +150,7 @@ class CExtensibleMarkupLanguageAttribute
           Value = source.Value;
       }
 
-      inline ~CExtensibleMarkupLanguageAttribute() noexcept {};
+      inline ~CExtensibleMarkupLanguageAttribute() {};
 
       // Properties
 
@@ -256,7 +270,7 @@ public:
       static _Check_return_ CExtensibleMarkupLanguageElement * NewElement( __inout_opt CExtensibleMarkupLanguageElement * parent_element = nullptr, _In_ ElementType const type = ElementType::Element, __inout_opt CExtensibleMarkupLanguageDocument * document = nullptr ) noexcept;
       static void DeleteElement( _Inout_ CExtensibleMarkupLanguageElement * element_p ) noexcept;
 
-      virtual ~CExtensibleMarkupLanguageElement() noexcept;
+      virtual ~CExtensibleMarkupLanguageElement();
 
       /*
       ** <ITEM HREF=" http://www.samplecdf.com/page1.htm">
@@ -445,7 +459,7 @@ class CExtensibleMarkupLanguageDocument
 
       CExtensibleMarkupLanguageDocument() noexcept;
       CExtensibleMarkupLanguageDocument( _In_ CExtensibleMarkupLanguageDocument const& source ) noexcept;
-      virtual ~CExtensibleMarkupLanguageDocument() noexcept;
+      virtual ~CExtensibleMarkupLanguageDocument();
 
       virtual _Check_return_ bool  AddEntity( _In_z_ wchar_t const * entity, _In_z_ wchar_t const * value ) noexcept;
       virtual void  Append( _In_ CExtensibleMarkupLanguageDocument const& source ) noexcept;

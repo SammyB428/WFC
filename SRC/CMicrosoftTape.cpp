@@ -56,14 +56,14 @@ USING_WFC_NAMESPACE
 ** As documented in ftp://ftp.microsoft.com/developr/drg/Tape/MTF10.ZIP
 */
 
-CMicrosoftTape::CMicrosoftTape()
+CMicrosoftTape::CMicrosoftTape() noexcept
 {
    WFC_VALIDATE_POINTER( this );
    m_Initialize();
    m_AutomaticallyClose = FALSE;
 }
 
-CMicrosoftTape::~CMicrosoftTape()
+CMicrosoftTape::~CMicrosoftTape() noexcept
 {
    WFC_VALIDATE_POINTER( this );
    m_Initialize();

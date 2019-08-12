@@ -60,7 +60,7 @@ class CCryptography
    public:
 
       CCryptography() noexcept;
-      virtual ~CCryptography() noexcept;
+      virtual ~CCryptography();
 
       virtual _Check_return_ DWORD GetErrorCode( void ) const noexcept;
 };
@@ -85,7 +85,7 @@ class CCryptographicHash : public CCryptography
 
       CCryptographicHash() noexcept;
       CCryptographicHash( __in HCRYPTHASH source_handle, __in bool automatically_destroy = true ) noexcept;
-      virtual ~CCryptographicHash() noexcept;
+      virtual ~CCryptographicHash();
 
       static constexpr DWORD const MD2  = CALG_MD2;
       static constexpr DWORD const MD4  = CALG_MD4;
@@ -146,7 +146,7 @@ class CCryptographicAlgorithm
       CCryptographicAlgorithm() noexcept;
       CCryptographicAlgorithm( __in CCryptographicAlgorithm const& source ) noexcept;
       CCryptographicAlgorithm( __in PROV_ENUMALGS const& source ) noexcept;
-      virtual ~CCryptographicAlgorithm() noexcept;
+      virtual ~CCryptographicAlgorithm();
 
       // Properties
 
@@ -271,7 +271,7 @@ class CCryptographicKey : public CCryptography
 
       CCryptographicKey() noexcept;
       CCryptographicKey( __in HCRYPTKEY source_handle, __in bool automatically_destroy = true )  noexcept;
-      virtual ~CCryptographicKey() noexcept;
+      virtual ~CCryptographicKey();
 
       // Properties
       enum class Parameter : uint32_t
@@ -442,7 +442,7 @@ class CCryptographicProvider : public CCryptography
        // Construction
 
       CCryptographicProvider() noexcept;
-      virtual ~CCryptographicProvider() noexcept;
+      virtual ~CCryptographicProvider();
 
       // Properties
 

@@ -63,11 +63,6 @@ class CParsePoint
          Copy( source );
       };
 
-      inline ~CParsePoint() noexcept
-      {
-         Empty();
-      };
-
       inline constexpr _Check_return_ CParsePoint& operator=( _In_ CParsePoint const& source ) noexcept
       {
          Copy( source );

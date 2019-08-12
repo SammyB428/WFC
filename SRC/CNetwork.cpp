@@ -670,7 +670,7 @@ _Check_return_ bool CNetwork::SetPrivilege( __in_z LPCTSTR privilege_name, __in 
       previous_token_privileges.PrivilegeCount       = 1;
       previous_token_privileges.Privileges[ 0 ].Luid = locally_unique_identifier;
       
-      if ( add_privilege != false )
+      if ( add_privilege == true)
       {
          previous_token_privileges.Privileges[ 0 ].Attributes |= (SE_PRIVILEGE_ENABLED);
       }

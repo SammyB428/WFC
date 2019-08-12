@@ -104,7 +104,7 @@ class CWfcTrace
 
       CWfcTrace( __in_z LPCTSTR function_name, __in std::size_t const tracing_level ) noexcept;
 
-      virtual ~CWfcTrace() noexcept;
+      virtual ~CWfcTrace();
 
       static void TraceAllOn( void ) noexcept;
       static void TraceAllOff( void ) noexcept;

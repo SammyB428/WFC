@@ -98,7 +98,7 @@ void CString::m_Format( __in_z __format_string LPCTSTR format_string, va_list ar
 
          bool exit_loop = false;
 
-         while( exit_loop != true )
+         while( exit_loop == false )
          {
             saved_argument_list = argument_list;
 

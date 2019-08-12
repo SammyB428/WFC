@@ -178,22 +178,11 @@ _Check_return_ bool CMixerWaveIn::Open( __in UINT_PTR device_number, __in DWORD 
    {
       if ( entry.Type == CMixerControl::ControlType::Mixer )
       {
-         WFC_TRY
-         {
-            m_SourceSelector_p = new CMixerSourceSelector( m_MixerLine, entry );
-         }
-         WFC_CATCH_ALL
-         {
-            m_SourceSelector_p = nullptr;
-         }
-         WFC_END_CATCH_ALL
+         m_SourceSelector = std::make_unique<CMixerSourceSelector>( m_MixerLine, entry );
 
-         WFC_VALIDATE_POINTER_NULL_OK( m_SourceSelector_p );
-         ASSERT( m_SourceSelector_p != nullptr );
-
-         if ( m_SourceSelector_p != nullptr )
+         if ( m_SourceSelector.get() != nullptr )
          {
-            (void) m_SourceSelector_p->Open( device_number, what_to_notify, who_to_notify, notify_data );
+            (void) m_SourceSelector->Open( device_number, what_to_notify, who_to_notify, notify_data );
          }
       }
 
@@ -222,7 +211,7 @@ _Check_return_ bool CMixerWaveIn::SetLeftChannelRecordingGain( __in DWORD const 
 {
    WFC_VALIDATE_POINTER( this );
 
-   const bool return_value = m_RecordingGain.SetLeftChannelVolume( desired_level );
+   bool const return_value = m_RecordingGain.SetLeftChannelVolume( desired_level );
 
    return( return_value );
 }
@@ -231,7 +220,7 @@ _Check_return_ bool CMixerWaveIn::SetRecordingGain( __in DWORD const desired_lev
 {
    WFC_VALIDATE_POINTER( this );
 
-   const bool return_value = m_RecordingGain.SetVolume( desired_level );
+   bool const return_value = m_RecordingGain.SetVolume( desired_level );
 
    return( return_value );
 }
@@ -240,7 +229,7 @@ _Check_return_ bool CMixerWaveIn::SetRightChannelRecordingGain( __in DWORD const
 {
    WFC_VALIDATE_POINTER( this );
 
-   const bool return_value = m_RecordingGain.SetRightChannelVolume( desired_level );
+   bool const return_value = m_RecordingGain.SetRightChannelVolume( desired_level );
 
    return( return_value );
 }

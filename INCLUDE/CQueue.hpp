@@ -76,7 +76,7 @@ public:
     CQueue& operator = (CQueue const&) = delete;
 
     inline  CQueue(_In_ std::size_t initial_size = WFC_QUEUE_DEFAULT_NUMBER_OF_ITEMS) noexcept;
-    inline ~CQueue() noexcept;
+    inline ~CQueue();
 
     inline _Check_return_ bool Add(_In_ std::size_t new_item) noexcept { return(Add((void *)new_item)); };
     inline _Check_return_ bool Add(_In_ void * new_item) noexcept;
@@ -134,7 +134,7 @@ inline CQueue::CQueue(_In_ std::size_t initial_size) noexcept
 
     if (m_Heap != nullptr)
     {
-        m_Items = (void **) ::HeapAlloc(m_Heap, HEAP_NO_SERIALIZE, initial_size * sizeof(void *));
+        m_Items = static_cast<void **>(::HeapAlloc(m_Heap, HEAP_NO_SERIALIZE, initial_size * sizeof(void *)));
 
         m_Size = (m_Items == nullptr) ? 0 : initial_size;
     }
@@ -239,17 +239,17 @@ inline _Check_return_ bool CQueue::TryGet(_Out_ void * & item) noexcept
                 if (m_GetIndex == m_AddIndex)
                 {
                     // See if we can just shrink it... It is safe to use HeapReAlloc() because the queue is empty
-                    void * return_value = (void *) ::HeapReAlloc(m_Heap, HEAP_NO_SERIALIZE, m_Items, WFC_QUEUE_DEFAULT_NUMBER_OF_ITEMS * sizeof(void *));
+                    auto return_value = ::HeapReAlloc(m_Heap, HEAP_NO_SERIALIZE, m_Items, WFC_QUEUE_DEFAULT_NUMBER_OF_ITEMS * sizeof(void *));
 
                     if (return_value != nullptr)
                     {
-                        m_Items = (void **)return_value;
+                        m_Items = static_cast<void **>(return_value);
                     }
                     else
                     {
                         // Looks like we'll have to do it the hard way
                         ::HeapFree(m_Heap, HEAP_NO_SERIALIZE, m_Items);
-                        m_Items = (void **) ::HeapAlloc(m_Heap, HEAP_NO_SERIALIZE, WFC_QUEUE_DEFAULT_NUMBER_OF_ITEMS * sizeof(void *));
+                        m_Items = static_cast<void **>(::HeapAlloc(m_Heap, HEAP_NO_SERIALIZE, WFC_QUEUE_DEFAULT_NUMBER_OF_ITEMS * sizeof(void *)));
                     }
 
                     m_Size = (m_Items == nullptr) ? 0 : WFC_QUEUE_DEFAULT_NUMBER_OF_ITEMS;
@@ -312,11 +312,11 @@ inline _Check_return_ bool CQueue::Get(_Out_ void * & item) noexcept
                 if (m_GetIndex == m_AddIndex)
                 {
                     // See if we can just shrink it... It is safe to use HeapReAlloc() because the queue is empty
-                    void * return_value = (void *) ::HeapReAlloc(m_Heap, HEAP_NO_SERIALIZE, m_Items, WFC_QUEUE_DEFAULT_NUMBER_OF_ITEMS * sizeof(void *));
+                    auto return_value = ::HeapReAlloc(m_Heap, HEAP_NO_SERIALIZE, m_Items, WFC_QUEUE_DEFAULT_NUMBER_OF_ITEMS * sizeof(void *));
 
                     if (return_value != nullptr)
                     {
-                        m_Items = (void **)return_value;
+                        m_Items = static_cast<void **>(return_value);
                     }
                     else
                     {

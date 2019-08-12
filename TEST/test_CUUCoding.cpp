@@ -56,12 +56,9 @@ __checkReturn bool test_CUUCoding( __out std::string& class_name, __out int& tes
 
     // Generate some test data
 
-    std::size_t index = 0;
-
-    while( index < 1024 )
+    for ( auto const index : Range(1024) )
     {
         (void) bytes_to_encode.push_back( static_cast< uint8_t >( index ) );
-        index++;
     }
 
     std::vector<uint8_t> encoded_bytes;
@@ -116,9 +113,7 @@ __checkReturn bool test_CUUCoding( __out std::string& class_name, __out int& tes
         return( failure() );
     }
 
-    index = 0;
-
-    while( index < number_of_decoded_bytes )
+    for ( auto const index : Range(number_of_decoded_bytes) )
     {
         if ( decoded_bytes.at( index ) != bytes_to_encode.at( index ) )
         {
@@ -128,8 +123,6 @@ __checkReturn bool test_CUUCoding( __out std::string& class_name, __out int& tes
             test_number_that_failed = 4;
             return(failure());
         }
-
-        index++;
     }
 
     test_number_that_failed = 4;

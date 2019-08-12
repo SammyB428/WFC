@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 1995-2016, Samuel R. Blackburn
+** Copyright, 1995-2019, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -51,7 +51,7 @@ static char THIS_FILE[] = __FILE__;
 
 USING_WFC_NAMESPACE
 
-CSharedMemoryObject::CSharedMemoryObject()
+CSharedMemoryObject::CSharedMemoryObject() noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -60,7 +60,7 @@ CSharedMemoryObject::CSharedMemoryObject()
    m_Size      = 0;
 }
 
-CSharedMemoryObject::~CSharedMemoryObject()
+CSharedMemoryObject::~CSharedMemoryObject() noexcept
 {
    WFC_VALIDATE_POINTER( this );
 

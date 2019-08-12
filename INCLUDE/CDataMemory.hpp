@@ -53,13 +53,13 @@ class CDataMemory : public CDataFile
 
    public:
 
-      CDataMemory();
-      CDataMemory( __in CDataMemory const& source );
-      CDataMemory( __in_bcount( number_of_bytes ) uint8_t const * buffer_p, __in std::size_t const number_of_bytes );
-      CDataMemory( __in std::vector<uint8_t> const& source );
+      CDataMemory() noexcept;
+      CDataMemory( __in CDataMemory const& source ) noexcept;
+      CDataMemory( __in_bcount( number_of_bytes ) uint8_t const * buffer_p, __in std::size_t const number_of_bytes ) noexcept;
+      CDataMemory( __in std::vector<uint8_t> const& source ) noexcept;
       virtual ~CDataMemory();
 
-      virtual void  Append( __in std::vector<uint8_t> const&  source ) noexcept;
+      virtual void  Append( __in std::vector<uint8_t> const& source ) noexcept;
       virtual void  Append( __in CDataMemory const& source ) noexcept;
       virtual void  AppendTo( __out std::vector<uint8_t>& data ) noexcept;
       void  Close( void ) noexcept override;

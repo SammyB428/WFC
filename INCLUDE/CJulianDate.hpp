@@ -59,7 +59,7 @@ class CJulianDate // Don't use this, I'm not finished with it yet
       ** "Do More with Less Code:..."
       */
 
-      virtual ~CJulianDate() noexcept;
+      virtual ~CJulianDate();
 
       /*
       ** Methods

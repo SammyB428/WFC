@@ -68,7 +68,7 @@ class CFileDirectory
       ** "Do More with Less Code:..."
       */
 
-      virtual ~CFileDirectory() noexcept;
+      virtual ~CFileDirectory();
 
       /*
       ** Methods

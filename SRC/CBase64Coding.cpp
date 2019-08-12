@@ -97,13 +97,13 @@ static inline constexpr _Check_return_ uint8_t __get_character( __in_ecount( siz
    return( return_value );
 }
 
-CBase64Coding::CBase64Coding()
+CBase64Coding::CBase64Coding() noexcept
 {
    WFC_VALIDATE_POINTER( this );
    m_InitializeDecoderTable();
 }
 
-CBase64Coding::~CBase64Coding()
+CBase64Coding::~CBase64Coding() noexcept
 {
    WFC_VALIDATE_POINTER( this );
 }
@@ -1160,7 +1160,7 @@ int _tmain( int number_of_command_line_arguments, LPCTSTR command_line_arguments
 
    std::wstring encoded_data;
 
-   if ( encoder.Encode( bytes, encoded_data ) != false )
+   if ( encoder.Encode( bytes, encoded_data ) == true )
    {
       _tprintf( TEXT( &quot;%s\n&quot;, (LPCTSTR) encoded_data );
    }

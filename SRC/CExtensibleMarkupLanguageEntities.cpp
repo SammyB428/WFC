@@ -97,7 +97,7 @@ _Check_return_ bool CExtensibleMarkupLanguageEntities::Add( _In_z_ wchar_t const
 
    // Now validate the name characters according to Rule 68->5
 
-   if ( Win32FoundationClasses::is_xml_Letter( entity[ 1 ] ) != true &&
+   if ( Win32FoundationClasses::is_xml_Letter( entity[ 1 ] ) == false &&
         entity[ 1 ] != TEXT( '_' ) &&
         entity[ 1 ] != TEXT( ':' ) )
    {
@@ -105,9 +105,7 @@ _Check_return_ bool CExtensibleMarkupLanguageEntities::Add( _In_z_ wchar_t const
       return( false );
    }
 
-   std::size_t loop_index = 2;
-
-   while( loop_index < entity_length - 1 )
+   for ( auto const loop_index : Range(entity_length - 1, 2) )
    {
       if ( Win32FoundationClasses::is_xml_NameChar( entity[ loop_index ] ) == false )
       {
@@ -115,8 +113,6 @@ _Check_return_ bool CExtensibleMarkupLanguageEntities::Add( _In_z_ wchar_t const
          //WFCTRACEVAL( TEXT( "This character index " ), (uint32_t) loop_index );
          return( false );
       }
-
-      loop_index++;
    }
 
    // Now validate the characters according to Rule 9 (REC-xml.htm#NT-EntityValue) 
@@ -194,15 +190,13 @@ _Check_return_ bool CExtensibleMarkupLanguageEntities::Add( _In_z_ wchar_t const
 
          uint32_t character_to_add_to_string = 0;
 
-         TCHAR * end_pointer = nullptr;
-
-         if ( is_hexadecimal_character_reference != false )
+         if ( is_hexadecimal_character_reference == true)
          {
-            character_to_add_to_string = ::_tcstoul( number_string.c_str(), &end_pointer, 16 );
+            character_to_add_to_string = static_cast<uint32_t>(as_hexadecimal_integer(number_string));
          }
          else
          {
-            character_to_add_to_string = ::wcstoul( number_string.c_str(), &end_pointer, 10 );
+            character_to_add_to_string = static_cast<uint32_t>(as_integer(number_string));
          }
 
          if ( Win32FoundationClasses::is_xml_Char( character_to_add_to_string ) == false )
@@ -211,7 +205,7 @@ _Check_return_ bool CExtensibleMarkupLanguageEntities::Add( _In_z_ wchar_t const
             return( false );
          }
 
-         resolved_string.push_back( static_cast< wchar_t >( ::_wtoi( number_string.c_str() ) ) );
+         resolved_string.push_back( static_cast< wchar_t >( as_integer(number_string) ) );
          location_of_character_reference = temp_string.find(L"&#");
       }
 
@@ -372,7 +366,7 @@ _Check_return_ bool CExtensibleMarkupLanguageEntities::IsEntity( _In_z_ wchar_t 
 
    // Now validate the name characters according to Rule 68->5
 
-   if ( Win32FoundationClasses::is_xml_Letter( entity[ 1 ] ) != true &&
+   if ( Win32FoundationClasses::is_xml_Letter( entity[ 1 ] ) == false &&
         entity[ 1 ] != TEXT( '_' ) &&
         entity[ 1 ] != TEXT( ':' ) )
    {
@@ -381,9 +375,7 @@ _Check_return_ bool CExtensibleMarkupLanguageEntities::IsEntity( _In_z_ wchar_t 
       return( false );
    }
 
-   std::size_t loop_index = 2;
-
-   while( loop_index < (entity_length - 1) )
+   for ( auto const loop_index : Range(entity_length - 1, 2) )
    {
       if ( Win32FoundationClasses::is_xml_NameChar( entity[ loop_index ] ) == false )
       {
@@ -392,10 +384,7 @@ _Check_return_ bool CExtensibleMarkupLanguageEntities::IsEntity( _In_z_ wchar_t 
          rule_that_was_broken = 5;
          return( false );
       }
-
-      loop_index++;
    }
-
 
    if (m_Entities.empty() == true)
    {

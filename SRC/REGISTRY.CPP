@@ -412,7 +412,7 @@ _Check_return_ bool CRegistry::DeleteKey( __in_z wchar_t const * name_of_key_to_
             ** Now we open the parent key and delete the child
             */
 
-            if ( Open( parent_key_name.c_str() ) != false )
+            if ( Open( parent_key_name.c_str() ) == true )
             {
                 m_ErrorCode = ::_recursively_delete_all_sub_keys( m_KeyHandle, child_key_name.c_str() );
             }
@@ -645,7 +645,7 @@ _Check_return_ bool CRegistry::GetBinaryValue( __in_z wchar_t const * name_of_va
 
     auto type = KeyValueTypes::Binary;
 
-    if ( QueryValue( name_of_value, type, memory_buffer, size_of_buffer ) != false )
+    if ( QueryValue( name_of_value, type, memory_buffer, size_of_buffer ) == true )
     {
         /*
         ** We've got data so give it back to the caller
@@ -684,11 +684,11 @@ _Check_return_ bool CRegistry::GetDoubleWordValue( _In_z_ wchar_t const * name_o
 {
     WFC_VALIDATE_POINTER( this );
 
-    SIZE_T size_of_buffer = sizeof( DWORD );
+    std::size_t size_of_buffer = sizeof( DWORD );
 
     auto type = KeyValueTypes::DoubleWord;
 
-    return( QueryValue( name_of_value, type, reinterpret_cast<LPBYTE>(&return_value), size_of_buffer ) );
+    return( QueryValue( name_of_value, type, reinterpret_cast<uint8_t *>(&return_value), size_of_buffer ) );
 }
 
 _Check_return_ DWORD CRegistry::GetErrorCode( void ) const noexcept
@@ -766,13 +766,13 @@ _Check_return_ bool CRegistry::GetStringValue(_In_z_ wchar_t const * name_of_val
     WFC_VALIDATE_POINTER(this);
 
     wchar_t temp_string[2048];
-    SIZE_T size_of_buffer = 2048;
+    std::size_t size_of_buffer = std::size(temp_string);
 
     ::ZeroMemory(temp_string, sizeof(temp_string));
 
     auto type = KeyValueTypes::String;
 
-    if (QueryValue(name_of_value, type, reinterpret_cast<LPBYTE>(temp_string), size_of_buffer) != false)
+    if (QueryValue(name_of_value, type, reinterpret_cast<uint8_t *>(temp_string), size_of_buffer) == true)
     {
         return_string.assign(temp_string);
         return(true);
@@ -798,11 +798,11 @@ _Check_return_ bool CRegistry::GetStringArrayValue(_In_z_ wchar_t const * name_o
 
     (void)QueryInfo();
 
-    SIZE_T size_of_buffer = m_LongestValueDataLength;
+    std::size_t size_of_buffer = m_LongestValueDataLength;
 
-    LPBYTE memory_buffer = (LPBYTE) new BYTE[size_of_buffer];
+    auto memory_buffer = std::make_unique<uint8_t[]>(size_of_buffer);
 
-    if (memory_buffer == nullptr)
+    if (memory_buffer.get() == nullptr)
     {
         m_ErrorCode = ::GetLastError();
         //WFCTRACEERROR( m_ErrorCode );
@@ -813,13 +813,13 @@ _Check_return_ bool CRegistry::GetStringArrayValue(_In_z_ wchar_t const * name_o
 
     auto type = KeyValueTypes::MultipleString; // A double NULL terminated string
 
-    if (QueryValue(name_of_value, type, memory_buffer, size_of_buffer) != false)
+    if (QueryValue(name_of_value, type, memory_buffer.get(), size_of_buffer) == true)
     {
         /*
         ** We've got data so give it back to the caller
         */
 
-        auto strings = reinterpret_cast<LPTSTR>(memory_buffer);
+        auto strings = reinterpret_cast<LPTSTR>(memory_buffer.get());
 
         return_array.clear();
 
@@ -835,8 +835,6 @@ _Check_return_ bool CRegistry::GetStringArrayValue(_In_z_ wchar_t const * name_o
     {
         return_value = false;
     }
-
-    delete[] memory_buffer;
 
     return(return_value);
 }
@@ -1005,8 +1003,8 @@ _Check_return_ bool CRegistry::QueryInfo( void ) noexcept
 
 _Check_return_ bool CRegistry::QueryValue( __in_z wchar_t const * name_of_value,
                                          __inout KeyValueTypes& value_type,
-                                         __out_bcount_part( size_of_buffer, size_of_buffer ) LPBYTE address_of_buffer,
-                                         __inout SIZE_T& size_of_buffer ) noexcept
+                                         __out_bcount_part( size_of_buffer, size_of_buffer ) uint8_t * address_of_buffer,
+                                         __inout std::size_t& size_of_buffer ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
 
@@ -1018,8 +1016,8 @@ _Check_return_ bool CRegistry::QueryValue( __in_z wchar_t const * name_of_value,
 
     WFC_TRY
     {
-        DWORD temp_data_type         = (DWORD) value_type;
-        DWORD the_size_of_the_buffer = (DWORD) size_of_buffer;
+        DWORD temp_data_type         = static_cast<DWORD>(value_type);
+        DWORD the_size_of_the_buffer = static_cast<DWORD>(size_of_buffer);
 
         m_ErrorCode = ::RegQueryValueEx( m_KeyHandle,
             (LPTSTR) name_of_value,
@@ -1030,7 +1028,7 @@ _Check_return_ bool CRegistry::QueryValue( __in_z wchar_t const * name_of_value,
 
         if ( m_ErrorCode == ERROR_SUCCESS )
         {
-            value_type = (KeyValueTypes) temp_data_type;
+            value_type = static_cast<KeyValueTypes>(temp_data_type);
             return( true );
         }
         else
@@ -1691,7 +1689,7 @@ Loads a subkey from a file.
 It returns TRUE on success or FALSE on failure.
 The reason for the failure can be retrieved via <B>GetErrorCode</B>().
 
-<DT><PRE>BOOL <B><A NAME="NotifyChange">NotifyChange</A></B>( const HANDLE event_handle                       = nullptr,
+<DT><PRE>BOOL <B><A NAME="NotifyChange">NotifyChange</A></B>( HANDLE const event_handle                       = nullptr,
 const NotifyChangeFilter changes_to_be_reported = notifyLastSet,
 const BOOL this_subkey_or_all_subkeys           = changeSpecifiedKeyOnly,
 const BOOL wait_for_change_or_signal_event      = WAIT_FOR_CHANGE )</PRE><DD>

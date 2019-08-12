@@ -112,7 +112,7 @@ _Check_return_ bool test_CRegistry(_Out_ std::string& class_name, _Out_ int& tes
 
    DWORD index = 0;
 
-   while( registry.EnumerateKeys( index, sub_key_name, registry_class_name ) != false )
+   while( registry.EnumerateKeys( index, sub_key_name, registry_class_name ) == true )
    {
       index++;
    }
@@ -124,7 +124,7 @@ _Check_return_ bool test_CRegistry(_Out_ std::string& class_name, _Out_ int& tes
    DWORD size_of_buffer = 4096;
    CRegistry::KeyValueTypes data_type;
 
-   while( registry.EnumerateValues( index, sub_key_name, data_type, buffer, size_of_buffer ) != false )
+   while( registry.EnumerateValues( index, sub_key_name, data_type, buffer, size_of_buffer ) == true )
    {
       index++;
    }

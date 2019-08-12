@@ -226,8 +226,8 @@ class CRegistry
       virtual _Check_return_ bool QueryInfo( void ) noexcept;
       virtual _Check_return_ bool QueryValue( __in_z wchar_t const * name_of_value,
                                __inout KeyValueTypes& value_type,
-                               __out_bcount_part( size_of_buffer, size_of_buffer ) LPBYTE address_of_buffer,
-                               __inout SIZE_T&        size_of_buffer ) noexcept;
+                               __out_bcount_part( size_of_buffer, size_of_buffer ) uint8_t * address_of_buffer,
+                               __inout std::size_t&        size_of_buffer ) noexcept;
       virtual _Check_return_ bool Replace( __in_z wchar_t const * name_of_subkey,
                             __in_z wchar_t const * name_of_file_with_new_data,
                             __in_z wchar_t const * name_of_backup_file ) noexcept;

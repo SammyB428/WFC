@@ -182,11 +182,9 @@ _Check_return_ double CSuperRandomNumberGenerator::GetValue( void ) noexcept
 
    if ( m_Index24 == 24 )
    {
-      int i = 0;
-
       m_Index24 = 0;
 
-      for( i = 1; i <= NUMBER_OF_VALUES_TO_SKIP; i++ )
+      for( auto const i : Range(NUMBER_OF_VALUES_TO_SKIP + 1, 1 ) )
       {
          temporary_value = m_Seeds[ m_Index_J24 ] - m_Seeds[ m_Index_I24 ] - m_Carry;
 
@@ -229,15 +227,12 @@ void CSuperRandomNumberGenerator::SetSeed( __in DWORD jseed ) noexcept
       jseed = random;
    }
 
-   int i = 0;
-   int k = 0;
-
    m_TwoM24 = (double) 1.0;
 
-   for( i = 1; i <= 24; i++ )
+   for( auto const i : Range( 25, 1 ) )
    {
       m_TwoM24 *= (double) 0.5;
-      k = jseed / 53668;
+      int k = jseed / 53668;
       jseed = 40014 * ( jseed - ( k * 53668 ) ) - ( k * 12211 );
 
       m_IntegerSeeds[ i ] = jseed % TWENTY_FOUR_BIT_VALUE;
@@ -245,7 +240,7 @@ void CSuperRandomNumberGenerator::SetSeed( __in DWORD jseed ) noexcept
 
    m_TwoM12 = m_TwoM24 * (double) 4096.0;
 
-   for( i = 1; i <= 24; i++ )
+   for( auto const i : Range( 25, 1 ) )
    {
       m_Seeds[ i ] = static_cast< double >( m_IntegerSeeds[ i ] * m_TwoM24 );
       m_NextValue[ i ] = i - 1;

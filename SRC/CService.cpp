@@ -87,7 +87,7 @@ CService::CService( __callback LPTHREAD_START_ROUTINE thread_start_routine, __in
 
    ZeroMemory( m_ServiceTable, sizeof( m_ServiceTable ) );
 
-   m_ServiceName = (wchar_t *) _aligned_malloc((SERVICE_NAME_LEN + 1) * sizeof( wchar_t ), 4096);
+   m_ServiceName = static_cast<wchar_t *>(_aligned_malloc((SERVICE_NAME_LEN + 1) * sizeof( wchar_t ), 4096));
 
    ZeroMemory( m_ServiceName, (SERVICE_NAME_LEN + 1) * sizeof(wchar_t));
 }
@@ -522,10 +522,10 @@ void CService::OnPause( void ) noexcept
    log.ReportInformation( TEXT( "Service Paused" ) );
 }
 
-_Check_return_ BOOL CService::OnPrepareServiceThread( void ) noexcept
+_Check_return_ bool CService::OnPrepareServiceThread( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
-   return( TRUE );
+   return( true );
 }
 
 void CService::OnShutdown( void ) noexcept
@@ -811,7 +811,7 @@ void CALLBACK CService::ServiceMain( _In_ DWORD const number_of_command_line_arg
             goto EXIT_GOTO;
          }
 
-         if ( m_StaticService_p->OnPrepareServiceThread() != FALSE )
+         if ( m_StaticService_p->OnPrepareServiceThread() == true )
          {
             // Daniel Meyer (Daniel.Meyer@Digital.com) had an awsome
             // suggestion here. Change CreateThread() to _beginthreadex()

@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 2000-2016, Samuel R. Blackburn
+** Copyright, 2000-2019, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -48,11 +48,11 @@ static char THIS_FILE[] = __FILE__;
 #define HAY (0x55)
 #define NEEDLE (0x5A)
 
-static _Check_return_ size_t fill_buffer_with_test_pattern(_Inout_ uint8_t * buffer, _In_ std::size_t const buffer_size, _In_ const uint8_t needle, _In_ const size_t test_number) noexcept
+static _Check_return_ std::size_t fill_buffer_with_test_pattern(_Inout_ uint8_t * buffer, _In_ std::size_t const buffer_size, _In_ uint8_t const needle, _In_ std::size_t const test_number) noexcept
 {
     std::size_t number_of_bytes_written = 0;
 
-    const std::size_t frequency = test_number + 1;
+    std::size_t const frequency = test_number + 1;
 
     for ( auto const buffer_index : Range(buffer_size))
     {
@@ -66,9 +66,9 @@ static _Check_return_ size_t fill_buffer_with_test_pattern(_Inout_ uint8_t * buf
     return(number_of_bytes_written);
 }
 
-static _Check_return_ size_t prepare_buffer(_Inout_ uint8_t * buffer, _In_ const size_t buffer_size) noexcept
+static _Check_return_ std::size_t prepare_buffer(_Inout_ uint8_t * buffer, _In_ std::size_t const buffer_size) noexcept
 {
-    static constexpr uint8_t _pattern[] =
+    static constexpr uint8_t const _pattern[] =
     {//  0     1    2    3    4    5    6    7    8    9   10   11   12   13   14   15   16   17   18   19   20   21   22   23   24   25   26   27   28   29   30   31 
 /*  0 */ HAY, HAY, HAY, HAY, HAY, HAY, HAY, HAY, HAY, HAY, HAY, HAY, HAY, HAY, HAY, HAY, HAY, HAY, HAY, HAY, HAY, HAY, HAY, HAY, HAY, HAY, HAY, HAY, HAY, HAY, HAY, HAY,
        //  0     1    2    3    4    5    6    7    8    9    10   11   12   13   14   15   16   17   18   19   20   21   22   23   24   25   26   27   28   29   30   31 
@@ -116,9 +116,9 @@ static _Check_return_ size_t prepare_buffer(_Inout_ uint8_t * buffer, _In_ const
 
     static_assert(sizeof(_pattern) == (36 * 32), "pattern buffer is not a multiple of 32");
 
-    static constexpr size_t number_of_needles = 32 + 32 + 2 + 4;
+    static constexpr std::size_t const number_of_needles = 32 + 32 + 2 + 4;
 
-    size_t return_value = 0;
+    std::size_t return_value = 0;
 
     memset(buffer, HAY, buffer_size);
 
@@ -129,11 +129,11 @@ static _Check_return_ size_t prepare_buffer(_Inout_ uint8_t * buffer, _In_ const
         return(0);
     }
 
-    size_t buffer_index = 0;
-    size_t chunk_index = 0;
-    size_t number_of_bytes_remaining = 0;
+    std::size_t buffer_index = 0;
+    std::size_t chunk_index = 0;
+    std::size_t number_of_bytes_remaining = 0;
 
-    size_t end_of_buffer = buffer_size;
+    std::size_t end_of_buffer = buffer_size;
 
     if ((buffer_size % sizeof(_pattern)) != 0)
     {
@@ -154,13 +154,13 @@ static _Check_return_ size_t prepare_buffer(_Inout_ uint8_t * buffer, _In_ const
     return(return_value);
 }
 
-static _Check_return_ size_t search_buffer(_Inout_ uint8_t * buffer, _In_ const size_t buffer_size, _In_ const uint8_t value ) noexcept
+static _Check_return_ std::size_t search_buffer(_Inout_ uint8_t * buffer, _In_ std::size_t const buffer_size, _In_ uint8_t const value ) noexcept
 {
-    size_t number_of_times_found = 0;
+    std::size_t number_of_times_found = 0;
 
-    size_t buffer_index = 0;
+    std::size_t buffer_index = 0;
 
-    size_t number_of_bytes_remaining = buffer_size;
+    std::size_t number_of_bytes_remaining = buffer_size;
 
     uint8_t needle[1];
 
@@ -183,9 +183,9 @@ static _Check_return_ size_t search_buffer(_Inout_ uint8_t * buffer, _In_ const 
     return(number_of_times_found);
 }
 
-__checkReturn bool execute_test(__in const uint8_t * buffer, __in const int64_t should_be_found_at) noexcept
+__checkReturn bool execute_test(__in uint8_t const * buffer, __in int64_t const should_be_found_at) noexcept
 {
-    const int64_t found_at = find_byte(NEEDLE, buffer, 32);
+    int64_t const found_at = find_byte(NEEDLE, buffer, 32);
 
     if (found_at != should_be_found_at)
     {
@@ -234,9 +234,7 @@ __checkReturn bool test_find(__out std::string& class_name, __out int& test_numb
 
     memset(test_buffer, 'A', sizeof(test_buffer));
 
-    size_t loop_index = 1;
-
-    while (loop_index < 34)
+    for( auto const loop_index : Range( 34, 1 ))
     {
         test_buffer[loop_index - 1] = 'B';
 
@@ -248,11 +246,9 @@ __checkReturn bool test_find(__out std::string& class_name, __out int& test_numb
         }
 
         test_buffer[loop_index - 1] = 'A';
-
-        loop_index++;
     }
 
-    uint8_t * buffer = (uint8_t *)_aligned_malloc(TEST_FIND_BUFFER_SIZE, 4096);
+    auto buffer = reinterpret_cast<uint8_t *>(_aligned_malloc(TEST_FIND_BUFFER_SIZE, 4096));
 
     memset(buffer, 0xFF, TEST_FIND_BUFFER_SIZE);
 
@@ -456,30 +452,30 @@ __checkReturn bool test_find(__out std::string& class_name, __out int& test_numb
         return(failure());
     }
 
-    size_t offset = 0;
+    std::size_t offset = 0;
 
-    const size_t number_of_tests = prepare_buffer(buffer, TEST_FIND_BUFFER_SIZE);
-    const size_t number_of_times_found = search_buffer(buffer, TEST_FIND_BUFFER_SIZE, NEEDLE);
+    std::size_t const number_of_tests = prepare_buffer(buffer, TEST_FIND_BUFFER_SIZE);
+    std::size_t const number_of_times_found = search_buffer(buffer, TEST_FIND_BUFFER_SIZE, NEEDLE);
 
 #if 0
     // Now gather some timings from the different search methods.
 
     memset(buffer, 0x55, TEST_FIND_BUFFER_SIZE);
 
-    const size_t needle_index = TEST_FIND_BUFFER_SIZE - 3;
+    std::size_t const needle_index = TEST_FIND_BUFFER_SIZE - 3;
 
     buffer[needle_index] = 0xAA;
 
-    const size_t desired_needle_index = needle_index - 1;
+    std::size_t const desired_needle_index = needle_index - 1;
 
     LARGE_INTEGER start_1 = { 0, 0 };
     LARGE_INTEGER end_1 = { 0, 0 };
     LARGE_INTEGER end_2 = { 0, 0 };
 
     QueryPerformanceCounter(&start_1);
-    const size_t found_1 = _find_byte_SSE41_1(0xAA, &buffer[1], TEST_FIND_BUFFER_SIZE - 1);
+    std::size_t const found_1 = _find_byte_SSE41_1(0xAA, &buffer[1], TEST_FIND_BUFFER_SIZE - 1);
     QueryPerformanceCounter(&end_1);
-    const size_t found_2 = _find_byte_SSE41_2(0xAA, &buffer[1], TEST_FIND_BUFFER_SIZE - 1);
+    std::size_t const found_2 = _find_byte_SSE41_2(0xAA, &buffer[1], TEST_FIND_BUFFER_SIZE - 1);
     QueryPerformanceCounter(&end_2);
 
     if (found_1 != desired_needle_index)
@@ -492,19 +488,19 @@ __checkReturn bool test_find(__out std::string& class_name, __out int& test_numb
         _ASSERT_EXPR(FALSE, _CRT_WIDE("found_1 is not equal to found_2"));
     }
 
-    const int64_t time_1 = end_1.QuadPart - start_1.QuadPart;
-    const int64_t time_2 = end_2.QuadPart - end_1.QuadPart;
+    int64_t const time_1 = end_1.QuadPart - start_1.QuadPart;
+    int64_t const time_2 = end_2.QuadPart - end_1.QuadPart;
 
     //printf("Method 1: %I64d\nMethod 2: %I64d\n", time_1, time_2);
 
     if (time_2 < time_1)
     {
-        const int64_t beating_ticks = time_1 - time_2;
+        int64_t const beating_ticks = time_1 - time_2;
         //printf("_find_byte_SSE41_2 wins by %I64d ticks\n", beating_ticks);
     }
     else
     {
-        const int64_t beating_ticks = time_2 - time_1;
+        int64_t const beating_ticks = time_2 - time_1;
         //printf("_find_byte_SSE41 wins by %I64d ticks\n", beating_ticks);
     }
 
@@ -537,7 +533,7 @@ __checkReturn bool test_find(__out std::string& class_name, __out int& test_numb
 
     std::vector<uint64_t> results;
 
-    uint8_t sam_needle[4] = { 'S', 'a', 'm', 'B' };
+    constexpr uint8_t const sam_needle[4] = { 'S', 'a', 'm', 'B' };
 
     find_all_in_memory(buffer, TEST_FIND_BUFFER_SIZE, sam_needle, sizeof(sam_needle), results);
 

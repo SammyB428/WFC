@@ -59,7 +59,7 @@ class CDataArchive
        CDataArchive(__in CDataArchive const&) = delete;
        CDataArchive& operator=(__in CDataArchive const&) = delete;
  
-       CDataArchive();
+       CDataArchive() noexcept;
       virtual ~CDataArchive();
 
       virtual _Check_return_ bool IsLoading( void ) const noexcept;

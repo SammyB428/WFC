@@ -56,7 +56,7 @@ class CEventLogRecord
       ** "Do More with Less Code:..."
       */
 
-      virtual ~CEventLogRecord() noexcept;
+      virtual ~CEventLogRecord();
 
       /*
       ** Data

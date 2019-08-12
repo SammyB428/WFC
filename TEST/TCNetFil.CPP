@@ -58,11 +58,11 @@ void test_CNetworkFiles( __in_z LPCTSTR machine_name ) noexcept
 
    CNetworkFileInformation network_files_information;
 
-   if ( network_files.Enumerate() != FALSE )
+   if ( network_files.Enumerate() == true )
    {
       _tprintf( TEXT( "Network Files Information:\n" ) );
 
-      while( network_files.GetNext( network_files_information ) != FALSE )
+      while( network_files.GetNext( network_files_information ) == true )
       {
          _tprintf( TEXT( " ID            - %d\n" ),     network_files_information.ID            );
          _tprintf( TEXT( " PathName      - \"%s\"\n" ), network_files_information.PathName.c_str());

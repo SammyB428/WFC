@@ -137,22 +137,22 @@ _Check_return_ bool PASCAL Win32FoundationClasses::wfc_is_dotted_ip_address( __i
 
     // OK, nothing but digits and dots of the right lengths, check the values
 
-    if ( _wtoi( a.c_str()) > 255 )
+    if ( as_integer(a) > 255 )
     {
         return( false );
     }
 
-    if ( _wtoi( b.c_str() ) > 255 )
+    if (as_integer(b) > 255 )
     {
         return( false );
     }
 
-    if ( _wtoi( c.c_str() ) > 255 )
+    if (as_integer(c) > 255 )
     {
         return( false );
     }
 
-    if ( _wtoi( d.c_str() ) > 255 )
+    if (as_integer(d) > 255 )
     {
         return( false );
     }
@@ -251,22 +251,22 @@ _Check_return_ bool PASCAL Win32FoundationClasses::wfc_is_dotted_ip_address( __i
 
     // OK, nothing but digits and dots of the right lengths, check the values
 
-    if ( _wtoi( a.c_str() ) > 255 )
+    if (as_integer(a) > 255 )
     {
         return( false );
     }
 
-    if ( _wtoi( b.c_str() ) > 255 )
+    if (as_integer(b) > 255 )
     {
         return( false );
     }
 
-    if ( _wtoi( c.c_str() ) > 255 )
+    if (as_integer(c) > 255 )
     {
         return( false );
     }
 
-    if ( _wtoi( d.c_str() ) > 255 )
+    if (as_integer(d) > 255 )
     {
         return( false );
     }

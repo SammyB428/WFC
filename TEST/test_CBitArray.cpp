@@ -120,17 +120,13 @@ __checkReturn bool test_CBitArray( __out std::string& class_name, __out int& tes
         return( failure() );
     }
 
-    size_t bit_index = 2;
-
-    while( bit_index < 36 )
+    for ( auto const bit_index : Range( 36, 2 ) )
     {
         if ( bits.GetAt( bit_index ) != 1 )
         {
             test_number_that_failed = 9;
             return( failure() );
         }
-
-        bit_index++;
     }
 
     //   virtual void      LeftTrim( DWORD number_of_bits );
@@ -609,11 +605,11 @@ __checkReturn bool test_CBitArray( __out std::string& class_name, __out int& tes
 
     //   virtual void      Append( const CBitArray& source );
 
-    bit_index = bits.GetSize();
+    auto const number_of_bits = bits.GetSize();
 
     bits.Append( bits4 );
 
-    if ( bits.GetSize() != ( bit_index + bits4.GetSize() ) )
+    if ( bits.GetSize() != (number_of_bits + bits4.GetSize() ) )
     {
         test_number_that_failed = 63;
         return( failure() );

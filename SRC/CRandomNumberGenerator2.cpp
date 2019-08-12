@@ -198,7 +198,7 @@ _Check_return_ bool CRandomNumberGenerator2::Fill( __out_bcount( number_of_bytes
 
    std::size_t array_index = 0;
 
-   while( array_index < number_of_dwords_in_buffer )
+   while( array_index < number_of_dwords_in_buffer ) // Cannot be converted to a Range loop
    {
       dwords[ array_index ] = GetInteger();
       array_index++;
@@ -206,7 +206,7 @@ _Check_return_ bool CRandomNumberGenerator2::Fill( __out_bcount( number_of_bytes
 
    array_index *= sizeof(uint32_t);
 
-   while( array_index < number_of_bytes )
+   while( array_index < number_of_bytes ) // Cannot be converted to a Range loop
    {
       buffer[ array_index ] = static_cast<uint8_t>(GetInteger());
       array_index++;
@@ -219,7 +219,7 @@ void CRandomNumberGenerator2::InitializeSeed( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
-   if ( m_Disabled != false )
+   if ( m_Disabled == true)
    {
       SetSeed( m_State[ 0 ] );
       return;

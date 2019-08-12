@@ -121,7 +121,7 @@ CCryptographicKey::~CCryptographicKey() noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
-   if ( m_AutomaticallyDestroy != false )
+   if ( m_AutomaticallyDestroy == true)
    {
       (void) Destroy();
    }
@@ -708,7 +708,7 @@ _Check_return_ bool CCryptographicKey::FromHandle( __in HCRYPTKEY source_handle,
 
    if ( m_Key != static_cast< HCRYPTKEY >( NULL ) )
    {
-      if ( m_AutomaticallyDestroy != false )
+      if ( m_AutomaticallyDestroy == true)
       {
          (void) Destroy();
       }
@@ -832,7 +832,7 @@ _Check_return_ bool CCryptographicKey::GetInitializationVector( __out std::vecto
 
    bool const return_value = GetParameter( Parameter::InitializationVector, initialization_vector.data(), buffer_length );
 
-   if ( return_value != false )
+   if ( return_value == true)
    {
       initialization_vector.resize( buffer_length );
    }
@@ -877,7 +877,7 @@ _Check_return_ bool CCryptographicKey::GetSalt( __out std::vector<uint8_t>& salt
 
    bool const return_value = GetParameter( Parameter::Salt, salt.data(), buffer_length );
 
-   if ( return_value != false )
+   if ( return_value == true)
    {
       salt.resize( buffer_length );
    }
@@ -996,7 +996,7 @@ _Check_return_ bool CCryptographicKey::SetPermissions( __in DWORD permissions ) 
 {
    WFC_VALIDATE_POINTER( this );
 
-   return( SetParameter( Parameter::Permissions, (BYTE *) permissions ) );
+   return( SetParameter( Parameter::Permissions, static_cast<uint8_t *>(IntToPtr(permissions) )));
 }
 
 _Check_return_ bool CCryptographicKey::SetSalt( __in uint8_t const * buffer ) noexcept

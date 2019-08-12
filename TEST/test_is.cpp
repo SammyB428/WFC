@@ -48,20 +48,20 @@ _Check_return_ bool test_is( _Out_ std::string& class_name, _Out_ int& test_numb
 {
    class_name.assign( "test_is" );
 
-   const char *    good_plain_ascii_guid =  "0AEE2A9F-BCBB-11d0-8C72-00C04FC2B085";
-   const wchar_t * good_plain_wide_guid  = L"0aee2A9F-BCBB-11d0-8C72-00C04FC2B085";
-   const char *    good_curly_ascii_guid =  "{0AEE2A9F-BCBB-11d0-8C72-00C04FC2B085}";
-   const wchar_t * good_curly_wide_guid  = L"{0aee2A9F-BCBB-11d0-8C72-00C04FC2B085}";
+   char const *    good_plain_ascii_guid =  "0AEE2A9F-BCBB-11d0-8C72-00C04FC2B085";
+   wchar_t const * good_plain_wide_guid  = L"0aee2A9F-BCBB-11d0-8C72-00C04FC2B085";
+   char const *    good_curly_ascii_guid =  "{0AEE2A9F-BCBB-11d0-8C72-00C04FC2B085}";
+   wchar_t const * good_curly_wide_guid  = L"{0aee2A9F-BCBB-11d0-8C72-00C04FC2B085}";
 
-   const char *    bad1_plain_ascii_guid =  "0AEE2A9F-BCBB-11d0-8C72 00C04FC2B085";
-   const wchar_t * bad1_plain_wide_guid  = L"0aee2A9F-BCBB-11d0-8C72 00C04FC2B085";
-   const char *    bad1_curly_ascii_guid =  "{0AEE2A9F-BCBB-11d0-8C72 00C04FC2B085}";
-   const wchar_t * bad1_curly_wide_guid  = L"{0aee2A9F-BCBB-11d0-8C72 00C04FC2B085}";
+   char const *    bad1_plain_ascii_guid =  "0AEE2A9F-BCBB-11d0-8C72 00C04FC2B085";
+   wchar_t const * bad1_plain_wide_guid  = L"0aee2A9F-BCBB-11d0-8C72 00C04FC2B085";
+   char const *    bad1_curly_ascii_guid =  "{0AEE2A9F-BCBB-11d0-8C72 00C04FC2B085}";
+   wchar_t const * bad1_curly_wide_guid  = L"{0aee2A9F-BCBB-11d0-8C72 00C04FC2B085}";
 
-   const char *    bad2_plain_ascii_guid =  "0AEE2A9F-BCBB-11d0-8C72-00C04FC2B08O";
-   const wchar_t * bad2_plain_wide_guid  = L"0aee2A9F-BCBB-11d0-8C72-00C04FC2B08O";
-   const char *    bad2_curly_ascii_guid =  "{0AEE2A9F-BCBB-11d0-8C72-00C04FC2B08O}";
-   const wchar_t * bad2_curly_wide_guid  = L"{0aee2A9F-BCBB-11d0-8C72-00C04FC2B08O}";
+   char const *    bad2_plain_ascii_guid =  "0AEE2A9F-BCBB-11d0-8C72-00C04FC2B08O";
+   wchar_t const * bad2_plain_wide_guid  = L"0aee2A9F-BCBB-11d0-8C72-00C04FC2B08O";
+   char const *    bad2_curly_ascii_guid =  "{0AEE2A9F-BCBB-11d0-8C72-00C04FC2B08O}";
+   wchar_t const * bad2_curly_wide_guid  = L"{0aee2A9F-BCBB-11d0-8C72-00C04FC2B08O}";
 
    if ( wfc_is_guid( good_plain_ascii_guid ) == false )
    {
@@ -147,14 +147,14 @@ _Check_return_ bool test_is( _Out_ std::string& class_name, _Out_ int& test_numb
        return( failure() );
    }
 
-   if ( wfc_find_curly_guid( (const uint8_t *) good_curly_ascii_guid, strlen( good_curly_ascii_guid ) ) != 0 )
+   if ( wfc_find_curly_guid( reinterpret_cast<uint8_t const *>(good_curly_ascii_guid), strlen( good_curly_ascii_guid ) ) != 0 )
    {
        class_name.assign( "wfc_find_curly_guid()" );
        test_number_that_failed = 13;
        return( failure() );
    }
 
-   if ( wfc_find_wide_curly_guid( (const uint8_t *) good_curly_wide_guid, wcslen( good_curly_wide_guid ) * sizeof( wchar_t ) ) != 0 )
+   if ( wfc_find_wide_curly_guid( reinterpret_cast<uint8_t const *>(good_curly_wide_guid), wcslen( good_curly_wide_guid ) * sizeof( wchar_t ) ) != 0 )
    {
        class_name.assign( "wfc_find_wide_curly_guid()" );
        test_number_that_failed = 14;

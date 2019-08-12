@@ -123,12 +123,12 @@ void CDataChunk::Dump( CDumpContext& dump_context ) const
 
 #endif // _DEBUG
 
-CDataFile::CDataFile()
+CDataFile::CDataFile() noexcept
 {
    WFC_VALIDATE_POINTER( this );
 }
 
-CDataFile::~CDataFile()
+CDataFile::~CDataFile() noexcept
 {
    WFC_VALIDATE_POINTER( this );
 }
@@ -153,25 +153,20 @@ _Check_return_ bool CDataFile::AddData( __in uint32_t const identifier, __in_bco
 
    // Write the identifier
 
-   BYTE byte_1 = 0;
-   BYTE byte_2 = 0;
-   BYTE byte_3 = 0;
-   BYTE byte_4 = 0;
-
    uint32_t temp_long = identifier;
 
-   byte_1 = (BYTE) (temp_long & 0xFF );
+   uint8_t byte_1 = (uint8_t) (temp_long & 0xFF );
    temp_long >>= 8;
 
-   byte_2 = (BYTE) (temp_long & 0xFF );
+   uint8_t byte_2 = (uint8_t) (temp_long & 0xFF );
    temp_long >>= 8;
 
-   byte_3 = (BYTE) (temp_long & 0xFF );
+   uint8_t byte_3 = (uint8_t) (temp_long & 0xFF );
    temp_long >>= 8;
 
-   byte_4 = (BYTE) (temp_long & 0xFF );
+   uint8_t byte_4 = (uint8_t) (temp_long & 0xFF );
 
-   BYTE buffer[ 9 ];
+   uint8_t buffer[ 9 ];
 
    buffer[ 0 ] = byte_1;
    buffer[ 1 ] = byte_2;
@@ -184,16 +179,16 @@ _Check_return_ bool CDataFile::AddData( __in uint32_t const identifier, __in_bco
 
    temp_long = (uint32_t) number_of_bytes;
 
-   byte_1 = (BYTE) (temp_long & 0xFF );
+   byte_1 = (uint8_t) (temp_long & 0xFF );
    temp_long >>= 8;
 
-   byte_2 = (BYTE) (temp_long & 0xFF );
+   byte_2 = (uint8_t) (temp_long & 0xFF );
    temp_long >>= 8;
 
-   byte_3 = (BYTE) (temp_long & 0xFF );
+   byte_3 = (uint8_t) (temp_long & 0xFF );
    temp_long >>= 8;
 
-   byte_4 = (BYTE) (temp_long & 0xFF );
+   byte_4 = (uint8_t) (temp_long & 0xFF );
 
    buffer[ 4 ] = byte_1;
    buffer[ 5 ] = byte_2;
@@ -204,7 +199,7 @@ _Check_return_ bool CDataFile::AddData( __in uint32_t const identifier, __in_bco
 
    // Now write the bytes
 
-   Write( buffer_p, (uint32_t) number_of_bytes );
+   Write( buffer_p, static_cast<uint32_t>(number_of_bytes) );
 
    return( true );
 }
@@ -221,7 +216,7 @@ _Check_return_ bool CDataFile::GetData( __out uint32_t& identifier, __out std::v
 
    identifier = 0;
 
-   BYTE bytes[9] = { 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+   uint8_t bytes[9] = { 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 
    UINT number_of_bytes_read = 0;
 
@@ -234,7 +229,7 @@ _Check_return_ bool CDataFile::GetData( __out uint32_t& identifier, __out std::v
       if ( number_of_bytes_read < 8 )
       {
          //WFCTRACE( TEXT( "Can't read identifier and length" ) );
-         return( FALSE );
+         return( false );
       }
 
       identifier = MAKE_DATA_ID( bytes[ 0 ], bytes[ 1 ], bytes[ 2 ], bytes[ 3 ] );

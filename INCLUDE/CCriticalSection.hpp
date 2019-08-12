@@ -60,7 +60,7 @@ class CCriticalSection
          ::InitializeCriticalSection( &m_CriticalSection );
       }
 
-      inline ~CCriticalSection() noexcept
+      inline ~CCriticalSection()
       {
          ::DeleteCriticalSection( &m_CriticalSection );
       }

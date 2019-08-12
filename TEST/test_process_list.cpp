@@ -267,7 +267,7 @@ __checkReturn bool test_process_list( __out std::string& class_name, __out int& 
     // The first thing we need to do is get a buffer large
     // enough to hold the raw data. I like overkill so I choose
 
-    const DWORD buffer_size = 4 * ONE_MEGABYTE;
+    DWORD const buffer_size = 4 * ONE_MEGABYTE;
 
     std::unique_ptr<uint8_t[]> allocated_buffer = std::make_unique<uint8_t[]>(buffer_size);
 

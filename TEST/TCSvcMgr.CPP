@@ -57,7 +57,7 @@ __checkReturn bool test_CServiceControlManager( __out std::string& class_name, _
 
    std::wstring machine_name;
 
-   if ( manager.Open( GENERIC_READ, NULL, machine_name.c_str() ) == FALSE )
+   if ( manager.Open( GENERIC_READ, NULL, machine_name.c_str() ) == false )
    {
       _tprintf( TEXT( "Can't Open ServiceControlManager\n" ) );
       return( failure() );
@@ -65,13 +65,13 @@ __checkReturn bool test_CServiceControlManager( __out std::string& class_name, _
 
    std::size_t number_of_services = 0;
 
-   if ( manager.EnumerateStatus( SERVICE_STATE_ALL, SERVICE_TYPE_ALL ) != FALSE )
+   if ( manager.EnumerateStatus( SERVICE_STATE_ALL, SERVICE_TYPE_ALL ) == true )
    {
      // _tprintf( TEXT( "Services on %s:\n" ), (LPCTSTR) machine_name );
 
       CServiceNameAndStatus status;
 
-      while( manager.GetNext( status ) != FALSE )
+      while( manager.GetNext( status ) == true )
       {
 #if defined( _DEBUG ) && ! defined( WFC_STL )
   //       status.Dump( afxDump );

@@ -75,7 +75,7 @@ _Check_return_ bool test_is( __out std::string& class_name, __out int& test_numb
 _Check_return_ bool test_find(__out std::string& class_name, __out int& test_number_that_failed) noexcept;
 
 void memory( void );
-void ReportError( __in const DWORD error_code ) noexcept;
+void ReportError( __in DWORD const error_code ) noexcept;
 void test_CloseHandle( void ) noexcept;
 void test_CEventLog( void ) noexcept;
 void test_CFileTransferProtocol( void ) noexcept;

@@ -57,7 +57,7 @@ void PASCAL Win32FoundationClasses::wfc_get_operating_system_version_string( _Ou
 
     COperatingSystemVersionInformation version_information;
 
-    if ( version_information.Fill() != false )
+    if ( version_information.Fill() == true )
     {
         std::wstring operating_system_identity;
 
@@ -160,7 +160,7 @@ inline static const _Check_return_ DEVICE_MANAGEMENT_INFORMATION_HEADER * __get_
 
     auto header = reinterpret_cast<DEVICE_MANAGEMENT_INFORMATION_HEADER const *>(buffer);
 
-    while( buffer_index < buffer_size )
+    while( buffer_index < buffer_size ) // Cannot be converted to a Range loop
     {
         header = reinterpret_cast<DEVICE_MANAGEMENT_INFORMATION_HEADER const *>(&buffer[ buffer_index ]);
 

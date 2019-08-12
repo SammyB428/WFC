@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 1995-2016, Samuel R. Blackburn
+** Copyright, 1995-2019, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -50,34 +50,6 @@ static char THIS_FILE[] = __FILE__;
 #endif // _DEBUG
 
 USING_WFC_NAMESPACE
-
-// Construction
-
-CMixerSourceSelector::CMixerSourceSelector( __in CMixerSourceSelector const& source )
-{
-   WFC_VALIDATE_POINTER( this );
-   Copy( source );
-}
-
-CMixerSourceSelector::CMixerSourceSelector( __in CMixerLine const& destination, __in CMixerControl const& control )
-{
-   WFC_VALIDATE_POINTER( this );
-
-   if ( m_MixerControl.Type != CMixerControl::ControlType::Mixer )
-   {
-      m_MixerLine.Empty();
-   }
-
-   SetLine( destination );
-   SetControl( control );
-}
-
-CMixerSourceSelector::~CMixerSourceSelector()
-{
-   WFC_VALIDATE_POINTER( this );
-
-   Close();
-}
 
 // Methods
 
@@ -146,7 +118,7 @@ _Check_return_ bool CMixerSourceSelector::m_GetSettings( void ) noexcept
 
    bool return_value = m_Mixer.GetControlDetails( m_MixerLine, m_MixerControl, array );
 
-   if ( return_value != false )
+   if ( return_value == true)
    {
       for ( auto const index : Range(array.size()) )
       {
@@ -164,7 +136,7 @@ _Check_return_ bool CMixerSourceSelector::m_SetSettings( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
-   const bool return_value = m_Mixer.SetControlDetails( m_MixerLine, m_MixerControl, m_Settings );
+   bool const return_value = m_Mixer.SetControlDetails( m_MixerLine, m_MixerControl, m_Settings );
 
    return( return_value );
 }
@@ -215,7 +187,7 @@ _Check_return_ bool CMixerSourceSelector::Select( __in DWORD const source, __in 
       }
    }
 
-   if ( source_was_found != false )
+   if ( source_was_found == true )
    {
       return_value = m_SetSettings();
    }

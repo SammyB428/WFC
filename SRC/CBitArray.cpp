@@ -54,8 +54,6 @@ USING_WFC_NAMESPACE
 #define new DEBUG_NEW
 #endif // _DEBUG
 
-#define AN_ELEMENT_THAT_IS_ALL_ONES (0xFFFFFFFF)
-
 // Construction
 
 CBitArray::CBitArray() noexcept
@@ -155,7 +153,7 @@ void CBitArray::ClearRange( __in std::size_t const array_index, __in std::size_t
    SSIZE_T number_of_bits_remaining = 0;
    uint32_t bit_number = 0;
 
-   while( loop_counter < count )
+   while( loop_counter < count ) // Cannot be converted to a Range loop
    {
       bit_location = array_index + loop_counter;
       number_of_bits_remaining = total_number_of_bits - bit_location;
@@ -195,7 +193,7 @@ void CBitArray::SetRange( __in std::size_t const array_index, __in std::size_t c
    SSIZE_T number_of_bits_remaining = 0;
    uint32_t bit_number = 0;
 
-   while( loop_counter < count )
+   while( loop_counter < count ) // Cannot be converted to a Range loop
    {
       bit_location = array_index + loop_counter;
       number_of_bits_remaining = total_number_of_bits - bit_location;
@@ -226,11 +224,11 @@ void CBitArray::Add( __in uint32_t const value, __in std::size_t const count ) n
 
    uint32_t bit_number = 0;
 
-   while( loop_counter < count )
+   while( loop_counter < count ) // Cannot be converted to a Range loop
    {
       bit_location = GetSize();
 
-      if ( m_GetElementIndexOfBitLocation( bit_location, index, bit_number ) != false )
+      if ( m_GetElementIndexOfBitLocation( bit_location, index, bit_number ) == true)
       {
          if ( index >= static_cast< uint32_t >( m_Bits.size() ) )
          {
@@ -388,7 +386,7 @@ void CBitArray::Complement( void ) noexcept
    // that contain LeftTrim()'d bits. In other words, don't
    // complement unused bits.
 
-   while( index < number_of_elements )
+   while( index < number_of_elements )  // Cannot be converted to a Range loop
    {
       m_Bits.at( index ) ^= AN_ELEMENT_THAT_IS_ALL_ONES;
       index++;
@@ -417,7 +415,7 @@ void CBitArray::Copy( __in std::vector<uint8_t> const& source ) noexcept
 
       uint32_t value_to_add = 0;
 
-      while( index < (int) ( number_of_bytes - sizeof( uint32_t ) ) )
+      while( index < (int) ( number_of_bytes - sizeof( uint32_t ) ) ) // Cannot be converted to a Range loop
       {
          value_to_add = MAKELONG( MAKEWORD( source.at( index + 3 ), source.at( index + 2 ) ), MAKEWORD( source.at( index + 1 ), source.at( index ) ) );
          (void) m_Bits.push_back( value_to_add );
@@ -426,7 +424,7 @@ void CBitArray::Copy( __in std::vector<uint8_t> const& source ) noexcept
       }
    }
 
-   while( index < number_of_bytes )
+   while( index < number_of_bytes )  // Cannot be converted to a Range loop
    {
       AddByte( source.at( index ) );
       index++;
@@ -666,7 +664,7 @@ _Check_return_ bool CBitArray::Find( __in CBitArray const& value, __inout std::s
          return( false );
       }
 
-      if ( Find( value_to_search_for, SizeOfBitRepresentation(), found_index, starting_index ) != false )
+      if ( Find( value_to_search_for, SizeOfBitRepresentation(), found_index, starting_index ) == true)
       {
          // We found the first 32 (sizeof(uint32_t)) bits, let's look for the
          // rest for them
@@ -703,7 +701,7 @@ _Check_return_ bool CBitArray::Find( __in CBitArray const& value, __inout std::s
             }
          }
 
-         if ( value_was_found != false )
+         if ( value_was_found == true)
          {
             found_at = found_index;
             return( true );
@@ -1369,32 +1367,6 @@ void CBitArray::LeftTrim( _In_ std::size_t const number_of_bits ) noexcept
 
    m_IndexOfFirstBit += number_of_bits;
 }
-
-#if defined( _DEBUG )
-
-// 1998-12-05
-// New calculation provided by Peter Ekberg (peda@sectra.se) to get rid of floating point calculations
-
-_Check_return_ bool CBitArray::m_GetElementIndexOfBitLocation( __in std::size_t const bit_location, __out std::size_t& array_index, __out uint32_t& bit_number ) const noexcept
-{
-   WFC_VALIDATE_POINTER( this );
-
-#if ( AN_ELEMENT_THAT_IS_ALL_ONES == 0xFFFFFFFF )
-
-   // If we are using 32 bits per element, we can optimize the
-   // division to right shifting. Right shifting by 5 is the
-   // same as dividing by 32 ( (x/32) == (x>>5) )
-   array_index = ( bit_location + m_IndexOfFirstBit ) >> 5;
-#else
-   array_index = ( bit_location + m_IndexOfFirstBit ) / m_SizeOfBitRepresentation;
-#endif // AN_ELEMENT_THAT_IS_ALL_ONES
-
-   bit_number = (uint32_t) ( MostSignificantBitLocation() - ( ( bit_location + m_IndexOfFirstBit ) % SizeOfBitRepresentation() ) );
-
-   return( true );
-}
-
-#endif // _DEBUG
 
 _Check_return_ CBitArray CBitArray::Mid( __in std::size_t const starting_at, __in std::size_t const number_of_bits ) const noexcept
 {

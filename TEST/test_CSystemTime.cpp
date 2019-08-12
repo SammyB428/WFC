@@ -166,7 +166,7 @@ __checkReturn bool test_CSystemTime( __out std::string& class_name, __out int& t
       return( failure() );
    }
 
-   const uint64_t ticks = 129748979200327745I64;
+   uint64_t const ticks = 129748979200327745I64;
 
    CFileTime ft;
    
@@ -190,9 +190,9 @@ __checkReturn bool test_CSystemTime( __out std::string& class_name, __out int& t
    c_time.tm_hour = 9;
    c_time.tm_min = 50;
 
-   static constexpr time_t correct_answer = 1422870600; // from http://www.onlineconversion.com/unix_time.htm 
+   static constexpr time_t const correct_answer = 1422870600; // from http://www.onlineconversion.com/unix_time.htm 
 
-   time_t time_value = _mkgmtime( &c_time );
+   time_t const time_value = _mkgmtime( &c_time );
 
    _ASSERTE( time_value == correct_answer );
 
@@ -204,7 +204,7 @@ __checkReturn bool test_CSystemTime( __out std::string& class_name, __out int& t
        return(failure());
    }
 
-   time_t second_time = ft.AsUnixTime();
+   time_t const second_time = ft.AsUnixTime();
 
    _ASSERT_EXPR( second_time == correct_answer, _CRT_WIDE("CFileTime.Set() failed to convert to 1422870600 correctly.") );
 

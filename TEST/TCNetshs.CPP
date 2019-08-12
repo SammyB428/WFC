@@ -56,11 +56,11 @@ void test_CNetworkShares( __in_z LPCTSTR machine_name ) noexcept
 
    CNetworkShareInformation share_information;
 
-   if ( shares.Enumerate() != FALSE )
+   if ( shares.Enumerate() == true )
    {
       _tprintf( TEXT( "Share Information for %s:\n" ), (LPCTSTR) shares.GetMachineName() );
 
-      while( shares.GetNext( share_information ) != FALSE )
+      while( shares.GetNext( share_information ) == true )
       {
          _tprintf( TEXT( " NetworkName         - \"%s\"\n" ), share_information.NetworkName.c_str() );
          _tprintf( TEXT( " Type                - %lu " ),     share_information.Type );

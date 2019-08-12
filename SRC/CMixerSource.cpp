@@ -51,24 +51,6 @@ static char THIS_FILE[] = __FILE__;
 
 USING_WFC_NAMESPACE
 
-// Construction
-
-CMixerSource::CMixerSource()
-{
-   WFC_VALIDATE_POINTER( this );
-}
-
-CMixerSource::CMixerSource( __in CMixerSource const& source )
-{
-   WFC_VALIDATE_POINTER( this );
-   Copy( source );
-}
-
-CMixerSource::~CMixerSource()
-{
-   WFC_VALIDATE_POINTER( this );
-}
-
 // Methods
 
 void CMixerSource::Copy( __in CMixerSource const& source ) noexcept
@@ -138,7 +120,7 @@ _Check_return_ bool CMixerSource::Open( __in UINT_PTR device_number, __in DWORD 
    m_WhoToNotify  = who_to_notify;
    m_NotifyData   = notify_data;
 
-   const bool return_value = CMixerControlInstance::Open( device_number, what_to_notify, who_to_notify, notify_data );
+   bool const return_value = CMixerControlInstance::Open( device_number, what_to_notify, who_to_notify, notify_data );
 
    if ( return_value == false )
    {

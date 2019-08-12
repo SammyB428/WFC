@@ -255,7 +255,7 @@ class CFileTime : public _FILETIME
       ** "Do More with Less Code:..."
       */
 
-      virtual ~CFileTime() noexcept
+      virtual ~CFileTime()
       {
          Empty();
       }

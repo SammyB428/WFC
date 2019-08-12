@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 1995-2016, Samuel R. Blackburn
+** Copyright, 1995-2019, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -50,60 +50,6 @@ static char THIS_FILE[] = __FILE__;
 #endif // _DEBUG
 
 USING_WFC_NAMESPACE
-
-CAccessAllowedEntry::CAccessAllowedEntry()
-{
-   Empty();
-}
-
-CAccessAllowedEntry::CAccessAllowedEntry( __in CAccessAllowedEntry const& source )
-{
-   Empty();
-   Copy( source );
-}
-
-CAccessAllowedEntry::CAccessAllowedEntry( __in ACCESS_ALLOWED_ACE const * source )
-{
-   Empty();
-   Copy( source );
-}
-
-CAccessAllowedEntry::~CAccessAllowedEntry()
-{
-   Empty();
-}
-
-void CAccessAllowedEntry::Copy( __in CAccessAllowedEntry const& source ) noexcept
-{
-   Copy( reinterpret_cast<ACCESS_ALLOWED_ACE const *>(&source) );
-}
-
-void CAccessAllowedEntry::Copy( __in ACCESS_ALLOWED_ACE const * source ) noexcept
-{
-   WFC_VALIDATE_POINTER( source );
-   ASSERT( source != this );
-
-   if ( source == nullptr || source == this )
-   {
-      return;
-   }
-
-   // We were passed a pointer, don't trust it
-
-   WFC_TRY
-   {
-      Header.AceType  = source->Header.AceType;
-      Header.AceFlags = source->Header.AceFlags;
-      Header.AceSize  = source->Header.AceSize;
-      Mask            = source->Mask;
-      SidStart        = source->SidStart;
-   }
-   WFC_CATCH_ALL
-   {
-      Empty();
-   }
-   WFC_END_CATCH_ALL
-}
 
 #if defined( _DEBUG ) && ! defined( WFC_NO_DUMPING )
 
@@ -206,24 +152,6 @@ void CAccessAllowedEntry::Dump( CDumpContext& dump_context ) const
 }
 
 #endif // _DEBUG
-
-void CAccessAllowedEntry::Empty( void ) noexcept
-{
-   // ACE_HEADER
-   Header.AceType  = 0;
-   Header.AceFlags = 0;
-   Header.AceSize  = 0;
-
-   // ACE_MASK
-   Mask            = 0;
-   SidStart        = 0;
-}
-
-_Check_return_ CAccessAllowedEntry& CAccessAllowedEntry::operator=( __in CAccessAllowedEntry const& source ) noexcept
-{
-   Copy( source );
-   return( *this );
-}
 
 CAccessControlEntryHeader::CAccessControlEntryHeader()
 {
@@ -3252,17 +3180,17 @@ void CRasterizerStatus::Empty( void ) noexcept
    nLanguageID = 0;
 }
 
-CSecurityAttributes::CSecurityAttributes()
+CSecurityAttributes::CSecurityAttributes() noexcept
 {
    Empty();
 }
 
-CSecurityAttributes::~CSecurityAttributes()
+CSecurityAttributes::~CSecurityAttributes() noexcept
 {
    Empty();
 }
 
-void CSecurityAttributes::Empty( void )
+void CSecurityAttributes::Empty( void ) noexcept
 {
    nLength              = sizeof( SECURITY_ATTRIBUTES );
    lpSecurityDescriptor = nullptr;
@@ -3297,24 +3225,24 @@ void CSecurityQualityOfService::Empty( void ) noexcept
 ** CSystemAuditEntry
 */
 
-CSystemAuditEntry::CSystemAuditEntry()
+CSystemAuditEntry::CSystemAuditEntry() noexcept
 {
    Empty();
 }
 
-CSystemAuditEntry::CSystemAuditEntry( __in CSystemAuditEntry const& source )
-{
-   Empty();
-   Copy( source );
-}
-
-CSystemAuditEntry::CSystemAuditEntry( __in _SYSTEM_AUDIT_ACE const * source )
+CSystemAuditEntry::CSystemAuditEntry( __in CSystemAuditEntry const& source ) noexcept
 {
    Empty();
    Copy( source );
 }
 
-CSystemAuditEntry::~CSystemAuditEntry()
+CSystemAuditEntry::CSystemAuditEntry( __in _SYSTEM_AUDIT_ACE const * source ) noexcept
+{
+   Empty();
+   Copy( source );
+}
+
+CSystemAuditEntry::~CSystemAuditEntry() noexcept
 {
    Empty();
 }
@@ -3743,24 +3671,24 @@ _Check_return_ CTextMetricW& CTextMetricW::operator=( __in CTextMetricW const& s
    return( *this );
 }
 
-CWindowPlacement::CWindowPlacement()
+CWindowPlacement::CWindowPlacement() noexcept
 {
    Empty();
 }
 
-CWindowPlacement::CWindowPlacement( __in CWindowPlacement const& source )
-{
-   Empty();
-   Copy( source );
-}
-
-CWindowPlacement::CWindowPlacement( __in tagWINDOWPLACEMENT const * source )
+CWindowPlacement::CWindowPlacement( __in CWindowPlacement const& source ) noexcept
 {
    Empty();
    Copy( source );
 }
 
-CWindowPlacement::~CWindowPlacement()
+CWindowPlacement::CWindowPlacement( __in tagWINDOWPLACEMENT const * source ) noexcept
+{
+   Empty();
+   Copy( source );
+}
+
+CWindowPlacement::~CWindowPlacement() noexcept
 {
    Empty();
 }

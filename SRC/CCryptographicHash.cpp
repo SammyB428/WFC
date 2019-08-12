@@ -81,7 +81,7 @@ CCryptographicHash::~CCryptographicHash() noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
-   if ( m_AutomaticallyDestroy != false )
+   if ( m_AutomaticallyDestroy == true)
    {
       (void) Destroy();
    }
@@ -119,7 +119,7 @@ _Check_return_ bool CCryptographicHash::FromHandle( __in HCRYPTHASH source_handl
 
    if ( m_Hash != static_cast< HCRYPTHASH >( NULL ) )
    {
-      if ( m_AutomaticallyDestroy != false )
+      if ( m_AutomaticallyDestroy == true)
       {
          (void) Destroy();
       }
@@ -161,11 +161,11 @@ _Check_return_ bool CCryptographicHash::GetValue(__out std::vector<uint8_t>& val
 
     value.resize(1024); // A Massive value
 
-    uint32_t buffer_length = (uint32_t)value.size();
+    uint32_t buffer_length = static_cast<uint32_t>(value.size());
 
     bool const return_value = GetParameter(parameterValue, value.data(), buffer_length);
 
-    if (return_value != false)
+    if (return_value == true)
     {
         value.resize(buffer_length);
     }

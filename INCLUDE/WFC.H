@@ -48,6 +48,8 @@
 #pragma message( "WFC Release 77." )
 #endif // WFC_SILENT
 
+#define _SILENCE_CXX17_CODECVT_HEADER_DEPRECATION_WARNING
+
 #define is_flagged( _x, _y ) ( ( _x & _y ) == _y )
 
 #define TAB_CHARACTER   (9)
@@ -243,10 +245,7 @@ private:
     std::size_t m_Position{ 0 };
 
 public:
-    constexpr RangeIterator(std::size_t const position) noexcept
-        : m_Position(position)
-    {
-    }
+    inline constexpr RangeIterator(std::size_t const position) noexcept : m_Position(position) {}
 
     // these three methods form the basis of an iterator for use with
     // a range-based for loop

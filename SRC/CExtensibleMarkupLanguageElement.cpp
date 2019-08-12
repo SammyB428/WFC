@@ -468,13 +468,13 @@ _Check_return_ std::size_t CExtensibleMarkupLanguageElement::CountChildren( _In_
 
         std::size_t enumerator = 0;
 
-        if ( EnumerateChildren( enumerator ) != false )
+        if ( EnumerateChildren( enumerator ) == true )
         {
             std::size_t number_of_children = 0;
 
             CExtensibleMarkupLanguageElement * child_p = nullptr;
 
-            while( GetNextChild( enumerator, child_p ) != false )
+            while( GetNextChild( enumerator, child_p ) == true )
             {
                 if ( child_p->m_Tag.compare(name) == I_AM_EQUAL_TO_THAT)
                 {
@@ -556,13 +556,13 @@ _Check_return_ std::size_t CExtensibleMarkupLanguageElement::CountChildren( _In_
 
         std::size_t enumerator = 0;
 
-        if ( element_p->EnumerateChildren( enumerator ) != false )
+        if ( element_p->EnumerateChildren( enumerator ) == true )
         {
             std::size_t number_of_children = 0;
 
             CExtensibleMarkupLanguageElement * child_p = nullptr;
 
-            while( element_p->GetNextChild( enumerator, child_p ) != false )
+            while( element_p->GetNextChild( enumerator, child_p ) == true )
             {
                 if ( child_name.compare( child_p->m_Tag ) == I_AM_EQUAL_TO_THAT)
                 {
@@ -603,9 +603,9 @@ void CExtensibleMarkupLanguageElement::DestroyAttributeByName( _In_z_ wchar_t co
     std::size_t loop_index = 0;
     std::size_t number_of_attributes = m_Attributes.size();
 
-    while( loop_index < number_of_attributes )
+    while( loop_index < number_of_attributes ) // Cannot be converted to a Range loop
     {
-        CExtensibleMarkupLanguageAttribute * attribute_p = m_Attributes[ loop_index ];
+        auto attribute_p = m_Attributes[ loop_index ];
 
         if ( attribute_p != nullptr )
         {
@@ -632,9 +632,9 @@ void CExtensibleMarkupLanguageElement::DestroyAttributeByValue( _In_z_ wchar_t c
     std::size_t loop_index           = 0;
     std::size_t number_of_attributes = m_Attributes.size();
 
-    while( loop_index < number_of_attributes )
+    while( loop_index < number_of_attributes ) // Cannot be converted to a Range loop
     {
-        CExtensibleMarkupLanguageAttribute * attribute_p = m_Attributes[ loop_index ];
+        auto attribute_p = m_Attributes[ loop_index ];
 
         if ( attribute_p != nullptr )
         {
@@ -764,14 +764,14 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::ForAny( _In_z_ wchar_t con
 
     WFC_TRY
     {
-        if ( EnumerateChildren( enumerator ) != false )
+        if ( EnumerateChildren( enumerator ) == true)
         {
             CExtensibleMarkupLanguageElement * child_p = nullptr;
 
             bool exit_loop = false;
 
             while( exit_loop                           == false &&
-                GetNextChild( enumerator, child_p ) != false )
+                   GetNextChild( enumerator, child_p ) == true)
             {
                 WFC_VALIDATE_POINTER( child_p );
 
@@ -781,7 +781,7 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::ForAny( _In_z_ wchar_t con
                     {
                         callback( callback_context, child_p );
 
-                        if ( child_p->GetAbortParsing() != false )
+                        if ( child_p->GetAbortParsing() == true)
                         {
                             child_p->SetAbortParsing( true );
                             exit_loop = true;
@@ -817,14 +817,14 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::ForEach(_In_z_ wchar_t con
 
     WFC_TRY
     {
-        if ( EnumerateChildren( enumerator ) != false )
+        if ( EnumerateChildren( enumerator ) == true)
         {
             CExtensibleMarkupLanguageElement * child_p = nullptr;
 
             bool exit_loop = false;
 
             while( exit_loop == false &&
-                GetNextChild( enumerator, child_p ) != false )
+                GetNextChild( enumerator, child_p ) == true)
             {
                 WFC_VALIDATE_POINTER( child_p );
 
@@ -834,7 +834,7 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::ForEach(_In_z_ wchar_t con
                     {
                         callback( callback_context, child_p );
 
-                        if ( child_p->GetAbortParsing() != false )
+                        if ( child_p->GetAbortParsing() == true)
                         {
                             child_p->SetAbortParsing( true );
                             exit_loop = true;
@@ -860,11 +860,11 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::GetAttributeByName( _Out_ 
 
     std::size_t enumerator = 0;
 
-    if ( EnumerateAttributes( enumerator ) != false )
+    if ( EnumerateAttributes( enumerator ) == true)
     {
         CExtensibleMarkupLanguageAttribute * this_attribute_p = nullptr;
 
-        while( GetNextAttribute( enumerator, this_attribute_p ) != false )
+        while( GetNextAttribute( enumerator, this_attribute_p ) == true )
         {
             if ( this_attribute_p != nullptr )
             {
@@ -891,11 +891,11 @@ _Check_return_ CExtensibleMarkupLanguageAttribute * CExtensibleMarkupLanguageEle
 
     std::size_t enumerator = 0;
 
-    if ( EnumerateAttributes( enumerator ) != false )
+    if ( EnumerateAttributes( enumerator ) == true)
     {
         CExtensibleMarkupLanguageAttribute * this_attribute_p = nullptr;
 
-        while( GetNextAttribute( enumerator, this_attribute_p ) != false )
+        while( GetNextAttribute( enumerator, this_attribute_p ) == true )
         {
             if ( this_attribute_p != nullptr )
             {
@@ -920,11 +920,11 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::GetAttributeByName( _In_z_
 
     std::size_t enumerator = 0;
 
-    if ( EnumerateAttributes( enumerator ) != false )
+    if ( EnumerateAttributes( enumerator ) == true)
     {
         CExtensibleMarkupLanguageAttribute * this_attribute_p = nullptr;
 
-        while( GetNextAttribute( enumerator, this_attribute_p ) != false )
+        while( GetNextAttribute( enumerator, this_attribute_p ) == true )
         {
             if ( this_attribute_p != nullptr )
             {
@@ -955,11 +955,11 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::GetAttributeByValue( _Out_
 
     std::size_t enumerator = 0;
 
-    if ( EnumerateAttributes( enumerator ) != false )
+    if ( EnumerateAttributes( enumerator ) == true)
     {
         CExtensibleMarkupLanguageAttribute * this_attribute_p = nullptr;
 
-        while( GetNextAttribute( enumerator, this_attribute_p ) != false )
+        while( GetNextAttribute( enumerator, this_attribute_p ) == true )
         {
             if ( this_attribute_p != nullptr )
             {
@@ -1129,7 +1129,7 @@ void CExtensibleMarkupLanguageElement::GetFullyQualifiedName( _Inout_ std::wstri
     WFC_VALIDATE_POINTER( this );
     name.clear();
 
-    if ( IsRoot() != false || m_Tag.empty() == true )
+    if ( IsRoot() == true || m_Tag.empty() == true )
     {
         // The root is nameless
         return;
@@ -1152,7 +1152,7 @@ void CExtensibleMarkupLanguageElement::GetFullyQualifiedName( _Inout_ std::wstri
     {
         parent_element_p->GetNameAndInstance( parent_name );
 
-        if ( parent_element_p->IsRoot() != false || parent_name.empty() == true )
+        if ( parent_element_p->IsRoot() == true || parent_name.empty() == true )
         {
             return;
         }
@@ -1173,18 +1173,18 @@ _Check_return_ CExtensibleMarkupLanguageElement * CExtensibleMarkupLanguageEleme
 
     std::size_t enumerator = 0;
 
-    if ( parent_element_p->EnumerateChildren( enumerator ) != false )
+    if ( parent_element_p->EnumerateChildren( enumerator ) == true)
     {
         CExtensibleMarkupLanguageElement * child_element_p = nullptr;
 
-        while( parent_element_p->GetNextChild( enumerator, child_element_p ) != false )
+        while( parent_element_p->GetNextChild( enumerator, child_element_p ) == true )
         {
             if ( child_element_p == this )
             {
                 // We've found ourselves!
 
                 // Now continue the enumeration until we reach a typeElement element
-                while( parent_element_p->GetNextChild( enumerator, child_element_p ) != false )
+                while( parent_element_p->GetNextChild( enumerator, child_element_p ) == true )
                 {
                     if ( child_element_p != nullptr )
                     {
@@ -1209,13 +1209,13 @@ _Check_return_ int CExtensibleMarkupLanguageElement::GetInstance( void ) const n
 
     std::size_t enumerator = 0;
 
-    if ( parent_element_p->EnumerateChildren( enumerator ) != false )
+    if ( parent_element_p->EnumerateChildren( enumerator ) == true)
     {
         std::size_t instance_number = 0;
 
         CExtensibleMarkupLanguageElement * child_element_p = nullptr;
 
-        while( parent_element_p->GetNextChild( enumerator, child_element_p ) != false )
+        while( parent_element_p->GetNextChild( enumerator, child_element_p ) == true )
         {
             if ( child_element_p == this )
             {
@@ -1243,7 +1243,7 @@ void CExtensibleMarkupLanguageElement::GetNameAndInstance( _Out_ std::wstring& n
 
     name.clear();
 
-    if ( IsRoot() != false || m_Tag.empty() == true )
+    if ( IsRoot() == true || m_Tag.empty() == true )
     {
         // The root is nameless
         return;
@@ -1389,7 +1389,7 @@ void CExtensibleMarkupLanguageElement::GetText( _Out_ std::wstring& text ) const
 
     // Retrieves the contents and text segments
 
-    if ( m_Document->GetIgnoreWhiteSpace() != false )
+    if ( m_Document->GetIgnoreWhiteSpace() == true)
     {
         // We should ignore white space
 
@@ -1608,7 +1608,7 @@ void CExtensibleMarkupLanguageElement::m_AddIndentation( _Inout_ std::vector<uin
     {
         m_Document->GetAutomaticIndentation( automatically_indent, indentation_level, indent_by );
 
-        if ( automatically_indent != false )
+        if ( automatically_indent == true)
         {
             m_AddCharacterToOutput( CARRIAGE_RETURN, write_options,  bytes );
             m_AddCharacterToOutput( LINE_FEED,       write_options, bytes );
@@ -1617,7 +1617,7 @@ void CExtensibleMarkupLanguageElement::m_AddIndentation( _Inout_ std::vector<uin
 
             //std::vector<uint8_t> indentation;
 
-            while( indent_by < indentation_level )
+            while( indent_by < indentation_level ) // Cannot be converted to a Range loop
             {
                 m_AddCharacterToOutput( ' ', write_options, bytes );
                 indent_by++;
@@ -1727,7 +1727,7 @@ void CExtensibleMarkupLanguageElement::m_DecrementIndentation( void ) const noex
     {
         m_Document->GetAutomaticIndentation( automatically_indent, indentation_level, indent_by );
 
-        if ( automatically_indent != false )
+        if ( automatically_indent == true)
         {
             indentation_level -= indent_by;
 
@@ -1750,13 +1750,13 @@ void CExtensibleMarkupLanguageElement::m_GetTag( _In_ std::wstring const& xml_da
     std::size_t loop_index      = 0;
     std::size_t const xml_data_length = xml_data.length();
 
-    while( loop_index < xml_data_length )
+    while( loop_index < xml_data_length ) // Cannot be converted to a Range loop
     {
         if ( xml_data.at( loop_index ) == '<' )
         {
             loop_index++;
 
-            while( loop_index < xml_data_length )
+            while( loop_index < xml_data_length ) // Cannot be converted to a Range loop
             {
                 if ( xml_data.at( loop_index ) == '>' )
                 {
@@ -1791,7 +1791,7 @@ void CExtensibleMarkupLanguageElement::m_IncrementIndentation( void ) const noex
     {
         m_Document->GetAutomaticIndentation( automatically_indent, indentation_level, indent_by );
 
-        if ( automatically_indent != false )
+        if ( automatically_indent == true)
         {
             indentation_level += indent_by;
 
@@ -2247,7 +2247,7 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::m_ParseDOCTYPESection( _In
             is_public = true;
         }
 
-        if ( is_public != false )
+        if ( is_public == true)
         {
             // If it is PUBLIC, there should be two quoted strings following it (Rule 75)
 
@@ -2286,7 +2286,7 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::m_ParseDOCTYPESection( _In
 
             string_to_parse.erase(0, 1);
 
-            if ( we_started_with_a_double_quote != false )
+            if ( we_started_with_a_double_quote == true)
             {
                 location_of_character = string_to_parse.find( '\"' );
             }
@@ -2321,7 +2321,7 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::m_ParseDOCTYPESection( _In
 
             //WFCTRACEVAL( TEXT( "Would now parse " ), string_to_parse );
 
-            if ( we_started_with_a_double_quote != false )
+            if ( we_started_with_a_double_quote == true)
             {
                 m_Contents.push_back( '\"' );
                 m_Contents.append( name );
@@ -2361,7 +2361,7 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::m_ParseDOCTYPESection( _In
 
             string_to_parse.erase(0, 1);
 
-            if ( we_started_with_a_double_quote != false )
+            if ( we_started_with_a_double_quote == true)
             {
                 location_of_character = string_to_parse.find( '\"' );
             }
@@ -2384,7 +2384,7 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::m_ParseDOCTYPESection( _In
 
             //WFCTRACEVAL( TEXT( "Would  now parse " ), string_to_parse );
 
-            if ( we_started_with_a_double_quote != false )
+            if ( we_started_with_a_double_quote == true)
             {
                 m_Contents.push_back( '\"' );
                 m_Contents.append( name );
@@ -2445,7 +2445,7 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::m_ParseDOCTYPESection( _In
 
             string_to_parse.erase(0, 1);
 
-            if ( we_started_with_a_double_quote != false )
+            if ( we_started_with_a_double_quote == true)
             {
                 location_of_character = string_to_parse.find( '\"' );
             }
@@ -2469,7 +2469,7 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::m_ParseDOCTYPESection( _In
 
             //WFCTRACEVAL( TEXT( "Would now parse " ), string_to_parse );
 
-            if ( we_started_with_a_double_quote != false )
+            if ( we_started_with_a_double_quote == true)
             {
                 m_Contents.push_back( '\"' );
                 m_Contents.append( name );
@@ -2576,7 +2576,7 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::m_ParseDOCTYPESection( _In
 
     if ( parser.IsTextASCII() == false )
     {
-        if ( parser.IsTextUCS4() != false )
+        if ( parser.IsTextUCS4() == true)
         {
             number_of_bytes_per_character = 4;
         }
@@ -2595,13 +2595,13 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::m_ParseDOCTYPESection( _In
 
     bool exit_loop = false;
 
-    while( exit_loop != true )
+    while( exit_loop == false )
     {
         CExtensibleMarkupLanguageElement * sub_element_p = nullptr;
 
         if ( parser.PeekCharacter( beginning_of_child, 0 ) == '<' )
         {
-            sub_element_p = NewElement( this, ElementType::Element, m_Document );
+            auto sub_element_p = NewElement( this, ElementType::Element, m_Document );
 
             if ( sub_element_p->Parse( beginning_of_child, parser ) == false )
             {
@@ -2727,7 +2727,7 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::m_ParseDOCTYPESection( _In
 
             sub_element_p->m_Beginning.Copy( beginning_of_child );
 
-            while( Win32FoundationClasses::is_xml_white_space( parser.PeekCharacter( beginning_of_child, 0 ) ) != false )
+            while( Win32FoundationClasses::is_xml_white_space( parser.PeekCharacter( beginning_of_child, 0 ) ) == true )
             {
                 sub_element_p->m_Contents.push_back( static_cast< wchar_t >( parser.PeekCharacter( beginning_of_child, 0 ) ) );
                 parser.AdvanceByOneCharacter( beginning_of_child );
@@ -2754,7 +2754,7 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::m_ParseDOCTYPESection( _In
 
             parser.AdvanceByOneCharacter( beginning_of_child, ']' );
 
-            while( Win32FoundationClasses::is_xml_white_space( parser.PeekCharacter( beginning_of_child, 0 ) ) != false )
+            while( Win32FoundationClasses::is_xml_white_space( parser.PeekCharacter( beginning_of_child, 0 ) ) == true )
             {
                 parser.AdvanceByOneCharacter( beginning_of_child );
 
@@ -2937,7 +2937,7 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::m_ParseTag( _In_ std::wstr
         {
             // Yup, this here is a CDATA section
 
-            if ( m_ParseCDATASection( tag, parser ) != false )
+            if ( m_ParseCDATASection( tag, parser ) == true)
             {
                 did_tag_contain_terminator = true; // CDATA sections are self-terminating
                 return( true );
@@ -3687,7 +3687,7 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::m_ParseTag( _In_ std::wstr
         tag_data.erase(0, 1);
 
 #if 0
-        if ( we_started_with_a_double_quote != false )
+        if ( we_started_with_a_double_quote == true)
         {
             location_of_character = tag_data.Find( '\"' );
 
@@ -3709,7 +3709,7 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::m_ParseTag( _In_ std::wstr
         }
 #else
         // 2003-11-05 I haven't solved that problem yet (the double thingy)
-        if ( we_started_with_a_double_quote != false )
+        if ( we_started_with_a_double_quote == true)
         {
             location_of_character = tag_data.find( '\"' );
         }
@@ -3783,7 +3783,7 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::m_ParseTag( _In_ std::wstr
 
             if ( attribute_value.empty() == false )
             {
-                if ( we_started_with_a_double_quote != false )
+                if ( we_started_with_a_double_quote == true)
                 {
                     if ( m_TrimQuotesAndSpaces( attribute_value, '\"' ) == false )
                     {
@@ -3819,7 +3819,7 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::m_ParseTag( _In_ std::wstr
         {
             std::wstring attribute_value( tag_data.substr( 0, location_of_character ) );
 
-            if ( we_started_with_a_double_quote != false )
+            if ( we_started_with_a_double_quote == true)
             {
                 (void) m_TrimQuotesAndSpaces( attribute_value, '\"' );
             }
@@ -3993,7 +3993,7 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::m_ParseXMLDeclaration( _In
 
     std::size_t location_of_delimiter = 0;
 
-    if ( we_started_with_a_double_quote != false )
+    if ( we_started_with_a_double_quote == true)
     {
         location_of_delimiter = string_to_parse.find( '\"' );
     }
@@ -4111,7 +4111,7 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::m_ParseXMLDeclaration( _In
 
         location_of_delimiter = 0;
 
-        if ( we_started_with_a_double_quote != false )
+        if ( we_started_with_a_double_quote == true)
         {
             location_of_delimiter = string_to_parse.find( '\"' );
         }
@@ -4240,7 +4240,7 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::m_ParseXMLDeclaration( _In
 
         location_of_delimiter = 0;
 
-        if ( we_started_with_a_double_quote != false )
+        if ( we_started_with_a_double_quote == true)
         {
             location_of_delimiter = string_to_parse.find( '\"' );
         }
@@ -4426,9 +4426,8 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::GetChildValue(_In_z_ wchar
     child->GetText( value_text );
 
     trim(value_text);
-    make_lower(value_text);
 
-    value = static_cast<uint32_t>(_wtoi( value_text.c_str() ));
+    value = static_cast<uint32_t>(as_integer(value_text));
 
     return( true );
 }
@@ -4454,7 +4453,7 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::GetChildValue(_In_z_ wchar
     trim(value_text);
     make_lower(value_text);
 
-    value = static_cast<uint64_t>(_wtoi64( value_text.c_str() ));
+    value = static_cast<uint64_t>(as_unsigned_integer(value_text));
 
     return( true );
 }
@@ -4518,7 +4517,7 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::GetChildValue(_In_z_ wchar
         return( true );
     }
 
-    int const integer_value = _wtoi( value_text.c_str() );
+    int const integer_value = static_cast<int>(as_integer(value_text));
 
     if ( integer_value != 0 )
     {
@@ -4843,7 +4842,7 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::Parse( _In_ CParsePoint co
 
             // Now let's see if we are still in the running to be all white space
 
-            if ( m_IsAllWhiteSpace != false )
+            if ( m_IsAllWhiteSpace == true)
             {
                 if ( character != 0x20 &&
                     character != TAB_CHARACTER &&
@@ -4924,7 +4923,7 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::Parse( _In_ CParsePoint co
             terminator_found = parser.GetUntilAndIncluding( m_Ending, L">", tag_string );
         }
 
-        if ( terminator_found != false )
+        if ( terminator_found == true)
         {
             //WFCTRACEVAL( TEXT( "tag_string is " ), tag_string );
 
@@ -4937,7 +4936,7 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::Parse( _In_ CParsePoint co
                 return( false );
             }
 
-            if ( m_ShorthandTerminatorDetected != false )
+            if ( m_ShorthandTerminatorDetected == true)
             {
                 //WFCTRACE( TEXT( "m_ShorthandTerminatorDetected is true" ) );
                 m_IsTagTerminated = true;
@@ -5011,7 +5010,7 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::Parse( _In_ CParsePoint co
                     {
                         m_Document->ExecuteCallbacks( this );
 
-                        if ( GetAbortParsing() != false )
+                        if ( GetAbortParsing() == true)
                         {
                             m_ReportParsingError( L"Parsing was aborted by Callback function." );
                             return( false );
@@ -5025,7 +5024,7 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::Parse( _In_ CParsePoint co
                 {
                     //WFCTRACE( TEXT( "Sub element was created" ) );
 
-                    if ( sub_element_p->Parse( m_Ending, parser ) != false )
+                    if ( sub_element_p->Parse( m_Ending, parser ) == true)
                     {
                         //WFCTRACE( TEXT( "Adding sub element as child" ) );
                         sub_element_p->GetEnding( m_Ending ); // Here's where we check to see if the sub-element just added is our terminator
@@ -5081,7 +5080,7 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::Parse( _In_ CParsePoint co
                                     // Now that the callbacks have had their shot, let's
                                     // see if we should abort parsing
 
-                                    if ( GetAbortParsing() != false )
+                                    if ( GetAbortParsing() == true)
                                     {
                                         m_ReportParsingError( L"Parsing was aborted by Callback function." );
                                         return( false );
@@ -5110,7 +5109,7 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::Parse( _In_ CParsePoint co
                                 {
                                     WFC_VALIDATE_bool( sub_element_p->m_IsAllWhiteSpace );
 
-                                    if ( sub_element_p->m_IsAllWhiteSpace != false )
+                                    if ( sub_element_p->m_IsAllWhiteSpace == true)
                                     {
                                         if ( parsing_options & WFC_XML_IGNORE_ALL_WHITE_SPACE_ELEMENTS )
                                         {
@@ -5202,7 +5201,7 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::Parse( _In_ CParsePoint co
     // Now that the callbacks have had their shot, let's
     // see if we should abort parsing
 
-    if ( GetAbortParsing() != false )
+    if ( GetAbortParsing() == true)
     {
         m_ReportParsingError( L"Parsing aborted by Callback function." );
         return( false );
@@ -5416,7 +5415,7 @@ void CExtensibleMarkupLanguageElement::WriteTo( _Inout_ std::vector<uint8_t>& xm
         m_AddCharacterToOutput( '<', write_options, xml );
         m_AddCharacterToOutput( '?', write_options, xml );
 
-        if ( IsRoot() != false )
+        if ( IsRoot() == true)
         {
             m_AddCharacterToOutput( 'x', write_options, xml );
             m_AddCharacterToOutput( 'm', write_options, xml );
@@ -5516,7 +5515,7 @@ void CExtensibleMarkupLanguageElement::WriteTo( _Inout_ std::vector<uint8_t>& xm
             m_AddCharacterToOutput( '=', write_options, xml );
             m_AddCharacterToOutput( '\"', write_options, xml );
 
-            if ( m_Document->IsStandalone() != false )
+            if ( m_Document->IsStandalone() == true)
             {
                 m_AddCharacterToOutput( 'y', write_options, xml );
                 m_AddCharacterToOutput( 'e', write_options, xml );
@@ -5571,7 +5570,7 @@ void CExtensibleMarkupLanguageElement::WriteTo( _Inout_ std::vector<uint8_t>& xm
 
         // First, see if we are in a namespace...
 
-        if ( m_Document != nullptr && m_Document->UseNamespace() != false )
+        if ( m_Document != nullptr && m_Document->UseNamespace() == true)
         {
             std::wstring name_space;
 
@@ -5604,7 +5603,7 @@ void CExtensibleMarkupLanguageElement::WriteTo( _Inout_ std::vector<uint8_t>& xm
 
         m_AppendAttributes( xml );
 
-        if ( m_ShorthandTerminatorDetected != false  && m_Children.size() == 0 )
+        if ( m_ShorthandTerminatorDetected == true && m_Children.size() == 0 )
         {
             // Terminated elements have no text fields
             m_AddCharacterToOutput( '/', write_options, xml );

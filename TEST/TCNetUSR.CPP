@@ -56,11 +56,11 @@ void test_CNetworkUsers( __in_z LPCTSTR machine_name ) noexcept
 
    CNetworkUserInformation user_information;
 
-   if ( users.Enumerate() != FALSE )
+   if ( users.Enumerate() == true )
    {
       _tprintf( TEXT( "User Information for %s:\n" ), (LPCTSTR) users.GetMachineName() );
 
-      while( users.GetNext( user_information ) != FALSE )
+      while( users.GetNext( user_information ) == true )
       {
 #if defined( _DEBUG ) && ! defined( WFC_STL )
          user_information.Dump( afxDump );

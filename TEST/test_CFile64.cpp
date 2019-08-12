@@ -90,28 +90,16 @@ _Check_return_ bool test_CFile64( _Out_ std::string& class_name, _Out_ int& test
    // If we get here, it means the filename generated above is a good one. No file
    // exists of that name.
 
-   BYTE * buffer = NULL;
+   auto buffer = std::make_unique<uint8_t[]>(ONE_MEGABYTE);
 
-   try
-   {
-      buffer = new BYTE[ ONE_MEGABYTE ];
-   }
-   catch( ... )
-   {
-      buffer = NULL;
-   }
-
-   if ( buffer == NULL )
+   if ( buffer.get() == nullptr )
    {
       return( failure() );
    }
 
-   DWORD loop_index = 0;
-
-   while( loop_index < ONE_MEGABYTE )
+   for ( auto const loop_index : Range(ONE_MEGABYTE) )
    {
       buffer[ loop_index ] = 'A';
-      loop_index++;
    }
 
    CFile64 file;
@@ -122,7 +110,7 @@ _Check_return_ bool test_CFile64( _Out_ std::string& class_name, _Out_ int& test
       return(failure());
    }
 
-   file.Write( buffer, ONE_MEGABYTE );
+   file.Write( buffer.get(), ONE_MEGABYTE );
 
    if ( file.GetLength() != ONE_MEGABYTE )
    {
@@ -160,7 +148,7 @@ _Check_return_ bool test_CFile64( _Out_ std::string& class_name, _Out_ int& test
       return(failure());
    }
 
-   ULONGLONG position = file.Seek( -ONE_MEGABYTE, CFile64::SeekPosition::end );
+   ULONGLONG const position = file.Seek( -ONE_MEGABYTE, CFile64::SeekPosition::end );
 
    if ( position != 0 )
    {
@@ -174,25 +162,21 @@ _Check_return_ bool test_CFile64( _Out_ std::string& class_name, _Out_ int& test
       return(failure());
    }
 
-   ZeroMemory( buffer, ONE_MEGABYTE );
+   ZeroMemory( buffer.get(), ONE_MEGABYTE );
 
-   if ( file.Read( buffer, ONE_MEGABYTE ) != ONE_MEGABYTE )
+   if ( file.Read( buffer.get(), ONE_MEGABYTE ) != ONE_MEGABYTE )
    {
       test_number_that_failed = 9;
       return(failure());
    }
 
-   loop_index = 0;
-
-   while( loop_index < ONE_MEGABYTE )
+   for ( auto const loop_index : Range(ONE_MEGABYTE) )
    {
       if ( buffer[ loop_index ] != 'A' )
       {
          test_number_that_failed = 10;
          return(failure());
       }
-
-      loop_index++;
    }
 
    CMemoryFile memory_mapped_file;
@@ -203,7 +187,7 @@ _Check_return_ bool test_CFile64( _Out_ std::string& class_name, _Out_ int& test
       return(failure());
    }
 
-   void * memory_mapped_pointer = memory_mapped_file.GetPointer();
+   auto memory_mapped_pointer = memory_mapped_file.GetPointer();
 
    WFC_VALIDATE_POINTER( memory_mapped_pointer );
 
@@ -265,11 +249,9 @@ _Check_return_ bool test_CFile64( _Out_ std::string& class_name, _Out_ int& test
 
    char temp_string[ 512 ];
 
-   loop_index = 0;
-
    int number_of_characters_to_write = 0;
 
-   while( loop_index < 100 )
+   for ( auto const loop_index : Range(100) )
    {
       number_of_characters_to_write = sprintf_s( temp_string, sizeof( temp_string ), "Test String %04lu", (unsigned long) loop_index );
 
@@ -301,8 +283,6 @@ _Check_return_ bool test_CFile64( _Out_ std::string& class_name, _Out_ int& test
          BYTE end_of_line[ 1 ] = { 0 };
          file.Write( end_of_line, 1 );
       }
-
-      loop_index++;
    }
 
    file.SeekToBegin();
@@ -321,9 +301,7 @@ _Check_return_ bool test_CFile64( _Out_ std::string& class_name, _Out_ int& test
       return(failure());
    }
 
-   loop_index = 0;
-
-   while( loop_index < 100 )
+   for ( auto const loop_index : Range(100) )
    {
       sprintf_s( temp_string, sizeof( temp_string ), "Test String %04lu", (unsigned long) loop_index );
 
@@ -332,8 +310,6 @@ _Check_return_ bool test_CFile64( _Out_ std::string& class_name, _Out_ int& test
          test_number_that_failed = 20;
          return(failure());
       }
-
-      loop_index++;
    }
 
    strcpy_s( temp_string, std::size( temp_string ), "<ROOT><A><B><C>WFC</C></B></A></ROOT>" );
@@ -351,9 +327,9 @@ _Check_return_ bool test_CFile64( _Out_ std::string& class_name, _Out_ int& test
       return(failure());
    }
 
-   CExtensibleMarkupLanguageElement * element_p = xml.GetElement( TEXT( "ROOT.A.B.C" ) );
+   auto element_p = xml.GetElement( TEXT( "ROOT.A.B.C" ) );
 
-   if ( element_p == NULL )
+   if ( element_p == nullptr )
    {
       test_number_that_failed = 22;
       return(failure());
@@ -368,9 +344,6 @@ _Check_return_ bool test_CFile64( _Out_ std::string& class_name, _Out_ int& test
       test_number_that_failed = 23;
       return( failure() );
    }
-
-   delete [] buffer;
-   buffer = NULL;
 
    CFile64 log_file;
 

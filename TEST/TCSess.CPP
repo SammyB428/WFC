@@ -71,11 +71,11 @@ void test_CNetSession( LPCTSTR machine_name ) noexcept
 
    session.Open( machine_name );
 
-   if ( session.Enumerate( information ) != FALSE )
+   if ( session.Enumerate( information ) == true )
    {
       print_information( information );
 
-      while( session.GetNext( information ) != FALSE )
+      while( session.GetNext( information ) == true )
       {
          print_information( information );
       }

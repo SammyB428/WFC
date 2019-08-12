@@ -264,15 +264,11 @@ void test_CRAS( void )
 
    if ( ras.GetPhoneBookEntries( strings ) != FALSE )
    {
-      DWORD index = 0;
-      DWORD number_of_entries = strings.GetSize();
-
       WFCTRACE( TEXT( "Phone Book Entries:" ) );
 
-      while( index < number_of_entries )
+      for ( auto const index : Range(strings.GetSize()))
       {
          WFCTRACE( strings.GetAt( index ) );
-         index++;
       }
    }
 
@@ -285,10 +281,9 @@ void test_CRAS( void )
 
       WFCTRACE( TEXT( "\nCurrent Connections:" ) );
 
-      while( index < number_of_entries )
+      for ( auto const index : Range(strings.GetSize()))
       {
          WFCTRACE( strings[ index ] );
-         index++;
       }
    }
 
@@ -307,12 +302,9 @@ void test_CRAS( void )
 
    if ( ras.GetConnections( strings ) != FALSE )
    {
-      DWORD index = 0;
-      DWORD number_of_entries = strings.GetSize();
-
       WFCTRACE( TEXT( "Current Connections:" ) );
 
-      while( index < number_of_entries )
+      for ( auto const index : Range(strings.GetSize()) )
       {
          WFCTRACE( strings[ index ] );
          index++;

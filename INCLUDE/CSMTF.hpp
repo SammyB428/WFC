@@ -53,10 +53,10 @@ class CUINT64 : public ___SIXTY_FOUR_BIT_UNSIGNED_INTEGER
 
       // Construction
 
-      CUINT64();
-      CUINT64( __in CUINT64 const& source );
-      CUINT64( __in SIXTY_FOUR_BIT_UNSIGNED_INTEGER const&  source );
-      CUINT64( __in SIXTY_FOUR_BIT_UNSIGNED_INTEGER const * source );
+       CUINT64() noexcept;
+      CUINT64( __in CUINT64 const& source ) noexcept;
+      CUINT64( __in SIXTY_FOUR_BIT_UNSIGNED_INTEGER const&  source ) noexcept;
+      CUINT64( __in SIXTY_FOUR_BIT_UNSIGNED_INTEGER const * source ) noexcept;
       virtual ~CUINT64();
 
       // Methods
@@ -86,11 +86,11 @@ class CMTFDateTime : public ___MTF_DATE_TIME
 
       // Construction
 
-      CMTFDateTime();
-      CMTFDateTime( __in CMTFDateTime const&   source );
-      CMTFDateTime( __in MTF_DATE_TIME const * source );
-      CMTFDateTime( __in MTF_DATE_TIME const&  source );
-      CMTFDateTime( __in CTime const&          source );
+       CMTFDateTime() noexcept;
+      CMTFDateTime( __in CMTFDateTime const&   source ) noexcept;
+      CMTFDateTime( __in MTF_DATE_TIME const * source ) noexcept;
+      CMTFDateTime( __in MTF_DATE_TIME const&  source ) noexcept;
+      CMTFDateTime( __in CTime const&          source ) noexcept;
       virtual ~CMTFDateTime();
 
       // Methods

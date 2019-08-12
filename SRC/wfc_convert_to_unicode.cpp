@@ -178,8 +178,6 @@ static inline _Check_return_ bool __detect_code_page(_In_ IMultiLanguage2 * inte
 
       if ( array_size > 0 )
       {
-         SIZE_T encodings_index = 0;
-
          INT last_confidence = encodings[ 0 ].nConfidence;
 
          detected_code_page = encodings[ 0 ].nCodePage;
@@ -193,7 +191,7 @@ static inline _Check_return_ bool __detect_code_page(_In_ IMultiLanguage2 * inte
             return_value = true;
          }
 
-         while( static_cast<int>(encodings_index) < array_size )
+         for ( auto const encodings_index : Range(array_size) )
          {
             if ( static_cast<long>(encodings[ encodings_index ].nDocPercent ) > 0 )
             {
@@ -205,8 +203,6 @@ static inline _Check_return_ bool __detect_code_page(_In_ IMultiLanguage2 * inte
                   return_value = true;
                }
             }
-
-            encodings_index++;
          }
       }
       else

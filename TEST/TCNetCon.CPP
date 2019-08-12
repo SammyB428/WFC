@@ -56,11 +56,11 @@ void test_CNetworkConnections( __in_z LPCTSTR machine_name ) noexcept
 
    CNetworkConnectionInformation connection_information;
 
-   if ( connections.Enumerate( TEXT( "data" ) ) != FALSE )
+   if ( connections.Enumerate( TEXT( "data" ) ) == true )
    {
       _tprintf( TEXT( "Network Connections Information:\n" ) );
 
-      while( connections.GetNext( connection_information ) != FALSE )
+      while( connections.GetNext( connection_information ) == true )
       {
          _tprintf( TEXT( " ID            - %d\n" ),     connection_information.ID            );
          _tprintf( TEXT( " Type          - %d\n" ),     connection_information.Type          );

@@ -72,7 +72,7 @@ class CPhysicalDiskFile : public CFile64
       ** "Do More with Less Code:..."
       */
 
-      virtual ~CPhysicalDiskFile() noexcept;
+      virtual ~CPhysicalDiskFile();
 
       /*
       ** Methods

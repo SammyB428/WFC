@@ -120,9 +120,7 @@ _Check_return_ bool PASCAL Win32FoundationClasses::wfc_am_i_administrator( void 
    // assume that we don't find the admin SID.
    success = FALSE;
 
-   UINT x = 0;
-
-   for( x = 0; x < token_groups_p->GroupCount; x++ )
+   for ( auto const x : Range(token_groups_p->GroupCount) )
    {
       if ( EqualSid( administrators_sid_p, token_groups_p->Groups[ x ].Sid ) != FALSE )
       {

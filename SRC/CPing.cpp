@@ -384,7 +384,7 @@ void CPing::SetText(__in_bcount(number_of_bytes) uint8_t const * bytes, __in std
 
     if (bytes != nullptr && number_of_bytes > 0)
     {
-        m_Text = reinterpret_cast<uint8_t *>(malloc(number_of_bytes));
+        m_Text = static_cast<uint8_t *>(malloc(number_of_bytes));
 
         if (m_Text != nullptr)
         {

@@ -119,7 +119,7 @@ _Check_return_ bool PASCAL Win32FoundationClasses::wfc_check_digital_signature( 
         return( false );
     }
 
-    uint8_t * hash_buffer = (uint8_t *) _alloca( number_of_bytes_in_hash );
+    auto hash_buffer = static_cast<uint8_t *>(_alloca( number_of_bytes_in_hash ));
 
     ZeroMemory( hash_buffer, number_of_bytes_in_hash );
 
@@ -132,7 +132,7 @@ _Check_return_ bool PASCAL Win32FoundationClasses::wfc_check_digital_signature( 
         return( false );
     }
 
-    wchar_t * hash_string = (wchar_t *) _alloca( ( ( number_of_bytes_in_hash + 1 ) * 2 ) * 2 );
+    auto hash_string = static_cast<wchar_t *>(_alloca( ( ( number_of_bytes_in_hash + 1 ) * 2 ) * 2 ));
 
     _to_hex( hash_buffer, number_of_bytes_in_hash, hash_string, number_of_bytes_in_hash * 2 );
 
@@ -142,12 +142,12 @@ _Check_return_ bool PASCAL Win32FoundationClasses::wfc_check_digital_signature( 
     catalog_information.cbStruct = sizeof( catalog_information );
 
     //Get catalog for our context.
-    HCATINFO catalog_context = ::CryptCATAdminEnumCatalogFromHash( context, hash_buffer, number_of_bytes_in_hash, 0, nullptr );
+    auto catalog_context = ::CryptCATAdminEnumCatalogFromHash( context, hash_buffer, number_of_bytes_in_hash, 0, nullptr );
 
     if ( catalog_context != static_cast< HCATINFO >( NULL ) )
     {
         //If we couldn't get information
-        if ( CryptCATCatalogInfoFromContext( catalog_context, &catalog_information, 0 ) != FALSE )
+        if ( ::CryptCATCatalogInfoFromContext( catalog_context, &catalog_information, 0 ) != FALSE )
         {
             //Release the context and set the context to null so it gets picked up below.
             ::CryptCATAdminReleaseCatalogContext( context, catalog_context, 0 );
@@ -250,7 +250,7 @@ void PASCAL Win32FoundationClasses::wfc_get_version( _In_z_ wchar_t const * file
 
    if ( number_of_bytes_to_allocate > 0 )
    {
-       auto byte_buffer = std::make_unique<uint8_t []>(number_of_bytes_to_allocate);
+      auto byte_buffer = std::make_unique<uint8_t []>(number_of_bytes_to_allocate);
 
       if ( byte_buffer.get() != nullptr )
       {

@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 1995-2016, Samuel R. Blackburn
+** Copyright, 1995-2019, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -51,13 +51,13 @@ static char THIS_FILE[] = __FILE__;
 
 USING_WFC_NAMESPACE
 
-CDataSocket::CDataSocket()
+CDataSocket::CDataSocket() noexcept
 {
    WFC_VALIDATE_POINTER( this );
    m_Socket_p = nullptr;
 }
 
-CDataSocket::CDataSocket( __inout CSimpleSocket * socket_p )
+CDataSocket::CDataSocket( __inout CSimpleSocket * socket_p ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER_NULL_OK( socket_p );
@@ -65,7 +65,7 @@ CDataSocket::CDataSocket( __inout CSimpleSocket * socket_p )
    Attach( socket_p );
 }
 
-CDataSocket::~CDataSocket()
+CDataSocket::~CDataSocket() noexcept
 {
    WFC_VALIDATE_POINTER( this );
 }

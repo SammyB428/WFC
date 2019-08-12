@@ -378,8 +378,8 @@ _Check_return_ bool test_CXMLDocument( _Out_ std::string& class_name, _Out_ int&
 
     //WFCTRACEVAL( TEXT( "Value is " ), test_string_2 );
 
-    const char * part_1 = "<?xml version=\"1.0\"  encoding=\"utf-8\" standalone=\"yes\"?><mhmd>\0";
-    const char * part_2 = "</mhmd>\0";
+    char const * part_1 = "<?xml version=\"1.0\"  encoding=\"utf-8\" standalone=\"yes\"?><mhmd>\0";
+    char const * part_2 = "</mhmd>\0";
 
     output.clear();
 
@@ -391,16 +391,13 @@ _Check_return_ bool test_CXMLDocument( _Out_ std::string& class_name, _Out_ int&
         part_index++;
     }
 
-    static constexpr const uint8_t mhmd[8] = {
+    static constexpr uint8_t const mhmd[8] = {
         0xD9, 0x85, 0xD8, 0xAD, 0xD9, 0x85, 0xD8, 0xAF
     };
 
-    part_index = 0;
-
-    while (part_index < sizeof(mhmd))
+    for ( auto const mhmd_index : Range(sizeof(mhmd)))
     {
-        output.push_back(mhmd[part_index]);
-        part_index++;
+        output.push_back(mhmd[mhmd_index]);
     }
 
     part_index = 0;
@@ -430,7 +427,7 @@ _Check_return_ bool test_CXMLDocument( _Out_ std::string& class_name, _Out_ int&
         return(failure());
     }
 
-    CExtensibleMarkupLanguageElement * root = xml.GetRootElement();
+    auto root = xml.GetRootElement();
 
     if (root == nullptr)
     {

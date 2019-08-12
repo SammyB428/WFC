@@ -51,32 +51,32 @@ static char THIS_FILE[] = __FILE__;
 
 USING_WFC_NAMESPACE
 
-CDataMemory::CDataMemory()
+CDataMemory::CDataMemory() noexcept
 {
    WFC_VALIDATE_POINTER( this );
    m_Position = 0;
 }
 
-CDataMemory::CDataMemory( __in CDataMemory const& source )
+CDataMemory::CDataMemory( __in CDataMemory const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );
 }
 
-CDataMemory::CDataMemory( __in_bcount( number_of_bytes ) uint8_t const * buffer_p, __in std::size_t const number_of_bytes )
+CDataMemory::CDataMemory( __in_bcount( number_of_bytes ) uint8_t const * buffer_p, __in std::size_t const number_of_bytes ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER_NULL_OK( buffer_p );
    Copy( buffer_p, number_of_bytes );
 }
 
-CDataMemory::CDataMemory( __in std::vector<uint8_t> const& source )
+CDataMemory::CDataMemory( __in std::vector<uint8_t> const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );
 }
 
-CDataMemory::~CDataMemory()
+CDataMemory::~CDataMemory() noexcept
 {
    WFC_VALIDATE_POINTER( this );
    m_Position = 0;
@@ -241,9 +241,9 @@ _Check_return_ UINT CDataMemory::Read(__out_bcount(read_size) void * buffer, __i
 
       if ( number_of_bytes_to_read > 0 )
       {
-         for ( UINT byte_buffer_index = 0; byte_buffer_index < number_of_bytes_to_read; byte_buffer_index++ )
+         for ( auto const byte_buffer_index : Range(number_of_bytes_to_read) )
          {
-            byte_buffer[ byte_buffer_index ] = m_Data.at( (size_t) m_Position );
+            byte_buffer[ byte_buffer_index ] = m_Data.at( m_Position );
             m_Position++;
          }
 

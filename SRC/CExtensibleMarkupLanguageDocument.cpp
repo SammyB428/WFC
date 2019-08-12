@@ -91,7 +91,7 @@ CExtensibleMarkupLanguageDocument::CExtensibleMarkupLanguageDocument() noexcept
 
 #pragma warning( push )
 #pragma warning( disable : 4996 )
-   if ( ::GetVersionEx( &operating_system_version_information ) != false )
+   if ( ::GetVersionEx( &operating_system_version_information ) != FALSE )
    {
 #pragma warning( pop )
       if ( operating_system_version_information.dwPlatformId == VER_PLATFORM_WIN32_WINDOWS )
@@ -147,7 +147,7 @@ CExtensibleMarkupLanguageDocument::CExtensibleMarkupLanguageDocument( _In_ CExte
 
 #pragma warning( push )
 #pragma warning( disable : 4996 )
-   if ( ::GetVersionEx( &operating_system_version_information ) != false )
+   if ( ::GetVersionEx( &operating_system_version_information ) != FALSE )
    {
 #pragma warning( pop )
        if ( operating_system_version_information.dwPlatformId == VER_PLATFORM_WIN32_WINDOWS )
@@ -304,9 +304,9 @@ void CExtensibleMarkupLanguageDocument::Append( _In_ CExtensibleMarkupLanguageDo
 
    std::size_t enumerator = 0;
 
-   if ( source.m_XML->EnumerateChildren( enumerator ) != false )
+   if ( source.m_XML->EnumerateChildren( enumerator ) == true )
    {
-      while( source.m_XML->GetNextChild( enumerator, element_to_copy_p ) != false )
+      while( source.m_XML->GetNextChild( enumerator, element_to_copy_p ) == true )
       {
          if ( element_to_copy_p != nullptr )
          {
@@ -928,7 +928,7 @@ static inline _Check_return_ bool __is_leading_spaces( _Inout_ CDataParser& sour
    BYTE const byte_3 = source.GetAt( 2 );
    BYTE const byte_4 = source.GetAt( 3 );
 
-   if ( is_xml_white_space( byte_1 ) != false )
+   if ( is_xml_white_space( byte_1 ) == true)
    {
       // The first character was a space, the possibilities are ASCII, little endian
       // Unicode or UCS-4 little endian
@@ -970,7 +970,7 @@ static inline _Check_return_ bool __is_leading_spaces( _Inout_ CDataParser& sour
 
    if ( byte_2 != 0 )
    {
-      if ( is_xml_white_space( byte_2 ) != true )
+      if ( is_xml_white_space( byte_2 ) == false)
       {
          return( false );
       }
@@ -1007,7 +1007,7 @@ static inline _Check_return_ bool __is_leading_spaces( _Inout_ CDataParser& sour
 
    if ( byte_3 == 0 )
    {
-      if ( is_xml_white_space( byte_4 ) != false )
+      if ( is_xml_white_space( byte_4 ) == true)
       {
          (void) source.SetTextToUCS4( true );
          (void) source.SetUCS4Order( 1234 );
@@ -1018,7 +1018,7 @@ static inline _Check_return_ bool __is_leading_spaces( _Inout_ CDataParser& sour
    }
    else
    {
-      if ( is_xml_white_space( byte_3 ) != false )
+      if ( is_xml_white_space( byte_3 ) == true)
       {
          if ( byte_4 == 0 )
          {
@@ -1222,7 +1222,7 @@ _Check_return_ bool CExtensibleMarkupLanguageDocument::Parse( _Inout_ CDataParse
 
    uint32_t character_to_test = source.PeekCharacter( parse_point, 0 );
 
-   while( Win32FoundationClasses::is_xml_white_space( character_to_test ) != false )
+   while( Win32FoundationClasses::is_xml_white_space( character_to_test ) == true )
    {
       // 2006-08-11 Fixed a bug where Unicode or UCS-4 files with leading spaces
       // weren't being parsed.
@@ -1273,11 +1273,11 @@ _Check_return_ bool CExtensibleMarkupLanguageDocument::Parse( _Inout_ CDataParse
    // According to REC-xml-19980210 Rule 23, the beginning of an XML document
    // is at the "<?xml" tag. Notice this is lower case!
 
-   if ( xml_declaration_found != false )
+   if ( xml_declaration_found == true)
    {
       // See if it is lower case
 
-      if ( xml_declaration_is_mixed_case != false &&
+      if ( xml_declaration_is_mixed_case == true &&
          ! ( m_ParseOptions & WFC_XML_IGNORE_CASE_IN_XML_DECLARATION ) )
       {
          m_ParseErrorEncountered = ParseErrorOccurred();
@@ -1413,13 +1413,13 @@ _Check_return_ bool CExtensibleMarkupLanguageDocument::Parse( _Inout_ CDataParse
    {
       std::size_t element_enumerator = 0;
 
-      if ( m_XML->EnumerateChildren( element_enumerator ) != false )
+      if ( m_XML->EnumerateChildren( element_enumerator ) == true )
       {
          CExtensibleMarkupLanguageElement * child_p = nullptr;
 
          uint32_t element_count = 0;
 
-         while( m_XML->GetNextChild( element_enumerator, child_p ) != false )
+         while( m_XML->GetNextChild( element_enumerator, child_p ) == true )
          {
             if ( child_p->GetType() == CExtensibleMarkupLanguageElement::ElementType::Element )
             {
@@ -1448,13 +1448,13 @@ _Check_return_ bool CExtensibleMarkupLanguageDocument::Parse( _Inout_ CDataParse
    {
       std::size_t element_enumerator = 0;
 
-      if ( m_XML->EnumerateChildren( element_enumerator ) != false )
+      if ( m_XML->EnumerateChildren( element_enumerator ) == true)
       {
          CExtensibleMarkupLanguageElement * child_p = nullptr;
 
          bool there_aint_one = true;
 
-         while( m_XML->GetNextChild( element_enumerator, child_p ) != false && there_aint_one == true )
+         while( m_XML->GetNextChild( element_enumerator, child_p ) == true && there_aint_one == true )
          {
             if ( child_p->GetType() == CExtensibleMarkupLanguageElement::ElementType::Element )
             {
@@ -1502,7 +1502,7 @@ _Check_return_ bool CExtensibleMarkupLanguageDocument::RemoveCallback( _In_z_ wc
 
    std::wstring const name( element_name );
 
-   while( loop_index < number_of_entries )
+   while( loop_index < number_of_entries ) // Cannot be converted to a Range loop
    {
       if (m_Callbacks[loop_index].callback  == callback &&
           m_Callbacks[loop_index].parameter == callback_parameter &&
@@ -1554,7 +1554,7 @@ void CExtensibleMarkupLanguageDocument::SetConversionCodePage(_In_ uint32_t cons
 
 #pragma warning( push )
 #pragma warning( disable : 4996 )
-      if ( ::GetVersionEx( &operating_system_version_information ) != false )
+      if ( ::GetVersionEx( &operating_system_version_information ) != FALSE )
       {
 #pragma warning( pop )
           if ( operating_system_version_information.dwPlatformId == VER_PLATFORM_WIN32_WINDOWS )
@@ -1800,11 +1800,11 @@ void CExtensibleMarkupLanguageDocument::WriteTo( _Out_ std::vector<uint8_t>& des
 
       std::size_t enumerator = 0;
 
-      if ( m_XML->EnumerateChildren( enumerator ) != false )
+      if ( m_XML->EnumerateChildren( enumerator ) == true )
       {
          CExtensibleMarkupLanguageElement * child_p = nullptr;
 
-         while( m_XML->GetNextChild( enumerator, child_p ) != false )
+         while( m_XML->GetNextChild( enumerator, child_p ) == true )
          {
             if ( child_p != nullptr )
             {
@@ -2299,7 +2299,7 @@ bool parse_document( const std::wstring&amp; filename, CExtensibleMarkupLanguage
 
    std::vector&lt;uint8_t&gt; bytes;
 
-   if ( get_bytes( filename, bytes ) != true )
+   if ( get_bytes( filename, bytes ) == false )
    {
       return( false );
    }
@@ -2308,7 +2308,7 @@ bool parse_document( const std::wstring&amp; filename, CExtensibleMarkupLanguage
 
    parser.<A HREF="CDataParser.htm#Initialize">Initialize</A>( &amp;bytes, false );
 
-   if ( document.<A HREF="#Parse">Parse</A>( parser ) != false )
+   if ( document.<A HREF="#Parse">Parse</A>( parser ) == true )
    {
       _tprintf( TEXT( &quot;Parsed OK\n&quot; ) );
    }
@@ -2335,7 +2335,7 @@ int _tmain( int number_of_command_line_arguments, LPCTSTR command_line_arguments
 
    document.<A HREF="#AddCallback">AddCallback</A>( TEXT( &quot;stanza&quot; ), stanza_callback, NULL );
 
-   if ( parse_document( TEXT( &quot;poem.xml&quot; ), document ) != false )
+   if ( parse_document( TEXT( &quot;poem.xml&quot; ), document ) == true )
    {
       std::vector&lt;uint8_t&gt; bytes;
 
@@ -2347,7 +2347,7 @@ int _tmain( int number_of_command_line_arguments, LPCTSTR command_line_arguments
 
       <A HREF="CFile64.htm">CFile64</A> file;
 
-      if ( file.Open( TEXT( &quot;xml.out&quot; ), <A HREF="CFile64.htm">CFile64</A>::modeCreate | <A HREF="CFile64.htm">CFile64</A>::modeWrite ) != false )
+      if ( file.Open( TEXT( &quot;xml.out&quot; ), <A HREF="CFile64.htm">CFile64</A>::modeCreate | <A HREF="CFile64.htm">CFile64</A>::modeWrite ) == true )
       {
          file.Write( bytes.GetData(), bytes.GetSize() );
          file.Close();

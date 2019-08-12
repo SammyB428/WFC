@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 1995-2017, Samuel R. Blackburn
+** Copyright, 1995-2019, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -139,31 +139,6 @@ _Check_return_ std::wstring CTimeSpan::Format( _In_z_ wchar_t const * format_str
 
 #endif // WFC_STL
 
-CTimeEx::CTimeEx()
-{
-   WFC_VALIDATE_POINTER( this );
-   Empty();
-}
-
-CTimeEx::CTimeEx( __in CTimeEx const& source )
-{
-   Copy( source );
-   WFC_VALIDATE_POINTER( this );
-}
-
-CTimeEx::CTimeEx( __in CTimeEx const * source )
-{
-   WFC_VALIDATE_POINTER( this );
-   WFC_VALIDATE_POINTER( source );
-   Copy( source );
-}
-
-CTimeEx::CTimeEx( __in time_t const source )
-{
-   WFC_VALIDATE_POINTER( this );
-   Copy( source );
-}
-
 CTimeEx::CTimeEx( __in struct tm const * time_p )
 {
    WFC_VALIDATE_POINTER( this );
@@ -181,93 +156,6 @@ CTimeEx::CTimeEx( __in int const year, __in int const month, __in int const day,
 {
    WFC_VALIDATE_POINTER( this );
    Set( year, month, day, hour, minute, second, daylight_savings_time );
-}
-
-CTimeEx::CTimeEx( __in FILETIME const& file_time )
-{
-   WFC_VALIDATE_POINTER( this );
-   Copy( file_time );
-}
-
-CTimeEx::CTimeEx( __in FILETIME const * file_time )
-{
-   WFC_VALIDATE_POINTER( this );
-   WFC_VALIDATE_POINTER( file_time );
-
-   Copy( file_time );
-}
-
-CTimeEx::~CTimeEx()
-{
-   WFC_VALIDATE_POINTER( this );
-   Empty();
-}
-
-_Check_return_ int CTimeEx::Compare( __in CTimeEx const& source ) const noexcept
-{
-   WFC_VALIDATE_POINTER( this );
-
-   if ( m_Time > source.m_Time )
-   {
-      // We are greater than source
-
-      return( I_AM_GREATER_THAN_THAT );
-   }
-
-   if ( m_Time < source.m_Time )
-   {
-      // We are less than source
-
-      return( I_AM_LESS_THAN_THAT );
-   }
-
-   // We could be equal to source, need to go to the nanosecond level
-
-   if ( m_Time > source.m_Time )
-   {
-      // We are greater than source
-
-      return( I_AM_GREATER_THAN_THAT );
-   }
-
-   if ( m_Time < source.m_Time )
-   {
-      return( I_AM_LESS_THAN_THAT );
-   }
-
-   // Welp, it looks like we're equal
-
-   return(I_AM_EQUAL_TO_THAT);
-}
-
-void CTimeEx::Copy( __in CTimeEx const& source ) noexcept
-{
-   WFC_VALIDATE_POINTER( this );
-   m_Time  = source.m_Time;
-}
-
-void CTimeEx::Copy( __in CTimeEx const * source ) noexcept
-{
-   WFC_VALIDATE_POINTER( this );
-   WFC_VALIDATE_POINTER_NULL_OK( source );
-
-   // We were passed a pointer, don't trust it
-
-   if ( source != nullptr )
-   {
-      Copy( *source );
-   }
-   else
-   {
-      Empty();
-   }
-}
-
-void CTimeEx::Copy( __in time_t const source ) noexcept
-{
-   WFC_VALIDATE_POINTER( this );
-
-   m_Time = source;
 }
 
 void CTimeEx::Copy( __in struct tm const * time_p ) noexcept
@@ -289,42 +177,13 @@ void CTimeEx::Copy( __in struct tm const& source ) noexcept
    Copy( &source );
 }
 
-void CTimeEx::Copy( __in FILETIME const& source ) noexcept
-{
-   WFC_VALIDATE_POINTER( this );
-
-   int64_t ll = source.dwHighDateTime;
-
-   ll <<= 32;
-   ll += source.dwLowDateTime;
-   ll -= CFileTime::JanFirst1970;
-
-   m_Time = (time_t) ( ll / CFileTime::NumberOfFiletimeTicksInOneSecond);
-}
-
-void CTimeEx::Copy( __in FILETIME const * source ) noexcept
-{
-   WFC_VALIDATE_POINTER( this );
-   WFC_VALIDATE_POINTER( source );
-
-   if ( source != nullptr )
-   {
-       Copy( *source );
-   }
-   else
-   {
-       m_Time = 0;
-   }
-}
-
 void CTimeEx::CopyModifiedJulianDate( __in double const number_of_days_since_17_november_1858 ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
-   double fractional_days = 0.0;
-   double whole_days      = 0.0;
+   double whole_days = 0.0;
 
-   fractional_days = modf( number_of_days_since_17_november_1858, &whole_days );
+   double fractional_days = std::modf( number_of_days_since_17_november_1858, &whole_days );
 
    whole_days -= 40587.0;
 
@@ -336,7 +195,7 @@ void CTimeEx::CopyModifiedJulianDate( __in double const number_of_days_since_17_
    m_Time = (long) (whole_days * 86400.0);
 
    double whole_seconds = 0.0;
-   double fractional_seconds = modf( number_of_seconds_into_the_day, &whole_seconds );
+   double fractional_seconds = std::modf( number_of_seconds_into_the_day, &whole_seconds );
 
    m_Time += static_cast<long>(whole_seconds);
 }
@@ -361,18 +220,6 @@ void CTimeEx::CopyTo(_Out_ struct tm& destination ) const noexcept
    WFC_VALIDATE_POINTER( this );
 
    GreenwichMeanTime( &m_Time, &destination );
-}
-
-void CTimeEx::CopyTo(_Out_ time_t& destination ) const noexcept
-{
-   WFC_VALIDATE_POINTER( this );
-   destination = m_Time;
-}
-
-void CTimeEx::Empty( void ) noexcept
-{
-   WFC_VALIDATE_POINTER( this );
-   m_Time  = 0;
 }
 
 _Check_return_ std::wstring CTimeEx::Format( _In_z_ wchar_t const * format_string ) const noexcept
@@ -940,7 +787,7 @@ void CTimeEx::Set( __in std::wstring const& iso_8601_string ) noexcept
 
    std::wstring value( temp_string.substr( 0, 4 ) );
 
-   int const year = _wtoi( value.c_str() );
+   int const year = static_cast<int>(as_integer( value ));
 
    temp_string.erase(0, 4);
 
@@ -987,7 +834,7 @@ void CTimeEx::Set( __in std::wstring const& iso_8601_string ) noexcept
 
    temp_string.erase(0, 2);
 
-   int const month = _wtoi( value.c_str() );
+   int const month = static_cast<int>(as_integer(value));
 
    // Now let's idiot proof the month
 
@@ -1040,7 +887,7 @@ void CTimeEx::Set( __in std::wstring const& iso_8601_string ) noexcept
 
    temp_string.erase(0, 2);
 
-   int const day = _wtoi( value.c_str() );
+   int const day = static_cast<int>(as_integer(value));
 
    // Now let's idiot proof the day
 
@@ -1091,7 +938,7 @@ void CTimeEx::Set( __in std::wstring const& iso_8601_string ) noexcept
 
    value.assign( temp_string.substr( 0, 2 ) );
 
-   int const hours = _wtoi( value.c_str() );
+   int const hours = static_cast<int>(as_integer(value));
 
    if ( hours > 24 )
    {
@@ -1134,7 +981,7 @@ void CTimeEx::Set( __in std::wstring const& iso_8601_string ) noexcept
 
    value.assign( temp_string.substr( 0, 2 ) );
 
-   int minutes = _wtoi( value.c_str() );
+   int minutes = static_cast<int>(as_integer(value));
 
    if ( minutes > 59 )
    {
@@ -1183,7 +1030,7 @@ void CTimeEx::Set( __in std::wstring const& iso_8601_string ) noexcept
 
    value.assign( temp_string.substr( 0, 2 ) );
 
-   int seconds = _wtoi( value.c_str() );
+   int seconds = static_cast<int>(as_integer(value));
 
    temp_string.erase(0, 2);
 
@@ -1269,8 +1116,8 @@ void CTimeEx::Set( __in std::wstring const& iso_8601_string ) noexcept
       return;
    }
 
-   int const offset_hours   = _wtoi( temp_string.substr( 1, 2 ).c_str() );
-   int const offset_minutes = _wtoi( temp_string.substr( 4, 2 ).c_str() );
+   int const offset_hours   = static_cast<int>(as_integer(temp_string.substr( 1, 2 )));
+   int const offset_minutes = static_cast<int>(as_integer(temp_string.substr( 4, 2 )));
 
    CTimeSpan const time_span( 0, offset_hours, offset_minutes, 0 );
 

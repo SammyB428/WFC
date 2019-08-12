@@ -67,7 +67,7 @@ void test_CNetwork( LPCTSTR machine_name ) noexcept
 
       CPortInformation port;
 
-      while( machine.GetNext( port ) != FALSE )
+      while( machine.GetNext( port ) == true )
       {
          _tprintf( TEXT( "Name:        %s\n" ), port.Name.c_str());
          _tprintf( TEXT( "Monitor:     %s\n" ), port.Monitor.c_str());

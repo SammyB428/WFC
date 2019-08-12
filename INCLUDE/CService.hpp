@@ -77,7 +77,7 @@ class CService
       ** "Do More with Less Code:..."
       */
 
-      virtual ~CService( void ) noexcept;
+      virtual ~CService( void );
 
       std::vector<std::wstring> CommandLineParameters;
 
@@ -148,7 +148,7 @@ class CService
       virtual void OnControlCode( _In_ DWORD control_code ) noexcept;
       virtual void OnShutdown( void ) noexcept;
       virtual void OnStop( void ) noexcept;
-      virtual _Check_return_ BOOL OnPrepareServiceThread( void ) noexcept;
+      virtual _Check_return_ bool OnPrepareServiceThread( void ) noexcept;
       virtual void OnPause( void ) noexcept;
       virtual void OnContinue( void ) noexcept;
 

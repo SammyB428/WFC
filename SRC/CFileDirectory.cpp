@@ -173,7 +173,7 @@ _Check_return_ bool CFileDirectory::Read(__callback WIDE_FILE_ACTION_FUNCTION ac
        {
           if (find_data.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)
           {
-             if (m_IncludeDirectoriesInCallback != false)
+             if (m_IncludeDirectoriesInCallback == true)
              {
                 complete_filename.assign(m_Name);
                 complete_filename.append(find_data.cFileName);
@@ -212,7 +212,7 @@ _Check_return_ bool CFileDirectory::Read(__callback WIDE_FILE_ACTION_FUNCTION ac
             {
                if (find_data.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)
                {
-                  if (m_IncludeDirectoriesInCallback != false)
+                  if (m_IncludeDirectoriesInCallback == true)
                   {
                      complete_filename.assign(m_Name);
                      complete_filename.append(find_data.cFileName);
@@ -505,7 +505,7 @@ static _Check_return_ bool PASCAL __wide_read_recursively(_In_ std::wstring cons
                 parameters_p->new_directory_name.assign(parameters_p->directory_name_ending_in_a_slash);
                 parameters_p->new_directory_name.append(parameters_p->find_data.cFileName);
 
-                if (include_directories != false)
+                if (include_directories == true)
                 {
                     parameters_p->complete_filename.assign(parameters_p->new_directory_name);
 
@@ -677,7 +677,7 @@ _Check_return_ bool CFileDirectory::ReadRecursively(__callback WIDE_FILE_ACTION_
                 new_directory_name.assign(m_Name);
                 new_directory_name.append(find_data.cFileName);
 
-                if (m_IncludeDirectoriesInCallback != false)
+                if (m_IncludeDirectoriesInCallback == true)
                 {
                     complete_filename.assign(new_directory_name);
 
@@ -746,7 +746,7 @@ _Check_return_ bool CFileDirectory::ReadRecursively(__callback WIDE_FILE_ACTION_
                     new_directory_name.assign(m_Name);
                     new_directory_name.append(find_data.cFileName);
 
-                    if (m_IncludeDirectoriesInCallback != false)
+                    if (m_IncludeDirectoriesInCallback == true)
                     {
                         complete_filename.assign(new_directory_name);
 

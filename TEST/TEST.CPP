@@ -232,14 +232,13 @@ _Check_return_ int _tmain( _In_ int const number_of_command_line_arguments, _In_
 
    std::string class_name;
 
-   std::size_t loop_index = 0;
    int total_number_of_tests = 0;
 
    std::wstring number_of_tests_string;
 
    TEST_FUNCTION test_function = nullptr;
 
-   while( loop_index < std::size( tests ) )
+   for ( auto const loop_index : Range( std::size( tests ) ) )
    {
       test_function = tests[ loop_index ];
 
@@ -269,8 +268,6 @@ _Check_return_ int _tmain( _In_ int const number_of_command_line_arguments, _In_
 
          total_number_of_tests += test_number_that_failed;
       }
-
-      loop_index++;
    }
 
    std::wstring number_of_classes;

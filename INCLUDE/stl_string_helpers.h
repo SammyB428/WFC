@@ -1,9 +1,6 @@
-#include <charconv>
 #if ! defined( STL_STRING_HELPERS_HEADER_FILE )
 
 #define STL_STRING_HELPERS_HEADER_FILE
-
-#define _SILENCE_CXX17_CODECVT_HEADER_DEPRECATION_WARNING
 
 // sprintf replacement code
 // https://msdn.microsoft.com/en-us/magazine/dn913181.aspx
@@ -1045,13 +1042,23 @@ inline _Check_return_ int64_t ascii_string_to_integer( _In_ char const * ascii_s
     return(return_value);
 }
 
-inline _Check_return_ uint64_t ascii_string_to_unsigned_integer(_In_ char const* ascii_string, _In_ std::size_t string_length, _In_ int radix) noexcept
+inline _Check_return_ int64_t ascii_string_to_integer(_In_ std::string const& ascii_string) noexcept
+{
+    return(ascii_string_to_integer(ascii_string.data(), ascii_string.length(), 10));
+}
+
+inline _Check_return_ uint64_t ascii_string_to_unsigned_integer(_In_ char const * ascii_string, _In_ std::size_t string_length, _In_ int radix) noexcept
 {
     uint64_t return_value = 0;
 
     (void)std::from_chars(ascii_string, &ascii_string[string_length], return_value, radix);
 
     return(return_value);
+}
+
+inline _Check_return_ uint64_t ascii_string_to_unsigned_integer(_In_ std::string const& ascii_string) noexcept
+{
+    return(ascii_string_to_unsigned_integer(ascii_string.data(), ascii_string.length(), 10));
 }
 
 inline _Check_return_ int64_t as_integer(_In_z_ char const * const buffer, _In_ std::size_t const buffer_size) noexcept
@@ -1136,7 +1143,7 @@ inline _Check_return_ int64_t as_integer(_In_ std::wstring const& s) noexcept
 {
     // See if we can optimize for small strings
 
-    std::size_t string_length = s.length();
+    std::size_t const string_length = s.length();
 
     if (string_length < 26)
     {
@@ -1161,7 +1168,7 @@ inline _Check_return_ int64_t as_integer(_In_ std::wstring const& s) noexcept
         radix = 16;
         value.erase(0, 2);
     }
-    else if (starts_with_no_case(value, L"x", 1) == true)
+    else if (value[0] == 'x')
     {
         radix = 16;
         value.erase(0, 1);
@@ -1178,7 +1185,7 @@ inline _Check_return_ uint64_t as_unsigned_integer(_In_ std::wstring const& s) n
 {
     // See if we can optimize for small strings
 
-    std::size_t string_length = s.length();
+    std::size_t const string_length = s.length();
 
     if (string_length < 26)
     {
@@ -1203,7 +1210,7 @@ inline _Check_return_ uint64_t as_unsigned_integer(_In_ std::wstring const& s) n
         radix = 16;
         value.erase(0, 2);
     }
-    else if (starts_with_no_case(value, L"x", 1) == true)
+    else if (value[0] == 'x')
     {
         radix = 16;
         value.erase(0, 1);
@@ -1352,7 +1359,7 @@ inline void format_number(_Inout_ std::wstring& s, _In_ uint64_t const source) n
         number_string,
         &number_format,
         formatted_string,
-        64);
+        static_cast<int>(std::size(formatted_string) - 1));
 
     s.assign(formatted_string);
 }
@@ -1398,7 +1405,7 @@ inline void format_number(_Inout_ std::wstring& s, _In_ int64_t const source) no
         number_string,
         &number_format,
         formatted_string,
-        64);
+        static_cast<int>(std::size(formatted_string) - 1));
 
     s.assign(formatted_string);
 }
@@ -1445,7 +1452,7 @@ inline void format_number(_Inout_ std::wstring& s, _In_ double const source, _In
         number_string,
         &number_format,
         formatted_string,
-        64);
+        static_cast<int>(std::size(formatted_string) - 1));
 
     s.assign(formatted_string);
 }

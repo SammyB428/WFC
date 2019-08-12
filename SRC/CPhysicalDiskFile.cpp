@@ -539,7 +539,7 @@ void CPhysicalDiskFile::Write( __in_bcount( count ) void const * buffer, __in UI
 
    WFC_TRY
    {
-      while( number_of_bytes_written < count )
+      while( number_of_bytes_written < count ) // Cannot be converted to a Range loop
       {
          number_of_bytes_to_write = count - number_of_bytes_written;
 

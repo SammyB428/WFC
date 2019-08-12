@@ -53,8 +53,9 @@ class CDataSocket : public CDataFile
 
        CDataSocket(__in CDataSocket const&) = delete;
        CDataSocket& operator=(__in CDataSocket const&) = delete;
-       CDataSocket();
-      CDataSocket( __inout CSimpleSocket * socket_p );
+
+       CDataSocket() noexcept;
+      CDataSocket( __inout CSimpleSocket * socket_p ) noexcept;
       virtual ~CDataSocket();
 
       virtual void Attach( __inout CSimpleSocket * socket_p ) noexcept;

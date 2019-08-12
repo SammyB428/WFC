@@ -54,7 +54,7 @@ class CEventLog
       DWORD m_NumberOfBytesRead{ 0 };
       DWORD m_NumberOfBytesInNextRecord{ 0 };
 
-      void m_Initialize( void );
+      void m_Initialize( void ) noexcept;
 
    public:
 
@@ -74,8 +74,9 @@ class CEventLog
 
       CEventLog(CEventLog const&) = delete;
       CEventLog& operator=(CEventLog const&) = delete;
-      CEventLog();
-      CEventLog( __in_z LPCTSTR source_name );
+
+      CEventLog() noexcept;
+      CEventLog( __in_z LPCTSTR source_name ) noexcept;
 
       /*
       ** Destructor should be virtual according to MSJ article in Sept 1992

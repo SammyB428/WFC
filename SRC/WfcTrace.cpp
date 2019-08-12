@@ -108,12 +108,9 @@ void CWfcTrace::m_Indent( void ) const noexcept
       {
          std::wstring spaces;
 
-         int index = 0;
-
-         while( index < Indent )
+         for ( auto const index : Range(Indent) )
          {
             spaces.push_back( ' ' );
-            index++;
          }
 
          OutputDebugStringW( spaces.c_str() );
@@ -284,7 +281,7 @@ void CWfcTrace::Output( __in_z LPCTSTR message, __in double const a_double ) con
 
          int index = 0;
 
-         while( index > decimal )
+         while( index > decimal ) // Cannot be converted to a Range loop
          {
             string.push_back( '0' );
             index--;

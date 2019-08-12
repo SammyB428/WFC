@@ -164,20 +164,14 @@ _Check_return_ bool CQueue_stress_test( _Out_ std::string& class_name, _Out_ int
 
    if ( system_information.dwNumberOfProcessors > 17 )
    {
-	   int array_index = 0;
-
-	   while( array_index < std::size( get_thread_handles ) )
+	   for ( auto const array_index : Range(std::size( get_thread_handles ) ) )
 	   {
 		   get_thread_handles[ array_index ] = (HANDLE) _beginthread( queue_get_thread, DEFAULT_THREAD_STACK_SIZE, &get_workspace );
-		   array_index++;
 	   }
 
-	   array_index = 0;
-
-	   while( array_index < std::size( add_thread_handles ) )
+       for (auto const array_index : Range(std::size( add_thread_handles ) ) )
 	   {
 		   //add_thread_handles[ array_index ] = (HANDLE) _beginthread( queue_add_thread, DEFAULT_THREAD_STACK_SIZE, &get_workspace );
-		   array_index++;
 	   }
    }
 

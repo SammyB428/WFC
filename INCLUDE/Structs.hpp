@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 1995-2016, Samuel R. Blackburn
+** Copyright, 1995-2019, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -47,14 +47,39 @@ class CAccessAllowedEntry : public _ACCESS_ALLOWED_ACE
 {
    public:
 
-      CAccessAllowedEntry();
-      CAccessAllowedEntry( __in CAccessAllowedEntry const& source );
-      CAccessAllowedEntry( __in ACCESS_ALLOWED_ACE const* source );
-      virtual ~CAccessAllowedEntry();
-      virtual void Copy( __in CAccessAllowedEntry const& source ) noexcept;
-      virtual void Copy( __in ACCESS_ALLOWED_ACE const * source ) noexcept;
-      virtual void Empty( void ) noexcept;
-      virtual _Check_return_ CAccessAllowedEntry& operator=( __in CAccessAllowedEntry const& source ) noexcept;
+       inline CAccessAllowedEntry() noexcept { Empty(); }
+       inline CAccessAllowedEntry(__in CAccessAllowedEntry const& source) noexcept { Copy(source); }
+       inline CAccessAllowedEntry(__in ACCESS_ALLOWED_ACE const* source) noexcept { Copy(source); }
+       inline ~CAccessAllowedEntry() {}
+
+      inline constexpr void Copy(__in CAccessAllowedEntry const& source) noexcept
+      {
+          Header.AceType = source.Header.AceType;
+          Header.AceFlags = source.Header.AceFlags;
+          Header.AceSize = source.Header.AceSize;
+          Mask = source.Mask;
+          SidStart = source.SidStart;
+      }
+
+      inline constexpr void Copy(__in ACCESS_ALLOWED_ACE const* source) noexcept
+      {
+          Header.AceType = source->Header.AceType;
+          Header.AceFlags = source->Header.AceFlags;
+          Header.AceSize = source->Header.AceSize;
+          Mask = source->Mask;
+          SidStart = source->SidStart;
+      }
+
+      inline constexpr void Empty(void) noexcept
+      {
+          Header.AceType = 0;
+          Header.AceFlags = 0;
+          Header.AceSize = 0;
+          Mask = 0;
+          SidStart = 0;
+      }
+
+      inline _Check_return_ CAccessAllowedEntry& operator=(__in CAccessAllowedEntry const& source) noexcept { Copy(source); }
 
 #if defined( _DEBUG ) && ! defined( WFC_NO_DUMPING )
 
@@ -447,9 +472,10 @@ class CWindowPlacement : public tagWINDOWPLACEMENT
 {
    public:
 
-      CWindowPlacement();
-      CWindowPlacement( __in CWindowPlacement const& source );
-      CWindowPlacement( __in tagWINDOWPLACEMENT const * source );
+      CWindowPlacement() noexcept;
+      CWindowPlacement( __in CWindowPlacement const& source ) noexcept;
+      CWindowPlacement( __in tagWINDOWPLACEMENT const * source ) noexcept;
+
       virtual ~CWindowPlacement();
       virtual void Copy( __in CWindowPlacement const& source ) noexcept;
       virtual void Copy( __in tagWINDOWPLACEMENT const * source ) noexcept;
@@ -467,19 +493,20 @@ class CSecurityAttributes : public _SECURITY_ATTRIBUTES
 {
    public:
 
-      CSecurityAttributes();
+      CSecurityAttributes() noexcept;
       virtual ~CSecurityAttributes();
-      virtual void Empty( void );
+      virtual void Empty( void ) noexcept;
 };
 
 class CSystemAuditEntry : public _SYSTEM_AUDIT_ACE
 {
    public:
 
-      CSystemAuditEntry();
-      CSystemAuditEntry( __in CSystemAuditEntry const& source );
-      CSystemAuditEntry( __in _SYSTEM_AUDIT_ACE const * source );
+      CSystemAuditEntry() noexcept;
+      CSystemAuditEntry( __in CSystemAuditEntry const& source ) noexcept;
+      CSystemAuditEntry( __in _SYSTEM_AUDIT_ACE const * source ) noexcept;
       virtual ~CSystemAuditEntry();
+
       virtual void Copy( __in CSystemAuditEntry const& source ) noexcept;
       virtual void Copy( __in _SYSTEM_AUDIT_ACE const * source ) noexcept;
       virtual void Empty( void ) noexcept;
@@ -501,7 +528,7 @@ class CFilterKeys : public tagFILTERKEYS
 {
    public:
 
-      CFilterKeys()
+      CFilterKeys() noexcept
       {
          ::ZeroMemory( (tagFILTERKEYS *) this, sizeof( tagFILTERKEYS ) );
          cbSize = sizeof( tagFILTERKEYS );
@@ -517,31 +544,36 @@ class CStickyKeys : public tagSTICKYKEYS
 {
    public:
 
-      CStickyKeys()
+      inline constexpr CStickyKeys() noexcept
       {
-         ::ZeroMemory( (tagSTICKYKEYS *) this, sizeof( tagSTICKYKEYS ) );
-         cbSize = sizeof( tagSTICKYKEYS );
+          cbSize = sizeof( tagSTICKYKEYS );
+          dwFlags = 0;
       }
 
      ~CStickyKeys()
       {
-         ::ZeroMemory( (tagSTICKYKEYS *) this, sizeof( tagSTICKYKEYS ) );
-      }
+         cbSize = 0;
+         dwFlags = 0;
+     }
 };
 
 class CMouseKeys : public tagMOUSEKEYS
 {
    public:
 
-      CMouseKeys()
+      inline constexpr CMouseKeys() noexcept
       {
-         ::ZeroMemory( (tagMOUSEKEYS *) this, sizeof( tagMOUSEKEYS ) );
          cbSize = sizeof( tagMOUSEKEYS );
+         dwFlags = 0;
+         iMaxSpeed = 0;
+         iTimeToMaxSpeed = 0;
+         iCtrlSpeed = 0;
+         dwReserved1 = 0;
+         dwReserved2 = 0;
       }
 
-     ~CMouseKeys()
+      inline ~CMouseKeys()
       {
-         ::ZeroMemory( (tagMOUSEKEYS *) this, sizeof( tagMOUSEKEYS ) );
       }
 };
 
@@ -549,7 +581,7 @@ class CToggleKeys : public tagTOGGLEKEYS
 {
    public:
 
-      CToggleKeys()
+      inline CToggleKeys() noexcept
       {
          ::ZeroMemory( (tagTOGGLEKEYS *) this, sizeof( tagTOGGLEKEYS ) );
          cbSize = sizeof( tagTOGGLEKEYS );
@@ -686,18 +718,21 @@ class COperatingSystemVersionInformationA : public _OSVERSIONINFOA
 {
    public:
 
-      COperatingSystemVersionInformationA()
+      inline constexpr COperatingSystemVersionInformationA() noexcept
       {
-         ::ZeroMemory( (POSVERSIONINFOA) this, sizeof( OSVERSIONINFOA ) );
          dwOSVersionInfoSize = sizeof( OSVERSIONINFOA );
+         dwMajorVersion = 0;
+         dwMinorVersion = 0;
+         dwBuildNumber = 0;
+         dwPlatformId = 0;
+         szCSDVersion[0] = 0x00;
       }
 
-     ~COperatingSystemVersionInformationA()
+      inline ~COperatingSystemVersionInformationA()
       {
-         ::ZeroMemory( (POSVERSIONINFOA) this, sizeof( OSVERSIONINFOA ) );
       }
 
-      _Check_return_ bool Fill( void )
+      inline _Check_return_ bool Fill( void ) noexcept
       {
 #pragma warning( push )
 #pragma warning(disable: 4996)
@@ -705,22 +740,25 @@ class COperatingSystemVersionInformationA : public _OSVERSIONINFOA
 #pragma warning( pop )
       }
 
-      operator POSVERSIONINFOA(){ return( (POSVERSIONINFOA) this ); };
+      inline operator POSVERSIONINFOA() noexcept { return( (POSVERSIONINFOA) this ); };
 };
 
 class COperatingSystemVersionInformationW : public _OSVERSIONINFOW
 {
    public:
 
-      COperatingSystemVersionInformationW()
+      inline constexpr COperatingSystemVersionInformationW() noexcept
       {
-         ::ZeroMemory( (POSVERSIONINFOW) this, sizeof( OSVERSIONINFOW ) );
          dwOSVersionInfoSize = sizeof( OSVERSIONINFOW );
+         dwMajorVersion = 0;
+         dwMinorVersion = 0;
+         dwBuildNumber = 0;
+         dwPlatformId = 0;
+         szCSDVersion[0] = 0x00;
       }
 
-     ~COperatingSystemVersionInformationW()
+      inline ~COperatingSystemVersionInformationW()
       {
-         ::ZeroMemory( (POSVERSIONINFOW) this, sizeof( OSVERSIONINFOW ) );
       }
 
       _Check_return_ bool Fill( void )
@@ -731,7 +769,7 @@ class COperatingSystemVersionInformationW : public _OSVERSIONINFOW
 #pragma warning( pop )
       }
 
-      operator POSVERSIONINFOW(){ return( (POSVERSIONINFOW) this ); };
+      inline operator POSVERSIONINFOW() noexcept { return( (POSVERSIONINFOW) this ); };
 };
 
 #if defined( UNICODE )

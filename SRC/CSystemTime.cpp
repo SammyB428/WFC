@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 1995-2016, Samuel R. Blackburn
+** Copyright, 1995-2019, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -61,7 +61,7 @@ static char THIS_FILE[] = __FILE__;
 // were dropped from September 1752. What are they teaching in schools
 // these days?? This method uses Zeller's Conguruence.
 
-static inline _Check_return_ uint16_t __get_day_of_week( __in int year, __in int month, __in int const day )
+static inline constexpr _Check_return_ uint16_t __get_day_of_week( __in int year, __in int month, __in int const day ) noexcept
 {
    if ( month <= 2 )
    {
@@ -113,83 +113,6 @@ CSystemTime::CSystemTime( __in COleDateTime const& source )
 }
 
 #endif // WFC_STL
-
-_Check_return_ LONG CSystemTime::Compare( __in CSystemTime const& source ) const noexcept
-{
-   WFC_VALIDATE_POINTER( this );
-
-   if ( wYear < source.wYear )
-   {
-      return( I_AM_LESS_THAN_THAT );
-   }
-
-   if ( wYear > source.wYear ) 
-   {
-      return( I_AM_GREATER_THAN_THAT );
-   }
-
-   if ( wMonth < source.wMonth )
-   {
-      return( I_AM_LESS_THAN_THAT );
-   }
-
-   if ( wMonth > source.wMonth ) 
-   {
-      return( I_AM_GREATER_THAN_THAT );
-   }
-
-   if ( wDay < source.wDay )
-   {
-      return( I_AM_LESS_THAN_THAT );
-   }
-
-   if ( wDay > source.wDay ) 
-   {
-      return( I_AM_GREATER_THAN_THAT );
-   }
-
-   if ( wHour < source.wHour )
-   {
-      return( I_AM_LESS_THAN_THAT );
-   }
-
-   if ( wHour > source.wHour ) 
-   {
-      return( I_AM_GREATER_THAN_THAT );
-   }
-
-   if ( wMinute < source.wMinute )
-   {
-      return( I_AM_LESS_THAN_THAT );
-   }
-
-   if ( wMinute > source.wMinute ) 
-   {
-      return( I_AM_GREATER_THAN_THAT );
-   }
-
-   if ( wSecond < source.wSecond )
-   {
-      return( I_AM_LESS_THAN_THAT );
-   }
-
-   if ( wSecond > source.wSecond ) 
-   {
-      return( I_AM_GREATER_THAN_THAT );
-   }
-
-   if ( wMilliseconds < source.wMilliseconds )
-   {
-      return( I_AM_LESS_THAN_THAT );
-   }
-
-   if ( wMilliseconds > source.wMilliseconds ) 
-   {
-      return( I_AM_GREATER_THAN_THAT );
-   }
-
-   return( I_AM_EQUAL_TO_THAT );
-}
 
 void CSystemTime::Copy( __in FILETIME const * source ) noexcept
 {
@@ -512,7 +435,7 @@ _Check_return_ uint32_t CSystemTime::NumberOfMinutesSinceMonday( void ) const no
    return( return_value );
 }
 
-_Check_return_ BOOL CSystemTime::Set( void ) const noexcept
+_Check_return_ bool CSystemTime::Set( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -527,7 +450,7 @@ _Check_return_ BOOL CSystemTime::Set( void ) const noexcept
       {
          error_code = ::GetLastError();
          //WFCTRACEERROR( error_code );
-         return( FALSE );
+         return( false );
       }
 
       TOKEN_PRIVILEGES token_privileges;
@@ -540,7 +463,7 @@ _Check_return_ BOOL CSystemTime::Set( void ) const noexcept
          //WFCTRACEERROR( error_code );
          (void) Win32FoundationClasses::wfc_close_handle( token_handle );
          token_handle = static_cast< HANDLE >( NULL );
-         return( FALSE );
+         return( false );
       }
 
       token_privileges.PrivilegeCount             = 1;
@@ -552,7 +475,7 @@ _Check_return_ BOOL CSystemTime::Set( void ) const noexcept
          //WFCTRACEERROR( error_code );
          (void) Win32FoundationClasses::wfc_close_handle( token_handle );
          token_handle = static_cast< HANDLE >( NULL );
-         return( FALSE );
+         return( false );
       }
 
       // Finally, let's get around to setting the time
@@ -563,15 +486,15 @@ _Check_return_ BOOL CSystemTime::Set( void ) const noexcept
          //WFCTRACEERROR( error_code );
          (void) Win32FoundationClasses::wfc_close_handle( token_handle );
          token_handle = static_cast< HANDLE >( NULL );
-         return( FALSE );
+         return( false );
       }
 
       (void) Win32FoundationClasses::wfc_close_handle( token_handle );
       token_handle = static_cast< HANDLE >( NULL );
-      return( TRUE );
+      return( true );
    }
 
-   return( FALSE );
+   return( false );
 }
 
 /*

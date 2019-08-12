@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 1995-2016, Samuel R. Blackburn
+** Copyright, 1995-2019, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -51,47 +51,11 @@ static char THIS_FILE[] = __FILE__;
 
 USING_WFC_NAMESPACE
 
-// Construction
-
-CMixerDestination::CMixerDestination()
-{
-   WFC_VALIDATE_POINTER( this );
-   m_SourceSelector_p = nullptr;
-}
-
-CMixerDestination::CMixerDestination( __in CMixerDestination const& source )
-{
-   WFC_VALIDATE_POINTER( this );
-   m_SourceSelector_p = nullptr;
-   Copy( source );
-}
-
-CMixerDestination::~CMixerDestination()
-{
-   WFC_VALIDATE_POINTER( this );
-
-   if ( m_SourceSelector_p != nullptr )
-   {
-      WFC_TRY
-      {
-         delete m_SourceSelector_p;
-      }
-      WFC_CATCH_ALL
-      {
-         ;
-      }
-      WFC_END_CATCH_ALL
-   }
-
-   m_SourceSelector_p = nullptr;
-}
-
 // Methods
 
 void CMixerDestination::Copy( __in CMixerDestination const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
-   WFC_VALIDATE_POINTER_NULL_OK( m_SourceSelector_p );
 
    // Copying ourself is a silly thing to do
 
@@ -100,19 +64,7 @@ void CMixerDestination::Copy( __in CMixerDestination const& source ) noexcept
       return;
    }
 
-   if ( m_SourceSelector_p != nullptr )
-   {
-      WFC_TRY
-      {
-         delete m_SourceSelector_p;
-      }
-      WFC_CATCH_ALL
-      {
-      }
-      WFC_END_CATCH_ALL
-
-      m_SourceSelector_p = nullptr;
-   }
+   m_SourceSelector = nullptr;
 
    CMixerControlInstance::Copy( source );
 }
@@ -150,7 +102,7 @@ _Check_return_ bool CMixerDestination::GetSource( __in CMixerLine::ComponentType
 
    for ( auto const source_number : Range(m_MixerLine.NumberOfConnections) )
    {
-      if ( m_Mixer.GetByConnection( m_MixerLine.DestinationNumber, static_cast<DWORD>(source_number), line ) != false )
+      if ( m_Mixer.GetByConnection( m_MixerLine.DestinationNumber, static_cast<DWORD>(source_number), line ) == true )
       {
          if ( line.Component == type_of_source )
          {
@@ -167,13 +119,12 @@ _Check_return_ bool CMixerDestination::GetSource( __in CMixerLine::ComponentType
 _Check_return_ bool CMixerDestination::IsSourceSelected( __in DWORD const source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
-   WFC_VALIDATE_POINTER( m_SourceSelector_p );
 
    bool return_value = false;
 
-   if ( m_SourceSelector_p != nullptr )
+   if ( m_SourceSelector.get() != nullptr )
    {
-      return_value = m_SourceSelector_p->IsSelected( source );
+      return_value = m_SourceSelector->IsSelected( source );
    }
    else
    {
@@ -191,7 +142,7 @@ _Check_return_ bool CMixerDestination::Open( __in UINT_PTR device_number, __in D
    m_WhoToNotify  = who_to_notify;
    m_NotifyData   = notify_data;
 
-   const bool return_value = CMixerControlInstance::Open( device_number, what_to_notify, who_to_notify, notify_data );
+   bool const return_value = CMixerControlInstance::Open( device_number, what_to_notify, who_to_notify, notify_data );
 
    if ( return_value == false )
    {
@@ -204,13 +155,12 @@ _Check_return_ bool CMixerDestination::Open( __in UINT_PTR device_number, __in D
 _Check_return_ bool CMixerDestination::SelectSource(__in DWORD const source, __in bool selection) noexcept
 {
    WFC_VALIDATE_POINTER( this );
-   WFC_VALIDATE_POINTER( m_SourceSelector_p );
 
    bool return_value = false;
 
-   if ( m_SourceSelector_p != nullptr )
+   if ( m_SourceSelector.get() != nullptr )
    {
-      return_value = m_SourceSelector_p->Select( source, selection );
+      return_value = m_SourceSelector->Select( source, selection );
    }
 
    return( return_value );
@@ -219,13 +169,12 @@ _Check_return_ bool CMixerDestination::SelectSource(__in DWORD const source, __i
 _Check_return_ bool CMixerDestination::UnselectSource( __in DWORD const source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
-   WFC_VALIDATE_POINTER( m_SourceSelector_p );
 
    bool return_value = false;
 
-   if ( m_SourceSelector_p != nullptr )
+   if ( m_SourceSelector.get() != nullptr )
    {
-      return_value = m_SourceSelector_p->Unselect( source );
+      return_value = m_SourceSelector->Unselect( source );
    }
 
    return( return_value );

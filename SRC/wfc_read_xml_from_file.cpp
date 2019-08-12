@@ -57,7 +57,7 @@ _Check_return_ bool PASCAL Win32FoundationClasses::wfc_read_xml_from_file( _In_z
 
     CMemoryFile memory_mapped_file;
 
-    if ( memory_mapped_file.Open( filename, static_cast<UINT>(CFile64::OpenFlags::modeRead) ) != false )
+    if ( memory_mapped_file.Open( filename, static_cast<UINT>(CFile64::OpenFlags::modeRead) ) == true )
     {
         CDataParser parser;
 
@@ -97,7 +97,7 @@ void PASCAL Win32FoundationClasses::wfc_get_program_data_directory(__out std::ws
 
         directory_name = nullptr;
 
-        if (application_data_directory.empty() != false)
+        if (application_data_directory.empty() == true)
         {
             // RATS! The directory is empty
             return;

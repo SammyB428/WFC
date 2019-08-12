@@ -59,8 +59,9 @@ class CDesktop
 
        CDesktop(__in CDesktop const&) = delete;
        CDesktop& operator=(__in CDesktop const&) = delete;
-       CDesktop();
-      CDesktop( __in HDESK desktop_handle );
+
+       CDesktop() noexcept;
+      CDesktop( __in HDESK desktop_handle ) noexcept;
 
       /*
       ** Destructor should be virtual according to MSJ article in Sept 1992

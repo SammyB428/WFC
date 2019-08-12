@@ -145,7 +145,7 @@ class CWorkstationTransport
 
       CWorkstationTransport( __in WKSTA_TRANSPORT_INFO_0 const * source ) noexcept;
       CWorkstationTransport( __in CWorkstationTransport const& source ) noexcept;
-      virtual ~CWorkstationTransport() noexcept;
+      virtual ~CWorkstationTransport();
 
       /*
       ** Patterned after WKSTA_USER_INFO_1
@@ -210,7 +210,7 @@ class CNetWorkstation : public CNetwork
        CNetWorkstation& operator=(__in CNetWorkstation const&) = delete;
        CNetWorkstation() noexcept;
       CNetWorkstation( __in_z_opt LPCTSTR machine_name ) noexcept;
-      virtual ~CNetWorkstation() noexcept;
+      virtual ~CNetWorkstation();
 
       virtual void Close( void ) noexcept;
       virtual _Check_return_ bool EnumerateInformation( void ) noexcept;

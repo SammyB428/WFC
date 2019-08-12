@@ -117,13 +117,10 @@ void test_CFileTransferProtocol( void ) noexcept
 
    _tprintf( TEXT( "Directory for %s\n" ), (LPCTSTR) url );
 
-   int index = 0;
-
-   while( index < directory.GetSize() )
+   for ( auto const index : Range(directory.GetSize()) )
    {
       WFCTRACE( directory.GetAt( index ) );
       _tprintf( TEXT( "%s\n" ), (LPCTSTR) directory.GetAt( index ) );
-      index++;
    }
 #endif // WFC_STL
 }

@@ -99,7 +99,7 @@ _Check_return_ bool PASCAL Win32FoundationClasses::wfc_create_path( __in_z LPCTS
          return( false );
       }
 
-      if ( does_directory_exist( path_name ) != false )
+      if ( does_directory_exist( path_name ) == true )
       {
          return( true );
       }
@@ -204,7 +204,7 @@ _Check_return_ bool PASCAL Win32FoundationClasses::wfc_create_wide_path( _In_z_ 
          return( false );
       }
 
-      if ( does_wide_directory_exist( path_name ) != false )
+      if ( does_wide_directory_exist( path_name ) == true )
       {
          return( true );
       }

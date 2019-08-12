@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 1995-2016, Samuel R. Blackburn
+** Copyright, 1995-2019, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -54,13 +54,13 @@ USING_WFC_NAMESPACE
 #define new DEBUG_NEW
 #endif // _DEBUG
 
-CEventLog::CEventLog()
+CEventLog::CEventLog() noexcept
 {
    WFC_VALIDATE_POINTER( this );
    m_Initialize();
 }
 
-CEventLog::CEventLog( __in_z LPCTSTR source_name )
+CEventLog::CEventLog( __in_z LPCTSTR source_name ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER_NULL_OK( source_name );
@@ -69,7 +69,7 @@ CEventLog::CEventLog( __in_z LPCTSTR source_name )
    (void )RegisterSource( source_name );
 }
 
-CEventLog::~CEventLog()
+CEventLog::~CEventLog() noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -86,7 +86,7 @@ CEventLog::~CEventLog()
    m_Initialize();
 }
 
-void CEventLog::m_Initialize( void )
+void CEventLog::m_Initialize( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -115,16 +115,12 @@ _Check_return_ bool CEventLog::Backup( __in_z LPCTSTR name_of_backup_file ) noex
 
    WFC_TRY
    {
-      BOOL return_value = ::BackupEventLog( m_LogHandle, name_of_backup_file );
+      BOOL const return_value = ::BackupEventLog( m_LogHandle, name_of_backup_file );
 
       if ( return_value == FALSE )
       {
          m_ErrorCode = ::GetLastError();
          //WFCTRACEERROR( m_ErrorCode );
-      }
-      else
-      {
-         return_value = TRUE;
       }
 
       return( return_value == FALSE ? false : true );
@@ -262,11 +258,11 @@ _Check_return_ bool CEventLog::CreateApplicationLog( __in_z LPCTSTR application_
       ** used to do this. Oh well, no harm no foul.
       */
 
-      if ( registry.Open( L"SYSTEM\\CurrentControlSet\\Services\\EventLog\\Application" ) != false )
+      if ( registry.Open( L"SYSTEM\\CurrentControlSet\\Services\\EventLog\\Application" ) == true)
       {
          std::vector<std::wstring> sources;
 
-         if ( registry.GetValue( L"Sources", sources ) != false )
+         if ( registry.GetValue( L"Sources", sources ) == true)
          {
             bool application_was_found = false;
 
@@ -500,11 +496,11 @@ _Check_return_ bool CEventLog::DeleteApplicationLog( _In_z_ wchar_t const * appl
       ** "Source" combobox of the Event Viewer application View->Filter Events... menu selection.
       */
 
-      if ( registry.Open( L"SYSTEM\\CurrentControlSet\\Services\\EventLog\\Application" ) != false )
+      if ( registry.Open( L"SYSTEM\\CurrentControlSet\\Services\\EventLog\\Application" ) == true)
       {
          std::vector<std::wstring> sources;
 
-         if ( registry.GetValue( L"Sources", sources ) != false )
+         if ( registry.GetValue( L"Sources", sources ) == true)
          {
             bool application_was_found = false;
 
@@ -518,7 +514,7 @@ _Check_return_ bool CEventLog::DeleteApplicationLog( _In_z_ wchar_t const * appl
                }
             }
 
-            if ( application_was_found != false )
+            if ( application_was_found == true)
             {
                (void) registry.SetValue( L"Sources", sources );
             }

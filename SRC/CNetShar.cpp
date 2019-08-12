@@ -445,7 +445,7 @@ _Check_return_ bool CNetworkShares::GetNext( _Inout_ CNetworkShareInformation& i
       {
          // We need another chunk
 
-         if ( m_GetChunk() != false )
+         if ( m_GetChunk() == true)
          {
             return( GetNext( information ) );
          }
@@ -467,7 +467,7 @@ _Check_return_ bool CNetworkShares::GetNext( _Inout_ CNetworkShareInformation& i
       {
          // We need another chunk
 
-         if ( m_GetChunk() != false )
+         if ( m_GetChunk() == true)
          {
             return( GetNext( information ) );
          }

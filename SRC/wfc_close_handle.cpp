@@ -76,9 +76,7 @@ _Check_return_ SECURITY_DESCRIPTOR * Win32FoundationClasses::wfc_create_null_dac
    // open. To do this we, we need to create the file with a NULL DACL.
    // Please read Knowledge Base article Q106387.
 
-   SECURITY_DESCRIPTOR * security_descriptor_p = (SECURITY_DESCRIPTOR *) nullptr;
-
-   security_descriptor_p = (SECURITY_DESCRIPTOR *) ::LocalAlloc( LPTR, SECURITY_DESCRIPTOR_MIN_LENGTH );
+   auto security_descriptor_p = static_cast<SECURITY_DESCRIPTOR *>(::LocalAlloc( LPTR, SECURITY_DESCRIPTOR_MIN_LENGTH ));
 
    if ( security_descriptor_p == nullptr )
    {

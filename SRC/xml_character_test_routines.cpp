@@ -51,26 +51,24 @@ static char THIS_FILE[] = __FILE__;
 
 struct WFC_RANGE
 {
-   uint32_t low;
-   uint32_t high;
+    uint32_t low{ 0 };
+    uint32_t high{ 0 };
 };
 
 USING_WFC_NAMESPACE
 
-static inline constexpr _Check_return_ bool __wfc_range_check( __in uint32_t const value_to_test, __in_ecount( number_of_ranges ) WFC_RANGE const * range, __in uint32_t number_of_ranges ) noexcept
+static inline constexpr _Check_return_ bool __wfc_range_check( __in uint32_t const value_to_test, __in_ecount( number_of_ranges ) WFC_RANGE const * range, __in std::size_t number_of_ranges ) noexcept
 {
    int32_t bottom = 0;
-   int32_t top    = number_of_ranges - 1;
-   int32_t middle = 0;
-   int32_t half   = 0;
+   int32_t top    = static_cast<int32_t>(number_of_ranges - 1);
 
    while( bottom <= top )
    {
-      half = number_of_ranges >> 1; // Same as dividing by two only faster
+      int32_t const half = static_cast<int32_t>(number_of_ranges >> 1); // Same as dividing by two only faster
 
       if ( half != 0 )
       {
-         middle = bottom + ( ( number_of_ranges & 1 ) ? half : ( half - 1 ) );
+         int32_t const middle = static_cast<int32_t>(bottom + ( ( number_of_ranges & 1 ) ? half : ( half - 1 ) ));
 
          if ( value_to_test >= range[ middle ].low &&
               value_to_test <= range[ middle ].high )
@@ -108,7 +106,7 @@ _Check_return_ bool Win32FoundationClasses::is_xml_BaseChar( __in uint32_t const
 {
    // Test according to Rule 85
 
-   static constexpr WFC_RANGE const static_basechar_range[ 201 ] =
+   static constexpr WFC_RANGE const static_basechar_range[] =
    {
       { 0x41, 0x5A }, // 0
       { 0x61, 0x7A }, // 1
@@ -313,14 +311,14 @@ _Check_return_ bool Win32FoundationClasses::is_xml_BaseChar( __in uint32_t const
       { 0xAC00, 0xD7A3 }  // 200
    };
 
-   return( __wfc_range_check( character_to_test, static_basechar_range, 201 ) );
+   return( __wfc_range_check( character_to_test, static_basechar_range, std::size(static_basechar_range) ) );
 }
 
 _Check_return_ bool Win32FoundationClasses::is_xml_Char( __in uint32_t const character_to_test ) noexcept
 {
    // Test according to Rule 2
 
-   static constexpr WFC_RANGE const static_char_range[ 6 ] =
+   static constexpr WFC_RANGE const static_char_range[] =
    {
       { 0x0009, 0x0009 }, // 0
       { 0x000A, 0x000A }, // 1
@@ -330,14 +328,14 @@ _Check_return_ bool Win32FoundationClasses::is_xml_Char( __in uint32_t const cha
       { 0x10000, 0x10FFFF } // 5
    };
 
-   return( __wfc_range_check( character_to_test, static_char_range, 6 ) );
+   return( __wfc_range_check( character_to_test, static_char_range, std::size(static_char_range) ) );
 }
 
 _Check_return_ bool Win32FoundationClasses::is_xml_CombiningChar( __in uint32_t const character_to_test ) noexcept
 {
    // Test according to Rule 87
 
-   static constexpr WFC_RANGE const static_combiningchar_range[ 96 ] =
+   static constexpr WFC_RANGE const static_combiningchar_range[] =
    {
       { 0x0300, 0x0345 }, // 0
       { 0x0360, 0x0361 }, // 1
@@ -436,14 +434,14 @@ _Check_return_ bool Win32FoundationClasses::is_xml_CombiningChar( __in uint32_t 
       { 0x309A, 0x309A }  // 95
    };
 
-   return( __wfc_range_check( character_to_test, static_combiningchar_range, 96 ) );
+   return( __wfc_range_check( character_to_test, static_combiningchar_range, std::size(static_combiningchar_range) ) );
 }
 
 _Check_return_ bool Win32FoundationClasses::is_xml_Digit( __in uint32_t const character_to_test ) noexcept
 {
    // Test according to Rule 88
 
-   static constexpr WFC_RANGE const static_digit_range[ 15 ] =
+   static constexpr WFC_RANGE const static_digit_range[] =
    {
       { 0x0030, 0x0039 }, // 0
       { 0x0660, 0x0669 }, // 1
@@ -462,14 +460,14 @@ _Check_return_ bool Win32FoundationClasses::is_xml_Digit( __in uint32_t const ch
       { 0x0F20, 0x0F29 }  // 14
    };
 
-   return( __wfc_range_check( character_to_test, static_digit_range, 15 ) );
+   return( __wfc_range_check( character_to_test, static_digit_range, std::size(static_digit_range) ) );
 }
 
 _Check_return_ bool Win32FoundationClasses::is_xml_Extender( __in uint32_t const character_to_test ) noexcept
 {
    // Test according to Rule 89
 
-   static constexpr WFC_RANGE const static_extender_range[ 11 ] =
+   static constexpr WFC_RANGE const static_extender_range[] =
    {
       { 0x00B7, 0x00B7 }, // 0
       { 0x02D0, 0x02D0 }, // 1
@@ -484,33 +482,33 @@ _Check_return_ bool Win32FoundationClasses::is_xml_Extender( __in uint32_t const
       { 0x30FC, 0x30FE }  // 10
    };
 
-   return( __wfc_range_check( character_to_test, static_extender_range, 11 ) );
+   return( __wfc_range_check( character_to_test, static_extender_range, std::size(static_extender_range) ) );
 }
 
 _Check_return_ bool Win32FoundationClasses::is_xml_Ideographic( __in uint32_t const character_to_test ) noexcept
 {
    // Test according to Rule 86
 
-   static constexpr WFC_RANGE const static_ideographic_range[ 3 ] =
+   static constexpr WFC_RANGE const static_ideographic_range[] =
    {
       { 0x3007, 0x3007 }, // 0
       { 0x3021, 0x3029 }, // 1
       { 0x4E00, 0x9FA5 }  // 2
    };
 
-   return( __wfc_range_check( character_to_test, static_ideographic_range, 3 ) );
+   return( __wfc_range_check( character_to_test, static_ideographic_range, std::size(static_ideographic_range) ) );
 }
 
 _Check_return_ bool Win32FoundationClasses::is_xml_Letter( __in uint32_t const character_to_test ) noexcept
 {
    // Test according to Rule 84
 
-   if ( Win32FoundationClasses::is_xml_BaseChar( character_to_test ) != false )
+   if ( Win32FoundationClasses::is_xml_BaseChar( character_to_test ) == true )
    {
       return( true );
    }
 
-   if ( Win32FoundationClasses::is_xml_Ideographic( character_to_test ) != false )
+   if ( Win32FoundationClasses::is_xml_Ideographic( character_to_test ) == true )
    {
       return( true );
    }
@@ -522,12 +520,12 @@ _Check_return_ bool Win32FoundationClasses::is_xml_NameChar( __in uint32_t const
 {
    // Test according to Rule 4
 
-   if ( Win32FoundationClasses::is_xml_Letter( character_to_test ) != false )
+   if ( Win32FoundationClasses::is_xml_Letter( character_to_test ) == true )
    {
       return( true );
    }
 
-   if ( Win32FoundationClasses::is_xml_Digit( character_to_test ) != false )
+   if ( Win32FoundationClasses::is_xml_Digit( character_to_test ) == true )
    {
       return( true );
    }
@@ -540,12 +538,12 @@ _Check_return_ bool Win32FoundationClasses::is_xml_NameChar( __in uint32_t const
       return( true );
    }
 
-   if ( Win32FoundationClasses::is_xml_CombiningChar( character_to_test ) != false )
+   if ( Win32FoundationClasses::is_xml_CombiningChar( character_to_test ) == true )
    {
       return( true );
    }
 
-   if ( Win32FoundationClasses::is_xml_Extender( character_to_test ) != false )
+   if ( Win32FoundationClasses::is_xml_Extender( character_to_test ) == true )
    {
       return( true );
    }
@@ -598,21 +596,6 @@ _Check_return_ bool Win32FoundationClasses::is_xml_PubidChar( __in uint32_t cons
         character_to_test == '$'  ||
         character_to_test == '_'  ||
         character_to_test == '%'  )
-   {
-      return( true );
-   }
-
-   return( false );
-}
-
-_Check_return_ bool Win32FoundationClasses::is_xml_white_space( __in uint32_t const character_to_test ) noexcept
-{
-   // Test according to Rule 3
-
-   if ( character_to_test == 0x0020 ||
-        character_to_test == 0x000D ||
-        character_to_test == 0x000A ||
-        character_to_test == 0x0009 )
    {
       return( true );
    }

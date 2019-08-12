@@ -147,7 +147,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
     byte_buffer[ 3 ] = 'd';
     byte_buffer[ 4 ] = 0xFF; // NOT NULL TERMINATED!
 
-    std::wstring string_4( reinterpret_cast<const wchar_t *>(byte_buffer), 4 );
+    std::wstring string_4( reinterpret_cast<wchar_t const *>(byte_buffer), 4 );
 
     if ( string_4.length() != 4 )
     {
@@ -169,7 +169,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     byte_buffer[ 4 ] = 0x00; // NULL TERMINATE
 
-    std::wstring string_5( reinterpret_cast<const wchar_t *>(byte_buffer) );
+    std::wstring string_5( reinterpret_cast<wchar_t const *>(byte_buffer) );
 
     if ( string_5.length() != 4 )
     {
@@ -232,7 +232,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
         return( failure() );
     }
 
-    string_1.append( reinterpret_cast<const wchar_t *>(byte_buffer) );
+    string_1.append( reinterpret_cast<wchar_t const *>(byte_buffer) );
 
     if ( string_1.compare( L"ABCDEFGHIJabcd" ) != I_AM_EQUAL_TO_THAT )
     {
@@ -384,7 +384,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
         return( failure() );
     }
 
-    string_2 = reinterpret_cast<const wchar_t *>(byte_buffer);
+    string_2 = reinterpret_cast<wchar_t const *>(byte_buffer);
 
     if ( string_2.compare( L"abcd" ) != 0 )
     {
@@ -415,7 +415,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
         return( failure() );
     }
 
-    // CWideString::operator += ( const char * )
+    // CWideString::operator += ( char const * )
 
     string_1 += L"HIJ";
 
@@ -500,7 +500,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
         return( failure() );
     }
 
-    // operator != ( CWideString&, const char * )
+    // operator != ( CWideString&, char const * )
 
     if ( ! ( string_1 != L"abc" ) )
     {
@@ -508,7 +508,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
         return( failure() );
     }
 
-    // operator != ( const char *, CWideString& )
+    // operator != ( char const *, CWideString& )
 
     if ( ! ( L"abc" != string_1 ) )
     {
@@ -527,7 +527,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
         return( failure() );
     }
 
-    // operator < ( CWideString&, const char * )
+    // operator < ( CWideString&, char const * )
 
     if ( ! ( string_1 < L"ABc" ) )
     {
@@ -535,7 +535,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
         return( failure() );
     }
 
-    // operator < ( const char *, CWideString& )
+    // operator < ( char const *, CWideString& )
 
     if ( ! ( L"AAB" < string_1 ) )
     {
@@ -554,7 +554,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
         return( failure() );
     }
 
-    // operator > ( CWideString&, const char * )
+    // operator > ( CWideString&, char const * )
 
     if ( ! ( string_1 > L"ABC" ) )
     {
@@ -562,7 +562,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
         return( failure() );
     }
 
-    // operator > ( const char *, CWideString& )
+    // operator > ( char const *, CWideString& )
 
     string_1.assign( L"ABC" );
 
@@ -585,7 +585,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
         return( failure() );
     }
 
-    // operator <= ( CWideString&, const char * )
+    // operator <= ( CWideString&, char const * )
 
     if ( ! ( string_1 <= L"ABc" ) )
     {
@@ -593,7 +593,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
         return( failure() );
     }
 
-    // operator <= ( const char *, CWideString& )
+    // operator <= ( char const *, CWideString& )
 
     if ( ! ( L"AAB" <= string_1 ) )
     {
@@ -613,7 +613,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
         return( failure() );
     }
 
-    // operator <= ( CWideString&, const char * )
+    // operator <= ( CWideString&, char const * )
 
     if ( ! ( string_1 <= L"ABC" ) )
     {
@@ -621,7 +621,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
         return( failure() );
     }
 
-    // operator <= ( const char *, CWideString& )
+    // operator <= ( char const *, CWideString& )
 
     if ( ! ( L"ABC" <= string_1 ) )
     {
@@ -641,7 +641,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
         return( failure() );
     }
 
-    // operator >= ( CWideString&, const char * )
+    // operator >= ( CWideString&, char const * )
 
     if ( ! ( string_1 >= L"ABC" ) )
     {
@@ -649,7 +649,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
         return( failure() );
     }
 
-    // operator >= ( const char *, CWideString& )
+    // operator >= ( char const *, CWideString& )
 
     string_1.assign( L"ABC" );
 
@@ -671,7 +671,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
         return( failure() );
     }
 
-    // operator >= ( CWideString&, const char * )
+    // operator >= ( CWideString&, char const * )
 
     if ( ! ( string_1 >= L"ABC" ) )
     {
@@ -679,7 +679,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
         return( failure() );
     }
 
-    // operator >= ( const char *, CWideString& )
+    // operator >= ( char const *, CWideString& )
 
     if ( ! ( L"ABC" >= string_1 ) )
     {
@@ -695,12 +695,11 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
         return( failure() );
     }
 
-    long loop_index                   = 0;
     long number_of_characters_to_test = INTERNAL_STRING_BUFFER_SIZE * 2;
 
     std::size_t previous_length = 0;
 
-    while( loop_index < number_of_characters_to_test )
+    for ( auto const loop_index : Range(number_of_characters_to_test) )
     {
         previous_length = string_1.length();
 
@@ -715,8 +714,6 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
             test_number_that_failed = 87;
             return( failure() );
         }
-
-        loop_index++;
     }
 
     if ( string_1.length() != number_of_characters_to_test )
@@ -1739,7 +1736,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     string_1.assign(L"3.14");
 
-    const double test_double = as_double( string_1 );
+    double const test_double = as_double( string_1 );
 
     if ( test_double < 3.14 || test_double > 3.141 )
     {

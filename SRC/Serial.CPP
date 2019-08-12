@@ -1086,7 +1086,7 @@ _Check_return_ bool CSerialFile::Open( void ) noexcept
       }
    }
 
-   int const port_number = _wtoi( number_string.c_str() );
+   int const port_number = static_cast<int>(as_integer(number_string));
 
    if ( port_number > 0 && port_number < 10 )
    {
@@ -1833,7 +1833,7 @@ _Check_return_ bool CSerialFile::WaitForString( __in std::string const& string_t
 
    while( time_expired == false )
    {
-      if ( IsDataWaiting() != false )
+      if ( IsDataWaiting() == true )
       {
          (void) Read( buffer, 1 );
 

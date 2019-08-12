@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 1995-2016, Samuel R. Blackburn
+** Copyright, 1995-2019, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -50,24 +50,6 @@ static char THIS_FILE[] = __FILE__;
 #endif // _DEBUG
 
 USING_WFC_NAMESPACE
-
-// Construction
-
-CMixerSpeakers::CMixerSpeakers()
-{
-   WFC_VALIDATE_POINTER( this );
-}
-
-CMixerSpeakers::CMixerSpeakers( __in CMixerSpeakers const& source )
-{
-   WFC_VALIDATE_POINTER( this );
-   Copy( source );
-}
-
-CMixerSpeakers::~CMixerSpeakers()
-{
-   WFC_VALIDATE_POINTER( this );
-}
 
 // Methods
 
@@ -149,7 +131,7 @@ _Check_return_ bool CMixerSpeakers::IsMuted( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
-   if ( m_Mute.GetState() != false )
+   if ( m_Mute.GetState() == true )
    {
       return( true );
    }
@@ -161,7 +143,7 @@ _Check_return_ bool CMixerSpeakers::Mute( __in bool const mute_on ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
-   const bool return_value = m_Mute.SetState( mute_on );
+   bool const return_value = m_Mute.SetState( mute_on );
 
    return( return_value );
 }
@@ -206,22 +188,11 @@ _Check_return_ bool CMixerSpeakers::Open( __in UINT_PTR device_number, __in DWOR
    {
       if ( entry.Type == CMixerControl::ControlType::Mixer )
       {
-         WFC_TRY
-         {
-            m_SourceSelector_p = new CMixerSourceSelector( m_MixerLine, entry );
-         }
-         WFC_CATCH_ALL
-         {
-            m_SourceSelector_p = nullptr;
-         }
-         WFC_END_CATCH_ALL
+            m_SourceSelector = std::make_unique<CMixerSourceSelector>( m_MixerLine, entry );
 
-         WFC_VALIDATE_POINTER_NULL_OK( m_SourceSelector_p );
-         ASSERT( m_SourceSelector_p != nullptr );
-
-         if ( m_SourceSelector_p != nullptr )
+         if ( m_SourceSelector.get() != nullptr )
          {
-            (void) m_SourceSelector_p->Open( device_number, what_to_notify, who_to_notify, notify_data );
+            (void) m_SourceSelector->Open( device_number, what_to_notify, who_to_notify, notify_data );
          }
       }
 
@@ -275,7 +246,7 @@ _Check_return_ bool CMixerSpeakers::SetLeftChannelVolume( __in DWORD const desir
 {
    WFC_VALIDATE_POINTER( this );
 
-   const bool return_value = m_Volume.SetLeftChannelVolume( desired_level );
+   bool const return_value = m_Volume.SetLeftChannelVolume( desired_level );
 
    return( return_value );
 }
@@ -284,7 +255,7 @@ _Check_return_ bool CMixerSpeakers::SetVolume( __in DWORD const desired_level ) 
 {
    WFC_VALIDATE_POINTER( this );
 
-   const bool return_value = m_Volume.SetVolume( desired_level );
+   bool const return_value = m_Volume.SetVolume( desired_level );
 
    return( return_value );
 }
@@ -293,7 +264,7 @@ _Check_return_ bool CMixerSpeakers::SetRightChannelVolume( __in DWORD const desi
 {
    WFC_VALIDATE_POINTER( this );
 
-   const bool return_value = m_Volume.SetRightChannelVolume( desired_level );
+   bool const return_value = m_Volume.SetRightChannelVolume( desired_level );
 
    return( return_value );
 }
@@ -302,7 +273,7 @@ _Check_return_ bool CMixerSpeakers::UnMute( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
-   const bool return_value = m_Mute.TurnOff();
+   bool const return_value = m_Mute.TurnOff();
 
    return( return_value );
 }

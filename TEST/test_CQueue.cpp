@@ -84,7 +84,7 @@ __checkReturn bool test_CQueue( __out std::string& class_name, __out int& test_n
       return(failure());
    }
 
-   size_t item = 0;
+   std::size_t item = 0;
 
    if ( queue.Get( item ) == false )
    {

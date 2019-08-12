@@ -405,7 +405,7 @@ void test_CEventLog( void )
 
    DWORD loop_index = 0;
 
-   while( log.Read( loop_index, record ) != FALSE )
+   while( log.Read( loop_index, record ) == true )
    {
 #if defined( _DEBUG )
       record.Dump( afxDump );

@@ -51,13 +51,13 @@ static char THIS_FILE[] = __FILE__;
 
 USING_WFC_NAMESPACE
 
-CTalkingSocket::CTalkingSocket()
+CTalkingSocket::CTalkingSocket() noexcept
 {
    WFC_VALIDATE_POINTER( this );
    m_Initialize();
 }
 
-CTalkingSocket::CTalkingSocket( __in std::wstring const& a_host_name, __in std::wstring const& p_name )
+CTalkingSocket::CTalkingSocket( __in std::wstring const& a_host_name, __in std::wstring const& p_name ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    m_Initialize();
@@ -66,7 +66,7 @@ CTalkingSocket::CTalkingSocket( __in std::wstring const& a_host_name, __in std::
    SetPort( p_name.c_str() );
 }
 
-CTalkingSocket::CTalkingSocket( __in std::wstring const& address, __in short const p_number )
+CTalkingSocket::CTalkingSocket( __in std::wstring const& address, __in short const p_number ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    m_Initialize();
@@ -75,7 +75,7 @@ CTalkingSocket::CTalkingSocket( __in std::wstring const& address, __in short con
    SetPort( p_number );
 }
 
-CTalkingSocket::~CTalkingSocket()
+CTalkingSocket::~CTalkingSocket() noexcept
 {
    WFC_VALIDATE_POINTER( this );
 }

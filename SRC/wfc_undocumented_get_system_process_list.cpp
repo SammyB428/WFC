@@ -102,7 +102,7 @@ _Check_return_ bool PASCAL Win32FoundationClasses::wfc_get_process_command_line(
 
     command_line.clear();
 
-    auto process_handle = ::OpenProcess(PROCESS_QUERY_INFORMATION | PROCESS_VM_READ, FALSE, (DWORD) process_id);
+    auto process_handle = ::OpenProcess(PROCESS_QUERY_INFORMATION | PROCESS_VM_READ, FALSE, PtrToInt(process_id));
 
     if (is_bad_handle(process_handle) == true)
     {
@@ -172,7 +172,7 @@ _Check_return_ bool PASCAL Win32FoundationClasses::wfc_get_process_command_line(
     DWORD number_of_characters = 32769;
     DWORD number_of_bytes_in_command_line_string = number_of_characters * sizeof(wchar_t);
 
-    auto wide_command_line_string = (wchar_t *)_aligned_malloc(number_of_bytes_in_command_line_string, 4096); // Need aligned memory
+    auto wide_command_line_string = static_cast<wchar_t *>(_aligned_malloc(number_of_bytes_in_command_line_string, 4096)); // Need aligned memory
 
     WFC_VALIDATE_POINTER(wide_command_line_string);
 

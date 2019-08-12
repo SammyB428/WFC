@@ -49,7 +49,8 @@ class CDataFile : public CFile64
 
       CDataFile(CDataFile const&) = delete;
       CDataFile& operator=(CDataFile const&) = delete;
-      CDataFile();
+
+      CDataFile() noexcept;
       virtual ~CDataFile();
 
       virtual _Check_return_ bool AddData( __in uint32_t const identifier, __in  std::vector<uint8_t> const& data ) noexcept;

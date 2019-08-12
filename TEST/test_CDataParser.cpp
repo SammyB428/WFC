@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 2000-2018, Samuel R. Blackburn
+** Copyright, 2000-2019, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -1188,7 +1188,7 @@ _Check_return_ bool test_CDataParser( _Out_ std::string& class_name, _Out_ int& 
     here.Empty();
     found_at.Empty();
 
-    const uint8_t needle[2] = { 'h', 'i' };
+    constexpr uint8_t const needle[2] = { 'h', 'i' };
 
     if (parser.Find(here, needle, sizeof(needle), found_at) == false)
     {

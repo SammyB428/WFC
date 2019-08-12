@@ -281,18 +281,15 @@ void CRandomNumberGenerator::SetSeed( __in DWORD new_seed ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
-   WORD seed_1 = 0;
-   WORD seed_2 = 0;
+   WORD seed_1 = LOWORD( new_seed );
+   WORD seed_2 = HIWORD( new_seed );
 
-   seed_1 = LOWORD( new_seed );
-   seed_2 = HIWORD( new_seed );
-
-   while ( seed_1 > 31328 )
+   while( seed_1 > 31328 ) // Cannot be converted to a Range loop
    {
       seed_1 %= 31329;
    }
 
-   while( seed_2 > 30081 )
+   while( seed_2 > 30081 ) // Cannot be converted to a Range loop
    {
       seed_2 %= 30082;
    }
@@ -302,21 +299,14 @@ void CRandomNumberGenerator::SetSeed( __in DWORD new_seed ) noexcept
    int k = static_cast< int >( ::fmod( seed_2 / 169.0, 178.0 ) + 1 );
    int l = static_cast< int >( ::fmod( seed_2        , 169.0 )     );
 
-   int outer_loop_index = 0;
-   int inner_loop_index = 0;
-
-   double seed = 0.0;
-   double t = 0.0;
-   double m = 0.0;
-
-   for( outer_loop_index = 0; outer_loop_index < 97; outer_loop_index++ )
+   for( auto const outer_loop_index : Range(97) )
    {
-      seed = 0.0;
-      t    = 0.5;
+      double seed = 0.0;
+      double t    = 0.5;
 
-      for( inner_loop_index = 0; inner_loop_index < 24; inner_loop_index++ )
+      for( auto const inner_loop_index : Range(24) )
       {
-         m = static_cast< int >( ::fmod( ::fmod( i * j, 179.0 ) * k , 179.0 ) );
+         double m = static_cast< int >( ::fmod( ::fmod( i * j, 179.0 ) * k , 179.0 ) );
          i = j;
          j = k;
          k = static_cast< int >( m );

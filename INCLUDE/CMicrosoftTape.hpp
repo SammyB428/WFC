@@ -57,7 +57,8 @@ class CMicrosoftTape : public CTape
 
        CMicrosoftTape(CMicrosoftTape const&) = delete;
        CMicrosoftTape& operator=(CMicrosoftTape const&) = delete;
-       CMicrosoftTape();
+
+       CMicrosoftTape() noexcept;
 
       virtual ~CMicrosoftTape();
 

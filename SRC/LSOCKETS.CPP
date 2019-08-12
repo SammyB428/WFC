@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 1995-2016, Samuel R. Blackburn
+** Copyright, 1995-2019, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -55,13 +55,13 @@ USING_WFC_NAMESPACE
 #define SOMAXCONN (0x7fffffff)
 #endif // SOMAXCONN
 
-CListeningSocket::CListeningSocket()
+CListeningSocket::CListeningSocket() noexcept
 {
    WFC_VALIDATE_POINTER( this );
    m_Initialize();
 }
 
-CListeningSocket::~CListeningSocket()
+CListeningSocket::~CListeningSocket() noexcept
 {
    WFC_VALIDATE_POINTER( this );
 }
@@ -200,26 +200,26 @@ void CListeningSocket::SetConnectionBacklog( __in int const backlog ) noexcept
 
 #pragma warning( default : 4100 )
 
-_Check_return_ BOOL CListeningSocket::WaitForConnection( void ) noexcept
+_Check_return_ bool CListeningSocket::WaitForConnection( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( m_Thunk_p );
 
    if ( m_Thunk_p == nullptr )
    {
-      return( FALSE );
+      return( false );
    }
 
    if ( m_PortNumberInNetworkByteOrder == 0 )
    {
-      return( FALSE );
+      return( false );
    }
 
    if ( m_SocketID == INVALID_SOCKET )
    {
-      if ( Open() == FALSE )
+      if ( Open() == false )
       {
-         return( FALSE );
+         return( false );
       }
    }
 
@@ -260,7 +260,7 @@ _Check_return_ BOOL CListeningSocket::WaitForConnection( void ) noexcept
    {
       m_LastError = m_Thunk_p->WSAGetLastError();
       //WFCTRACESOCKETERROR( m_LastError );
-      return( FALSE );
+      return( false );
    }
 
    /*
@@ -287,7 +287,7 @@ _Check_return_ BOOL CListeningSocket::WaitForConnection( void ) noexcept
    if ( dotted_ip_address == nullptr )
    {
       m_LastError = WSAEINVAL;
-      return( FALSE );
+      return( false );
    }
 
    ULONG temp_long = 0L;
@@ -297,7 +297,7 @@ _Check_return_ BOOL CListeningSocket::WaitForConnection( void ) noexcept
    if ( temp_long == INADDR_NONE )
    {
       m_LastError = WSAEINVAL;
-      return( FALSE );
+      return( false );
    }
 
    // Now see if we should resolve the IP address to a machine name
@@ -314,7 +314,7 @@ _Check_return_ BOOL CListeningSocket::WaitForConnection( void ) noexcept
 
       OnNewConnection( socket_id, dotted_ip_address_string.c_str(), dotted_ip_address_string.c_str() );
 
-      return( TRUE );
+      return( true );
    }
 
    auto host_entry_p = m_Thunk_p->gethostbyaddr( reinterpret_cast<char const *>(&temp_long), 4, PF_INET );
@@ -323,7 +323,7 @@ _Check_return_ BOOL CListeningSocket::WaitForConnection( void ) noexcept
    {
       m_LastError = m_Thunk_p->WSAGetLastError();
       //WFCTRACESOCKETERROR( m_LastError );
-      return( FALSE );
+      return( false );
    }
 
    std::wstring host_name_string;
@@ -334,10 +334,10 @@ _Check_return_ BOOL CListeningSocket::WaitForConnection( void ) noexcept
 
    OnNewConnection( socket_id, host_name_string.c_str(), dotted_ip_address_string.c_str());
 
-   return( TRUE );
+   return( true );
 }
 
-_Check_return_ BOOL CListeningSocket::WaitForConnection( __in int const port_number ) noexcept
+_Check_return_ bool CListeningSocket::WaitForConnection( __in int const port_number ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    ASSERT( port_number > 0 );
@@ -347,7 +347,7 @@ _Check_return_ BOOL CListeningSocket::WaitForConnection( __in int const port_num
    return( WaitForConnection() );
 }
 
-_Check_return_ BOOL CListeningSocket::WaitForConnection( __in_z LPCTSTR port_name ) noexcept
+_Check_return_ bool CListeningSocket::WaitForConnection( __in_z LPCTSTR port_name ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( port_name );
@@ -355,7 +355,7 @@ _Check_return_ BOOL CListeningSocket::WaitForConnection( __in_z LPCTSTR port_nam
    if ( port_name == nullptr )
    {
       m_LastError = ERROR_INVALID_PARAMETER;
-      return( FALSE );
+      return( false );
    }
 
    SetPort( port_name );

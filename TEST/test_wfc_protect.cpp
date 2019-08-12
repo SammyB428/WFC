@@ -56,61 +56,43 @@ __checkReturn bool test_wfc_protect( __out std::string& class_name, __out int& t
 
    strcpy_s( plaintext, sizeof( plaintext ), "WFC is actually useful." );
 
-   size_t size_of_ciphertext_buffer = 0;
+   std::size_t size_of_ciphertext_buffer = 0;
 
-   if ( wfc_protect_data( (const BYTE *) plaintext, strlen( plaintext ) + 1, NULL, &size_of_ciphertext_buffer ) == false )
+   if ( wfc_protect_data( reinterpret_cast<uint8_t const *>(plaintext), strlen( plaintext ) + 1, nullptr, &size_of_ciphertext_buffer ) == false )
    {
       test_number_that_failed = 1;
       return( failure() );
    }
 
-   BYTE * ciphertext = (BYTE *) malloc( size_of_ciphertext_buffer );
+   auto ciphertext = std::make_unique<uint8_t[]>(size_of_ciphertext_buffer );
 
-   if ( wfc_protect_data( (const BYTE *) plaintext, strlen( plaintext ) + 1, ciphertext, &size_of_ciphertext_buffer ) == false )
+   if ( wfc_protect_data( reinterpret_cast<uint8_t const *>(plaintext), strlen( plaintext ) + 1, ciphertext.get(), &size_of_ciphertext_buffer ) == false )
    {
       test_number_that_failed = 2;
-      free( ciphertext );
-      ciphertext = NULL;
       return( failure() );
    }
 
-   size_t size_of_decrypted = 0;
+   std::size_t size_of_decrypted = 0;
 
-   if ( wfc_unprotect_data( ciphertext, size_of_ciphertext_buffer, NULL, &size_of_decrypted ) == FALSE )
+   if ( wfc_unprotect_data( ciphertext.get(), size_of_ciphertext_buffer, nullptr, &size_of_decrypted ) == FALSE )
    {
       test_number_that_failed = 3;
-      free( ciphertext );
-      ciphertext = NULL;
       return( failure() );
    }
 
-   BYTE * decrypted = (BYTE *) malloc( size_of_decrypted );
+   auto decrypted = std::make_unique<uint8_t[]>( size_of_decrypted );
 
-   if ( wfc_unprotect_data( ciphertext, size_of_ciphertext_buffer, (BYTE *) decrypted, &size_of_decrypted ) == FALSE )
+   if ( wfc_unprotect_data( ciphertext.get(), size_of_ciphertext_buffer, decrypted.get(), &size_of_decrypted ) == FALSE )
    {
-      free( ciphertext );
-      ciphertext = NULL;
-      free( decrypted );
-      decrypted = NULL;
       test_number_that_failed = 4;
       return( failure() );
    }
 
-   if ( strcmp( plaintext, (const char *) decrypted ) != 0 )
+   if ( strcmp( plaintext, reinterpret_cast<char const *>(decrypted.get()) ) != 0 )
    {
       test_number_that_failed = 5;
-      free( ciphertext );
-      ciphertext = NULL;
-      free( decrypted );
-      decrypted = NULL;
       return( failure() );
    }
-
-   free( ciphertext );
-   ciphertext = NULL;
-
-   free( decrypted );
-   decrypted = NULL;
 
    TCHAR filename[ MAX_PATH + 64 ];
 
