@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 2000-2017, Samuel R. Blackburn
+** Copyright, 2000-2019, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -338,17 +338,6 @@ _Check_return_ bool test_CXMLDocument( _Out_ std::string& class_name, _Out_ int&
         return( failure() );
     }
 
-    // 2000-05-07
-    // Test provided by Juro Gottweis (juro@asc.sk)
-
-    xml.Empty();
-
-    bytes.clear();
-
-    std::wstring test_text( L"<?xml version=\"1.0\" standalone=\"yes\"?>\n" );
-
-    test_text.append( L"<prop>Hello</prop> <prop>World</prop>" );
-
     //bytes.Append( (const BYTE *) ( (LPCTSTR) test_text ), test_text.GetLength() * sizeof( TCHAR ) );
 
     CDataParser parser;
@@ -550,6 +539,40 @@ _Check_return_ bool test_CXMLDocument( _Out_ std::string& class_name, _Out_ int&
         return(failure());
     }
 
-    test_number_that_failed = 35;
+    // 2000-05-07
+    // Test provided by Juro Gottweis (juro@asc.sk)
+
+    xml.Empty();
+
+    bytes.clear();
+
+    std::string test_text("<?xml version=\"1.0\" standalone=\"yes\"?>\n");
+
+    test_text.append("<prop>Hello</prop> <prop>World</prop>");
+
+    test_text.assign("<?xml version=\"1.0\" standalone=\"yes\"?>\n");
+    test_text.append("<root><prop>Hello</prop> <prop>World</prop></root>");
+
+    (void)parser.Initialize(reinterpret_cast<uint8_t const *>(test_text.data()), test_text.length());
+
+    parser.SetTextToASCII();
+
+    xml.Parse(parser);
+    xml.Trim();
+
+    root = xml.GetRootElement();
+
+    std::wstring current_text;
+
+    root->GetText(current_text);
+
+    if (current_text.compare(L"HelloWorld") != I_AM_EQUAL_TO_THAT)
+    {
+        test_number_that_failed = 36;
+        ASSERT(FALSE);
+        return(failure());
+    }
+
+    test_number_that_failed = 36;
     return( true );
 }

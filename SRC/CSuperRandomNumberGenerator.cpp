@@ -68,28 +68,19 @@ void CSuperRandomNumberGenerator::Dump( CDumpContext& dump_context ) const
 {
    dump_context << TEXT( "a CSuperRandomNumberGenerator at " ) << (VOID *) this << TEXT( "\n{\n" );
 
-   int index = 0;
-
-   while( index < 25 )
+   for ( auto const index : Range(25) )
    {
       dump_context << TEXT( "   m_IntegerSeeds[ " ) << index << TEXT( " ] is " ) << m_IntegerSeeds[ index ] << TEXT( "\n" );
-      index++;
    }
 
-   index = 0;
-
-   while( index < 25 )
+   for (auto const index : Range(25))
    {
       dump_context << TEXT( "   m_NextValue[ " ) << index << TEXT( " ] is " ) << m_NextValue[ index ] << TEXT( "\n" );
-      index++;
    }
 
-   index = 0;
-
-   while( index < 25 )
+   for (auto const index : Range(25))
    {
       dump_context << TEXT( "   m_Seeds[ " ) << index << TEXT( " ] is " ) << m_Seeds[ index ] << TEXT( "\n" );
-      index++;
    }
 
    dump_context << TEXT( "   m_Carry is     " ) << m_Carry     << TEXT( "\n" );

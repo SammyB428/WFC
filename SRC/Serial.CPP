@@ -1950,7 +1950,7 @@ void CSerialFile::Write( __in_bcount( length ) void const * buffer, __in UINT co
       DWORD total_number_of_bytes_written = 0;
       DWORD number_of_bytes_to_write      = length;
 
-      BYTE * temp_buffer = (BYTE *) buffer;
+      auto temp_buffer = static_cast<uint8_t const *>(buffer);
 
       while( total_number_of_bytes_written < length )
       {

@@ -1633,8 +1633,13 @@ public:
 
         uint32_t line_character = 0;
 
-        while (line_count < number_of_lines && GetNextCharacter( parse_point, line_character ) != 0 )
+        while (line_count < number_of_lines  )
         {
+            if (GetNextCharacter(parse_point, line_character) == false)
+            {
+                break;
+            }
+
             if (line_character == CARRIAGE_RETURN)
             {
                 line_character = GetCharacter(parse_point);
@@ -1660,7 +1665,7 @@ public:
 
         uint32_t line_character = 0;
 
-        while( GetNextCharacter( parse_point, line_character ) != 0 )
+        while( GetNextCharacter( parse_point, line_character ) == true )
         {
             if ( line_character == CARRIAGE_RETURN )
             {

@@ -197,7 +197,7 @@ As you can see, the double-locking mechanism is the best.
 
    DWORD item = 0;
 
-   while( queue.Get( item ) != FALSE )
+   while( queue.Get( item ) == true )
    {
       WFCTRACEVAL( TEXT( &quot;Got &quot;, item ) );
    }
@@ -211,7 +211,7 @@ As you can see, the double-locking mechanism is the best.
    queue.Add( 9 );
    queue.Add( 10 );
 
-   while( queue.Get( item ) != FALSE )
+   while( queue.Get( item ) == true )
    {
       WFCTRACEVAL( TEXT( &quot;Got &quot;, item ) );
    }

@@ -254,18 +254,14 @@ void CDataArchive::Read(__out std::vector<std::wstring>& array) noexcept
 
        Read(number_of_array_entries);
 
-       uint32_t index = 0;
-
        std::wstring string;
 
-       while (index < number_of_array_entries)
+       for ( const auto index : Range(number_of_array_entries) )
        {
           Read(string);
 
           (void) array.push_back(string);
           string.clear();
-
-          index++;
        }
     }
         WFC_CATCH_ALL
@@ -730,12 +726,9 @@ void CDataArchive::Write(__in double const value) noexcept
     {
        auto buffer = reinterpret_cast<uint8_t const *>(&value);
 
-       int index = 0;
-
-       while (index < sizeof(value))
+       for ( const auto index : Range(sizeof(value)) )
        {
           (void) m_WriteToDataChunk_p->Data.push_back(buffer[index]);
-          index++;
        }
     }
         WFC_CATCH_ALL
@@ -793,12 +786,9 @@ void CDataArchive::Write(__in wchar_t const value) noexcept
     {
        auto buffer = reinterpret_cast<uint8_t const *>(&value);
 
-       int index = 0;
-
-       while (index < sizeof(value))
+       for ( auto const index : Range(sizeof(value)) )
        {
           (void) m_WriteToDataChunk_p->Data.push_back(buffer[index]);
-          index++;
        }
     }
         WFC_CATCH_ALL
@@ -826,12 +816,9 @@ void CDataArchive::Write(__in float const value) noexcept
     {
        auto buffer = reinterpret_cast<uint8_t const *>(&value);
 
-       int index = 0;
-
-       while (index < sizeof(value))
+       for ( auto const index : Range(sizeof(value)) )
        {
           (void) m_WriteToDataChunk_p->Data.push_back(buffer[index]);
-          index++;
        }
     }
         WFC_CATCH_ALL
@@ -935,7 +922,7 @@ void CDataArchive::WriteTo(__inout CDataChunk * chunk_p) noexcept
 {
     WFC_VALIDATE_POINTER(this);
 
-    m_AmIWriting = TRUE;
+    m_AmIWriting = true;
     m_WriteToDataChunk_p = chunk_p;
     m_ReadFromDataChunk_p = nullptr;
     m_Position = 0;

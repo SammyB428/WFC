@@ -1490,7 +1490,7 @@ void test_CNetworkUsers( LPCTSTR machine_name )
    {
       _tprintf( TEXT( &quot;User Information for %s:\n&quot; ), (LPCTSTR) users.GetMachineName() );
 
-      while( users.GetNext( user_information ) != FALSE )
+      while( users.GetNext( user_information ) == true )
       {
          _tprintf( TEXT( &quot; Name                 - \&quot;%s\&quot;\n&quot; ), (LPCTSTR) user_information.Name          );
          _tprintf( TEXT( &quot; Full Name            - \&quot;%s\&quot;\n&quot; ), (LPCTSTR) user_information.FullName      );

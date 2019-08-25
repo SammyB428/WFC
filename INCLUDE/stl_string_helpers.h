@@ -562,9 +562,7 @@ inline void from_flags(_Inout_ std::wstring& s, _In_ uint64_t const flags, _In_r
 {
     s.resize(0);
 
-    int bit_number = 0;
-
-    while (bit_number < 64)
+    for ( auto const bit_number : Range(64) )
     {
         if (bit_test(flags, bit_number) == 1)
         {
@@ -576,15 +574,13 @@ inline void from_flags(_Inout_ std::wstring& s, _In_ uint64_t const flags, _In_r
             {
                 wchar_t temp_string[64];
 
-                swprintf_s(temp_string, std::size(temp_string), L"Undefined(%d)", bit_number);
+                swprintf_s(temp_string, std::size(temp_string), L"Undefined(%zd)", bit_number);
                 s.append(temp_string);
             }
 
             s.push_back(',');
             s.push_back(' ');
         }
-
-        bit_number++;
     }
 
     trim(s);
@@ -2366,12 +2362,9 @@ inline void copy_beginning_at(_Inout_ std::vector<std::wstring>& destination, _I
 {
     destination.clear();
 
-    std::size_t index = starting_index;
-
-    while (index < source.size())
+    for ( auto const index : Range(source.size(), starting_index) )
     {
         destination.push_back(source[index]);
-        index++;
     }
 }
 

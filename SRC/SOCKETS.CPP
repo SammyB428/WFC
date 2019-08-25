@@ -49,6 +49,8 @@ static char THIS_FILE[] = __FILE__;
 #define new DEBUG_NEW
 #endif // _DEBUG
 
+#include <VersionHelpers.h>
+
 USING_WFC_NAMESPACE
 
 long CSimpleSocket::m_ReferenceCount = 0;
@@ -360,19 +362,16 @@ void CSimpleSocket::Dump( CDumpContext &dump_context ) const
    dump_context << TEXT( "m_SocketID                     = "   ) << m_SocketID       << TEXT( "\n" );
    dump_context << TEXT( "m_ReferenceCount               = "   ) << m_ReferenceCount << TEXT( "\n" );
 
-   std::size_t loop_index        = 0;
-   std::size_t number_of_aliases = AliasList.GetSize();
+   std::size_t const number_of_aliases = AliasList.GetSize();
 
    dump_context << TEXT( "AliasList conains " ) << (long) number_of_aliases << TEXT( " aliases.\n" );
 
    std::wstring string;
 
-   while( loop_index < number_of_aliases )
+   for ( auto const loop_index : Range(number_of_aliases) )
    {
       string = AliasList.GetAt( loop_index );
       dump_context << loop_index << TEXT( ". \"" ) << string << TEXT( "\"\n" );
-
-      loop_index++;
    }
 }
 
@@ -842,6 +841,18 @@ static void PASCAL FAR return_nothing( void )
    return;
 }
 
+VERSIONHELPERAPI
+IsWindowsNT4OrGreater()
+{
+    return IsWindowsVersionOrGreater(HIBYTE(_WIN32_WINNT_NT4), LOBYTE(_WIN32_WINNT_NT4), 0);
+}
+
+VERSIONHELPERAPI
+IsWindows2KOrGreater()
+{
+    return IsWindowsVersionOrGreater(HIBYTE(_WIN32_WINNT_WIN2K), LOBYTE(_WIN32_WINNT_WIN2K), 0);
+}
+
 void CSimpleSocket::m_InitializeThunk( void ) noexcept
 {
    if ( m_Thunk_p != nullptr )
@@ -868,33 +879,21 @@ void CSimpleSocket::m_InitializeThunk( void ) noexcept
 
    ZeroMemory( m_Thunk_p, sizeof( WFC_SOCKET_THUNK ) );
 
-   OSVERSIONINFO operating_system_version_information;
-
-   ZeroMemory( &operating_system_version_information, sizeof( operating_system_version_information ) );
-   operating_system_version_information.dwOSVersionInfoSize = sizeof( operating_system_version_information );
-
-   if ( ::GetVersionEx( &operating_system_version_information ) != FALSE )
+   if (IsWindows2KOrGreater() == true )
    {
-      // Now figure out which Win32 we're running
-
-      if ( operating_system_version_information.dwPlatformId == VER_PLATFORM_WIN32_NT )
-      {
-         // YIPPEE!! A real operating system!
-
-         if ( operating_system_version_information.dwMajorVersion == 4 )
-         {
-            _tcsncpy_s( m_Thunk_p->dll_name, std::size( m_Thunk_p->dll_name ), TEXT( "ws2_32.dll" ), std::size( m_Thunk_p->dll_name ) );
-         }
-         else
-         {
-            _tcsncpy_s( m_Thunk_p->dll_name, std::size( m_Thunk_p->dll_name ), TEXT( "wsock32.dll" ), std::size( m_Thunk_p->dll_name ) );
-         }
-      }
-      else if ( operating_system_version_information.dwPlatformId == VER_PLATFORM_WIN32_WINDOWS )
-      {
-         // Piece of crap Windows95 garbage
-         _tcsncpy_s( m_Thunk_p->dll_name, std::size( m_Thunk_p->dll_name ), TEXT( "wsock32.dll" ), std::size( m_Thunk_p->dll_name ) );
-      }
+       _tcsncpy_s(m_Thunk_p->dll_name, std::size(m_Thunk_p->dll_name), TEXT("wsock32.dll"), std::size(m_Thunk_p->dll_name));
+   }
+   else
+   {
+       if (IsWindowsNT4OrGreater() == true)
+       {
+           _tcsncpy_s(m_Thunk_p->dll_name, std::size(m_Thunk_p->dll_name), TEXT("ws2_32.dll"), std::size(m_Thunk_p->dll_name));
+       }
+       else
+       {
+           // Windows 95
+           _tcsncpy_s(m_Thunk_p->dll_name, std::size(m_Thunk_p->dll_name), TEXT("wsock32.dll"), std::size(m_Thunk_p->dll_name));
+       }
    }
 
    if ( _tcslen( m_Thunk_p->dll_name ) > 0 )

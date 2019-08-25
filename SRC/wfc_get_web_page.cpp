@@ -196,12 +196,9 @@ void PASCAL Win32FoundationClasses::wfc_get_web_page( __in CUniformResourceLocat
 
     Win32FoundationClasses::wfc_get_web_page( url, web_page, options );
 
-    int loop_index = 0;
-
-    while( loop_index < web_page.GetSize() )
+    for ( auto const loop_index : Range(web_page.GetSize()) )
     {
         Win32FoundationClasses::wfc_append_string_to_byte_array( web_page.at( loop_index ), page_contents );
-        loop_index++;
     }
 }
 

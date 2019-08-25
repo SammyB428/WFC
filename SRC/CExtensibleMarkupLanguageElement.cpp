@@ -1400,8 +1400,16 @@ void CExtensibleMarkupLanguageElement::GetText( _Out_ std::wstring& text ) const
     }
     else
     {
+        _ASSERTE(m_Type != ElementType::Unknown);
+
         // We shouldn't ignore white space
-        text = m_Contents;
+        if (m_Type != ElementType::Comment &&
+            m_Type != ElementType::ProcessingInstruction &&
+            m_Type != ElementType::Unknown &&
+            m_Type != ElementType::MetaData)
+        {
+            text = m_Contents;
+        }
     }
 
     // Here's where it begins to get fun. If we are
@@ -1421,7 +1429,11 @@ void CExtensibleMarkupLanguageElement::GetText( _Out_ std::wstring& text ) const
     {
         if (child != nullptr)
         {
+            _ASSERTE(child->GetType() != ElementType::Unknown);
+
             if (child->GetType() != ElementType::Comment &&
+                child->GetType() != ElementType::ProcessingInstruction &&
+                child->GetType() != ElementType::Unknown &&
                 child->GetType() != ElementType::MetaData)
             {
                 child->GetText(text_segment);
@@ -1429,18 +1441,6 @@ void CExtensibleMarkupLanguageElement::GetText( _Out_ std::wstring& text ) const
             }
         }
     }
-}
-
-_Check_return_ CExtensibleMarkupLanguageElement * CExtensibleMarkupLanguageElement::GetTheFirstChild( void ) const noexcept
-{
-    WFC_VALIDATE_POINTER( this );
-
-    if ( m_Children.empty() == false )
-    {
-        return( m_Children[ 0 ] );
-    }
-
-    return( nullptr );
 }
 
 _Check_return_ uint32_t CExtensibleMarkupLanguageElement::GetTotalNumberOfChildren( void ) const noexcept
@@ -1462,20 +1462,6 @@ _Check_return_ uint32_t CExtensibleMarkupLanguageElement::GetTotalNumberOfChildr
     }
 
     return( return_value );
-}
-
-_Check_return_ bool CExtensibleMarkupLanguageElement::IsRoot( void ) const noexcept
-{
-    WFC_VALIDATE_POINTER( this );
-
-    // If we have no parent, we must be the root
-
-    if ( m_Parent == nullptr )
-    {
-        return( true );
-    }
-
-    return( false );
 }
 
 void CExtensibleMarkupLanguageElement::m_AddCharacterToOutput( _In_ uint32_t const character, _In_ uint32_t const options, _Inout_ std::vector<uint8_t>& output ) const noexcept
@@ -1610,7 +1596,7 @@ void CExtensibleMarkupLanguageElement::m_AddIndentation( _Inout_ std::vector<uin
 
         if ( automatically_indent == true)
         {
-            m_AddCharacterToOutput( CARRIAGE_RETURN, write_options,  bytes );
+            m_AddCharacterToOutput( CARRIAGE_RETURN, write_options, bytes );
             m_AddCharacterToOutput( LINE_FEED,       write_options, bytes );
 
             indent_by = 0;
@@ -1634,8 +1620,6 @@ void CExtensibleMarkupLanguageElement::m_AppendAttributes( _Inout_ std::vector<u
 {
     WFC_VALIDATE_POINTER( this );
 
-    std::size_t string_length = 0;
-
     uint32_t write_options = WFC_XML_WRITE_AS_ASCII;
 
     if ( m_Document != nullptr )
@@ -1649,7 +1633,7 @@ void CExtensibleMarkupLanguageElement::m_AppendAttributes( _Inout_ std::vector<u
 
         if ( attribute_p != nullptr )
         {
-            string_length = attribute_p->Name.length();
+            auto const string_length = attribute_p->Name.length();
 
             if ( string_length > 0 )
             {
@@ -5226,30 +5210,6 @@ void CExtensibleMarkupLanguageElement::RemoveChild( _Inout_ CExtensibleMarkupLan
     }
 }
 
-void CExtensibleMarkupLanguageElement::SetType( _In_ ElementType const type ) noexcept
-{
-    WFC_VALIDATE_POINTER( this );
-    // Make sure type is a valid type
-
-    switch( type )
-    {
-    case ElementType::Unknown:
-    case ElementType::ProcessingInstruction:
-    case ElementType::Comment:
-    case ElementType::CharacterData:
-    case ElementType::Element:
-    case ElementType::TextSegment:
-    case ElementType::MetaData:
-
-        m_Type = type;
-        break;
-
-    default:
-
-        m_Type = ElementType::Unknown;
-    }
-}
-
 void CExtensibleMarkupLanguageElement::WriteTo( _Inout_ std::vector<uint8_t>& xml ) const noexcept
 {
     WFC_VALIDATE_POINTER( this );
@@ -5660,6 +5620,37 @@ _Check_return_ CExtensibleMarkupLanguageElement& CExtensibleMarkupLanguageElemen
     WFC_VALIDATE_POINTER( this );
     Copy( source );
     return( *this );
+}
+
+void CExtensibleMarkupLanguageElement::Trim(void) noexcept
+{
+    // Look for children that are all spaces and delete them
+    if (m_Children.empty() == true)
+    {
+        return;
+    }
+
+    std::vector<CExtensibleMarkupLanguageElement *> space_children;
+
+    for (auto child : m_Children)
+    {
+        if (child->GetType() == ElementType::TextSegment)
+        {
+            if (child->IsAllWhiteSpace() == true)
+            {
+                space_children.push_back(child);
+            }
+        }
+        else
+        {
+            child->Trim();
+        }
+    }
+
+    for (auto child : space_children)
+    {
+        RemoveChild(child);
+    }
 }
 
 // End of source

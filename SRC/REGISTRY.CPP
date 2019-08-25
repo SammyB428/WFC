@@ -1615,7 +1615,7 @@ should look like:
 
 DWORD size_of_buffer = 4096;
 
-while( registry.EnumerateValues( enumerator, name, type, buffer, size_of_buffer ) != FALSE )
+while( registry.EnumerateValues( enumerator, name, type, buffer, size_of_buffer ) == true )
 {
 _tprintf( TEXT( &quot;Found %s, length is %lu\n&quot; ), (wchar_t const *) name, size_of_buffer );
 size_of_buffer = 4096;

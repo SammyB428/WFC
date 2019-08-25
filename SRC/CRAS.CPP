@@ -913,17 +913,13 @@ HRASCONN CRemoteAccessService::GetConnection( LPCTSTR name_of_connection )
 
       if ( m_ErrorCode == 0 )
       {
-         DWORD index = 0;
-
-         while( index < number_of_entries )
+         for ( auto const index : Range(number_of_entries) )
          {
             if ( _tcsicmp( name_of_connection, connections[ index ].szEntryName ) == 0 )
             {
                return_value = connections[ index ].hrasconn;
-               index = number_of_entries;
+               break;
             }
-
-            index++;
          }
       }
 

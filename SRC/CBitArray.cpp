@@ -1140,18 +1140,14 @@ _Check_return_ std::size_t CBitArray::GetNumberOfOnes( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
-   std::size_t index          = 0;
    std::size_t number_of_ones = 0;
-   std::size_t number_of_bits = GetSize();
 
-   while( index < number_of_bits )
+   for ( auto const index : Range(GetSize()) )
    {
       if ( GetAt( index ) == 1 )
       {
          number_of_ones++;
       }
-
-      index++;
    }
 
    return( number_of_ones );

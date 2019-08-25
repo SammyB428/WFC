@@ -469,7 +469,7 @@ int _tmain( int number_of_command_line_arguments, LPCTSTR command_line_arguments
 
    // Wait on port 37 (the &quot;time&quot; port)
 
-   while( time_service.WaitForConnection( 37 ) != FALSE )
+   while( time_service.WaitForConnection( 37 ) == true )
    {
       _tprintf( TEXT( &quot;We had a connection\n&quot; ) );
    }

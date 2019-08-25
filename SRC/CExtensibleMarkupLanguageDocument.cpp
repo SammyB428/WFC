@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 1995-2018, Samuel R. Blackburn
+** Copyright, 1995-2019, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -49,6 +49,8 @@ static char THIS_FILE[] = __FILE__;
 #define new DEBUG_NEW
 #endif // _DEBUG
 
+#include <VersionHelpers.h>
+
 USING_WFC_NAMESPACE
 
 CExtensibleMarkupLanguageDocument::CExtensibleMarkupLanguageDocument() noexcept
@@ -84,21 +86,10 @@ CExtensibleMarkupLanguageDocument::CExtensibleMarkupLanguageDocument() noexcept
 
    m_ConversionCodePage = CP_UTF8;
 
-   OSVERSIONINFO operating_system_version_information;
-
-   ZeroMemory( &operating_system_version_information, sizeof( operating_system_version_information ) );
-   operating_system_version_information.dwOSVersionInfoSize = sizeof( operating_system_version_information );
-
-#pragma warning( push )
-#pragma warning( disable : 4996 )
-   if ( ::GetVersionEx( &operating_system_version_information ) != FALSE )
+   if (IsWindowsXPOrGreater() == false)
    {
-#pragma warning( pop )
-      if ( operating_system_version_information.dwPlatformId == VER_PLATFORM_WIN32_WINDOWS )
-      {
-         // Piece of crap Windows95 garbage
-         m_ConversionCodePage = CP_ACP;
-      }
+       // Piece of crap Windows95 garbage
+       m_ConversionCodePage = CP_ACP;
    }
 
    NumberOfBytesPerCharacter = 1;
@@ -140,21 +131,10 @@ CExtensibleMarkupLanguageDocument::CExtensibleMarkupLanguageDocument( _In_ CExte
 
    m_ConversionCodePage = CP_UTF8;
 
-   OSVERSIONINFO operating_system_version_information;
-
-   ZeroMemory( &operating_system_version_information, sizeof( operating_system_version_information ) );
-   operating_system_version_information.dwOSVersionInfoSize = sizeof( operating_system_version_information );
-
-#pragma warning( push )
-#pragma warning( disable : 4996 )
-   if ( ::GetVersionEx( &operating_system_version_information ) != FALSE )
+   if (IsWindowsXPOrGreater() == false)
    {
-#pragma warning( pop )
-       if ( operating_system_version_information.dwPlatformId == VER_PLATFORM_WIN32_WINDOWS )
-      {
-         // Piece of crap Windows95 garbage
-         m_ConversionCodePage = CP_ACP;
-      }
+       // Piece of crap Windows95 garbage
+       m_ConversionCodePage = CP_ACP;
    }
 
    m_InitializeEntities();
@@ -300,7 +280,7 @@ void CExtensibleMarkupLanguageDocument::Append( _In_ CExtensibleMarkupLanguageDo
    }
 
    CExtensibleMarkupLanguageElement * element_to_copy_p = nullptr;
-   CExtensibleMarkupLanguageElement * element_to_add_p  = nullptr;
+   //CExtensibleMarkupLanguageElement * element_to_add_p  = nullptr;
 
    std::size_t enumerator = 0;
 
@@ -310,7 +290,7 @@ void CExtensibleMarkupLanguageDocument::Append( _In_ CExtensibleMarkupLanguageDo
       {
          if ( element_to_copy_p != nullptr )
          {
-            element_to_add_p = CExtensibleMarkupLanguageElement::NewElement( m_XML );
+            auto element_to_add_p = CExtensibleMarkupLanguageElement::NewElement( m_XML );
 
             if ( element_to_add_p == nullptr )
             {
@@ -321,7 +301,6 @@ void CExtensibleMarkupLanguageDocument::Append( _In_ CExtensibleMarkupLanguageDo
             element_to_add_p->Copy( *element_to_copy_p );
 
             m_XML->AddChild( element_to_add_p, false );
-            element_to_add_p = nullptr;
          }
       }
    }
@@ -698,7 +677,6 @@ void CExtensibleMarkupLanguageDocument::ExecuteCallbacks( _Inout_ CExtensibleMar
           if (element_p->Tag().compare( entry.name ) == I_AM_EQUAL_TO_THAT)
           {
              // We found a callback
-
              entry.callback( entry.parameter, element_p );
           }
       }
@@ -755,12 +733,6 @@ _Check_return_ CExtensibleMarkupLanguageEntities const& CExtensibleMarkupLanguag
    return( m_Entities );
 }
 
-_Check_return_ bool CExtensibleMarkupLanguageDocument::GetIgnoreWhiteSpace( void ) const noexcept
-{
-   WFC_VALIDATE_POINTER( this );
-   return( ( m_IgnoreWhiteSpace == false ) ? false : true );
-}
-
 void CExtensibleMarkupLanguageDocument::GetNamespace( _Out_ std::wstring& name_space ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
@@ -800,18 +772,6 @@ _Check_return_ std::size_t CExtensibleMarkupLanguageDocument::GetNumberOfElement
    }
 
    return( m_XML->GetTotalNumberOfChildren() );
-}
-
-_Check_return_ TCHAR CExtensibleMarkupLanguageDocument::GetParentChildSeparatorCharacter( void ) const noexcept
-{
-   WFC_VALIDATE_POINTER( this );
-   return( m_ParentChildSeparatorCharacter );
-}
-
-_Check_return_ uint32_t CExtensibleMarkupLanguageDocument::GetParseOptions( void ) const noexcept
-{
-   WFC_VALIDATE_POINTER( this );
-   return( m_ParseOptions );
 }
 
 void CExtensibleMarkupLanguageDocument::GetParsingErrorInformation(_Out_ std::wstring& message ) const noexcept
@@ -870,18 +830,6 @@ void CExtensibleMarkupLanguageDocument::GetVersion( _Out_ std::wstring& version 
 {
    WFC_VALIDATE_POINTER( this );
    version.assign( m_Version );
-}
-
-_Check_return_ uint32_t CExtensibleMarkupLanguageDocument::GetWriteOptions( void ) const noexcept
-{
-   WFC_VALIDATE_POINTER( this );
-   return( m_WriteOptions );
-}
-
-_Check_return_ bool CExtensibleMarkupLanguageDocument::IsStandalone( void ) const noexcept
-{
-   WFC_VALIDATE_POINTER( this );
-   return( m_IsStandalone );
 }
 
 void CExtensibleMarkupLanguageDocument::m_InitializeEntities( void ) noexcept
@@ -1476,9 +1424,6 @@ _Check_return_ bool CExtensibleMarkupLanguageDocument::Parse( _Inout_ CDataParse
             return( false );
          }
       }
-      else
-      {
-      }
    }
 
    //WFCTRACEVAL( TEXT( "?xml began at line " ), (uint32_t) beginning_of_tag.GetLineNumber() );
@@ -1547,22 +1492,11 @@ void CExtensibleMarkupLanguageDocument::SetConversionCodePage(_In_ uint32_t cons
 
    if ( m_ConversionCodePage != CP_ACP )
    {
-      OSVERSIONINFO operating_system_version_information;
-
-      ZeroMemory( &operating_system_version_information, sizeof( operating_system_version_information ) );
-      operating_system_version_information.dwOSVersionInfoSize = sizeof( operating_system_version_information );
-
-#pragma warning( push )
-#pragma warning( disable : 4996 )
-      if ( ::GetVersionEx( &operating_system_version_information ) != FALSE )
-      {
-#pragma warning( pop )
-          if ( operating_system_version_information.dwPlatformId == VER_PLATFORM_WIN32_WINDOWS )
-         {
-            // Piece of crap Windows95 garbage
-            m_ConversionCodePage = CP_ACP;
-         }
-      }
+       if (IsWindowsXPOrGreater() == false)
+       {
+           // Piece of crap Windows95 garbage
+           m_ConversionCodePage = CP_ACP;
+       }
    }
 }
 
@@ -1571,23 +1505,6 @@ void CExtensibleMarkupLanguageDocument::SetEncoding( _In_z_ wchar_t const * enco
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER_NULL_OK( encoding );
    m_Encoding.assign( encoding );
-}
-
-_Check_return_ bool CExtensibleMarkupLanguageDocument::SetIgnoreWhiteSpace( _In_ bool const new_setting ) noexcept
-{
-   WFC_VALIDATE_POINTER( this );
-   bool return_value = ( m_IgnoreWhiteSpace == false ) ? false : true;
-
-   if ( new_setting == false )
-   {
-      m_IgnoreWhiteSpace = false;
-   }
-   else
-   {
-      m_IgnoreWhiteSpace = true;
-   }
-
-   return( return_value );
 }
 
 void CExtensibleMarkupLanguageDocument::SetNamespace( _In_z_ wchar_t const * name_space ) noexcept
@@ -1605,44 +1522,6 @@ void CExtensibleMarkupLanguageDocument::SetNamespace( _In_z_ wchar_t const * nam
       m_UseNamespace = true;
       m_Namespace.assign( name_space );
    }
-}
-
-_Check_return_ bool CExtensibleMarkupLanguageDocument::SetParentChildSeparatorCharacter(_In_ wchar_t const separator ) noexcept
-{
-   WFC_VALIDATE_POINTER( this );
-
-   if ( separator == 0x00 )
-   {
-      return( false );
-   }
-
-   m_ParentChildSeparatorCharacter = separator;
-
-   return( true );
-}
-
-_Check_return_ uint32_t CExtensibleMarkupLanguageDocument::SetParseOptions(_In_ uint32_t const new_options ) noexcept
-{
-   WFC_VALIDATE_POINTER( this );
-
-   uint32_t return_value = m_ParseOptions;
-
-   m_ParseOptions = new_options;
-
-   return( return_value );
-}
-
-void CExtensibleMarkupLanguageDocument::SetStrictParsing( void ) noexcept
-{
-   WFC_VALIDATE_POINTER( this );
-
-   uint32_t options = WFC_XML_FAIL_ON_ILL_FORMED_ENTITIES;
-
-   options |= WFC_XML_DISALLOW_MULTIPLE_ELEMENTS;
-   options |= WFC_XML_FORCE_AT_LEAST_ONE_ELEMENT_MUST_BE_PRESENT;
-   options |= WFC_XML_CHECK_ENTITIES_FOR_ILLEGAL_CHARACTERS;
-
-   (void) SetParseOptions( options );
 }
 
 void CExtensibleMarkupLanguageDocument::SetParsingErrorInformation( _In_z_ wchar_t const * tag_name, _In_ CParsePoint const& beginning, _In_ CParsePoint const& error_location, _In_opt_z_ wchar_t const * error_message ) noexcept
@@ -1667,12 +1546,6 @@ void CExtensibleMarkupLanguageDocument::SetParsingErrorInformation( _In_z_ wchar
          m_ErrorMessage.assign( error_message );
       }
    }
-}
-
-void CExtensibleMarkupLanguageDocument::SetStandalone(_In_ bool const standalone ) noexcept
-{
-   WFC_VALIDATE_POINTER( this );
-   m_IsStandalone = ( standalone == false ) ? false : true;
 }
 
 void CExtensibleMarkupLanguageDocument::SetVersion( _In_z_ wchar_t const * version ) noexcept
@@ -1838,6 +1711,16 @@ void CExtensibleMarkupLanguageDocument::WriteTo( _Out_ std::vector<uint8_t>& des
 
       m_XML->WriteTo( destination );
    }
+}
+
+void CExtensibleMarkupLanguageDocument::Trim(void) noexcept
+{
+    WFC_VALIDATE_POINTER(this);
+
+    if (m_XML != nullptr)
+    {
+        m_XML->Trim();
+    }
 }
 
 _Check_return_ CExtensibleMarkupLanguageDocument& CExtensibleMarkupLanguageDocument::operator=( _In_ CExtensibleMarkupLanguageDocument const& source ) noexcept
@@ -2014,7 +1897,7 @@ all parameters are set to NULL. Callbacks are added via the
 <DT><PRE>uint32_t <B><A NAME="GetNumberOfElements">GetNumberOfElements</A></B>( void ) const</PRE><DD>
 Returns the number of elements in this document.
 
-<DT><PRE>TCHAR <B><A NAME="GetParentChildSeparatorCharacter">GetParentChildSeparatorCharacter</A></B>( void ) const</PRE><DD>
+<DT><PRE>wchar_t <B><A NAME="GetParentChildSeparatorCharacter">GetParentChildSeparatorCharacter</A></B>( void ) const</PRE><DD>
 Returns the character that will be used to separate parent element names
 from child element names in the <B>GetElement</B>() method.
 

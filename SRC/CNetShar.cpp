@@ -673,7 +673,7 @@ When you reach the end of the list, <B>GetNext</B>() will return FALSE.
    {
       _tprintf( TEXT( &quot;Share Information for %s:\n&quot; ), (LPCTSTR) shares.GetMachineName() );
 
-      while( shares.GetNext( share_information ) != FALSE )
+      while( shares.GetNext( share_information ) == true )
       {
          _tprintf( TEXT( &quot; NetworkName         - \&quot;%s\&quot;\n&quot; ), (LPCTSTR) share_information.NetworkName         );
          _tprintf( TEXT( &quot; Type                - %lu &quot; ),               share_information.Type                );

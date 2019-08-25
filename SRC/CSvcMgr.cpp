@@ -2215,7 +2215,7 @@ std::vector&lt;std::wstring&gt; stopped_services;
 
 CServiceNameAndStatus status;
 
-while( service_control_manager.GetNext( status ) != FALSE )
+while( service_control_manager.GetNext( status ) == true )
 {
 stopped_services.Add( status.lpServiceName );
 }

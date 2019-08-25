@@ -60,7 +60,7 @@ void CDataParser::GetTextStatistics( _In_ CParsePoint& parse_point, _Inout_ CTex
    uint32_t last_character = 0;
    uint32_t this_character = 0;
 
-   while( GetNextCharacter( here, this_character ) != FALSE )
+   while( GetNextCharacter( here, this_character ) == true )
    {
       statistics.NumberOfCharacters++;
 
