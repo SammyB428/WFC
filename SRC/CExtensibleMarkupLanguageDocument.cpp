@@ -727,12 +727,6 @@ void CExtensibleMarkupLanguageDocument::GetEncoding( _Out_ std::wstring& encodin
    }
 }
 
-_Check_return_ CExtensibleMarkupLanguageEntities const& CExtensibleMarkupLanguageDocument::GetEntities( void ) const noexcept
-{
-   WFC_VALIDATE_POINTER( this );
-   return( m_Entities );
-}
-
 void CExtensibleMarkupLanguageDocument::GetNamespace( _Out_ std::wstring& name_space ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
@@ -819,13 +813,6 @@ void CExtensibleMarkupLanguageDocument::GetParsingErrorInformation(_Out_ std::ws
    }
 }
 
-_Check_return_ CExtensibleMarkupLanguageElement * CExtensibleMarkupLanguageDocument::GetRootElement( void ) const noexcept
-{
-   WFC_VALIDATE_POINTER( this );
-   WFC_VALIDATE_POINTER_NULL_OK( m_XML );
-   return( m_XML );
-}
-
 void CExtensibleMarkupLanguageDocument::GetVersion( _Out_ std::wstring& version ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
@@ -871,10 +858,10 @@ void CExtensibleMarkupLanguageDocument::m_RemoveAllCallbacks( void ) noexcept
 
 static inline _Check_return_ bool __is_leading_spaces( _Inout_ CDataParser& source ) noexcept
 {
-   BYTE const byte_1 = source.GetAt( 0 );
-   BYTE const byte_2 = source.GetAt( 1 );
-   BYTE const byte_3 = source.GetAt( 2 );
-   BYTE const byte_4 = source.GetAt( 3 );
+   uint8_t const byte_1 = source.GetAt( 0 );
+   uint8_t const byte_2 = source.GetAt( 1 );
+   uint8_t const byte_3 = source.GetAt( 2 );
+   uint8_t const byte_4 = source.GetAt( 3 );
 
    if ( is_xml_white_space( byte_1 ) == true)
    {
@@ -1082,10 +1069,10 @@ _Check_return_ bool CExtensibleMarkupLanguageDocument::Parse( _Inout_ CDataParse
       {
          // Now it gets a little more interesting
 
-         BYTE byte_1 = source.GetAt( 0 );
-         BYTE byte_2 = source.GetAt( 1 );
-         BYTE byte_3 = source.GetAt( 2 );
-         BYTE byte_4 = source.GetAt( 3 );
+         uint8_t byte_1 = source.GetAt( 0 );
+         uint8_t byte_2 = source.GetAt( 1 );
+         uint8_t byte_3 = source.GetAt( 2 );
+         uint8_t byte_4 = source.GetAt( 3 );
 
          if ( byte_1 == 0x3C && byte_2 == 0x3F )
          {
@@ -1270,14 +1257,8 @@ _Check_return_ bool CExtensibleMarkupLanguageDocument::Parse( _Inout_ CDataParse
          {
             uint32_t const character = source.PeekCharacter( beginning_of_tag, 0 );
 
-            if ( character != '<' )
-            {
-               child_element_p = CExtensibleMarkupLanguageElement::NewElement( m_XML, CExtensibleMarkupLanguageElement::ElementType::TextSegment, this );
-            }
-            else
-            {
-               child_element_p = CExtensibleMarkupLanguageElement::NewElement( m_XML, CExtensibleMarkupLanguageElement::ElementType::Element, this );
-            }
+            auto child_element_p = (character != '<' ) ? CExtensibleMarkupLanguageElement::NewElement(m_XML, CExtensibleMarkupLanguageElement::ElementType::TextSegment, this)
+                                                       : CExtensibleMarkupLanguageElement::NewElement(m_XML, CExtensibleMarkupLanguageElement::ElementType::Element, this);
 
             if ( child_element_p == nullptr )
             {
@@ -1474,15 +1455,6 @@ _Check_return_ bool CExtensibleMarkupLanguageDocument::ResolveEntity( _In_z_ wch
    }
 
    return( true );
-}
-
-void CExtensibleMarkupLanguageDocument::SetAutomaticIndentation( _In_ bool const automatically_indent, _In_ uint32_t const indentation_level, _In_ uint32_t const indent_by ) noexcept
-{
-   WFC_VALIDATE_POINTER( this );
-
-   m_AutomaticIndentation = automatically_indent;
-   m_IndentationLevel     = indentation_level;
-   m_IndentBy             = indent_by;
 }
 
 void CExtensibleMarkupLanguageDocument::SetConversionCodePage(_In_ uint32_t const new_page ) noexcept

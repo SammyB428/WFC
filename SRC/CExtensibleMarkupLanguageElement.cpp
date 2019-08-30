@@ -377,7 +377,7 @@ void CExtensibleMarkupLanguageElement::Copy( _In_ CExtensibleMarkupLanguageEleme
 
     // Let's copy the attributes
 
-    for( auto const& that_attribute_p : source.m_Attributes )
+    for( auto const that_attribute_p : source.m_Attributes )
     {
         if ( that_attribute_p != nullptr )
         {
@@ -409,21 +409,11 @@ void CExtensibleMarkupLanguageElement::Copy( _In_ CExtensibleMarkupLanguageEleme
 
     // Now let's copy the children
 
-    for( auto const& that_item_p : source.m_Children )
+    for( auto const that_item_p : source.m_Children )
     {
         if ( that_item_p != nullptr )
         {
-            CExtensibleMarkupLanguageElement * this_item_p = nullptr;
-
-            WFC_TRY
-            {
-                this_item_p = NewElement( this );
-            }
-            WFC_CATCH_ALL
-            {
-                this_item_p = nullptr;
-            }
-            WFC_END_CATCH_ALL
+            auto this_item_p = NewElement( this );
 
             if ( this_item_p == nullptr )
             {
@@ -434,8 +424,7 @@ void CExtensibleMarkupLanguageElement::Copy( _In_ CExtensibleMarkupLanguageEleme
 
             this_item_p->Copy( *that_item_p );
 
-            AddChild( this_item_p, false );
-            this_item_p = nullptr;
+            AddChild( this_item_p );
         }
     }
 }
@@ -1393,7 +1382,11 @@ void CExtensibleMarkupLanguageElement::GetText( _Out_ std::wstring& text ) const
     {
         // We should ignore white space
 
-        if ( m_IsAllWhiteSpace == false )
+        if ( m_IsAllWhiteSpace == false &&
+             m_Type != ElementType::Comment &&
+             m_Type != ElementType::ProcessingInstruction &&
+             m_Type != ElementType::Unknown &&
+             m_Type != ElementType::MetaData)
         {
             text = m_Contents;
         }
@@ -1423,8 +1416,6 @@ void CExtensibleMarkupLanguageElement::GetText( _Out_ std::wstring& text ) const
 
     // Now get all of the text of our children
 
-    std::wstring text_segment;
-
     for (auto const child : m_Children)
     {
         if (child != nullptr)
@@ -1436,6 +1427,8 @@ void CExtensibleMarkupLanguageElement::GetText( _Out_ std::wstring& text ) const
                 child->GetType() != ElementType::Unknown &&
                 child->GetType() != ElementType::MetaData)
             {
+                std::wstring text_segment;
+
                 child->GetText(text_segment);
                 text.append(text_segment);
             }
@@ -1451,7 +1444,7 @@ _Check_return_ uint32_t CExtensibleMarkupLanguageElement::GetTotalNumberOfChildr
 
     for ( auto const loop_index : Range(m_Children.size()) )
     {
-        auto element_p = m_Children[ loop_index ];
+        auto const element_p = m_Children[ loop_index ];
 
         if ( element_p != nullptr )
         {
@@ -1600,8 +1593,6 @@ void CExtensibleMarkupLanguageElement::m_AddIndentation( _Inout_ std::vector<uin
             m_AddCharacterToOutput( LINE_FEED,       write_options, bytes );
 
             indent_by = 0;
-
-            //std::vector<uint8_t> indentation;
 
             while( indent_by < indentation_level ) // Cannot be converted to a Range loop
             {
@@ -5207,6 +5198,16 @@ void CExtensibleMarkupLanguageElement::RemoveChild( _Inout_ CExtensibleMarkupLan
             m_Children.erase( std::begin(m_Children) + loop_index );
             return;
         }
+    }
+}
+
+void CExtensibleMarkupLanguageElement::SetDocument(_In_ CExtensibleMarkupLanguageDocument * document_p) noexcept
+{
+    m_Document = document_p;
+
+    for (auto const child_p : m_Children)
+    {
+        child_p->SetDocument(document_p);
     }
 }
 

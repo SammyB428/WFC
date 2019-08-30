@@ -121,13 +121,13 @@ class CServiceConfigurationW
       virtual void  Empty( void ) noexcept;
       virtual void  GetDependencies( __out std::vector<std::wstring>& dependencies ) const noexcept;
       virtual void  GetDisplayName( __out std::wstring& display_name ) const noexcept;
-      virtual _Check_return_ DWORD GetErrorControl( void ) const noexcept;
+      inline constexpr _Check_return_ DWORD GetErrorControl(void) const noexcept { return(m_ErrorControl); }
       virtual void  GetLoadOrderGroup( __out std::wstring& load_order_group ) const noexcept;
       virtual void  GetNameOfExecutableFile( __out std::wstring& name_of_executable ) const noexcept;
       virtual void  GetStartName( __out std::wstring& start_name ) const noexcept;
-      virtual _Check_return_ DWORD GetTag( void ) const noexcept;
-      virtual _Check_return_ DWORD GetTypeOfService( void ) const noexcept;
-      virtual _Check_return_ DWORD GetWhenToStart( void ) const noexcept;
+      inline constexpr _Check_return_ DWORD GetTag(void) const noexcept { return(m_Tag); }
+      inline constexpr _Check_return_ DWORD GetTypeOfService(void) const noexcept { return(m_TypeOfService); }
+      inline constexpr _Check_return_ DWORD GetWhenToStart(void) const noexcept { return(m_WhenToStart); }
 
       virtual _Check_return_ CServiceConfigurationW& operator=( __in CServiceConfigurationW const& source ) noexcept;
       virtual _Check_return_ CServiceConfigurationW& operator=( __in _QUERY_SERVICE_CONFIGW const& source ) noexcept;

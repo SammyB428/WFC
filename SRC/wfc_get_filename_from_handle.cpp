@@ -128,7 +128,7 @@ _Check_return_ bool PASCAL Win32FoundationClasses::wfc_get_command_line( _Out_ s
 
         int argc = 0;
 
-        LPWSTR * argv = CommandLineToArgvW( GetCommandLineW(), &argc );
+        auto argv = CommandLineToArgvW( GetCommandLineW(), &argc );
 
         for( auto const argv_index : Range(argc, 1) )
         {

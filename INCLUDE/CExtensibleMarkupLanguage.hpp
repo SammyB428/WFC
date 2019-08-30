@@ -354,7 +354,7 @@ public:
       _Check_return_ bool  Parse( _In_ CParsePoint const& beginning, _In_ CDataParser const& parser ) noexcept;
       inline constexpr void SetAbortParsing( _In_ bool const abort_parsing = true ) noexcept { m_AbortParsing = abort_parsing; };
       inline void SetContents( _In_z_ wchar_t const * const contents ) noexcept { m_Contents.assign( contents ); };
-      inline constexpr void SetDocument( _In_ CExtensibleMarkupLanguageDocument * document_p ) noexcept { m_Document = document_p; };
+      inline void SetDocument( _In_ CExtensibleMarkupLanguageDocument * document_p ) noexcept;
       inline void SetTag( _In_z_ wchar_t const * const tag_name ) noexcept { m_Tag.assign( tag_name ); };
       inline constexpr void SetType(_In_ ElementType const element_type) noexcept
       {
@@ -502,7 +502,7 @@ class CExtensibleMarkupLanguageDocument
       virtual void  GetAutomaticIndentation( _Out_ bool& automatically_indent, _Out_ uint32_t& level, _Out_ uint32_t& indent_by ) const noexcept;
       inline  constexpr _Check_return_ uint32_t GetConversionCodePage( void ) const noexcept { return( m_ConversionCodePage ); }
       virtual void  GetEncoding( _Out_ std::wstring& encoding ) const noexcept;
-      virtual _Check_return_ CExtensibleMarkupLanguageEntities const& GetEntities( void ) const noexcept;
+      inline constexpr _Check_return_ CExtensibleMarkupLanguageEntities const& GetEntities(void) const noexcept { return(m_Entities); }
       inline constexpr _Check_return_ bool GetIgnoreWhiteSpace(void) const noexcept { return(m_IgnoreWhiteSpace); }
       virtual void  GetNamespace( _Out_ std::wstring& name_space ) const noexcept;
       virtual _Check_return_ std::size_t GetNumberOfElements( void ) const noexcept;
@@ -510,13 +510,18 @@ class CExtensibleMarkupLanguageDocument
       inline constexpr _Check_return_ uint32_t GetParseOptions(void) const noexcept { return(m_ParseOptions); }
       virtual void  GetParsingErrorInformation( _Out_ std::wstring& tag_name, _Out_ CParsePoint& beginning, _Out_ CParsePoint& error_location, _Out_opt_ std::wstring * error_message = static_cast<std::wstring *>( nullptr ) ) const noexcept;
       virtual void  GetParsingErrorInformation(_Out_ std::wstring& message ) const noexcept;
-      virtual _Check_return_ CExtensibleMarkupLanguageElement * GetRootElement( void ) const noexcept;
+      inline constexpr _Check_return_ CExtensibleMarkupLanguageElement* GetRootElement(void) const noexcept { return(m_XML); }
       virtual void  GetVersion( _Out_ std::wstring& version ) const noexcept;
       inline constexpr _Check_return_ uint32_t GetWriteOptions(void) const noexcept { return(m_WriteOptions); }
       inline constexpr _Check_return_ bool IsStandalone(void) const noexcept { return(m_IsStandalone); }
       virtual _Check_return_ bool  Parse( _Inout_ CDataParser& source ) noexcept;
       virtual _Check_return_ bool  ResolveEntity( _In_z_ wchar_t const * entity, _Out_ std::wstring& resolved_to ) const noexcept;
-      virtual void  SetAutomaticIndentation( _In_ bool const automatically_indent = true, _In_ uint32_t const level = 0, _In_ uint32_t const indent_by = 2 ) noexcept;
+      inline constexpr void SetAutomaticIndentation(_In_ bool const automatically_indent = true, _In_ uint32_t const indentation_level = 0, _In_ uint32_t const indent_by = 2) noexcept
+      {
+          m_AutomaticIndentation = automatically_indent;
+          m_IndentationLevel = indentation_level;
+          m_IndentBy = indent_by;
+      }
       virtual void  SetConversionCodePage( _In_ uint32_t const new_page ) noexcept;
       virtual void  SetEncoding( _In_z_ wchar_t const * encoding ) noexcept;
       inline constexpr _Check_return_ bool SetIgnoreWhiteSpace(_In_ bool const ignore_whitespace) noexcept

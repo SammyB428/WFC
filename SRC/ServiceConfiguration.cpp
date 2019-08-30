@@ -105,10 +105,7 @@ void CServiceConfigurationA::Copy( __in CServiceConfigurationA const& source ) n
    m_StartName.assign( source.m_StartName );
    m_DisplayName.assign( source.m_DisplayName );
 
-   for( auto const& entry : source.m_Dependencies)
-   {
-      m_Dependencies.push_back(entry);
-   }
+   m_Dependencies.assign(source.m_Dependencies.cbegin(), source.m_Dependencies.cend());
 }
 
 void CServiceConfigurationA::Copy( __in CServiceConfigurationA const * source ) noexcept
@@ -278,13 +275,7 @@ void CServiceConfigurationA::Empty( void ) noexcept
 void CServiceConfigurationA::GetDependencies( __out std::vector<std::string>& dependencies ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
-
-   dependencies.clear();
-
-   for( auto const& entry : m_Dependencies )
-   {
-      (void) dependencies.push_back(entry);
-   }
+   dependencies.assign(m_Dependencies.cbegin(), m_Dependencies.cend());
 }
 
 void CServiceConfigurationA::GetDisplayName( __out std::string& display_name ) const noexcept
@@ -433,10 +424,7 @@ void CServiceConfigurationW::Copy( __in CServiceConfigurationW const& source ) n
    m_StartName.assign( source.m_StartName );
    m_DisplayName .assign( source.m_DisplayName );
 
-   for( auto const& entry : source.m_Dependencies)
-   {
-      m_Dependencies.push_back( entry );
-   }
+   m_Dependencies.assign(source.m_Dependencies.cbegin(), source.m_Dependencies.cend());
 }
 
 void CServiceConfigurationW::Copy( __in CServiceConfigurationW const * source ) noexcept
@@ -615,25 +603,13 @@ void CServiceConfigurationW::Empty( void ) noexcept
 void CServiceConfigurationW::GetDependencies( __out std::vector<std::wstring>& dependencies ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
-
-   dependencies.clear();
-
-   for( auto const& entry : m_Dependencies)
-   {
-      dependencies.push_back( entry );
-   }
+   dependencies.assign(m_Dependencies.cbegin(), m_Dependencies.cend());
 }
 
 void CServiceConfigurationW::GetDisplayName( __out std::wstring& display_name ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
    display_name.assign( m_DisplayName );
-}
-
-_Check_return_ DWORD CServiceConfigurationW::GetErrorControl( void ) const noexcept
-{
-   WFC_VALIDATE_POINTER( this );
-   return( m_ErrorControl );
 }
 
 void CServiceConfigurationW::GetLoadOrderGroup( __out std::wstring& load_order_group ) const noexcept
@@ -652,24 +628,6 @@ void CServiceConfigurationW::GetStartName( __out std::wstring& start_name ) cons
 {
    WFC_VALIDATE_POINTER( this );
    start_name.assign( m_StartName );
-}
-
-_Check_return_ DWORD CServiceConfigurationW::GetTag( void ) const noexcept
-{
-   WFC_VALIDATE_POINTER( this );
-   return( m_Tag );
-}
-
-_Check_return_ DWORD CServiceConfigurationW::GetTypeOfService( void ) const noexcept
-{
-   WFC_VALIDATE_POINTER( this );
-   return( m_TypeOfService );
-}
-
-_Check_return_ DWORD CServiceConfigurationW::GetWhenToStart( void ) const noexcept
-{
-   WFC_VALIDATE_POINTER( this );
-   return( m_WhenToStart );
 }
 
 // Thanks go to Ullrich Pollaehne [Ullrich_Pollaehne@ka2.maus.de] for
