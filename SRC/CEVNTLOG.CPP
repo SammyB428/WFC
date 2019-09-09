@@ -60,7 +60,7 @@ CEventLog::CEventLog() noexcept
    m_Initialize();
 }
 
-CEventLog::CEventLog( __in_z LPCTSTR source_name ) noexcept
+CEventLog::CEventLog( __in_z wchar_t const * source_name ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER_NULL_OK( source_name );
@@ -196,7 +196,7 @@ _Check_return_ bool CEventLog::Close( void ) noexcept
    return( true );
 }
 
-_Check_return_ bool CEventLog::CreateApplicationLog( __in_z LPCTSTR application_name, __in_z LPCTSTR message_resource_file, __in DWORD supported_types ) noexcept
+_Check_return_ bool CEventLog::CreateApplicationLog( __in_z wchar_t const * application_name, __in_z wchar_t const * message_resource_file, __in DWORD supported_types ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( application_name );
@@ -239,7 +239,10 @@ _Check_return_ bool CEventLog::CreateApplicationLog( __in_z LPCTSTR application_
       // Thanks go to Donald Hartzog (donhartzog@usa.net) for finding a UNICODE
       // bug here. I was assuming _tcslen() == sizeof() a string. DOH!
 
-      if ( registry.SetValue( L"EventMessageFile", CRegistry::KeyValueTypes::UnexpandedString, (LPBYTE) message_resource_file, ( _tcslen( message_resource_file ) + 1 ) * sizeof( TCHAR ) ) == false )
+      std::wstring dequoted_source(message_resource_file);
+      trim_quotes(dequoted_source);
+
+      if ( registry.SetValue( L"EventMessageFile", CRegistry::KeyValueTypes::UnexpandedString, (LPBYTE)dequoted_source.c_str(), ( dequoted_source.length() + 1 ) * sizeof( wchar_t ) ) == false )
       {
          m_ErrorCode = registry.GetErrorCode();
          return( false );
@@ -961,7 +964,7 @@ _Check_return_ bool CEventLog::Read( __in DWORD record_number, __out_bcount_part
    WFC_END_CATCH_ALL
 }
 
-_Check_return_ bool CEventLog::RegisterSource( __in_z LPCTSTR source_name, __in_z_opt LPCTSTR name_of_computer ) noexcept
+_Check_return_ bool CEventLog::RegisterSource( __in_z wchar_t const * source_name, __in_z_opt wchar_t const * name_of_computer ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source_name );
@@ -986,7 +989,15 @@ _Check_return_ bool CEventLog::RegisterSource( __in_z LPCTSTR source_name, __in_
          (void) DeregisterSource();
       }
 
-      m_EventSourceHandle = ::RegisterEventSource( name_of_computer, source_name );
+      // 2019-09-08, SRB - Somewhere along the line, Microsoft forgot how to handle
+      // paths that are quoted. We must remove any double quotes from the given source_name
+      // Funny, you used to have to quote paths with space in them....
+
+      std::wstring dequoted_path_name(source_name);
+
+      (void) trim_quotes(dequoted_path_name);
+
+      m_EventSourceHandle = ::RegisterEventSourceW( name_of_computer, dequoted_path_name.c_str());
 
       if ( m_EventSourceHandle == static_cast< HDESK >( NULL ) )
       {

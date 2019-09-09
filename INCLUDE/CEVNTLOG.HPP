@@ -76,7 +76,7 @@ class CEventLog
       CEventLog& operator=(CEventLog const&) = delete;
 
       CEventLog() noexcept;
-      CEventLog( __in_z LPCTSTR source_name ) noexcept;
+      CEventLog( __in_z wchar_t const * source_name ) noexcept;
 
       /*
       ** Destructor should be virtual according to MSJ article in Sept 1992
@@ -99,8 +99,8 @@ class CEventLog
       virtual _Check_return_ bool  Backup( __in_z LPCTSTR name_of_backup_file ) noexcept;
       virtual _Check_return_ bool  Clear(  __in_z LPCTSTR name_of_backup_file ) noexcept;
       virtual _Check_return_ bool  Close( void ) noexcept;
-      virtual _Check_return_ bool  CreateApplicationLog( __in_z LPCTSTR application_name,
-                                          __in_z LPCTSTR file_containing_message_table_resource,
+      virtual _Check_return_ bool  CreateApplicationLog( __in_z wchar_t const * application_name,
+                                          __in_z wchar_t const * file_containing_message_table_resource,
                                           __in DWORD   supported_types ) noexcept;
       virtual _Check_return_ bool  CreateCustomLog( __in_z LPCTSTR log_name, __in_z_opt LPCTSTR log_filename = nullptr, __in DWORD maximum_file_size = 0x80000, __in DWORD overwrite_after_this_many_seconds = 604800 ) noexcept;
       virtual _Check_return_ bool  Delete( __in_z wchar_t const * log_name ) noexcept; // Very DANGEROUS! Will delete any log you specify
@@ -122,7 +122,7 @@ class CEventLog
                           __out_bcount_part( number_of_bytes_to_read, number_of_bytes_to_read ) LPVOID buffer, 
                           __inout DWORD& number_of_bytes_to_read, 
                           __in DWORD  how_to_read = EVENTLOG_FORWARDS_READ | EVENTLOG_SEQUENTIAL_READ ) noexcept;
-      virtual _Check_return_ bool  RegisterSource( __in_z LPCTSTR source_name, __in_z_opt LPCTSTR name_of_computer = nullptr ) noexcept;
+      virtual _Check_return_ bool  RegisterSource( __in_z wchar_t const * source_name, __in_z_opt wchar_t const * name_of_computer = nullptr ) noexcept;
       virtual _Check_return_ bool  Report( __in EventType event_type,
                             __in WORD      category,
                             __in DWORD     event_id,
