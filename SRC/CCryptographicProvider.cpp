@@ -122,42 +122,42 @@ bool CCryptographicProvider::CreateHash( CCryptographicAlgorithm const& algorith
       {
          case ERROR_INVALID_HANDLE:
 
-            debug_message.assign( TEXT( "ERROR_INVALID_HANDLE - One of the parameters specifies an invalid handle." ) );
+            debug_message.assign(WSTRING_VIEW(L"ERROR_INVALID_HANDLE - One of the parameters specifies an invalid handle." ) );
             break;
 
          case ERROR_INVALID_PARAMETER:
 
-            debug_message.assign( TEXT( "ERROR_INVALID_PARAMETER - One of the parameters contains an invalid value. This is most often an illegal pointer." ) );
+            debug_message.assign(WSTRING_VIEW(L"ERROR_INVALID_PARAMETER - One of the parameters contains an invalid value. This is most often an illegal pointer." ) );
             break;
 
          case ERROR_NOT_ENOUGH_MEMORY:
 
-            debug_message.assign( TEXT( "ERROR_NOT_ENOUGH_MEMORY - The operating system ran out of memory during the operation." ) );
+            debug_message.assign(WSTRING_VIEW(L"ERROR_NOT_ENOUGH_MEMORY - The operating system ran out of memory during the operation." ) );
             break;
 
          case NTE_BAD_ALGID:
 
-            debug_message.assign( TEXT( "NTE_BAD_ALGID - The Algid parameter specifies an algorithm that this CSP does not support." ) );
+            debug_message.assign(WSTRING_VIEW(L"NTE_BAD_ALGID - The Algid parameter specifies an algorithm that this CSP does not support." ) );
             break;
 
          case NTE_BAD_FLAGS:
 
-            debug_message.assign( TEXT( "NTE_BAD_FLAGS - The dwFlags parameter is nonzero." ) );
+            debug_message.assign(WSTRING_VIEW(L"NTE_BAD_FLAGS - The dwFlags parameter is nonzero." ) );
             break;
 
          case NTE_BAD_KEY:
 
-            debug_message.assign( TEXT( "NTE_BAD_KEY - A keyed hash algorithm (such as CALG_MAC) is specified by Algid and the hKey parameter is either zero or it specifies an invalid key handle. This error code will also be returned if the key is to a stream cipher, or if the cipher mode is anything other than CBC." ) );
+            debug_message.assign(WSTRING_VIEW(L"NTE_BAD_KEY - A keyed hash algorithm (such as CALG_MAC) is specified by Algid and the hKey parameter is either zero or it specifies an invalid key handle. This error code will also be returned if the key is to a stream cipher, or if the cipher mode is anything other than CBC." ) );
             break;
 
          case NTE_NO_MEMORY:
 
-            debug_message.assign( TEXT( "NTE_NO_MEMORY - The CSP ran out of memory during the operation." ) );
+            debug_message.assign(WSTRING_VIEW(L"NTE_NO_MEMORY - The CSP ran out of memory during the operation." ) );
             break;
 
          case NTE_FAIL:
 
-            debug_message.assign( TEXT( "NTE_FAIL - The function failed in some unexpected way." ) );
+            debug_message.assign(WSTRING_VIEW(L"NTE_FAIL - The function failed in some unexpected way." ) );
             break;
 
          default:
@@ -234,32 +234,32 @@ bool CCryptographicProvider::CreateKey( CCryptographicAlgorithm const& algorithm
       {
          case ERROR_INVALID_HANDLE:
 
-            debug_message.assign( TEXT( "ERROR_INVALID_HANDLE - One of the parameters specifies an invalid handle." ) );
+            debug_message.assign(WSTRING_VIEW(L"ERROR_INVALID_HANDLE - One of the parameters specifies an invalid handle." ) );
             break;
 
          case ERROR_INVALID_PARAMETER:
 
-            debug_message.assign( TEXT( "ERROR_INVALID_PARAMETER - One of the parameters contains an invalid value. This is most often an illegal pointer." ) );
+            debug_message.assign(WSTRING_VIEW(L"ERROR_INVALID_PARAMETER - One of the parameters contains an invalid value. This is most often an illegal pointer." ) );
             break;
 
          case NTE_BAD_ALGID:
 
-            debug_message.assign( TEXT( "NTE_BAD_ALGID - The Algid parameter specifies an algorithm that this CSP does not support." ) );
+            debug_message.assign(WSTRING_VIEW(L"NTE_BAD_ALGID - The Algid parameter specifies an algorithm that this CSP does not support." ) );
             break;
 
          case NTE_BAD_FLAGS:
 
-            debug_message.assign( TEXT( "NTE_BAD_FLAGS - The dwFlags parameter is nonzero." ) );
+            debug_message.assign(WSTRING_VIEW(L"NTE_BAD_FLAGS - The dwFlags parameter is nonzero." ) );
             break;
 
          case NTE_BAD_UID:
 
-            debug_message.assign( TEXT( "NTE_BAD_UID - The hProv parameter does not contain a valid context handle." ) );
+            debug_message.assign(WSTRING_VIEW(L"NTE_BAD_UID - The hProv parameter does not contain a valid context handle." ) );
             break;
 
          case NTE_FAIL:
 
-            debug_message.assign( TEXT( "NTE_FAIL - The function failed in some unexpected way." ) );
+            debug_message.assign(WSTRING_VIEW(L"NTE_FAIL - The function failed in some unexpected way." ) );
             break;
 
          default:
@@ -345,37 +345,37 @@ bool CCryptographicProvider::DeriveKey( CCryptographicAlgorithm const& algorithm
       {
          case ERROR_INVALID_HANDLE:
 
-            debug_message.assign( TEXT( "ERROR_INVALID_HANDLE - One of the parameters specifies an invalid handle." ) );
+            debug_message.assign(WSTRING_VIEW(L"ERROR_INVALID_HANDLE - One of the parameters specifies an invalid handle." ) );
             break;
 
          case ERROR_INVALID_PARAMETER:
 
-            debug_message.assign( TEXT( "ERROR_INVALID_PARAMETER - One of the paeters contains an invalid value. This is most often an illegal pointer." ) );
+            debug_message.assign(WSTRING_VIEW(L"ERROR_INVALID_PARAMETER - One of the paeters contains an invalid value. This is most often an illegal pointer." ) );
             break;
 
          case NTE_BAD_ALGID:
 
-            debug_message.assign( TEXT( "NTE_BAD_ALGID - The Algid parameter specifies an algorithm that this CSP does not support." ) );
+            debug_message.assign(WSTRING_VIEW(L"NTE_BAD_ALGID - The Algid parameter specifies an algorithm that this CSP does not support." ) );
             break;
 
          case NTE_BAD_FLAGS:
 
-            debug_message.assign( TEXT( "NTE_BAD_FLAGS - The dwFlags parameter is nonzero." ) );
+            debug_message.assign(WSTRING_VIEW(L"NTE_BAD_FLAGS - The dwFlags parameter is nonzero." ) );
             break;
 
          case NTE_BAD_HASH:
 
-            debug_message.assign( TEXT( "NTE_BAD_HASH - The hBaseData parameter does not contain a valid handle to a hash object." ) );
+            debug_message.assign(WSTRING_VIEW(L"NTE_BAD_HASH - The hBaseData parameter does not contain a valid handle to a hash object." ) );
             break;
 
          case NTE_BAD_UID:
 
-            debug_message.assign( TEXT( "NTE_BAD_UID - The hProv parameter does not contain a valid context handle." ) );
+            debug_message.assign(WSTRING_VIEW(L"NTE_BAD_UID - The hProv parameter does not contain a valid context handle." ) );
             break;
 
          case NTE_FAIL:
 
-            debug_message.assign( TEXT( "NTE_FAIL - The function failed in some unexpected way." ) );
+            debug_message.assign(WSTRING_VIEW(L"NTE_FAIL - The function failed in some unexpected way." ) );
             break;
 
          default:
@@ -454,22 +454,22 @@ bool CCryptographicProvider::GenerateRandomBytes(std::vector<uint8_t>& array, DW
       {
          case ERROR_INVALID_HANDLE:
 
-            debug_message.assign( TEXT( "ERROR_INVALID_HANDLE - One of the parameters specifies an invalid handle." ) );
+            debug_message.assign(WSTRING_VIEW(L"ERROR_INVALID_HANDLE - One of the parameters specifies an invalid handle." ) );
             break;
 
          case ERROR_INVALID_PARAMETER:
 
-            debug_message.assign( TEXT( "ERROR_INVALID_PARAMETER - One of the parameters contains an invalid value. This is most often an illegal pointer." ) );
+            debug_message.assign(WSTRING_VIEW(L"ERROR_INVALID_PARAMETER - One of the parameters contains an invalid value. This is most often an illegal pointer." ) );
             break;
 
          case NTE_BAD_UID:
 
-            debug_message.assign( TEXT( "NTE_BAD_UID - The CSP context that was specified when the hKey key was created cannot be found." ) );
+            debug_message.assign(WSTRING_VIEW(L"NTE_BAD_UID - The CSP context that was specified when the hKey key was created cannot be found." ) );
             break;
 
          case NTE_FAIL:
 
-            debug_message.assign( TEXT( "NTE_FAIL - The function failed in some unexpected way." ) );
+            debug_message.assign(WSTRING_VIEW(L"NTE_FAIL - The function failed in some unexpected way." ) );
             break;
 
          default:
@@ -546,37 +546,37 @@ bool CCryptographicProvider::GetParameter( DWORD const parameter_to_get, std::ve
       {
          case ERROR_INVALID_HANDLE:
 
-            debug_message.assign( TEXT( "ERROR_INVALID_HANDLE - One of the parameters specifies an invalid handle." ) );
+            debug_message.assign(WSTRING_VIEW(L"ERROR_INVALID_HANDLE - One of the parameters specifies an invalid handle." ) );
             break;
 
          case ERROR_INVALID_PARAMETER:
 
-            debug_message.assign( TEXT( "ERROR_INVALID_PARAMETER - One of the parameters contains an invalid value. This is most often an illegal pointer." ) );
+            debug_message.assign(WSTRING_VIEW(L"ERROR_INVALID_PARAMETER - One of the parameters contains an invalid value. This is most often an illegal pointer." ) );
             break;
 
          case ERROR_NO_MORE_ITEMS:
 
-            debug_message.assign( TEXT( "ERROR_NO_MORE_ITEMS - The end of the enumeration list has been reached. No valid data has been placed in the pbData buffer. This error is only returned when dwParam equals PP_ENUMALGS or PP_ENUMCONTAINERS." ) );
+            debug_message.assign(WSTRING_VIEW(L"ERROR_NO_MORE_ITEMS - The end of the enumeration list has been reached. No valid data has been placed in the pbData buffer. This error is only returned when dwParam equals PP_ENUMALGS or PP_ENUMCONTAINERS." ) );
             break;
 
          case NTE_BAD_FLAGS:
 
-            debug_message.assign( TEXT( "NTE_BAD_FLAGS - The dwFlags parameter is nonzero." ) );
+            debug_message.assign(WSTRING_VIEW(L"NTE_BAD_FLAGS - The dwFlags parameter is nonzero." ) );
             break;
 
          case NTE_BAD_TYPE:
 
-            debug_message.assign( TEXT( "NTE_BAD_TYPE - The dwParam parameter specifies an unknown parameter number." ) );
+            debug_message.assign(WSTRING_VIEW(L"NTE_BAD_TYPE - The dwParam parameter specifies an unknown parameter number." ) );
             break;
 
          case NTE_BAD_UID:
 
-            debug_message.assign( TEXT( "NTE_BAD_UID - The CSP context that was specified when the hKey key was created cannot be found." ) );
+            debug_message.assign(WSTRING_VIEW(L"NTE_BAD_UID - The CSP context that was specified when the hKey key was created cannot be found." ) );
             break;
 
          case NTE_FAIL:
 
-            debug_message.assign( TEXT( "NTE_FAIL - The function failed in some unexpected way." ) );
+            debug_message.assign(WSTRING_VIEW(L"NTE_FAIL - The function failed in some unexpected way." ) );
             break;
 
          default:
@@ -627,32 +627,32 @@ bool CCryptographicProvider::GetUserKey( DWORD which_user_key_to_get, CCryptogra
       {
          case ERROR_INVALID_HANDLE:
 
-            debug_message.assign( TEXT( "ERROR_INVALID_HANDLE - One of the parameters specifies an invalid handle." ) );
+            debug_message.assign(WSTRING_VIEW(L"ERROR_INVALID_HANDLE - One of the parameters specifies an invalid handle." ) );
             break;
 
          case ERROR_INVALID_PARAMETER:
 
-            debug_message.assign( TEXT( "ERROR_INVALID_PARAMETER - One of the parameters contains an invalid value. This is most often an illegal pointer." ) );
+            debug_message.assign(WSTRING_VIEW(L"ERROR_INVALID_PARAMETER - One of the parameters contains an invalid value. This is most often an illegal pointer." ) );
             break;
 
          case NTE_BAD_KEY:
 
-            debug_message.assign( TEXT( "NTE_BAD_KEY - The dwKeySpec parameter contains an invalid value." ) );
+            debug_message.assign(WSTRING_VIEW(L"NTE_BAD_KEY - The dwKeySpec parameter contains an invalid value." ) );
             break;
 
          case NTE_BAD_UID:
 
-            debug_message.assign( TEXT( "NTE_BAD_UID - The CSP context that was specified when the hKey key was created cannot be found." ) );
+            debug_message.assign(WSTRING_VIEW(L"NTE_BAD_UID - The CSP context that was specified when the hKey key was created cannot be found." ) );
             break;
 
          case NTE_NO_KEY:
 
-            debug_message.assign( TEXT( "NTE_NO_KEY - The key requested by the dwKeySpec parameter does not exist." ) );
+            debug_message.assign(WSTRING_VIEW(L"NTE_NO_KEY - The key requested by the dwKeySpec parameter does not exist." ) );
             break;
 
          case NTE_FAIL:
 
-            debug_message.assign( TEXT( "NTE_FAIL - The function failed in some unexpected way." ) );
+            debug_message.assign(WSTRING_VIEW(L"NTE_FAIL - The function failed in some unexpected way." ) );
             break;
 
          default:
@@ -703,47 +703,47 @@ bool CCryptographicProvider::ImportKey(std::vector<uint8_t>& exported_key_data, 
         {
         case ERROR_INVALID_HANDLE:
 
-            debug_message.assign(TEXT("ERROR_INVALID_HANDLE - One of the parameters specifies an invalid handle."));
+            debug_message.assign(WSTRING_VIEW(L"ERROR_INVALID_HANDLE - One of the parameters specifies an invalid handle."));
             break;
 
         case ERROR_INVALID_PARAMETER:
 
-            debug_message.assign(TEXT("ERROR_INVALID_PARAMETER - One of the parameters contains an invalid value. This is most often an illegal pointer."));
+            debug_message.assign(WSTRING_VIEW(L"ERROR_INVALID_PARAMETER - One of the parameters contains an invalid value. This is most often an illegal pointer."));
             break;
 
         case NTE_BAD_ALGID:
 
-            debug_message.assign(TEXT("NTE_BAD_ALGID - The simple key blob you are trying to import is not encrypted with the expected key exchange algorithm."));
+            debug_message.assign(WSTRING_VIEW(L"NTE_BAD_ALGID - The simple key blob you are trying to import is not encrypted with the expected key exchange algorithm."));
             break;
 
         case NTE_BAD_DATA:
 
-            debug_message.assign(TEXT("NTE_BAD_DATA - The algorithm that works with the public key you are trying to import is not supported by this CSP."));
+            debug_message.assign(WSTRING_VIEW(L"NTE_BAD_DATA - The algorithm that works with the public key you are trying to import is not supported by this CSP."));
             break;
 
         case NTE_BAD_FLAGS:
 
-            debug_message.assign(TEXT("NTE_BAD_FLAGS - The dwFlags parameter is nonzero."));
+            debug_message.assign(WSTRING_VIEW(L"NTE_BAD_FLAGS - The dwFlags parameter is nonzero."));
             break;
 
         case NTE_BAD_TYPE:
 
-            debug_message.assign(TEXT("NTE_BAD_TYPE - The key blob type is not supported by this CSP and is possibly invalid."));
+            debug_message.assign(WSTRING_VIEW(L"NTE_BAD_TYPE - The key blob type is not supported by this CSP and is possibly invalid."));
             break;
 
         case NTE_BAD_UID:
 
-            debug_message.assign(TEXT("NTE_BAD_UID - The CSP context that was specified when the hKey key was created cannot be found."));
+            debug_message.assign(WSTRING_VIEW(L"NTE_BAD_UID - The CSP context that was specified when the hKey key was created cannot be found."));
             break;
 
         case NTE_BAD_VER:
 
-            debug_message.assign(TEXT("NTE_BAD_VER - The key blob’s version number does not match the CSP version. This usually indicates that the CSP needs to be upgraded."));
+            debug_message.assign(WSTRING_VIEW(L"NTE_BAD_VER - The key blob’s version number does not match the CSP version. This usually indicates that the CSP needs to be upgraded."));
             break;
 
         case NTE_FAIL:
 
-            debug_message.assign(TEXT("NTE_FAIL - The function failed in some unexpected way."));
+            debug_message.assign(WSTRING_VIEW(L"NTE_FAIL - The function failed in some unexpected way."));
             break;
 
         default:
@@ -805,92 +805,92 @@ _Check_return_ bool CCryptographicProvider::Open(__in_z_opt LPCTSTR container_na
          {
             case ERROR_INVALID_PARAMETER:
 
-               debug_message.assign( TEXT( "ERROR_INVALID_PARAMETER - One of the parameters contains an invalid value. This is most often an illegal pointer." ) );
+               debug_message.assign(WSTRING_VIEW(L"ERROR_INVALID_PARAMETER - One of the parameters contains an invalid value. This is most often an illegal pointer." ) );
                break;
 
             case ERROR_NOT_ENOUGH_MEMORY:
 
-               debug_message.assign( TEXT( "ERROR_NOT_ENOUGH_MEMORY - The operating system ran out of memory during the operation." ) );
+               debug_message.assign(WSTRING_VIEW(L"ERROR_NOT_ENOUGH_MEMORY - The operating system ran out of memory during the operation." ) );
                break;
 
             case NTE_BAD_FLAGS:
 
-               debug_message.assign( TEXT( "NTE_BAD_FLAGS - The dwFlags parameter has an illegal value." ) );
+               debug_message.assign(WSTRING_VIEW(L"NTE_BAD_FLAGS - The dwFlags parameter has an illegal value." ) );
                break;
 
             case NTE_BAD_KEYSET:
 
-               debug_message.assign( TEXT( "NTE_BAD_KEYSET - The Registry entry for the key container could not be opened and may not exist." ) );
+               debug_message.assign(WSTRING_VIEW(L"NTE_BAD_KEYSET - The Registry entry for the key container could not be opened and may not exist." ) );
                break;
 
             case NTE_BAD_KEYSET_PARAM:
 
-               debug_message.assign(TEXT( "NTE_BAD_KEYSET_PARAM - The pszContainer or pszProvider parameter is set to an illegal value." ));
+               debug_message.assign(WSTRING_VIEW(L"NTE_BAD_KEYSET_PARAM - The pszContainer or pszProvider parameter is set to an illegal value." ));
                break;
 
             case NTE_BAD_PROV_TYPE:
 
-               debug_message.assign(TEXT( "NTE_BAD_PROV_TYPE - The value of the dwProvType parameter is out of range. All provider types must be from 1 to 999, inclusive." ) );
+               debug_message.assign(WSTRING_VIEW(L"NTE_BAD_PROV_TYPE - The value of the dwProvType parameter is out of range. All provider types must be from 1 to 999, inclusive." ) );
                break;
 
             case NTE_BAD_SIGNATURE:
 
-               debug_message.assign(TEXT( "NTE_BAD_SIGNATURE - The provider DLL signature did not verify correctly. Either the DLL or the digital signature has been tampered with." ) );
+               debug_message.assign(WSTRING_VIEW(L"NTE_BAD_SIGNATURE - The provider DLL signature did not verify correctly. Either the DLL or the digital signature has been tampered with." ) );
                break;
 
             case NTE_EXISTS:
 
-               debug_message.assign(TEXT( "NTE_EXISTS - The dwFlags parameter is CRYPT_NEWKEYSET, but the key container already exists." ) );
+               debug_message.assign(WSTRING_VIEW(L"NTE_EXISTS - The dwFlags parameter is CRYPT_NEWKEYSET, but the key container already exists." ) );
                break;
 
             case NTE_KEYSET_ENTRY_BAD:
 
-               debug_message.assign( TEXT( "NTE_KEYSET_ENTRY_BAD - The Registry entry for the pszContainer key container was found (in the HKEY_CURRENT_USER window), but is corrupt. See the section System Administration for details about CryptoAPI’s Registry usage." ) );
+               debug_message.assign(WSTRING_VIEW(L"NTE_KEYSET_ENTRY_BAD - The Registry entry for the pszContainer key container was found (in the HKEY_CURRENT_USER window), but is corrupt. See the section System Administration for details about CryptoAPI’s Registry usage." ) );
                break;
 
             case NTE_KEYSET_NOT_DEF:
 
-               debug_message.assign( TEXT( "NTE_KEYSET_NOT_DEF - No Registry entry exists in the HKEY_CURRENT_USER window for the key container specified by pszContainer." ) );
+               debug_message.assign(WSTRING_VIEW(L"NTE_KEYSET_NOT_DEF - No Registry entry exists in the HKEY_CURRENT_USER window for the key container specified by pszContainer." ) );
                break;
 
             case NTE_NO_MEMORY:
 
-               debug_message.assign( TEXT( "NTE_NO_MEMORY - The CSP ran out of memory during the operation." ) );
+               debug_message.assign(WSTRING_VIEW(L"NTE_NO_MEMORY - The CSP ran out of memory during the operation." ) );
                break;
 
             case NTE_PROV_DLL_NOT_FOUND:
 
-               debug_message.assign( TEXT( "NTE_PROV_DLL_NOT_FOUND - The provider DLL file does not exist or is not on the current path." ) );
+               debug_message.assign(WSTRING_VIEW(L"NTE_PROV_DLL_NOT_FOUND - The provider DLL file does not exist or is not on the current path." ) );
                break;
 
             case NTE_PROV_TYPE_ENTRY_BAD:
 
-               debug_message.assign( TEXT( "NTE_PROV_TYPE_ENTRY_BAD - The Registry entry for the provider type specified by dwProvType is corrupt. This error may relate to either the user default CSP list or the machine default CSP list. See the section System Administration for details about CryptoAPI’s Registry usage." ) );
+               debug_message.assign(WSTRING_VIEW(L"NTE_PROV_TYPE_ENTRY_BAD - The Registry entry for the provider type specified by dwProvType is corrupt. This error may relate to either the user default CSP list or the machine default CSP list. See the section System Administration for details about CryptoAPI’s Registry usage." ) );
                break;
 
             case NTE_PROV_TYPE_NO_MATCH:
 
-               debug_message.assign( TEXT( "NTE_PROV_TYPE_NO_MATCH - The provider type specified by dwProvType does not match the provider type found in the Registry. Note that this error can only occur when pszProvider specifies an actual CSP name." ) );
+               debug_message.assign(WSTRING_VIEW(L"NTE_PROV_TYPE_NO_MATCH - The provider type specified by dwProvType does not match the provider type found in the Registry. Note that this error can only occur when pszProvider specifies an actual CSP name." ) );
                break;
 
             case NTE_PROV_TYPE_NOT_DEF:
 
-               debug_message.assign( TEXT( "NTE_PROV_TYPE_NOT_DEF - No Registry entry exists for the provider type specified by dwProvType." ) );
+               debug_message.assign(WSTRING_VIEW(L"NTE_PROV_TYPE_NOT_DEF - No Registry entry exists for the provider type specified by dwProvType." ) );
                break;
 
             case NTE_PROVIDER_DLL_FAIL:
 
-               debug_message.assign( TEXT( "NTE_PROVIDER_DLL_FAIL - The provider DLL file could not be loaded, and may not exist. If it exists, then the file is not a valid DLL." ) );
+               debug_message.assign(WSTRING_VIEW(L"NTE_PROVIDER_DLL_FAIL - The provider DLL file could not be loaded, and may not exist. If it exists, then the file is not a valid DLL." ) );
                break;
 
             case NTE_SIGNATURE_FILE_BAD:
 
-               debug_message.assign( TEXT( "An error occurred while loading the DLL file image, prior to verifying its signature." ) );
+               debug_message.assign(WSTRING_VIEW(L"NTE_SIGNATURE_FILE_BAD - An error occurred while loading the DLL file image, prior to verifying its signature." ) );
                break;
 
             case NTE_FAIL:
 
-               debug_message.assign( TEXT( "NTE_FAIL - The function failed in some unexpected way." ) );
+               debug_message.assign(WSTRING_VIEW(L"NTE_FAIL - The function failed in some unexpected way." ) );
                break;
 
             default:
@@ -978,17 +978,17 @@ bool CCryptographicProvider::SetDefault( std::wstring const& name, DWORD type ) 
       {
          case ERROR_INVALID_HANDLE:
 
-            debug_message.assign( L"ERROR_INVALID_HANDLE - One of the parameters specifies an invalid handle." );
+            debug_message.assign(WSTRING_VIEW(L"ERROR_INVALID_HANDLE - One of the parameters specifies an invalid handle." ));
             break;
 
          case ERROR_INVALID_PARAMETER:
 
-            debug_message.assign( L"ERROR_INVALID_PARAMETER - One of the parameters contains an invalid value. This is most often an illegal pointer." );
+            debug_message.assign(WSTRING_VIEW(L"ERROR_INVALID_PARAMETER - One of the parameters contains an invalid value. This is most often an illegal pointer." ));
             break;
 
          case ERROR_NOT_ENOUGH_MEMORY:
 
-            debug_message.assign( L"ERROR_NOT_ENOUGH_MEMORY - The operating system ran out of memory during the operation." );
+            debug_message.assign(WSTRING_VIEW(L"ERROR_NOT_ENOUGH_MEMORY - The operating system ran out of memory during the operation." ));
             break;
 
          default:

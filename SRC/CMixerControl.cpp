@@ -449,157 +449,157 @@ void CMixerControl::GetTypeName( _Out_ std::wstring& name ) const noexcept
    {
        case CMixerControl::ControlType::Custom:
 
-         name.assign(L"Custom");
+         name.assign(WSTRING_VIEW(L"Custom"));
          break;
 
       case CMixerControl::ControlType::Bass:
 
-         name.assign(L"Bass Fader");
+         name.assign(WSTRING_VIEW(L"Bass Fader"));
          break;
 
       case CMixerControl::ControlType::Equalizer:
 
-         name.assign(L"Equalizer Fader" );
+         name.assign(WSTRING_VIEW(L"Equalizer Fader"));
          break;
 
       case CMixerControl::ControlType::Fader:
 
-         name.assign( L"Fader" );
+         name.assign(WSTRING_VIEW(L"Fader"));
          break;
 
       case CMixerControl::ControlType::Treble:
 
-         name.assign(L"Treble Fader" );
+         name.assign(WSTRING_VIEW(L"Treble Fader"));
          break;
 
       case CMixerControl::ControlType::Volume:
 
-         name.assign(L"Volume Fader" );
+         name.assign(WSTRING_VIEW(L"Volume Fader"));
          break;
 
       case CMixerControl::ControlType::Mixer:
 
-         name.assign(L"Mixer List" );
+         name.assign(WSTRING_VIEW(L"Mixer List"));
          break;
 
       case CMixerControl::ControlType::MultipleSelect:
 
-         name.assign(L"Multiple-Select List" );
+         name.assign(WSTRING_VIEW(L"Multiple-Select List"));
          break;
 
       case CMixerControl::ControlType::Mux:
 
-         name.assign(L"Mux List" );
+         name.assign(WSTRING_VIEW(L"Mux List"));
          break;
 
       case CMixerControl::ControlType::SingleSelect:
 
-         name.assign(L"Single-Select List" );
+         name.assign(WSTRING_VIEW(L"Single-Select List"));
          break;
 
       case CMixerControl::ControlType::BooleanMeter:
 
-         name.assign(L"Boolean Meter" );
+         name.assign(WSTRING_VIEW(L"Boolean Meter"));
          break;
 
       case CMixerControl::ControlType::PeakMeter:
 
-         name.assign(L"Peak Meter" );
+         name.assign(WSTRING_VIEW(L"Peak Meter"));
          break;
 
       case CMixerControl::ControlType::SignedMeter:
 
-         name.assign(L"Signed Meter" );
+         name.assign(WSTRING_VIEW(L"Signed Meter"));
          break;
 
       case CMixerControl::ControlType::UnsignedMeter:
 
-          name.assign(L"Unsigned Meter" );
+          name.assign(WSTRING_VIEW(L"Unsigned Meter"));
          break;
 
       case CMixerControl::ControlType::Decibels:
 
-          name.assign(L"Decibels Number" );
+          name.assign(WSTRING_VIEW(L"Decibels Number"));
          break;
 
       case CMixerControl::ControlType::Percent:
 
-          name.assign(L"Percent Number" );
+          name.assign(WSTRING_VIEW(L"Percent Number"));
          break;
 
       case CMixerControl::ControlType::Signed:
 
-          name.assign( L"Signed Number" );
+          name.assign(WSTRING_VIEW(L"Signed Number"));
          break;
 
       case CMixerControl::ControlType::Unsigned:
 
-          name.assign(L"Unsigned Number" );
+          name.assign(WSTRING_VIEW(L"Unsigned Number"));
          break;
 
       case CMixerControl::ControlType::Pan:
 
-          name.assign(L"Pan Slider" );
+          name.assign(WSTRING_VIEW(L"Pan Slider"));
          break;
 
       case CMixerControl::ControlType::QSoundPan:
 
-          name.assign(L"Q-Sound Pan Slider" );
+          name.assign(WSTRING_VIEW(L"Q-Sound Pan Slider"));
          break;
 
       case CMixerControl::ControlType::Slider:
 
-          name.assign(L"Slider" );
+          name.assign(WSTRING_VIEW(L"Slider"));
          break;
 
       case CMixerControl::ControlType::Boolean:
 
-          name.assign( L"Boolean" );
+          name.assign(WSTRING_VIEW(L"Boolean"));
          break;
 
       case CMixerControl::ControlType::Button:
 
-         name.assign( L"Button" );
+         name.assign(WSTRING_VIEW(L"Button"));
          break;
 
       case CMixerControl::ControlType::Loudness:
 
-          name.assign( L"Loudness Switch" );
+          name.assign(WSTRING_VIEW(L"Loudness Switch"));
          break;
 
       case CMixerControl::ControlType::Mono:
 
-          name.assign(L"Mono Switch" );
+          name.assign(WSTRING_VIEW(L"Mono Switch"));
          break;
 
       case CMixerControl::ControlType::Mute:
 
-          name.assign(L"Mute Switch" );
+          name.assign(WSTRING_VIEW(L"Mute Switch"));
          break;
 
       case CMixerControl::ControlType::OnOff:
 
-          name.assign(L"On/Off Switch" );
+          name.assign(WSTRING_VIEW(L"On/Off Switch"));
          break;
 
       case CMixerControl::ControlType::StereoEnhance:
 
-          name.assign(L"Stereo Enhance Switch" );
+          name.assign(WSTRING_VIEW(L"Stereo Enhance Switch"));
          break;
 
       case CMixerControl::ControlType::MicroTime:
 
-          name.assign(L"Microsecond Time" );
+          name.assign(WSTRING_VIEW(L"Microsecond Time"));
          break;
 
       case CMixerControl::ControlType::MilliTime:
 
-          name.assign( L"Millisecond Time" );
+          name.assign(WSTRING_VIEW(L"Millisecond Time"));
          break;
 
       default:
 
-          name.assign(L"Unknown");
+          name.assign(WSTRING_VIEW(L"Unknown"));
           break;
    }
 }

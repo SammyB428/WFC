@@ -570,207 +570,207 @@ void CMixer::GetErrorString(_Out_ std::wstring& error_string) const noexcept
     {
     case MMSYSERR_NOERROR:
 
-        error_string.assign(TEXT("No Error"));
+        error_string.assign(WSTRING_VIEW(L"No Error"));
         break;
 
     case MMSYSERR_ERROR:
 
-        error_string.assign(TEXT("Unspecified Error"));
+        error_string.assign(WSTRING_VIEW(L"Unspecified Error"));
         break;
 
     case MMSYSERR_BADDEVICEID:
 
-        error_string.assign(TEXT("Device ID out of range"));
+        error_string.assign(WSTRING_VIEW(L"Device ID out of range"));
         break;
 
     case MMSYSERR_NOTENABLED:
 
-        error_string.assign(TEXT("Driver failed enable"));
+        error_string.assign(WSTRING_VIEW(L"Driver failed enable"));
         break;
 
     case MMSYSERR_ALLOCATED:
 
-        error_string.assign(TEXT("Device already allocated"));
+        error_string.assign(WSTRING_VIEW(L"Device already allocated"));
         break;
 
     case MMSYSERR_INVALHANDLE:
 
-        error_string.assign(TEXT("Device handle is invalid"));
+        error_string.assign(WSTRING_VIEW(L"Device handle is invalid"));
         break;
 
     case MMSYSERR_NODRIVER:
 
-        error_string.assign(TEXT("No device driver present"));
+        error_string.assign(WSTRING_VIEW(L"No device driver present"));
         break;
 
     case MMSYSERR_NOMEM:
 
-        error_string.assign(TEXT("Memory allocation error"));
+        error_string.assign(WSTRING_VIEW(L"Memory allocation error"));
         break;
 
     case MMSYSERR_NOTSUPPORTED:
 
-        error_string.assign(TEXT("Function is not supported"));
+        error_string.assign(WSTRING_VIEW(L"Function is not supported"));
         break;
 
     case MMSYSERR_BADERRNUM:
 
-        error_string.assign(TEXT("Error value out of range"));
+        error_string.assign(WSTRING_VIEW(L"Error value out of range"));
         break;
 
     case MMSYSERR_INVALFLAG:
 
-        error_string.assign(TEXT("Invalid flag passed"));
+        error_string.assign(WSTRING_VIEW(L"Invalid flag passed"));
         break;
 
     case MMSYSERR_INVALPARAM:
 
-        error_string.assign(TEXT("Invalid parameter passed"));
+        error_string.assign(WSTRING_VIEW(L"Invalid parameter passed"));
         break;
 
     case MMSYSERR_HANDLEBUSY:
 
-        error_string.assign(TEXT("Handle being used simultaneously on another thread (or callback)"));
+        error_string.assign(WSTRING_VIEW(L"Handle being used simultaneously on another thread (or callback)"));
         break;
 
     case MMSYSERR_INVALIDALIAS:
 
-        error_string.assign(TEXT("Specified alias not found"));
+        error_string.assign(WSTRING_VIEW(L"Specified alias not found"));
         break;
 
     case MMSYSERR_BADDB:
 
-        error_string.assign(TEXT("Bad registry database"));
+        error_string.assign(WSTRING_VIEW(L"Bad registry database"));
         break;
 
     case MMSYSERR_KEYNOTFOUND:
 
-        error_string.assign(TEXT("Registry key not found"));
+        error_string.assign(WSTRING_VIEW(L"Registry key not found"));
         break;
 
     case MMSYSERR_READERROR:
 
-        error_string.assign(TEXT("Registry read error"));
+        error_string.assign(WSTRING_VIEW(L"Registry read error"));
         break;
 
     case MMSYSERR_WRITEERROR:
 
-        error_string.assign(TEXT("Registry write error"));
+        error_string.assign(WSTRING_VIEW(L"Registry write error"));
         break;
 
     case MMSYSERR_DELETEERROR:
 
-        error_string.assign(TEXT("Registry delete error"));
+        error_string.assign(WSTRING_VIEW(L"Registry delete error"));
         break;
 
     case MMSYSERR_VALNOTFOUND:
 
-        error_string.assign(TEXT("Registry value not found"));
+        error_string.assign(WSTRING_VIEW(L"Registry value not found"));
         break;
 
     case MMSYSERR_NODRIVERCB:
 
-        error_string.assign(TEXT("Driver does not call DriverCallback"));
+        error_string.assign(WSTRING_VIEW(L"Driver does not call DriverCallback"));
         break;
 
     case WAVERR_BADFORMAT:
 
-        error_string.assign(TEXT("Unsupported Wave format"));
+        error_string.assign(WSTRING_VIEW(L"Unsupported Wave format"));
         break;
 
     case WAVERR_STILLPLAYING:
 
-        error_string.assign(TEXT("Wave is still playing"));
+        error_string.assign(WSTRING_VIEW(L"Wave is still playing"));
         break;
 
     case WAVERR_UNPREPARED:
 
-        error_string.assign(TEXT("Wave header not prepared"));
+        error_string.assign(WSTRING_VIEW(L"Wave header not prepared"));
         break;
 
     case WAVERR_SYNC:
 
-        error_string.assign(TEXT("Wave device is synchronous"));
+        error_string.assign(WSTRING_VIEW(L"Wave device is synchronous"));
         break;
 
     case MIDIERR_UNPREPARED:
 
-        error_string.assign(TEXT("MIDI header not prepared"));
+        error_string.assign(WSTRING_VIEW(L"MIDI header not prepared"));
         break;
 
     case MIDIERR_STILLPLAYING:
 
-        error_string.assign(TEXT("MIDI is still playing"));
+        error_string.assign(WSTRING_VIEW(L"MIDI is still playing"));
         break;
 
     case MIDIERR_NOMAP:
 
-        error_string.assign(TEXT("MIDI has no configured instruments"));
+        error_string.assign(WSTRING_VIEW(L"MIDI has no configured instruments"));
         break;
 
     case MIDIERR_NOTREADY:
 
-        error_string.assign(TEXT("MIDI hardware is still busy"));
+        error_string.assign(WSTRING_VIEW(L"MIDI hardware is still busy"));
         break;
 
     case MIDIERR_NODEVICE:
 
-        error_string.assign(TEXT("MIDI port no longer connected"));
+        error_string.assign(WSTRING_VIEW(L"MIDI port no longer connected"));
         break;
 
     case MIDIERR_INVALIDSETUP:
 
-        error_string.assign(TEXT("MIDI invalid MIF"));
+        error_string.assign(WSTRING_VIEW(L"MIDI invalid MIF"));
         break;
 
     case MIDIERR_BADOPENMODE:
 
-        error_string.assign(TEXT("MIDI operation unsupported with open mode"));
+        error_string.assign(WSTRING_VIEW(L"MIDI operation unsupported with open mode"));
         break;
 
     case MIDIERR_DONT_CONTINUE:
 
-        error_string.assign(TEXT("MIDI through device is eating a message"));
+        error_string.assign(WSTRING_VIEW(L"MIDI through device is eating a message"));
         break;
 
     case TIMERR_NOCANDO:
 
-        error_string.assign(TEXT("Timer request not completed"));
+        error_string.assign(WSTRING_VIEW(L"Timer request not completed"));
         break;
 
     case TIMERR_STRUCT:
 
-        error_string.assign(TEXT("Timer structure size error"));
+        error_string.assign(WSTRING_VIEW(L"Timer structure size error"));
         break;
 
     case JOYERR_PARMS:
 
-        error_string.assign(TEXT("Joystick bad parameters"));
+        error_string.assign(WSTRING_VIEW(L"Joystick bad parameters"));
         break;
 
     case JOYERR_NOCANDO:
 
-        error_string.assign(TEXT("Joystick request not completed"));
+        error_string.assign(WSTRING_VIEW(L"Joystick request not completed"));
         break;
 
     case JOYERR_UNPLUGGED:
 
-        error_string.assign(TEXT("Joystick is unplugged"));
+        error_string.assign(WSTRING_VIEW(L"Joystick is unplugged"));
         break;
 
     case MIXERR_INVALLINE:
 
-        error_string.assign(TEXT("Mixer invalid line"));
+        error_string.assign(WSTRING_VIEW(L"Mixer invalid line"));
         break;
 
     case MIXERR_INVALCONTROL:
 
-        error_string.assign(TEXT("Mixer invalid control"));
+        error_string.assign(WSTRING_VIEW(L"Mixer invalid control"));
         break;
 
     case MIXERR_INVALVALUE:
 
-        error_string.assign(TEXT("Mixer invalid value"));
+        error_string.assign(WSTRING_VIEW(L"Mixer invalid value"));
         break;
 
     default:

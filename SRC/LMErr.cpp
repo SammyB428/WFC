@@ -59,1555 +59,1555 @@ void PASCAL Win32FoundationClasses::Convert_NERR_Code_to_String( _In_ DWORD cons
    {
       case NERR_Success:
 
-         error_message.assign( TEXT( "Success." ) );
+         error_message.assign(WSTRING_VIEW(L"Success." ) );
          return;
 
       case NERR_NetNotStarted:
    
-         error_message.assign( TEXT( "The workstation driver is not installed." ) );
+         error_message.assign(WSTRING_VIEW(L"The workstation driver is not installed." ) );
          return;
 
       case NERR_UnknownServer:
    
-         error_message.assign( TEXT( "The server could not be located." ) );
+         error_message.assign(WSTRING_VIEW(L"The server could not be located." ) );
          return;
 
       case NERR_ShareMem:
    
-         error_message.assign( TEXT( "An internal error occurred. The network cannot access a shared memory segment." ) );
+         error_message.assign(WSTRING_VIEW(L"An internal error occurred. The network cannot access a shared memory segment." ) );
          return;
 
       case NERR_NoNetworkResource:
    
-         error_message.assign( TEXT( "A network resource shortage occurred." ) );
+         error_message.assign(WSTRING_VIEW(L"A network resource shortage occurred." ) );
          return;
 
       case NERR_RemoteOnly:
    
-         error_message.assign( TEXT( "This operation is not supported on workstations." ) );
+         error_message.assign(WSTRING_VIEW(L"This operation is not supported on workstations." ) );
          return;
 
       case NERR_DevNotRedirected:
    
-         error_message.assign( TEXT( "The device is not connected." ) );
+         error_message.assign(WSTRING_VIEW(L"The device is not connected." ) );
          return;
 
       case NERR_ServerNotStarted:
    
-         error_message.assign( TEXT( "The Server service is not started." ) );
+         error_message.assign(WSTRING_VIEW(L"The Server service is not started." ) );
          return;
 
       case NERR_ItemNotFound:
    
-         error_message.assign( TEXT( "The queue is empty." ) );
+         error_message.assign(WSTRING_VIEW(L"The queue is empty." ) );
          return;
 
       case NERR_UnknownDevDir:
    
-         error_message.assign( TEXT( "The device or directory does not exist." ) );
+         error_message.assign(WSTRING_VIEW(L"The device or directory does not exist." ) );
          return;
 
       case NERR_RedirectedPath:
    
-         error_message.assign( TEXT( "The operation is invalid on a redirected resource." ) );
+         error_message.assign(WSTRING_VIEW(L"The operation is invalid on a redirected resource." ) );
          return;
 
       case NERR_DuplicateShare:
    
-         error_message.assign( TEXT( "The name has already been shared." ) );
+         error_message.assign(WSTRING_VIEW(L"The name has already been shared." ) );
          return;
 
       case NERR_NoRoom:
    
-         error_message.assign( TEXT( "The server is currently out of the requested resource." ) );
+         error_message.assign(WSTRING_VIEW(L"The server is currently out of the requested resource." ) );
          return;
 
       case NERR_TooManyItems:
    
-         error_message.assign( TEXT( "Requested addition of items exceeds the maximum allowed." ) );
+         error_message.assign(WSTRING_VIEW(L"Requested addition of items exceeds the maximum allowed." ) );
          return;
 
       case NERR_InvalidMaxUsers:
    
-         error_message.assign( TEXT( "The Peer service supports only two simultaneous users." ) );
+         error_message.assign(WSTRING_VIEW(L"The Peer service supports only two simultaneous users." ) );
          return;
 
       case NERR_BufTooSmall:
    
-         error_message.assign( TEXT( "The API return buffer is too small." ) );
+         error_message.assign(WSTRING_VIEW(L"The API return buffer is too small." ) );
          return;
 
       case NERR_RemoteErr:
    
-         error_message.assign( TEXT( "A remote API error occurred." ) );
+         error_message.assign(WSTRING_VIEW(L"A remote API error occurred." ) );
          return;
 
       case NERR_LanmanIniError:
    
-         error_message.assign( TEXT( "An error occurred when opening or reading the configuration file." ) );
+         error_message.assign(WSTRING_VIEW(L"An error occurred when opening or reading the configuration file." ) );
          return;
 
       case NERR_NetworkError:
    
-         error_message.assign( TEXT( "A general network error occurred." ) );
+         error_message.assign(WSTRING_VIEW(L"A general network error occurred." ) );
          return;
 
       case NERR_WkstaInconsistentState:
    
-         error_message.assign( TEXT( "The Workstation service is in an inconsistent state. Restart the computer before restarting the Workstation service." ) );
+         error_message.assign(WSTRING_VIEW(L"The Workstation service is in an inconsistent state. Restart the computer before restarting the Workstation service." ) );
          return;
 
       case NERR_WkstaNotStarted:
    
-         error_message.assign( TEXT( "The Workstation service has not been started." ) );
+         error_message.assign(WSTRING_VIEW(L"The Workstation service has not been started." ) );
          return;
 
       case NERR_BrowserNotStarted:
    
-         error_message.assign( TEXT( "The requested information is not available." ) );
+         error_message.assign(WSTRING_VIEW(L"The requested information is not available." ) );
          return;
 
       case NERR_InternalError:
    
-         error_message.assign( TEXT( "An internal Windows NT error occurred." ) );
+         error_message.assign(WSTRING_VIEW(L"An internal Windows NT error occurred." ) );
          return;
 
       case NERR_BadTransactConfig:
    
-         error_message.assign( TEXT( "The server is not configured for transactions." ) );
+         error_message.assign(WSTRING_VIEW(L"The server is not configured for transactions." ) );
          return;
 
       case NERR_InvalidAPI:
    
-         error_message.assign( TEXT( "The requested API is not supported on the remote server." ) );
+         error_message.assign(WSTRING_VIEW(L"The requested API is not supported on the remote server." ) );
          return;
 
       case NERR_BadEventName:
    
-         error_message.assign( TEXT( "The event name is invalid." ) );
+         error_message.assign(WSTRING_VIEW(L"The event name is invalid." ) );
          return;
 
       case NERR_DupNameReboot:
    
-         error_message.assign( TEXT( "The computer name already exists on the network. Change it and restart the computer." ) );
+         error_message.assign(WSTRING_VIEW(L"The computer name already exists on the network. Change it and restart the computer." ) );
          return;
 
       case NERR_CfgCompNotFound:
    
-         error_message.assign( TEXT( "The specified component could not be found in the configuration information." ) );
+         error_message.assign(WSTRING_VIEW(L"The specified component could not be found in the configuration information." ) );
          return;
 
       case NERR_CfgParamNotFound:
    
-         error_message.assign( TEXT( "The specified parameter could not be found in the configuration information." ) );
+         error_message.assign(WSTRING_VIEW(L"The specified parameter could not be found in the configuration information." ) );
          return;
 
       case NERR_LineTooLong:
    
-         error_message.assign( TEXT( "A line in the configuration file is too long." ) );
+         error_message.assign(WSTRING_VIEW(L"A line in the configuration file is too long." ) );
          return;
 
       case NERR_QNotFound:
    
-         error_message.assign( TEXT( "The printer does not exist." ) );
+         error_message.assign(WSTRING_VIEW(L"The printer does not exist." ) );
          return;
 
       case NERR_JobNotFound:
    
-         error_message.assign( TEXT( "The print job does not exist." ) );
+         error_message.assign(WSTRING_VIEW(L"The print job does not exist." ) );
          return;
 
       case NERR_DestNotFound:
    
-         error_message.assign( TEXT( "The printer destination cannot be found." ) );
+         error_message.assign(WSTRING_VIEW(L"The printer destination cannot be found." ) );
          return;
 
       case NERR_DestExists:
    
-         error_message.assign( TEXT( "The printer destination already exists." ) );
+         error_message.assign(WSTRING_VIEW(L"The printer destination already exists." ) );
          return;
 
       case NERR_QExists:
    
-         error_message.assign( TEXT( "The printer queue already exists." ) );
+         error_message.assign(WSTRING_VIEW(L"The printer queue already exists." ) );
          return;
 
       case NERR_QNoRoom:
    
-         error_message.assign( TEXT( "No more printers can be added." ) );
+         error_message.assign(WSTRING_VIEW(L"No more printers can be added." ) );
          return;
 
       case NERR_JobNoRoom:
    
-         error_message.assign( TEXT( "No more print jobs can be added." ) );
+         error_message.assign(WSTRING_VIEW(L"No more print jobs can be added." ) );
          return;
 
       case NERR_DestNoRoom:
    
-         error_message.assign( TEXT( "No more printer destinations can be added." ) );
+         error_message.assign(WSTRING_VIEW(L"No more printer destinations can be added." ) );
          return;
 
       case NERR_DestIdle:
    
-         error_message.assign( TEXT( "This printer destination is idle and cannot accept control operations." ) );
+         error_message.assign(WSTRING_VIEW(L"This printer destination is idle and cannot accept control operations." ) );
          return;
 
       case NERR_DestInvalidOp:
    
-         error_message.assign( TEXT( "This printer destination request contains an invalid control function." ) );
+         error_message.assign(WSTRING_VIEW(L"This printer destination request contains an invalid control function." ) );
          return;
 
       case NERR_ProcNoRespond:
    
-         error_message.assign( TEXT( "The print processor is not responding." ) );
+         error_message.assign(WSTRING_VIEW(L"The print processor is not responding." ) );
          return;
 
       case NERR_SpoolerNotLoaded:
    
-         error_message.assign( TEXT( "The spooler is not running." ) );
+         error_message.assign(WSTRING_VIEW(L"The spooler is not running." ) );
          return;
 
       case NERR_DestInvalidState:
    
-         error_message.assign( TEXT( "This operation cannot be performed on the print destination in its current state." ) );
+         error_message.assign(WSTRING_VIEW(L"This operation cannot be performed on the print destination in its current state." ) );
          return;
 
       case NERR_QInvalidState:
    
-         error_message.assign( TEXT( "This operation cannot be performed on the printer queue in its current state." ) );
+         error_message.assign(WSTRING_VIEW(L"This operation cannot be performed on the printer queue in its current state." ) );
          return;
 
       case NERR_JobInvalidState:
    
-         error_message.assign( TEXT( "This operation cannot be performed on the print job in its current state." ) );
+         error_message.assign(WSTRING_VIEW(L"This operation cannot be performed on the print job in its current state." ) );
          return;
 
       case NERR_SpoolNoMemory:
    
-         error_message.assign( TEXT( "A spooler memory allocation failure occurred." ) );
+         error_message.assign(WSTRING_VIEW(L"A spooler memory allocation failure occurred." ) );
          return;
 
       case NERR_DriverNotFound:
    
-         error_message.assign( TEXT( "The device driver does not exist." ) );
+         error_message.assign(WSTRING_VIEW(L"The device driver does not exist." ) );
          return;
 
       case NERR_DataTypeInvalid:
    
-         error_message.assign( TEXT( "The data type is not supported by the print processor." ) );
+         error_message.assign(WSTRING_VIEW(L"The data type is not supported by the print processor." ) );
          return;
 
       case NERR_ProcNotFound:
    
-         error_message.assign( TEXT( "The print processor is not installed." ) );
+         error_message.assign(WSTRING_VIEW(L"The print processor is not installed." ) );
          return;
 
       case NERR_ServiceTableLocked:
    
-         error_message.assign( TEXT( "The service database is locked." ) );
+         error_message.assign(WSTRING_VIEW(L"The service database is locked." ) );
          return;
 
       case NERR_ServiceTableFull:
    
-         error_message.assign( TEXT( "The service table is full." ) );
+         error_message.assign(WSTRING_VIEW(L"The service table is full." ) );
          return;
 
       case NERR_ServiceInstalled:
    
-         error_message.assign( TEXT( "The requested service has already been started." ) );
+         error_message.assign(WSTRING_VIEW(L"The requested service has already been started." ) );
          return;
 
       case NERR_ServiceEntryLocked:
    
-         error_message.assign( TEXT( "The service does not respond to control actions." ) );
+         error_message.assign(WSTRING_VIEW(L"The service does not respond to control actions." ) );
          return;
 
       case NERR_ServiceNotInstalled:
    
-         error_message.assign( TEXT( "The service has not been started." ) );
+         error_message.assign(WSTRING_VIEW(L"The service has not been started." ) );
          return;
 
       case NERR_BadServiceName:
    
-         error_message.assign( TEXT( "The service name is invalid." ) );
+         error_message.assign(WSTRING_VIEW(L"The service name is invalid." ) );
          return;
 
       case NERR_ServiceCtlTimeout:
    
-         error_message.assign( TEXT( "The service is not responding to the control function." ) );
+         error_message.assign(WSTRING_VIEW(L"The service is not responding to the control function." ) );
          return;
 
       case NERR_ServiceCtlBusy:
    
-         error_message.assign( TEXT( "The service control is busy." ) );
+         error_message.assign(WSTRING_VIEW(L"The service control is busy." ) );
          return;
 
       case NERR_BadServiceProgName:
    
-         error_message.assign( TEXT( "The configuration file contains an invalid service program name." ) );
+         error_message.assign(WSTRING_VIEW(L"The configuration file contains an invalid service program name." ) );
          return;
 
       case NERR_ServiceNotCtrl:
    
-         error_message.assign( TEXT( "The service could not be controlled in its present state." ) );
+         error_message.assign(WSTRING_VIEW(L"The service could not be controlled in its present state." ) );
          return;
 
       case NERR_ServiceKillProc:
    
-         error_message.assign( TEXT( "The service ended abnormally." ) );
+         error_message.assign(WSTRING_VIEW(L"The service ended abnormally." ) );
          return;
 
       case NERR_ServiceCtlNotValid:
    
-         error_message.assign( TEXT( "The requested pause or stop is not valid for this service." ) );
+         error_message.assign(WSTRING_VIEW(L"The requested pause or stop is not valid for this service." ) );
          return;
 
       case NERR_NotInDispatchTbl:
    
-         error_message.assign( TEXT( "The service control dispatcher could not find the service name in the dispatch table." ) );
+         error_message.assign(WSTRING_VIEW(L"The service control dispatcher could not find the service name in the dispatch table." ) );
          return;
 
       case NERR_BadControlRecv:
    
-         error_message.assign( TEXT( "The service control dispatcher pipe read failed." ) );
+         error_message.assign(WSTRING_VIEW(L"The service control dispatcher pipe read failed." ) );
          return;
 
       case NERR_ServiceNotStarting:
    
-         error_message.assign( TEXT( "A thread for the new service could not be created." ) );
+         error_message.assign(WSTRING_VIEW(L"A thread for the new service could not be created." ) );
          return;
 
       case NERR_AlreadyLoggedOn:
    
-         error_message.assign( TEXT( "This workstation is already logged on to the local-area network." ) );
+         error_message.assign(WSTRING_VIEW(L"This workstation is already logged on to the local-area network." ) );
          return;
 
       case NERR_NotLoggedOn:
    
-         error_message.assign( TEXT( "The workstation is not logged on to the local-area network." ) );
+         error_message.assign(WSTRING_VIEW(L"The workstation is not logged on to the local-area network." ) );
          return;
 
       case NERR_BadUsername:
    
-         error_message.assign( TEXT( "The user name or group name parameter is invalid." ) );
+         error_message.assign(WSTRING_VIEW(L"The user name or group name parameter is invalid." ) );
          return;
 
       case NERR_BadPassword:
    
-         error_message.assign( TEXT( "The password parameter is invalid." ) );
+         error_message.assign(WSTRING_VIEW(L"The password parameter is invalid." ) );
          return;
 
       case NERR_UnableToAddName_W:
    
-         error_message.assign( TEXT( "@W The logon processor did not add the message alias." ) );
+         error_message.assign(WSTRING_VIEW(L"@W The logon processor did not add the message alias." ) );
          return;
 
       case NERR_UnableToAddName_F:
    
-         error_message.assign( TEXT( "The logon processor did not add the message alias." ) );
+         error_message.assign(WSTRING_VIEW(L"The logon processor did not add the message alias." ) );
          return;
 
       case NERR_UnableToDelName_W:
    
-         error_message.assign( TEXT( "@W The logoff processor did not delete the message alias." ) );
+         error_message.assign(WSTRING_VIEW(L"@W The logoff processor did not delete the message alias." ) );
          return;
 
       case NERR_UnableToDelName_F:
    
-         error_message.assign( TEXT( "The logoff processor did not delete the message alias." ) );
+         error_message.assign(WSTRING_VIEW(L"The logoff processor did not delete the message alias." ) );
          return;
 
       case NERR_LogonsPaused:
    
-         error_message.assign( TEXT( "Network logons are paused." ) );
+         error_message.assign(WSTRING_VIEW(L"Network logons are paused." ) );
          return;
 
       case NERR_LogonServerConflict:
    
-         error_message.assign( TEXT( "A centralized logon-server conflict occurred." ) );
+         error_message.assign(WSTRING_VIEW(L"A centralized logon-server conflict occurred." ) );
          return;
 
       case NERR_LogonNoUserPath:
    
-         error_message.assign( TEXT( "The server is configured without a valid user path." ) );
+         error_message.assign(WSTRING_VIEW(L"The server is configured without a valid user path." ) );
          return;
 
       case NERR_LogonScriptError:
    
-         error_message.assign( TEXT( "An error occurred while loading or running the logon script." ) );
+         error_message.assign(WSTRING_VIEW(L"An error occurred while loading or running the logon script." ) );
          return;
 
       case NERR_StandaloneLogon:
    
-         error_message.assign( TEXT( "The logon server was not specified. Your computer will be logged on as STANDALONE." ) );
+         error_message.assign(WSTRING_VIEW(L"The logon server was not specified. Your computer will be logged on as STANDALONE." ) );
          return;
 
       case NERR_LogonServerNotFound:
    
-         error_message.assign( TEXT( "The logon server could not be found." ) );
+         error_message.assign(WSTRING_VIEW(L"The logon server could not be found." ) );
          return;
 
       case NERR_LogonDomainExists:
    
-         error_message.assign( TEXT( "There is already a logon domain for this computer." ) );
+         error_message.assign(WSTRING_VIEW(L"There is already a logon domain for this computer." ) );
          return;
 
       case NERR_NonValidatedLogon:
    
-         error_message.assign( TEXT( "The logon server could not validate the logon." ) );
+         error_message.assign(WSTRING_VIEW(L"The logon server could not validate the logon." ) );
          return;
 
       case NERR_ACFNotFound:
    
-         error_message.assign( TEXT( "The security database could not be found." ) );
+         error_message.assign(WSTRING_VIEW(L"The security database could not be found." ) );
          return;
 
       case NERR_GroupNotFound:
    
-         error_message.assign( TEXT( "The group name could not be found." ) );
+         error_message.assign(WSTRING_VIEW(L"The group name could not be found." ) );
          return;
 
       case NERR_UserNotFound:
    
-         error_message.assign( TEXT( "The user name could not be found." ) );
+         error_message.assign(WSTRING_VIEW(L"The user name could not be found." ) );
          return;
 
       case NERR_ResourceNotFound:
    
-         error_message.assign( TEXT( "The resource name could not be found." ) );
+         error_message.assign(WSTRING_VIEW(L"The resource name could not be found." ) );
          return;
 
       case NERR_GroupExists:
    
-         error_message.assign( TEXT( "The group already exists." ) );
+         error_message.assign(WSTRING_VIEW(L"The group already exists." ) );
          return;
 
       case NERR_UserExists:
    
-         error_message.assign( TEXT( "The user account already exists." ) );
+         error_message.assign(WSTRING_VIEW(L"The user account already exists." ) );
          return;
 
       case NERR_ResourceExists:
    
-         error_message.assign( TEXT( "The resource permission list already exists." ) );
+         error_message.assign(WSTRING_VIEW(L"The resource permission list already exists." ) );
          return;
 
       case NERR_NotPrimary:
    
-         error_message.assign( TEXT( "This operation is only allowed on the primary domain controller of the domain." ) );
+         error_message.assign(WSTRING_VIEW(L"This operation is only allowed on the primary domain controller of the domain." ) );
          return;
 
       case NERR_ACFNotLoaded:
    
-         error_message.assign( TEXT( "The security database has not been started." ) );
+         error_message.assign(WSTRING_VIEW(L"The security database has not been started." ) );
          return;
 
       case NERR_ACFNoRoom:
    
-         error_message.assign( TEXT( "There are too many names in the user accounts database." ) );
+         error_message.assign(WSTRING_VIEW(L"There are too many names in the user accounts database." ) );
          return;
 
       case NERR_ACFFileIOFail:
    
-         error_message.assign( TEXT( "A disk I/O failure occurred." ) );
+         error_message.assign(WSTRING_VIEW(L"A disk I/O failure occurred." ) );
          return;
 
       case NERR_ACFTooManyLists:
    
-         error_message.assign( TEXT( "The limit of 64 entries per resource was exceeded." ) );
+         error_message.assign(WSTRING_VIEW(L"The limit of 64 entries per resource was exceeded." ) );
          return;
 
       case NERR_UserLogon:
    
-         error_message.assign( TEXT( "Deleting a user with a session is not allowed." ) );
+         error_message.assign(WSTRING_VIEW(L"Deleting a user with a session is not allowed." ) );
          return;
 
       case NERR_ACFNoParent:
    
-         error_message.assign( TEXT( "The parent directory could not be located." ) );
+         error_message.assign(WSTRING_VIEW(L"The parent directory could not be located." ) );
          return;
 
       case NERR_CanNotGrowSegment:
    
-         error_message.assign( TEXT( "Unable to add to the security database session cache segment." ) );
+         error_message.assign(WSTRING_VIEW(L"Unable to add to the security database session cache segment." ) );
          return;
 
       case NERR_SpeGroupOp:
    
-         error_message.assign( TEXT( "This operation is not allowed on this special group." ) );
+         error_message.assign(WSTRING_VIEW(L"This operation is not allowed on this special group." ) );
          return;
 
       case NERR_NotInCache:
    
-         error_message.assign( TEXT( "This user is not cached in user accounts database session cache." ) );
+         error_message.assign(WSTRING_VIEW(L"This user is not cached in user accounts database session cache." ) );
          return;
 
       case NERR_UserInGroup:
    
-         error_message.assign( TEXT( "The user already belongs to this group." ) );
+         error_message.assign(WSTRING_VIEW(L"The user already belongs to this group." ) );
          return;
 
       case NERR_UserNotInGroup:
    
-         error_message.assign( TEXT( "The user does not belong to this group." ) );
+         error_message.assign(WSTRING_VIEW(L"The user does not belong to this group." ) );
          return;
 
       case NERR_AccountUndefined:
    
-         error_message.assign( TEXT( "This user account is undefined." ) );
+         error_message.assign(WSTRING_VIEW(L"This user account is undefined." ) );
          return;
 
       case NERR_AccountExpired:
    
-         error_message.assign( TEXT( "This user account has expired." ) );
+         error_message.assign(WSTRING_VIEW(L"This user account has expired." ) );
          return;
 
       case NERR_InvalidWorkstation:
    
-         error_message.assign( TEXT( "The user is not allowed to log on from this workstation." ) );
+         error_message.assign(WSTRING_VIEW(L"The user is not allowed to log on from this workstation." ) );
          return;
 
       case NERR_InvalidLogonHours:
    
-         error_message.assign( TEXT( "The user is not allowed to log on at this time." ) );
+         error_message.assign(WSTRING_VIEW(L"The user is not allowed to log on at this time." ) );
          return;
 
       case NERR_PasswordExpired:
    
-         error_message.assign( TEXT( "The password of this user has expired." ) );
+         error_message.assign(WSTRING_VIEW(L"The password of this user has expired." ) );
          return;
 
       case NERR_PasswordCantChange:
    
-         error_message.assign( TEXT( "The password of this user cannot change." ) );
+         error_message.assign(WSTRING_VIEW(L"The password of this user cannot change." ) );
          return;
 
       case NERR_PasswordHistConflict:
    
-         error_message.assign( TEXT( "This password cannot be used now." ) );
+         error_message.assign(WSTRING_VIEW(L"This password cannot be used now." ) );
          return;
 
       case NERR_PasswordTooShort:
    
-         error_message.assign( TEXT( "The password is shorter than required." ) );
+         error_message.assign(WSTRING_VIEW(L"The password is shorter than required." ) );
          return;
 
       case NERR_PasswordTooRecent:
    
-         error_message.assign( TEXT( "The password of this user is too recent to change." ) );
+         error_message.assign(WSTRING_VIEW(L"The password of this user is too recent to change." ) );
          return;
 
       case NERR_InvalidDatabase:
    
-         error_message.assign( TEXT( "The security database is corrupted." ) );
+         error_message.assign(WSTRING_VIEW(L"The security database is corrupted." ) );
          return;
 
       case NERR_DatabaseUpToDate:
    
-         error_message.assign( TEXT( "No updates are necessary to this replicant network/local security database." ) );
+         error_message.assign(WSTRING_VIEW(L"No updates are necessary to this replicant network/local security database." ) );
          return;
 
       case NERR_SyncRequired:
    
-         error_message.assign( TEXT( "This replicant database is outdated; synchronization is required." ) );
+         error_message.assign(WSTRING_VIEW(L"This replicant database is outdated; synchronization is required." ) );
          return;
 
       case NERR_UseNotFound:
    
-         error_message.assign( TEXT( "The network connection could not be found." ) );
+         error_message.assign(WSTRING_VIEW(L"The network connection could not be found." ) );
          return;
 
       case NERR_BadAsgType:
    
-         error_message.assign( TEXT( "This asg_type is invalid." ) );
+         error_message.assign(WSTRING_VIEW(L"This asg_type is invalid." ) );
          return;
 
       case NERR_DeviceIsShared:
    
-         error_message.assign( TEXT( "This device is currently being shared." ) );
+         error_message.assign(WSTRING_VIEW(L"This device is currently being shared." ) );
          return;
 
       case NERR_NoComputerName:
    
-         error_message.assign( TEXT( "The computer name could not be added as a message alias. The name may already exist on the network." ) );
+         error_message.assign(WSTRING_VIEW(L"The computer name could not be added as a message alias. The name may already exist on the network." ) );
          return;
 
       case NERR_MsgAlreadyStarted:
    
-         error_message.assign( TEXT( "The Messenger service is already started." ) );
+         error_message.assign(WSTRING_VIEW(L"The Messenger service is already started." ) );
          return;
 
       case NERR_MsgInitFailed:
    
-         error_message.assign( TEXT( "The Messenger service failed to start." ) );
+         error_message.assign(WSTRING_VIEW(L"The Messenger service failed to start." ) );
          return;
 
       case NERR_NameNotFound:
    
-         error_message.assign( TEXT( "The message alias could not be found on the network." ) );
+         error_message.assign(WSTRING_VIEW(L"The message alias could not be found on the network." ) );
          return;
 
       case NERR_AlreadyForwarded:
    
-         error_message.assign( TEXT( "This message alias has already been forwarded." ) );
+         error_message.assign(WSTRING_VIEW(L"This message alias has already been forwarded." ) );
          return;
 
       case NERR_AddForwarded:
    
-         error_message.assign( TEXT( "This message alias has been added but is still forwarded." ) );
+         error_message.assign(WSTRING_VIEW(L"This message alias has been added but is still forwarded." ) );
          return;
 
       case NERR_AlreadyExists:
    
-         error_message.assign( TEXT( "This message alias already exists locally." ) );
+         error_message.assign(WSTRING_VIEW(L"This message alias already exists locally." ) );
          return;
 
       case NERR_TooManyNames:
    
-         error_message.assign( TEXT( "The maximum number of added message aliases has been exceeded." ) );
+         error_message.assign(WSTRING_VIEW(L"The maximum number of added message aliases has been exceeded." ) );
          return;
 
       case NERR_DelComputerName:
    
-         error_message.assign( TEXT( "The computer name could not be deleted." ) );
+         error_message.assign(WSTRING_VIEW(L"The computer name could not be deleted." ) );
          return;
 
       case NERR_LocalForward:
    
-         error_message.assign( TEXT( "Messages cannot be forwarded back to the same workstation." ) );
+         error_message.assign(WSTRING_VIEW(L"Messages cannot be forwarded back to the same workstation." ) );
          return;
 
       case NERR_GrpMsgProcessor:
    
-         error_message.assign( TEXT( "An error occurred in the domain message processor." ) );
+         error_message.assign(WSTRING_VIEW(L"An error occurred in the domain message processor." ) );
          return;
 
       case NERR_PausedRemote:
    
-         error_message.assign( TEXT( "The message was sent, but the recipient has paused the Messenger service." ) );
+         error_message.assign(WSTRING_VIEW(L"The message was sent, but the recipient has paused the Messenger service." ) );
          return;
 
       case NERR_BadReceive:
    
-         error_message.assign( TEXT( "The message was sent but not received." ) );
+         error_message.assign(WSTRING_VIEW(L"The message was sent but not received." ) );
          return;
 
       case NERR_NameInUse:
    
-         error_message.assign( TEXT( "The message alias is currently in use. Try again later." ) );
+         error_message.assign(WSTRING_VIEW(L"The message alias is currently in use. Try again later." ) );
          return;
 
       case NERR_MsgNotStarted:
    
-         error_message.assign( TEXT( "The Messenger service has not been started." ) );
+         error_message.assign(WSTRING_VIEW(L"The Messenger service has not been started." ) );
          return;
 
       case NERR_NotLocalName:
    
-         error_message.assign( TEXT( "The name is not on the local computer." ) );
+         error_message.assign(WSTRING_VIEW(L"The name is not on the local computer." ) );
          return;
 
       case NERR_NoForwardName:
    
-         error_message.assign( TEXT( "The forwarded message alias could not be found on the network." ) );
+         error_message.assign(WSTRING_VIEW(L"The forwarded message alias could not be found on the network." ) );
          return;
 
       case NERR_RemoteFull:
    
-         error_message.assign( TEXT( "The message alias table on the remote station is full." ) );
+         error_message.assign(WSTRING_VIEW(L"The message alias table on the remote station is full." ) );
          return;
 
       case NERR_NameNotForwarded:
    
-         error_message.assign( TEXT( "Messages for this alias are not currently being forwarded." ) );
+         error_message.assign(WSTRING_VIEW(L"Messages for this alias are not currently being forwarded." ) );
          return;
 
       case NERR_TruncatedBroadcast:
    
-         error_message.assign( TEXT( "The broadcast message was truncated." ) );
+         error_message.assign(WSTRING_VIEW(L"The broadcast message was truncated." ) );
          return;
 
       case NERR_InvalidDevice:
    
-         error_message.assign( TEXT( "This is an invalid device name." ) );
+         error_message.assign(WSTRING_VIEW(L"This is an invalid device name." ) );
          return;
 
       case NERR_WriteFault:
    
-         error_message.assign( TEXT( "A write fault occurred." ) );
+         error_message.assign(WSTRING_VIEW(L"A write fault occurred." ) );
          return;
 
       case NERR_DuplicateName:
    
-         error_message.assign( TEXT( "A duplicate message alias exists on the network." ) );
+         error_message.assign(WSTRING_VIEW(L"A duplicate message alias exists on the network." ) );
          return;
 
       case NERR_DeleteLater:
    
-         error_message.assign( TEXT( "@W This message alias will be deleted later." ) );
+         error_message.assign(WSTRING_VIEW(L"@W This message alias will be deleted later." ) );
          return;
 
       case NERR_IncompleteDel:
    
-         error_message.assign( TEXT( "The message alias was not successfully deleted from all networks." ) );
+         error_message.assign(WSTRING_VIEW(L"The message alias was not successfully deleted from all networks." ) );
          return;
 
       case NERR_MultipleNets:
    
-         error_message.assign( TEXT( "This operation is not supported on computers with multiple networks." ) );
+         error_message.assign(WSTRING_VIEW(L"This operation is not supported on computers with multiple networks." ) );
          return;
 
       case NERR_NetNameNotFound:
    
-         error_message.assign( TEXT( "This shared resource does not exist." ) );
+         error_message.assign(WSTRING_VIEW(L"This shared resource does not exist." ) );
          return;
 
       case NERR_DeviceNotShared:
    
-         error_message.assign( TEXT( "This device is not shared." ) );
+         error_message.assign(WSTRING_VIEW(L"This device is not shared." ) );
          return;
 
       case NERR_ClientNameNotFound:
    
-         error_message.assign( TEXT( "A session does not exist with that computer name." ) );
+         error_message.assign(WSTRING_VIEW(L"A session does not exist with that computer name." ) );
          return;
 
       case NERR_FileIdNotFound:
    
-         error_message.assign( TEXT( "There is not an open file with that identification number." ) );
+         error_message.assign(WSTRING_VIEW(L"There is not an open file with that identification number." ) );
          return;
 
       case NERR_ExecFailure:
    
-         error_message.assign( TEXT( "A failure occurred when executing a remote administration command." ) );
+         error_message.assign(WSTRING_VIEW(L"A failure occurred when executing a remote administration command." ) );
          return;
 
       case NERR_TmpFile:
    
-         error_message.assign( TEXT( "A failure occurred when opening a remote temporary file." ) );
+         error_message.assign(WSTRING_VIEW(L"A failure occurred when opening a remote temporary file." ) );
          return;
 
       case NERR_TooMuchData:
    
-         error_message.assign( TEXT( "The data    returned from a remote administration command has been truncated to 64K." ) );
+         error_message.assign(WSTRING_VIEW(L"The data    returned from a remote administration command has been truncated to 64K." ) );
          return;
 
       case NERR_DeviceShareConflict:
    
-         error_message.assign( TEXT( "This device cannot be shared as both a spooled and a non-spooled resource." ) );
+         error_message.assign(WSTRING_VIEW(L"This device cannot be shared as both a spooled and a non-spooled resource." ) );
          return;
 
       case NERR_BrowserTableIncomplete:
    
-         error_message.assign( TEXT( "The information in the list of servers may be incorrect." ) );
+         error_message.assign(WSTRING_VIEW(L"The information in the list of servers may be incorrect." ) );
          return;
 
       case NERR_NotLocalDomain:
    
-         error_message.assign( TEXT( "The computer is not active in this domain." ) );
+         error_message.assign(WSTRING_VIEW(L"The computer is not active in this domain." ) );
          return;
 
       case NERR_DevInvalidOpCode:
    
-         error_message.assign( TEXT( "The operation is invalid for this device." ) );
+         error_message.assign(WSTRING_VIEW(L"The operation is invalid for this device." ) );
          return;
 
       case NERR_DevNotFound:
    
-         error_message.assign( TEXT( "This device cannot be shared." ) );
+         error_message.assign(WSTRING_VIEW(L"This device cannot be shared." ) );
          return;
 
       case NERR_DevNotOpen:
    
-         error_message.assign( TEXT( "This device was not open." ) );
+         error_message.assign(WSTRING_VIEW(L"This device was not open." ) );
          return;
 
       case NERR_BadQueueDevString:
    
-         error_message.assign( TEXT( "This device name list is invalid." ) );
+         error_message.assign(WSTRING_VIEW(L"This device name list is invalid." ) );
          return;
 
       case NERR_BadQueuePriority:
    
-         error_message.assign( TEXT( "The queue priority is invalid." ) );
+         error_message.assign(WSTRING_VIEW(L"The queue priority is invalid." ) );
          return;
 
       case NERR_NoCommDevs:
    
-         error_message.assign( TEXT( "There are no shared communication devices." ) );
+         error_message.assign(WSTRING_VIEW(L"There are no shared communication devices." ) );
          return;
 
       case NERR_QueueNotFound:
    
-         error_message.assign( TEXT( "The queue you specified does not exist." ) );
+         error_message.assign(WSTRING_VIEW(L"The queue you specified does not exist." ) );
          return;
 
       case NERR_BadDevString:
    
-         error_message.assign( TEXT( "This list of devices is invalid." ) );
+         error_message.assign(WSTRING_VIEW(L"This list of devices is invalid." ) );
          return;
 
       case NERR_BadDev:
    
-         error_message.assign( TEXT( "The requested device is invalid." ) );
+         error_message.assign(WSTRING_VIEW(L"The requested device is invalid." ) );
          return;
 
       case NERR_InUseBySpooler:
    
-         error_message.assign( TEXT( "This device is already in use by the spooler." ) );
+         error_message.assign(WSTRING_VIEW(L"This device is already in use by the spooler." ) );
          return;
 
       case NERR_CommDevInUse:
    
-         error_message.assign( TEXT( "This device is already in use as a communication device." ) );
+         error_message.assign(WSTRING_VIEW(L"This device is already in use as a communication device." ) );
          return;
 
       case NERR_InvalidComputer:
    
-         error_message.assign( TEXT( "This computer name is invalid." ) );
+         error_message.assign(WSTRING_VIEW(L"This computer name is invalid." ) );
          return;
 
       case NERR_MaxLenExceeded:
    
-         error_message.assign( TEXT( "The string and prefix specified are too long." ) );
+         error_message.assign(WSTRING_VIEW(L"The string and prefix specified are too long." ) );
          return;
 
       case NERR_BadComponent:
    
-         error_message.assign( TEXT( "This path component is invalid." ) );
+         error_message.assign(WSTRING_VIEW(L"This path component is invalid." ) );
          return;
 
       case NERR_CantType:
    
-         error_message.assign( TEXT( "Could not determine the type of input." ) );
+         error_message.assign(WSTRING_VIEW(L"Could not determine the type of input." ) );
          return;
 
       case NERR_TooManyEntries:
    
-         error_message.assign( TEXT( "The buffer for types is not big enough." ) );
+         error_message.assign(WSTRING_VIEW(L"The buffer for types is not big enough." ) );
          return;
 
       case NERR_ProfileFileTooBig:
    
-         error_message.assign( TEXT( "Profile files cannot exceed 64K." ) );
+         error_message.assign(WSTRING_VIEW(L"Profile files cannot exceed 64K." ) );
          return;
 
       case NERR_ProfileOffset:
    
-         error_message.assign( TEXT( "The start offset is out of range." ) );
+         error_message.assign(WSTRING_VIEW(L"The start offset is out of range." ) );
          return;
 
       case NERR_ProfileCleanup:
    
-         error_message.assign( TEXT( "The system cannot delete current connections to network resources." ) );
+         error_message.assign(WSTRING_VIEW(L"The system cannot delete current connections to network resources." ) );
          return;
 
       case NERR_ProfileUnknownCmd:
    
-         error_message.assign( TEXT( "The system was unable to parse the command line in this file." ) );
+         error_message.assign(WSTRING_VIEW(L"The system was unable to parse the command line in this file." ) );
          return;
 
       case NERR_ProfileLoadErr:
    
-         error_message.assign( TEXT( "An error occurred while loading the profile file." ) );
+         error_message.assign(WSTRING_VIEW(L"An error occurred while loading the profile file." ) );
          return;
 
       case NERR_ProfileSaveErr:
    
-         error_message.assign( TEXT( "@W Errors occurred while saving the profile file. The profile was partially saved." ) );
+         error_message.assign(WSTRING_VIEW(L"@W Errors occurred while saving the profile file. The profile was partially saved." ) );
          return;
 
       case NERR_LogOverflow:
    
-         error_message.assign( TEXT( "Log file %1 is full." ) );
+         error_message.assign(WSTRING_VIEW(L"Log file %1 is full." ) );
          return;
 
       case NERR_LogFileChanged:
    
-         error_message.assign( TEXT( "This log file has changed between reads." ) );
+         error_message.assign(WSTRING_VIEW(L"This log file has changed between reads." ) );
          return;
 
       case NERR_LogFileCorrupt:
    
-         error_message.assign( TEXT( "Log file %1 is corrupt." ) );
+         error_message.assign(WSTRING_VIEW(L"Log file %1 is corrupt." ) );
          return;
 
       case NERR_SourceIsDir:
    
-         error_message.assign( TEXT( "The source path cannot be a directory." ) );
+         error_message.assign(WSTRING_VIEW(L"The source path cannot be a directory." ) );
          return;
 
       case NERR_BadSource:
    
-         error_message.assign( TEXT( "The source path is illegal." ) );
+         error_message.assign(WSTRING_VIEW(L"The source path is illegal." ) );
          return;
 
       case NERR_BadDest:
    
-         error_message.assign( TEXT( "The destination path is illegal." ) );
+         error_message.assign(WSTRING_VIEW(L"The destination path is illegal." ) );
          return;
 
       case NERR_DifferentServers:
    
-         error_message.assign( TEXT( "The source and destination paths are on different servers." ) );
+         error_message.assign(WSTRING_VIEW(L"The source and destination paths are on different servers." ) );
          return;
 
       case NERR_RunSrvPaused:
    
-         error_message.assign( TEXT( "The Run server you requested is paused." ) );
+         error_message.assign(WSTRING_VIEW(L"The Run server you requested is paused." ) );
          return;
 
       case NERR_ErrCommRunSrv:
    
-         error_message.assign( TEXT( "An error occurred when communicating with a Run server." ) );
+         error_message.assign(WSTRING_VIEW(L"An error occurred when communicating with a Run server." ) );
          return;
 
       case NERR_ErrorExecingGhost:
    
-         error_message.assign( TEXT( "An error occurred when starting a background process." ) );
+         error_message.assign(WSTRING_VIEW(L"An error occurred when starting a background process." ) );
          return;
 
       case NERR_ShareNotFound:
    
-         error_message.assign( TEXT( "The shared resource you are connected to could not be found." ) );
+         error_message.assign(WSTRING_VIEW(L"The shared resource you are connected to could not be found." ) );
          return;
 
       case NERR_InvalidLana:
    
-         error_message.assign( TEXT( "The LAN adapter number is invalid." ) );
+         error_message.assign(WSTRING_VIEW(L"The LAN adapter number is invalid." ) );
          return;
 
       case NERR_OpenFiles:
    
-         error_message.assign( TEXT( "There are open files on the connection." ) );
+         error_message.assign(WSTRING_VIEW(L"There are open files on the connection." ) );
          return;
 
       case NERR_ActiveConns:
    
-         error_message.assign( TEXT( "Active connections still exist." ) );
+         error_message.assign(WSTRING_VIEW(L"Active connections still exist." ) );
          return;
 
       case NERR_BadPasswordCore:
    
-         error_message.assign( TEXT( "This share name or password is invalid." ) );
+         error_message.assign(WSTRING_VIEW(L"This share name or password is invalid." ) );
          return;
 
       case NERR_DevInUse:
    
-         error_message.assign( TEXT( "The device is being accessed by an active process." ) );
+         error_message.assign(WSTRING_VIEW(L"The device is being accessed by an active process." ) );
          return;
 
       case NERR_LocalDrive:
    
-         error_message.assign( TEXT( "The drive letter is in use locally." ) );
+         error_message.assign(WSTRING_VIEW(L"The drive letter is in use locally." ) );
          return;
 
       case NERR_AlertExists:
    
-         error_message.assign( TEXT( "The specified client is already registered for the specified event." ) );
+         error_message.assign(WSTRING_VIEW(L"The specified client is already registered for the specified event." ) );
          return;
 
       case NERR_TooManyAlerts:
    
-         error_message.assign( TEXT( "The alert table is full." ) );
+         error_message.assign(WSTRING_VIEW(L"The alert table is full." ) );
          return;
 
       case NERR_NoSuchAlert:
    
-         error_message.assign( TEXT( "An invalid or nonexistent alert name was raised." ) );
+         error_message.assign(WSTRING_VIEW(L"An invalid or nonexistent alert name was raised." ) );
          return;
 
       case NERR_BadRecipient:
    
-         error_message.assign( TEXT( "The alert recipient is invalid." ) );
+         error_message.assign(WSTRING_VIEW(L"The alert recipient is invalid." ) );
          return;
 
       case NERR_AcctLimitExceeded:
    
-         error_message.assign( TEXT( "A user's session with this server has been deleted because the user's logon hours are no longer valid." ) );
+         error_message.assign(WSTRING_VIEW(L"A user's session with this server has been deleted because the user's logon hours are no longer valid." ) );
          return;
 
       case NERR_InvalidLogSeek:
    
-         error_message.assign( TEXT( "The log file does not contain the requested record number." ) );
+         error_message.assign(WSTRING_VIEW(L"The log file does not contain the requested record number." ) );
          return;
 
       case NERR_BadUasConfig:
    
-         error_message.assign( TEXT( "The user accounts database is not configured correctly." ) );
+         error_message.assign(WSTRING_VIEW(L"The user accounts database is not configured correctly." ) );
          return;
 
       case NERR_InvalidUASOp:
    
-         error_message.assign( TEXT( "This operation is not permitted when the Netlogon service is running." ) );
+         error_message.assign(WSTRING_VIEW(L"This operation is not permitted when the Netlogon service is running." ) );
          return;
 
       case NERR_LastAdmin:
    
-         error_message.assign( TEXT( "This operation is not allowed on the last administrative account." ) );
+         error_message.assign(WSTRING_VIEW(L"This operation is not allowed on the last administrative account." ) );
          return;
 
       case NERR_DCNotFound:
    
-         error_message.assign( TEXT( "Could not find domain controller for this domain." ) );
+         error_message.assign(WSTRING_VIEW(L"Could not find domain controller for this domain." ) );
          return;
 
       case NERR_LogonTrackingError:
    
-         error_message.assign( TEXT( "Could not set logon information for this user." ) );
+         error_message.assign(WSTRING_VIEW(L"Could not set logon information for this user." ) );
          return;
 
       case NERR_NetlogonNotStarted:
    
-         error_message.assign( TEXT( "The Netlogon service has not been started." ) );
+         error_message.assign(WSTRING_VIEW(L"The Netlogon service has not been started." ) );
          return;
 
       case NERR_CanNotGrowUASFile:
    
-         error_message.assign( TEXT( "Unable to add to the user accounts database." ) );
+         error_message.assign(WSTRING_VIEW(L"Unable to add to the user accounts database." ) );
          return;
 
       case NERR_TimeDiffAtDC:
    
-         error_message.assign( TEXT( "This server's clock is not synchronized with the primary domain controller's clock." ) );
+         error_message.assign(WSTRING_VIEW(L"This server's clock is not synchronized with the primary domain controller's clock." ) );
          return;
 
       case NERR_PasswordMismatch:
    
-         error_message.assign( TEXT( "A password mismatch has been detected." ) );
+         error_message.assign(WSTRING_VIEW(L"A password mismatch has been detected." ) );
          return;
 
       case NERR_NoSuchServer:
    
-         error_message.assign( TEXT( "The server identification does not specify a valid server." ) );
+         error_message.assign(WSTRING_VIEW(L"The server identification does not specify a valid server." ) );
          return;
 
       case NERR_NoSuchSession:
    
-         error_message.assign( TEXT( "The session identification does not specify a valid session." ) );
+         error_message.assign(WSTRING_VIEW(L"The session identification does not specify a valid session." ) );
          return;
 
       case NERR_NoSuchConnection:
    
-         error_message.assign( TEXT( "The connection identification does not specify a valid connection." ) );
+         error_message.assign(WSTRING_VIEW(L"The connection identification does not specify a valid connection." ) );
          return;
 
       case NERR_TooManyServers:
    
-         error_message.assign( TEXT( "There is no space for another entry in the table of available servers." ) );
+         error_message.assign(WSTRING_VIEW(L"There is no space for another entry in the table of available servers." ) );
          return;
 
       case NERR_TooManySessions:
    
-         error_message.assign( TEXT( "The server has reached the maximum number of sessions it supports." ) );
+         error_message.assign(WSTRING_VIEW(L"The server has reached the maximum number of sessions it supports." ) );
          return;
 
       case NERR_TooManyConnections:
    
-         error_message.assign( TEXT( "The server has reached the maximum number of connections it supports." ) );
+         error_message.assign(WSTRING_VIEW(L"The server has reached the maximum number of connections it supports." ) );
          return;
 
       case NERR_TooManyFiles:
    
-         error_message.assign( TEXT( "The server cannot open more files because it has reached its maximum number." ) );
+         error_message.assign(WSTRING_VIEW(L"The server cannot open more files because it has reached its maximum number." ) );
          return;
 
       case NERR_NoAlternateServers:
    
-         error_message.assign( TEXT( "There are no alternate servers registered on this server." ) );
+         error_message.assign(WSTRING_VIEW(L"There are no alternate servers registered on this server." ) );
          return;
 
       case NERR_TryDownLevel:
    
-         error_message.assign( TEXT( "Try down-level (remote admin protocol) version of API instead." ) );
+         error_message.assign(WSTRING_VIEW(L"Try down-level (remote admin protocol) version of API instead." ) );
          return;
 
       case NERR_UPSDriverNotStarted:
    
-         error_message.assign( TEXT( "The UPS driver could not be accessed by the UPS service." ) );
+         error_message.assign(WSTRING_VIEW(L"The UPS driver could not be accessed by the UPS service." ) );
          return;
 
       case NERR_UPSInvalidConfig:
    
-         error_message.assign( TEXT( "The UPS service is not configured correctly." ) );
+         error_message.assign(WSTRING_VIEW(L"The UPS service is not configured correctly." ) );
          return;
 
       case NERR_UPSInvalidCommPort:
 
-         error_message.assign( TEXT( "The UPS service could not access the specified Comm Port." ) );
+         error_message.assign(WSTRING_VIEW(L"The UPS service could not access the specified Comm Port." ) );
          return;
 
       case NERR_UPSSignalAsserted:
 
-         error_message.assign( TEXT( "The UPS indicated a line fail or low battery situation. Service not started." ) );
+         error_message.assign(WSTRING_VIEW(L"The UPS indicated a line fail or low battery situation. Service not started." ) );
          return;
 
       case NERR_UPSShutdownFailed:
 
-         error_message.assign( TEXT( "The UPS service failed to perform a system shut down." ) );
+         error_message.assign(WSTRING_VIEW(L"The UPS service failed to perform a system shut down." ) );
          return;
 
       case NERR_BadDosRetCode:
 
-         error_message.assign( TEXT( "The program below returned an MS-DOS error code:" ) );
+         error_message.assign(WSTRING_VIEW(L"The program below returned an MS-DOS error code:" ) );
          return;
 
       case NERR_ProgNeedsExtraMem:
 
-         error_message.assign( TEXT( "The program below needs more memory:" ) );
+         error_message.assign(WSTRING_VIEW(L"The program below needs more memory:" ) );
          return;
 
       case NERR_BadDosFunction:
 
-         error_message.assign( TEXT( "The program below called an unsupported MS-DOS function:" ) );
+         error_message.assign(WSTRING_VIEW(L"The program below called an unsupported MS-DOS function:" ) );
          return;
 
       case NERR_RemoteBootFailed:
    
-         error_message.assign( TEXT( "The workstation failed to boot." ) );
+         error_message.assign(WSTRING_VIEW(L"The workstation failed to boot." ) );
          return;
 
       case NERR_BadFileCheckSum:
    
-         error_message.assign( TEXT( "The file below is corrupt." ) );
+         error_message.assign(WSTRING_VIEW(L"The file below is corrupt." ) );
          return;
 
       case NERR_NoRplBootSystem:
    
-         error_message.assign( TEXT( "No loader is specified in the boot-block definition file." ) );
+         error_message.assign(WSTRING_VIEW(L"No loader is specified in the boot-block definition file." ) );
          return;
 
       case NERR_RplLoadrNetBiosErr:
    
-         error_message.assign( TEXT( "NetBIOS    returned an error: The NCB and SMB are dumped above." ) );
+         error_message.assign(WSTRING_VIEW(L"NetBIOS    returned an error: The NCB and SMB are dumped above." ) );
          return;
 
       case NERR_RplLoadrDiskErr:
    
-         error_message.assign( TEXT( "A disk I/O error occurred." ) );
+         error_message.assign(WSTRING_VIEW(L"A disk I/O error occurred." ) );
          return;
 
       case NERR_ImageParamErr:
    
-         error_message.assign( TEXT( "Image parameter substitution failed." ) );
+         error_message.assign(WSTRING_VIEW(L"Image parameter substitution failed." ) );
          return;
 
       case NERR_TooManyImageParams:
    
-         error_message.assign( TEXT( "Too many image parameters cross disk sector boundaries." ) );
+         error_message.assign(WSTRING_VIEW(L"Too many image parameters cross disk sector boundaries." ) );
          return;
 
       case NERR_NonDosFloppyUsed:
    
-         error_message.assign( TEXT( "The image was not generated from an MS-DOS diskette formatted with /S." ) );
+         error_message.assign(WSTRING_VIEW(L"The image was not generated from an MS-DOS diskette formatted with /S." ) );
          return;
 
       case NERR_RplBootRestart:
    
-         error_message.assign( TEXT( "Remote boot will be restarted later." ) );
+         error_message.assign(WSTRING_VIEW(L"Remote boot will be restarted later." ) );
          return;
 
       case NERR_RplSrvrCallFailed:
    
-         error_message.assign( TEXT( "The call to the Remoteboot server failed." ) );
+         error_message.assign(WSTRING_VIEW(L"The call to the Remoteboot server failed." ) );
          return;
 
       case NERR_CantConnectRplSrvr:
    
-         error_message.assign( TEXT( "Cannot connect to the Remoteboot server." ) );
+         error_message.assign(WSTRING_VIEW(L"Cannot connect to the Remoteboot server." ) );
          return;
 
       case NERR_CantOpenImageFile:
    
-         error_message.assign( TEXT( "Cannot open image file on the Remoteboot server." ) );
+         error_message.assign(WSTRING_VIEW(L"Cannot open image file on the Remoteboot server." ) );
          return;
 
       case NERR_CallingRplSrvr:
    
-         error_message.assign( TEXT( "Connecting to the Remoteboot server..." ) );
+         error_message.assign(WSTRING_VIEW(L"Connecting to the Remoteboot server..." ) );
          return;
 
       case NERR_StartingRplBoot:
    
-         error_message.assign( TEXT( "Connecting to the Remoteboot server..." ) );
+         error_message.assign(WSTRING_VIEW(L"Connecting to the Remoteboot server..." ) );
          return;
 
       case NERR_RplBootServiceTerm:
    
-         error_message.assign( TEXT( "Remote boot service was stopped; check the error log for the cause of the problem." ) );
+         error_message.assign(WSTRING_VIEW(L"Remote boot service was stopped; check the error log for the cause of the problem." ) );
          return;
 
       case NERR_RplBootStartFailed:
    
-         error_message.assign( TEXT( "Remote boot startup failed; check the error log for the cause of the problem." ) );
+         error_message.assign(WSTRING_VIEW(L"Remote boot startup failed; check the error log for the cause of the problem." ) );
          return;
 
       case NERR_RPL_CONNECTED:
 
-         error_message.assign( TEXT( "A second connection to a Remoteboot resource is not allowed." ) );
+         error_message.assign(WSTRING_VIEW(L"A second connection to a Remoteboot resource is not allowed." ) );
          return;
 
       case NERR_BrowserConfiguredToNotRun:
 
-         error_message.assign( TEXT( "The browser service was configured with MaintainServerList=No." ) );
+         error_message.assign(WSTRING_VIEW(L"The browser service was configured with MaintainServerList=No." ) );
          return;
 
       case NERR_RplNoAdaptersStarted:
 
-         error_message.assign( TEXT( "Service failed to start since none of the network adapters started with this service." ) );
+         error_message.assign(WSTRING_VIEW(L"Service failed to start since none of the network adapters started with this service." ) );
          return;
 
       case NERR_RplBadRegistry:
 
-         error_message.assign( TEXT( "Service failed to start due to bad startup information in the registry." ) );
+         error_message.assign(WSTRING_VIEW(L"Service failed to start due to bad startup information in the registry." ) );
          return;
 
       case NERR_RplBadDatabase:
 
-         error_message.assign( TEXT( "Service failed to start because its database is absent or corrupt." ) );
+         error_message.assign(WSTRING_VIEW(L"Service failed to start because its database is absent or corrupt." ) );
          return;
 
       case NERR_RplRplfilesShare:
 
-         error_message.assign( TEXT( "Service failed to start because RPLFILES share is absent." ) );
+         error_message.assign(WSTRING_VIEW(L"Service failed to start because RPLFILES share is absent." ) );
          return;
 
       case NERR_RplNotRplServer:
 
-         error_message.assign( TEXT( "Service failed to start because RPLUSER group is absent." ) );
+         error_message.assign(WSTRING_VIEW(L"Service failed to start because RPLUSER group is absent." ) );
          return;
 
       case NERR_RplCannotEnum:
 
-         error_message.assign( TEXT( "Cannot enumerate service records." ) );
+         error_message.assign(WSTRING_VIEW(L"Cannot enumerate service records." ) );
          return;
 
       case NERR_RplWkstaInfoCorrupted:
 
-         error_message.assign( TEXT( "Workstation record information has been corrupted." ) );
+         error_message.assign(WSTRING_VIEW(L"Workstation record information has been corrupted." ) );
          return;
 
       case NERR_RplWkstaNotFound:
 
-         error_message.assign( TEXT( "Workstation record was not found." ) );
+         error_message.assign(WSTRING_VIEW(L"Workstation record was not found." ) );
          return;
 
       case NERR_RplWkstaNameUnavailable:
 
-         error_message.assign( TEXT( "Workstation name is in use by some other workstation." ) );
+         error_message.assign(WSTRING_VIEW(L"Workstation name is in use by some other workstation." ) );
          return;
 
       case NERR_RplProfileInfoCorrupted:
 
-         error_message.assign( TEXT( "Profile record information has been corrupted." ) );
+         error_message.assign(WSTRING_VIEW(L"Profile record information has been corrupted." ) );
          return;
 
       case NERR_RplProfileNotFound:
 
-         error_message.assign( TEXT( "Profile record was not found." ) );
+         error_message.assign(WSTRING_VIEW(L"Profile record was not found." ) );
          return;
 
       case NERR_RplProfileNameUnavailable:
 
-         error_message.assign( TEXT( "Profile name is in use by some other profile." ) );
+         error_message.assign(WSTRING_VIEW(L"Profile name is in use by some other profile." ) );
          return;
 
       case NERR_RplProfileNotEmpty:
 
-         error_message.assign( TEXT( "There are workstations using this profile." ) );
+         error_message.assign(WSTRING_VIEW(L"There are workstations using this profile." ) );
          return;
 
       case NERR_RplConfigInfoCorrupted:
 
-         error_message.assign( TEXT( "Configuration record information has been corrupted." ) );
+         error_message.assign(WSTRING_VIEW(L"Configuration record information has been corrupted." ) );
          return;
 
       case NERR_RplConfigNotFound:
 
-         error_message.assign( TEXT( "Configuration record was not found." ) );
+         error_message.assign(WSTRING_VIEW(L"Configuration record was not found." ) );
          return;
 
       case NERR_RplAdapterInfoCorrupted:
 
-         error_message.assign( TEXT( "Adapter id record information has been corrupted." ) );
+         error_message.assign(WSTRING_VIEW(L"Adapter id record information has been corrupted." ) );
          return;
 
       case NERR_RplInternal:
 
-         error_message.assign( TEXT( "An internal service error has occured." ) );
+         error_message.assign(WSTRING_VIEW(L"An internal service error has occured." ) );
          return;
 
       case NERR_RplVendorInfoCorrupted:
 
-         error_message.assign( TEXT( "Vendor id record information has been corrupted." ) );
+         error_message.assign(WSTRING_VIEW(L"Vendor id record information has been corrupted." ) );
          return;
 
       case NERR_RplBootInfoCorrupted:
 
-         error_message.assign( TEXT( "Boot block record information has been corrupted." ) );
+         error_message.assign(WSTRING_VIEW(L"Boot block record information has been corrupted." ) );
          return;
 
       case NERR_RplWkstaNeedsUserAcct:
 
-         error_message.assign( TEXT( "The user account for this workstation record is missing." ) );
+         error_message.assign(WSTRING_VIEW(L"The user account for this workstation record is missing." ) );
          return;
 
       case NERR_RplNeedsRPLUSERAcct:
 
-         error_message.assign( TEXT( "The RPLUSER local group could not be found." ) );
+         error_message.assign(WSTRING_VIEW(L"The RPLUSER local group could not be found." ) );
          return;
 
       case NERR_RplBootNotFound:
 
-         error_message.assign( TEXT( "Boot block record was not found." ) );
+         error_message.assign(WSTRING_VIEW(L"Boot block record was not found." ) );
          return;
 
       case NERR_RplIncompatibleProfile:
 
-         error_message.assign( TEXT( "Chosen profile is incompatible with this workstation." ) );
+         error_message.assign(WSTRING_VIEW(L"Chosen profile is incompatible with this workstation." ) );
          return;
 
       case NERR_RplAdapterNameUnavailable:
 
-         error_message.assign( TEXT( "Chosen network adapter id is in use by some other workstation." ) );
+         error_message.assign(WSTRING_VIEW(L"Chosen network adapter id is in use by some other workstation." ) );
          return;
 
       case NERR_RplConfigNotEmpty:
 
-         error_message.assign( TEXT( "There are profiles using this configuration." ) );
+         error_message.assign(WSTRING_VIEW(L"There are profiles using this configuration." ) );
          return;
 
       case NERR_RplBootInUse:
 
-         error_message.assign( TEXT( "There are workstations, profiles or configurations using this boot block." ) );
+         error_message.assign(WSTRING_VIEW(L"There are workstations, profiles or configurations using this boot block." ) );
          return;
 
       case NERR_RplBackupDatabase:
 
-         error_message.assign( TEXT( "Service failed to backup remoteboot database." ) );
+         error_message.assign(WSTRING_VIEW(L"Service failed to backup remoteboot database." ) );
          return;
 
       case NERR_RplAdapterNotFound:
 
-         error_message.assign( TEXT( "Adapter record was not found." ) );
+         error_message.assign(WSTRING_VIEW(L"Adapter record was not found." ) );
          return;
 
       case NERR_RplVendorNotFound:
 
-         error_message.assign( TEXT( "Vendor record was not found." ) );
+         error_message.assign(WSTRING_VIEW(L"Vendor record was not found." ) );
          return;
 
       case NERR_RplVendorNameUnavailable:
 
-         error_message.assign( TEXT( "Vendor name is in use by some other vendor record." ) );
+         error_message.assign(WSTRING_VIEW(L"Vendor name is in use by some other vendor record." ) );
          return;
 
       case NERR_RplBootNameUnavailable:
 
-         error_message.assign( TEXT( "(boot name, vendor id) is in use by some other boot block record." ) );
+         error_message.assign(WSTRING_VIEW(L"(boot name, vendor id) is in use by some other boot block record." ) );
          return;
 
       case NERR_RplConfigNameUnavailable:
 
-         error_message.assign( TEXT( "Configuration name is in use by some other configuration." ) );
+         error_message.assign(WSTRING_VIEW(L"Configuration name is in use by some other configuration." ) );
          return;
 
       case NERR_DfsInternalCorruption:
 
-         error_message.assign( TEXT( "The internal database maintained by the Dfs service is corrupt." ) );
+         error_message.assign(WSTRING_VIEW(L"The internal database maintained by the Dfs service is corrupt." ) );
          return;
 
       case NERR_DfsVolumeDataCorrupt:
 
-         error_message.assign( TEXT( "One of the records in the internal Dfs database is corrupt." ) );
+         error_message.assign(WSTRING_VIEW(L"One of the records in the internal Dfs database is corrupt." ) );
          return;
 
       case NERR_DfsNoSuchVolume:
 
-         error_message.assign( TEXT( "There is no volume whose entry path matches the input Entry Path." ) );
+         error_message.assign(WSTRING_VIEW(L"There is no volume whose entry path matches the input Entry Path." ) );
          return;
 
       case NERR_DfsVolumeAlreadyExists:
 
-         error_message.assign( TEXT( "A volume with the given name already exists." ) );
+         error_message.assign(WSTRING_VIEW(L"A volume with the given name already exists." ) );
          return;
 
       case NERR_DfsAlreadyShared:
 
-         error_message.assign( TEXT( "The server share specified is already shared in the Dfs." ) );
+         error_message.assign(WSTRING_VIEW(L"The server share specified is already shared in the Dfs." ) );
          return;
 
       case NERR_DfsNoSuchShare:
 
-         error_message.assign( TEXT( "The indicated server share does not support the indicated Dfs volume." ) );
+         error_message.assign(WSTRING_VIEW(L"The indicated server share does not support the indicated Dfs volume." ) );
          return;
 
       case NERR_DfsNotALeafVolume:
 
-         error_message.assign( TEXT( "The operation is not valid on a non-leaf volume." ) );
+         error_message.assign(WSTRING_VIEW(L"The operation is not valid on a non-leaf volume." ) );
          return;
 
       case NERR_DfsLeafVolume:
 
-         error_message.assign( TEXT( "The operation is not valid on a leaf volume." ) );
+         error_message.assign(WSTRING_VIEW(L"The operation is not valid on a leaf volume." ) );
          return;
 
       case NERR_DfsVolumeHasMultipleServers:
 
-         error_message.assign( TEXT( "The operation is ambiguous because the volume has multiple servers." ) );
+         error_message.assign(WSTRING_VIEW(L"The operation is ambiguous because the volume has multiple servers." ) );
          return;
 
       case NERR_DfsCantCreateJunctionPoint:
 
-         error_message.assign( TEXT( "Unable to create a junction point." ) );
+         error_message.assign(WSTRING_VIEW(L"Unable to create a junction point." ) );
          return;
 
       case NERR_DfsServerNotDfsAware:
 
-         error_message.assign( TEXT( "The server is not Dfs Aware." ) );
+         error_message.assign(WSTRING_VIEW(L"The server is not Dfs Aware." ) );
          return;
 
       case NERR_DfsBadRenamePath:
 
-         error_message.assign( TEXT( "The specified rename target path is invalid." ) );
+         error_message.assign(WSTRING_VIEW(L"The specified rename target path is invalid." ) );
          return;
 
       case NERR_DfsVolumeIsOffline:
 
-         error_message.assign( TEXT( "The specified Dfs volume is offline." ) );
+         error_message.assign(WSTRING_VIEW(L"The specified Dfs volume is offline." ) );
          return;
 
       case (NERR_BASE+573):
 
          // NERR_DfsNoSuchServer
 
-         error_message.assign( TEXT( "The specified server is not a server for this volume." ) );
+         error_message.assign(WSTRING_VIEW(L"The specified server is not a server for this volume." ) );
          return;
 
       case (NERR_BASE+574):
 
          // NERR_DfsCyclicalName
 
-         error_message.assign( TEXT( "A cycle in the Dfs name was detected." ) );
+         error_message.assign(WSTRING_VIEW(L"A cycle in the Dfs name was detected." ) );
          return;
 
       case (NERR_BASE+575):
 
          // NERR_DfsNotSupportedInServerDfs
 
-         error_message.assign( TEXT( "The operation is not supported on a server-based Dfs." ) );
+         error_message.assign(WSTRING_VIEW(L"The operation is not supported on a server-based Dfs." ) );
          return;
 
       case (NERR_BASE+576):
 
          // NERR_DfsDuplicateService
 
-         error_message.assign( TEXT( "This volume is already supported by the specified server-share." ) );
+         error_message.assign(WSTRING_VIEW(L"This volume is already supported by the specified server-share." ) );
          return;
 
       case (NERR_BASE+577):
 
          // NERR_DfsCantRemoveLastServerShare
 
-         error_message.assign( TEXT( "Can't remove the last server-share supporting this volume." ) );
+         error_message.assign(WSTRING_VIEW(L"Can't remove the last server-share supporting this volume." ) );
          return;
 
       case (NERR_BASE+578):
 
          // NERR_DfsVolumeIsInterDfs
 
-         error_message.assign( TEXT( "The operation is not supported for an Inter-Dfs volume." ) );
+         error_message.assign(WSTRING_VIEW(L"The operation is not supported for an Inter-Dfs volume." ) );
          return;
 
       case (NERR_BASE+579):
 
          // NERR_DfsInconsistent
 
-         error_message.assign( TEXT( "The internal state of the Dfs Service has become inconsistent." ) );
+         error_message.assign(WSTRING_VIEW(L"The internal state of the Dfs Service has become inconsistent." ) );
          return;
 
       case (NERR_BASE+580):
 
          // NERR_DfsServerUpgraded
 
-         error_message.assign( TEXT( "The Dfs Service has been installed on the specified server." ) );
+         error_message.assign(WSTRING_VIEW(L"The Dfs Service has been installed on the specified server." ) );
          return;
 
       case (NERR_BASE+581):
 
          // NERR_DfsDataIsIdentical
 
-         error_message.assign( TEXT( "The Dfs data being reconciled is identical." ) );
+         error_message.assign(WSTRING_VIEW(L"The Dfs data being reconciled is identical." ) );
          return;
 
       case (NERR_BASE+582):
 
          // NERR_DfsCantRemoveDfsRoot
 
-         error_message.assign( TEXT( "The Dfs root volume cannot be deleted - Uninstall Dfs if required." ) );
+         error_message.assign(WSTRING_VIEW(L"The Dfs root volume cannot be deleted - Uninstall Dfs if required." ) );
          return;
 
       case (NERR_BASE+583):
 
          // NERR_DfsChildOrParentInDfs
 
-         error_message.assign( TEXT( "A child or parent directory of the share is already in a Dfs." ) );
+         error_message.assign(WSTRING_VIEW(L"A child or parent directory of the share is already in a Dfs." ) );
          return;
 
       case (NERR_BASE+590):
 
          // NERR_DfsInternalError
 
-         error_message.assign( TEXT( "Dfs internal error." ) );
+         error_message.assign(WSTRING_VIEW(L"Dfs internal error." ) );
          return;
 
       case (NERR_BASE+591):
 
          // NERR_SetupAlreadyJoined
 
-         error_message.assign( TEXT( "This machine is already joined to a domain." ) );
+         error_message.assign(WSTRING_VIEW(L"This machine is already joined to a domain." ) );
          return;
 
       case (NERR_BASE+592):
 
          // NERR_SetupNotJoined
 
-         error_message.assign( TEXT( "This machine is not currently joined to a domain." ) );
+         error_message.assign(WSTRING_VIEW(L"This machine is not currently joined to a domain." ) );
          return;
 
       case (NERR_BASE+593):
 
          // NERR_SetupDomainController
 
-         error_message.assign( TEXT( "This machine is a domain controller and cannot be unjoined from a domain." ) );
+         error_message.assign(WSTRING_VIEW(L"This machine is a domain controller and cannot be unjoined from a domain." ) );
          return;
 
       case (NERR_BASE+594):
 
          // NERR_DefaultJoinRequired
 
-         error_message.assign( TEXT( "The destination domain controller does not support creating machine accounts in OUs." ) );
+         error_message.assign(WSTRING_VIEW(L"The destination domain controller does not support creating machine accounts in OUs." ) );
          return;
 
       case (NERR_BASE+595):
 
          // NERR_InvalidWorkgroupName
 
-         error_message.assign( TEXT( "The specified workgroup name is invalid." ) );
+         error_message.assign(WSTRING_VIEW(L"The specified workgroup name is invalid." ) );
          return;
 
       case (NERR_BASE+596):
 
          // NERR_NameUsesIncompatibleCodePage
 
-         error_message.assign( TEXT( "The specified computer name is incompatible with the default language used on the domain controller." ) );
+         error_message.assign(WSTRING_VIEW(L"The specified computer name is incompatible with the default language used on the domain controller." ) );
          return;
 
       case (NERR_BASE+597):
 
          // NERR_ComputerAccountNotFound
 
-         error_message.assign( TEXT( "The specified computer account could not be found." ) );
+         error_message.assign(WSTRING_VIEW(L"The specified computer account could not be found." ) );
          return;
 
       default:

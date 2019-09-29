@@ -631,7 +631,7 @@ _Check_return_ bool CServiceControlManager::Install( __in_z wchar_t const * serv
             return( false );
         }
 
-        if ( normalized_executable_name.find( L" " ) != std::wstring::npos )
+        if ( normalized_executable_name.find(' ') != std::wstring::npos )
         {
             // The name contains a space. We must make sure the name is in quotes
 
@@ -1088,7 +1088,7 @@ _Check_return_ bool CServiceControlManager::Remove( __in_z wchar_t const * servi
     WFC_CATCH_ALL
     {
         m_ErrorCode = ERROR_EXCEPTION_IN_SERVICE;
-        m_ErrorMessage.assign(L"Exception occurred.");
+        m_ErrorMessage.assign(WSTRING_VIEW(L"Exception occurred."));
         return( false );
     }
     WFC_END_CATCH_ALL
@@ -1163,7 +1163,7 @@ _Check_return_ bool CServiceControlManager::SetConfiguration( __in_z wchar_t con
                 normalized_executable_name.assign( name_of_executable_file );
             }
 
-            if ( normalized_executable_name.find( L" " ) != std::wstring::npos )
+            if ( normalized_executable_name.find(' ') != std::wstring::npos )
             {
                 // The name contains a space. We must make sure the name is in quotes
 

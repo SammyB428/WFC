@@ -1066,7 +1066,7 @@ void CTimeEx::Set( __in std::wstring const& iso_8601_string ) noexcept
          return;
       }
 
-      value.assign( L"0." );
+      value.assign(WSTRING_VIEW(L"0."));
       value.append( temp_string.substr( 0, character_index ) );
 
       double fractional_second = fractional_second = _wtof( value.c_str() );

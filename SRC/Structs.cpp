@@ -1244,102 +1244,102 @@ void CCommunicationProperties::ConvertBaudRateToString( __in DWORD const baud_ra
    {
       case BAUD_075:
 
-         human_readable_string.assign( L"75 bps" );
+         human_readable_string.assign(WSTRING_VIEW(L"75 bps"));
          break;
 
       case BAUD_110:
 
-         human_readable_string.assign( TEXT( "110 bps" ) );
+         human_readable_string.assign(WSTRING_VIEW(L"110 bps" ) );
          break;
 
       case BAUD_134_5:
 
-         human_readable_string.assign( TEXT( "134.5 bps" ) );
+         human_readable_string.assign(WSTRING_VIEW(L"134.5 bps" ) );
          break;
 
       case BAUD_150:
 
-         human_readable_string.assign( TEXT( "150 bps" ) );
+         human_readable_string.assign(WSTRING_VIEW(L"150 bps" ) );
          break;
 
       case BAUD_300:
 
-         human_readable_string.assign( TEXT( "300 bps" ) );
+         human_readable_string.assign(WSTRING_VIEW(L"300 bps" ) );
          break;
 
       case BAUD_600:
 
-         human_readable_string.assign( TEXT( "600 bps" ) );
+         human_readable_string.assign(WSTRING_VIEW(L"600 bps" ) );
          break;
 
       case BAUD_1200:
 
-         human_readable_string.assign( TEXT( "1200 bps" ) );
+         human_readable_string.assign(WSTRING_VIEW(L"1200 bps" ) );
          break;
 
       case BAUD_1800:
 
-         human_readable_string.assign( TEXT( "1800 bps" ) );
+         human_readable_string.assign(WSTRING_VIEW(L"1800 bps" ) );
          break;
 
       case BAUD_2400:
 
-         human_readable_string.assign( TEXT( "2400 bps" ) );
+         human_readable_string.assign(WSTRING_VIEW(L"2400 bps" ) );
          break;
 
       case BAUD_4800:
 
-         human_readable_string.assign( TEXT( "4800 bps" ) );
+         human_readable_string.assign(WSTRING_VIEW(L"4800 bps" ) );
          break;
 
       case BAUD_7200:
 
-         human_readable_string.assign( TEXT( "7200 bps" ) );
+         human_readable_string.assign(WSTRING_VIEW(L"7200 bps" ) );
          break;
 
       case BAUD_9600:
 
-         human_readable_string.assign( TEXT( "9600 bps" ) );
+         human_readable_string.assign(WSTRING_VIEW(L"9600 bps" ) );
          break;
 
       case BAUD_14400:
 
-         human_readable_string.assign( TEXT( "14400 bps" ) );
+         human_readable_string.assign(WSTRING_VIEW(L"14400 bps" ) );
          break;
 
       case BAUD_19200:
 
-         human_readable_string.assign( TEXT( "19200 bps" ) );
+         human_readable_string.assign(WSTRING_VIEW(L"19200 bps" ) );
          break;
 
       case BAUD_38400:
 
-         human_readable_string.assign( TEXT( "38400 bps" ) );
+         human_readable_string.assign(WSTRING_VIEW(L"38400 bps" ) );
          break;
 
       case BAUD_56K:
 
-         human_readable_string.assign( TEXT( "56 Kbps" ) );
+         human_readable_string.assign(WSTRING_VIEW(L"56 Kbps" ) );
          break;
 
       case BAUD_128K:
 
-         human_readable_string.assign( TEXT( "128 Kbps" ) );
+         human_readable_string.assign(WSTRING_VIEW(L"128 Kbps" ) );
          break;
 
       case BAUD_115200:
 
-         human_readable_string.assign( TEXT( "115200 bps" ) );
+         human_readable_string.assign(WSTRING_VIEW(L"115200 bps" ) );
          break;
 
       case BAUD_57600:
 
-         human_readable_string.assign( TEXT( "57600 bps" ) );
+         human_readable_string.assign(WSTRING_VIEW(L"57600 bps" ) );
          break;
 
       case BAUD_USER:
 
-         human_readable_string.assign( TEXT( "Programmable baud rates available" ) );
+         human_readable_string.assign(WSTRING_VIEW(L"Programmable baud rates available" ) );
          break;
 
       default:
@@ -1355,197 +1355,197 @@ void CCommunicationProperties::ConvertBaudRateListToString( __in DWORD const bau
 
    if ( baud_rate & BAUD_075 )
    {
-      human_readable_string.assign( L"75 bps" );
+      human_readable_string.assign(WSTRING_VIEW(L"75 bps"));
    }
 
    if ( baud_rate & BAUD_110 )
    {
       if ( human_readable_string.empty() == false )
       {
-         human_readable_string.append( L", " );
+         human_readable_string.append(WSTRING_VIEW(L", ") );
       }
 
-      human_readable_string.append( L"110 bps" );
+      human_readable_string.append(WSTRING_VIEW(L"110 bps") );
    }
 
    if ( baud_rate & BAUD_134_5 )
    {
        if (human_readable_string.empty() == false)
        {
-           human_readable_string.append(L", ");
+           human_readable_string.append(WSTRING_VIEW(L", "));
        }
 
-      human_readable_string.append( TEXT( "134.5 bps" ) );
+      human_readable_string.append(WSTRING_VIEW(L"134.5 bps" ) );
    }
 
    if ( baud_rate & BAUD_150 )
    {
        if (human_readable_string.empty() == false)
        {
-           human_readable_string.append(L", ");
+           human_readable_string.append(WSTRING_VIEW(L", "));
        }
 
-      human_readable_string.append( TEXT( "150 bps" ) );
+      human_readable_string.append(WSTRING_VIEW(L"150 bps" ) );
    }
 
    if ( baud_rate & BAUD_300 )
    {
        if (human_readable_string.empty() == false)
        {
-           human_readable_string.append(L", ");
+           human_readable_string.append(WSTRING_VIEW(L", "));
        }
 
-      human_readable_string.append( TEXT( "300 bps" ) );
+      human_readable_string.append(WSTRING_VIEW(L"300 bps" ) );
    }
 
    if ( baud_rate & BAUD_600 )
    {
        if (human_readable_string.empty() == false)
        {
-           human_readable_string.append(L", ");
+           human_readable_string.append(WSTRING_VIEW(L", "));
        }
 
-      human_readable_string.append( TEXT( "600 bps" ) );
+      human_readable_string.append(WSTRING_VIEW(L"600 bps" ) );
    }
 
    if ( baud_rate & BAUD_1200 )
    {
        if (human_readable_string.empty() == false)
        {
-           human_readable_string.append(L", ");
+           human_readable_string.append(WSTRING_VIEW(L", "));
        }
 
-      human_readable_string.append( TEXT( "1200 bps" ) );
+      human_readable_string.append(WSTRING_VIEW(L"1200 bps" ) );
    }
 
    if ( baud_rate & BAUD_1800 )
    {
        if (human_readable_string.empty() == false)
        {
-           human_readable_string.append(L", ");
+           human_readable_string.append(WSTRING_VIEW(L", "));
        }
 
-      human_readable_string.append( TEXT( "1800 bps" ) );
+      human_readable_string.append(WSTRING_VIEW(L"1800 bps" ) );
    }
 
    if ( baud_rate & BAUD_2400 )
    {
        if (human_readable_string.empty() == false)
        {
-           human_readable_string.append(L", ");
+           human_readable_string.append(WSTRING_VIEW(L", "));
        }
 
-      human_readable_string.append( TEXT( "2400 bps" ) );
+      human_readable_string.append(WSTRING_VIEW(L"2400 bps" ) );
    }
 
    if ( baud_rate & BAUD_4800 )
    {
        if (human_readable_string.empty() == false)
        {
-           human_readable_string.append(L", ");
+           human_readable_string.append(WSTRING_VIEW(L", "));
        }
 
-      human_readable_string.append( TEXT( "4800 bps" ) );
+      human_readable_string.append(WSTRING_VIEW(L"4800 bps" ) );
    }
 
    if ( baud_rate & BAUD_7200 )
    {
        if (human_readable_string.empty() == false)
        {
-           human_readable_string.append(L", ");
+           human_readable_string.append(WSTRING_VIEW(L", "));
        }
 
-      human_readable_string.append( TEXT( "7200 bps" ) );
+      human_readable_string.append(WSTRING_VIEW(L"7200 bps" ) );
    }
 
    if ( baud_rate & BAUD_9600 )
    {
        if (human_readable_string.empty() == false)
        {
-           human_readable_string.append(L", ");
+           human_readable_string.append(WSTRING_VIEW(L", "));
        }
 
-       human_readable_string.append( TEXT( "9600 bps" ) );
+       human_readable_string.append(WSTRING_VIEW(L"9600 bps" ) );
    }
 
    if ( baud_rate & BAUD_14400 )
    {
        if (human_readable_string.empty() == false)
        {
-           human_readable_string.append(L", ");
+           human_readable_string.append(WSTRING_VIEW(L", "));
        }
 
-      human_readable_string.append( TEXT( "14400 bps" ) );
+      human_readable_string.append(WSTRING_VIEW(L"14400 bps" ) );
    }
 
    if ( baud_rate & BAUD_19200 )
    {
        if (human_readable_string.empty() == false)
        {
-           human_readable_string.append(L", ");
+           human_readable_string.append(WSTRING_VIEW(L", "));
        }
 
-      human_readable_string.append( TEXT( "19200 bps" ) );
+      human_readable_string.append(WSTRING_VIEW(L"19200 bps" ) );
    }
 
    if ( baud_rate & BAUD_38400 )
    {
        if (human_readable_string.empty() == false)
        {
-           human_readable_string.append(L", ");
+           human_readable_string.append(WSTRING_VIEW(L", "));
        }
 
-      human_readable_string.append( TEXT( "38400 bps" ) );
+      human_readable_string.append(WSTRING_VIEW(L"38400 bps" ) );
    }
 
    if ( baud_rate & BAUD_56K )
    {
        if (human_readable_string.empty() == false)
        {
-           human_readable_string.append(L", ");
+           human_readable_string.append(WSTRING_VIEW(L", "));
        }
 
-      human_readable_string.append( TEXT( "56 Kbps" ) );
+      human_readable_string.append(WSTRING_VIEW(L"56 Kbps" ) );
    }
 
    if ( baud_rate & BAUD_128K )
    {
        if (human_readable_string.empty() == false)
        {
-           human_readable_string.append(L", ");
+           human_readable_string.append(WSTRING_VIEW(L", "));
        }
 
-      human_readable_string.append( TEXT( "128 Kbps" ) );
+      human_readable_string.append(WSTRING_VIEW(L"128 Kbps" ) );
    }
 
    if ( baud_rate & BAUD_115200 )
    {
        if (human_readable_string.empty() == false)
        {
-           human_readable_string.append(L", ");
+           human_readable_string.append(WSTRING_VIEW(L", "));
        }
 
-      human_readable_string.append( TEXT( "115200 bps" ) );
+      human_readable_string.append(WSTRING_VIEW(L"115200 bps" ) );
    }
 
    if ( baud_rate & BAUD_57600 )
    {
        if (human_readable_string.empty() == false)
        {
-           human_readable_string.append(L", ");
+           human_readable_string.append(WSTRING_VIEW(L", "));
        }
 
-      human_readable_string.append( TEXT( "57600 bps" ) );
+      human_readable_string.append(WSTRING_VIEW(L"57600 bps" ) );
    }
 
    if ( baud_rate & BAUD_USER )
    {
        if (human_readable_string.empty() == false)
        {
-           human_readable_string.append(L", ");
+           human_readable_string.append(WSTRING_VIEW(L", "));
        }
 
-      human_readable_string.append( L"Programmable baud rates available" );
+      human_readable_string.append(WSTRING_VIEW(L"Programmable baud rates available"));
    }
 }
 
@@ -1555,57 +1555,57 @@ void CCommunicationProperties::ConvertDataBitsToString( __in DWORD const data_bi
 
    if ( data_bits & DATABITS_5 )
    {
-      human_readable_string.assign( TEXT( "5 data bits" ) );
+      human_readable_string.assign(WSTRING_VIEW(L"5 data bits" ) );
    }
 
    if ( data_bits & DATABITS_6 )
    {
        if (human_readable_string.empty() == false)
        {
-           human_readable_string.append(L", ");
+           human_readable_string.append(WSTRING_VIEW(L", "));
        }
 
-      human_readable_string.append( TEXT( "6 data bits" ) );
+      human_readable_string.append(WSTRING_VIEW(L"6 data bits" ) );
    }
 
    if ( data_bits & DATABITS_7 )
    {
        if (human_readable_string.empty() == false)
        {
-           human_readable_string.append(L", ");
+           human_readable_string.append(WSTRING_VIEW(L", "));
        }
 
-      human_readable_string.append( TEXT( "7 data bits" ) );
+      human_readable_string.append(WSTRING_VIEW(L"7 data bits" ) );
    }
 
    if ( data_bits & DATABITS_8 )
    {
        if (human_readable_string.empty() == false)
        {
-           human_readable_string.append(L", ");
+           human_readable_string.append(WSTRING_VIEW(L", "));
        }
 
-      human_readable_string.append( TEXT( "8 data bits" ) );
+      human_readable_string.append(WSTRING_VIEW(L"8 data bits" ) );
    }
 
    if ( data_bits & DATABITS_16 )
    {
        if (human_readable_string.empty() == false)
        {
-           human_readable_string.append(L", ");
+           human_readable_string.append(WSTRING_VIEW(L", "));
        }
 
-      human_readable_string.append( TEXT( "16 data bits" ) );
+      human_readable_string.append(WSTRING_VIEW(L"16 data bits" ) );
    }
 
    if ( data_bits & DATABITS_16X )
    {
        if (human_readable_string.empty() == false)
        {
-           human_readable_string.append(L", ");
+           human_readable_string.append(WSTRING_VIEW(L", "));
        }
 
-      human_readable_string.append( TEXT( "Special wide path through serial hardware" ) );
+      human_readable_string.append(WSTRING_VIEW(L"Special wide path through serial hardware" ) );
    }
 }
 
@@ -1615,97 +1615,97 @@ void CCommunicationProperties::ConvertProviderCapabilitiesToString( __in DWORD c
 
    if ( capabilities & PCF_DTRDSR )
    {
-      human_readable_string.assign( TEXT( "DTR/DSR supported" ) );
+      human_readable_string.assign(WSTRING_VIEW(L"DTR/DSR supported" ) );
    }
 
    if ( capabilities & PCF_RTSCTS )
    {
        if (human_readable_string.empty() == false)
        {
-           human_readable_string.append(L", ");
+           human_readable_string.append(WSTRING_VIEW(L", "));
        }
 
-      human_readable_string.append( TEXT( "RTS/CTS supported" ) );
+      human_readable_string.append(WSTRING_VIEW(L"RTS/CTS supported" ) );
    }
 
    if ( capabilities & PCF_RLSD )
    {
        if (human_readable_string.empty() == false)
        {
-           human_readable_string.append(L", ");
+           human_readable_string.append(WSTRING_VIEW(L", "));
        }
 
-      human_readable_string.append( TEXT( "RLSD supported" ) );
+      human_readable_string.append(WSTRING_VIEW(L"RLSD supported" ) );
    }
 
    if ( capabilities & PCF_PARITY_CHECK )
    {
        if (human_readable_string.empty() == false)
        {
-           human_readable_string.append(L", ");
+           human_readable_string.append(WSTRING_VIEW(L", "));
        }
 
-      human_readable_string.append( TEXT( "Parity checking supported" ) );
+      human_readable_string.append(WSTRING_VIEW(L"Parity checking supported" ) );
    }
 
    if ( capabilities & PCF_XONXOFF )
    {
        if (human_readable_string.empty() == false)
        {
-           human_readable_string.append(L", ");
+           human_readable_string.append(WSTRING_VIEW(L", "));
        }
 
-      human_readable_string.append( TEXT( "XON/XOFF supported" ) );
+      human_readable_string.append(WSTRING_VIEW(L"XON/XOFF supported" ) );
    }
 
    if ( capabilities & PCF_SETXCHAR )
    {
        if (human_readable_string.empty() == false)
        {
-           human_readable_string.append(L", ");
+           human_readable_string.append(WSTRING_VIEW(L", "));
        }
 
-      human_readable_string.append( TEXT( "Settable XON/XOFF supported" ) );
+      human_readable_string.append(WSTRING_VIEW(L"Settable XON/XOFF supported" ) );
    }
 
    if ( capabilities & PCF_TOTALTIMEOUTS )
    {
        if (human_readable_string.empty() == false)
        {
-           human_readable_string.append(L", ");
+           human_readable_string.append(WSTRING_VIEW(L", "));
        }
 
-      human_readable_string.append( TEXT( "Total (elapsed) time-outs supported" ) );
+      human_readable_string.append(WSTRING_VIEW(L"Total (elapsed) time-outs supported" ) );
    }
 
    if ( capabilities & PCF_INTTIMEOUTS )
    {
        if (human_readable_string.empty() == false)
        {
-           human_readable_string.append(L", ");
+           human_readable_string.append(WSTRING_VIEW(L", "));
        }
 
-      human_readable_string.append( TEXT( "Interval time-outs supported" ) );
+      human_readable_string.append(WSTRING_VIEW(L"Interval time-outs supported" ) );
    }
 
    if ( capabilities & PCF_SPECIALCHARS )
    {
        if (human_readable_string.empty() == false)
        {
-           human_readable_string.append(L", ");
+           human_readable_string.append(WSTRING_VIEW(L", "));
        }
 
-      human_readable_string.append( TEXT( "Special character support provided" ) );
+      human_readable_string.append(WSTRING_VIEW(L"Special character support provided" ) );
    }
 
    if ( capabilities & PCF_16BITMODE )
    {
        if (human_readable_string.empty() == false)
        {
-           human_readable_string.append(L", ");
+           human_readable_string.append(WSTRING_VIEW(L", "));
        }
 
-      human_readable_string.append( TEXT( "Special 16-bit mode supported" ) );
+      human_readable_string.append(WSTRING_VIEW(L"Special 16-bit mode supported" ) );
    }
 }
 
@@ -1715,67 +1715,67 @@ void CCommunicationProperties::ConvertProviderSubtypeToString( __in DWORD const 
    {
       case PST_UNSPECIFIED:
 
-         human_readable_string.assign( TEXT( "Unspecified" ) );
+         human_readable_string.assign(WSTRING_VIEW(L"Unspecified" ) );
          break;
 
       case PST_RS232:
 
-         human_readable_string.assign( TEXT( "RS-232 serial port" ) );
+         human_readable_string.assign(WSTRING_VIEW(L"RS-232 serial port" ) );
          break;
 
       case PST_PARALLELPORT:
 
-         human_readable_string.assign( TEXT( "Parallel port" ) );
+         human_readable_string.assign(WSTRING_VIEW(L"Parallel port" ) );
          break;
 
       case PST_RS422:
 
-         human_readable_string.assign( TEXT( "RS-422 port" ) );
+         human_readable_string.assign(WSTRING_VIEW(L"RS-422 port" ) );
          break;
 
       case PST_RS423:
 
-         human_readable_string.assign( TEXT( "RS-423 port" ) );
+         human_readable_string.assign(WSTRING_VIEW(L"RS-423 port" ) );
          break;
 
       case PST_RS449:
 
-         human_readable_string.assign( TEXT( "RS-449 port" ) );
+         human_readable_string.assign(WSTRING_VIEW(L"RS-449 port" ) );
          break;
 
       case PST_MODEM:
 
-         human_readable_string.assign( TEXT( "Modem device" ) );
+         human_readable_string.assign(WSTRING_VIEW(L"Modem device" ) );
          break;
 
       case PST_FAX:
 
-         human_readable_string.assign( TEXT( "FAX device" ) );
+         human_readable_string.assign(WSTRING_VIEW(L"FAX device" ) );
          break;
 
       case PST_SCANNER:
 
-         human_readable_string.assign( TEXT( "Scanner device" ) );
+         human_readable_string.assign(WSTRING_VIEW(L"Scanner device" ) );
          break;
 
       case PST_NETWORK_BRIDGE:
 
-         human_readable_string.assign( TEXT( "Unspecified network bridge" ) );
+         human_readable_string.assign(WSTRING_VIEW(L"Unspecified network bridge" ) );
          break;
 
       case PST_LAT:
 
-         human_readable_string.assign( TEXT( "LAT protocol" ) );
+         human_readable_string.assign(WSTRING_VIEW(L"LAT protocol" ) );
          break;
 
       case PST_TCPIP_TELNET:
 
-         human_readable_string.assign( TEXT( "TCP/IP Telnet protocol" ) );
+         human_readable_string.assign(WSTRING_VIEW(L"TCP/IP Telnet protocol" ) );
          break;
 
       case PST_X25:
 
-         human_readable_string.assign( TEXT( "X.25 standards" ) );
+         human_readable_string.assign(WSTRING_VIEW(L"X.25 standards" ) );
          break;
 
       default:
@@ -1791,67 +1791,67 @@ void CCommunicationProperties::ConvertSettableParametersToString( __in DWORD con
 
    if ( parameters & SP_PARITY )
    {
-      human_readable_string.assign( TEXT( "Parity" ) );
+      human_readable_string.assign(WSTRING_VIEW(L"Parity" ) );
    }
 
    if ( parameters & SP_BAUD )
    {
        if (human_readable_string.empty() == false)
        {
-           human_readable_string.append(L", ");
+           human_readable_string.append(WSTRING_VIEW(L", "));
        }
 
-      human_readable_string.append( TEXT( "Baud rate" ) );
+      human_readable_string.append(WSTRING_VIEW(L"Baud rate" ) );
    }
 
    if ( parameters & SP_DATABITS )
    {
        if (human_readable_string.empty() == false)
        {
-           human_readable_string.append(L", ");
+           human_readable_string.append(WSTRING_VIEW(L", "));
        }
 
-      human_readable_string.append( TEXT( "Data bits" ) );
+      human_readable_string.append(WSTRING_VIEW(L"Data bits" ) );
    }
 
    if ( parameters & SP_STOPBITS )
    {
        if (human_readable_string.empty() == false)
        {
-           human_readable_string.append(L", ");
+           human_readable_string.append(WSTRING_VIEW(L", "));
        }
 
-      human_readable_string.append( TEXT( "Stop bits" ) );
+      human_readable_string.append(WSTRING_VIEW(L"Stop bits" ) );
    }
 
    if ( parameters & SP_HANDSHAKING )
    {
        if (human_readable_string.empty() == false)
        {
-           human_readable_string.append(L", ");
+           human_readable_string.append(WSTRING_VIEW(L", "));
        }
 
-      human_readable_string.append( TEXT( "Handshaking (flow control)" ) );
+      human_readable_string.append(WSTRING_VIEW(L"Handshaking (flow control)" ) );
    }
 
    if ( parameters & SP_PARITY_CHECK )
    {
        if (human_readable_string.empty() == false)
        {
-           human_readable_string.append(L", ");
+           human_readable_string.append(WSTRING_VIEW(L", "));
        }
 
-      human_readable_string.append( TEXT( "Parity checking" ) );
+      human_readable_string.append(WSTRING_VIEW(L"Parity checking" ) );
    }
 
    if ( parameters & SP_RLSD )
    {
        if (human_readable_string.empty() == false)
        {
-           human_readable_string.append(L", ");
+           human_readable_string.append(WSTRING_VIEW(L", "));
        }
 
-      human_readable_string.append( TEXT( "Receive-line-signal-detect (RLSD)" ) );
+      human_readable_string.append(WSTRING_VIEW(L"Receive-line-signal-detect (RLSD)" ) );
    }
 }
 
@@ -1861,77 +1861,77 @@ void CCommunicationProperties::ConvertStopParityToString( __in DWORD const stop_
 
    if ( stop_parity & STOPBITS_10 )
    {
-      human_readable_string.assign( TEXT( "1 stop bit" ) );
+      human_readable_string.assign(WSTRING_VIEW(L"1 stop bit" ) );
    }
 
    if ( stop_parity & STOPBITS_15 )
    {
        if (human_readable_string.empty() == false)
        {
-           human_readable_string.append(L", ");
+           human_readable_string.append(WSTRING_VIEW(L", "));
        }
 
-      human_readable_string.append( TEXT( "1.5 stop bits" ) );
+      human_readable_string.append(WSTRING_VIEW(L"1.5 stop bits" ) );
    }
 
    if ( stop_parity & STOPBITS_20 )
    {
        if (human_readable_string.empty() == false)
        {
-           human_readable_string.append(L", ");
+           human_readable_string.append(WSTRING_VIEW(L", "));
        }
 
-      human_readable_string.append( TEXT( "2 stop bits" ) );
+      human_readable_string.append(WSTRING_VIEW(L"2 stop bits" ) );
    }
 
    if ( stop_parity & PARITY_NONE )
    {
        if (human_readable_string.empty() == false)
        {
-           human_readable_string.append(L", ");
+           human_readable_string.append(WSTRING_VIEW(L", "));
        }
 
-      human_readable_string.append( TEXT( "No parity" ) );
+      human_readable_string.append(WSTRING_VIEW(L"No parity" ) );
    }
 
    if ( stop_parity & PARITY_ODD )
    {
        if (human_readable_string.empty() == false)
        {
-           human_readable_string.append(L", ");
+           human_readable_string.append(WSTRING_VIEW(L", "));
        }
 
-      human_readable_string.append( TEXT( "Odd parity" ) );
+      human_readable_string.append(WSTRING_VIEW(L"Odd parity" ) );
    }
 
    if ( stop_parity & PARITY_EVEN )
    {
        if (human_readable_string.empty() == false)
        {
-           human_readable_string.append(L", ");
+           human_readable_string.append(WSTRING_VIEW(L", "));
        }
 
-      human_readable_string.append( TEXT( "Even parity" ) );
+      human_readable_string.append(WSTRING_VIEW(L"Even parity" ) );
    }
 
    if ( stop_parity & PARITY_MARK )
    {
        if (human_readable_string.empty() == false)
        {
-           human_readable_string.append(L", ");
+           human_readable_string.append(WSTRING_VIEW(L", "));
        }
 
-      human_readable_string.append( TEXT( "Mark parity" ) );
+      human_readable_string.append(WSTRING_VIEW(L"Mark parity" ) );
    }
 
    if ( stop_parity & PARITY_SPACE )
    {
        if (human_readable_string.empty() == false)
        {
-           human_readable_string.append(L", ");
+           human_readable_string.append(WSTRING_VIEW(L", "));
        }
 
-      human_readable_string.append( TEXT( "Space parity" ) );
+      human_readable_string.append(WSTRING_VIEW(L"Space parity" ) );
    }
 }
 

@@ -2174,7 +2174,7 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::m_ParseDOCTYPESection( _In
 
     // Keep contents for later writing
 
-    m_Contents.assign( L"DOCTYPE " );
+    m_Contents.assign(WSTRING_VIEW(L"DOCTYPE "));
     m_Contents.append( name );
 
     string_to_parse.erase(0, name.length());
@@ -2683,7 +2683,7 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::m_ParseDOCTYPESection( _In
 
                     std::wstring error_message;
 
-                    error_message.assign( L"Unsupported (non-standalone) External Reference to \"" );
+                    error_message.assign(WSTRING_VIEW(L"Unsupported (non-standalone) External Reference to \""));
                     error_message.append( entity_resolved_to );
                     error_message.push_back( '\"' );
 
@@ -3152,7 +3152,7 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::m_ParseTag( _In_ std::wstr
 
                 // Well, whaddya know... It is a CDATA section
                 m_Type = ElementType::CharacterData;
-                tag_name.assign( L"[CDATA[" );
+                tag_name.assign(WSTRING_VIEW(L"[CDATA["));
 
                 if ( m_ParseCDATASection( tag, parser ) == false )
                 {
@@ -4129,7 +4129,7 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::m_ParseXMLDeclaration( _In
 
         if ( value.length() > 1 )
         {
-            legal_characters.assign( L"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789._-" );
+            legal_characters.assign(WSTRING_VIEW(L"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789._-"));
 
             for ( auto const loop_index : Range(value.length(), 1) )
             {

@@ -70,8 +70,8 @@ namespace Win32FoundationClasses
 #endif // _MSC_VER > 1000
 #endif // WFC_DONT_USE_NAMESPACES
 
-    void PASCAL ASCII_to_UNICODE( _In_z_ LPCSTR ansi_string, __out_z LPWSTR unicode_string ) noexcept;
-    void PASCAL UNICODE_to_ASCII( _In_z_ LPCWSTR unicode_string, __out_z LPSTR ansi_string, _In_ SSIZE_T number_of_unicode_characters_to_convert = (-1), _In_ const UINT code_page = CP_ACP ) noexcept;
+    void PASCAL ASCII_to_UNICODE(_In_z_ std::string_view ansi_string, __out_z LPWSTR unicode_string) noexcept;
+    void PASCAL UNICODE_to_ASCII(_In_ std::wstring_view unicode_string, __out_z LPSTR ansi_string, _In_ SSIZE_T number_of_unicode_characters_to_convert = (-1), _In_ const UINT code_page = CP_ACP) noexcept;
 
 #if ! defined( WFC_DONT_USE_NAMESPACES )
 #if ( _MSC_VER > 1000 )

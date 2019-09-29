@@ -269,7 +269,7 @@ void CUniversalNamingConvention::Make( void ) noexcept
           (LPCTSTR) PathName );
 #endif // WFC_STL
 
-   UNC.assign( L"\\\\" );
+   UNC.assign(WSTRING_VIEW(L"\\\\"));
    UNC.append( ServerName );
    UNC.push_back( '\\' );
    UNC.append( ShareName );

@@ -537,37 +537,37 @@ void CWfcTrace::OutputVariant( __in_z LPCTSTR message, __in VARIANT const * valu
 
       if ( vt & VT_VECTOR )
       {
-         data_type.assign( L"VT_VECTOR" );
+         data_type.assign(WSTRING_VIEW(L"VT_VECTOR"));
       }
 
       if ( vt & VT_ARRAY )
       {
          if ( data_type.empty() == false )
          {
-            data_type.append( TEXT( " | " ) );
+            data_type.append(WSTRING_VIEW(L" | " ) );
          }
 
-         data_type.append( TEXT( "VT_ARRAY" ) );
+         data_type.append(WSTRING_VIEW(L"VT_ARRAY" ) );
       }
 
       if ( vt & VT_BYREF )
       {
           if (data_type.empty() == false)
           {
-              data_type.append(TEXT(" | "));
+              data_type.append(WSTRING_VIEW(L" | "));
           }
 
-         data_type.append( TEXT( "VT_BYREF" ) );
+         data_type.append(WSTRING_VIEW(L"VT_BYREF" ) );
       }
 
       if ( vt & VT_RESERVED )
       {
           if (data_type.empty() == false)
           {
-              data_type.append(TEXT(" | "));
+              data_type.append(WSTRING_VIEW(L" | "));
           }
 
-         data_type.append( TEXT( "VT_RESERVED" ) );
+         data_type.append(WSTRING_VIEW(L"VT_RESERVED" ) );
       }
 
       DWORD basic_type = vt & VT_TYPEMASK;
@@ -578,420 +578,420 @@ void CWfcTrace::OutputVariant( __in_z LPCTSTR message, __in VARIANT const * valu
 
              if (data_type.empty() == false)
              {
-                 data_type.append(TEXT(" | "));
+                 data_type.append(WSTRING_VIEW(L" | "));
              }
 
-            data_type.append( TEXT( "VT_EMPTY" ) );
+            data_type.append(WSTRING_VIEW(L"VT_EMPTY" ) );
             break;
 
          case VT_NULL:
 
              if (data_type.empty() == false)
              {
-                 data_type.append(TEXT(" | "));
+                 data_type.append(WSTRING_VIEW(L" | "));
              }
 
-            data_type.append( TEXT( "VT_NULL" ) );
+            data_type.append(WSTRING_VIEW(L"VT_NULL" ) );
             break;
 
          case VT_I2:
 
              if (data_type.empty() == false)
              {
-                 data_type.append(TEXT(" | "));
+                 data_type.append(WSTRING_VIEW(L" | "));
              }
 
-            data_type.append( TEXT( "VT_I2" ) );
+            data_type.append(WSTRING_VIEW(L"VT_I2" ) );
             break;
 
          case VT_I4:
 
              if (data_type.empty() == false)
              {
-                 data_type.append(TEXT(" | "));
+                 data_type.append(WSTRING_VIEW(L" | "));
              }
 
-            data_type.append( TEXT( "VT_I4" ) );
+            data_type.append(WSTRING_VIEW(L"VT_I4" ) );
             break;
 
          case VT_R4:
 
              if (data_type.empty() == false)
              {
-                 data_type.append(TEXT(" | "));
+                 data_type.append(WSTRING_VIEW(L" | "));
              }
 
-            data_type.append( TEXT( "VT_R4" ) );
+            data_type.append(WSTRING_VIEW(L"VT_R4" ) );
             break;
 
          case VT_R8:
 
              if (data_type.empty() == false)
              {
-                 data_type.append(TEXT(" | "));
+                 data_type.append(WSTRING_VIEW(L" | "));
              }
 
-            data_type.append( TEXT( "VT_R8" ) );
+            data_type.append(WSTRING_VIEW(L"VT_R8" ) );
             break;
 
          case VT_CY:
 
              if (data_type.empty() == false)
              {
-                 data_type.append(TEXT(" | "));
+                 data_type.append(WSTRING_VIEW(L" | "));
              }
 
-            data_type.append( TEXT( "VT_CY" ) );
+            data_type.append(WSTRING_VIEW(L"VT_CY" ) );
             break;
 
          case VT_DATE:
 
              if (data_type.empty() == false)
              {
-                 data_type.append(TEXT(" | "));
+                 data_type.append(WSTRING_VIEW(L" | "));
              }
 
-            data_type.append( TEXT( "VT_DATE" ) );
+            data_type.append(WSTRING_VIEW(L"VT_DATE" ) );
             break;
 
          case VT_BSTR:
 
              if (data_type.empty() == false)
              {
-                 data_type.append(TEXT(" | "));
+                 data_type.append(WSTRING_VIEW(L" | "));
              }
 
-            data_type.append( TEXT( "VT_BSTR" ) );
+            data_type.append(WSTRING_VIEW(L"VT_BSTR" ) );
             break;
 
          case VT_DISPATCH:
 
              if (data_type.empty() == false)
              {
-                 data_type.append(TEXT(" | "));
+                 data_type.append(WSTRING_VIEW(L" | "));
              }
 
-            data_type.append( TEXT( "VT_DISPATCH" ) );
+            data_type.append(WSTRING_VIEW(L"VT_DISPATCH" ) );
             break;
 
          case VT_ERROR:
 
              if (data_type.empty() == false)
              {
-                 data_type.append(TEXT(" | "));
+                 data_type.append(WSTRING_VIEW(L" | "));
              }
 
-            data_type.append( TEXT( "VT_ERROR" ) );
+            data_type.append(WSTRING_VIEW(L"VT_ERROR" ) );
             break;
 
          case VT_BOOL:
 
              if (data_type.empty() == false)
              {
-                 data_type.append(TEXT(" | "));
+                 data_type.append(WSTRING_VIEW(L" | "));
              }
 
-            data_type.append( TEXT( "VT_BOOL" ) );
+            data_type.append(WSTRING_VIEW(L"VT_BOOL" ) );
             break;
 
          case VT_VARIANT:
 
              if (data_type.empty() == false)
              {
-                 data_type.append(TEXT(" | "));
+                 data_type.append(WSTRING_VIEW(L" | "));
              }
 
-            data_type.append( TEXT( "VT_VARIANT" ) );
+            data_type.append(WSTRING_VIEW(L"VT_VARIANT" ) );
             break;
 
          case VT_UNKNOWN:
 
              if (data_type.empty() == false)
              {
-                 data_type.append(TEXT(" | "));
+                 data_type.append(WSTRING_VIEW(L" | "));
              }
 
-            data_type.append( TEXT( "VT_UNKNOWN" ) );
+            data_type.append(WSTRING_VIEW(L"VT_UNKNOWN" ) );
             break;
 
          case VT_DECIMAL:
 
              if (data_type.empty() == false)
              {
-                 data_type.append(TEXT(" | "));
+                 data_type.append(WSTRING_VIEW(L" | "));
              }
              
-             data_type.append( TEXT( "VT_DECIMAL" ) );
+             data_type.append(WSTRING_VIEW(L"VT_DECIMAL" ) );
             break;
 
          case VT_I1:
 
              if (data_type.empty() == false)
              {
-                 data_type.append(TEXT(" | "));
+                 data_type.append(WSTRING_VIEW(L" | "));
              }
 
-            data_type.append( TEXT( "VT_I1" ) );
+            data_type.append(WSTRING_VIEW(L"VT_I1" ) );
             break;
 
          case VT_UI1:
 
              if (data_type.empty() == false)
              {
-                 data_type.append(TEXT(" | "));
+                 data_type.append(WSTRING_VIEW(L" | "));
              }
 
-            data_type.append( TEXT( "VT_UI1" ) );
+            data_type.append(WSTRING_VIEW(L"VT_UI1" ) );
             break;
 
          case VT_UI2:
 
              if (data_type.empty() == false)
              {
-                 data_type.append(TEXT(" | "));
+                 data_type.append(WSTRING_VIEW(L" | "));
              }
 
-            data_type.append( TEXT( "VT_UI2" ) );
+            data_type.append(WSTRING_VIEW(L"VT_UI2" ) );
             break;
 
          case VT_UI4:
 
              if (data_type.empty() == false)
              {
-                 data_type.append(TEXT(" | "));
+                 data_type.append(WSTRING_VIEW(L" | "));
              }
 
-            data_type.append( TEXT( "VT_UI4" ) );
+            data_type.append(WSTRING_VIEW(L"VT_UI4" ) );
             break;
 
          case VT_I8:
 
              if (data_type.empty() == false)
              {
-                 data_type.append(TEXT(" | "));
+                 data_type.append(WSTRING_VIEW(L" | "));
              }
              
-             data_type.append( TEXT( "VT_I8" ) );
+             data_type.append(WSTRING_VIEW(L"VT_I8" ) );
             break;
 
          case VT_UI8:
 
              if (data_type.empty() == false)
              {
-                 data_type.append(TEXT(" | "));
+                 data_type.append(WSTRING_VIEW(L" | "));
              }
 
-            data_type.append( TEXT( "VT_UI8" ) );
+            data_type.append(WSTRING_VIEW(L"VT_UI8" ) );
             break;
 
          case VT_INT:
 
              if (data_type.empty() == false)
              {
-                 data_type.append(TEXT(" | "));
+                 data_type.append(WSTRING_VIEW(L" | "));
              }
 
-            data_type.append( TEXT( "VT_INT" ) );
+            data_type.append(WSTRING_VIEW(L"VT_INT" ) );
             break;
 
          case VT_UINT:
 
              if (data_type.empty() == false)
              {
-                 data_type.append(TEXT(" | "));
+                 data_type.append(WSTRING_VIEW(L" | "));
              }
 
-             data_type.append( TEXT( "VT_UINT" ) );
+             data_type.append(WSTRING_VIEW(L"VT_UINT" ) );
             break;
 
          case VT_VOID:
 
              if (data_type.empty() == false)
              {
-                 data_type.append(TEXT(" | "));
+                 data_type.append(WSTRING_VIEW(L" | "));
              }
 
-            data_type.append( TEXT( "VT_VOID" ) );
+            data_type.append(WSTRING_VIEW(L"VT_VOID" ) );
             break;
 
          case VT_HRESULT:
 
              if (data_type.empty() == false)
              {
-                 data_type.append(TEXT(" | "));
+                 data_type.append(WSTRING_VIEW(L" | "));
              }
 
-            data_type.append( TEXT( "VT_HRESULT" ) );
+            data_type.append(WSTRING_VIEW(L"VT_HRESULT" ) );
             break;
 
          case VT_PTR:
 
              if (data_type.empty() == false)
              {
-                 data_type.append(TEXT(" | "));
+                 data_type.append(WSTRING_VIEW(L" | "));
              }
 
-            data_type.append( TEXT( "VT_PTR" ) );
+            data_type.append(WSTRING_VIEW(L"VT_PTR" ) );
             break;
 
          case VT_SAFEARRAY:
 
              if (data_type.empty() == false)
              {
-                 data_type.append(TEXT(" | "));
+                 data_type.append(WSTRING_VIEW(L" | "));
              }
 
-            data_type.append( TEXT( "VT_SAFEARRAY" ) );
+            data_type.append(WSTRING_VIEW(L"VT_SAFEARRAY" ) );
             break;
 
          case VT_CARRAY:
 
              if (data_type.empty() == false)
              {
-                 data_type.append(TEXT(" | "));
+                 data_type.append(WSTRING_VIEW(L" | "));
              }
              
-             data_type.append( TEXT( "VT_CARRAY" ) );
+             data_type.append(WSTRING_VIEW(L"VT_CARRAY" ) );
             break;
 
          case VT_USERDEFINED:
 
              if (data_type.empty() == false)
              {
-                 data_type.append(TEXT(" | "));
+                 data_type.append(WSTRING_VIEW(L" | "));
              }
 
-            data_type.append( TEXT( "VT_USERDEFINED" ) );
+            data_type.append(WSTRING_VIEW(L"VT_USERDEFINED" ) );
             break;
 
          case VT_LPSTR:
 
              if (data_type.empty() == false)
              {
-                 data_type.append(TEXT(" | "));
+                 data_type.append(WSTRING_VIEW(L" | "));
              }
 
-            data_type.append( TEXT( "VT_LPSTR" ) );
+            data_type.append(WSTRING_VIEW(L"VT_LPSTR" ) );
             break;
 
          case VT_LPWSTR:
 
              if (data_type.empty() == false)
              {
-                 data_type.append(TEXT(" | "));
+                 data_type.append(WSTRING_VIEW(L" | "));
              }
 
-            data_type.append( TEXT( "VT_LPWSTR" ) );
+            data_type.append(WSTRING_VIEW(L"VT_LPWSTR" ) );
             break;
 
          case VT_RECORD:
 
              if (data_type.empty() == false)
              {
-                 data_type.append(TEXT(" | "));
+                 data_type.append(WSTRING_VIEW(L" | "));
              }
 
-            data_type.append( TEXT( "VT_RECORD" ) );
+            data_type.append(WSTRING_VIEW(L"VT_RECORD" ) );
             break;
 
          case VT_FILETIME:
 
              if (data_type.empty() == false)
              {
-                 data_type.append(TEXT(" | "));
+                 data_type.append(WSTRING_VIEW(L" | "));
              }
 
-            data_type.append( TEXT( "VT_FILETIME" ) );
+            data_type.append(WSTRING_VIEW(L"VT_FILETIME" ) );
             break;
 
          case VT_BLOB:
 
              if (data_type.empty() == false)
              {
-                 data_type.append(TEXT(" | "));
+                 data_type.append(WSTRING_VIEW(L" | "));
              }
 
-            data_type.append( TEXT( "VT_BLOB" ) );
+            data_type.append(WSTRING_VIEW(L"VT_BLOB" ) );
             break;
 
          case VT_STREAM:
 
              if (data_type.empty() == false)
              {
-                 data_type.append(TEXT(" | "));
+                 data_type.append(WSTRING_VIEW(L" | "));
              }
 
-            data_type.append( TEXT( "VT_STREAM" ) );
+            data_type.append(WSTRING_VIEW(L"VT_STREAM" ) );
             break;
 
          case VT_STORAGE:
 
              if (data_type.empty() == false)
              {
-                 data_type.append(TEXT(" | "));
+                 data_type.append(WSTRING_VIEW(L" | "));
              }
 
-            data_type.append( TEXT( "VT_STORAGE" ) );
+            data_type.append(WSTRING_VIEW(L"VT_STORAGE" ) );
             break;
 
          case VT_STREAMED_OBJECT:
 
              if (data_type.empty() == false)
              {
-                 data_type.append(TEXT(" | "));
+                 data_type.append(WSTRING_VIEW(L" | "));
              }
 
-            data_type.append( TEXT( "VT_STREAMED_OBJECT" ) );
+            data_type.append(WSTRING_VIEW(L"VT_STREAMED_OBJECT" ) );
             break;
 
          case VT_STORED_OBJECT:
 
              if (data_type.empty() == false)
              {
-                 data_type.append(TEXT(" | "));
+                 data_type.append(WSTRING_VIEW(L" | "));
              }
 
-            data_type.append( TEXT( "VT_STORED_OBJECT" ) );
+            data_type.append(WSTRING_VIEW(L"VT_STORED_OBJECT" ) );
             break;
 
          case VT_BLOB_OBJECT:
 
              if (data_type.empty() == false)
              {
-                 data_type.append(TEXT(" | "));
+                 data_type.append(WSTRING_VIEW(L" | "));
              }
              
-             data_type.append( TEXT( "VT_BLOB_OBJECT" ) );
+             data_type.append(WSTRING_VIEW(L"VT_BLOB_OBJECT" ) );
             break;
 
          case VT_CF:
 
              if (data_type.empty() == false)
              {
-                 data_type.append(TEXT(" | "));
+                 data_type.append(WSTRING_VIEW(L" | "));
              }
 
-            data_type.append( TEXT( "VT_CF" ) );
+            data_type.append(WSTRING_VIEW(L"VT_CF" ) );
             break;
 
          case VT_CLSID:
 
              if (data_type.empty() == false)
              {
-                 data_type.append(TEXT(" | "));
+                 data_type.append(WSTRING_VIEW(L" | "));
              }
 
-            data_type.append( TEXT( "VT_CLSID" ) );
+            data_type.append(WSTRING_VIEW(L"VT_CLSID" ) );
             break;
 
          case VT_BSTR_BLOB:
 
              if (data_type.empty() == false)
              {
-                 data_type.append(TEXT(" | "));
+                 data_type.append(WSTRING_VIEW(L" | "));
              }
 
-            data_type.append( TEXT( "VT_BSTR_BLOB" ) );
+            data_type.append(WSTRING_VIEW(L"VT_BSTR_BLOB" ) );
             break;
 
          default:
@@ -1003,7 +1003,7 @@ void CWfcTrace::OutputVariant( __in_z LPCTSTR message, __in VARIANT const * valu
 
                if (data_type.empty() == false)
                {
-                   data_type.append(TEXT(" | "));
+                   data_type.append(WSTRING_VIEW(L" | "));
                }
 
                data_type.append( data_type_string );
@@ -1014,7 +1014,7 @@ void CWfcTrace::OutputVariant( __in_z LPCTSTR message, __in VARIANT const * valu
 
       std::wstring variant_message( message );
    
-      variant_message.append( L"Variant type is " );
+      variant_message.append(WSTRING_VIEW(L"Variant type is "));
       variant_message.append( data_type );
 
       Output( variant_message.c_str() );

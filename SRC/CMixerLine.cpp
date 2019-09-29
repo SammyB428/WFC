@@ -199,102 +199,102 @@ void CMixerLine::GetComponent( _Out_ std::wstring& component_string ) const noex
    {
    case CMixerLine::ComponentType::destinationUndefined:
 
-         component_string.assign(L"Undefined Destination" );
+         component_string.assign(WSTRING_VIEW(L"Undefined Destination"));
          break;
 
       case CMixerLine::ComponentType::destinationDigital:
 
-         component_string.assign(L"Digital Destination" );
+         component_string.assign(WSTRING_VIEW(L"Digital Destination"));
          break;
 
       case CMixerLine::ComponentType::destinationLine:
 
-         component_string.assign(L"Line Destination" );
+         component_string.assign(WSTRING_VIEW(L"Line Destination"));
          break;
 
       case CMixerLine::ComponentType::destinationMonitor:
 
-         component_string.assign(L"Monitor Destination" );
+         component_string.assign(WSTRING_VIEW(L"Monitor Destination"));
          break;
 
       case CMixerLine::ComponentType::destinationSpeakers:
 
-         component_string.assign(L"Speakers Destination" );
+         component_string.assign(WSTRING_VIEW(L"Speakers Destination"));
          break;
 
       case CMixerLine::ComponentType::destinationHeadphones:
 
-         component_string.assign(L"Headphones Destination" );
+         component_string.assign(WSTRING_VIEW(L"Headphones Destination"));
          break;
 
       case CMixerLine::ComponentType::destinationTelephone:
 
-         component_string.assign(L"Telephone Destination" );
+         component_string.assign(WSTRING_VIEW(L"Telephone Destination"));
          break;
 
       case CMixerLine::ComponentType::destinationWaveIn:
 
-         component_string.assign(L"Wave In Destination" );
+         component_string.assign(WSTRING_VIEW(L"Wave In Destination"));
          break;
 
       case CMixerLine::ComponentType::destinationVoiceIn:
 
-         component_string.assign(L"Voice In Destination" );
+         component_string.assign(WSTRING_VIEW(L"Voice In Destination"));
          break;
 
       case CMixerLine::ComponentType::sourceUndefined:
 
-         component_string.assign(L"Undefined Source" );
+         component_string.assign(WSTRING_VIEW(L"Undefined Source"));
          break;
 
       case CMixerLine::ComponentType::sourceDigital:
 
-         component_string.assign(L"Digital Source" );
+         component_string.assign(WSTRING_VIEW(L"Digital Source"));
          break;
 
       case CMixerLine::ComponentType::sourceLine:
 
-         component_string.assign(L"Line Source" );
+         component_string.assign(WSTRING_VIEW(L"Line Source"));
          break;
 
       case CMixerLine::ComponentType::sourceMicrophone:
 
-         component_string.assign(L"Microphone Source" );
+         component_string.assign(WSTRING_VIEW(L"Microphone Source"));
          break;
 
       case CMixerLine::ComponentType::sourceSynthesizer:
 
-         component_string.assign(L"Synthesizer Source" );
+         component_string.assign(WSTRING_VIEW(L"Synthesizer Source"));
          break;
 
       case CMixerLine::ComponentType::sourceCompactDisc:
 
-         component_string.assign(L"Compact Disc Source" );
+         component_string.assign(WSTRING_VIEW(L"Compact Disc Source"));
          break;
 
       case CMixerLine::ComponentType::sourceTelephone:
 
-         component_string.assign(L"Telephone Source" );
+         component_string.assign(WSTRING_VIEW(L"Telephone Source"));
          break;
 
       case CMixerLine::ComponentType::sourcePCSpeaker:
 
-         component_string.assign(L"PC Speaker Source" );
+         component_string.assign(WSTRING_VIEW(L"PC Speaker Source"));
          break;
 
       case CMixerLine::ComponentType::sourceWaveOut:
 
-         component_string.assign(L"Wave Out Source" );
+         component_string.assign(WSTRING_VIEW(L"Wave Out Source"));
          break;
 
       case CMixerLine::ComponentType::sourceAuxillary:
 
-         component_string.assign(L"Auxillary Source" );
+         component_string.assign(WSTRING_VIEW(L"Auxillary Source"));
          break;
 
       case CMixerLine::ComponentType::sourceAnalog:
 
-         component_string.assign(L"Analog Source" );
+         component_string.assign(WSTRING_VIEW(L"Analog Source"));
          break;
 
       default:
@@ -312,27 +312,27 @@ void CMixerLine::GetStatus( _Out_ std::wstring& status_string ) const noexcept
 
    if ( Status & static_cast<uint32_t>(CMixerLine::Status::Active) )
    {
-      status_string.assign(L"Active" );
+      status_string.assign(WSTRING_VIEW(L"Active"));
    }
 
    if ( Status & static_cast<uint32_t>(CMixerLine::Status::Disconnected) )
    {
       if ( status_string.empty() == false )
       {
-         status_string.append( L", " );
+         status_string.append(WSTRING_VIEW(L", "));
       }
 
-      status_string.append( L"Disconnected" );
+      status_string.append(WSTRING_VIEW(L"Disconnected"));
    }
 
    if ( Status & static_cast<uint32_t>(CMixerLine::Status::Source) )
    {
       if ( status_string.empty() == false )
       {
-         status_string.append( L", " );
+         status_string.append(WSTRING_VIEW(L", "));
       }
 
-      status_string.append(L"Source" );
+      status_string.append(WSTRING_VIEW(L"Source"));
    }
 }
 
@@ -344,32 +344,32 @@ void CMixerLine::GetTarget( _Out_ std::wstring& target_string ) const noexcept
    {
    case CMixerLine::TargetType::Undefined:
 
-         target_string.assign(L"Undefined" );
+         target_string.assign(WSTRING_VIEW(L"Undefined"));
          break;
 
       case CMixerLine::TargetType::WaveOut:
 
-         target_string.assign(L"Wave Out" );
+         target_string.assign(WSTRING_VIEW(L"Wave Out"));
          break;
 
       case CMixerLine::TargetType::WaveIn:
 
-         target_string.assign(L"Wave In" );
+         target_string.assign(WSTRING_VIEW(L"Wave In"));
          break;
 
       case CMixerLine::TargetType::MidiOut:
 
-         target_string.assign(L"MIDI Out" );
+         target_string.assign(WSTRING_VIEW(L"MIDI Out"));
          break;
 
       case CMixerLine::TargetType::MidiIn:
 
-         target_string.assign(L"MIDI In" );
+         target_string.assign(WSTRING_VIEW(L"MIDI In"));
          break;
 
       case CMixerLine::TargetType::Auxillary:
 
-         target_string.assign(L"Aux" );
+         target_string.assign(WSTRING_VIEW(L"Aux"));
          break;
 
       default:

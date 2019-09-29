@@ -781,7 +781,7 @@ _Check_return_ bool CBase64Coding::Encode( __in_bcount( number_of_bytes_to_encod
 
    if ( number_of_bytes_to_encode < 1 || input_buffer == nullptr )
    {
-      destination_string.assign( TEXT( "=" ) );
+      destination_string.assign( WSTRING_VIEW( L"=" ) );
       return( true );
    }
 
@@ -803,7 +803,7 @@ _Check_return_ bool CBase64Coding::Encode(__in_bcount(number_of_bytes_to_encode)
 
     if (number_of_bytes_to_encode < 1 || input_buffer == nullptr)
     {
-        destination_string.assign("=");
+        destination_string.assign(STRING_VIEW("="));
         return(true);
     }
 

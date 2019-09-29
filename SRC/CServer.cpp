@@ -210,12 +210,12 @@ void CServer::GetPlatformName( _Out_ std::wstring& name ) noexcept
    {
       case SV_PLATFORM_ID_OS2:
 
-         name.assign(L"OS/2");
+         name.assign(WSTRING_VIEW(L"OS/2"));
          return;
 
       case SV_PLATFORM_ID_NT:
 
-         name.assign(L"NT");
+         name.assign(WSTRING_VIEW(L"NT"));
          return;
 
       default:

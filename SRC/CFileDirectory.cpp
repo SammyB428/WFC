@@ -54,7 +54,7 @@ USING_WFC_NAMESPACE
 CFileDirectory::CFileDirectory() noexcept
 {
     WFC_VALIDATE_POINTER(this);
-    m_Wildcard.assign(L"*.*");
+    m_Wildcard.assign(WSTRING_VIEW(L"*.*"));
     m_IncludeDirectoriesInCallback = false;
 }
 

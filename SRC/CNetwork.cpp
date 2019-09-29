@@ -551,7 +551,7 @@ void CNetwork::Open( __in_z_opt LPCTSTR machine_name ) noexcept
 
          // Now, add those stinking backslashes
 
-         temporary_machine_name.assign( L"\\\\" );
+         temporary_machine_name.assign(WSTRING_VIEW(L"\\\\"));
          temporary_machine_name.append( m_FriendlyMachineName );
 
          std::size_t const number_of_characters_in_m_WideDoubleBackslashPreceededMachineName = temporary_machine_name.length() + 1;

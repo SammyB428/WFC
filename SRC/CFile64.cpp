@@ -484,7 +484,7 @@ void CFile64::Dump( CDumpContext& dump_context ) const
 
         if ( information.dwFileAttributes & FILE_ATTRIBUTE_ARCHIVE )
         {
-            attributes.assign(L"FILE_ATTRIBUTE_ARCHIVE" );
+            attributes.assign(WSTRING_VIEW(L"FILE_ATTRIBUTE_ARCHIVE"));
         }
 
         if ( information.dwFileAttributes & FILE_ATTRIBUTE_COMPRESSED )

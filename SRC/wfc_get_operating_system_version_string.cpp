@@ -65,17 +65,17 @@ void PASCAL Win32FoundationClasses::wfc_get_operating_system_version_string( _Ou
         {
         case VER_PLATFORM_WIN32s:
 
-            operating_system_identity.assign( TEXT( "Windows 3.1 running Win32s" ) );
+            operating_system_identity.assign(WSTRING_VIEW(L"Windows 3.1 running Win32s" ) );
             break;
 
         case VER_PLATFORM_WIN32_WINDOWS:
 
-            operating_system_identity.assign( TEXT( "Windows 95" ) );
+            operating_system_identity.assign(WSTRING_VIEW(L"Windows 95" ) );
             break;
 
         case VER_PLATFORM_WIN32_NT:
 
-            operating_system_identity.assign( TEXT( "Windows NT" ) );
+            operating_system_identity.assign(WSTRING_VIEW(L"Windows NT" ) );
             break;
 
         default:

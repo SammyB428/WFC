@@ -2,6 +2,9 @@
 
 #define STL_STRING_HELPERS_HEADER_FILE
 
+#define STRING_VIEW(_x)  std::string_view(  _x, std::size(_x) - 1)
+#define WSTRING_VIEW(_x) std::wstring_view( _x, std::size(_x) - 1)
+
 // sprintf replacement code
 // https://msdn.microsoft.com/en-us/magazine/dn913181.aspx
 // http://en.cppreference.com/w/cpp/io/c/fprintf
@@ -18,7 +21,7 @@ T const* PrintfArgument(std::basic_string<T> const& value) noexcept
     return value.c_str();
 }
 
-inline wchar_t const* PrintfArgument(std::experimental::filesystem::v1::path const& value) noexcept
+inline wchar_t const* PrintfArgument(std::filesystem::path const& value) noexcept
 {
     return(value.c_str());
 }
@@ -138,13 +141,11 @@ inline void make_upper(_Inout_ std::wstring& s) noexcept
     }
 }
 
-inline void copy(_Inout_ std::wstring& s, _In_opt_z_ char const* ascii_string_p, _In_ SSIZE_T number_of_characters = (-1), _In_ std::size_t const beginning_at = (0)) noexcept
+inline void copy(_Inout_ std::wstring& s, std::string_view ascii_string, _In_ SSIZE_T number_of_characters = (-1), _In_ std::size_t const beginning_at = (0)) noexcept
 {
-    WFC_VALIDATE_POINTER_NULL_OK(ascii_string_p);
+    s.clear();
 
-    s.resize(0);
-
-    if (ascii_string_p == nullptr)
+    if (ascii_string.length() == 0)
     {
         return;
     }
@@ -152,8 +153,7 @@ inline void copy(_Inout_ std::wstring& s, _In_opt_z_ char const* ascii_string_p,
     if (number_of_characters < 0) // used to be -1 but that opened us up to errors
     {
         std::size_t loop_index = beginning_at;
-        std::size_t string_index = 0;
-        std::size_t string_size = strlen(ascii_string_p);
+        std::size_t string_size = ascii_string.length();
 
         if (loop_index >= string_size)
         {
@@ -164,24 +164,24 @@ inline void copy(_Inout_ std::wstring& s, _In_opt_z_ char const* ascii_string_p,
 
         string_size -= loop_index;
 
-        s.resize(string_size);
+        s.reserve(string_size);
 
-        wchar_t* pointer = &s[0];
-
-        while (ascii_string_p[loop_index] != 0)
+        while (loop_index < ascii_string.length() && ascii_string[loop_index] != 0)
         {
-            pointer[string_index] = static_cast<uint8_t>(ascii_string_p[loop_index]);
-            _ASSERTE(pointer[string_index] > 0 && pointer[string_index] < 256);
+            if (ascii_string[loop_index] == 0x00)
+            {
+                return;
+            }
+
+            s.push_back(ascii_string[loop_index]);
             loop_index++;
-            string_index++;
         }
     }
     else
     {
         // Only append a finite number of characters...
 
-        std::size_t string_index = 0;
-        std::size_t const ascii_string_length = strlen(ascii_string_p);
+        std::size_t const ascii_string_length = ascii_string.length();
 
         if (beginning_at > 0)
         {
@@ -198,46 +198,74 @@ inline void copy(_Inout_ std::wstring& s, _In_opt_z_ char const* ascii_string_p,
 
         s.resize(number_of_characters);
 
+        std::size_t destination_string_index = 0;
+
         wchar_t* pointer = &s[0];
 
         for (auto const loop_index : Range(number_of_characters))
         {
-            pointer[string_index] = static_cast<uint8_t>(ascii_string_p[beginning_at + loop_index]);
-            _ASSERTE(pointer[string_index] > 0 && pointer[string_index] < 256);
-            string_index++;
+            pointer[destination_string_index] = static_cast<uint8_t>(ascii_string[beginning_at + loop_index]);
+            _ASSERTE(pointer[destination_string_index] > 0 && pointer[destination_string_index] < 256);
+            destination_string_index++;
         }
     }
 }
 
-inline void copy(_Inout_ std::wstring& s, _In_opt_z_ wchar_t const * string_p, _In_ SSIZE_T const number_of_characters = (-1), _In_ std::size_t const beginning_at = 0) noexcept
+inline void copy_not_null(_Inout_ std::wstring& s, _In_z_ char const* ascii_string, _In_ SSIZE_T number_of_characters = (-1), _In_ std::size_t const beginning_at = (0)) noexcept
 {
-    WFC_VALIDATE_POINTER_NULL_OK(string_p);
+    if (ascii_string == nullptr)
+    {
+        s.clear();
+        return;
+    }
 
-    s.resize(0);
+    copy(s, std::string_view(ascii_string), number_of_characters, beginning_at);
+}
 
-    if (string_p == nullptr)
+inline void copy(_Inout_ std::wstring& s, _In_ std::wstring_view string_view, _In_ SSIZE_T const number_of_characters = (-1), _In_ std::size_t const beginning_at = 0) noexcept
+{
+    s.clear();
+
+    if (string_view.length() == 0)
     {
         return;
     }
 
     if (number_of_characters < 0)
     {
-        s.append(&string_p[beginning_at]);
+        s.append(string_view);
     }
     else
     {
+        s.reserve(string_view.length() - number_of_characters);
         // Only append a finite number of characters...
 
         for (auto const loop_index : Range(number_of_characters))
         {
-            if (string_p[beginning_at + loop_index] == 0x00)
+            if ((beginning_at + loop_index) >= string_view.length())
             {
                 return;
             }
 
-            s.push_back(string_p[beginning_at + loop_index]);
+            if (string_view[beginning_at + loop_index] == 0x00)
+            {
+                return;
+            }
+
+            s.push_back(string_view[beginning_at + loop_index]);
         }
     }
+}
+
+inline void copy_not_null(_Inout_ std::wstring& s, _In_z_ wchar_t const* wide_string, _In_ SSIZE_T number_of_characters = (-1), _In_ std::size_t const beginning_at = (0)) noexcept
+{
+    if (wide_string == nullptr)
+    {
+        s.clear();
+        return;
+    }
+
+    copy(s, std::wstring_view(wide_string), number_of_characters, beginning_at);
 }
 
 inline void copy(_Inout_ std::wstring& s, _In_ int const code_page, _In_reads_bytes_(number_of_bytes) uint8_t const* buffer, _In_ std::size_t const number_of_bytes) noexcept
@@ -513,7 +541,7 @@ inline constexpr _Check_return_ bool is_this_character_ascii(_In_ wchar_t const 
     return(false);
 }
 
-inline _Check_return_ bool is_all_ascii(_In_ std::wstring const& the_string) noexcept
+inline constexpr _Check_return_ bool is_all_ascii(_In_ std::wstring_view the_string) noexcept
 {
     for (auto const& character : the_string)
     {
@@ -526,7 +554,7 @@ inline _Check_return_ bool is_all_ascii(_In_ std::wstring const& the_string) noe
     return(true);
 }
 
-inline _Check_return_ bool is_all_ascii(_In_ std::string const& the_string) noexcept
+inline constexpr _Check_return_ bool is_all_ascii(_In_ std::string_view the_string) noexcept
 {
     for (auto const character : the_string)
     {
@@ -2758,6 +2786,17 @@ inline void append_string_to_byte_array(_In_ char const* the_string, _Inout_ std
     auto buffer = bytes.data();
 
     CopyMemory(&buffer[original_array_size], the_string, string_length);
+}
+
+inline void append_string_to_byte_array(_In_ std::string_view the_string, _Inout_ std::vector<uint8_t>& bytes) noexcept
+{
+    std::size_t const original_array_size = bytes.size();
+
+    bytes.resize(the_string.length() + original_array_size);
+
+    auto buffer = bytes.data();
+
+    CopyMemory(&buffer[original_array_size], the_string.data(), the_string.length());
 }
 
 #endif // STL_STRING_HELPERS_HEADER_FILE

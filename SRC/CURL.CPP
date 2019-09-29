@@ -107,7 +107,7 @@ void CUniformResourceLocator::Copy( __in CUniversalNamingConvention const& sourc
 
    Empty();
 
-   ProtocolName.assign( L"file" );
+   ProtocolName.assign(WSTRING_VIEW(L"file"));
    MachineName.assign( source.ServerName );
    PathName.assign( source.ShareName );
    PathName.push_back( '/' );

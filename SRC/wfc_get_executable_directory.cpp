@@ -67,7 +67,7 @@ void PASCAL Win32FoundationClasses::wfc_get_executable_directory(_Out_ std::wstr
     }
     else
     {
-        directory_name_ending_in_a_slash.assign(L"\\");
+        directory_name_ending_in_a_slash.assign(WSTRING_VIEW(L"\\"));
     }
 }
 
@@ -96,7 +96,7 @@ void PASCAL Win32FoundationClasses::wfc_get_dll_directory(__out std::wstring& di
     }
     else
     {
-        directory_name_ending_in_a_slash.assign(L"\\");
+        directory_name_ending_in_a_slash.assign(WSTRING_VIEW(L"\\"));
     }
 }
 

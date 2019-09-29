@@ -1415,7 +1415,7 @@ _Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Write( _In_z_ wch
 
          if ( contents.empty() == true )
          {
-            contents.assign(L"0.0");
+            contents.assign(WSTRING_VIEW(L"0.0"));
          }
 
          sub_element_p->SetTag( tag );

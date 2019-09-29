@@ -241,37 +241,37 @@ _Check_return_ bool CRegistry::Connect( __in HKEY key_to_open, __in_z_opt wchar_
 
             if ( key_to_open == HKEY_LOCAL_MACHINE )
             {
-                m_RegistryName.assign( L"HKEY_LOCAL_MACHINE" );
+                m_RegistryName.assign(WSTRING_VIEW(L"HKEY_LOCAL_MACHINE"));
             }
             else if ( key_to_open == HKEY_CLASSES_ROOT )
             {
-                m_RegistryName.assign( L"HKEY_CLASSES_ROOT" );
+                m_RegistryName.assign(WSTRING_VIEW(L"HKEY_CLASSES_ROOT"));
             }
             else if ( key_to_open == HKEY_USERS )
             {
-                m_RegistryName.assign( L"HKEY_USERS" );
+                m_RegistryName.assign(WSTRING_VIEW(L"HKEY_USERS"));
             }
             else if ( key_to_open == HKEY_CURRENT_USER )
             {
-                m_RegistryName.assign( L"HKEY_CURRENT_USER" );
+                m_RegistryName.assign(WSTRING_VIEW(L"HKEY_CURRENT_USER"));
             }
             else if ( key_to_open == HKEY_PERFORMANCE_DATA )
             {
-                m_RegistryName.assign( L"HKEY_PERFORMANCE_DATA" );
+                m_RegistryName.assign(WSTRING_VIEW(L"HKEY_PERFORMANCE_DATA"));
             }
 #if ( WINVER >= 0x400 )
             else if ( key_to_open == HKEY_CURRENT_CONFIG )
             {
-                m_RegistryName.assign( L"HKEY_CURRENT_CONFIG" );
+                m_RegistryName.assign(WSTRING_VIEW(L"HKEY_CURRENT_CONFIG"));
             }
             else if ( key_to_open == HKEY_DYN_DATA )
             {
-                m_RegistryName.assign( L"HKEY_DYN_DATA" );
+                m_RegistryName.assign(WSTRING_VIEW(L"HKEY_DYN_DATA"));
             }
 #endif
             else
             {
-                m_RegistryName.assign( L"Unknown" );
+                m_RegistryName.assign(WSTRING_VIEW(L"Unknown"));
             }
 
             //WFCTRACEVAL( TEXT( "Connected to " ), m_ComputerName );

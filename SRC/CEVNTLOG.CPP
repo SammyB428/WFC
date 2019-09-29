@@ -330,9 +330,9 @@ _Check_return_ bool CEventLog::CreateCustomLog( __in_z LPCTSTR log_name_paramete
 
       if ( log_filename_parameter == nullptr )
       {
-         log_filename.assign( L"%SystemRoot%\\System32\\config\\" );
+         log_filename.assign(WSTRING_VIEW(L"%SystemRoot%\\System32\\config\\"));
          log_filename.append( log_name );
-         log_filename.append( L".Evt" );
+         log_filename.append(WSTRING_VIEW(L".Evt"));
       }
       else
       {

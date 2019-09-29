@@ -719,7 +719,7 @@ void CExtensibleMarkupLanguageDocument::GetEncoding( _Out_ std::wstring& encodin
 
    if ( m_WriteOptions & WFC_XML_WRITE_AS_UNICODE )
    {
-      encoding.assign( L"UTF-16" );
+      encoding.assign(WSTRING_VIEW(L"UTF-16"));
    }
    else
    {
@@ -993,7 +993,7 @@ _Check_return_ bool CExtensibleMarkupLanguageDocument::Parse( _Inout_ CDataParse
       {
          //WFCTRACE( TEXT( "Can't allocate memory for the document node" ) );
          m_ParseErrorEncountered = ParseErrorOccurred();
-         m_ErrorMessage.assign( L"Can't allocate memory." );
+         m_ErrorMessage.assign(WSTRING_VIEW(L"Can't allocate memory."));
          return( false );
       }
    }
@@ -1002,7 +1002,7 @@ _Check_return_ bool CExtensibleMarkupLanguageDocument::Parse( _Inout_ CDataParse
    {
       // The minimum size of an XML document is 4 bytes (<a/>)
       m_ParseErrorEncountered = ParseErrorOccurred();
-      m_ErrorMessage.assign( L"Too few bytes to parse." );
+      m_ErrorMessage.assign(WSTRING_VIEW(L"Too few bytes to parse."));
       return( false );
    }
 
@@ -1029,7 +1029,7 @@ _Check_return_ bool CExtensibleMarkupLanguageDocument::Parse( _Inout_ CDataParse
          else
          {
             m_ParseErrorEncountered = ParseErrorOccurred();
-            m_ErrorMessage.assign( L"Second character of Byte Order Mark is invalid for UTF-16 Big Endian (Appendix F)." );
+            m_ErrorMessage.assign(WSTRING_VIEW(L"Second character of Byte Order Mark is invalid for UTF-16 Big Endian (Appendix F)."));
             return( false );
          }
 
@@ -1049,7 +1049,7 @@ _Check_return_ bool CExtensibleMarkupLanguageDocument::Parse( _Inout_ CDataParse
          else
          {
             m_ParseErrorEncountered = ParseErrorOccurred();
-            m_ErrorMessage.assign( L"Second character of Byte Order Mark is invalid for UTF-16 Little Endian (Appendix F)." );
+            m_ErrorMessage.assign(WSTRING_VIEW(L"Second character of Byte Order Mark is invalid for UTF-16 Little Endian (Appendix F)."));
             return( false );
          }
 
@@ -1141,7 +1141,7 @@ _Check_return_ bool CExtensibleMarkupLanguageDocument::Parse( _Inout_ CDataParse
          else
          {
             m_ParseErrorEncountered = ParseErrorOccurred();
-            m_ErrorMessage.assign( L"Can't determine Character Encoding (Appendix F)." );
+            m_ErrorMessage.assign(WSTRING_VIEW(L"Can't determine Character Encoding (Appendix F)."));
             return( false );
          }
       }
@@ -1166,7 +1166,7 @@ _Check_return_ bool CExtensibleMarkupLanguageDocument::Parse( _Inout_ CDataParse
       if ( source.PeekAtCharacter( parse_point, character_to_test, 0 ) == false )
       {
          m_ParseErrorEncountered = ParseErrorOccurred();
-         m_ErrorMessage.assign( L"Document is all white space (Rule 1)." );
+         m_ErrorMessage.assign(WSTRING_VIEW(L"Document is all white space (Rule 1)."));
          return( false );
       }
    }
@@ -1200,7 +1200,7 @@ _Check_return_ bool CExtensibleMarkupLanguageDocument::Parse( _Inout_ CDataParse
       if ( source.PeekCharacter( parse_point, 0 ) != '<' )
       {
          m_ParseErrorEncountered = ParseErrorOccurred();
-         m_ErrorMessage.assign( L"First non-space character is not '<' (Rule 1)." );
+         m_ErrorMessage.assign(WSTRING_VIEW(L"First non-space character is not '<' (Rule 1)."));
          return( false );
       }
    }
@@ -1216,7 +1216,7 @@ _Check_return_ bool CExtensibleMarkupLanguageDocument::Parse( _Inout_ CDataParse
          ! ( m_ParseOptions & WFC_XML_IGNORE_CASE_IN_XML_DECLARATION ) )
       {
          m_ParseErrorEncountered = ParseErrorOccurred();
-         m_ErrorMessage.assign( L"XML Declaration is not lower case (Rule 23)." );
+         m_ErrorMessage.assign(WSTRING_VIEW(L"XML Declaration is not lower case (Rule 23)."));
          return( false );
       }
 
@@ -1294,7 +1294,7 @@ _Check_return_ bool CExtensibleMarkupLanguageDocument::Parse( _Inout_ CDataParse
          // We still failed
 
          m_ParseErrorEncountered = ParseErrorOccurred();
-         m_ErrorMessage.assign( L"Can't find beginning-of-XML tag (<?xml) regardless of case." );
+         m_ErrorMessage.assign(WSTRING_VIEW(L"Can't find beginning-of-XML tag (<?xml) regardless of case."));
          return( false );
       }
    }
@@ -1309,7 +1309,7 @@ _Check_return_ bool CExtensibleMarkupLanguageDocument::Parse( _Inout_ CDataParse
    {
       //WFCTRACE( TEXT( "Can't find ?>" ) );
       m_ParseErrorEncountered = ParseErrorOccurred();
-      m_ErrorMessage.assign( L"Can't find the end of the end of the beginning-of-XML tag (?>)." );
+      m_ErrorMessage.assign(WSTRING_VIEW(L"Can't find the end of the end of the beginning-of-XML tag (?>)."));
       return( false );
    }
 
@@ -1317,7 +1317,7 @@ _Check_return_ bool CExtensibleMarkupLanguageDocument::Parse( _Inout_ CDataParse
    {
       //WFCTRACE( TEXT( "m_XML is NULL!" ) );
       m_ParseErrorEncountered = ParseErrorOccurred();
-      m_ErrorMessage.assign( L"Internal error : m_XML is NULL." );
+      m_ErrorMessage.assign(WSTRING_VIEW(L"Internal error : m_XML is NULL."));
       return( false );
    }
 
@@ -1361,7 +1361,7 @@ _Check_return_ bool CExtensibleMarkupLanguageDocument::Parse( _Inout_ CDataParse
                if ( element_count > 1 )
                {
                   m_ParseErrorEncountered = ParseErrorOccurred();
-                  m_ErrorMessage.assign( L"There can be only one element (Rule 1)." );
+                  m_ErrorMessage.assign(WSTRING_VIEW(L"There can be only one element (Rule 1)."));
                   child_p->GetBeginning( m_ErrorElementBeganAt );
                   m_ErrorOccuredAt.Copy( m_ErrorElementBeganAt );
                   child_p->GetTag( m_ErrorTagName );
@@ -1398,7 +1398,7 @@ _Check_return_ bool CExtensibleMarkupLanguageDocument::Parse( _Inout_ CDataParse
          if ( there_aint_one == true )
          {
             m_ParseErrorEncountered = ParseErrorOccurred();
-            m_ErrorMessage.assign( L"There must be only one element (Rule 1)." );
+            m_ErrorMessage.assign(WSTRING_VIEW(L"There must be only one element (Rule 1)."));
             m_ErrorElementBeganAt.Empty();
             m_ErrorTagName.clear();
 

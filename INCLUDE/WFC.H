@@ -48,8 +48,6 @@
 #pragma message( "WFC Release 77." )
 #endif // WFC_SILENT
 
-#define _SILENCE_CXX17_CODECVT_HEADER_DEPRECATION_WARNING
-
 #define is_flagged( _x, _y ) ( ( _x & _y ) == _y )
 
 #define TAB_CHARACTER   (9)

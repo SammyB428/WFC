@@ -104,122 +104,122 @@ void CPing::ConvertErrorToString(__in DWORD const error_code, __out std::wstring
     {
     case IP_SUCCESS:
 
-        meaning.assign(L"IP_SUCCESS: Success");
+        meaning.assign(WSTRING_VIEW(L"IP_SUCCESS: Success"));
         break;
 
     case IP_BUF_TOO_SMALL:
 
-        meaning.assign(TEXT("IP_BUFF_TOO_SMALL: Buffer too small"));
+        meaning.assign(WSTRING_VIEW(L"IP_BUFF_TOO_SMALL: Buffer too small"));
         break;
 
     case IP_DEST_NET_UNREACHABLE:
 
-        meaning.assign(TEXT("IP_DEST_NET_UNREACHABLE: Network unreachable"));
+        meaning.assign(WSTRING_VIEW(L"IP_DEST_NET_UNREACHABLE: Network unreachable"));
         break;
 
     case IP_DEST_HOST_UNREACHABLE:
 
-        meaning.assign(TEXT("IP_DEST_HOST_UNREACHABLE: Destination Host Unreachable"));
+        meaning.assign(WSTRING_VIEW(L"IP_DEST_HOST_UNREACHABLE: Destination Host Unreachable"));
         break;
 
     case IP_DEST_PROT_UNREACHABLE:
 
-        meaning.assign(TEXT("IP_DEST_PROT_UNREACHABLE"));
+        meaning.assign(WSTRING_VIEW(L"IP_DEST_PROT_UNREACHABLE"));
         break;
 
     case IP_DEST_PORT_UNREACHABLE:
 
-        meaning.assign(TEXT("IP_DEST_PORT_UNREACHABLE"));
+        meaning.assign(WSTRING_VIEW(L"IP_DEST_PORT_UNREACHABLE"));
         break;
 
     case IP_NO_RESOURCES:
 
-        meaning.assign(TEXT("IP_NO_RESOURCES"));
+        meaning.assign(WSTRING_VIEW(L"IP_NO_RESOURCES"));
         break;
 
     case IP_BAD_OPTION:
 
-        meaning.assign(TEXT("IP_BAD_OPTION"));
+        meaning.assign(WSTRING_VIEW(L"IP_BAD_OPTION"));
         break;
 
     case IP_HW_ERROR:
 
-        meaning.assign(TEXT("IP_HW_ERROR: Hardware Error"));
+        meaning.assign(WSTRING_VIEW(L"IP_HW_ERROR: Hardware Error"));
         break;
 
     case IP_PACKET_TOO_BIG:
 
-        meaning.assign(TEXT("IP_PACKET_TOO_BIG: Packet too big"));
+        meaning.assign(WSTRING_VIEW(L"IP_PACKET_TOO_BIG: Packet too big"));
         break;
 
     case IP_REQ_TIMED_OUT:
 
-        meaning.assign(TEXT("IP_REQ_TIMED_OUT: Request timed out"));
+        meaning.assign(WSTRING_VIEW(L"IP_REQ_TIMED_OUT: Request timed out"));
         break;
 
     case IP_BAD_REQ:
 
-        meaning.assign(TEXT("IP_BAD_REQ"));
+        meaning.assign(WSTRING_VIEW(L"IP_BAD_REQ"));
         break;
 
     case IP_BAD_ROUTE:
 
-        meaning.assign(TEXT("IP_BAD_ROUTE"));
+        meaning.assign(WSTRING_VIEW(L"IP_BAD_ROUTE"));
         break;
 
     case IP_TTL_EXPIRED_TRANSIT:
 
-        meaning.assign(TEXT("IP_TTL_EXPIRED_TRANSIT"));
+        meaning.assign(WSTRING_VIEW(L"IP_TTL_EXPIRED_TRANSIT"));
         break;
 
     case IP_TTL_EXPIRED_REASSEM:
 
-        meaning.assign(TEXT("IP_TTL_EXPIRED_REASSEM"));
+        meaning.assign(WSTRING_VIEW(L"IP_TTL_EXPIRED_REASSEM"));
         break;
 
     case IP_PARAM_PROBLEM:
 
-        meaning.assign(TEXT("IP_PARAM_PROBLEM"));
+        meaning.assign(WSTRING_VIEW(L"IP_PARAM_PROBLEM"));
         break;
 
     case IP_SOURCE_QUENCH:
 
-        meaning.assign(TEXT("IP_SOURCE_QUENCH"));
+        meaning.assign(WSTRING_VIEW(L"IP_SOURCE_QUENCH"));
         break;
 
     case IP_OPTION_TOO_BIG:
 
-        meaning.assign(TEXT("IP_OPTION_TOO_BIG"));
+        meaning.assign(WSTRING_VIEW(L"IP_OPTION_TOO_BIG"));
         break;
 
     case IP_BAD_DESTINATION:
 
-        meaning.assign(TEXT("IP_BAD_DESTINATION"));
+        meaning.assign(WSTRING_VIEW(L"IP_BAD_DESTINATION"));
         break;
 
     case IP_ADDR_DELETED:
 
-        meaning.assign(TEXT("IP_ADDR_DELETED"));
+        meaning.assign(WSTRING_VIEW(L"IP_ADDR_DELETED"));
         break;
 
     case IP_SPEC_MTU_CHANGE:
 
-        meaning.assign(TEXT("IP_SPEC_MTU_CHANGE"));
+        meaning.assign(WSTRING_VIEW(L"IP_SPEC_MTU_CHANGE"));
         break;
 
     case IP_MTU_CHANGE:
 
-        meaning.assign(TEXT("IP_MTU_CHANGE"));
+        meaning.assign(WSTRING_VIEW(L"IP_MTU_CHANGE"));
         break;
 
     case IP_GENERAL_FAILURE:
 
-        meaning.assign(TEXT("IP_GENERAL_FAILURE"));
+        meaning.assign(WSTRING_VIEW(L"IP_GENERAL_FAILURE"));
         break;
 
     case IP_PENDING:
 
-        meaning.assign(TEXT("IP_PENDING"));
+        meaning.assign(WSTRING_VIEW(L"IP_PENDING"));
         break;
 
     default:
