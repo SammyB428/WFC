@@ -67,7 +67,7 @@ _Check_return_ uint32_t PASCAL Win32FoundationClasses::wfc_get_directory_usage_p
       mask.push_back( '/' );
    }
 
-   mask.append( L"*.*" );
+   mask.append(WSTRING_VIEW(L"*.*"));
 
    WIN32_FIND_DATA find_data;
 

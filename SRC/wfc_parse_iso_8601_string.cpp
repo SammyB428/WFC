@@ -51,7 +51,7 @@ static char THIS_FILE[] = __FILE__;
 
 USING_WFC_NAMESPACE
 
-static inline _Check_return_ bool __parse_ymdhmsf( _In_z_ LPCTSTR time_string,
+static inline _Check_return_ bool __parse_ymdhmsf( _In_ std::wstring_view time_string,
     _Out_ int&    year,
     _Out_ int&    month,
     _Out_ int&    day,
@@ -69,7 +69,7 @@ static inline _Check_return_ bool __parse_ymdhmsf( _In_z_ LPCTSTR time_string,
 
     // Do a little idiot checking
 
-    if ( time_string == nullptr )
+    if ( time_string.empty() == true )
     {
         //WFCTRACE( TEXT( "time string is NULL!" ) );
         return( false );
@@ -92,7 +92,7 @@ static inline _Check_return_ bool __parse_ymdhmsf( _In_z_ LPCTSTR time_string,
 
     WFC_TRY
     {
-        if ( _tcslen( time_string ) < 4 ) 
+        if ( time_string.length() < 4 ) 
         {
             // There ain't enough characters to even attempt to parse
 
@@ -128,12 +128,12 @@ static inline _Check_return_ bool __parse_ymdhmsf( _In_z_ LPCTSTR time_string,
 
         // If we get here, it means we've got 4 good digits
 
-        TCHAR temp_string[ 11 ];
+        char temp_string[ 11 ];
 
-        temp_string[ 0 ] = time_string[ 0 ];
-        temp_string[ 1 ] = time_string[ 1 ];
-        temp_string[ 2 ] = time_string[ 2 ];
-        temp_string[ 3 ] = time_string[ 3 ];
+        temp_string[ 0 ] = static_cast<char>(time_string[ 0 ]);
+        temp_string[ 1 ] = static_cast<char>(time_string[ 1 ]);
+        temp_string[ 2 ] = static_cast<char>(time_string[ 2 ]);
+        temp_string[ 3 ] = static_cast<char>(time_string[ 3 ]);
         temp_string[ 4 ] = 0x00;
         temp_string[ 5 ] = 0x00;
         temp_string[ 6 ] = 0x00;
@@ -142,7 +142,7 @@ static inline _Check_return_ bool __parse_ymdhmsf( _In_z_ LPCTSTR time_string,
         temp_string[ 9 ] = 0x00;
         temp_string[ 10 ] = 0x00;
 
-        year = _ttoi( temp_string );
+        (void)std::from_chars(temp_string, &temp_string[4], year, 10);
 
         SIZE_T index = 4;
 
@@ -151,14 +151,14 @@ static inline _Check_return_ bool __parse_ymdhmsf( _In_z_ LPCTSTR time_string,
         //     v
         // 1969-07-20T22:56:15-04:00
 
-        if ( time_string[ index ] == 0x00 )
+        if ( index >= time_string.length() )
         {
             // We're at the end of the string
 
             return( true );
         }
 
-        if ( time_string[ index ] != TEXT( '-' ) )
+        if ( time_string[ index ] != L'-' )
         {
             //WFCTRACE( TEXT( "The separator between year and month is not -" ) );
             return(false);
@@ -171,7 +171,7 @@ static inline _Check_return_ bool __parse_ymdhmsf( _In_z_ LPCTSTR time_string,
         //      v
         // 1969-07-20T22:56:15-04:00
 
-        if ( time_string[ index ] == 0x00 )
+        if (index >= time_string.length())
         {
             // We're at the end of the string
             return( true );
@@ -198,11 +198,10 @@ static inline _Check_return_ bool __parse_ymdhmsf( _In_z_ LPCTSTR time_string,
             return(false);
         }
 
-        temp_string[ 0 ] = time_string[ index - 1 ];
-        temp_string[ 1 ] = time_string[ index ];
-        temp_string[ 2 ] = 0x00;
+        temp_string[ 0 ] = static_cast<char>(time_string[ index - 1 ]);
+        temp_string[ 1 ] = static_cast<char>(time_string[ index ]);
 
-        month = _ttoi( temp_string );
+        (void)std::from_chars(temp_string, &temp_string[2], month, 10);
 
         // Do a little idiot proofing
 
@@ -219,12 +218,12 @@ static inline _Check_return_ bool __parse_ymdhmsf( _In_z_ LPCTSTR time_string,
         //        v
         // 1969-07-20T22:56:15-04:00
 
-        if ( time_string[ index ] == 0x00 )
+        if (index >= time_string.length())
         {
             return( true );
         }
 
-        if ( time_string[ index ] != TEXT( '-' ) )
+        if ( time_string[ index ] != L'-' )
         {
             //WFCTRACE( TEXT( "The separator between month and day fields is not -" ) );
             return(false);
@@ -237,7 +236,7 @@ static inline _Check_return_ bool __parse_ymdhmsf( _In_z_ LPCTSTR time_string,
         //         v
         // 1969-07-20T22:56:15-04:00
 
-        if ( time_string[ index ] == 0x00 )
+        if (index >= time_string.length())
         {
             // Odd, but not illegal
             return( true );
@@ -264,12 +263,12 @@ static inline _Check_return_ bool __parse_ymdhmsf( _In_z_ LPCTSTR time_string,
             return(false);
         }
 
-        temp_string[ 0 ] = time_string[ index - 1 ];
-        temp_string[ 1 ] = time_string[ index ];
+        temp_string[ 0 ] = static_cast<char>(time_string[ index - 1 ]);
+        temp_string[ 1 ] = static_cast<char>(time_string[ index ]);
 
         // We don't need to set temp_string[ 2 ] because we did that at line 158 above
 
-        day = _ttoi( temp_string );
+        (void)std::from_chars(temp_string, &temp_string[2], day, 10);
 
         // Do a very little bit of error checking
 
@@ -286,13 +285,13 @@ static inline _Check_return_ bool __parse_ymdhmsf( _In_z_ LPCTSTR time_string,
         //           v
         // 1969-07-20T22:56:15-04:00
 
-        if ( time_string[ index ] == 0x00 )
+        if (index >= time_string.length())
         {
             // Odd, but not illegal
             return( true );
         }
 
-        if ( time_string[ index ] != TEXT( 'T' ) )
+        if ( time_string[ index ] != L'T' )
         {
             //WFCTRACE( TEXT( "Separator between date and time ain't T" ) );
             return(false);
@@ -305,7 +304,7 @@ static inline _Check_return_ bool __parse_ymdhmsf( _In_z_ LPCTSTR time_string,
         //            v
         // 1969-07-20T22:56:15-04:00
 
-        if ( time_string[ index ] == 0x00 )
+        if (index >= time_string.length())
         {
             // Odd, but not illegal
             return( true );
@@ -332,12 +331,12 @@ static inline _Check_return_ bool __parse_ymdhmsf( _In_z_ LPCTSTR time_string,
             return(false);
         }
 
-        temp_string[ 0 ] = time_string[ index - 1 ];
-        temp_string[ 1 ] = time_string[ index ];
+        temp_string[ 0 ] = static_cast<char>(time_string[ index - 1 ]);
+        temp_string[ 1 ] = static_cast<char>(time_string[ index ]);
 
         // We don't need to set temp_string[ 2 ] because we did that at line 158 above
 
-        hours = _ttoi( temp_string );
+        (void)std::from_chars(temp_string, &temp_string[2], hours, 10);
 
         index++;
 
@@ -346,7 +345,7 @@ static inline _Check_return_ bool __parse_ymdhmsf( _In_z_ LPCTSTR time_string,
         //              v
         // 1969-07-20T22:56:15-04:00
 
-        if ( time_string[ index ] == 0x00 )
+        if (index >= time_string.length())
         {
             // Odd, but not illegal
             return( true );
@@ -365,7 +364,7 @@ static inline _Check_return_ bool __parse_ymdhmsf( _In_z_ LPCTSTR time_string,
         //               v
         // 1969-07-20T22:56:15-04:00
 
-        if ( time_string[ index ] == 0x00 )
+        if (index >= time_string.length())
         {
             // Odd, but not illegal
             return( true );
@@ -390,10 +389,10 @@ static inline _Check_return_ bool __parse_ymdhmsf( _In_z_ LPCTSTR time_string,
             return(false);
         }
 
-        temp_string[ 0 ] = time_string[ index - 1 ];
-        temp_string[ 1 ] = time_string[ index ];
+        temp_string[ 0 ] = static_cast<char>(time_string[ index - 1 ]);
+        temp_string[ 1 ] = static_cast<char>(time_string[ index ]);
 
-        minutes = _ttoi( temp_string );
+        (void)std::from_chars(temp_string, &temp_string[2], minutes, 10);
 
         index++;
 
@@ -402,12 +401,12 @@ static inline _Check_return_ bool __parse_ymdhmsf( _In_z_ LPCTSTR time_string,
         //                 v
         // 1969-07-20T22:56:15-04:00
 
-        if ( time_string[ index ] == 0x00 )
+        if (index >= time_string.length())
         {
             return( true );
         }
 
-        if ( time_string[ index ] != TEXT( ':' ) )
+        if ( time_string[ index ] != L':' )
         {
             //WFCTRACE( TEXT( "Separator between minutes and seconds ain't :" ) );
             return(false);
@@ -420,7 +419,7 @@ static inline _Check_return_ bool __parse_ymdhmsf( _In_z_ LPCTSTR time_string,
         //                  v
         // 1969-07-20T22:56:15-04:00
 
-        if ( time_string[ index ] == 0x00 )
+        if (index >= time_string.length())
         {
             // Odd, but not illegal
             return( true );
@@ -445,10 +444,10 @@ static inline _Check_return_ bool __parse_ymdhmsf( _In_z_ LPCTSTR time_string,
             return(false);
         }
 
-        temp_string[ 0 ] = time_string[ index - 1 ];
-        temp_string[ 1 ] = time_string[ index ];
+        temp_string[ 0 ] = static_cast<char>(time_string[ index - 1 ]);
+        temp_string[ 1 ] = static_cast<char>(time_string[ index ]);
 
-        seconds = _ttoi( temp_string );
+        (void)std::from_chars(temp_string, &temp_string[2], seconds, 10);
 
         index++;
 
@@ -479,14 +478,14 @@ static inline _Check_return_ bool __parse_ymdhmsf( _In_z_ LPCTSTR time_string,
             {
                 if (temp_string_index < (std::size(temp_string) - 1))
                 {
-                    temp_string[temp_string_index] = time_string[index];
+                    temp_string[temp_string_index] = static_cast<char>(time_string[index]);
                     temp_string_index++;
                 }
 
                 index++;
             }
 
-            fraction = _ttof(temp_string);
+            (void)std::from_chars(temp_string, &temp_string[temp_string_index], fraction);
         }
 
         temp_string[0] = 0x00;
@@ -506,21 +505,21 @@ static inline _Check_return_ bool __parse_ymdhmsf( _In_z_ LPCTSTR time_string,
         //                    v
         // 1969-07-20T22:56:15-04:00
 
-        if ( time_string[ index ] == 0x00 ||
-            time_string[ index ] == TEXT( 'Z' ) )
+        if (index >= time_string.length() ||
+            time_string[ index ] == L'Z' )
         {
             return( true );
         }
 
         // If we get here, we should be sitting on a Z, + or -
 
-        if ( time_string[ index ] == TEXT( 'Z' ) )
+        if ( time_string[ index ] == L'Z' )
         {
             return( true );
         }
 
-        if ( time_string[ index ] != TEXT( '+' ) &&
-            time_string[ index ] != TEXT( '-' ) )
+        if ( time_string[ index ] != L'+' &&
+            time_string[ index ] != L'-' )
         {
             //WFCTRACE( TEXT( "Time zone designator ain't beginning with + or -" ) );
             return(false);
@@ -554,10 +553,10 @@ static inline _Check_return_ bool __parse_ymdhmsf( _In_z_ LPCTSTR time_string,
             return(false);
         }
 
-        temp_string[ 0 ] = time_string[ index - 1 ];
-        temp_string[ 1 ] = time_string[ index ];
+        temp_string[ 0 ] = static_cast<char>(time_string[ index - 1 ]);
+        temp_string[ 1 ] = static_cast<char>(time_string[ index ]);
 
-        offset_hours = _ttoi( temp_string );
+        (void)std::from_chars(temp_string, &temp_string[2], offset_hours, 10);
 
         index++;
 
@@ -566,7 +565,7 @@ static inline _Check_return_ bool __parse_ymdhmsf( _In_z_ LPCTSTR time_string,
         //                       v
         // 1969-07-20T22:56:15-04:00
 
-        if ( time_string[ index ] != TEXT( ':' ) )
+        if ( time_string[ index ] != L':' )
         {
             //WFCTRACE( TEXT( "Separator between offset hours and minutes ain't a :" ) );
             return(false);
@@ -598,10 +597,10 @@ static inline _Check_return_ bool __parse_ymdhmsf( _In_z_ LPCTSTR time_string,
             return(false);
         }
 
-        temp_string[ 0 ] = time_string[ index - 1 ];
-        temp_string[ 1 ] = time_string[ index ];
+        temp_string[ 0 ] = static_cast<char>(time_string[ index - 1 ]);
+        temp_string[ 1 ] = static_cast<char>(time_string[ index ]);
 
-        offset_minutes = _ttoi( temp_string );
+        (void)std::from_chars(temp_string, &temp_string[2], offset_minutes, 10);
 
         return( true );
     }
@@ -612,7 +611,7 @@ static inline _Check_return_ bool __parse_ymdhmsf( _In_z_ LPCTSTR time_string,
     WFC_END_CATCH_ALL
 }
 
-_Check_return_ bool PASCAL Win32FoundationClasses::wfc_parse_iso_8601_string( _In_z_ wchar_t const * time_string, __out Win32FoundationClasses::CFileTime& the_time ) noexcept
+_Check_return_ bool PASCAL Win32FoundationClasses::wfc_parse_iso_8601_string(_In_ std::wstring_view time_string, __out Win32FoundationClasses::CFileTime& the_time ) noexcept
 {
     the_time.Empty();
 
@@ -711,13 +710,13 @@ BOOL PASCAL Win32FoundationClasses::wfc_parse_iso_8601_string( LPCTSTR time_stri
 
 #endif // WFC_STL
 
-_Check_return_ bool PASCAL Win32FoundationClasses::wfc_parse_iso_8601_string( _In_z_ wchar_t const * time_string, __out CSystemTime& the_time ) noexcept
+_Check_return_ bool PASCAL Win32FoundationClasses::wfc_parse_iso_8601_string(_In_ std::wstring_view time_string, __out CSystemTime& the_time ) noexcept
 {
     the_time.Empty();
 
     // Do a little idiot checking
 
-    if ( time_string == nullptr )
+    if ( time_string.empty() == true )
     {
         //WFCTRACE( TEXT( "time_string is NULL!" ) );
         return( false );
@@ -744,15 +743,15 @@ _Check_return_ bool PASCAL Win32FoundationClasses::wfc_parse_iso_8601_string( _I
 
     CTime ole_time = CTime( year, month, day, hours, minutes, seconds );
 
-    if ( offset_character != TEXT( 'Z' ) )
+    if ( offset_character != L'Z' )
     {
         CTimeSpan time_zone_offset( 0, offset_hours, offset_minutes, 0 );
 
-        if ( offset_character == TEXT( '-' ) )
+        if ( offset_character == L'-' )
         {
             ole_time += time_zone_offset;
         }
-        else if ( offset_character == TEXT( '+' ) )
+        else if ( offset_character == L'+' )
         {
             ole_time -= time_zone_offset;
         }
@@ -763,13 +762,13 @@ _Check_return_ bool PASCAL Win32FoundationClasses::wfc_parse_iso_8601_string( _I
     return( true );
 }
 
-_Check_return_ bool PASCAL Win32FoundationClasses::wfc_parse_iso_8601_string( _In_z_ wchar_t const * time_string, __out CTime& the_time ) noexcept
+_Check_return_ bool PASCAL Win32FoundationClasses::wfc_parse_iso_8601_string(_In_ std::wstring_view time_string, __out CTime& the_time ) noexcept
 {
     the_time = CTime( static_cast< time_t >( 0 ) );
 
     // Do a little idiot checking
 
-    if ( time_string == nullptr )
+    if ( time_string.empty() == true )
     {
         //WFCTRACE( TEXT( "time_string is NULL!" ) );
         return( false );
@@ -796,15 +795,15 @@ _Check_return_ bool PASCAL Win32FoundationClasses::wfc_parse_iso_8601_string( _I
 
     the_time = CTime( year, month, day, hours, minutes, seconds );
 
-    if ( offset_character != TEXT( 'Z' ) )
+    if ( offset_character != L'Z' )
     {
         CTimeSpan time_zone_offset( 0, offset_hours, offset_minutes, 0 );
 
-        if ( offset_character == TEXT( '-' ) )
+        if ( offset_character == L'-' )
         {
             the_time += time_zone_offset;
         }
-        else if ( offset_character == TEXT( '+' ) )
+        else if ( offset_character == L'+' )
         {
             the_time -= time_zone_offset;
         }

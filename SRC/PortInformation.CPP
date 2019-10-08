@@ -181,37 +181,37 @@ void CPortInformation::TypeToString( __in DWORD type, __out std::wstring& string
 
    if ( type & PORT_TYPE_WRITE )
    {
-      string.assign( L"Write" );
+      string.assign(WSTRING_VIEW(L"Write"));
    }
 
    if ( type & PORT_TYPE_READ )
    {
       if ( string.empty() == false )
       {
-         string.append( L", " );
+         string.append(WSTRING_VIEW(L", "));
       }
 
-      string.append( L"Read" );
+      string.append(WSTRING_VIEW(L"Read"));
    }
 
    if ( type & PORT_TYPE_REDIRECTED )
    {
        if (string.empty() == false)
        {
-           string.append(L", ");
+           string.append(WSTRING_VIEW(L", "));
        }
 
-      string.append( L"Redirected" );
+      string.append(WSTRING_VIEW(L"Redirected"));
    }
 
    if ( type & PORT_TYPE_NET_ATTACHED )
    {
        if (string.empty() == false)
        {
-           string.append(L", ");
+           string.append(WSTRING_VIEW(L", "));
        }
 
-      string.append(L"Net Attached" );
+      string.append(WSTRING_VIEW(L"Net Attached"));
    }
 }
 

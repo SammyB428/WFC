@@ -566,7 +566,7 @@ _Check_return_ bool test_CXMLDocument( _Out_ std::string& class_name, _Out_ int&
 
     root->GetText(current_text);
 
-    if (current_text.compare(L"HelloWorld") != I_AM_EQUAL_TO_THAT)
+    if (current_text.compare(WSTRING_VIEW(L"HelloWorld")) != I_AM_EQUAL_TO_THAT)
     {
         test_number_that_failed = 36;
         ASSERT(FALSE);

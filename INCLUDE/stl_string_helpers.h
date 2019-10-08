@@ -635,6 +635,20 @@ inline _Check_return_ int compare_no_case(_In_ std::wstring const& s1, _In_ std:
     return(_wcsicmp(s1.c_str(), s2.c_str()));
 }
 
+inline bool compare_character_ignore_case(wchar_t const& c1, wchar_t const& c2) noexcept
+{
+    if (c1 == c2)
+        return true;
+    else if (std::toupper(c1) == std::toupper(c2))
+        return true;
+    return false;
+}
+
+inline _Check_return_ int compare_no_case(_In_ std::wstring_view s1, _In_ std::wstring_view s2) noexcept
+{
+    return( s1.length() == s2.length() && std::equal(std::cbegin(s1), std::cend(s1), std::cbegin(s2), compare_character_ignore_case));
+}
+
 inline _Check_return_ int compare_no_case(_In_ std::string const& s, _In_opt_z_ char const* string_p) noexcept
 {
     WFC_VALIDATE_POINTER_NULL_OK(string_p);
@@ -657,9 +671,7 @@ inline _Check_return_ int compare_no_case(_In_ std::string const& s1, _In_ std::
 
 inline _Check_return_ std::wstring right(_In_ std::wstring const& s, _In_ std::size_t const count) noexcept
 {
-    std::size_t const string_length = s.length();
-
-    if (string_length > count)
+    if (s.length() > count)
     {
         return(s.substr(s.length() - count));
     }
@@ -671,13 +683,39 @@ inline _Check_return_ std::wstring right(_In_ std::wstring const& s, _In_ std::s
     }
 }
 
+inline _Check_return_ std::wstring right(_In_ std::wstring_view s, _In_ std::size_t const count) noexcept
+{
+    if (s.length() > count)
+    {
+        return(std::wstring(s.substr(s.length() - count)));
+    }
+    else
+    {
+        std::wstring return_value(s);
+
+        return(return_value);
+    }
+}
+
 inline _Check_return_ std::string right(_In_ std::string const& s, _In_ std::size_t const count) noexcept
 {
-    std::size_t const string_length = s.length();
-
-    if (string_length > count)
+    if (s.length() > count)
     {
         return(s.substr(s.length() - count));
+    }
+    else
+    {
+        std::string return_value(s);
+
+        return(return_value);
+    }
+}
+
+inline _Check_return_ std::string right(_In_ std::string_view s, _In_ std::size_t const count) noexcept
+{
+    if (s.length() > count)
+    {
+        return(std::string(s.substr(s.length() - count)));
     }
     else
     {
@@ -829,6 +867,24 @@ inline _Check_return_ bool starts_with(_In_ std::wstring const& s, _In_z_ wchar_
     for (auto const loop_index : Range(number_of_characters_in_beginning))
     {
         if (our_string[loop_index] != beginning[loop_index])
+        {
+            return(false);
+        }
+    }
+
+    return(true);
+}
+
+inline _Check_return_ bool starts_with(_In_ std::wstring_view s, _In_z_ wchar_t const* beginning, _In_ std::size_t const number_of_characters_in_beginning) noexcept
+{
+    if (beginning == nullptr || number_of_characters_in_beginning < 1 || number_of_characters_in_beginning > s.length())
+    {
+        return(false);
+    }
+
+    for (auto const loop_index : Range(number_of_characters_in_beginning))
+    {
+        if (s[loop_index] != beginning[loop_index])
         {
             return(false);
         }
@@ -1486,7 +1542,7 @@ inline void friendly_byte_count(_Inout_ std::wstring& s, _In_ uint64_t const byt
     if (byte_count < ONE_KILOBYTE)
     {
         format_number(s, byte_count);
-        s.append(L" bytes");
+        s.append(WSTRING_VIEW(L" bytes"));
     }
     else if (byte_count < ONE_MEGABYTE)
     {
@@ -2026,6 +2082,24 @@ static inline constexpr _Check_return_ bool it_wasnt_found(_In_ WSTRING_CONST_IT
 static inline constexpr _Check_return_ bool it_was_found(_In_ WSTRING_CONST_ITERATOR_PAIR const& p) noexcept
 {
     return((p.first != p.second) ? true : false);
+}
+
+inline _Check_return_ SSIZE_T add_to_unique_sorted_vector(_In_ std::wstring_view value_to_add, _Inout_ std::vector<std::wstring>& values) noexcept
+{
+    auto const p = std::equal_range(std::cbegin(values), std::cend(values), value_to_add);
+
+    if (it_was_found(p) == false)
+    {
+        const SSIZE_T return_value = std::distance(std::cbegin(values), p.second);
+
+        values.emplace(p.second, value_to_add);
+
+        // Return the index where we inserted
+        return(return_value);
+    }
+
+    // Return the index of the existing entry
+    return(std::distance(std::cbegin(values), p.first));
 }
 
 inline _Check_return_ SSIZE_T add_to_unique_sorted_vector(_In_ std::wstring const& value_to_add, _Inout_ std::vector<std::wstring>& values) noexcept

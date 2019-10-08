@@ -67,10 +67,10 @@ CWfcTrace::CWfcTrace( __in_z LPCTSTR function_name, __in std::size_t const traci
 
          m_Indent();
 
-         std::wstring string_to_output( L"Entering " );
+         std::wstring string_to_output(WSTRING_VIEW(L"Entering "));
 
          string_to_output.append( m_FunctionName );
-         string_to_output.append( L"\n" );
+         string_to_output.append(WSTRING_VIEW(L"\n"));
 
          OutputDebugStringW( string_to_output.c_str() );
       }
@@ -89,10 +89,10 @@ CWfcTrace::~CWfcTrace() noexcept
       {
          m_Indent();
 
-         std::wstring string_to_output( L"Leaving  " );
+         std::wstring string_to_output(WSTRING_VIEW(L"Leaving  "));
 
          string_to_output.append( m_FunctionName );
-         string_to_output.append( L"\n" );
+         string_to_output.append(WSTRING_VIEW(L"\n"));
 
          OutputDebugStringW( string_to_output.c_str() );
          m_FunctionName = nullptr;
@@ -126,7 +126,7 @@ void CWfcTrace::Output( _In_z_ LPCTSTR message ) const noexcept
 
       std::wstring output_string( m_FunctionName );
 
-      output_string.append( L" : " );
+      output_string.append(WSTRING_VIEW(L" : "));
       output_string.append( message );
 
       if ( output_string.length() > 510 )
@@ -134,7 +134,7 @@ void CWfcTrace::Output( _In_z_ LPCTSTR message ) const noexcept
          output_string.erase(510);
       }
 
-      output_string.append( L"\n" );
+      output_string.append(WSTRING_VIEW(L"\n"));
 
       OutputDebugStringW( output_string.c_str() );
    }

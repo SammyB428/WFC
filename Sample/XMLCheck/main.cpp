@@ -94,22 +94,22 @@ int _tmain( int number_of_command_line_arguments, LPCTSTR command_line_arguments
 
    std::error_code filesystem_error_code;
 
-   for( auto const index : Range1(number_of_command_line_arguments) )
+   for( auto const index : Range(number_of_command_line_arguments, 1) )
    {
-       if (filesystem::exists(command_line_arguments[index], filesystem_error_code) == true)
+       if (std::filesystem::exists(command_line_arguments[index], filesystem_error_code) == true)
        {
-           if (filesystem::is_directory(command_line_arguments[index], filesystem_error_code) == false)
+           if (std::filesystem::is_directory(command_line_arguments[index], filesystem_error_code) == false)
            {
                check_xml_file(command_line_arguments[index]);
            }
            else
            {
-               std::vector<filesystem::path> filenames;
+               std::vector<std::filesystem::path> filenames;
 
-               for (auto const& entry : filesystem::recursive_directory_iterator(command_line_arguments[index], filesystem_error_code))
+               for (auto const& entry : std::filesystem::recursive_directory_iterator(command_line_arguments[index], filesystem_error_code))
                {
-                   if (filesystem::is_directory(entry, filesystem_error_code) == false &&
-                       filesystem::file_size(entry, filesystem_error_code) > 0) // Skip empty files, pffexport likes to write these...
+                   if (std::filesystem::is_directory(entry, filesystem_error_code) == false &&
+                       std::filesystem::file_size(entry, filesystem_error_code) > 0) // Skip empty files, pffexport likes to write these...
                    {
                        filenames.push_back(entry.path());
                    }
@@ -130,7 +130,7 @@ int _tmain( int number_of_command_line_arguments, LPCTSTR command_line_arguments
 
            if (find_file_handle != INVALID_HANDLE_VALUE)
            {
-               filesystem::path full_path(command_line_arguments[index]);
+               std::filesystem::path full_path(command_line_arguments[index]);
 
                full_path.append(find_data.cFileName);
 

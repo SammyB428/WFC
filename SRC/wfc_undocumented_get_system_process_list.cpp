@@ -60,8 +60,8 @@ void Win32FoundationClasses::wfc_debug_error_code( _In_ DWORD const error_code )
     std::wstring error_message;
 
     format( error_message, L"ERROR %lu - ", error_code );
-    error_message.append( error_string.c_str() );
-    error_message.append( L"\n" );
+    error_message.append( error_string );
+    error_message.append(WSTRING_VIEW(L"\n"));
 
     OutputDebugStringW( error_message.c_str() );
 }

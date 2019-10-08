@@ -60,7 +60,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
         return( failure() );
     }
 
-    string_1.assign( L"ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789" );
+    string_1.assign(WSTRING_VIEW(L"ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"));
 
     if ( string_1.length() != 36 )
     {
@@ -78,7 +78,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     make_lower( string_1 );
 
-    if ( string_1.compare( L"abcdefghijklmnopqrstuvwxyz0123456789" ) != I_AM_EQUAL_TO_THAT )
+    if ( string_1.compare(WSTRING_VIEW(L"abcdefghijklmnopqrstuvwxyz0123456789")) != I_AM_EQUAL_TO_THAT )
     {
         test_number_that_failed = 4;
         return( failure() );
@@ -94,7 +94,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     string_2.assign( left(string_1, 26 ) );
 
-    if ( string_2.compare( L"ABCDEFGHIJKLMNOPQRSTUVWXYZ" ) != I_AM_EQUAL_TO_THAT )
+    if ( string_2.compare(WSTRING_VIEW(L"ABCDEFGHIJKLMNOPQRSTUVWXYZ")) != I_AM_EQUAL_TO_THAT )
     {
         test_number_that_failed = 6;
         return( failure() );
@@ -108,7 +108,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     string_2.assign( right( string_1, 10 ) );
 
-    if ( string_2.compare( L"0123456789" ) != I_AM_EQUAL_TO_THAT )
+    if ( string_2.compare(WSTRING_VIEW(L"0123456789")) != I_AM_EQUAL_TO_THAT )
     {
         test_number_that_failed = 8;
         return( failure() );
@@ -119,7 +119,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     // Now test to see if we can add more than one character...
 
-    std::wstring string_3( L"ABCDE" );
+    std::wstring string_3(WSTRING_VIEW(L"ABCDE"));
 
     if ( string_3.length() != 5 )
     {
@@ -133,7 +133,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
         return( failure() );
     }
 
-    if ( string_3.compare( L"ABCDE" ) != 0 )
+    if ( string_3.compare(WSTRING_VIEW(L"ABCDE")) != 0 )
     {
         test_number_that_failed = 15;
         return( failure() );
@@ -161,7 +161,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
         return( failure() );
     }
 
-    if ( string_4.compare( L"abcd" ) != 0 )
+    if ( string_4.compare(WSTRING_VIEW(L"abcd")) != 0 )
     {
         test_number_that_failed = 18;
         return( failure() );
@@ -183,7 +183,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
         return( failure() );
     }
 
-    if ( string_5.compare( L"abcd" ) != 0 )
+    if ( string_5.compare(WSTRING_VIEW(L"abcd")) != 0 )
     {
         test_number_that_failed = 21;
         return( failure() );
@@ -205,20 +205,20 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     // Be careful to use only functions that have already been tested above
 
-    string_1.assign( L"ABC" );
-    string_2.assign( L"DEF" );
+    string_1.assign(WSTRING_VIEW(L"ABC"));
+    string_2.assign(WSTRING_VIEW(L"DEF"));
 
     string_1.append( string_2 );
 
-    if ( string_1.compare( L"ABCDEF" ) != I_AM_EQUAL_TO_THAT )
+    if ( string_1.compare(WSTRING_VIEW(L"ABCDEF")) != I_AM_EQUAL_TO_THAT )
     {
         test_number_that_failed = 23;
         return( failure() );
     }
 
-    string_1.append( L"GHI" );
+    string_1.append(WSTRING_VIEW(L"GHI"));
 
-    if ( string_1.compare( L"ABCDEFGHI" ) != I_AM_EQUAL_TO_THAT )
+    if ( string_1.compare(WSTRING_VIEW(L"ABCDEFGHI")) != I_AM_EQUAL_TO_THAT )
     {
         test_number_that_failed = 24;
         return( failure() );
@@ -226,7 +226,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     string_1.push_back( 'J' );
 
-    if ( string_1.compare( L"ABCDEFGHIJ" ) != I_AM_EQUAL_TO_THAT )
+    if ( string_1.compare(WSTRING_VIEW(L"ABCDEFGHIJ")) != I_AM_EQUAL_TO_THAT )
     {
         test_number_that_failed = 25;
         return( failure() );
@@ -234,17 +234,17 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     string_1.append( reinterpret_cast<wchar_t const *>(byte_buffer) );
 
-    if ( string_1.compare( L"ABCDEFGHIJabcd" ) != I_AM_EQUAL_TO_THAT )
+    if ( string_1.compare(WSTRING_VIEW(L"ABCDEFGHIJabcd")) != I_AM_EQUAL_TO_THAT )
     {
         test_number_that_failed = 26;
         return( failure() );
     }
 
-    string_2.assign( L"WXYZ" );
+    string_2.assign(WSTRING_VIEW(L"WXYZ"));
 
     SSIZE_T found_at_index = 0;
 
-    string_1.assign( L"WXYZ" );
+    string_1.assign(WSTRING_VIEW(L"WXYZ"));
 
     found_at_index = string_1.find( 'Z' );
 
@@ -254,7 +254,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
         return( failure() );
     }
 
-    found_at_index = string_1.find( L"XY" );
+    found_at_index = string_1.find(WSTRING_VIEW(L"XY"));
 
     if ( found_at_index != 1 )
     {
@@ -268,11 +268,11 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
         return( failure() );
     }
 
-    string_1.assign( L"ABCD12345" ); // An Odd-numbered length
+    string_1.assign(WSTRING_VIEW(L"ABCD12345")); // An Odd-numbered length
 
     make_reverse(string_1);
 
-    if ( string_1.compare( L"54321DCBA" ) != I_AM_EQUAL_TO_THAT )
+    if ( string_1.compare(WSTRING_VIEW(L"54321DCBA")) != I_AM_EQUAL_TO_THAT )
     {
         test_number_that_failed = 38;
         return( failure() );
@@ -280,17 +280,17 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     make_reverse(string_1);
 
-    if ( string_1.compare( L"ABCD12345" ) != I_AM_EQUAL_TO_THAT )
+    if ( string_1.compare(WSTRING_VIEW(L"ABCD12345")) != I_AM_EQUAL_TO_THAT )
     {
         test_number_that_failed = 39;
         return( failure() );
     }
 
-    string_1.assign( L"ABCD1234" ); // An Even-numbered length
+    string_1.assign(WSTRING_VIEW(L"ABCD1234")); // An Even-numbered length
 
     make_reverse(string_1);
 
-    if ( string_1.compare( L"4321DCBA" ) != I_AM_EQUAL_TO_THAT )
+    if ( string_1.compare(WSTRING_VIEW(L"4321DCBA")) != I_AM_EQUAL_TO_THAT )
     {
         test_number_that_failed = 40;
         return( failure() );
@@ -298,7 +298,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     make_reverse(string_1);
 
-    if ( string_1.compare( L"ABCD1234" ) != I_AM_EQUAL_TO_THAT )
+    if ( string_1.compare(WSTRING_VIEW(L"ABCD1234")) != I_AM_EQUAL_TO_THAT )
     {
         test_number_that_failed = 41;
         return( failure() );
@@ -306,7 +306,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     string_2.assign( string_1.substr(2, 4 ) );
 
-    if ( string_2.compare( L"CD12" ) != I_AM_EQUAL_TO_THAT )
+    if ( string_2.compare(WSTRING_VIEW(L"CD12")) != I_AM_EQUAL_TO_THAT )
     {
         test_number_that_failed = 42;
         return( failure() );
@@ -314,17 +314,17 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     string_2.assign( string_1.substr( 2 ) );
 
-    if ( string_2.compare( L"CD1234" ) != I_AM_EQUAL_TO_THAT )
+    if ( string_2.compare(WSTRING_VIEW(L"CD1234")) != I_AM_EQUAL_TO_THAT )
     {
         test_number_that_failed = 43;
         return( failure() );
     }
 
-    string_1.assign( L"AZA" );
+    string_1.assign(WSTRING_VIEW(L"AZA"));
 
     string_1.at( 1 ) =  'A';
 
-    if ( string_1.compare( L"AAA" ) != 0 )
+    if ( string_1.compare(WSTRING_VIEW(L"AAA")) != 0 )
     {
         test_number_that_failed = 45;
         return( failure() );
@@ -332,15 +332,15 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     // CWideString::SpanExcluding()
 
-    string_1.assign( L"AABBCCDDYYZZ" );
+    string_1.assign(WSTRING_VIEW(L"AABBCCDDYYZZ"));
 
     // CWideString::TrimLeft()
 
-    string_1.assign( L" \t\r  ABCD" );
+    string_1.assign(WSTRING_VIEW(L" \t\r  ABCD"));
 
     trim_left( string_1 );
 
-    if ( string_1.compare( L"ABCD" ) != 0 )
+    if ( string_1.compare(WSTRING_VIEW(L"ABCD")) != 0 )
     {
         test_number_that_failed = 48;
         return( failure() );
@@ -348,11 +348,11 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     // CWideString::TrimRight()
 
-    string_1.assign( L"ABCD \t\r " );
+    string_1.assign(WSTRING_VIEW(L"ABCD \t\r "));
 
     trim_right( string_1 );
 
-    if ( string_1.compare( L"ABCD" ) != 0 )
+    if ( string_1.compare(WSTRING_VIEW(L"ABCD")) != 0 )
     {
         test_number_that_failed = 49;
         return( failure() );
@@ -364,7 +364,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     string_2 = string_1;
 
-    if ( string_2.compare( L"ABCD" ) != 0 )
+    if ( string_2.compare(WSTRING_VIEW(L"ABCD")) != 0 )
     {
         test_number_that_failed = 50;
         return( failure() );
@@ -372,7 +372,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     string_2 = L'A';
 
-    if ( string_2.compare( L"A" ) != 0 )
+    if ( string_2.compare(WSTRING_VIEW(L"A")) != 0 )
     {
         test_number_that_failed = 51;
         return( failure() );
@@ -386,7 +386,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     string_2 = reinterpret_cast<wchar_t const *>(byte_buffer);
 
-    if ( string_2.compare( L"abcd" ) != 0 )
+    if ( string_2.compare(WSTRING_VIEW(L"abcd")) != 0 )
     {
         test_number_that_failed = 53;
         return( failure() );
@@ -394,12 +394,12 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     // CWideString::operator += ( CWideString& )
 
-    string_1.assign( L"ABC" );
-    string_2.assign( L"DEF" );
+    string_1.assign(WSTRING_VIEW(L"ABC"));
+    string_2.assign(WSTRING_VIEW(L"DEF"));
 
     string_1 += string_2;
 
-    if ( string_1.compare( L"ABCDEF" ) != 0 )
+    if ( string_1.compare(WSTRING_VIEW(L"ABCDEF")) != 0 )
     {
         test_number_that_failed = 54;
         return( failure() );
@@ -409,7 +409,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     string_1 += L'G';
 
-    if ( string_1.compare( L"ABCDEFG" ) != 0 )
+    if ( string_1.compare(WSTRING_VIEW(L"ABCDEFG")) != 0 )
     {
         test_number_that_failed = 55;
         return( failure() );
@@ -419,18 +419,18 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     string_1 += L"HIJ";
 
-    if ( string_1.compare( L"ABCDEFGHIJ" ) != 0 )
+    if ( string_1.compare(WSTRING_VIEW(L"ABCDEFGHIJ")) != 0 )
     {
         test_number_that_failed = 56;
         return( failure() );
     }
 
-    string_1.assign( L"ABC" );
-    string_2.assign( L"DEF" );
+    string_1.assign(WSTRING_VIEW(L"ABC"));
+    string_2.assign(WSTRING_VIEW(L"DEF"));
 
     string_3.assign( string_1 + string_2 );
 
-    if ( string_3.compare( L"ABCDEF" ) != 0 )
+    if ( string_3.compare(WSTRING_VIEW(L"ABCDEF")) != 0 )
     {
         test_number_that_failed = 57;
         return( failure() );
@@ -438,7 +438,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     string_3.assign( string_1 + L'D' );
 
-    if ( string_3.compare( L"ABCD" ) != 0 )
+    if ( string_3.compare(WSTRING_VIEW(L"ABCD")) != 0 )
     {
         wprintf( L"String should have been \"ABCD\" but it is \"%s\"\n", string_3.c_str() );
         test_number_that_failed = 58;
@@ -447,7 +447,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     string_3.assign( L'C' + string_2 );
 
-    if ( string_3.compare( L"CDEF" ) != 0 )
+    if ( string_3.compare(WSTRING_VIEW(L"CDEF")) != 0 )
     {
         test_number_that_failed = 59;
         return( failure() );
@@ -455,7 +455,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     string_3.assign( string_1 + L"DEF" );
 
-    if ( string_3.compare( L"ABCDEF" ) != 0 )
+    if ( string_3.compare(WSTRING_VIEW(L"ABCDEF")) != 0 )
     {
         test_number_that_failed = 60;
         return( failure() );
@@ -471,8 +471,8 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     // Enough with the friends aleady. Now is the time for helper operators
 
-    string_1.assign( L"ABC" );
-    string_2.assign( L"ABC" );
+    string_1.assign(WSTRING_VIEW(L"ABC"));
+    string_2.assign(WSTRING_VIEW(L"ABC"));
 
     if ( ! ( string_1 == string_2 ) )
     {
@@ -492,7 +492,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
         return( failure() );
     }
 
-    string_2.assign( L"abc" );
+    string_2.assign(WSTRING_VIEW(L"abc"));
 
     if ( ! ( string_1 != string_2 ) )
     {
@@ -518,8 +518,8 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     // operator < ( CWideString&, CWideString& )
 
-    string_1.assign( L"ABC" );
-    string_2.assign( L"ABc" );
+    string_1.assign(WSTRING_VIEW(L"ABC"));
+    string_2.assign(WSTRING_VIEW(L"ABc"));
 
     if ( ! ( string_1 < string_2 ) )
     {
@@ -1588,9 +1588,9 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     std::vector<std::wstring> string_array;
 
-    (void) string_array.push_back( L"1a1" );
-    (void) string_array.push_back( L"2b2" );
-    (void) string_array.push_back( L"1a1" );
+    (void) string_array.push_back(L"1a1");
+    (void) string_array.push_back(L"2b2");
+    (void) string_array.push_back(L"1a1");
 
     if ( string_array.size() != 3 )
     {
@@ -1608,7 +1608,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     string_5.assign( string_array.at(0) );
 
-    if ( string_5.compare( L"2b2" ) != 0 )
+    if ( string_5.compare(WSTRING_VIEW(L"2b2")) != 0 )
     {
         test_number_that_failed = 228;
         return( failure() );
@@ -1617,7 +1617,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
     string_1.clear();
     string_2.clear();
 
-    string_1.assign( L"AAAB" );
+    string_1.assign(WSTRING_VIEW(L"AAAB"));
 
     found_at_index = string_1.find( 'B', 3 );
 
@@ -1627,7 +1627,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
         return( failure() );
     }
 
-    string_1.assign( L"YZYZTZ" );
+    string_1.assign(WSTRING_VIEW(L"YZYZTZ"));
 
     found_at_index = string_1.find( L"TZ", 1 );
 
@@ -1637,11 +1637,11 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
         return( failure() );
     }
 
-    string_2.assign( L"0123456789" );
+    string_2.assign(WSTRING_VIEW(L"0123456789"));
 
     string_1.append( string_2, 7 );
 
-    if ( string_1.compare( L"YZYZTZ789" ) != 0 )
+    if ( string_1.compare(WSTRING_VIEW(L"YZYZTZ789")) != 0 )
     {
         test_number_that_failed = 230;
         return( failure() );
@@ -1655,10 +1655,10 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
         return( failure() );
     }
 
-    string_array.push_back( L"0" );
-    string_array.push_back( L"Aa" );
-    string_array.push_back( L"Bb" );
-    string_array.push_back( L"Cc" );
+    string_array.push_back(L"0");
+    string_array.push_back(L"Aa");
+    string_array.push_back(L"Bb");
+    string_array.push_back(L"Cc");
 
     if ( string_array.size() != 4 )
     {
@@ -1668,9 +1668,9 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     std::vector<std::wstring> other_array;
 
-    other_array.push_back( L"One" );
-    other_array.push_back( L"Two" );
-    other_array.push_back( L"Three" );
+    other_array.push_back(L"One");
+    other_array.push_back(L"Two");
+    other_array.push_back(L"Three");
 
     if ( other_array.size() != 3 )
     {
@@ -1680,7 +1680,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     join( other_array, nullptr, string_1 );
 
-    if ( string_1.compare( L"OneTwoThree" ) != 0 )
+    if ( string_1.compare(WSTRING_VIEW(L"OneTwoThree")) != 0 )
     {
         test_number_that_failed = 239;
         return( failure() );
@@ -1696,7 +1696,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     join( other_array, L"", string_1 );
 
-    if ( string_1.compare( L"OneTwoThree" ) != 0 )
+    if ( string_1.compare(WSTRING_VIEW(L"OneTwoThree")) != 0 )
     {
         test_number_that_failed = 241;
         return( failure() );
@@ -1712,7 +1712,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     join( other_array, L".", string_1 );
 
-    if ( string_1.compare( L"One.Two.Three" ) != 0 )
+    if ( string_1.compare(WSTRING_VIEW(L"One.Two.Three")) != 0 )
     {
         test_number_that_failed = 243;
         return( failure() );
@@ -1728,7 +1728,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     join( other_array, L" and a ", string_1 );
 
-    if ( string_1.compare( L"One and a Two and a Three" ) != 0 )
+    if ( string_1.compare(WSTRING_VIEW(L"One and a Two and a Three")) != 0 )
     {
         test_number_that_failed = 245;
         return( failure() );
@@ -1750,7 +1750,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
         return(failure());
     }
 
-    string_1.assign(L"01293784529346");
+    string_1.assign(WSTRING_VIEW(L"01293784529346"));
 
     if (is_all_decimal_digits( string_1 ) == false)
     {
@@ -1764,7 +1764,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
         return(failure());
     }
 
-    string_1.assign(L"012aBcDEf9");
+    string_1.assign(WSTRING_VIEW(L"012aBcDEf9"));
 
     if (is_all_hex_digits( string_1 ) == false)
     {
@@ -1772,7 +1772,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
         return(failure());
     }
 
-    string_1.assign(L"ABCDEFG");
+    string_1.assign(WSTRING_VIEW(L"ABCDEFG"));
 
     if (is_all_hex_digits( string_1) == true)
     {
@@ -1784,7 +1784,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     found_at_index = 0;
 
-    string_1.assign(L"WXYZ");
+    string_1.assign(WSTRING_VIEW(L"WXYZ"));
 
     found_at_index = string_1.find(L'U');
 
@@ -1794,7 +1794,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
         return(failure());
     }
 
-    found_at_index = string_1.find(L"Z1");
+    found_at_index = string_1.find(WSTRING_VIEW(L"Z1"));
 
     if (found_at_index != std::wstring::npos)
     {
@@ -1802,7 +1802,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
         return(failure());
     }
 
-    found_at_index = string_1.find(L"YZ");
+    found_at_index = string_1.find(WSTRING_VIEW(L"YZ"));
 
     if (found_at_index != 2)
     {
@@ -1812,7 +1812,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     string_1.assign(L"BCDEF");
 
-    found_at_index = string_1.find_first_of(L"AbZ");
+    found_at_index = string_1.find_first_of(WSTRING_VIEW(L"AbZ"));
 
     if (found_at_index != std::wstring::npos)
     {
@@ -1822,7 +1822,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     std::vector<std::wstring> sorted;
 
-    SSIZE_T where_it_was_inserted = add_to_unique_sorted_vector(L"&amp;", sorted);
+    SSIZE_T where_it_was_inserted = add_to_unique_sorted_vector(WSTRING_VIEW(L"&amp;"), sorted);
 
     if (sorted.size() != 1)
     {
@@ -1836,7 +1836,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
         return(failure());
     }
 
-    where_it_was_inserted = add_to_unique_sorted_vector(L"&apos;", sorted);
+    where_it_was_inserted = add_to_unique_sorted_vector(WSTRING_VIEW(L"&apos;"), sorted);
 
     if (sorted.size() != 2)
     {
@@ -1850,19 +1850,19 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
         return(failure());
     }
 
-    if (sorted[0].compare(L"&amp;") != I_AM_EQUAL_TO_THAT)
+    if (sorted[0].compare(WSTRING_VIEW(L"&amp;")) != I_AM_EQUAL_TO_THAT)
     {
         test_number_that_failed = 261;
         return(failure());
     }
 
-    if (sorted[1].compare(L"&apos;") != I_AM_EQUAL_TO_THAT)
+    if (sorted[1].compare(WSTRING_VIEW(L"&apos;")) != I_AM_EQUAL_TO_THAT)
     {
         test_number_that_failed = 262;
         return(failure());
     }
 
-    where_it_was_inserted = add_to_unique_sorted_vector(L"&amp;", sorted);
+    where_it_was_inserted = add_to_unique_sorted_vector(WSTRING_VIEW(L"&amp;"), sorted);
 
     if (sorted.size() != 2)
     {
@@ -1870,13 +1870,13 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
         return(failure());
     }
 
-    if (sorted[0].compare(L"&amp;") != I_AM_EQUAL_TO_THAT)
+    if (sorted[0].compare(WSTRING_VIEW(L"&amp;")) != I_AM_EQUAL_TO_THAT)
     {
         test_number_that_failed = 264;
         return(failure());
     }
 
-    if (sorted[1].compare(L"&apos;") != I_AM_EQUAL_TO_THAT)
+    if (sorted[1].compare(WSTRING_VIEW(L"&apos;")) != I_AM_EQUAL_TO_THAT)
     {
         test_number_that_failed = 265;
         return(failure());
@@ -1888,7 +1888,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
         return(failure());
     }
 
-    where_it_was_inserted = add_to_unique_sorted_vector(L"&apos;", sorted);
+    where_it_was_inserted = add_to_unique_sorted_vector(WSTRING_VIEW(L"&apos;"), sorted);
 
     if (sorted.size() != 2)
     {
@@ -1896,13 +1896,13 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
         return(failure());
     }
 
-    if (sorted[0].compare(L"&amp;") != I_AM_EQUAL_TO_THAT)
+    if (sorted[0].compare(WSTRING_VIEW(L"&amp;")) != I_AM_EQUAL_TO_THAT)
     {
         test_number_that_failed = 268;
         return(failure());
     }
 
-    if (sorted[1].compare(L"&apos;") != I_AM_EQUAL_TO_THAT)
+    if (sorted[1].compare(WSTRING_VIEW(L"&apos;")) != I_AM_EQUAL_TO_THAT)
     {
         test_number_that_failed = 269;
         return(failure());
@@ -1914,7 +1914,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
         return(failure());
     }
 
-    where_it_was_inserted = add_to_unique_sorted_vector(L"&aaaa;", sorted);
+    where_it_was_inserted = add_to_unique_sorted_vector(WSTRING_VIEW(L"&aaaa;"), sorted);
 
     if (sorted.size() != 3)
     {
@@ -1922,19 +1922,19 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
         return(failure());
     }
 
-    if (sorted[0].compare(L"&aaaa;") != I_AM_EQUAL_TO_THAT)
+    if (sorted[0].compare(WSTRING_VIEW(L"&aaaa;")) != I_AM_EQUAL_TO_THAT)
     {
         test_number_that_failed = 272;
         return(failure());
     }
 
-    if (sorted[1].compare(L"&amp;") != I_AM_EQUAL_TO_THAT)
+    if (sorted[1].compare(WSTRING_VIEW(L"&amp;")) != I_AM_EQUAL_TO_THAT)
     {
         test_number_that_failed = 273;
         return(failure());
     }
 
-    if (sorted[2].compare(L"&apos;") != I_AM_EQUAL_TO_THAT)
+    if (sorted[2].compare(WSTRING_VIEW(L"&apos;")) != I_AM_EQUAL_TO_THAT)
     {
         test_number_that_failed = 274;
         return(failure());
@@ -1946,8 +1946,8 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
         return(failure());
     }
 
-    std::wstring ss1(L"ABCDEF");
-    std::wstring ss2(L"abcdef");
+    std::wstring ss1(WSTRING_VIEW(L"ABCDEF"));
+    std::wstring ss2(WSTRING_VIEW(L"abcdef"));
 
     if (compare_no_case(ss1, ss2) != I_AM_EQUAL_TO_THAT)
     {
@@ -1955,11 +1955,11 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
         return(failure());
     }
 
-    std::experimental::filesystem::v1::path p1(L"C:\\t1\\t2\\t3.txt");
+    std::filesystem::path p1(L"C:\\t1\\t2\\t3.txt");
 
     format(ss2, L"%s==", p1);
 
-    if (ss2.compare(L"C:\\t1\\t2\\t3.txt==") != I_AM_EQUAL_TO_THAT)
+    if (ss2.compare(WSTRING_VIEW(L"C:\\t1\\t2\\t3.txt==")) != I_AM_EQUAL_TO_THAT)
     {
         test_number_that_failed = 277;
         return(failure());

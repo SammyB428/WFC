@@ -210,7 +210,7 @@ void CUniformResourceLocator::Make( void ) noexcept
    WFC_VALIDATE_POINTER( this );
 
    URL.assign( ProtocolName );
-   URL.append( L"://" );
+   URL.append(WSTRING_VIEW(L"://"));
    URL.append( MachineName );
 
    if ( PortName.empty() == false )

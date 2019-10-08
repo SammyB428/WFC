@@ -567,7 +567,7 @@ _Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Read( _In_z_ wcha
 
          sub_element_p->GetText( string_value );
 
-         (void) ::wfc_parse_iso_8601_string( string_value.c_str(), value );
+         (void) ::wfc_parse_iso_8601_string( string_value, value );
       }
 
       return( sub_element_p );
@@ -677,7 +677,7 @@ _Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Read( _In_z_ wcha
 
          sub_element_p->GetText( string_value );
 
-         (void) wfc_parse_iso_8601_string( string_value.c_str(), value );
+         (void) wfc_parse_iso_8601_string( string_value, value );
       }
 
       return( sub_element_p );
@@ -713,7 +713,7 @@ _Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Read( _In_ wchar_
 
          sub_element_p->GetText( string_value );
 
-         (void) ::wfc_parse_iso_8601_string( string_value.c_str(), value );
+         (void) ::wfc_parse_iso_8601_string( string_value, value );
       }
 
       return( sub_element_p );

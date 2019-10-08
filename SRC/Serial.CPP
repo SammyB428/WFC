@@ -1179,13 +1179,13 @@ _Check_return_ bool CSerialFile::Open( void ) noexcept
    // Need to add idiot proofing here...
    // check each setting for validity...
 
-   std::wstring dcb_string(L"baud=" );
+   std::wstring dcb_string(WSTRING_VIEW(L"baud="));
    dcb_string.append( baud_string );
-   dcb_string.append( L" parity=" );
+   dcb_string.append(WSTRING_VIEW(L" parity="));
    dcb_string.append( parity_string );
-   dcb_string.append( L" data=" );
+   dcb_string.append(WSTRING_VIEW(L" data="));
    dcb_string.append( data_bits_string );
-   dcb_string.append( L" stop=" );
+   dcb_string.append(WSTRING_VIEW(L" stop="));
    dcb_string.append( stop_bits_string );
 
    CDeviceControlBlock device_control_block;
@@ -1808,10 +1808,10 @@ _Check_return_ bool CSerialFile::WaitForString( __in std::string const& string_t
 
 #if defined( _DEBUG )
 
-   std::string debug_string( "\"" );
+   std::string debug_string(STRING_VIEW("\"") );
 
    debug_string.append( string_to_wait_for );
-   debug_string.append( "\"" );
+   debug_string.push_back('\"');
 
    //WFCTRACEVAL( TEXT( "Waiting for " ), debug_string );
 

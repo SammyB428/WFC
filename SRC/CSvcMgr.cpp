@@ -1112,7 +1112,7 @@ _Check_return_ bool CServiceControlManager::SetConfiguration( __in_z wchar_t con
     {
         m_ErrorCode = ERROR_INVALID_PARAMETER;
         wfc_get_error_string(m_ErrorCode, m_ErrorMessage);
-        m_ErrorMessage.append(L" because service_name parameter is null.");
+        m_ErrorMessage.append(WSTRING_VIEW(L" because service_name parameter is null."));
         return( false );
     }
 
@@ -1122,7 +1122,7 @@ _Check_return_ bool CServiceControlManager::SetConfiguration( __in_z wchar_t con
     {
         m_ErrorCode = ERROR_INVALID_HANDLE;
         wfc_get_error_string(m_ErrorCode, m_ErrorMessage);
-        m_ErrorMessage.append(L" because the manager handle is invalid.");
+        m_ErrorMessage.append(WSTRING_VIEW(L" because the manager handle is invalid."));
         return( false );
     }
 
@@ -1137,7 +1137,7 @@ _Check_return_ bool CServiceControlManager::SetConfiguration( __in_z wchar_t con
             m_ErrorCode = ::GetLastError();
             wfc_get_error_string(m_ErrorCode, m_ErrorMessage);
             //WFCTRACEERROR( m_ErrorCode );
-            m_ErrorMessage.append(L" because the manager handle is invalid Can't open for config Access.");
+            m_ErrorMessage.append(WSTRING_VIEW(L" because the manager handle is invalid Can't open for config Access."));
             return( false );
         }
 
@@ -1198,7 +1198,7 @@ _Check_return_ bool CServiceControlManager::SetConfiguration( __in_z wchar_t con
                 m_ErrorCode = ::GetLastError();
                 wfc_get_error_string(m_ErrorCode, m_ErrorMessage);
                 //WFCTRACEERROR( m_ErrorCode );
-                m_ErrorMessage.append(L" while calling ChangeServiceConfigW API.");
+                m_ErrorMessage.append(WSTRING_VIEW(L" while calling ChangeServiceConfigW API."));
                 return_value = false;
             }
             else
@@ -1216,7 +1216,7 @@ _Check_return_ bool CServiceControlManager::SetConfiguration( __in_z wchar_t con
             // LockDatabase already set m_ErrorCode
 
             ::CloseServiceHandle( service_handle );
-            m_ErrorMessage.append(L" while locking database to change service config.");
+            m_ErrorMessage.append(WSTRING_VIEW(L" while locking database to change service config."));
             return( false );
         }
     }

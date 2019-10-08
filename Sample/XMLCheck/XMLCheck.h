@@ -51,8 +51,6 @@
 #include <wfc.h>
 #include <filesystem>
 
-namespace filesystem = std::experimental::filesystem::v1;
-
 USING_WFC_NAMESPACE
 
 inline constexpr _Check_return_ UINT read_open_mode(void) noexcept

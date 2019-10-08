@@ -169,21 +169,14 @@ CExtensibleMarkupLanguageDocument::~CExtensibleMarkupLanguageDocument()
    }
 }
 
-_Check_return_ bool CExtensibleMarkupLanguageDocument::AddCallback( _In_z_ LPCTSTR element_name, __callback XML_ELEMENT_CALLBACK callback, __inout void * callback_parameter ) noexcept
+_Check_return_ bool CExtensibleMarkupLanguageDocument::AddCallback( _In_ std::wstring_view element_name, __callback XML_ELEMENT_CALLBACK callback, __inout void * callback_parameter ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
-   WFC_VALIDATE_POINTER_NULL_OK( element_name );
    WFC_VALIDATE_POINTER( callback );
 
-   if ( element_name == nullptr )
+   if ( element_name.empty() == true )
    {
       //WFCTRACE( TEXT( "Nameless element callbacks not supported" ) );
-      return( false );
-   }
-
-   if ( element_name[ 0 ] == 0x00 )
-   {
-      //WFCTRACE( TEXT( "Empty element name not supported" ) );
       return( false );
    }
 
@@ -195,13 +188,11 @@ _Check_return_ bool CExtensibleMarkupLanguageDocument::AddCallback( _In_z_ LPCTS
 
    // Now go find this entry (to make sure we don't call it twice)
 
-   std::wstring name( element_name );
-
    for( auto& entry : m_Callbacks )
    {
       if ( entry.callback  == callback &&
            entry.parameter == callback_parameter &&
-           name.compare( entry.name ) == I_AM_EQUAL_TO_THAT)
+           element_name.compare( entry.name ) == I_AM_EQUAL_TO_THAT)
       {
          return( false );
       }
@@ -213,18 +204,16 @@ _Check_return_ bool CExtensibleMarkupLanguageDocument::AddCallback( _In_z_ LPCTS
 
    new_entry.callback  = callback;
    new_entry.parameter = callback_parameter;
-   new_entry.name = name;
+   new_entry.name.assign(element_name);
 
    m_Callbacks.push_back(new_entry);
 
    return( true );
 }
 
-_Check_return_ bool CExtensibleMarkupLanguageDocument::AddEntity( _In_z_ wchar_t const * entity, _In_z_ wchar_t const * value ) noexcept
+_Check_return_ bool CExtensibleMarkupLanguageDocument::AddEntity( _In_ std::wstring_view entity, _In_ std::wstring_view value ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
-   WFC_VALIDATE_POINTER(entity);
-   WFC_VALIDATE_POINTER(value);
 
    // First, we must check to see if we allow default entities to be replaced...
    // The default entities are:
@@ -248,11 +237,11 @@ _Check_return_ bool CExtensibleMarkupLanguageDocument::AddEntity( _In_z_ wchar_t
    {
       // We must check to make sure the default entities aren't replaced
 
-      if ( wcscmp(entity, L"&amp;"  ) == I_AM_EQUAL_TO_THAT ||
-           wcscmp(entity, L"&apos;" ) == I_AM_EQUAL_TO_THAT ||
-           wcscmp(entity, L"&gt;"   ) == I_AM_EQUAL_TO_THAT ||
-           wcscmp(entity, L"&lt;"   ) == I_AM_EQUAL_TO_THAT ||
-           wcscmp(entity, L"&quot;" ) == I_AM_EQUAL_TO_THAT)
+      if ( entity.compare(WSTRING_VIEW(L"&amp;")) == I_AM_EQUAL_TO_THAT ||
+           entity.compare(WSTRING_VIEW(L"&apos;")) == I_AM_EQUAL_TO_THAT ||
+           entity.compare(WSTRING_VIEW(L"&gt;")) == I_AM_EQUAL_TO_THAT ||
+           entity.compare(WSTRING_VIEW(L"&lt;")) == I_AM_EQUAL_TO_THAT ||
+           entity.compare(WSTRING_VIEW(L"&quot;")) == I_AM_EQUAL_TO_THAT)
       {
          // The user tried to replace a default entity
          return( false );
@@ -279,15 +268,14 @@ void CExtensibleMarkupLanguageDocument::Append( _In_ CExtensibleMarkupLanguageDo
       return;
    }
 
-   CExtensibleMarkupLanguageElement * element_to_copy_p = nullptr;
-   //CExtensibleMarkupLanguageElement * element_to_add_p  = nullptr;
-
    std::size_t enumerator = 0;
 
    if ( source.m_XML->EnumerateChildren( enumerator ) == true )
    {
-      while( source.m_XML->GetNextChild( enumerator, element_to_copy_p ) == true )
-      {
+       CExtensibleMarkupLanguageElement * element_to_copy_p = nullptr;
+
+       while( source.m_XML->GetNextChild( enumerator, element_to_copy_p ) == true )
+       {
          if ( element_to_copy_p != nullptr )
          {
             auto element_to_add_p = CExtensibleMarkupLanguageElement::NewElement( m_XML );
@@ -339,43 +327,41 @@ void CExtensibleMarkupLanguageDocument::CopyCallbacks( _In_ CExtensibleMarkupLan
    {
        // 2000-10-18
        // Thanks go to Larry Bredehoeft (L.Bredehoeft@imandi.com) for finding a bug here
-      (void )AddCallback( entry.name.c_str(), entry.callback, entry.parameter );
+      (void )AddCallback( entry.name, entry.callback, entry.parameter );
    }
 }
 
 struct CONTAINS_ELEMENT_NAME
 {
     bool found{ false };
-    std::wstring const * desired_name{ nullptr };
+    std::wstring_view desired_name;
 };
 
 void find_element_name( void * parameter, CExtensibleMarkupLanguageElement * element_p ) noexcept
 {
     auto context = static_cast<CONTAINS_ELEMENT_NAME *>( parameter );
 
-    WFC_VALIDATE_POINTER(context->desired_name);
-
     if ( context->found == false )
     {
-        if ( compare_no_case( *context->desired_name, element_p->Tag() ) == 0 )
+        if ( compare_no_case( context->desired_name, element_p->Tag() ) == 0 )
         {
             context->found = true;
         }
     }
 }
 
-_Check_return_ bool CExtensibleMarkupLanguageDocument::ContainsElementName( _In_ std::wstring const& name ) const noexcept
+_Check_return_ bool CExtensibleMarkupLanguageDocument::ContainsElementName( _In_ std::wstring_view name ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
    CONTAINS_ELEMENT_NAME context;
 
-   context.desired_name = &name;
+   context.desired_name = name;
    context.found = false;
 
    if ( m_XML != nullptr )
    {
-      (void) m_XML->ForAny( name.c_str(), find_element_name, &context );
+      (void) m_XML->ForAny( name, find_element_name, &context );
 
       return( context.found );
    }
@@ -383,10 +369,9 @@ _Check_return_ bool CExtensibleMarkupLanguageDocument::ContainsElementName( _In_
    return( false );
 }
 
-_Check_return_ std::size_t CExtensibleMarkupLanguageDocument::CountElements( _In_z_ wchar_t const * name ) const noexcept
+_Check_return_ std::size_t CExtensibleMarkupLanguageDocument::CountElements( _In_ std::wstring_view name ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
-   WFC_VALIDATE_POINTER(name);
 
    if ( m_XML != nullptr )
    {
@@ -697,10 +682,9 @@ void CExtensibleMarkupLanguageDocument::GetAutomaticIndentation( _Out_ bool& aut
    indent_by            = m_IndentBy;
 }
 
-_Check_return_ CExtensibleMarkupLanguageElement * CExtensibleMarkupLanguageDocument::GetElement( _In_z_ wchar_t const * element_name ) const noexcept
+_Check_return_ CExtensibleMarkupLanguageElement * CExtensibleMarkupLanguageDocument::GetElement( _In_ std::wstring_view element_name ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
-   WFC_VALIDATE_POINTER(element_name);
    WFC_VALIDATE_POINTER_NULL_OK( m_XML );
 
    if ( m_XML == nullptr )
@@ -829,11 +813,11 @@ void CExtensibleMarkupLanguageDocument::m_InitializeEntities( void ) noexcept
    }
 
    // Add the internal entities listed in section 4.6 of REC-xml-19980210
-   (void) m_Entities.Add( L"&amp;", L"&" );
-   (void) m_Entities.Add( L"&apos;", L"'" );
-   (void) m_Entities.Add( L"&gt;", L">" );
-   (void) m_Entities.Add( L"&lt;", L"<" );
-   (void) m_Entities.Add( L"&quot;", L"\"" );
+   (void) m_Entities.Add(WSTRING_VIEW(L"&amp;"), WSTRING_VIEW(L"&") );
+   (void) m_Entities.Add(WSTRING_VIEW(L"&apos;"), WSTRING_VIEW(L"'") );
+   (void) m_Entities.Add(WSTRING_VIEW(L"&gt;"), WSTRING_VIEW(L">") );
+   (void) m_Entities.Add(WSTRING_VIEW(L"&lt;"), WSTRING_VIEW(L"<") );
+   (void) m_Entities.Add(WSTRING_VIEW(L"&quot;"), WSTRING_VIEW(L"\"") );
 }
 
 void CExtensibleMarkupLanguageDocument::m_InitializeRootElement( void ) noexcept
@@ -1239,17 +1223,15 @@ _Check_return_ bool CExtensibleMarkupLanguageDocument::Parse( _Inout_ CDataParse
 
          if ( m_XML != nullptr )
          {
-            m_XML->SetContents( L"xml version=\"1.0\" standalone=\"yes\"" );
-            (void) m_XML->AddAttribute( L"version", L"1.0" );
-            (void) m_XML->AddAttribute( L"standalone", L"yes" );
-            SetVersion( L"1.0" );
+            m_XML->SetContents(WSTRING_VIEW(L"xml version=\"1.0\" standalone=\"yes\""));
+            (void) m_XML->AddAttribute(WSTRING_VIEW(L"version"), WSTRING_VIEW(L"1.0") );
+            (void) m_XML->AddAttribute(WSTRING_VIEW(L"standalone"), WSTRING_VIEW(L"yes") );
+            SetVersion(WSTRING_VIEW(L"1.0"));
             SetStandalone( true );
          }
 
          // OK, the XML declaration is missing, this is bad but allowable under
          // the specification. Let's just use the default set in the constructors.
-
-         CExtensibleMarkupLanguageElement * child_element_p = nullptr;
 
          beginning_of_tag.Copy( parse_point );
 
@@ -1329,9 +1311,9 @@ _Check_return_ bool CExtensibleMarkupLanguageDocument::Parse( _Inout_ CDataParse
       // so we don't need to fill them in here.
 
       m_XML->DestroyAttributes();
-      m_XML->SetContents( L"xml version=\"1.0\" standalone=\"yes\"" );
-      (void) m_XML->AddAttribute( L"version", L"1.0" );
-      (void) m_XML->AddAttribute( L"standalone", L"yes" );
+      m_XML->SetContents(WSTRING_VIEW(L"xml version=\"1.0\" standalone=\"yes\""));
+      (void) m_XML->AddAttribute(WSTRING_VIEW(L"version"), WSTRING_VIEW(L"1.0"));
+      (void) m_XML->AddAttribute(WSTRING_VIEW(L"standalone"), WSTRING_VIEW(L"yes"));
 
       return( false );
    }
@@ -1415,10 +1397,9 @@ _Check_return_ bool CExtensibleMarkupLanguageDocument::Parse( _Inout_ CDataParse
    return( true );
 }
 
-_Check_return_ bool CExtensibleMarkupLanguageDocument::RemoveCallback( _In_z_ wchar_t const * element_name, __callback XML_ELEMENT_CALLBACK callback, __inout void * callback_parameter ) noexcept
+_Check_return_ bool CExtensibleMarkupLanguageDocument::RemoveCallback( _In_ std::wstring_view element_name, __callback XML_ELEMENT_CALLBACK callback, __inout void * callback_parameter ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
-   WFC_VALIDATE_POINTER( element_name );
    WFC_VALIDATE_POINTER_NULL_OK( callback );
 
    // Now go find this entry (to make sure we don't call it twice)
@@ -1426,13 +1407,11 @@ _Check_return_ bool CExtensibleMarkupLanguageDocument::RemoveCallback( _In_z_ wc
    std::size_t loop_index        = 0;
    std::size_t number_of_entries = m_Callbacks.size();
 
-   std::wstring const name( element_name );
-
    while( loop_index < number_of_entries ) // Cannot be converted to a Range loop
    {
       if (m_Callbacks[loop_index].callback  == callback &&
           m_Callbacks[loop_index].parameter == callback_parameter &&
-          name.compare( m_Callbacks[loop_index].name ) == I_AM_EQUAL_TO_THAT)
+          element_name.compare( m_Callbacks[loop_index].name ) == I_AM_EQUAL_TO_THAT)
       {
          m_Callbacks.erase( std::begin(m_Callbacks) + loop_index );
          number_of_entries--;
@@ -1445,7 +1424,7 @@ _Check_return_ bool CExtensibleMarkupLanguageDocument::RemoveCallback( _In_z_ wc
    return( true );
 }
 
-_Check_return_ bool CExtensibleMarkupLanguageDocument::ResolveEntity( _In_z_ wchar_t const * entity, _Out_ std::wstring& resolved_to ) const noexcept
+_Check_return_ bool CExtensibleMarkupLanguageDocument::ResolveEntity( _In_ std::wstring_view entity, _Out_ std::wstring& resolved_to ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -1472,19 +1451,17 @@ void CExtensibleMarkupLanguageDocument::SetConversionCodePage(_In_ uint32_t cons
    }
 }
 
-void CExtensibleMarkupLanguageDocument::SetEncoding( _In_z_ wchar_t const * encoding ) noexcept
+void CExtensibleMarkupLanguageDocument::SetEncoding( _In_ std::wstring_view encoding ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
-   WFC_VALIDATE_POINTER_NULL_OK( encoding );
    m_Encoding.assign( encoding );
 }
 
-void CExtensibleMarkupLanguageDocument::SetNamespace( _In_z_ wchar_t const * name_space ) noexcept
+void CExtensibleMarkupLanguageDocument::SetNamespace( _In_ std::wstring_view name_space ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
-   WFC_VALIDATE_POINTER_NULL_OK( name_space );
 
-   if ( name_space == nullptr || name_space[ 0 ] == 0x00 )
+   if ( name_space.empty() == true )
    {
       m_UseNamespace = false;
       m_Namespace.clear();
@@ -1496,11 +1473,9 @@ void CExtensibleMarkupLanguageDocument::SetNamespace( _In_z_ wchar_t const * nam
    }
 }
 
-void CExtensibleMarkupLanguageDocument::SetParsingErrorInformation( _In_z_ wchar_t const * tag_name, _In_ CParsePoint const& beginning, _In_ CParsePoint const& error_location, _In_opt_z_ wchar_t const * error_message ) noexcept
+void CExtensibleMarkupLanguageDocument::SetParsingErrorInformation( _In_ std::wstring_view tag_name, _In_ CParsePoint const& beginning, _In_ CParsePoint const& error_location, _In_ std::wstring_view error_message ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
-   WFC_VALIDATE_POINTER(tag_name);
-   WFC_VALIDATE_POINTER_NULL_OK( error_message );
 
    if ( m_ParseErrorEncountered == false )
    {
@@ -1509,7 +1484,7 @@ void CExtensibleMarkupLanguageDocument::SetParsingErrorInformation( _In_z_ wchar
       m_ErrorElementBeganAt.Copy( beginning );
       m_ErrorOccuredAt.Copy( error_location );
 
-      if ( error_message == nullptr )
+      if ( error_message.empty() == true )
       {
          m_ErrorMessage.clear();
       }
@@ -1520,10 +1495,9 @@ void CExtensibleMarkupLanguageDocument::SetParsingErrorInformation( _In_z_ wchar
    }
 }
 
-void CExtensibleMarkupLanguageDocument::SetVersion( _In_z_ wchar_t const * version ) noexcept
+void CExtensibleMarkupLanguageDocument::SetVersion( _In_ std::wstring_view version ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
-   WFC_VALIDATE_POINTER_NULL_OK( version );
    m_Version.assign( version );
 }
 

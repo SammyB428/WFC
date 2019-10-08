@@ -314,7 +314,7 @@ namespace Win32FoundationClasses
 
             WFC_TRY
             {
-                m_String.append( (LPCTSTR) source.m_String.c_str() );
+                m_String.append( source.m_String );
             }
             WFC_CATCH_ALL
             {

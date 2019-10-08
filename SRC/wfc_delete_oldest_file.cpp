@@ -76,7 +76,7 @@ _Check_return_ bool PASCAL Win32FoundationClasses::wfc_delete_oldest_file( _In_z
         mask.push_back( '/' );
     }
 
-    mask.append( L"*.*" );
+    mask.append(WSTRING_VIEW(L"*.*"));
 
     WIN32_FIND_DATAW find_data;
 
@@ -141,7 +141,7 @@ _Check_return_ uint32_t PASCAL Win32FoundationClasses::wfc_number_of_files_in_di
         mask.push_back( '/' );
     }
 
-    mask.append( L"*.*" );
+    mask.append(WSTRING_VIEW(L"*.*"));
 
     WIN32_FIND_DATAW find_data;
 
@@ -190,7 +190,7 @@ _Check_return_ uint64_t PASCAL Win32FoundationClasses::wfc_number_of_bytes_in_di
         mask.push_back( '/' );
     }
 
-    mask.append( L"*.*" );
+    mask.append(WSTRING_VIEW(L"*.*"));
 
     WIN32_FIND_DATAW find_data;
 

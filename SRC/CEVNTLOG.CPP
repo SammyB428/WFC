@@ -375,7 +375,7 @@ _Check_return_ bool CEventLog::CreateCustomLog( __in_z LPCTSTR log_name_paramete
          return( false );
       }
 
-      log_key_name.append( L"\\WFC" );
+      log_key_name.append( WSTRING_VIEW(L"\\WFC") );
 
       if ( registry.Create( log_key_name.c_str() ) == false )
       {

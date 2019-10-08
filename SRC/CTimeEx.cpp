@@ -1058,7 +1058,7 @@ void CTimeEx::Set( __in std::wstring const& iso_8601_string ) noexcept
 
    if ( character == '.' )
    {
-      std::size_t const character_index = temp_string.find_first_of( L"Z+-" );
+      std::size_t const character_index = temp_string.find_first_of(WSTRING_VIEW(L"Z+-"));
 
       if ( character_index == std::wstring::npos )
       {

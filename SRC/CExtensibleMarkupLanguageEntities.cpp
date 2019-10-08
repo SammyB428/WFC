@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 1995-2017, Samuel R. Blackburn
+** Copyright, 1995-2019, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -67,19 +67,15 @@ CExtensibleMarkupLanguageEntities::~CExtensibleMarkupLanguageEntities() noexcept
    WFC_VALIDATE_POINTER( this );
 }
 
-_Check_return_ bool CExtensibleMarkupLanguageEntities::Add( _In_z_ wchar_t const * entity, _In_z_ wchar_t const * text_parameter ) noexcept
+_Check_return_ bool CExtensibleMarkupLanguageEntities::Add( _In_ std::wstring_view entity, _In_ std::wstring_view text_parameter ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
-   WFC_VALIDATE_POINTER(entity);
-   WFC_VALIDATE_POINTER(text_parameter);
 
    // entity is in &xxx; form
 
    // Validate the entity
 
-   std::size_t const entity_length = wcslen(entity);
-
-   if (entity_length < 3 )
+   if (entity.length() < 3 )
    {
       //WFCTRACE( TEXT( "Entity too short." ) );
       return( false );
@@ -90,7 +86,7 @@ _Check_return_ bool CExtensibleMarkupLanguageEntities::Add( _In_z_ wchar_t const
       return( false );
    }
 
-   if ( entity[ entity_length - 1 ] != TEXT( ';' ) )
+   if ( entity[entity.length() - 1 ] != TEXT( ';' ) )
    {
       return( false );
    }
@@ -105,7 +101,7 @@ _Check_return_ bool CExtensibleMarkupLanguageEntities::Add( _In_z_ wchar_t const
       return( false );
    }
 
-   for ( auto const loop_index : Range(entity_length - 1, 2) )
+   for ( auto const loop_index : Range(entity.length() - 1, 2) )
    {
       if ( Win32FoundationClasses::is_xml_NameChar( entity[ loop_index ] ) == false )
       {
@@ -128,7 +124,7 @@ _Check_return_ bool CExtensibleMarkupLanguageEntities::Add( _In_z_ wchar_t const
 
    std::wstring resolved_string;
 
-   if ( text.find( L"&#" ) == std::wstring::npos )
+   if ( text.find( WSTRING_VIEW(L"&#") ) == std::wstring::npos )
    {
       // Well, that was easy
       resolved_string = text;
@@ -138,7 +134,7 @@ _Check_return_ bool CExtensibleMarkupLanguageEntities::Add( _In_z_ wchar_t const
       std::wstring temp_string( text );
       std::wstring number_string;
 
-      std::size_t location_of_character_reference = temp_string.find( L"&#" );
+      std::size_t location_of_character_reference = temp_string.find(WSTRING_VIEW(L"&#"));
 
       while( location_of_character_reference != std::wstring::npos )
       {
@@ -206,7 +202,7 @@ _Check_return_ bool CExtensibleMarkupLanguageEntities::Add( _In_z_ wchar_t const
          }
 
          resolved_string.push_back( static_cast< wchar_t >( as_integer(number_string) ) );
-         location_of_character_reference = temp_string.find(L"&#");
+         location_of_character_reference = temp_string.find(WSTRING_VIEW(L"&#"));
       }
 
       resolved_string.append( temp_string );
@@ -218,7 +214,7 @@ _Check_return_ bool CExtensibleMarkupLanguageEntities::Add( _In_z_ wchar_t const
 
    if (m_Entities.empty() == true)
    {
-       (void)m_Entities.push_back(entity);
+       (void)m_Entities.push_back(std::wstring(entity));
        (void)m_Values.push_back(resolved_string);
        return(true);
    }
@@ -277,7 +273,7 @@ _Check_return_ bool CExtensibleMarkupLanguageEntities::GetNext( _Inout_ std::siz
    return( false );
 }
 
-_Check_return_ bool CExtensibleMarkupLanguageEntities::IsEntity( _In_z_ wchar_t const * entity, _Out_ uint32_t& rule_that_was_broken ) const noexcept
+_Check_return_ bool CExtensibleMarkupLanguageEntities::IsEntity( _In_ std::wstring_view entity, _Out_ uint32_t& rule_that_was_broken ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -285,9 +281,7 @@ _Check_return_ bool CExtensibleMarkupLanguageEntities::IsEntity( _In_z_ wchar_t 
 
    rule_that_was_broken = 0;
 
-   std::size_t const entity_length = wcslen( entity );
-
-   if ( entity_length < 3 )
+   if ( entity.length() < 3 )
    {
       // We must have a leading & and trailing ; and at least one character in the middle
 
@@ -301,7 +295,7 @@ _Check_return_ bool CExtensibleMarkupLanguageEntities::IsEntity( _In_z_ wchar_t 
       return( false );
    }
 
-   if ( entity[entity_length - 1 ] != TEXT( ';' ) )
+   if ( entity[entity.length() - 1 ] != TEXT( ';' ) )
    {
       rule_that_was_broken = 68;
       return( false );
@@ -311,7 +305,7 @@ _Check_return_ bool CExtensibleMarkupLanguageEntities::IsEntity( _In_z_ wchar_t 
    {
       // Check to see if mathematical entity is possible
 
-      if ( entity_length == 3 )
+      if ( entity.length() == 3 )
       {
          rule_that_was_broken = 66;
          return( false );
@@ -333,7 +327,7 @@ _Check_return_ bool CExtensibleMarkupLanguageEntities::IsEntity( _In_z_ wchar_t 
 
          // We use entity_length - 4 because we need to skip the &#x at the beginning and ; at the end
 
-         for ( auto const loop_index : Range( entity_length - 4 ) )
+         for ( auto const loop_index : Range( entity.length() - 4 ) )
          {
             if ( _istxdigit( entity[ loop_index + 3 ] ) == 0 ) // + 3 skips &#x
             {
@@ -349,7 +343,7 @@ _Check_return_ bool CExtensibleMarkupLanguageEntities::IsEntity( _In_z_ wchar_t 
          // Nope, we must be decimal
 
          // We use entity_length - 3 because we need to skip the &# at the beginning and ; at the end
-         for ( auto const loop_index : Range( entity_length - 3 ) )
+         for ( auto const loop_index : Range( entity.length() - 3 ) )
          {
             if ( _istdigit( entity[ loop_index + 2 ] ) == 0 ) // + 2 skips &#
             {
@@ -375,7 +369,7 @@ _Check_return_ bool CExtensibleMarkupLanguageEntities::IsEntity( _In_z_ wchar_t 
       return( false );
    }
 
-   for ( auto const loop_index : Range(entity_length - 1, 2) )
+   for ( auto const loop_index : Range(entity.length() - 1, 2) )
    {
       if ( Win32FoundationClasses::is_xml_NameChar( entity[ loop_index ] ) == false )
       {
@@ -403,7 +397,7 @@ _Check_return_ bool CExtensibleMarkupLanguageEntities::IsEntity( _In_z_ wchar_t 
    return(true);
 }
 
-_Check_return_ bool CExtensibleMarkupLanguageEntities::Resolve( _In_z_ wchar_t const * entity, _Out_ std::wstring& text ) const noexcept
+_Check_return_ bool CExtensibleMarkupLanguageEntities::Resolve( _In_ std::wstring_view entity, _Out_ std::wstring& text ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -413,9 +407,7 @@ _Check_return_ bool CExtensibleMarkupLanguageEntities::Resolve( _In_z_ wchar_t c
 
    // First, check to see if this is a mathematical entity.
 
-   std::size_t const entity_length = wcslen(entity);
-
-   if ( entity_length < 3 )
+   if (entity.length() < 3 )
    {
       // We must have a leading & and trailing ; and at least one character in the middle
 
@@ -428,7 +420,7 @@ _Check_return_ bool CExtensibleMarkupLanguageEntities::Resolve( _In_z_ wchar_t c
       return( false );
    }
 
-   if ( entity[entity_length - 1 ] != ';' )
+   if ( entity[entity.length() - 1 ] != ';' )
    {
       return( false );
    }
@@ -437,7 +429,7 @@ _Check_return_ bool CExtensibleMarkupLanguageEntities::Resolve( _In_z_ wchar_t c
    {
       // Check to see if mathematical entity is possible
 
-      if ( entity_length == 3 )
+      if (entity.length() == 3 )
       {
          //WFCTRACE( TEXT( "No body for the mathematical entity." ) );
          text.clear();
@@ -467,7 +459,7 @@ _Check_return_ bool CExtensibleMarkupLanguageEntities::Resolve( _In_z_ wchar_t c
 
          // We use entity_length - 4 because we need to skip the &#x at the beginning and ; at the end
 
-         for ( auto const loop_index : Range( entity_length - 4 ) )
+         for ( auto const loop_index : Range(entity.length() - 4 ) )
          {
             if ( iswdigit( entity[ loop_index + 3 ] ) == 0 ) // + 3 skips &#x
             {
@@ -512,7 +504,7 @@ _Check_return_ bool CExtensibleMarkupLanguageEntities::Resolve( _In_z_ wchar_t c
          // Nope, we must be decimal
 
          // We use entity_length - 3 because we need to skip the &# at the beginning and ; at the end
-         for ( auto const loop_index : Range( entity_length - 3 ) )
+         for ( auto const loop_index : Range(entity.length() - 3 ) )
          {
             if ( _istdigit( entity[ loop_index + 2 ] ) == 0 ) // + 2 skips &#
             {

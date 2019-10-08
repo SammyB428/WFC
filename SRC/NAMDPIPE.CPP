@@ -225,7 +225,7 @@ _Check_return_ bool CNamedPipe::Create( __in_z LPCTSTR server_name,
       m_PipeName.append( server_name );
    }
 
-   m_PipeName.append( L"\\PIPE\\" );
+   m_PipeName.append(WSTRING_VIEW(L"\\PIPE\\"));
    m_PipeName.append( pipe_name );
 
    CSecurityAttributes security_attributes;
@@ -489,7 +489,7 @@ _Check_return_ bool CNamedPipe::Wait( __in_z_opt LPCTSTR name_of_server, __in_z 
       full_pipe_name.append( name_of_server );
    }
 
-   full_pipe_name.append( TEXT( "\\pipe\\" ) );
+   full_pipe_name.append(WSTRING_VIEW(L"\\pipe\\"));
    full_pipe_name.append( name_of_pipe );
 
    BOOL const return_value = ::WaitNamedPipeW( full_pipe_name.c_str(), number_of_milliseconds );

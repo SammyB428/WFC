@@ -107,112 +107,131 @@ CExtensibleMarkupLanguageElement::~CExtensibleMarkupLanguageElement()
     m_Ending.Empty();
 }
 
-_Check_return_ bool CExtensibleMarkupLanguageElement::AddAttribute( _In_z_ wchar_t const * name, _In_z_ wchar_t const * value, _In_ uint64_t const name_offset, _In_ uint64_t const value_offset ) noexcept
+_Check_return_ bool CExtensibleMarkupLanguageElement::AddAttribute(_In_ std::wstring_view name, _In_ std::wstring_view value, _In_ uint64_t const name_offset, _In_ uint64_t const value_offset ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
-    WFC_VALIDATE_POINTER(name);
-    WFC_VALIDATE_POINTER(value);
 
-    CExtensibleMarkupLanguageAttribute * attribute_p = nullptr;
+    auto attribute_p = new CExtensibleMarkupLanguageAttribute;
 
-    WFC_TRY
+    //WFCTRACEVAL( TEXT( "Adding attribute named " ), name );
+    //WFCTRACEVAL( TEXT( "Value is " ), value );
+
+    attribute_p->Name.assign( name );
+    attribute_p->Value.assign( value );
+    attribute_p->NameOffset = name_offset;
+    attribute_p->ValueOffset = value_offset;
+
+    // 1998-09-04
+    // Thanks go to Mats Johnsson (mats.johnsson@comfact.com)
+    // for pointing out that I wasn't normalizing the attribute
+    // values according to section 3.3.3 of XML 1.0 Recommendatation
+    // dated 1998-02-10
+
+    // First, we need replace and CARRIAGE_RETURN/LINE_FEED pairs
+    // with a single space
+
+    std::wstring temporary_string;
+
+    std::size_t location_of_character = attribute_p->Value.find( CARRIAGE_RETURN );
+
+    while( location_of_character != std::wstring::npos)
     {
-        attribute_p = new CExtensibleMarkupLanguageAttribute;
-    }
-    WFC_CATCH_ALL
-    {
-        attribute_p = nullptr;
-    }
-    WFC_END_CATCH_ALL
+        // We found a carriage return, let's normalize it.
 
-        if ( attribute_p == nullptr )
+        attribute_p->Value[ location_of_character ] = ' ';
+
+        if ( location_of_character < attribute_p->Value.length() - 1 )
         {
-            //WFCTRACE( TEXT( "Can't allocate memory for a new attribute" ) );
-            return( false );
-        }
+            // There's at least one more character after the carriage return
 
-        //WFCTRACEVAL( TEXT( "Adding attribute named " ), name );
-        //WFCTRACEVAL( TEXT( "Value is " ), value );
-
-        attribute_p->Name.assign( name );
-        attribute_p->Value.assign( value );
-        attribute_p->NameOffset = name_offset;
-        attribute_p->ValueOffset = value_offset;
-
-        // 1998-09-04
-        // Thanks go to Mats Johnsson (mats.johnsson@comfact.com)
-        // for pointing out that I wasn't normalizing the attribute
-        // values according to section 3.3.3 of XML 1.0 Recommendatation
-        // dated 1998-02-10
-
-        // First, we need replace and CARRIAGE_RETURN/LINE_FEED pairs
-        // with a single space
-
-        std::wstring temporary_string;
-
-        std::size_t location_of_character = attribute_p->Value.find( CARRIAGE_RETURN );
-
-        while( location_of_character != std::wstring::npos)
-        {
-            // We found a carriage return, let's normalize it.
-
-            attribute_p->Value[ location_of_character ] = ' ';
-
-            if ( location_of_character < attribute_p->Value.length() - 1 )
+            if ( attribute_p->Value.at( location_of_character + 1 ) == LINE_FEED )
             {
-                // There's at least one more character after the carriage return
+                // Yup. It was one of those danged line feeds. Let's delete it
 
-                if ( attribute_p->Value.at( location_of_character + 1 ) == LINE_FEED )
-                {
-                    // Yup. It was one of those danged line feeds. Let's delete it
+                temporary_string = attribute_p->Value.substr( 0, location_of_character );
+                temporary_string.append( right( attribute_p->Value, attribute_p->Value.length() - ( location_of_character + 1 ) ) );
 
-                    temporary_string = attribute_p->Value.substr( 0, location_of_character );
-                    temporary_string.append( right( attribute_p->Value, attribute_p->Value.length() - ( location_of_character + 1 ) ) );
-
-                    attribute_p->Value = temporary_string;
-                }
+                attribute_p->Value = temporary_string;
             }
-
-            location_of_character = attribute_p->Value.find( CARRIAGE_RETURN );
         }
 
-        // Now that we've gotten rid of all carriage returns (and carriage
-        // return/line feed pairs), we need to get rid of all line feeds.
+        location_of_character = attribute_p->Value.find( CARRIAGE_RETURN );
+    }
 
+    // Now that we've gotten rid of all carriage returns (and carriage
+    // return/line feed pairs), we need to get rid of all line feeds.
+
+    location_of_character = attribute_p->Value.find( LINE_FEED );
+
+    while( location_of_character != std::wstring::npos)
+    {
+        // We found a carriage return, let's normalize it.
+
+        attribute_p->Value[ location_of_character ] = ' ';
         location_of_character = attribute_p->Value.find( LINE_FEED );
+    }
 
-        while( location_of_character != std::wstring::npos)
-        {
-            // We found a carriage return, let's normalize it.
+    // And last but not least, we need to get rid of all TAB characters
 
-            attribute_p->Value[ location_of_character ] = ' ';
-            location_of_character = attribute_p->Value.find( LINE_FEED );
-        }
+    location_of_character = attribute_p->Value.find(TAB_CHARACTER);
 
-        // And last but not least, we need to get rid of all TAB characters
+    while( location_of_character != std::wstring::npos)
+    {
+        // We found a carriage return, let's normalize it.
 
+        attribute_p->Value[ location_of_character ] = ' ';
         location_of_character = attribute_p->Value.find(TAB_CHARACTER);
+    }
 
-        while( location_of_character != std::wstring::npos)
-        {
-            // We found a carriage return, let's normalize it.
+    // 1999-06-21
+    // Fixed a couple of (unreported, I found them myself) bugs dealing with
+    // well formedness constraints in regards to attributes
 
-            attribute_p->Value[ location_of_character ] = ' ';
-            location_of_character = attribute_p->Value.find(TAB_CHARACTER);
-        }
-
-        // 1999-06-21
-        // Fixed a couple of (unreported, I found them myself) bugs dealing with
-        // well formedness constraints in regards to attributes
-
-        if ( GetAttributeByName( attribute_p->Name.c_str() ) != nullptr )
-        {
-            std::wstring parsing_error_message(L"Attributes must be unique (Rule 40). An attribute named \"");
+    if ( GetAttributeByName( attribute_p->Name ) != nullptr )
+    {
+        std::wstring parsing_error_message(WSTRING_VIEW(L"Attributes must be unique (Rule 40). An attribute named \""));
  
-            parsing_error_message.append(attribute_p->Name);
-            parsing_error_message.append(L"\" was repeated.");
+        parsing_error_message.append(attribute_p->Name);
+        parsing_error_message.append(WSTRING_VIEW(L"\" was repeated."));
 
-            m_ReportParsingError( parsing_error_message.c_str() );
+        m_ReportParsingError( parsing_error_message );
+
+        delete attribute_p;
+        attribute_p = nullptr;
+
+        return( false );
+    }
+
+    if ( attribute_p->Value.find( '<' ) != std::wstring::npos)
+    {
+        std::wstring parsing_error_message(WSTRING_VIEW(L"Attribute values cannot contain a '<' (Rule 41). Offending attribute is named named \""));
+
+        parsing_error_message.append(attribute_p->Name);
+        parsing_error_message.push_back('\"');
+        m_ReportParsingError( parsing_error_message );
+
+        delete attribute_p;
+        attribute_p = nullptr;
+
+        return( false );
+    }
+
+    // 2003-01-24, Thanks go to Anne Jobmann for finding a bug here.
+    // I was not allowing entity references in attributes. Apparently, I mis-read
+    // the XML spec.
+
+    std::size_t const index_of_ampersand = attribute_p->Value.find( '&' );
+
+    if ( index_of_ampersand != std::wstring::npos)
+    {
+        std::size_t const index_of_semicolon = attribute_p->Value.find( ';', index_of_ampersand + 1 );
+
+        if ( index_of_semicolon == std::wstring::npos)
+        {
+            std::wstring parsing_error_message;
+
+            format( parsing_error_message, L"Attribute values cannot contain a '&' (Rule 41). Offending attribute is named named \"%s\"", attribute_p->Name );
+            m_ReportParsingError( parsing_error_message );
 
             delete attribute_p;
             attribute_p = nullptr;
@@ -220,49 +239,12 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::AddAttribute( _In_z_ wchar
             return( false );
         }
 
-        if ( attribute_p->Value.find( '<' ) != std::wstring::npos)
-        {
-            std::wstring parsing_error_message(L"Attribute values cannot contain a '<' (Rule 41). Offending attribute is named named \"");
+        // A semicolon follows the ampersand. We will assume it to be an entity reference.
+    }
 
-            parsing_error_message.append(attribute_p->Name);
-            parsing_error_message.push_back('\"');
-            m_ReportParsingError( parsing_error_message.c_str() );
+    m_Attributes.push_back( attribute_p );
 
-            delete attribute_p;
-            attribute_p = nullptr;
-
-            return( false );
-        }
-
-        // 2003-01-24, Thanks go to Anne Jobmann for finding a bug here.
-        // I was not allowing entity references in attributes. Apparently, I mis-read
-        // the XML spec.
-
-        std::size_t const index_of_ampersand = attribute_p->Value.find( '&' );
-
-        if ( index_of_ampersand != std::wstring::npos)
-        {
-            std::size_t const index_of_semicolon = attribute_p->Value.find( ';', index_of_ampersand + 1 );
-
-            if ( index_of_semicolon == std::wstring::npos)
-            {
-                std::wstring parsing_error_message;
-
-                format( parsing_error_message, L"Attribute values cannot contain a '&' (Rule 41). Offending attribute is named named \"%s\"", attribute_p->Name );
-                m_ReportParsingError( parsing_error_message.c_str() );
-
-                delete attribute_p;
-                attribute_p = nullptr;
-
-                return( false );
-            }
-
-            // A semicolon follows the ampersand. We will assume it to be an entity reference.
-        }
-
-        m_Attributes.push_back( attribute_p );
-
-        return( true );
+    return( true );
 }
 
 void CExtensibleMarkupLanguageElement::AddChild( _Inout_ CExtensibleMarkupLanguageElement * item_p, _In_ bool const check_for_uniqueness, _In_ uint32_t const insert_at ) noexcept
@@ -291,8 +273,8 @@ void CExtensibleMarkupLanguageElement::AddChild( _Inout_ CExtensibleMarkupLangua
                {
                    if (m_Children[loop_index] == item_p)
                    {
-                    //WFCTRACE( TEXT( "Element is already a child." ) );
-                    // the item is already in the list
+                       //WFCTRACE( TEXT( "Element is already a child." ) );
+                       // the item is already in the list
                        return;
                    }
                }
@@ -323,10 +305,9 @@ void CExtensibleMarkupLanguageElement::AddChild( _Inout_ CExtensibleMarkupLangua
     }
 }
 
-_Check_return_ bool CExtensibleMarkupLanguageElement::AddText( _In_z_ wchar_t const * text_segment_parameter ) noexcept
+_Check_return_ bool CExtensibleMarkupLanguageElement::AddText(_In_ std::wstring_view text_segment_parameter ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
-    WFC_VALIDATE_POINTER(text_segment_parameter);
 
     // Create a child text segment thingy
 
@@ -341,7 +322,7 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::AddText( _In_z_ wchar_t co
 
     // Here's where we encode the default entities
 
-    if ( text_segment.find_first_of( L"&\"<>'" ) == std::wstring::npos )
+    if ( text_segment.find_first_of(WSTRING_VIEW(L"&\"<>'")) == std::wstring::npos )
     {
         // Nothing to translate
         child_element_p->SetContents( text_segment_parameter );
@@ -356,7 +337,7 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::AddText( _In_z_ wchar_t co
         replace( encoded_entity_string, L"\"", L"&quot;");
         replace( encoded_entity_string, L"'", L"&apos;" );
 
-        child_element_p->SetContents( encoded_entity_string.c_str() );
+        child_element_p->SetContents( encoded_entity_string );
     }
 
     return( true );
@@ -429,12 +410,11 @@ void CExtensibleMarkupLanguageElement::Copy( _In_ CExtensibleMarkupLanguageEleme
     }
 }
 
-_Check_return_ std::size_t CExtensibleMarkupLanguageElement::CountChildren( _In_z_ wchar_t const * name_parameter ) const noexcept
+_Check_return_ std::size_t CExtensibleMarkupLanguageElement::CountChildren(_In_ std::wstring_view name_parameter ) const noexcept
 {
     WFC_VALIDATE_POINTER( this );
-    WFC_VALIDATE_POINTER(name_parameter);
 
-    if (name_parameter == nullptr || name_parameter[0] == 0x00 )
+    if (name_parameter.empty() == true)
     {
         return( 0 );
     }
@@ -446,9 +426,7 @@ _Check_return_ std::size_t CExtensibleMarkupLanguageElement::CountChildren( _In_
         parent_child_separator_character = m_Document->GetParentChildSeparatorCharacter();
     }
 
-    std::wstring const name(name_parameter);
-
-    if ( name.find( parent_child_separator_character ) == std::wstring::npos )
+    if ( name_parameter.find( parent_child_separator_character ) == std::wstring::npos )
     {
         // Count the elements at this level
 
@@ -465,7 +443,7 @@ _Check_return_ std::size_t CExtensibleMarkupLanguageElement::CountChildren( _In_
 
             while( GetNextChild( enumerator, child_p ) == true )
             {
-                if ( child_p->m_Tag.compare(name) == I_AM_EQUAL_TO_THAT)
+                if ( child_p->m_Tag.compare(name_parameter) == I_AM_EQUAL_TO_THAT)
                 {
                     number_of_children++;
                 }
@@ -481,11 +459,11 @@ _Check_return_ std::size_t CExtensibleMarkupLanguageElement::CountChildren( _In_
         // Find the last . in the name, we know there's one in there somewhere
 
         std::size_t index_of_character = 0;
-        SSIZE_T loop_index = name.length() - 1;
+        SSIZE_T loop_index = name_parameter.length() - 1;
 
         while( loop_index >= 0 )
         {
-            if ( name[ loop_index ] == parent_child_separator_character )
+            if (name_parameter[ loop_index ] == parent_child_separator_character )
             {
                 index_of_character = loop_index;
                 loop_index = 0; // exit_loop
@@ -494,8 +472,8 @@ _Check_return_ std::size_t CExtensibleMarkupLanguageElement::CountChildren( _In_
             loop_index--;
         }
 
-        std::wstring parent_name( name.substr( 0, index_of_character ) );
-        std::wstring child_name( right( name, name.length() - ( index_of_character + 1 ) ) );
+        std::wstring parent_name(name_parameter.substr( 0, index_of_character ) );
+        std::wstring child_name( right(name_parameter, name_parameter.length() - ( index_of_character + 1 ) ) );
 
         //WFCTRACEVAL( TEXT( "parent_name is " ), parent_name );
         //WFCTRACEVAL( TEXT( "child_name is " ), child_name );
@@ -535,7 +513,7 @@ _Check_return_ std::size_t CExtensibleMarkupLanguageElement::CountChildren( _In_
 
         // Whew! OK, now we need to get that parent
 
-        auto element_p = GetChild( parent_name.c_str() );
+        auto element_p = GetChild( parent_name );
 
         if ( element_p == nullptr )
         {
@@ -584,10 +562,9 @@ void CExtensibleMarkupLanguageElement::DeleteElement( _Inout_ CExtensibleMarkupL
     }
 }
 
-void CExtensibleMarkupLanguageElement::DestroyAttributeByName( _In_z_ wchar_t const * name ) noexcept
+void CExtensibleMarkupLanguageElement::DestroyAttributeByName(_In_ std::wstring_view name ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
-    WFC_VALIDATE_POINTER(name);
 
     std::size_t loop_index = 0;
     std::size_t number_of_attributes = m_Attributes.size();
@@ -613,10 +590,9 @@ void CExtensibleMarkupLanguageElement::DestroyAttributeByName( _In_z_ wchar_t co
     }
 }
 
-void CExtensibleMarkupLanguageElement::DestroyAttributeByValue( _In_z_ wchar_t const * value ) noexcept
+void CExtensibleMarkupLanguageElement::DestroyAttributeByValue(_In_ std::wstring_view value ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
-    WFC_VALIDATE_POINTER(value);
 
     std::size_t loop_index           = 0;
     std::size_t number_of_attributes = m_Attributes.size();
@@ -661,7 +637,7 @@ void CExtensibleMarkupLanguageElement::DestroyChildren( void ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
 
-    std::for_each( std::begin(m_Children), std::end(m_Children), DeleteElement );
+    std::for_each( std::cbegin(m_Children), std::cend(m_Children), DeleteElement );
     m_Children.clear();
 }
 
@@ -723,10 +699,9 @@ static void __find_any_child_callback( void * parameter, _Inout_ CExtensibleMark
     }
 }
 
-_Check_return_ CExtensibleMarkupLanguageElement * CExtensibleMarkupLanguageElement::GetAnyChild(_In_z_ wchar_t const * const name ) const noexcept
+_Check_return_ CExtensibleMarkupLanguageElement * CExtensibleMarkupLanguageElement::GetAnyChild(_In_ std::wstring_view name ) const noexcept
 {
     WFC_VALIDATE_POINTER( this );
-    WFC_VALIDATE_POINTER( name );
 
     FIND_ANY_CHILD_CONTEXT context;
 
@@ -737,13 +712,12 @@ _Check_return_ CExtensibleMarkupLanguageElement * CExtensibleMarkupLanguageEleme
     return( context.child );
 }
 
-_Check_return_ bool CExtensibleMarkupLanguageElement::ForAny( _In_z_ wchar_t const * const name, __callback XML_ELEMENT_CALLBACK callback, _Inout_ void * callback_context ) const noexcept
+_Check_return_ bool CExtensibleMarkupLanguageElement::ForAny(_In_ std::wstring_view name, __callback XML_ELEMENT_CALLBACK callback, _Inout_ void * callback_context ) const noexcept
 {
     WFC_VALIDATE_POINTER( this );
-    WFC_VALIDATE_POINTER( name );
     WFC_VALIDATE_POINTER_NULL_OK( callback_context );
 
-    if ( name == nullptr || name[ 0 ] == 0x00 )
+    if ( name .empty() == true )
     {
         // Nothing to do
         return( true );
@@ -787,16 +761,15 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::ForAny( _In_z_ wchar_t con
     }
     WFC_END_CATCH_ALL
 
-        return( true );
+    return( true );
 }
 
-_Check_return_ bool CExtensibleMarkupLanguageElement::ForEach(_In_z_ wchar_t const * const name, __callback XML_ELEMENT_CALLBACK callback, _Inout_ void * callback_context ) const noexcept
+_Check_return_ bool CExtensibleMarkupLanguageElement::ForEach(_In_ std::wstring_view name, __callback XML_ELEMENT_CALLBACK callback, _Inout_ void * callback_context ) const noexcept
 {
     WFC_VALIDATE_POINTER( this );
-    WFC_VALIDATE_POINTER( name );
     WFC_VALIDATE_POINTER_NULL_OK( callback_context );
 
-    if ( name == nullptr || name[ 0 ] == 0x00 )
+    if ( name.empty() == true )
     {
         // Nothing to do
         return( true );
@@ -873,10 +846,9 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::GetAttributeByName( _Out_ 
 
 // Suggested by Mats Johnsson (mats.johnsson@comfact.com)
 
-_Check_return_ CExtensibleMarkupLanguageAttribute * CExtensibleMarkupLanguageElement::GetAttributeByName( _In_z_ wchar_t const * name ) const noexcept
+_Check_return_ CExtensibleMarkupLanguageAttribute * CExtensibleMarkupLanguageElement::GetAttributeByName( _In_ std::wstring_view name ) const noexcept
 {
     WFC_VALIDATE_POINTER( this );
-    WFC_VALIDATE_POINTER(name);
 
     std::size_t enumerator = 0;
 
@@ -899,10 +871,9 @@ _Check_return_ CExtensibleMarkupLanguageAttribute * CExtensibleMarkupLanguageEle
     return( nullptr );
 }
 
-_Check_return_ bool CExtensibleMarkupLanguageElement::GetAttributeByName( _In_z_ wchar_t const * name, _Out_ std::wstring& value ) const noexcept
+_Check_return_ bool CExtensibleMarkupLanguageElement::GetAttributeByName(_In_ std::wstring_view name, _Out_ std::wstring& value ) const noexcept
 {
     WFC_VALIDATE_POINTER(this);
-    WFC_VALIDATE_POINTER(name);
 
     // Always start from a known state
     value.clear();
@@ -964,7 +935,7 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::GetAttributeByValue( _Out_
     return( false );
 }
 
-_Check_return_ bool CExtensibleMarkupLanguageElement::GetChildText( _In_z_ wchar_t const * name, _Inout_ std::wstring& text, _Inout_ CParsePoint& beginning ) const noexcept
+_Check_return_ bool CExtensibleMarkupLanguageElement::GetChildText( _In_ std::wstring_view name, _Inout_ std::wstring& text, _Inout_ CParsePoint& beginning ) const noexcept
 {
     WFC_VALIDATE_POINTER( this );
 
@@ -1018,10 +989,9 @@ _Check_return_ CExtensibleMarkupLanguageElement * CExtensibleMarkupLanguageEleme
     return(m_Children[index]);
 }
 
-_Check_return_ CExtensibleMarkupLanguageElement * CExtensibleMarkupLanguageElement::GetChild( _In_z_ wchar_t const * name ) const noexcept
+_Check_return_ CExtensibleMarkupLanguageElement * CExtensibleMarkupLanguageElement::GetChild( _In_ std::wstring_view name ) const noexcept
 {
     WFC_VALIDATE_POINTER( this );
-    WFC_VALIDATE_POINTER(name);
 
     std::wstring parent_name;
     std::wstring child_name;
@@ -1065,7 +1035,7 @@ _Check_return_ CExtensibleMarkupLanguageElement * CExtensibleMarkupLanguageEleme
                         // Nope, we are not the Key Master, continue the search
                         // further down the tree
 
-                        return( element_p->GetChild( child_name.c_str() ) );
+                        return( element_p->GetChild( child_name ) );
                     }
                 }
                 else
@@ -1085,10 +1055,9 @@ _Check_return_ CExtensibleMarkupLanguageElement * CExtensibleMarkupLanguageEleme
     return( nullptr );
 }
 
-_Check_return_ CExtensibleMarkupLanguageElement * CExtensibleMarkupLanguageElement::GetChild(_In_z_ wchar_t const * name, _In_ std::size_t const desired_instance_number) const noexcept
+_Check_return_ CExtensibleMarkupLanguageElement * CExtensibleMarkupLanguageElement::GetChild(_In_ std::wstring_view name, _In_ std::size_t const desired_instance_number) const noexcept
 {
     WFC_VALIDATE_POINTER(this);
-    WFC_VALIDATE_POINTER(name);
 
     uint32_t this_instance_number = 0;
 
@@ -1248,7 +1217,7 @@ void CExtensibleMarkupLanguageElement::GetNameAndInstance( _Out_ std::wstring& n
     {
         std::wstring child_tag_name;
         format( child_tag_name, L"(%lu)", static_cast<unsigned long>(instance_number) );
-        name.append( child_tag_name.c_str() );
+        name.append( child_tag_name );
     }
 }
 
@@ -1304,7 +1273,7 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::GetNextChild( _Inout_ std:
 
 // Suggested by Mats Johnsson (mats.johnsson@comfact.com)
 
-_Check_return_ CExtensibleMarkupLanguageElement * CExtensibleMarkupLanguageElement::GetParent( _In_ std::wstring const& name ) const noexcept
+_Check_return_ CExtensibleMarkupLanguageElement * CExtensibleMarkupLanguageElement::GetParent( _In_ std::wstring_view name ) const noexcept
 {
     WFC_VALIDATE_POINTER( this );
     WFC_VALIDATE_POINTER_NULL_OK( m_Parent );
@@ -1780,7 +1749,7 @@ void CExtensibleMarkupLanguageElement::m_IncrementIndentation( void ) const noex
     WFC_END_CATCH_ALL
 }
 
-_Check_return_ bool CExtensibleMarkupLanguageElement::m_ParseCDATASection( _In_ std::wstring const& tag, _In_ CDataParser const& parser ) noexcept
+_Check_return_ bool CExtensibleMarkupLanguageElement::m_ParseCDATASection( _In_ std::wstring_view tag, _In_ CDataParser const& parser ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
 
@@ -1824,7 +1793,7 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::m_ParseCDATASection( _In_ 
 
     temp_string.assign( right( tag, 3 ) );
 
-    if ( temp_string.compare( L"]]>" ) == I_AM_EQUAL_TO_THAT)
+    if ( temp_string.compare(WSTRING_VIEW(L"]]>")) == I_AM_EQUAL_TO_THAT)
     {
         // This may be the end...
 
@@ -1834,7 +1803,7 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::m_ParseCDATASection( _In_ 
         {
             //WFCTRACE( TEXT( "Escape sequence detected!" ) );
 
-            m_Contents.append( L"]]>" ); // Add the escaped characters
+            m_Contents.append(WSTRING_VIEW( L"]]>" )); // Add the escaped characters
 
             bool exit_loop = false;
 
@@ -1864,7 +1833,7 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::m_ParseCDATASection( _In_ 
                             // Yup, it is another escape sequence
                             // Let's skip the next 5 characters
 
-                            m_Contents.append( L"]]" );
+                            m_Contents.append(WSTRING_VIEW(L"]]"));
 
                             parser.AdvanceByOneCharacter( m_Ending, character );
                             parser.AdvanceByOneCharacter( m_Ending, ']' );
@@ -1937,7 +1906,7 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::m_ParseCDATASection( _In_ 
                         // Yup, it is another escape sequence
                         // Let's skip the next 5 characters
 
-                        m_Contents.append( L"]]" );
+                        m_Contents.append(WSTRING_VIEW(L"]]"));
 
                         parser.AdvanceByOneCharacter( m_Ending, character );
                         parser.AdvanceByOneCharacter( m_Ending, ']' );
@@ -2061,7 +2030,7 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::m_ParseCDATASection( _In_ 
     return( false );
 }
 
-_Check_return_ bool CExtensibleMarkupLanguageElement::m_ParseDOCTYPESection( _In_ std::wstring const& tag, _In_ CDataParser const& parser ) noexcept
+_Check_return_ bool CExtensibleMarkupLanguageElement::m_ParseDOCTYPESection( _In_ std::wstring_view tag, _In_ CDataParser const& parser ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
 
@@ -2088,7 +2057,7 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::m_ParseDOCTYPESection( _In
     if ( string_to_parse.length() < 1 )
     {
         ASSERT( false );
-        m_ReportParsingError( L"DOCTYPE Section, not enough room to parse Name (Rule 28)." );
+        m_ReportParsingError(WSTRING_VIEW(L"DOCTYPE Section, not enough room to parse Name (Rule 28)."));
         return( false );
     }
 
@@ -2115,14 +2084,14 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::m_ParseDOCTYPESection( _In
 
         if ( character != '_' && character != ':' )
         {
-            m_ReportParsingError( L"DOCTYPE Section, illegal first character of Name (Rule 5)." );
+            m_ReportParsingError(WSTRING_VIEW(L"DOCTYPE Section, illegal first character of Name (Rule 5)."));
             return( false );
         }
     }
 
     // Name sections can be terminated by a space or a [
 
-    std::size_t location_of_character = string_to_parse.find_first_of( L" \t\r\n[" );
+    std::size_t location_of_character = string_to_parse.find_first_of(WSTRING_VIEW(L" \t\r\n["));
 
     if ( location_of_character == std::wstring::npos )
     {
@@ -2136,7 +2105,7 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::m_ParseDOCTYPESection( _In
 
         if ( location_of_character == std::wstring::npos )
         {
-            m_ReportParsingError( L"Illegal DOCTYPE name terminator (Rule 28)." );
+            m_ReportParsingError(WSTRING_VIEW(L"Illegal DOCTYPE name terminator (Rule 28)."));
             return( false );
         }
     }
@@ -2165,7 +2134,7 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::m_ParseDOCTYPESection( _In
 
         if ( Win32FoundationClasses::is_xml_NameChar( character ) == false )
         {
-            m_ReportParsingError(L"Illegal DOCTYPE name character (Rule 28).");
+            m_ReportParsingError(WSTRING_VIEW(L"Illegal DOCTYPE name character (Rule 28)."));
             return( false );
         }
     }
@@ -2182,7 +2151,7 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::m_ParseDOCTYPESection( _In
 
     //WFCTRACEVAL( TEXT( "Now parsing " ), string_to_parse );
 
-    if ( string_to_parse.compare( L">" ) == I_AM_EQUAL_TO_THAT)
+    if ( string_to_parse.compare(WSTRING_VIEW(L">")) == I_AM_EQUAL_TO_THAT)
     {
         // We're done
         return( true );
@@ -2194,7 +2163,7 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::m_ParseDOCTYPESection( _In
         string_to_parse.at( 0 ) != 'S' &&
         string_to_parse.at( 0 ) != 'P' )
     {
-        m_ReportParsingError( L"Impossible character in DOCTYPE declaration (Rule 28)." );
+        m_ReportParsingError(WSTRING_VIEW(L"Impossible character in DOCTYPE declaration (Rule 28)."));
         return( false );
     }
 
@@ -2204,14 +2173,14 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::m_ParseDOCTYPESection( _In
     {
         if ( string_to_parse.length() < 6 )
         {
-            m_ReportParsingError( L"No more room to parse SYSTEM or PUBLIC (Rule 75)." );
+            m_ReportParsingError(WSTRING_VIEW(L"No more room to parse SYSTEM or PUBLIC (Rule 75)."));
             return( false );
         }
 
         if ( starts_with( string_to_parse, L"PUBLIC", 6 ) == false &&
              starts_with( string_to_parse, L"SYSTEM", 6 ) == false)
         {
-            m_ReportParsingError( L"DOCTYPE ExternalID is not SYSTEM or PUBLIC (Rule 75)." );
+            m_ReportParsingError(WSTRING_VIEW(L"DOCTYPE ExternalID is not SYSTEM or PUBLIC (Rule 75)."));
             return( false );
         }
 
@@ -2228,7 +2197,7 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::m_ParseDOCTYPESection( _In
 
             //WFCTRACE( TEXT( "Parsing PUBLIC" ) );
 
-            m_Contents.append( L" PUBLIC " );
+            m_Contents.append(WSTRING_VIEW(L" PUBLIC "));
 
             string_to_parse.erase(0, 6);
             trim_left(string_to_parse);
@@ -2239,14 +2208,14 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::m_ParseDOCTYPESection( _In
 
             if ( string_to_parse.length() < 2 )
             {
-                m_ReportParsingError( L"Not enough room to quote a string (Rule 11)." );
+                m_ReportParsingError(WSTRING_VIEW(L"Not enough room to quote a string (Rule 11)."));
                 return( false );
             }
 
             if ( string_to_parse.at( 0 ) != '\'' &&
                 string_to_parse.at( 0 ) != '\"' )
             {
-                m_ReportParsingError( L"String not properly quoted (Rule 11)." );
+                m_ReportParsingError(WSTRING_VIEW(L"String not properly quoted (Rule 11)."));
                 return( false );
             }
 
@@ -2272,7 +2241,7 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::m_ParseDOCTYPESection( _In
 
             if ( location_of_character == std::wstring::npos )
             {
-                m_ReportParsingError( L"Mismatched quotes (Rule 11)." );
+                m_ReportParsingError(WSTRING_VIEW(L"Mismatched quotes (Rule 11)."));
                 return( false );
             }
 
@@ -2286,7 +2255,7 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::m_ParseDOCTYPESection( _In
             {
                 if ( Win32FoundationClasses::is_xml_PubidChar( name.at( name_loop_index ) ) == false )
                 {
-                    m_ReportParsingError( L"Illegal PubidChar (Rule 13)." );
+                    m_ReportParsingError(WSTRING_VIEW(L"Illegal PubidChar (Rule 13)."));
                     return( false );
                 }
             }
@@ -2314,14 +2283,14 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::m_ParseDOCTYPESection( _In
             if ( string_to_parse.length() < 2 )
             {
                 // There's not enough room for an opening and closing quote
-                m_ReportParsingError( L"No more room to quote a string (Rule 11)." );
+                m_ReportParsingError(WSTRING_VIEW(L"No more room to quote a string (Rule 11)."));
                 return( false );
             }
 
             if ( string_to_parse.at( 0 ) != '\'' &&
                 string_to_parse.at( 0 ) != '\"' )
             {
-                m_ReportParsingError( L"PUBLIC SystemLiteral not properly quoted (Rule 11)." );
+                m_ReportParsingError(WSTRING_VIEW(L"PUBLIC SystemLiteral not properly quoted (Rule 11)."));
                 return( false );
             }
 
@@ -2347,7 +2316,7 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::m_ParseDOCTYPESection( _In
 
             if ( location_of_character == std::wstring::npos )
             {
-                m_ReportParsingError( L"Mismatched quotes (Rule 11)." );
+                m_ReportParsingError(WSTRING_VIEW(L"Mismatched quotes (Rule 11)."));
                 return( false );
             }
 
@@ -2376,7 +2345,7 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::m_ParseDOCTYPESection( _In
 
             if ( string_to_parse.empty() == true )
             {
-                m_ReportParsingError( L"No more room (Rule 28)." );
+                m_ReportParsingError(WSTRING_VIEW(L"No more room (Rule 28)."));
                 return( false );
             }
         }
@@ -2386,7 +2355,7 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::m_ParseDOCTYPESection( _In
 
             //WFCTRACE( TEXT( "Parsing SYSTEM" ) );
 
-            m_Contents.append( L" SYSTEM " );
+            m_Contents.append(WSTRING_VIEW(L" SYSTEM "));
 
             string_to_parse.erase(0, 6);
             trim_left(string_to_parse);
@@ -2398,14 +2367,14 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::m_ParseDOCTYPESection( _In
             if ( string_to_parse.length() < 2 )
             {
                 // There's not enough room for an opening an and closing quotes
-                m_ReportParsingError( L"No more room to parse a quoted string (Rule 11)." );
+                m_ReportParsingError(WSTRING_VIEW(L"No more room to parse a quoted string (Rule 11)."));
                 return( false );
             }
 
             if ( string_to_parse.at( 0 ) != '\'' &&
                 string_to_parse.at( 0 ) != '\"' )
             {
-                m_ReportParsingError( L"PUBLIC SystemLiteral not properly quoted (Rule 11)." );
+                m_ReportParsingError(WSTRING_VIEW(L"PUBLIC SystemLiteral not properly quoted (Rule 11)."));
                 return( false );
             }
 
@@ -2431,7 +2400,7 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::m_ParseDOCTYPESection( _In
 
             if ( location_of_character == std::wstring::npos )
             {
-                m_ReportParsingError( L"Mismatched quotes (Rule 11)." );
+                m_ReportParsingError(WSTRING_VIEW(L"Mismatched quotes (Rule 11)."));
                 return( false );
             }
 
@@ -2461,7 +2430,7 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::m_ParseDOCTYPESection( _In
 
             if ( string_to_parse.empty() == true )
             {
-                m_ReportParsingError( L"No more room (Rule 28)." );
+                m_ReportParsingError(WSTRING_VIEW(L"No more room (Rule 28)."));
                 return( false );
             }
         }
@@ -2479,11 +2448,11 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::m_ParseDOCTYPESection( _In
 
     if ( string_to_parse.at( 0 ) != '[' )
     {
-        m_ReportParsingError( L"Illegal character at contiuation point (Rule 28)." );
+        m_ReportParsingError(WSTRING_VIEW(L"Illegal character at contiuation point (Rule 28)."));
         return( false );
     }
 
-    m_Contents.append( L" [" );
+    m_Contents.append(WSTRING_VIEW(L" ["));
 
     // If it is [, then we have a whole lot of SGML pain to go through
 
@@ -2504,7 +2473,7 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::m_ParseDOCTYPESection( _In
 
     if ( string_to_parse.empty() == true )
     {
-        m_ReportParsingError( L"No room after continuation point (Rule 28)." );
+        m_ReportParsingError(WSTRING_VIEW(L"No room after continuation point (Rule 28)."));
         return( false );
     }
 
@@ -2518,7 +2487,7 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::m_ParseDOCTYPESection( _In
 
         if ( string_to_parse.empty() == true )
         {
-            m_ReportParsingError( L"No room after closing ] (Rule 28)." );
+            m_ReportParsingError(WSTRING_VIEW(L"No room after closing ] (Rule 28)."));
             return( false );
         }
 
@@ -2526,7 +2495,7 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::m_ParseDOCTYPESection( _In
 
         if ( string_to_parse.at( 0 ) != '>' )
         {
-            m_ReportParsingError( L"Missing closing > (Rule 28)." );
+            m_ReportParsingError(WSTRING_VIEW(L"Missing closing > (Rule 28)."));
             return( false );
         }
 
@@ -2537,7 +2506,7 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::m_ParseDOCTYPESection( _In
 
     if ( string_to_parse.at( 0 ) != '<' )
     {
-        m_ReportParsingError( L"Ill-formed DOCTYPE child, missing < (Rule 29)." );
+        m_ReportParsingError(WSTRING_VIEW(L"Ill-formed DOCTYPE child, missing < (Rule 29)."));
         return( false );
     }
 
@@ -2592,7 +2561,7 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::m_ParseDOCTYPESection( _In
 
             if ( parser.GetUntilAndIncluding( beginning_of_child, L";", entity_string ) == false )
             {
-                m_ReportParsingError( L"DOCTYPE PEReference is missing terminating semi-colon (Rule 69)." );
+                m_ReportParsingError(WSTRING_VIEW(L"DOCTYPE PEReference is missing terminating semi-colon (Rule 69)."));
                 return( false );
             }
 
@@ -2609,13 +2578,13 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::m_ParseDOCTYPESection( _In
 
             if ( m_Document == nullptr )
             {
-                m_ReportParsingError( L"No entity database." );
+                m_ReportParsingError(WSTRING_VIEW(L"No entity database."));
                 return( false );
             }
 
-            if ( m_Document->ResolveEntity( entity_to_resolve.c_str(), entity_resolved_to ) == false )
+            if ( m_Document->ResolveEntity( entity_to_resolve, entity_resolved_to ) == false )
             {
-                m_ReportParsingError( L"Can't resolve DOCTYPE PEReference (Rule 69)." );
+                m_ReportParsingError(WSTRING_VIEW(L"Can't resolve DOCTYPE PEReference (Rule 69)."));
                 return( false );
             }
 
@@ -2632,9 +2601,9 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::m_ParseDOCTYPESection( _In
                     entity_to_resolve.assign( entity_resolved_to );
                     entity_to_resolve[ 0 ] = '&';
 
-                    if ( m_Document->ResolveEntity( entity_to_resolve.c_str(), entity_resolved_to ) == false )
+                    if ( m_Document->ResolveEntity( entity_to_resolve, entity_resolved_to ) == false )
                     {
-                        m_ReportParsingError( L"Can't resolve embedded DOCTYPE PEReference (Rule 69)." );
+                        m_ReportParsingError(WSTRING_VIEW(L"Can't resolve embedded DOCTYPE PEReference (Rule 69)."));
                         return( false );
                     }
                 }
@@ -2660,13 +2629,13 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::m_ParseDOCTYPESection( _In
 
                     if ( sub_element_p == nullptr )
                     {
-                        m_ReportParsingError( L"Ran out of memory allocating for a tricky element." );
+                        m_ReportParsingError(WSTRING_VIEW(L"Ran out of memory allocating for a tricky element."));
                         return( false );
                     }
 
                     if ( sub_element_p->Parse( entity_beginning, entity_parser ) == false )
                     {
-                        m_ReportParsingError( L"Can't parse tricky element (Rule 69)." );
+                        m_ReportParsingError(WSTRING_VIEW(L"Can't parse tricky element (Rule 69)."));
                         return( false );
                     }
                     else
@@ -2687,7 +2656,7 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::m_ParseDOCTYPESection( _In
                     error_message.append( entity_resolved_to );
                     error_message.push_back( '\"' );
 
-                    m_ReportParsingError( error_message.c_str() );
+                    m_ReportParsingError( error_message );
 
                     return( false );
                 }
@@ -2735,7 +2704,7 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::m_ParseDOCTYPESection( _In
 
                 if ( beginning_of_child.GetIndex() >= parser.GetSize() )
                 {
-                    m_ReportParsingError( L"Error 2490 (Rule 28)." );
+                    m_ReportParsingError(WSTRING_VIEW(L"Error 2490 (Rule 28)."));
                     return( false ); // this should probably be false
                 }
             }
@@ -2744,7 +2713,7 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::m_ParseDOCTYPESection( _In
 
             if ( parser.PeekCharacter( beginning_of_child, 0 ) != '>' )
             {
-                m_ReportParsingError( L"Ill-formed DOCTYPE child, missing terminating > (Rule 28)." );
+                m_ReportParsingError(WSTRING_VIEW(L"Ill-formed DOCTYPE child, missing terminating > (Rule 28)."));
                 return( false ); // this should probably be false
             }
 
@@ -2760,11 +2729,11 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::m_ParseDOCTYPESection( _In
     // Need to validate the sub-elements to make sure they ain't XML (i.e. regular elements)
     // They must all be processing instructions
 
-    m_ReportParsingError( L"DOCTYPE Section did not parse." );
+    m_ReportParsingError(WSTRING_VIEW(L"DOCTYPE Section did not parse."));
     return( false );
 }
 
-_Check_return_ bool CExtensibleMarkupLanguageElement::m_ParseElementName( _In_z_ wchar_t const * name, _Inout_ std::wstring& parent_name, _Inout_ uint32_t& desired_instance_number, _Out_ std::wstring& child_name ) const noexcept
+_Check_return_ bool CExtensibleMarkupLanguageElement::m_ParseElementName( _In_ std::wstring_view name, _Inout_ std::wstring& parent_name, _Inout_ uint32_t& desired_instance_number, _Out_ std::wstring& child_name ) const noexcept
 {
     WFC_VALIDATE_POINTER( this );
     WFC_VALIDATE_POINTER_NULL_OK( m_Document );
@@ -2772,7 +2741,7 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::m_ParseElementName( _In_z_
     parent_name.clear();
     child_name.clear();
 
-    if ( name[0] == 0x00 )
+    if ( name.empty() == true )
     {
         return( false );
     }
@@ -2864,7 +2833,7 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::m_ParseProcessingInstructi
 
     if ( m_Contents.empty() == true )
     {
-        m_ReportParsingError( L"The processing instruction cannot be empty (Rule 16)." );
+        m_ReportParsingError(WSTRING_VIEW(L"The processing instruction cannot be empty (Rule 16)."));
         return( false );
     }
 
@@ -2880,20 +2849,20 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::m_ParseProcessingInstructi
 
     // Check to see if the first character of the name is legal
 
-    std::wstring const legal_characters( L"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_:" );
+    std::wstring const legal_characters( WSTRING_VIEW(L"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_:") );
 
     std::size_t const value_index = legal_characters.find( m_Contents[0] );
 
     if ( value_index == std::wstring::npos )
     {
-        m_ReportParsingError( L"Illegal first character in processing instruction (Rule 16->5)." );
+        m_ReportParsingError(WSTRING_VIEW(L"Illegal first character in processing instruction (Rule 16->5)."));
         return( false );
     }
 
     return( true );
 }
 
-_Check_return_ bool CExtensibleMarkupLanguageElement::m_ParseTag( _In_ std::wstring const& tag, _Inout_ bool& did_tag_contain_terminator, _In_ CDataParser const& parser ) noexcept
+_Check_return_ bool CExtensibleMarkupLanguageElement::m_ParseTag( _In_ std::wstring_view tag, _Inout_ bool& did_tag_contain_terminator, _In_ CDataParser const& parser ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
 
@@ -2919,13 +2888,13 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::m_ParseTag( _In_ std::wstr
             }
             else
             {
-                m_ReportParsingError( L"Ill-formed CDATA section." );
+                m_ReportParsingError(WSTRING_VIEW(L"Ill-formed CDATA section."));
                 return( false );
             }
         }
     }
 
-    std::size_t location_of_character = tag_data.find_first_of( L" \t\r\n" ); // This list of space characters is taken from section 2.3 of the XML 1.0 recommendation (REC-xml-19980210)
+    std::size_t location_of_character = tag_data.find_first_of(WSTRING_VIEW(L" \t\r\n")); // This list of space characters is taken from section 2.3 of the XML 1.0 recommendation (REC-xml-19980210)
 
     if ( location_of_character == std::wstring::npos )
     {
@@ -3005,7 +2974,7 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::m_ParseTag( _In_ std::wstr
 
     if ( tag_name.empty() == true )
     {
-        m_ReportParsingError( L"Tag is empty." );
+        m_ReportParsingError(WSTRING_VIEW(L"Tag is empty."));
         return( false );
     }
 
@@ -3019,7 +2988,7 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::m_ParseTag( _In_ std::wstr
 
         m_Tag.clear();
 
-        if ( tag.find( L"?>" ) == std::wstring::npos )
+        if ( tag.find(WSTRING_VIEW(L"?>")) == std::wstring::npos )
         {
             // If we get here, it means we hit something tricky like "<?pi some data ? > <??>"
             //WFCTRACE( TEXT( "Can't find processing instruction terminator \"?>\"" ) );
@@ -3031,7 +3000,7 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::m_ParseTag( _In_ std::wstr
 
             if ( parser.GetUntilAndIncluding( m_Ending, L"?>", tricky_end ) == false )
             {
-                m_ReportParsingError( L"Processing instruction is not terminated with ?> (Rule 16)" );
+                m_ReportParsingError(WSTRING_VIEW(L"Processing instruction is not terminated with ?> (Rule 16)"));
                 return( false );
             }
 
@@ -3067,7 +3036,7 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::m_ParseTag( _In_ std::wstr
 
         if ( tag_name.length() < 3 )
         {
-            m_ReportParsingError( L"META tag is too short." );
+            m_ReportParsingError(WSTRING_VIEW(L"META tag is too short."));
             return( false );
         }
 
@@ -3085,7 +3054,7 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::m_ParseTag( _In_ std::wstr
 
             if ( m_Document != nullptr && ( m_Document->GetParseOptions() & WFC_XML_LOOSE_COMMENT_PARSING ) )
             {
-                location_of_character = m_Contents.find( L"-->" );
+                location_of_character = m_Contents.find(WSTRING_VIEW(L"-->"));
 
                 if ( location_of_character == std::wstring::npos )
                 {
@@ -3096,31 +3065,31 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::m_ParseTag( _In_ std::wstr
                     if ( parser.GetUntilAndIncluding( m_Ending, L"-->", temp_string ) == false )
                     {
                         //WFCTRACE( TEXT( "Can't find comment terminator \"-->\"" ) );
-                        m_ReportParsingError(L"Comment is missing the --> terminator (Rule 15).");
+                        m_ReportParsingError(WSTRING_VIEW(L"Comment is missing the --> terminator (Rule 15)."));
                         return( false );
                     }
 
                     m_Contents.append( temp_string );
-                    location_of_character = m_Contents.find( L"-->" );
+                    location_of_character = m_Contents.find(WSTRING_VIEW(L"-->"));
                 }
             }
             else
             {
                 // Strict comment parsing
 
-                location_of_character = m_Contents.find( L"--" );
+                location_of_character = m_Contents.find(WSTRING_VIEW(L"--"));
 
                 if ( location_of_character == STRING_NOT_FOUND )
                 {
                     //WFCTRACE( TEXT( "Can't find comment terminator \"--\"" ) );
-                    m_ReportParsingError( L"Comment is missing the -- terminator (Rule 15)." );
+                    m_ReportParsingError(WSTRING_VIEW(L"Comment is missing the -- terminator (Rule 15)."));
                     return( false );
                 }
 
                 if ( m_Contents.at( location_of_character + 2 ) != '>' )
                 {
                     //WFCTRACE( TEXT( "Comment contains illegal double dashes (Rule 15)." ) );
-                    m_ReportParsingError( L"Comment contains illegal double dashes (Rule 15)." );
+                    m_ReportParsingError(WSTRING_VIEW(L"Comment contains illegal double dashes (Rule 15)."));
                     return( false );
                 }
             }
@@ -3140,13 +3109,13 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::m_ParseTag( _In_ std::wstr
             if ( tag_name.length() < 9 )
             {
                 //WFCTRACE( TEXT( "Giving up on funky CData section" ) );
-                m_ReportParsingError( L"Ill-formed CDATA section (Rule 19)." );
+                m_ReportParsingError(WSTRING_VIEW(L"Ill-formed CDATA section (Rule 19)."));
                 return( false );
             }
 
             std::wstring cdata( tag_name.substr( 1, 8 ) );
 
-            if ( cdata.compare( L"![CDATA[" ) == I_AM_EQUAL_TO_THAT)
+            if ( cdata.compare(WSTRING_VIEW(L"![CDATA[")) == I_AM_EQUAL_TO_THAT)
             {
                 //WFCTRACE( TEXT( "It is a CDATA section" ) );
 
@@ -3157,7 +3126,7 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::m_ParseTag( _In_ std::wstr
                 if ( m_ParseCDATASection( tag, parser ) == false )
                 {
                     //WFCTRACE( TEXT( "Can't parse CDATA section" ) );
-                    m_ReportParsingError( L"Bad CDATA section (Rule 20)." );
+                    m_ReportParsingError(WSTRING_VIEW(L"Bad CDATA section (Rule 20)."));
                     return( false );
                 }
             }
@@ -3199,11 +3168,11 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::m_ParseTag( _In_ std::wstr
 
             // Now add the entity to the document
 
-            std::size_t location_of_entity = tag_data.find( L"ENTITY" );
+            std::size_t location_of_entity = tag_data.find(WSTRING_VIEW(L"ENTITY"));
 
             if ( location_of_entity == std::wstring::npos )
             {
-                m_ReportParsingError( L"Ill-formed ENTITY section (Rule 71)." );
+                m_ReportParsingError(WSTRING_VIEW(L"Ill-formed ENTITY section (Rule 71)."));
                 return( false );
             }
 
@@ -3231,11 +3200,11 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::m_ParseTag( _In_ std::wstr
                 {
                     // We should now be on the entity name
 
-                    std::size_t const location_of_space = tag_data.find_first_of( L" \t\r\n" );
+                    std::size_t const location_of_space = tag_data.find_first_of(WSTRING_VIEW(L" \t\r\n"));
 
                     if ( location_of_space == std::wstring::npos )
                     {
-                        m_ReportParsingError( L"Ill-formed ENTITY section[2] (Rule 71)." );
+                        m_ReportParsingError(WSTRING_VIEW(L"Ill-formed ENTITY section[2] (Rule 71)."));
                         return( false );
                     }
 
@@ -3261,7 +3230,7 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::m_ParseTag( _In_ std::wstr
                         if ( tag_data.at( 0 ) != 'S' && tag_data.at( 0 ) != 'P' )
                         {
                             //WFCTRACE( TEXT( "Ill-formed external entity value. Character is not S or P. Refer to rule 75." ) );
-                            m_ReportParsingError( L"Ill-formed ENTITY section[4] (Rule 71)." );
+                            m_ReportParsingError(WSTRING_VIEW(L"Ill-formed ENTITY section[4] (Rule 71)."));
                             return( false );
                         }
 
@@ -3273,7 +3242,7 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::m_ParseTag( _In_ std::wstr
                             {
                                 // Not enough room to succeede
                                 //WFCTRACE( TEXT( "Ran out of room parsing SYSTEM. Refer to rule 75." ) );
-                                m_ReportParsingError( L"Ill-formed ENTITY section (Rule 75)." );
+                                m_ReportParsingError(WSTRING_VIEW(L"Ill-formed ENTITY section (Rule 75)."));
                                 return( false );
                             }
 
@@ -3286,7 +3255,7 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::m_ParseTag( _In_ std::wstr
                                 tag_data.at( 5 ) != 'M' )
                             {
                                 //WFCTRACE( TEXT( "External entity is not SYSTEM. Refer to rule 75." ) );
-                                m_ReportParsingError( L"Ill-formed ENTITY section[2] (Rule 75)." );
+                                m_ReportParsingError(WSTRING_VIEW(L"Ill-formed ENTITY section[2] (Rule 75)."));
                                 return( false );
                             }
 
@@ -3302,7 +3271,7 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::m_ParseTag( _In_ std::wstr
                             {
                                 // Not enough room to succeede
                                 //WFCTRACE( TEXT( "Ran out of room parsing PUBLIC. Refer to rule 75." ) );
-                                m_ReportParsingError( L"Ill-formed ENTITY (PUBLIC) section (Rule 75)." );
+                                m_ReportParsingError(WSTRING_VIEW(L"Ill-formed ENTITY (PUBLIC) section (Rule 75)."));
                                 return( false );
                             }
 
@@ -3315,7 +3284,7 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::m_ParseTag( _In_ std::wstr
                                 tag_data.at( 5 ) != 'C' )
                             {
                                 //WFCTRACE( TEXT( "External entity is not PUBLIC. Refer to rule 75." ) );
-                                m_ReportParsingError( L"Ill-formed ENTITY (PUBLIC) section[2] (Rule 75)." );
+                                m_ReportParsingError(WSTRING_VIEW(L"Ill-formed ENTITY (PUBLIC) section[2] (Rule 75)."));
                                 return( false );
                             }
 
@@ -3350,7 +3319,7 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::m_ParseTag( _In_ std::wstr
 
                             if ( parser.GetUntilAndIncluding( m_Ending, L">", temp_string ) == false )
                             {
-                                m_ReportParsingError( L"ENTITY value missing closing double quote (Rule 9)." );
+                                m_ReportParsingError(WSTRING_VIEW(L"ENTITY value missing closing double quote (Rule 9)."));
                                 return( false );
                             }
 
@@ -3363,7 +3332,7 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::m_ParseTag( _In_ std::wstr
 
                         if (  tag_data.find( '"', location_of_entity + 1 ) != std::wstring::npos )
                         {
-                            m_ReportParsingError( L"ENTITY value has extra double quote (Rule 9)." );
+                            m_ReportParsingError(WSTRING_VIEW(L"ENTITY value has extra double quote (Rule 9)."));
                             return( false );
                         }
 
@@ -3388,7 +3357,7 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::m_ParseTag( _In_ std::wstr
 
                             if ( parser.GetUntilAndIncluding( m_Ending, L">", temp_string ) == false )
                             {
-                                m_ReportParsingError( L"ENTITY value missing closing single quote (Rule 9)." );
+                                m_ReportParsingError(WSTRING_VIEW(L"ENTITY value missing closing single quote (Rule 9)."));
                                 return( false );
                             }
 
@@ -3401,7 +3370,7 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::m_ParseTag( _In_ std::wstr
 
                         if ( tag_data.find( '\'', location_of_entity + 1 ) != std::wstring::npos )
                         {
-                            m_ReportParsingError( L"ENTITY value has extra single quote (Rule 9)." );
+                            m_ReportParsingError(WSTRING_VIEW(L"ENTITY value has extra single quote (Rule 9)."));
                             return( false );
                         }
 
@@ -3422,7 +3391,7 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::m_ParseTag( _In_ std::wstr
                     {
                         if ( location_of_illegal_character > location_of_semicolon )
                         {
-                            m_ReportParsingError( L"ENTITY value contains & but is not used in an entity reference (Rule 9)." );
+                            m_ReportParsingError(WSTRING_VIEW(L"ENTITY value contains & but is not used in an entity reference (Rule 9)."));
                             return( false );
                         }
                     }
@@ -3433,7 +3402,7 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::m_ParseTag( _In_ std::wstr
                     {
                         if ( location_of_illegal_character > location_of_semicolon )
                         {
-                            m_ReportParsingError( L"ENTITY value contains % but is not used in a character reference (Rule 9)." );
+                            m_ReportParsingError(WSTRING_VIEW(L"ENTITY value contains % but is not used in a character reference (Rule 9)."));
                             return( false );
                         }
                     }
@@ -3442,15 +3411,15 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::m_ParseTag( _In_ std::wstr
 
                     if ( m_Document != nullptr )
                     {
-                        std::wstring entity_to_add( L"&" );
+                        std::wstring entity_to_add(WSTRING_VIEW(L"&"));
 
                         entity_to_add.append( entity_name );
                         entity_to_add.push_back( ';' );
 
-                        if ( m_Document->AddEntity( entity_to_add.c_str(), tag_data.c_str() ) == false )
+                        if ( m_Document->AddEntity( entity_to_add, tag_data ) == false )
                         {
                             //WFCTRACE( TEXT( "Can't add entity to document." ) );
-                            m_ReportParsingError( L"Internal error adding ENTITY" );
+                            m_ReportParsingError(WSTRING_VIEW(L"Internal error adding ENTITY"));
                             return( false );
                         }
                     }
@@ -3542,7 +3511,7 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::m_ParseTag( _In_ std::wstr
 
         if ( m_Tag.empty() == true )
         {
-            m_ReportParsingError( L"EmptyTag." );
+            m_ReportParsingError(WSTRING_VIEW(L"EmptyTag."));
             return( false );
         }
 
@@ -3551,7 +3520,7 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::m_ParseTag( _In_ std::wstr
             m_Tag[ 0 ] != '_' &&
             m_Tag[ 0 ] != ':' )
         {
-            m_ReportParsingError( L"First character of element name is not legal (Rule 5)." );
+            m_ReportParsingError(WSTRING_VIEW(L"First character of element name is not legal (Rule 5)."));
             return( false );
         }
 
@@ -3568,7 +3537,7 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::m_ParseTag( _In_ std::wstr
                 format( error_message, L"Character %lu of element named \"%s\" is invalid (Rule 999192).",
                     static_cast<unsigned long>(name_loop_index),
                     m_Tag );
-                m_ReportParsingError( error_message.c_str() );
+                m_ReportParsingError( error_message );
                 return( false );
             }
         }
@@ -3603,7 +3572,7 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::m_ParseTag( _In_ std::wstr
         {
             if ( we_parsed_at_least_one_attribute == false )
             {
-                m_ReportParsingError( L"Attribute must have '=' between the name and the value (Rule 41)." );
+                m_ReportParsingError(WSTRING_VIEW(L"Attribute must have '=' between the name and the value (Rule 41)."));
                 return( false );
             }
 
@@ -3625,7 +3594,7 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::m_ParseTag( _In_ std::wstr
         if ( tag_data.empty() == true )
         {
             //WFCTRACE( TEXT( "Ran out of room looking for attribute value" ) );
-            m_ReportParsingError( L"Not yet documented error 2726." );
+            m_ReportParsingError(WSTRING_VIEW(L"Not yet documented error 2726."));
             return( false );
         }
 
@@ -3644,7 +3613,7 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::m_ParseTag( _In_ std::wstr
             if ( tag_data.at( 0 ) != '\'' )
             {
                 //WFCTRACE( TEXT( "And it ain't a single quote either!" ) );
-                m_ReportParsingError( L"Attribute values must begin with a \" or a ' (Rule 10)." );
+                m_ReportParsingError(WSTRING_VIEW(L"Attribute values must begin with a \" or a ' (Rule 10)."));
                 return( false );
             }
             else
@@ -3669,7 +3638,7 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::m_ParseTag( _In_ std::wstr
             if ( location_of_character != CHARACTER_NOT_FOUND && location_of_character != tag_data.GetLength() - 1 )
             {
                 // Looks like we got one of them there doubley terminated strings such as <x att="This"That">
-                m_ReportParsingError( TEXT( "Attribute value cannot contain another double quote (Rule 10)." ) );
+                m_ReportParsingError(WSTRING_VIEW(L"Attribute value cannot contain another double quote (Rule 10)." ) );
             }
         }
         else
@@ -3679,7 +3648,7 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::m_ParseTag( _In_ std::wstr
             if ( location_of_character != CHARACTER_NOT_FOUND && location_of_character != tag_data.GetLength() - 1 )
             {
                 // Looks like we got one of them there doubley terminated strings such as <x att="This"That">
-                m_ReportParsingError( TEXT( "Attribute value cannot contain another single quote (Rule 10)." ) );
+                m_ReportParsingError(WSTRING_VIEW(L"Attribute value cannot contain another single quote (Rule 10)." ) );
             }
         }
 #else
@@ -3713,7 +3682,7 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::m_ParseTag( _In_ std::wstr
 
             if ( attribute_value.at( attribute_value.length() - 1 ) != '>' )
             {
-                m_ReportParsingError( L"Not yet documented error 2785." );
+                m_ReportParsingError(WSTRING_VIEW(L"Not yet documented error 2785."));
                 return( false );
             }
 
@@ -3732,7 +3701,7 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::m_ParseTag( _In_ std::wstr
 
                 if ( attribute_value.at( attribute_value.length() - 1 ) != '?' )
                 {
-                    m_ReportParsingError( L"Not yet documented error 2804." );
+                    m_ReportParsingError(WSTRING_VIEW(L"Not yet documented error 2804."));
                     return( false );
                 }
 
@@ -3762,7 +3731,7 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::m_ParseTag( _In_ std::wstr
                 {
                     if ( m_TrimQuotesAndSpaces( attribute_value, '\"' ) == false )
                     {
-                        m_ReportParsingError( L"Attribute missing matching \" (Rule 10)." );
+                        m_ReportParsingError(WSTRING_VIEW(L"Attribute missing matching \" (Rule 10)."));
                         return( false );
                     }
                 }
@@ -3770,12 +3739,12 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::m_ParseTag( _In_ std::wstr
                 {
                     if ( m_TrimQuotesAndSpaces( attribute_value, '\'' ) == false )
                     {
-                        m_ReportParsingError( L"Attribute missing matching \' (Rule 10)." );
+                        m_ReportParsingError(WSTRING_VIEW(L"Attribute missing matching \' (Rule 10)."));
                         return( false );
                     }
                 }
 
-                if ( AddAttribute( attribute_name.c_str(), attribute_value.c_str() ) == false )
+                if ( AddAttribute( attribute_name, attribute_value ) == false )
                 {
                     // Adding attribute failed. It called m_ReportParsingError() for us.
                     return( false );
@@ -3786,7 +3755,7 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::m_ParseTag( _In_ std::wstr
             else
             {
                 // Rule 10
-                m_ReportParsingError( L"Empty attribute not allowed (Rule 10)." );
+                m_ReportParsingError(WSTRING_VIEW(L"Empty attribute not allowed (Rule 10)."));
                 return( false );
             }
         }
@@ -3839,7 +3808,7 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::m_ParseTag( _In_ std::wstr
                 offset_of_attribute_value += m_Beginning.GetIndex() + 1; // + 1 to account for the beginning double-quote of our search pattern
             }
 
-            if ( AddAttribute( attribute_name.c_str(), attribute_value.c_str(), offset_of_attribute_name, offset_of_attribute_value) == false )
+            if ( AddAttribute( attribute_name, attribute_value, offset_of_attribute_name, offset_of_attribute_value) == false )
             {
                 // Adding attribute failed. It called m_ReportParsingError() for us.
                 return( false );
@@ -3860,7 +3829,7 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::m_ParseTag( _In_ std::wstr
 
             if ( m_Attributes.empty() == false )
             {
-                m_ReportParsingError( L"Attributes not allowed in end tag (Rule 42)." );
+                m_ReportParsingError(WSTRING_VIEW(L"Attributes not allowed in end tag (Rule 42)."));
                 return( false );
             }
 
@@ -3871,12 +3840,12 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::m_ParseTag( _In_ std::wstr
     return( true );
 }
 
-_Check_return_ bool CExtensibleMarkupLanguageElement::m_ParseXMLDeclaration( _In_ std::wstring const& tag ) noexcept
+_Check_return_ bool CExtensibleMarkupLanguageElement::m_ParseXMLDeclaration( _In_ std::wstring_view tag ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
     WFC_VALIDATE_POINTER_NULL_OK( m_Document );
 
-    std::wstring const temp_string = tag.substr( 0, 3 );
+    std::wstring const temp_string(tag.substr( 0, 3 ));
 
     uint32_t parsing_options = 0;
 
@@ -3889,9 +3858,9 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::m_ParseXMLDeclaration( _In
     {
         // We must begin with lower case xml
 
-        if ( temp_string.compare( L"xml" ) != I_AM_EQUAL_TO_THAT)
+        if ( temp_string.compare(WSTRING_VIEW(L"xml")) != I_AM_EQUAL_TO_THAT)
         {
-            m_ReportParsingError( L"The xml declaration must be lower case (Rule 23)." );
+            m_ReportParsingError(WSTRING_VIEW(L"The xml declaration must be lower case (Rule 23)."));
             return( false );
         }
     }
@@ -3903,7 +3872,7 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::m_ParseXMLDeclaration( _In
         // We ain't root. That means we've come across another XML declaration in the data.
         // That ain't legal.
 
-        m_ReportParsingError( L"There can be only one prolog (Rule 1)." );
+        m_ReportParsingError(WSTRING_VIEW(L"There can be only one prolog (Rule 1)."));
         return( false );
     }
 
@@ -3912,15 +3881,15 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::m_ParseXMLDeclaration( _In
 
     if ( string_to_parse.length() < 7 )
     {
-        m_ReportParsingError( L"Missing VersionInfo data (Rule 23)." );
+        m_ReportParsingError(WSTRING_VIEW(L"Missing VersionInfo data (Rule 23)."));
         return( false );
     }
 
     std::wstring attribute_name = string_to_parse.substr( 0, 7 );
 
-    if ( attribute_name.compare( L"version" ) != I_AM_EQUAL_TO_THAT)
+    if ( attribute_name.compare(WSTRING_VIEW(L"version")) != I_AM_EQUAL_TO_THAT)
     {
-        m_ReportParsingError( L"The VersionInfo must be lower case (Rule 23)." );
+        m_ReportParsingError(WSTRING_VIEW(L"The VersionInfo must be lower case (Rule 23)."));
         return( false );
     }
 
@@ -3931,13 +3900,13 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::m_ParseXMLDeclaration( _In
 
     if ( string_to_parse.empty() == true )
     {
-        m_ReportParsingError( L"Truncated VersionInfo (Rule 24)." );
+        m_ReportParsingError(WSTRING_VIEW(L"Truncated VersionInfo (Rule 24)."));
         return( false );
     }
 
     if ( string_to_parse.at( 0 ) != '=' )
     {
-        m_ReportParsingError( L"Ill-formed VersionInfo missing = character (Rule 24)." );
+        m_ReportParsingError(WSTRING_VIEW(L"Ill-formed VersionInfo missing = character (Rule 24)."));
         return( false );
     }
 
@@ -3946,7 +3915,7 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::m_ParseXMLDeclaration( _In
 
     if ( string_to_parse.empty() == true )
     {
-        m_ReportParsingError( L"Ill-formed VersionInfo, missing VersionNum (Rule 24)." );
+        m_ReportParsingError(WSTRING_VIEW(L"Ill-formed VersionInfo, missing VersionNum (Rule 24)."));
         return( false );
     }
 
@@ -3955,7 +3924,7 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::m_ParseXMLDeclaration( _In
     if ( string_to_parse.at( 0 ) != '\"' &&
          string_to_parse.at( 0 ) != '\'' )
     {
-        m_ReportParsingError( L"Illegal VersionNum delimiter, must be a single or double quote (Rule 24)." );
+        m_ReportParsingError(WSTRING_VIEW(L"Illegal VersionNum delimiter, must be a single or double quote (Rule 24)."));
         return( false );
     }
 
@@ -3979,7 +3948,7 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::m_ParseXMLDeclaration( _In
 
     if ( location_of_delimiter == std::wstring::npos )
     {
-        m_ReportParsingError( L"VersionNum missing matching delimiter (Rule 24)." );
+        m_ReportParsingError(WSTRING_VIEW(L"VersionNum missing matching delimiter (Rule 24)."));
         return( false );
     }
 
@@ -3987,14 +3956,14 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::m_ParseXMLDeclaration( _In
 
     if ( value.empty() == true )
     {
-        m_ReportParsingError( L"Empty VersionNum not allowed (Rule 26)." );
+        m_ReportParsingError(WSTRING_VIEW(L"Empty VersionNum not allowed (Rule 26)."));
         return( false );
     }
 
     string_to_parse.erase(0, location_of_delimiter + 1);
     trim_left(string_to_parse);
 
-    std::wstring legal_characters( L"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_.:" );
+    std::wstring legal_characters(WSTRING_VIEW(L"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_.:"));
 
     for ( auto const value_index : Range(value.length()) )
     {
@@ -4006,7 +3975,7 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::m_ParseXMLDeclaration( _In
 
             //WFCTRACE( error_message );
 
-            m_ReportParsingError( error_message.c_str() );
+            m_ReportParsingError( error_message );
 
             return( false );
         }
@@ -4014,7 +3983,7 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::m_ParseXMLDeclaration( _In
 
     if ( m_Document != nullptr )
     {
-        m_Document->SetVersion( value.c_str() );
+        m_Document->SetVersion( value );
     }
 
     if ( string_to_parse.empty() == true )
@@ -4032,13 +4001,13 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::m_ParseXMLDeclaration( _In
     if ( string_to_parse.length() < 8 )
     {
         // There's not enough room for either "encoding" or "standalone"
-        m_ReportParsingError( L"Not enough room left to parse (Rule 23)." );
+        m_ReportParsingError(WSTRING_VIEW(L"Not enough room left to parse (Rule 23)."));
         return( false );
     }
 
     value.assign( string_to_parse.substr( 0, 8 ) );
 
-    if ( value.compare( L"encoding" ) == I_AM_EQUAL_TO_THAT)
+    if ( value.compare(WSTRING_VIEW(L"encoding")) == I_AM_EQUAL_TO_THAT)
     {
         // We are encoding, let's parse it
 
@@ -4049,13 +4018,13 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::m_ParseXMLDeclaration( _In
 
         if ( string_to_parse.empty() == true )
         {
-            m_ReportParsingError( L"Truncated EncodingDecl (Rule 80)." );
+            m_ReportParsingError(WSTRING_VIEW(L"Truncated EncodingDecl (Rule 80)."));
             return( false );
         }
 
         if ( string_to_parse.at( 0 ) != '=' )
         {
-            m_ReportParsingError( L"Ill-formed EncodingDecl missing = character (Rule 80)." );
+            m_ReportParsingError(WSTRING_VIEW(L"Ill-formed EncodingDecl missing = character (Rule 80)."));
             return( false );
         }
 
@@ -4064,7 +4033,7 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::m_ParseXMLDeclaration( _In
 
         if ( string_to_parse.empty() == true )
         {
-            m_ReportParsingError( L"Ill-formed EncodingDecl, missing EncName (Rule 80)." );
+            m_ReportParsingError(WSTRING_VIEW(L"Ill-formed EncodingDecl, missing EncName (Rule 80)."));
             return( false );
         }
 
@@ -4073,7 +4042,7 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::m_ParseXMLDeclaration( _In
         if ( string_to_parse.at( 0 ) != '\"' &&
             string_to_parse.at( 0 ) != '\'' )
         {
-            m_ReportParsingError( L"Illegal EncName delimiter, must be a single or double quote (Rule 80)." );
+            m_ReportParsingError(WSTRING_VIEW(L"Illegal EncName delimiter, must be a single or double quote (Rule 80)."));
             return( false );
         }
 
@@ -4097,7 +4066,7 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::m_ParseXMLDeclaration( _In
 
         if ( location_of_delimiter == std::wstring::npos )
         {
-            m_ReportParsingError( L"EncName missing matching delimiter (Rule 80)." );
+            m_ReportParsingError(WSTRING_VIEW(L"EncName missing matching delimiter (Rule 80)."));
             return( false );
         }
 
@@ -4105,7 +4074,7 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::m_ParseXMLDeclaration( _In
 
         if ( value.empty() == true )
         {
-            m_ReportParsingError( L"Empty EncName not allowed (Rule 81)." );
+            m_ReportParsingError(WSTRING_VIEW(L"Empty EncName not allowed (Rule 81)."));
             return( false );
         }
 
@@ -4123,7 +4092,7 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::m_ParseXMLDeclaration( _In
         }
         else
         {
-            m_ReportParsingError( L"Illegal first character in EncName (Rule 81)." );
+            m_ReportParsingError(WSTRING_VIEW(L"Illegal first character in EncName (Rule 81)."));
             return( false );
         }
 
@@ -4139,14 +4108,14 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::m_ParseXMLDeclaration( _In
 
                     format( error_message, L"Character %d is illegal in EncName of \"%s\" (Rule 81).", static_cast<int>(loop_index + 1), value );
 
-                    m_ReportParsingError(error_message.c_str());
+                    m_ReportParsingError(error_message);
                     return( false );
                 }
             }
 
             if ( m_Document != nullptr )
             {
-                m_Document->SetEncoding( value.c_str() );
+                m_Document->SetEncoding( value );
             }
         }
     }
@@ -4162,13 +4131,13 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::m_ParseXMLDeclaration( _In
     if ( string_to_parse.length() < 10 )
     {
         // There's not enough room for either "encoding" or "standalone"
-        m_ReportParsingError( L"Not enough room left to parse SDDecl (Rule 32)." );
+        m_ReportParsingError(WSTRING_VIEW(L"Not enough room left to parse SDDecl (Rule 32)."));
         return( false );
     }
 
     value.assign( string_to_parse.substr( 0, 10 ) );
 
-    if ( value.compare( L"standalone" ) == I_AM_EQUAL_TO_THAT)
+    if ( value.compare(WSTRING_VIEW(L"standalone")) == I_AM_EQUAL_TO_THAT)
     {
         // We are standalone, let's parse it
         string_to_parse.erase(0, 10);
@@ -4178,13 +4147,13 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::m_ParseXMLDeclaration( _In
 
         if ( string_to_parse.empty() == true )
         {
-            m_ReportParsingError( L"Truncated SDDecl (Rule 32)." );
+            m_ReportParsingError(WSTRING_VIEW(L"Truncated SDDecl (Rule 32)."));
             return( false );
         }
 
         if ( string_to_parse.at( 0 ) != '=' )
         {
-            m_ReportParsingError( L"Ill-formed SDDecl missing = character (Rule 32)." );
+            m_ReportParsingError(WSTRING_VIEW(L"Ill-formed SDDecl missing = character (Rule 32)."));
             return( false );
         }
 
@@ -4193,7 +4162,7 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::m_ParseXMLDeclaration( _In
 
         if ( string_to_parse.empty() == true )
         {
-            m_ReportParsingError( L"Ill-formed SDDecl, missing data (Rule 32)." );
+            m_ReportParsingError(WSTRING_VIEW(L"Ill-formed SDDecl, missing data (Rule 32)."));
             return( false );
         }
 
@@ -4202,7 +4171,7 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::m_ParseXMLDeclaration( _In
         if ( string_to_parse.at( 0 ) != '\"' &&
             string_to_parse.at( 0 ) != '\'' )
         {
-            m_ReportParsingError( L"Illegal SDDecl delimiter, must be a single or double quote (Rule 32)." );
+            m_ReportParsingError(WSTRING_VIEW(L"Illegal SDDecl delimiter, must be a single or double quote (Rule 32)."));
             return( false );
         }
 
@@ -4226,7 +4195,7 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::m_ParseXMLDeclaration( _In
 
         if ( location_of_delimiter == std::wstring::npos )
         {
-            m_ReportParsingError( L"SDDecl missing matching delimiter (Rule 32)." );
+            m_ReportParsingError(WSTRING_VIEW(L"SDDecl missing matching delimiter (Rule 32)."));
             return( false );
         }
 
@@ -4234,7 +4203,7 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::m_ParseXMLDeclaration( _In
 
         if ( value.empty() == true )
         {
-            m_ReportParsingError( L"Empty SDDecl not allowed (Rule 32)." );
+            m_ReportParsingError(WSTRING_VIEW(L"Empty SDDecl not allowed (Rule 32)."));
             return( false );
         }
 
@@ -4243,15 +4212,15 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::m_ParseXMLDeclaration( _In
 
         // Now validate the contents of SDDecl
 
-        if ( value.compare( L"yes" ) != I_AM_EQUAL_TO_THAT && value.compare( L"no" ) != I_AM_EQUAL_TO_THAT)
+        if ( value.compare(WSTRING_VIEW(L"yes")) != I_AM_EQUAL_TO_THAT && value.compare(WSTRING_VIEW(L"no")) != I_AM_EQUAL_TO_THAT)
         {
-            m_ReportParsingError( L"Illegal value for SDDecl, it must me lower case \"yes\" or \"no\" (Rule 32)." );
+            m_ReportParsingError(WSTRING_VIEW(L"Illegal value for SDDecl, it must me lower case \"yes\" or \"no\" (Rule 32)."));
             return( false );
         }
 
         if ( m_Document != nullptr )
         {
-            if ( value.compare( L"yes" ) == I_AM_EQUAL_TO_THAT)
+            if ( value.compare(WSTRING_VIEW(L"yes")) == I_AM_EQUAL_TO_THAT)
             {
                 m_Document->SetStandalone( true );
             }
@@ -4264,14 +4233,14 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::m_ParseXMLDeclaration( _In
 
     if ( string_to_parse.empty() == false )
     {
-        m_ReportParsingError( L"Extra characters after SDDecl (Rule 23)." );
+        m_ReportParsingError(WSTRING_VIEW(L"Extra characters after SDDecl (Rule 23)."));
         return( false );
     }
 
     return( true );
 }
 
-void CExtensibleMarkupLanguageElement::m_ReportParsingError(_In_opt_z_ wchar_t const * const error_message ) noexcept
+void CExtensibleMarkupLanguageElement::m_ReportParsingError(_In_ std::wstring_view error_message ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
     WFC_VALIDATE_POINTER_NULL_OK( m_Document );
@@ -4280,7 +4249,7 @@ void CExtensibleMarkupLanguageElement::m_ReportParsingError(_In_opt_z_ wchar_t c
     {
         WFC_TRY
         {
-            m_Document->SetParsingErrorInformation( m_Tag.c_str(), m_Beginning, m_Ending, error_message );
+            m_Document->SetParsingErrorInformation( m_Tag, m_Beginning, m_Ending, error_message );
         }
         WFC_CATCH_ALL
         {
@@ -4333,7 +4302,7 @@ void CExtensibleMarkupLanguageElement::m_ResolveEntities( _Inout_ std::wstring& 
 
         entity.assign( temp_string.substr( 0, location + 1 ) );
 
-        if ( m_Document->ResolveEntity( entity.c_str(), text ) == false )
+        if ( m_Document->ResolveEntity( entity, text ) == false )
         {
             //WFCTRACEVAL( TEXT( "Unresloved entity " ), entity );
             return;
@@ -4382,10 +4351,9 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::m_TrimQuotesAndSpaces( _In
     return( return_value );
 }
 
-_Check_return_ bool CExtensibleMarkupLanguageElement::GetChildValue(_In_z_ wchar_t const * const tag_name, _Out_ uint32_t& value ) const noexcept
+_Check_return_ bool CExtensibleMarkupLanguageElement::GetChildValue(_In_ std::wstring_view tag_name, _Out_ uint32_t& value ) const noexcept
 {
     WFC_VALIDATE_POINTER( this );
-    WFC_VALIDATE_POINTER( tag_name );
 
     value = 0;
 
@@ -4407,10 +4375,9 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::GetChildValue(_In_z_ wchar
     return( true );
 }
 
-_Check_return_ bool CExtensibleMarkupLanguageElement::GetChildValue(_In_z_ wchar_t const * const tag_name, _Out_ uint64_t& value ) const noexcept
+_Check_return_ bool CExtensibleMarkupLanguageElement::GetChildValue(_In_ std::wstring_view tag_name, _Out_ uint64_t& value ) const noexcept
 {
     WFC_VALIDATE_POINTER( this );
-    WFC_VALIDATE_POINTER( tag_name );
 
     value = 0;
 
@@ -4433,10 +4400,9 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::GetChildValue(_In_z_ wchar
     return( true );
 }
 
-_Check_return_ bool CExtensibleMarkupLanguageElement::GetChildValue(_In_z_ wchar_t const * const tag_name, _Out_ double& value ) const noexcept
+_Check_return_ bool CExtensibleMarkupLanguageElement::GetChildValue(_In_ std::wstring_view tag_name, _Out_ double& value ) const noexcept
 {
     WFC_VALIDATE_POINTER( this );
-    WFC_VALIDATE_POINTER( tag_name );
 
     value = 0;
 
@@ -4459,10 +4425,9 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::GetChildValue(_In_z_ wchar
     return( true );
 }
 
-_Check_return_ bool CExtensibleMarkupLanguageElement::GetChildValue(_In_z_ wchar_t const * const tag_name, _Out_ bool& value ) const noexcept
+_Check_return_ bool CExtensibleMarkupLanguageElement::GetChildValue(_In_ std::wstring_view tag_name, _Out_ bool& value ) const noexcept
 {
     WFC_VALIDATE_POINTER( this );
-    WFC_VALIDATE_POINTER( tag_name );
 
     value = false;
 
@@ -4502,10 +4467,9 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::GetChildValue(_In_z_ wchar
     return( true );
 }
 
-_Check_return_ bool CExtensibleMarkupLanguageElement::GetChildValue(_In_z_ wchar_t const * const tag_name, _Out_ std::wstring& value ) const noexcept
+_Check_return_ bool CExtensibleMarkupLanguageElement::GetChildValue(_In_ std::wstring_view tag_name, _Out_ std::wstring& value ) const noexcept
 {
     WFC_VALIDATE_POINTER( this );
-    WFC_VALIDATE_POINTER( tag_name );
 
     value.clear();
 
@@ -4521,10 +4485,9 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::GetChildValue(_In_z_ wchar
     return( true );
 }
 
-_Check_return_ bool CExtensibleMarkupLanguageElement::GetChildValue( _In_z_ wchar_t const * tag_name, _Out_ std::vector<uint8_t>& value ) const noexcept
+_Check_return_ bool CExtensibleMarkupLanguageElement::GetChildValue(_In_ std::wstring_view tag_name, _Out_ std::vector<uint8_t>& value ) const noexcept
 {
     WFC_VALIDATE_POINTER( this );
-    WFC_VALIDATE_POINTER( tag_name );
 
     value.clear();
 
@@ -4544,7 +4507,7 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::GetChildValue( _In_z_ wcha
     return( coder.Decode( encoded_bytes, value ) == false ? false : true );
 }
 
-_Check_return_ CExtensibleMarkupLanguageElement * CExtensibleMarkupLanguageElement::NewChildValue(_In_z_ wchar_t const * const tag_name, _In_ uint32_t const value ) noexcept
+_Check_return_ CExtensibleMarkupLanguageElement * CExtensibleMarkupLanguageElement::NewChildValue(_In_ std::wstring_view tag_name, _In_ uint32_t const value ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
 
@@ -4556,13 +4519,13 @@ _Check_return_ CExtensibleMarkupLanguageElement * CExtensibleMarkupLanguageEleme
 
         format( formatted_value, L"%lu", value );
 
-        (void) return_value->AddText( formatted_value.c_str() );
+        (void) return_value->AddText( formatted_value );
     }
 
     return( return_value );
 }
 
-_Check_return_ CExtensibleMarkupLanguageElement * CExtensibleMarkupLanguageElement::NewChildValue(_In_z_ wchar_t const * const tag_name, _In_ int32_t const value ) noexcept
+_Check_return_ CExtensibleMarkupLanguageElement * CExtensibleMarkupLanguageElement::NewChildValue(_In_ std::wstring_view tag_name, _In_ int32_t const value ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
 
@@ -4574,13 +4537,13 @@ _Check_return_ CExtensibleMarkupLanguageElement * CExtensibleMarkupLanguageEleme
 
         format( formatted_value, L"%ld", value );
 
-        (void) return_value->AddText( formatted_value.c_str() );
+        (void) return_value->AddText( formatted_value );
     }
 
     return( return_value );
 }
 
-_Check_return_ CExtensibleMarkupLanguageElement * CExtensibleMarkupLanguageElement::NewChildValue(_In_z_ wchar_t const * const tag_name, _In_ uint64_t const value ) noexcept
+_Check_return_ CExtensibleMarkupLanguageElement * CExtensibleMarkupLanguageElement::NewChildValue(_In_ std::wstring_view tag_name, _In_ uint64_t const value ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
 
@@ -4592,13 +4555,13 @@ _Check_return_ CExtensibleMarkupLanguageElement * CExtensibleMarkupLanguageEleme
 
         format( formatted_value, L"%I64u", value );
 
-        (void) return_value->AddText( formatted_value.c_str() );
+        (void) return_value->AddText( formatted_value );
     }
 
     return( return_value );
 }
 
-_Check_return_ CExtensibleMarkupLanguageElement * CExtensibleMarkupLanguageElement::NewChildValue(_In_z_ wchar_t const * const tag_name, _In_ int64_t const value ) noexcept
+_Check_return_ CExtensibleMarkupLanguageElement * CExtensibleMarkupLanguageElement::NewChildValue(_In_ std::wstring_view tag_name, _In_ int64_t const value ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
 
@@ -4610,13 +4573,13 @@ _Check_return_ CExtensibleMarkupLanguageElement * CExtensibleMarkupLanguageEleme
 
         format( formatted_value, L"%I64d", value );
 
-        (void) return_value->AddText( formatted_value.c_str() );
+        (void) return_value->AddText( formatted_value );
     }
 
     return( return_value );
 }
 
-_Check_return_ CExtensibleMarkupLanguageElement * CExtensibleMarkupLanguageElement::NewChildValue(_In_z_ wchar_t const * const tag_name, _In_ double const value ) noexcept
+_Check_return_ CExtensibleMarkupLanguageElement * CExtensibleMarkupLanguageElement::NewChildValue(_In_ std::wstring_view tag_name, _In_ double const value ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
 
@@ -4628,16 +4591,15 @@ _Check_return_ CExtensibleMarkupLanguageElement * CExtensibleMarkupLanguageEleme
 
         format( formatted_value, L"%lf", value );
 
-        (void) return_value->AddText( formatted_value.c_str() );
+        (void) return_value->AddText( formatted_value );
     }
 
     return( return_value );
 }
 
-_Check_return_ CExtensibleMarkupLanguageElement * CExtensibleMarkupLanguageElement::NewChildValue( _In_z_ wchar_t const * tag_name, _In_ std::vector<uint8_t> const& value ) noexcept
+_Check_return_ CExtensibleMarkupLanguageElement * CExtensibleMarkupLanguageElement::NewChildValue(_In_ std::wstring_view tag_name, _In_ std::vector<uint8_t> const& value ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
-    WFC_VALIDATE_POINTER( tag_name );
 
     std::wstring as_string;
 
@@ -4645,10 +4607,10 @@ _Check_return_ CExtensibleMarkupLanguageElement * CExtensibleMarkupLanguageEleme
 
     (void) coder.Encode( value, as_string );
 
-    return( NewChildValue( tag_name, as_string.c_str() ) );
+    return( NewChildValue( tag_name, as_string ) );
 }
 
-_Check_return_ CExtensibleMarkupLanguageElement * CExtensibleMarkupLanguageElement::NewChildValue(_In_z_ wchar_t const * tag_name, __in_bcount( number_of_bytes ) uint8_t const * buffer, _In_ std::size_t const number_of_bytes ) noexcept
+_Check_return_ CExtensibleMarkupLanguageElement * CExtensibleMarkupLanguageElement::NewChildValue(_In_ std::wstring_view tag_name, __in_bcount( number_of_bytes ) uint8_t const * buffer, _In_ std::size_t const number_of_bytes ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
 
@@ -4658,16 +4620,16 @@ _Check_return_ CExtensibleMarkupLanguageElement * CExtensibleMarkupLanguageEleme
 
     (void) coder.Encode( buffer, number_of_bytes, as_string );
 
-    return( NewChildValue( tag_name, as_string.c_str() ) );
+    return( NewChildValue( tag_name, as_string ) );
 }
 
-_Check_return_ CExtensibleMarkupLanguageElement * CExtensibleMarkupLanguageElement::NewChildValue( _In_z_ wchar_t const * tag_name, _In_z_ wchar_t const * value ) noexcept
+_Check_return_ CExtensibleMarkupLanguageElement * CExtensibleMarkupLanguageElement::NewChildValue(_In_ std::wstring_view tag_name, _In_ std::wstring_view value ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
 
     auto return_value = NewChild( tag_name );
 
-    if ( return_value != nullptr && value != nullptr && value[ 0 ] != 0x00 )
+    if ( return_value != nullptr && value.empty() == false )
     {
         (void) return_value->AddText( value );
     }
@@ -4675,13 +4637,11 @@ _Check_return_ CExtensibleMarkupLanguageElement * CExtensibleMarkupLanguageEleme
     return( return_value );
 }
 
-_Check_return_ CExtensibleMarkupLanguageElement * CExtensibleMarkupLanguageElement::NewChild( _In_opt_z_ wchar_t const * tag_name, _In_ ElementType const element_type ) noexcept
+_Check_return_ CExtensibleMarkupLanguageElement * CExtensibleMarkupLanguageElement::NewChild( _In_ std::wstring_view tag_name, _In_ ElementType const element_type ) noexcept
 {
-    WFC_VALIDATE_POINTER( this );
-
     auto child_p = NewElement( this, element_type );
 
-    if ( child_p != nullptr && tag_name != nullptr )
+    if ( child_p != nullptr && tag_name.empty() == false )
     {
         child_p->SetTag( tag_name );
     }
@@ -4689,11 +4649,11 @@ _Check_return_ CExtensibleMarkupLanguageElement * CExtensibleMarkupLanguageEleme
     return( child_p );
 }
 
-_Check_return_ CExtensibleMarkupLanguageElement * CExtensibleMarkupLanguageElement::NewComment(_In_ wchar_t const * text) noexcept
+_Check_return_ CExtensibleMarkupLanguageElement * CExtensibleMarkupLanguageElement::NewComment(_In_ std::wstring_view text) noexcept
 {
     auto return_value = NewElement(this, ElementType::Comment);
 
-    if (return_value != nullptr && text != nullptr && text[0] != 0)
+    if (return_value != nullptr && text.empty() == false)
     {
         return_value->m_Contents.assign(text);
     }
@@ -4761,14 +4721,14 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::Parse( _In_ CParsePoint co
     if ( m_Ending.GetIndex() >= parser.GetSize() )
     {
         //WFCTRACE( TEXT( "Ran out of room before we started" ) );
-        m_ReportParsingError( L"There are no more bytes to parse. We ran out of bytes before we rand out of XML." );
+        m_ReportParsingError(WSTRING_VIEW(L"There are no more bytes to parse. We ran out of bytes before we rand out of XML."));
         return( false );
     }
 
     if ( m_Type == ElementType::Unknown )
     {
         //WFCTRACE( TEXT( "We don't know what type of element we are therefore we don't know how to parse the data" ) );
-        m_ReportParsingError( L"Type of element is unknown. Could not parse element data." );
+        m_ReportParsingError(WSTRING_VIEW(L"Type of element is unknown. Could not parse element data."));
         return( false );
     }
 
@@ -4906,7 +4866,7 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::Parse( _In_ CParsePoint co
             {
                 //WFCTRACE( TEXT( "Can't m_ParseTag()" ) );
                 // m_ParseTag calls m_ReportParsingError
-                //m_ReportParsingError( TEXT( "Internal error: Could not parse tag." ) );
+                //m_ReportParsingError( WSTRING_VIEW(L"Internal error: Could not parse tag." ) );
                 Empty();
                 return( false );
             }
@@ -4962,7 +4922,7 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::Parse( _In_ CParsePoint co
 
                     if ( sub_element_p == nullptr )
                     {
-                        m_ReportParsingError( L"Internal error: Could not create new element." );
+                        m_ReportParsingError(WSTRING_VIEW(L"Internal error: Could not create new element."));
                         Empty();
                         return( false );
                     }
@@ -4975,7 +4935,7 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::Parse( _In_ CParsePoint co
 
                     if ( IsRoot() == false )
                     {
-                        m_ReportParsingError( L"Premature end of data." );
+                        m_ReportParsingError(WSTRING_VIEW(L"Premature end of data."));
                         Empty();
 
                         return( false );
@@ -4987,7 +4947,7 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::Parse( _In_ CParsePoint co
 
                         if ( GetAbortParsing() == true)
                         {
-                            m_ReportParsingError( L"Parsing was aborted by Callback function." );
+                            m_ReportParsingError(WSTRING_VIEW(L"Parsing was aborted by Callback function."));
                             return( false );
                         }
                     }
@@ -5027,7 +4987,7 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::Parse( _In_ CParsePoint co
 
                                     format( error_text, L"Overlapping tags detected. Found \"%s\" but needed to find \"%s\".", tag_string, m_Tag);
 
-                                    m_ReportParsingError( error_text.c_str() );
+                                    m_ReportParsingError( error_text );
 
                                     RemoveChild( sub_element_p ); // Because NewElement made it our child
                                     DeleteElement( sub_element_p );
@@ -5057,7 +5017,7 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::Parse( _In_ CParsePoint co
 
                                     if ( GetAbortParsing() == true)
                                     {
-                                        m_ReportParsingError( L"Parsing was aborted by Callback function." );
+                                        m_ReportParsingError(WSTRING_VIEW(L"Parsing was aborted by Callback function."));
                                         return( false );
                                     }
 
@@ -5112,18 +5072,18 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::Parse( _In_ CParsePoint co
 
                                                 if ( location_of_semicolon == std::wstring::npos )
                                                 {
-                                                    m_ReportParsingError( L"Ill-formed entity reference in text section (Rule 68)." );
+                                                    m_ReportParsingError(WSTRING_VIEW(L"Ill-formed entity reference in text section (Rule 68)."));
                                                     return( false );
                                                 }
 
                                                 uint32_t rule_that_was_broken = 0;
 
-                                                if ( m_Document->GetEntities().IsEntity( sub_element_p->m_Contents.substr( location_of_ampersand, ( location_of_semicolon + 1 ) - location_of_ampersand ).c_str(), rule_that_was_broken ) == false )
+                                                if ( m_Document->GetEntities().IsEntity( sub_element_p->m_Contents.substr( location_of_ampersand, ( location_of_semicolon + 1 ) - location_of_ampersand ), rule_that_was_broken ) == false )
                                                 {
                                                     std::wstring error_message;
 
                                                     format( error_message, L"Bad entity reference in text section (Rule %lu).", (unsigned long) rule_that_was_broken );
-                                                    m_ReportParsingError( error_message.c_str() );
+                                                    m_ReportParsingError( error_message );
                                                     return( false );
                                                 }
 
@@ -5163,7 +5123,7 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::Parse( _In_ CParsePoint co
         {
             // Terminator could not be found
             // 1998-12-08 what happens when the terminator ain't found
-            m_ReportParsingError( L"Could not find terminator. Premature end of data encountered." );
+            m_ReportParsingError(WSTRING_VIEW(L"Could not find terminator. Premature end of data encountered."));
             return( false );
         }
     }
@@ -5178,7 +5138,7 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::Parse( _In_ CParsePoint co
 
     if ( GetAbortParsing() == true)
     {
-        m_ReportParsingError( L"Parsing aborted by Callback function." );
+        m_ReportParsingError(WSTRING_VIEW(L"Parsing aborted by Callback function."));
         return( false );
     }
 
@@ -5327,7 +5287,7 @@ void CExtensibleMarkupLanguageElement::WriteTo( _Inout_ std::vector<uint8_t>& xm
 
         std::wstring temp_string = m_Contents;
 
-        std::size_t location_of_string = temp_string.find( L"]]>" );
+        std::size_t location_of_string = temp_string.find(WSTRING_VIEW(L"]]>"));
 
         while( location_of_string != std::wstring::npos )
         {
@@ -5353,7 +5313,7 @@ void CExtensibleMarkupLanguageElement::WriteTo( _Inout_ std::vector<uint8_t>& xm
 
             temp_string.erase(0, location_of_string + 3);
 
-            location_of_string = temp_string.find( L"]]>" );
+            location_of_string = temp_string.find(WSTRING_VIEW(L"]]>"));
         }
 
         for ( auto const cdata_index : Range(temp_string.length()) )

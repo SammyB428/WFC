@@ -1078,11 +1078,11 @@ _Check_return_ bool PASCAL wfc_get_filename_from_handle( __in HANDLE const file_
 _Check_return_ bool PASCAL wfc_move_file_at_reboot( __in std::wstring const& existing_file, __in std::wstring const& file_to_move ) noexcept;
 _Check_return_ bool PASCAL wfc_parse_hex_string(__in_z wchar_t const * hex_string, _In_ std::size_t const number_of_characters, __out_bcount( buffer_size ) uint8_t * buffer, _In_ std::size_t const buffer_size ) noexcept;
 _Check_return_ bool PASCAL wfc_parse_hex_string(__in_z char const * hex_string, _In_ std::size_t const number_of_characters, __out_bcount( buffer_size ) uint8_t * buffer, _In_ std::size_t const buffer_size ) noexcept;
-_Check_return_ bool PASCAL wfc_parse_iso_8601_string( __in_z wchar_t const * time_string, __out CFileTime&    the_time ) noexcept;
-_Check_return_ bool PASCAL wfc_parse_iso_8601_string( __in_z wchar_t const * time_string, __out CSystemTime&  the_time ) noexcept;
+_Check_return_ bool PASCAL wfc_parse_iso_8601_string( _In_ std::wstring_view time_string, __out CFileTime&    the_time ) noexcept;
+_Check_return_ bool PASCAL wfc_parse_iso_8601_string(_In_ std::wstring_view time_string, __out CSystemTime&  the_time ) noexcept;
+_Check_return_ bool PASCAL wfc_parse_iso_8601_string(_In_ std::wstring_view time_string, __out CTime& the_time) noexcept;
 _Check_return_ bool PASCAL wfc_process_buffer( __in uint8_t const * buffer, __in std::size_t const number_of_bytes_in_buffer, __in std::size_t const step_size, __inout PROCESS_BUFFER_CALLBACK function_to_call, __inout_opt void * callback_context ) noexcept;
 _Check_return_ bool wfcGenRandom( _Out_writes_bytes_(RandomBufferLength) PVOID RandomBuffer, _In_ ULONG const RandomBufferLength ) noexcept;
-_Check_return_ bool PASCAL wfc_parse_iso_8601_string( __in_z LPCTSTR time_string, __out CTime& the_time ) noexcept;
 _Check_return_ bool PASCAL wfc_parse_xml( __in_z LPCTSTR filename, __inout CExtensibleMarkupLanguageDocument& xml ) noexcept;
 
 _Check_return_ uint32_t PASCAL wfc_get_directory_usage_percentage( __in std::wstring const& directory_path ) noexcept;
