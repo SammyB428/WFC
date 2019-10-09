@@ -827,7 +827,7 @@ _Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Write( _In_z_ wch
 
    WFC_TRY
    {
-      CExtensibleMarkupLanguageElement * sub_element_p = CExtensibleMarkupLanguageElement::NewElement( m_Element_p );
+      auto sub_element_p = CExtensibleMarkupLanguageElement::NewElement( m_Element_p );
 
       if ( sub_element_p != nullptr )
       {
@@ -837,16 +837,16 @@ _Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Write( _In_z_ wch
 
          if ( value == FALSE )
          {
-            (void) sub_element_p->AddText( L"0" );
+            (void) sub_element_p->AddText(WSTRING_VIEW(L"0"));
          }
          else
          {
-            (void) sub_element_p->AddText( L"1" );
+            (void) sub_element_p->AddText(WSTRING_VIEW(L"1"));
          }
 
          if ( m_AddNewLineAfterEachElement == true )
          {
-            (void) m_Element_p->AddText( TEXT( "\n" ) );
+            (void) m_Element_p->AddText(WSTRING_VIEW(L"\n"));
          }
       }
 
@@ -873,7 +873,7 @@ _Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Write( _In_z_ wch
 
    WFC_TRY
    {
-      CExtensibleMarkupLanguageElement * sub_element_p = CExtensibleMarkupLanguageElement::NewElement( m_Element_p );
+      auto sub_element_p = CExtensibleMarkupLanguageElement::NewElement( m_Element_p );
 
       if ( sub_element_p != nullptr )
       {
@@ -884,11 +884,11 @@ _Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Write( _In_z_ wch
          (void) encoder.Encode( value, contents );
 
          sub_element_p->SetTag( tag );
-         (void) sub_element_p->AddText( contents.c_str() );
+         (void) sub_element_p->AddText( contents );
 
          if ( m_AddNewLineAfterEachElement == true )
          {
-            (void) m_Element_p->AddText( TEXT( "\n" ) );
+             (void)m_Element_p->AddText(WSTRING_VIEW(L"\n"));
          }
       }
 
@@ -913,7 +913,7 @@ _Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Write( _In_z_ wch
 
    WFC_TRY
    {
-      CExtensibleMarkupLanguageElement * sub_element_p = CExtensibleMarkupLanguageElement::NewElement( m_Element_p );
+      auto sub_element_p = CExtensibleMarkupLanguageElement::NewElement( m_Element_p );
 
       if ( sub_element_p != nullptr )
       {
@@ -921,7 +921,7 @@ _Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Write( _In_z_ wch
 
          if ( m_AddNewLineAfterEachElement == true )
          {
-            (void) m_Element_p->AddText( TEXT( "\n" ) );
+             (void)m_Element_p->AddText(WSTRING_VIEW(L"\n"));
          }
 
          CXMLArchive entry_archiver;
@@ -966,7 +966,7 @@ _Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Write( _In_z_ wch
       // one location. This way, we get a better chance of tracking down the
       // offending leaker.
 
-      CExtensibleMarkupLanguageElement * sub_element_p = CExtensibleMarkupLanguageElement::NewElement( m_Element_p );
+      auto sub_element_p = CExtensibleMarkupLanguageElement::NewElement( m_Element_p );
 
       if ( sub_element_p != nullptr )
       {
@@ -985,11 +985,11 @@ _Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Write( _In_z_ wch
          contents.append( m_TimeZone );
 
          sub_element_p->SetTag( tag );
-         (void) sub_element_p->AddText( contents.c_str() );
+         (void) sub_element_p->AddText( contents );
 
          if ( m_AddNewLineAfterEachElement == true )
          {
-            (void) m_Element_p->AddText( TEXT( "\n" ) );
+             (void)m_Element_p->AddText(WSTRING_VIEW(L"\n"));
          }
       }
 
@@ -1024,7 +1024,7 @@ _Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Write( _In_z_ wch
       // one location. This way, we get a better chance of tracking down the
       // offending leaker.
 
-      CExtensibleMarkupLanguageElement * sub_element_p = CExtensibleMarkupLanguageElement::NewElement( m_Element_p );
+      auto sub_element_p = CExtensibleMarkupLanguageElement::NewElement( m_Element_p );
 
       if ( sub_element_p != nullptr )
       {
@@ -1054,7 +1054,7 @@ _Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Write( _In_z_ wch
 
          if ( m_AddNewLineAfterEachElement == true )
          {
-            m_Element_p->AddText( TEXT( "\n" ) );
+             (void)m_Element_p->AddText(WSTRING_VIEW(L"\n"));
          }
       }
 
@@ -1087,7 +1087,7 @@ _Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Write( _In_z_ wch
       // one location. This way, we get a better chance of tracking down the
       // offending leaker.
 
-      CExtensibleMarkupLanguageElement * sub_element_p = CExtensibleMarkupLanguageElement::NewElement( m_Element_p );
+      auto sub_element_p = CExtensibleMarkupLanguageElement::NewElement( m_Element_p );
 
       if ( sub_element_p != nullptr )
       {
@@ -1102,7 +1102,7 @@ _Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Write( _In_z_ wch
 
          if ( m_AddNewLineAfterEachElement == true )
          {
-            m_Element_p->AddText( TEXT( "\n" ) );
+             (void)m_Element_p->AddText(WSTRING_VIEW(L"\n"));
          }
       }
 
@@ -1129,16 +1129,16 @@ _Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Write( _In_z_ wch
 
    WFC_TRY
    {
-      CExtensibleMarkupLanguageElement * sub_element_p = CExtensibleMarkupLanguageElement::NewElement( m_Element_p );
+      auto sub_element_p = CExtensibleMarkupLanguageElement::NewElement( m_Element_p );
 
       if ( sub_element_p != nullptr )
       {
          sub_element_p->SetTag( tag );
-         (void) sub_element_p->AddText( value.c_str() );
+         (void) sub_element_p->AddText( value );
 
          if ( m_AddNewLineAfterEachElement == true )
          {
-            (void) m_Element_p->AddText( L"\n" );
+            (void) m_Element_p->AddText(WSTRING_VIEW(L"\n"));
          }
       }
 
@@ -1163,7 +1163,7 @@ _Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Write( _In_z_ wch
 
    WFC_TRY
    {
-      CExtensibleMarkupLanguageElement * sub_element_p = CExtensibleMarkupLanguageElement::NewElement( m_Element_p );
+      auto sub_element_p = CExtensibleMarkupLanguageElement::NewElement( m_Element_p );
 
       if ( sub_element_p != nullptr )
       {
@@ -1171,7 +1171,7 @@ _Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Write( _In_z_ wch
 
          if ( m_AddNewLineAfterEachElement == true )
          {
-            (void) m_Element_p->AddText( TEXT( "\n" ) );
+             (void)m_Element_p->AddText(WSTRING_VIEW(L"\n"));
          }
 
          CXMLArchive entry_archiver;
@@ -1216,7 +1216,7 @@ _Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Write( _In_z_ wch
       // one location. This way, we get a better chance of tracking down the
       // offending leaker.
 
-      CExtensibleMarkupLanguageElement * sub_element_p = CExtensibleMarkupLanguageElement::NewElement( m_Element_p );
+      auto sub_element_p = CExtensibleMarkupLanguageElement::NewElement( m_Element_p );
 
       if ( sub_element_p != nullptr )
       {
@@ -1231,11 +1231,11 @@ _Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Write( _In_z_ wch
          std::wstring contents( the_time.Format( L"%Y-%m-%dT%H:%M:%SZ") );
 
          sub_element_p->SetTag( tag );
-         (void) sub_element_p->AddText( contents.c_str() );
+         (void) sub_element_p->AddText( contents );
 
          if ( m_AddNewLineAfterEachElement == true )
          {
-            (void) m_Element_p->AddText( L"\n" );
+            (void) m_Element_p->AddText(WSTRING_VIEW(L"\n"));
          }
       }
 
@@ -1269,7 +1269,7 @@ _Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Write( _In_z_ wch
       // one location. This way, we get a better chance of tracking down the
       // offending leaker.
 
-      CExtensibleMarkupLanguageElement * sub_element_p = CExtensibleMarkupLanguageElement::NewElement( m_Element_p );
+      auto sub_element_p = CExtensibleMarkupLanguageElement::NewElement( m_Element_p );
 
       if ( sub_element_p != nullptr )
       {
@@ -1293,11 +1293,11 @@ _Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Write( _In_z_ wch
          }
 
          sub_element_p->SetTag( tag );
-         (void) sub_element_p->AddText( contents.c_str() );
+         (void) sub_element_p->AddText( contents );
 
          if ( m_AddNewLineAfterEachElement == true )
          {
-            (void) m_Element_p->AddText( L"\n" );
+            (void) m_Element_p->AddText(WSTRING_VIEW(L"\n"));
          }
       }
 
@@ -1331,7 +1331,7 @@ _Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Write( _In_z_ wch
       // one location. This way, we get a better chance of tracking down the
       // offending leaker.
 
-      CExtensibleMarkupLanguageElement * sub_element_p = CExtensibleMarkupLanguageElement::NewElement( m_Element_p );
+      auto sub_element_p = CExtensibleMarkupLanguageElement::NewElement( m_Element_p );
 
       if ( sub_element_p != nullptr )
       {
@@ -1342,11 +1342,11 @@ _Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Write( _In_z_ wch
          format( contents, L"%I64u", static_cast<uint64_t>(value.GetTotalSeconds()) );
 
          sub_element_p->SetTag( tag );
-         (void) sub_element_p->AddText( contents.c_str() );
+         (void) sub_element_p->AddText( contents );
 
          if ( m_AddNewLineAfterEachElement == true )
          {
-            (void) m_Element_p->AddText( TEXT( "\n" ) );
+             (void)m_Element_p->AddText(WSTRING_VIEW(L"\n"));
          }
       }
 
@@ -1380,7 +1380,7 @@ _Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Write( _In_z_ wch
       // one location. This way, we get a better chance of tracking down the
       // offending leaker.
 
-      CExtensibleMarkupLanguageElement * sub_element_p = CExtensibleMarkupLanguageElement::NewElement( m_Element_p );
+      auto sub_element_p = CExtensibleMarkupLanguageElement::NewElement( m_Element_p );
 
       if ( sub_element_p != nullptr )
       {
@@ -1419,11 +1419,11 @@ _Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Write( _In_z_ wch
          }
 
          sub_element_p->SetTag( tag );
-         (void) sub_element_p->AddText( contents.c_str() );
+         (void) sub_element_p->AddText( contents );
 
          if ( m_AddNewLineAfterEachElement == true )
          {
-            (void) m_Element_p->AddText( TEXT( "\n" ) );
+             (void)m_Element_p->AddText(WSTRING_VIEW(L"\n"));
          }
       }
 
@@ -1457,7 +1457,7 @@ _Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Write( _In_z_ wch
       // one location. This way, we get a better chance of tracking down the
       // offending leaker.
 
-      CExtensibleMarkupLanguageElement * sub_element_p = CExtensibleMarkupLanguageElement::NewElement( m_Element_p );
+      auto sub_element_p = CExtensibleMarkupLanguageElement::NewElement( m_Element_p );
 
       if ( sub_element_p != nullptr )
       {
@@ -1468,11 +1468,11 @@ _Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Write( _In_z_ wch
          format( contents, L"%lu", value );
 
          sub_element_p->SetTag( tag );
-         (void) sub_element_p->AddText( contents.c_str() );
+         (void) sub_element_p->AddText( contents );
 
          if ( m_AddNewLineAfterEachElement == true )
          {
-            (void) m_Element_p->AddText( TEXT( "\n" ) );
+             (void)m_Element_p->AddText(WSTRING_VIEW(L"\n"));
          }
       }
 
@@ -1505,7 +1505,7 @@ _Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Write( _In_z_ wch
       // one location. This way, we get a better chance of tracking down the
       // offending leaker.
 
-      CExtensibleMarkupLanguageElement * sub_element_p = CExtensibleMarkupLanguageElement::NewElement( m_Element_p );
+      auto sub_element_p = CExtensibleMarkupLanguageElement::NewElement( m_Element_p );
 
       if ( sub_element_p != nullptr )
       {
@@ -1516,11 +1516,11 @@ _Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Write( _In_z_ wch
          format( contents, L"%I64d", value );
 
          sub_element_p->SetTag( tag );
-         (void) sub_element_p->AddText( contents.c_str() );
+         (void) sub_element_p->AddText( contents );
 
          if ( m_AddNewLineAfterEachElement == true )
          {
-            (void) m_Element_p->AddText( TEXT( "\n" ) );
+             (void)m_Element_p->AddText(WSTRING_VIEW(L"\n"));
          }
       }
 
@@ -1554,7 +1554,7 @@ _Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Write( _In_z_ wch
       // one location. This way, we get a better chance of tracking down the
       // offending leaker.
 
-      CExtensibleMarkupLanguageElement * sub_element_p = CExtensibleMarkupLanguageElement::NewElement( m_Element_p );
+      auto sub_element_p = CExtensibleMarkupLanguageElement::NewElement( m_Element_p );
 
       if ( sub_element_p != nullptr )
       {
@@ -1565,11 +1565,11 @@ _Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Write( _In_z_ wch
          format( contents, L"%I64u", value );
 
          sub_element_p->SetTag( tag );
-         (void) sub_element_p->AddText( contents.c_str() );
+         (void) sub_element_p->AddText( contents );
 
          if ( m_AddNewLineAfterEachElement == true )
          {
-            (void) m_Element_p->AddText( TEXT( "\n" ) );
+             (void)m_Element_p->AddText(WSTRING_VIEW(L"\n"));
          }
       }
 

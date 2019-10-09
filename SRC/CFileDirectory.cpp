@@ -465,7 +465,7 @@ void PASCAL __wide_read_recursively(_In_ std::wstring const& directory_name, _In
     }
 }
 
-static _Check_return_ bool PASCAL __wide_read_recursively(_In_ std::wstring const& directory_name, _In_ std::wstring const& wildcard, _In_ BOOL const include_directories, __callback WIDE_FILE_ACTION_FUNCTION action_to_take, __in void * action_parameter)
+static _Check_return_ bool PASCAL __wide_read_recursively(_In_ std::wstring const& directory_name, _In_ std::wstring const& wildcard, _In_ bool const include_directories, __callback WIDE_FILE_ACTION_FUNCTION action_to_take, __in void * action_parameter)
 {
     WFC_VALIDATE_POINTER(action_to_take);
 

@@ -64,7 +64,7 @@ _Check_return_ bool PASCAL Win32FoundationClasses::wfc_set_activex_servers( __in
 
       if ( temp_string.empty() == false )
       {
-         if ( compare_no_case( temp_string, L"CODEBASE" ) == I_AM_EQUAL_TO_THAT )
+         if ( compare_no_case( temp_string, WSTRING_VIEW(L"CODEBASE")) == I_AM_EQUAL_TO_THAT )
          {
             // This is the evil CODEBASE setting. It means your computer is
             // wide open to downloading malicious ActiveX controls

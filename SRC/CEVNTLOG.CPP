@@ -225,7 +225,7 @@ _Check_return_ bool CEventLog::CreateApplicationLog( __in_z wchar_t const * appl
          return( false );
       }
 
-      std::wstring log_key_name( L"SYSTEM\\CurrentControlSet\\Services\\EventLog\\Application\\" );
+      std::wstring log_key_name(WSTRING_VIEW(L"SYSTEM\\CurrentControlSet\\Services\\EventLog\\Application\\"));
 
       log_key_name.append( application_name );
 
@@ -347,7 +347,7 @@ _Check_return_ bool CEventLog::CreateCustomLog( __in_z LPCTSTR log_name_paramete
          return( false );
       }
 
-      std::wstring log_key_name( L"SYSTEM\\CurrentControlSet\\Services\\EventLog\\" );
+      std::wstring log_key_name(WSTRING_VIEW(L"SYSTEM\\CurrentControlSet\\Services\\EventLog\\"));
 
       log_key_name.append( log_name );
 
@@ -415,9 +415,9 @@ _Check_return_ bool CEventLog::Delete( _In_z_ wchar_t const * log_name ) noexcep
       // really sure they want to do this. By using ASSERT, Visual C++ will
       // popup an Abort, Retry, or Ignore window.
 
-      ASSERT( compare_no_case( log_to_delete, L"Application" ) != I_AM_EQUAL_TO_THAT );
-      ASSERT( compare_no_case( log_to_delete, L"Security"    ) != I_AM_EQUAL_TO_THAT );
-      ASSERT( compare_no_case( log_to_delete, L"System"      ) != I_AM_EQUAL_TO_THAT );
+      ASSERT( compare_no_case( log_to_delete, WSTRING_VIEW(L"Application") ) != I_AM_EQUAL_TO_THAT );
+      ASSERT( compare_no_case( log_to_delete, WSTRING_VIEW(L"Security")    ) != I_AM_EQUAL_TO_THAT );
+      ASSERT( compare_no_case( log_to_delete, WSTRING_VIEW(L"System")      ) != I_AM_EQUAL_TO_THAT );
 
       CRegistry registry;
 

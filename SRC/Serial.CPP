@@ -1047,7 +1047,7 @@ _Check_return_ bool CSerialFile::Open( void ) noexcept
    // but someone cried until it was hacked to take "COMx:". It sure looks like
    // a compromise to me.
 
-   std::wstring com_port_name( L"\\\\.\\" );
+   std::wstring com_port_name(WSTRING_VIEW(L"\\\\.\\"));
 
    std::size_t index = 0;
    std::size_t string_length = Name.length();

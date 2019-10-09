@@ -813,18 +813,16 @@ inline _Check_return_ bool starts_with(_In_ std::string const& s, _In_ char cons
     return((beginning == character) ? true : false);
 }
 
-inline _Check_return_ bool starts_with(_In_ std::string const& s, _In_z_ char const* beginning, _In_ std::size_t const number_of_characters_in_beginning) noexcept
+inline _Check_return_ bool starts_with(_In_ std::string_view s, _In_z_ char const* beginning, _In_ std::size_t const number_of_characters_in_beginning) noexcept
 {
     if (beginning == nullptr || number_of_characters_in_beginning < 1 || number_of_characters_in_beginning > s.length())
     {
         return(false);
     }
 
-    auto our_string = s.c_str();
-
     for (auto const loop_index : Range(number_of_characters_in_beginning))
     {
-        if (our_string[loop_index] != beginning[loop_index])
+        if (s[loop_index] != beginning[loop_index])
         {
             return(false);
         }
@@ -843,6 +841,11 @@ inline _Check_return_ bool starts_with(_In_ std::string const& s, _In_ std::stri
     return(starts_with(s, beginning.c_str(), beginning.length()));
 }
 
+inline _Check_return_ bool starts_with(_In_ std::string_view s, _In_ std::string_view beginning) noexcept
+{
+    return(starts_with(s, beginning.data(), beginning.length()));
+}
+
 inline _Check_return_ bool starts_with(_In_ std::wstring const& s, _In_ wchar_t const beginning) noexcept
 {
     if (s.empty() == true)
@@ -853,26 +856,6 @@ inline _Check_return_ bool starts_with(_In_ std::wstring const& s, _In_ wchar_t 
     auto character = s.at(0);
 
     return((beginning == character) ? true : false);
-}
-
-inline _Check_return_ bool starts_with(_In_ std::wstring const& s, _In_z_ wchar_t const* beginning, _In_ std::size_t const number_of_characters_in_beginning) noexcept
-{
-    if (beginning == nullptr || number_of_characters_in_beginning < 1 || number_of_characters_in_beginning > s.length())
-    {
-        return(false);
-    }
-
-    auto our_string = s.c_str();
-
-    for (auto const loop_index : Range(number_of_characters_in_beginning))
-    {
-        if (our_string[loop_index] != beginning[loop_index])
-        {
-            return(false);
-        }
-    }
-
-    return(true);
 }
 
 inline _Check_return_ bool starts_with(_In_ std::wstring_view s, _In_z_ wchar_t const* beginning, _In_ std::size_t const number_of_characters_in_beginning) noexcept
@@ -903,6 +886,11 @@ inline _Check_return_ bool starts_with(_In_ std::wstring const& s, _In_ std::wst
     return(starts_with(s, beginning.c_str(), beginning.length()));
 }
 
+inline _Check_return_ bool starts_with(_In_ std::wstring_view s, _In_ std::wstring_view beginning) noexcept
+{
+    return(starts_with(s, beginning.data(), beginning.length()));
+}
+
 inline _Check_return_ bool starts_with_no_case(_In_ std::wstring const& s, _In_z_ wchar_t const* beginning, _In_ std::size_t const number_of_characters_in_beginning) noexcept
 {
     if (beginning == nullptr || number_of_characters_in_beginning < 1 || number_of_characters_in_beginning > s.length())
@@ -912,13 +900,10 @@ inline _Check_return_ bool starts_with_no_case(_In_ std::wstring const& s, _In_z
 
     auto our_string = s.c_str();
 
-    wchar_t this_character = 0;
-    wchar_t that_character = 0;
-
     for (auto const loop_index : Range(number_of_characters_in_beginning))
     {
-        this_character = wfc_to_upper(our_string[loop_index]);
-        that_character = wfc_to_upper(beginning[loop_index]);
+        auto this_character = wfc_to_upper(our_string[loop_index]);
+        auto that_character = wfc_to_upper(beginning[loop_index]);
 
         if (this_character != that_character)
         {
@@ -938,13 +923,10 @@ inline _Check_return_ bool starts_with_no_case(_In_ std::string const& s, _In_z_
 
     auto our_string = s.c_str();
 
-    wchar_t this_character = 0;
-    wchar_t that_character = 0;
-
     for (auto const loop_index : Range(number_of_characters_in_beginning))
     {
-        this_character = wfc_to_upper(our_string[loop_index]);
-        that_character = wfc_to_upper(beginning[loop_index]);
+        auto this_character = wfc_to_upper(our_string[loop_index]);
+        auto that_character = wfc_to_upper(beginning[loop_index]);
 
         if (this_character != that_character)
         {
@@ -970,20 +952,28 @@ inline _Check_return_ bool starts_with_no_case(_In_ std::wstring const& s, _In_ 
     return(starts_with_no_case(s, beginning.c_str(), beginning.length()));
 }
 
+inline _Check_return_ bool starts_with_no_case(_In_ std::wstring const& s, _In_ std::wstring_view beginning) noexcept
+{
+    return(starts_with_no_case(s, beginning.data(), beginning.length()));
+}
+
 inline _Check_return_ bool starts_with_no_case(_In_ std::string const& s, _In_ std::string const& beginning) noexcept
 {
     return(starts_with_no_case(s, beginning.c_str(), beginning.length()));
+}
+
+inline _Check_return_ bool starts_with_no_case(_In_ std::string const& s, _In_ std::string_view beginning) noexcept
+{
+    return(starts_with_no_case(s, beginning.data(), beginning.length()));
 }
 
 inline _Check_return_ std::size_t number_of_decimal_digits(_In_ std::wstring const& s) noexcept
 {
     std::size_t return_value = 0;
 
-    wchar_t this_character = 0;
-
     for (auto const character_index : Range(s.length()))
     {
-        this_character = s.at(character_index);
+        auto const this_character = s.at(character_index);
 
         if (this_character >= '0' && this_character <= '9')
         {
@@ -1000,7 +990,7 @@ inline _Check_return_ std::size_t number_of_decimal_digits(_In_ std::string cons
 
     for (auto const character_index : Range(s.length()))
     {
-        wchar_t const this_character = s.at(character_index);
+        auto const this_character = s.at(character_index);
 
         if (this_character >= '0' && this_character <= '9')
         {
@@ -1015,11 +1005,9 @@ inline _Check_return_ std::size_t number_of_hex_digits(_In_ std::wstring const& 
 {
     std::size_t return_value = 0;
 
-    wchar_t this_character = 0;
-
     for (auto const character_index : Range(s.length()))
     {
-        this_character = s.at(character_index);
+        auto this_character = s.at(character_index);
 
         if (WFC_IS_HEXADECIMAL(this_character))
         {
@@ -1034,11 +1022,9 @@ inline _Check_return_ std::size_t number_of_lower_case_letters_AZ(_In_ std::wstr
 {
     std::size_t return_value = 0;
 
-    wchar_t this_character = 0;
-
     for (auto const character_index : Range(s.length()))
     {
-        this_character = s.at(character_index);
+        auto this_character = s.at(character_index);
 
         if (this_character >= 'a' && this_character <= 'z')
         {
@@ -1053,11 +1039,9 @@ inline _Check_return_ std::size_t number_of_upper_case_letters_AZ(_In_ std::wstr
 {
     std::size_t return_value = 0;
 
-    wchar_t this_character = 0;
-
     for (auto const character_index : Range(s.length()))
     {
-        this_character = s.at(character_index);
+        auto this_character = s.at(character_index);
 
         if (this_character >= 'A' && this_character <= 'Z')
         {
@@ -1243,7 +1227,7 @@ inline _Check_return_ int64_t as_integer(_In_ std::wstring const& s) noexcept
 
     trim(value);
 
-    if (starts_with_no_case(value, L"0x", 2) == true)
+    if (starts_with_no_case(value, WSTRING_VIEW(L"0x")) == true)
     {
         radix = 16;
         value.erase(0, 2);
@@ -1285,7 +1269,7 @@ inline _Check_return_ uint64_t as_unsigned_integer(_In_ std::wstring const& s) n
 
     trim(value);
 
-    if (starts_with_no_case(value, L"0x", 2) == true)
+    if (starts_with_no_case(value, WSTRING_VIEW(L"0x")) == true)
     {
         radix = 16;
         value.erase(0, 2);

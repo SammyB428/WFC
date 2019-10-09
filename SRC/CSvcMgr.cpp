@@ -637,7 +637,7 @@ _Check_return_ bool CServiceControlManager::Install( __in_z wchar_t const * serv
 
             if ( normalized_executable_name.at( 0 ) != '\"' )
             {
-                std::wstring new_name( L"\"" );
+                std::wstring new_name( WSTRING_VIEW(L"\"") );
 
                 new_name.append( normalized_executable_name );
                 normalized_executable_name.assign( new_name );

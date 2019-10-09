@@ -928,7 +928,7 @@ void CNetworkUserInformation::SetAddDefaults( void ) noexcept
    FullName.assign(Name);
    MaximumStorage      = USER_MAXSTORAGE_UNLIMITED;
    Privileges          = privilegeUser;
-   UserComment.assign( L"Added by WFC" );
+   UserComment.assign(WSTRING_VIEW(L"Added by WFC"));
 
    Parameters.clear();
    Workstations.clear();

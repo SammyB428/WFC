@@ -214,7 +214,7 @@ _Check_return_ bool CNamedPipe::Create( __in_z LPCTSTR server_name,
       return( false );
    }
 
-   m_PipeName.assign( L"\\\\" );
+   m_PipeName.assign(WSTRING_VIEW(L"\\\\"));
 
    if ( server_name == nullptr )
    {
@@ -358,11 +358,11 @@ _Check_return_ bool CNamedPipe::Open( __in_z LPCTSTR pipe_name, __in UINT const)
       unc.ServerName.assign( L"." );
    }
 
-   if ( compare_no_case( unc.ShareName, L"PIPE" ) != I_AM_EQUAL_TO_THAT )
+   if ( compare_no_case( unc.ShareName, WSTRING_VIEW(L"PIPE") ) != I_AM_EQUAL_TO_THAT )
    {
       std::wstring temp_string = unc.ShareName;
 
-      unc.ShareName.assign( L"PIPE" );
+      unc.ShareName.assign(WSTRING_VIEW(L"PIPE"));
 
       if ( temp_string.empty() == false )
       {
@@ -478,7 +478,7 @@ _Check_return_ bool CNamedPipe::Wait( __in_z_opt LPCTSTR name_of_server, __in_z 
       return( false );
    }
 
-   std::wstring full_pipe_name( L"\\\\" ); // like \\servername\pipe\pipename
+   std::wstring full_pipe_name(WSTRING_VIEW(L"\\\\")); // like \\servername\pipe\pipename
 
    if ( name_of_server == nullptr )
    {

@@ -153,7 +153,7 @@ _Check_return_ uint32_t PASCAL Win32FoundationClasses::wfc_number_of_files_in_di
     {
         filename.assign( find_data.cFileName );
 
-        if ( filename.compare( L"." ) != I_AM_EQUAL_TO_THAT &&  filename.compare( L".." ) != I_AM_EQUAL_TO_THAT)
+        if ( filename.compare(WSTRING_VIEW(L".")) != I_AM_EQUAL_TO_THAT &&  filename.compare(WSTRING_VIEW(L"..")) != I_AM_EQUAL_TO_THAT)
         {
             number_of_files++;
         }
@@ -162,7 +162,7 @@ _Check_return_ uint32_t PASCAL Win32FoundationClasses::wfc_number_of_files_in_di
         {
             filename.assign( find_data.cFileName );
 
-            if ( filename.compare( L"." ) != I_AM_EQUAL_TO_THAT &&  filename.compare( L".." ) != I_AM_EQUAL_TO_THAT)
+            if ( filename.compare(WSTRING_VIEW(L".")) != I_AM_EQUAL_TO_THAT &&  filename.compare(WSTRING_VIEW(L"..")) != I_AM_EQUAL_TO_THAT)
             {
                 number_of_files++;
             }
@@ -204,7 +204,7 @@ _Check_return_ uint64_t PASCAL Win32FoundationClasses::wfc_number_of_bytes_in_di
     {
         filename.assign( find_data.cFileName );
 
-        if ( filename.compare( L"." ) != I_AM_EQUAL_TO_THAT &&  filename.compare( L".." ) != I_AM_EQUAL_TO_THAT)
+        if ( filename.compare(WSTRING_VIEW(L".")) != I_AM_EQUAL_TO_THAT &&  filename.compare(WSTRING_VIEW(L"..")) != I_AM_EQUAL_TO_THAT)
         {
             large_integer.HighPart = find_data.nFileSizeHigh;
             large_integer.LowPart  = find_data.nFileSizeLow;
@@ -216,7 +216,7 @@ _Check_return_ uint64_t PASCAL Win32FoundationClasses::wfc_number_of_bytes_in_di
         {
             filename.assign( find_data.cFileName );
 
-            if ( filename.compare( L"." ) != I_AM_EQUAL_TO_THAT &&  filename.compare( L".." ) != I_AM_EQUAL_TO_THAT)
+            if ( filename.compare(WSTRING_VIEW(L".")) != I_AM_EQUAL_TO_THAT &&  filename.compare(WSTRING_VIEW(L"..")) != I_AM_EQUAL_TO_THAT)
             {
                 large_integer.HighPart = find_data.nFileSizeHigh;
                 large_integer.LowPart  = find_data.nFileSizeLow;

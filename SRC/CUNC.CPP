@@ -180,7 +180,7 @@ void CUniversalNamingConvention::Copy( __in_z LPCTSTR source ) noexcept
 
       std::wstring temp_string( source );
 
-      if ( temp_string.length() < 2 || temp_string.substr( 0, 2 ).compare(L"\\\\") != I_AM_EQUAL_TO_THAT )
+      if ( temp_string.length() < 2 || temp_string.substr( 0, 2 ).compare(WSTRING_VIEW(L"\\\\")) != I_AM_EQUAL_TO_THAT )
       {
          PathName.assign( temp_string );
          Make();
