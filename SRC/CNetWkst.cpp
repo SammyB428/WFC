@@ -556,17 +556,17 @@ _Check_return_ bool CNetWorkstation::EnumerateInformation( void ) noexcept
       {
          m_ErrorCode = ::NetWkstaGetInfo( (LMSTR) m_WideMachineName.get(), 100, (LPBYTE *) &m_InformationBuffer100 );
 
-         if ( m_ErrorCode != NERR_Success || m_InformationBuffer100 == nullptr )
+         if ( m_ErrorCode != NERR_Success or m_InformationBuffer100 == nullptr )
          {
             return( false );
          }
       }
-      else if ( m_ErrorCode != NERR_Success || m_InformationBuffer101 == nullptr )
+      else if ( m_ErrorCode != NERR_Success or m_InformationBuffer101 == nullptr )
       {
          return( false );
       }
    }
-   else if ( m_ErrorCode != NERR_Success || m_InformationBuffer102 == nullptr )
+   else if ( m_ErrorCode != NERR_Success or m_InformationBuffer102 == nullptr )
    {
       return( false );
    }
@@ -597,7 +597,7 @@ _Check_return_ bool CNetWorkstation::EnumerateTransports( void ) noexcept
                                                  &m_TransportTotalNumberOfEntries,
                                                  &m_TransportResumeHandle );
 
-   if ( m_ErrorCode != NERR_Success || m_TransportBuffer == nullptr || m_TransportNumberOfEntriesRead == 0 )
+   if ( m_ErrorCode != NERR_Success or m_TransportBuffer == nullptr or m_TransportNumberOfEntriesRead == 0 )
    {
       return( false );
    }
@@ -628,7 +628,7 @@ _Check_return_ bool CNetWorkstation::EnumerateUsers( void ) noexcept
                                     &m_UserTotalNumberOfEntries,
                                     &m_UserResumeHandle );
 
-   if ( m_ErrorCode != NERR_Success || m_UserBuffer == nullptr || m_UserNumberOfEntriesRead == 0 )
+   if ( m_ErrorCode != NERR_Success or m_UserBuffer == nullptr or m_UserNumberOfEntriesRead == 0 )
    {
       return( false );
    }
@@ -644,7 +644,7 @@ _Check_return_ bool CNetWorkstation::GetCurrentUser( __inout CWorkstationUser& i
 
    m_ErrorCode = ::NetWkstaUserGetInfo( nullptr, 1, (LPBYTE *) &buffer );
 
-   if ( m_ErrorCode != NERR_Success || buffer == nullptr )
+   if ( m_ErrorCode != NERR_Success or buffer == nullptr )
    {
       information.Empty();
       return( false );

@@ -146,7 +146,7 @@ _Check_return_ DWORD CDummyFile::m_CreateCreationDistribution( void ) const noex
 _Check_return_ DWORD CDummyFile::m_CreateDesiredAccess( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
-   return( GENERIC_READ | GENERIC_WRITE );
+   return( GENERIC_READ bitor GENERIC_WRITE );
 }
 
 _Check_return_ DWORD CDummyFile::m_CreateFlagsAndAttributes( void ) const noexcept

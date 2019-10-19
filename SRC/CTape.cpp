@@ -369,7 +369,7 @@ void CTapeGetDriveParameters::Dump( CDumpContext& dump_context ) const
 
    DWORD features_high = FeaturesHigh;
 
-   features_high |= TAPE_DRIVE_HIGH_FEATURES;
+   features_high or_eq TAPE_DRIVE_HIGH_FEATURES;
 
    temp_string.Empty();
 
@@ -1088,7 +1088,7 @@ _Check_return_ bool CTape::Open( __in UINT const tape_drive_number_starting_at_z
    _stprintf_s( tape_drive_name, std::size( tape_drive_name ), TEXT( "\\\\.\\TAPE%u" ), tape_drive_number_starting_at_zero );
 
    HANDLE const file_handle = ::CreateFile( tape_drive_name,
-                               GENERIC_READ | GENERIC_WRITE,
+                               GENERIC_READ bitor GENERIC_WRITE,
                                0,
                                nullptr,
                                OPEN_EXISTING,

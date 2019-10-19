@@ -243,7 +243,7 @@ void CEventLogRecord::Copy( _In_ EVENTLOGRECORD  const * source ) noexcept
 
          // Advance to the next string
 
-         if ( *character_pointer == 0 && ( ( number_of_strings + 1 ) < source->NumStrings ) )
+         if ( *character_pointer == 0 and ( ( number_of_strings + 1 ) < source->NumStrings ) )
          {
             while( *character_pointer == 0 )
             {

@@ -326,7 +326,7 @@ void CSystemTime::CopyTo( __out CTime& destination ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
-   if ( wYear > 1969 && wYear < 2038 )
+   if ( wYear > 1969 and wYear < 2038 )
    {
       destination = CTime( wYear, wMonth, wDay, wHour, wMinute, wSecond );
    }
@@ -446,7 +446,7 @@ _Check_return_ bool CSystemTime::Set( void ) const noexcept
 
       DWORD error_code = 0;
 
-      if ( ::OpenProcessToken( ::GetCurrentProcess(), TOKEN_ADJUST_PRIVILEGES | TOKEN_QUERY, &token_handle ) == FALSE )
+      if ( ::OpenProcessToken( ::GetCurrentProcess(), TOKEN_ADJUST_PRIVILEGES bitor TOKEN_QUERY, &token_handle ) == FALSE )
       {
          error_code = ::GetLastError();
          //WFCTRACEERROR( error_code );
@@ -609,7 +609,7 @@ void CSystemTime::Dump( CDumpContext& dump_context ) const
    dump_context << TEXT( "   wYear is  " ) << wYear << TEXT( "\n" );
    dump_context << TEXT( "   wMonth is " ) << wMonth;
 
-   if ( wMonth > 0 && wMonth < 13 )
+   if ( wMonth > 0 and wMonth < 13 )
    {
       dump_context << TEXT( " " ) << months[ wMonth - 1 ] << TEXT( "\n" );
    }

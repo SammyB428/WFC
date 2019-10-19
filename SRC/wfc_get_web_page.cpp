@@ -263,7 +263,7 @@ void PASCAL Win32FoundationClasses::wfc_get_web_page( __in CUniformResourceLocat
         (DWORD) bytes_read_in_this_chunk.size(),
         &number_of_bytes_read );
 
-    while( return_value != FALSE && number_of_bytes_read > 0 )
+    while( return_value != FALSE and number_of_bytes_read > 0 )
     {
         bytes_read_in_this_chunk.resize( number_of_bytes_read );
         page_contents.insert( std::end(page_contents), std::cbegin(bytes_read_in_this_chunk), std::cend(bytes_read_in_this_chunk));

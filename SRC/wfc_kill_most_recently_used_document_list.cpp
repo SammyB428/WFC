@@ -62,7 +62,7 @@ _Check_return_ bool PASCAL Win32FoundationClasses::wfc_kill_most_recently_used_d
    }
 
    if ( registry.Open( L"Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\RecentDocs",
-      (CRegistry::CreatePermissions)( CRegistry::permissionRead | CRegistry::permissionSetValue | CRegistry::permissionWrite ) ) == FALSE )
+      (CRegistry::CreatePermissions)( CRegistry::permissionRead bitor CRegistry::permissionSetValue bitor CRegistry::permissionWrite ) ) == FALSE )
    {
       //WFCTRACEERROR( registry.GetErrorCode() );
       return( false );

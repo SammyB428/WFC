@@ -91,7 +91,7 @@ void PASCAL Win32FoundationClasses::wfc_read_string_array(_In_ wchar_t const * c
     // Always start with a virgin array
     string_array.clear();
 
-    if (buffer == nullptr || number_of_characters < 1)
+    if (buffer == nullptr or number_of_characters < 1)
     {
         return;
     }

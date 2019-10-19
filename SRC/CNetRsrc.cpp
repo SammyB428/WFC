@@ -134,7 +134,7 @@ _Check_return_ bool CNetworkResources::Enumerate( __inout CNetworkResourceInform
 
       case usageConnectable:
       case usageContainer:
-      case usageConnectable | usageContainer:
+      case usageConnectable bitor usageContainer:
 
          net_resource_parameter = &m_NetResource;
          break;

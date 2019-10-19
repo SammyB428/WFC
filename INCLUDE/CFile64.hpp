@@ -324,25 +324,25 @@ class CFile64
 // Open the file for reading, deny none, allow deleting
 inline constexpr _Check_return_ UINT read_file_open_mode(void) noexcept
 {
-    return(static_cast<UINT>(static_cast<UINT>(CFile64::OpenFlags::modeRead) | static_cast<UINT>(CFile64::OpenFlags::shareDenyNone) | static_cast<UINT>(CFile64::OpenFlags::shareAllowDelete)));
+    return(static_cast<UINT>(static_cast<UINT>(CFile64::OpenFlags::modeRead) bitor static_cast<UINT>(CFile64::OpenFlags::shareDenyNone) bitor static_cast<UINT>(CFile64::OpenFlags::shareAllowDelete)));
 }
 
 // Create the file for writing, deny writes, allow deleting
 inline constexpr _Check_return_ UINT create_for_writing(void) noexcept
 {
-    return(static_cast<UINT>(static_cast<UINT>(CFile64::OpenFlags::modeCreate) | static_cast<UINT>(CFile64::OpenFlags::modeWrite) | static_cast<UINT>(CFile64::OpenFlags::shareAllowDelete) | static_cast<UINT>(CFile64::OpenFlags::shareDenyWrite)));
+    return(static_cast<UINT>(static_cast<UINT>(CFile64::OpenFlags::modeCreate) | static_cast<UINT>(CFile64::OpenFlags::modeWrite) bitor static_cast<UINT>(CFile64::OpenFlags::shareAllowDelete) bitor static_cast<UINT>(CFile64::OpenFlags::shareDenyWrite)));
 }
 
 // Open the file for reading, deny none and delete on close
 inline constexpr _Check_return_ UINT read_delete_on_close(void) noexcept
 {
-    return(read_file_open_mode() | static_cast<UINT>(CFile64::OpenFlags::wfcDeleteOnClose));
+    return(read_file_open_mode() bitor static_cast<UINT>(CFile64::OpenFlags::wfcDeleteOnClose));
 }
 
 // Create a readwrite file that will be deleted when it is closed
 inline constexpr _Check_return_ UINT create_temporary_delete_on_close(void) noexcept
 {
-    return(static_cast<UINT>(static_cast<UINT>(CFile64::OpenFlags::modeCreate) | static_cast<UINT>(CFile64::OpenFlags::modeReadWrite) | static_cast<UINT>(CFile64::OpenFlags::wfcDeleteOnClose) | static_cast<UINT>(CFile64::OpenFlags::shareDenyNone) | static_cast<UINT>(CFile64::OpenFlags::shareAllowDelete)));
+    return(static_cast<UINT>(static_cast<UINT>(CFile64::OpenFlags::modeCreate) bitor static_cast<UINT>(CFile64::OpenFlags::modeReadWrite) bitor static_cast<UINT>(CFile64::OpenFlags::wfcDeleteOnClose) bitor static_cast<UINT>(CFile64::OpenFlags::shareDenyNone) bitor static_cast<UINT>(CFile64::OpenFlags::shareAllowDelete)));
 }
 
 #endif // FILE_64_CLASS_HEADER

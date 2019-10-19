@@ -78,7 +78,7 @@ _Check_return_ bool CFileDirectory::Open(_In_z_ wchar_t const * const directory_
 
     if (m_Name.empty() == false)
     {
-        if (ends_with( m_Name, '/') == false &&
+        if (ends_with( m_Name, '/') == false and
             ends_with( m_Name, '\\') == false )
         {
             m_Name.push_back('/');
@@ -296,7 +296,7 @@ static void PASCAL __read_recursively(__in std::wstring const& directory_name, _
         return;
     }
 
-    if (ends_with( parameters_p->directory_to_open, '/' ) == false &&
+    if (ends_with( parameters_p->directory_to_open, '/' ) == false and
         ends_with( parameters_p->directory_to_open, '\\') == false )
     {
         parameters_p->directory_to_open.push_back('/');
@@ -311,8 +311,8 @@ static void PASCAL __read_recursively(__in std::wstring const& directory_name, _
     {
         if (parameters_p->find_data.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)
         {
-            if (_tcscmp(parameters_p->find_data.cFileName, TEXT(".")) == 0 ||
-                _tcscmp(parameters_p->find_data.cFileName, TEXT("..")) == 0)
+            if (_tcscmp(parameters_p->find_data.cFileName, TEXT(".")) == I_AM_EQUAL_TO_THAT or
+                _tcscmp(parameters_p->find_data.cFileName, TEXT("..")) == I_AM_EQUAL_TO_THAT)
             {
                 // Do nothing, to do something would cause infinite recursion and that is a bad thing
             }
@@ -336,8 +336,8 @@ static void PASCAL __read_recursively(__in std::wstring const& directory_name, _
         {
             if (parameters_p->find_data.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)
             {
-                if (_tcscmp(parameters_p->find_data.cFileName, TEXT(".")) == 0 ||
-                    _tcscmp(parameters_p->find_data.cFileName, TEXT("..")) == 0)
+                if (_tcscmp(parameters_p->find_data.cFileName, TEXT(".")) == I_AM_EQUAL_TO_THAT or
+                    _tcscmp(parameters_p->find_data.cFileName, TEXT("..")) == I_AM_EQUAL_TO_THAT)
                 {
                     // Do nothing, to do something would cause infinite recursion and that is a bad thing
                 }
@@ -392,7 +392,7 @@ void PASCAL __wide_read_recursively(_In_ std::wstring const& directory_name, _In
         return;
     }
 
-    if (ends_with(parameters_p->directory_to_open, '/') == false &&
+    if (ends_with(parameters_p->directory_to_open, '/') == false and
         ends_with(parameters_p->directory_to_open, '\\' ) == false )
     {
         parameters_p->directory_to_open.push_back('/');
@@ -408,8 +408,8 @@ void PASCAL __wide_read_recursively(_In_ std::wstring const& directory_name, _In
     {
         if (parameters_p->find_data.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)
         {
-            if (wcscmp(parameters_p->find_data.cFileName, L".") == 0 ||
-                wcscmp(parameters_p->find_data.cFileName, L"..") == 0)
+            if (wcscmp(parameters_p->find_data.cFileName, L".") == I_AM_EQUAL_TO_THAT or
+                wcscmp(parameters_p->find_data.cFileName, L"..") == I_AM_EQUAL_TO_THAT)
             {
                 // Do nothing, to do something would cause infinite recursion and that is a bad thing
             }
@@ -433,8 +433,8 @@ void PASCAL __wide_read_recursively(_In_ std::wstring const& directory_name, _In
         {
             if (parameters_p->find_data.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)
             {
-                if (wcscmp(parameters_p->find_data.cFileName, L".") == 0 ||
-                    wcscmp(parameters_p->find_data.cFileName, L"..") == 0)
+                if (wcscmp(parameters_p->find_data.cFileName, L".") == I_AM_EQUAL_TO_THAT or
+                    wcscmp(parameters_p->find_data.cFileName, L"..") == I_AM_EQUAL_TO_THAT)
                 {
                     // Do nothing, to do something would cause infinite recursion and that is a bad thing
                 }
@@ -480,7 +480,7 @@ static _Check_return_ bool PASCAL __wide_read_recursively(_In_ std::wstring cons
         return(false);
     }
 
-    if (ends_with( parameters_p->directory_to_open, '/' ) == false &&
+    if (ends_with( parameters_p->directory_to_open, '/' ) == false and
         ends_with( parameters_p->directory_to_open, '\\') == false )
     {
         parameters_p->directory_to_open.push_back('/');
@@ -495,8 +495,8 @@ static _Check_return_ bool PASCAL __wide_read_recursively(_In_ std::wstring cons
     {
         if (parameters_p->find_data.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)
         {
-            if (wcscmp(parameters_p->find_data.cFileName, L".") == 0 ||
-                wcscmp(parameters_p->find_data.cFileName, L"..") == 0)
+            if (wcscmp(parameters_p->find_data.cFileName, L".") == I_AM_EQUAL_TO_THAT or
+                wcscmp(parameters_p->find_data.cFileName, L"..") == I_AM_EQUAL_TO_THAT)
             {
                 // Do nothing, to do something would cause infinite recursion and that is a bad thing
             }
@@ -565,8 +565,8 @@ static _Check_return_ bool PASCAL __wide_read_recursively(_In_ std::wstring cons
         {
             if (parameters_p->find_data.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)
             {
-                if (wcscmp(parameters_p->find_data.cFileName, L".") == 0 ||
-                    wcscmp(parameters_p->find_data.cFileName, L"..") == 0)
+                if (wcscmp(parameters_p->find_data.cFileName, L".") == I_AM_EQUAL_TO_THAT or
+                    wcscmp(parameters_p->find_data.cFileName, L"..") == I_AM_EQUAL_TO_THAT)
                 {
                     // Do nothing, to do something would cause infinite recursion and that is a bad thing
                 }
@@ -667,8 +667,8 @@ _Check_return_ bool CFileDirectory::ReadRecursively(__callback WIDE_FILE_ACTION_
 
         if (find_data.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)
         {
-            if (::_tcscmp(find_data.cFileName, TEXT(".")) == 0 ||
-                ::_tcscmp(find_data.cFileName, TEXT("..")) == 0)
+            if (::_tcscmp(find_data.cFileName, TEXT(".")) == I_AM_EQUAL_TO_THAT or
+                ::_tcscmp(find_data.cFileName, TEXT("..")) == I_AM_EQUAL_TO_THAT)
             {
                 // Avoid infinite recursion here.
             }
@@ -736,8 +736,8 @@ _Check_return_ bool CFileDirectory::ReadRecursively(__callback WIDE_FILE_ACTION_
         {
             if (find_data.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)
             {
-                if (::_tcscmp(find_data.cFileName, TEXT(".")) == 0 ||
-                    ::_tcscmp(find_data.cFileName, TEXT("..")) == 0)
+                if (::_tcscmp(find_data.cFileName, TEXT(".")) == I_AM_EQUAL_TO_THAT or
+                    ::_tcscmp(find_data.cFileName, TEXT("..")) == I_AM_EQUAL_TO_THAT)
                 {
                     // Avoid infinite recursion here.
                 }
@@ -837,8 +837,8 @@ _Check_return_ bool CFileDirectory::ReadRecursively(_Out_ std::vector<std::wstri
 
         if (find_data.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)
         {
-            if (::wcscmp(find_data.cFileName, L".") == 0 ||
-                ::wcscmp(find_data.cFileName, L"..") == 0)
+            if (::wcscmp(find_data.cFileName, L".") == I_AM_EQUAL_TO_THAT or
+                ::wcscmp(find_data.cFileName, L"..") == I_AM_EQUAL_TO_THAT)
             {
                 // Avoid infinite recursion here.
             }
@@ -862,8 +862,8 @@ _Check_return_ bool CFileDirectory::ReadRecursively(_Out_ std::vector<std::wstri
         {
             if (find_data.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)
             {
-                if (::wcscmp(find_data.cFileName, L".") == 0 ||
-                    ::wcscmp(find_data.cFileName, L"..") == 0)
+                if (::wcscmp(find_data.cFileName, L".") == I_AM_EQUAL_TO_THAT or
+                    ::wcscmp(find_data.cFileName, L"..") == I_AM_EQUAL_TO_THAT)
                 {
                     // Avoid infinite recursion here.
                 }
@@ -975,7 +975,7 @@ static _Check_return_ bool __delete_file_action(_Inout_ void * parameter, _In_z_
 
 _Check_return_ bool CFileDirectory::RecursivelyDestroy(_In_z_ wchar_t const * const folder_name) noexcept// static
 {
-    if (folder_name == nullptr || folder_name[0] == 0x00)
+    if (folder_name == nullptr or folder_name[0] == 0x00)
     {
         return(false);
     }

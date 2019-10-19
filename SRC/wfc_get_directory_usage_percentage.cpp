@@ -61,7 +61,7 @@ _Check_return_ uint32_t PASCAL Win32FoundationClasses::wfc_get_directory_usage_p
 
    std::wstring mask( directory_path );
 
-   if ( mask.at( mask.length() - 1 ) != '\\' &&
+   if ( mask.at( mask.length() - 1 ) != '\\' and
         mask.at( mask.length() - 1 ) != '/' )
    {
       mask.push_back( '/' );

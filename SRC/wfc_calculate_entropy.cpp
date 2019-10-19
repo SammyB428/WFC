@@ -57,7 +57,7 @@ _Check_return_ double PASCAL Win32FoundationClasses::wfc_calculate_entropy( __in
 {
    WFC_VALIDATE_POINTER( counts );
 
-   if ( counts           == nullptr ||
+   if ( counts           == nullptr or
         number_of_counts < 2 )
    {
       //WFCTRACE( TEXT( "Nothing to do." ) );
@@ -87,7 +87,7 @@ _Check_return_ double PASCAL Win32FoundationClasses::wfc_calculate_entropy( __in
          }
       }
 
-      if ( sum <= 0 || number_of_unique_values < 2 ) // If there's only one unique value, the entropy is zero
+      if ( sum <= 0 or number_of_unique_values < 2 ) // If there's only one unique value, the entropy is zero
       {
          return( 0.0 );
       }
@@ -109,7 +109,7 @@ _Check_return_ double PASCAL Win32FoundationClasses::wfc_calculate_entropy( __in
 {
    WFC_VALIDATE_POINTER( counts );
 
-   if ( counts           == nullptr ||
+   if ( counts           == nullptr or
         number_of_counts < 2 )
    {
       //WFCTRACE( TEXT( "Nothing to do." ) );
@@ -134,7 +134,7 @@ _Check_return_ double PASCAL Win32FoundationClasses::wfc_calculate_entropy( __in
          }
       }
 
-      if (sum <= 0 || number_of_unique_values < 2) // If there's only one unique value, the entropy is zero
+      if (sum <= 0 or number_of_unique_values < 2) // If there's only one unique value, the entropy is zero
       {
          return( 0.0 );
       }
@@ -156,7 +156,7 @@ _Check_return_ double PASCAL Win32FoundationClasses::wfc_calculate_entropy( __in
 {
    WFC_VALIDATE_POINTER( counts );
 
-   if ( counts           == nullptr ||
+   if ( counts           == nullptr or
         number_of_counts < 2 )
    {
       //WFCTRACE( TEXT( "Nothing to do." ) );
@@ -181,7 +181,7 @@ _Check_return_ double PASCAL Win32FoundationClasses::wfc_calculate_entropy( __in
          }
       }
 
-      if (sum <= 0 || number_of_unique_values < 2) // If there's only one unique value, the entropy is zero
+      if (sum <= 0 or number_of_unique_values < 2) // If there's only one unique value, the entropy is zero
       {
          return( 0.0 );
       }
@@ -203,7 +203,7 @@ _Check_return_ double Win32FoundationClasses::wfc_get_buffer_entropy(__in_bcount
 {
     WFC_VALIDATE_POINTER(buffer);
 
-    if (buffer == nullptr || buffer_size < 2)
+    if (buffer == nullptr or buffer_size < 2)
     {
         return(0.0);
     }
@@ -224,9 +224,9 @@ _Check_return_ bool Win32FoundationClasses::wfcGenRandom( _Out_writes_bytes_(Ran
 {
    static CRandomNumberGenerator2 * static_rng = nullptr;
 
-   if ( RandomBuffer == nullptr || RandomBufferLength < 1 )
+   if ( RandomBuffer == nullptr or RandomBufferLength < 1 )
    {
-       if ( RandomBuffer == nullptr && RandomBufferLength == 0 )
+       if ( RandomBuffer == nullptr and RandomBufferLength == 0 )
        {
            if ( static_rng != nullptr )
            {
@@ -237,7 +237,7 @@ _Check_return_ bool Win32FoundationClasses::wfcGenRandom( _Out_writes_bytes_(Ran
                // By immediately setting the static pointer to null, the other thread will create a new one
                // and use it while we destruct the old one. If this sitution happens, you've got other problems
                // to worry about...
-               CRandomNumberGenerator2 * temp_rng = static_rng;
+               auto temp_rng = static_rng;
                static_rng = nullptr;
                delete temp_rng;
            }
@@ -310,7 +310,7 @@ _Check_return_ static int64_t _find_byte_256(_In_ uint8_t const byte_value, _In_
         goto SEARCH_LAST_BLOCK;
     }
 
-    while (buffer_index < last_buffer_index &&
+    while (buffer_index < last_buffer_index and
         _mm256_testc_si256(zero, _mm256_cmpeq_epi8(byte_to_find, *((__m256i const *) &buffer[buffer_index]))) != 0) // _mm256_testc_si256 - AVX2
     {
         buffer_index += 32;
@@ -342,7 +342,7 @@ _Check_return_ static int64_t _find_byte_256( _In_ uint8_t const byte_value, _In
 
     int64_t buffer_index = 0;
 
-    while( buffer_index < last_buffer_index &&
+    while( buffer_index < last_buffer_index and
         _mm256_testc_si256( zero, _mm256_cmpeq_epi8( byte_to_find, _mm256_loadu_si256((__m256i const *) &buffer[ buffer_index ]))) != 0 ) // _mm256_testc_si256 - AVX2
     {
         buffer_index += 32;
@@ -399,7 +399,7 @@ _Check_return_ int64_t _find_byte_SSE41(_In_ uint8_t const byte_value, _In_reads
 
     _ASSERTE((((int64_t)&buffer[buffer_index]) % 16) == 0);
 
-    while (buffer_index < last_buffer_index &&
+    while (buffer_index < last_buffer_index and
         _mm_testc_si128(zero, _mm_cmpeq_epi8(byte_to_find, *((__m128i const *) &buffer[buffer_index]))) != 0) // _mm_cmpeq_epi8-SSE2, _mm_testc_si128-SSE4.1
     {
         buffer_index += 16;

@@ -102,7 +102,7 @@ _Check_return_ bool PASCAL Win32FoundationClasses::wfc_get_process_command_line(
 
     command_line.clear();
 
-    auto process_handle = ::OpenProcess(PROCESS_QUERY_INFORMATION | PROCESS_VM_READ, FALSE, PtrToInt(process_id));
+    auto process_handle = ::OpenProcess(PROCESS_QUERY_INFORMATION bitor PROCESS_VM_READ, FALSE, PtrToInt(process_id));
 
     if (is_bad_handle(process_handle) == true)
     {

@@ -84,9 +84,6 @@ inline _Check_return_ int CReedSolomonErrorCorrectionCode::m_Mod( __in int x ) n
 
 // The class
 
-int const CReedSolomonErrorCorrectionCode::m_NumberOfBitsPerSymbol = 8;
-int const CReedSolomonErrorCorrectionCode::m_BlockSize             = 255; // (1 << m_NumberOfBitsPerSymbol) - 1
-
 CReedSolomonErrorCorrectionCode::CReedSolomonErrorCorrectionCode()
 {
    WFC_VALIDATE_POINTER( this );
@@ -318,16 +315,16 @@ _Check_return_ int CReedSolomonErrorCorrectionCode::m_DecodeChunk(__inout std::v
          {
             if ( recd[ j ] != m_BlockSize ) /* recd[j] in index form */
             {
-               tmp ^= m_Alpha_to[ m_Mod( recd[ j ] + ( 1 + i - 1 ) * static_cast<int>(j) ) ];
+               tmp xor_eq m_Alpha_to[ m_Mod( recd[ j ] + ( 1 + i - 1 ) * static_cast<int>(j) ) ];
             }
 
-            syndrome_error |= tmp; /* set flag if non-zero syndrome =>error store syndrome in index form  */
+            syndrome_error or_eq tmp; /* set flag if non-zero syndrome =>error store syndrome in index form  */
          }
 
          s[ i ] = m_Index_of[ tmp ];
       }
 
-      if ( ! syndrome_error )
+      if (not syndrome_error )
       {
          /*
           * if syndrome is zero, data[] is a codeword and there are no
@@ -356,7 +353,7 @@ _Check_return_ int CReedSolomonErrorCorrectionCode::m_DecodeChunk(__inout std::v
 
                if( tmp != m_BlockSize )
                {
-                  lambda[ j ] ^= m_Alpha_to[ m_Mod( u + tmp ) ];
+                  lambda[ j ] xor_eq m_Alpha_to[ m_Mod( u + tmp ) ];
                }
             }
          }
@@ -383,9 +380,9 @@ _Check_return_ int CReedSolomonErrorCorrectionCode::m_DecodeChunk(__inout std::v
 
          for ( i = 0; i < step_number; i++ )
          {
-            if ( ( lambda[ i ] != 0 ) && ( s[ step_number - i ] != m_BlockSize ) )
+            if ( ( lambda[ i ] != 0 ) and ( s[ step_number - i ] != m_BlockSize ) )
             {
-               discrepancy_at_step_number ^= m_Alpha_to[ m_Mod( m_Index_of[ lambda[ i ] ] + s[ step_number - i ] ) ];
+               discrepancy_at_step_number xor_eq m_Alpha_to[ m_Mod( m_Index_of[ lambda[ i ] ] + s[ step_number - i ] ) ];
             }
          }
 
@@ -406,7 +403,7 @@ _Check_return_ int CReedSolomonErrorCorrectionCode::m_DecodeChunk(__inout std::v
             {
                if( b[ i ] != m_BlockSize )
                {
-                  t[ i + 1 ] = lambda[ i + 1 ] ^ m_Alpha_to[ m_Mod( discrepancy_at_step_number + b[ i ] ) ];
+                  t[ i + 1 ] = lambda[ i + 1 ] xor m_Alpha_to[ m_Mod( discrepancy_at_step_number + b[ i ] ) ];
                }
                else
                {
@@ -471,11 +468,11 @@ _Check_return_ int CReedSolomonErrorCorrectionCode::m_DecodeChunk(__inout std::v
             if ( reg[ j ] != m_BlockSize )
             {
                reg[ j ] = m_Mod( reg[ j ] + j );
-               q ^= m_Alpha_to[ reg[ j ] ];
+               q xor_eq m_Alpha_to[ reg[ j ] ];
             }
          }
 
-         if ( ! q )
+         if (not q )
          {
             /* store root (index-form) and error location number */
             root[ count ] = i;
@@ -517,9 +514,9 @@ _Check_return_ int CReedSolomonErrorCorrectionCode::m_DecodeChunk(__inout std::v
 
          for( ;j >= 0; j-- )
          {
-            if ( ( s[ i + 1 - j ] != m_BlockSize ) && ( lambda[ j ] != m_BlockSize ) )
+            if ( ( s[ i + 1 - j ] != m_BlockSize ) and ( lambda[ j ] != m_BlockSize ) )
             {
-               tmp ^= m_Alpha_to[ m_Mod( s[ i + 1 - j ] + lambda[ j ] ) ];
+               tmp xor_eq m_Alpha_to[ m_Mod( s[ i + 1 - j ] + lambda[ j ] ) ];
             }
          }
 
@@ -546,7 +543,7 @@ _Check_return_ int CReedSolomonErrorCorrectionCode::m_DecodeChunk(__inout std::v
          {
             if ( omega[ i ] != m_BlockSize )
             {
-               num1  ^= m_Alpha_to[ m_Mod( omega[ i ] + i * root[ j ] ) ];
+               num1 xor_eq m_Alpha_to[ m_Mod( omega[ i ] + i * root[ j ] ) ];
             }
          }
 
@@ -559,7 +556,7 @@ _Check_return_ int CReedSolomonErrorCorrectionCode::m_DecodeChunk(__inout std::v
          {
             if( lambda[ i + 1 ] != m_BlockSize )
             {
-               denominator ^= m_Alpha_to[ m_Mod( lambda[ i + 1 ] + i * root[ j ] ) ];
+               denominator xor_eq m_Alpha_to[ m_Mod( lambda[ i + 1 ] + i * root[ j ] ) ];
             }
          }
 
@@ -572,7 +569,7 @@ _Check_return_ int CReedSolomonErrorCorrectionCode::m_DecodeChunk(__inout std::v
 
          if ( num1 != 0 )
          {
-            data.at( loc[ j ] ) ^= m_Alpha_to[ m_Mod( m_Index_of[ num1 ] + m_Index_of[ num2 ] + m_BlockSize - m_Index_of[ denominator ] ) ];
+            data.at( loc[ j ] ) xor_eq m_Alpha_to[ m_Mod( m_Index_of[ num1 ] + m_Index_of[ num2 ] + m_BlockSize - m_Index_of[ denominator ] ) ];
          }
       }
 
@@ -609,7 +606,7 @@ _Check_return_ bool CReedSolomonErrorCorrectionCode::m_EncodeChunk( __in std::ve
 
    for ( i = m_NumberOfSymbolsPerBlock - 1; i >= 0; i-- )
    {
-      feedback = m_Index_of[ data.at( i ) ^ parity.at( m_BlockSize - m_NumberOfSymbolsPerBlock - 1 ) ];
+      feedback = m_Index_of[ data.at( i ) xor parity.at( m_BlockSize - m_NumberOfSymbolsPerBlock - 1 ) ];
 
       if ( feedback != m_BlockSize )
       { /* feedback term is non-zero */
@@ -617,7 +614,7 @@ _Check_return_ bool CReedSolomonErrorCorrectionCode::m_EncodeChunk( __in std::ve
          {
             if ( m_GeneratorPolynomial[ j ] != m_BlockSize )
             {
-               parity.at( j ) = (uint8_t) ( parity.at( j - 1 ) ^ m_Alpha_to[ m_Mod( m_GeneratorPolynomial[ j ] + feedback ) ] );
+               parity.at( j ) = (uint8_t) ( parity.at( j - 1 ) xor m_Alpha_to[ m_Mod( m_GeneratorPolynomial[ j ] + feedback ) ] );
             }
             else
             {
@@ -688,7 +685,7 @@ void CReedSolomonErrorCorrectionCode::m_GenerateGaloisField( void ) noexcept
 
       if ( m_PrimitivePolynomials[ loop_index ] != 0)
       {
-         m_Alpha_to[ m_NumberOfBitsPerSymbol ] ^= mask; /* Bit-wise EXOR operation */
+         m_Alpha_to[ m_NumberOfBitsPerSymbol ] xor_eq mask; /* Bit-wise EXOR operation */
       }
 
       mask <<= 1; /* single left-shift */
@@ -708,7 +705,7 @@ void CReedSolomonErrorCorrectionCode::m_GenerateGaloisField( void ) noexcept
    {
       if ( m_Alpha_to[ loop_index - 1 ] >= mask )
       {
-         m_Alpha_to[ loop_index ] = m_Alpha_to[ m_NumberOfBitsPerSymbol ] ^ ( ( m_Alpha_to[ loop_index - 1 ] ^ mask ) << 1 );
+         m_Alpha_to[ loop_index ] = m_Alpha_to[ m_NumberOfBitsPerSymbol ] xor ( ( m_Alpha_to[ loop_index - 1 ] xor mask ) << 1 );
       }
       else
       {
@@ -759,7 +756,7 @@ void CReedSolomonErrorCorrectionCode::m_GeneratePolynomial( void ) noexcept
       {
          if ( m_GeneratorPolynomial[ j ] != 0 )
          {
-            m_GeneratorPolynomial[ j ] = m_GeneratorPolynomial[ j - 1 ] ^ m_Alpha_to[ m_Mod( ( m_Index_of[ m_GeneratorPolynomial[ j ] ] ) + 1 + i - 1 ) ];
+            m_GeneratorPolynomial[ j ] = m_GeneratorPolynomial[ j - 1 ] xor m_Alpha_to[ m_Mod( ( m_Index_of[ m_GeneratorPolynomial[ j ] ] ) + 1 + i - 1 ) ];
          }
          else
          {
@@ -780,7 +777,7 @@ void CReedSolomonErrorCorrectionCode::m_GeneratePolynomial( void ) noexcept
    }
 }
 
-void CReedSolomonErrorCorrectionCode::m_Initialize( __in int number_of_symbols_per_block ) noexcept
+void CReedSolomonErrorCorrectionCode::m_Initialize( _In_ int const number_of_symbols_per_block ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 

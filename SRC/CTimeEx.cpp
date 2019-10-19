@@ -567,8 +567,8 @@ _Check_return_ time_t CTimeEx::m_Make_time_t( __in struct tm const * time_parame
 /*
  * ChkAdd evaluates to TRUE if dest = src1 + src2 has overflowed
  */
-#define ChkAdd(dest, src1, src2)   ( ((src1 >= 0L) && (src2 >= 0L) \
-    && (dest < 0L)) || ((src1 < 0L) && (src2 < 0L) && (dest >= 0L)) )
+#define ChkAdd(dest, src1, src2)   ( ((src1 >= 0L) and (src2 >= 0L) \
+    and (dest < 0L)) or ((src1 < 0L) and (src2 < 0L) and (dest >= 0L)) )
 
 /*
  * ChkMul evaluates to TRUE if dest = src1 * src2 has overflowed
@@ -595,7 +595,7 @@ _Check_return_ time_t CTimeEx::m_Make_time_t( __in struct tm const * time_parame
     * First, make sure tm_year is reasonably close to being in range.
     */
 
-   if ( ((time_1 = tm_time.tm_year) < 69L) || (time_1 > 139L) )
+   if ( ((time_1 = tm_time.tm_year) < 69L) or (time_1 > 139L) )
    {
       return( (time_t) -1 );
    }
@@ -605,7 +605,7 @@ _Check_return_ time_t CTimeEx::m_Make_time_t( __in struct tm const * time_parame
     * we don't know how many days are in months 12, 13, 14, etc.
     */
 
-   if ( (tm_time.tm_mon < 0) || (tm_time.tm_mon > 11) )
+   if ( (tm_time.tm_mon < 0) or (tm_time.tm_mon > 11) )
    {
       /*
        * no danger of overflow because the range check above.
@@ -622,7 +622,7 @@ _Check_return_ time_t CTimeEx::m_Make_time_t( __in struct tm const * time_parame
       /*
        * Make sure year count is still in range.
        */
-      if ( (time_1 < 69) || (time_1 > 139) )
+      if ( (time_1 < 69) or (time_1 > 139) )
       {
          return( (time_t) -1 );
       }
@@ -639,7 +639,7 @@ _Check_return_ time_t CTimeEx::m_Make_time_t( __in struct tm const * time_parame
 
    time_2 = days[ tm_time.tm_mon ];
 
-   if ( ! ( time_1 & 3 ) && ( tm_time.tm_mon > 1 ) )
+   if ( ! ( time_1 & 3 ) and ( tm_time.tm_mon > 1 ) )
    {
       time_2++;
    }
@@ -741,8 +741,8 @@ void CTimeEx::Set( __in int const year, __in int const month, __in int const day
 {
    WFC_VALIDATE_POINTER( this );
 
-   ASSERT( day   >= 1 && day   <= 31 );
-   ASSERT( month >= 1 && month <= 12 );
+   ASSERT( day   >= 1 and day   <= 31 );
+   ASSERT( month >= 1 and month <= 12 );
    ASSERT( year  >= 1900 );
 
    struct tm tm_structure;
@@ -838,7 +838,7 @@ void CTimeEx::Set( __in std::wstring const& iso_8601_string ) noexcept
 
    // Now let's idiot proof the month
 
-   if ( month < 1 || month > 12 )
+   if ( month < 1 or month > 12 )
    {
       return;
    }
@@ -891,7 +891,7 @@ void CTimeEx::Set( __in std::wstring const& iso_8601_string ) noexcept
 
    // Now let's idiot proof the day
 
-   if ( day < 1 || day > 31 )
+   if ( day < 1 or day > 31 )
    {
       return;
    }

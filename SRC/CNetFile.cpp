@@ -174,7 +174,7 @@ bool CNetworkFiles::m_GetChunk( void ) noexcept
 
    m_103Index = 0;
 
-   if ( m_103NumberOfEntriesRead != 0 && m_103ResumeHandle == 0 )
+   if ( m_103NumberOfEntriesRead != 0 and m_103ResumeHandle == 0 )
    {
       // Yup, we've finished reading
       ::NetApiBufferFree( m_103InformationBuffer );
@@ -196,7 +196,7 @@ bool CNetworkFiles::m_GetChunk( void ) noexcept
                                        &m_103TotalNumberOfEntries,
                                        &m_103ResumeHandle );
 
-   if ( m_ErrorCode != NERR_Success || m_103InformationBuffer == nullptr )
+   if ( m_ErrorCode != NERR_Success or m_103InformationBuffer == nullptr )
    {
       return( false );
    }

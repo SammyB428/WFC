@@ -202,7 +202,7 @@ _Check_return_ bool CEventLog::CreateApplicationLog( __in_z wchar_t const * appl
    WFC_VALIDATE_POINTER( application_name );
    WFC_VALIDATE_POINTER( message_resource_file );
 
-   if ( application_name == nullptr || message_resource_file == nullptr )
+   if ( application_name == nullptr or message_resource_file == nullptr )
    {
       m_ErrorCode = ERROR_INVALID_PARAMETER;
       return( false );
@@ -212,7 +212,7 @@ _Check_return_ bool CEventLog::CreateApplicationLog( __in_z wchar_t const * appl
 
    WFC_TRY
    {
-      if ( application_name[ 0 ] == 0x00 || message_resource_file[ 0 ] == 0x00 )
+      if ( application_name[ 0 ] == 0x00 or message_resource_file[ 0 ] == 0x00 )
       {
          return( false );
       }
@@ -617,7 +617,7 @@ _Check_return_ bool CEventLog::GetNextLog( __inout DWORD& enumerator, __out std:
       return( false );
    }
 
-   DWORD const permissions = CRegistry::permissionEnumerateSubKeys | CRegistry::permissionRead;
+   DWORD const permissions = CRegistry::permissionEnumerateSubKeys bitor CRegistry::permissionRead;
 
    return_value = registry.Open( TEXT( "SYSTEM\\CurrentControlSet\\Services\\EventLog" ), static_cast< CRegistry::CreatePermissions >( permissions ) );
 
@@ -879,7 +879,7 @@ _Check_return_ bool CEventLog::Read( __in DWORD record_number, __out CEventLogRe
 
       m_ErrorCode = ::GetLastError();
 
-      if ( return_value == false && m_ErrorCode != ERROR_INSUFFICIENT_BUFFER )
+      if ( return_value == false and m_ErrorCode != ERROR_INSUFFICIENT_BUFFER )
       {
          //WFCTRACEERROR( m_ErrorCode );
          return( false );
@@ -933,7 +933,7 @@ _Check_return_ bool CEventLog::Read( __in DWORD record_number, __out_bcount_part
 
    WFC_TRY
    {
-      if ( buffer == nullptr || m_LogHandle == static_cast< HANDLE >( INVALID_HANDLE_VALUE ) )
+      if ( buffer == nullptr or m_LogHandle == static_cast< HANDLE >( INVALID_HANDLE_VALUE ) )
       {
          m_ErrorCode = ERROR_INVALID_PARAMETER;
          return( false );

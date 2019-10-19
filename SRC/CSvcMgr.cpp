@@ -589,7 +589,7 @@ _Check_return_ bool CServiceControlManager::Install( __in_z wchar_t const * serv
     WFC_VALIDATE_POINTER( service_name );
     WFC_VALIDATE_POINTER( friendly_name );
 
-    if ( service_name  == nullptr || friendly_name == nullptr )
+    if ( service_name  == nullptr or friendly_name == nullptr )
     {
         m_ErrorCode = ERROR_INVALID_PARAMETER;
         wfc_get_error_string(m_ErrorCode, m_ErrorMessage);
@@ -658,10 +658,10 @@ _Check_return_ bool CServiceControlManager::Install( __in_z wchar_t const * serv
             return( false );
         }
 
-        DWORD const supported_types = EVENTLOG_ERROR_TYPE | 
-            EVENTLOG_WARNING_TYPE     |
-            EVENTLOG_INFORMATION_TYPE |
-            EVENTLOG_AUDIT_SUCCESS    |
+        DWORD const supported_types = EVENTLOG_ERROR_TYPE bitor
+            EVENTLOG_WARNING_TYPE bitor
+            EVENTLOG_INFORMATION_TYPE bitor
+            EVENTLOG_AUDIT_SUCCESS bitor
             EVENTLOG_AUDIT_FAILURE;
 
         // Thanks go to Patrik Sjoberg (pasjo@wmdata.com) for finding a bug here.
@@ -712,7 +712,7 @@ _Check_return_ bool CServiceControlManager::Install( __in_z wchar_t const * serv
             {
                 LPVOID message_buffer = nullptr;
 
-                ::FormatMessage( FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM,
+                ::FormatMessage( FORMAT_MESSAGE_ALLOCATE_BUFFER bitor FORMAT_MESSAGE_FROM_SYSTEM,
                     nullptr,
                     m_ErrorCode,
                     MAKELANGID( LANG_ENGLISH, SUBLANG_ENGLISH_US ),
@@ -1044,7 +1044,7 @@ _Check_return_ bool CServiceControlManager::Remove( __in_z wchar_t const * servi
 
             LPVOID message_buffer = (LPVOID) nullptr;
 
-            ::FormatMessage( FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM,
+            ::FormatMessage( FORMAT_MESSAGE_ALLOCATE_BUFFER bitor FORMAT_MESSAGE_FROM_SYSTEM,
                 nullptr,
                 m_ErrorCode,
                 MAKELANGID( LANG_ENGLISH, SUBLANG_ENGLISH_US ),
@@ -1319,7 +1319,7 @@ _Check_return_ bool CServiceControlManager::Stop( _In_z_ wchar_t const * service
         // I was not opening the service with permission to query it's status.
         // That caused the QueryServiceStatus() later on to fail.
 
-        SC_HANDLE service_handle = ::OpenServiceW( m_ManagerHandle, service_name, SERVICE_STOP | SERVICE_QUERY_STATUS );
+        SC_HANDLE service_handle = ::OpenServiceW( m_ManagerHandle, service_name, SERVICE_STOP bitor SERVICE_QUERY_STATUS );
 
         if ( service_handle == static_cast< SC_HANDLE >( NULL ) )
         {

@@ -48,7 +48,7 @@ USING_WFC_NAMESPACE
 
 _Check_return_ bool PASCAL Win32FoundationClasses::wfc_is_dotted_ip_address( __in_z_opt const char * ip_address ) noexcept
 {
-    if ( ip_address == nullptr || ip_address[0] == 0x00 )
+    if ( ip_address == nullptr or ip_address[0] == 0x00 )
     {
         return( false );
     }
@@ -63,7 +63,7 @@ _Check_return_ bool PASCAL Win32FoundationClasses::wfc_is_dotted_ip_address( __i
 
     while( ip_address[ ip_address_index ] != 0x00 )
     {
-        if ( ip_address[ ip_address_index ] != '.' &&
+        if ( ip_address[ ip_address_index ] != '.' and
              isdigit( (unsigned char) ip_address[ ip_address_index ] ) == 0 )
         {
             // Illegal character
@@ -127,9 +127,9 @@ _Check_return_ bool PASCAL Win32FoundationClasses::wfc_is_dotted_ip_address( __i
         ip_address_index++;
     }
 
-    if ( a.empty() == true ||
-         b.empty() == true ||
-         c.empty() == true ||
+    if ( a.empty() == true or
+         b.empty() == true or
+         c.empty() == true or
          d.empty() == true)
     {
         return( false );
@@ -162,7 +162,7 @@ _Check_return_ bool PASCAL Win32FoundationClasses::wfc_is_dotted_ip_address( __i
 
 _Check_return_ bool PASCAL Win32FoundationClasses::wfc_is_dotted_ip_address( __in_z_opt wchar_t const * ip_address ) noexcept
 {
-    if ( ip_address == nullptr || ip_address[0] == 0x00 )
+    if ( ip_address == nullptr or ip_address[0] == 0x00 )
     {
         return( false );
     }
@@ -177,7 +177,7 @@ _Check_return_ bool PASCAL Win32FoundationClasses::wfc_is_dotted_ip_address( __i
 
     while( ip_address[ ip_address_index ] != 0x00 )
     {
-        if ( ip_address[ ip_address_index ] != '.' &&
+        if ( ip_address[ ip_address_index ] != '.' and
              iswdigit( ip_address[ ip_address_index ] ) == 0 )
         {
             // Illegal character
@@ -241,9 +241,9 @@ _Check_return_ bool PASCAL Win32FoundationClasses::wfc_is_dotted_ip_address( __i
         ip_address_index++;
     }
 
-    if ( a.empty() == true ||
-         b.empty() == true ||
-         c.empty() == true ||
+    if ( a.empty() == true or
+         b.empty() == true or
+         c.empty() == true or
          d.empty() == true)
     {
         return( false );
@@ -279,7 +279,7 @@ _Check_return_ bool PASCAL Win32FoundationClasses::wfc_is_guid( __in_z char cons
     //           11111111112222222222333333333
     // 012345678901234567890123456789012345678
     // 0AEE2A92-BCBB-11d0-8C72-00C04FC2B085
-    if ( characters == nullptr || characters[ 0 ] == 0x00 )
+    if ( characters == nullptr or characters[ 0 ] == 0x00 )
     {
         return( false );
     }
@@ -291,9 +291,9 @@ _Check_return_ bool PASCAL Win32FoundationClasses::wfc_is_guid( __in_z char cons
             return( false );
         }
 
-        if ( array_index ==  8 ||
-             array_index == 13 ||
-             array_index == 18 ||
+        if ( array_index ==  8 or
+             array_index == 13 or
+             array_index == 18 or
              array_index == 23 )
         {
             if ( characters[ array_index ] != '-' )
@@ -303,7 +303,7 @@ _Check_return_ bool PASCAL Win32FoundationClasses::wfc_is_guid( __in_z char cons
         }
         else
         {
-            if ( ! WFC_IS_HEXADECIMAL( characters[ array_index ] )  )
+            if (not WFC_IS_HEXADECIMAL( characters[ array_index ] )  )
             {
                 return( false );
             }
@@ -318,7 +318,7 @@ _Check_return_ bool PASCAL Win32FoundationClasses::wfc_is_guid( __in_z wchar_t c
     //           11111111112222222222333333333
     // 012345678901234567890123456789012345678
     // 0AEE2A92-BCBB-11d0-8C72-00C04FC2B085
-    if ( characters == nullptr || characters[ 0 ] == 0x00 )
+    if ( characters == nullptr or characters[ 0 ] == 0x00 )
     {
         return( false );
     }
@@ -330,9 +330,9 @@ _Check_return_ bool PASCAL Win32FoundationClasses::wfc_is_guid( __in_z wchar_t c
             return( false );
         }
 
-        if ( array_index ==  8 ||
-             array_index == 13 ||
-             array_index == 18 ||
+        if ( array_index ==  8 or
+             array_index == 13 or
+             array_index == 18 or
              array_index == 23 )
         {
             if ( characters[ array_index ] != '-' )
@@ -342,7 +342,7 @@ _Check_return_ bool PASCAL Win32FoundationClasses::wfc_is_guid( __in_z wchar_t c
         }
         else
         {
-            if ( ! WFC_IS_HEXADECIMAL( characters[ array_index ] )  )
+            if (not WFC_IS_HEXADECIMAL( characters[ array_index ] )  )
             {
                 return( false );
             }
@@ -357,7 +357,7 @@ _Check_return_ bool PASCAL Win32FoundationClasses::wfc_is_guid_with_curlies( __i
     //           11111111112222222222333333333
     // 012345678901234567890123456789012345678
     // {0AEE2A92-BCBB-11d0-8C72-00C04FC2B085}
-    if ( characters == nullptr || characters[ 0 ] != '{' )
+    if ( characters == nullptr or characters[ 0 ] != '{' )
     {
         return( false );
     }
@@ -371,9 +371,9 @@ _Check_return_ bool PASCAL Win32FoundationClasses::wfc_is_guid_with_curlies( __i
                 return( false );
             }
         }
-        else if ( array_index ==  9 ||
-                  array_index == 14 ||
-                  array_index == 19 ||
+        else if ( array_index ==  9 or
+                  array_index == 14 or
+                  array_index == 19 or
                   array_index == 24 )
         {
             if ( characters[ array_index ] != '-' )
@@ -383,7 +383,7 @@ _Check_return_ bool PASCAL Win32FoundationClasses::wfc_is_guid_with_curlies( __i
         }
         else
         {
-            if ( ! WFC_IS_HEXADECIMAL( characters[ array_index ] )  )
+            if (not WFC_IS_HEXADECIMAL( characters[ array_index ] )  )
             {
                 return( false );
             }
@@ -398,7 +398,7 @@ _Check_return_ bool PASCAL Win32FoundationClasses::wfc_is_guid_with_curlies( __i
     //           11111111112222222222333333333
     // 012345678901234567890123456789012345678
     // {0AEE2A92-BCBB-11d0-8C72-00C04FC2B085}
-    if ( characters == nullptr || characters[ 0 ] != '{' )
+    if ( characters == nullptr or characters[ 0 ] != '{' )
     {
         return( false );
     }
@@ -412,9 +412,9 @@ _Check_return_ bool PASCAL Win32FoundationClasses::wfc_is_guid_with_curlies( __i
                 return( false );
             }
         }
-        else if ( array_index ==  9 ||
-                  array_index == 14 ||
-                  array_index == 19 ||
+        else if ( array_index ==  9 or
+                  array_index == 14 or
+                  array_index == 19 or
                   array_index == 24 )
         {
             if ( characters[ array_index ] != '-' )
@@ -424,7 +424,7 @@ _Check_return_ bool PASCAL Win32FoundationClasses::wfc_is_guid_with_curlies( __i
         }
         else
         {
-            if ( ! WFC_IS_HEXADECIMAL( characters[ array_index ] )  )
+            if (not WFC_IS_HEXADECIMAL( characters[ array_index ] )  )
             {
                 return( false );
             }
@@ -436,14 +436,14 @@ _Check_return_ bool PASCAL Win32FoundationClasses::wfc_is_guid_with_curlies( __i
 
 _Check_return_ bool PASCAL Win32FoundationClasses::wfc_is_octal( __in_bcount( number_of_bytes ) uint8_t const * buffer, __in std::size_t const number_of_bytes ) noexcept
 {
-    if ( buffer == nullptr || number_of_bytes < 1 )
+    if ( buffer == nullptr or number_of_bytes < 1 )
     {
         return( false );
     }
 
     for ( auto const buffer_index : Range(number_of_bytes) )
     {
-        if ( ! WFC_IS_OCTAL( buffer[ buffer_index ] ) )
+        if (not WFC_IS_OCTAL( buffer[ buffer_index ] ) )
         {
             return( false );
         }
@@ -454,7 +454,7 @@ _Check_return_ bool PASCAL Win32FoundationClasses::wfc_is_octal( __in_bcount( nu
 
 _Check_return_ bool PASCAL Win32FoundationClasses::wfc_is_wide_octal( __in_bcount( number_of_bytes ) uint8_t const * buffer, __in std::size_t const number_of_bytes ) noexcept
 {
-    if ( buffer == nullptr || number_of_bytes < 2 )
+    if ( buffer == nullptr or number_of_bytes < 2 )
     {
         return( false );
     }
@@ -465,7 +465,7 @@ _Check_return_ bool PASCAL Win32FoundationClasses::wfc_is_wide_octal( __in_bcoun
 
     for ( auto const buffer_index : Range(buffer_size) )
     {
-        if ( ! WFC_IS_OCTAL( wide_string[ buffer_index ] ) )
+        if (not WFC_IS_OCTAL( wide_string[ buffer_index ] ) )
         {
             return( false );
         }
@@ -476,7 +476,7 @@ _Check_return_ bool PASCAL Win32FoundationClasses::wfc_is_wide_octal( __in_bcoun
 
 _Check_return_ bool PASCAL Win32FoundationClasses::wfc_is_octal_then_NULLs( __in_bcount( number_of_bytes ) uint8_t const * buffer, __in std::size_t const number_of_bytes ) noexcept
 {
-    if ( buffer == nullptr || number_of_bytes < 1 )
+    if ( buffer == nullptr or number_of_bytes < 1 )
     {
         return( false );
     }
@@ -489,7 +489,7 @@ _Check_return_ bool PASCAL Win32FoundationClasses::wfc_is_octal_then_NULLs( __in
         {
             case 0: // digits
 
-                if ( ! WFC_IS_OCTAL( buffer[ buffer_index ] ) )
+                if (not WFC_IS_OCTAL( buffer[ buffer_index ] ) )
                 {
                     // Not a digit, do we advance the state or return false?
 
@@ -548,7 +548,7 @@ _Check_return_ bool PASCAL Win32FoundationClasses::wfc_is_octal_then_NULLs( __in
 
 _Check_return_ bool PASCAL Win32FoundationClasses::wfc_is_wide_octal_then_NULLs( __in_bcount( number_of_bytes ) uint8_t const * buffer, __in std::size_t const number_of_bytes ) noexcept
 {
-    if ( buffer == nullptr || number_of_bytes < 2 )
+    if ( buffer == nullptr or number_of_bytes < 2 )
     {
         return( false );
     }
@@ -565,7 +565,7 @@ _Check_return_ bool PASCAL Win32FoundationClasses::wfc_is_wide_octal_then_NULLs(
         {
             case 0: // digits
 
-                if ( ! WFC_IS_OCTAL( wide_string[ buffer_index ] ) )
+                if (not WFC_IS_OCTAL( wide_string[ buffer_index ] ) )
                 {
                     // Not a digit, do we advance the state or return false?
 
@@ -624,14 +624,14 @@ _Check_return_ bool PASCAL Win32FoundationClasses::wfc_is_wide_octal_then_NULLs(
 
 _Check_return_ bool PASCAL Win32FoundationClasses::wfc_is_hexadecimal( __in_bcount( number_of_bytes ) uint8_t const * buffer, __in std::size_t const number_of_bytes ) noexcept
 {
-    if ( buffer == nullptr || number_of_bytes < 1 )
+    if ( buffer == nullptr or number_of_bytes < 1 )
     {
         return( false );
     }
 
     for ( auto const buffer_index : Range(number_of_bytes) )
     {
-        if ( ! WFC_IS_HEXADECIMAL( buffer[ buffer_index ] ) )
+        if (not WFC_IS_HEXADECIMAL( buffer[ buffer_index ] ) )
         {
             return( false );
         }
@@ -642,7 +642,7 @@ _Check_return_ bool PASCAL Win32FoundationClasses::wfc_is_hexadecimal( __in_bcou
 
 _Check_return_ bool PASCAL Win32FoundationClasses::wfc_is_wide_hexadecimal( __in_bcount( number_of_bytes ) uint8_t const * buffer, __in std::size_t const number_of_bytes ) noexcept
 {
-    if ( buffer == nullptr || number_of_bytes < 2 )
+    if ( buffer == nullptr or number_of_bytes < 2 )
     {
         return( false );
     }
@@ -653,7 +653,7 @@ _Check_return_ bool PASCAL Win32FoundationClasses::wfc_is_wide_hexadecimal( __in
 
     for ( auto const buffer_index : Range(buffer_size) )
     {
-        if ( ! WFC_IS_HEXADECIMAL( wide_string[ buffer_index ] ) )
+        if (not WFC_IS_HEXADECIMAL( wide_string[ buffer_index ] ) )
         {
             return( false );
         }
@@ -664,7 +664,7 @@ _Check_return_ bool PASCAL Win32FoundationClasses::wfc_is_wide_hexadecimal( __in
 
 _Check_return_ bool PASCAL Win32FoundationClasses::wfc_is_hexadecimal_then_NULLs( __in_bcount( number_of_bytes ) uint8_t const * buffer, __in std::size_t const number_of_bytes ) noexcept
 {
-    if ( buffer == nullptr || number_of_bytes < 1 )
+    if ( buffer == nullptr or number_of_bytes < 1 )
     {
         return( false );
     }
@@ -677,7 +677,7 @@ _Check_return_ bool PASCAL Win32FoundationClasses::wfc_is_hexadecimal_then_NULLs
         {
             case 0: // digits
 
-                if ( ! WFC_IS_HEXADECIMAL( buffer[ buffer_index ] ) )
+                if (not WFC_IS_HEXADECIMAL( buffer[ buffer_index ] ) )
                 {
                     // Not a digit, do we advance the state or return false?
 
@@ -736,7 +736,7 @@ _Check_return_ bool PASCAL Win32FoundationClasses::wfc_is_hexadecimal_then_NULLs
 
 _Check_return_ bool PASCAL Win32FoundationClasses::wfc_is_wide_hexadecimal_then_NULLs( __in_bcount( number_of_bytes ) uint8_t const * buffer, __in std::size_t const number_of_bytes ) noexcept
 {
-    if ( buffer == nullptr || number_of_bytes < 2 )
+    if ( buffer == nullptr or number_of_bytes < 2 )
     {
         return( false );
     }
@@ -753,7 +753,7 @@ _Check_return_ bool PASCAL Win32FoundationClasses::wfc_is_wide_hexadecimal_then_
         {
             case 0: // digits
 
-                if ( ! WFC_IS_HEXADECIMAL( wide_string[ buffer_index ] ) )
+                if (not WFC_IS_HEXADECIMAL( wide_string[ buffer_index ] ) )
                 {
                     // Not a digit, do we advance the state or return false?
 
@@ -812,14 +812,14 @@ _Check_return_ bool PASCAL Win32FoundationClasses::wfc_is_wide_hexadecimal_then_
 
 _Check_return_ bool PASCAL Win32FoundationClasses::wfc_is_decimal( __in_bcount( number_of_bytes ) uint8_t const * buffer, __in std::size_t const number_of_bytes ) noexcept
 {
-    if ( buffer == nullptr || number_of_bytes < 1 )
+    if ( buffer == nullptr or number_of_bytes < 1 )
     {
         return( false );
     }
 
     for( auto const buffer_index : Range(number_of_bytes) )
     {
-        if ( ! WFC_IS_DECIMAL( buffer[ buffer_index ] ) )
+        if (not WFC_IS_DECIMAL( buffer[ buffer_index ] ) )
         {
             return( false );
         }
@@ -830,7 +830,7 @@ _Check_return_ bool PASCAL Win32FoundationClasses::wfc_is_decimal( __in_bcount( 
 
 _Check_return_ bool PASCAL Win32FoundationClasses::wfc_is_wide_decimal( __in_bcount( number_of_bytes ) uint8_t const * buffer, __in std::size_t const number_of_bytes ) noexcept
 {
-    if ( buffer == nullptr || number_of_bytes < 2 )
+    if ( buffer == nullptr or number_of_bytes < 2 )
     {
         return( false );
     }
@@ -841,7 +841,7 @@ _Check_return_ bool PASCAL Win32FoundationClasses::wfc_is_wide_decimal( __in_bco
 
     for ( auto const buffer_index : Range(buffer_size) )
     {
-        if ( ! WFC_IS_DECIMAL( wide_string[ buffer_index ] ) )
+        if (not WFC_IS_DECIMAL( wide_string[ buffer_index ] ) )
         {
             return( false );
         }
@@ -852,7 +852,7 @@ _Check_return_ bool PASCAL Win32FoundationClasses::wfc_is_wide_decimal( __in_bco
 
 _Check_return_ bool PASCAL Win32FoundationClasses::wfc_is_decimal_then_NULLs( __in_bcount( number_of_bytes ) uint8_t const * buffer, __in std::size_t const number_of_bytes ) noexcept
 {
-    if ( buffer == nullptr || number_of_bytes < 1 )
+    if ( buffer == nullptr or number_of_bytes < 1 )
     {
         return( false );
     }
@@ -865,7 +865,7 @@ _Check_return_ bool PASCAL Win32FoundationClasses::wfc_is_decimal_then_NULLs( __
         {
             case 0: // digits
 
-                if ( ! WFC_IS_DECIMAL( buffer[ buffer_index ] ) )
+                if (not WFC_IS_DECIMAL( buffer[ buffer_index ] ) )
                 {
                     // Not a digit, do we advance the state or return false?
 
@@ -924,7 +924,7 @@ _Check_return_ bool PASCAL Win32FoundationClasses::wfc_is_decimal_then_NULLs( __
 
 _Check_return_ bool PASCAL Win32FoundationClasses::wfc_is_wide_decimal_then_NULLs( __in_bcount( number_of_bytes ) uint8_t const * buffer, __in std::size_t const number_of_bytes ) noexcept
 {
-    if ( buffer == nullptr || number_of_bytes < 2 )
+    if ( buffer == nullptr or number_of_bytes < 2 )
     {
         return( false );
     }
@@ -941,7 +941,7 @@ _Check_return_ bool PASCAL Win32FoundationClasses::wfc_is_wide_decimal_then_NULL
         {
             case 0: // digits
 
-                if ( ! WFC_IS_DECIMAL( wide_string[ buffer_index ] ) )
+                if (not WFC_IS_DECIMAL( wide_string[ buffer_index ] ) )
                 {
                     // Not a digit, do we advance the state or return false?
 
@@ -1000,7 +1000,7 @@ _Check_return_ bool PASCAL Win32FoundationClasses::wfc_is_wide_decimal_then_NULL
 
 _Check_return_ int Win32FoundationClasses::wfc_find_curly_guid( __in_bcount( number_of_bytes_in_buffer ) uint8_t const * buffer, __in std::size_t const number_of_bytes_in_buffer ) noexcept
 {
-    if ( buffer == nullptr || number_of_bytes_in_buffer < 38 )
+    if ( buffer == nullptr or number_of_bytes_in_buffer < 38 )
     {
         return( GUID_NOT_FOUND );
     }
@@ -1021,7 +1021,7 @@ _Check_return_ int Win32FoundationClasses::wfc_find_curly_guid( __in_bcount( num
 
 _Check_return_ int Win32FoundationClasses::wfc_find_wide_curly_guid( __in_bcount( number_of_bytes_in_buffer ) uint8_t const * buffer, __in std::size_t const number_of_bytes_in_buffer ) noexcept
 {
-    if ( buffer == nullptr || number_of_bytes_in_buffer < 76 )
+    if ( buffer == nullptr or number_of_bytes_in_buffer < 76 )
     {
         return( GUID_NOT_FOUND );
     }

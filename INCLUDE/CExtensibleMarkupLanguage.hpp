@@ -59,9 +59,9 @@ inline constexpr _Check_return_ bool is_xml_white_space(_In_ uint32_t const char
 {
     // Test according to Rule 3
 
-    if (character_to_test == 0x0020 ||
-        character_to_test == 0x000D ||
-        character_to_test == 0x000A ||
+    if (character_to_test == 0x0020 or
+        character_to_test == 0x000D or
+        character_to_test == 0x000A or
         character_to_test == 0x0009)
     {
         return(true);
@@ -558,9 +558,9 @@ class CExtensibleMarkupLanguageDocument
       {
           uint32_t options = WFC_XML_FAIL_ON_ILL_FORMED_ENTITIES;
 
-          options |= WFC_XML_DISALLOW_MULTIPLE_ELEMENTS;
-          options |= WFC_XML_FORCE_AT_LEAST_ONE_ELEMENT_MUST_BE_PRESENT;
-          options |= WFC_XML_CHECK_ENTITIES_FOR_ILLEGAL_CHARACTERS;
+          options or_eq WFC_XML_DISALLOW_MULTIPLE_ELEMENTS;
+          options or_eq WFC_XML_FORCE_AT_LEAST_ONE_ELEMENT_MUST_BE_PRESENT;
+          options or_eq WFC_XML_CHECK_ENTITIES_FOR_ILLEGAL_CHARACTERS;
 
           (void)SetParseOptions(options);
       }

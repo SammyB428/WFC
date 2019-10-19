@@ -79,7 +79,7 @@ static void _to_hex( __in_bcount( number_of_bytes ) uint8_t const * buffer, __in
 
 _Check_return_ bool PASCAL Win32FoundationClasses::wfc_check_digital_signature( __in_z LPCTSTR filename ) noexcept
 {
-    if ( filename == nullptr || filename[ 0 ] == 0x0 )
+    if ( filename == nullptr or filename[ 0 ] == 0x0 )
     {
        return( false );
     }
@@ -94,7 +94,7 @@ _Check_return_ bool PASCAL Win32FoundationClasses::wfc_check_digital_signature( 
 
     CFile64 file_to_check;
 
-    if ( file_to_check.Open( filename, (UINT)( (UINT)CFile64::OpenFlags::modeRead | (UINT) CFile64::OpenFlags::shareDenyNone )) == false )
+    if ( file_to_check.Open( filename, (UINT)( (UINT)CFile64::OpenFlags::modeRead bitor (UINT) CFile64::OpenFlags::shareDenyNone )) == false )
     {
         //WFCTRACEERROR( ::GetLastError() );
         //WFCTRACEVAL( TEXT( "Can't open " ), filename );
@@ -181,7 +181,7 @@ _Check_return_ bool PASCAL Win32FoundationClasses::wfc_check_digital_signature( 
         trust_data.dwUIChoice          = WTD_UI_NONE;
         trust_data.fdwRevocationChecks = WTD_REVOKE_NONE;
         trust_data.dwStateAction       = WTD_STATEACTION_IGNORE;
-        trust_data.dwProvFlags         = WTD_SAFER_FLAG | WTD_CACHE_ONLY_URL_RETRIEVAL;
+        trust_data.dwProvFlags         = WTD_SAFER_FLAG bitor WTD_CACHE_ONLY_URL_RETRIEVAL;
         trust_data.hWVTStateData       = static_cast< HANDLE >( NULL );
         trust_data.pwszURLReference    = nullptr;
     }
@@ -198,7 +198,7 @@ _Check_return_ bool PASCAL Win32FoundationClasses::wfc_check_digital_signature( 
         trust_data.dwStateAction       = WTD_STATEACTION_VERIFY;
         trust_data.hWVTStateData       = static_cast< HANDLE >( NULL );
         trust_data.pwszURLReference    = nullptr;
-        trust_data.dwProvFlags         = WTD_SAFER_FLAG | WTD_CACHE_ONLY_URL_RETRIEVAL;
+        trust_data.dwProvFlags         = WTD_SAFER_FLAG bitor WTD_CACHE_ONLY_URL_RETRIEVAL;
         trust_data.dwUIContext         = WTD_UICONTEXT_EXECUTE;
 
         //Fill in catalog info structure.

@@ -338,7 +338,7 @@ BOOL CRemoteAccessServiceAdministration::GetUserAccountServer(std::wstring& user
 
    // Idiot proof the parameters
 
-   if ( ras_server_domain_name == nullptr && ras_server_name == nullptr )
+   if ( ras_server_domain_name == nullptr and ras_server_name == nullptr )
    {
       m_ErrorCode = ERROR_INVALID_PARAMETER;
       return( FALSE );
@@ -358,7 +358,7 @@ BOOL CRemoteAccessServiceAdministration::GetUserAccountServer(std::wstring& user
 
       DWORD return_value = 0;
 
-      if ( ras_server_domain_name != nullptr && ras_server_name != nullptr )
+      if ( ras_server_domain_name != nullptr and ras_server_name != nullptr )
       {
          // CNetwork is cool because it will convert the name to a real server name
          // taking into account UNICODE and prepending

@@ -70,7 +70,7 @@ static inline constexpr _Check_return_ bool __wfc_range_check( __in uint32_t con
       {
          int32_t const middle = static_cast<int32_t>(bottom + ( ( number_of_ranges & 1 ) ? half : ( half - 1 ) ));
 
-         if ( value_to_test >= range[ middle ].low &&
+         if ( value_to_test >= range[ middle ].low and
               value_to_test <= range[ middle ].high )
          {
             return( true );
@@ -89,7 +89,7 @@ static inline constexpr _Check_return_ bool __wfc_range_check( __in uint32_t con
       }
       else
       {
-         if ( value_to_test >= range[ bottom ].low &&
+         if ( value_to_test >= range[ bottom ].low and
               value_to_test <= range[ bottom ].high )
          {
             return( true );
@@ -530,9 +530,9 @@ _Check_return_ bool Win32FoundationClasses::is_xml_NameChar( __in uint32_t const
       return( true );
    }
 
-   if ( character_to_test == '.' ||
-        character_to_test == '-' ||
-        character_to_test == '_' ||
+   if ( character_to_test == '.' or
+        character_to_test == '-' or
+        character_to_test == '_' or
         character_to_test == ':' )
    {
       return( true );
@@ -555,46 +555,46 @@ _Check_return_ bool Win32FoundationClasses::is_xml_PubidChar( __in uint32_t cons
 {
    // Test according to Rule 13
 
-   if ( character_to_test >= 'a' && character_to_test <= 'z' )
+   if ( character_to_test >= 'a' and character_to_test <= 'z' )
    {
       return( true );
    }
 
-   if ( character_to_test >= 'A' && character_to_test <= 'Z' )
+   if ( character_to_test >= 'A' and character_to_test <= 'Z' )
    {
       return( true );
    }
 
-   if ( character_to_test >= '0' && character_to_test <= '9' )
+   if ( character_to_test >= '0' and character_to_test <= '9' )
    {
       return( true );
    }
 
-   if ( character_to_test == 0x0020 ||
-        character_to_test == 0x000D ||
+   if ( character_to_test == 0x0020 or
+        character_to_test == 0x000D or
         character_to_test == 0x000A )
    {
       return( true );
    }
 
-   if ( character_to_test == '-'  ||
-        character_to_test == '\'' ||
-        character_to_test == '('  ||
-        character_to_test == ')'  ||
-        character_to_test == '+'  ||
-        character_to_test == ','  ||
-        character_to_test == '.'  ||
-        character_to_test == '/'  ||
-        character_to_test == ':'  ||
-        character_to_test == '='  ||
-        character_to_test == '?'  ||
-        character_to_test == ';'  ||
-        character_to_test == '!'  ||
-        character_to_test == '*'  ||
-        character_to_test == '#'  ||
-        character_to_test == '@'  ||
-        character_to_test == '$'  ||
-        character_to_test == '_'  ||
+   if ( character_to_test == '-' or
+        character_to_test == '\'' or
+        character_to_test == '(' or
+        character_to_test == ')' or
+        character_to_test == '+' or
+        character_to_test == ',' or
+        character_to_test == '.' or
+        character_to_test == '/' or
+        character_to_test == ':' or
+        character_to_test == '=' or
+        character_to_test == '?' or
+        character_to_test == ';' or
+        character_to_test == '!' or
+        character_to_test == '*' or
+        character_to_test == '#' or
+        character_to_test == '@' or
+        character_to_test == '$' or
+        character_to_test == '_' or
         character_to_test == '%'  )
    {
       return( true );

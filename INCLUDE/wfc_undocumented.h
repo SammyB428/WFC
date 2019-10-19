@@ -126,7 +126,7 @@ struct WFC_VM_COUNTERS
 
 inline _Check_return_ const ::SYSTEM_PROCESS_INFORMATION * GetNext( _In_ ::SYSTEM_PROCESS_INFORMATION const * information_p ) noexcept
 {
-    if ( information_p == nullptr || information_p->NextEntryOffset == 0 )
+    if ( information_p == nullptr or information_p->NextEntryOffset == 0 )
     {
         return( nullptr );
     }

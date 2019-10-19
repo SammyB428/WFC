@@ -119,7 +119,7 @@ _Check_return_ DWORD CSuperRandomNumberGenerator::GetInteger( void ) noexcept
 
       if ( temp_value )
       {
-         hash_value ^= temp_value >> 24;
+         hash_value xor_eq temp_value >> 24;
       }
 
       hash_value &= ~temp_value;

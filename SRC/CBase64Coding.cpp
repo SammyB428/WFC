@@ -68,7 +68,7 @@ static inline constexpr _Check_return_ uint8_t __get_character( _In_reads_( size
       return_value = buffer[ index ];
       index++;
    }
-   while( return_value != END_OF_BASE64_ENCODED_DATA &&
+   while( return_value != END_OF_BASE64_ENCODED_DATA and
           decoder_table[ return_value ] == BASE64_IGNORABLE_CHARACTER );
 
    return( return_value );
@@ -91,7 +91,7 @@ static inline constexpr _Check_return_ uint8_t __get_character( __in_ecount( siz
       return_value = static_cast<uint8_t>(buffer[ index ]);
       index++;
    }
-   while( return_value != END_OF_BASE64_ENCODED_DATA &&
+   while( return_value != END_OF_BASE64_ENCODED_DATA and
           decoder_table[ return_value ] == BASE64_IGNORABLE_CHARACTER );
 
    return( return_value );
@@ -200,7 +200,7 @@ _Check_return_ std::size_t CBase64Coding::Decode(_In_reads_bytes_(number_of_byte
     WFC_VALIDATE_POINTER(this);
     WFC_VALIDATE_POINTER_NULL_OK(buffer);
 
-    if (buffer == nullptr || number_of_bytes < 1)
+    if (buffer == nullptr or number_of_bytes < 1)
     {
         return(0);
     }
@@ -230,7 +230,7 @@ _Check_return_ std::size_t CBase64Coding::Decode(_In_reads_bytes_(number_of_byte
     {
         character_1 = __get_character(buffer, m_DecoderTable, index, number_of_bytes);
 
-        if (character_1 != END_OF_BASE64_ENCODED_DATA && character_1 != BASE64_END_OF_BUFFER)
+        if (character_1 != END_OF_BASE64_ENCODED_DATA and character_1 != BASE64_END_OF_BUFFER)
         {
             if (m_DecoderTable[character_1] == BASE64_UNKNOWN_VALUE)
             {
@@ -240,7 +240,7 @@ _Check_return_ std::size_t CBase64Coding::Decode(_In_reads_bytes_(number_of_byte
 
             character_2 = __get_character(buffer, m_DecoderTable, index, number_of_bytes);
 
-            if (character_2 != END_OF_BASE64_ENCODED_DATA && character_2 != BASE64_END_OF_BUFFER)
+            if (character_2 != END_OF_BASE64_ENCODED_DATA and character_2 != BASE64_END_OF_BUFFER)
             {
                 if (m_DecoderTable[character_2] == BASE64_UNKNOWN_VALUE)
                 {
@@ -250,7 +250,7 @@ _Check_return_ std::size_t CBase64Coding::Decode(_In_reads_bytes_(number_of_byte
 
                 character_3 = __get_character(buffer, m_DecoderTable, index, number_of_bytes);
 
-                if (character_3 != END_OF_BASE64_ENCODED_DATA && character_3 != BASE64_END_OF_BUFFER)
+                if (character_3 != END_OF_BASE64_ENCODED_DATA and character_3 != BASE64_END_OF_BUFFER)
                 {
                     if (m_DecoderTable[character_3] == BASE64_UNKNOWN_VALUE)
                     {
@@ -260,7 +260,7 @@ _Check_return_ std::size_t CBase64Coding::Decode(_In_reads_bytes_(number_of_byte
 
                     character_4 = __get_character(buffer, m_DecoderTable, index, number_of_bytes);
 
-                    if (character_4 != END_OF_BASE64_ENCODED_DATA && character_4 != BASE64_END_OF_BUFFER)
+                    if (character_4 != END_OF_BASE64_ENCODED_DATA and character_4 != BASE64_END_OF_BUFFER)
                     {
                         if (m_DecoderTable[character_4] == BASE64_UNKNOWN_VALUE)
                         {
@@ -269,8 +269,8 @@ _Check_return_ std::size_t CBase64Coding::Decode(_In_reads_bytes_(number_of_byte
                         }
                     }
 
-                    if (character_2 == BASE64_END_OF_BUFFER ||
-                        character_3 == BASE64_END_OF_BUFFER ||
+                    if (character_2 == BASE64_END_OF_BUFFER or
+                        character_3 == BASE64_END_OF_BUFFER or
                         character_4 == BASE64_END_OF_BUFFER)
                     {
                         //WFCTRACE( TEXT( "Not enough translatable data" ) );
@@ -295,7 +295,7 @@ _Check_return_ std::size_t CBase64Coding::Decode(_In_reads_bytes_(number_of_byte
             character_4 = END_OF_BASE64_ENCODED_DATA;
         }
 
-        if (character_1 == END_OF_BASE64_ENCODED_DATA ||
+        if (character_1 == END_OF_BASE64_ENCODED_DATA or
             character_2 == END_OF_BASE64_ENCODED_DATA)
         {
             return(add_index);
@@ -304,7 +304,7 @@ _Check_return_ std::size_t CBase64Coding::Decode(_In_reads_bytes_(number_of_byte
         character_1 = m_DecoderTable[character_1];
         character_2 = m_DecoderTable[character_2];
 
-        byte_to_add = static_cast<uint8_t>(((character_1 << 2) | ((character_2 & 0x30) >> 4)));
+        byte_to_add = static_cast<uint8_t>(((character_1 << 2) bitor ((character_2 & 0x30) >> 4)));
 
         _ASSERTE(add_index < destination_size);
         destination[add_index] = byte_to_add;
@@ -317,7 +317,7 @@ _Check_return_ std::size_t CBase64Coding::Decode(_In_reads_bytes_(number_of_byte
 
         character_3 = m_DecoderTable[character_3];
 
-        byte_to_add = static_cast<uint8_t>(((((character_2 & 0x0F) << 4) | ((character_3 & 0x3C) >> 2))));
+        byte_to_add = static_cast<uint8_t>(((((character_2 & 0x0F) << 4) bitor ((character_3 & 0x3C) >> 2))));
 
         _ASSERTE(add_index < destination_size);
         destination[add_index] = byte_to_add;
@@ -330,7 +330,7 @@ _Check_return_ std::size_t CBase64Coding::Decode(_In_reads_bytes_(number_of_byte
 
         character_4 = m_DecoderTable[character_4];
 
-        byte_to_add = static_cast<uint8_t>((((character_3 & 0x03) << 6) | character_4));
+        byte_to_add = static_cast<uint8_t>((((character_3 & 0x03) << 6) bitor character_4));
 
         _ASSERTE(add_index < destination_size);
         destination[add_index] = byte_to_add;
@@ -345,7 +345,7 @@ _Check_return_ bool CBase64Coding::Decode(_In_reads_bytes_(number_of_bytes) uint
     WFC_VALIDATE_POINTER(this);
     WFC_VALIDATE_POINTER_NULL_OK(buffer);
 
-    if (buffer == nullptr || number_of_bytes < 1)
+    if (buffer == nullptr or number_of_bytes < 1)
     {
         destination.clear();
         return(true);
@@ -375,7 +375,7 @@ _Check_return_ bool CBase64Coding::Decode(_In_reads_bytes_(number_of_bytes) uint
     {
         character_1 = __get_character(buffer, m_DecoderTable, index, number_of_bytes);
 
-        if (character_1 != END_OF_BASE64_ENCODED_DATA && character_1 != BASE64_END_OF_BUFFER)
+        if (character_1 != END_OF_BASE64_ENCODED_DATA and character_1 != BASE64_END_OF_BUFFER)
         {
             if (m_DecoderTable[character_1] == BASE64_UNKNOWN_VALUE)
             {
@@ -386,7 +386,7 @@ _Check_return_ bool CBase64Coding::Decode(_In_reads_bytes_(number_of_bytes) uint
 
             character_2 = __get_character(buffer, m_DecoderTable, index, number_of_bytes);
 
-            if (character_2 != END_OF_BASE64_ENCODED_DATA && character_2 != BASE64_END_OF_BUFFER)
+            if (character_2 != END_OF_BASE64_ENCODED_DATA and character_2 != BASE64_END_OF_BUFFER)
             {
                 if (m_DecoderTable[character_2] == BASE64_UNKNOWN_VALUE)
                 {
@@ -397,7 +397,7 @@ _Check_return_ bool CBase64Coding::Decode(_In_reads_bytes_(number_of_bytes) uint
 
                 character_3 = __get_character(buffer, m_DecoderTable, index, number_of_bytes);
 
-                if (character_3 != END_OF_BASE64_ENCODED_DATA && character_3 != BASE64_END_OF_BUFFER)
+                if (character_3 != END_OF_BASE64_ENCODED_DATA and character_3 != BASE64_END_OF_BUFFER)
                 {
                     if (m_DecoderTable[character_3] == BASE64_UNKNOWN_VALUE)
                     {
@@ -408,7 +408,7 @@ _Check_return_ bool CBase64Coding::Decode(_In_reads_bytes_(number_of_bytes) uint
 
                     character_4 = __get_character(buffer, m_DecoderTable, index, number_of_bytes);
 
-                    if (character_4 != END_OF_BASE64_ENCODED_DATA && character_4 != BASE64_END_OF_BUFFER)
+                    if (character_4 != END_OF_BASE64_ENCODED_DATA and character_4 != BASE64_END_OF_BUFFER)
                     {
                         if (m_DecoderTable[character_4] == BASE64_UNKNOWN_VALUE)
                         {
@@ -418,8 +418,8 @@ _Check_return_ bool CBase64Coding::Decode(_In_reads_bytes_(number_of_bytes) uint
                         }
                     }
 
-                    if (character_2 == BASE64_END_OF_BUFFER ||
-                        character_3 == BASE64_END_OF_BUFFER ||
+                    if (character_2 == BASE64_END_OF_BUFFER or
+                        character_3 == BASE64_END_OF_BUFFER or
                         character_4 == BASE64_END_OF_BUFFER)
                     {
                         //WFCTRACE( TEXT( "Not enough translatable data" ) );
@@ -445,7 +445,7 @@ _Check_return_ bool CBase64Coding::Decode(_In_reads_bytes_(number_of_bytes) uint
             character_4 = END_OF_BASE64_ENCODED_DATA;
         }
 
-        if (character_1 == END_OF_BASE64_ENCODED_DATA ||
+        if (character_1 == END_OF_BASE64_ENCODED_DATA or
             character_2 == END_OF_BASE64_ENCODED_DATA)
         {
             destination.resize(add_index);
@@ -455,7 +455,7 @@ _Check_return_ bool CBase64Coding::Decode(_In_reads_bytes_(number_of_bytes) uint
         character_1 = m_DecoderTable[character_1];
         character_2 = m_DecoderTable[character_2];
 
-        byte_to_add = static_cast<uint8_t>(((character_1 << 2) | ((character_2 & 0x30) >> 4)));
+        byte_to_add = static_cast<uint8_t>(((character_1 << 2) bitor ((character_2 & 0x30) >> 4)));
 
         destination[add_index] = byte_to_add;
         add_index++;
@@ -468,7 +468,7 @@ _Check_return_ bool CBase64Coding::Decode(_In_reads_bytes_(number_of_bytes) uint
 
         character_3 = m_DecoderTable[character_3];
 
-        byte_to_add = static_cast<uint8_t>(((((character_2 & 0x0F) << 4) | ((character_3 & 0x3C) >> 2))));
+        byte_to_add = static_cast<uint8_t>(((((character_2 & 0x0F) << 4) bitor ((character_3 & 0x3C) >> 2))));
 
         destination[add_index] = byte_to_add;
         add_index++;
@@ -481,7 +481,7 @@ _Check_return_ bool CBase64Coding::Decode(_In_reads_bytes_(number_of_bytes) uint
 
         character_4 = m_DecoderTable[character_4];
 
-        byte_to_add = static_cast<uint8_t>((((character_3 & 0x03) << 6) | character_4));
+        byte_to_add = static_cast<uint8_t>((((character_3 & 0x03) << 6) bitor character_4));
 
         destination[add_index] = byte_to_add;
         add_index++;
@@ -533,7 +533,7 @@ _Check_return_ bool CBase64Coding::Decode( _In_ std::wstring const& source, _Ino
 
       if ( character_1 != END_OF_BASE64_ENCODED_DATA )
       {
-         if ( m_DecoderTable[ character_1 ] == BASE64_UNKNOWN_VALUE && character_1 != BASE64_END_OF_BUFFER )
+         if ( m_DecoderTable[ character_1 ] == BASE64_UNKNOWN_VALUE and character_1 != BASE64_END_OF_BUFFER )
          {
             //WFCTRACEVAL( TEXT( "Character 1 Failed translation at index " ), (uint32_t) index );
             destination.resize( add_index );
@@ -544,7 +544,7 @@ _Check_return_ bool CBase64Coding::Decode( _In_ std::wstring const& source, _Ino
 
          if ( character_2 != END_OF_BASE64_ENCODED_DATA )
          {
-            if ( m_DecoderTable[ character_2 ] == BASE64_UNKNOWN_VALUE && character_2 != BASE64_END_OF_BUFFER )
+            if ( m_DecoderTable[ character_2 ] == BASE64_UNKNOWN_VALUE and character_2 != BASE64_END_OF_BUFFER )
             {
                //WFCTRACEVAL( TEXT( "Character 2 Failed translation at index " ), (uint32_t) index );
                destination.resize( add_index );
@@ -555,7 +555,7 @@ _Check_return_ bool CBase64Coding::Decode( _In_ std::wstring const& source, _Ino
 
             if ( character_3 != END_OF_BASE64_ENCODED_DATA )
             {
-               if ( m_DecoderTable[ character_3 ] == BASE64_UNKNOWN_VALUE && character_3 != BASE64_END_OF_BUFFER )
+               if ( m_DecoderTable[ character_3 ] == BASE64_UNKNOWN_VALUE and character_3 != BASE64_END_OF_BUFFER )
                {
                   //WFCTRACEVAL( TEXT( "Character 3 Failed translation at index " ), (uint32_t) index );
                   destination.resize( add_index );
@@ -566,7 +566,7 @@ _Check_return_ bool CBase64Coding::Decode( _In_ std::wstring const& source, _Ino
 
                if ( character_4 != END_OF_BASE64_ENCODED_DATA )
                {
-                  if ( m_DecoderTable[ character_4 ] == BASE64_UNKNOWN_VALUE && character_4 != BASE64_END_OF_BUFFER )
+                  if ( m_DecoderTable[ character_4 ] == BASE64_UNKNOWN_VALUE and character_4 != BASE64_END_OF_BUFFER )
                   {
                      //WFCTRACEVAL( TEXT( "Character 4 Failed translation at index " ), (uint32_t) index );
                      destination.resize( add_index );
@@ -574,8 +574,8 @@ _Check_return_ bool CBase64Coding::Decode( _In_ std::wstring const& source, _Ino
                   }
                }
 
-               if ( character_2 == BASE64_END_OF_BUFFER ||
-                    character_3 == BASE64_END_OF_BUFFER ||
+               if ( character_2 == BASE64_END_OF_BUFFER or
+                    character_3 == BASE64_END_OF_BUFFER or
                     character_4 == BASE64_END_OF_BUFFER )
                { 
                    if (destination.size() == add_index)
@@ -605,7 +605,7 @@ _Check_return_ bool CBase64Coding::Decode( _In_ std::wstring const& source, _Ino
          character_4 = END_OF_BASE64_ENCODED_DATA;
       }
 
-      if ( character_1 == END_OF_BASE64_ENCODED_DATA ||
+      if ( character_1 == END_OF_BASE64_ENCODED_DATA or
            character_2 == END_OF_BASE64_ENCODED_DATA )
       {
          destination.resize( add_index );
@@ -615,7 +615,7 @@ _Check_return_ bool CBase64Coding::Decode( _In_ std::wstring const& source, _Ino
       character_1 = m_DecoderTable[ character_1 ];
       character_2 = m_DecoderTable[ character_2 ];
 
-      byte_to_add = static_cast<uint8_t>( ( ( character_1 << 2 ) | ( ( character_2 & 0x30 ) >> 4 ) ) );
+      byte_to_add = static_cast<uint8_t>( ( ( character_1 << 2 ) bitor ( ( character_2 & 0x30 ) >> 4 ) ) );
 
       destination[ add_index ] = byte_to_add;
       add_index++;
@@ -628,7 +628,7 @@ _Check_return_ bool CBase64Coding::Decode( _In_ std::wstring const& source, _Ino
 
       character_3 = m_DecoderTable[ character_3 ];
 
-      byte_to_add = static_cast<uint8_t>( ( ( ( ( character_2 & 0x0F ) << 4 ) | ( ( character_3 & 0x3C ) >> 2 ) ) ) );
+      byte_to_add = static_cast<uint8_t>( ( ( ( ( character_2 & 0x0F ) << 4 ) bitor ( ( character_3 & 0x3C ) >> 2 ) ) ) );
 
       destination[ add_index ] = byte_to_add;
       add_index++;
@@ -641,7 +641,7 @@ _Check_return_ bool CBase64Coding::Decode( _In_ std::wstring const& source, _Ino
 
       character_4 = m_DecoderTable[ character_4 ];
 
-      byte_to_add = static_cast<uint8_t>( ( ( ( character_3 & 0x03 ) << 6 ) | character_4 ) );
+      byte_to_add = static_cast<uint8_t>( ( ( ( character_3 & 0x03 ) << 6 ) bitor character_4 ) );
 
       destination[ add_index ] = byte_to_add;
       add_index++;
@@ -701,7 +701,7 @@ _Check_return_ bool CBase64Coding::Encode( _In_ std::vector<uint8_t> const& sour
          // We're at the end of the data to encode
 
          byte_2 = 0;
-         byte_to_add = alphabet[ ( ( ( byte_1 & 0x03 ) << 4 ) | ( ( byte_2 & 0xF0 ) >> 4 ) ) ];
+         byte_to_add = alphabet[ ( ( ( byte_1 & 0x03 ) << 4 ) bitor ( ( byte_2 & 0xF0 ) >> 4 ) ) ];
 
          destination[ add_index ] = byte_to_add;
          add_index++;
@@ -720,7 +720,7 @@ _Check_return_ bool CBase64Coding::Encode( _In_ std::vector<uint8_t> const& sour
          byte_2 = input_buffer[ source_index ];
       }
 
-      byte_to_add = alphabet[ ( ( ( byte_1 & 0x03 ) << 4 ) | ( ( byte_2 & 0xF0 ) >> 4 ) ) ];
+      byte_to_add = alphabet[ ( ( ( byte_1 & 0x03 ) << 4 ) bitor ( ( byte_2 & 0xF0 ) >> 4 ) ) ];
       destination[ add_index ] = byte_to_add;
       add_index++;
 
@@ -731,7 +731,7 @@ _Check_return_ bool CBase64Coding::Encode( _In_ std::vector<uint8_t> const& sour
          // We ran out of bytes, we need to add the last half of byte_2 and pad
          byte_3 = 0;
 
-         byte_to_add = alphabet[ ( ( ( byte_2 & 0x0F ) << 2 ) | ( ( byte_3 & 0xC0 ) >> 6 ) ) ];
+         byte_to_add = alphabet[ ( ( ( byte_2 & 0x0F ) << 2 ) bitor ( ( byte_3 & 0xC0 ) >> 6 ) ) ];
 
          destination[ add_index ] = byte_to_add;
          add_index++;
@@ -749,7 +749,7 @@ _Check_return_ bool CBase64Coding::Encode( _In_ std::vector<uint8_t> const& sour
 
       source_index++;
 
-      byte_to_add = alphabet[ ( ( ( byte_2 & 0x0F ) << 2 ) | ( ( byte_3 & 0xC0 ) >> 6 ) ) ];
+      byte_to_add = alphabet[ ( ( ( byte_2 & 0x0F ) << 2 ) bitor ( ( byte_3 & 0xC0 ) >> 6 ) ) ];
 
       destination[ add_index ] = byte_to_add;
       add_index++;
@@ -779,7 +779,7 @@ _Check_return_ bool CBase64Coding::Encode( __in_bcount( number_of_bytes_to_encod
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER_NULL_OK( input_buffer );
 
-   if ( number_of_bytes_to_encode < 1 || input_buffer == nullptr )
+   if ( number_of_bytes_to_encode < 1 or input_buffer == nullptr )
    {
       destination_string.assign( WSTRING_VIEW( L"=" ) );
       return( true );
@@ -801,7 +801,7 @@ _Check_return_ bool CBase64Coding::Encode(__in_bcount(number_of_bytes_to_encode)
     WFC_VALIDATE_POINTER(this);
     WFC_VALIDATE_POINTER_NULL_OK(input_buffer);
 
-    if (number_of_bytes_to_encode < 1 || input_buffer == nullptr)
+    if (number_of_bytes_to_encode < 1 or input_buffer == nullptr)
     {
         destination_string.assign(STRING_VIEW("="));
         return(true);
@@ -849,7 +849,7 @@ _Check_return_ bool CBase64Coding::Encode(__in_bcount(number_of_bytes_to_encode)
             // We're at the end of the data to encode
 
             byte_2 = 0;
-            byte_to_add = alphabet[(((byte_1 & 0x03) << 4) | ((byte_2 & 0xF0) >> 4))];
+            byte_to_add = alphabet[(((byte_1 & 0x03) << 4) bitor ((byte_2 & 0xF0) >> 4))];
 
             destination_string[number_of_bytes_encoded] = static_cast< char >(byte_to_add);
             number_of_bytes_encoded++;
@@ -893,7 +893,7 @@ _Check_return_ bool CBase64Coding::Encode(__in_bcount(number_of_bytes_to_encode)
             byte_2 = input_buffer[loop_index];
         }
 
-        byte_to_add = alphabet[(((byte_1 & 0x03) << 4) | ((byte_2 & 0xF0) >> 4))];
+        byte_to_add = alphabet[(((byte_1 & 0x03) << 4) bitor ((byte_2 & 0xF0) >> 4))];
 
         destination_string[number_of_bytes_encoded] = static_cast<char>(byte_to_add);
         number_of_bytes_encoded++;
@@ -916,7 +916,7 @@ _Check_return_ bool CBase64Coding::Encode(__in_bcount(number_of_bytes_to_encode)
             // We ran out of bytes, we need to add the last half of byte_2 and pad
             byte_3 = 0;
 
-            byte_to_add = alphabet[(((byte_2 & 0x0F) << 2) | ((byte_3 & 0xC0) >> 6))];
+            byte_to_add = alphabet[(((byte_2 & 0x0F) << 2) bitor ((byte_3 & 0xC0) >> 6))];
 
             destination_string[number_of_bytes_encoded] = static_cast< char >(byte_to_add);
             number_of_bytes_encoded++;
@@ -948,7 +948,7 @@ _Check_return_ bool CBase64Coding::Encode(__in_bcount(number_of_bytes_to_encode)
 
         loop_index++;
 
-        byte_to_add = alphabet[(((byte_2 & 0x0F) << 2) | ((byte_3 & 0xC0) >> 6))];
+        byte_to_add = alphabet[(((byte_2 & 0x0F) << 2) bitor ((byte_3 & 0xC0) >> 6))];
 
         destination_string[number_of_bytes_encoded] = static_cast<char>(byte_to_add);
         number_of_bytes_encoded++;
@@ -1000,14 +1000,14 @@ static inline void __encode(_In_ uint8_t const * input_buffer, _In_ std::size_t 
     {
         // Three Bytes to encode
         output_buffer[0] = alphabet[(input_buffer[0] >> 2)];
-        output_buffer[1] = alphabet[(((input_buffer[0] & 0x03) << 4) | ((input_buffer[1] & 0xF0) >> 4))];
-        output_buffer[2] = alphabet[(((input_buffer[1] & 0x0F) << 2) | ((input_buffer[2] & 0xC0) >> 6))];
+        output_buffer[1] = alphabet[(((input_buffer[0] & 0x03) << 4) bitor ((input_buffer[1] & 0xF0) >> 4))];
+        output_buffer[2] = alphabet[(((input_buffer[1] & 0x0F) << 2) bitor ((input_buffer[2] & 0xC0) >> 6))];
         output_buffer[3] = alphabet[(input_buffer[2] & 0x3F)];
     }
     else if (number_of_bytes == 2)
     {
         output_buffer[0] = alphabet[(input_buffer[0] >> 2)];
-        output_buffer[1] = alphabet[(((input_buffer[0] & 0x03) << 4) | ((input_buffer[1] & 0xF0) >> 4))];
+        output_buffer[1] = alphabet[(((input_buffer[0] & 0x03) << 4) bitor ((input_buffer[1] & 0xF0) >> 4))];
         output_buffer[2] = alphabet[((input_buffer[1] & 0x0F) << 2) ];
         output_buffer[3] = '=';
     }

@@ -94,7 +94,7 @@ class CSerialFile : public CDummyFile
          purgeTerminateReadOperation  = PURGE_RXABORT,
          purgeClearInputBuffer        = PURGE_RXCLEAR,
          purgeClearOutputBuffer       = PURGE_TXCLEAR,
-         purgeAll                     = PURGE_TXCLEAR | PURGE_RXCLEAR | PURGE_RXABORT | PURGE_TXABORT
+         purgeAll                     = PURGE_TXCLEAR bitor PURGE_RXCLEAR bitor PURGE_RXABORT bitor PURGE_TXABORT
       };
 
       enum _StuffYouCanWaitFor

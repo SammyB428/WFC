@@ -79,7 +79,7 @@ void PASCAL Win32FoundationClasses::wfc_get_dll_directory(__out std::wstring& di
 
     HMODULE module_handle = NULL;
 
-    if (!GetModuleHandleExW(GET_MODULE_HANDLE_EX_FLAG_FROM_ADDRESS |
+    if (!GetModuleHandleExW(GET_MODULE_HANDLE_EX_FLAG_FROM_ADDRESS bitor
         GET_MODULE_HANDLE_EX_FLAG_UNCHANGED_REFCOUNT,
         (LPCWSTR)&Win32FoundationClasses::wfc_am_i_administrator,
         &module_handle))

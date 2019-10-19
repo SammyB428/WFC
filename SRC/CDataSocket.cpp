@@ -111,7 +111,7 @@ _Check_return_ uint32_t CDataSocket::Read(__out_bcount(size_of_buffer) void * bu
       {
          number_of_bytes_read = m_Socket_p->Read( temporary_buffer, number_of_bytes_to_read );
 
-         if ( number_of_bytes_read == SOCKET_ERROR || number_of_bytes_read == 0 )
+         if ( number_of_bytes_read == SOCKET_ERROR or number_of_bytes_read == 0 )
          {
             //WFCTRACE( TEXT( "ERROR! Can't read socket\n" ) );
             exit_loop = true;

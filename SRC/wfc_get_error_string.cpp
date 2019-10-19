@@ -57,8 +57,8 @@ void PASCAL Win32FoundationClasses::wfc_get_error_string( _In_ DWORD const error
 
    LPVOID message_buffer = nullptr;
 
-   ::FormatMessageW( FORMAT_MESSAGE_ALLOCATE_BUFFER |
-                    FORMAT_MESSAGE_FROM_SYSTEM |
+   ::FormatMessageW( FORMAT_MESSAGE_ALLOCATE_BUFFER bitor
+                    FORMAT_MESSAGE_FROM_SYSTEM bitor
                     FORMAT_MESSAGE_IGNORE_INSERTS,
                     nullptr,
                     error_code,

@@ -140,7 +140,7 @@ void CBitArray::ClearRange( __in std::size_t const array_index, __in std::size_t
 
    auto const total_number_of_bits = GetSize();
 
-   if ( array_index >= total_number_of_bits || ( array_index + count ) > total_number_of_bits )
+   if ( array_index >= total_number_of_bits or ( array_index + count ) > total_number_of_bits )
    {
        _ASSERT_EXPR(false, _CRT_WIDE("Array index is out of bounds."));
       // Array out of bounds
@@ -158,7 +158,7 @@ void CBitArray::ClearRange( __in std::size_t const array_index, __in std::size_t
       bit_location = array_index + loop_counter;
       number_of_bits_remaining = total_number_of_bits - bit_location;
 
-      if ( ( ( bit_location % SizeOfBitRepresentation() ) == 0 ) && (number_of_bits_remaining >= SizeOfBitRepresentation()) )
+      if ( ( ( bit_location % SizeOfBitRepresentation() ) == 0 ) and (number_of_bits_remaining >= SizeOfBitRepresentation()) )
       {
          // We are on a boundary! We can optimize
          (void) m_GetElementIndexOfBitLocation( bit_location, bit_array_index, bit_number );
@@ -180,7 +180,7 @@ void CBitArray::SetRange( __in std::size_t const array_index, __in std::size_t c
 
    std::size_t const total_number_of_bits = GetSize();
 
-   if ( array_index >= total_number_of_bits || ( array_index + count ) > total_number_of_bits )
+   if ( array_index >= total_number_of_bits or ( array_index + count ) > total_number_of_bits )
    {
        _ASSERT_EXPR(false, _CRT_WIDE("Array index is out of bounds."));
        // Array out of bounds
@@ -198,7 +198,7 @@ void CBitArray::SetRange( __in std::size_t const array_index, __in std::size_t c
       bit_location = array_index + loop_counter;
       number_of_bits_remaining = total_number_of_bits - bit_location;
 
-      if ( ( ( bit_location % SizeOfBitRepresentation() ) == 0 ) && (number_of_bits_remaining >= SizeOfBitRepresentation()) )
+      if ( ( ( bit_location % SizeOfBitRepresentation() ) == 0 ) and (number_of_bits_remaining >= SizeOfBitRepresentation()) )
       {
          // We are on a boundary! We can optimize
          (void) m_GetElementIndexOfBitLocation( bit_location, bit_array_index, bit_number );
@@ -388,7 +388,7 @@ void CBitArray::Complement( void ) noexcept
 
    while( index < number_of_elements )  // Cannot be converted to a Range loop
    {
-      m_Bits.at( index ) ^= AN_ELEMENT_THAT_IS_ALL_ONES;
+      m_Bits.at( index ) xor_eq AN_ELEMENT_THAT_IS_ALL_ONES;
       index++;
    }
 }
@@ -937,7 +937,7 @@ _Check_return_ bool CBitArray::GetNextOne( __inout std::size_t& enumerator ) con
       SSIZE_T element_index = 0;
       SSIZE_T const number_of_elements = (SSIZE_T) m_Bits.size();
 
-      while( element_index < ( number_of_elements - 1 ) &&
+      while( element_index < ( number_of_elements - 1 ) and
              m_Bits.at( element_index ) == 0 )
       {
          element_index++;
@@ -953,7 +953,7 @@ _Check_return_ bool CBitArray::GetNextOne( __inout std::size_t& enumerator ) con
 
       SSIZE_T const number_of_bits_in_array = (SSIZE_T) GetSize();
 
-      while( bit_index < number_of_bits_in_array && GetAt( bit_index ) == 0 )
+      while( bit_index < number_of_bits_in_array and GetAt( bit_index ) == 0 )
       {
          bit_index++;
       }
@@ -977,7 +977,7 @@ _Check_return_ bool CBitArray::GetNextOne( __inout std::size_t& enumerator ) con
       return( false );
    }
 
-   while( bit_index < number_of_bits_in_array &&
+   while( bit_index < number_of_bits_in_array and
           ( bit_index % SizeOfBitRepresentation() ) != 0 )
    {
       if ( GetAt( bit_index ) == 1 )
@@ -1001,7 +1001,7 @@ _Check_return_ bool CBitArray::GetNextOne( __inout std::size_t& enumerator ) con
 
    std::size_t number_of_elements = m_Bits.size();
 
-   while( element_index < ( number_of_elements - 1 ) &&
+   while( element_index < ( number_of_elements - 1 ) and
           m_Bits.at( element_index ) == 0 )
    {
       element_index++;
@@ -1017,7 +1017,7 @@ _Check_return_ bool CBitArray::GetNextOne( __inout std::size_t& enumerator ) con
 
    bit_index += ( ( enumerator + 1 ) % SizeOfBitRepresentation() );
 
-   while( bit_index < number_of_bits_in_array && GetAt( bit_index ) == 0 )
+   while( bit_index < number_of_bits_in_array and GetAt( bit_index ) == 0 )
    {
       bit_index++;
    }
@@ -1042,7 +1042,7 @@ _Check_return_ bool CBitArray::GetNextZero( __inout std::size_t& enumerator ) co
       SSIZE_T element_index      = 0;
       SSIZE_T const number_of_elements = (SSIZE_T) m_Bits.size();
 
-      while( element_index < ( number_of_elements - 1 ) &&
+      while( element_index < ( number_of_elements - 1 ) and
              m_Bits.at( element_index ) == AN_ELEMENT_THAT_IS_ALL_ONES )
       {
          element_index++;
@@ -1058,7 +1058,7 @@ _Check_return_ bool CBitArray::GetNextZero( __inout std::size_t& enumerator ) co
 
       std::size_t const number_of_bits_in_array = GetSize();
 
-      while( bit_index < number_of_bits_in_array && GetAt( bit_index ) == 1 )
+      while( bit_index < number_of_bits_in_array and GetAt( bit_index ) == 1 )
       {
          bit_index++;
       }
@@ -1082,7 +1082,7 @@ _Check_return_ bool CBitArray::GetNextZero( __inout std::size_t& enumerator ) co
       return( false );
    }
 
-   while( bit_index < number_of_bits_in_array &&
+   while( bit_index < number_of_bits_in_array and
           ( bit_index % SizeOfBitRepresentation() ) != 0 )
    {
       if ( GetAt( bit_index ) == 0 )
@@ -1106,7 +1106,7 @@ _Check_return_ bool CBitArray::GetNextZero( __inout std::size_t& enumerator ) co
 
    std::size_t number_of_elements = m_Bits.size();
 
-   while( element_index < ( number_of_elements - 1 ) &&
+   while( element_index < ( number_of_elements - 1 ) and
           m_Bits.at( element_index ) == AN_ELEMENT_THAT_IS_ALL_ONES )
    {
       element_index++;
@@ -1122,7 +1122,7 @@ _Check_return_ bool CBitArray::GetNextZero( __inout std::size_t& enumerator ) co
 
    bit_index += ( ( enumerator + 1 ) % SizeOfBitRepresentation() );
 
-   while( bit_index < number_of_bits_in_array && GetAt( bit_index ) == 1 )
+   while( bit_index < number_of_bits_in_array and GetAt( bit_index ) == 1 )
    {
       bit_index++;
    }
@@ -1284,7 +1284,7 @@ void CBitArray::InsertAt( __in std::size_t const bit_location, __in uint32_t con
 
       SSIZE_T upper_bound = m_Bits.size() - 1;
 
-      if ( bit_number != 0 && (SSIZE_T) array_index < upper_bound )
+      if ( bit_number != 0 and (SSIZE_T) array_index < upper_bound )
       {
          that_set_of_bits = m_Bits.at( array_index + 1 );
 
@@ -1615,7 +1615,7 @@ void CBitArray::SetSize( __in std::size_t const number_of_bits ) noexcept
 
       number_of_elements_to_add /= SizeOfBitRepresentation();
 
-      if ( number_of_elements == 0 && number_of_elements_to_add == 0 )
+      if ( number_of_elements == 0 and number_of_elements_to_add == 0 )
       {
          // Dang math problem...
          number_of_elements_to_add++;
@@ -1634,7 +1634,7 @@ void CBitArray::SetValue(_In_ std::size_t const starting_bit_location, _In_ uint
    WFC_VALIDATE_POINTER( this );
    ASSERT( number_of_bits <= static_cast<uint32_t>(SizeOfBitRepresentation()) );
 
-   if ( number_of_bits > static_cast<uint32_t>(SizeOfBitRepresentation()) || number_of_bits < 1 )
+   if ( number_of_bits > static_cast<uint32_t>(SizeOfBitRepresentation()) or number_of_bits < 1 )
    {
       return;
    }

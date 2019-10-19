@@ -398,7 +398,7 @@ inline void CQueue::m_GrowBy(_In_ std::size_t number_of_new_items) noexcept
     // a HUGE bug here. I was using HeapReAlloc as a short cut but my logic
     // was flawed. In certain circumstances, queue items were being dropped.
 
-    void**  new_array = (void **) ::HeapAlloc(m_Heap, HEAP_NO_SERIALIZE | HEAP_CREATE_ALIGN_16, new_size * sizeof(void *));
+    void**  new_array = (void **) ::HeapAlloc(m_Heap, HEAP_NO_SERIALIZE bitor HEAP_CREATE_ALIGN_16, new_size * sizeof(void *));
 
     if (new_array != nullptr)
     {

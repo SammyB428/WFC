@@ -109,7 +109,7 @@ public:
     virtual void      Close( void ) noexcept;
     virtual _Check_return_ bool Flush( void ) noexcept;
     virtual _Check_return_ bool FromHandle( __in HANDLE file_handle,
-        __in UINT open_flags                     = (UINT)( (UINT)CFile64::OpenFlags::modeRead | (UINT)CFile64::OpenFlags::shareDenyNone),
+        __in UINT open_flags                     = (UINT)( (UINT)CFile64::OpenFlags::modeRead bitor (UINT)CFile64::OpenFlags::shareDenyNone),
         __in uint64_t const beginning_at         = 0,
         __in std::size_t const number_of_bytes_to_map = 0,
         __in_opt void const * desired_address    = nullptr ) noexcept;
@@ -120,12 +120,12 @@ public:
     inline  constexpr _Check_return_ void * GetPointer( void ) const noexcept { return( m_Pointer ); };
     virtual _Check_return_ void * Map( __in uint64_t const offset, __in std::size_t const length ) noexcept;
     virtual _Check_return_ bool Open( __in_z LPCWSTR filename,
-        __in UINT open_flags                     = (UINT)( (UINT)CFile64::OpenFlags::modeRead | (UINT)CFile64::OpenFlags::shareDenyNone),
+        __in UINT open_flags                     = (UINT)( (UINT)CFile64::OpenFlags::modeRead bitor (UINT)CFile64::OpenFlags::shareDenyNone),
         __in uint64_t const beginning_at         = 0,
         __in std::size_t const number_of_bytes_to_map = 0,
         __in_opt void const * desired_address    = nullptr ) noexcept;
     virtual _Check_return_ bool Open( __in_z LPCSTR filename,
-        __in UINT const open_flags               = (UINT)( (UINT)CFile64::OpenFlags::modeRead | (UINT)CFile64::OpenFlags::shareDenyNone),
+        __in UINT const open_flags               = (UINT)( (UINT)CFile64::OpenFlags::modeRead bitor (UINT)CFile64::OpenFlags::shareDenyNone),
         __in uint64_t const beginning_at         = 0,
         __in std::size_t const number_of_bytes_to_map = 0,
         __in_opt void const * desired_address    = nullptr ) noexcept;

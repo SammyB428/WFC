@@ -1620,7 +1620,7 @@ void PASCAL Win32FoundationClasses::Convert_NERR_Code_to_String( _In_ DWORD cons
 
             LPVOID message_buffer = (LPVOID) nullptr;
 
-            FormatMessage( FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM,
+            FormatMessage( FORMAT_MESSAGE_ALLOCATE_BUFFER bitor FORMAT_MESSAGE_FROM_SYSTEM,
                            nullptr,
                            error_code,
                            MAKELANGID( LANG_ENGLISH, SUBLANG_ENGLISH_US ),

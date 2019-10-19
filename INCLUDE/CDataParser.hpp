@@ -50,17 +50,17 @@
 #endif
 
 #define MAKE_uint16_t( least_significant, most_significant ) \
-    ( (uint16_t) (uint8_t) (least_significant) | ( (uint16_t) (uint8_t) (most_significant) << 8 ) )
+    ( (uint16_t) (uint8_t) (least_significant) bitor ( (uint16_t) (uint8_t) (most_significant) << 8 ) )
 
 #define MAKE_uint32_t( least_significant, byte_2, byte_3, most_significant ) \
-    ( (uint32_t) (uint8_t) (least_significant) | ( (uint32_t) (uint8_t) (byte_2) <<  8 ) | \
-    ( (uint32_t) (uint8_t) (byte_3) << 16 )    | ( (uint32_t) (uint8_t) (most_significant) << 24 ) )
+    ( (uint32_t) (uint8_t) (least_significant) bitor ( (uint32_t) (uint8_t) (byte_2) <<  8 ) bitor \
+    ( (uint32_t) (uint8_t) (byte_3) << 16 )    bitor ( (uint32_t) (uint8_t) (most_significant) << 24 ) )
 
 #define MAKE_uint64_t( least_significant, byte_2, byte_3, byte_4, byte_5, byte_6, byte_7, most_significant ) \
-    ( (uint64_t) (uint8_t) (least_significant) | ( (uint64_t) (uint8_t) (byte_2) <<  8 ) | \
-    ( (uint64_t) (uint8_t) (byte_3) << 16 )    | ( (uint64_t) (uint8_t) (byte_4) << 24 ) | \
-    ( (uint64_t) (uint8_t) (byte_5) << 32 )    | ( (uint64_t) (uint8_t) (byte_6) << 40 ) | \
-    ( (uint64_t) (uint8_t) (byte_7) << 48 )    | ( (uint64_t) (uint8_t) (most_significant) << 56 ) )
+    ( (uint64_t) (uint8_t) (least_significant) bitor ( (uint64_t) (uint8_t) (byte_2) <<  8 ) bitor \
+    ( (uint64_t) (uint8_t) (byte_3) << 16 )    bitor ( (uint64_t) (uint8_t) (byte_4) << 24 ) bitor \
+    ( (uint64_t) (uint8_t) (byte_5) << 32 )    bitor ( (uint64_t) (uint8_t) (byte_6) << 40 ) bitor \
+    ( (uint64_t) (uint8_t) (byte_7) << 48 )    bitor ( (uint64_t) (uint8_t) (most_significant) << 56 ) )
 
 class CMatchingCharacters
 {
@@ -92,22 +92,22 @@ public:
 
 inline constexpr _Check_return_ bool wfc_is_punctuation( _In_ uint32_t const character ) noexcept
 {
-    if ( character >= 0x21 && character <= 0x2F )
+    if ( character >= 0x21 and character <= 0x2F )
     {
         return( true );
     }
 
-    if ( character >= 0x3A && character <= 0x40 )
+    if ( character >= 0x3A and character <= 0x40 )
     {
         return( true );
     }
 
-    if ( character >= 0x5B && character <= 0x60 )
+    if ( character >= 0x5B and character <= 0x60 )
     {
         return( true );
     }
 
-    if ( character >= 0x7B && character <= 0x7E )
+    if ( character >= 0x7B and character <= 0x7E )
     {
         return( true );
     }
@@ -1707,7 +1707,7 @@ public:
 
         while (GetNextCharacter(parse_point, line_character) == true)
         {
-            if (line_character == CARRIAGE_RETURN || line_character == 0x00)
+            if (line_character == CARRIAGE_RETURN or line_character == 0x00)
             {
                 // Now take a look a the current character without advancing the parse point
 
@@ -1724,7 +1724,7 @@ public:
 
                 return(true);
             }
-            else if (line_character == LINE_FEED || line_character == 0x00)
+            else if (line_character == LINE_FEED or line_character == 0x00)
             {
                 return(true);
             }
@@ -1755,7 +1755,7 @@ public:
 
                 if ( PeekNextCharacter( parse_point, line_character ) == true )
                 {
-                    if ( line_character == LINE_FEED || line_character == 0x00 )
+                    if ( line_character == LINE_FEED or line_character == 0x00 )
                     {
                         if ( GetNextCharacter( parse_point, line_character ) == false )
                         {
@@ -1766,7 +1766,7 @@ public:
 
                 return( true );
             }
-            else if ( line_character == LINE_FEED || line_character == 0x00 )
+            else if ( line_character == LINE_FEED or line_character == 0x00 )
             {
                 return( true );
             }
@@ -1896,7 +1896,7 @@ public:
                 }
             } while (byte_to_test != termination_byte);
 
-            if (temp_buffer_index < 256 && temp_buffer_index > 0)
+            if (temp_buffer_index < 256 and temp_buffer_index > 0)
             {
                 temp_buffer[temp_buffer_index] = 0x00; // zero Terminate
                 string_to_get.append(temp_buffer);
@@ -2138,7 +2138,7 @@ public:
 
             WFC_SET_LAST_ERROR( NO_ERROR );
 
-            if ( data == nullptr || number_of_bytes == 0 )
+            if ( data == nullptr or number_of_bytes == 0 )
             {
                 WFC_SET_LAST_ERROR( ERROR_INVALID_ADDRESS );
                 return( false );
@@ -2424,7 +2424,7 @@ public:
         uint8_t const byte_1 = ReadByte( p );
         uint8_t const byte_2 = ReadByte( p );
 
-        if ( byte_1 == 0xFF && byte_2 == 0xFE )
+        if ( byte_1 == 0xFF and byte_2 == 0xFE )
         {
             (void) SetTextToASCII( false );
             (void) SetTextToBigEndian( false );
@@ -2432,7 +2432,7 @@ public:
             return;
         }
 
-        if ( byte_1 == 0xFE && byte_2 == 0xFF )
+        if ( byte_1 == 0xFE and byte_2 == 0xFF )
         {
             (void) SetTextToASCII( false );
             (void) SetTextToBigEndian( true );
@@ -2442,8 +2442,8 @@ public:
 
         uint8_t const byte_3 = ReadByte( p );
 
-        if ( byte_1 == 0xEF &&
-            byte_2 == 0xBB &&
+        if ( byte_1 == 0xEF and
+            byte_2 == 0xBB and
             byte_3 == 0xBF )
         {
             (void) SetTextToASCII( true );
@@ -2455,9 +2455,9 @@ public:
 
         uint8_t const byte_4 = ReadByte( p );
 
-        if ( Win32FoundationClasses::wfc_is_ascii( byte_1 ) == true &&
-            Win32FoundationClasses::wfc_is_ascii( byte_2 ) == true &&
-            Win32FoundationClasses::wfc_is_ascii( byte_3 ) == true &&
+        if ( Win32FoundationClasses::wfc_is_ascii( byte_1 ) == true and
+            Win32FoundationClasses::wfc_is_ascii( byte_2 ) == true and
+            Win32FoundationClasses::wfc_is_ascii( byte_3 ) == true and
             Win32FoundationClasses::wfc_is_ascii( byte_4 ) == true)
         {
             // all 4 are ascii
@@ -2466,9 +2466,9 @@ public:
             return;
         }
 
-        if ( byte_2 == 0x00 &&
-            byte_4 == 0x00 &&
-            wfc_is_ascii( byte_1 ) == true &&
+        if ( byte_2 == 0x00 and
+            byte_4 == 0x00 and
+            wfc_is_ascii( byte_1 ) == true and
             wfc_is_ascii( byte_3 ) == true)
         {
             // UTF-16, Big Endian
@@ -2478,9 +2478,9 @@ public:
             return;
         }
 
-        if ( byte_1 == 0x00 &&
-            wfc_is_ascii( byte_2 ) == true &&
-            byte_3 == 0x00 &&
+        if ( byte_1 == 0x00 and
+            wfc_is_ascii( byte_2 ) == true and
+            byte_3 == 0x00 and
             wfc_is_ascii( byte_4 ) == true)
         {
             // UTF-16, Big Endian
@@ -2490,9 +2490,9 @@ public:
             return;
         }
 
-        if ( byte_1 == 0x00 &&
-            byte_2 == 0x00 &&
-            byte_3 == 0x00 &&
+        if ( byte_1 == 0x00 and
+            byte_2 == 0x00 and
+            byte_3 == 0x00 and
             byte_4 != 0x00 )
         {
             // UCS-4 Big Endian
@@ -2502,9 +2502,9 @@ public:
             return;
         }
 
-        if ( byte_1 != 0x00 &&
-            byte_2 == 0x00 &&
-            byte_3 == 0x00 &&
+        if ( byte_1 != 0x00 and
+            byte_2 == 0x00 and
+            byte_3 == 0x00 and
             byte_4 == 0x00 )
         {
             // UCS-4 Little Endian
@@ -2514,9 +2514,9 @@ public:
             return;
         }
 
-        if ( byte_1 == 0x00 &&
-            byte_2 == 0x00 &&
-            byte_3 != 0x00 &&
+        if ( byte_1 == 0x00 and
+            byte_2 == 0x00 and
+            byte_3 != 0x00 and
             byte_4 == 0x00 )
         {
             // UCS-4 Little Endian
@@ -2526,9 +2526,9 @@ public:
             return;
         }
 
-        if ( byte_1 == 0x00 &&
-            byte_2 != 0x00 &&
-            byte_3 == 0x00 &&
+        if ( byte_1 == 0x00 and
+            byte_2 != 0x00 and
+            byte_3 == 0x00 and
             byte_4 == 0x00 )
         {
             // UCS-4 Little Endian

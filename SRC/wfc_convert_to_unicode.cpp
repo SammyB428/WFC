@@ -80,7 +80,7 @@ _Check_return_ VOID * PASCAL Win32FoundationClasses::wfc_get_unicode_conversion_
 
    auto const result_code = ::CoCreateInstance( mlang_class_id,
                                    nullptr,
-                                   CLSCTX_INPROC_SERVER | CLSCTX_LOCAL_SERVER,
+                                   CLSCTX_INPROC_SERVER bitor CLSCTX_LOCAL_SERVER,
                                    imultilanguage2_interface_id,
                                   &return_value );
 
@@ -98,7 +98,7 @@ static inline _Check_return_ bool __detect_code_page(_In_ IMultiLanguage2 * inte
    {
       detected_code_page = WFC_DEFAULT_CODEPAGE;
 
-      if (bytes == nullptr || number_of_bytes_in_buffer < 1)
+      if (bytes == nullptr or number_of_bytes_in_buffer < 1)
       {
           return(false);
       }

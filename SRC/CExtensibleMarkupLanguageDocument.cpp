@@ -190,8 +190,8 @@ _Check_return_ bool CExtensibleMarkupLanguageDocument::AddCallback( _In_ std::ws
 
    for( auto& entry : m_Callbacks )
    {
-      if ( entry.callback  == callback &&
-           entry.parameter == callback_parameter &&
+      if ( entry.callback  == callback and
+           entry.parameter == callback_parameter and
            element_name.compare( entry.name ) == I_AM_EQUAL_TO_THAT)
       {
          return( false );
@@ -237,10 +237,10 @@ _Check_return_ bool CExtensibleMarkupLanguageDocument::AddEntity( _In_ std::wstr
    {
       // We must check to make sure the default entities aren't replaced
 
-      if ( entity.compare(WSTRING_VIEW(L"&amp;")) == I_AM_EQUAL_TO_THAT ||
-           entity.compare(WSTRING_VIEW(L"&apos;")) == I_AM_EQUAL_TO_THAT ||
-           entity.compare(WSTRING_VIEW(L"&gt;")) == I_AM_EQUAL_TO_THAT ||
-           entity.compare(WSTRING_VIEW(L"&lt;")) == I_AM_EQUAL_TO_THAT ||
+      if ( entity.compare(WSTRING_VIEW(L"&amp;")) == I_AM_EQUAL_TO_THAT or
+           entity.compare(WSTRING_VIEW(L"&apos;")) == I_AM_EQUAL_TO_THAT or
+           entity.compare(WSTRING_VIEW(L"&gt;")) == I_AM_EQUAL_TO_THAT or
+           entity.compare(WSTRING_VIEW(L"&lt;")) == I_AM_EQUAL_TO_THAT or
            entity.compare(WSTRING_VIEW(L"&quot;")) == I_AM_EQUAL_TO_THAT)
       {
          // The user tried to replace a default entity
@@ -262,7 +262,7 @@ void CExtensibleMarkupLanguageDocument::Append( _In_ CExtensibleMarkupLanguageDo
 {
    WFC_VALIDATE_POINTER( this );
 
-   if ( m_XML == nullptr || source.m_XML == nullptr )
+   if ( m_XML == nullptr or source.m_XML == nullptr )
    {
       //WFCTRACE( TEXT( "an m_XML is NULL!" ) );
       return;
@@ -1040,8 +1040,8 @@ _Check_return_ bool CExtensibleMarkupLanguageDocument::Parse( _Inout_ CDataParse
          // Skip the first two characters
          parse_point.SetIndex( 2 );
       }
-      else if ( source.GetAt( 0 ) == 0xEF &&
-                source.GetAt( 1 ) == 0xBB &&
+      else if ( source.GetAt( 0 ) == 0xEF and
+                source.GetAt( 1 ) == 0xBB and
                 source.GetAt( 2 ) == 0xBF )
       {
          // UTF-8 encoding
@@ -1058,13 +1058,13 @@ _Check_return_ bool CExtensibleMarkupLanguageDocument::Parse( _Inout_ CDataParse
          uint8_t byte_3 = source.GetAt( 2 );
          uint8_t byte_4 = source.GetAt( 3 );
 
-         if ( byte_1 == 0x3C && byte_2 == 0x3F )
+         if ( byte_1 == 0x3C and byte_2 == 0x3F )
          {
             // Plain old ASCII
             (void) source.SetTextToASCII( true );
          }
-         else if ( byte_1 == 0x00 && wfc_is_ascii( byte_2 ) == true &&
-                   byte_3 == 0x00 && wfc_is_ascii( byte_4 ) == true )
+         else if ( byte_1 == 0x00 and wfc_is_ascii( byte_2 ) == true and
+                   byte_3 == 0x00 and wfc_is_ascii( byte_4 ) == true )
          {
             // UTF-16, Big Endian
             (void) source.SetTextToASCII( false );
@@ -1072,8 +1072,8 @@ _Check_return_ bool CExtensibleMarkupLanguageDocument::Parse( _Inout_ CDataParse
 
             // Don't autoincrement parse_point
          }
-         else if ( wfc_is_ascii( byte_1 ) == true && byte_2 == 0x00 &&
-                   wfc_is_ascii( byte_3 ) == true && byte_4 == 0x00 )
+         else if ( wfc_is_ascii( byte_1 ) == true and byte_2 == 0x00 and
+                   wfc_is_ascii( byte_3 ) == true and byte_4 == 0x00 )
          {
             // UTF-16, Little Endian
             (void) source.SetTextToASCII( false );
@@ -1081,36 +1081,36 @@ _Check_return_ bool CExtensibleMarkupLanguageDocument::Parse( _Inout_ CDataParse
 
             // Don't autoincrement parse_point
          }
-         else if ( byte_1 == 0x00 &&
-                   byte_2 == 0x00 &&
-                   byte_3 == 0x00 &&
+         else if ( byte_1 == 0x00 and
+                   byte_2 == 0x00 and
+                   byte_3 == 0x00 and
                    wfc_is_ascii( byte_4 ) == true )
          {
             // UCS-4 Big Endian
             (void) source.SetTextToUCS4( true );
             (void) source.SetUCS4Order( 1234 );
          }
-         else if ( wfc_is_ascii( byte_1 ) == true &&
-                   byte_2 == 0x00 &&
-                   byte_3 == 0x00 &&
+         else if ( wfc_is_ascii( byte_1 ) == true and
+                   byte_2 == 0x00 and
+                   byte_3 == 0x00 and
                    byte_4 == 0x00 )
          {
             // UCS-4 Little Endian
             (void) source.SetTextToUCS4( true );
             (void) source.SetUCS4Order( 4321 );
          }
-         else if ( byte_1 == 0x00 &&
-                   byte_2 == 0x00 &&
-                   wfc_is_ascii( byte_3 ) == true &&
+         else if ( byte_1 == 0x00 and
+                   byte_2 == 0x00 and
+                   wfc_is_ascii( byte_3 ) == true and
                    byte_4 == 0x00 )
          {
             // UCS-4 Unusual
             (void) source.SetTextToUCS4( true );
             (void) source.SetUCS4Order( 2143 );
          }
-         else if ( byte_1 == 0x00 &&
-                   wfc_is_ascii( byte_2 ) == true &&
-                   byte_3 == 0x00 &&
+         else if ( byte_1 == 0x00 and
+                   wfc_is_ascii( byte_2 ) == true and
+                   byte_3 == 0x00 and
                    byte_4 == 0x00 )
          {
             // UCS-4 Unusual
@@ -1160,20 +1160,20 @@ _Check_return_ bool CExtensibleMarkupLanguageDocument::Parse( _Inout_ CDataParse
    bool xml_declaration_found         = false;
    bool xml_declaration_is_mixed_case = false;
 
-   if (   source.PeekCharacter( parse_point, 0 ) == '<'   &&
-          source.PeekCharacter( parse_point, 1 ) == '?'   &&
-        ( source.PeekCharacter( parse_point, 2 ) == 'x'   ||
-          source.PeekCharacter( parse_point, 2 ) == 'X' ) &&
-        ( source.PeekCharacter( parse_point, 3 ) == 'm'   ||
-          source.PeekCharacter( parse_point, 3 ) == 'M' ) &&
-        ( source.PeekCharacter( parse_point, 4 ) == 'l'   ||
+   if (   source.PeekCharacter( parse_point, 0 ) == '<' and
+          source.PeekCharacter( parse_point, 1 ) == '?' and
+        ( source.PeekCharacter( parse_point, 2 ) == 'x'   or
+          source.PeekCharacter( parse_point, 2 ) == 'X' ) and
+        ( source.PeekCharacter( parse_point, 3 ) == 'm'   or
+          source.PeekCharacter( parse_point, 3 ) == 'M' ) and
+        ( source.PeekCharacter( parse_point, 4 ) == 'l'   or
           source.PeekCharacter( parse_point, 4 ) == 'L' ) )
    {
       beginning_of_tag.Copy( parse_point );
       xml_declaration_found = true;
 
-      if ( source.PeekCharacter( parse_point, 2 ) != 'x' ||
-           source.PeekCharacter( parse_point, 3 ) != 'm' ||
+      if ( source.PeekCharacter( parse_point, 2 ) != 'x' or
+           source.PeekCharacter( parse_point, 3 ) != 'm' or
            source.PeekCharacter( parse_point, 4 ) != 'l' )
       {
          xml_declaration_is_mixed_case = true;
@@ -1196,8 +1196,8 @@ _Check_return_ bool CExtensibleMarkupLanguageDocument::Parse( _Inout_ CDataParse
    {
       // See if it is lower case
 
-      if ( xml_declaration_is_mixed_case == true &&
-         ! ( m_ParseOptions & WFC_XML_IGNORE_CASE_IN_XML_DECLARATION ) )
+      if ( xml_declaration_is_mixed_case == true and
+         not ( m_ParseOptions & WFC_XML_IGNORE_CASE_IN_XML_DECLARATION ) )
       {
          m_ParseErrorEncountered = ParseErrorOccurred();
          m_ErrorMessage.assign(WSTRING_VIEW(L"XML Declaration is not lower case (Rule 23)."));
@@ -1365,7 +1365,7 @@ _Check_return_ bool CExtensibleMarkupLanguageDocument::Parse( _Inout_ CDataParse
 
          bool there_aint_one = true;
 
-         while( m_XML->GetNextChild( element_enumerator, child_p ) == true && there_aint_one == true )
+         while( m_XML->GetNextChild( element_enumerator, child_p ) == true and there_aint_one == true )
          {
             if ( child_p->GetType() == CExtensibleMarkupLanguageElement::ElementType::Element )
             {
@@ -1409,8 +1409,8 @@ _Check_return_ bool CExtensibleMarkupLanguageDocument::RemoveCallback( _In_ std:
 
    while( loop_index < number_of_entries ) // Cannot be converted to a Range loop
    {
-      if (m_Callbacks[loop_index].callback  == callback &&
-          m_Callbacks[loop_index].parameter == callback_parameter &&
+      if (m_Callbacks[loop_index].callback  == callback and
+          m_Callbacks[loop_index].parameter == callback_parameter and
           element_name.compare( m_Callbacks[loop_index].name ) == I_AM_EQUAL_TO_THAT)
       {
          m_Callbacks.erase( std::begin(m_Callbacks) + loop_index );
@@ -1514,68 +1514,68 @@ _Check_return_ uint32_t CExtensibleMarkupLanguageDocument::SetWriteOptions( _In_
    if ( m_WriteOptions & WFC_XML_WRITE_AS_UTF8 )
    {
       // UTF-8 was specified, UTF-7 & ASCII are invalid
-      ASSERT( ! ( m_WriteOptions & WFC_XML_WRITE_AS_UTF7 ) );
-      ASSERT( ! ( m_WriteOptions & WFC_XML_WRITE_AS_ASCII ) );
-      ASSERT( ! ( m_WriteOptions & WFC_XML_WRITE_AS_UNICODE ) );
-      ASSERT( ! ( m_WriteOptions & WFC_XML_WRITE_AS_UCS4 ) );
-      ASSERT( ! ( m_WriteOptions & WFC_XML_WRITE_AS_UCS4_UNUSUAL_2143 ) );
-      ASSERT( ! ( m_WriteOptions & WFC_XML_WRITE_AS_UCS4_UNUSUAL_3412 ) );
+      ASSERT(not ( m_WriteOptions & WFC_XML_WRITE_AS_UTF7 ) );
+      ASSERT(not ( m_WriteOptions & WFC_XML_WRITE_AS_ASCII ) );
+      ASSERT(not ( m_WriteOptions & WFC_XML_WRITE_AS_UNICODE ) );
+      ASSERT(not ( m_WriteOptions & WFC_XML_WRITE_AS_UCS4 ) );
+      ASSERT(not ( m_WriteOptions & WFC_XML_WRITE_AS_UCS4_UNUSUAL_2143 ) );
+      ASSERT(not ( m_WriteOptions & WFC_XML_WRITE_AS_UCS4_UNUSUAL_3412 ) );
    }
    else if ( m_WriteOptions & WFC_XML_WRITE_AS_UTF7 )
    {
       // UTF-7 was specified, UTF-8 & ASCII are invalid
-      ASSERT( ! ( m_WriteOptions & WFC_XML_WRITE_AS_UTF8 ) );
-      ASSERT( ! ( m_WriteOptions & WFC_XML_WRITE_AS_ASCII ) );
-      ASSERT( ! ( m_WriteOptions & WFC_XML_WRITE_AS_UNICODE ) );
-      ASSERT( ! ( m_WriteOptions & WFC_XML_WRITE_AS_UCS4 ) );
-      ASSERT( ! ( m_WriteOptions & WFC_XML_WRITE_AS_UCS4_UNUSUAL_2143 ) );
-      ASSERT( ! ( m_WriteOptions & WFC_XML_WRITE_AS_UCS4_UNUSUAL_3412 ) );
+      ASSERT(not ( m_WriteOptions & WFC_XML_WRITE_AS_UTF8 ) );
+      ASSERT(not ( m_WriteOptions & WFC_XML_WRITE_AS_ASCII ) );
+      ASSERT(not ( m_WriteOptions & WFC_XML_WRITE_AS_UNICODE ) );
+      ASSERT(not ( m_WriteOptions & WFC_XML_WRITE_AS_UCS4 ) );
+      ASSERT(not ( m_WriteOptions & WFC_XML_WRITE_AS_UCS4_UNUSUAL_2143 ) );
+      ASSERT(not ( m_WriteOptions & WFC_XML_WRITE_AS_UCS4_UNUSUAL_3412 ) );
    }
    else if ( m_WriteOptions & WFC_XML_WRITE_AS_ASCII )
    {
       // ASCII was specified, UTF is invalid
-      ASSERT( ! ( m_WriteOptions & WFC_XML_WRITE_AS_UTF7 ) );
-      ASSERT( ! ( m_WriteOptions & WFC_XML_WRITE_AS_UTF8 ) );
-      ASSERT( ! ( m_WriteOptions & WFC_XML_WRITE_AS_UNICODE ) );
-      ASSERT( ! ( m_WriteOptions & WFC_XML_WRITE_AS_UCS4 ) );
-      ASSERT( ! ( m_WriteOptions & WFC_XML_WRITE_AS_UCS4_UNUSUAL_2143 ) );
-      ASSERT( ! ( m_WriteOptions & WFC_XML_WRITE_AS_UCS4_UNUSUAL_3412 ) );
+      ASSERT(not ( m_WriteOptions & WFC_XML_WRITE_AS_UTF7 ) );
+      ASSERT(not ( m_WriteOptions & WFC_XML_WRITE_AS_UTF8 ) );
+      ASSERT(not ( m_WriteOptions & WFC_XML_WRITE_AS_UNICODE ) );
+      ASSERT(not ( m_WriteOptions & WFC_XML_WRITE_AS_UCS4 ) );
+      ASSERT(not ( m_WriteOptions & WFC_XML_WRITE_AS_UCS4_UNUSUAL_2143 ) );
+      ASSERT(not ( m_WriteOptions & WFC_XML_WRITE_AS_UCS4_UNUSUAL_3412 ) );
    }
    else if ( m_WriteOptions & WFC_XML_WRITE_AS_UNICODE )
    {
-      ASSERT( ! ( m_WriteOptions & WFC_XML_WRITE_AS_ASCII ) );
-      ASSERT( ! ( m_WriteOptions & WFC_XML_WRITE_AS_UTF7 ) );
-      ASSERT( ! ( m_WriteOptions & WFC_XML_WRITE_AS_UTF8 ) );
-      ASSERT( ! ( m_WriteOptions & WFC_XML_WRITE_AS_UCS4 ) );
-      ASSERT( ! ( m_WriteOptions & WFC_XML_WRITE_AS_UCS4_UNUSUAL_2143 ) );
-      ASSERT( ! ( m_WriteOptions & WFC_XML_WRITE_AS_UCS4_UNUSUAL_3412 ) );
+      ASSERT(not ( m_WriteOptions & WFC_XML_WRITE_AS_ASCII ) );
+      ASSERT(not ( m_WriteOptions & WFC_XML_WRITE_AS_UTF7 ) );
+      ASSERT(not ( m_WriteOptions & WFC_XML_WRITE_AS_UTF8 ) );
+      ASSERT(not ( m_WriteOptions & WFC_XML_WRITE_AS_UCS4 ) );
+      ASSERT(not ( m_WriteOptions & WFC_XML_WRITE_AS_UCS4_UNUSUAL_2143 ) );
+      ASSERT(not ( m_WriteOptions & WFC_XML_WRITE_AS_UCS4_UNUSUAL_3412 ) );
    }
    else if ( m_WriteOptions & WFC_XML_WRITE_AS_UCS4 )
    {
-      ASSERT( ! ( m_WriteOptions & WFC_XML_WRITE_AS_ASCII ) );
-      ASSERT( ! ( m_WriteOptions & WFC_XML_WRITE_AS_UTF7 ) );
-      ASSERT( ! ( m_WriteOptions & WFC_XML_WRITE_AS_UTF8 ) );
-      ASSERT( ! ( m_WriteOptions & WFC_XML_WRITE_AS_UNICODE ) );
-      ASSERT( ! ( m_WriteOptions & WFC_XML_WRITE_AS_UCS4_UNUSUAL_2143 ) );
-      ASSERT( ! ( m_WriteOptions & WFC_XML_WRITE_AS_UCS4_UNUSUAL_3412 ) );
+      ASSERT(not ( m_WriteOptions & WFC_XML_WRITE_AS_ASCII ) );
+      ASSERT(not ( m_WriteOptions & WFC_XML_WRITE_AS_UTF7 ) );
+      ASSERT(not ( m_WriteOptions & WFC_XML_WRITE_AS_UTF8 ) );
+      ASSERT(not ( m_WriteOptions & WFC_XML_WRITE_AS_UNICODE ) );
+      ASSERT(not ( m_WriteOptions & WFC_XML_WRITE_AS_UCS4_UNUSUAL_2143 ) );
+      ASSERT(not ( m_WriteOptions & WFC_XML_WRITE_AS_UCS4_UNUSUAL_3412 ) );
    }
    else if ( m_WriteOptions & WFC_XML_WRITE_AS_UCS4_UNUSUAL_2143 )
    {
-      ASSERT( ! ( m_WriteOptions & WFC_XML_WRITE_AS_ASCII ) );
-      ASSERT( ! ( m_WriteOptions & WFC_XML_WRITE_AS_UTF7 ) );
-      ASSERT( ! ( m_WriteOptions & WFC_XML_WRITE_AS_UTF8 ) );
-      ASSERT( ! ( m_WriteOptions & WFC_XML_WRITE_AS_UNICODE ) );
-      ASSERT( ! ( m_WriteOptions & WFC_XML_WRITE_AS_UCS4 ) );
-      ASSERT( ! ( m_WriteOptions & WFC_XML_WRITE_AS_UCS4_UNUSUAL_3412 ) );
+      ASSERT(not ( m_WriteOptions & WFC_XML_WRITE_AS_ASCII ) );
+      ASSERT(not ( m_WriteOptions & WFC_XML_WRITE_AS_UTF7 ) );
+      ASSERT(not ( m_WriteOptions & WFC_XML_WRITE_AS_UTF8 ) );
+      ASSERT(not ( m_WriteOptions & WFC_XML_WRITE_AS_UNICODE ) );
+      ASSERT(not ( m_WriteOptions & WFC_XML_WRITE_AS_UCS4 ) );
+      ASSERT(not ( m_WriteOptions & WFC_XML_WRITE_AS_UCS4_UNUSUAL_3412 ) );
    }
    else if ( m_WriteOptions & WFC_XML_WRITE_AS_UCS4_UNUSUAL_3412 )
    {
-      ASSERT( ! ( m_WriteOptions & WFC_XML_WRITE_AS_ASCII ) );
-      ASSERT( ! ( m_WriteOptions & WFC_XML_WRITE_AS_UTF7 ) );
-      ASSERT( ! ( m_WriteOptions & WFC_XML_WRITE_AS_UTF8 ) );
-      ASSERT( ! ( m_WriteOptions & WFC_XML_WRITE_AS_UNICODE ) );
-      ASSERT( ! ( m_WriteOptions & WFC_XML_WRITE_AS_UCS4 ) );
-      ASSERT( ! ( m_WriteOptions & WFC_XML_WRITE_AS_UCS4_UNUSUAL_2143 ) );
+      ASSERT(not ( m_WriteOptions & WFC_XML_WRITE_AS_ASCII ) );
+      ASSERT(not ( m_WriteOptions & WFC_XML_WRITE_AS_UTF7 ) );
+      ASSERT(not ( m_WriteOptions & WFC_XML_WRITE_AS_UTF8 ) );
+      ASSERT(not ( m_WriteOptions & WFC_XML_WRITE_AS_UNICODE ) );
+      ASSERT(not ( m_WriteOptions & WFC_XML_WRITE_AS_UCS4 ) );
+      ASSERT(not ( m_WriteOptions & WFC_XML_WRITE_AS_UCS4_UNUSUAL_2143 ) );
    }
 #endif // _DEBUG
 

@@ -69,10 +69,10 @@ class CReedSolomonErrorCorrectionCode
 {
    protected:
 
-      static int const m_NumberOfBitsPerSymbol; // 8 bits per symbol
-      static int const m_BlockSize; // 255
+      static constexpr int const m_NumberOfBitsPerSymbol = 8; // 8 bits per symbol
+      static constexpr int const m_BlockSize = 255; // 255
 
-      int   m_NumberOfSymbolsPerBlock;
+      int m_NumberOfSymbolsPerBlock{ 0 };
       std::unique_ptr<int[]> m_Alpha_to; // array of integers of size (m_BlockSize + 1) elements
       std::unique_ptr<int[]> m_GeneratorPolynomial; // array of integers size (m_BlockSize - m_NumberOfSymbolsPerBlock + 1) elements
       std::unique_ptr<int[]> m_Index_of; // array of integers of size (m_BlockSize + 1) elements
@@ -83,7 +83,7 @@ class CReedSolomonErrorCorrectionCode
       virtual _Check_return_ int  m_DecodeChunk( __inout std::vector<uint8_t>& chunk, __out std::vector<int>& error_polynomials, __in int no_eras = 1 ) noexcept;
       virtual void m_GenerateGaloisField( void ) noexcept;
       virtual void m_GeneratePolynomial( void ) noexcept;
-      virtual void m_Initialize( __in int number_of_symbols_per_block ) noexcept;
+      virtual void m_Initialize( _In_ int const number_of_symbols_per_block ) noexcept;
       inline  _Check_return_ int m_Mod( __in int x ) noexcept;
 
    public:

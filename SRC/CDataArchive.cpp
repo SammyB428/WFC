@@ -99,7 +99,7 @@ void CDataArchive::Read(__out uint8_t& value) noexcept
 {
     WFC_VALIDATE_POINTER(this);
 
-    if (m_AmIWriting == true || m_ReadFromDataChunk_p == nullptr)
+    if (m_AmIWriting == true or m_ReadFromDataChunk_p == nullptr)
     {
         //WFCTRACE( TEXT( "You haven't called ReadFrom() or you passed a NULL to ReadFrom()" ) );
         value = 0;
@@ -126,7 +126,7 @@ void CDataArchive::Read(__out std::vector<uint8_t>& array) noexcept
 {
     WFC_VALIDATE_POINTER(this);
 
-    if (m_AmIWriting == true || m_ReadFromDataChunk_p == nullptr)
+    if (m_AmIWriting == true or m_ReadFromDataChunk_p == nullptr)
     {
         //WFCTRACE( TEXT( "You haven't called ReadFrom() or you passed a NULL to ReadFrom()" ) );
         array.clear();
@@ -171,7 +171,7 @@ void CDataArchive::Read(__out std::vector<uint32_t>& array) noexcept
 {
     WFC_VALIDATE_POINTER(this);
 
-    if (m_AmIWriting == true || m_ReadFromDataChunk_p == nullptr)
+    if (m_AmIWriting == true or m_ReadFromDataChunk_p == nullptr)
     {
         //WFCTRACE( TEXT( "You haven't called ReadFrom() or you passed a NULL to ReadFrom()" ) );
         array.clear();
@@ -216,7 +216,7 @@ void CDataArchive::Read(__out char& value) noexcept
 {
     WFC_VALIDATE_POINTER(this);
 
-    if (m_AmIWriting == true || m_ReadFromDataChunk_p == nullptr)
+    if (m_AmIWriting == true or m_ReadFromDataChunk_p == nullptr)
     {
         //WFCTRACE( TEXT( "You haven't called ReadFrom() or you passed a NULL to ReadFrom()" ) );
         value = 0;
@@ -238,7 +238,7 @@ void CDataArchive::Read(__out std::vector<std::wstring>& array) noexcept
 
     array.clear();
 
-    if (m_AmIWriting == true || m_ReadFromDataChunk_p == nullptr)
+    if (m_AmIWriting == true or m_ReadFromDataChunk_p == nullptr)
     {
         //WFCTRACE( TEXT( "You haven't called ReadFrom() or you passed a NULL to ReadFrom()" ) );
         return;
@@ -277,7 +277,7 @@ void CDataArchive::Read(__out std::wstring& value) noexcept
 
     value.clear();
 
-    if (m_AmIWriting == true || m_ReadFromDataChunk_p == nullptr)
+    if (m_AmIWriting == true or m_ReadFromDataChunk_p == nullptr)
     {
         //WFCTRACE( TEXT( "You haven't called ReadFrom() or you passed a NULL to ReadFrom()" ) );
         return;
@@ -308,7 +308,7 @@ void CDataArchive::Read(__out std::vector<uint16_t>& array) noexcept
 {
     WFC_VALIDATE_POINTER(this);
 
-    if (m_AmIWriting == true || m_ReadFromDataChunk_p == nullptr)
+    if (m_AmIWriting == true or m_ReadFromDataChunk_p == nullptr)
     {
         //WFCTRACE( TEXT( "You haven't called ReadFrom() or you passed a NULL to ReadFrom()" ) );
         array.clear();
@@ -353,7 +353,7 @@ void CDataArchive::Read(__out double& value) noexcept
 {
     WFC_VALIDATE_POINTER(this);
 
-    if (m_AmIWriting == true || m_ReadFromDataChunk_p == nullptr)
+    if (m_AmIWriting == true or m_ReadFromDataChunk_p == nullptr)
     {
         //WFCTRACE( TEXT( "You haven't called ReadFrom() or you passed a NULL to ReadFrom()" ) );
         value = 0.0;
@@ -382,7 +382,7 @@ void CDataArchive::Read(__out uint32_t& value) noexcept
 {
     WFC_VALIDATE_POINTER(this);
 
-    if (m_AmIWriting == true || m_ReadFromDataChunk_p == nullptr)
+    if (m_AmIWriting == true or m_ReadFromDataChunk_p == nullptr)
     {
         //WFCTRACE( TEXT( "You haven't called ReadFrom() or you passed a NULL to ReadFrom()" ) );
         value = 0;
@@ -412,7 +412,7 @@ void CDataArchive::Read(__out float& value) noexcept
 {
     WFC_VALIDATE_POINTER(this);
 
-    if (m_AmIWriting == true || m_ReadFromDataChunk_p == nullptr)
+    if (m_AmIWriting == true or m_ReadFromDataChunk_p == nullptr)
     {
         //WFCTRACE( TEXT( "You haven't called ReadFrom() or you passed a NULL to ReadFrom()" ) );
         value = 0.0;
@@ -441,7 +441,7 @@ void CDataArchive::Read( __out int32_t& value) noexcept
 {
     WFC_VALIDATE_POINTER(this);
 
-    if (m_AmIWriting == true || m_ReadFromDataChunk_p == nullptr)
+    if (m_AmIWriting == true or m_ReadFromDataChunk_p == nullptr)
     {
         //WFCTRACE( TEXT( "You haven't called ReadFrom() or you passed a NULL to ReadFrom()" ) );
         value = 0;
@@ -470,7 +470,7 @@ void CDataArchive::Read(__out uint64_t& value) noexcept
 {
     WFC_VALIDATE_POINTER(this);
 
-    if (m_AmIWriting == true || m_ReadFromDataChunk_p == nullptr)
+    if (m_AmIWriting == true or m_ReadFromDataChunk_p == nullptr)
     {
         //WFCTRACE( TEXT( "You haven't called ReadFrom() or you passed a NULL to ReadFrom()" ) );
         value = 0;
@@ -499,7 +499,7 @@ void CDataArchive::Read(__out uint16_t& value) noexcept
 {
     WFC_VALIDATE_POINTER(this);
 
-    if (m_AmIWriting == true || m_ReadFromDataChunk_p == nullptr)
+    if (m_AmIWriting == true or m_ReadFromDataChunk_p == nullptr)
     {
         //WFCTRACE( TEXT( "You haven't called ReadFrom() or you passed a NULL to ReadFrom()" ) );
         value = 0;
@@ -528,7 +528,7 @@ void CDataArchive::Read(__out wchar_t& value) noexcept
 {
     WFC_VALIDATE_POINTER(this);
 
-    if (m_AmIWriting == true || m_ReadFromDataChunk_p == nullptr)
+    if (m_AmIWriting == true or m_ReadFromDataChunk_p == nullptr)
     {
         //WFCTRACE( TEXT( "You haven't called ReadFrom() or you passed a NULL to ReadFrom()" ) );
         value = 0;
@@ -567,7 +567,7 @@ void CDataArchive::Write( __in uint8_t const value) noexcept
 {
     WFC_VALIDATE_POINTER(this);
 
-    if (m_AmIWriting == false || m_WriteToDataChunk_p == nullptr)
+    if (m_AmIWriting == false or m_WriteToDataChunk_p == nullptr)
     {
         //WFCTRACE( TEXT( "You haven't called WriteTo() or you passed a NULL to WriteTo()" ) );
         return;
@@ -592,7 +592,7 @@ void CDataArchive::Write(__in char const value) noexcept
 {
     WFC_VALIDATE_POINTER(this);
 
-    if (m_AmIWriting == false || m_WriteToDataChunk_p == nullptr)
+    if (m_AmIWriting == false or m_WriteToDataChunk_p == nullptr)
     {
         //WFCTRACE( TEXT( "You haven't called WriteTo() or you passed a NULL to WriteTo()" ) );
         return;
@@ -607,7 +607,7 @@ void CDataArchive::Write(__in std::vector<uint8_t> const& array) noexcept
 {
     WFC_VALIDATE_POINTER(this);
 
-    if (m_AmIWriting == false || m_WriteToDataChunk_p == nullptr)
+    if (m_AmIWriting == false or m_WriteToDataChunk_p == nullptr)
     {
         //WFCTRACE( TEXT( "You haven't called WriteTo() or you passed a NULL to WriteTo()" ) );
         return;
@@ -636,7 +636,7 @@ void CDataArchive::Write(__in std::vector<uint32_t> const& array) noexcept
 {
     WFC_VALIDATE_POINTER(this);
 
-    if (m_AmIWriting == false || m_WriteToDataChunk_p == nullptr)
+    if (m_AmIWriting == false or m_WriteToDataChunk_p == nullptr)
     {
         //WFCTRACE( TEXT( "You haven't called WriteTo() or you passed a NULL to WriteTo()" ) );
         return;
@@ -654,7 +654,7 @@ void CDataArchive::Write(__in std::wstring const& value) noexcept
 {
     WFC_VALIDATE_POINTER(this);
 
-    if (m_AmIWriting == false || m_WriteToDataChunk_p == nullptr)
+    if (m_AmIWriting == false or m_WriteToDataChunk_p == nullptr)
     {
         //WFCTRACE( TEXT( "You haven't called WriteTo() or you passed a NULL to WriteTo()" ) );
         return;
@@ -676,7 +676,7 @@ void CDataArchive::Write(__in std::vector<std::wstring> const& array) noexcept
 {
     WFC_VALIDATE_POINTER(this);
 
-    if (m_AmIWriting == false || m_WriteToDataChunk_p == nullptr)
+    if (m_AmIWriting == false or m_WriteToDataChunk_p == nullptr)
     {
         //WFCTRACE( TEXT( "You haven't called WriteTo() or you passed a NULL to WriteTo()" ) );
         return;
@@ -694,7 +694,7 @@ void CDataArchive::Write(__in std::vector<uint16_t> const& array) noexcept
 {
     WFC_VALIDATE_POINTER(this);
 
-    if (m_AmIWriting == false || m_WriteToDataChunk_p == nullptr)
+    if (m_AmIWriting == false or m_WriteToDataChunk_p == nullptr)
     {
         //WFCTRACE( TEXT( "You haven't called WriteTo() or you passed a NULL to WriteTo()" ) );
         return;
@@ -712,7 +712,7 @@ void CDataArchive::Write(__in double const value) noexcept
 {
     WFC_VALIDATE_POINTER(this);
 
-    if (m_AmIWriting == false || m_WriteToDataChunk_p == nullptr)
+    if (m_AmIWriting == false or m_WriteToDataChunk_p == nullptr)
     {
         //WFCTRACE( TEXT( "You haven't called WriteTo() or you passed a NULL to WriteTo()" ) );
         return;
@@ -742,7 +742,7 @@ void CDataArchive::Write(__in uint32_t const value) noexcept
 {
     WFC_VALIDATE_POINTER(this);
 
-    if (m_AmIWriting == false || m_WriteToDataChunk_p == nullptr)
+    if (m_AmIWriting == false or m_WriteToDataChunk_p == nullptr)
     {
         //WFCTRACE( TEXT( "You haven't called WriteTo() or you passed a NULL to WriteTo()" ) );
         return;
@@ -772,7 +772,7 @@ void CDataArchive::Write(__in wchar_t const value) noexcept
 {
     WFC_VALIDATE_POINTER(this);
 
-    if (m_AmIWriting == false || m_WriteToDataChunk_p == nullptr)
+    if (m_AmIWriting == false or m_WriteToDataChunk_p == nullptr)
     {
         //WFCTRACE( TEXT( "You haven't called WriteTo() or you passed a NULL to WriteTo()" ) );
         return;
@@ -802,7 +802,7 @@ void CDataArchive::Write(__in float const value) noexcept
 {
     WFC_VALIDATE_POINTER(this);
 
-    if (m_AmIWriting == false || m_WriteToDataChunk_p == nullptr)
+    if (m_AmIWriting == false or m_WriteToDataChunk_p == nullptr)
     {
         //WFCTRACE( TEXT( "You haven't called WriteTo() or you passed a NULL to WriteTo()" ) );
         return;
@@ -832,7 +832,7 @@ void CDataArchive::Write(__in int32_t const value) noexcept
 {
     WFC_VALIDATE_POINTER(this);
 
-    if (m_AmIWriting == false || m_WriteToDataChunk_p == nullptr)
+    if (m_AmIWriting == false or m_WriteToDataChunk_p == nullptr)
     {
         //WFCTRACE( TEXT( "You haven't called WriteTo() or you passed a NULL to WriteTo()" ) );
         return;
@@ -862,7 +862,7 @@ void CDataArchive::Write(__in uint64_t const value) noexcept
 {
     WFC_VALIDATE_POINTER(this);
 
-    if (m_AmIWriting == false || m_WriteToDataChunk_p == nullptr)
+    if (m_AmIWriting == false or m_WriteToDataChunk_p == nullptr)
     {
         //WFCTRACE( TEXT( "You haven't called WriteTo() or you passed a NULL to WriteTo()" ) );
         return;
@@ -892,7 +892,7 @@ void CDataArchive::Write(__in uint16_t const value) noexcept
 {
     WFC_VALIDATE_POINTER(this);
 
-    if (m_AmIWriting == false || m_WriteToDataChunk_p == nullptr)
+    if (m_AmIWriting == false or m_WriteToDataChunk_p == nullptr)
     {
         //WFCTRACE( TEXT( "You haven't called WriteTo() or you passed a NULL to WriteTo()" ) );
         return;

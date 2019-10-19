@@ -82,10 +82,10 @@ _Check_return_ bool CUUCoding::OutputFilename(_In_ std::vector<uint8_t> const& s
     {
         // Skip space characters...
 
-        while (index < number_of_bytes_to_decode &&
-            (input_buffer[index] == CARRIAGE_RETURN ||
-                input_buffer[index] == LINE_FEED ||
-                input_buffer[index] == ' ' ||
+        while (index < number_of_bytes_to_decode and
+            (input_buffer[index] == CARRIAGE_RETURN or
+                input_buffer[index] == LINE_FEED or
+                input_buffer[index] == ' ' or
                 input_buffer[index] == 0x09))
         {
             index++;
@@ -93,38 +93,38 @@ _Check_return_ bool CUUCoding::OutputFilename(_In_ std::vector<uint8_t> const& s
 
         if ((number_of_bytes_to_decode - index) > 5)
         {
-            if ((input_buffer[index] == 'B' || input_buffer[index] == 'b') &&
-                (input_buffer[index + 1] == 'E' || input_buffer[index + 1] == 'e') &&
-                (input_buffer[index + 2] == 'G' || input_buffer[index + 2] == 'g') &&
-                (input_buffer[index + 3] == 'I' || input_buffer[index + 3] == 'i') &&
-                (input_buffer[index + 4] == 'N' || input_buffer[index + 4] == 'n'))
+            if ((input_buffer[index] == 'B' or input_buffer[index] == 'b') and
+                (input_buffer[index + 1] == 'E' or input_buffer[index + 1] == 'e') and
+                (input_buffer[index + 2] == 'G' or input_buffer[index + 2] == 'g') and
+                (input_buffer[index + 3] == 'I' or input_buffer[index + 3] == 'i') and
+                (input_buffer[index + 4] == 'N' or input_buffer[index + 4] == 'n'))
             {
                 index += 5;
 
                 // Skip spaces to get to the mode number
-                while (index < number_of_bytes_to_decode &&
-                    (input_buffer[index] == ' ' || input_buffer[index] == 0x09))
+                while (index < number_of_bytes_to_decode and
+                    (input_buffer[index] == ' ' or input_buffer[index] == 0x09))
                 {
                     index++;
                 }
 
                 // Now skip the mode numbers until we get to another space
-                while (index < number_of_bytes_to_decode &&
-                    (input_buffer[index] != ' ' && input_buffer[index] != 0x09))
+                while (index < number_of_bytes_to_decode and
+                    (input_buffer[index] != ' ' and input_buffer[index] != 0x09))
                 {
                     index++;
                 }
 
                 // Now skip the spaces between the mode and the filename
-                while (index < number_of_bytes_to_decode &&
-                    (input_buffer[index] == ' ' || input_buffer[index] == 0x09))
+                while (index < number_of_bytes_to_decode and
+                    (input_buffer[index] == ' ' or input_buffer[index] == 0x09))
                 {
                     index++;
                 }
 
                 // FINALLY! We are at the filename
-                while (index < number_of_bytes_to_decode &&
-                    (input_buffer[index] != CARRIAGE_RETURN && input_buffer[index] != LINE_FEED))
+                while (index < number_of_bytes_to_decode and
+                    (input_buffer[index] != CARRIAGE_RETURN and input_buffer[index] != LINE_FEED))
                 {
                     filename.push_back(input_buffer[index]);
                     index++;
@@ -173,10 +173,10 @@ _Check_return_ bool CUUCoding::Decode(_In_ std::vector<uint8_t> const& source, _
     {
         // Skip space characters...
 
-        while (index < number_of_bytes_to_decode &&
-            (input_buffer[index] == CARRIAGE_RETURN ||
-                input_buffer[index] == LINE_FEED ||
-                input_buffer[index] == ' ' ||
+        while (index < number_of_bytes_to_decode and
+            (input_buffer[index] == CARRIAGE_RETURN or
+                input_buffer[index] == LINE_FEED or
+                input_buffer[index] == ' ' or
                 input_buffer[index] == 0x09))
         {
             index++;
@@ -184,16 +184,16 @@ _Check_return_ bool CUUCoding::Decode(_In_ std::vector<uint8_t> const& source, _
 
         if ((number_of_bytes_to_decode - index) > 5)
         {
-            if ((input_buffer[index] == 'B' || input_buffer[index] == 'b') &&
-                (input_buffer[index + 1] == 'E' || input_buffer[index + 1] == 'e') &&
-                (input_buffer[index + 2] == 'G' || input_buffer[index + 2] == 'g') &&
-                (input_buffer[index + 3] == 'I' || input_buffer[index + 3] == 'i') &&
-                (input_buffer[index + 4] == 'N' || input_buffer[index + 4] == 'n'))
+            if ((input_buffer[index] == 'B' or input_buffer[index] == 'b') and
+                (input_buffer[index + 1] == 'E' or input_buffer[index + 1] == 'e') and
+                (input_buffer[index + 2] == 'G' or input_buffer[index + 2] == 'g') and
+                (input_buffer[index + 3] == 'I' or input_buffer[index + 3] == 'i') and
+                (input_buffer[index + 4] == 'N' or input_buffer[index + 4] == 'n'))
             {
                 index += 5;
 
-                while (index < number_of_bytes_to_decode &&
-                    (input_buffer[index] != CARRIAGE_RETURN &&
+                while (index < number_of_bytes_to_decode and
+                    (input_buffer[index] != CARRIAGE_RETURN and
                         input_buffer[index] != LINE_FEED))
                 {
                     index++;
@@ -203,10 +203,10 @@ _Check_return_ bool CUUCoding::Decode(_In_ std::vector<uint8_t> const& source, _
 
         // Skip space characters...
 
-        while (index < number_of_bytes_to_decode &&
-            (input_buffer[index] == CARRIAGE_RETURN ||
-                input_buffer[index] == LINE_FEED ||
-                input_buffer[index] == ' ' ||
+        while (index < number_of_bytes_to_decode and
+            (input_buffer[index] == CARRIAGE_RETURN or
+                input_buffer[index] == LINE_FEED or
+                input_buffer[index] == ' ' or
                 input_buffer[index] == 0x09))
         {
             index++;
@@ -228,9 +228,9 @@ _Check_return_ bool CUUCoding::Decode(_In_ std::vector<uint8_t> const& source, _
 
         if ((index + 3) < number_of_bytes_to_decode)
         {
-            if ((input_buffer[index] == 'e' || input_buffer[index] == 'E') &&
-                (input_buffer[index + 1] == 'n' || input_buffer[index + 1] == 'N') &&
-                (input_buffer[index + 2] == 'd' || input_buffer[index + 2] == 'D'))
+            if ((input_buffer[index] == 'e' or input_buffer[index] == 'E') and
+                (input_buffer[index + 1] == 'n' or input_buffer[index + 1] == 'N') and
+                (input_buffer[index + 2] == 'd' or input_buffer[index + 2] == 'D'))
             {
                 return(true);
             }
@@ -289,7 +289,7 @@ _Check_return_ bool CUUCoding::Decode(_In_ std::vector<uint8_t> const& source, _
 
             if (line_index <= number_of_characters_in_this_line)
             {
-                byte_to_add = static_cast<uint8_t>((character_1 << 2) | (character_2 >> 4));
+                byte_to_add = static_cast<uint8_t>((character_1 << 2) bitor (character_2 >> 4));
                 destination.push_back(byte_to_add);
             }
 
@@ -297,7 +297,7 @@ _Check_return_ bool CUUCoding::Decode(_In_ std::vector<uint8_t> const& source, _
 
             if (line_index <= number_of_characters_in_this_line)
             {
-                byte_to_add = static_cast<uint8_t>((character_2 << 4) | (character_3 >> 2));
+                byte_to_add = static_cast<uint8_t>((character_2 << 4) bitor (character_3 >> 2));
                 destination.push_back(byte_to_add);
             }
 
@@ -305,7 +305,7 @@ _Check_return_ bool CUUCoding::Decode(_In_ std::vector<uint8_t> const& source, _
 
             if (line_index <= number_of_characters_in_this_line)
             {
-                byte_to_add = static_cast<uint8_t>((character_3 << 6) | (character_4));
+                byte_to_add = static_cast<uint8_t>((character_3 << 6) bitor (character_4));
                 (void)destination.push_back(byte_to_add);
             }
         }
@@ -383,7 +383,7 @@ _Check_return_ bool CUUCoding::Encode( _In_ std::vector<uint8_t> const& source, 
     {
         line_index = 0;
 
-        if ( index > 0 && ( ( index % 44 ) == 0 ) )
+        if ( index > 0 and ( ( index % 44 ) == 0 ) )
         {
             //WFCTRACE( TEXT( "TROUBLE!" ) );
         }
@@ -408,9 +408,9 @@ _Check_return_ bool CUUCoding::Encode( _In_ std::vector<uint8_t> const& source, 
                 index++;
 
                 character_to_output_1 = static_cast<uint8_t>( byte_to_encode_1 >> 2 );
-                character_to_output_2 = static_cast<uint8_t>( ( ( byte_to_encode_1 << 4 ) & 0x30 ) | ( ( byte_to_encode_2 >> 4 ) & 0x0F ) );
-                character_to_output_3 = static_cast<uint8_t>( ( ( byte_to_encode_2 << 2 ) & 0x3C ) | ( ( byte_to_encode_3 >> 6 ) & 0x03 ) );
-                character_to_output_4 = static_cast<uint8_t>( byte_to_encode_3 & 0x3F );
+                character_to_output_2 = static_cast<uint8_t>( ( ( byte_to_encode_1 << 4 ) bitand 0x30 ) bitor ( ( byte_to_encode_2 >> 4 ) bitand 0x0F ) );
+                character_to_output_3 = static_cast<uint8_t>( ( ( byte_to_encode_2 << 2 ) bitand 0x3C ) bitor ( ( byte_to_encode_3 >> 6 ) bitand 0x03 ) );
+                character_to_output_4 = static_cast<uint8_t>( byte_to_encode_3 bitand 0x3F );
 
                 // These lines are here for easy debugging
 
@@ -466,8 +466,8 @@ _Check_return_ bool CUUCoding::Encode( _In_ std::vector<uint8_t> const& source, 
                 index++;
 
                 character_to_output_1 = static_cast<uint8_t>( byte_to_encode_1 >> 2 );
-                character_to_output_2 = static_cast<uint8_t>( ( ( byte_to_encode_1 << 4 ) & 0x30 ) | ( ( byte_to_encode_2 >> 4 ) & 0x0F ) );
-                character_to_output_3 = static_cast<uint8_t>( ( ( byte_to_encode_2 << 2 ) & 0x3C ) | ( ( byte_to_encode_3 >> 6 ) & 0x03 ) );
+                character_to_output_2 = static_cast<uint8_t>( ( ( byte_to_encode_1 << 4 ) bitand 0x30 ) bitor ( ( byte_to_encode_2 >> 4 ) bitand 0x0F ) );
+                character_to_output_3 = static_cast<uint8_t>( ( ( byte_to_encode_2 << 2 ) bitand 0x3C ) bitor ( ( byte_to_encode_3 >> 6 ) bitand 0x03 ) );
                 character_to_output_4 = static_cast<uint8_t>( byte_to_encode_3 & 0x3F );
 
                 destination.push_back( UU_ENCODE_BYTE( character_to_output_1 ) );

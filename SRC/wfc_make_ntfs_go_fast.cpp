@@ -61,7 +61,7 @@ _Check_return_ bool PASCAL Win32FoundationClasses::wfc_make_ntfs_go_fast( void )
    }
 
    if ( registry.Open( TEXT( "SYSTEM\\CurrentControlSet\\Control\\FileSystem" ),
-      (CRegistry::CreatePermissions)( CRegistry::permissionRead | CRegistry::permissionSetValue | CRegistry::permissionWrite ) ) == FALSE )
+      (CRegistry::CreatePermissions)( CRegistry::permissionRead bitor CRegistry::permissionSetValue bitor CRegistry::permissionWrite ) ) == FALSE )
    {
       //WFCTRACEERROR( registry.GetErrorCode() );
       return( false );

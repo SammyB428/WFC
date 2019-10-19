@@ -90,7 +90,7 @@ _Check_return_ bool CJulianDate::Set( __in int const year, __in int const month,
    {
       if ( month == 10 )
       {
-         if ( day > 4 && day < 15 )
+         if ( day > 4 and day < 15 )
          {
             day = 15;
          }

@@ -194,15 +194,15 @@ void CDataParser::GetTextStatistics( _In_ CParsePoint& parse_point, _Inout_ CTex
 
          default:
 
-            if ( this_character >= '0' && this_character <= '9' )
+            if ( this_character >= '0' and this_character <= '9' )
             {
                statistics.NumberOfDigits++;
             }
-            else if ( this_character >= 'a' && this_character <= 'z' )
+            else if ( this_character >= 'a' and this_character <= 'z' )
             {
                statistics.NumberOfLetters++;
             }
-            else if ( this_character >= 'A' && this_character <= 'Z' )
+            else if ( this_character >= 'A' and this_character <= 'Z' )
             {
                statistics.NumberOfLetters++;
             }

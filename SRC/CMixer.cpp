@@ -190,7 +190,7 @@ _Check_return_ bool CMixer::GetAllControls(__in CMixerLine const& line, __out st
     line_controls.cbmxctrl = sizeof(MIXERCONTROL);
     line_controls.pamxctrl = control_array.data();
 
-    DWORD flags = static_cast<DWORD>(Notifiers::notifyMixerNumber) | MIXER_GETLINECONTROLSF_ALL;
+    DWORD flags = static_cast<DWORD>(Notifiers::notifyMixerNumber) bitor MIXER_GETLINECONTROLSF_ALL;
 
     bool return_value = true;
 
@@ -224,7 +224,7 @@ _Check_return_ bool CMixer::GetByComponent(__in CMixerLine::ComponentType const 
     mixer_line.cbStruct = sizeof(mixer_line);
     mixer_line.dwComponentType = static_cast<uint32_t>(component);
 
-    DWORD const flags = static_cast<DWORD>(Notifiers::notifyMixerNumber) | MIXER_GETLINEINFOF_COMPONENTTYPE;
+    DWORD const flags = static_cast<DWORD>(Notifiers::notifyMixerNumber) bitor MIXER_GETLINEINFOF_COMPONENTTYPE;
 
     m_ErrorCode = ::mixerGetLineInfo((HMIXEROBJ)m_DeviceID, &mixer_line, flags);
 
@@ -250,7 +250,7 @@ _Check_return_ bool CMixer::GetByDestination(__in DWORD const destination, __out
     mixer_line.cbStruct = sizeof(mixer_line);
     mixer_line.dwDestination = destination;
 
-    DWORD flags = static_cast<DWORD>(Notifiers::notifyMixerNumber) | MIXER_GETLINEINFOF_DESTINATION;
+    DWORD flags = static_cast<DWORD>(Notifiers::notifyMixerNumber) bitor MIXER_GETLINEINFOF_DESTINATION;
 
     m_ErrorCode = ::mixerGetLineInfo((HMIXEROBJ)m_DeviceID, &mixer_line, flags);
 
@@ -276,7 +276,7 @@ _Check_return_ bool CMixer::GetByID(__in DWORD const id, __out CMixerLine& line)
     mixer_line.cbStruct = sizeof(mixer_line);
     mixer_line.dwLineID = id;
 
-    DWORD flags = static_cast<DWORD>(Notifiers::notifyMixerNumber) | MIXER_GETLINEINFOF_LINEID;
+    DWORD flags = static_cast<DWORD>(Notifiers::notifyMixerNumber) bitor MIXER_GETLINEINFOF_LINEID;
 
     m_ErrorCode = ::mixerGetLineInfo((HMIXEROBJ)m_DeviceID, &mixer_line, flags);
 
@@ -303,7 +303,7 @@ _Check_return_ bool CMixer::GetByConnection( __in DWORD const destination, __in 
     mixer_line.dwDestination = destination;
     mixer_line.dwSource = source;
 
-    DWORD flags = static_cast<DWORD>(Notifiers::notifyMixerNumber) | MIXER_GETLINEINFOF_SOURCE;
+    DWORD flags = static_cast<DWORD>(Notifiers::notifyMixerNumber) bitor MIXER_GETLINEINFOF_SOURCE;
 
     m_ErrorCode = ::mixerGetLineInfo((HMIXEROBJ)m_DeviceID, &mixer_line, flags);
 
@@ -336,12 +336,12 @@ _Check_return_ bool CMixer::GetControlDetails(__in CMixerLine const& line, __in 
     {
         size_of_element = sizeof(MIXERCONTROLDETAILS_BOOLEAN);
     }
-    else if (type_of_details == CMixerControl::Units::Signed ||
+    else if (type_of_details == CMixerControl::Units::Signed or
         type_of_details == CMixerControl::Units::Decibels)
     {
         size_of_element = sizeof(MIXERCONTROLDETAILS_SIGNED);
     }
-    else if (type_of_details == CMixerControl::Units::Unsigned ||
+    else if (type_of_details == CMixerControl::Units::Unsigned or
         type_of_details == CMixerControl::Units::Percent)
     {
         size_of_element = sizeof(MIXERCONTROLDETAILS_UNSIGNED);
@@ -432,14 +432,14 @@ _Check_return_ bool CMixer::GetControlDetails(__in CMixerLine const& line, __in 
 
                 entry.Copy(boolean_array[index]);
             }
-            else if (type_of_details == CMixerControl::Units::Signed ||
+            else if (type_of_details == CMixerControl::Units::Signed or
                     type_of_details == CMixerControl::Units::Decibels)
             {
                auto signed_array = reinterpret_cast<MIXERCONTROLDETAILS_SIGNED *>(memory_buffer.get());
 
                entry.Copy(signed_array[index]);
             }
-            else if (type_of_details == CMixerControl::Units::Unsigned ||
+            else if (type_of_details == CMixerControl::Units::Unsigned or
                     type_of_details == CMixerControl::Units::Percent)
             {
                 auto unsigned_array = reinterpret_cast<MIXERCONTROLDETAILS_UNSIGNED *>(memory_buffer.get());
@@ -518,7 +518,7 @@ _Check_return_ bool CMixer::GetControlListText(__in CMixerLine const& line, __in
     control_details.cbDetails = size_of_element;
     control_details.paDetails = details_array.get();
 
-    DWORD flags = static_cast<DWORD>(Notifiers::notifyMixerNumber) | MIXER_GETCONTROLDETAILSF_LISTTEXT;
+    DWORD flags = static_cast<DWORD>(Notifiers::notifyMixerNumber) bitor MIXER_GETCONTROLDETAILSF_LISTTEXT;
 
 #if defined( _WFC_DEBUG_MIXER_GET_CONTROL_DETAILS )
 
@@ -840,12 +840,12 @@ _Check_return_ bool CMixer::SetControlDetails(__in CMixerLine const& line, __in 
     {
         size_of_element = sizeof(MIXERCONTROLDETAILS_BOOLEAN);
     }
-    else if (type_of_details == CMixerControl::Units::Signed ||
+    else if (type_of_details == CMixerControl::Units::Signed or
         type_of_details == CMixerControl::Units::Decibels)
     {
         size_of_element = sizeof(MIXERCONTROLDETAILS_SIGNED);
     }
-    else if (type_of_details == CMixerControl::Units::Unsigned ||
+    else if (type_of_details == CMixerControl::Units::Unsigned or
         type_of_details == CMixerControl::Units::Percent)
     {
         size_of_element = sizeof(MIXERCONTROLDETAILS_UNSIGNED);
@@ -895,14 +895,14 @@ _Check_return_ bool CMixer::SetControlDetails(__in CMixerLine const& line, __in 
 
             array[loop_index].fValue = ((settings_array.at(loop_index).Parameter1 == 0) ? FALSE : TRUE);
         }
-        else if (type_of_details == CMixerControl::Units::Signed ||
+        else if (type_of_details == CMixerControl::Units::Signed or
                 type_of_details == CMixerControl::Units::Decibels)
         {
             auto array = reinterpret_cast<MIXERCONTROLDETAILS_SIGNED *>(memory_buffer.get());
 
             array[loop_index].lValue = settings_array.at(loop_index).Parameter1;
         }
-        else if (type_of_details == CMixerControl::Units::Unsigned ||
+        else if (type_of_details == CMixerControl::Units::Unsigned or
                 type_of_details == CMixerControl::Units::Percent)
         {
             auto array = reinterpret_cast<MIXERCONTROLDETAILS_UNSIGNED *>(memory_buffer.get());

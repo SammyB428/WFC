@@ -76,7 +76,7 @@ static inline void _append_time_zone_offset( __inout std::wstring& time_string )
 
    TCHAR offset_character = TEXT( '+' );
 
-   if ( offset_hours < 0 || offset_minutes < 0 )
+   if ( offset_hours < 0 or offset_minutes < 0 )
    {
       if ( offset_hours < 0 )
       {
@@ -91,7 +91,7 @@ static inline void _append_time_zone_offset( __inout std::wstring& time_string )
       offset_character = TEXT( '-' );
    }
 
-   if ( offset_hours == 0 && offset_minutes == 0 )
+   if ( offset_hours == 0 and offset_minutes == 0 )
    {
       time_string.push_back('Z');
    }
@@ -168,7 +168,7 @@ _Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Read(_In_z_ wchar
 
    value = false;
 
-   if ( m_AmIWriting == true || m_Element_p == nullptr )
+   if ( m_AmIWriting == true or m_Element_p == nullptr )
    {
       return( nullptr );
    }
@@ -211,7 +211,7 @@ _Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Read(_In_z_ wchar
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER(tag);
 
-   if ( m_AmIWriting == true || m_Element_p == nullptr )
+   if ( m_AmIWriting == true or m_Element_p == nullptr )
    {
       //WFCTRACE( TEXT( "You haven't called ReadFrom() or you passed a NULL to ReadFrom()" ) );
       value.clear();
@@ -254,7 +254,7 @@ _Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Read(_In_z_ wchar
 
    value.clear();
 
-   if ( m_AmIWriting == true || m_Element_p == nullptr )
+   if ( m_AmIWriting == true or m_Element_p == nullptr )
    {
       //WFCTRACE( TEXT( "You haven't called ReadFrom() or you passed a NULL to ReadFrom()" ) );
       return( nullptr );
@@ -314,7 +314,7 @@ _Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Read(_In_z_ wchar
 
    value.clear();
 
-   if ( m_AmIWriting == true || m_Element_p == nullptr )
+   if ( m_AmIWriting == true or m_Element_p == nullptr )
    {
       return( nullptr );
    }
@@ -346,7 +346,7 @@ _Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Read( _In_z_ wcha
 
    value.clear();
 
-   if ( m_AmIWriting == true || m_Element_p == nullptr )
+   if ( m_AmIWriting == true or m_Element_p == nullptr )
    {
       return( nullptr );
    }
@@ -402,7 +402,7 @@ _Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Read( _In_z_ wcha
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER(tag);
 
-   if ( m_AmIWriting == true || m_Element_p == nullptr )
+   if ( m_AmIWriting == true or m_Element_p == nullptr )
    {
        value = 0.0;
       return( nullptr );
@@ -442,7 +442,7 @@ _Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Read( _In_z_ wcha
 
    value = 0;
 
-   if ( m_AmIWriting == true || m_Element_p == nullptr )
+   if ( m_AmIWriting == true or m_Element_p == nullptr )
    {
       return( nullptr );
    }
@@ -478,7 +478,7 @@ _Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Read( _In_z_ wcha
 
    value = 0;
 
-   if ( m_AmIWriting == true || m_Element_p == nullptr )
+   if ( m_AmIWriting == true or m_Element_p == nullptr )
    {
       return( nullptr );
    }
@@ -514,7 +514,7 @@ _Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Read( _In_z_ wcha
 
    value = 0;
 
-   if ( m_AmIWriting == true || m_Element_p == nullptr )
+   if ( m_AmIWriting == true or m_Element_p == nullptr )
    {
       return( nullptr );
    }
@@ -550,7 +550,7 @@ _Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Read( _In_z_ wcha
 
    value.Empty();
 
-   if ( m_AmIWriting == true || m_Element_p == nullptr )
+   if ( m_AmIWriting == true or m_Element_p == nullptr )
    {
       return( nullptr );
    }
@@ -586,7 +586,7 @@ _Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Read( _In_z_ wcha
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER(tag);
 
-   if ( m_AmIWriting == true || m_Element_p == nullptr )
+   if ( m_AmIWriting == true or m_Element_p == nullptr )
    {
       //WFCTRACE( TEXT( "You haven't called ReadFrom() or you passed a NULL to ReadFrom()" ) );
       return( nullptr );
@@ -621,7 +621,7 @@ _Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Read( _In_z_ wcha
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER(tag);
 
-   if ( m_AmIWriting == true || m_Element_p == nullptr )
+   if ( m_AmIWriting == true or m_Element_p == nullptr )
    {
       //WFCTRACE( TEXT( "You haven't called ReadFrom() or you passed a NULL to ReadFrom()" ) );
       return( nullptr );
@@ -660,7 +660,7 @@ _Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Read( _In_z_ wcha
 
    value.Empty();
 
-   if ( m_AmIWriting == true || m_Element_p == nullptr )
+   if ( m_AmIWriting == true or m_Element_p == nullptr )
    {
       return( nullptr );
    }
@@ -696,7 +696,7 @@ _Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Read( _In_ wchar_
 
    value.Empty();
 
-   if ( m_AmIWriting == true || m_Element_p == nullptr )
+   if ( m_AmIWriting == true or m_Element_p == nullptr )
    {
       return( nullptr );
    }
@@ -731,7 +731,7 @@ _Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Read( _In_z_ wcha
 
    value.Empty();
 
-   if ( m_AmIWriting == true || m_Element_p == nullptr )
+   if ( m_AmIWriting == true or m_Element_p == nullptr )
    {
       return( nullptr );
    }
@@ -817,7 +817,7 @@ _Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Write( _In_z_ wch
 {
    WFC_VALIDATE_POINTER( this );
 
-   if ( m_AmIWriting == false || m_Element_p == nullptr )
+   if ( m_AmIWriting == false or m_Element_p == nullptr )
    {
       //WFCTRACE( TEXT( "You haven't called WriteTo() or you passed a NULL to WriteTo()" ) );
       return( nullptr );
@@ -863,7 +863,7 @@ _Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Write( _In_z_ wch
 {
    WFC_VALIDATE_POINTER( this );
 
-   if ( m_AmIWriting == false || m_Element_p == nullptr )
+   if ( m_AmIWriting == false or m_Element_p == nullptr )
    {
       //WFCTRACE( TEXT( "You haven't called WriteTo() or you passed a NULL to WriteTo()" ) );
       return( nullptr );
@@ -905,7 +905,7 @@ _Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Write( _In_z_ wch
 {
    WFC_VALIDATE_POINTER( this );
 
-   if ( m_AmIWriting == false || m_Element_p == nullptr )
+   if ( m_AmIWriting == false or m_Element_p == nullptr )
    {
       //WFCTRACE( TEXT( "You haven't called WriteTo() or you passed a NULL to WriteTo()" ) );
       return( nullptr );
@@ -949,7 +949,7 @@ _Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Write( _In_z_ wch
 {
    WFC_VALIDATE_POINTER( this );
 
-   if ( m_AmIWriting == false || m_Element_p == nullptr )
+   if ( m_AmIWriting == false or m_Element_p == nullptr )
    {
       //WFCTRACE( TEXT( "You haven't called WriteTo() or you passed a NULL to WriteTo()" ) );
       return( nullptr );
@@ -1008,7 +1008,7 @@ _Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Write( _In_z_ wch
 {
    WFC_VALIDATE_POINTER( this );
 
-   if ( m_AmIWriting == false || m_Element_p == nullptr )
+   if ( m_AmIWriting == false or m_Element_p == nullptr )
    {
       return( nullptr );
    }
@@ -1071,7 +1071,7 @@ _Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Write( _In_z_ wch
 {
    WFC_VALIDATE_POINTER( this );
 
-   if ( m_AmIWriting == false || m_Element_p == nullptr )
+   if ( m_AmIWriting == false or m_Element_p == nullptr )
    {
       return( nullptr );
    }
@@ -1121,7 +1121,7 @@ _Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Write( _In_z_ wch
 {
    WFC_VALIDATE_POINTER( this );
 
-   if ( m_AmIWriting == false || m_Element_p == nullptr )
+   if ( m_AmIWriting == false or m_Element_p == nullptr )
    {
       //WFCTRACE( TEXT( "You haven't called WriteTo() or you passed a NULL to WriteTo()" ) );
       return( nullptr );
@@ -1155,7 +1155,7 @@ _Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Write( _In_z_ wch
 {
    WFC_VALIDATE_POINTER( this );
 
-   if ( m_AmIWriting == false || m_Element_p == nullptr )
+   if ( m_AmIWriting == false or m_Element_p == nullptr )
    {
       //WFCTRACE( TEXT( "You haven't called WriteTo() or you passed a NULL to WriteTo()" ) );
       return( nullptr );
@@ -1199,7 +1199,7 @@ _Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Write( _In_z_ wch
 {
    WFC_VALIDATE_POINTER( this );
 
-   if ( m_AmIWriting == false || m_Element_p == nullptr )
+   if ( m_AmIWriting == false or m_Element_p == nullptr )
    {
       //WFCTRACE( TEXT( "You haven't called WriteTo() or you passed a NULL to WriteTo()" ) );
       return( nullptr );
@@ -1252,7 +1252,7 @@ _Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Write( _In_z_ wch
 {
    WFC_VALIDATE_POINTER( this );
 
-   if ( m_AmIWriting == false || m_Element_p == nullptr )
+   if ( m_AmIWriting == false or m_Element_p == nullptr )
    {
       //WFCTRACE( TEXT( "You haven't called WriteTo() or you passed a NULL to WriteTo()" ) );
       return( nullptr );
@@ -1314,7 +1314,7 @@ _Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Write( _In_z_ wch
 {
    WFC_VALIDATE_POINTER( this );
 
-   if ( m_AmIWriting == false || m_Element_p == nullptr )
+   if ( m_AmIWriting == false or m_Element_p == nullptr )
    {
       //WFCTRACE( TEXT( "You haven't called WriteTo() or you passed a NULL to WriteTo()" ) );
       return( nullptr );
@@ -1363,7 +1363,7 @@ _Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Write( _In_z_ wch
 {
    WFC_VALIDATE_POINTER( this );
 
-   if ( m_AmIWriting == false || m_Element_p == nullptr )
+   if ( m_AmIWriting == false or m_Element_p == nullptr )
    {
       //WFCTRACE( TEXT( "You haven't called WriteTo() or you passed a NULL to WriteTo()" ) );
       return( nullptr );
@@ -1440,7 +1440,7 @@ _Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Write( _In_z_ wch
 {
    WFC_VALIDATE_POINTER( this );
 
-   if ( m_AmIWriting == false || m_Element_p == nullptr )
+   if ( m_AmIWriting == false or m_Element_p == nullptr )
    {
       //WFCTRACE( TEXT( "You haven't called WriteTo() or you passed a NULL to WriteTo()" ) );
       return( nullptr );
@@ -1489,7 +1489,7 @@ _Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Write( _In_z_ wch
 {
    WFC_VALIDATE_POINTER( this );
 
-   if ( m_AmIWriting == false || m_Element_p == nullptr )
+   if ( m_AmIWriting == false or m_Element_p == nullptr )
    {
       return( nullptr );
    }
@@ -1537,7 +1537,7 @@ _Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Write( _In_z_ wch
 {
    WFC_VALIDATE_POINTER( this );
 
-   if ( m_AmIWriting == false || m_Element_p == nullptr )
+   if ( m_AmIWriting == false or m_Element_p == nullptr )
    {
       //WFCTRACE( TEXT( "You haven't called WriteTo() or you passed a NULL to WriteTo()" ) );
       return( nullptr );

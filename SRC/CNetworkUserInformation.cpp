@@ -520,7 +520,7 @@ void CNetworkUserInformation::Copy( __in CNetworkUserInformation const * source 
    ** Make sure we ain't copying ourselves
    */
 
-   if ( this == nullptr || this == source )
+   if ( this == nullptr or this == source )
    {
       return;
    }
@@ -922,8 +922,8 @@ void CNetworkUserInformation::SetAddDefaults( void ) noexcept
    AuthenticationFlags = 0;
    CodePage            = 0;
    CountryCode         = 0;
-   Flags               = UF_DONT_EXPIRE_PASSWD | 
-                         UF_NORMAL_ACCOUNT     |
+   Flags               = UF_DONT_EXPIRE_PASSWD bitor
+                         UF_NORMAL_ACCOUNT bitor
                          UF_SCRIPT;
    FullName.assign(Name);
    MaximumStorage      = USER_MAXSTORAGE_UNLIMITED;

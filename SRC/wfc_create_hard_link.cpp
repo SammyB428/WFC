@@ -60,8 +60,8 @@ _Check_return_ bool PASCAL Win32FoundationClasses::wfc_create_hard_link( __in_z 
       ASSERT( new_filename != existing_filename );
       ASSERT( _tcscmp( new_filename, existing_filename ) != 0 );
 
-      if ( new_filename      == nullptr ||
-           existing_filename == nullptr ||
+      if ( new_filename      == nullptr or
+           existing_filename == nullptr or
            new_filename      == existing_filename )
       {
          return( false );
@@ -86,7 +86,7 @@ _Check_return_ bool PASCAL Win32FoundationClasses::wfc_create_hard_link( __in_z 
 
       HANDLE existing_file_handle = CreateFile( existing_filename,
                                          FILE_WRITE_ATTRIBUTES,
-                                         FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE,
+                                         FILE_SHARE_READ bitor FILE_SHARE_WRITE bitor FILE_SHARE_DELETE,
                                          sa,
                                          OPEN_EXISTING,
                                          0,

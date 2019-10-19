@@ -57,7 +57,7 @@ static bool inline _Check_return_ does_directory_exist( __in_z LPCTSTR full_path
                                          0,
                                          nullptr,
                                          OPEN_EXISTING,
-                                         FILE_ATTRIBUTE_NORMAL | FILE_FLAG_BACKUP_SEMANTICS, // We need FILE_FLAG_BACKUP_SEMANTICS to open the root directory
+                                         FILE_ATTRIBUTE_NORMAL bitor FILE_FLAG_BACKUP_SEMANTICS, // We need FILE_FLAG_BACKUP_SEMANTICS to open the root directory
                                          nullptr );
 
    if ( directory_handle ==INVALID_HANDLE_VALUE )
@@ -76,7 +76,7 @@ static bool inline _Check_return_ does_wide_directory_exist( __in_z wchar_t cons
                                             0,
                                             nullptr,
                                             OPEN_EXISTING,
-                                            FILE_ATTRIBUTE_NORMAL | FILE_FLAG_BACKUP_SEMANTICS, // We need FILE_FLAG_BACKUP_SEMANTICS to open the root directory
+                                            FILE_ATTRIBUTE_NORMAL bitor FILE_FLAG_BACKUP_SEMANTICS, // We need FILE_FLAG_BACKUP_SEMANTICS to open the root directory
                                             nullptr );
 
    if ( directory_handle == INVALID_HANDLE_VALUE )
@@ -108,7 +108,7 @@ _Check_return_ bool PASCAL Win32FoundationClasses::wfc_create_path( __in_z LPCTS
       {
          DWORD last_error = GetLastError();
 
-         if ( last_error != ERROR_PATH_NOT_FOUND &&
+         if ( last_error != ERROR_PATH_NOT_FOUND and
               last_error != ERROR_ALREADY_EXISTS )
          {
             //WFCTRACEERROR( last_error );
@@ -213,7 +213,7 @@ _Check_return_ bool PASCAL Win32FoundationClasses::wfc_create_wide_path( _In_z_ 
       {
          DWORD last_error = GetLastError();
 
-         if ( last_error != ERROR_PATH_NOT_FOUND &&
+         if ( last_error != ERROR_PATH_NOT_FOUND and
               last_error != ERROR_ALREADY_EXISTS )
          {
             //WFCTRACEERROR( last_error );

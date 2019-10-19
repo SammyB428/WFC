@@ -93,8 +93,8 @@ _Check_return_ bool CExtensibleMarkupLanguageEntities::Add( _In_ std::wstring_vi
 
    // Now validate the name characters according to Rule 68->5
 
-   if ( Win32FoundationClasses::is_xml_Letter( entity[ 1 ] ) == false &&
-        entity[ 1 ] != TEXT( '_' ) &&
+   if ( Win32FoundationClasses::is_xml_Letter( entity[ 1 ] ) == false and
+        entity[ 1 ] != TEXT( '_' ) and
         entity[ 1 ] != TEXT( ':' ) )
    {
       //WFCTRACE( TEXT( "Bad first character of entity name." ) );
@@ -146,7 +146,7 @@ _Check_return_ bool CExtensibleMarkupLanguageEntities::Add( _In_ std::wstring_vi
 
          bool is_hexadecimal_character_reference = false;
 
-         if ( temp_string.empty() == false && temp_string.at( 0 ) == 'x' )
+         if ( temp_string.empty() == false and temp_string.at( 0 ) == 'x' )
          {
             // We are hexadecimal
             is_hexadecimal_character_reference = true;
@@ -155,10 +155,10 @@ _Check_return_ bool CExtensibleMarkupLanguageEntities::Add( _In_ std::wstring_vi
 
             temp_string.erase(0, 1);
 
-            while( temp_string.empty() == false &&
-                   ( ( temp_string.at( 0 ) >= '0' && temp_string.at( 0 ) <= '9' ) ||
-                     ( temp_string.at( 0 ) >= 'A' && temp_string.at( 0 ) <= 'Z' ) ||
-                     ( temp_string.at( 0 ) >= 'a' && temp_string.at( 0 ) <= 'z' ) ) )
+            while( temp_string.empty() == false and
+                   ( ( temp_string.at( 0 ) >= '0' and temp_string.at( 0 ) <= '9' ) or
+                     ( temp_string.at( 0 ) >= 'A' and temp_string.at( 0 ) <= 'Z' ) or
+                     ( temp_string.at( 0 ) >= 'a' and temp_string.at( 0 ) <= 'z' ) ) )
             {
                number_string.push_back( temp_string.at( 0 ) );
                temp_string.erase(0, 1);
@@ -168,15 +168,15 @@ _Check_return_ bool CExtensibleMarkupLanguageEntities::Add( _In_ std::wstring_vi
          {
             // We are decimal
 
-            while( temp_string.empty() == false &&
-                   temp_string.at( 0 ) >= '0' && temp_string.at( 0 ) <= '9' )
+            while( temp_string.empty() == false and
+                   temp_string.at( 0 ) >= '0' and temp_string.at( 0 ) <= '9' )
             {
                number_string.push_back( temp_string.at( 0 ) );
                temp_string.erase(0, 1);
             }
          }
 
-         if ( temp_string.empty() == true || temp_string.at( 0 ) != ';' )
+         if ( temp_string.empty() == true or temp_string.at( 0 ) != ';' )
          {
             //WFCTRACE( TEXT( "Ill-formed character reference" ) );
             return( false );
@@ -360,8 +360,8 @@ _Check_return_ bool CExtensibleMarkupLanguageEntities::IsEntity( _In_ std::wstri
 
    // Now validate the name characters according to Rule 68->5
 
-   if ( Win32FoundationClasses::is_xml_Letter( entity[ 1 ] ) == false &&
-        entity[ 1 ] != TEXT( '_' ) &&
+   if ( Win32FoundationClasses::is_xml_Letter( entity[ 1 ] ) == false and
+        entity[ 1 ] != TEXT( '_' ) and
         entity[ 1 ] != TEXT( ':' ) )
    {
       //WFCTRACE( TEXT( "Bad first character of entity name." ) );
@@ -553,7 +553,7 @@ _Check_return_ bool CExtensibleMarkupLanguageEntities::Resolve( _In_ std::wstrin
    }
 
    auto lower = std::lower_bound(std::cbegin(m_Entities), std::cend(m_Entities), entity);
-   bool const found = lower != std::cend(m_Entities) && *lower == entity;
+   bool const found = lower != std::cend(m_Entities) and *lower == entity;
 
    if (found == true)
    {

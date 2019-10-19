@@ -326,7 +326,7 @@ void CSimpleSocket::Close( void ) noexcept
 
 #endif // _DEBUG
 
-      while( number_of_bytes_read > 0 && ( number_of_bytes_read != SOCKET_ERROR ) )
+      while( number_of_bytes_read > 0 and ( number_of_bytes_read != SOCKET_ERROR ) )
       {
          // Read the buffer 4Kb at a time.
          number_of_bytes_read = m_Thunk_p->recv( m_SocketID, buffer, sizeof( buffer ), 0 );
@@ -1046,7 +1046,7 @@ _Check_return_ bool CSimpleSocket::Read( _Out_ std::string& line_to_read ) noexc
             line_to_read.push_back( character );
          }
       }
-      while( character != m_StringReadTerminatorCharacter &&
+      while( character != m_StringReadTerminatorCharacter and
              character != 0x00 );
 
       if ( number_of_bytes_read == SOCKET_ERROR )
@@ -1108,9 +1108,9 @@ void CSimpleSocket::SetAddress( _In_z_ LPCTSTR address_string ) noexcept
 
       BOOL exit_loop = FALSE;
 
-      while( index < address.length() && exit_loop == FALSE )
+      while( index < address.length() and exit_loop == FALSE )
       {
-         if ( address.at( index ) != '.' && ! iswdigit( address.at( index ) ) )
+         if ( address.at( index ) != '.' and not iswdigit( address.at( index ) ) )
          {
             /*
             ** The character is not a period and not a digit so it cannot meet the requirements
@@ -1141,7 +1141,7 @@ void CSimpleSocket::SetAddress( _In_z_ LPCTSTR address_string ) noexcept
 
       if ( exit_loop != FALSE ) // exit_loop is FALSE when we do not have a dotted IP address
       {
-         if ( ! ( m_Options & optionsDontResolveHostName ) )
+         if (not ( m_Options & optionsDontResolveHostName ) )
          {
             host_entry_p = m_Thunk_p->gethostbyname( ascii_address_string );
          }
@@ -1172,7 +1172,7 @@ void CSimpleSocket::SetAddress( _In_z_ LPCTSTR address_string ) noexcept
          }
 #endif
 
-         if ( ! ( m_Options & optionsDontResolveHostName ) )
+         if (not ( m_Options & optionsDontResolveHostName ) )
          {
             ULONG internet_address = 0L;
 
@@ -1530,8 +1530,8 @@ void __stdcall CSimpleSocket::StartWindowsSockets( void ) noexcept
    major_version_required = HIBYTE( desired_winsock_version );
    minor_version_required = LOBYTE( desired_winsock_version );
 
-   if ( (   LOBYTE( winsock_data.wVersion ) <  major_version_required ) ||
-        (   LOBYTE( winsock_data.wVersion ) == major_version_required ) &&
+   if ( (   LOBYTE( winsock_data.wVersion ) <  major_version_required ) or
+        (   LOBYTE( winsock_data.wVersion ) == major_version_required ) and
         ( ( HIBYTE( winsock_data.wVersion ) <  minor_version_required ) ) )
    {
       //WFCTRACE( TEXT( "Need a later version of Winsock" ) );
@@ -1998,7 +1998,7 @@ void CSimpleSocket::Write( __in_bcount( number_of_bytes_to_write ) VOID const * 
       int number_of_bytes_sent = 0;
       int loop_count           = 0;
 
-      while( bytes_were_sent == FALSE && loop_count < 100 )
+      while( bytes_were_sent == FALSE and loop_count < 100 )
       {
          number_of_bytes_sent = m_Thunk_p->send( m_SocketID, reinterpret_cast<char const *>(byte_buffer), number_of_bytes_to_write, 0 );
 
@@ -2007,10 +2007,10 @@ void CSimpleSocket::Write( __in_bcount( number_of_bytes_to_write ) VOID const * 
             m_LastError = m_Thunk_p->WSAGetLastError();
             //WFCTRACESOCKETERROR( m_LastError );
 
-            if ( m_LastError != WSAENOBUFS && m_LastError != WSAEINPROGRESS )
+            if ( m_LastError != WSAENOBUFS and m_LastError != WSAEINPROGRESS )
             {
-               if ( m_LastError == WSAENOTCONN  ||
-                    m_LastError == WSAENETRESET ||
+               if ( m_LastError == WSAENOTCONN or
+                    m_LastError == WSAENETRESET or
                     m_LastError == WSAESHUTDOWN )
                {
                   /*

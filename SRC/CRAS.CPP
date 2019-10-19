@@ -799,7 +799,7 @@ BOOL CRemoteAccessService::Dial( LPCTSTR who_to_dial )
 
    ::ZeroMemory( &credentials, sizeof( credentials ) );
    credentials.dwSize = sizeof( credentials );
-   credentials.dwMask = RASCM_UserName | RASCM_Password | RASCM_Domain;
+   credentials.dwMask = RASCM_UserName bitor RASCM_Password bitor RASCM_Domain;
 
    // get the default credentials
    m_Thunk_p->RasGetCredentials( nullptr, (TCHAR *) who_to_dial, &credentials );
@@ -1084,7 +1084,7 @@ BOOL CRemoteAccessService::GetPhoneBookEntries( std::vector<std::wstring>& phone
 
    if ( m_ErrorCode != 0 )
    {
-      if ( m_ErrorCode == ERROR_BUFFER_TOO_SMALL || m_ErrorCode == ERROR_NOT_ENOUGH_MEMORY )
+      if ( m_ErrorCode == ERROR_BUFFER_TOO_SMALL or m_ErrorCode == ERROR_NOT_ENOUGH_MEMORY )
       {
          delete [] memory_buffer;
 
@@ -1308,7 +1308,7 @@ void CRemoteAccessService::m_GetConnectionsIntoMemory( LPRASCONN& connections, D
 
    if ( m_ErrorCode != 0 )
    {
-      if ( m_ErrorCode == ERROR_BUFFER_TOO_SMALL || m_ErrorCode == ERROR_NOT_ENOUGH_MEMORY )
+      if ( m_ErrorCode == ERROR_BUFFER_TOO_SMALL or m_ErrorCode == ERROR_NOT_ENOUGH_MEMORY )
       {
          delete [] memory_buffer;
 
@@ -1534,7 +1534,7 @@ BOOL CRemoteAccessService::Open( LPCTSTR who_to_dial )
 
       ::ZeroMemory( &credentials, sizeof( credentials ) );
       credentials.dwSize = sizeof( credentials );
-      credentials.dwMask = RASCM_UserName | RASCM_Password | RASCM_Domain;
+      credentials.dwMask = RASCM_UserName bitor RASCM_Password bitor RASCM_Domain;
 
       // get the default credentials
       m_Thunk_p->RasGetCredentials( nullptr, (TCHAR *) who_to_dial, &credentials );

@@ -277,7 +277,7 @@ _Check_return_ void * CMemoryFile::Map( _In_ uint64_t const offset, _In_ std::si
 {
     WFC_VALIDATE_POINTER( this );
 
-    if ( m_MapOffsetParameter == offset && m_MapLengthParameter == length )
+    if ( m_MapOffsetParameter == offset and m_MapLengthParameter == length )
     {
         // The caller has asked for this before, nothing to do
         return( m_Pointer );
@@ -401,7 +401,7 @@ _Check_return_ bool CMemoryFile::m_MapTheFile( __in HANDLE const file_handle, __
         m_Access = FILE_MAP_READ;
     }
 
-    if ( ( just_flags & (UINT)CFile64::OpenFlags::modeWrite ) || ( just_flags & (UINT) CFile64::OpenFlags::modeReadWrite ) )
+    if ( ( just_flags & (UINT)CFile64::OpenFlags::modeWrite ) or ( just_flags & (UINT) CFile64::OpenFlags::modeReadWrite ) )
     {
         //WFCTRACE( TEXT( "User wants Read/Write access." ) );
         m_Protections = PAGE_READWRITE;

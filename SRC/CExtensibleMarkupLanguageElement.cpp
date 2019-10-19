@@ -733,7 +733,7 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::ForAny(_In_ std::wstring_v
 
             bool exit_loop = false;
 
-            while( exit_loop                           == false &&
+            while( exit_loop                           == false and
                    GetNextChild( enumerator, child_p ) == true)
             {
                 WFC_VALIDATE_POINTER( child_p );
@@ -1087,7 +1087,7 @@ void CExtensibleMarkupLanguageElement::GetFullyQualifiedName( _Inout_ std::wstri
     WFC_VALIDATE_POINTER( this );
     name.clear();
 
-    if ( IsRoot() == true || m_Tag.empty() == true )
+    if ( IsRoot() == true or m_Tag.empty() == true )
     {
         // The root is nameless
         return;
@@ -1110,7 +1110,7 @@ void CExtensibleMarkupLanguageElement::GetFullyQualifiedName( _Inout_ std::wstri
     {
         parent_element_p->GetNameAndInstance( parent_name );
 
-        if ( parent_element_p->IsRoot() == true || parent_name.empty() == true )
+        if ( parent_element_p->IsRoot() == true or parent_name.empty() == true )
         {
             return;
         }
@@ -1201,7 +1201,7 @@ void CExtensibleMarkupLanguageElement::GetNameAndInstance( _Out_ std::wstring& n
 
     name.clear();
 
-    if ( IsRoot() == true || m_Tag.empty() == true )
+    if ( IsRoot() == true or m_Tag.empty() == true )
     {
         // The root is nameless
         return;
@@ -1351,10 +1351,10 @@ void CExtensibleMarkupLanguageElement::GetText( _Out_ std::wstring& text ) const
     {
         // We should ignore white space
 
-        if ( m_IsAllWhiteSpace == false &&
-             m_Type != ElementType::Comment &&
-             m_Type != ElementType::ProcessingInstruction &&
-             m_Type != ElementType::Unknown &&
+        if ( m_IsAllWhiteSpace == false and
+             m_Type != ElementType::Comment and
+             m_Type != ElementType::ProcessingInstruction and
+             m_Type != ElementType::Unknown and
              m_Type != ElementType::MetaData)
         {
             text = m_Contents;
@@ -1365,9 +1365,9 @@ void CExtensibleMarkupLanguageElement::GetText( _Out_ std::wstring& text ) const
         _ASSERTE(m_Type != ElementType::Unknown);
 
         // We shouldn't ignore white space
-        if (m_Type != ElementType::Comment &&
-            m_Type != ElementType::ProcessingInstruction &&
-            m_Type != ElementType::Unknown &&
+        if (m_Type != ElementType::Comment and
+            m_Type != ElementType::ProcessingInstruction and
+            m_Type != ElementType::Unknown and
             m_Type != ElementType::MetaData)
         {
             text = m_Contents;
@@ -1391,9 +1391,9 @@ void CExtensibleMarkupLanguageElement::GetText( _Out_ std::wstring& text ) const
         {
             _ASSERTE(child->GetType() != ElementType::Unknown);
 
-            if (child->GetType() != ElementType::Comment &&
-                child->GetType() != ElementType::ProcessingInstruction &&
-                child->GetType() != ElementType::Unknown &&
+            if (child->GetType() != ElementType::Comment and
+                child->GetType() != ElementType::ProcessingInstruction and
+                child->GetType() != ElementType::Unknown and
                 child->GetType() != ElementType::MetaData)
             {
                 std::wstring text_segment;
@@ -1487,7 +1487,7 @@ void CExtensibleMarkupLanguageElement::m_AddCharacterToOutput( _In_ uint32_t con
         (void) output.push_back( HIBYTE( HIWORD( character ) ) );
         (void) output.push_back( LOBYTE( HIWORD( character ) ) );
     }
-    else if ( ( options & WFC_XML_WRITE_AS_UTF8 ) ||
+    else if ( ( options & WFC_XML_WRITE_AS_UTF8 ) or
         ( options & WFC_XML_WRITE_AS_UTF7 ) )
     {
         // This is by far the slowest method
@@ -1797,8 +1797,8 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::m_ParseCDATASection( _In_ 
     {
         // This may be the end...
 
-        if ( parser.PeekCharacter( m_Ending, 0 ) == ']' &&
-            parser.PeekCharacter( m_Ending, 1 ) == ']' &&
+        if ( parser.PeekCharacter( m_Ending, 0 ) == ']' and
+            parser.PeekCharacter( m_Ending, 1 ) == ']' and
             parser.PeekCharacter( m_Ending, 2 ) == '>' )
         {
             //WFCTRACE( TEXT( "Escape sequence detected!" ) );
@@ -1821,13 +1821,13 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::m_ParseCDATASection( _In_ 
                 {
                     // DANG! It might be the terminator
 
-                    if ( parser.PeekCharacter( m_Ending, 1 ) == ']' &&
+                    if ( parser.PeekCharacter( m_Ending, 1 ) == ']' and
                         parser.PeekCharacter( m_Ending, 2 ) == '>' )
                     {
                         // OK, we've got a terminator, let's see if it is an escape sequence
 
-                        if ( parser.PeekCharacter( m_Ending, 3 ) == ']' &&
-                            parser.PeekCharacter( m_Ending, 4 ) == ']' &&
+                        if ( parser.PeekCharacter( m_Ending, 3 ) == ']' and
+                            parser.PeekCharacter( m_Ending, 4 ) == ']' and
                             parser.PeekCharacter( m_Ending, 5 ) == '>' )
                         {
                             // Yup, it is another escape sequence
@@ -1894,13 +1894,13 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::m_ParseCDATASection( _In_ 
             {
                 // DANG! It might be the terminator
 
-                if ( parser.PeekCharacter( m_Ending, 1 ) == ']' &&
+                if ( parser.PeekCharacter( m_Ending, 1 ) == ']' and
                     parser.PeekCharacter( m_Ending, 2 ) == '>' )
                 {
                     // OK, we've got a terminator, let's see if it is an escape sequence
 
-                    if ( parser.PeekCharacter( m_Ending, 3 ) == ']' &&
-                        parser.PeekCharacter( m_Ending, 4 ) == ']' &&
+                    if ( parser.PeekCharacter( m_Ending, 3 ) == ']' and
+                        parser.PeekCharacter( m_Ending, 4 ) == ']' and
                         parser.PeekCharacter( m_Ending, 5 ) == '>' )
                     {
                         // Yup, it is another escape sequence
@@ -2082,7 +2082,7 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::m_ParseDOCTYPESection( _In
     {
         // the first character can also be a _ or a :
 
-        if ( character != '_' && character != ':' )
+        if ( character != '_' and character != ':' )
         {
             m_ReportParsingError(WSTRING_VIEW(L"DOCTYPE Section, illegal first character of Name (Rule 5)."));
             return( false );
@@ -2159,8 +2159,8 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::m_ParseDOCTYPESection( _In
 
     // The next character can be one of three possibilites, [, S or P
 
-    if ( string_to_parse.at( 0 ) != '[' &&
-        string_to_parse.at( 0 ) != 'S' &&
+    if ( string_to_parse.at( 0 ) != '[' and
+        string_to_parse.at( 0 ) != 'S' and
         string_to_parse.at( 0 ) != 'P' )
     {
         m_ReportParsingError(WSTRING_VIEW(L"Impossible character in DOCTYPE declaration (Rule 28)."));
@@ -2177,7 +2177,7 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::m_ParseDOCTYPESection( _In
             return( false );
         }
 
-        if ( starts_with( string_to_parse, WSTRING_VIEW(L"PUBLIC") ) == false &&
+        if ( starts_with( string_to_parse, WSTRING_VIEW(L"PUBLIC") ) == false and
              starts_with( string_to_parse, WSTRING_VIEW(L"SYSTEM") ) == false)
         {
             m_ReportParsingError(WSTRING_VIEW(L"DOCTYPE ExternalID is not SYSTEM or PUBLIC (Rule 75)."));
@@ -2212,7 +2212,7 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::m_ParseDOCTYPESection( _In
                 return( false );
             }
 
-            if ( string_to_parse.at( 0 ) != '\'' &&
+            if ( string_to_parse.at( 0 ) != '\'' and
                 string_to_parse.at( 0 ) != '\"' )
             {
                 m_ReportParsingError(WSTRING_VIEW(L"String not properly quoted (Rule 11)."));
@@ -2287,7 +2287,7 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::m_ParseDOCTYPESection( _In
                 return( false );
             }
 
-            if ( string_to_parse.at( 0 ) != '\'' &&
+            if ( string_to_parse.at( 0 ) != '\'' and
                 string_to_parse.at( 0 ) != '\"' )
             {
                 m_ReportParsingError(WSTRING_VIEW(L"PUBLIC SystemLiteral not properly quoted (Rule 11)."));
@@ -2371,7 +2371,7 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::m_ParseDOCTYPESection( _In
                 return( false );
             }
 
-            if ( string_to_parse.at( 0 ) != '\'' &&
+            if ( string_to_parse.at( 0 ) != '\'' and
                 string_to_parse.at( 0 ) != '\"' )
             {
                 m_ReportParsingError(WSTRING_VIEW(L"PUBLIC SystemLiteral not properly quoted (Rule 11)."));
@@ -2461,7 +2461,7 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::m_ParseDOCTYPESection( _In
     // The next valid characters are spaces (Rule 28), a closing bracket (Rule 28) or an opening < (Rule 29)
     // Let's go for the easy stuff first
 
-    while( string_to_parse.empty() == false && Win32FoundationClasses::is_xml_white_space( string_to_parse.at( 0 ) ) )
+    while( string_to_parse.empty() == false and Win32FoundationClasses::is_xml_white_space( string_to_parse.at( 0 ) ) )
     {
         m_Contents.push_back( string_to_parse.at( 0 ) );
         string_to_parse.erase(0, 1);
@@ -2545,7 +2545,7 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::m_ParseDOCTYPESection( _In
 
         if ( parser.PeekCharacter( beginning_of_child, 0 ) == '<' )
         {
-            auto sub_element_p = NewElement( this, ElementType::Element, m_Document );
+            sub_element_p = NewElement( this, ElementType::Element, m_Document );
 
             if ( sub_element_p->Parse( beginning_of_child, parser ) == false )
             {
@@ -2784,7 +2784,7 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::m_ParseElementName( _In_ s
 
         // Check to make sure they didn't pass us something like "Southpark)0("
 
-        if ( location_of_ending < location_of_beginning || location_of_ending == std::wstring::npos )
+        if ( location_of_ending < location_of_beginning or location_of_ending == std::wstring::npos )
         {
             //WFCTRACE( TEXT( "[] is ][ (they're backwards)" ) );
             return( false );
@@ -3041,7 +3041,7 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::m_ParseTag( _In_ std::wstr
         }
 
         // See if it is a comment <!--
-        if ( tag_name.at( 1 ) == '-' &&
+        if ( tag_name.at( 1 ) == '-' and
             tag_name.at( 2 ) == '-' )
         {
             // Yup, it is a comment
@@ -3052,7 +3052,7 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::m_ParseTag( _In_ std::wstr
 
             m_Contents.assign( right( tag, tag.length() - 4 ) );
 
-            if ( m_Document != nullptr && ( m_Document->GetParseOptions() & WFC_XML_LOOSE_COMMENT_PARSING ) )
+            if ( m_Document != nullptr and ( m_Document->GetParseOptions() & WFC_XML_LOOSE_COMMENT_PARSING ) )
             {
                 location_of_character = m_Contents.find(WSTRING_VIEW(L"-->"));
 
@@ -3101,8 +3101,8 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::m_ParseTag( _In_ std::wstr
 
             return( true );
         }
-        else if ( tag_name.at( 1 ) == '[' &&
-            ( tag_name.at( 2 ) == 'C' || tag_name.at( 2 ) == 'c' ) )
+        else if ( tag_name.at( 1 ) == '[' and
+            ( tag_name.at( 2 ) == 'C' or tag_name.at( 2 ) == 'c' ) )
         {
             // We may have a CDATA section here
 
@@ -3136,12 +3136,12 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::m_ParseTag( _In_ std::wstr
                 did_tag_contain_terminator = true;
             }
         }
-        else if ( tag_name.length() > 6 &&
-            tag_name.at( 1 ) == 'E' &&
-            tag_name.at( 2 ) == 'N' &&
-            tag_name.at( 3 ) == 'T' &&
-            tag_name.at( 4 ) == 'I' &&
-            tag_name.at( 5 ) == 'T' &&
+        else if ( tag_name.length() > 6 and
+            tag_name.at( 1 ) == 'E' and
+            tag_name.at( 2 ) == 'N' and
+            tag_name.at( 3 ) == 'T' and
+            tag_name.at( 4 ) == 'I' and
+            tag_name.at( 5 ) == 'T' and
             tag_name.at( 6 ) == 'Y' )
         {
             //WFCTRACE( TEXT( "ENTITY tag found" ) );
@@ -3216,7 +3216,7 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::m_ParseTag( _In_ std::wstr
 
                     // We should now be on a quote (single or double)
 
-                    if ( tag_data.at( 0 ) != '"' && tag_data.at( 0 ) != '\'' )
+                    if ( tag_data.at( 0 ) != '"' and tag_data.at( 0 ) != '\'' )
                     {
                         // 1999-03-26
                         // Thanks go to Jurgen Lumera (jlumera@vftis.com) for finding
@@ -3227,7 +3227,7 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::m_ParseTag( _In_ std::wstr
 
                         // We must attempt to parse according to rules 75 and 76
 
-                        if ( tag_data.at( 0 ) != 'S' && tag_data.at( 0 ) != 'P' )
+                        if ( tag_data.at( 0 ) != 'S' and tag_data.at( 0 ) != 'P' )
                         {
                             //WFCTRACE( TEXT( "Ill-formed external entity value. Character is not S or P. Refer to rule 75." ) );
                             m_ReportParsingError(WSTRING_VIEW(L"Ill-formed ENTITY section[4] (Rule 71)."));
@@ -3248,10 +3248,10 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::m_ParseTag( _In_ std::wstr
 
                             // See if the next few characters make up YSTEM
 
-                            if ( tag_data.at( 1 ) != 'Y' ||
-                                tag_data.at( 2 ) != 'S' ||
-                                tag_data.at( 3 ) != 'T' ||
-                                tag_data.at( 4 ) != 'E' ||
+                            if ( tag_data.at( 1 ) != 'Y' or
+                                tag_data.at( 2 ) != 'S' or
+                                tag_data.at( 3 ) != 'T' or
+                                tag_data.at( 4 ) != 'E' or
                                 tag_data.at( 5 ) != 'M' )
                             {
                                 //WFCTRACE( TEXT( "External entity is not SYSTEM. Refer to rule 75." ) );
@@ -3277,10 +3277,10 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::m_ParseTag( _In_ std::wstr
 
                             // See if the next few characters make up UBLIC
 
-                            if ( tag_data.at( 1 ) != 'U' ||
-                                tag_data.at( 2 ) != 'B' ||
-                                tag_data.at( 3 ) != 'L' ||
-                                tag_data.at( 4 ) != 'I' ||
+                            if ( tag_data.at( 1 ) != 'U' or
+                                tag_data.at( 2 ) != 'B' or
+                                tag_data.at( 3 ) != 'L' or
+                                tag_data.at( 4 ) != 'I' or
                                 tag_data.at( 5 ) != 'C' )
                             {
                                 //WFCTRACE( TEXT( "External entity is not PUBLIC. Refer to rule 75." ) );
@@ -3435,13 +3435,13 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::m_ParseTag( _In_ std::wstr
                 }
             }
         }
-        else if ( tag_name.length() > 7   &&
-            tag_name.at( 1 ) == 'D' &&
-            tag_name.at( 2 ) == 'O' &&
-            tag_name.at( 3 ) == 'C' &&
-            tag_name.at( 4 ) == 'T' &&
-            tag_name.at( 5 ) == 'Y' &&
-            tag_name.at( 6 ) == 'P' &&
+        else if ( tag_name.length() > 7 and
+            tag_name.at( 1 ) == 'D' and
+            tag_name.at( 2 ) == 'O' and
+            tag_name.at( 3 ) == 'C' and
+            tag_name.at( 4 ) == 'T' and
+            tag_name.at( 5 ) == 'Y' and
+            tag_name.at( 6 ) == 'P' and
             tag_name.at( 7 ) == 'E' )
         {
             //WFCTRACE( TEXT( "DOCTYPE tag found" ) );
@@ -3515,9 +3515,9 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::m_ParseTag( _In_ std::wstr
             return( false );
         }
 
-        if ( Win32FoundationClasses::is_xml_Letter( m_Tag[ 0 ] ) == false &&
-            m_Tag[ 0 ] != '/' &&
-            m_Tag[ 0 ] != '_' &&
+        if ( Win32FoundationClasses::is_xml_Letter( m_Tag[ 0 ] ) == false and
+            m_Tag[ 0 ] != '/' and
+            m_Tag[ 0 ] != '_' and
             m_Tag[ 0 ] != ':' )
         {
             m_ReportParsingError(WSTRING_VIEW(L"First character of element name is not legal (Rule 5)."));
@@ -3635,7 +3635,7 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::m_ParseTag( _In_ std::wstr
         {
             location_of_character = tag_data.Find( '\"' );
 
-            if ( location_of_character != CHARACTER_NOT_FOUND && location_of_character != tag_data.GetLength() - 1 )
+            if ( location_of_character != CHARACTER_NOT_FOUND and location_of_character != tag_data.GetLength() - 1 )
             {
                 // Looks like we got one of them there doubley terminated strings such as <x att="This"That">
                 m_ReportParsingError(WSTRING_VIEW(L"Attribute value cannot contain another double quote (Rule 10)." ) );
@@ -3645,7 +3645,7 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::m_ParseTag( _In_ std::wstr
         {
             location_of_character = tag_data.Find( TEXT( '\'' ) );
 
-            if ( location_of_character != CHARACTER_NOT_FOUND && location_of_character != tag_data.GetLength() - 1 )
+            if ( location_of_character != CHARACTER_NOT_FOUND and location_of_character != tag_data.GetLength() - 1 )
             {
                 // Looks like we got one of them there doubley terminated strings such as <x att="This"That">
                 m_ReportParsingError(WSTRING_VIEW(L"Attribute value cannot contain another single quote (Rule 10)." ) );
@@ -3708,7 +3708,7 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::m_ParseTag( _In_ std::wstr
                 //attribute_value.assign( attribute_value.substr( 0, attribute_value.length() - 1 ) );
                 attribute_value.erase(attribute_value.length() - 1, 1);
             }
-            else if ( m_Type == ElementType::MetaData || m_Type == ElementType::Element )
+            else if ( m_Type == ElementType::MetaData or m_Type == ElementType::Element )
             {
                 if ( attribute_value.empty() == false )
                 {
@@ -3854,7 +3854,7 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::m_ParseXMLDeclaration( _In
         parsing_options = m_Document->GetParseOptions();
     }
 
-    if ( ! ( parsing_options & WFC_XML_IGNORE_CASE_IN_XML_DECLARATION ) )
+    if (not ( parsing_options & WFC_XML_IGNORE_CASE_IN_XML_DECLARATION ) )
     {
         // We must begin with lower case xml
 
@@ -3921,7 +3921,7 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::m_ParseXMLDeclaration( _In
 
     bool we_started_with_a_double_quote = false;
 
-    if ( string_to_parse.at( 0 ) != '\"' &&
+    if ( string_to_parse.at( 0 ) != '\"' and
          string_to_parse.at( 0 ) != '\'' )
     {
         m_ReportParsingError(WSTRING_VIEW(L"Illegal VersionNum delimiter, must be a single or double quote (Rule 24)."));
@@ -4039,7 +4039,7 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::m_ParseXMLDeclaration( _In
 
         we_started_with_a_double_quote = false;
 
-        if ( string_to_parse.at( 0 ) != '\"' &&
+        if ( string_to_parse.at( 0 ) != '\"' and
             string_to_parse.at( 0 ) != '\'' )
         {
             m_ReportParsingError(WSTRING_VIEW(L"Illegal EncName delimiter, must be a single or double quote (Rule 80)."));
@@ -4085,8 +4085,8 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::m_ParseXMLDeclaration( _In
 
         wchar_t const character = value.at( 0 );
 
-        if (  ( character >= 'a' && character <= 'z' ) ||
-            ( character >= 'A' && character <= 'Z' ) )
+        if (  ( character >= 'a' and character <= 'z' ) or
+            ( character >= 'A' and character <= 'Z' ) )
         {
             // Do Nothing
         }
@@ -4168,7 +4168,7 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::m_ParseXMLDeclaration( _In
 
         we_started_with_a_double_quote = false;
 
-        if ( string_to_parse.at( 0 ) != '\"' &&
+        if ( string_to_parse.at( 0 ) != '\"' and
             string_to_parse.at( 0 ) != '\'' )
         {
             m_ReportParsingError(WSTRING_VIEW(L"Illegal SDDecl delimiter, must be a single or double quote (Rule 32)."));
@@ -4212,7 +4212,7 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::m_ParseXMLDeclaration( _In
 
         // Now validate the contents of SDDecl
 
-        if ( value.compare(WSTRING_VIEW(L"yes")) != I_AM_EQUAL_TO_THAT && value.compare(WSTRING_VIEW(L"no")) != I_AM_EQUAL_TO_THAT)
+        if ( value.compare(WSTRING_VIEW(L"yes")) != I_AM_EQUAL_TO_THAT and value.compare(WSTRING_VIEW(L"no")) != I_AM_EQUAL_TO_THAT)
         {
             m_ReportParsingError(WSTRING_VIEW(L"Illegal value for SDDecl, it must me lower case \"yes\" or \"no\" (Rule 32)."));
             return( false );
@@ -4450,7 +4450,7 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::GetChildValue(_In_ std::ws
         return( false );
     }
 
-    if ( starts_with( value_text, 't' ) == true ||
+    if ( starts_with( value_text, 't' ) == true or
          starts_with( value_text, 'y' ) == true )
     {
         value = true;
@@ -4629,7 +4629,7 @@ _Check_return_ CExtensibleMarkupLanguageElement * CExtensibleMarkupLanguageEleme
 
     auto return_value = NewChild( tag_name );
 
-    if ( return_value != nullptr && value.empty() == false )
+    if ( return_value != nullptr and value.empty() == false )
     {
         (void) return_value->AddText( value );
     }
@@ -4641,7 +4641,7 @@ _Check_return_ CExtensibleMarkupLanguageElement * CExtensibleMarkupLanguageEleme
 {
     auto child_p = NewElement( this, element_type );
 
-    if ( child_p != nullptr && tag_name.empty() == false )
+    if ( child_p != nullptr and tag_name.empty() == false )
     {
         child_p->SetTag( tag_name );
     }
@@ -4653,7 +4653,7 @@ _Check_return_ CExtensibleMarkupLanguageElement * CExtensibleMarkupLanguageEleme
 {
     auto return_value = NewElement(this, ElementType::Comment);
 
-    if (return_value != nullptr && text.empty() == false)
+    if (return_value != nullptr and text.empty() == false)
     {
         return_value->m_Contents.assign(text);
     }
@@ -4779,9 +4779,9 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::Parse( _In_ CParsePoint co
 
             if ( m_IsAllWhiteSpace == true)
             {
-                if ( character != 0x20 &&
-                    character != TAB_CHARACTER &&
-                    character != CARRIAGE_RETURN &&
+                if ( character != 0x20 and
+                    character != TAB_CHARACTER and
+                    character != CARRIAGE_RETURN and
                     character != LINE_FEED )
                 {
                     // We didn't find this character in the space string so it must not be a space-like character
@@ -4834,20 +4834,20 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::Parse( _In_ CParsePoint co
 
         bool terminator_found = false;
 
-        if ( parser.PeekCharacter( m_Ending, 1 ) == '!' &&
-            parser.PeekCharacter( m_Ending, 2 ) == '-' &&
+        if ( parser.PeekCharacter( m_Ending, 1 ) == '!' and
+            parser.PeekCharacter( m_Ending, 2 ) == '-' and
             parser.PeekCharacter( m_Ending, 3 ) == '-' )
         {
             // Yup, we are in the special case here. We are parsing a comment tag
             terminator_found = parser.GetUntilAndIncluding( m_Ending, L"-->", tag_string );
         }
-        else if ( parser.PeekCharacter( m_Ending, 1 ) == '!' &&
-            parser.PeekCharacter( m_Ending, 2 ) == '[' &&
-            parser.PeekCharacter( m_Ending, 3 ) == 'C' &&
-            parser.PeekCharacter( m_Ending, 4 ) == 'D' &&
-            parser.PeekCharacter( m_Ending, 5 ) == 'A' &&
-            parser.PeekCharacter( m_Ending, 6 ) == 'T' &&
-            parser.PeekCharacter( m_Ending, 7 ) == 'A' &&
+        else if ( parser.PeekCharacter( m_Ending, 1 ) == '!' and
+            parser.PeekCharacter( m_Ending, 2 ) == '[' and
+            parser.PeekCharacter( m_Ending, 3 ) == 'C' and
+            parser.PeekCharacter( m_Ending, 4 ) == 'D' and
+            parser.PeekCharacter( m_Ending, 5 ) == 'A' and
+            parser.PeekCharacter( m_Ending, 6 ) == 'T' and
+            parser.PeekCharacter( m_Ending, 7 ) == 'A' and
             parser.PeekCharacter( m_Ending, 8 ) == '[' )
         {
             // Gawl dang CDATA sections
@@ -4881,7 +4881,7 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::Parse( _In_ CParsePoint co
 
             CExtensibleMarkupLanguageElement * sub_element_p = nullptr;
 
-            // while ( m_IsTagTerminated == false || m_Type == typeProcessingInstruction )
+            // while ( m_IsTagTerminated == false or m_Type == typeProcessingInstruction )
             while ( m_IsTagTerminated == false )
             {
                 // We've got sub_elements!
@@ -4896,7 +4896,7 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::Parse( _In_ CParsePoint co
                     if ( character != '<' )
                     {
 #if 0
-                        if ( m_Type == typeProcessingInstruction && m_Parent != nullptr )
+                        if ( m_Type == typeProcessingInstruction and m_Parent != nullptr )
                         {
                             // If we are a processing instruction then the child will be the
                             // child of our parent and not us. The child will be a sibling
@@ -5037,8 +5037,8 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::Parse( _In_ CParsePoint co
                             // Juro Gottweis (juro@asc.sk) Found a bug here. I was trimming all-white-space
                             // elements when just WFC_XML_ALLOW_AMPERSANDS_IN_ELEMENTS was specified
 
-                            if ( parsing_options & WFC_XML_IGNORE_ALL_WHITE_SPACE_ELEMENTS ||
-                                parsing_options & WFC_XML_ALLOW_AMPERSANDS_IN_ELEMENTS    )
+                            if ( parsing_options & WFC_XML_IGNORE_ALL_WHITE_SPACE_ELEMENTS or
+                                parsing_options & WFC_XML_ALLOW_AMPERSANDS_IN_ELEMENTS )
                             {
                                 if ( sub_element_p->GetType() == ElementType::TextSegment )
                                 {
@@ -5152,7 +5152,7 @@ void CExtensibleMarkupLanguageElement::RemoveChild( _Inout_ CExtensibleMarkupLan
 
     for ( auto const loop_index : Range(m_Children.size()) )
     {
-        if ( m_Children[ loop_index ] == element_p ||
+        if ( m_Children[ loop_index ] == element_p or
             m_Children[ loop_index ] == nullptr )
         {
             m_Children.erase( std::begin(m_Children) + loop_index );
@@ -5233,7 +5233,7 @@ void CExtensibleMarkupLanguageElement::WriteTo( _Inout_ std::vector<uint8_t>& xm
         // terminated. Yes, this is stupid. Yes, it doesn't fit with the rest
         // of XML syntax. Yes, we have SGML to thank for this.
 
-        if ( m_Contents.length() > 6 && starts_with( m_Contents, WSTRING_VIEW(L"DOCTYPE") ) == true)
+        if ( m_Contents.length() > 6 and starts_with( m_Contents, WSTRING_VIEW(L"DOCTYPE") ) == true)
         {
             // Yup, we are a DOCTYPE element
 
@@ -5491,7 +5491,7 @@ void CExtensibleMarkupLanguageElement::WriteTo( _Inout_ std::vector<uint8_t>& xm
 
         // First, see if we are in a namespace...
 
-        if ( m_Document != nullptr && m_Document->UseNamespace() == true)
+        if ( m_Document != nullptr and m_Document->UseNamespace() == true)
         {
             std::wstring name_space;
 
@@ -5524,7 +5524,7 @@ void CExtensibleMarkupLanguageElement::WriteTo( _Inout_ std::vector<uint8_t>& xm
 
         m_AppendAttributes( xml );
 
-        if ( m_ShorthandTerminatorDetected == true && m_Children.size() == 0 )
+        if ( m_ShorthandTerminatorDetected == true and m_Children.size() == 0 )
         {
             // Terminated elements have no text fields
             m_AddCharacterToOutput( '/', write_options, xml );
@@ -5549,7 +5549,7 @@ void CExtensibleMarkupLanguageElement::WriteTo( _Inout_ std::vector<uint8_t>& xm
             {
                 CExtensibleMarkupLanguageElement * first_child_p = m_Children[ 0 ];
 
-                if ( first_child_p->m_Type != ElementType::TextSegment || m_Children.size() > 1 )
+                if ( first_child_p->m_Type != ElementType::TextSegment or m_Children.size() > 1 )
                 {
                     m_AddIndentation( xml );
                 }

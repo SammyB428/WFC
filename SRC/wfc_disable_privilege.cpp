@@ -57,7 +57,7 @@ _Check_return_ bool PASCAL Win32FoundationClasses::wfc_disable_privilege( __in_z
    {
       auto token_handle = static_cast< HANDLE >( NULL );
 
-      if ( ::OpenProcessToken( GetCurrentProcess(), TOKEN_ADJUST_PRIVILEGES | TOKEN_QUERY, &token_handle ) == FALSE )
+      if ( ::OpenProcessToken( GetCurrentProcess(), TOKEN_ADJUST_PRIVILEGES bitor TOKEN_QUERY, &token_handle ) == FALSE )
       {
          //WFCTRACEERROR( GetLastError() );
          //WFCTRACE( TEXT( "Can't OpenProcessToken()" ) );

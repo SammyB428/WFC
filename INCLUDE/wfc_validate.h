@@ -188,7 +188,7 @@ _ASSERTE( (DWORD) _pointer != NO_MANS_LAND )
 #if ! defined( WFC_VALIDATE_BOOL )
 #if defined( _DEBUG ) && defined( _ASSERTE )
 #define WFC_VALIDATE_BOOL( _BOOLean_value ) \
-_ASSERTE( _BOOLean_value == TRUE || _BOOLean_value == FALSE )
+_ASSERTE( _BOOLean_value == TRUE or _BOOLean_value == FALSE )
 #else // _DEBUG
 #define WFC_VALIDATE_BOOL( _BOOLean_value )
 #endif // _DEBUG
@@ -197,7 +197,7 @@ _ASSERTE( _BOOLean_value == TRUE || _BOOLean_value == FALSE )
 #if ! defined( WFC_VALIDATE_bool )
 #if defined( _DEBUG ) && defined( _ASSERTE )
 #define WFC_VALIDATE_bool( _BOOLean_value ) \
-_ASSERTE( _BOOLean_value == true || _BOOLean_value == false )
+_ASSERTE( _BOOLean_value == true or _BOOLean_value == false )
 #else // _DEBUG
 #define WFC_VALIDATE_bool( _BOOLean_value )
 #endif // _DEBUG

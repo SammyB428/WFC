@@ -493,7 +493,7 @@ _Check_return_ bool CNetworkShares::m_GetChunk( void ) noexcept
 
    // Let's see if we have already been reading
 
-   if ( m_2NumberOfEntriesRead != 0 && m_2ResumeHandle == 0 )
+   if ( m_2NumberOfEntriesRead != 0 and m_2ResumeHandle == 0 )
    {
       // Yup, we've finished reading
       //WFCTRACE( TEXT( "Freeing Buffer 2" ) );
@@ -514,7 +514,7 @@ _Check_return_ bool CNetworkShares::m_GetChunk( void ) noexcept
                                         &m_2TotalNumberOfEntries,
                                         &m_2ResumeHandle );
 
-   if ( m_ErrorCode == NERR_Success || m_ErrorCode == ERROR_MORE_DATA )
+   if ( m_ErrorCode == NERR_Success or m_ErrorCode == ERROR_MORE_DATA )
    {
       if ( m_ErrorCode == NERR_Success )
       {
@@ -546,7 +546,7 @@ _Check_return_ bool CNetworkShares::m_GetChunk( void ) noexcept
 
       // Let's see if we have already been reading
 
-      if ( m_1NumberOfEntriesRead != 0 && m_1ResumeHandle == 0 )
+      if ( m_1NumberOfEntriesRead != 0 and m_1ResumeHandle == 0 )
       {
          // Yup, we've finished reading
          //WFCTRACE( TEXT( "Freeing Buffer 1" ) );
@@ -568,7 +568,7 @@ _Check_return_ bool CNetworkShares::m_GetChunk( void ) noexcept
                                            &m_1ResumeHandle );
 
 
-      if ( m_ErrorCode == NERR_Success || m_ErrorCode == ERROR_MORE_DATA )
+      if ( m_ErrorCode == NERR_Success or m_ErrorCode == ERROR_MORE_DATA )
       {
          //WFCTRACE( TEXT( "Got lower level information" ) );
 

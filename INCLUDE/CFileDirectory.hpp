@@ -83,7 +83,7 @@ class CFileDirectory
       {
           WFC_VALIDATE_POINTER(directory_name);
 
-          if (directory_name == nullptr || directory_name[0] == 0x00)
+          if (directory_name == nullptr or directory_name[0] == 0x00)
           {
               return(false);
           }
@@ -112,7 +112,7 @@ class CFileDirectory
       {
           WFC_VALIDATE_POINTER( directory_name );
 
-          if ( directory_name == nullptr || directory_name[ 0 ] == 0x00 )
+          if ( directory_name == nullptr or directory_name[ 0 ] == 0x00 )
           {
               return( false );
           }
@@ -129,7 +129,7 @@ class CFileDirectory
       {
           WFC_VALIDATE_POINTER( file_name );
 
-          if ( file_name == nullptr || file_name[ 0 ] == 0x00 )
+          if ( file_name == nullptr or file_name[ 0 ] == 0x00 )
           {
               return( false );
           }

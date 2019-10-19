@@ -327,7 +327,7 @@ inline void __cdecl operator delete( void * address, const char *, int )
    ::operator delete( address );
 }
 
-#define WFC_DUMP_MEMORY_LEAKS_AT_PROGRAM_EXIT() _CrtSetDbgFlag( ( _CrtSetDbgFlag( _CRTDBG_REPORT_FLAG ) | _CRTDBG_LEAK_CHECK_DF ) )
+#define WFC_DUMP_MEMORY_LEAKS_AT_PROGRAM_EXIT() _CrtSetDbgFlag( ( _CrtSetDbgFlag( _CRTDBG_REPORT_FLAG ) bitor _CRTDBG_LEAK_CHECK_DF ) )
 
 #else // _DEBUG
 
@@ -381,7 +381,7 @@ inline void __cdecl operator delete( void * address, const char *, int )
 #endif // // _MFC_VER < 0x0700
 
 #if defined( _DEBUG ) && defined( _INC_CRTDBG )
-#define WFC_REPORT_MEMORY_LEAKS() _CrtSetDbgFlag( _CRTDBG_LEAK_CHECK_DF | _CrtSetDbgFlag( _CRTDBG_REPORT_FLAG ) )
+#define WFC_REPORT_MEMORY_LEAKS() _CrtSetDbgFlag( _CRTDBG_LEAK_CHECK_DF bitor _CrtSetDbgFlag( _CRTDBG_REPORT_FLAG ) )
 #else
 #define WFC_REPORT_MEMORY_LEAKS()
 #endif
@@ -537,17 +537,17 @@ namespace Win32FoundationClasses
 #define WFC_STANDARD_TIME_FORMAT TEXT( "%H:%M:%S %d %b %Y" ) 
 
 #define WFC_NULL_GUID  {0,0,0,{0,0,0,0,0,0,0,0}}
-#define WFC_IS_NULL_GUID(id) ((id.Data1==0)&&(id.Data2==0)&&(id.Data3==0)&&\
-                              (id.Data4[0]==0)&&(id.Data4[1]==0)&&(id.Data4[2]==0)&&\
-                              (id.Data4[3]==0)&&(id.Data4[4]==0)&&(id.Data4[5]==0)&&\
-                              (id.Data4[6]==0)&&(id.Data4[7]==0))
-#define WFC_IS_NOT_NULL_GUID(id) ((id.Data1!=0)||(id.Data2!=0)||(id.Data3!=0)||\
-                                  (id.Data4[0]!=0)||(id.Data4[1]!=0)||(id.Data4[2]!=0)||\
-                                  (id.Data4[3]!=0)||(id.Data4[4]!=0)||(id.Data4[5]!=0)||\
-                                  (id.Data4[6]!=0)||(id.Data4[7]!=0))
-#define WFC_IS_HEXADECIMAL( _x ) ((_x >= '0' && _x <= '9')||(_x >= 'a' && _x <= 'f')||(_x >= 'A' && _x <= 'F'))
-#define WFC_IS_OCTAL( _x ) (_x >= '0' && _x <= '7')
-#define WFC_IS_DECIMAL( _x ) (_x >= '0' && _x <= '9')
+#define WFC_IS_NULL_GUID(id) ((id.Data1==0)and(id.Data2==0)and(id.Data3==0)and\
+                              (id.Data4[0]==0)and(id.Data4[1]==0)and(id.Data4[2]==0)and\
+                              (id.Data4[3]==0)and(id.Data4[4]==0)and(id.Data4[5]==0)and\
+                              (id.Data4[6]==0)and(id.Data4[7]==0))
+#define WFC_IS_NOT_NULL_GUID(id) ((id.Data1!=0)or(id.Data2!=0)or(id.Data3!=0)or\
+                                  (id.Data4[0]!=0)or(id.Data4[1]!=0)or(id.Data4[2]!=0)or\
+                                  (id.Data4[3]!=0)or(id.Data4[4]!=0)or(id.Data4[5]!=0)or\
+                                  (id.Data4[6]!=0)or(id.Data4[7]!=0))
+#define WFC_IS_HEXADECIMAL( _x ) ((_x >= '0' and _x <= '9')or(_x >= 'a' and _x <= 'f')or(_x >= 'A' and _x <= 'F'))
+#define WFC_IS_OCTAL( _x ) (_x >= '0' and _x <= '7')
+#define WFC_IS_DECIMAL( _x ) (_x >= '0' and _x <= '9')
 
     /*
 ** An easy way to refer to colors . . .
@@ -635,15 +635,15 @@ void PASCAL wfc_append_text_to_edit_control( __in HWND edit_control_handle, __in
 #endif
 
 #if ! defined( bit_set )
-#define bit_set( arg, posn ) ((arg) |= (ONE_BIT << (posn)))
+#define bit_set( arg, posn ) ((arg) or_eq (ONE_BIT << (posn)))
 #endif
 
 #if ! defined( bit_clear )
-#define bit_clear( arg, posn ) ((arg) &= ~(ONE_BIT << (posn)))
+#define bit_clear( arg, posn ) ((arg) and_eq ~(ONE_BIT << (posn)))
 #endif
 
 #if ! defined( bit_test )
-#define bit_test( arg, posn ) BITBOOL((arg) & (ONE_BIT << (posn)))
+#define bit_test( arg, posn ) BITBOOL((arg) bitand (ONE_BIT << (posn)))
 #endif
 
 #define EAX (0)
@@ -687,7 +687,7 @@ inline _Check_return_ bool is_avx_supported( void ) noexcept
     bool const os_uses_XSAVE_XRSTORE = is_proccessor_feature_supported( 1, ECX, 27 );
     bool const cpu_supports_AVX = is_proccessor_feature_supported( 1, ECX, 28 );
 
-    if ( os_uses_XSAVE_XRSTORE == true && cpu_supports_AVX == true )
+    if ( os_uses_XSAVE_XRSTORE == true and cpu_supports_AVX == true )
     {
         // Check to see if the OS will save the YMM registers 
         auto const xcr_feature_mask = _xgetbv( _XCR_XFEATURE_ENABLED_MASK );
@@ -713,7 +713,7 @@ inline _Check_return_ bool is_sse2_supported( void ) noexcept
 
 inline constexpr _Check_return_ bool is_bad_handle( _In_opt_ HANDLE const handle_value ) noexcept
 {
-   if ( handle_value == static_cast<HANDLE>( NULL ) || handle_value == INVALID_HANDLE_VALUE )
+   if ( handle_value == static_cast<HANDLE>( NULL ) or handle_value == INVALID_HANDLE_VALUE )
    {
        return( true );
    }
@@ -725,7 +725,7 @@ inline constexpr _Check_return_ bool is_bad_handle( _In_opt_ HANDLE const handle
 
 static inline _Check_return_ wchar_t const * DefinedStringConstant(_In_ uint64_t const value, __in_ecount(number_of_definitions) DEFINED_WIDE_STRING const definitions[], _In_ std::size_t const number_of_definitions) noexcept
 {
-    if (definitions == nullptr || number_of_definitions < 1)
+    if (definitions == nullptr or number_of_definitions < 1)
     {
         return(nullptr);
     }
@@ -770,14 +770,14 @@ inline void from_defined(_Inout_ std::wstring& s, _In_ uint64_t const value, __i
 
 inline constexpr _Check_return_ bool PASCAL wfc_is_ascii( uint8_t const byte_value ) noexcept
 {
-    if ( byte_value == CARRIAGE_RETURN ||
-         byte_value == LINE_FEED ||
+    if ( byte_value == CARRIAGE_RETURN or
+         byte_value == LINE_FEED or
          byte_value == TAB_CHARACTER )
     {
         return( true );
     }
 
-    if ( byte_value >= 0x20 && byte_value <= 0x7E )
+    if ( byte_value >= 0x20 and byte_value <= 0x7E )
     {
         return( true );
     }
@@ -787,7 +787,7 @@ inline constexpr _Check_return_ bool PASCAL wfc_is_ascii( uint8_t const byte_val
 
 inline constexpr _Check_return_ uint64_t round_down_to_a_multiple_of(_In_ uint64_t const value, _In_ uint64_t const multiple) noexcept
 {
-    if (value < multiple || multiple == 0)
+    if (value < multiple or multiple == 0)
     {
         return(0);
     }
@@ -1045,17 +1045,17 @@ inline constexpr _Check_return_ uint64_t round_down_to_a_multiple_of(_In_ uint64
 
 inline constexpr _Check_return_ uint8_t hex_val( _In_ wchar_t const character ) noexcept
 {
-    if ( character >= '0' && character <= '9' )
+    if ( character >= '0' and character <= '9' )
     {
         return( character - '0' );
     }
 
-    if ( character >= 'a' && character <= 'f' )
+    if ( character >= 'a' and character <= 'f' )
     {
         return( ( character - 'a' ) + 10 );
     }
 
-    if ( character >= 'A' && character <= 'F' )
+    if ( character >= 'A' and character <= 'F' )
     {
         return( ( character - 'A' ) + 10 );
     }
@@ -1092,7 +1092,7 @@ void PASCAL wfc_append_ascii_string_to_byte_array( __in_z char const * string_to
 void PASCAL wfc_append_unicode_string_to_byte_array( __in_z wchar_t const * string_to_append, __inout std::vector<uint8_t>& bytes ) noexcept;
 
 #if ! defined( WFC_DEFAULT_WEB_PAGE_OPTIONS )
-#define WFC_DEFAULT_WEB_PAGE_OPTIONS (INTERNET_FLAG_RELOAD|INTERNET_FLAG_TRANSFER_ASCII|INTERNET_FLAG_NO_CACHE_WRITE|INTERNET_FLAG_IGNORE_CERT_CN_INVALID|INTERNET_FLAG_IGNORE_CERT_DATE_INVALID)
+#define WFC_DEFAULT_WEB_PAGE_OPTIONS (INTERNET_FLAG_RELOAD bitor INTERNET_FLAG_TRANSFER_ASCII bitor INTERNET_FLAG_NO_CACHE_WRITE bitor INTERNET_FLAG_IGNORE_CERT_CN_INVALID bitor INTERNET_FLAG_IGNORE_CERT_DATE_INVALID)
 #endif // WFC_DEFAULT_WEB_PAGE_OPTIONS
 
 inline constexpr _Check_return_ double wfc_get_percentage( _In_ double const sample, _In_ double const total_samples ) noexcept
@@ -1220,8 +1220,8 @@ _Check_return_ bool PASCAL wfc_convert_to_unicode( __inout VOID *       unicode_
 #endif // NO_WFC_CONVERT_TO_UNICODE
 
 #define WFC_INITIALIZE_SINGLE_THREADED_COM() ::CoInitialize( nullptr )
-#define WFC_INITIALIZE_SINGLE_THREADED_COM_NO_DDE() ::CoInitializeEx( nullptr, COINIT_APARTMENTTHREADED | COINIT_DISABLE_OLE1DDE | COINIT_SPEED_OVER_MEMORY )
-#define WFC_INITIALIZE_MULTITHREADED_COM() ::CoInitializeEx( nullptr, COINIT_MULTITHREADED | COINIT_DISABLE_OLE1DDE | COINIT_SPEED_OVER_MEMORY )
+#define WFC_INITIALIZE_SINGLE_THREADED_COM_NO_DDE() ::CoInitializeEx( nullptr, COINIT_APARTMENTTHREADED bitor COINIT_DISABLE_OLE1DDE bitor COINIT_SPEED_OVER_MEMORY )
+#define WFC_INITIALIZE_MULTITHREADED_COM() ::CoInitializeEx( nullptr, COINIT_MULTITHREADED bitor COINIT_DISABLE_OLE1DDE bitor COINIT_SPEED_OVER_MEMORY )
 
 /*
 ** Last but not least, let's see if we are building a UNICODE console

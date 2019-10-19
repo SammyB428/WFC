@@ -79,7 +79,7 @@ _Check_return_ bool CNetwork::AbortShutdown( void ) noexcept
 
    auto token_handle = static_cast< HANDLE >( NULL );
 
-   if ( ::OpenProcessToken( ::GetCurrentProcess(), TOKEN_ADJUST_PRIVILEGES | TOKEN_QUERY, &token_handle ) == FALSE )
+   if ( ::OpenProcessToken( ::GetCurrentProcess(), TOKEN_ADJUST_PRIVILEGES bitor TOKEN_QUERY, &token_handle ) == FALSE )
    {
       m_ErrorCode = ::GetLastError();
       //WFCTRACE( TEXT( "Can't OpenProcessToken()" ) );
@@ -399,7 +399,7 @@ _Check_return_ bool CNetwork::IsRebootable( void ) noexcept
 
    auto token_handle = static_cast< HANDLE >( NULL );
 
-   if ( ::OpenProcessToken( ::GetCurrentProcess(), TOKEN_ADJUST_PRIVILEGES | TOKEN_QUERY, &token_handle ) == FALSE )
+   if ( ::OpenProcessToken( ::GetCurrentProcess(), TOKEN_ADJUST_PRIVILEGES bitor TOKEN_QUERY, &token_handle ) == FALSE )
    {
       m_ErrorCode = ::GetLastError();
       //WFCTRACEERROR( m_ErrorCode );
@@ -619,7 +619,7 @@ _Check_return_ bool CNetwork::SetPrivilege( __in_z LPCTSTR privilege_name, __in 
 
    WFC_TRY
    {
-      if ( ::OpenProcessToken( ::GetCurrentProcess(), TOKEN_ADJUST_PRIVILEGES | TOKEN_QUERY, &token_handle ) == FALSE )
+      if ( ::OpenProcessToken( ::GetCurrentProcess(), TOKEN_ADJUST_PRIVILEGES bitor TOKEN_QUERY, &token_handle ) == FALSE )
       {
          m_ErrorCode = ::GetLastError();
          //WFCTRACE( TEXT( "Can't OpenProcessToken" ) );
@@ -672,11 +672,11 @@ _Check_return_ bool CNetwork::SetPrivilege( __in_z LPCTSTR privilege_name, __in 
       
       if ( add_privilege == true)
       {
-         previous_token_privileges.Privileges[ 0 ].Attributes |= (SE_PRIVILEGE_ENABLED);
+         previous_token_privileges.Privileges[ 0 ].Attributes or_eq (SE_PRIVILEGE_ENABLED);
       }
       else
       {
-         previous_token_privileges.Privileges[ 0 ].Attributes ^= ( (SE_PRIVILEGE_ENABLED) & previous_token_privileges.Privileges[ 0 ].Attributes );
+         previous_token_privileges.Privileges[ 0 ].Attributes xor_eq ( (SE_PRIVILEGE_ENABLED) bitand previous_token_privileges.Privileges[ 0 ].Attributes );
       }
 
       if ( ::AdjustTokenPrivileges( token_handle,
@@ -716,7 +716,7 @@ _Check_return_ bool CNetwork::Shutdown( __in bool const reboot, __in bool const 
 
    auto token_handle = static_cast< HANDLE >( NULL );
 
-   if ( ::OpenProcessToken( ::GetCurrentProcess(), TOKEN_ADJUST_PRIVILEGES | TOKEN_QUERY, &token_handle ) == FALSE )
+   if ( ::OpenProcessToken( ::GetCurrentProcess(), TOKEN_ADJUST_PRIVILEGES bitor TOKEN_QUERY, &token_handle ) == FALSE )
    {
       m_ErrorCode = ::GetLastError();
       //WFCTRACEERROR( m_ErrorCode );

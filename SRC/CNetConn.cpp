@@ -185,7 +185,7 @@ _Check_return_ bool CNetworkConnections::m_GetChunk( void ) noexcept
 
    m_1Index = 0;
 
-   if ( m_1NumberOfEntriesRead != 0 && m_1ResumeHandle == 0 )
+   if ( m_1NumberOfEntriesRead != 0 and m_1ResumeHandle == 0 )
    {
       // Yup, we've finished reading
       ::NetApiBufferFree( m_1InformationBuffer );
@@ -206,7 +206,7 @@ _Check_return_ bool CNetworkConnections::m_GetChunk( void ) noexcept
                                              &m_1TotalNumberOfEntries,
                                              &m_1ResumeHandle );
 
-   if ( m_ErrorCode == NERR_Success || m_ErrorCode == ERROR_MORE_DATA )
+   if ( m_ErrorCode == NERR_Success or m_ErrorCode == ERROR_MORE_DATA )
    {
       return( true );
    }

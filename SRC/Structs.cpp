@@ -185,7 +185,7 @@ void CAccessControlEntryHeader::Copy( __in ACE_HEADER const * source ) noexcept
    WFC_VALIDATE_POINTER( source );
    ASSERT( source != this );
 
-   if ( source == nullptr || source == this )
+   if ( source == nullptr or source == this )
    {
       return;
    }
@@ -350,7 +350,7 @@ void CAccessControlList::Copy( __in ACL const * source ) noexcept
    WFC_VALIDATE_POINTER( source );
    ASSERT( source != this );
 
-   if ( source == nullptr || source == this )
+   if ( source == nullptr or source == this )
    {
       return;
    }
@@ -435,7 +435,7 @@ void CAccessDeniedEntry::Copy( __in ACCESS_DENIED_ACE const * source ) noexcept
    WFC_VALIDATE_POINTER( source );
    ASSERT( source != this );
 
-   if ( source == nullptr || source == this )
+   if ( source == nullptr or source == this )
    {
       return;
    }
@@ -609,7 +609,7 @@ void CBitmapCoreHeader::Copy( __in tagBITMAPCOREHEADER const * source ) noexcept
    WFC_VALIDATE_POINTER( source );
    ASSERT( source != this );
 
-   if ( source == nullptr || source == this )
+   if ( source == nullptr or source == this )
    {
       return;
    }
@@ -694,7 +694,7 @@ void CBitmapFileHeader::Copy( __in tagBITMAPFILEHEADER const * source ) noexcept
    WFC_VALIDATE_POINTER( source );
    ASSERT( source != this );
 
-   if ( source == nullptr || source == this )
+   if ( source == nullptr or source == this )
    {
       return;
    }
@@ -786,7 +786,7 @@ void CBitmapInfoHeader::Copy( __in tagBITMAPINFOHEADER const * source ) noexcept
    WFC_VALIDATE_POINTER( source );
    ASSERT( source != this );
 
-   if ( source == nullptr || source == this )
+   if ( source == nullptr or source == this )
    {
       return;
    }
@@ -893,7 +893,7 @@ void CColorAdjustment::Copy( __in tagCOLORADJUSTMENT const * source ) noexcept
    WFC_VALIDATE_POINTER( source );
    ASSERT( source != this );
 
-   if ( source == nullptr || source == this )
+   if ( source == nullptr or source == this )
    {
       return;
    }
@@ -2191,7 +2191,7 @@ void COFStruct::Copy( __in _OFSTRUCT const * source ) noexcept
    WFC_VALIDATE_POINTER( source );
    ASSERT( source != this );
 
-   if ( source == nullptr || source == this )
+   if ( source == nullptr or source == this )
    {
       return;
    }
@@ -2287,7 +2287,7 @@ void COutlineTextMetricA::Copy( __in _OUTLINETEXTMETRICA const * source ) noexce
    WFC_VALIDATE_POINTER( source );
    ASSERT( source != this );
 
-   if ( source == nullptr || source == this )
+   if ( source == nullptr or source == this )
    {
       return;
    }
@@ -2582,7 +2582,7 @@ void COutlineTextMetricW::Copy( __in _OUTLINETEXTMETRICW const * source ) noexce
    WFC_VALIDATE_POINTER( source );
    ASSERT( source != this );
 
-   if ( source == nullptr || source == this )
+   if ( source == nullptr or source == this )
    {
       return;
    }
@@ -2921,7 +2921,7 @@ void CPixelFormatDescriptor::Copy( __in tagPIXELFORMATDESCRIPTOR const * source 
    WFC_VALIDATE_POINTER( source );
    ASSERT( source != this );
 
-   if ( source == nullptr || source == this )
+   if ( source == nullptr or source == this )
    {
       return;
    }
@@ -3257,7 +3257,7 @@ void CSystemAuditEntry::Copy( __in _SYSTEM_AUDIT_ACE const * source ) noexcept
    WFC_VALIDATE_POINTER( source );
    ASSERT( source != this );
 
-   if ( source == nullptr || source == this )
+   if ( source == nullptr or source == this )
    {
       return;
    }
@@ -3439,7 +3439,7 @@ void CTextMetricA::Copy( __in tagTEXTMETRICA const * source ) noexcept
    WFC_VALIDATE_POINTER( source );
    ASSERT( source != this );
 
-   if ( source == nullptr || source == this )
+   if ( source == nullptr or source == this )
    {
       return;
    }
@@ -3573,7 +3573,7 @@ void CTextMetricW::Copy( __in tagTEXTMETRICW const * source ) noexcept
    WFC_VALIDATE_POINTER( source );
    ASSERT( source != this );
 
-   if ( source == nullptr || source == this )
+   if ( source == nullptr or source == this )
    {
       return;
    }
@@ -3703,7 +3703,7 @@ void CWindowPlacement::Copy( __in tagWINDOWPLACEMENT const * source ) noexcept
    WFC_VALIDATE_POINTER( source );
    ASSERT( source != this );
 
-   if ( source == nullptr || source == this )
+   if ( source == nullptr or source == this )
    {
       return;
    }

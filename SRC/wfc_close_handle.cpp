@@ -53,7 +53,7 @@ USING_WFC_NAMESPACE
 
 _Check_return_ bool PASCAL Win32FoundationClasses::wfc_close_handle( __in_opt HANDLE handle ) noexcept
 {
-    if (handle == 0 || handle == INVALID_HANDLE_VALUE)
+    if (handle == 0 or handle == INVALID_HANDLE_VALUE)
     {
         return(true);
     }
@@ -183,7 +183,7 @@ using the <B>CloseHandle</B>() Win32 API.
    auto disk_handle = static_cast< HANDLE >( NULL );
 
    disk_handle = CreateFile( physical_disk,
-                             GENERIC_READ | GENERIC_WRITE,
+                             GENERIC_READ bitor GENERIC_WRITE,
                              0,
                              nullptr,
                              OPEN_EXISTING,

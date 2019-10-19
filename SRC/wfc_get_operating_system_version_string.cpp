@@ -154,7 +154,7 @@ struct BASE_BOARD_INFORMATION
 #define SYSTEM_MANAGEMENT_SYSTEM_INFORMATION (1)
 #define SYSTEM_MANAGEMENT_BIOS_BASE_BOARD_INFORMATION (2)
 
-inline static const _Check_return_ DEVICE_MANAGEMENT_INFORMATION_HEADER * __get_smbios_info( _In_ uint8_t const desired_type, _In_reads_bytes_( buffer_size ) uint8_t const * buffer, _In_ std::size_t const buffer_size ) noexcept
+inline static _Check_return_ DEVICE_MANAGEMENT_INFORMATION_HEADER const * __get_smbios_info( _In_ uint8_t const desired_type, _In_reads_bytes_( buffer_size ) uint8_t const * buffer, _In_ std::size_t const buffer_size ) noexcept
 {
     int buffer_index = 0;
 
@@ -171,7 +171,7 @@ inline static const _Check_return_ DEVICE_MANAGEMENT_INFORMATION_HEADER * __get_
 
         buffer_index += header->length;
 
-        while( buffer_index < buffer_size && ! ( buffer[ buffer_index ] == 0 && buffer[ buffer_index + 1 ] == 0 ) )
+        while( buffer_index < buffer_size and not ( buffer[ buffer_index ] == 0 and buffer[ buffer_index + 1 ] == 0 ) )
         {
             buffer_index++;
         }

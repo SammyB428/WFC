@@ -611,7 +611,7 @@ namespace Win32FoundationClasses
         {
             WFC_VALIDATE_POINTER( this );
 
-            if ( index < 0 || number_of_characters_to_delete < 1 )
+            if ( index < 0 or number_of_characters_to_delete < 1 )
             {
                 return( (int) m_String.length() );
             }
@@ -1151,7 +1151,7 @@ namespace Win32FoundationClasses
 
         _Check_return_ bool EndsWith( _In_z_ LPCTSTR ending ) const noexcept
         {
-            if ( ending == nullptr || ending[ 0 ] == 0x00 )
+            if ( ending == nullptr or ending[ 0 ] == 0x00 )
             {
                 return( false );
             }
@@ -1177,7 +1177,7 @@ namespace Win32FoundationClasses
 
         inline _Check_return_ bool EndsWithNoCase( _In_z_ LPCTSTR ending ) const noexcept
         {
-            if ( ending == nullptr || ending[ 0 ] == 0x00 )
+            if ( ending == nullptr or ending[ 0 ] == 0x00 )
             {
                 return( false );
             }
@@ -1287,7 +1287,7 @@ namespace Win32FoundationClasses
             WFC_VALIDATE_POINTER( this );
             WFC_VALIDATE_POINTER_NULL_OK( character_set );
 
-            if ( character_set != nullptr && m_String.empty() == false )
+            if ( character_set != nullptr and m_String.empty() == false )
             {
                 return( Left( ::_tcscspn( m_String.c_str(), character_set ) ) );
             }
@@ -1352,7 +1352,7 @@ namespace Win32FoundationClasses
             {
                 std::size_t number_of_elements_to_erase = 0;
 
-                while( number_of_elements_to_erase < string_length &&
+                while( number_of_elements_to_erase < string_length and
                     _istspace( m_String.at( number_of_elements_to_erase ) ) )
                 {
                     number_of_elements_to_erase++;
@@ -1379,7 +1379,7 @@ namespace Win32FoundationClasses
             {
                 std::size_t number_of_elements_to_erase = 0;
 
-                while( number_of_elements_to_erase < string_length &&
+                while( number_of_elements_to_erase < string_length and
                     character == m_String.at( number_of_elements_to_erase ) )
                 {
                     number_of_elements_to_erase++;
@@ -1626,7 +1626,7 @@ namespace Win32FoundationClasses
 
     inline _Check_return_ int64_t find_in_memory(_In_reads_bytes_( buffer_size ) uint8_t const * __restrict buffer, _In_ int64_t const buffer_size, _In_reads_bytes_( pattern_size ) uint8_t const * __restrict pattern, _In_ int64_t const pattern_size ) noexcept
     {
-        if ( buffer == nullptr || buffer_size < 1 || pattern == nullptr || pattern_size < 1 || pattern_size > buffer_size )
+        if ( buffer == nullptr or buffer_size < 1 or pattern == nullptr or pattern_size < 1 or pattern_size > buffer_size )
         {
             return( BYTES_NOT_FOUND );
         }
@@ -1729,9 +1729,9 @@ namespace Win32FoundationClasses
         {
             character_to_test = buffer[here];
 
-            if (character_to_test == 0x20 ||
-                character_to_test == TAB_CHARACTER ||
-                character_to_test == CARRIAGE_RETURN ||
+            if (character_to_test == 0x20 or
+                character_to_test == TAB_CHARACTER or
+                character_to_test == CARRIAGE_RETURN or
                 character_to_test == LINE_FEED)
             {
                 here++;

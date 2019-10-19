@@ -207,12 +207,12 @@ class CSystemTime : public _SYSTEMTIME
 
       inline constexpr _Check_return_ bool IsEmpty(void) const noexcept
       {
-          if (wYear != 0 ||
-              wMonth != 0 ||
-              wDay != 0 ||
-              wHour != 0 ||
-              wMinute != 0 ||
-              wSecond != 0 ||
+          if (wYear != 0 or
+              wMonth != 0 or
+              wDay != 0 or
+              wHour != 0 or
+              wMinute != 0 or
+              wSecond != 0 or
               wMilliseconds != 0)
           {
               return(false);

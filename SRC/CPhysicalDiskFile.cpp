@@ -332,11 +332,11 @@ _Check_return_ bool CPhysicalDiskFile::Open( _In_z_ LPCTSTR drive_letter, _In_ U
       format( filename, L"\\\\.\\%c:", drive_letter[ 0 ] );
 
       m_FileHandle = ::CreateFileW( filename.c_str(),
-                                   GENERIC_READ | GENERIC_WRITE,
-                                   FILE_SHARE_READ | FILE_SHARE_WRITE,
+                                   GENERIC_READ bitor GENERIC_WRITE,
+                                   FILE_SHARE_READ bitor FILE_SHARE_WRITE,
                                    nullptr,
                                    OPEN_EXISTING,
-                                   FILE_ATTRIBUTE_NORMAL | FILE_FLAG_WRITE_THROUGH | FILE_FLAG_NO_BUFFERING,
+                                   FILE_ATTRIBUTE_NORMAL bitor FILE_FLAG_WRITE_THROUGH bitor FILE_FLAG_NO_BUFFERING,
                                    reinterpret_cast< HANDLE >( NULL ) );
 
       if ( m_FileHandle == reinterpret_cast< HANDLE >( INVALID_HANDLE_VALUE ) )
@@ -382,11 +382,11 @@ _Check_return_ bool CPhysicalDiskFile::Open( _In_ int const physical_disk_number
    format( filename, L"\\\\.\\PhysicalDrive%d", physical_disk_number );
 
    m_FileHandle = ::CreateFileW( filename.c_str(),
-                                GENERIC_READ | GENERIC_WRITE,
+                                GENERIC_READ bitor GENERIC_WRITE,
                                 0,
                                 nullptr,
                                 OPEN_EXISTING,
-                                FILE_ATTRIBUTE_NORMAL | FILE_FLAG_WRITE_THROUGH | FILE_FLAG_NO_BUFFERING,
+                                FILE_ATTRIBUTE_NORMAL bitor FILE_FLAG_WRITE_THROUGH bitor FILE_FLAG_NO_BUFFERING,
                                 reinterpret_cast< HANDLE >( NULL ) );
 
    if ( m_FileHandle == reinterpret_cast< HANDLE >( INVALID_HANDLE_VALUE ) )
@@ -423,10 +423,10 @@ _Check_return_ bool CPhysicalDiskFile::OpenRead(_In_z_ wchar_t const * physical_
 
     m_FileHandle = ::CreateFileW(physical_drive_name,
         GENERIC_READ,
-        FILE_SHARE_READ | FILE_SHARE_WRITE,
+        FILE_SHARE_READ bitor FILE_SHARE_WRITE,
         nullptr,
         OPEN_EXISTING,
-        FILE_ATTRIBUTE_NORMAL | FILE_FLAG_NO_BUFFERING,
+        FILE_ATTRIBUTE_NORMAL bitor FILE_FLAG_NO_BUFFERING,
         reinterpret_cast< HANDLE >(NULL));
 
     if (m_FileHandle == reinterpret_cast< HANDLE >(INVALID_HANDLE_VALUE))

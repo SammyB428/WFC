@@ -72,7 +72,7 @@ bool CPasswordChangeFilter::AddFilter( _In_ std::wstring const& dll_name ) noexc
       return( false );
    }
 
-   if ( registry.Open( L"SYSTEM\\CurrentControlSet\\Control\\Lsa", (CRegistry::CreatePermissions)(CRegistry::permissionRead | CRegistry::permissionSetValue ) ) == FALSE )
+   if ( registry.Open( L"SYSTEM\\CurrentControlSet\\Control\\Lsa", (CRegistry::CreatePermissions)(CRegistry::permissionRead bitor CRegistry::permissionSetValue ) ) == FALSE )
    {
       return( false );
    }
@@ -156,7 +156,7 @@ _Check_return_ bool CPasswordChangeFilter::RemoveFilter( __in std::wstring const
       return( false );
    }
 
-   if ( registry.Open( L"SYSTEM\\CurrentControlSet\\Control\\Lsa", (CRegistry::CreatePermissions)(CRegistry::permissionRead | CRegistry::permissionSetValue ) ) == FALSE )
+   if ( registry.Open( L"SYSTEM\\CurrentControlSet\\Control\\Lsa", (CRegistry::CreatePermissions)(CRegistry::permissionRead bitor CRegistry::permissionSetValue ) ) == FALSE )
    {
       return( false );
    }

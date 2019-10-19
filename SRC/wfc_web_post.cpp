@@ -143,7 +143,7 @@ _Check_return_ bool PASCAL Win32FoundationClasses::wfc_web_post( __in_z LPCTSTR 
    WFC_VALIDATE_POINTER( url );
    WFC_VALIDATE_POINTER( data );
 
-   if ( url  == nullptr ||
+   if ( url  == nullptr or
         data == nullptr )
    {
       return( false );
@@ -191,7 +191,7 @@ _Check_return_ bool PASCAL Win32FoundationClasses::wfc_web_post( __in_z LPCTSTR 
       LPCTSTR       internet_connect_user_name = nullptr;
       LPCTSTR       internet_connect_password  = nullptr;
       DWORD         internet_connect_service   = INTERNET_SERVICE_HTTP;
-      DWORD         internet_connect_flags     = INTERNET_FLAG_RELOAD | 
+      DWORD         internet_connect_flags     = INTERNET_FLAG_RELOAD bitor
                                                  INTERNET_FLAG_NO_CACHE_WRITE;
       DWORD         internet_connect_context   = 0;
 
@@ -256,7 +256,7 @@ _Check_return_ bool PASCAL Win32FoundationClasses::wfc_web_post( __in_z LPCTSTR 
       strcat_s( temp_string, std::size( temp_string ), boundary_string );
       strcat_s( temp_string, std::size( temp_string ), "\r\n" );
 
-      DWORD http_add_request_headers_modifiers = HTTP_ADDREQ_FLAG_REPLACE | HTTP_ADDREQ_FLAG_ADD;
+      DWORD http_add_request_headers_modifiers = HTTP_ADDREQ_FLAG_REPLACE bitor HTTP_ADDREQ_FLAG_ADD;
 
       if ( HttpAddRequestHeadersA( http_request_handle,
                                    temp_string,
@@ -380,7 +380,7 @@ _Check_return_ bool PASCAL Win32FoundationClasses::wfc_web_post( __in_z LPCTSTR 
       InternetCloseHandle( internet_handle );
       internet_handle = static_cast< HINTERNET >( NULL );
 
-      if ( response != nullptr && response_buffer != nullptr )
+      if ( response != nullptr and response_buffer != nullptr )
       {
          copy( *response, reinterpret_cast<char const *>(response_buffer.get()) );
       }

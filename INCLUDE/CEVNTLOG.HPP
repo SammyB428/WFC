@@ -117,11 +117,11 @@ class CEventLog
       virtual _Check_return_ bool  Open( __in_z LPCTSTR log_name, __in_z_opt LPCTSTR name_of_computer = nullptr ) noexcept;
       virtual _Check_return_ bool  Read( __in DWORD  record_number,
                           __out CEventLogRecord& record,
-                          __in DWORD  how_to_read = EVENTLOG_FORWARDS_READ | EVENTLOG_SEQUENTIAL_READ ) noexcept;
+                          __in DWORD  how_to_read = EVENTLOG_FORWARDS_READ bitor EVENTLOG_SEQUENTIAL_READ ) noexcept;
       virtual _Check_return_ bool  Read( __in DWORD  record_number, 
                           __out_bcount_part( number_of_bytes_to_read, number_of_bytes_to_read ) LPVOID buffer, 
                           __inout DWORD& number_of_bytes_to_read, 
-                          __in DWORD  how_to_read = EVENTLOG_FORWARDS_READ | EVENTLOG_SEQUENTIAL_READ ) noexcept;
+                          __in DWORD  how_to_read = EVENTLOG_FORWARDS_READ bitor EVENTLOG_SEQUENTIAL_READ ) noexcept;
       virtual _Check_return_ bool  RegisterSource( __in_z wchar_t const * source_name, __in_z_opt wchar_t const * name_of_computer = nullptr ) noexcept;
       virtual _Check_return_ bool  Report( __in EventType event_type,
                             __in WORD      category,

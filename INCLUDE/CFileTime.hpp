@@ -795,7 +795,7 @@ class CFileTime : public _FILETIME
 
       inline constexpr _Check_return_ bool IsEmpty( void ) const noexcept
       {
-         return( ( dwHighDateTime == 0 && dwLowDateTime == 0 ) ? true : false );
+         return( ( dwHighDateTime == 0 and dwLowDateTime == 0 ) ? true : false );
       }
 
       inline void FillWithCurrentTime( void ) noexcept

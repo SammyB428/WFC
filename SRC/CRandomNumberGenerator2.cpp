@@ -108,10 +108,10 @@ typedef unsigned long uint32;
 #define N              (624)                 // length of state vector
 #define M              (397)                 // a period parameter
 #define K              (0x9908B0DFU)         // a magic constant
-#define hiBit(u)       ((u) & 0x80000000U)   // mask all but highest   bit of u
-#define loBit(u)       ((u) & 0x00000001U)   // mask all but lowest    bit of u
-#define loBits(u)      ((u) & 0x7FFFFFFFU)   // mask     the highest   bit of u
-#define mixBits(u, v)  (hiBit(u)|loBits(v))  // move hi bit of u to hi bit of v
+#define hiBit(u)       ((u) bitand 0x80000000U)   // mask all but highest   bit of u
+#define loBit(u)       ((u) bitand 0x00000001U)   // mask all but lowest    bit of u
+#define loBits(u)      ((u) bitand 0x7FFFFFFFU)   // mask     the highest   bit of u
+#define mixBits(u, v)  (hiBit(u) bitor loBits(v))  // move hi bit of u to hi bit of v
 
 _Check_return_ uint32_t CRandomNumberGenerator2::m_LoadMersenneTwister( void ) noexcept
 {
@@ -134,19 +134,19 @@ _Check_return_ uint32_t CRandomNumberGenerator2::m_LoadMersenneTwister( void ) n
 
     for( s0 = m_State[ 0 ], s1 = m_State[ 1 ], j = N - M + 1; --j; s0 = s1, s1 = *p2++ )
     {
-        *p0++ = *pM++ ^ (mixBits(s0, s1) >> 1) ^ (loBit(s1) ? K : 0U);
+        *p0++ = *pM++ xor (mixBits(s0, s1) >> 1) xor (loBit(s1) ? K : 0U);
     }
 
     for( pM = m_State, j = M; --j; s0 = s1, s1 = *p2++ )
     {
-        *p0++ = *pM++ ^ (mixBits(s0, s1) >> 1) ^ (loBit(s1) ? K : 0U);
+        *p0++ = *pM++ xor (mixBits(s0, s1) >> 1) xor (loBit(s1) ? K : 0U);
     }
 
-    s1 = m_State[0], *p0 = *pM ^ (mixBits(s0, s1) >> 1) ^ (loBit(s1) ? K : 0U);
-    s1 ^= (s1 >> 11);
-    s1 ^= (s1 <<  7) & 0x9D2C5680U;
-    s1 ^= (s1 << 15) & 0xEFC60000U;
-    return(s1 ^ (s1 >> 18));
+    s1 = m_State[0], *p0 = *pM xor (mixBits(s0, s1) >> 1) xor (loBit(s1) ? K : 0U);
+    s1 xor_eq (s1 >> 11);
+    s1 xor_eq (s1 <<  7) & 0x9D2C5680U;
+    s1 xor_eq (s1 << 15) & 0xEFC60000U;
+    return(s1 xor (s1 >> 18));
  }
 
 CRandomNumberGenerator2::CRandomNumberGenerator2() noexcept
@@ -270,7 +270,7 @@ void CRandomNumberGenerator2::InitializeSeed( void ) noexcept
       // Anther call to GetTickCount() should do the trick because the
       // GetDiskFreeSpace() will take a varying amount of time.
 
-      low_word  ^= ( (uint16_t) ::GetTickCount64() );
+      low_word xor_eq ( (uint16_t) ::GetTickCount64() );
 
       totaler += number_of_sectors_per_cluster;
       totaler <<= 1;
@@ -305,7 +305,7 @@ void CRandomNumberGenerator2::InitializeSeed( void ) noexcept
    // 2000-05-26
    // Added GetCurrentThreadId() so two threads won't initialize to the same seed
 
-   uint32_t value_1 = ( MAKELONG( low_word, high_word ) ^ ( ::GetCurrentThreadId() << 11 ) );
+   uint32_t value_1 = ( MAKELONG( low_word, high_word ) xor ( ::GetCurrentThreadId() << 11 ) );
 
    value_1 += totaler;
 
@@ -326,7 +326,7 @@ void CRandomNumberGenerator2::InitializeSeed( void ) noexcept
       value_1++;
    }
 
-   value_1 ^= random_integer;
+   value_1 xor_eq random_integer;
 #endif
 
    SetSeed( value_1 );
@@ -344,11 +344,11 @@ _Check_return_ uint32_t CRandomNumberGenerator2::GetInteger( void ) noexcept
    }
 
    return_value  = *m_Next++;
-   return_value ^= (return_value >> 11);
-   return_value ^= (return_value <<  7) & 0x9D2C5680U;
-   return_value ^= (return_value << 15) & 0xEFC60000U;
+   return_value xor_eq (return_value >> 11);
+   return_value xor_eq (return_value <<  7) & 0x9D2C5680U;
+   return_value xor_eq (return_value << 15) & 0xEFC60000U;
 
-   return( return_value ^ (return_value >> 18) );
+   return( return_value xor (return_value >> 18) );
 }
 
 _Check_return_ double CRandomNumberGenerator2::GetFloat( void ) noexcept
@@ -367,14 +367,14 @@ _Check_return_ double CRandomNumberGenerator2::GetFloat( void ) noexcept
    uint32_t temp_integer = GetInteger();
 
    // This works for Intel-Endian machines
-   x.bytes[ 0 ] ^= HIBYTE( HIWORD( temp_integer ) );
-   x.bytes[ 1 ] ^= HIBYTE( LOWORD( temp_integer ) );
-   x.bytes[ 2 ] ^= LOBYTE( HIWORD( temp_integer ) );
+   x.bytes[ 0 ] xor_eq HIBYTE( HIWORD( temp_integer ) );
+   x.bytes[ 1 ] xor_eq HIBYTE( LOWORD( temp_integer ) );
+   x.bytes[ 2 ] xor_eq LOBYTE( HIWORD( temp_integer ) );
 
    // This works for Sun-Endian machines
-   //x.bytes[ 7 ] ^= HIBYTE( HIWORD( temp_integer ) );
-   //x.bytes[ 6 ] ^= HIBYTE( LOWORD( temp_integer ) );
-   //x.bytes[ 5 ] ^= LOBYTE( HIWORD( temp_integer ) );
+   //x.bytes[ 7 ] xor_eq HIBYTE( HIWORD( temp_integer ) );
+   //x.bytes[ 6 ] xor_eq HIBYTE( LOWORD( temp_integer ) );
+   //x.bytes[ 5 ] xor_eq LOBYTE( HIWORD( temp_integer ) );
 
    return( x.return_value );
 }
@@ -429,7 +429,7 @@ void CRandomNumberGenerator2::SetSeed( _In_ uint32_t const new_seed ) noexcept
     // so-- that's why the only change I made is to restrict to odd seeds.
     //
 
-    uint32_t x = (new_seed | 1) & 0xFFFFFFFF;
+    uint32_t x = (new_seed bitor 1) bitand 0xFFFFFFFF;
     uint32_t *s = m_State;
     int    j = 0;
 
@@ -589,7 +589,7 @@ _Check_return_ uint64_t CRandomNumberGenerator2::Uint64(__in_ecount(number_of_va
     WFC_VALIDATE_POINTER(this);
     WFC_VALIDATE_POINTER(values);
 
-    if (values == nullptr || number_of_values < 1)
+    if (values == nullptr or number_of_values < 1)
     {
         return(Integer64());
     }

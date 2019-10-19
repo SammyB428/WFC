@@ -78,7 +78,7 @@ void format(_Inout_ std::string& result, _In_z_ char const* format_string, Args 
 
 inline void append(_Inout_ std::vector<uint8_t>& s, _In_reads_bytes_(number_of_bytes) uint8_t const* __restrict byte_buffer, _In_ std::size_t const number_of_bytes) noexcept
 {
-    if (byte_buffer == nullptr || number_of_bytes == 0)
+    if (byte_buffer == nullptr or number_of_bytes == 0)
     {
         return;
     }
@@ -94,11 +94,11 @@ inline void append(_Inout_ std::vector<uint8_t>& s, _In_reads_bytes_(number_of_b
 
 inline constexpr _Check_return_ bool is_space_character(_In_ wchar_t const character) noexcept
 {
-    if (character == 0x20 ||
-        character == 0x0D ||
-        character == 0x0A ||
-        character == 0x09 ||
-        character == 0x0B ||
+    if (character == 0x20 or
+        character == 0x0D or
+        character == 0x0A or
+        character == 0x09 or
+        character == 0x0B or
         character == 0x0C)
     {
         return(true);
@@ -107,7 +107,7 @@ inline constexpr _Check_return_ bool is_space_character(_In_ wchar_t const chara
     return(false);
 }
 
-#define wfc_to_upper( _x ) ( ( _x >= 0x61 && _x <= 0x7A ) ? _x - 0x20 : _x )
+#define wfc_to_upper( _x ) ( ( _x >= 0x61 and _x <= 0x7A ) ? _x - 0x20 : _x )
 
 // Avoid annoying out of range exceptions
 inline constexpr _Check_return_ wchar_t get_at(_In_ std::wstring const& s, _In_ std::size_t const character_index) noexcept
@@ -166,7 +166,7 @@ inline void copy(_Inout_ std::wstring& s, std::string_view ascii_string, _In_ SS
 
         s.reserve(string_size);
 
-        while (loop_index < ascii_string.length() && ascii_string[loop_index] != 0)
+        while (loop_index < ascii_string.length() and ascii_string[loop_index] != 0)
         {
             if (ascii_string[loop_index] == 0x00)
             {
@@ -205,7 +205,7 @@ inline void copy(_Inout_ std::wstring& s, std::string_view ascii_string, _In_ SS
         for (auto const loop_index : Range(number_of_characters))
         {
             pointer[destination_string_index] = static_cast<uint8_t>(ascii_string[beginning_at + loop_index]);
-            _ASSERTE(pointer[destination_string_index] > 0 && pointer[destination_string_index] < 256);
+            _ASSERTE(pointer[destination_string_index] > 0 and pointer[destination_string_index] < 256);
             destination_string_index++;
         }
     }
@@ -270,7 +270,7 @@ inline void copy_not_null(_Inout_ std::wstring& s, _In_z_ wchar_t const* wide_st
 
 inline void copy(_Inout_ std::wstring& s, _In_ int const code_page, _In_reads_bytes_(number_of_bytes) uint8_t const* buffer, _In_ std::size_t const number_of_bytes) noexcept
 {
-    if (buffer == nullptr || number_of_bytes < 1)
+    if (buffer == nullptr or number_of_bytes < 1)
     {
         s.resize(0);
         return;
@@ -299,7 +299,7 @@ inline void copy_to(_In_ std::wstring const& s, _Out_ char* ascii_buffer, _In_ s
 {
     WFC_VALIDATE_POINTER(ascii_buffer);
 
-    if (buffer_size == 0 || ascii_buffer == nullptr)
+    if (buffer_size == 0 or ascii_buffer == nullptr)
     {
         // No buffer to write to, just give up
         return;
@@ -426,7 +426,7 @@ inline void trim_left(_Inout_ std::wstring& the_string) noexcept
     {
         std::size_t number_of_elements_to_erase = 0;
 
-        while (number_of_elements_to_erase < string_length &&
+        while (number_of_elements_to_erase < string_length and
             iswspace(the_string.at(number_of_elements_to_erase)))
         {
             number_of_elements_to_erase++;
@@ -451,7 +451,7 @@ inline void trim_left(_Inout_ std::string& the_string) noexcept
     {
         std::size_t number_of_elements_to_erase = 0;
 
-        while (number_of_elements_to_erase < string_length &&
+        while (number_of_elements_to_erase < string_length and
             is_space_character(the_string.at(number_of_elements_to_erase)))
         {
             number_of_elements_to_erase++;
@@ -476,7 +476,7 @@ inline void trim_left(_Inout_ std::wstring& s, _In_ wchar_t const character) noe
     {
         std::size_t number_of_elements_to_erase = 0;
 
-        while (number_of_elements_to_erase < string_length &&
+        while (number_of_elements_to_erase < string_length and
             character == (s.at(number_of_elements_to_erase)))
         {
             number_of_elements_to_erase++;
@@ -501,7 +501,7 @@ inline void trim_left(_Inout_ std::string& s, _In_ char const character) noexcep
     {
         std::size_t number_of_elements_to_erase = 0;
 
-        while (number_of_elements_to_erase < string_length &&
+        while (number_of_elements_to_erase < string_length and
             character == (s.at(number_of_elements_to_erase)))
         {
             number_of_elements_to_erase++;
@@ -526,14 +526,14 @@ inline void trim(_Inout_ std::wstring& the_string) noexcept
 
 inline constexpr _Check_return_ bool is_this_character_ascii(_In_ wchar_t const character) noexcept
 {
-    if (character == 13 ||
-        character == 10 ||
+    if (character == 13 or
+        character == 10 or
         character == 9)
     {
         return(true);
     }
 
-    if (character >= 0x20 && character <= 0x7E)
+    if (character >= 0x20 and character <= 0x7E)
     {
         return(true);
     }
@@ -594,7 +594,7 @@ inline void from_flags(_Inout_ std::wstring& s, _In_ uint64_t const flags, _In_r
     {
         if (bit_test(flags, bit_number) == 1)
         {
-            if (bit_number < number_of_names && names_of_bits != nullptr && names_of_bits[bit_number] != nullptr && names_of_bits[bit_number][0] != 0x00)
+            if (bit_number < number_of_names and names_of_bits != nullptr and names_of_bits[bit_number] != nullptr and names_of_bits[bit_number][0] != 0x00)
             {
                 s.append(names_of_bits[bit_number]);
             }
@@ -602,8 +602,8 @@ inline void from_flags(_Inout_ std::wstring& s, _In_ uint64_t const flags, _In_r
             {
                 wchar_t temp_string[64];
 
-                swprintf_s(temp_string, std::size(temp_string), L"Undefined(%zd)", bit_number);
-                s.append(temp_string);
+                int const number_of_characters = swprintf_s(temp_string, std::size(temp_string), L"Undefined(%zd)", bit_number);
+                s.append(std::wstring_view(temp_string, number_of_characters));
             }
 
             s.push_back(',');
@@ -646,7 +646,7 @@ inline bool compare_character_ignore_case(wchar_t const& c1, wchar_t const& c2) 
 
 inline _Check_return_ int compare_no_case(_In_ std::wstring_view s1, _In_ std::wstring_view s2) noexcept
 {
-    return( s1.length() == s2.length() && std::equal(std::cbegin(s1), std::cend(s1), std::cbegin(s2), compare_character_ignore_case));
+    return( s1.length() == s2.length() and std::equal(std::cbegin(s1), std::cend(s1), std::cbegin(s2), compare_character_ignore_case));
 }
 
 inline _Check_return_ int compare_no_case(_In_ std::string const& s, _In_opt_z_ char const* string_p) noexcept
@@ -751,7 +751,7 @@ inline _Check_return_ bool ends_with(_In_ std::wstring const& s, _In_ wchar_t co
 
 inline _Check_return_ bool ends_with(_In_ std::wstring const& s, _In_z_ wchar_t const* ending) noexcept
 {
-    if (s.empty() == true || ending == nullptr || ending[0] == 0x00)
+    if (s.empty() == true or ending == nullptr or ending[0] == 0x00)
     {
         return(false);
     }
@@ -777,7 +777,7 @@ inline _Check_return_ bool ends_with(_In_ std::wstring const& s, _In_z_ wchar_t 
 
 inline _Check_return_ bool ends_with_no_case(_In_ std::wstring const& s, _In_z_ wchar_t const* ending) noexcept
 {
-    if (s.empty() == true || ending == nullptr || ending[0] == 0x00)
+    if (s.empty() == true or ending == nullptr or ending[0] == 0x00)
     {
         return(false);
     }
@@ -815,7 +815,7 @@ inline _Check_return_ bool starts_with(_In_ std::string const& s, _In_ char cons
 
 inline _Check_return_ bool starts_with(_In_ std::string_view s, _In_z_ char const* beginning, _In_ std::size_t const number_of_characters_in_beginning) noexcept
 {
-    if (beginning == nullptr || number_of_characters_in_beginning < 1 || number_of_characters_in_beginning > s.length())
+    if (beginning == nullptr or number_of_characters_in_beginning < 1 or number_of_characters_in_beginning > s.length())
     {
         return(false);
     }
@@ -860,7 +860,7 @@ inline _Check_return_ bool starts_with(_In_ std::wstring const& s, _In_ wchar_t 
 
 inline _Check_return_ bool starts_with(_In_ std::wstring_view s, _In_z_ wchar_t const* beginning, _In_ std::size_t const number_of_characters_in_beginning) noexcept
 {
-    if (beginning == nullptr || number_of_characters_in_beginning < 1 || number_of_characters_in_beginning > s.length())
+    if (beginning == nullptr or number_of_characters_in_beginning < 1 or number_of_characters_in_beginning > s.length())
     {
         return(false);
     }
@@ -893,7 +893,7 @@ inline _Check_return_ bool starts_with(_In_ std::wstring_view s, _In_ std::wstri
 
 inline _Check_return_ bool starts_with_no_case(_In_ std::wstring const& s, _In_z_ wchar_t const* beginning, _In_ std::size_t const number_of_characters_in_beginning) noexcept
 {
-    if (beginning == nullptr || number_of_characters_in_beginning < 1 || number_of_characters_in_beginning > s.length())
+    if (beginning == nullptr or number_of_characters_in_beginning < 1 or number_of_characters_in_beginning > s.length())
     {
         return(false);
     }
@@ -916,7 +916,7 @@ inline _Check_return_ bool starts_with_no_case(_In_ std::wstring const& s, _In_z
 
 inline _Check_return_ bool starts_with_no_case(_In_ std::string const& s, _In_z_ char const* beginning, _In_ std::size_t const number_of_characters_in_beginning) noexcept
 {
-    if (beginning == nullptr || number_of_characters_in_beginning < 1 || number_of_characters_in_beginning > s.length())
+    if (beginning == nullptr or number_of_characters_in_beginning < 1 or number_of_characters_in_beginning > s.length())
     {
         return(false);
     }
@@ -975,7 +975,7 @@ inline _Check_return_ std::size_t number_of_decimal_digits(_In_ std::wstring con
     {
         auto const this_character = s.at(character_index);
 
-        if (this_character >= '0' && this_character <= '9')
+        if (this_character >= '0' and this_character <= '9')
         {
             return_value++;
         }
@@ -992,7 +992,7 @@ inline _Check_return_ std::size_t number_of_decimal_digits(_In_ std::string cons
     {
         auto const this_character = s.at(character_index);
 
-        if (this_character >= '0' && this_character <= '9')
+        if (this_character >= '0' and this_character <= '9')
         {
             return_value++;
         }
@@ -1026,7 +1026,7 @@ inline _Check_return_ std::size_t number_of_lower_case_letters_AZ(_In_ std::wstr
     {
         auto this_character = s.at(character_index);
 
-        if (this_character >= 'a' && this_character <= 'z')
+        if (this_character >= 'a' and this_character <= 'z')
         {
             return_value++;
         }
@@ -1043,7 +1043,7 @@ inline _Check_return_ std::size_t number_of_upper_case_letters_AZ(_In_ std::wstr
     {
         auto this_character = s.at(character_index);
 
-        if (this_character >= 'A' && this_character <= 'Z')
+        if (this_character >= 'A' and this_character <= 'Z')
         {
             return_value++;
         }
@@ -1143,13 +1143,13 @@ inline _Check_return_ int64_t as_integer(_In_z_ char const * const buffer, _In_ 
 
     if ((buffer_size - offset_of_first_digit) > 1)
     {
-        if (buffer[offset_of_first_digit] == '0' &&
-            (buffer[offset_of_first_digit + 1] == 'x' || buffer[offset_of_first_digit + 1] == 'X'))
+        if (buffer[offset_of_first_digit] == '0' and
+            (buffer[offset_of_first_digit + 1] == 'x' or buffer[offset_of_first_digit + 1] == 'X'))
         {
             radix = 16;
             offset_of_first_digit += 2;
         }
-        else if (buffer[offset_of_first_digit] == 'x' || buffer[offset_of_first_digit] == 'X')
+        else if (buffer[offset_of_first_digit] == 'x' or buffer[offset_of_first_digit] == 'X')
         {
             radix = 16;
             offset_of_first_digit++;
@@ -1177,13 +1177,13 @@ inline _Check_return_ uint64_t as_unsigned_integer(_In_z_ char const* const buff
 
     if ((buffer_size - offset_of_first_digit) > 1)
     {
-        if (buffer[offset_of_first_digit] == '0' &&
-            (buffer[offset_of_first_digit + 1] == 'x' || buffer[offset_of_first_digit + 1] == 'X'))
+        if (buffer[offset_of_first_digit] == '0' and
+            (buffer[offset_of_first_digit + 1] == 'x' or buffer[offset_of_first_digit + 1] == 'X'))
         {
             radix = 16;
             offset_of_first_digit += 2;
         }
-        else if (buffer[offset_of_first_digit] == 'x' || buffer[offset_of_first_digit] == 'X')
+        else if (buffer[offset_of_first_digit] == 'x' or buffer[offset_of_first_digit] == 'X')
         {
             radix = 16;
             offset_of_first_digit++;
@@ -1339,7 +1339,7 @@ inline _Check_return_ std::wstring skip_first(_In_ std::wstring const& s, _In_ s
 {
     std::size_t const string_length = s.length();
 
-    if (count == 0 || count > string_length)
+    if (count == 0 or count > string_length)
     {
         std::wstring return_value(s);
 
@@ -1354,7 +1354,7 @@ inline _Check_return_ std::string skip_first(_In_ std::string const& s, _In_ std
 {
     std::size_t const string_length = s.length();
 
-    if (count == 0 || count > string_length)
+    if (count == 0 or count > string_length)
     {
         std::string return_value(s);
 
@@ -1581,9 +1581,9 @@ inline void despace(_Inout_ std::wstring& s) noexcept
 
     wchar_t character = s[0];
 
-    if (character == 0x20 ||
-        character == TAB_CHARACTER ||
-        character == CARRIAGE_RETURN ||
+    if (character == 0x20 or
+        character == TAB_CHARACTER or
+        character == CARRIAGE_RETURN or
         character == LINE_FEED)
     {
         needs_despacing = true;
@@ -1592,9 +1592,9 @@ inline void despace(_Inout_ std::wstring& s) noexcept
     {
         character = s[number_of_characters - 1];
 
-        if (character == 0x20 ||
-            character == TAB_CHARACTER ||
-            character == CARRIAGE_RETURN ||
+        if (character == 0x20 or
+            character == TAB_CHARACTER or
+            character == CARRIAGE_RETURN or
             character == LINE_FEED)
         {
             needs_despacing = true;
@@ -1603,22 +1603,22 @@ inline void despace(_Inout_ std::wstring& s) noexcept
         {
             std::size_t string_index = 1;
 
-            while (needs_despacing == false && string_index < (number_of_characters - 1))
+            while (needs_despacing == false and string_index < (number_of_characters - 1))
             {
                 character = s[string_index];
 
-                if (character == 0x20 ||
-                    character == TAB_CHARACTER ||
-                    character == CARRIAGE_RETURN ||
+                if (character == 0x20 or
+                    character == TAB_CHARACTER or
+                    character == CARRIAGE_RETURN or
                     character == LINE_FEED)
                 {
                     string_index++;
 
                     character = s[string_index];
 
-                    if (character == 0x20 ||
-                        character == TAB_CHARACTER ||
-                        character == CARRIAGE_RETURN ||
+                    if (character == 0x20 or
+                        character == TAB_CHARACTER or
+                        character == CARRIAGE_RETURN or
                         character == LINE_FEED)
                     {
                         needs_despacing = true;
@@ -1649,9 +1649,9 @@ inline void despace(_Inout_ std::wstring& s) noexcept
     {
         character = s[string_index];
 
-        if (character == 0x20 ||
-            character == TAB_CHARACTER ||
-            character == CARRIAGE_RETURN ||
+        if (character == 0x20 or
+            character == TAB_CHARACTER or
+            character == CARRIAGE_RETURN or
             character == LINE_FEED)
         {
             if (last_character_added_was_a_space == false)
@@ -1771,16 +1771,16 @@ inline _Check_return_ bool is_all_space(_In_ std::wstring const& s) noexcept
 
 inline _Check_return_ bool is_space(_In_ std::wstring const& s, _In_ std::size_t const character_index) noexcept
 {
-    if (s.empty() == true || character_index >= s.length())
+    if (s.empty() == true or character_index >= s.length())
     {
         return(false);
     }
 
     wchar_t const character_to_test = get_at(s, character_index);
 
-    if (character_to_test == 0x20 ||
-        character_to_test == TAB_CHARACTER ||
-        character_to_test == CARRIAGE_RETURN ||
+    if (character_to_test == 0x20 or
+        character_to_test == TAB_CHARACTER or
+        character_to_test == CARRIAGE_RETURN or
         character_to_test == LINE_FEED)
     {
         return(true);
@@ -1791,7 +1791,7 @@ inline _Check_return_ bool is_space(_In_ std::wstring const& s, _In_ std::size_t
 
 inline void copy_utf8(_Inout_ std::wstring& s, _In_opt_z_ char const* ascii_string_p) noexcept
 {
-    if (ascii_string_p == nullptr || ascii_string_p[0] == 0x00)
+    if (ascii_string_p == nullptr or ascii_string_p[0] == 0x00)
     {
         s.resize(0);
         return;
@@ -1817,7 +1817,7 @@ inline void copy_utf8(_Inout_ std::wstring& s, _In_ std::vector<uint8_t> const& 
 
 inline void copy_utf8(_Inout_ std::wstring& s, _In_ uint8_t const* bytes, _In_ std::size_t const number_of_bytes) noexcept
 {
-    if (bytes == nullptr || number_of_bytes < 1)
+    if (bytes == nullptr or number_of_bytes < 1)
     {
         s.resize(0);
         return;
@@ -1836,8 +1836,8 @@ inline void split(_In_z_ wchar_t const* source, _In_z_ wchar_t const* terminator
 {
     string_array.clear();
 
-    if (source == nullptr || source[0] == 0x00 ||
-        terminator == nullptr || terminator[0] == 0x00)
+    if (source == nullptr or source[0] == 0x00 or
+        terminator == nullptr or terminator[0] == 0x00)
     {
         return;
     }
@@ -1871,8 +1871,8 @@ inline void split(_In_z_ char const* source, _In_z_ char const* terminator, _Ino
 {
     string_array.clear();
 
-    if (source == nullptr || source[0] == 0x00 ||
-        terminator == nullptr || terminator[0] == 0x00)
+    if (source == nullptr or source[0] == 0x00 or
+        terminator == nullptr or terminator[0] == 0x00)
     {
         return;
     }
@@ -1906,7 +1906,7 @@ inline void split(_In_z_ char const* source, _In_ std::size_t const length, char
 {
     string_array.clear();
 
-    if (source == nullptr || source[0] == 0x00 || character == 0x00)
+    if (source == nullptr or source[0] == 0x00 or character == 0x00)
     {
         return;
     }
@@ -1933,7 +1933,7 @@ inline void split(_In_z_ char const* source, _In_ char const character, _Inout_ 
 {
     string_array.clear();
 
-    if (source == nullptr || source[0] == 0x00 || character == 0x00)
+    if (source == nullptr or source[0] == 0x00 or character == 0x00)
     {
         return;
     }
@@ -1945,7 +1945,7 @@ inline void split(_In_z_ wchar_t const* source, _In_ std::size_t const length, _
 {
     string_array.clear();
 
-    if (source == nullptr || source[0] == 0x00 || character == 0x00)
+    if (source == nullptr or source[0] == 0x00 or character == 0x00)
     {
         return;
     }
@@ -1972,7 +1972,7 @@ inline void split(_In_z_ wchar_t const* source, _In_ wchar_t const character, _I
 {
     string_array.clear();
 
-    if (source == nullptr || source[0] == 0x00 || character == 0x00)
+    if (source == nullptr or source[0] == 0x00 or character == 0x00)
     {
         return;
     }
@@ -1994,7 +1994,7 @@ inline void split_and_trim(_In_z_ wchar_t const* source, _In_ wchar_t const char
 {
     string_array.clear();
 
-    if (source == nullptr || source[0] == 0x00)
+    if (source == nullptr or source[0] == 0x00)
     {
         return;
     }
@@ -2038,7 +2038,7 @@ inline void split_and_trim(_In_ std::wstring const& source, _In_ wchar_t const c
 
 inline _Check_return_ int delete_characters(_Inout_ std::wstring& s, _In_ int const index, _In_ int number_of_characters_to_delete = 1) noexcept
 {
-    if (index < 0 || number_of_characters_to_delete < 1)
+    if (index < 0 or number_of_characters_to_delete < 1)
     {
         return(static_cast<int>(s.length()));
     }
@@ -2142,12 +2142,14 @@ inline void replace(_Inout_ std::wstring& s, _In_z_ wchar_t const* what_to_repla
     std::size_t const string_length = wcslen(what_to_replace);
     std::size_t location = s.find(what_to_replace);
 
+    std::wstring_view replace_it_with(what_to_replace_it_with, wcslen(what_to_replace_it_with));
+
     while (location != std::wstring::npos)
     {
         // Append the data up to the what_to_replace to our translated string
 
         translated_string.append(s.substr(0, location));
-        translated_string.append(what_to_replace_it_with);
+        translated_string.append(replace_it_with);
 
         s.erase(0, location + string_length);
 
@@ -2165,12 +2167,14 @@ inline void replace(_Inout_ std::string& s, _In_z_ char const* what_to_replace, 
     std::size_t const string_length = strlen(what_to_replace);
     std::size_t location = s.find(what_to_replace);
 
+    std::string_view replace_it_with(what_to_replace_it_with, strlen(what_to_replace_it_with));
+
     while (location != std::string::npos)
     {
         // Append the data up to the what_to_replace to our translated string
 
         translated_string.append(s.substr(0, location));
-        translated_string.append(what_to_replace_it_with);
+        translated_string.append(replace_it_with);
 
         s.erase(0, location + string_length);
 
@@ -2183,7 +2187,7 @@ inline void replace(_Inout_ std::string& s, _In_z_ char const* what_to_replace, 
 
 inline _Check_return_ bool contains_no_case(_In_ std::vector<std::wstring> const& s, _In_z_ wchar_t const* the_string) noexcept
 {
-    if (s.empty() == true || the_string == nullptr)
+    if (s.empty() == true or the_string == nullptr)
     {
         return(false);
     }
@@ -2201,7 +2205,7 @@ inline _Check_return_ bool contains_no_case(_In_ std::vector<std::wstring> const
 
 inline _Check_return_ bool contains(_In_ std::vector<std::wstring> const& s, _In_z_ wchar_t const* the_string) noexcept
 {
-    if (s.empty() == true || the_string == nullptr)
+    if (s.empty() == true or the_string == nullptr)
     {
         return(false);
     }
@@ -2219,7 +2223,7 @@ inline _Check_return_ bool contains(_In_ std::vector<std::wstring> const& s, _In
 
 inline _Check_return_ bool contains_no_case(_In_ std::vector<std::string> const& s, _In_z_ char const* the_string) noexcept
 {
-    if (s.empty() == true || the_string == nullptr)
+    if (s.empty() == true or the_string == nullptr)
     {
         return(false);
     }
@@ -2260,7 +2264,7 @@ inline _Check_return_ SSIZE_T add_to_unique_sorted_vector_ignore_case(_In_ std::
 
 inline _Check_return_ bool contains_no_case_sorted(_In_ std::vector<std::string> const& s, _In_z_ char const* the_string) noexcept
 {
-    if (s.empty() == true || the_string == nullptr)
+    if (s.empty() == true or the_string == nullptr)
     {
         return(false);
     }
@@ -2274,7 +2278,7 @@ inline _Check_return_ bool contains_no_case_sorted(_In_ std::vector<std::string>
 
 inline _Check_return_ bool contains(_In_ std::vector<std::string> const& s, _In_z_ char const* the_string) noexcept
 {
-    if (s.empty() == true || the_string == nullptr)
+    if (s.empty() == true or the_string == nullptr)
     {
         return(false);
     }
@@ -2332,7 +2336,7 @@ inline void join(_In_ std::vector<std::wstring> const& s, _In_opt_z_ wchar_t con
     {
         result.append(s.at(array_index));
 
-        if (divider != nullptr && divider[0] != 0x00)
+        if (divider != nullptr and divider[0] != 0x00)
         {
             result.append(divider);
         }
@@ -2367,7 +2371,7 @@ inline void join(_In_ std::vector<std::string> const& s, _In_opt_z_ char const* 
     {
         result.append(s.at(array_index));
 
-        if (divider != nullptr && divider[0] != 0x00)
+        if (divider != nullptr and divider[0] != 0x00)
         {
             result.append(divider);
         }
@@ -2391,7 +2395,7 @@ inline void remove_at(_Inout_ std::vector<uint8_t>& s, _In_ std::size_t const ar
 
 inline void remove_no_case(std::vector<std::wstring>& s, _In_z_ wchar_t const* entry) noexcept
 {
-    if (s.empty() == true || entry == nullptr)
+    if (s.empty() == true or entry == nullptr)
     {
         return;
     }
@@ -2412,7 +2416,7 @@ inline void remove_no_case(std::vector<std::wstring>& s, _In_z_ wchar_t const* e
 
 inline void insert_at(_Inout_ std::vector<std::wstring>& s, _In_ std::size_t const array_index, _In_z_ wchar_t const* new_element, _In_ std::size_t const number_of_times_to_insert_it = 1) noexcept
 {
-    if (number_of_times_to_insert_it < 1 || new_element == nullptr)
+    if (number_of_times_to_insert_it < 1 or new_element == nullptr)
     {
         return;
     }
@@ -2468,7 +2472,7 @@ inline void append_to_bytes(_In_ std::wstring const& source, _Inout_ std::vector
 
 inline _Check_return_ bool constexpr is_null_or_empty(_In_opt_z_ wchar_t const * s) noexcept
 {
-    return (s == nullptr || s[0] == 0x00) ? true : false;
+    return (s == nullptr or s[0] == 0x00) ? true : false;
 }
 
 inline void append(_Inout_ std::wstring& s, _In_ int const integer) noexcept
@@ -2553,7 +2557,7 @@ inline void split_path(_In_ std::wstring const& source, _Inout_ std::vector<std:
 
     while (source[source_index] != 0x00)
     {
-        if (source[source_index] == '/' ||
+        if (source[source_index] == '/' or
             source[source_index] == '\\')
         {
             if (string_to_add.empty() == false)
@@ -2604,7 +2608,7 @@ inline void copy_to_clipboard(_In_ std::wstring const& the_string) noexcept
 
 inline void end_each_entry_with(_Inout_ std::vector<std::wstring>& strings, _In_z_ wchar_t const* ending) noexcept
 {
-    if (ending == nullptr || ending[0] == 0x00)
+    if (ending == nullptr or ending[0] == 0x00)
     {
         return;
     }
@@ -2646,7 +2650,7 @@ struct DEFINED_WIDE_STRING
 
 inline _Check_return_ int compare_defines(_In_ void const* a, _In_ void const* b) noexcept
 {
-    if (a == nullptr || b == nullptr)
+    if (a == nullptr or b == nullptr)
     {
         return(I_AM_EQUAL_TO_THAT);
     }
@@ -2668,7 +2672,7 @@ inline _Check_return_ int compare_defines(_In_ void const* a, _In_ void const* b
 
 inline _Check_return_ wchar_t const* from_defined_constant(_In_ uint64_t const value, _In_reads_(number_of_definitions) const Win32FoundationClasses::DEFINED_WIDE_STRING definitions[], _In_ std::size_t const number_of_definitions) noexcept
 {
-    if (definitions == nullptr || number_of_definitions < 1)
+    if (definitions == nullptr or number_of_definitions < 1)
     {
         return(nullptr);
     }
@@ -2719,7 +2723,7 @@ inline void split_unique_non_empty_lines(_In_ std::wstring const& text, _Inout_ 
     {
         wchar_t const this_character = text[string_index];
 
-        if (this_character == CARRIAGE_RETURN || this_character == LINE_FEED)
+        if (this_character == CARRIAGE_RETURN or this_character == LINE_FEED)
         {
             if (this_character == CARRIAGE_RETURN)
             {
@@ -2768,6 +2772,8 @@ inline _Check_return_ std::wstring join(_In_ std::vector<std::wstring> const& st
 
     std::size_t const delimiter_length = wcslen(delimiter);
 
+    std::wstring_view d(delimiter, delimiter_length);
+
     std::size_t reserve_length = 0;
 
     for (auto const& this_string : strings)
@@ -2784,7 +2790,7 @@ inline _Check_return_ std::wstring join(_In_ std::vector<std::wstring> const& st
     {
         if (return_value.empty() == false)
         {
-            return_value.append(delimiter);
+            return_value.append(d);
         }
 
         return_value.append(this_string);
@@ -2795,7 +2801,7 @@ inline _Check_return_ std::wstring join(_In_ std::vector<std::wstring> const& st
 
 inline void append(_Inout_ std::vector<uint8_t>& bytes, _In_z_ char const* string, _In_ std::size_t const string_length) noexcept
 {
-    if (string_length < 1 || string == nullptr || string[0] == 0x00)
+    if (string_length < 1 or string == nullptr or string[0] == 0x00)
     {
         return;
     }
@@ -2815,7 +2821,7 @@ inline void append(_Inout_ std::vector<uint8_t>& bytes, _In_z_ char const* strin
 
 inline void append(_Inout_ std::vector<uint8_t>& bytes, _In_z_ char const* string) noexcept
 {
-    if (string == nullptr || string[0] == 0x00)
+    if (string == nullptr or string[0] == 0x00)
     {
         return;
     }

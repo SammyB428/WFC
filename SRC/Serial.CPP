@@ -96,7 +96,7 @@ _Check_return_ BOOL CSerialFile::Attach( __in HANDLE new_handle, __out_opt HANDL
    ASSERT( m_hFile != reinterpret_cast< CFILE_HFILE >( INVALID_HANDLE_VALUE ) );
 #endif
 
-   if ( new_handle == static_cast< HANDLE >( INVALID_HANDLE_VALUE ) ||
+   if ( new_handle == static_cast< HANDLE >( INVALID_HANDLE_VALUE ) or
 #if defined( WFC_STL )
         m_FileHandle == reinterpret_cast< HANDLE >( INVALID_HANDLE_VALUE ) )
 #else
@@ -610,16 +610,16 @@ _Check_return_ DWORD CSerialFile::GetFlowControl( void ) noexcept
       return( 0 );
    }
 
-   if ( device_control_block.fOutxDsrFlow != FALSE &&
+   if ( device_control_block.fOutxDsrFlow != FALSE and
         device_control_block.fOutxCtsFlow != FALSE )
    {
       flow_control = flowHardware;
    }
 
-   if ( device_control_block.fInX  != FALSE &&
+   if ( device_control_block.fInX  != FALSE and
         device_control_block.fOutX != FALSE )
    {
-      flow_control |= flowSoftware;
+      flow_control or_eq flowSoftware;
    }
 
    return( flow_control );
@@ -1052,7 +1052,7 @@ _Check_return_ bool CSerialFile::Open( void ) noexcept
    std::size_t index = 0;
    std::size_t string_length = Name.length();
 
-   while( index < string_length && Name.at( index ) != ':' )
+   while( index < string_length and Name.at( index ) != ':' )
    {
       com_port_name.push_back( Name.at( index ) );
       index++;
@@ -1074,7 +1074,7 @@ _Check_return_ bool CSerialFile::Open( void ) noexcept
 
    while( index < com_port_name_string_length )
    {
-      if ( com_port_name.at( index ) >= '0' &&
+      if ( com_port_name.at( index ) >= '0' and
            com_port_name.at( index ) <= '9' )
       {
          number_string.push_back( com_port_name.at( index ) );
@@ -1088,7 +1088,7 @@ _Check_return_ bool CSerialFile::Open( void ) noexcept
 
    int const port_number = static_cast<int>(as_integer(number_string));
 
-   if ( port_number > 0 && port_number < 10 )
+   if ( port_number > 0 and port_number < 10 )
    {
       // Yep, we've got a COM1 through COM9 so strip our \\.\ prefix
 
@@ -1140,7 +1140,7 @@ _Check_return_ bool CSerialFile::Open( void ) noexcept
    index = 0;
    string_length = settings_string.length();
 
-   while( index < string_length && settings_string.at( index ) != ',' )
+   while( index < string_length and settings_string.at( index ) != ',' )
    {
       baud_string.push_back( settings_string.at( index ) );
       index++;
@@ -1150,7 +1150,7 @@ _Check_return_ bool CSerialFile::Open( void ) noexcept
 
    std::wstring parity_string;
 
-   while( index < string_length && settings_string.at( index ) != ',' )
+   while( index < string_length and settings_string.at( index ) != ',' )
    {
       parity_string.push_back( settings_string.at( index ) );
       index++;
@@ -1160,7 +1160,7 @@ _Check_return_ bool CSerialFile::Open( void ) noexcept
 
    std::wstring data_bits_string;
 
-   while( index < string_length && settings_string.at( index ) != ',' )
+   while( index < string_length and settings_string.at( index ) != ',' )
    {
       data_bits_string.push_back( settings_string.at( index ) );
       index++;
@@ -1246,11 +1246,11 @@ _Check_return_ UINT CSerialFile::Read( __out_bcount( length ) void * buffer, __i
 
 #if defined( WFC_STL )
    ASSERT( m_FileHandle != static_cast< HANDLE >( INVALID_HANDLE_VALUE ) );
-   if ( buffer == nullptr ||
+   if ( buffer == nullptr or
        m_FileHandle == static_cast< HANDLE >( INVALID_HANDLE_VALUE ) )
 #else
    ASSERT( m_hFile != (CFILE_HFILE) INVALID_HANDLE_VALUE );
-   if ( buffer == nullptr ||
+   if ( buffer == nullptr or
 	   m_hFile == (CFILE_HFILE) INVALID_HANDLE_VALUE )
 #endif
    {
@@ -1922,7 +1922,7 @@ void CSerialFile::Write( __in_bcount( length ) void const * buffer, __in UINT co
    ASSERT( m_hFile != (CFILE_HFILE) INVALID_HANDLE_VALUE );
 #endif
 
-   if ( buffer == nullptr ||
+   if ( buffer == nullptr or
 #if defined( WFC_STL )
        m_FileHandle == static_cast< HANDLE >( INVALID_HANDLE_VALUE ) )
 #else
@@ -1958,7 +1958,7 @@ void CSerialFile::Write( __in_bcount( length ) void const * buffer, __in UINT co
                           &temp_buffer[ total_number_of_bytes_written ],
                            number_of_bytes_to_write,
                           &number_of_bytes_written,
-                           nullptr ) == FALSE &&
+                           nullptr ) == FALSE and
               ::GetLastError() != 0 )
          {
             // Something bad happened...

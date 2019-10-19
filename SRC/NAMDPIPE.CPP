@@ -134,7 +134,7 @@ _Check_return_  bool CNamedPipe::Call( __inout std::wstring& pipe_name,
    WFC_VALIDATE_POINTER( write_buffer );
    WFC_VALIDATE_POINTER( read_buffer );
 
-   if ( write_buffer == nullptr || read_buffer == nullptr )
+   if ( write_buffer == nullptr or read_buffer == nullptr )
    {
       m_LastError = ERROR_INVALID_PARAMETER;
       return( false );

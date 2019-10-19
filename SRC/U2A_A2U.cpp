@@ -55,7 +55,7 @@ void PASCAL Win32FoundationClasses::ASCII_to_UNICODE(_In_ std::string_view ansi_
 {
     WFC_VALIDATE_POINTER_NULL_OK(unicode_string);
 
-    if (ansi_string.length() == 0 || unicode_string == nullptr)
+    if (ansi_string.length() == 0 or unicode_string == nullptr)
     {
         return;
     }
@@ -72,7 +72,7 @@ void PASCAL Win32FoundationClasses::ASCII_to_UNICODE(_In_ std::string_view ansi_
     {
        SIZE_T loop_index = 0;
 
-       while (loop_index < ansi_string.length() && ansi_string[loop_index] != 0x00)
+       while (loop_index < ansi_string.length() and ansi_string[loop_index] != 0x00)
        {
           unicode_string[loop_index] = ansi_string[loop_index];
           loop_index++;
@@ -91,7 +91,7 @@ void PASCAL Win32FoundationClasses::UNICODE_to_ASCII(_In_ std::wstring_view unic
 {
     WFC_VALIDATE_POINTER_NULL_OK(ansi_string);
 
-    if (unicode_string.length() == 0 || ansi_string == nullptr)
+    if (unicode_string.length() == 0 or ansi_string == nullptr)
     {
         return;
     }

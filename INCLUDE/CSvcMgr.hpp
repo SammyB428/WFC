@@ -110,7 +110,7 @@ class CServiceControlManager
 
        static inline constexpr uint32_t const QueryStatusPermissions(void) noexcept
        {
-           return(READ_CONTROL | SC_MANAGER_CONNECT | SC_MANAGER_ENUMERATE_SERVICE);
+           return(READ_CONTROL bitor SC_MANAGER_CONNECT bitor SC_MANAGER_ENUMERATE_SERVICE);
        }
 
        CServiceControlManager() noexcept;

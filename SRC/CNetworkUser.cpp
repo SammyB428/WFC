@@ -432,8 +432,8 @@ _Check_return_ bool CNetworkUsers::CreateComputerAccount( __in_z_opt LPCTSTR com
    // Article Q145697 discusses the manipulation of the "Trusted Domains" 
    // side of the domain trust relationship, at the domain controller level.
 
-   if ( type_of_account != accountMachine                &&
-        type_of_account != accountBackupDomainController &&
+   if ( type_of_account != accountMachine and
+        type_of_account != accountBackupDomainController and
         type_of_account != accountInterdomain )
    {
       m_ErrorCode = ERROR_INVALID_PARAMETER;
@@ -529,7 +529,7 @@ _Check_return_ bool CNetworkUsers::CreateComputerAccount( __in_z_opt LPCTSTR com
       }
 
       information.Privileges = USER_PRIV_USER;
-      information.Flags = type_of_account | UF_SCRIPT;
+      information.Flags = type_of_account bitor UF_SCRIPT;
 
       std::wstring primary_domain_controller;
 
@@ -1060,7 +1060,7 @@ _Check_return_ bool CNetworkUsers::m_GetChunk( void ) noexcept
 
    // Let's see if we have already been reading
 
-   if ( m_3NumberOfEntriesRead != 0 && m_3ResumeHandle == 0 )
+   if ( m_3NumberOfEntriesRead != 0 and m_3ResumeHandle == 0 )
    {
       // Yup, we've finished reading
       ::NetApiBufferFree( m_3InformationBuffer );
@@ -1081,7 +1081,7 @@ _Check_return_ bool CNetworkUsers::m_GetChunk( void ) noexcept
                                &m_3TotalNumberOfEntries,
                                &m_3ResumeHandle );
 
-   if ( m_ErrorCode == NERR_Success || m_ErrorCode == ERROR_MORE_DATA )
+   if ( m_ErrorCode == NERR_Success or m_ErrorCode == ERROR_MORE_DATA )
    {
       // Thanks go to Dirk Tolson (dirk.tolson@srs.gov) for finding a bug
       // here. When there were more accounts than could be read in one read,
@@ -1122,7 +1122,7 @@ _Check_return_ bool CNetworkUsers::m_GetChunk( void ) noexcept
 
    // Let's see if we have already been reading
 
-   if ( m_2NumberOfEntriesRead != 0 && m_2ResumeHandle == 0 )
+   if ( m_2NumberOfEntriesRead != 0 and m_2ResumeHandle == 0 )
    {
       // Yup, we've finished reading
       ::NetApiBufferFree( m_2InformationBuffer );
@@ -1143,7 +1143,7 @@ _Check_return_ bool CNetworkUsers::m_GetChunk( void ) noexcept
                                          &m_2TotalNumberOfEntries,
                                          &m_2ResumeHandle );
 
-   if ( m_ErrorCode == NERR_Success && m_2InformationBuffer != nullptr )
+   if ( m_ErrorCode == NERR_Success and m_2InformationBuffer != nullptr )
    {
       // Thanks go to Dirk Tolson (dirk.tolson@srs.gov) for finding a bug
       // here. When there were more accounts than could be read in one read,
@@ -1179,7 +1179,7 @@ _Check_return_ bool CNetworkUsers::m_GetChunk( void ) noexcept
 
    // Let's see if we have already been reading
 
-   if ( m_1NumberOfEntriesRead != 0 && m_1ResumeHandle == 0 )
+   if ( m_1NumberOfEntriesRead != 0 and m_1ResumeHandle == 0 )
    {
       // Yup, we've finished reading
       ::NetApiBufferFree( m_1InformationBuffer );
@@ -1200,7 +1200,7 @@ _Check_return_ bool CNetworkUsers::m_GetChunk( void ) noexcept
                                          &m_1TotalNumberOfEntries,
                                          &m_1ResumeHandle );
 
-   if ( m_ErrorCode == NERR_Success && m_1InformationBuffer != nullptr )
+   if ( m_ErrorCode == NERR_Success and m_1InformationBuffer != nullptr )
    {
       // Thanks go to Dirk Tolson (dirk.tolson@srs.gov) for finding a bug
       // here. When there were more accounts than could be read in one read,
@@ -1237,7 +1237,7 @@ _Check_return_ bool CNetworkUsers::m_GetChunk( void ) noexcept
 
    // Let's see if we have already been reading
 
-   if ( m_10NumberOfEntriesRead != 0 && m_10ResumeHandle == 0 )
+   if ( m_10NumberOfEntriesRead != 0 and m_10ResumeHandle == 0 )
    {
       // Yup, we've finished reading
       ::NetApiBufferFree( m_10InformationBuffer );
@@ -1258,7 +1258,7 @@ _Check_return_ bool CNetworkUsers::m_GetChunk( void ) noexcept
                                         &m_10TotalNumberOfEntries,
                                         &m_10ResumeHandle );
 
-   if ( m_ErrorCode == NERR_Success && m_10InformationBuffer != nullptr )
+   if ( m_ErrorCode == NERR_Success and m_10InformationBuffer != nullptr )
    {
       // Thanks go to Dirk Tolson (dirk.tolson@srs.gov) for finding a bug
       // here. When there were more accounts than could be read in one read,
@@ -1295,7 +1295,7 @@ _Check_return_ bool CNetworkUsers::m_GetChunk( void ) noexcept
 
    // Let's see if we have already been reading
 
-   if ( m_0NumberOfEntriesRead != 0 && m_0ResumeHandle == 0 )
+   if ( m_0NumberOfEntriesRead != 0 and m_0ResumeHandle == 0 )
    {
       // Yup, we've finished reading
       ::NetApiBufferFree( m_0InformationBuffer );
@@ -1316,7 +1316,7 @@ _Check_return_ bool CNetworkUsers::m_GetChunk( void ) noexcept
                                         &m_0TotalNumberOfEntries,
                                         &m_0ResumeHandle );
 
-   if ( m_ErrorCode == NERR_Success && m_0InformationBuffer != nullptr )
+   if ( m_ErrorCode == NERR_Success and m_0InformationBuffer != nullptr )
    {
       // Thanks go to Dirk Tolson (dirk.tolson@srs.gov) for finding a bug
       // here. When there were more accounts than could be read in one read,

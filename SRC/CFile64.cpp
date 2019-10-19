@@ -57,12 +57,12 @@ USING_WFC_NAMESPACE
 
 static inline constexpr _Check_return_ bool __is_directory_separation_character( _In_ wchar_t const character_to_test ) noexcept
 {
-    return( character_to_test == '\\' || character_to_test == '/' );
+    return( character_to_test == '\\' or character_to_test == '/' );
 }
 
 static inline constexpr _Check_return_ bool __is_wide_directory_separation_character( _In_ wchar_t const character_to_test ) noexcept
 {
-    return( character_to_test == L'\\' || character_to_test == L'/' );
+    return( character_to_test == L'\\' or character_to_test == L'/' );
 }
 
 static inline _Check_return_ UINT __GetFileName( _In_z_ LPCTSTR path_name_parameter, __out_ecount_opt( maximum_number_of_characters ) LPTSTR title_parameter, _In_ UINT const maximum_number_of_characters ) noexcept
@@ -78,7 +78,7 @@ static inline _Check_return_ UINT __GetFileName( _In_z_ LPCTSTR path_name_parame
     for ( temporary_pointer = path_name_parameter; *temporary_pointer != '\0'; temporary_pointer = _tcsinc( temporary_pointer ) )
     {
         // remember last directory/drive separator
-        if ( *temporary_pointer == '\\' || *temporary_pointer == '/' || *temporary_pointer == ':')
+        if ( *temporary_pointer == '\\' or *temporary_pointer == '/' or *temporary_pointer == ':')
         {
             temporary_writable_pointer = (LPTSTR) _tcsinc( temporary_pointer );
         }
@@ -115,7 +115,7 @@ static inline void __GetRoot( _In_z_ wchar_t const * path_name_parameter, _Inout
     for ( temporary_pointer = root_pointer; *temporary_pointer != '\0'; temporary_pointer = _wcsinc( temporary_pointer ) )
     {
         // find first double slash and stop
-        if ( __is_directory_separation_character( temporary_pointer[ 0 ] ) &&
+        if ( __is_directory_separation_character( temporary_pointer[ 0 ] ) and
             __is_directory_separation_character( temporary_pointer[ 1 ] ) )
         {
             break;
@@ -130,7 +130,7 @@ static inline void __GetRoot( _In_z_ wchar_t const * path_name_parameter, _Inout
 
         temporary_pointer += 2;
 
-        while ( *temporary_pointer != '\0' && ( ! __is_directory_separation_character( *temporary_pointer ) ) )
+        while ( *temporary_pointer != '\0' and (not __is_directory_separation_character( *temporary_pointer ) ) )
         {
             temporary_pointer = _wcsinc( temporary_pointer );
         }
@@ -140,7 +140,7 @@ static inline void __GetRoot( _In_z_ wchar_t const * path_name_parameter, _Inout
             temporary_pointer = _wcsinc( temporary_pointer );
         }
 
-        while ( *temporary_pointer != '\0' && ( ! __is_directory_separation_character( *temporary_pointer ) ) )
+        while ( *temporary_pointer != '\0' and (not __is_directory_separation_character( *temporary_pointer ) ) )
         {
             temporary_pointer = _wcsinc( temporary_pointer );
         }
@@ -157,7 +157,7 @@ static inline void __GetRoot( _In_z_ wchar_t const * path_name_parameter, _Inout
         // not a UNC, look for just the first slash
         temporary_pointer = root_pointer;
 
-        while ( *temporary_pointer != '\0' && ( ! __is_directory_separation_character( *temporary_pointer ) ) )
+        while ( *temporary_pointer != '\0' and (not __is_directory_separation_character( *temporary_pointer ) ) )
         {
             temporary_pointer = _wcsinc( temporary_pointer );
         }
@@ -181,7 +181,7 @@ static inline _Check_return_ bool __FullPath( _Out_ wchar_t * lpszPathOut, _In_z
     // first, fully qualify the path name
     wchar_t * lpszFilePart = nullptr;
 
-    if ( ! GetFullPathNameW( lpszFileIn, _MAX_PATH, lpszPathOut, &lpszFilePart ) )
+    if (not GetFullPathNameW( lpszFileIn, _MAX_PATH, lpszPathOut, &lpszFilePart ) )
     {
         (void) lstrcpyn(lpszPathOut, lpszFileIn, _MAX_PATH); // take it literally
         return( false );
@@ -197,21 +197,21 @@ static inline _Check_return_ bool __FullPath( _Out_ wchar_t * lpszPathOut, _In_z
     DWORD dwFlags = 0;
     DWORD dwDummy = 0;
 
-    if ( ! GetVolumeInformationW(strRoot.c_str(), nullptr, 0, nullptr, &dwDummy, &dwFlags, nullptr, 0 ) )
+    if (not GetVolumeInformationW(strRoot.c_str(), nullptr, 0, nullptr, &dwDummy, &dwFlags, nullptr, 0 ) )
     {
         return( false );   // preserving case may not be correct
     }
 
     // not all characters have complete uppercase/lowercase
 
-    if ( ! ( dwFlags & FS_CASE_IS_PRESERVED ) )
+    if (not ( dwFlags & FS_CASE_IS_PRESERVED ) )
     {
         CharUpper( lpszPathOut );
     }
 
     // assume non-UNICODE file systems, use OEM character set
 
-    if ( ! ( dwFlags & FS_UNICODE_STORED_ON_DISK ) )
+    if (not ( dwFlags & FS_UNICODE_STORED_ON_DISK ) )
     {
         WIN32_FIND_DATA data;
 
@@ -271,7 +271,7 @@ void CFile64::CreatePathTo(_In_z_ LPCWSTR full_pathname) noexcept
         filename, std::size(filename),
         extension_including_period, std::size(extension_including_period)) == 0)
     {
-        if (directory[0] != 0x00 && directory[1] != '\\')
+        if (directory[0] != 0x00 and directory[1] != '\\')
         {
             std::wstring full_directory_path( drive );
 
@@ -340,7 +340,7 @@ CFile64::~CFile64() noexcept
 {
     WFC_VALIDATE_POINTER( this );
 
-    if ( m_FileHandle != static_cast< HANDLE >( INVALID_HANDLE_VALUE ) && m_CloseOnDelete == true)
+    if ( m_FileHandle != static_cast< HANDLE >( INVALID_HANDLE_VALUE ) and m_CloseOnDelete == true)
     {
         Close();
     }
@@ -386,7 +386,7 @@ void CFile64::Close( void ) noexcept
 
 #if ! defined( WFC_STL )
 
-    if ( return_value == FALSE && m_BeStupidAndUseExceptions == true )
+    if ( return_value == FALSE and m_BeStupidAndUseExceptions == true )
     {
         CFileException::ThrowOsError( (LONG) ::GetLastError() );
     }
@@ -471,7 +471,7 @@ void CFile64::Dump( CDumpContext& dump_context ) const
 
     dump_context << TEXT( "\n" );
 
-    if ( dump_context.GetDepth() > 0 && m_FileHandle != static_cast< HANDLE >( INVALID_HANDLE_VALUE ) )
+    if ( dump_context.GetDepth() > 0 and m_FileHandle != static_cast< HANDLE >( INVALID_HANDLE_VALUE ) )
     {
         BY_HANDLE_FILE_INFORMATION information;
 
@@ -872,7 +872,7 @@ _Check_return_ std::wstring CFile64::GetFileTitle( void ) const noexcept
     // This is not a good thing when you are trying to be fast.
     // We will delay the penality as long as possible.
 
-    if ( m_FileTitle.empty() == true && m_PathName.empty() == false )
+    if ( m_FileTitle.empty() == true and m_PathName.empty() == false )
     {
         TCHAR file_title[ _MAX_FNAME ];
 
@@ -1144,7 +1144,7 @@ void CFile64::SetSecurity(_In_z_ wchar_t const * sddl) noexcept
     WFC_VALIDATE_POINTER(sddl);
     _ASSERTE(sddl[0] != 0x00);
 
-    if (sddl == nullptr || sddl[0] == 0x00)
+    if (sddl == nullptr or sddl[0] == 0x00)
     {
         return;
     }
@@ -1259,7 +1259,7 @@ _Check_return_ bool CFile64::Open( _In_z_ LPCTSTR filename, _In_ UINT const open
 
         case (UINT) OpenFlags::modeReadWrite:
 
-            access = GENERIC_READ | GENERIC_WRITE;
+            access = GENERIC_READ bitor GENERIC_WRITE;
             break;
 
         default:
@@ -1289,7 +1289,7 @@ _Check_return_ bool CFile64::Open( _In_z_ LPCTSTR filename, _In_ UINT const open
 
         case OpenFlags::shareDenyNone:
 
-            share_mode = FILE_SHARE_WRITE|FILE_SHARE_READ;
+            share_mode = FILE_SHARE_WRITE bitor FILE_SHARE_READ;
             break;
 
         default:
@@ -1299,7 +1299,7 @@ _Check_return_ bool CFile64::Open( _In_z_ LPCTSTR filename, _In_ UINT const open
 
         if (is_flagged(open_flags, (UINT)OpenFlags::shareAllowDelete))
         {
-            share_mode |= FILE_SHARE_DELETE;
+            share_mode or_eq FILE_SHARE_DELETE;
         }
 
         if ( m_SecurityAttributes_p != nullptr )
@@ -1327,27 +1327,27 @@ _Check_return_ bool CFile64::Open( _In_z_ LPCTSTR filename, _In_ UINT const open
 
         if ( open_flags & (UINT) OpenFlags::osNoBuffer )
         {
-            m_Attributes |= FILE_FLAG_NO_BUFFERING;
+            m_Attributes or_eq FILE_FLAG_NO_BUFFERING;
         }
 
         if ( open_flags & (UINT) OpenFlags::osRandomAccess )
         {
-            m_Attributes |= FILE_FLAG_RANDOM_ACCESS;
+            m_Attributes or_eq FILE_FLAG_RANDOM_ACCESS;
         }
 
         if ( open_flags & (UINT) OpenFlags::osSequentialScan )
         {
-            m_Attributes |= FILE_FLAG_SEQUENTIAL_SCAN;
+            m_Attributes or_eq FILE_FLAG_SEQUENTIAL_SCAN;
         }
 
         if ( open_flags & (UINT) OpenFlags::osWriteThrough )
         {
-            m_Attributes |= FILE_FLAG_WRITE_THROUGH;
+            m_Attributes or_eq FILE_FLAG_WRITE_THROUGH;
         }
 
         if ( open_flags & (UINT) OpenFlags::wfcDeleteOnClose )
         {
-            m_Attributes |= FILE_FLAG_DELETE_ON_CLOSE;
+            m_Attributes or_eq FILE_FLAG_DELETE_ON_CLOSE;
         }
 
         m_FileHandle = ::CreateFile( filename,
@@ -1429,7 +1429,7 @@ _Check_return_ bool CFile64::OpenWide( _In_z_ wchar_t const * unicode_filename, 
 
         case OpenFlags::modeReadWrite:
 
-            access = GENERIC_READ | GENERIC_WRITE;
+            access = GENERIC_READ bitor GENERIC_WRITE;
             break;
 
         default:
@@ -1459,7 +1459,7 @@ _Check_return_ bool CFile64::OpenWide( _In_z_ wchar_t const * unicode_filename, 
 
         case OpenFlags::shareDenyNone:
 
-            share_mode = FILE_SHARE_WRITE|FILE_SHARE_READ;
+            share_mode = FILE_SHARE_WRITE bitor FILE_SHARE_READ;
             break;
 
         default:
@@ -1492,27 +1492,27 @@ _Check_return_ bool CFile64::OpenWide( _In_z_ wchar_t const * unicode_filename, 
 
         if ( open_flags & (UINT)OpenFlags::osNoBuffer )
         {
-            m_Attributes |= FILE_FLAG_NO_BUFFERING;
+            m_Attributes or_eq FILE_FLAG_NO_BUFFERING;
         }
 
         if ( open_flags & (UINT)OpenFlags::osRandomAccess )
         {
-            m_Attributes |= FILE_FLAG_RANDOM_ACCESS;
+            m_Attributes or_eq FILE_FLAG_RANDOM_ACCESS;
         }
 
         if ( open_flags & (UINT)OpenFlags::osSequentialScan )
         {
-            m_Attributes |= FILE_FLAG_SEQUENTIAL_SCAN;
+            m_Attributes or_eq FILE_FLAG_SEQUENTIAL_SCAN;
         }
 
         if ( open_flags & (UINT) OpenFlags::osWriteThrough )
         {
-            m_Attributes |= FILE_FLAG_WRITE_THROUGH;
+            m_Attributes or_eq FILE_FLAG_WRITE_THROUGH;
         }
 
         if ( open_flags & (UINT)OpenFlags::wfcDeleteOnClose )
         {
-            m_Attributes |= FILE_FLAG_DELETE_ON_CLOSE;
+            m_Attributes or_eq FILE_FLAG_DELETE_ON_CLOSE;
         }
 
         m_FileHandle = ::CreateFileW( unicode_filename,
@@ -1574,7 +1574,7 @@ _Check_return_ bool CFile64::Read( _Inout_ std::string& string_from_file ) noexc
             return( ( string_from_file.length() > 0 ) ? true : false );
         }
 
-        if ( byte_from_file == 0x00 ||
+        if ( byte_from_file == 0x00 or
             byte_from_file == LINE_FEED )
         {
             return( true );
@@ -1811,7 +1811,7 @@ void PASCAL CFile64::Remove( _In_z_ LPCTSTR filename ) noexcept // static
 
         // Try to delete the file with DELETE ON CLOSE semantics.
 
-        if (file.Open(filename, (UINT)((UINT)CFile64::OpenFlags::modeRead | (UINT)CFile64::OpenFlags::shareDenyNone | (UINT)CFile64::OpenFlags::wfcDeleteOnClose)) == true)
+        if (file.Open(filename, read_delete_on_close()) == true)
         {
             file.Close();
         }

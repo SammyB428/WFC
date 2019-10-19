@@ -241,8 +241,8 @@ _Check_return_ uint64_t CLZFile::Seek(_In_ int64_t const offset, _In_ CFile64::S
 #else
    ASSERT( m_hFile != (CFILE_HFILE) CFile::hFileNull );
 #endif
-  ASSERT( from == CFile64::SeekPosition::begin || from == CFile64::SeekPosition::end || from == CFile64::SeekPosition::current );
-  ASSERT((int)CFile64::SeekPosition::begin == FILE_BEGIN && (int)CFile64::SeekPosition::end == FILE_END && (int)CFile64::SeekPosition::current == FILE_CURRENT );
+  ASSERT( from == CFile64::SeekPosition::begin or from == CFile64::SeekPosition::end or from == CFile64::SeekPosition::current );
+  ASSERT((int)CFile64::SeekPosition::begin == FILE_BEGIN and (int)CFile64::SeekPosition::end == FILE_END and (int)CFile64::SeekPosition::current == FILE_CURRENT );
 
    LONG const offset_from_beginning_of_file = ::LZSeek( m_LZFileHandle, (LONG) offset, (INT) from );
 

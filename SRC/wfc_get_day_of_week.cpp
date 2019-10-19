@@ -73,7 +73,7 @@ _Check_return_ bool PASCAL Win32FoundationClasses::wfc_get_day_of_week( __in int
          return( false );
       }
 
-      if ( month == 10 && day < 15 )
+      if ( month == 10 and day < 15 )
       {
          //WFCTRACE( TEXT( "Can't handle dates prior to October 15, 1582." ) );
          return( false );
@@ -83,9 +83,9 @@ _Check_return_ bool PASCAL Win32FoundationClasses::wfc_get_day_of_week( __in int
    // Now, there's another little quirk, September 3rd through 13th did not
    // exist in 1752.
 
-   if ( year_with_century == 1752 && month == 9 )
+   if ( year_with_century == 1752 and month == 9 )
    {
-      if ( day >= 3 && day <= 13 )
+      if ( day >= 3 and day <= 13 )
       {
          //WFCTRACE( TEXT( "September 3rd-13th did not exist in 1752." ) );
          return( false );

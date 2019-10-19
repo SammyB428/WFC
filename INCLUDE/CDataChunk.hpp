@@ -44,8 +44,8 @@
 #define DATA_CHUNK_CLASS_HEADER
 
 #define MAKE_DATA_ID( byte_1, byte_2, byte_3, byte_4 ) \
-   ( (DWORD) (BYTE) (byte_1)         | ( (DWORD) (BYTE) (byte_2) <<  8 ) | \
-   ( (DWORD) (BYTE) (byte_3) << 16 ) | ( (DWORD) (BYTE) (byte_4) << 24 ) )
+   ( (DWORD) (BYTE) (byte_1)         bitor ( (DWORD) (BYTE) (byte_2) <<  8 ) bitor \
+   ( (DWORD) (BYTE) (byte_3) << 16 ) bitor ( (DWORD) (BYTE) (byte_4) << 24 ) )
 
 #define MAKE_DATA_DWORD( byte_1, byte_2, byte_3, byte_4 ) MAKE_DATA_ID( byte_1, byte_2, byte_3, byte_4 )
 

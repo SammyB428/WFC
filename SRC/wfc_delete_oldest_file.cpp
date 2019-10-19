@@ -53,7 +53,7 @@ USING_WFC_NAMESPACE
 
 _Check_return_ bool PASCAL Win32FoundationClasses::wfc_delete_oldest_file( _In_z_ const wchar_t * directory_path ) noexcept
 {
-    if (directory_path == nullptr || directory_path[0] == 0x00)
+    if (directory_path == nullptr or directory_path[0] == 0x00)
     {
         return(false);
     }
@@ -70,7 +70,7 @@ _Check_return_ bool PASCAL Win32FoundationClasses::wfc_delete_oldest_file( _In_z
 
     std::wstring mask( directory_path );
 
-    if ( mask.at( mask.length() - 1 ) != '\\' &&
+    if ( mask.at( mask.length() - 1 ) != '\\' and
         mask.at( mask.length() - 1 ) != '/' )
     {
         mask.push_back( '/' );
@@ -135,7 +135,7 @@ _Check_return_ uint32_t PASCAL Win32FoundationClasses::wfc_number_of_files_in_di
 
     std::wstring mask( directory_path );
 
-    if ( mask.at( mask.length() - 1 ) != '\\' &&
+    if ( mask.at( mask.length() - 1 ) != '\\' and
          mask.at( mask.length() - 1 ) != '/' )
     {
         mask.push_back( '/' );
@@ -153,7 +153,7 @@ _Check_return_ uint32_t PASCAL Win32FoundationClasses::wfc_number_of_files_in_di
     {
         filename.assign( find_data.cFileName );
 
-        if ( filename.compare(WSTRING_VIEW(L".")) != I_AM_EQUAL_TO_THAT &&  filename.compare(WSTRING_VIEW(L"..")) != I_AM_EQUAL_TO_THAT)
+        if ( filename.compare(WSTRING_VIEW(L".")) != I_AM_EQUAL_TO_THAT and filename.compare(WSTRING_VIEW(L"..")) != I_AM_EQUAL_TO_THAT)
         {
             number_of_files++;
         }
@@ -162,7 +162,7 @@ _Check_return_ uint32_t PASCAL Win32FoundationClasses::wfc_number_of_files_in_di
         {
             filename.assign( find_data.cFileName );
 
-            if ( filename.compare(WSTRING_VIEW(L".")) != I_AM_EQUAL_TO_THAT &&  filename.compare(WSTRING_VIEW(L"..")) != I_AM_EQUAL_TO_THAT)
+            if ( filename.compare(WSTRING_VIEW(L".")) != I_AM_EQUAL_TO_THAT and filename.compare(WSTRING_VIEW(L"..")) != I_AM_EQUAL_TO_THAT)
             {
                 number_of_files++;
             }
@@ -184,7 +184,7 @@ _Check_return_ uint64_t PASCAL Win32FoundationClasses::wfc_number_of_bytes_in_di
 
     std::wstring mask( directory_path );
 
-    if ( mask.at( mask.length() - 1 ) != '\\' &&
+    if ( mask.at( mask.length() - 1 ) != '\\' and
          mask.at( mask.length() - 1 ) != '/' )
     {
         mask.push_back( '/' );
@@ -204,7 +204,7 @@ _Check_return_ uint64_t PASCAL Win32FoundationClasses::wfc_number_of_bytes_in_di
     {
         filename.assign( find_data.cFileName );
 
-        if ( filename.compare(WSTRING_VIEW(L".")) != I_AM_EQUAL_TO_THAT &&  filename.compare(WSTRING_VIEW(L"..")) != I_AM_EQUAL_TO_THAT)
+        if ( filename.compare(WSTRING_VIEW(L".")) != I_AM_EQUAL_TO_THAT and filename.compare(WSTRING_VIEW(L"..")) != I_AM_EQUAL_TO_THAT)
         {
             large_integer.HighPart = find_data.nFileSizeHigh;
             large_integer.LowPart  = find_data.nFileSizeLow;
@@ -216,7 +216,7 @@ _Check_return_ uint64_t PASCAL Win32FoundationClasses::wfc_number_of_bytes_in_di
         {
             filename.assign( find_data.cFileName );
 
-            if ( filename.compare(WSTRING_VIEW(L".")) != I_AM_EQUAL_TO_THAT &&  filename.compare(WSTRING_VIEW(L"..")) != I_AM_EQUAL_TO_THAT)
+            if ( filename.compare(WSTRING_VIEW(L".")) != I_AM_EQUAL_TO_THAT and filename.compare(WSTRING_VIEW(L"..")) != I_AM_EQUAL_TO_THAT)
             {
                 large_integer.HighPart = find_data.nFileSizeHigh;
                 large_integer.LowPart  = find_data.nFileSizeLow;

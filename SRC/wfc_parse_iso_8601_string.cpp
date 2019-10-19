@@ -205,7 +205,7 @@ static inline _Check_return_ bool __parse_ymdhmsf( _In_ std::wstring_view time_s
 
         // Do a little idiot proofing
 
-        if ( month < 1 || month > 12 )
+        if ( month < 1 or month > 12 )
         {
             //WFCTRACE( TEXT( "Funky month" ) );
             return(false);
@@ -272,7 +272,7 @@ static inline _Check_return_ bool __parse_ymdhmsf( _In_ std::wstring_view time_s
 
         // Do a very little bit of error checking
 
-        if ( day < 1 || day > 31 )
+        if ( day < 1 or day > 31 )
         {
             //WFCTRACE( TEXT( "Funky day" ) );
             return(false);
@@ -505,7 +505,7 @@ static inline _Check_return_ bool __parse_ymdhmsf( _In_ std::wstring_view time_s
         //                    v
         // 1969-07-20T22:56:15-04:00
 
-        if (index >= time_string.length() ||
+        if (index >= time_string.length() or
             time_string[ index ] == L'Z' )
         {
             return( true );
@@ -518,7 +518,7 @@ static inline _Check_return_ bool __parse_ymdhmsf( _In_ std::wstring_view time_s
             return( true );
         }
 
-        if ( time_string[ index ] != L'+' &&
+        if ( time_string[ index ] != L'+' and
             time_string[ index ] != L'-' )
         {
             //WFCTRACE( TEXT( "Time zone designator ain't beginning with + or -" ) );
@@ -818,7 +818,7 @@ _Check_return_ bool PASCAL Win32FoundationClasses::wfc_parse_xml( __in_z LPCTSTR
 
     xml.Empty();
 
-    if ( filename == nullptr || filename[ 0 ] == 0x00 )
+    if ( filename == nullptr or filename[ 0 ] == 0x00 )
     {
         return( false );
     }
@@ -886,7 +886,7 @@ _Check_return_ bool PASCAL Win32FoundationClasses::wfc_parse_hex_string(__in_z w
 
     for ( auto const buffer_index : Range(buffer_size) )
     {
-        buffer[buffer_index] = ((g_hex_values[(uint8_t)hex_string[string_index]]) << 4) | g_hex_values[(uint8_t)hex_string[string_index + 1]];
+        buffer[buffer_index] = ((g_hex_values[(uint8_t)hex_string[string_index]]) << 4) bitor g_hex_values[(uint8_t)hex_string[string_index + 1]];
         string_index += 2;
     }
 
@@ -908,7 +908,7 @@ _Check_return_ bool PASCAL Win32FoundationClasses::wfc_parse_hex_string(__in_z c
 
     for ( auto const buffer_index : Range(buffer_size) )
     {
-        buffer[buffer_index] = ((g_hex_values[hex_string[string_index]]) << 4) | g_hex_values[hex_string[string_index + 1]];
+        buffer[buffer_index] = ((g_hex_values[hex_string[string_index]]) << 4) bitor g_hex_values[hex_string[string_index + 1]];
         string_index += 2;
     }
 

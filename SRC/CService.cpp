@@ -170,7 +170,7 @@ _Check_return_ bool CService::SpawnProcess( __in_z LPCTSTR command_line, __in_z 
 
    _tcsncpy_s( non_const_command_line, std::size( non_const_command_line ), command_line, std::size( non_const_command_line ) );
 
-   DWORD creation_flags = CREATE_NO_WINDOW | CREATE_NEW_CONSOLE;
+   DWORD creation_flags = CREATE_NO_WINDOW bitor CREATE_NEW_CONSOLE;
 
    CStartupInformationW startup_information;
 
@@ -460,11 +460,11 @@ _Check_return_ int CService::ShowMessageBox(__in_z_opt LPCTSTR text, __in_z_opt 
    {
       if ( version_information.dwMajorVersion <= 3 )
       {
-         type |= MB_SERVICE_NOTIFICATION_NT3X;
+         type or_eq MB_SERVICE_NOTIFICATION_NT3X;
       }
       else
       {
-         type |= MB_SERVICE_NOTIFICATION;
+         type or_eq MB_SERVICE_NOTIFICATION;
       }
    }
 
@@ -580,7 +580,7 @@ void CService::ParseCommandLineParameters( _In_ DWORD const number_of_command_li
 
    for( auto const argument_number : Range(number_of_command_line_arguments, 1) )
    {
-      if ( command_line_arguments[ argument_number ][ 0 ] == '-' ||
+      if ( command_line_arguments[ argument_number ][ 0 ] == '-' or
            command_line_arguments[ argument_number ][ 0 ] == '/' )
       {
          switch( command_line_arguments[ argument_number ][ 1 ] )
@@ -690,7 +690,7 @@ void CALLBACK CService::ServiceControlManagerHandler( __in DWORD control_code )
 
       case SERVICE_CONTROL_PAUSE:
 
-         if ( m_StaticService_p->m_Running == true && m_StaticService_p->m_Paused == false )
+         if ( m_StaticService_p->m_Running == true and m_StaticService_p->m_Paused == false )
          {
             if ( m_StaticService_p->SendStatusToServiceControlManager( SERVICE_PAUSE_PENDING, NO_ERROR, 1, m_StaticService_p->m_WaitHint ) == FALSE )
             {
@@ -713,7 +713,7 @@ void CALLBACK CService::ServiceControlManagerHandler( __in DWORD control_code )
 
       case SERVICE_CONTROL_CONTINUE:
 
-         if ( m_StaticService_p->m_Running == true && m_StaticService_p->m_Paused == true )
+         if ( m_StaticService_p->m_Running == true and m_StaticService_p->m_Paused == true )
          {
             if ( m_StaticService_p->SendStatusToServiceControlManager( SERVICE_CONTINUE_PENDING, NO_ERROR, 1, m_StaticService_p->m_WaitHint ) == FALSE )
             {
@@ -782,7 +782,7 @@ void CALLBACK CService::ServiceMain( _In_ DWORD const number_of_command_line_arg
    }
    else
    {
-      if ( ! m_StaticService_p->SendStatusToServiceControlManager( SERVICE_START_PENDING, NO_ERROR, 1, m_StaticService_p->m_WaitHint ) )
+      if (not m_StaticService_p->SendStatusToServiceControlManager( SERVICE_START_PENDING, NO_ERROR, 1, m_StaticService_p->m_WaitHint ) )
       {
          goto EXIT_GOTO;
       }
@@ -799,14 +799,14 @@ void CALLBACK CService::ServiceMain( _In_ DWORD const number_of_command_line_arg
       }
       else
       {
-         if ( ! m_StaticService_p->SendStatusToServiceControlManager( SERVICE_START_PENDING, NO_ERROR, 2, m_StaticService_p->m_WaitHint ) )
+         if (not m_StaticService_p->SendStatusToServiceControlManager( SERVICE_START_PENDING, NO_ERROR, 2, m_StaticService_p->m_WaitHint ) )
          {
             goto EXIT_GOTO;
          }
 
          m_StaticService_p->ParseCommandLineParameters( number_of_command_line_arguments, command_line_arguments );
 
-         if ( ! m_StaticService_p->SendStatusToServiceControlManager( SERVICE_START_PENDING, NO_ERROR, 3, m_StaticService_p->m_WaitHint ) )
+         if (not m_StaticService_p->SendStatusToServiceControlManager( SERVICE_START_PENDING, NO_ERROR, 3, m_StaticService_p->m_WaitHint ) )
          {
             goto EXIT_GOTO;
          }

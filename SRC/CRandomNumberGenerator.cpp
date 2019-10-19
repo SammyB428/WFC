@@ -162,7 +162,7 @@ void CRandomNumberGenerator::InitializeSeed( void ) noexcept
       // Anther call to GetTickCount() should do the trick because the
       // GetDiskFreeSpace() will take a varying amount of time.
 
-      low_word  ^= ( (WORD) ::GetTickCount64() );
+      low_word xor_eq ( (WORD) ::GetTickCount64() );
    }
    else
    {
@@ -189,7 +189,7 @@ void CRandomNumberGenerator::InitializeSeed( void ) noexcept
    // 2000-05-26
    // Added GetCurrentThreadId() so two threads won't initialize to the same seed
 
-   SetSeed( ( MAKELONG( low_word, high_word ) ^ ( ::GetCurrentThreadId() << 11 ) ) );
+   SetSeed( ( MAKELONG( low_word, high_word ) xor ( ::GetCurrentThreadId() << 11 ) ) );
 }
 
 _Check_return_ DWORD CRandomNumberGenerator::GetInteger( void ) noexcept
@@ -218,10 +218,10 @@ _Check_return_ DWORD CRandomNumberGenerator::GetInteger( void ) noexcept
 
       if ( temp_value )
       {
-         hash_value ^= temp_value >> 24;
+         hash_value xor_eq temp_value >> 24;
       }
 
-      hash_value &= ~temp_value;
+      hash_value and_eq ~temp_value;
    }
 
    DWORD return_value = static_cast< DWORD >( value );

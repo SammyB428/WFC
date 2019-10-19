@@ -186,7 +186,7 @@ _Check_return_ bool CRegistry::Connect( __in HKEY key_to_open, __in_z_opt wchar_
         ** name_of_computer can be nullptr
         */
 
-        if ( key_to_open == (HKEY) keyClassesRoot || key_to_open == (HKEY) keyCurrentUser )
+        if ( key_to_open == (HKEY) keyClassesRoot or key_to_open == (HKEY) keyCurrentUser )
         {
             if ( name_of_computer == nullptr )
             {
@@ -870,7 +870,7 @@ _Check_return_ bool CRegistry::Load( __in_z wchar_t const * name_of_subkey, __in
     WFC_VALIDATE_POINTER( name_of_subkey );
     WFC_VALIDATE_POINTER( name_of_file_containing_information );
 
-    if ( name_of_subkey == nullptr || name_of_file_containing_information == nullptr )
+    if ( name_of_subkey == nullptr or name_of_file_containing_information == nullptr )
     {
         m_ErrorCode = ERROR_INVALID_PARAMETER;
         return( false );
@@ -942,7 +942,7 @@ _Check_return_ bool CRegistry::Open( __in_z wchar_t const * name_of_subkey_to_op
             m_KeyHandle = static_cast< HKEY >( NULL );
         }
 
-        m_ErrorCode = ::RegOpenKeyEx( m_RegistryHandle, name_of_subkey_to_open, 0, security_access_mask | KEY_WOW64_64KEY, &m_KeyHandle );
+        m_ErrorCode = ::RegOpenKeyEx( m_RegistryHandle, name_of_subkey_to_open, 0, security_access_mask bitor KEY_WOW64_64KEY, &m_KeyHandle );
 
         if ( m_ErrorCode == ERROR_SUCCESS )
         {
@@ -1054,8 +1054,8 @@ _Check_return_ bool CRegistry::Replace( __in_z wchar_t const * name_of_subkey,
     WFC_VALIDATE_POINTER( name_of_file_with_new_data );
     WFC_VALIDATE_POINTER( name_of_backup_file );
 
-    if ( name_of_subkey             == nullptr ||
-        name_of_file_with_new_data == nullptr ||
+    if ( name_of_subkey             == nullptr or
+        name_of_file_with_new_data == nullptr or
         name_of_backup_file        == nullptr )
     {
         m_ErrorCode = ERROR_INVALID_PARAMETER;
@@ -1119,7 +1119,7 @@ _Check_return_ bool CRegistry::Restore( __in_z wchar_t const * name_of_file_hold
             // Maybe we need to get permission...
             HANDLE token_handle = static_cast< HANDLE >( NULL );
 
-            if ( ::OpenProcessToken( ::GetCurrentProcess(), TOKEN_ADJUST_PRIVILEGES | TOKEN_QUERY, &token_handle ) == FALSE )
+            if ( ::OpenProcessToken( ::GetCurrentProcess(), TOKEN_ADJUST_PRIVILEGES bitor TOKEN_QUERY, &token_handle ) == FALSE )
             {
                 m_ErrorCode = ::GetLastError();
                 //WFCTRACEERROR( m_ErrorCode );
@@ -1409,7 +1409,7 @@ _Check_return_ bool CRegistry::SetValue( __in_z wchar_t const * name_of_value,
     WFC_VALIDATE_POINTER( name_of_value );
     WFC_VALIDATE_POINTER( address_of_value_data );
 
-    if ( name_of_value == nullptr || address_of_value_data == nullptr )
+    if ( name_of_value == nullptr or address_of_value_data == nullptr )
     {
         m_ErrorCode = ERROR_INVALID_PARAMETER;
         return( false );
@@ -1831,7 +1831,7 @@ return;
 }
 
 if ( registry.Open( TEXT( &quot;SYSTEM\\CurrentControlSet\\Services\\EventLog\\Application&quot; ),
-(CRegistry::CreatePermissions)(CRegistry::permissionRead | CRegistry::permissionSetValue)
+(CRegistry::CreatePermissions)(CRegistry::permissionRead bitor CRegistry::permissionSetValue)
 ) == FALSE )
 {
 TRACE( TEXT( &quot;Can't open key\n&quot; ) );

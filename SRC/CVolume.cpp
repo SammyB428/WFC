@@ -339,7 +339,7 @@ _Check_return_ bool CVolume::Open( _In_ TCHAR const drive_letter ) noexcept
       default:
       case DRIVE_REMOVABLE:
 
-         access_flags = GENERIC_READ | GENERIC_WRITE;
+         access_flags = GENERIC_READ bitor GENERIC_WRITE;
          break;
 
       case DRIVE_CDROM:
@@ -353,7 +353,7 @@ _Check_return_ bool CVolume::Open( _In_ TCHAR const drive_letter ) noexcept
 
    m_Handle = ::CreateFileW( m_Name.c_str(),
                             access_flags,
-                            FILE_SHARE_READ | FILE_SHARE_WRITE,
+                            FILE_SHARE_READ bitor FILE_SHARE_WRITE,
                             nullptr,
                             OPEN_EXISTING,
                             0,

@@ -101,7 +101,7 @@ _Check_return_ int CServiceApplication::m_Main(__in int const number_of_command_
         return(EXIT_SUCCESS);
     }
 
-    if (number_of_command_line_arguments > 1 && command_line_arguments != nullptr)
+    if (number_of_command_line_arguments > 1 and command_line_arguments != nullptr)
     {
         if (_tcsicmp(command_line_arguments[1], TEXT("install")) == 0)
         {
