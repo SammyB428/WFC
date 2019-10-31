@@ -103,13 +103,13 @@ _Check_return_ bool CFileDirectory::Read(_Out_ std::vector<std::wstring>& filena
     std::wstring name_and_wildcard(m_Name);
     name_and_wildcard.append(m_Wildcard);
 
-    HANDLE file_find_handle = ::FindFirstFileW(name_and_wildcard.c_str(), &find_data);
+    auto file_find_handle = ::FindFirstFileW(name_and_wildcard.c_str(), &find_data);
 
     if (file_find_handle != static_cast<HANDLE>(INVALID_HANDLE_VALUE))
     {
         std::wstring complete_filename;
 
-        if (find_data.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)
+        if (is_flagged( find_data.dwFileAttributes, FILE_ATTRIBUTE_DIRECTORY) == true)
         {
             // Skip this file
         }
@@ -123,7 +123,7 @@ _Check_return_ bool CFileDirectory::Read(_Out_ std::vector<std::wstring>& filena
 
         while (::FindNextFileW(file_find_handle, &find_data) != FALSE)
         {
-            if (find_data.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)
+            if (is_flagged( find_data.dwFileAttributes, FILE_ATTRIBUTE_DIRECTORY) == true )
             {
                 // Skip this file
             }
@@ -161,7 +161,7 @@ _Check_return_ bool CFileDirectory::Read(__callback WIDE_FILE_ACTION_FUNCTION ac
     std::wstring filename_and_wildcard(m_Name);
     filename_and_wildcard.append(m_Wildcard);
 
-    HANDLE file_find_handle = ::FindFirstFileW(filename_and_wildcard.c_str(), &find_data);
+    auto file_find_handle = ::FindFirstFileW(filename_and_wildcard.c_str(), &find_data);
 
     // The user passed us a couple of pointers, don't trust them
 
@@ -171,7 +171,7 @@ _Check_return_ bool CFileDirectory::Read(__callback WIDE_FILE_ACTION_FUNCTION ac
     {
        if (file_find_handle != static_cast<HANDLE>(INVALID_HANDLE_VALUE))
        {
-          if (find_data.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)
+          if (is_flagged(find_data.dwFileAttributes, FILE_ATTRIBUTE_DIRECTORY) == true)
           {
              if (m_IncludeDirectoriesInCallback == true)
              {
@@ -210,7 +210,7 @@ _Check_return_ bool CFileDirectory::Read(__callback WIDE_FILE_ACTION_FUNCTION ac
 
             while (::FindNextFile(file_find_handle, &find_data) != FALSE)
             {
-               if (find_data.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)
+               if (is_flagged(find_data.dwFileAttributes, FILE_ATTRIBUTE_DIRECTORY) == true)
                {
                   if (m_IncludeDirectoriesInCallback == true)
                   {
@@ -309,7 +309,7 @@ static void PASCAL __read_recursively(__in std::wstring const& directory_name, _
 
     if (parameters_p->find_file_handle != static_cast<HANDLE>(INVALID_HANDLE_VALUE))
     {
-        if (parameters_p->find_data.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)
+        if (is_flagged( parameters_p->find_data.dwFileAttributes, FILE_ATTRIBUTE_DIRECTORY) == true)
         {
             if (_tcscmp(parameters_p->find_data.cFileName, TEXT(".")) == I_AM_EQUAL_TO_THAT or
                 _tcscmp(parameters_p->find_data.cFileName, TEXT("..")) == I_AM_EQUAL_TO_THAT)
@@ -334,7 +334,7 @@ static void PASCAL __read_recursively(__in std::wstring const& directory_name, _
 
         while (FindNextFile(parameters_p->find_file_handle, &parameters_p->find_data) != FALSE)
         {
-            if (parameters_p->find_data.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)
+            if (is_flagged(parameters_p->find_data.dwFileAttributes, FILE_ATTRIBUTE_DIRECTORY) == true)
             {
                 if (_tcscmp(parameters_p->find_data.cFileName, TEXT(".")) == I_AM_EQUAL_TO_THAT or
                     _tcscmp(parameters_p->find_data.cFileName, TEXT("..")) == I_AM_EQUAL_TO_THAT)
@@ -406,7 +406,7 @@ void PASCAL __wide_read_recursively(_In_ std::wstring const& directory_name, _In
 
     if (parameters_p->find_file_handle != static_cast<HANDLE>(INVALID_HANDLE_VALUE))
     {
-        if (parameters_p->find_data.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)
+        if (is_flagged(parameters_p->find_data.dwFileAttributes, FILE_ATTRIBUTE_DIRECTORY) == true)
         {
             if (wcscmp(parameters_p->find_data.cFileName, L".") == I_AM_EQUAL_TO_THAT or
                 wcscmp(parameters_p->find_data.cFileName, L"..") == I_AM_EQUAL_TO_THAT)
@@ -431,7 +431,7 @@ void PASCAL __wide_read_recursively(_In_ std::wstring const& directory_name, _In
 
         while (FindNextFileW(parameters_p->find_file_handle, &parameters_p->find_data) != FALSE)
         {
-            if (parameters_p->find_data.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)
+            if (is_flagged(parameters_p->find_data.dwFileAttributes, FILE_ATTRIBUTE_DIRECTORY) == true)
             {
                 if (wcscmp(parameters_p->find_data.cFileName, L".") == I_AM_EQUAL_TO_THAT or
                     wcscmp(parameters_p->find_data.cFileName, L"..") == I_AM_EQUAL_TO_THAT)
@@ -493,7 +493,7 @@ static _Check_return_ bool PASCAL __wide_read_recursively(_In_ std::wstring cons
 
     if (parameters_p->find_file_handle != static_cast<HANDLE>(INVALID_HANDLE_VALUE))
     {
-        if (parameters_p->find_data.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)
+        if (is_flagged(parameters_p->find_data.dwFileAttributes, FILE_ATTRIBUTE_DIRECTORY) == true)
         {
             if (wcscmp(parameters_p->find_data.cFileName, L".") == I_AM_EQUAL_TO_THAT or
                 wcscmp(parameters_p->find_data.cFileName, L"..") == I_AM_EQUAL_TO_THAT)
@@ -563,7 +563,7 @@ static _Check_return_ bool PASCAL __wide_read_recursively(_In_ std::wstring cons
 
         while (::FindNextFileW(parameters_p->find_file_handle, &parameters_p->find_data) != FALSE)
         {
-            if (parameters_p->find_data.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)
+            if (is_flagged(parameters_p->find_data.dwFileAttributes, FILE_ATTRIBUTE_DIRECTORY) == true)
             {
                 if (wcscmp(parameters_p->find_data.cFileName, L".") == I_AM_EQUAL_TO_THAT or
                     wcscmp(parameters_p->find_data.cFileName, L"..") == I_AM_EQUAL_TO_THAT)
@@ -658,14 +658,14 @@ _Check_return_ bool CFileDirectory::ReadRecursively(__callback WIDE_FILE_ACTION_
     std::wstring filename_and_wildcard(m_Name);
     filename_and_wildcard.append(m_Wildcard);
 
-    HANDLE file_find_handle = ::FindFirstFileW(filename_and_wildcard.c_str(), &find_data);
+    auto file_find_handle = ::FindFirstFileW(filename_and_wildcard.c_str(), &find_data);
 
     if (file_find_handle != static_cast<HANDLE>(INVALID_HANDLE_VALUE))
     {
         std::wstring complete_filename;
         std::wstring new_directory_name;
 
-        if (find_data.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)
+        if (is_flagged( find_data.dwFileAttributes, FILE_ATTRIBUTE_DIRECTORY) == true )
         {
             if (::_tcscmp(find_data.cFileName, TEXT(".")) == I_AM_EQUAL_TO_THAT or
                 ::_tcscmp(find_data.cFileName, TEXT("..")) == I_AM_EQUAL_TO_THAT)
@@ -734,7 +734,7 @@ _Check_return_ bool CFileDirectory::ReadRecursively(__callback WIDE_FILE_ACTION_
 
         while (::FindNextFile(file_find_handle, &find_data) != FALSE)
         {
-            if (find_data.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)
+            if (is_flagged( find_data.dwFileAttributes, FILE_ATTRIBUTE_DIRECTORY) == true)
             {
                 if (::_tcscmp(find_data.cFileName, TEXT(".")) == I_AM_EQUAL_TO_THAT or
                     ::_tcscmp(find_data.cFileName, TEXT("..")) == I_AM_EQUAL_TO_THAT)
@@ -828,14 +828,14 @@ _Check_return_ bool CFileDirectory::ReadRecursively(_Out_ std::vector<std::wstri
     std::wstring filename_and_wildcard(m_Name);
     filename_and_wildcard.append(m_Wildcard);
 
-    HANDLE file_find_handle = ::FindFirstFileW(filename_and_wildcard.c_str(), &find_data);
+    auto file_find_handle = ::FindFirstFileW(filename_and_wildcard.c_str(), &find_data);
 
     if (file_find_handle != static_cast<HANDLE>(INVALID_HANDLE_VALUE))
     {
         std::wstring complete_filename;
         std::wstring new_directory_name;
 
-        if (find_data.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)
+        if (is_flagged(find_data.dwFileAttributes, FILE_ATTRIBUTE_DIRECTORY) == true)
         {
             if (::wcscmp(find_data.cFileName, L".") == I_AM_EQUAL_TO_THAT or
                 ::wcscmp(find_data.cFileName, L"..") == I_AM_EQUAL_TO_THAT)
@@ -860,7 +860,7 @@ _Check_return_ bool CFileDirectory::ReadRecursively(_Out_ std::vector<std::wstri
 
         while (::FindNextFileW(file_find_handle, &find_data) != FALSE)
         {
-            if (find_data.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)
+            if (is_flagged( find_data.dwFileAttributes, FILE_ATTRIBUTE_DIRECTORY) == true)
             {
                 if (::wcscmp(find_data.cFileName, L".") == I_AM_EQUAL_TO_THAT or
                     ::wcscmp(find_data.cFileName, L"..") == I_AM_EQUAL_TO_THAT)
@@ -961,7 +961,7 @@ void CFileDirectory::GetStatistics(__out uint64_t& number_of_files, __out uint64
 
 static _Check_return_ bool __delete_file_action(_Inout_ void * parameter, _In_z_ wchar_t const * const filename, _In_ WIN32_FIND_DATAW const * data_p) noexcept
 {
-    if (data_p->dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)
+    if (is_flagged( data_p->dwFileAttributes, FILE_ATTRIBUTE_DIRECTORY) == true)
     {
         (void) CFileDirectory::RecursivelyDestroy(filename);
     }

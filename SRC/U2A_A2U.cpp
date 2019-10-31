@@ -60,7 +60,7 @@ void PASCAL Win32FoundationClasses::ASCII_to_UNICODE(_In_ std::string_view ansi_
         return;
     }
 
-    if (ansi_string == (LPCSTR)unicode_string)
+    if (ansi_string.data() == (LPCSTR)unicode_string)
     {
         ASSERT(FALSE);
         return;

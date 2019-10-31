@@ -59,7 +59,7 @@ CWfcTrace::CWfcTrace( __in_z LPCTSTR function_name, __in std::size_t const traci
 {
    m_TracingLevel = tracing_level;
 
-   if ( Levels & m_TracingLevel )
+   if ( is_flagged( Levels, m_TracingLevel ) == true )
    {
       if ( Tracing == true )
       {
@@ -81,7 +81,7 @@ CWfcTrace::CWfcTrace( __in_z LPCTSTR function_name, __in std::size_t const traci
 
 CWfcTrace::~CWfcTrace() noexcept
 {
-   if ( Levels & m_TracingLevel )
+   if ( is_flagged( Levels, m_TracingLevel ) == true )
    {
       Indent -= 2;
 
@@ -102,7 +102,7 @@ CWfcTrace::~CWfcTrace() noexcept
 
 void CWfcTrace::m_Indent( void ) const noexcept
 {
-   if ( ( Levels & m_TracingLevel ) and Tracing == true )
+   if ( is_flagged( Levels, m_TracingLevel ) == true and Tracing == true )
    {
       if ( Indent > 0 )
       {
@@ -120,7 +120,7 @@ void CWfcTrace::m_Indent( void ) const noexcept
 
 void CWfcTrace::Output( _In_z_ LPCTSTR message ) const noexcept
 {
-   if ( ( Levels & m_TracingLevel ) and Tracing == true )
+   if ( is_flagged( Levels, m_TracingLevel ) == true and Tracing == true )
    {
       m_Indent();
 
@@ -142,7 +142,7 @@ void CWfcTrace::Output( _In_z_ LPCTSTR message ) const noexcept
 
 void CWfcTrace::Output( __in_z LPCTSTR message, __in int const integer ) const noexcept
 {
-   if ( ( Levels & m_TracingLevel ) and Tracing == true )
+   if (is_flagged( Levels, m_TracingLevel ) == true and Tracing == true )
    {
        TCHAR temp_string[11]{ 0 };
 
@@ -159,7 +159,7 @@ void CWfcTrace::Output( __in_z LPCTSTR message, __in int const integer ) const n
 
 void CWfcTrace::Output( __in_z LPCTSTR message, __in UINT const integer ) const noexcept
 {
-   if ( ( Levels & m_TracingLevel ) and Tracing == true )
+   if (is_flagged( Levels, m_TracingLevel ) == true and Tracing == true )
    {
       Output( message, (ULONG) integer );
    }
@@ -167,7 +167,7 @@ void CWfcTrace::Output( __in_z LPCTSTR message, __in UINT const integer ) const 
 
 void CWfcTrace::Output( __in_z LPCTSTR message, __in long const a_long ) const noexcept
 {
-   if ( ( Levels & m_TracingLevel ) and Tracing == true )
+   if (is_flagged( Levels, m_TracingLevel ) == true and Tracing == true )
    {
       TCHAR temp_string[ 11 ];
 
@@ -184,7 +184,7 @@ void CWfcTrace::Output( __in_z LPCTSTR message, __in long const a_long ) const n
 
 void CWfcTrace::Output( __in_z LPCTSTR message, __in ULONG const a_long ) const noexcept
 {
-   if ( ( Levels & m_TracingLevel ) and Tracing == true )
+   if (is_flagged( Levels, m_TracingLevel ) == true and Tracing == true )
    {
       TCHAR temp_string[ 11 ];
 
@@ -201,7 +201,7 @@ void CWfcTrace::Output( __in_z LPCTSTR message, __in ULONG const a_long ) const 
 
 void CWfcTrace::Output( __in_z LPCTSTR message, __in LONGLONG const a_long ) const noexcept
 {
-   if ( ( Levels & m_TracingLevel ) and Tracing == true )
+   if (is_flagged( Levels, m_TracingLevel ) == true and Tracing == true )
    {
       TCHAR temp_string[ 31 ];
 
@@ -218,7 +218,7 @@ void CWfcTrace::Output( __in_z LPCTSTR message, __in LONGLONG const a_long ) con
 
 void CWfcTrace::Output( __in_z LPCTSTR message, __in ULONGLONG const a_long ) const noexcept
 {
-   if ( ( Levels & m_TracingLevel ) and Tracing == true )
+   if (is_flagged( Levels, m_TracingLevel ) == true and Tracing == true )
    {
       TCHAR temp_string[ 31 ];
 
@@ -235,7 +235,7 @@ void CWfcTrace::Output( __in_z LPCTSTR message, __in ULONGLONG const a_long ) co
 
 void CWfcTrace::Output( __in_z LPCTSTR message, __in double const a_double ) const noexcept
 {
-   if ( ( Levels & m_TracingLevel ) and Tracing == true )
+   if (is_flagged( Levels, m_TracingLevel ) == true and Tracing == true )
    {
       int decimal = 0;
       int sign    = 0;
@@ -321,7 +321,7 @@ void CWfcTrace::Output( __in_z LPCTSTR message, __in double const a_double ) con
 
 void CWfcTrace::Output( __in_z LPCTSTR message, __in std::wstring const& string ) const noexcept
 {
-   if ( ( Levels & m_TracingLevel ) and Tracing == true )
+   if (is_flagged( Levels, m_TracingLevel ) == true and Tracing == true )
    {
       std::wstring message2(message);
       message2.append(string);
@@ -331,7 +331,7 @@ void CWfcTrace::Output( __in_z LPCTSTR message, __in std::wstring const& string 
 
 void CWfcTrace::Output( __in_z LPCTSTR message, __in VOID const * pointer ) const noexcept
 {
-   if ( ( Levels & m_TracingLevel ) and Tracing == true )
+   if (is_flagged( Levels, m_TracingLevel ) == true and Tracing == true )
    {
        std::wstring pointer_string;
 
@@ -343,7 +343,7 @@ void CWfcTrace::Output( __in_z LPCTSTR message, __in VOID const * pointer ) cons
 
 void CWfcTrace::Output( __in_z LPCTSTR message, __in LARGE_INTEGER const& value ) const noexcept
 {
-   if ( ( Levels & m_TracingLevel ) and Tracing == true )
+   if (is_flagged( Levels, m_TracingLevel ) == true and Tracing == true )
    {
        std::wstring pointer_string;
 
@@ -356,7 +356,7 @@ void CWfcTrace::Output( __in_z LPCTSTR message, __in LARGE_INTEGER const& value 
 
 void CWfcTrace::Output( __in_z LPCTSTR message, __in ULARGE_INTEGER const& value ) const noexcept
 {
-   if ( ( Levels & m_TracingLevel ) and Tracing == true )
+   if (is_flagged( Levels, m_TracingLevel ) == true and Tracing == true )
    {
        std::wstring pointer_string;
 
@@ -369,7 +369,7 @@ void CWfcTrace::Output( __in_z LPCTSTR message, __in ULARGE_INTEGER const& value
 
 void CWfcTrace::Output( __in_z LPCTSTR message, __in RECT const& value ) const noexcept
 {
-   if ( ( Levels & m_TracingLevel ) and Tracing == true )
+   if (is_flagged( Levels, m_TracingLevel ) == true and Tracing == true )
    {
        std::wstring pointer_string;
 
@@ -382,7 +382,7 @@ void CWfcTrace::Output( __in_z LPCTSTR message, __in RECT const& value ) const n
 
 void CWfcTrace::Output( __in_z LPCTSTR message, __in POINT const& value ) const noexcept
 {
-   if ( ( Levels & m_TracingLevel ) and Tracing == true )
+   if (is_flagged( Levels, m_TracingLevel ) == true and Tracing == true )
    {
        std::wstring pointer_string;
 
@@ -395,7 +395,7 @@ void CWfcTrace::Output( __in_z LPCTSTR message, __in POINT const& value ) const 
 
 void CWfcTrace::Output( __in_z LPCTSTR message, __in SIZE const& value ) const noexcept
 {
-   if ( ( Levels & m_TracingLevel ) and Tracing == true )
+   if (is_flagged( Levels, m_TracingLevel ) == true and Tracing == true )
    {
        std::wstring pointer_string;
 
@@ -408,7 +408,7 @@ void CWfcTrace::Output( __in_z LPCTSTR message, __in SIZE const& value ) const n
 
 void CWfcTrace::Output( __in_z LPCTSTR message, __in GUID const& value ) const noexcept // New for Release 52
 {
-   if ( ( Levels & m_TracingLevel ) and Tracing == true )
+   if (is_flagged( Levels, m_TracingLevel ) == true and Tracing == true )
    {
       std::wstring class_name;
 
@@ -431,7 +431,7 @@ void CWfcTrace::Output( __in_z LPCTSTR message, __in GUID const& value ) const n
 
 void CWfcTrace::Output( __in_z LPCTSTR message, __in FILETIME const& value ) const noexcept // New for Release 52
 {
-   if ( ( Levels & m_TracingLevel ) and Tracing == true )
+   if (is_flagged( Levels, m_TracingLevel ) == true and Tracing == true )
    {
       SYSTEMTIME system_time;
 
@@ -466,7 +466,7 @@ void CWfcTrace::Output( __in_z LPCTSTR message, __in FILETIME const& value ) con
 
 void CWfcTrace::Output( __in_z LPCTSTR message, __in SYSTEMTIME const& value ) const noexcept // New for Release 52
 {
-   if ( ( Levels & m_TracingLevel ) and Tracing == true )
+   if (is_flagged( Levels, m_TracingLevel ) == true and Tracing == true )
    {
       std::wstring class_name;
 
@@ -486,7 +486,7 @@ void CWfcTrace::Output( __in_z LPCTSTR message, __in SYSTEMTIME const& value ) c
 
 void CWfcTrace::OutputBinary( __in_z LPCTSTR message, __in ULONG const a_long ) const noexcept
 {
-   if ( ( Levels & m_TracingLevel ) and Tracing == true )
+   if (is_flagged( Levels, m_TracingLevel ) == true and Tracing == true )
    {
       int index = 31;
 
@@ -521,7 +521,7 @@ void CWfcTrace::OutputBinary( __in_z LPCTSTR message, __in ULONG const a_long ) 
 
 void CWfcTrace::OutputVariant( __in_z LPCTSTR message, __in VARIANT const& value ) const noexcept
 {
-   if ( ( Levels & m_TracingLevel ) and Tracing == true )
+   if (is_flagged( Levels, m_TracingLevel ) == true and Tracing == true )
    {
       OutputVariant( message, &value );
    }
@@ -529,7 +529,7 @@ void CWfcTrace::OutputVariant( __in_z LPCTSTR message, __in VARIANT const& value
 
 void CWfcTrace::OutputVariant( __in_z LPCTSTR message, __in VARIANT const * value ) const noexcept
 {
-   if ( ( Levels & m_TracingLevel ) and Tracing == true )
+   if (is_flagged( Levels, m_TracingLevel ) == true and Tracing == true )
    {
       std::wstring data_type;
 
@@ -537,12 +537,12 @@ void CWfcTrace::OutputVariant( __in_z LPCTSTR message, __in VARIANT const * valu
 
       // Types taken from WTYPES.H -- VARENUM data type
 
-      if ( vt & VT_VECTOR )
+      if (is_flagged(vt, VT_VECTOR) == true)
       {
          data_type.assign(WSTRING_VIEW(L"VT_VECTOR"));
       }
 
-      if ( vt & VT_ARRAY )
+      if (is_flagged(vt, VT_ARRAY) == true)
       {
          if ( data_type.empty() == false )
          {
@@ -552,7 +552,7 @@ void CWfcTrace::OutputVariant( __in_z LPCTSTR message, __in VARIANT const * valu
          data_type.append(WSTRING_VIEW(L"VT_ARRAY" ) );
       }
 
-      if ( vt & VT_BYREF )
+      if (is_flagged(vt, VT_BYREF) == true)
       {
           if (data_type.empty() == false)
           {
@@ -562,7 +562,7 @@ void CWfcTrace::OutputVariant( __in_z LPCTSTR message, __in VARIANT const * valu
          data_type.append(WSTRING_VIEW(L"VT_BYREF" ) );
       }
 
-      if ( vt & VT_RESERVED )
+      if (is_flagged(vt, VT_RESERVED) == true)
       {
           if (data_type.empty() == false)
           {
@@ -572,7 +572,7 @@ void CWfcTrace::OutputVariant( __in_z LPCTSTR message, __in VARIANT const * valu
          data_type.append(WSTRING_VIEW(L"VT_RESERVED" ) );
       }
 
-      DWORD basic_type = vt & VT_TYPEMASK;
+      DWORD basic_type = vt bitand VT_TYPEMASK;
 
       switch( basic_type )
       {
@@ -1025,7 +1025,7 @@ void CWfcTrace::OutputVariant( __in_z LPCTSTR message, __in VARIANT const * valu
 
 void CWfcTrace::ReportError( __in DWORD const error_code ) noexcept
 {
-   if ( ( Levels & m_TracingLevel ) and Tracing == true )
+   if ( is_flagged( Levels, m_TracingLevel ) == true and Tracing == true )
    {
       std::wstring error_string;
 
@@ -1042,7 +1042,7 @@ void CWfcTrace::ReportError( __in DWORD const error_code ) noexcept
 
 void CWfcTrace::ReportSocketError( __in DWORD const error_code ) noexcept
 {
-   if ( ( Levels & m_TracingLevel ) and Tracing == true )
+   if ( is_flagged( Levels, m_TracingLevel ) == true and Tracing == true )
    {
       TCHAR error_string[ MAX_PATH * 2 ];
 

@@ -204,14 +204,14 @@ static inline _Check_return_ bool __FullPath( _Out_ wchar_t * lpszPathOut, _In_z
 
     // not all characters have complete uppercase/lowercase
 
-    if (not ( dwFlags & FS_CASE_IS_PRESERVED ) )
+    if (is_flagged( dwFlags, FS_CASE_IS_PRESERVED ) == false )
     {
         CharUpper( lpszPathOut );
     }
 
     // assume non-UNICODE file systems, use OEM character set
 
-    if (not ( dwFlags & FS_UNICODE_STORED_ON_DISK ) )
+    if (is_flagged( dwFlags, FS_UNICODE_STORED_ON_DISK ) == false )
     {
         WIN32_FIND_DATA data;
 
@@ -482,12 +482,12 @@ void CFile64::Dump( CDumpContext& dump_context ) const
 
         std::wstring attributes;
 
-        if ( information.dwFileAttributes & FILE_ATTRIBUTE_ARCHIVE )
+        if ( information.dwFileAttributes bitand FILE_ATTRIBUTE_ARCHIVE )
         {
             attributes.assign(WSTRING_VIEW(L"FILE_ATTRIBUTE_ARCHIVE"));
         }
 
-        if ( information.dwFileAttributes & FILE_ATTRIBUTE_COMPRESSED )
+        if ( information.dwFileAttributes bitand FILE_ATTRIBUTE_COMPRESSED )
         {
             if ( attributes.GetLength() > 0 )
             {
@@ -497,7 +497,7 @@ void CFile64::Dump( CDumpContext& dump_context ) const
             attributes += TEXT( "FILE_ATTRIBUTE_COMPRESSED" );
         }
 
-        if ( information.dwFileAttributes & FILE_ATTRIBUTE_ENCRYPTED )
+        if ( information.dwFileAttributes bitand FILE_ATTRIBUTE_ENCRYPTED )
         {
             if ( attributes.GetLength() > 0 )
             {
@@ -507,7 +507,7 @@ void CFile64::Dump( CDumpContext& dump_context ) const
             attributes += TEXT( "FILE_ATTRIBUTE_ENCRYPTED" );
         }
 
-        if ( information.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY )
+        if ( information.dwFileAttributes bitand FILE_ATTRIBUTE_DIRECTORY )
         {
             if ( attributes.GetLength() > 0 )
             {
@@ -517,7 +517,7 @@ void CFile64::Dump( CDumpContext& dump_context ) const
             attributes += TEXT( "FILE_ATTRIBUTE_DIRECTORY" );
         }
 
-        if ( information.dwFileAttributes & FILE_ATTRIBUTE_HIDDEN )
+        if ( information.dwFileAttributes bitand FILE_ATTRIBUTE_HIDDEN )
         {
             if ( attributes.GetLength() > 0 )
             {
@@ -527,7 +527,7 @@ void CFile64::Dump( CDumpContext& dump_context ) const
             attributes += TEXT( "FILE_ATTRIBUTE_HIDDEN" );
         }
 
-        if ( information.dwFileAttributes & FILE_ATTRIBUTE_OFFLINE )
+        if ( information.dwFileAttributes bitand FILE_ATTRIBUTE_OFFLINE )
         {
             if ( attributes.GetLength() > 0 )
             {
@@ -537,7 +537,7 @@ void CFile64::Dump( CDumpContext& dump_context ) const
             attributes += TEXT( "FILE_ATTRIBUTE_OFFLINE" );
         }
 
-        if ( information.dwFileAttributes & FILE_ATTRIBUTE_READONLY )
+        if ( information.dwFileAttributes bitand FILE_ATTRIBUTE_READONLY )
         {
             if ( attributes.GetLength() > 0 )
             {
@@ -547,7 +547,7 @@ void CFile64::Dump( CDumpContext& dump_context ) const
             attributes += TEXT( "FILE_ATTRIBUTE_READONLY" );
         }
 
-        if ( information.dwFileAttributes & FILE_ATTRIBUTE_REPARSE_POINT )
+        if ( information.dwFileAttributes bitand FILE_ATTRIBUTE_REPARSE_POINT )
         {
             if ( attributes.GetLength() > 0 )
             {
@@ -557,7 +557,7 @@ void CFile64::Dump( CDumpContext& dump_context ) const
             attributes += TEXT( "FILE_ATTRIBUTE_REPARSE_POINT" );
         }
 
-        if ( information.dwFileAttributes & FILE_ATTRIBUTE_SPARSE_FILE )
+        if ( information.dwFileAttributes bitand FILE_ATTRIBUTE_SPARSE_FILE )
         {
             if ( attributes.GetLength() > 0 )
             {
@@ -567,7 +567,7 @@ void CFile64::Dump( CDumpContext& dump_context ) const
             attributes += TEXT( "FILE_ATTRIBUTE_SPARSE_FILE" );
         }
 
-        if ( information.dwFileAttributes & FILE_ATTRIBUTE_SYSTEM )
+        if ( information.dwFileAttributes bitand FILE_ATTRIBUTE_SYSTEM )
         {
             if ( attributes.GetLength() > 0 )
             {
@@ -577,7 +577,7 @@ void CFile64::Dump( CDumpContext& dump_context ) const
             attributes += TEXT( "FILE_ATTRIBUTE_SYSTEM" );
         }
 
-        if ( information.dwFileAttributes & FILE_ATTRIBUTE_TEMPORARY )
+        if ( information.dwFileAttributes bitand FILE_ATTRIBUTE_TEMPORARY )
         {
             if ( attributes.GetLength() > 0 )
             {
@@ -587,7 +587,7 @@ void CFile64::Dump( CDumpContext& dump_context ) const
             attributes += TEXT( "FILE_ATTRIBUTE_TEMPORARY" );
         }
 
-        if ( information.dwFileAttributes & FILE_ATTRIBUTE_NOT_CONTENT_INDEXED )
+        if ( information.dwFileAttributes bitand FILE_ATTRIBUTE_NOT_CONTENT_INDEXED )
         {
             if ( attributes.GetLength() > 0 )
             {
@@ -597,7 +597,7 @@ void CFile64::Dump( CDumpContext& dump_context ) const
             attributes += TEXT( "FILE_ATTRIBUTE_NOT_CONTENT_INDEXED" );
         }
 
-        if ( information.dwFileAttributes & FILE_ATTRIBUTE_NORMAL )
+        if ( information.dwFileAttributes bitand FILE_ATTRIBUTE_NORMAL )
         {
             if ( attributes.GetLength() > 0 )
             {
@@ -607,7 +607,7 @@ void CFile64::Dump( CDumpContext& dump_context ) const
             attributes += TEXT( "FILE_ATTRIBUTE_NORMAL" );
         }
 
-        if ( information.dwFileAttributes & FILE_ATTRIBUTE_DEVICE )
+        if ( information.dwFileAttributes bitand FILE_ATTRIBUTE_DEVICE )
         {
             if ( attributes.GetLength() > 0 )
             {
@@ -1062,7 +1062,7 @@ _Check_return_ BOOL PASCAL CFile64::GetStatus( _In_z_ LPCTSTR filename, __out CF
 
     FindClose( find_handle );
 
-    status.m_attribute = (BYTE) ( find_data.dwFileAttributes & ~FILE_ATTRIBUTE_NORMAL );
+    status.m_attribute = (BYTE) ( find_data.dwFileAttributes bitand (compl FILE_ATTRIBUTE_NORMAL) );
 
     status.m_size = (LONG) find_data.nFileSizeLow;
 
@@ -1241,11 +1241,11 @@ _Check_return_ bool CFile64::Open( _In_z_ LPCTSTR filename, _In_ UINT const open
 
         m_FileTitle.clear ();
 
-        open_flags &= ~ (UINT) OpenFlags::typeBinary;
+        open_flags and_eq compl (UINT) OpenFlags::typeBinary;
 
         DWORD access = 0;
 
-        switch ( open_flags & 3 )
+        switch ( open_flags bitand 3 )
         {
         case (UINT) OpenFlags::modeRead:
 
@@ -1269,7 +1269,7 @@ _Check_return_ bool CFile64::Open( _In_z_ LPCTSTR filename, _In_ UINT const open
 
         DWORD share_mode = 0;
 
-        switch ( static_cast<OpenFlags>(open_flags & 0x70) )    // map compatibility mode to exclusive
+        switch ( static_cast<OpenFlags>(open_flags bitand 0x70) )    // map compatibility mode to exclusive
         {
         case OpenFlags::shareCompat:
         case OpenFlags::shareExclusive:
@@ -1304,14 +1304,14 @@ _Check_return_ bool CFile64::Open( _In_z_ LPCTSTR filename, _In_ UINT const open
 
         if ( m_SecurityAttributes_p != nullptr )
         {
-            m_SecurityAttributes_p->bInheritHandle = ( ( open_flags & (UINT) OpenFlags::modeNoInherit ) == 0 ) ? TRUE : FALSE;
+            m_SecurityAttributes_p->bInheritHandle = ( ( open_flags bitand (UINT) OpenFlags::modeNoInherit ) == 0 ) ? TRUE : FALSE;
         }
 
         DWORD creation_flags = 0;
 
-        if ( open_flags & (UINT) OpenFlags::modeCreate )
+        if ( is_flagged(open_flags, (uint64_t) OpenFlags::modeCreate) == true )
         {
-            if ( open_flags & (UINT) OpenFlags::modeNoTruncate )
+            if ( is_flagged( open_flags, (uint64_t) OpenFlags::modeNoTruncate) == true )
             {
                 creation_flags = OPEN_ALWAYS;
             }
@@ -1325,27 +1325,27 @@ _Check_return_ bool CFile64::Open( _In_z_ LPCTSTR filename, _In_ UINT const open
             creation_flags = OPEN_EXISTING;
         }
 
-        if ( open_flags & (UINT) OpenFlags::osNoBuffer )
+        if ( is_flagged( open_flags, (uint64_t) OpenFlags::osNoBuffer) == true )
         {
             m_Attributes or_eq FILE_FLAG_NO_BUFFERING;
         }
 
-        if ( open_flags & (UINT) OpenFlags::osRandomAccess )
+        if ( is_flagged( open_flags, (uint64_t) OpenFlags::osRandomAccess) == true )
         {
             m_Attributes or_eq FILE_FLAG_RANDOM_ACCESS;
         }
 
-        if ( open_flags & (UINT) OpenFlags::osSequentialScan )
+        if ( is_flagged( open_flags, (uint64_t) OpenFlags::osSequentialScan) == true )
         {
             m_Attributes or_eq FILE_FLAG_SEQUENTIAL_SCAN;
         }
 
-        if ( open_flags & (UINT) OpenFlags::osWriteThrough )
+        if ( is_flagged( open_flags, (uint64_t) OpenFlags::osWriteThrough) == true )
         {
             m_Attributes or_eq FILE_FLAG_WRITE_THROUGH;
         }
 
-        if ( open_flags & (UINT) OpenFlags::wfcDeleteOnClose )
+        if ( is_flagged( open_flags, (uint64_t) OpenFlags::wfcDeleteOnClose) == true )
         {
             m_Attributes or_eq FILE_FLAG_DELETE_ON_CLOSE;
         }
@@ -1411,11 +1411,11 @@ _Check_return_ bool CFile64::OpenWide( _In_z_ wchar_t const * unicode_filename, 
 
         m_FileTitle.clear();
 
-        open_flags &= ~ (UINT) OpenFlags::typeBinary;
+        open_flags and_eq compl (UINT) OpenFlags::typeBinary;
 
         DWORD access = 0;
 
-        switch ( (OpenFlags)(open_flags & 3 ))
+        switch ( (OpenFlags)(open_flags bitand 3 ))
         {
         case OpenFlags::modeRead:
 
@@ -1439,7 +1439,7 @@ _Check_return_ bool CFile64::OpenWide( _In_z_ wchar_t const * unicode_filename, 
 
         DWORD share_mode = 0;
 
-        switch ( (OpenFlags)(open_flags & 0x70))    // map compatibility mode to exclusive
+        switch ( (OpenFlags)(open_flags bitand 0x70))    // map compatibility mode to exclusive
         {
         case OpenFlags::shareCompat:
         case OpenFlags::shareExclusive:
@@ -1469,14 +1469,14 @@ _Check_return_ bool CFile64::OpenWide( _In_z_ wchar_t const * unicode_filename, 
 
         if ( m_SecurityAttributes_p != nullptr )
         {
-            m_SecurityAttributes_p->bInheritHandle = ( ( open_flags & (UINT) OpenFlags::modeNoInherit ) == 0 ) ? TRUE : FALSE;
+            m_SecurityAttributes_p->bInheritHandle = ( ( open_flags bitand (UINT) OpenFlags::modeNoInherit ) == 0 ) ? TRUE : FALSE;
         }
 
         DWORD creation_flags = 0;
 
-        if ( open_flags & (UINT) OpenFlags::modeCreate )
+        if ( is_flagged( open_flags, (uint64_t) OpenFlags::modeCreate) == true )
         {
-            if ( open_flags & (UINT) OpenFlags::modeNoTruncate )
+            if ( is_flagged( open_flags, (uint64_t) OpenFlags::modeNoTruncate ) == true )
             {
                 creation_flags = OPEN_ALWAYS;
             }
@@ -1490,27 +1490,27 @@ _Check_return_ bool CFile64::OpenWide( _In_z_ wchar_t const * unicode_filename, 
             creation_flags = OPEN_EXISTING;
         }
 
-        if ( open_flags & (UINT)OpenFlags::osNoBuffer )
+        if ( is_flagged( open_flags, (uint64_t)OpenFlags::osNoBuffer ) == true )
         {
             m_Attributes or_eq FILE_FLAG_NO_BUFFERING;
         }
 
-        if ( open_flags & (UINT)OpenFlags::osRandomAccess )
+        if (is_flagged(open_flags, (uint64_t)OpenFlags::osRandomAccess ) == true )
         {
             m_Attributes or_eq FILE_FLAG_RANDOM_ACCESS;
         }
 
-        if ( open_flags & (UINT)OpenFlags::osSequentialScan )
+        if (is_flagged(open_flags, (uint64_t)OpenFlags::osSequentialScan ) == true)
         {
             m_Attributes or_eq FILE_FLAG_SEQUENTIAL_SCAN;
         }
 
-        if ( open_flags & (UINT) OpenFlags::osWriteThrough )
+        if (is_flagged(open_flags, (uint64_t) OpenFlags::osWriteThrough ) == true)
         {
             m_Attributes or_eq FILE_FLAG_WRITE_THROUGH;
         }
 
-        if ( open_flags & (UINT)OpenFlags::wfcDeleteOnClose )
+        if (is_flagged(open_flags, (uint64_t)OpenFlags::wfcDeleteOnClose ) == true)
         {
             m_Attributes or_eq FILE_FLAG_DELETE_ON_CLOSE;
         }

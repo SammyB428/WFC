@@ -150,7 +150,7 @@ class CSerialFile : public CDummyFile
       virtual void  SetFlowControl( __in DWORD const flow_control ) noexcept;
       virtual void  SetInputBufferSize( __in DWORD const buffer_size ) noexcept;
       virtual void  SetOutputBufferSize( __in DWORD const buffer_size ) noexcept;
-      virtual _Check_return_ BOOL  SetPurgeBufferOnError( __in BOOL const purge_buffer = TRUE ) noexcept;
+      virtual _Check_return_ bool  SetPurgeBufferOnError( __in bool const purge_buffer = true ) noexcept;
       virtual _Check_return_ BOOL  SetRequestToSend( __in BOOL const set_RTS_on = TRUE ) noexcept;
       virtual _Check_return_ BOOL  SetState( __inout CDeviceControlBlock& device_control_block ) noexcept;
       virtual _Check_return_ BOOL  SetTimeouts( __in_opt COMMTIMEOUTS const * timeouts_p = nullptr ) noexcept;

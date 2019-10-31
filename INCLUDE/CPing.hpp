@@ -291,9 +291,9 @@ class CPingResults
    public:
 
       CPingResults();
-      CPingResults( __in CPingResults const &   source );
-      CPingResults( __in CPingResults const *  source );
-      CPingResults( __in IP_ECHO_REPLY const &  source );
+      CPingResults( __in CPingResults const &  source );
+      CPingResults( __in CPingResults const * source );
+      CPingResults( __in IP_ECHO_REPLY const & source );
       CPingResults( __in IP_ECHO_REPLY const * source );
       virtual ~CPingResults();
 

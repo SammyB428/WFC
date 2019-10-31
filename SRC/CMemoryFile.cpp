@@ -392,7 +392,7 @@ _Check_return_ bool CMemoryFile::m_MapTheFile( __in HANDLE const file_handle, __
     m_Protections = PAGE_READONLY;
     m_Access = FILE_MAP_READ;
 
-    UINT const just_flags = open_flags & 0x0F;
+    UINT const just_flags = open_flags bitand 0x0F;
 
     if ( just_flags == (UINT) CFile64::OpenFlags::modeRead )
     {
@@ -401,7 +401,7 @@ _Check_return_ bool CMemoryFile::m_MapTheFile( __in HANDLE const file_handle, __
         m_Access = FILE_MAP_READ;
     }
 
-    if ( ( just_flags & (UINT)CFile64::OpenFlags::modeWrite ) or ( just_flags & (UINT) CFile64::OpenFlags::modeReadWrite ) )
+    if ( ( just_flags bitand (UINT)CFile64::OpenFlags::modeWrite ) or ( just_flags bitand (UINT) CFile64::OpenFlags::modeReadWrite ) )
     {
         //WFCTRACE( TEXT( "User wants Read/Write access." ) );
         m_Protections = PAGE_READWRITE;

@@ -1575,12 +1575,12 @@ void CServiceNameAndStatusA::Dump( CDumpContext& dump_context ) const
 
     std::wstring temp_string;
 
-    if ( ServiceStatus.dwServiceType & SERVICE_WIN32_OWN_PROCESS )
+    if ( ServiceStatus.dwServiceType bitand SERVICE_WIN32_OWN_PROCESS )
     {
         temp_string = TEXT( "SERVICE_WIN32_OWN_PROCESS" );
     }
 
-    if ( ServiceStatus.dwServiceType & SERVICE_WIN32_SHARE_PROCESS )
+    if ( ServiceStatus.dwServiceType bitand SERVICE_WIN32_SHARE_PROCESS )
     {
         if ( temp_string.GetLength() > 0 )
         {
@@ -1590,7 +1590,7 @@ void CServiceNameAndStatusA::Dump( CDumpContext& dump_context ) const
         temp_string += TEXT( "SERVICE_WIN32_SHARE_PROCESS" );
     }
 
-    if ( ServiceStatus.dwServiceType & SERVICE_KERNEL_DRIVER  )
+    if ( ServiceStatus.dwServiceType bitand SERVICE_KERNEL_DRIVER  )
     {
         if ( temp_string.GetLength() > 0 )
         {
@@ -1600,7 +1600,7 @@ void CServiceNameAndStatusA::Dump( CDumpContext& dump_context ) const
         temp_string += TEXT( "SERVICE_KERNEL_DRIVER" );
     }
 
-    if ( ServiceStatus.dwServiceType & SERVICE_FILE_SYSTEM_DRIVER )
+    if ( ServiceStatus.dwServiceType bitand SERVICE_FILE_SYSTEM_DRIVER )
     {
         if ( temp_string.GetLength() > 0 )
         {
@@ -1610,7 +1610,7 @@ void CServiceNameAndStatusA::Dump( CDumpContext& dump_context ) const
         temp_string += TEXT( "SERVICE_FILE_SYSTEM_DRIVER" );
     }
 
-    if ( ServiceStatus.dwServiceType & SERVICE_INTERACTIVE_PROCESS )
+    if ( ServiceStatus.dwServiceType bitand SERVICE_INTERACTIVE_PROCESS )
     {
         if ( temp_string.GetLength() > 0 )
         {
@@ -1675,12 +1675,12 @@ void CServiceNameAndStatusA::Dump( CDumpContext& dump_context ) const
 
     temp_string = TEXT( "" );
 
-    if ( ServiceStatus.dwControlsAccepted & SERVICE_ACCEPT_STOP )
+    if ( ServiceStatus.dwControlsAccepted bitand SERVICE_ACCEPT_STOP )
     {
         temp_string = TEXT( "SERVICE_ACCEPT_STOP" );
     }
 
-    if ( ServiceStatus.dwControlsAccepted & SERVICE_ACCEPT_PAUSE_CONTINUE )
+    if ( ServiceStatus.dwControlsAccepted bitand SERVICE_ACCEPT_PAUSE_CONTINUE )
     {
         if ( temp_string.GetLength() > 0 )
         {
@@ -1690,7 +1690,7 @@ void CServiceNameAndStatusA::Dump( CDumpContext& dump_context ) const
         temp_string += TEXT( "SERVICE_ACCEPT_PAUSE_CONTINUE" );
     }
 
-    if ( ServiceStatus.dwControlsAccepted & SERVICE_ACCEPT_SHUTDOWN )
+    if ( ServiceStatus.dwControlsAccepted bitand SERVICE_ACCEPT_SHUTDOWN )
     {
         if ( temp_string.GetLength() > 0 )
         {
@@ -1781,12 +1781,12 @@ void CServiceNameAndStatusW::Dump( CDumpContext& dump_context ) const
 
     std::wstring temp_string;
 
-    if ( ServiceStatus.dwServiceType & SERVICE_WIN32_OWN_PROCESS )
+    if ( ServiceStatus.dwServiceType bitand SERVICE_WIN32_OWN_PROCESS )
     {
         temp_string = TEXT( "SERVICE_WIN32_OWN_PROCESS" );
     }
 
-    if ( ServiceStatus.dwServiceType & SERVICE_WIN32_SHARE_PROCESS )
+    if ( ServiceStatus.dwServiceType bitand SERVICE_WIN32_SHARE_PROCESS )
     {
         if ( temp_string.GetLength() > 0 )
         {
@@ -1796,7 +1796,7 @@ void CServiceNameAndStatusW::Dump( CDumpContext& dump_context ) const
         temp_string += TEXT( "SERVICE_WIN32_SHARE_PROCESS" );
     }
 
-    if ( ServiceStatus.dwServiceType & SERVICE_KERNEL_DRIVER  )
+    if ( ServiceStatus.dwServiceType bitand SERVICE_KERNEL_DRIVER  )
     {
         if ( temp_string.GetLength() > 0 )
         {
@@ -1806,7 +1806,7 @@ void CServiceNameAndStatusW::Dump( CDumpContext& dump_context ) const
         temp_string += TEXT( "SERVICE_KERNEL_DRIVER" );
     }
 
-    if ( ServiceStatus.dwServiceType & SERVICE_FILE_SYSTEM_DRIVER )
+    if ( ServiceStatus.dwServiceType bitand SERVICE_FILE_SYSTEM_DRIVER )
     {
         if ( temp_string.GetLength() > 0 )
         {
@@ -1816,7 +1816,7 @@ void CServiceNameAndStatusW::Dump( CDumpContext& dump_context ) const
         temp_string += TEXT( "SERVICE_FILE_SYSTEM_DRIVER" );
     }
 
-    if ( ServiceStatus.dwServiceType & SERVICE_INTERACTIVE_PROCESS )
+    if ( ServiceStatus.dwServiceType bitand SERVICE_INTERACTIVE_PROCESS )
     {
         if ( temp_string.GetLength() > 0 )
         {
@@ -1881,12 +1881,12 @@ void CServiceNameAndStatusW::Dump( CDumpContext& dump_context ) const
 
     temp_string = TEXT( "" );
 
-    if ( ServiceStatus.dwControlsAccepted & SERVICE_ACCEPT_STOP )
+    if ( ServiceStatus.dwControlsAccepted bitand SERVICE_ACCEPT_STOP )
     {
         temp_string = TEXT( "SERVICE_ACCEPT_STOP" );
     }
 
-    if ( ServiceStatus.dwControlsAccepted & SERVICE_ACCEPT_PAUSE_CONTINUE )
+    if ( ServiceStatus.dwControlsAccepted bitand SERVICE_ACCEPT_PAUSE_CONTINUE )
     {
         if ( temp_string.GetLength() > 0 )
         {
@@ -1896,7 +1896,7 @@ void CServiceNameAndStatusW::Dump( CDumpContext& dump_context ) const
         temp_string += TEXT( "SERVICE_ACCEPT_PAUSE_CONTINUE" );
     }
 
-    if ( ServiceStatus.dwControlsAccepted & SERVICE_ACCEPT_SHUTDOWN )
+    if ( ServiceStatus.dwControlsAccepted bitand SERVICE_ACCEPT_SHUTDOWN )
     {
         if ( temp_string.GetLength() > 0 )
         {

@@ -68,7 +68,7 @@ static inline constexpr _Check_return_ bool __wfc_range_check( __in uint32_t con
 
       if ( half != 0 )
       {
-         int32_t const middle = static_cast<int32_t>(bottom + ( ( number_of_ranges & 1 ) ? half : ( half - 1 ) ));
+         int32_t const middle = static_cast<int32_t>(bottom + ( ( number_of_ranges bitand 1 ) ? half : ( half - 1 ) ));
 
          if ( value_to_test >= range[ middle ].low and
               value_to_test <= range[ middle ].high )
@@ -79,7 +79,7 @@ static inline constexpr _Check_return_ bool __wfc_range_check( __in uint32_t con
          if ( value_to_test < range[ middle ].high )
          {
             top = middle - 1;
-            number_of_ranges = ( number_of_ranges & 1 ) ? half : ( half - 1 );
+            number_of_ranges = ( number_of_ranges bitand 1 ) ? half : ( half - 1 );
          }
          else
          {

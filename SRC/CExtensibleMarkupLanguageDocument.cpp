@@ -223,7 +223,7 @@ _Check_return_ bool CExtensibleMarkupLanguageDocument::AddEntity( _In_ std::wstr
    // &lt;
    // &quot;
 
-   if ( m_ParseOptions & WFC_XML_ALLOW_REPLACEMENT_OF_DEFAULT_ENTITIES )
+   if (is_flagged( m_ParseOptions, WFC_XML_ALLOW_REPLACEMENT_OF_DEFAULT_ENTITIES ) == true )
    {
       // We don't care if default entities are replaced 
       if ( m_Entities.Add( entity, value ) == false )
@@ -457,52 +457,52 @@ void CExtensibleMarkupLanguageDocument::Dump( CDumpContext& dump_context ) const
 
       dump_context << TEXT( "   {\n" );
 
-      if ( m_ParseOptions & WFC_XML_IGNORE_CASE_IN_XML_DECLARATION )
+      if ( m_ParseOptions bitand WFC_XML_IGNORE_CASE_IN_XML_DECLARATION )
       {
          dump_context << TEXT( "      WFC_XML_IGNORE_CASE_IN_XML_DECLARATION\n" );
       }
 
-      if ( m_ParseOptions & WFC_XML_ALLOW_REPLACEMENT_OF_DEFAULT_ENTITIES )
+      if ( m_ParseOptions bitand WFC_XML_ALLOW_REPLACEMENT_OF_DEFAULT_ENTITIES )
       {
          dump_context << TEXT( "      WFC_XML_ALLOW_REPLACEMENT_OF_DEFAULT_ENTITIES\n" );
       }
 
-      if ( m_ParseOptions & WFC_XML_FAIL_ON_ILL_FORMED_ENTITIES )
+      if ( m_ParseOptions bitand WFC_XML_FAIL_ON_ILL_FORMED_ENTITIES )
       {
          dump_context << TEXT( "      WFC_XML_FAIL_ON_ILL_FORMED_ENTITIES\n" );
       }
 
-      if ( m_ParseOptions & WFC_XML_IGNORE_ALL_WHITE_SPACE_ELEMENTS )
+      if ( m_ParseOptions bitand WFC_XML_IGNORE_ALL_WHITE_SPACE_ELEMENTS )
       {
          dump_context << TEXT( "      WFC_XML_IGNORE_ALL_WHITE_SPACE_ELEMENTS\n" );
       }
 
-      if ( m_ParseOptions & WFC_XML_IGNORE_MISSING_XML_DECLARATION )
+      if ( m_ParseOptions bitand WFC_XML_IGNORE_MISSING_XML_DECLARATION )
       {
          dump_context << TEXT( "      WFC_XML_IGNORE_MISSING_XML_DECLARATION\n" );
       }
 
-      if ( m_ParseOptions & WFC_XML_DISALLOW_MULTIPLE_ELEMENTS )
+      if ( m_ParseOptions bitand WFC_XML_DISALLOW_MULTIPLE_ELEMENTS )
       {
          dump_context << TEXT( "      WFC_XML_DISALLOW_MULTIPLE_ELEMENTS\n" );
       }
 
-      if ( m_ParseOptions & WFC_XML_LOOSE_COMMENT_PARSING )
+      if ( m_ParseOptions bitand WFC_XML_LOOSE_COMMENT_PARSING )
       {
          dump_context << TEXT( "      WFC_XML_LOOSE_COMMENT_PARSING\n" );
       }
 
-      if ( m_ParseOptions & WFC_XML_ALLOW_AMPERSANDS_IN_ELEMENTS )
+      if ( m_ParseOptions bitand WFC_XML_ALLOW_AMPERSANDS_IN_ELEMENTS )
       {
          dump_context << TEXT( "      WFC_XML_ALLOW_AMPERSANDS_IN_ELEMENTS\n" );
       }
 
-      if ( m_ParseOptions & WFC_XML_FORCE_AT_LEAST_ONE_ELEMENT_MUST_BE_PRESENT )
+      if ( m_ParseOptions bitand WFC_XML_FORCE_AT_LEAST_ONE_ELEMENT_MUST_BE_PRESENT )
       {
          dump_context << TEXT( "      WFC_XML_FORCE_AT_LEAST_ONE_ELEMENT_MUST_BE_PRESENT\n" );
       }
 
-      if ( m_ParseOptions & WFC_XML_CHECK_ENTITIES_FOR_ILLEGAL_CHARACTERS )
+      if ( m_ParseOptions bitand WFC_XML_CHECK_ENTITIES_FOR_ILLEGAL_CHARACTERS )
       {
          dump_context << TEXT( "      WFC_XML_CHECK_ENTITIES_FOR_ILLEGAL_CHARACTERS\n" );
       }
@@ -518,47 +518,47 @@ void CExtensibleMarkupLanguageDocument::Dump( CDumpContext& dump_context ) const
 
       dump_context << TEXT( "   {\n" );
 
-      if ( m_ParseOptions & WFC_XML_INCLUDE_TYPE_INFORMATION )
+      if ( m_ParseOptions bitand WFC_XML_INCLUDE_TYPE_INFORMATION )
       {
          dump_context << TEXT( "      WFC_XML_INCLUDE_TYPE_INFORMATION\n" );
       }
 
-      if ( m_ParseOptions & WFC_XML_DONT_OUTPUT_XML_DECLARATION )
+      if ( m_ParseOptions bitand WFC_XML_DONT_OUTPUT_XML_DECLARATION )
       {
          dump_context << TEXT( "      WFC_XML_DONT_OUTPUT_XML_DECLARATION\n" );
       }
 
-      if ( m_ParseOptions & WFC_XML_WRITE_AS_UNICODE )
+      if ( m_ParseOptions bitand WFC_XML_WRITE_AS_UNICODE )
       {
          dump_context << TEXT( "      WFC_XML_WRITE_AS_UNICODE\n" );
       }
 
-      if ( m_ParseOptions & WFC_XML_WRITE_AS_ASCII )
+      if ( m_ParseOptions bitand WFC_XML_WRITE_AS_ASCII )
       {
          dump_context << TEXT( "      WFC_XML_WRITE_AS_ASCII\n" );
       }
 
-      if ( m_ParseOptions & WFC_XML_WRITE_AS_UCS4 )
+      if ( m_ParseOptions bitand WFC_XML_WRITE_AS_UCS4 )
       {
          dump_context << TEXT( "      WFC_XML_WRITE_AS_UCS4\n" );
       }
 
-      if ( m_ParseOptions & WFC_XML_WRITE_AS_UCS4_UNUSUAL_2143 )
+      if ( m_ParseOptions bitand WFC_XML_WRITE_AS_UCS4_UNUSUAL_2143 )
       {
          dump_context << TEXT( "      WFC_XML_WRITE_AS_UCS4_UNUSUAL_2143\n" );
       }
 
-      if ( m_ParseOptions & WFC_XML_WRITE_AS_UCS4_UNUSUAL_3412 )
+      if ( m_ParseOptions bitand WFC_XML_WRITE_AS_UCS4_UNUSUAL_3412 )
       {
          dump_context << TEXT( "      WFC_XML_WRITE_AS_UCS4_UNUSUAL_3412\n" );
       }
 
-      if ( m_ParseOptions & WFC_XML_WRITE_AS_UTF8 )
+      if ( m_ParseOptions bitand WFC_XML_WRITE_AS_UTF8 )
       {
          dump_context << TEXT( "      WFC_XML_WRITE_AS_UTF8\n" );
       }
 
-      if ( m_ParseOptions & WFC_XML_WRITE_AS_UTF7 )
+      if ( m_ParseOptions bitand WFC_XML_WRITE_AS_UTF7 )
       {
          dump_context << TEXT( "      WFC_XML_WRITE_AS_UTF7\n" );
       }
@@ -701,7 +701,7 @@ void CExtensibleMarkupLanguageDocument::GetEncoding( _Out_ std::wstring& encodin
 {
    WFC_VALIDATE_POINTER( this );
 
-   if ( m_WriteOptions & WFC_XML_WRITE_AS_UNICODE )
+   if (is_flagged( m_WriteOptions, WFC_XML_WRITE_AS_UNICODE) == true )
    {
       encoding.assign(WSTRING_VIEW(L"UTF-16"));
    }
@@ -1197,7 +1197,7 @@ _Check_return_ bool CExtensibleMarkupLanguageDocument::Parse( _Inout_ CDataParse
       // See if it is lower case
 
       if ( xml_declaration_is_mixed_case == true and
-         not ( m_ParseOptions & WFC_XML_IGNORE_CASE_IN_XML_DECLARATION ) )
+         not ( is_flagged( m_ParseOptions, WFC_XML_IGNORE_CASE_IN_XML_DECLARATION ) == true ) )
       {
          m_ParseErrorEncountered = ParseErrorOccurred();
          m_ErrorMessage.assign(WSTRING_VIEW(L"XML Declaration is not lower case (Rule 23)."));
@@ -1212,7 +1212,7 @@ _Check_return_ bool CExtensibleMarkupLanguageDocument::Parse( _Inout_ CDataParse
       // If we get here, it means we don't have an XML declaration but we
       // do have something that starts with '<'
 
-      if ( m_ParseOptions & WFC_XML_IGNORE_MISSING_XML_DECLARATION )
+      if (is_flagged( m_ParseOptions, WFC_XML_IGNORE_MISSING_XML_DECLARATION) == true)
       {
          //WFCTRACE( TEXT( "Skipping the missing XML declaration" ) );
 
@@ -1320,7 +1320,7 @@ _Check_return_ bool CExtensibleMarkupLanguageDocument::Parse( _Inout_ CDataParse
 
    // Now let's see if the user wants to make the parser more useless
 
-   if ( m_ParseOptions & WFC_XML_DISALLOW_MULTIPLE_ELEMENTS )
+   if (is_flagged( m_ParseOptions, WFC_XML_DISALLOW_MULTIPLE_ELEMENTS ) == true )
    {
       std::size_t element_enumerator = 0;
 
@@ -1355,7 +1355,7 @@ _Check_return_ bool CExtensibleMarkupLanguageDocument::Parse( _Inout_ CDataParse
       }
    }
 
-   if ( m_ParseOptions & WFC_XML_FORCE_AT_LEAST_ONE_ELEMENT_MUST_BE_PRESENT )
+   if (is_flagged( m_ParseOptions, WFC_XML_FORCE_AT_LEAST_ONE_ELEMENT_MUST_BE_PRESENT) == true)
    {
       std::size_t element_enumerator = 0;
 
@@ -1511,83 +1511,83 @@ _Check_return_ uint32_t CExtensibleMarkupLanguageDocument::SetWriteOptions( _In_
 #if defined( _DEBUG )
    // Assert the crap out of these options
 
-   if ( m_WriteOptions & WFC_XML_WRITE_AS_UTF8 )
+   if ( m_WriteOptions bitand WFC_XML_WRITE_AS_UTF8 )
    {
       // UTF-8 was specified, UTF-7 & ASCII are invalid
-      ASSERT(not ( m_WriteOptions & WFC_XML_WRITE_AS_UTF7 ) );
-      ASSERT(not ( m_WriteOptions & WFC_XML_WRITE_AS_ASCII ) );
-      ASSERT(not ( m_WriteOptions & WFC_XML_WRITE_AS_UNICODE ) );
-      ASSERT(not ( m_WriteOptions & WFC_XML_WRITE_AS_UCS4 ) );
-      ASSERT(not ( m_WriteOptions & WFC_XML_WRITE_AS_UCS4_UNUSUAL_2143 ) );
-      ASSERT(not ( m_WriteOptions & WFC_XML_WRITE_AS_UCS4_UNUSUAL_3412 ) );
+      ASSERT(not ( m_WriteOptions bitand WFC_XML_WRITE_AS_UTF7 ) );
+      ASSERT(not ( m_WriteOptions bitand WFC_XML_WRITE_AS_ASCII ) );
+      ASSERT(not ( m_WriteOptions bitand WFC_XML_WRITE_AS_UNICODE ) );
+      ASSERT(not ( m_WriteOptions bitand WFC_XML_WRITE_AS_UCS4 ) );
+      ASSERT(not ( m_WriteOptions bitand WFC_XML_WRITE_AS_UCS4_UNUSUAL_2143 ) );
+      ASSERT(not ( m_WriteOptions bitand WFC_XML_WRITE_AS_UCS4_UNUSUAL_3412 ) );
    }
-   else if ( m_WriteOptions & WFC_XML_WRITE_AS_UTF7 )
+   else if ( m_WriteOptions bitand WFC_XML_WRITE_AS_UTF7 )
    {
       // UTF-7 was specified, UTF-8 & ASCII are invalid
-      ASSERT(not ( m_WriteOptions & WFC_XML_WRITE_AS_UTF8 ) );
-      ASSERT(not ( m_WriteOptions & WFC_XML_WRITE_AS_ASCII ) );
-      ASSERT(not ( m_WriteOptions & WFC_XML_WRITE_AS_UNICODE ) );
-      ASSERT(not ( m_WriteOptions & WFC_XML_WRITE_AS_UCS4 ) );
-      ASSERT(not ( m_WriteOptions & WFC_XML_WRITE_AS_UCS4_UNUSUAL_2143 ) );
-      ASSERT(not ( m_WriteOptions & WFC_XML_WRITE_AS_UCS4_UNUSUAL_3412 ) );
+      ASSERT(not ( m_WriteOptions bitand WFC_XML_WRITE_AS_UTF8 ) );
+      ASSERT(not ( m_WriteOptions bitand WFC_XML_WRITE_AS_ASCII ) );
+      ASSERT(not ( m_WriteOptions bitand WFC_XML_WRITE_AS_UNICODE ) );
+      ASSERT(not ( m_WriteOptions bitand WFC_XML_WRITE_AS_UCS4 ) );
+      ASSERT(not ( m_WriteOptions bitand WFC_XML_WRITE_AS_UCS4_UNUSUAL_2143 ) );
+      ASSERT(not ( m_WriteOptions bitand WFC_XML_WRITE_AS_UCS4_UNUSUAL_3412 ) );
    }
-   else if ( m_WriteOptions & WFC_XML_WRITE_AS_ASCII )
+   else if ( m_WriteOptions bitand WFC_XML_WRITE_AS_ASCII )
    {
       // ASCII was specified, UTF is invalid
-      ASSERT(not ( m_WriteOptions & WFC_XML_WRITE_AS_UTF7 ) );
-      ASSERT(not ( m_WriteOptions & WFC_XML_WRITE_AS_UTF8 ) );
-      ASSERT(not ( m_WriteOptions & WFC_XML_WRITE_AS_UNICODE ) );
-      ASSERT(not ( m_WriteOptions & WFC_XML_WRITE_AS_UCS4 ) );
-      ASSERT(not ( m_WriteOptions & WFC_XML_WRITE_AS_UCS4_UNUSUAL_2143 ) );
-      ASSERT(not ( m_WriteOptions & WFC_XML_WRITE_AS_UCS4_UNUSUAL_3412 ) );
+      ASSERT(not ( m_WriteOptions bitand WFC_XML_WRITE_AS_UTF7 ) );
+      ASSERT(not ( m_WriteOptions bitand WFC_XML_WRITE_AS_UTF8 ) );
+      ASSERT(not ( m_WriteOptions bitand WFC_XML_WRITE_AS_UNICODE ) );
+      ASSERT(not ( m_WriteOptions bitand WFC_XML_WRITE_AS_UCS4 ) );
+      ASSERT(not ( m_WriteOptions bitand WFC_XML_WRITE_AS_UCS4_UNUSUAL_2143 ) );
+      ASSERT(not ( m_WriteOptions bitand WFC_XML_WRITE_AS_UCS4_UNUSUAL_3412 ) );
    }
-   else if ( m_WriteOptions & WFC_XML_WRITE_AS_UNICODE )
+   else if ( m_WriteOptions bitand WFC_XML_WRITE_AS_UNICODE )
    {
-      ASSERT(not ( m_WriteOptions & WFC_XML_WRITE_AS_ASCII ) );
-      ASSERT(not ( m_WriteOptions & WFC_XML_WRITE_AS_UTF7 ) );
-      ASSERT(not ( m_WriteOptions & WFC_XML_WRITE_AS_UTF8 ) );
-      ASSERT(not ( m_WriteOptions & WFC_XML_WRITE_AS_UCS4 ) );
-      ASSERT(not ( m_WriteOptions & WFC_XML_WRITE_AS_UCS4_UNUSUAL_2143 ) );
-      ASSERT(not ( m_WriteOptions & WFC_XML_WRITE_AS_UCS4_UNUSUAL_3412 ) );
+      ASSERT(not ( m_WriteOptions bitand WFC_XML_WRITE_AS_ASCII ) );
+      ASSERT(not ( m_WriteOptions bitand WFC_XML_WRITE_AS_UTF7 ) );
+      ASSERT(not ( m_WriteOptions bitand WFC_XML_WRITE_AS_UTF8 ) );
+      ASSERT(not ( m_WriteOptions bitand WFC_XML_WRITE_AS_UCS4 ) );
+      ASSERT(not ( m_WriteOptions bitand WFC_XML_WRITE_AS_UCS4_UNUSUAL_2143 ) );
+      ASSERT(not ( m_WriteOptions bitand WFC_XML_WRITE_AS_UCS4_UNUSUAL_3412 ) );
    }
-   else if ( m_WriteOptions & WFC_XML_WRITE_AS_UCS4 )
+   else if ( m_WriteOptions bitand WFC_XML_WRITE_AS_UCS4 )
    {
-      ASSERT(not ( m_WriteOptions & WFC_XML_WRITE_AS_ASCII ) );
-      ASSERT(not ( m_WriteOptions & WFC_XML_WRITE_AS_UTF7 ) );
-      ASSERT(not ( m_WriteOptions & WFC_XML_WRITE_AS_UTF8 ) );
-      ASSERT(not ( m_WriteOptions & WFC_XML_WRITE_AS_UNICODE ) );
-      ASSERT(not ( m_WriteOptions & WFC_XML_WRITE_AS_UCS4_UNUSUAL_2143 ) );
-      ASSERT(not ( m_WriteOptions & WFC_XML_WRITE_AS_UCS4_UNUSUAL_3412 ) );
+      ASSERT(not ( m_WriteOptions bitand WFC_XML_WRITE_AS_ASCII ) );
+      ASSERT(not ( m_WriteOptions bitand WFC_XML_WRITE_AS_UTF7 ) );
+      ASSERT(not ( m_WriteOptions bitand WFC_XML_WRITE_AS_UTF8 ) );
+      ASSERT(not ( m_WriteOptions bitand WFC_XML_WRITE_AS_UNICODE ) );
+      ASSERT(not ( m_WriteOptions bitand WFC_XML_WRITE_AS_UCS4_UNUSUAL_2143 ) );
+      ASSERT(not ( m_WriteOptions bitand WFC_XML_WRITE_AS_UCS4_UNUSUAL_3412 ) );
    }
-   else if ( m_WriteOptions & WFC_XML_WRITE_AS_UCS4_UNUSUAL_2143 )
+   else if ( m_WriteOptions bitand WFC_XML_WRITE_AS_UCS4_UNUSUAL_2143 )
    {
-      ASSERT(not ( m_WriteOptions & WFC_XML_WRITE_AS_ASCII ) );
-      ASSERT(not ( m_WriteOptions & WFC_XML_WRITE_AS_UTF7 ) );
-      ASSERT(not ( m_WriteOptions & WFC_XML_WRITE_AS_UTF8 ) );
-      ASSERT(not ( m_WriteOptions & WFC_XML_WRITE_AS_UNICODE ) );
-      ASSERT(not ( m_WriteOptions & WFC_XML_WRITE_AS_UCS4 ) );
-      ASSERT(not ( m_WriteOptions & WFC_XML_WRITE_AS_UCS4_UNUSUAL_3412 ) );
+      ASSERT(not ( m_WriteOptions bitand WFC_XML_WRITE_AS_ASCII ) );
+      ASSERT(not ( m_WriteOptions bitand WFC_XML_WRITE_AS_UTF7 ) );
+      ASSERT(not ( m_WriteOptions bitand WFC_XML_WRITE_AS_UTF8 ) );
+      ASSERT(not ( m_WriteOptions bitand WFC_XML_WRITE_AS_UNICODE ) );
+      ASSERT(not ( m_WriteOptions bitand WFC_XML_WRITE_AS_UCS4 ) );
+      ASSERT(not ( m_WriteOptions bitand WFC_XML_WRITE_AS_UCS4_UNUSUAL_3412 ) );
    }
-   else if ( m_WriteOptions & WFC_XML_WRITE_AS_UCS4_UNUSUAL_3412 )
+   else if ( m_WriteOptions bitand WFC_XML_WRITE_AS_UCS4_UNUSUAL_3412 )
    {
-      ASSERT(not ( m_WriteOptions & WFC_XML_WRITE_AS_ASCII ) );
-      ASSERT(not ( m_WriteOptions & WFC_XML_WRITE_AS_UTF7 ) );
-      ASSERT(not ( m_WriteOptions & WFC_XML_WRITE_AS_UTF8 ) );
-      ASSERT(not ( m_WriteOptions & WFC_XML_WRITE_AS_UNICODE ) );
-      ASSERT(not ( m_WriteOptions & WFC_XML_WRITE_AS_UCS4 ) );
-      ASSERT(not ( m_WriteOptions & WFC_XML_WRITE_AS_UCS4_UNUSUAL_2143 ) );
+      ASSERT(not ( m_WriteOptions bitand WFC_XML_WRITE_AS_ASCII ) );
+      ASSERT(not ( m_WriteOptions bitand WFC_XML_WRITE_AS_UTF7 ) );
+      ASSERT(not ( m_WriteOptions bitand WFC_XML_WRITE_AS_UTF8 ) );
+      ASSERT(not ( m_WriteOptions bitand WFC_XML_WRITE_AS_UNICODE ) );
+      ASSERT(not ( m_WriteOptions bitand WFC_XML_WRITE_AS_UCS4 ) );
+      ASSERT(not ( m_WriteOptions bitand WFC_XML_WRITE_AS_UCS4_UNUSUAL_2143 ) );
    }
 #endif // _DEBUG
 
-   if ( m_WriteOptions & WFC_XML_WRITE_AS_ASCII )
+   if (is_flagged(m_WriteOptions, WFC_XML_WRITE_AS_ASCII) == true)
    {
       SetConversionCodePage( CP_ACP );
    }
-   else if ( m_WriteOptions & WFC_XML_WRITE_AS_UTF8 )
+   else if (is_flagged(m_WriteOptions, WFC_XML_WRITE_AS_UTF8) == true)
    {
       SetConversionCodePage( CP_UTF8 );
    }
-   else if ( m_WriteOptions & WFC_XML_WRITE_AS_UTF7)
+   else if (is_flagged(m_WriteOptions, WFC_XML_WRITE_AS_UTF7) == true)
    {
       SetConversionCodePage( CP_UTF7 );
    }
@@ -1612,7 +1612,7 @@ void CExtensibleMarkupLanguageDocument::WriteTo( _Out_ std::vector<uint8_t>& des
       return;
    }
 
-   if ( m_WriteOptions & WFC_XML_DONT_OUTPUT_XML_DECLARATION )
+   if (is_flagged(m_WriteOptions, WFC_XML_DONT_OUTPUT_XML_DECLARATION) == true)
    {
       // The user doesn't want to write the XML declaration. Just write
       // the children.
@@ -1640,9 +1640,9 @@ void CExtensibleMarkupLanguageDocument::WriteTo( _Out_ std::vector<uint8_t>& des
    {
       // See if the user wants to write as UNICODE or not
 
-      if ( m_WriteOptions & WFC_XML_WRITE_AS_UNICODE )
+      if (is_flagged(m_WriteOptions, WFC_XML_WRITE_AS_UNICODE) == true)
       {
-         if ( m_WriteOptions & WFC_XML_WRITE_AS_BIG_ENDIAN )
+         if (is_flagged(m_WriteOptions, WFC_XML_WRITE_AS_BIG_ENDIAN) == true)
          {
             // Write UTF-16 Big Endian as specified in Appendix F
             (void) destination.push_back( 0xFE );

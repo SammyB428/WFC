@@ -51,8 +51,8 @@ static char THIS_FILE[] = __FILE__;
 
 USING_WFC_NAMESPACE
 
-#define UU_DECODE_CHARACTER( _c ) static_cast< BYTE >( ( (_c) - 0x20 ) & 0x3F )
-#define UU_ENCODE_BYTE(      _c ) static_cast< BYTE >( (_c) ? ( (_c) & 0x3F ) + 0x20 : '`' )
+#define UU_DECODE_CHARACTER( _c ) static_cast< BYTE >( ( (_c) - 0x20 ) bitand 0x3F )
+#define UU_ENCODE_BYTE(      _c ) static_cast< BYTE >( (_c) ? ( (_c) bitand 0x3F ) + 0x20 : '`' )
 
 CUUCoding::CUUCoding()
 {
@@ -468,7 +468,7 @@ _Check_return_ bool CUUCoding::Encode( _In_ std::vector<uint8_t> const& source, 
                 character_to_output_1 = static_cast<uint8_t>( byte_to_encode_1 >> 2 );
                 character_to_output_2 = static_cast<uint8_t>( ( ( byte_to_encode_1 << 4 ) bitand 0x30 ) bitor ( ( byte_to_encode_2 >> 4 ) bitand 0x0F ) );
                 character_to_output_3 = static_cast<uint8_t>( ( ( byte_to_encode_2 << 2 ) bitand 0x3C ) bitor ( ( byte_to_encode_3 >> 6 ) bitand 0x03 ) );
-                character_to_output_4 = static_cast<uint8_t>( byte_to_encode_3 & 0x3F );
+                character_to_output_4 = static_cast<uint8_t>( byte_to_encode_3 bitand 0x3F );
 
                 destination.push_back( UU_ENCODE_BYTE( character_to_output_1 ) );
                 destination.push_back( UU_ENCODE_BYTE( character_to_output_2 ) );

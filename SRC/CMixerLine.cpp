@@ -310,12 +310,12 @@ void CMixerLine::GetStatus( _Out_ std::wstring& status_string ) const noexcept
 
    status_string.clear();
 
-   if ( Status & static_cast<uint32_t>(CMixerLine::Status::Active) )
+   if ( is_flagged( Status, static_cast<uint64_t>(CMixerLine::Status::Active) ) == true )
    {
       status_string.assign(WSTRING_VIEW(L"Active"));
    }
 
-   if ( Status & static_cast<uint32_t>(CMixerLine::Status::Disconnected) )
+   if (is_flagged( Status, static_cast<uint64_t>(CMixerLine::Status::Disconnected) ) == true )
    {
       if ( status_string.empty() == false )
       {
@@ -325,7 +325,7 @@ void CMixerLine::GetStatus( _Out_ std::wstring& status_string ) const noexcept
       status_string.append(WSTRING_VIEW(L"Disconnected"));
    }
 
-   if ( Status & static_cast<uint32_t>(CMixerLine::Status::Source) )
+   if (is_flagged( Status, static_cast<uint64_t>(CMixerLine::Status::Source)) == true)
    {
       if ( status_string.empty() == false )
       {
@@ -383,42 +383,21 @@ _Check_return_ bool CMixerLine::IsActive( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
-   DWORD const active = ( Status & static_cast<uint32_t>(CMixerLine::Status::Active) );
-
-   if ( active != 0 )
-   {
-      return( true );
-   }
-
-   return( false );
+   return(is_flagged( Status, static_cast<uint64_t>(CMixerLine::Status::Active)));
 }
 
 _Check_return_ bool CMixerLine::IsDisconnected( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
-   DWORD const disconnected = ( Status & static_cast<uint32_t>(CMixerLine::Status::Disconnected) );
-
-   if ( disconnected != 0 )
-   {
-      return( true );
-   }
-
-   return( false );
+   return(is_flagged( Status, static_cast<uint64_t>(CMixerLine::Status::Disconnected)));
 }
 
 _Check_return_ bool CMixerLine::IsSource( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
-   auto const source = ( Status & static_cast<uint32_t>(CMixerLine::Status::Source) );
-
-   if ( source != 0 )
-   {
-      return( true );
-   }
-
-   return( false );
+   return(is_flagged( Status, static_cast<uint64_t>(CMixerLine::Status::Source)));
 }
 
 _Check_return_ CMixerLine& CMixerLine::operator=( __in CMixerLine const& source ) noexcept

@@ -88,12 +88,12 @@ void CAccessAllowedEntry::Dump( CDumpContext& dump_context ) const
 
    std::wstring temp_string;
 
-   if ( Header.AceFlags & CONTAINER_INHERIT_ACE )
+   if ( Header.AceFlags bitand CONTAINER_INHERIT_ACE )
    {
       temp_string = TEXT( "CONTAINER_INHERIT_ACE" );
    }
 
-   if ( Header.AceFlags & INHERIT_ONLY_ACE )
+   if ( Header.AceFlags bitand INHERIT_ONLY_ACE )
    {
       if ( temp_string.GetLength() > 0 )
       {
@@ -103,7 +103,7 @@ void CAccessAllowedEntry::Dump( CDumpContext& dump_context ) const
       temp_string += TEXT( "INHERIT_ONLY_ACE" );
    }
 
-   if ( Header.AceFlags & NO_PROPAGATE_INHERIT_ACE )
+   if ( Header.AceFlags bitand NO_PROPAGATE_INHERIT_ACE )
    {
       if ( temp_string.GetLength() > 0 )
       {
@@ -113,7 +113,7 @@ void CAccessAllowedEntry::Dump( CDumpContext& dump_context ) const
       temp_string += TEXT( "NO_PROPAGATE_INHERIT_ACE" );
    }
 
-   if ( Header.AceFlags & OBJECT_INHERIT_ACE )
+   if ( Header.AceFlags bitand OBJECT_INHERIT_ACE )
    {
       if ( temp_string.GetLength() > 0 )
       {
@@ -123,7 +123,7 @@ void CAccessAllowedEntry::Dump( CDumpContext& dump_context ) const
       temp_string += TEXT( "OBJECT_INHERIT_ACE" );
    }
 
-   if ( Header.AceFlags & FAILED_ACCESS_ACE_FLAG )
+   if ( Header.AceFlags bitand FAILED_ACCESS_ACE_FLAG )
    {
       if ( temp_string.GetLength() > 0 )
       {
@@ -133,7 +133,7 @@ void CAccessAllowedEntry::Dump( CDumpContext& dump_context ) const
       temp_string += TEXT( "FAILED_ACCESS_ACE_FLAG" );
    }
 
-   if ( Header.AceFlags & SUCCESSFUL_ACCESS_ACE_FLAG )
+   if ( Header.AceFlags bitand SUCCESSFUL_ACCESS_ACE_FLAG )
    {
       if ( temp_string.GetLength() > 0 )
       {
@@ -242,12 +242,12 @@ void CAccessControlEntryHeader::Dump( CDumpContext& dump_context ) const
 
    std::wstring temp_string;
 
-   if ( AceFlags & CONTAINER_INHERIT_ACE )
+   if ( AceFlags bitand CONTAINER_INHERIT_ACE )
    {
       temp_string = TEXT( "CONTAINER_INHERIT_ACE" );
    }
 
-   if ( AceFlags & INHERIT_ONLY_ACE )
+   if ( AceFlags bitand INHERIT_ONLY_ACE )
    {
       if ( temp_string.GetLength() > 0 )
       {
@@ -257,7 +257,7 @@ void CAccessControlEntryHeader::Dump( CDumpContext& dump_context ) const
       temp_string += TEXT( "INHERIT_ONLY_ACE" );
    }
 
-   if ( AceFlags & NO_PROPAGATE_INHERIT_ACE )
+   if ( AceFlags bitand NO_PROPAGATE_INHERIT_ACE )
    {
       if ( temp_string.GetLength() > 0 )
       {
@@ -267,7 +267,7 @@ void CAccessControlEntryHeader::Dump( CDumpContext& dump_context ) const
       temp_string += TEXT( "NO_PROPAGATE_INHERIT_ACE" );
    }
 
-   if ( AceFlags & OBJECT_INHERIT_ACE )
+   if ( AceFlags bitand OBJECT_INHERIT_ACE )
    {
       if ( temp_string.GetLength() > 0 )
       {
@@ -277,7 +277,7 @@ void CAccessControlEntryHeader::Dump( CDumpContext& dump_context ) const
       temp_string += TEXT( "OBJECT_INHERIT_ACE" );
    }
 
-   if ( AceFlags & FAILED_ACCESS_ACE_FLAG )
+   if ( AceFlags bitand FAILED_ACCESS_ACE_FLAG )
    {
       if ( temp_string.GetLength() > 0 )
       {
@@ -287,7 +287,7 @@ void CAccessControlEntryHeader::Dump( CDumpContext& dump_context ) const
       temp_string += TEXT( "FAILED_ACCESS_ACE_FLAG" );
    }
 
-   if ( AceFlags & SUCCESSFUL_ACCESS_ACE_FLAG )
+   if ( AceFlags bitand SUCCESSFUL_ACCESS_ACE_FLAG )
    {
       if ( temp_string.GetLength() > 0 )
       {
@@ -494,12 +494,12 @@ void CAccessDeniedEntry::Dump( CDumpContext& dump_context ) const
 
    std::wstring temp_string;
 
-   if ( Header.AceFlags & CONTAINER_INHERIT_ACE )
+   if ( Header.AceFlags bitand CONTAINER_INHERIT_ACE )
    {
       temp_string = TEXT( "CONTAINER_INHERIT_ACE" );
    }
 
-   if ( Header.AceFlags & INHERIT_ONLY_ACE )
+   if ( Header.AceFlags bitand INHERIT_ONLY_ACE )
    {
       if ( temp_string.GetLength() > 0 )
       {
@@ -509,7 +509,7 @@ void CAccessDeniedEntry::Dump( CDumpContext& dump_context ) const
       temp_string += TEXT( "INHERIT_ONLY_ACE" );
    }
 
-   if ( Header.AceFlags & NO_PROPAGATE_INHERIT_ACE )
+   if ( Header.AceFlags bitand NO_PROPAGATE_INHERIT_ACE )
    {
       if ( temp_string.GetLength() > 0 )
       {
@@ -519,7 +519,7 @@ void CAccessDeniedEntry::Dump( CDumpContext& dump_context ) const
       temp_string += TEXT( "NO_PROPAGATE_INHERIT_ACE" );
    }
 
-   if ( Header.AceFlags & OBJECT_INHERIT_ACE )
+   if ( Header.AceFlags bitand OBJECT_INHERIT_ACE )
    {
       if ( temp_string.GetLength() > 0 )
       {
@@ -529,7 +529,7 @@ void CAccessDeniedEntry::Dump( CDumpContext& dump_context ) const
       temp_string += TEXT( "OBJECT_INHERIT_ACE" );
    }
 
-   if ( Header.AceFlags & FAILED_ACCESS_ACE_FLAG )
+   if ( Header.AceFlags bitand FAILED_ACCESS_ACE_FLAG )
    {
       if ( temp_string.GetLength() > 0 )
       {
@@ -539,7 +539,7 @@ void CAccessDeniedEntry::Dump( CDumpContext& dump_context ) const
       temp_string += TEXT( "FAILED_ACCESS_ACE_FLAG" );
    }
 
-   if ( Header.AceFlags & SUCCESSFUL_ACCESS_ACE_FLAG )
+   if ( Header.AceFlags bitand SUCCESSFUL_ACCESS_ACE_FLAG )
    {
       if ( temp_string.GetLength() > 0 )
       {
@@ -1353,12 +1353,12 @@ void CCommunicationProperties::ConvertBaudRateListToString( __in DWORD const bau
 {
    human_readable_string.clear();
 
-   if ( baud_rate & BAUD_075 )
+   if (is_flagged(baud_rate, BAUD_075) == true)
    {
       human_readable_string.assign(WSTRING_VIEW(L"75 bps"));
    }
 
-   if ( baud_rate & BAUD_110 )
+   if (is_flagged(baud_rate, BAUD_110) == true )
    {
       if ( human_readable_string.empty() == false )
       {
@@ -1368,7 +1368,7 @@ void CCommunicationProperties::ConvertBaudRateListToString( __in DWORD const bau
       human_readable_string.append(WSTRING_VIEW(L"110 bps") );
    }
 
-   if ( baud_rate & BAUD_134_5 )
+   if (is_flagged(baud_rate, BAUD_134_5) == true)
    {
        if (human_readable_string.empty() == false)
        {
@@ -1378,7 +1378,7 @@ void CCommunicationProperties::ConvertBaudRateListToString( __in DWORD const bau
       human_readable_string.append(WSTRING_VIEW(L"134.5 bps" ) );
    }
 
-   if ( baud_rate & BAUD_150 )
+   if (is_flagged(baud_rate, BAUD_150) == true)
    {
        if (human_readable_string.empty() == false)
        {
@@ -1388,7 +1388,7 @@ void CCommunicationProperties::ConvertBaudRateListToString( __in DWORD const bau
       human_readable_string.append(WSTRING_VIEW(L"150 bps" ) );
    }
 
-   if ( baud_rate & BAUD_300 )
+   if (is_flagged(baud_rate, BAUD_300) == true)
    {
        if (human_readable_string.empty() == false)
        {
@@ -1398,7 +1398,7 @@ void CCommunicationProperties::ConvertBaudRateListToString( __in DWORD const bau
       human_readable_string.append(WSTRING_VIEW(L"300 bps" ) );
    }
 
-   if ( baud_rate & BAUD_600 )
+   if (is_flagged(baud_rate, BAUD_600) == true)
    {
        if (human_readable_string.empty() == false)
        {
@@ -1408,7 +1408,7 @@ void CCommunicationProperties::ConvertBaudRateListToString( __in DWORD const bau
       human_readable_string.append(WSTRING_VIEW(L"600 bps" ) );
    }
 
-   if ( baud_rate & BAUD_1200 )
+   if (is_flagged(baud_rate, BAUD_1200) == true)
    {
        if (human_readable_string.empty() == false)
        {
@@ -1418,7 +1418,7 @@ void CCommunicationProperties::ConvertBaudRateListToString( __in DWORD const bau
       human_readable_string.append(WSTRING_VIEW(L"1200 bps" ) );
    }
 
-   if ( baud_rate & BAUD_1800 )
+   if (is_flagged(baud_rate, BAUD_1800) == true)
    {
        if (human_readable_string.empty() == false)
        {
@@ -1428,7 +1428,7 @@ void CCommunicationProperties::ConvertBaudRateListToString( __in DWORD const bau
       human_readable_string.append(WSTRING_VIEW(L"1800 bps" ) );
    }
 
-   if ( baud_rate & BAUD_2400 )
+   if (is_flagged(baud_rate, BAUD_2400) == true)
    {
        if (human_readable_string.empty() == false)
        {
@@ -1438,7 +1438,7 @@ void CCommunicationProperties::ConvertBaudRateListToString( __in DWORD const bau
       human_readable_string.append(WSTRING_VIEW(L"2400 bps" ) );
    }
 
-   if ( baud_rate & BAUD_4800 )
+   if (is_flagged(baud_rate,BAUD_4800) == true)
    {
        if (human_readable_string.empty() == false)
        {
@@ -1448,7 +1448,7 @@ void CCommunicationProperties::ConvertBaudRateListToString( __in DWORD const bau
       human_readable_string.append(WSTRING_VIEW(L"4800 bps" ) );
    }
 
-   if ( baud_rate & BAUD_7200 )
+   if (is_flagged(baud_rate,BAUD_7200) == true)
    {
        if (human_readable_string.empty() == false)
        {
@@ -1458,7 +1458,7 @@ void CCommunicationProperties::ConvertBaudRateListToString( __in DWORD const bau
       human_readable_string.append(WSTRING_VIEW(L"7200 bps" ) );
    }
 
-   if ( baud_rate & BAUD_9600 )
+   if (is_flagged(baud_rate, BAUD_9600) == true)
    {
        if (human_readable_string.empty() == false)
        {
@@ -1468,7 +1468,7 @@ void CCommunicationProperties::ConvertBaudRateListToString( __in DWORD const bau
        human_readable_string.append(WSTRING_VIEW(L"9600 bps" ) );
    }
 
-   if ( baud_rate & BAUD_14400 )
+   if (is_flagged(baud_rate, BAUD_14400) == true)
    {
        if (human_readable_string.empty() == false)
        {
@@ -1478,7 +1478,7 @@ void CCommunicationProperties::ConvertBaudRateListToString( __in DWORD const bau
       human_readable_string.append(WSTRING_VIEW(L"14400 bps" ) );
    }
 
-   if ( baud_rate & BAUD_19200 )
+   if (is_flagged(baud_rate, BAUD_19200) == true)
    {
        if (human_readable_string.empty() == false)
        {
@@ -1488,7 +1488,7 @@ void CCommunicationProperties::ConvertBaudRateListToString( __in DWORD const bau
       human_readable_string.append(WSTRING_VIEW(L"19200 bps" ) );
    }
 
-   if ( baud_rate & BAUD_38400 )
+   if (is_flagged(baud_rate, BAUD_38400) == true)
    {
        if (human_readable_string.empty() == false)
        {
@@ -1498,7 +1498,7 @@ void CCommunicationProperties::ConvertBaudRateListToString( __in DWORD const bau
       human_readable_string.append(WSTRING_VIEW(L"38400 bps" ) );
    }
 
-   if ( baud_rate & BAUD_56K )
+   if (is_flagged(baud_rate, BAUD_56K) == true)
    {
        if (human_readable_string.empty() == false)
        {
@@ -1508,7 +1508,7 @@ void CCommunicationProperties::ConvertBaudRateListToString( __in DWORD const bau
       human_readable_string.append(WSTRING_VIEW(L"56 Kbps" ) );
    }
 
-   if ( baud_rate & BAUD_128K )
+   if (is_flagged(baud_rate, BAUD_128K) == true)
    {
        if (human_readable_string.empty() == false)
        {
@@ -1518,7 +1518,7 @@ void CCommunicationProperties::ConvertBaudRateListToString( __in DWORD const bau
       human_readable_string.append(WSTRING_VIEW(L"128 Kbps" ) );
    }
 
-   if ( baud_rate & BAUD_115200 )
+   if (is_flagged(baud_rate, BAUD_115200) == true)
    {
        if (human_readable_string.empty() == false)
        {
@@ -1528,7 +1528,7 @@ void CCommunicationProperties::ConvertBaudRateListToString( __in DWORD const bau
       human_readable_string.append(WSTRING_VIEW(L"115200 bps" ) );
    }
 
-   if ( baud_rate & BAUD_57600 )
+   if (is_flagged(baud_rate, BAUD_57600) == true)
    {
        if (human_readable_string.empty() == false)
        {
@@ -1538,7 +1538,7 @@ void CCommunicationProperties::ConvertBaudRateListToString( __in DWORD const bau
       human_readable_string.append(WSTRING_VIEW(L"57600 bps" ) );
    }
 
-   if ( baud_rate & BAUD_USER )
+   if (is_flagged(baud_rate, BAUD_USER) == true)
    {
        if (human_readable_string.empty() == false)
        {
@@ -1553,12 +1553,12 @@ void CCommunicationProperties::ConvertDataBitsToString( __in DWORD const data_bi
 {
    human_readable_string.clear();
 
-   if ( data_bits & DATABITS_5 )
+   if (is_flagged(data_bits, DATABITS_5) == true)
    {
       human_readable_string.assign(WSTRING_VIEW(L"5 data bits" ) );
    }
 
-   if ( data_bits & DATABITS_6 )
+   if (is_flagged(data_bits, DATABITS_6) == true)
    {
        if (human_readable_string.empty() == false)
        {
@@ -1568,7 +1568,7 @@ void CCommunicationProperties::ConvertDataBitsToString( __in DWORD const data_bi
       human_readable_string.append(WSTRING_VIEW(L"6 data bits" ) );
    }
 
-   if ( data_bits & DATABITS_7 )
+   if (is_flagged(data_bits, DATABITS_7) == true)
    {
        if (human_readable_string.empty() == false)
        {
@@ -1578,7 +1578,7 @@ void CCommunicationProperties::ConvertDataBitsToString( __in DWORD const data_bi
       human_readable_string.append(WSTRING_VIEW(L"7 data bits" ) );
    }
 
-   if ( data_bits & DATABITS_8 )
+   if (is_flagged(data_bits, DATABITS_8) == true)
    {
        if (human_readable_string.empty() == false)
        {
@@ -1588,7 +1588,7 @@ void CCommunicationProperties::ConvertDataBitsToString( __in DWORD const data_bi
       human_readable_string.append(WSTRING_VIEW(L"8 data bits" ) );
    }
 
-   if ( data_bits & DATABITS_16 )
+   if (is_flagged(data_bits, DATABITS_16) == true)
    {
        if (human_readable_string.empty() == false)
        {
@@ -1598,7 +1598,7 @@ void CCommunicationProperties::ConvertDataBitsToString( __in DWORD const data_bi
       human_readable_string.append(WSTRING_VIEW(L"16 data bits" ) );
    }
 
-   if ( data_bits & DATABITS_16X )
+   if (is_flagged(data_bits, DATABITS_16X) == true)
    {
        if (human_readable_string.empty() == false)
        {
@@ -1613,12 +1613,12 @@ void CCommunicationProperties::ConvertProviderCapabilitiesToString( __in DWORD c
 {
    human_readable_string.clear();
 
-   if ( capabilities & PCF_DTRDSR )
+   if (is_flagged(capabilities, PCF_DTRDSR) == true )
    {
-      human_readable_string.assign(WSTRING_VIEW(L"DTR/DSR supported" ) );
+      human_readable_string.assign(WSTRING_VIEW(L"DTR/DSR supported") );
    }
 
-   if ( capabilities & PCF_RTSCTS )
+   if (is_flagged(capabilities, PCF_RTSCTS) == true)
    {
        if (human_readable_string.empty() == false)
        {
@@ -1628,7 +1628,7 @@ void CCommunicationProperties::ConvertProviderCapabilitiesToString( __in DWORD c
       human_readable_string.append(WSTRING_VIEW(L"RTS/CTS supported" ) );
    }
 
-   if ( capabilities & PCF_RLSD )
+   if (is_flagged(capabilities, PCF_RLSD) == true)
    {
        if (human_readable_string.empty() == false)
        {
@@ -1638,7 +1638,7 @@ void CCommunicationProperties::ConvertProviderCapabilitiesToString( __in DWORD c
       human_readable_string.append(WSTRING_VIEW(L"RLSD supported" ) );
    }
 
-   if ( capabilities & PCF_PARITY_CHECK )
+   if (is_flagged(capabilities, PCF_PARITY_CHECK) == true)
    {
        if (human_readable_string.empty() == false)
        {
@@ -1648,7 +1648,7 @@ void CCommunicationProperties::ConvertProviderCapabilitiesToString( __in DWORD c
       human_readable_string.append(WSTRING_VIEW(L"Parity checking supported" ) );
    }
 
-   if ( capabilities & PCF_XONXOFF )
+   if (is_flagged(capabilities, PCF_XONXOFF) == true )
    {
        if (human_readable_string.empty() == false)
        {
@@ -1658,7 +1658,7 @@ void CCommunicationProperties::ConvertProviderCapabilitiesToString( __in DWORD c
       human_readable_string.append(WSTRING_VIEW(L"XON/XOFF supported" ) );
    }
 
-   if ( capabilities & PCF_SETXCHAR )
+   if (is_flagged(capabilities, PCF_SETXCHAR) == true)
    {
        if (human_readable_string.empty() == false)
        {
@@ -1668,7 +1668,7 @@ void CCommunicationProperties::ConvertProviderCapabilitiesToString( __in DWORD c
       human_readable_string.append(WSTRING_VIEW(L"Settable XON/XOFF supported" ) );
    }
 
-   if ( capabilities & PCF_TOTALTIMEOUTS )
+   if (is_flagged(capabilities, PCF_TOTALTIMEOUTS) == true)
    {
        if (human_readable_string.empty() == false)
        {
@@ -1678,7 +1678,7 @@ void CCommunicationProperties::ConvertProviderCapabilitiesToString( __in DWORD c
       human_readable_string.append(WSTRING_VIEW(L"Total (elapsed) time-outs supported" ) );
    }
 
-   if ( capabilities & PCF_INTTIMEOUTS )
+   if (is_flagged(capabilities, PCF_INTTIMEOUTS) == true)
    {
        if (human_readable_string.empty() == false)
        {
@@ -1688,7 +1688,7 @@ void CCommunicationProperties::ConvertProviderCapabilitiesToString( __in DWORD c
       human_readable_string.append(WSTRING_VIEW(L"Interval time-outs supported" ) );
    }
 
-   if ( capabilities & PCF_SPECIALCHARS )
+   if (is_flagged(capabilities, PCF_SPECIALCHARS) == true)
    {
        if (human_readable_string.empty() == false)
        {
@@ -1698,7 +1698,7 @@ void CCommunicationProperties::ConvertProviderCapabilitiesToString( __in DWORD c
       human_readable_string.append(WSTRING_VIEW(L"Special character support provided" ) );
    }
 
-   if ( capabilities & PCF_16BITMODE )
+   if (is_flagged(capabilities, PCF_16BITMODE) == true)
    {
        if (human_readable_string.empty() == false)
        {
@@ -1789,12 +1789,12 @@ void CCommunicationProperties::ConvertSettableParametersToString( __in DWORD con
 {
    human_readable_string.clear();
 
-   if ( parameters & SP_PARITY )
+   if ( is_flagged(parameters, SP_PARITY) == true )
    {
       human_readable_string.assign(WSTRING_VIEW(L"Parity" ) );
    }
 
-   if ( parameters & SP_BAUD )
+   if (is_flagged(parameters, SP_BAUD) == true )
    {
        if (human_readable_string.empty() == false)
        {
@@ -1804,7 +1804,7 @@ void CCommunicationProperties::ConvertSettableParametersToString( __in DWORD con
       human_readable_string.append(WSTRING_VIEW(L"Baud rate" ) );
    }
 
-   if ( parameters & SP_DATABITS )
+   if (is_flagged(parameters, SP_DATABITS) == true )
    {
        if (human_readable_string.empty() == false)
        {
@@ -1814,7 +1814,7 @@ void CCommunicationProperties::ConvertSettableParametersToString( __in DWORD con
       human_readable_string.append(WSTRING_VIEW(L"Data bits" ) );
    }
 
-   if ( parameters & SP_STOPBITS )
+   if (is_flagged(parameters, SP_STOPBITS) == true )
    {
        if (human_readable_string.empty() == false)
        {
@@ -1824,7 +1824,7 @@ void CCommunicationProperties::ConvertSettableParametersToString( __in DWORD con
       human_readable_string.append(WSTRING_VIEW(L"Stop bits" ) );
    }
 
-   if ( parameters & SP_HANDSHAKING )
+   if (is_flagged(parameters, SP_HANDSHAKING) == true )
    {
        if (human_readable_string.empty() == false)
        {
@@ -1834,7 +1834,7 @@ void CCommunicationProperties::ConvertSettableParametersToString( __in DWORD con
       human_readable_string.append(WSTRING_VIEW(L"Handshaking (flow control)" ) );
    }
 
-   if ( parameters & SP_PARITY_CHECK )
+   if (is_flagged(parameters, SP_PARITY_CHECK) == true )
    {
        if (human_readable_string.empty() == false)
        {
@@ -1844,7 +1844,7 @@ void CCommunicationProperties::ConvertSettableParametersToString( __in DWORD con
       human_readable_string.append(WSTRING_VIEW(L"Parity checking" ) );
    }
 
-   if ( parameters & SP_RLSD )
+   if (is_flagged(parameters, SP_RLSD) == true )
    {
        if (human_readable_string.empty() == false)
        {
@@ -1859,12 +1859,12 @@ void CCommunicationProperties::ConvertStopParityToString( __in DWORD const stop_
 {
    human_readable_string.clear();
 
-   if ( stop_parity & STOPBITS_10 )
+   if ( is_flagged(stop_parity, STOPBITS_10) == true )
    {
       human_readable_string.assign(WSTRING_VIEW(L"1 stop bit" ) );
    }
 
-   if ( stop_parity & STOPBITS_15 )
+   if (is_flagged(stop_parity, STOPBITS_15) == true )
    {
        if (human_readable_string.empty() == false)
        {
@@ -1874,7 +1874,7 @@ void CCommunicationProperties::ConvertStopParityToString( __in DWORD const stop_
       human_readable_string.append(WSTRING_VIEW(L"1.5 stop bits" ) );
    }
 
-   if ( stop_parity & STOPBITS_20 )
+   if (is_flagged(stop_parity, STOPBITS_20) == true )
    {
        if (human_readable_string.empty() == false)
        {
@@ -1884,7 +1884,7 @@ void CCommunicationProperties::ConvertStopParityToString( __in DWORD const stop_
       human_readable_string.append(WSTRING_VIEW(L"2 stop bits" ) );
    }
 
-   if ( stop_parity & PARITY_NONE )
+   if (is_flagged(stop_parity, PARITY_NONE) == true)
    {
        if (human_readable_string.empty() == false)
        {
@@ -1894,7 +1894,7 @@ void CCommunicationProperties::ConvertStopParityToString( __in DWORD const stop_
       human_readable_string.append(WSTRING_VIEW(L"No parity" ) );
    }
 
-   if ( stop_parity & PARITY_ODD )
+   if (is_flagged(stop_parity, PARITY_ODD) == true)
    {
        if (human_readable_string.empty() == false)
        {
@@ -1904,7 +1904,7 @@ void CCommunicationProperties::ConvertStopParityToString( __in DWORD const stop_
       human_readable_string.append(WSTRING_VIEW(L"Odd parity" ) );
    }
 
-   if ( stop_parity & PARITY_EVEN )
+   if (is_flagged(stop_parity, PARITY_EVEN) == true)
    {
        if (human_readable_string.empty() == false)
        {
@@ -1914,7 +1914,7 @@ void CCommunicationProperties::ConvertStopParityToString( __in DWORD const stop_
       human_readable_string.append(WSTRING_VIEW(L"Even parity" ) );
    }
 
-   if ( stop_parity & PARITY_MARK )
+   if (is_flagged(stop_parity, PARITY_MARK) == true)
    {
        if (human_readable_string.empty() == false)
        {
@@ -1924,7 +1924,7 @@ void CCommunicationProperties::ConvertStopParityToString( __in DWORD const stop_
       human_readable_string.append(WSTRING_VIEW(L"Mark parity" ) );
    }
 
-   if ( stop_parity & PARITY_SPACE )
+   if (is_flagged(stop_parity, PARITY_SPACE) == true)
    {
        if (human_readable_string.empty() == false)
        {
@@ -2976,12 +2976,12 @@ void CPixelFormatDescriptor::Dump( CDumpContext& dump_context ) const
 
    std::wstring temp_string;
 
-   if ( dwFlags & PFD_DRAW_TO_WINDOW )
+   if ( dwFlags bitand PFD_DRAW_TO_WINDOW )
    {
       temp_string = TEXT( "PFD_DRAW_TO_WINDOW" );
    }
 
-   if ( dwFlags & PFD_DRAW_TO_BITMAP )
+   if ( dwFlags bitand PFD_DRAW_TO_BITMAP )
    {
       if ( temp_string.GetLength() > 0 )
       {
@@ -2991,7 +2991,7 @@ void CPixelFormatDescriptor::Dump( CDumpContext& dump_context ) const
       temp_string += TEXT( "PFD_DRAW_TO_BITMAP" );
    }
 
-   if ( dwFlags & PFD_SUPPORT_GDI )
+   if ( dwFlags bitand PFD_SUPPORT_GDI )
    {
       if ( temp_string.GetLength() > 0 )
       {
@@ -3001,7 +3001,7 @@ void CPixelFormatDescriptor::Dump( CDumpContext& dump_context ) const
       temp_string += TEXT( "PFD_SUPPORT_GDI" );
    }
 
-   if ( dwFlags & PFD_SUPPORT_OPENGL )
+   if ( dwFlags bitand PFD_SUPPORT_OPENGL )
    {
       if ( temp_string.GetLength() > 0 )
       {
@@ -3011,7 +3011,7 @@ void CPixelFormatDescriptor::Dump( CDumpContext& dump_context ) const
       temp_string += TEXT( "PFD_SUPPORT_OPENGL" );
    }
 
-   if ( dwFlags & PFD_GENERIC_ACCELERATED )
+   if ( dwFlags bitand PFD_GENERIC_ACCELERATED )
    {
       if ( temp_string.GetLength() > 0 )
       {
@@ -3021,7 +3021,7 @@ void CPixelFormatDescriptor::Dump( CDumpContext& dump_context ) const
       temp_string += TEXT( "PFD_GENERIC_ACCELERATED" );
    }
 
-   if ( dwFlags & PFD_GENERIC_FORMAT )
+   if ( dwFlags bitand PFD_GENERIC_FORMAT )
    {
       if ( temp_string.GetLength() > 0 )
       {
@@ -3031,7 +3031,7 @@ void CPixelFormatDescriptor::Dump( CDumpContext& dump_context ) const
       temp_string += TEXT( "PFD_GENERIC_FORMAT" );
    }
 
-   if ( dwFlags & PFD_NEED_PALETTE )
+   if ( dwFlags bitand PFD_NEED_PALETTE )
    {
       if ( temp_string.GetLength() > 0 )
       {
@@ -3041,7 +3041,7 @@ void CPixelFormatDescriptor::Dump( CDumpContext& dump_context ) const
       temp_string += TEXT( "PFD_NEED_PALETTE" );
    }
 
-   if ( dwFlags & PFD_NEED_SYSTEM_PALETTE )
+   if ( dwFlags bitand PFD_NEED_SYSTEM_PALETTE )
    {
       if ( temp_string.GetLength() > 0 )
       {
@@ -3051,7 +3051,7 @@ void CPixelFormatDescriptor::Dump( CDumpContext& dump_context ) const
       temp_string += TEXT( "PFD_NEED_SYSTEM_PALETTE" );
    }
 
-   if ( dwFlags & PFD_DOUBLEBUFFER )
+   if ( dwFlags bitand PFD_DOUBLEBUFFER )
    {
       if ( temp_string.GetLength() > 0 )
       {
@@ -3061,7 +3061,7 @@ void CPixelFormatDescriptor::Dump( CDumpContext& dump_context ) const
       temp_string += TEXT( "PFD_DOUBLEBUFFER" );
    }
 
-   if ( dwFlags & PFD_STEREO )
+   if ( dwFlags bitand PFD_STEREO )
    {
       if ( temp_string.GetLength() > 0 )
       {
@@ -3071,7 +3071,7 @@ void CPixelFormatDescriptor::Dump( CDumpContext& dump_context ) const
       temp_string += TEXT( "PFD_STEREO" );
    }
 
-   if ( dwFlags & PFD_SWAP_LAYER_BUFFERS )
+   if ( dwFlags bitand PFD_SWAP_LAYER_BUFFERS )
    {
       if ( temp_string.GetLength() > 0 )
       {
@@ -3319,12 +3319,12 @@ void CSystemAuditEntry::Dump( CDumpContext& dump_context ) const
 
    std::wstring temp_string;
 
-   if ( Header.AceFlags & CONTAINER_INHERIT_ACE )
+   if ( Header.AceFlags bitand CONTAINER_INHERIT_ACE )
    {
       temp_string = TEXT( "CONTAINER_INHERIT_ACE" );
    }
 
-   if ( Header.AceFlags & INHERIT_ONLY_ACE )
+   if ( Header.AceFlags bitand INHERIT_ONLY_ACE )
    {
       if ( temp_string.GetLength() > 0 )
       {
@@ -3334,7 +3334,7 @@ void CSystemAuditEntry::Dump( CDumpContext& dump_context ) const
       temp_string += TEXT( "INHERIT_ONLY_ACE" );
    }
 
-   if ( Header.AceFlags & NO_PROPAGATE_INHERIT_ACE )
+   if ( Header.AceFlags bitand NO_PROPAGATE_INHERIT_ACE )
    {
       if ( temp_string.GetLength() > 0 )
       {
@@ -3344,7 +3344,7 @@ void CSystemAuditEntry::Dump( CDumpContext& dump_context ) const
       temp_string += TEXT( "NO_PROPAGATE_INHERIT_ACE" );
    }
 
-   if ( Header.AceFlags & OBJECT_INHERIT_ACE )
+   if ( Header.AceFlags bitand OBJECT_INHERIT_ACE )
    {
       if ( temp_string.GetLength() > 0 )
       {
@@ -3354,7 +3354,7 @@ void CSystemAuditEntry::Dump( CDumpContext& dump_context ) const
       temp_string += TEXT( "OBJECT_INHERIT_ACE" );
    }
 
-   if ( Header.AceFlags & FAILED_ACCESS_ACE_FLAG )
+   if ( Header.AceFlags bitand FAILED_ACCESS_ACE_FLAG )
    {
       if ( temp_string.GetLength() > 0 )
       {
@@ -3364,7 +3364,7 @@ void CSystemAuditEntry::Dump( CDumpContext& dump_context ) const
       temp_string += TEXT( "FAILED_ACCESS_ACE_FLAG" );
    }
 
-   if ( Header.AceFlags & SUCCESSFUL_ACCESS_ACE_FLAG )
+   if ( Header.AceFlags bitand SUCCESSFUL_ACCESS_ACE_FLAG )
    {
       if ( temp_string.GetLength() > 0 )
       {
@@ -3746,12 +3746,12 @@ void CWindowPlacement::Dump( CDumpContext& dump_context ) const
 
    std::wstring temp_string;
 
-   if ( flags & WPF_SETMINPOSITION )
+   if ( flags bitand WPF_SETMINPOSITION )
    {
       temp_string = TEXT( "WPF_SETMINPOSITION" );
    }
 
-   if ( flags & WPF_RESTORETOMAXIMIZED )
+   if ( flags bitand WPF_RESTORETOMAXIMIZED )
    {
       if ( temp_string.GetLength() > 0 )
       {

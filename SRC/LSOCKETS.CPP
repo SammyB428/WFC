@@ -304,7 +304,7 @@ _Check_return_ bool CListeningSocket::WaitForConnection( void ) noexcept
    // This is a performance hit since we have to consult DNS for the
    // answer.
 
-   if ( ( m_Options & optionsDontResolveHostName ) )
+   if ( is_flagged( m_Options, optionsDontResolveHostName ) == true )
    {
       // User doesn't care about the machine name in a humanly readable form
 

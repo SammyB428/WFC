@@ -138,12 +138,12 @@ void CTapeGetDriveParameters::Dump( CDumpContext& dump_context ) const
 
    std::wstring temp_string;
 
-   if ( FeaturesLow & TAPE_DRIVE_COMPRESSION )
+   if ( FeaturesLow bitand TAPE_DRIVE_COMPRESSION )
    {
       temp_string = TEXT( "TAPE_DRIVE_COMPRESSION" );
    }
 
-   if ( FeaturesLow & TAPE_DRIVE_ECC )
+   if ( FeaturesLow bitand TAPE_DRIVE_ECC )
    {
       if ( temp_string.GetLength() > 0 )
       {
@@ -153,7 +153,7 @@ void CTapeGetDriveParameters::Dump( CDumpContext& dump_context ) const
       temp_string += TEXT( "TAPE_DRIVE_ECC" );
    }
 
-   if ( FeaturesLow & TAPE_DRIVE_EJECT_MEDIA )
+   if ( FeaturesLow bitand TAPE_DRIVE_EJECT_MEDIA )
    {
       if ( temp_string.GetLength() > 0 )
       {
@@ -163,7 +163,7 @@ void CTapeGetDriveParameters::Dump( CDumpContext& dump_context ) const
       temp_string += TEXT( "TAPE_DRIVE_EJECT_MEDIA" );
    }
 
-   if ( FeaturesLow & TAPE_DRIVE_ERASE_BOP_ONLY )
+   if ( FeaturesLow bitand TAPE_DRIVE_ERASE_BOP_ONLY )
    {
       if ( temp_string.GetLength() > 0 )
       {
@@ -173,7 +173,7 @@ void CTapeGetDriveParameters::Dump( CDumpContext& dump_context ) const
       temp_string += TEXT( "TAPE_DRIVE_ERASE_BOP_ONLY" );
    }
 
-   if ( FeaturesLow & TAPE_DRIVE_ERASE_LONG )
+   if ( FeaturesLow bitand TAPE_DRIVE_ERASE_LONG )
    {
       if ( temp_string.GetLength() > 0 )
       {
@@ -183,7 +183,7 @@ void CTapeGetDriveParameters::Dump( CDumpContext& dump_context ) const
       temp_string += TEXT( "TAPE_DRIVE_ERASE_LONG" );
    }
 
-   if ( FeaturesLow & TAPE_DRIVE_ERASE_IMMEDIATE )
+   if ( FeaturesLow bitand TAPE_DRIVE_ERASE_IMMEDIATE )
    {
       if ( temp_string.GetLength() > 0 )
       {
@@ -193,7 +193,7 @@ void CTapeGetDriveParameters::Dump( CDumpContext& dump_context ) const
       temp_string += TEXT( "TAPE_DRIVE_ERASE_IMMEDIATE" );
    }
 
-   if ( FeaturesLow & TAPE_DRIVE_ERASE_SHORT )
+   if ( FeaturesLow bitand TAPE_DRIVE_ERASE_SHORT )
    {
       if ( temp_string.GetLength() > 0 )
       {
@@ -203,7 +203,7 @@ void CTapeGetDriveParameters::Dump( CDumpContext& dump_context ) const
       temp_string += TEXT( "TAPE_DRIVE_ERASE_SHORT" );
    }
 
-   if ( FeaturesLow & TAPE_DRIVE_FIXED )
+   if ( FeaturesLow bitand TAPE_DRIVE_FIXED )
    {
       if ( temp_string.GetLength() > 0 )
       {
@@ -213,7 +213,7 @@ void CTapeGetDriveParameters::Dump( CDumpContext& dump_context ) const
       temp_string += TEXT( "TAPE_DRIVE_FIXED" );
    }
 
-   if ( FeaturesLow & TAPE_DRIVE_FIXED_BLOCK )
+   if ( FeaturesLow bitand TAPE_DRIVE_FIXED_BLOCK )
    {
       if ( temp_string.GetLength() > 0 )
       {
@@ -223,7 +223,7 @@ void CTapeGetDriveParameters::Dump( CDumpContext& dump_context ) const
       temp_string += TEXT( "TAPE_DRIVE_FIXED_BLOCK" );
    }
 
-   if ( FeaturesLow & TAPE_DRIVE_INITIATOR )
+   if ( FeaturesLow bitand TAPE_DRIVE_INITIATOR )
    {
       if ( temp_string.GetLength() > 0 )
       {
@@ -233,7 +233,7 @@ void CTapeGetDriveParameters::Dump( CDumpContext& dump_context ) const
       temp_string += TEXT( "TAPE_DRIVE_INITIATOR" );
    }
 
-   if ( FeaturesLow & TAPE_DRIVE_PADDING )
+   if ( FeaturesLow bitand TAPE_DRIVE_PADDING )
    {
       if ( temp_string.GetLength() > 0 )
       {
@@ -243,7 +243,7 @@ void CTapeGetDriveParameters::Dump( CDumpContext& dump_context ) const
       temp_string += TEXT( "TAPE_DRIVE_PADDING" );
    }
 
-   if ( FeaturesLow & TAPE_DRIVE_GET_ABSOLUTE_BLK )
+   if ( FeaturesLow bitand TAPE_DRIVE_GET_ABSOLUTE_BLK )
    {
       if ( temp_string.GetLength() > 0 )
       {
@@ -253,7 +253,7 @@ void CTapeGetDriveParameters::Dump( CDumpContext& dump_context ) const
       temp_string += TEXT( "TAPE_DRIVE_GET_ABSOLUTE_BLK" );
    }
 
-   if ( FeaturesLow & TAPE_DRIVE_GET_LOGICAL_BLK )
+   if ( FeaturesLow bitand TAPE_DRIVE_GET_LOGICAL_BLK )
    {
       if ( temp_string.GetLength() > 0 )
       {
@@ -263,7 +263,7 @@ void CTapeGetDriveParameters::Dump( CDumpContext& dump_context ) const
       temp_string += TEXT( "TAPE_DRIVE_GET_LOGICAL_BLK" );
    }
 
-   if ( FeaturesLow & TAPE_DRIVE_REPORT_SMKS )
+   if ( FeaturesLow bitand TAPE_DRIVE_REPORT_SMKS )
    {
       if ( temp_string.GetLength() > 0 )
       {
@@ -273,7 +273,7 @@ void CTapeGetDriveParameters::Dump( CDumpContext& dump_context ) const
       temp_string += TEXT( "TAPE_DRIVE_REPORT_SMKS" );
    }
 
-   if ( FeaturesLow & TAPE_DRIVE_SELECT )
+   if ( FeaturesLow bitand TAPE_DRIVE_SELECT )
    {
       if ( temp_string.GetLength() > 0 )
       {
@@ -283,7 +283,7 @@ void CTapeGetDriveParameters::Dump( CDumpContext& dump_context ) const
       temp_string += TEXT( "TAPE_DRIVE_SELECT" );
    }
 
-   if ( FeaturesLow & TAPE_DRIVE_SET_EOT_WZ_SIZE )
+   if ( FeaturesLow bitand TAPE_DRIVE_SET_EOT_WZ_SIZE )
    {
       if ( temp_string.GetLength() > 0 )
       {
@@ -293,7 +293,7 @@ void CTapeGetDriveParameters::Dump( CDumpContext& dump_context ) const
       temp_string += TEXT( "TAPE_DRIVE_SET_EOT_WZ_SIZE" );
    }
 
-   if ( FeaturesLow & TAPE_DRIVE_EOT_WZ_SIZE )
+   if ( FeaturesLow bitand TAPE_DRIVE_EOT_WZ_SIZE )
    {
       if ( temp_string.GetLength() > 0 )
       {
@@ -303,7 +303,7 @@ void CTapeGetDriveParameters::Dump( CDumpContext& dump_context ) const
       temp_string += TEXT( "TAPE_DRIVE_EOT_WZ_SIZE" );
    }
 
-   if ( FeaturesLow & TAPE_DRIVE_TAPE_CAPACITY )
+   if ( FeaturesLow bitand TAPE_DRIVE_TAPE_CAPACITY )
    {
       if ( temp_string.GetLength() > 0 )
       {
@@ -313,7 +313,7 @@ void CTapeGetDriveParameters::Dump( CDumpContext& dump_context ) const
       temp_string += TEXT( "TAPE_DRIVE_TAPE_CAPACITY" );
    }
 
-   if ( FeaturesLow & TAPE_DRIVE_TAPE_REMAINING )
+   if ( FeaturesLow bitand TAPE_DRIVE_TAPE_REMAINING )
    {
       if ( temp_string.GetLength() > 0 )
       {
@@ -323,7 +323,7 @@ void CTapeGetDriveParameters::Dump( CDumpContext& dump_context ) const
       temp_string += TEXT( "TAPE_DRIVE_TAPE_REMAINING" );
    }
 
-   if ( FeaturesLow & TAPE_DRIVE_VARIABLE_BLOCK )
+   if ( FeaturesLow bitand TAPE_DRIVE_VARIABLE_BLOCK )
    {
       if ( temp_string.GetLength() > 0 )
       {
@@ -333,7 +333,7 @@ void CTapeGetDriveParameters::Dump( CDumpContext& dump_context ) const
       temp_string += TEXT( "TAPE_DRIVE_VARIABLE_BLOCK" );
    }
 
-   if ( FeaturesLow & TAPE_DRIVE_WRITE_PROTECT )
+   if ( FeaturesLow bitand TAPE_DRIVE_WRITE_PROTECT )
    {
       if ( temp_string.GetLength() > 0 )
       {
@@ -343,7 +343,7 @@ void CTapeGetDriveParameters::Dump( CDumpContext& dump_context ) const
       temp_string += TEXT( "TAPE_DRIVE_WRITE_PROTECT" );
    }
 
-   if ( FeaturesLow & TAPE_DRIVE_CLEAN_REQUESTS )
+   if ( FeaturesLow bitand TAPE_DRIVE_CLEAN_REQUESTS )
    {
       if ( temp_string.GetLength() > 0 )
       {
@@ -353,7 +353,7 @@ void CTapeGetDriveParameters::Dump( CDumpContext& dump_context ) const
       temp_string += TEXT( "TAPE_DRIVE_CLEAN_REQUESTS" );
    }
 
-   if ( FeaturesLow & TAPE_DRIVE_SET_CMP_BOP_ONLY )
+   if ( FeaturesLow bitand TAPE_DRIVE_SET_CMP_BOP_ONLY )
    {
       if ( temp_string.GetLength() > 0 )
       {
@@ -373,12 +373,12 @@ void CTapeGetDriveParameters::Dump( CDumpContext& dump_context ) const
 
    temp_string.Empty();
 
-   if ( features_high & TAPE_DRIVE_LOAD_UNLOAD )
+   if ( features_high bitand TAPE_DRIVE_LOAD_UNLOAD )
    {
       temp_string = TEXT( "TAPE_DRIVE_LOAD_UNLOAD" );
    }
 
-   if ( features_high & TAPE_DRIVE_TENSION )
+   if ( features_high bitand TAPE_DRIVE_TENSION )
    {
       if ( temp_string.GetLength() > 0 )
       {
@@ -388,7 +388,7 @@ void CTapeGetDriveParameters::Dump( CDumpContext& dump_context ) const
       temp_string += TEXT( "TAPE_DRIVE_TENSION" );
    }
 
-   if ( features_high & TAPE_DRIVE_LOCK_UNLOCK )
+   if ( features_high bitand TAPE_DRIVE_LOCK_UNLOCK )
    {
       if ( temp_string.GetLength() > 0 )
       {
@@ -398,7 +398,7 @@ void CTapeGetDriveParameters::Dump( CDumpContext& dump_context ) const
       temp_string += TEXT( "TAPE_DRIVE_LOCK_UNLOCK" );
    }
 
-   if ( features_high & TAPE_DRIVE_REWIND_IMMEDIATE )
+   if ( features_high bitand TAPE_DRIVE_REWIND_IMMEDIATE )
    {
       if ( temp_string.GetLength() > 0 )
       {
@@ -408,7 +408,7 @@ void CTapeGetDriveParameters::Dump( CDumpContext& dump_context ) const
       temp_string += TEXT( "TAPE_DRIVE_REWIND_IMMEDIATE" );
    }
 
-   if ( features_high & TAPE_DRIVE_SET_BLOCK_SIZE )
+   if ( features_high bitand TAPE_DRIVE_SET_BLOCK_SIZE )
    {
       if ( temp_string.GetLength() > 0 )
       {
@@ -418,7 +418,7 @@ void CTapeGetDriveParameters::Dump( CDumpContext& dump_context ) const
       temp_string += TEXT( "TAPE_DRIVE_SET_BLOCK_SIZE" );
    }
 
-   if ( features_high & TAPE_DRIVE_LOAD_UNLD_IMMED )
+   if ( features_high bitand TAPE_DRIVE_LOAD_UNLD_IMMED )
    {
       if ( temp_string.GetLength() > 0 )
       {
@@ -428,7 +428,7 @@ void CTapeGetDriveParameters::Dump( CDumpContext& dump_context ) const
       temp_string += TEXT( "TAPE_DRIVE_LOAD_UNLD_IMMED" );
    }
 
-   if ( features_high & TAPE_DRIVE_TENSION_IMMED )
+   if ( features_high bitand TAPE_DRIVE_TENSION_IMMED )
    {
       if ( temp_string.GetLength() > 0 )
       {
@@ -438,7 +438,7 @@ void CTapeGetDriveParameters::Dump( CDumpContext& dump_context ) const
       temp_string += TEXT( "TAPE_DRIVE_TENSION_IMMED" );
    }
 
-   if ( features_high & TAPE_DRIVE_LOCK_UNLK_IMMED )
+   if ( features_high bitand TAPE_DRIVE_LOCK_UNLK_IMMED )
    {
       if ( temp_string.GetLength() > 0 )
       {
@@ -448,7 +448,7 @@ void CTapeGetDriveParameters::Dump( CDumpContext& dump_context ) const
       temp_string += TEXT( "TAPE_DRIVE_LOCK_UNLK_IMMED" );
    }
 
-   if ( features_high & TAPE_DRIVE_SET_ECC )
+   if ( features_high bitand TAPE_DRIVE_SET_ECC )
    {
       if ( temp_string.GetLength() > 0 )
       {
@@ -458,7 +458,7 @@ void CTapeGetDriveParameters::Dump( CDumpContext& dump_context ) const
       temp_string += TEXT( "TAPE_DRIVE_SET_ECC" );
    }
 
-   if ( features_high & TAPE_DRIVE_SET_COMPRESSION )
+   if ( features_high bitand TAPE_DRIVE_SET_COMPRESSION )
    {
       if ( temp_string.GetLength() > 0 )
       {
@@ -468,7 +468,7 @@ void CTapeGetDriveParameters::Dump( CDumpContext& dump_context ) const
       temp_string += TEXT( "TAPE_DRIVE_SET_COMPRESSION" );
    }
 
-   if ( features_high & TAPE_DRIVE_SET_PADDING )
+   if ( features_high bitand TAPE_DRIVE_SET_PADDING )
    {
       if ( temp_string.GetLength() > 0 )
       {
@@ -478,7 +478,7 @@ void CTapeGetDriveParameters::Dump( CDumpContext& dump_context ) const
       temp_string += TEXT( "TAPE_DRIVE_SET_PADDING" );
    }
 
-   if ( features_high & TAPE_DRIVE_SET_REPORT_SMKS )
+   if ( features_high bitand TAPE_DRIVE_SET_REPORT_SMKS )
    {
       if ( temp_string.GetLength() > 0 )
       {
@@ -488,7 +488,7 @@ void CTapeGetDriveParameters::Dump( CDumpContext& dump_context ) const
       temp_string += TEXT( "TAPE_DRIVE_SET_REPORT_SMKS" );
    }
 
-   if ( features_high & TAPE_DRIVE_ABSOLUTE_BLK )
+   if ( features_high bitand TAPE_DRIVE_ABSOLUTE_BLK )
    {
       if ( temp_string.GetLength() > 0 )
       {
@@ -498,7 +498,7 @@ void CTapeGetDriveParameters::Dump( CDumpContext& dump_context ) const
       temp_string += TEXT( "TAPE_DRIVE_ABSOLUTE_BLK" );
    }
 
-   if ( features_high & TAPE_DRIVE_ABS_BLK_IMMED )
+   if ( features_high bitand TAPE_DRIVE_ABS_BLK_IMMED )
    {
       if ( temp_string.GetLength() > 0 )
       {
@@ -508,7 +508,7 @@ void CTapeGetDriveParameters::Dump( CDumpContext& dump_context ) const
       temp_string += TEXT( "TAPE_DRIVE_ABS_BLK_IMMED" );
    }
 
-   if ( features_high & TAPE_DRIVE_LOGICAL_BLK )
+   if ( features_high bitand TAPE_DRIVE_LOGICAL_BLK )
    {
       if ( temp_string.GetLength() > 0 )
       {
@@ -518,7 +518,7 @@ void CTapeGetDriveParameters::Dump( CDumpContext& dump_context ) const
       temp_string += TEXT( "TAPE_DRIVE_LOGICAL_BLK" );
    }
 
-   if ( features_high & TAPE_DRIVE_LOG_BLK_IMMED )
+   if ( features_high bitand TAPE_DRIVE_LOG_BLK_IMMED )
    {
       if ( temp_string.GetLength() > 0 )
       {
@@ -528,7 +528,7 @@ void CTapeGetDriveParameters::Dump( CDumpContext& dump_context ) const
       temp_string += TEXT( "TAPE_DRIVE_LOG_BLK_IMMED" );
    }
 
-   if ( features_high & TAPE_DRIVE_END_OF_DATA )
+   if ( features_high bitand TAPE_DRIVE_END_OF_DATA )
    {
       if ( temp_string.GetLength() > 0 )
       {
@@ -538,7 +538,7 @@ void CTapeGetDriveParameters::Dump( CDumpContext& dump_context ) const
       temp_string += TEXT( "TAPE_DRIVE_END_OF_DATA" );
    }
 
-   if ( features_high & TAPE_DRIVE_RELATIVE_BLKS )
+   if ( features_high bitand TAPE_DRIVE_RELATIVE_BLKS )
    {
       if ( temp_string.GetLength() > 0 )
       {
@@ -548,7 +548,7 @@ void CTapeGetDriveParameters::Dump( CDumpContext& dump_context ) const
       temp_string += TEXT( "TAPE_DRIVE_RELATIVE_BLKS" );
    }
 
-   if ( features_high & TAPE_DRIVE_FILEMARKS )
+   if ( features_high bitand TAPE_DRIVE_FILEMARKS )
    {
       if ( temp_string.GetLength() > 0 )
       {
@@ -558,7 +558,7 @@ void CTapeGetDriveParameters::Dump( CDumpContext& dump_context ) const
       temp_string += TEXT( "TAPE_DRIVE_FILEMARKS" );
    }
 
-   if ( features_high & TAPE_DRIVE_SEQUENTIAL_FMKS )
+   if ( features_high bitand TAPE_DRIVE_SEQUENTIAL_FMKS )
    {
       if ( temp_string.GetLength() > 0 )
       {
@@ -568,7 +568,7 @@ void CTapeGetDriveParameters::Dump( CDumpContext& dump_context ) const
       temp_string += TEXT( "TAPE_DRIVE_SEQUENTIAL_FMKS" );
    }
 
-   if ( features_high & TAPE_DRIVE_SETMARKS )
+   if ( features_high bitand TAPE_DRIVE_SETMARKS )
    {
       if ( temp_string.GetLength() > 0 )
       {
@@ -578,7 +578,7 @@ void CTapeGetDriveParameters::Dump( CDumpContext& dump_context ) const
       temp_string += TEXT( "TAPE_DRIVE_SETMARKS" );
    }
 
-   if ( features_high & TAPE_DRIVE_SEQUENTIAL_SMKS )
+   if ( features_high bitand TAPE_DRIVE_SEQUENTIAL_SMKS )
    {
       if ( temp_string.GetLength() > 0 )
       {
@@ -588,7 +588,7 @@ void CTapeGetDriveParameters::Dump( CDumpContext& dump_context ) const
       temp_string += TEXT( "TAPE_DRIVE_SEQUENTIAL_SMKS" );
    }
 
-   if ( features_high & TAPE_DRIVE_REVERSE_POSITION )
+   if ( features_high bitand TAPE_DRIVE_REVERSE_POSITION )
    {
       if ( temp_string.GetLength() > 0 )
       {
@@ -598,7 +598,7 @@ void CTapeGetDriveParameters::Dump( CDumpContext& dump_context ) const
       temp_string += TEXT( "TAPE_DRIVE_REVERSE_POSITION" );
    }
 
-   if ( features_high & TAPE_DRIVE_SPACE_IMMEDIATE )
+   if ( features_high bitand TAPE_DRIVE_SPACE_IMMEDIATE )
    {
       if ( temp_string.GetLength() > 0 )
       {
@@ -608,7 +608,7 @@ void CTapeGetDriveParameters::Dump( CDumpContext& dump_context ) const
       temp_string += TEXT( "TAPE_DRIVE_SPACE_IMMEDIATE" );
    }
 
-   if ( features_high & TAPE_DRIVE_WRITE_SETMARKS )
+   if ( features_high bitand TAPE_DRIVE_WRITE_SETMARKS )
    {
       if ( temp_string.GetLength() > 0 )
       {
@@ -618,7 +618,7 @@ void CTapeGetDriveParameters::Dump( CDumpContext& dump_context ) const
       temp_string += TEXT( "TAPE_DRIVE_WRITE_SETMARKS" );
    }
 
-   if ( features_high & TAPE_DRIVE_WRITE_FILEMARKS )
+   if ( features_high bitand TAPE_DRIVE_WRITE_FILEMARKS )
    {
       if ( temp_string.GetLength() > 0 )
       {
@@ -628,7 +628,7 @@ void CTapeGetDriveParameters::Dump( CDumpContext& dump_context ) const
       temp_string += TEXT( "TAPE_DRIVE_WRITE_FILEMARKS" );
    }
 
-   if ( features_high & TAPE_DRIVE_WRITE_SHORT_FMKS )
+   if ( features_high bitand TAPE_DRIVE_WRITE_SHORT_FMKS )
    {
       if ( temp_string.GetLength() > 0 )
       {
@@ -638,7 +638,7 @@ void CTapeGetDriveParameters::Dump( CDumpContext& dump_context ) const
       temp_string += TEXT( "TAPE_DRIVE_WRITE_SHORT_FMKS" );
    }
 
-   if ( features_high & TAPE_DRIVE_WRITE_LONG_FMKS )
+   if ( features_high bitand TAPE_DRIVE_WRITE_LONG_FMKS )
    {
       if ( temp_string.GetLength() > 0 )
       {
@@ -648,7 +648,7 @@ void CTapeGetDriveParameters::Dump( CDumpContext& dump_context ) const
       temp_string += TEXT( "TAPE_DRIVE_WRITE_LONG_FMKS" );
    }
 
-   if ( features_high & TAPE_DRIVE_WRITE_MARK_IMMED )
+   if ( features_high bitand TAPE_DRIVE_WRITE_MARK_IMMED )
    {
       if ( temp_string.GetLength() > 0 )
       {
@@ -658,7 +658,7 @@ void CTapeGetDriveParameters::Dump( CDumpContext& dump_context ) const
       temp_string += TEXT( "TAPE_DRIVE_WRITE_MARK_IMMED" );
    }
 
-   if ( features_high & TAPE_DRIVE_FORMAT )
+   if ( features_high bitand TAPE_DRIVE_FORMAT )
    {
       if ( temp_string.GetLength() > 0 )
       {
@@ -668,7 +668,7 @@ void CTapeGetDriveParameters::Dump( CDumpContext& dump_context ) const
       temp_string += TEXT( "TAPE_DRIVE_FORMAT" );
    }
 
-   if ( features_high & TAPE_DRIVE_FORMAT_IMMEDIATE )
+   if ( features_high bitand TAPE_DRIVE_FORMAT_IMMEDIATE )
    {
       if ( temp_string.GetLength() > 0 )
       {

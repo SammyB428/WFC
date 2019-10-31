@@ -1106,9 +1106,9 @@ void CSimpleSocket::SetAddress( _In_z_ LPCTSTR address_string ) noexcept
 
       SIZE_T index = 0;
 
-      BOOL exit_loop = FALSE;
+      bool exit_loop = FALSE;
 
-      while( index < address.length() and exit_loop == FALSE )
+      while( index < address.length() and exit_loop == false )
       {
          if ( address.at( index ) != '.' and not iswdigit( address.at( index ) ) )
          {
@@ -1117,7 +1117,7 @@ void CSimpleSocket::SetAddress( _In_z_ LPCTSTR address_string ) noexcept
             ** of xxx.xxx.xxx.xxx type address and therefore must be a host name
             */
 
-            exit_loop = TRUE;
+            exit_loop = true;
          }
          else
          {
@@ -1139,9 +1139,9 @@ void CSimpleSocket::SetAddress( _In_z_ LPCTSTR address_string ) noexcept
 
 #endif
 
-      if ( exit_loop != FALSE ) // exit_loop is FALSE when we do not have a dotted IP address
+      if ( exit_loop != false ) // exit_loop is FALSE when we do not have a dotted IP address
       {
-         if (not ( m_Options & optionsDontResolveHostName ) )
+         if (is_flagged(m_Options, optionsDontResolveHostName) == false)
          {
             host_entry_p = m_Thunk_p->gethostbyname( ascii_address_string );
          }
@@ -1172,7 +1172,7 @@ void CSimpleSocket::SetAddress( _In_z_ LPCTSTR address_string ) noexcept
          }
 #endif
 
-         if (not ( m_Options & optionsDontResolveHostName ) )
+         if (is_flagged( m_Options, optionsDontResolveHostName ) == false )
          {
             ULONG internet_address = 0L;
 
@@ -1412,7 +1412,7 @@ void CSimpleSocket::SetPort( __in short const p ) noexcept
    ** Now go find a name for this port . . .
    */
 
-   if ( m_Options & optionsDontResolvePortNumber )
+   if ( is_flagged( m_Options, optionsDontResolvePortNumber ) == true )
    {
       // The user doesn't care what the friendly name of the port is,
       // they are concerned with speed.

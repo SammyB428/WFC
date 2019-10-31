@@ -194,7 +194,7 @@ class CFile64
               return( false );
           }
 
-          if ( attributes & FILE_ATTRIBUTE_DIRECTORY )
+          if (is_flagged( attributes, FILE_ATTRIBUTE_DIRECTORY ) == true )
           {
               return( true );
           }
@@ -211,7 +211,7 @@ class CFile64
               return( false );
           }
 
-          if ( attributes & FILE_ATTRIBUTE_DIRECTORY )
+          if (is_flagged( attributes, FILE_ATTRIBUTE_DIRECTORY ) == true )
           {
               return( true );
           }
@@ -330,7 +330,7 @@ inline constexpr _Check_return_ UINT read_file_open_mode(void) noexcept
 // Create the file for writing, deny writes, allow deleting
 inline constexpr _Check_return_ UINT create_for_writing(void) noexcept
 {
-    return(static_cast<UINT>(static_cast<UINT>(CFile64::OpenFlags::modeCreate) | static_cast<UINT>(CFile64::OpenFlags::modeWrite) bitor static_cast<UINT>(CFile64::OpenFlags::shareAllowDelete) bitor static_cast<UINT>(CFile64::OpenFlags::shareDenyWrite)));
+    return(static_cast<UINT>(static_cast<UINT>(CFile64::OpenFlags::modeCreate) bitor static_cast<UINT>(CFile64::OpenFlags::modeWrite) bitor static_cast<UINT>(CFile64::OpenFlags::shareAllowDelete) bitor static_cast<UINT>(CFile64::OpenFlags::shareDenyWrite)));
 }
 
 // Open the file for reading, deny none and delete on close

@@ -406,57 +406,57 @@ void CSerialFile::Dump( CDumpContext& dump_context ) const
    {
       dump_context << TEXT( " ( " );
 
-      if ( m_CommunicationErrorCodes & CE_BREAK )
+      if ( m_CommunicationErrorCodes bitand CE_BREAK )
       {
          dump_context << TEXT( "CE_BREAK " );
       }
 
-      if ( m_CommunicationErrorCodes & CE_FRAME )
+      if ( m_CommunicationErrorCodes bitand CE_FRAME )
       {
          dump_context << TEXT( "CE_FRAME " );
       }
 
-      if ( m_CommunicationErrorCodes & CE_IOE )
+      if ( m_CommunicationErrorCodes bitand CE_IOE )
       {
          dump_context << TEXT( "CE_IOE " );
       }
 
-      if ( m_CommunicationErrorCodes & CE_MODE )
+      if ( m_CommunicationErrorCodes bitand CE_MODE )
       {
          dump_context << TEXT( "CE_MODE " );
       }
 
-      if ( m_CommunicationErrorCodes & CE_OVERRUN )
+      if ( m_CommunicationErrorCodes bitand CE_OVERRUN )
       {
          dump_context << TEXT( "CE_OVERRUN " );
       }
 
-      if ( m_CommunicationErrorCodes & CE_RXOVER )
+      if ( m_CommunicationErrorCodes bitand CE_RXOVER )
       {
          dump_context << TEXT( "CE_RXOVER " );
       }
 
-      if ( m_CommunicationErrorCodes & CE_RXPARITY )
+      if ( m_CommunicationErrorCodes bitand CE_RXPARITY )
       {
          dump_context << TEXT( "CE_RXPARITY " );
       }
 
-      if ( m_CommunicationErrorCodes & CE_TXFULL )
+      if ( m_CommunicationErrorCodes bitand CE_TXFULL )
       {
          dump_context << TEXT( "CE_TXFULL " );
       }
 
-      if ( m_CommunicationErrorCodes & CE_DNS )
+      if ( m_CommunicationErrorCodes bitand CE_DNS )
       {
          dump_context << TEXT( "CE_DNS " );
       }
 
-      if ( m_CommunicationErrorCodes & CE_PTO )
+      if ( m_CommunicationErrorCodes bitand CE_PTO )
       {
          dump_context << TEXT( "CE_PTO " );
       }
 
-      if ( m_CommunicationErrorCodes & CE_OOP )
+      if ( m_CommunicationErrorCodes bitand CE_OOP )
       {
          dump_context << TEXT( "CE_OOP " );
       }
@@ -831,20 +831,20 @@ void CSerialFile::m_ClearError(__in int const ) noexcept
 
       ::ZeroMemory( error_message, sizeof( error_message ) );
 
-      if ( m_CommunicationErrorCodes & CE_BREAK )
+      if ( m_CommunicationErrorCodes bitand CE_BREAK )
       {
          _tcscat_s( error_message, std::size( error_message ), TEXT( "\r\nThe hardware detected a break condition. (CE_BREAK);" ) );
       }
 
 #endif // _DEBUG
 
-      if ( m_CommunicationErrorCodes & CE_FRAME )
+      if ( is_flagged(m_CommunicationErrorCodes, CE_FRAME) == true )
       {
 #if defined( _DEBUG )
          _tcscat_s( error_message, std::size( error_message ), TEXT( "\r\nThe hardware detected a framing error. (CE_FRAME);" ) );
 #endif // _DEBUG
 
-         if ( m_PurgeBufferOnError != FALSE )
+         if ( m_PurgeBufferOnError == true )
          {
             (void) Purge( purgeClearInputBuffer );
 
@@ -858,24 +858,24 @@ void CSerialFile::m_ClearError(__in int const ) noexcept
 
 #if defined( _DEBUG )
 
-      if ( m_CommunicationErrorCodes & CE_IOE )
+      if ( m_CommunicationErrorCodes bitand CE_IOE )
       {
          _tcscat_s( error_message, std::size( error_message ), TEXT( "\r\nAn I/O error occurred during communications with the device. (CE_IOE);" ) );
       }
 
-      if ( m_CommunicationErrorCodes & CE_MODE )
+      if ( m_CommunicationErrorCodes bitand CE_MODE )
       {
          _tcscat_s( error_message, std::size( error_message ), TEXT( "\r\nThe requested mode is not supported or the hCommDev parameter is invalid. (CE_MODE);" ) );
       }
 
-      if ( m_CommunicationErrorCodes & CE_OVERRUN )
+      if ( m_CommunicationErrorCodes bitand CE_OVERRUN )
       {
          _tcscat_s( error_message, std::size( error_message ), TEXT( "\r\nA character-buffer overrun has occurred. The next character is lost. (CE_OVERRUN);" ) );
       }
 
 #endif // _DEBUG
 
-      if ( m_CommunicationErrorCodes & CE_RXOVER )
+      if ( is_flagged(m_CommunicationErrorCodes, CE_RXOVER) == true )
       {
          m_LastError = CE_RXOVER;
 #if defined( _DEBUG )
@@ -885,27 +885,27 @@ void CSerialFile::m_ClearError(__in int const ) noexcept
 
 #if defined( _DEBUG )
 
-      if ( m_CommunicationErrorCodes & CE_RXPARITY )
+      if ( m_CommunicationErrorCodes bitand CE_RXPARITY )
       {
          _tcscat_s( error_message, std::size( error_message ), TEXT( "\r\n.The hardware detected a parity error. (CE_RXPARITY);" ) );
       }
 
-      if ( m_CommunicationErrorCodes & CE_TXFULL )
+      if ( m_CommunicationErrorCodes bitand CE_TXFULL )
       {
          _tcscat_s( error_message, std::size( error_message ), TEXT( "\r\nThe application tried to transmit a character, but the output buffer was full. (CE_TXFULL);" ) );
       }
 
-      if ( m_CommunicationErrorCodes & CE_DNS )
+      if ( m_CommunicationErrorCodes bitand CE_DNS )
       {
          _tcscat_s( error_message, std::size( error_message ), TEXT( "\r\nThe parallel device is not selected. (CE_DNS);" ) );
       }
 
-      if ( m_CommunicationErrorCodes & CE_PTO )
+      if ( m_CommunicationErrorCodes bitand CE_PTO )
       {
          _tcscat_s( error_message, std::size( error_message ), TEXT( "\r\nA time-out occurred on the parallel device. (CE_PTO);" ) );
       }
 
-      if ( m_CommunicationErrorCodes & CE_OOP )
+      if ( m_CommunicationErrorCodes bitand CE_OOP )
       {
          _tcscat_s( error_message, std::size( error_message ), TEXT( "\r\nThe parallel device signaled that it is out of paper. (CE_OOP);" ) );
       }
@@ -1517,7 +1517,7 @@ void CSerialFile::SetFlowControl( __in DWORD const flow_control ) noexcept
    // to get hardware flow control work properly
    // 1998-07-14
 
-   if ( flow_control & flowRtsCts )
+   if ( is_flagged( flow_control, flowRtsCts ) == true )
    {
       device_control_block.fRtsControl  = RTS_CONTROL_HANDSHAKE;
       device_control_block.fOutxCtsFlow = TRUE;
@@ -1528,7 +1528,7 @@ void CSerialFile::SetFlowControl( __in DWORD const flow_control ) noexcept
       device_control_block.fOutxCtsFlow = FALSE;
    }
 
-   if ( flow_control & flowDtrDsr )
+   if ( is_flagged(flow_control, flowDtrDsr) == true )
    {
       device_control_block.fDtrControl  = DTR_CONTROL_HANDSHAKE;
       device_control_block.fOutxDsrFlow = TRUE;
@@ -1539,7 +1539,7 @@ void CSerialFile::SetFlowControl( __in DWORD const flow_control ) noexcept
       device_control_block.fOutxDsrFlow = FALSE;
    }
 
-   if ( flow_control & flowSoftware )
+   if ( is_flagged(flow_control, flowSoftware) == true )
    {
       device_control_block.fInX     = TRUE;
       device_control_block.fOutX    = TRUE;
@@ -1581,13 +1581,13 @@ void CSerialFile::SetOutputBufferSize( __in DWORD const buffer_size ) noexcept
    m_OutputBufferSize = buffer_size;
 }
 
-_Check_return_ BOOL CSerialFile::SetPurgeBufferOnError( __in BOOL const purge_buffer ) noexcept
+_Check_return_ bool CSerialFile::SetPurgeBufferOnError( __in bool const purge_buffer ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
-   BOOL return_value = m_PurgeBufferOnError;
+   auto return_value = m_PurgeBufferOnError;
 
-   m_PurgeBufferOnError = ( purge_buffer == FALSE ) ? FALSE : TRUE;
+   m_PurgeBufferOnError = purge_buffer;
 
    return( return_value );
 }

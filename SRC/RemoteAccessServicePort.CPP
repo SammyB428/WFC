@@ -265,12 +265,12 @@ void CRemoteAccessServicePort::Dump( CDumpContext& dump_context ) const
 
    std::wstring flags;
 
-   if ( Flags & USER_AUTHENTICATED )
+   if ( Flags bitand USER_AUTHENTICATED )
    {
       flags = TEXT( "USER_AUTHENTICATED" );
    }
 
-   if ( Flags & MESSENGER_PRESENT )
+   if ( Flags bitand MESSENGER_PRESENT )
    {
       if ( flags.GetLength() > 0 )
       {
@@ -280,7 +280,7 @@ void CRemoteAccessServicePort::Dump( CDumpContext& dump_context ) const
       flags += TEXT( "MESSENGER_PRESENT" );
    }
 
-   if ( Flags & PPP_CLIENT )
+   if ( Flags bitand PPP_CLIENT )
    {
       if ( flags.GetLength() > 0 )
       {
@@ -290,7 +290,7 @@ void CRemoteAccessServicePort::Dump( CDumpContext& dump_context ) const
       flags += TEXT( "PPP_CLIENT" );
    }
 
-   if ( Flags & GATEWAY_ACTIVE )
+   if ( Flags bitand GATEWAY_ACTIVE )
    {
       if ( flags.GetLength() > 0 )
       {
@@ -300,7 +300,7 @@ void CRemoteAccessServicePort::Dump( CDumpContext& dump_context ) const
       flags += TEXT( "GATEWAY_ACTIVE" );
    }
 
-   if ( Flags & REMOTE_LISTEN )
+   if ( Flags bitand REMOTE_LISTEN )
    {
       if ( flags.GetLength() > 0 )
       {
@@ -310,7 +310,7 @@ void CRemoteAccessServicePort::Dump( CDumpContext& dump_context ) const
       flags += TEXT( "REMOTE_LISTEN" );
    }
 
-   if ( Flags & PORT_MULTILINKED )
+   if ( Flags bitand PORT_MULTILINKED )
    {
       if ( flags.GetLength() > 0 )
       {

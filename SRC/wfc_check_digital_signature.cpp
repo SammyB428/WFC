@@ -63,7 +63,7 @@ static void _to_hex( __in_bcount( number_of_bytes ) uint8_t const * buffer, __in
         {
             value = buffer[ buffer_index ];
             destination_string[ string_index     ] = static_hex_digits[ value >> 4 ];
-            destination_string[ string_index + 1 ] = static_hex_digits[ value & 0x0F ];
+            destination_string[ string_index + 1 ] = static_hex_digits[ value bitand 0x0F ];
             destination_string[ string_index + 2 ] = 0x00;
 
             string_index += 2;

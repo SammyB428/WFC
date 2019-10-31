@@ -253,7 +253,7 @@ public:
       void m_AppendAttributes( _Inout_ std::vector<uint8_t>& data ) const noexcept;
       void m_AppendChildren( _Inout_ std::vector<uint8_t>& data ) const noexcept;
       void m_DecrementIndentation( void ) const noexcept;
-      void m_GetTag( _In_ std::wstring const& xml_data, _Inout_ std::wstring& tag ) noexcept;
+      void m_GetTag( _In_ std::wstring_view xml_data, _Inout_ std::wstring& tag ) noexcept;
       void m_IncrementIndentation( void ) const noexcept;
       inline constexpr void m_Initialize( void ) noexcept { m_Parent = nullptr; };
       _Check_return_ bool m_ParseCDATASection( _In_ std::wstring_view tag, _In_ CDataParser const& parser ) noexcept;

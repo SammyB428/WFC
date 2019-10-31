@@ -76,7 +76,7 @@ inline _Check_return_ int CReedSolomonErrorCorrectionCode::m_Mod( __in int x ) n
    while ( x >= m_BlockSize )
    {
       x -= m_BlockSize;
-      x = ( x >> m_NumberOfBitsPerSymbol ) + ( x & m_BlockSize );
+      x = ( x >> m_NumberOfBitsPerSymbol ) + ( x bitand m_BlockSize );
    }
 
    return( x );
@@ -552,7 +552,7 @@ _Check_return_ int CReedSolomonErrorCorrectionCode::m_DecodeChunk(__inout std::v
 
          /* lambda[i+1] for i even is the formal derivative lambda_pr of lambda[i] */
 
-         for ( i = std::min( deg_lambda, m_BlockSize - m_NumberOfSymbolsPerBlock - 1 ) & ~1; i >= 0; i -=2 )
+         for ( i = std::min( deg_lambda, m_BlockSize - m_NumberOfSymbolsPerBlock - 1 ) bitand compl 1; i >= 0; i -=2 )
          {
             if( lambda[ i + 1 ] != m_BlockSize )
             {

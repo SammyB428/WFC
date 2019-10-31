@@ -144,8 +144,8 @@ _Check_return_ uint32_t CRandomNumberGenerator2::m_LoadMersenneTwister( void ) n
 
     s1 = m_State[0], *p0 = *pM xor (mixBits(s0, s1) >> 1) xor (loBit(s1) ? K : 0U);
     s1 xor_eq (s1 >> 11);
-    s1 xor_eq (s1 <<  7) & 0x9D2C5680U;
-    s1 xor_eq (s1 << 15) & 0xEFC60000U;
+    s1 xor_eq (s1 <<  7) bitand 0x9D2C5680U;
+    s1 xor_eq (s1 << 15) bitand 0xEFC60000U;
     return(s1 xor (s1 >> 18));
  }
 
@@ -345,8 +345,8 @@ _Check_return_ uint32_t CRandomNumberGenerator2::GetInteger( void ) noexcept
 
    return_value  = *m_Next++;
    return_value xor_eq (return_value >> 11);
-   return_value xor_eq (return_value <<  7) & 0x9D2C5680U;
-   return_value xor_eq (return_value << 15) & 0xEFC60000U;
+   return_value xor_eq (return_value <<  7) bitand 0x9D2C5680U;
+   return_value xor_eq (return_value << 15) bitand 0xEFC60000U;
 
    return( return_value xor (return_value >> 18) );
 }
@@ -434,7 +434,7 @@ void CRandomNumberGenerator2::SetSeed( _In_ uint32_t const new_seed ) noexcept
     int    j = 0;
 
     for(m_Left=0, *s++=x, j=N; --j;
-        *s++ = (x*=69069U) & 0xFFFFFFFF);
+        *s++ = (x*=69069U) bitand 0xFFFFFFFF);
 }
 
 CRandomNumberGenerator2::operator char() noexcept

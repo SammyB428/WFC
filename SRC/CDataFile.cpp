@@ -57,7 +57,7 @@ void CDataChunk::GetIdentifier( __in uint32_t const id, __out std::wstring& stri
 
    TCHAR character = 0;
 
-   character = (BYTE) ( id & 0xFF );
+   character = (BYTE) ( id bitand 0xFF );
 
    if ( character == 0 )
    {
@@ -70,7 +70,7 @@ void CDataChunk::GetIdentifier( __in uint32_t const id, __out std::wstring& stri
 
    identifier >>= 8;
 
-   character = (BYTE) ( identifier & 0xFF );
+   character = (BYTE) ( identifier bitand 0xFF );
 
    if ( character == 0 )
    {
@@ -81,7 +81,7 @@ void CDataChunk::GetIdentifier( __in uint32_t const id, __out std::wstring& stri
 
    identifier >>= 8;
 
-   character = (BYTE) ( identifier & 0xFF );
+   character = (BYTE) ( identifier bitand 0xFF );
 
    if ( character == 0 )
    {
@@ -92,7 +92,7 @@ void CDataChunk::GetIdentifier( __in uint32_t const id, __out std::wstring& stri
 
    identifier >>= 8;
 
-   character = (BYTE) ( identifier & 0xFF );
+   character = (BYTE) ( identifier bitand 0xFF );
 
    if ( character == 0 )
    {
@@ -155,16 +155,16 @@ _Check_return_ bool CDataFile::AddData( __in uint32_t const identifier, __in_bco
 
    uint32_t temp_long = identifier;
 
-   uint8_t byte_1 = (uint8_t) (temp_long & 0xFF );
+   uint8_t byte_1 = (uint8_t) (temp_long bitand 0xFF );
    temp_long >>= 8;
 
-   uint8_t byte_2 = (uint8_t) (temp_long & 0xFF );
+   uint8_t byte_2 = (uint8_t) (temp_long bitand 0xFF );
    temp_long >>= 8;
 
-   uint8_t byte_3 = (uint8_t) (temp_long & 0xFF );
+   uint8_t byte_3 = (uint8_t) (temp_long bitand 0xFF );
    temp_long >>= 8;
 
-   uint8_t byte_4 = (uint8_t) (temp_long & 0xFF );
+   uint8_t byte_4 = (uint8_t) (temp_long bitand 0xFF );
 
    uint8_t buffer[ 9 ];
 
@@ -179,16 +179,16 @@ _Check_return_ bool CDataFile::AddData( __in uint32_t const identifier, __in_bco
 
    temp_long = (uint32_t) number_of_bytes;
 
-   byte_1 = (uint8_t) (temp_long & 0xFF );
+   byte_1 = (uint8_t) (temp_long bitand 0xFF );
    temp_long >>= 8;
 
-   byte_2 = (uint8_t) (temp_long & 0xFF );
+   byte_2 = (uint8_t) (temp_long bitand 0xFF );
    temp_long >>= 8;
 
-   byte_3 = (uint8_t) (temp_long & 0xFF );
+   byte_3 = (uint8_t) (temp_long bitand 0xFF );
    temp_long >>= 8;
 
-   byte_4 = (uint8_t) (temp_long & 0xFF );
+   byte_4 = (uint8_t) (temp_long bitand 0xFF );
 
    buffer[ 4 ] = byte_1;
    buffer[ 5 ] = byte_2;

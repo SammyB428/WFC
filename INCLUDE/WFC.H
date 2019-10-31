@@ -48,8 +48,6 @@
 #pragma message( "WFC Release 77." )
 #endif // WFC_SILENT
 
-#define is_flagged( _x, _y ) ( ( _x & _y ) == _y )
-
 #define TAB_CHARACTER   (9)
 #define CARRIAGE_RETURN (13)
 #define LINE_FEED       (10)
@@ -440,6 +438,11 @@ extern "C" {
 #include <commdlg.h> // For GetFileTitle() in CFile64
 #include <wininet.h> // For InternetOpenUrl() etc
 
+inline constexpr _Check_return_ bool is_flagged(_In_ uint64_t const _x, _In_ uint64_t const _y) noexcept
+{
+    return(((_x bitand _y) == _y) ? true : false);
+}
+
 #if defined ( __MINGW32__ ) // windows.h doesn't ole2.h include by default 
 #include <ole2.h>           // Note: COM only works with new ABI (-fvtable-thunks)
 #endif
@@ -692,7 +695,7 @@ inline _Check_return_ bool is_avx_supported( void ) noexcept
         // Check to see if the OS will save the YMM registers 
         auto const xcr_feature_mask = _xgetbv( _XCR_XFEATURE_ENABLED_MASK );
 
-        if ( ( xcr_feature_mask & 6 ) == 6 )
+        if (is_flagged( xcr_feature_mask, 6 ) == true )
         {
             return( true );
         }

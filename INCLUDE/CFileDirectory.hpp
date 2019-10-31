@@ -138,7 +138,7 @@ class CFileDirectory
 
           if ( attributes != INVALID_FILE_ATTRIBUTES )
           {
-              if ( attributes & FILE_ATTRIBUTE_DIRECTORY )
+              if (is_flagged( attributes, FILE_ATTRIBUTE_DIRECTORY ) == true )
               {
                   return( true );
               }

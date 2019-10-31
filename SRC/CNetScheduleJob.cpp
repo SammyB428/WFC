@@ -306,12 +306,12 @@ void CNetworkScheduleJob::Dump( CDumpContext& dump_context ) const
 
    dump_context << TEXT( "   Flags                            = " ) << Flags                            << TEXT( " ( " );
 
-   if ( Flags & JOB_RUN_PERIODICALLY )
+   if ( Flags bitand JOB_RUN_PERIODICALLY )
    {
       temp_string = TEXT( "JOB_RUN_PERIODICALLY" );
    }
 
-   if ( Flags & JOB_EXEC_ERROR )
+   if ( Flags bitand JOB_EXEC_ERROR )
    {
       if ( temp_string.GetLength() > 0 )
       {
@@ -321,7 +321,7 @@ void CNetworkScheduleJob::Dump( CDumpContext& dump_context ) const
       temp_string += TEXT( "JOB_EXEC_ERROR" );
    }
 
-   if ( Flags & JOB_RUNS_TODAY )
+   if ( Flags bitand JOB_RUNS_TODAY )
    {
       if ( temp_string.GetLength() > 0 )
       {
@@ -331,7 +331,7 @@ void CNetworkScheduleJob::Dump( CDumpContext& dump_context ) const
       temp_string += TEXT( "JOB_RUNS_TODAY" );
    }
 
-   if ( Flags & JOB_ADD_CURRENT_DATE )
+   if ( Flags bitand JOB_ADD_CURRENT_DATE )
    {
       if ( temp_string.GetLength() > 0 )
       {
@@ -341,7 +341,7 @@ void CNetworkScheduleJob::Dump( CDumpContext& dump_context ) const
       temp_string += TEXT( "JOB_ADD_CURRENT_DATE" );
    }
 
-   if ( Flags & JOB_NONINTERACTIVE )
+   if ( Flags bitand JOB_NONINTERACTIVE )
    {
       if ( temp_string.GetLength() > 0 )
       {

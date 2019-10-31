@@ -214,14 +214,14 @@ _Check_return_ DWORD CRandomNumberGenerator::GetInteger( void ) noexcept
    {
       hash_value = ( hash_value << 4 ) + buffer[ index ];
 
-      temp_value = hash_value & 0xF0000000L;
+      temp_value = hash_value bitand 0xF0000000L;
 
       if ( temp_value )
       {
          hash_value xor_eq temp_value >> 24;
       }
 
-      hash_value and_eq ~temp_value;
+      hash_value and_eq compl temp_value;
    }
 
    DWORD return_value = static_cast< DWORD >( value );

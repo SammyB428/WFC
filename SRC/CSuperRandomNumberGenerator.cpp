@@ -115,14 +115,14 @@ _Check_return_ DWORD CSuperRandomNumberGenerator::GetInteger( void ) noexcept
    {
       hash_value = ( hash_value << 4 ) + buffer[ index ];
 
-      temp_value = hash_value & 0xF0000000L;
+      temp_value = hash_value bitand 0xF0000000L;
 
       if ( temp_value )
       {
          hash_value xor_eq temp_value >> 24;
       }
 
-      hash_value &= ~temp_value;
+      hash_value and_eq compl temp_value;
    }
 
    DWORD return_value = static_cast< DWORD >( value );
@@ -175,7 +175,7 @@ _Check_return_ double CSuperRandomNumberGenerator::GetValue( void ) noexcept
    {
       m_Index24 = 0;
 
-      for( auto const i : Range(NUMBER_OF_VALUES_TO_SKIP + 1, 1 ) )
+      for( auto const i : Range(NUMBER_OF_VALUES_TO_SKIP + 1, 1) )
       {
          temporary_value = m_Seeds[ m_Index_J24 ] - m_Seeds[ m_Index_I24 ] - m_Carry;
 

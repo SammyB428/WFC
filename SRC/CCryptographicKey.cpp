@@ -405,16 +405,16 @@ _Check_return_ bool CCryptographicKey::Encrypt( std::vector<uint8_t> const&     
          // Now, to correct for the design flaw, add the number of bytes
          // Write the length
 
-         uint8_t const byte_1 = static_cast<uint8_t>(number_of_bytes_to_encrypt & 0xFF);
+         uint8_t const byte_1 = static_cast<uint8_t>(number_of_bytes_to_encrypt bitand 0xFF);
          number_of_bytes_to_encrypt >>= 8;
 
-         uint8_t const byte_2 = static_cast<uint8_t>(number_of_bytes_to_encrypt & 0xFF);
+         uint8_t const byte_2 = static_cast<uint8_t>(number_of_bytes_to_encrypt bitand 0xFF);
          number_of_bytes_to_encrypt >>= 8;
 
-         uint8_t const byte_3 = static_cast<uint8_t>(number_of_bytes_to_encrypt & 0xFF);
+         uint8_t const byte_3 = static_cast<uint8_t>(number_of_bytes_to_encrypt bitand 0xFF);
          number_of_bytes_to_encrypt >>= 8;
 
-         uint8_t const byte_4 = static_cast<uint8_t>(number_of_bytes_to_encrypt & 0xFF);
+         uint8_t const byte_4 = static_cast<uint8_t>(number_of_bytes_to_encrypt bitand 0xFF);
 
          // Make room for the length
 

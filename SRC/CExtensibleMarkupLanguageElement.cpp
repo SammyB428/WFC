@@ -1431,7 +1431,7 @@ void CExtensibleMarkupLanguageElement::m_AddCharacterToOutput( _In_ uint32_t con
     WFC_VALIDATE_POINTER( this );
     WFC_VALIDATE_POINTER( options );
 
-    if ( options & WFC_XML_WRITE_AS_ASCII )
+    if ( is_flagged(options, WFC_XML_WRITE_AS_ASCII) == true)
     {
 #if defined( _DEBUG )
         if ( character > 255 )
@@ -1441,9 +1441,9 @@ void CExtensibleMarkupLanguageElement::m_AddCharacterToOutput( _In_ uint32_t con
 #endif // _DEBUG
         (void) output.push_back( LOBYTE( LOWORD( character ) ) );
     }
-    else if ( options & WFC_XML_WRITE_AS_UNICODE )
+    else if (is_flagged(options, WFC_XML_WRITE_AS_UNICODE) == true)
     {
-        if ( options & WFC_XML_WRITE_AS_BIG_ENDIAN )
+        if (is_flagged(options, WFC_XML_WRITE_AS_BIG_ENDIAN) == true)
         {
             (void) output.push_back( HIBYTE( LOWORD( character ) ) );
             (void) output.push_back( LOBYTE( LOWORD( character ) ) );
@@ -1454,9 +1454,9 @@ void CExtensibleMarkupLanguageElement::m_AddCharacterToOutput( _In_ uint32_t con
             (void) output.push_back( HIBYTE( LOWORD( character ) ) );
         }
     }
-    else if ( options & WFC_XML_WRITE_AS_UCS4 )
+    else if (is_flagged(options, WFC_XML_WRITE_AS_UCS4) == true)
     {
-        if ( options & WFC_XML_WRITE_AS_BIG_ENDIAN )
+        if (is_flagged(options, WFC_XML_WRITE_AS_BIG_ENDIAN) == true)
         {
             // 1234
             (void) output.push_back( HIBYTE( HIWORD( character ) ) );
@@ -1473,22 +1473,22 @@ void CExtensibleMarkupLanguageElement::m_AddCharacterToOutput( _In_ uint32_t con
             (void) output.push_back( HIBYTE( HIWORD( character ) ) );
         }
     }
-    else if ( options & WFC_XML_WRITE_AS_UCS4_UNUSUAL_2143 )
+    else if ( is_flagged(options, WFC_XML_WRITE_AS_UCS4_UNUSUAL_2143) == true)
     {
         (void) output.push_back( LOBYTE( HIWORD( character ) ) );
         (void) output.push_back( HIBYTE( HIWORD( character ) ) );
         (void) output.push_back( LOBYTE( LOWORD( character ) ) );
         (void) output.push_back( HIBYTE( LOWORD( character ) ) );
     }
-    else if ( options & WFC_XML_WRITE_AS_UCS4_UNUSUAL_3412 )
+    else if ( is_flagged( options, WFC_XML_WRITE_AS_UCS4_UNUSUAL_3412) == true)
     {
         (void) output.push_back( HIBYTE( LOWORD( character ) ) );
         (void) output.push_back( LOBYTE( LOWORD( character ) ) );
         (void) output.push_back( HIBYTE( HIWORD( character ) ) );
         (void) output.push_back( LOBYTE( HIWORD( character ) ) );
     }
-    else if ( ( options & WFC_XML_WRITE_AS_UTF8 ) or
-        ( options & WFC_XML_WRITE_AS_UTF7 ) )
+    else if (is_flagged(options, WFC_XML_WRITE_AS_UTF8 ) == true or
+             is_flagged(options, WFC_XML_WRITE_AS_UTF7 ) == true )
     {
         // This is by far the slowest method
 
@@ -1685,22 +1685,21 @@ void CExtensibleMarkupLanguageElement::m_DecrementIndentation( void ) const noex
     WFC_END_CATCH_ALL
 }
 
-void CExtensibleMarkupLanguageElement::m_GetTag( _In_ std::wstring const& xml_data, _Inout_ std::wstring& tag ) noexcept
+void CExtensibleMarkupLanguageElement::m_GetTag( _In_ std::wstring_view xml_data, _Inout_ std::wstring& tag ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
 
     tag.clear();
 
-    std::size_t loop_index      = 0;
-    std::size_t const xml_data_length = xml_data.length();
+    std::size_t loop_index = 0;
 
-    while( loop_index < xml_data_length ) // Cannot be converted to a Range loop
+    while( loop_index < xml_data.length() ) // Cannot be converted to a Range loop
     {
         if ( xml_data.at( loop_index ) == '<' )
         {
             loop_index++;
 
-            while( loop_index < xml_data_length ) // Cannot be converted to a Range loop
+            while( loop_index < xml_data.length() ) // Cannot be converted to a Range loop
             {
                 if ( xml_data.at( loop_index ) == '>' )
                 {
@@ -3052,7 +3051,7 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::m_ParseTag( _In_ std::wstr
 
             m_Contents.assign( right( tag, tag.length() - 4 ) );
 
-            if ( m_Document != nullptr and ( m_Document->GetParseOptions() & WFC_XML_LOOSE_COMMENT_PARSING ) )
+            if ( m_Document != nullptr and ( is_flagged( m_Document->GetParseOptions(), WFC_XML_LOOSE_COMMENT_PARSING) == true ) )
             {
                 location_of_character = m_Contents.find(WSTRING_VIEW(L"-->"));
 
@@ -3854,7 +3853,7 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::m_ParseXMLDeclaration( _In
         parsing_options = m_Document->GetParseOptions();
     }
 
-    if (not ( parsing_options & WFC_XML_IGNORE_CASE_IN_XML_DECLARATION ) )
+    if (is_flagged( parsing_options, WFC_XML_IGNORE_CASE_IN_XML_DECLARATION ) == false )
     {
         // We must begin with lower case xml
 
@@ -3885,7 +3884,7 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::m_ParseXMLDeclaration( _In
         return( false );
     }
 
-    std::wstring attribute_name = string_to_parse.substr( 0, 7 );
+    auto attribute_name = string_to_parse.substr( 0, 7 );
 
     if ( attribute_name.compare(WSTRING_VIEW(L"version")) != I_AM_EQUAL_TO_THAT)
     {
@@ -5037,8 +5036,8 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::Parse( _In_ CParsePoint co
                             // Juro Gottweis (juro@asc.sk) Found a bug here. I was trimming all-white-space
                             // elements when just WFC_XML_ALLOW_AMPERSANDS_IN_ELEMENTS was specified
 
-                            if ( parsing_options & WFC_XML_IGNORE_ALL_WHITE_SPACE_ELEMENTS or
-                                parsing_options & WFC_XML_ALLOW_AMPERSANDS_IN_ELEMENTS )
+                            if ( is_flagged( parsing_options, WFC_XML_IGNORE_ALL_WHITE_SPACE_ELEMENTS) == true or
+                                 is_flagged( parsing_options, WFC_XML_ALLOW_AMPERSANDS_IN_ELEMENTS ) == true )
                             {
                                 if ( sub_element_p->GetType() == ElementType::TextSegment )
                                 {
@@ -5046,7 +5045,7 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::Parse( _In_ CParsePoint co
 
                                     if ( sub_element_p->m_IsAllWhiteSpace == true)
                                     {
-                                        if ( parsing_options & WFC_XML_IGNORE_ALL_WHITE_SPACE_ELEMENTS )
+                                        if ( is_flagged( parsing_options, WFC_XML_IGNORE_ALL_WHITE_SPACE_ELEMENTS ) == true )
                                         {
                                             //WFCTRACE( TEXT( "Removing all white-space element." ) );
                                             RemoveChild( sub_element_p );

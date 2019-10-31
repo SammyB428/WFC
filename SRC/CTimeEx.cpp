@@ -639,7 +639,7 @@ _Check_return_ time_t CTimeEx::m_Make_time_t( __in struct tm const * time_parame
 
    time_2 = days[ tm_time.tm_mon ];
 
-   if ( ! ( time_1 & 3 ) and ( tm_time.tm_mon > 1 ) )
+   if ( ! ( time_1 bitand 3 ) and ( tm_time.tm_mon > 1 ) )
    {
       time_2++;
    }

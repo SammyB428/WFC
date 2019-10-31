@@ -304,7 +304,7 @@ _Check_return_ std::size_t CBase64Coding::Decode(_In_reads_bytes_(number_of_byte
         character_1 = m_DecoderTable[character_1];
         character_2 = m_DecoderTable[character_2];
 
-        byte_to_add = static_cast<uint8_t>(((character_1 << 2) bitor ((character_2 & 0x30) >> 4)));
+        byte_to_add = static_cast<uint8_t>(((character_1 << 2) bitor ((character_2 bitand 0x30) >> 4)));
 
         _ASSERTE(add_index < destination_size);
         destination[add_index] = byte_to_add;
@@ -317,7 +317,7 @@ _Check_return_ std::size_t CBase64Coding::Decode(_In_reads_bytes_(number_of_byte
 
         character_3 = m_DecoderTable[character_3];
 
-        byte_to_add = static_cast<uint8_t>(((((character_2 & 0x0F) << 4) bitor ((character_3 & 0x3C) >> 2))));
+        byte_to_add = static_cast<uint8_t>(((((character_2 bitand 0x0F) << 4) bitor ((character_3 bitand 0x3C) >> 2))));
 
         _ASSERTE(add_index < destination_size);
         destination[add_index] = byte_to_add;
@@ -330,7 +330,7 @@ _Check_return_ std::size_t CBase64Coding::Decode(_In_reads_bytes_(number_of_byte
 
         character_4 = m_DecoderTable[character_4];
 
-        byte_to_add = static_cast<uint8_t>((((character_3 & 0x03) << 6) bitor character_4));
+        byte_to_add = static_cast<uint8_t>((((character_3 bitand 0x03) << 6) bitor character_4));
 
         _ASSERTE(add_index < destination_size);
         destination[add_index] = byte_to_add;
@@ -455,7 +455,7 @@ _Check_return_ bool CBase64Coding::Decode(_In_reads_bytes_(number_of_bytes) uint
         character_1 = m_DecoderTable[character_1];
         character_2 = m_DecoderTable[character_2];
 
-        byte_to_add = static_cast<uint8_t>(((character_1 << 2) bitor ((character_2 & 0x30) >> 4)));
+        byte_to_add = static_cast<uint8_t>(((character_1 << 2) bitor ((character_2 bitand 0x30) >> 4)));
 
         destination[add_index] = byte_to_add;
         add_index++;
@@ -468,7 +468,7 @@ _Check_return_ bool CBase64Coding::Decode(_In_reads_bytes_(number_of_bytes) uint
 
         character_3 = m_DecoderTable[character_3];
 
-        byte_to_add = static_cast<uint8_t>(((((character_2 & 0x0F) << 4) bitor ((character_3 & 0x3C) >> 2))));
+        byte_to_add = static_cast<uint8_t>(((((character_2 bitand 0x0F) << 4) bitor ((character_3 bitand 0x3C) >> 2))));
 
         destination[add_index] = byte_to_add;
         add_index++;
@@ -481,7 +481,7 @@ _Check_return_ bool CBase64Coding::Decode(_In_reads_bytes_(number_of_bytes) uint
 
         character_4 = m_DecoderTable[character_4];
 
-        byte_to_add = static_cast<uint8_t>((((character_3 & 0x03) << 6) bitor character_4));
+        byte_to_add = static_cast<uint8_t>((((character_3 bitand 0x03) << 6) bitor character_4));
 
         destination[add_index] = byte_to_add;
         add_index++;
@@ -615,7 +615,7 @@ _Check_return_ bool CBase64Coding::Decode( _In_ std::wstring const& source, _Ino
       character_1 = m_DecoderTable[ character_1 ];
       character_2 = m_DecoderTable[ character_2 ];
 
-      byte_to_add = static_cast<uint8_t>( ( ( character_1 << 2 ) bitor ( ( character_2 & 0x30 ) >> 4 ) ) );
+      byte_to_add = static_cast<uint8_t>( ( ( character_1 << 2 ) bitor ( ( character_2 bitand 0x30 ) >> 4 ) ) );
 
       destination[ add_index ] = byte_to_add;
       add_index++;
@@ -628,7 +628,7 @@ _Check_return_ bool CBase64Coding::Decode( _In_ std::wstring const& source, _Ino
 
       character_3 = m_DecoderTable[ character_3 ];
 
-      byte_to_add = static_cast<uint8_t>( ( ( ( ( character_2 & 0x0F ) << 4 ) bitor ( ( character_3 & 0x3C ) >> 2 ) ) ) );
+      byte_to_add = static_cast<uint8_t>( ( ( ( ( character_2 bitand 0x0F ) << 4 ) bitor ( ( character_3 bitand 0x3C ) >> 2 ) ) ) );
 
       destination[ add_index ] = byte_to_add;
       add_index++;
@@ -641,7 +641,7 @@ _Check_return_ bool CBase64Coding::Decode( _In_ std::wstring const& source, _Ino
 
       character_4 = m_DecoderTable[ character_4 ];
 
-      byte_to_add = static_cast<uint8_t>( ( ( ( character_3 & 0x03 ) << 6 ) bitor character_4 ) );
+      byte_to_add = static_cast<uint8_t>( ( ( ( character_3 bitand 0x03 ) << 6 ) bitor character_4 ) );
 
       destination[ add_index ] = byte_to_add;
       add_index++;
@@ -701,7 +701,7 @@ _Check_return_ bool CBase64Coding::Encode( _In_ std::vector<uint8_t> const& sour
          // We're at the end of the data to encode
 
          byte_2 = 0;
-         byte_to_add = alphabet[ ( ( ( byte_1 & 0x03 ) << 4 ) bitor ( ( byte_2 & 0xF0 ) >> 4 ) ) ];
+         byte_to_add = alphabet[ ( ( ( byte_1 bitand 0x03 ) << 4 ) bitor ( ( byte_2 bitand 0xF0 ) >> 4 ) ) ];
 
          destination[ add_index ] = byte_to_add;
          add_index++;
@@ -720,7 +720,7 @@ _Check_return_ bool CBase64Coding::Encode( _In_ std::vector<uint8_t> const& sour
          byte_2 = input_buffer[ source_index ];
       }
 
-      byte_to_add = alphabet[ ( ( ( byte_1 & 0x03 ) << 4 ) bitor ( ( byte_2 & 0xF0 ) >> 4 ) ) ];
+      byte_to_add = alphabet[ ( ( ( byte_1 bitand 0x03 ) << 4 ) bitor ( ( byte_2 bitand 0xF0 ) >> 4 ) ) ];
       destination[ add_index ] = byte_to_add;
       add_index++;
 
@@ -731,7 +731,7 @@ _Check_return_ bool CBase64Coding::Encode( _In_ std::vector<uint8_t> const& sour
          // We ran out of bytes, we need to add the last half of byte_2 and pad
          byte_3 = 0;
 
-         byte_to_add = alphabet[ ( ( ( byte_2 & 0x0F ) << 2 ) bitor ( ( byte_3 & 0xC0 ) >> 6 ) ) ];
+         byte_to_add = alphabet[ ( ( ( byte_2 bitand 0x0F ) << 2 ) bitor ( ( byte_3 bitand 0xC0 ) >> 6 ) ) ];
 
          destination[ add_index ] = byte_to_add;
          add_index++;
@@ -749,12 +749,12 @@ _Check_return_ bool CBase64Coding::Encode( _In_ std::vector<uint8_t> const& sour
 
       source_index++;
 
-      byte_to_add = alphabet[ ( ( ( byte_2 & 0x0F ) << 2 ) bitor ( ( byte_3 & 0xC0 ) >> 6 ) ) ];
+      byte_to_add = alphabet[ ( ( ( byte_2 bitand 0x0F ) << 2 ) bitor ( ( byte_3 bitand 0xC0 ) >> 6 ) ) ];
 
       destination[ add_index ] = byte_to_add;
       add_index++;
 
-      byte_to_add = alphabet[ ( byte_3 & 0x3F ) ];
+      byte_to_add = alphabet[ ( byte_3 bitand 0x3F ) ];
 
       destination[ add_index ] = byte_to_add;
       add_index++;
@@ -849,7 +849,7 @@ _Check_return_ bool CBase64Coding::Encode(__in_bcount(number_of_bytes_to_encode)
             // We're at the end of the data to encode
 
             byte_2 = 0;
-            byte_to_add = alphabet[(((byte_1 & 0x03) << 4) bitor ((byte_2 & 0xF0) >> 4))];
+            byte_to_add = alphabet[(((byte_1 bitand 0x03) << 4) bitor ((byte_2 bitand 0xF0) >> 4))];
 
             destination_string[number_of_bytes_encoded] = static_cast< char >(byte_to_add);
             number_of_bytes_encoded++;
@@ -893,7 +893,7 @@ _Check_return_ bool CBase64Coding::Encode(__in_bcount(number_of_bytes_to_encode)
             byte_2 = input_buffer[loop_index];
         }
 
-        byte_to_add = alphabet[(((byte_1 & 0x03) << 4) bitor ((byte_2 & 0xF0) >> 4))];
+        byte_to_add = alphabet[(((byte_1 bitand 0x03) << 4) bitor ((byte_2 bitand 0xF0) >> 4))];
 
         destination_string[number_of_bytes_encoded] = static_cast<char>(byte_to_add);
         number_of_bytes_encoded++;
@@ -916,7 +916,7 @@ _Check_return_ bool CBase64Coding::Encode(__in_bcount(number_of_bytes_to_encode)
             // We ran out of bytes, we need to add the last half of byte_2 and pad
             byte_3 = 0;
 
-            byte_to_add = alphabet[(((byte_2 & 0x0F) << 2) bitor ((byte_3 & 0xC0) >> 6))];
+            byte_to_add = alphabet[(((byte_2 bitand 0x0F) << 2) bitor ((byte_3 bitand 0xC0) >> 6))];
 
             destination_string[number_of_bytes_encoded] = static_cast< char >(byte_to_add);
             number_of_bytes_encoded++;
@@ -948,7 +948,7 @@ _Check_return_ bool CBase64Coding::Encode(__in_bcount(number_of_bytes_to_encode)
 
         loop_index++;
 
-        byte_to_add = alphabet[(((byte_2 & 0x0F) << 2) bitor ((byte_3 & 0xC0) >> 6))];
+        byte_to_add = alphabet[(((byte_2 bitand 0x0F) << 2) bitor ((byte_3 bitand 0xC0) >> 6))];
 
         destination_string[number_of_bytes_encoded] = static_cast<char>(byte_to_add);
         number_of_bytes_encoded++;
@@ -964,7 +964,7 @@ _Check_return_ bool CBase64Coding::Encode(__in_bcount(number_of_bytes_to_encode)
             character_index_in_this_line = 0;
         }
 
-        byte_to_add = alphabet[(byte_3 & 0x3F)];
+        byte_to_add = alphabet[(byte_3 bitand 0x3F)];
 
         destination_string[number_of_bytes_encoded] = static_cast< char >(byte_to_add);
         number_of_bytes_encoded++;
@@ -1000,21 +1000,21 @@ static inline void __encode(_In_ uint8_t const * input_buffer, _In_ std::size_t 
     {
         // Three Bytes to encode
         output_buffer[0] = alphabet[(input_buffer[0] >> 2)];
-        output_buffer[1] = alphabet[(((input_buffer[0] & 0x03) << 4) bitor ((input_buffer[1] & 0xF0) >> 4))];
-        output_buffer[2] = alphabet[(((input_buffer[1] & 0x0F) << 2) bitor ((input_buffer[2] & 0xC0) >> 6))];
-        output_buffer[3] = alphabet[(input_buffer[2] & 0x3F)];
+        output_buffer[1] = alphabet[(((input_buffer[0] bitand 0x03) << 4) bitor ((input_buffer[1] bitand 0xF0) >> 4))];
+        output_buffer[2] = alphabet[(((input_buffer[1] bitand 0x0F) << 2) bitor ((input_buffer[2] bitand 0xC0) >> 6))];
+        output_buffer[3] = alphabet[(input_buffer[2] bitand 0x3F)];
     }
     else if (number_of_bytes == 2)
     {
         output_buffer[0] = alphabet[(input_buffer[0] >> 2)];
-        output_buffer[1] = alphabet[(((input_buffer[0] & 0x03) << 4) bitor ((input_buffer[1] & 0xF0) >> 4))];
-        output_buffer[2] = alphabet[((input_buffer[1] & 0x0F) << 2) ];
+        output_buffer[1] = alphabet[(((input_buffer[0] bitand 0x03) << 4) bitor ((input_buffer[1] bitand 0xF0) >> 4))];
+        output_buffer[2] = alphabet[((input_buffer[1] bitand 0x0F) << 2) ];
         output_buffer[3] = '=';
     }
     else if (number_of_bytes == 1)
     {
         output_buffer[0] = alphabet[(input_buffer[0] >> 2)];
-        output_buffer[1] = alphabet[((input_buffer[0] & 0x03) << 4)];
+        output_buffer[1] = alphabet[((input_buffer[0] bitand 0x03) << 4)];
         output_buffer[2] = '=';
         output_buffer[3] = '=';
     }

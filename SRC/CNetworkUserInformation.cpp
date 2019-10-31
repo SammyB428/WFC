@@ -597,12 +597,12 @@ void CNetworkUserInformation::Dump( CDumpContext& dump_context ) const
 
    std::wstring temp_string;
 
-   if ( AuthenticationFlags & AF_OP_PRINT )
+   if ( AuthenticationFlags bitand AF_OP_PRINT )
    {
       temp_string = TEXT( "AF_OP_PRINT" );
    }
 
-   if ( AuthenticationFlags & AF_OP_COMM )
+   if ( AuthenticationFlags bitand AF_OP_COMM )
    {
       if ( temp_string.empty() == false )
       {
@@ -612,7 +612,7 @@ void CNetworkUserInformation::Dump( CDumpContext& dump_context ) const
       temp_string += TEXT( "AF_OP_COMM" );
    }
    
-   if ( AuthenticationFlags & AF_OP_SERVER )
+   if ( AuthenticationFlags bitand AF_OP_SERVER )
    {
       if ( temp_string.GetLength() > 0 )
       {
@@ -622,7 +622,7 @@ void CNetworkUserInformation::Dump( CDumpContext& dump_context ) const
       temp_string += TEXT( "AF_OP_SERVER" );
    }
    
-   if ( AuthenticationFlags & AF_OP_ACCOUNTS )
+   if ( AuthenticationFlags bitand AF_OP_ACCOUNTS )
    {
       if ( temp_string.GetLength() > 0 )
       {
@@ -644,12 +644,12 @@ void CNetworkUserInformation::Dump( CDumpContext& dump_context ) const
 
    temp_string.Empty();
 
-   if ( Flags & UF_SCRIPT )
+   if ( Flags bitand UF_SCRIPT )
    {
       temp_string = TEXT( "UF_SCRIPT" );
    }
 
-   if ( Flags & UF_ACCOUNTDISABLE )
+   if ( Flags bitand UF_ACCOUNTDISABLE )
    {
       if ( temp_string.GetLength() > 0 )
       {
@@ -659,7 +659,7 @@ void CNetworkUserInformation::Dump( CDumpContext& dump_context ) const
       temp_string += TEXT( "UF_ACCOUNTDISABLE" );
    }
 
-   if ( Flags & UF_HOMEDIR_REQUIRED )
+   if ( Flags bitand UF_HOMEDIR_REQUIRED )
    {
       if ( temp_string.GetLength() > 0 )
       {
@@ -669,7 +669,7 @@ void CNetworkUserInformation::Dump( CDumpContext& dump_context ) const
       temp_string += TEXT( "UF_HOMEDIR_REQUIRED" );
    }
 
-   if ( Flags & UF_PASSWD_NOTREQD )
+   if ( Flags bitand UF_PASSWD_NOTREQD )
    {
       if ( temp_string.GetLength() > 0 )
       {
@@ -679,7 +679,7 @@ void CNetworkUserInformation::Dump( CDumpContext& dump_context ) const
       temp_string += TEXT( "UF_PASSWD_NOTREQD" );
    }
 
-   if ( Flags & UF_PASSWD_CANT_CHANGE )
+   if ( Flags bitand UF_PASSWD_CANT_CHANGE )
    {
       if ( temp_string.GetLength() > 0 )
       {
@@ -689,7 +689,7 @@ void CNetworkUserInformation::Dump( CDumpContext& dump_context ) const
       temp_string += TEXT( "UF_PASSWD_CANT_CHANGE" );
    }
 
-   if ( Flags & UF_LOCKOUT )
+   if ( Flags bitand UF_LOCKOUT )
    {
       if ( temp_string.GetLength() > 0 )
       {
@@ -699,7 +699,7 @@ void CNetworkUserInformation::Dump( CDumpContext& dump_context ) const
       temp_string += TEXT( "UF_LOCKOUT" );
    }
 
-   if ( Flags & UF_DONT_EXPIRE_PASSWD )
+   if ( Flags bitand UF_DONT_EXPIRE_PASSWD )
    {
       if ( temp_string.GetLength() > 0 )
       {
@@ -709,7 +709,7 @@ void CNetworkUserInformation::Dump( CDumpContext& dump_context ) const
       temp_string += TEXT( "UF_DONT_EXPIRE_PASSWD" );
    }
 
-   if ( Flags & UF_NORMAL_ACCOUNT )
+   if ( Flags bitand UF_NORMAL_ACCOUNT )
    {
       if ( temp_string.GetLength() > 0 )
       {
@@ -719,7 +719,7 @@ void CNetworkUserInformation::Dump( CDumpContext& dump_context ) const
       temp_string += TEXT( "UF_NORMAL_ACCOUNT" );
    }
 
-   if ( Flags & UF_TEMP_DUPLICATE_ACCOUNT )
+   if ( Flags bitand UF_TEMP_DUPLICATE_ACCOUNT )
    {
       if ( temp_string.GetLength() > 0 )
       {
@@ -729,7 +729,7 @@ void CNetworkUserInformation::Dump( CDumpContext& dump_context ) const
       temp_string += TEXT( "UF_TEMP_DUPLICATE_ACCOUNT" );
    }
 
-   if ( Flags & UF_WORKSTATION_TRUST_ACCOUNT )
+   if ( Flags bitand UF_WORKSTATION_TRUST_ACCOUNT )
    {
       if ( temp_string.GetLength() > 0 )
       {
@@ -739,7 +739,7 @@ void CNetworkUserInformation::Dump( CDumpContext& dump_context ) const
       temp_string += TEXT( "UF_WORKSTATION_TRUST_ACCOUNT" );
    }
 
-   if ( Flags & UF_SERVER_TRUST_ACCOUNT )
+   if ( Flags bitand UF_SERVER_TRUST_ACCOUNT )
    {
       if ( temp_string.GetLength() > 0 )
       {
@@ -749,7 +749,7 @@ void CNetworkUserInformation::Dump( CDumpContext& dump_context ) const
       temp_string += TEXT( "UF_SERVER_TRUST_ACCOUNT" );
    }
 
-   if ( Flags & UF_INTERDOMAIN_TRUST_ACCOUNT )
+   if ( Flags bitand UF_INTERDOMAIN_TRUST_ACCOUNT )
    {
       if ( temp_string.GetLength() > 0 )
       {

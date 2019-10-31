@@ -133,7 +133,7 @@ void CMixerControl::Dump( CDumpContext& dump_context ) const
    dump_context << TEXT( "a CMixerControl at " ) << (VOID *) this << TEXT( "\n{\n" );
    dump_context << TEXT( "   ID is " ) << ID << TEXT( "\n" );
 
-   DWORD thing = Type & MIXERCONTROL_CT_CLASS_MASK;
+   DWORD thing = Type bitand MIXERCONTROL_CT_CLASS_MASK;
 
    switch( thing )
    {
@@ -178,7 +178,7 @@ void CMixerControl::Dump( CDumpContext& dump_context ) const
          break;
    }
 
-   thing = Type & MIXERCONTROL_CT_UNITS_MASK;
+   thing = Type bitand MIXERCONTROL_CT_UNITS_MASK;
 
    switch( thing )
    {
@@ -421,7 +421,7 @@ _Check_return_ CMixerControl::Types CMixerControl::GetType( void ) const noexcep
 {
    WFC_VALIDATE_POINTER( this );
 
-   CMixerControl::Types const type = static_cast<CMixerControl::Types>(static_cast<uint32_t>(Type) & MIXERCONTROL_CT_CLASS_MASK);
+   CMixerControl::Types const type = static_cast<CMixerControl::Types>(static_cast<uint32_t>(Type) bitand MIXERCONTROL_CT_CLASS_MASK);
 
    switch( type )
    {
@@ -608,7 +608,7 @@ _Check_return_ CMixerControl::Units CMixerControl::GetUnits( void ) const noexce
 {
    WFC_VALIDATE_POINTER( this );
 
-   uint32_t const units = static_cast<uint32_t>( static_cast<uint32_t>(Type) & MIXERCONTROL_CT_UNITS_MASK);
+   uint32_t const units = static_cast<uint32_t>( static_cast<uint32_t>(Type) bitand MIXERCONTROL_CT_UNITS_MASK);
 
    switch( units )
    {
@@ -678,7 +678,7 @@ _Check_return_ bool CMixerControl::IsDisabled( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
-   DWORD const status = ( StatusFlags & static_cast<uint32_t>(CMixerControl::StatusFlags::Disabled) );
+   DWORD const status = ( StatusFlags bitand static_cast<uint32_t>(CMixerControl::StatusFlags::Disabled) );
 
    if ( status != 0 )
    {
@@ -728,14 +728,7 @@ _Check_return_ bool CMixerControl::IsMultiple( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
-   DWORD const multiple = ( StatusFlags & static_cast<uint32_t>(CMixerControl::StatusFlags::Multiple) );
-
-   if ( multiple != 0 )
-   {
-      return( true );
-   }
-
-   return( false );
+   return( is_flagged(StatusFlags, static_cast<uint32_t>(CMixerControl::StatusFlags::Multiple)));
 }
 
 _Check_return_ bool CMixerControl::IsNumber( void ) const noexcept
@@ -814,14 +807,7 @@ _Check_return_ bool CMixerControl::IsUniform( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
-   DWORD const uniform = ( StatusFlags & static_cast<uint32_t>(CMixerControl::StatusFlags::Uniform) );
-
-   if ( uniform != 0 )
-   {
-      return( true );
-   }
-
-   return( false );
+   return(is_flagged(StatusFlags, static_cast<uint32_t>(CMixerControl::StatusFlags::Uniform)));
 }
 
 _Check_return_ bool CMixerControl::IsUnsignedUnits( void ) const noexcept

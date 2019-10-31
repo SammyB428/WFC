@@ -283,18 +283,18 @@ void CService::DumpStatus( __inout SERVICE_STATUS *status_p ) const
 
       //WFCTRACE( TEXT( "   SERVICE_CONTROL_INTERROGATE" ) );
 
-      if ( status_p->dwControlsAccepted & SERVICE_ACCEPT_STOP )
+      if ( status_p->dwControlsAccepted bitand SERVICE_ACCEPT_STOP )
       {
          //WFCTRACE( TEXT( "   SERVICE_CONTROL_STOP" ) );
       }
 
-      if ( status_p->dwControlsAccepted & SERVICE_ACCEPT_PAUSE_CONTINUE )
+      if ( status_p->dwControlsAccepted bitand SERVICE_ACCEPT_PAUSE_CONTINUE )
       {
          //WFCTRACE( TEXT( "   SERVICE_CONTROL_PAUSE" ) );
          //WFCTRACE( TEXT( "   SERVICE_CONTROL_CONTINUE" ) );
       }
 
-      if ( status_p->dwControlsAccepted & SERVICE_ACCEPT_SHUTDOWN )
+      if ( status_p->dwControlsAccepted bitand SERVICE_ACCEPT_SHUTDOWN )
       {
          //WFCTRACE( TEXT( "   SERVICE_CONTROL_SHUTDOWN" ) );
       }
@@ -1149,7 +1149,7 @@ void set_default_parameters( void )
          {
             LPVOID message_buffer = (LPVOID) nullptr;
 
-            ::FormatMessage( FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM,
+            ::FormatMessage( FORMAT_MESSAGE_ALLOCATE_BUFFER bitor FORMAT_MESSAGE_FROM_SYSTEM,
                              nullptr,
                              registry.GetErrorCode(),
                              MAKELANGID( LANG_ENGLISH, SUBLANG_ENGLISH_US ),

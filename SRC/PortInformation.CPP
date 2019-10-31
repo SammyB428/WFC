@@ -179,12 +179,12 @@ void CPortInformation::TypeToString( __in DWORD type, __out std::wstring& string
 
    string.clear(); // Always start out with an empty string
 
-   if ( type & PORT_TYPE_WRITE )
+   if ( is_flagged( type, PORT_TYPE_WRITE ) == true )
    {
       string.assign(WSTRING_VIEW(L"Write"));
    }
 
-   if ( type & PORT_TYPE_READ )
+   if (is_flagged(type, PORT_TYPE_READ ) == true )
    {
       if ( string.empty() == false )
       {
@@ -194,7 +194,7 @@ void CPortInformation::TypeToString( __in DWORD type, __out std::wstring& string
       string.append(WSTRING_VIEW(L"Read"));
    }
 
-   if ( type & PORT_TYPE_REDIRECTED )
+   if (is_flagged(type, PORT_TYPE_REDIRECTED ) == true )
    {
        if (string.empty() == false)
        {
@@ -204,7 +204,7 @@ void CPortInformation::TypeToString( __in DWORD type, __out std::wstring& string
       string.append(WSTRING_VIEW(L"Redirected"));
    }
 
-   if ( type & PORT_TYPE_NET_ATTACHED )
+   if (is_flagged(type, PORT_TYPE_NET_ATTACHED ) == true )
    {
        if (string.empty() == false)
        {
