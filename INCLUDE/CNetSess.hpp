@@ -111,7 +111,7 @@ class CNetworkSessions : public CNetwork
        CNetworkSessions(CNetworkSessions const&) = delete;
        CNetworkSessions& operator=(CNetworkSessions const&) = delete;
        CNetworkSessions() noexcept;
-      CNetworkSessions( __in_z_opt LPCTSTR machine_name ) noexcept;
+      CNetworkSessions(_In_ std::wstring_view machine_name = { nullptr, 0 }) noexcept;
       virtual ~CNetworkSessions();
 
       virtual void  Close( void ) noexcept;

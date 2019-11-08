@@ -119,7 +119,7 @@ public:
     CNetworkConnections(__in CNetworkConnections const&) = delete;
     CNetworkConnections& operator=(__in CNetworkConnections const&) = delete;
     CNetworkConnections();
-      CNetworkConnections( __in_z_opt LPCTSTR machine_name );
+      CNetworkConnections(_In_ std::wstring_view machine_name = { nullptr, 0 });
       virtual ~CNetworkConnections();
 
       virtual void Close( void ) noexcept;

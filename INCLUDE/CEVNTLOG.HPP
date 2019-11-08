@@ -58,7 +58,7 @@ class CEventLog
 
    public:
 
-      enum EventType
+      enum class EventType
       {
          eventError       = EVENTLOG_ERROR_TYPE,
          eventWarning     = EVENTLOG_WARNING_TYPE,
@@ -67,10 +67,7 @@ class CEventLog
          eventFailure     = EVENTLOG_AUDIT_FAILURE
       };
 
-      enum MessageNumbers
-      {
-         messageNumberZero = 0x40000000L
-      };
+      static constexpr DWORD messageNumberZero = 0x40000000L;
 
       CEventLog(CEventLog const&) = delete;
       CEventLog& operator=(CEventLog const&) = delete;
@@ -107,8 +104,8 @@ class CEventLog
       virtual _Check_return_ bool  DeleteApplicationLog( __in_z wchar_t const * application_name ) noexcept;
       virtual _Check_return_ bool  DeregisterSource( void ) noexcept;
       virtual _Check_return_ bool  EnumerateLogs( __out DWORD& enumerator ) const noexcept;
-      virtual _Check_return_ DWORD GetErrorCode( void ) const noexcept;
-      virtual _Check_return_ HANDLE GetHandle( void ) const noexcept;
+      inline constexpr _Check_return_ DWORD GetErrorCode(void) const noexcept { return(m_ErrorCode); }
+      inline constexpr _Check_return_ HANDLE GetHandle(void) const noexcept { return(m_LogHandle); }
       virtual _Check_return_ bool  GetNextLog( __inout DWORD& enumerator, __out std::wstring& log_name ) noexcept;
       virtual _Check_return_ bool  GetNumberOfRecords( __out DWORD& number_of_records ) noexcept;
       virtual _Check_return_ DWORD GetOldestRecordNumber( void ) noexcept;
@@ -135,8 +132,8 @@ class CEventLog
                             __in DWORD     message_string_resource_id,
                             __in WORD      number_of_strings = 0,
                             __in_ecount_z_opt( number_of_strings ) LPCTSTR * string_array = nullptr ) noexcept;
-      virtual void  ReportError( __in_z LPCTSTR string_to_report ) noexcept;
-      virtual void  ReportInformation( __in_z LPCTSTR string_to_report ) noexcept;
+      virtual void ReportError(_In_z_ wchar_t const * string_to_report ) noexcept;
+      virtual void ReportInformation( _In_z_ wchar_t const * string_to_report ) noexcept;
 
 #if defined( _DEBUG ) && ! defined( WFC_NO_DUMPING ) 
 

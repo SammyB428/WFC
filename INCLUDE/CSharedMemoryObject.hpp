@@ -64,7 +64,7 @@ class CSharedMemoryObject
      ~CSharedMemoryObject();
 
       void          Close( void ) noexcept;
-      _Check_return_ bool  Create( __in std::wstring const& object_name, __in std::size_t const size_in_bytes ) noexcept;
+      _Check_return_ bool  Create( _In_ std::wstring_view object_name, _In_ std::size_t const size_in_bytes ) noexcept;
       inline constexpr _Check_return_ HANDLE GetHandle( void ) const noexcept { return( m_MapHandle ); };
       inline void   GetName( __out std::wstring& name ) const noexcept { name.assign( m_Name ); };
       inline constexpr _Check_return_ void * GetPointer( void ) const noexcept   { return( m_Pointer ); };

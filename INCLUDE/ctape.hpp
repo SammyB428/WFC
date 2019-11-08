@@ -255,7 +255,7 @@ class CTape : public CDummyFile
 
       virtual _Check_return_ bool Rewind( void ) noexcept;
 
-      virtual _Check_return_ bool SetAutomaticallyClose( __in bool auto_close ) noexcept; // returns previous setting
+      inline constexpr _Check_return_ bool SetAutomaticallyClose(_In_ bool auto_close) noexcept { auto const return_value = m_AutomaticallyClose; m_AutomaticallyClose = auto_close; return(return_value); }; // returns previous setting
       virtual _Check_return_ bool SetParameters( __in CTapeSetDriveParameters const& parameters ) noexcept; // SetTapeParameters
       virtual _Check_return_ bool SetParameters( __in CTapeSetMediaParameters const& parameters ) noexcept;
 

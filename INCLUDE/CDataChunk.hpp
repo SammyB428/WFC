@@ -55,7 +55,7 @@ class CDataChunk
 {
    public:
 
-      uint32_t   Identifier;
+       uint32_t   Identifier{ 0 };
       std::vector<uint8_t> Data;
 
       CDataChunk()

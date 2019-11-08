@@ -1226,9 +1226,9 @@ _Check_return_ bool CSerialFile::Open( void ) noexcept
 
    // assert DTR
 
-   (void) SetDataTerminalReady( TRUE );
+   (void) SetDataTerminalReady( true );
 
-   m_IsOpen      = TRUE;
+   m_IsOpen = true;
 
 #if ! defined( WFC_STL )
    m_strFileName = Name;
@@ -1443,7 +1443,7 @@ _Check_return_ BOOL CSerialFile::SetCharacterToWaitFor( __in uint8_t const chara
    return( TRUE );
 }
 
-_Check_return_ BOOL CSerialFile::SetDataTerminalReady( __in BOOL const set_DTR_on ) noexcept
+_Check_return_ BOOL CSerialFile::SetDataTerminalReady( _In_ bool const set_DTR_on ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -1461,7 +1461,7 @@ _Check_return_ BOOL CSerialFile::SetDataTerminalReady( __in BOOL const set_DTR_o
 
    BOOL return_value = FALSE;
 
-   if ( set_DTR_on != FALSE )
+   if ( set_DTR_on == true )
    {
       //WFCTRACE( TEXT( "Setting DTR on" ) );
       return_value = ::EscapeCommFunction( m_FileHandle, SETDTR );
@@ -1487,7 +1487,7 @@ _Check_return_ BOOL CSerialFile::SetDataTerminalReady( __in BOOL const set_DTR_o
    return( return_value );
 }
 
-void CSerialFile::SetFlowControl( __in DWORD const flow_control ) noexcept
+void CSerialFile::SetFlowControl( _In_ DWORD const flow_control ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 

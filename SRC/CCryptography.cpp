@@ -73,14 +73,6 @@ CCryptography::~CCryptography() noexcept
    m_ErrorCode = 0;
 }
 
-// Methods
-
-_Check_return_ DWORD CCryptography::GetErrorCode( void ) const noexcept
-{
-   WFC_VALIDATE_POINTER( this );
-   return( m_ErrorCode );
-}
-
 #endif // _MSC_VER
 
 // End of source

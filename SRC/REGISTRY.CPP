@@ -691,28 +691,10 @@ _Check_return_ bool CRegistry::GetDoubleWordValue( _In_z_ wchar_t const * name_o
     return( QueryValue( name_of_value, type, reinterpret_cast<uint8_t *>(&return_value), size_of_buffer ) );
 }
 
-_Check_return_ DWORD CRegistry::GetErrorCode( void ) const noexcept
-{
-    WFC_VALIDATE_POINTER( this );
-    return( m_ErrorCode );
-}
-
 void CRegistry::GetKeyName( __out std::wstring& key_name ) const noexcept
 {
     WFC_VALIDATE_POINTER( this );
     key_name.assign( m_KeyName );
-}
-
-_Check_return_ DWORD CRegistry::GetNumberOfSubkeys( void ) const noexcept
-{
-    WFC_VALIDATE_POINTER( this );
-    return( m_NumberOfSubkeys );
-}
-
-_Check_return_ DWORD CRegistry::GetNumberOfValues( void ) const noexcept
-{
-    WFC_VALIDATE_POINTER( this );
-    return( m_NumberOfValues );
 }
 
 void CRegistry::GetRegistryName( _Out_ std::wstring& registry_name ) const noexcept

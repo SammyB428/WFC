@@ -60,10 +60,9 @@ CNetworkFiles::CNetworkFiles()
    m_Initialize();
 }
 
-CNetworkFiles::CNetworkFiles( __in_z_opt LPCTSTR machine_name )
+CNetworkFiles::CNetworkFiles(_In_ std::wstring_view machine_name)
 {
    WFC_VALIDATE_POINTER( this );
-   WFC_VALIDATE_POINTER_NULL_OK( machine_name );
    m_Initialize();
    Open( machine_name );
 }

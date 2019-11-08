@@ -644,14 +644,14 @@ CRemoteAccessService::CRemoteAccessService()
    m_Thunk_p = nullptr;
    m_Initialize();
    m_InitializeThunk();
-   m_AutomaticallyClose = FALSE;
+   m_AutomaticallyClose = false;
 }
 
 CRemoteAccessService::~CRemoteAccessService()
 {
    WFC_VALIDATE_POINTER( this );
 
-   if ( m_AutomaticallyClose != FALSE )
+   if ( m_AutomaticallyClose == true )
    {
       Close();
    }
@@ -1626,11 +1626,11 @@ BOOL CRemoteAccessService::Open( LPCTSTR who_to_dial )
    WFC_END_CATCH_ALL
 }
 
-BOOL CRemoteAccessService::SetAutomaticallyClose( BOOL auto_close )
+bool CRemoteAccessService::SetAutomaticallyClose( bool auto_close )
 {
    WFC_VALIDATE_POINTER( this );
 
-   BOOL return_value = m_AutomaticallyClose;
+   auto return_value = m_AutomaticallyClose;
 
    m_AutomaticallyClose = auto_close;
 

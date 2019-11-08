@@ -118,7 +118,7 @@ class CNetworkScheduler : public CNetwork
        CNetworkFiles(CNetworkFiles const&) = delete;
        CNetworkFiles& operator=(CNetworkFiles const&) = delete;
        CNetworkFiles();
-      CNetworkFiles( LPCTSTR machine_name );
+      CNetworkFiles(_In_ std::wstring_view machine_name = { nullptr, 0 });
       virtual ~CNetworkFiles();
 
       virtual void  Close( void ) noexcept;

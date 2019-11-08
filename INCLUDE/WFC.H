@@ -642,17 +642,17 @@ void PASCAL wfc_append_text_to_edit_control( __in HWND edit_control_handle, __in
 #endif
 
 #if ! defined( bit_clear )
-#define bit_clear( arg, posn ) ((arg) and_eq ~(ONE_BIT << (posn)))
+#define bit_clear( arg, posn ) ((arg) and_eq compl(ONE_BIT << (posn)))
 #endif
 
 #if ! defined( bit_test )
 #define bit_test( arg, posn ) BITBOOL((arg) bitand (ONE_BIT << (posn)))
 #endif
 
-#define EAX (0)
-#define EBX (1)
-#define ECX (2)
-#define EDX (3)
+constexpr int EAX = (0);
+constexpr int EBX = (1);
+constexpr int ECX = (2);
+constexpr int EDX = (3);
 
  inline _Check_return_ bool is_proccessor_feature_supported( __in int const information_type, __in int const which_register, __in int const which_bit ) noexcept
 {
@@ -733,10 +733,7 @@ static inline _Check_return_ wchar_t const * DefinedStringConstant(_In_ uint64_t
         return(nullptr);
     }
 
-    DEFINED_WIDE_STRING value_to_find;
-
-    value_to_find.Constant = value;
-    value_to_find.StringValue = nullptr;
+    DEFINED_WIDE_STRING const value_to_find{ value, nullptr };
 
     auto entry = reinterpret_cast<DEFINED_WIDE_STRING const *>(bsearch(&value_to_find, definitions, number_of_definitions, sizeof(DEFINED_WIDE_STRING), compare_defines));
 

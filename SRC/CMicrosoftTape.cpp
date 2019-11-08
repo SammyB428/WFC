@@ -60,7 +60,7 @@ CMicrosoftTape::CMicrosoftTape() noexcept
 {
    WFC_VALIDATE_POINTER( this );
    m_Initialize();
-   m_AutomaticallyClose = FALSE;
+   m_AutomaticallyClose = false;
 }
 
 CMicrosoftTape::~CMicrosoftTape() noexcept

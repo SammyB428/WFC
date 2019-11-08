@@ -148,7 +148,7 @@ class CRemoteAccessServiceAuthenticationMessageBlock : public _rasamb
       void  Copy( __in RASAMB const * source ) noexcept;
       void  Copy( __in CRemoteAccessServiceAuthenticationMessageBlock const& source ) noexcept;
       _Check_return_ BYTE  GetLana( void ) const noexcept;
-      _Check_return_ DWORD GetErrorCode( void ) const noexcept;
+      inline constexpr _Check_return_ DWORD GetErrorCode(void) const noexcept { return(m_ErrorCode); };
       void  GetErrorString( __out std::wstring& return_string ) const noexcept;
       CRemoteAccessServiceAuthenticationMessageBlock& operator=( __in CRemoteAccessServiceAuthenticationMessageBlock const& source ) noexcept;
 };
@@ -181,7 +181,7 @@ class CRemoteAccessServiceNetBEUIFramer : public _raspppnbf
       void  Copy( __in RASPPPNBF const * source ) noexcept;
       void  Copy( __in CRemoteAccessServiceNetBEUIFramer const& source ) noexcept;
       _Check_return_ BYTE  GetLana( void ) const noexcept;
-      _Check_return_ DWORD GetErrorCode( void ) const noexcept;
+      inline constexpr _Check_return_ DWORD GetErrorCode(void) const noexcept { return(m_ErrorCode); };
       _Check_return_ DWORD GetNetBiosErrorCode( void ) const noexcept;
       void GetErrorString( __out std::wstring& return_string ) const noexcept;
       void GetWorkstationName( __out std::wstring& return_string ) const noexcept;
@@ -215,7 +215,7 @@ class CRemoteAccessServiceInternetworkPacketExchange : public _raspppipx
 
       void Copy( __in RASPPPIPX const * source ) noexcept;
       void Copy( __in CRemoteAccessServiceInternetworkPacketExchange const& source ) noexcept;
-      _Check_return_ DWORD GetErrorCode( void ) const noexcept;
+      inline constexpr _Check_return_ DWORD GetErrorCode(void) const noexcept { return(m_ErrorCode); };
       void GetIPXAddress( __out std::wstring& return_string ) const noexcept;
       CRemoteAccessServiceInternetworkPacketExchange& operator=( __in CRemoteAccessServiceInternetworkPacketExchange const& source ) noexcept;
 };
@@ -247,7 +247,7 @@ class CRemoteAccessServiceInternetProtocol : public _raspppip
 
       void Copy( __in RASPPPIP const * source ) noexcept;
       void Copy( __in CRemoteAccessServiceInternetProtocol const& source ) noexcept;
-      _Check_return_ DWORD GetErrorCode( void ) const noexcept;
+      inline constexpr _Check_return_ DWORD GetErrorCode(void) const noexcept { return(m_ErrorCode); };
       void GetIPAddress( __inout std::wstring& return_string ) const noexcept;
 
 #if ! defined( WINNT35COMPATIBLE )
@@ -275,7 +275,7 @@ class CRemoteAccessService
 
        WFC_RAS_THUNK_P m_Thunk_p{ nullptr };
 
-       BOOL m_AutomaticallyClose{ FALSE };
+       bool m_AutomaticallyClose{ false };
 
        LONG m_ErrorCode{ 0 };
 

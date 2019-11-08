@@ -60,10 +60,9 @@ CNetworkSessions::CNetworkSessions() noexcept
    m_Initialize();
 }
 
-CNetworkSessions::CNetworkSessions( __in_z_opt LPCTSTR machine_name ) noexcept
+CNetworkSessions::CNetworkSessions(_In_ std::wstring_view machine_name) noexcept
 {
    WFC_VALIDATE_POINTER( this );
-   WFC_VALIDATE_POINTER_NULL_OK( machine_name );
    Open( machine_name );
 }
 

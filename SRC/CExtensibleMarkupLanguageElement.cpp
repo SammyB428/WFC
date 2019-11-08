@@ -331,11 +331,11 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::AddText(_In_ std::wstring_
     {
         std::wstring encoded_entity_string( text_segment );
 
-        replace( encoded_entity_string, L"&", L"&amp;");
-        replace( encoded_entity_string, L">", L"&gt;");
-        replace( encoded_entity_string, L"<", L"&lt;");
-        replace( encoded_entity_string, L"\"", L"&quot;");
-        replace( encoded_entity_string, L"'", L"&apos;" );
+        replace( encoded_entity_string, WSTRING_VIEW(L"&"), WSTRING_VIEW(L"&amp;"));
+        replace( encoded_entity_string, WSTRING_VIEW(L">"), WSTRING_VIEW(L"&gt;"));
+        replace( encoded_entity_string, WSTRING_VIEW(L"<"), WSTRING_VIEW(L"&lt;"));
+        replace( encoded_entity_string, WSTRING_VIEW(L"\""), WSTRING_VIEW(L"&quot;"));
+        replace( encoded_entity_string, WSTRING_VIEW(L"'"), WSTRING_VIEW(L"&apos;"));
 
         child_element_p->SetContents( encoded_entity_string );
     }
@@ -785,7 +785,7 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::ForEach(_In_ std::wstring_
 
             bool exit_loop = false;
 
-            while( exit_loop == false &&
+            while( exit_loop == false and
                 GetNextChild( enumerator, child_p ) == true)
             {
                 WFC_VALIDATE_POINTER( child_p );

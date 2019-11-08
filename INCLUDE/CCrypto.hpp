@@ -62,7 +62,7 @@ class CCryptography
       CCryptography() noexcept;
       virtual ~CCryptography();
 
-      virtual _Check_return_ DWORD GetErrorCode( void ) const noexcept;
+      inline constexpr _Check_return_ DWORD GetErrorCode(void) const noexcept { return(m_ErrorCode); }
 };
 
 // Need forward declaration because of Catch-22...

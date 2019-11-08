@@ -78,7 +78,7 @@ class CServer : public CNetwork
        _Check_return_ CServer& operator=(__in CServer const&) = delete;
        
        CServer();
-      CServer( _In_opt_z_ LPCWSTR machine_name );
+       CServer(_In_ std::wstring_view machine_name = { nullptr, 0 });
       virtual ~CServer();
 
       void  Close( void ) noexcept override;

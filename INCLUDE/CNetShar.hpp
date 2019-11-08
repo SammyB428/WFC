@@ -116,7 +116,7 @@ class CNetworkShares : public CNetwork
        CNetworkShares(_In_ CNetworkShares const&) = delete;
        _Check_return_ CNetworkShares& operator=(_In_ CNetworkShares const&) = delete;
        CNetworkShares();
-      CNetworkShares( _In_opt_z_ LPCWSTR machine_name );
+      CNetworkShares(_In_ std::wstring_view machine_name = { nullptr, 0 });
       virtual ~CNetworkShares();
 
       virtual _Check_return_ bool Add( _Inout_ CNetworkShareInformation& share_to_add ) noexcept;

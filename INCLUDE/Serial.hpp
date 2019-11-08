@@ -141,12 +141,12 @@ class CSerialFile : public CDummyFile
 
       virtual _Check_return_ BOOL  Purge( __in DWORD const what_to_purge = purgeAll ) noexcept;
       virtual _Check_return_ UINT  Read( __out_bcount( length ) void * buffer, __in UINT const length ) noexcept;
-      virtual void ReplaceGarbledCharacter( __in bool const yes_or_no = TRUE, __in uint8_t const character_to_replace_the_garbled_one_with = ' ' ) noexcept;
+      virtual void ReplaceGarbledCharacter( __in bool const yes_or_no = true, __in uint8_t const character_to_replace_the_garbled_one_with = ' ' ) noexcept;
 
       virtual _Check_return_ bool  SetBaudRate( __in uint32_t const baud_rate ) noexcept;
       virtual _Check_return_ BOOL  SetBreak( void ) noexcept;
       virtual _Check_return_ BOOL  SetCharacterToWaitFor( __in uint8_t const character_to_wait_for ) noexcept;
-      virtual _Check_return_ BOOL  SetDataTerminalReady( __in BOOL const set_DTR_on = TRUE ) noexcept;
+      virtual _Check_return_ BOOL  SetDataTerminalReady( __in bool const set_DTR_on = true ) noexcept;
       virtual void  SetFlowControl( __in DWORD const flow_control ) noexcept;
       virtual void  SetInputBufferSize( __in DWORD const buffer_size ) noexcept;
       virtual void  SetOutputBufferSize( __in DWORD const buffer_size ) noexcept;

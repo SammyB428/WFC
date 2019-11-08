@@ -217,10 +217,9 @@ CNetworkShares::CNetworkShares()
    m_Initialize();
 }
 
-CNetworkShares::CNetworkShares( _In_opt_z_ LPCWSTR machine_name )
+CNetworkShares::CNetworkShares(_In_ std::wstring_view machine_name)
 {
    WFC_VALIDATE_POINTER( this );
-   WFC_VALIDATE_POINTER_NULL_OK( machine_name );
    m_Initialize();
    Open( machine_name );
 }

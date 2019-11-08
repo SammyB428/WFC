@@ -100,28 +100,30 @@ void CSharedMemoryObject::Close( void ) noexcept
    m_Name.clear();
 }
 
-_Check_return_ bool CSharedMemoryObject::Create( __in std::wstring const& object_name, __in std::size_t const size_in_bytes ) noexcept
+_Check_return_ bool CSharedMemoryObject::Create( _In_ std::wstring_view object_name, _In_ std::size_t const size_in_bytes ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
    Close();
+
+   m_Name.assign(object_name);
 
    m_MapHandle = ::CreateFileMappingW( INVALID_HANDLE_VALUE,
                                       nullptr,
                                       PAGE_READWRITE,
                                       0,
                               (DWORD) size_in_bytes,
-                                      object_name.c_str() );
+                                      m_Name.c_str() );
 
    if ( m_MapHandle == static_cast< HANDLE >( NULL ) )
    {
       //WFCTRACEERROR( ::GetLastError() );
       m_MapHandle = static_cast< HANDLE >( INVALID_HANDLE_VALUE );
+      m_Name.clear();
       return( false );
    }
 
    m_Size = size_in_bytes;
-   m_Name.assign( object_name );
 
    m_Pointer = ::MapViewOfFile( m_MapHandle, FILE_MAP_ALL_ACCESS, 0, 0, m_Size );
 

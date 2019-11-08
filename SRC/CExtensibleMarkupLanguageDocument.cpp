@@ -797,12 +797,6 @@ void CExtensibleMarkupLanguageDocument::GetParsingErrorInformation(_Out_ std::ws
    }
 }
 
-void CExtensibleMarkupLanguageDocument::GetVersion( _Out_ std::wstring& version ) const noexcept
-{
-   WFC_VALIDATE_POINTER( this );
-   version.assign( m_Version );
-}
-
 void CExtensibleMarkupLanguageDocument::m_InitializeEntities( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
@@ -1495,12 +1489,6 @@ void CExtensibleMarkupLanguageDocument::SetParsingErrorInformation( _In_ std::ws
    }
 }
 
-void CExtensibleMarkupLanguageDocument::SetVersion( _In_ std::wstring_view version ) noexcept
-{
-   WFC_VALIDATE_POINTER( this );
-   m_Version.assign( version );
-}
-
 _Check_return_ uint32_t CExtensibleMarkupLanguageDocument::SetWriteOptions( _In_ uint32_t const new_options ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
@@ -1657,30 +1645,6 @@ void CExtensibleMarkupLanguageDocument::WriteTo( _Out_ std::vector<uint8_t>& des
 
       m_XML->WriteTo( destination );
    }
-}
-
-void CExtensibleMarkupLanguageDocument::Trim(void) noexcept
-{
-    WFC_VALIDATE_POINTER(this);
-
-    if (m_XML != nullptr)
-    {
-        m_XML->Trim();
-    }
-}
-
-_Check_return_ CExtensibleMarkupLanguageDocument& CExtensibleMarkupLanguageDocument::operator=( _In_ CExtensibleMarkupLanguageDocument const& source ) noexcept
-{
-   WFC_VALIDATE_POINTER( this );
-   Copy( source );
-   return( *this );
-}
-
-_Check_return_  CExtensibleMarkupLanguageDocument& CExtensibleMarkupLanguageDocument::operator+=(_In_ CExtensibleMarkupLanguageDocument const& source ) noexcept
-{
-   WFC_VALIDATE_POINTER( this );
-   Append( source );
-   return( *this );
 }
 
 // End of source

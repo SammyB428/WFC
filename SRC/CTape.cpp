@@ -918,7 +918,7 @@ CTape::CTape() noexcept
 {
    WFC_VALIDATE_POINTER( this );
    m_Initialize();
-   m_AutomaticallyClose = FALSE;
+   m_AutomaticallyClose = false;
 }
 
 CTape::~CTape() noexcept
@@ -1187,7 +1187,7 @@ _Check_return_ bool CTape::BackupSeek( __in DWORD const seek_low, __in DWORD con
 
    WFC_TRY
    {
-      BOOL return_value = ::BackupSeek( m_FileHandle, seek_low, seek_high, seeked_low, seeked_high, &m_BackupReadContextPointer );
+      BOOL const return_value = ::BackupSeek( m_FileHandle, seek_low, seek_high, seeked_low, seeked_high, &m_BackupReadContextPointer );
 
       if ( return_value == FALSE )
       {
@@ -1204,17 +1204,6 @@ _Check_return_ bool CTape::BackupSeek( __in DWORD const seek_low, __in DWORD con
       return( false );
    }
    WFC_END_CATCH_ALL
-}
-
-_Check_return_ bool CTape::SetAutomaticallyClose( __in bool auto_close ) noexcept
-{
-   WFC_VALIDATE_POINTER( this );
-
-   bool const return_value = m_AutomaticallyClose;
-
-   m_AutomaticallyClose = auto_close;
-
-   return( return_value );
 }
 
 _Check_return_ bool CTape::SetParameters( __in CTapeSetMediaParameters const& parameters ) noexcept

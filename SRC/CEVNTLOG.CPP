@@ -579,18 +579,6 @@ _Check_return_ bool CEventLog::EnumerateLogs( __out DWORD& enumerator ) const no
    return( true );
 }
 
-_Check_return_ DWORD CEventLog::GetErrorCode( void ) const noexcept
-{
-   WFC_VALIDATE_POINTER( this );
-   return( m_ErrorCode );
-}
-
-_Check_return_ HANDLE CEventLog::GetHandle( void ) const noexcept
-{
-   WFC_VALIDATE_POINTER( this );
-   return( m_LogHandle );
-}
-
 _Check_return_ bool CEventLog::GetNextLog( __inout DWORD& enumerator, __out std::wstring& log_name ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
@@ -1128,7 +1116,7 @@ _Check_return_ bool CEventLog::Report( __in_z LPCTSTR log_name, __in DWORD messa
 
       if ( RegisterSource( log_name ) == true )
       {
-         if ( Report( eventError, 0, message_string_resource_identifier, number_of_strings, string_array ) == false )
+         if ( Report( EventType::eventError, 0, message_string_resource_identifier, number_of_strings, string_array ) == false )
          {
             (void) DeregisterSource();
             return( false );
@@ -1151,7 +1139,7 @@ _Check_return_ bool CEventLog::Report( __in_z LPCTSTR log_name, __in DWORD messa
    WFC_END_CATCH_ALL
 }
 
-void CEventLog::ReportError( __in_z LPCTSTR string_to_report ) noexcept
+void CEventLog::ReportError(_In_z_ wchar_t const * string_to_report) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( string_to_report );
@@ -1167,10 +1155,10 @@ void CEventLog::ReportError( __in_z LPCTSTR string_to_report ) noexcept
       string_array[ 0 ] = string_to_report;
    }
 
-   (void) Report( eventError, 0, messageNumberZero, 1, string_array );
+   (void) Report( EventType::eventError, 0, messageNumberZero, 1, string_array );
 }
 
-void CEventLog::ReportInformation( __in_z LPCTSTR string_to_report ) noexcept
+void CEventLog::ReportInformation(_In_z_ wchar_t const * string_to_report ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( string_to_report );
@@ -1186,7 +1174,7 @@ void CEventLog::ReportInformation( __in_z LPCTSTR string_to_report ) noexcept
       string_array[ 0 ] = string_to_report;
    }
 
-   (void) Report( eventInformation, 0, messageNumberZero, 1, string_array );
+   (void) Report(EventType::eventInformation, 0, messageNumberZero, 1, string_array );
 }
 
 // End of source

@@ -453,10 +453,10 @@ class CMixer
       virtual _Check_return_ bool  GetByID( __in DWORD const id, __out CMixerLine& line ) noexcept;
       virtual _Check_return_ bool  GetControlDetails(  __in CMixerLine const& line, __in CMixerControl const& control, __out std::vector<CMixerControlDetailsData>& array) noexcept;
       virtual _Check_return_ bool  GetControlListText( __in CMixerLine const& line, __in CMixerControl const& control, __out std::vector<CMixerControlDetailsData>& array ) noexcept;
-      virtual _Check_return_ UINT_PTR GetDeviceID( void ) const noexcept;
-      virtual _Check_return_ DWORD GetErrorCode( void ) const noexcept;
+      inline constexpr _Check_return_ UINT_PTR GetDeviceID(void) const noexcept { return(m_DeviceID); }
+      inline constexpr _Check_return_ DWORD GetErrorCode(void) const noexcept { return(m_ErrorCode); };
       virtual void GetErrorString( __out std::wstring& error_string ) const noexcept;
-      virtual _Check_return_ HMIXEROBJ GetHandle( void ) const noexcept;
+      inline constexpr _Check_return_ HMIXEROBJ GetHandle(void) const noexcept { return((HMIXEROBJ)m_Handle); }
       virtual _Check_return_ std::size_t GetNumberOfDevices( void ) const noexcept;
       virtual _Check_return_ bool  Open( __in UINT_PTR device_id = 0, __in DWORD what_to_notify = 0, __in DWORD_PTR who_to_notify = 0, __in DWORD_PTR notify_data = 0) noexcept;
       virtual _Check_return_ bool  SetControlDetails( __in CMixerLine const& line, __in CMixerControl const& control, __in std::vector<CMixerControlDetailsData> const& array) noexcept;

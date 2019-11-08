@@ -89,16 +89,16 @@ class CDesktop
 
       virtual void  Attach( __in HDESK desktop_handle ) noexcept;
       virtual _Check_return_ bool Close( void ) noexcept;
-      virtual _Check_return_ bool Create( __in std::wstring const& name_of_desktop,
+      virtual _Check_return_ bool Create( _In_ std::wstring_view name_of_desktop,
                                   __in DWORD    desired_access = DESKTOP_CREATEWINDOW,
                      __in_opt LPSECURITY_ATTRIBUTES security_attributes_p = nullptr, 
                                   __in DWORD    flags = 0 ) noexcept;
-      virtual _Check_return_ bool  GetAutomaticallyClose( void ) const noexcept;
-      virtual _Check_return_ DWORD GetErrorCode( void ) const noexcept;
-      virtual _Check_return_ HDESK GetHandle( void ) const noexcept;
+      inline constexpr _Check_return_ bool  GetAutomaticallyClose(void) const noexcept { return(m_AutomaticallyClose); }
+      inline constexpr _Check_return_ DWORD GetErrorCode(void) const noexcept { return(m_ErrorCode); };
+      inline constexpr _Check_return_ HDESK GetHandle(void) const noexcept { return(m_DesktopHandle); }
       virtual void  GetThread( __in DWORD thread_id = 0 ) noexcept;
       virtual _Check_return_ bool  GetWindows( _Out_ std::vector<HWND>& window_handles ) noexcept; // EnumDesktopWindows
-      virtual _Check_return_ bool  Open( __in std::wstring const& desktop_name, __in DWORD desired_access = DESKTOP_CREATEWINDOW, __in DWORD flags = 0, __in bool inherit = false ) noexcept;
+      virtual _Check_return_ bool  Open( _In_ std::wstring_view desktop_name, __in DWORD desired_access = DESKTOP_CREATEWINDOW, __in DWORD flags = 0, __in bool inherit = false ) noexcept;
       virtual _Check_return_ bool  OpenInput( __in DWORD desired_access = accessCreateWindow, __in DWORD flags = 0, __in bool inherit = false ) noexcept;
       virtual void  SetAutomaticallyClose( __in bool const automatically_close = true ) noexcept;
       virtual _Check_return_ bool  SetThread( void ) noexcept;

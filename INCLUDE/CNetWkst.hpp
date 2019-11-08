@@ -209,7 +209,7 @@ class CNetWorkstation : public CNetwork
        CNetWorkstation(__in CNetWorkstation const&) = delete;
        CNetWorkstation& operator=(__in CNetWorkstation const&) = delete;
        CNetWorkstation() noexcept;
-      CNetWorkstation( __in_z_opt LPCTSTR machine_name ) noexcept;
+      CNetWorkstation(_In_ std::wstring_view machine_name = { nullptr, 0 }) noexcept;
       virtual ~CNetWorkstation();
 
       virtual void Close( void ) noexcept;

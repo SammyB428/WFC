@@ -2075,7 +2075,7 @@ inline _Check_return_ SSIZE_T add_to_unique_sorted_vector(_In_ std::wstring_view
 
     if (it_was_found(p) == false)
     {
-        const SSIZE_T return_value = std::distance(std::cbegin(values), p.second);
+        SSIZE_T const return_value = std::distance(std::cbegin(values), p.second);
 
         values.emplace(p.second, value_to_add);
 
@@ -2093,7 +2093,7 @@ inline _Check_return_ SSIZE_T add_to_unique_sorted_vector(_In_ std::wstring cons
 
     if (it_was_found(p) == false)
     {
-        const SSIZE_T return_value = std::distance(std::cbegin(values), p.second);
+        SSIZE_T const return_value = std::distance(std::cbegin(values), p.second);
 
         values.emplace(p.second, value_to_add);
 
@@ -2124,7 +2124,7 @@ inline _Check_return_ SSIZE_T add_to_unique_sorted_vector(_In_ std::string const
 
     if (it_was_found(p) == false)
     {
-        const SSIZE_T return_value = std::distance(std::cbegin(values), p.second);
+        SSIZE_T const return_value = std::distance(std::cbegin(values), p.second);
 
         values.emplace(p.second, value_to_add);
 
@@ -2136,14 +2136,11 @@ inline _Check_return_ SSIZE_T add_to_unique_sorted_vector(_In_ std::string const
     return(std::distance(std::cbegin(values), p.first));
 }
 
-inline void replace(_Inout_ std::wstring& s, _In_z_ wchar_t const* what_to_replace, _In_z_ wchar_t const* what_to_replace_it_with) noexcept
+inline void replace(_Inout_ std::wstring& s, _In_ std::wstring_view what_to_replace, _In_ std::wstring_view replace_it_with) noexcept
 {
     std::wstring translated_string;
 
-    std::size_t const string_length = wcslen(what_to_replace);
     std::size_t location = s.find(what_to_replace);
-
-    std::wstring_view replace_it_with(what_to_replace_it_with, wcslen(what_to_replace_it_with));
 
     while (location != std::wstring::npos)
     {
@@ -2152,7 +2149,7 @@ inline void replace(_Inout_ std::wstring& s, _In_z_ wchar_t const* what_to_repla
         translated_string.append(s.substr(0, location));
         translated_string.append(replace_it_with);
 
-        s.erase(0, location + string_length);
+        s.erase(0, location + what_to_replace.length());
 
         location = s.find(what_to_replace);
     }
@@ -2161,14 +2158,11 @@ inline void replace(_Inout_ std::wstring& s, _In_z_ wchar_t const* what_to_repla
     s = translated_string;
 }
 
-inline void replace(_Inout_ std::string& s, _In_z_ char const* what_to_replace, _In_z_ char const* what_to_replace_it_with) noexcept
+inline void replace(_Inout_ std::string& s, _In_ std::string_view what_to_replace, _In_ std::string_view replace_it_with) noexcept
 {
     std::string translated_string;
 
-    std::size_t const string_length = strlen(what_to_replace);
     std::size_t location = s.find(what_to_replace);
-
-    std::string_view replace_it_with(what_to_replace_it_with, strlen(what_to_replace_it_with));
 
     while (location != std::string::npos)
     {
@@ -2177,7 +2171,7 @@ inline void replace(_Inout_ std::string& s, _In_z_ char const* what_to_replace, 
         translated_string.append(s.substr(0, location));
         translated_string.append(replace_it_with);
 
-        s.erase(0, location + string_length);
+        s.erase(0, location + what_to_replace.length());
 
         location = s.find(what_to_replace);
     }

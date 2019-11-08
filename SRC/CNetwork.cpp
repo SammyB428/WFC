@@ -58,10 +58,9 @@ USING_WFC_NAMESPACE
 ** CNetwork stuff
 */
 
-CNetwork::CNetwork(_In_opt_z_ LPCWSTR machine_name )
+CNetwork::CNetwork(_In_ std::wstring_view machine_name)
 {
    WFC_VALIDATE_POINTER( this );
-   WFC_VALIDATE_POINTER_NULL_OK( machine_name );
    m_Initialize();
    Open( machine_name );
 }
@@ -335,12 +334,6 @@ _Check_return_ bool CNetwork::GetNext( __inout CPortInformation& port ) noexcept
    }
 }
 
-_Check_return_ DWORD CNetwork::GetErrorCode( void ) const noexcept
-{
-   WFC_VALIDATE_POINTER( this );
-   return( m_ErrorCode );
-}
-
 void CNetwork::GetFriendlyMachineName( _Out_ std::wstring& machine_name ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
@@ -490,10 +483,9 @@ void CNetwork::m_Initialize( void ) noexcept
    m_PortNumber      = 0;
 }
 
-void CNetwork::Open( __in_z_opt LPCTSTR machine_name ) noexcept
+void CNetwork::Open( _In_ std::wstring_view machine_name ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
-   WFC_VALIDATE_POINTER_NULL_OK( machine_name );
 
    // First, make sure we're closed...
 
@@ -503,7 +495,7 @@ void CNetwork::Open( __in_z_opt LPCTSTR machine_name ) noexcept
 
    WFC_TRY
    {
-      if ( machine_name != nullptr )
+      if ( machine_name.empty() == false )
       {
          // Thanks go to Ullrich Pollahne (u.pollaehne@online.de)
          // for finding a bug here. I was not correctly counting
@@ -541,7 +533,7 @@ void CNetwork::Open( __in_z_opt LPCTSTR machine_name ) noexcept
          if ( m_WideMachineName.get() != nullptr )
          {
 #if defined( UNICODE )
-            ::wcscpy_s( m_WideMachineName.get(), number_of_characters_in_wide_machine_name, machine_name );
+            ::wcscpy_s( m_WideMachineName.get(), number_of_characters_in_wide_machine_name, machine_name.data() );
 #else
             ::ASCII_to_UNICODE( machine_name, m_WideMachineName.get() );
 #endif
@@ -573,13 +565,13 @@ void CNetwork::Open( __in_z_opt LPCTSTR machine_name ) noexcept
          // with the local machine. That's OK, all we need to do is put
          // the name of the computer into m_FriendlyName
 
-         TCHAR this_machine_name[ MAX_COMPUTERNAME_LENGTH + 1 ];
+         wchar_t this_machine_name[ MAX_COMPUTERNAME_LENGTH + 1 ];
 
          DWORD string_size = MAX_COMPUTERNAME_LENGTH + 1;
 
          ZeroMemory( this_machine_name, sizeof( this_machine_name ) );
 
-         if ( ::GetComputerNameEx(COMPUTER_NAME_FORMAT::ComputerNameDnsHostname, this_machine_name, &string_size ) == FALSE )
+         if ( ::GetComputerNameExW(COMPUTER_NAME_FORMAT::ComputerNameDnsHostname, this_machine_name, &string_size ) == FALSE )
          {
             // CRAP! The computer name is too long.
 

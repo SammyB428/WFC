@@ -550,18 +550,6 @@ _Check_return_ bool CMixer::GetControlListText(__in CMixerLine const& line, __in
     return(return_value);
 }
 
-_Check_return_ UINT_PTR CMixer::GetDeviceID(void) const noexcept
-{
-    WFC_VALIDATE_POINTER(this);
-    return(m_DeviceID);
-}
-
-_Check_return_ DWORD CMixer::GetErrorCode(void) const noexcept
-{
-    WFC_VALIDATE_POINTER(this);
-    return(m_ErrorCode);
-}
-
 void CMixer::GetErrorString(_Out_ std::wstring& error_string) const noexcept
 {
     WFC_VALIDATE_POINTER(this);
@@ -797,19 +785,11 @@ void CMixer::GetErrorString(_Out_ std::wstring& error_string) const noexcept
     }
 }
 
-_Check_return_ HMIXEROBJ CMixer::GetHandle(void) const noexcept
-{
-    WFC_VALIDATE_POINTER(this);
-    return((HMIXEROBJ)m_Handle);
-}
-
 _Check_return_ std::size_t CMixer::GetNumberOfDevices(void) const noexcept
 {
     WFC_VALIDATE_POINTER(this);
 
-    std::size_t return_value = ::mixerGetNumDevs();
-
-    return(return_value);
+    return(::mixerGetNumDevs());
 }
 
 _Check_return_ bool CMixer::Open(__in UINT_PTR device_id, __in DWORD what_to_notify, __in DWORD_PTR who_to_notify, __in DWORD_PTR notify_data) noexcept

@@ -449,11 +449,9 @@ CNetWorkstation::CNetWorkstation() noexcept
    m_Initialize();
 }
 
-CNetWorkstation::CNetWorkstation(__in_z_opt LPCTSTR machine_name ) noexcept
+CNetWorkstation::CNetWorkstation(_In_ std::wstring_view machine_name) noexcept
 {
    WFC_VALIDATE_POINTER( this );
-   WFC_VALIDATE_POINTER_NULL_OK( machine_name );
-
    m_Initialize();
    Open( machine_name );
 }

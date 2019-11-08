@@ -95,20 +95,20 @@ class CNetwork
 
       CNetwork(_In_ CNetwork const&) = delete;
       _Check_return_ CNetwork& operator=(_In_ CNetwork const&) = delete;
-      CNetwork(_In_opt_z_ LPCWSTR machine_name = nullptr );
+      CNetwork(_In_ std::wstring_view machine_name = { nullptr, 0 });
       virtual ~CNetwork();
 
       virtual _Check_return_ bool AbortShutdown( void ) noexcept;
       virtual void    Close( void ) noexcept;
       virtual _Check_return_ bool  EnumeratePorts( void ) noexcept;
-      virtual _Check_return_ DWORD GetErrorCode( void ) const noexcept;
+      inline constexpr _Check_return_ DWORD GetErrorCode(void) const noexcept { return(m_ErrorCode); };
       virtual _Check_return_ LPCWSTR GetMachineName( void ) const noexcept;
       virtual void    GetFriendlyMachineName( _Out_ std::wstring& name ) const noexcept;
       virtual _Check_return_ bool GetNext( _Inout_ CPortInformation& port ) noexcept;
       virtual _Check_return_ bool GetTime(_Inout_ CTime& machine_time ) noexcept;
       virtual _Check_return_ bool GetTime(_Inout_ CSystemTime& machine_time ) noexcept;
       virtual _Check_return_ bool IsRebootable( void ) noexcept;
-      virtual void    Open(_In_opt_z_ LPCWSTR machine_name = nullptr ) noexcept;
+      virtual void    Open(_In_ std::wstring_view machine_name = { nullptr, 0 } ) noexcept;
       virtual _Check_return_ bool SetPrivilege( _In_z_ LPCWSTR privilege_name, _In_ bool const add_privilege = true ) noexcept;
       virtual _Check_return_ bool Shutdown( _In_ bool const reboot                            = true,
                                             _In_ bool const force_applications_to_close       = true,

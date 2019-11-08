@@ -60,11 +60,11 @@ CDesktop::CDesktop() noexcept
    m_ErrorCode          = 0;
 }
 
-CDesktop::CDesktop( __in HDESK desktop_handle ) noexcept
+CDesktop::CDesktop( _In_ HDESK desktop_handle ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
-   m_AutomaticallyClose = FALSE;
+   m_AutomaticallyClose = false;
    m_DesktopHandle      = static_cast< HDESK >( NULL );
    m_ErrorCode          = 0;
 
@@ -128,7 +128,7 @@ _Check_return_ bool CDesktop::Close( void ) noexcept
    return( return_value == FALSE ? false : true );
 }
 
-_Check_return_ bool CDesktop::Create( __in std::wstring const& name_of_desktop, __in DWORD desired_access, __in_opt LPSECURITY_ATTRIBUTES security_attributes_p, __in DWORD flags ) noexcept
+_Check_return_ bool CDesktop::Create( _In_ std::wstring_view name_of_desktop, __in DWORD desired_access, __in_opt LPSECURITY_ATTRIBUTES security_attributes_p, __in DWORD flags ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER_NULL_OK( security_attributes_p );
@@ -153,7 +153,7 @@ _Check_return_ bool CDesktop::Create( __in std::wstring const& name_of_desktop, 
 
       ::ZeroMemory( desktop_name, sizeof( desktop_name ) );
       
-      (void) wcsncpy_s( desktop_name, std::size( desktop_name ), name_of_desktop.c_str(), _TRUNCATE );
+      (void) wcsncpy_s( desktop_name, std::size( desktop_name ), name_of_desktop.data(), name_of_desktop.length() );
 
       // CreateDesktop is not const correct
 
@@ -184,18 +184,6 @@ _Check_return_ bool CDesktop::Create( __in std::wstring const& name_of_desktop, 
       return( false );
    }
    WFC_END_CATCH_ALL
-}
-
-_Check_return_ bool CDesktop::GetAutomaticallyClose( void ) const noexcept
-{
-   WFC_VALIDATE_POINTER( this );
-   return( m_AutomaticallyClose );
-}
-
-_Check_return_ HDESK CDesktop::GetHandle( void ) const noexcept
-{
-   WFC_VALIDATE_POINTER( this );
-   return( m_DesktopHandle );
 }
 
 static BOOL CALLBACK CDesktop__WindowEnumerator( HWND window_handle, LPARAM lParam )
@@ -253,12 +241,6 @@ _Check_return_ bool CDesktop::GetWindows( _Out_ std::vector<HWND>& window_handle
    return( return_value );
 }
 
-_Check_return_ DWORD CDesktop::GetErrorCode( void ) const noexcept
-{
-   WFC_VALIDATE_POINTER( this );
-   return( m_ErrorCode );
-}
-
 void CDesktop::GetThread( __in DWORD thread_id ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
@@ -273,7 +255,7 @@ void CDesktop::GetThread( __in DWORD thread_id ) noexcept
    }
 }
 
-_Check_return_ bool CDesktop::Open( __in std::wstring const& name_of_desktop, __in DWORD desired_access, __in DWORD flags, __in bool inheritable ) noexcept
+_Check_return_ bool CDesktop::Open( _In_ std::wstring_view name_of_desktop, __in DWORD desired_access, __in DWORD flags, __in bool inheritable ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -293,7 +275,7 @@ _Check_return_ bool CDesktop::Open( __in std::wstring const& name_of_desktop, __
 
    ::ZeroMemory( desktop_name, sizeof( desktop_name ) );
       
-   (void) wcsncpy_s( desktop_name, std::size( desktop_name ), name_of_desktop.c_str(), _TRUNCATE );
+   (void) wcsncpy_s( desktop_name, std::size( desktop_name ), name_of_desktop.data(), name_of_desktop.length() );
 
    // OpenDesktop() is not const correct
 

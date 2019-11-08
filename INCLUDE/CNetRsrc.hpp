@@ -119,7 +119,7 @@ class CNetworkResources : public CNetwork
       CNetworkResources(__in CNetworkResources const&) = delete;
       CNetworkResources& operator=(__in CNetworkResources const&) = delete;
       CNetworkResources();
-      CNetworkResources( __in_z_opt LPCTSTR machine_name );
+      CNetworkResources(_In_ std::wstring_view machine_name = { nullptr, 0 });
       virtual ~CNetworkResources();
 
       virtual _Check_return_ bool Enumerate( __inout CNetworkResourceInformation& information ) noexcept;
