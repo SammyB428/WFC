@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 1995-2017, Samuel R. Blackburn
+** Copyright, 1995-2019, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -565,7 +565,7 @@ void CNetwork::Open( _In_ std::wstring_view machine_name ) noexcept
          // with the local machine. That's OK, all we need to do is put
          // the name of the computer into m_FriendlyName
 
-         wchar_t this_machine_name[ MAX_COMPUTERNAME_LENGTH + 1 ];
+         wchar_t this_machine_name[MAX_COMPUTERNAME_LENGTH + 1]{ 0 };
 
          DWORD string_size = MAX_COMPUTERNAME_LENGTH + 1;
 

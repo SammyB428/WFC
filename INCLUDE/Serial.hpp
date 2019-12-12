@@ -122,10 +122,10 @@ class CSerialFile : public CDummyFile
       virtual _Check_return_ BOOL  CancelWaitFor( void ) noexcept;
       virtual _Check_return_ BOOL  ClearBreak( void ) noexcept;
       virtual void  Close( void ) noexcept;
-      virtual _Check_return_ BOOL  ConfigurationDialog( __inout CCommunicationsConfiguration& configuration, __in BOOL const save_changes = TRUE, __in HWND const parent_window_handle = static_cast< HWND >( NULL ) ) noexcept;
+      virtual _Check_return_ bool  ConfigurationDialog( __inout CCommunicationsConfiguration& configuration, _In_ bool const save_changes = true, _In_ HWND const parent_window_handle = static_cast< HWND >( NULL ) ) noexcept;
       virtual _Check_return_ HANDLE Detach( void ) noexcept;
       virtual _Check_return_ DWORD GetBaudRate( void ) noexcept;
-      virtual _Check_return_ BOOL  GetConfiguration( __inout CCommunicationsConfiguration& configuration ) noexcept;
+      virtual _Check_return_ bool  GetConfiguration( __inout CCommunicationsConfiguration& configuration ) noexcept;
       virtual _Check_return_ DWORD GetFlowControl( void ) noexcept;
       virtual _Check_return_ DWORD GetInputBufferSize( void ) noexcept;
       virtual _Check_return_ DWORD GetModemStatus( void ) noexcept;
@@ -137,7 +137,7 @@ class CSerialFile : public CDummyFile
       virtual _Check_return_ DWORD NumberOfBytesWaitingToBeRead( void ) noexcept;
       virtual _Check_return_ DWORD NumberOfBytesWaitingToBeWritten( void ) noexcept;
       virtual _Check_return_ bool  Open( void ) noexcept; // Name already filled, used in re-opening an existing session
-      _Check_return_ bool  Open( __in_z LPCTSTR channel_name, __in UINT const open_flags = 0 ) noexcept override;
+      _Check_return_ bool Open(_In_ std::wstring_view channel_name, __in UINT const open_flags = 0 ) noexcept override;
 
       virtual _Check_return_ BOOL  Purge( __in DWORD const what_to_purge = purgeAll ) noexcept;
       virtual _Check_return_ UINT  Read( __out_bcount( length ) void * buffer, __in UINT const length ) noexcept;
@@ -148,8 +148,8 @@ class CSerialFile : public CDummyFile
       virtual _Check_return_ BOOL  SetCharacterToWaitFor( __in uint8_t const character_to_wait_for ) noexcept;
       virtual _Check_return_ BOOL  SetDataTerminalReady( __in bool const set_DTR_on = true ) noexcept;
       virtual void  SetFlowControl( __in DWORD const flow_control ) noexcept;
-      virtual void  SetInputBufferSize( __in DWORD const buffer_size ) noexcept;
-      virtual void  SetOutputBufferSize( __in DWORD const buffer_size ) noexcept;
+      inline void SetInputBufferSize(__in DWORD const buffer_size) noexcept { m_InputBufferSize = buffer_size; }
+      inline void SetOutputBufferSize(__in DWORD const buffer_size) noexcept { m_OutputBufferSize = buffer_size; }
       virtual _Check_return_ bool  SetPurgeBufferOnError( __in bool const purge_buffer = true ) noexcept;
       virtual _Check_return_ BOOL  SetRequestToSend( __in BOOL const set_RTS_on = TRUE ) noexcept;
       virtual _Check_return_ BOOL  SetState( __inout CDeviceControlBlock& device_control_block ) noexcept;

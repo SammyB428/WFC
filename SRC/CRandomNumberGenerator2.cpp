@@ -103,8 +103,6 @@ USING_WFC_NAMESPACE
 
 using GET_RANDOM_DWORD_FUNCTION = VOID (*)( DWORD * );
 
-typedef unsigned long uint32;
-
 #define N              (624)                 // length of state vector
 #define M              (397)                 // a period parameter
 #define K              (0x9908B0DFU)         // a magic constant

@@ -186,7 +186,7 @@ _Check_return_ bool CDesktop::Create( _In_ std::wstring_view name_of_desktop, __
    WFC_END_CATCH_ALL
 }
 
-static BOOL CALLBACK CDesktop__WindowEnumerator( HWND window_handle, LPARAM lParam )
+static BOOL CALLBACK CDesktop__WindowEnumerator( HWND window_handle, LPARAM lParam ) noexcept
 {
    WFC_VALIDATE_POINTER_NULL_OK( lParam );
 

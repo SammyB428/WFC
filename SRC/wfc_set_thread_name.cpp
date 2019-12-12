@@ -53,17 +53,16 @@ USING_WFC_NAMESPACE
 
 #if ( _MSC_VER >= 1300 ) // Visual Studio 7.0
 
-static void __stdcall __set_visual_studio_thread_name( __in_z LPCSTR thread_name )
+static void __stdcall __set_visual_studio_thread_name( __in_z LPCSTR thread_name ) noexcept
 {
 #pragma pack( push, 8 )
-   typedef struct _thread_name_information
+   struct THREAD_NAME_INFORMATION
    {
-      DWORD  Type;
-      LPCSTR AsciiThreadName;
-      DWORD  ThreadID;
-      DWORD  Flags;
-   }
-   THREAD_NAME_INFORMATION;
+       DWORD  Type{ 0 };
+       LPCSTR AsciiThreadName{ nullptr };
+       DWORD  ThreadID{ 0 };
+       DWORD  Flags{ 0 };
+   };
 #pragma pack( pop )
 
    THREAD_NAME_INFORMATION thread_name_information;
@@ -87,7 +86,7 @@ static void __stdcall __set_visual_studio_thread_name( __in_z LPCSTR thread_name
 
 #endif // _MSC_VER >= 1300
 
-static inline _Check_return_ WFC_THREAD_INFORMATION_BLOCK * get_thread_information_block( void )
+static inline _Check_return_ WFC_THREAD_INFORMATION_BLOCK * _get_thread_information_block( void ) noexcept
 {
    WFC_THREAD_INFORMATION_BLOCK * return_value = nullptr;
 
@@ -126,7 +125,7 @@ void PASCAL Win32FoundationClasses::wfc_set_thread_name( __in_z LPCSTR thread_na
    __set_visual_studio_thread_name( thread_name );
 #endif
 
-   WFC_THREAD_INFORMATION_BLOCK * thread_information_block_p = get_thread_information_block();
+   WFC_THREAD_INFORMATION_BLOCK * thread_information_block_p = _get_thread_information_block();
 
    thread_information_block_p->Arbitrary = (VOID *) thread_name;
 }

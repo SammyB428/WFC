@@ -51,7 +51,7 @@ static char THIS_FILE[] = __FILE__;
 
 USING_WFC_NAMESPACE
 
-static inline _Check_return_ WFC_THREAD_INFORMATION_BLOCK * get_thread_information_block( void )
+static inline _Check_return_ WFC_THREAD_INFORMATION_BLOCK * get_thread_information_block( void ) noexcept
 {
    WFC_THREAD_INFORMATION_BLOCK * return_value = nullptr;
 

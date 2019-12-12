@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 1995-2017, Samuel R. Blackburn
+** Copyright, 1995-2019, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -312,7 +312,7 @@ _Check_return_ bool CPhysicalDiskFile::m_SetSectorSize( void ) noexcept
    return( true );
 }
 
-_Check_return_ bool CPhysicalDiskFile::Open( _In_z_ LPCTSTR drive_letter, _In_ UINT const) noexcept
+_Check_return_ bool CPhysicalDiskFile::Open(_In_ std::wstring_view drive_letter, _In_ UINT const) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -321,6 +321,11 @@ _Check_return_ bool CPhysicalDiskFile::Open( _In_z_ LPCTSTR drive_letter, _In_ U
    if ( m_FileHandle != reinterpret_cast< HANDLE >( INVALID_HANDLE_VALUE ) )
    {
       Close();
+   }
+
+   if (drive_letter.empty() == true)
+   {
+       return(false);
    }
 
    std::wstring filename;
@@ -636,7 +641,7 @@ BOOL copy_diskette_to_file( CFile&amp; file )
 
    <B>CPhysicalDiskFile</B> disk;
 
-   if ( disk.Open( &quot;A:&quot;, 0 ) == FALSE )
+   if ( disk.Open( &quot;A:&quot;, 0 ) == false )
    {
       return( FALSE );
    }
@@ -670,7 +675,7 @@ void get_sector( TCHAR drive_letter, DWORD sector_number, std::vector&lt;uint8_t
 
    <B>CPhysicalDiskFile</B> disk;
 
-   if ( disk.Open( filename, 0 ) == FALSE )
+   if ( disk.Open( filename, 0 ) == false )
    {
       return;
    }

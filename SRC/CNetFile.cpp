@@ -54,17 +54,10 @@ USING_WFC_NAMESPACE
 #define new DEBUG_NEW
 #endif // _DEBUG
 
-CNetworkFiles::CNetworkFiles()
+CNetworkFiles::CNetworkFiles(_In_ std::wstring_view machine_name) : CNetwork(machine_name)
 {
    WFC_VALIDATE_POINTER( this );
    m_Initialize();
-}
-
-CNetworkFiles::CNetworkFiles(_In_ std::wstring_view machine_name)
-{
-   WFC_VALIDATE_POINTER( this );
-   m_Initialize();
-   Open( machine_name );
 }
 
 CNetworkFiles::~CNetworkFiles()
@@ -186,9 +179,9 @@ bool CNetworkFiles::m_GetChunk( void ) noexcept
    }
 
    m_ErrorCode = ::NetFileEnum( (LMSTR) m_WideMachineName.get(),
-                                        nullptr, 
-                                        nullptr, 
-                                        3, 
+                                        nullptr,
+                                        nullptr,
+                                        3,
                             (LPBYTE *) &m_103InformationBuffer,
                                         64 * 1024,
                                        &m_103NumberOfEntriesRead,

@@ -57,21 +57,21 @@ CTalkingSocket::CTalkingSocket() noexcept
    m_Initialize();
 }
 
-CTalkingSocket::CTalkingSocket( __in std::wstring const& a_host_name, __in std::wstring const& p_name ) noexcept
+CTalkingSocket::CTalkingSocket(_In_ std::wstring_view a_host_name, __in std::wstring const& p_name ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    m_Initialize();
 
-   SetAddress( a_host_name.c_str() );
+   SetAddress( a_host_name );
    SetPort( p_name.c_str() );
 }
 
-CTalkingSocket::CTalkingSocket( __in std::wstring const& address, __in short const p_number ) noexcept
+CTalkingSocket::CTalkingSocket(_In_ std::wstring_view address, __in short const p_number ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    m_Initialize();
 
-   SetAddress( address.c_str() );
+   SetAddress( address );
    SetPort( p_number );
 }
 
@@ -197,12 +197,11 @@ _Check_return_ bool CTalkingSocket::Open( void ) noexcept
 
 #pragma warning( disable : 4100 )
 
-_Check_return_ bool CTalkingSocket::Open( __in_z LPCTSTR a, __in UINT const port_number ) noexcept
+_Check_return_ bool CTalkingSocket::Open( _In_ std::wstring_view a, __in UINT const port_number ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
-   WFC_VALIDATE_POINTER( a );
 
-   if ( a == nullptr )
+   if ( a.empty() == true )
    {
       m_LastError = ERROR_INVALID_PARAMETER;
       return( FALSE );
@@ -216,22 +215,22 @@ _Check_return_ bool CTalkingSocket::Open( __in_z LPCTSTR a, __in UINT const port
 
 #pragma warning( default : 4100 )
 
-_Check_return_ bool CTalkingSocket::Open( __in std::wstring const& a, __in short const p ) noexcept
+_Check_return_ bool CTalkingSocket::Open(_In_ std::wstring_view a, __in short const p ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    ASSERT( p > 0 );
 
-   SetAddress( a.c_str() );
+   SetAddress( a );
    SetPort( p );
 
    return( Open() );
 }
 
-_Check_return_ bool CTalkingSocket::Open( __in std::wstring const& _host_name, __in std::wstring const& _port_name ) noexcept
+_Check_return_ bool CTalkingSocket::Open(_In_ std::wstring_view _host_name, __in std::wstring const& _port_name ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
-   SetAddress( _host_name.c_str() );
+   SetAddress( _host_name );
    SetPort( _port_name.c_str() );
 
    return( Open() );

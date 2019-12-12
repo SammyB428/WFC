@@ -355,7 +355,15 @@ public:
       _Check_return_ bool  Parse( _In_ CParsePoint const& beginning, _In_ CDataParser const& parser ) noexcept;
       inline constexpr void SetAbortParsing( _In_ bool const abort_parsing = true ) noexcept { m_AbortParsing = abort_parsing; };
       inline void SetContents( _In_ std::wstring_view contents ) noexcept { m_Contents.assign( contents ); };
-      inline void SetDocument( _In_ CExtensibleMarkupLanguageDocument * document_p ) noexcept;
+      inline void SetDocument(_In_ CExtensibleMarkupLanguageDocument* document_p) noexcept
+      {
+          m_Document = document_p;
+
+          for (auto const child_p : m_Children)
+          {
+              child_p->SetDocument(document_p);
+          }
+      }
       inline void SetTag( _In_ std::wstring_view tag_name ) noexcept { m_Tag.assign( tag_name ); };
       inline constexpr void SetType(_In_ ElementType const element_type) noexcept
       {

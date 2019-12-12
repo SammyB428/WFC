@@ -277,7 +277,7 @@ void CFile64::CreatePathTo(_In_z_ LPCWSTR full_pathname) noexcept
 
             full_directory_path.append(directory);
 
-            CFileDirectory::Create(full_directory_path);
+            (void) CFileDirectory::Create(full_directory_path);
         }
     }
 }
@@ -1093,7 +1093,7 @@ _Check_return_ BOOL PASCAL CFile64::GetStatus( _In_z_ LPCTSTR filename, __out CF
 
 #endif // WFC_STL
 
-void CFile64::m_Initialize( void )
+void CFile64::m_Initialize( void ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
 
@@ -1176,7 +1176,7 @@ void CFile64::SetSecurity(_In_z_ wchar_t const * sddl) noexcept
     m_SecurityDescriptor_p = (SECURITY_DESCRIPTOR *) m_SecurityAttributes_p->lpSecurityDescriptor;
 }
 
-void CFile64::m_Uninitialize( void )
+void CFile64::m_Uninitialize( void ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
 
@@ -1220,10 +1220,9 @@ _Check_return_ bool CFile64::LockRange( _In_ uint64_t const position, _In_ uint6
     return( true );
 }
 
-_Check_return_ bool CFile64::Open( _In_z_ LPCTSTR filename, _In_ UINT const open_flags_parameter ) noexcept
+_Check_return_ bool CFile64::Open(_In_ std::wstring_view filename, _In_ UINT const open_flags_parameter ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
-    WFC_VALIDATE_POINTER( filename );
 
     Close();
 
@@ -1235,7 +1234,7 @@ _Check_return_ bool CFile64::Open( _In_z_ LPCTSTR filename, _In_ UINT const open
 
         TCHAR full_path[_MAX_PATH]{ 0 };
 
-        (void) ::__FullPath( full_path, filename );
+        (void) ::__FullPath( full_path, m_FileName.c_str());
 
         m_PathName.assign( full_path );
 
@@ -1350,7 +1349,7 @@ _Check_return_ bool CFile64::Open( _In_z_ LPCTSTR filename, _In_ UINT const open
             m_Attributes or_eq FILE_FLAG_DELETE_ON_CLOSE;
         }
 
-        m_FileHandle = ::CreateFile( filename,
+        m_FileHandle = ::CreateFile(m_FileName.c_str(),
             access,
             share_mode,
             GetSecurityAttributes(),
@@ -1374,159 +1373,6 @@ _Check_return_ bool CFile64::Open( _In_z_ LPCTSTR filename, _In_ UINT const open
             }
 
 #endif // WFC_STL
-
-            Close();
-            return( false );
-        }
-
-        m_CloseOnDelete = true;
-
-        return( true );
-    }
-    WFC_CATCH_ALL
-    {
-        return( false );
-    }
-    WFC_END_CATCH_ALL
-}
-
-_Check_return_ bool CFile64::OpenWide( _In_z_ wchar_t const * unicode_filename, _In_ UINT const open_flags_parameter ) noexcept
-{
-    WFC_VALIDATE_POINTER( this );
-    WFC_VALIDATE_POINTER( unicode_filename );
-
-    Close();
-
-    UINT open_flags = open_flags_parameter;
-
-    WFC_TRY
-    {
-        m_FileName.assign( unicode_filename );
-
-        wchar_t unicode_full_path[ _MAX_PATH ];
-
-        (void) ::__FullPath( unicode_full_path, unicode_filename );
-
-        m_PathName.assign( unicode_full_path );
-
-        m_FileTitle.clear();
-
-        open_flags and_eq compl (UINT) OpenFlags::typeBinary;
-
-        DWORD access = 0;
-
-        switch ( (OpenFlags)(open_flags bitand 3 ))
-        {
-        case OpenFlags::modeRead:
-
-            access = GENERIC_READ;
-            break;
-
-        case OpenFlags::modeWrite:
-
-            access = GENERIC_WRITE;
-            break;
-
-        case OpenFlags::modeReadWrite:
-
-            access = GENERIC_READ bitor GENERIC_WRITE;
-            break;
-
-        default:
-
-        _ASSERT_EXPR( FALSE, _CRT_WIDE( "Invalid flags." ) );
-        }
-
-        DWORD share_mode = 0;
-
-        switch ( (OpenFlags)(open_flags bitand 0x70))    // map compatibility mode to exclusive
-        {
-        case OpenFlags::shareCompat:
-        case OpenFlags::shareExclusive:
-
-            share_mode = 0;
-            break;
-
-        case OpenFlags::shareDenyWrite:
-
-            share_mode = FILE_SHARE_READ;
-            break;
-
-        case OpenFlags::shareDenyRead:
-
-            share_mode = FILE_SHARE_WRITE;
-            break;
-
-        case OpenFlags::shareDenyNone:
-
-            share_mode = FILE_SHARE_WRITE bitor FILE_SHARE_READ;
-            break;
-
-        default:
-
-        _ASSERT_EXPR( FALSE, _CRT_WIDE( "Invalid share mode." ) );
-        }
-
-        if ( m_SecurityAttributes_p != nullptr )
-        {
-            m_SecurityAttributes_p->bInheritHandle = ( ( open_flags bitand (UINT) OpenFlags::modeNoInherit ) == 0 ) ? TRUE : FALSE;
-        }
-
-        DWORD creation_flags = 0;
-
-        if ( is_flagged( open_flags, (uint64_t) OpenFlags::modeCreate) == true )
-        {
-            if ( is_flagged( open_flags, (uint64_t) OpenFlags::modeNoTruncate ) == true )
-            {
-                creation_flags = OPEN_ALWAYS;
-            }
-            else
-            {
-                creation_flags = CREATE_ALWAYS;
-            }
-        }
-        else
-        {
-            creation_flags = OPEN_EXISTING;
-        }
-
-        if ( is_flagged( open_flags, (uint64_t)OpenFlags::osNoBuffer ) == true )
-        {
-            m_Attributes or_eq FILE_FLAG_NO_BUFFERING;
-        }
-
-        if (is_flagged(open_flags, (uint64_t)OpenFlags::osRandomAccess ) == true )
-        {
-            m_Attributes or_eq FILE_FLAG_RANDOM_ACCESS;
-        }
-
-        if (is_flagged(open_flags, (uint64_t)OpenFlags::osSequentialScan ) == true)
-        {
-            m_Attributes or_eq FILE_FLAG_SEQUENTIAL_SCAN;
-        }
-
-        if (is_flagged(open_flags, (uint64_t) OpenFlags::osWriteThrough ) == true)
-        {
-            m_Attributes or_eq FILE_FLAG_WRITE_THROUGH;
-        }
-
-        if (is_flagged(open_flags, (uint64_t)OpenFlags::wfcDeleteOnClose ) == true)
-        {
-            m_Attributes or_eq FILE_FLAG_DELETE_ON_CLOSE;
-        }
-
-        m_FileHandle = ::CreateFileW( unicode_filename,
-            access,
-            share_mode,
-            GetSecurityAttributes(),
-            creation_flags,
-            GetAttributes(),
-            GetTemplateFile() );
-
-        if ( m_FileHandle == static_cast< HANDLE >( INVALID_HANDLE_VALUE ) )
-        {
-            m_LastError = ::GetLastError();
-            //WFCTRACEERROR(m_LastError);
 
             Close();
             return( false );
@@ -1948,12 +1794,11 @@ void PASCAL CFile64::SetStatus( LPCTSTR filename, CFileStatus& const status )
 #endif
 
 // WFC version of the FILE_ZERO_DATA_INFORMATION structure
-typedef struct _wfc_sparse_region
+struct WFC_SPARSE_REGION
 {
-    LARGE_INTEGER file_offset;
-    LARGE_INTEGER beyond_final_zero;
-}
-WFC_SPARSE_REGION, *WFC_SPARSE_REGION_P;
+    LARGE_INTEGER file_offset{ 0,0 };
+    LARGE_INTEGER beyond_final_zero{ 0,0 };
+};
 
 _Check_return_ bool CFile64::SparsifyRegion( _In_ uint64_t const position, _In_ uint64_t const number_of_bytes_to_mark_as_sparse ) noexcept
 {

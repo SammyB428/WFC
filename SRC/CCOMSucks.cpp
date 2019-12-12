@@ -51,7 +51,7 @@ static char THIS_FILE[] = __FILE__;
 
 USING_WFC_NAMESPACE
 
-static DWORD WINAPI com_sucks_message_pump_thread(VOID * parameter)
+static DWORD WINAPI com_sucks_message_pump_thread(VOID * parameter) noexcept
 {
     // Use Mutlithreaded apartment model, not that it matters much...
     (void)CoInitializeEx(nullptr, COINIT_MULTITHREADED);

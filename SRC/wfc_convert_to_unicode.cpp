@@ -89,7 +89,7 @@ _Check_return_ VOID * PASCAL Win32FoundationClasses::wfc_get_unicode_conversion_
 
 #define MINIMUM_CODE_PAGE_DETECTION_BUFFER_SIZE (512)
 
-static inline _Check_return_ bool __detect_code_page(_In_ IMultiLanguage2 * interface_pointer, _In_reads_bytes_( number_of_bytes_in_buffer ) uint8_t const * bytes, _In_ std::size_t number_of_bytes_in_buffer, __in DWORD encoding_hints, _Out_ DWORD& detected_code_page ) noexcept
+static inline _Check_return_ bool __detect_code_page(_In_ IMultiLanguage2 * interface_pointer, _In_reads_bytes_( number_of_bytes_in_buffer ) uint8_t const * bytes, _In_ std::size_t number_of_bytes_in_buffer, _In_ DWORD encoding_hints, _Out_ DWORD& detected_code_page ) noexcept
 {
    WFC_VALIDATE_POINTER( interface_pointer );
    WFC_VALIDATE_POINTER( bytes );

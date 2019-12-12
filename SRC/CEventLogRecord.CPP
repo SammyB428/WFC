@@ -222,8 +222,6 @@ void CEventLogRecord::Copy( _In_ EVENTLOGRECORD  const * source ) noexcept
 
       std::wstring data_string;
 
-      int number_of_strings = 0;
-
       here = source->StringOffset;
 
       character_pointer = reinterpret_cast<wchar_t *>(&byte_p[ here ]);

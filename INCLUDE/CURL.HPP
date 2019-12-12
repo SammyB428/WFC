@@ -49,10 +49,10 @@ class CUniformResourceLocator
 {
    public:
 
-      CUniformResourceLocator();
-      CUniformResourceLocator( __in CUniversalNamingConvention const& source );
-      CUniformResourceLocator( __in CUniformResourceLocator const& source );
-      CUniformResourceLocator( __in_z LPCTSTR source );
+      CUniformResourceLocator() noexcept;
+      CUniformResourceLocator( _In_ CUniversalNamingConvention const& source ) noexcept;
+      CUniformResourceLocator( _In_ CUniformResourceLocator const& source ) noexcept;
+      CUniformResourceLocator(_In_ std::wstring_view source ) noexcept;
 
       /*
       ** Destructor should be virtual according to MSJ article in Sept 1992
@@ -85,7 +85,7 @@ class CUniformResourceLocator
       virtual _Check_return_ int Compare( __in CUniformResourceLocator const& source ) const noexcept;
       virtual void Copy( __in CUniformResourceLocator const& source ) noexcept;
       virtual void Copy( __in CUniversalNamingConvention const& source ) noexcept;
-      virtual void Copy( __in_z LPCTSTR source ) noexcept;
+      virtual void Copy(_In_ std::wstring_view source ) noexcept;
       virtual void Empty( void ) noexcept;
       virtual void Make( void ) noexcept;
 

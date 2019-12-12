@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 1995-2016, Samuel R. Blackburn
+** Copyright, 1995-2019, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -54,16 +54,10 @@ USING_WFC_NAMESPACE
 #define new DEBUG_NEW
 #endif // _DEBUG
 
-CNetworkSessions::CNetworkSessions() noexcept
+CNetworkSessions::CNetworkSessions(_In_ std::wstring_view machine_name) noexcept : CNetwork(machine_name)
 {
    WFC_VALIDATE_POINTER( this );
    m_Initialize();
-}
-
-CNetworkSessions::CNetworkSessions(_In_ std::wstring_view machine_name) noexcept
-{
-   WFC_VALIDATE_POINTER( this );
-   Open( machine_name );
 }
 
 CNetworkSessions::~CNetworkSessions() noexcept

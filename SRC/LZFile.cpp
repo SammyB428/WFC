@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 1995-2015, Samuel R. Blackburn
+** Copyright, 1995-2019, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -118,20 +118,21 @@ void CLZFile::Dump( CDumpContext& dump_context ) const
 
 #endif // _DEBUG
 
-_Check_return_ bool CLZFile::GetExpandedName( __in_z wchar_t * name_of_compressed_file, __out std::wstring& original_file_name ) noexcept
+_Check_return_ bool CLZFile::GetExpandedName( _In_ std::wstring_view name_of_compressed_file, __out std::wstring& original_file_name ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
-   WFC_VALIDATE_POINTER( name_of_compressed_file );
 
    wchar_t file_name[ _MAX_PATH ];
 
    ::ZeroMemory( file_name, sizeof( file_name ) );
 
+   std::wstring name(name_of_compressed_file);
+
    // We were passed a pointer, don't trust it
 
    try
    {
-      if ( ::GetExpandedNameW( name_of_compressed_file, file_name ) == 1 )
+      if ( ::GetExpandedNameW(const_cast<LPWSTR>(name.data()), file_name ) == 1 )
       {
          original_file_name.assign( file_name );
          return( true );
@@ -158,12 +159,11 @@ void CLZFile::m_Initialize( void ) noexcept
    WFC_VALIDATE_POINTER( this );
 }
 
-_Check_return_ bool CLZFile::Open( __in_z LPCTSTR file_name, __in UINT const style ) noexcept
+_Check_return_ bool CLZFile::Open(_In_ std::wstring_view file_name, __in UINT const style ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
-   WFC_VALIDATE_POINTER( file_name );
 
-   if ( file_name == nullptr )
+   if ( file_name.empty() == true )
    {
       return( false );
    }
@@ -254,48 +254,48 @@ _Check_return_ uint64_t CLZFile::Seek(_In_ int64_t const offset, _In_ CFile64::S
    return( offset_from_beginning_of_file );
 }
 
-void CLZFile::TranslateErrorCode( __in int const error_code, __out std::wstring& error_message ) noexcept
+void CLZFile::TranslateErrorCode( _In_ int const error_code, _Out_ std::wstring& error_message ) noexcept
 {
    switch( error_code )
    {
       case LZERROR_BADINHANDLE:
 
-         error_message.assign( TEXT( "Invalid input handle" ) );
+         error_message.assign(WSTRING_VIEW( L"Invalid input handle" ) );
          return;
 
       case LZERROR_BADOUTHANDLE:
 
-         error_message.assign( TEXT( "Invalid output handle" ) );
+         error_message.assign(WSTRING_VIEW( L"Invalid output handle" ) );
          return;
 
       case LZERROR_READ:
 
-         error_message.assign( TEXT( "Corrupt compressed file format" ) );
+         error_message.assign(WSTRING_VIEW( L"Corrupt compressed file format" ) );
          return;
 
       case LZERROR_WRITE:
 
-         error_message.assign( TEXT( "Out of space for output file" ) );
+         error_message.assign(WSTRING_VIEW( L"Out of space for output file" ) );
          return;
 
       case LZERROR_GLOBALLOC:
 
-         error_message.assign( TEXT( "Insufficient memory for LZFile struct" ) );
+         error_message.assign(WSTRING_VIEW( L"Insufficient memory for LZFile struct" ) );
          return;
 
       case LZERROR_GLOBLOCK:
 
-         error_message.assign( TEXT( "Bad global handle" ) );
+         error_message.assign( WSTRING_VIEW( L"Bad global handle" ) );
          return;
 
       case LZERROR_BADVALUE:
 
-         error_message.assign( TEXT( "Input parameter out of acceptable range" ) );
+         error_message.assign(WSTRING_VIEW( L"Input parameter out of acceptable range" ) );
          return;
 
       case LZERROR_UNKNOWNALG:
 
-         error_message.assign( TEXT( "Compression algorithm not recognized" ) );
+         error_message.assign(WSTRING_VIEW( L"Compression algorithm not recognized" ) );
          return;
 
       default:

@@ -345,7 +345,7 @@ _Check_return_ bool CExtensibleMarkupLanguageEntities::IsEntity( _In_ std::wstri
          // We use entity_length - 3 because we need to skip the &# at the beginning and ; at the end
          for ( auto const loop_index : Range( entity.length() - 3 ) )
          {
-            if ( _istdigit( entity[ loop_index + 2 ] ) == 0 ) // + 2 skips &#
+            if (fast_is_digit( entity[ loop_index + 2 ] ) == false ) // + 2 skips &#
             {
                rule_that_was_broken = 66;
                return( false );
@@ -506,7 +506,7 @@ _Check_return_ bool CExtensibleMarkupLanguageEntities::Resolve( _In_ std::wstrin
          // We use entity_length - 3 because we need to skip the &# at the beginning and ; at the end
          for ( auto const loop_index : Range(entity.length() - 3 ) )
          {
-            if ( _istdigit( entity[ loop_index + 2 ] ) == 0 ) // + 2 skips &#
+            if (fast_is_digit( entity[ loop_index + 2 ] ) == false ) // + 2 skips &#
             {
                //WFCTRACEVAL( TEXT( "Ill-formed decimal entity. Character is not a digit at index " ), (uint32_t) ( loop_index + 2 ) );
                text.clear();

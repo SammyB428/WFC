@@ -52,40 +52,32 @@
 //
 // IP types
 //
-typedef unsigned long   IPAddr;     // An IP address.
-typedef unsigned long   IPMask;     // An IP subnet mask.
-typedef unsigned long   IP_STATUS;  // Status code returned from IP APIs.
+using IPAddr = unsigned long;     // An IP address.
+using IPMask = unsigned long;     // An IP subnet mask.
+using IP_STATUS = unsigned long;  // Status code returned from IP APIs.
 
 /*INC*/
 #if 0
-struct ip_option_information {
-    unsigned char       Ttl;             // Time To Live
-    unsigned char       Tos;             // Type Of Service
-    unsigned char       Flags;           // IP header flags
-    unsigned char       OptionsSize;     // Size in bytes of options data
-    unsigned char FAR * OptionsData;     // Pointer to options data
+struct IP_OPTION_INFORMATION {
+    unsigned char       Ttl{ 0 };             // Time To Live
+    unsigned char       Tos{ 0 };             // Type Of Service
+    unsigned char       Flags{ 0 };           // IP header flags
+    unsigned char       OptionsSize{ 0 };     // Size in bytes of options data
+    unsigned char FAR * OptionsData{ nullptr };     // Pointer to options data
 }; /* ip_option_information */
 
-struct icmp_echo_reply {
-    IPAddr                         Address;         // Replying address
-    unsigned long                  Status;          // Reply status
-    unsigned long                  RoundTripTime;   // RTT in milliseconds
-    unsigned short                 DataSize;        // Echo data size
-    unsigned short                 Reserved;        // Reserved for system use
-    void FAR                     * Data;            // Pointer to the echo data
-    struct ip_option_information   Options;         // Reply options
+struct ICMP_ECHO_REPLY {
+    IPAddr                  Address{ 0 };         // Replying address
+    unsigned long           Status{ 0 };          // Reply status
+    unsigned long           RoundTripTime{ 0 };   // RTT in milliseconds
+    unsigned short          DataSize{ 0 };        // Echo data size
+    unsigned short          Reserved{ 0 };        // Reserved for system use
+    void FAR              * Data{ nullptr };            // Pointer to the echo data
+    IP_OPTION_INFORMATION   Options;         // Reply options
 }; /* icmp_echo_reply */
 
 /*NOINC*/
 
-//
-// IP Options structure for use by the application-level ICMP interface.
-//
-
-typedef struct ip_option_information IP_OPTION_INFORMATION,
-                                     FAR * PIP_OPTION_INFORMATION;
-
-typedef struct icmp_echo_reply ICMP_ECHO_REPLY, FAR *PICMP_ECHO_REPLY;
 #endif // 0
 /*INC*/
 
@@ -151,23 +143,23 @@ typedef struct icmp_echo_reply ICMP_ECHO_REPLY, FAR *PICMP_ECHO_REPLY;
 
 // === Structures Required by the ICMP.DLL ====================================
 
-typedef struct {
-   unsigned char Ttl;                                           // Time To Live
-   unsigned char Tos;                                        // Type Of Service
-   unsigned char Flags;                                      // IP header flags
-   unsigned char OptionsSize;                  // Size in bytes of options data
-   unsigned char *OptionsData;                       // Pointer to options data
-} IP_OPTION_INFORMATION, * PIP_OPTION_INFORMATION;
+struct IP_OPTION_INFORMATION {
+    unsigned char Ttl{ 0 };                                           // Time To Live
+   unsigned char Tos{ 0 };                                        // Type Of Service
+   unsigned char Flags{ 0 };                                      // IP header flags
+   unsigned char OptionsSize{ 0 };                  // Size in bytes of options data
+   unsigned char *OptionsData{ nullptr };                       // Pointer to options data
+};
 
-typedef struct {
-   DWORD Address;                                           // Replying address
-   unsigned long  Status;                                       // Reply status
-   unsigned long  RoundTripTime;                         // RTT in milliseconds
-   unsigned short DataSize;                                   // Echo data size
-   unsigned short Reserved;                          // Reserved for system use
-   void * Data;                                      // Pointer to the echo data
-   IP_OPTION_INFORMATION Options;                              // Reply options
-} IP_ECHO_REPLY, * PIP_ECHO_REPLY;
+struct IP_ECHO_REPLY {
+    DWORD Address{ 0 };                                           // Replying address
+    unsigned long  Status{ 0 };                                       // Reply status
+    unsigned long  RoundTripTime{ 0 };                         // RTT in milliseconds
+    unsigned short DataSize{ 0 };                                   // Echo data size
+    unsigned short Reserved{ 0 };                          // Reserved for system use
+    void* Data{ nullptr };                                      // Pointer to the echo data
+    IP_OPTION_INFORMATION Options;                              // Reply options
+};
 
 #if ! defined( _ICMP_INCLUDED_ )
 
@@ -273,7 +265,7 @@ IcmpSendEcho(
     IPAddr                   DestinationAddress,
     LPVOID                   RequestData,
     WORD                     RequestSize,
-    PIP_OPTION_INFORMATION   RequestOptions,
+    IP_OPTION_INFORMATION *  RequestOptions,
     LPVOID                   ReplyBuffer,
     DWORD                    ReplySize,
     DWORD                    Timeout
@@ -282,9 +274,9 @@ IcmpSendEcho(
 
 #endif // _ICMP_INCLUDED_
 
-typedef HANDLE (WINAPI *ICMP_OPEN_FUNCTION)( VOID );
-typedef VOID (WINAPI *ICMP_CLOSE_FUNCTION)( HANDLE );
-typedef DWORD (WINAPI *ICMP_SEND_ECHO_FUNCTION)( HANDLE, IPAddr, LPVOID, WORD, PIP_OPTION_INFORMATION, LPVOID, DWORD, DWORD );
+using ICMP_OPEN_FUNCTION = HANDLE (WINAPI*)(VOID);
+using ICMP_CLOSE_FUNCTION = VOID (WINAPI *)( HANDLE );
+using ICMP_SEND_ECHO_FUNCTION = DWORD (WINAPI *)( HANDLE, IPAddr, LPVOID, WORD, IP_OPTION_INFORMATION *, LPVOID, DWORD, DWORD );
 
 class CPingResults
 {
@@ -325,7 +317,7 @@ class CPing : public CSimpleSocket
 
       HANDLE (WINAPI *m_Open)    ( VOID );
       VOID   (WINAPI *m_Close)   ( HANDLE );
-      DWORD  (WINAPI *m_SendEcho)( HANDLE, IPAddr, LPVOID, WORD, PIP_OPTION_INFORMATION, LPVOID, DWORD, DWORD );
+      DWORD  (WINAPI *m_SendEcho)( HANDLE, IPAddr, LPVOID, WORD, IP_OPTION_INFORMATION *, LPVOID, DWORD, DWORD );
 
    public:
 
@@ -337,7 +329,7 @@ class CPing : public CSimpleSocket
 
       virtual void ConvertErrorToString( __in DWORD const error_code, __out std::wstring& meaning ) const noexcept;
       _Check_return_ bool Open( void ) noexcept override;
-      _Check_return_ bool Open( __in_z LPCTSTR channel_name, __in UINT const port_number = 23 ) noexcept override;
+      _Check_return_ bool Open(_In_ std::wstring_view channel_name, __in UINT const port_number = 23 ) noexcept override;
 
       virtual _Check_return_ DWORD Ping( __in std::wstring const& name_or_address, __out_opt CPingResults * results_p = nullptr, __in short desired_time_to_live = 255 ) noexcept;
       virtual void SetText( __in_bcount(number_of_bytes ) uint8_t const * bytes, __in std::size_t const number_of_bytes ) noexcept;

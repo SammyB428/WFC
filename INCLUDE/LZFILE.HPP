@@ -78,8 +78,8 @@ class CLZFile : public CDummyFile
       virtual void Close( void ) noexcept;
       virtual _Check_return_ bool Copy( __in CLZFile const&  source ) noexcept;
       virtual _Check_return_ bool Copy( __in CLZFile const * source ) noexcept;
-      virtual _Check_return_ bool GetExpandedName( __in_z wchar_t * name_of_compressed_file, __out std::wstring& original_file_name ) noexcept;
-      _Check_return_ bool Open( __in_z LPCTSTR channel_name, __in UINT const style = OF_READ ) noexcept override;
+      virtual _Check_return_ bool GetExpandedName(_In_ std::wstring_view name_of_compressed_file, __out std::wstring& original_file_name ) noexcept;
+      _Check_return_ bool Open(_In_ std::wstring_view channel_name, __in UINT const style = OF_READ ) noexcept override;
       _Check_return_ UINT Read( __out_bcount( size_of_buffer ) void * buffer, __in UINT const size_of_buffer ) noexcept override;
       _Check_return_ uint64_t Seek( __in int64_t const offset, __in CFile64::SeekPosition const from ) noexcept override;
 

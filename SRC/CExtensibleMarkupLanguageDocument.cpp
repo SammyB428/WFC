@@ -1499,7 +1499,7 @@ _Check_return_ uint32_t CExtensibleMarkupLanguageDocument::SetWriteOptions( _In_
 #if defined( _DEBUG )
    // Assert the crap out of these options
 
-   if ( m_WriteOptions bitand WFC_XML_WRITE_AS_UTF8 )
+   if (is_flagged( m_WriteOptions, WFC_XML_WRITE_AS_UTF8) == true)
    {
       // UTF-8 was specified, UTF-7 & ASCII are invalid
       ASSERT(not ( m_WriteOptions bitand WFC_XML_WRITE_AS_UTF7 ) );
@@ -1509,7 +1509,7 @@ _Check_return_ uint32_t CExtensibleMarkupLanguageDocument::SetWriteOptions( _In_
       ASSERT(not ( m_WriteOptions bitand WFC_XML_WRITE_AS_UCS4_UNUSUAL_2143 ) );
       ASSERT(not ( m_WriteOptions bitand WFC_XML_WRITE_AS_UCS4_UNUSUAL_3412 ) );
    }
-   else if ( m_WriteOptions bitand WFC_XML_WRITE_AS_UTF7 )
+   else if (is_flagged(m_WriteOptions, WFC_XML_WRITE_AS_UTF7) == true)
    {
       // UTF-7 was specified, UTF-8 & ASCII are invalid
       ASSERT(not ( m_WriteOptions bitand WFC_XML_WRITE_AS_UTF8 ) );
@@ -1519,7 +1519,7 @@ _Check_return_ uint32_t CExtensibleMarkupLanguageDocument::SetWriteOptions( _In_
       ASSERT(not ( m_WriteOptions bitand WFC_XML_WRITE_AS_UCS4_UNUSUAL_2143 ) );
       ASSERT(not ( m_WriteOptions bitand WFC_XML_WRITE_AS_UCS4_UNUSUAL_3412 ) );
    }
-   else if ( m_WriteOptions bitand WFC_XML_WRITE_AS_ASCII )
+   else if (is_flagged(m_WriteOptions, WFC_XML_WRITE_AS_ASCII) == true)
    {
       // ASCII was specified, UTF is invalid
       ASSERT(not ( m_WriteOptions bitand WFC_XML_WRITE_AS_UTF7 ) );
@@ -1529,7 +1529,7 @@ _Check_return_ uint32_t CExtensibleMarkupLanguageDocument::SetWriteOptions( _In_
       ASSERT(not ( m_WriteOptions bitand WFC_XML_WRITE_AS_UCS4_UNUSUAL_2143 ) );
       ASSERT(not ( m_WriteOptions bitand WFC_XML_WRITE_AS_UCS4_UNUSUAL_3412 ) );
    }
-   else if ( m_WriteOptions bitand WFC_XML_WRITE_AS_UNICODE )
+   else if (is_flagged(m_WriteOptions, WFC_XML_WRITE_AS_UNICODE) == true)
    {
       ASSERT(not ( m_WriteOptions bitand WFC_XML_WRITE_AS_ASCII ) );
       ASSERT(not ( m_WriteOptions bitand WFC_XML_WRITE_AS_UTF7 ) );
@@ -1538,7 +1538,7 @@ _Check_return_ uint32_t CExtensibleMarkupLanguageDocument::SetWriteOptions( _In_
       ASSERT(not ( m_WriteOptions bitand WFC_XML_WRITE_AS_UCS4_UNUSUAL_2143 ) );
       ASSERT(not ( m_WriteOptions bitand WFC_XML_WRITE_AS_UCS4_UNUSUAL_3412 ) );
    }
-   else if ( m_WriteOptions bitand WFC_XML_WRITE_AS_UCS4 )
+   else if (is_flagged(m_WriteOptions, WFC_XML_WRITE_AS_UCS4) == true)
    {
       ASSERT(not ( m_WriteOptions bitand WFC_XML_WRITE_AS_ASCII ) );
       ASSERT(not ( m_WriteOptions bitand WFC_XML_WRITE_AS_UTF7 ) );
@@ -1547,7 +1547,7 @@ _Check_return_ uint32_t CExtensibleMarkupLanguageDocument::SetWriteOptions( _In_
       ASSERT(not ( m_WriteOptions bitand WFC_XML_WRITE_AS_UCS4_UNUSUAL_2143 ) );
       ASSERT(not ( m_WriteOptions bitand WFC_XML_WRITE_AS_UCS4_UNUSUAL_3412 ) );
    }
-   else if ( m_WriteOptions bitand WFC_XML_WRITE_AS_UCS4_UNUSUAL_2143 )
+   else if (is_flagged(m_WriteOptions, WFC_XML_WRITE_AS_UCS4_UNUSUAL_2143) == true)
    {
       ASSERT(not ( m_WriteOptions bitand WFC_XML_WRITE_AS_ASCII ) );
       ASSERT(not ( m_WriteOptions bitand WFC_XML_WRITE_AS_UTF7 ) );
@@ -1556,7 +1556,7 @@ _Check_return_ uint32_t CExtensibleMarkupLanguageDocument::SetWriteOptions( _In_
       ASSERT(not ( m_WriteOptions bitand WFC_XML_WRITE_AS_UCS4 ) );
       ASSERT(not ( m_WriteOptions bitand WFC_XML_WRITE_AS_UCS4_UNUSUAL_3412 ) );
    }
-   else if ( m_WriteOptions bitand WFC_XML_WRITE_AS_UCS4_UNUSUAL_3412 )
+   else if (is_flagged(m_WriteOptions, WFC_XML_WRITE_AS_UCS4_UNUSUAL_3412) == true)
    {
       ASSERT(not ( m_WriteOptions bitand WFC_XML_WRITE_AS_ASCII ) );
       ASSERT(not ( m_WriteOptions bitand WFC_XML_WRITE_AS_UTF7 ) );

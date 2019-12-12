@@ -477,8 +477,6 @@ void CBitArray::CopyTo( __inout std::vector<uint8_t>& destination ) noexcept
 
    uint32_t buffer_index = 0;
 
-   std::size_t index = 0;
-
    for ( auto const index : Range(number_of_elements) )
    {
       bits = m_Bits.at( index );
@@ -1157,24 +1155,6 @@ _Check_return_ std::size_t CBitArray::GetNumberOfZeroes( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
    return( GetSize() - GetNumberOfOnes() );
-}
-
-_Check_return_ std::size_t CBitArray::GetSize( void ) const noexcept
-{
-   WFC_VALIDATE_POINTER( this );
-   return( m_TotalNumberOfBits - m_IndexOfFirstBit );
-}
-
-_Check_return_ std::size_t CBitArray::GetUpperBound( void ) const noexcept
-{
-   WFC_VALIDATE_POINTER( this );
-
-   if ( GetSize() > 0 )
-   {
-      return( GetSize() - 1 );
-   }
-
-   return( 0 );
 }
 
 _Check_return_ uint32_t CBitArray::GetValue( __in std::size_t const starting_bit_location, __in std::size_t const number_of_bits ) const noexcept

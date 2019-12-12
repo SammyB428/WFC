@@ -52,27 +52,25 @@
 
 #pragma pack( push, 1 )
 
-typedef struct _WFC_EXCEPTION_RECORD
+struct WFC_EXCEPTION_RECORD
 {
-   struct _WFC_EXCEPTION_RECORD * Next;
-   FARPROC                        Handler;
-}
-WFC_EXCEPTION_RECORD;
+    WFC_EXCEPTION_RECORD * Next{ nullptr };
+    FARPROC                Handler{ nullptr };
+};
 
-typedef struct _WFC_PROCESS_DATABASE
+struct WFC_PROCESS_DATABASE
 {
-   DWORD Unknown_0x00;
-   DWORD Unknown_0x04;
-   PVOID ExecutableBaseAddress; // Offset 0x08
-   DWORD Unknown_0x0C;
-   DWORD Unknown_0x10;
-   DWORD Unknown_0x14;
-   DWORD StackUserTop;
-   DWORD Unknown_0x1C;
-   PVOID NTDLL_RtlEnterCriticalSection;
-   PVOID NTDLL_RtlLeaveCriticalSection;
-}
-WFC_PROCESS_DATABASE;
+   DWORD Unknown_0x00{ 0 };
+   DWORD Unknown_0x04{ 0 };
+   PVOID ExecutableBaseAddress{ nullptr }; // Offset 0x08
+   DWORD Unknown_0x0C{ 0 };
+   DWORD Unknown_0x10{ 0 };
+   DWORD Unknown_0x14{ 0 };
+   DWORD StackUserTop{ 0 };
+   DWORD Unknown_0x1C{ 0 };
+   PVOID NTDLL_RtlEnterCriticalSection{ nullptr };
+   PVOID NTDLL_RtlLeaveCriticalSection{ nullptr };
+};
 
 /*
 ** 2001-06-26
@@ -99,69 +97,64 @@ WFC_PROCESS_DATABASE;
 **
 */
 
-typedef struct _WFC_THREAD_INFORMATION_BLOCK
+struct WFC_THREAD_INFORMATION_BLOCK
 {
-   WFC_EXCEPTION_RECORD * ExceptionRecordList; // Offset 0x00, aka NT_TIB.ExceptionList
-   VOID * StackUserTop; // Offset 0x04, aka NT_TIB.StackBase
-   VOID * StackUserBase; // Offset 0x08, aka NT_TIB.StackLimit
+    WFC_EXCEPTION_RECORD * ExceptionRecordList{ nullptr }; // Offset 0x00, aka NT_TIB.ExceptionList
+    VOID * StackUserTop{ nullptr }; // Offset 0x04, aka NT_TIB.StackBase
+    VOID * StackUserBase{ nullptr }; // Offset 0x08, aka NT_TIB.StackLimit
 
    union
    {
-      struct
+      struct WFC_WIN95
       {
-         WORD  TDB; // Offset  0x0C
-         WORD  SSSelectorForThunkingTo16Bits; // Offset 0x0E
-         DWORD Unknown1; // Offset 0x10
-      }
-      WFC_WIN95;
+          WORD  TDB{ 0 }; // Offset  0x0C
+          WORD  SSSelectorForThunkingTo16Bits{ 0 }; // Offset 0x0E
+         DWORD Unknown1{ 0 }; // Offset 0x10
+      };
 
-      struct
+      struct WFC_WINNT
       {
          VOID * SubSystemThreadInformationBlock; // Offset 0x0C, aka NT_TIB.SubSystemTib
          DWORD  FiberData; // Offset 0x10, aka NT_TIB.FiberData or NT_TIB.Version (its a union)
-      }
-      WFC_WINNT;
+      };
    }
    FIRST_UNION;
 
-   VOID * Arbitrary; // Offset 0x14, aka NT_TIB.ArbitraryUserPointer
-   struct _WFC_THREAD_INFORMATION_BLOCK * Self; // Offset 0x18
+   VOID * Arbitrary{ nullptr }; // Offset 0x14, aka NT_TIB.ArbitraryUserPointer
+   WFC_THREAD_INFORMATION_BLOCK * Self{ nullptr }; // Offset 0x18
 
    union
    {
-      struct
+      struct WFC_WIN95
       {
-         WORD  ThreadInformationBlockFlags; // Offset 0x1C
-         WORD  Win16MutexCount; // Offset 0x1E
-         DWORD DebugContext; // Offset 0x20
-         DWORD CurrentPriority; // Offset 0x24
-         DWORD MessageQueueSelector; // Offset 0x28
-      }
-      WFC_WIN95;
+          WORD  ThreadInformationBlockFlags{ 0 }; // Offset 0x1C
+          WORD  Win16MutexCount{ 0 }; // Offset 0x1E
+          DWORD DebugContext{ 0 }; // Offset 0x20
+          DWORD CurrentPriority{ 0 }; // Offset 0x24
+          DWORD MessageQueueSelector{ 0 }; // Offset 0x28
+      };
 
-      struct
+      struct WFC_WINNT
       {
          VOID * EnvironmentPtr;  // Offset 0x1C, according to Inside Windows 2000, page 328
          DWORD  ProcessID; // Offset 0x20
          DWORD  ThreadID;  // Offset 0x24
          HANDLE RpcHandle;  // Offset 0x28, , according to Inside Windows 2000, page 328
-      }
-      WFC_WINNT;
+      };
    }
    SECOND_UNION;
 
-   VOID * ThreadLocalStorageArray; // Offset 0x2C
+   VOID * ThreadLocalStorageArray{ nullptr }; // Offset 0x2C
 
    union
    {
-      WFC_PROCESS_DATABASE * OwningProcessDatabase; // Offset 0x30
+       WFC_PROCESS_DATABASE * OwningProcessDatabase{ nullptr }; // Offset 0x30
    }
    THIRD_UNION;
 
-   DWORD LastError; // Offset 0x34
-   DWORD LastStatus; // Offset 0x38, according to Inside Windows 2000, page 329
-}
-WFC_THREAD_INFORMATION_BLOCK;
+   DWORD LastError{ 0 }; // Offset 0x34
+   DWORD LastStatus{ 0 }; // Offset 0x38, according to Inside Windows 2000, page 329
+};
 
 #pragma pack( pop )
 

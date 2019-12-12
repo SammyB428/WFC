@@ -59,7 +59,7 @@ CMixerControlDetails::CMixerControlDetails()
    Empty();
 }
 
-CMixerControlDetails::CMixerControlDetails( __in CMixerControlDetails const& source )
+CMixerControlDetails::CMixerControlDetails( __in CMixerControlDetails const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );

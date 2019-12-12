@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 1995-2015, Samuel R. Blackburn
+** Copyright, 1995-2019, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -54,28 +54,27 @@ USING_WFC_NAMESPACE
 #define new DEBUG_NEW
 #endif // _DEBUG
 
-CUniformResourceLocator::CUniformResourceLocator()
+CUniformResourceLocator::CUniformResourceLocator() noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Empty();
 }
 
-CUniformResourceLocator::CUniformResourceLocator( __in CUniformResourceLocator const& source )
+CUniformResourceLocator::CUniformResourceLocator(_In_ CUniformResourceLocator const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );
 }
 
-CUniformResourceLocator::CUniformResourceLocator( __in CUniversalNamingConvention const& source )
+CUniformResourceLocator::CUniformResourceLocator( _In_ CUniversalNamingConvention const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );
 }
 
-CUniformResourceLocator::CUniformResourceLocator( __in_z LPCTSTR source )
+CUniformResourceLocator::CUniformResourceLocator(_In_ std::wstring_view source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
-   WFC_VALIDATE_POINTER( source );
    Copy( source );
 }
 
@@ -101,7 +100,7 @@ void CUniformResourceLocator::Copy(_In_ CUniformResourceLocator const& source ) 
    URL.assign( source.URL );
 }
 
-void CUniformResourceLocator::Copy( __in CUniversalNamingConvention const& source ) noexcept
+void CUniformResourceLocator::Copy( _In_ CUniversalNamingConvention const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -128,14 +127,13 @@ void CUniformResourceLocator::Copy( __in CUniversalNamingConvention const& sourc
    Make();
 }
 
-void CUniformResourceLocator::Copy( __in_z LPCTSTR source ) noexcept
+void CUniformResourceLocator::Copy(_In_ std::wstring_view source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
-   WFC_VALIDATE_POINTER( source );
 
    Empty();
 
-   if ( source == nullptr )
+   if ( source.empty() == true )
    {
       return;
    }
@@ -144,7 +142,7 @@ void CUniformResourceLocator::Copy( __in_z LPCTSTR source ) noexcept
 
    WFC_TRY
    {
-      std::wstring temp_string = source;
+      std::wstring temp_string(source);
 
       std::size_t location = temp_string.find( ':' );
 
@@ -241,7 +239,7 @@ _Check_return_ CUniformResourceLocator& CUniformResourceLocator::operator = ( __
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
-   Copy( source );
+   Copy( std::wstring_view(source) );
    return( *this );
 }
 

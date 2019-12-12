@@ -55,15 +55,15 @@ class CDataChunk
 {
    public:
 
-       uint32_t   Identifier{ 0 };
+      uint32_t   Identifier{ 0 };
       std::vector<uint8_t> Data;
 
-      CDataChunk()
+      CDataChunk() noexcept
       {
          Identifier = 0;
       };
 
-      CDataChunk( __in CDataChunk const& source )
+      CDataChunk( __in CDataChunk const& source ) noexcept
       {
          Copy( source );
       };

@@ -114,8 +114,8 @@ class CFile64
 
 #endif // WFC_STL
 
-      void m_Initialize( void );
-      void m_Uninitialize( void );
+      void m_Initialize( void ) noexcept;
+      void m_Uninitialize( void ) noexcept;
 
    public:
 
@@ -233,7 +233,7 @@ class CFile64
       virtual _Check_return_ SECURITY_ATTRIBUTES * GetSecurityAttributes( void ) const noexcept;
       virtual _Check_return_ SECURITY_DESCRIPTOR * GetSecurityDescriptor( void ) const noexcept;
       virtual _Check_return_ bool                  LockRange(_In_ uint64_t const position, _In_ uint64_t const number_of_bytes_to_lock ) noexcept;
-      virtual _Check_return_ bool                  Open( _In_z_ LPCTSTR filename, _In_ UINT const open_flags ) noexcept;
+      virtual _Check_return_ bool                  Open( _In_ std::wstring_view filename, _In_ UINT const open_flags ) noexcept;
 
       _Check_return_ uint32_t AtomicRead(_In_ uint64_t const file_offset, __out_bcount( number_of_bytes_to_read ) void * buffer, _In_ uint32_t const number_of_bytes_to_read ) const noexcept;
       _Check_return_ uint32_t AtomicWrite(_In_ uint64_t const file_offset, __in_bcount(number_of_bytes_to_write) void const * buffer, _In_ uint32_t const number_of_bytes_to_write) const noexcept;
@@ -304,7 +304,6 @@ class CFile64
       static void PASCAL            Rename( __in_z LPCTSTR old_name, __in_z LPCTSTR new_name ) noexcept;
       static void PASCAL            Remove( __in_z LPCTSTR filename ) noexcept;
 
-      _Check_return_ bool OpenWide( __in_z wchar_t const * unicode_filename, __in UINT const open_flags ) noexcept;
       virtual _Check_return_ bool SetShortName( __in_z LPCTSTR new_short_name ) noexcept; // New for 73
       virtual _Check_return_ bool SetValidData( __in int64_t const valid_data_length ) noexcept; // New for 73
 

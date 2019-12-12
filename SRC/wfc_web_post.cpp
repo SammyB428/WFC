@@ -79,7 +79,7 @@ static inline void append_string( __in_z char const * string_p, __inout std::vec
    append_buffer( reinterpret_cast<uint8_t const *>(string_p), string_length, bytes );
 }
 
-static inline void append_item( __in WFC_WEB_POST_DATA_P item, __in_z char const * boundary, __inout std::vector<uint8_t>& bytes )
+static inline void append_item( __in WFC_WEB_POST_DATA * item, __in_z char const * boundary, __inout std::vector<uint8_t>& bytes )
 {
    WFC_VALIDATE_POINTER( item );
    WFC_VALIDATE_POINTER( item->variable_name );
@@ -138,12 +138,11 @@ static inline void append_item( __in WFC_WEB_POST_DATA_P item, __in_z char const
    append_string( "\r\n", bytes );
 }
 
-_Check_return_ bool PASCAL Win32FoundationClasses::wfc_web_post( __in_z LPCTSTR url, __in WFC_WEB_POST_DATA_P * data, __inout_opt std::wstring * response ) noexcept
+_Check_return_ bool PASCAL Win32FoundationClasses::wfc_web_post( _In_ std::wstring_view url, _In_ WFC_WEB_POST_DATA ** data, __inout_opt std::wstring * response ) noexcept
 {
-   WFC_VALIDATE_POINTER( url );
    WFC_VALIDATE_POINTER( data );
 
-   if ( url  == nullptr or
+   if ( url.empty() == true or
         data == nullptr )
    {
       return( false );
@@ -159,7 +158,7 @@ _Check_return_ bool PASCAL Win32FoundationClasses::wfc_web_post( __in_z LPCTSTR 
    {
       while( data[ number_of_parameters ] != nullptr )
       {
-          WFC_WEB_POST_DATA_P data_p = data[ number_of_parameters ];
+          auto data_p = data[ number_of_parameters ];
 
          append_item( data_p, boundary_string, bytes_to_send );
 
@@ -169,10 +168,10 @@ _Check_return_ bool PASCAL Win32FoundationClasses::wfc_web_post( __in_z LPCTSTR 
       append_string( boundary_string, bytes_to_send );
       append_string( "--\r\n", bytes_to_send );
 
-      DWORD   internet_open_access_type  = INTERNET_OPEN_TYPE_PRECONFIG;
+      DWORD const internet_open_access_type  = INTERNET_OPEN_TYPE_PRECONFIG;
       LPCTSTR internet_open_proxy        = nullptr;
       LPCTSTR internet_open_proxy_bypass = nullptr;
-      DWORD   internet_open_flags        = 0;
+      DWORD const internet_open_flags        = 0;
 
       auto internet_handle =  InternetOpenW( L"Mozilla/4.0 (compatible; Win32 Foundation Classes; http://www.samblackburn.com)",
                                       internet_open_access_type,
@@ -187,13 +186,13 @@ _Check_return_ bool PASCAL Win32FoundationClasses::wfc_web_post( __in_z LPCTSTR 
          return( false );
       }
 
-      INTERNET_PORT internet_connect_port      = INTERNET_DEFAULT_HTTP_PORT;
+      INTERNET_PORT const internet_connect_port      = INTERNET_DEFAULT_HTTP_PORT;
       LPCTSTR       internet_connect_user_name = nullptr;
       LPCTSTR       internet_connect_password  = nullptr;
-      DWORD         internet_connect_service   = INTERNET_SERVICE_HTTP;
-      DWORD         internet_connect_flags     = INTERNET_FLAG_RELOAD bitor
+      DWORD const internet_connect_service   = INTERNET_SERVICE_HTTP;
+      DWORD const internet_connect_flags     = INTERNET_FLAG_RELOAD bitor
                                                  INTERNET_FLAG_NO_CACHE_WRITE;
-      DWORD         internet_connect_context   = 0;
+      DWORD const internet_connect_context   = 0;
 
       CUniformResourceLocator uniform_resource_locator( url );
 
@@ -222,8 +221,8 @@ _Check_return_ bool PASCAL Win32FoundationClasses::wfc_web_post( __in_z LPCTSTR 
       LPCTSTR   http_open_request_version      = nullptr;
       LPCTSTR   http_open_request_referer      = nullptr;
       LPCTSTR * http_open_request_accept_types = nullptr;
-      DWORD     http_open_request_flags        = INTERNET_FLAG_NO_CACHE_WRITE;
-      DWORD_PTR http_open_request_context      = 0;
+      DWORD const http_open_request_flags        = INTERNET_FLAG_NO_CACHE_WRITE;
+      DWORD_PTR const http_open_request_context      = 0;
 
       auto http_request_handle = HttpOpenRequest( internet_connection_handle,
                                              http_open_request_verb,
@@ -256,7 +255,7 @@ _Check_return_ bool PASCAL Win32FoundationClasses::wfc_web_post( __in_z LPCTSTR 
       strcat_s( temp_string, std::size( temp_string ), boundary_string );
       strcat_s( temp_string, std::size( temp_string ), "\r\n" );
 
-      DWORD http_add_request_headers_modifiers = HTTP_ADDREQ_FLAG_REPLACE bitor HTTP_ADDREQ_FLAG_ADD;
+      DWORD const http_add_request_headers_modifiers = HTTP_ADDREQ_FLAG_REPLACE bitor HTTP_ADDREQ_FLAG_ADD;
 
       if ( HttpAddRequestHeadersA( http_request_handle,
                                    temp_string,
@@ -294,8 +293,8 @@ _Check_return_ bool PASCAL Win32FoundationClasses::wfc_web_post( __in_z LPCTSTR 
       http_send_request_ex_input_buffers.dwOffsetHigh    = 0;
 
       INTERNET_BUFFERS * http_send_request_ex_output_buffers = nullptr;
-      DWORD              http_send_request_ex_flags          = 0;
-      DWORD              http_send_request_ex_context        = 0;
+      DWORD const        http_send_request_ex_flags          = 0;
+      DWORD const        http_send_request_ex_context        = 0;
 
       if ( HttpSendRequestEx( http_request_handle,
                              &http_send_request_ex_input_buffers,
@@ -330,8 +329,8 @@ _Check_return_ bool PASCAL Win32FoundationClasses::wfc_web_post( __in_z LPCTSTR 
       ASSERT( number_of_bytes_sent == bytes_to_send.size() );
 
       INTERNET_BUFFERS * http_end_request_output_buffers = nullptr;
-      DWORD              http_end_request_flags          = 0;
-      DWORD              http_end_request_context        = 0;
+      DWORD const        http_end_request_flags          = 0;
+      DWORD const        http_end_request_context        = 0;
 
       if ( HttpEndRequest( http_request_handle,
                            http_end_request_output_buffers,
@@ -357,7 +356,7 @@ _Check_return_ bool PASCAL Win32FoundationClasses::wfc_web_post( __in_z LPCTSTR 
 
       number_of_bytes_sent = 0;
 
-      std::size_t const response_buffer_size = ( 64 * 1024 ) + 1;
+      constexpr std::size_t const response_buffer_size = ( 64 * 1024 ) + 1;
 
       auto response_buffer  = std::make_unique<uint8_t[]>(response_buffer_size);
 

@@ -144,8 +144,17 @@ class CBitArray
       _Check_return_ bool      GetNextZero( __inout std::size_t& enumerator ) const noexcept;
       _Check_return_ std::size_t GetNumberOfOnes( void ) const noexcept;
       _Check_return_ std::size_t GetNumberOfZeroes( void ) const noexcept;
-      _Check_return_ std::size_t GetSize( void ) const noexcept;
-      _Check_return_ std::size_t GetUpperBound( void ) const noexcept;
+      inline constexpr _Check_return_ std::size_t GetSize(void) const noexcept { return(m_TotalNumberOfBits - m_IndexOfFirstBit); }
+      inline constexpr _Check_return_ std::size_t GetUpperBound(void) const noexcept
+      {
+          if (GetSize() > 0)
+          {
+              return(GetSize() - 1);
+          }
+
+          return(0);
+      }
+
       _Check_return_ uint32_t    GetValue( __in std::size_t const index, __in std::size_t const length ) const noexcept;
       void                    InsertAt( __in std::size_t const index, __in uint32_t const value ) noexcept;
       _Check_return_ CBitArray Left( __in std::size_t const number_of_bits ) const noexcept;

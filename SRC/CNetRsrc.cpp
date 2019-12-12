@@ -56,7 +56,7 @@ USING_WFC_NAMESPACE
 
 // TO DO: Add "net use" capability, WNetAddConnection
 
-CNetworkResources::CNetworkResources()
+CNetworkResources::CNetworkResources(_In_ std::wstring_view machine_name) : CNetwork(machine_name)
 {
    WFC_VALIDATE_POINTER( this );
    m_Initialize();
@@ -186,7 +186,7 @@ _Check_return_ bool CNetworkResources::GetNext( __inout CNetworkResourceInformat
       m_ErrorCode = ::GetLastError();
       //WFCTRACEERROR( m_ErrorCode );
    }
-                                        
+
    return( false );
 }
 

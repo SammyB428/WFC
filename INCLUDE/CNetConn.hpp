@@ -118,7 +118,6 @@ public:
 
     CNetworkConnections(__in CNetworkConnections const&) = delete;
     CNetworkConnections& operator=(__in CNetworkConnections const&) = delete;
-    CNetworkConnections();
       CNetworkConnections(_In_ std::wstring_view machine_name = { nullptr, 0 });
       virtual ~CNetworkConnections();
 

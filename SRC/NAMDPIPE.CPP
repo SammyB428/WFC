@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 1995-2016, Samuel R. Blackburn
+** Copyright, 1995-2019, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -333,12 +333,11 @@ _Check_return_ bool CNamedPipe::GetState( void ) noexcept
    return( true );
 }
 
-_Check_return_ bool CNamedPipe::Open( __in_z LPCTSTR pipe_name, __in UINT const) noexcept
+_Check_return_ bool CNamedPipe::Open(_In_ std::wstring_view pipe_name, __in UINT const) noexcept
 {
    WFC_VALIDATE_POINTER( this );
-   WFC_VALIDATE_POINTER( pipe_name );
 
-   if ( pipe_name == nullptr )
+   if ( pipe_name.empty() == true )
    {
       m_LastError = ERROR_INVALID_PARAMETER;
       return( false );
@@ -355,7 +354,7 @@ _Check_return_ bool CNamedPipe::Open( __in_z LPCTSTR pipe_name, __in UINT const)
 
    if ( unc.ServerName.empty() == true )
    {
-      unc.ServerName.assign( L"." );
+      unc.ServerName.assign(WSTRING_VIEW(L"."));
    }
 
    if ( compare_no_case( unc.ShareName, WSTRING_VIEW(L"PIPE") ) != I_AM_EQUAL_TO_THAT )

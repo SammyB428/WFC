@@ -43,13 +43,12 @@
 
 #define PASSWORD_CHANGE_FILTER_CLASS_HEADER
 
-typedef struct __password_filter_unicode_string
+struct PASSWORD_FILTER_STRING
 {
     USHORT  Length{ 0 };
     USHORT  MaximumLength{ 0 };
     WCHAR* UnicodeString{ nullptr };
-}
-PASSWORD_FILTER_STRING, * PASSWORD_FILTER_STRING_P;
+};
 
 class CPasswordChangeFilter
 {

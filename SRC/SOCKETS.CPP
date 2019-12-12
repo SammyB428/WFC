@@ -54,7 +54,7 @@ static char THIS_FILE[] = __FILE__;
 USING_WFC_NAMESPACE
 
 long CSimpleSocket::m_ReferenceCount = 0;
-WFC_SOCKET_THUNK_P CSimpleSocket::m_Thunk_p = nullptr;
+WFC_SOCKET_THUNK * CSimpleSocket::m_Thunk_p = nullptr;
 
 static _Check_return_ HANDLE inline _create_socket_thunk_mutex( void ) noexcept
 {
@@ -706,7 +706,7 @@ _Check_return_ bool CSimpleSocket::IsDataWaiting( void ) noexcept
 
    FD_SET socket_in;
 
-   TIMEVAL time_out;
+   TIMEVAL time_out{ 0 };
 
    /*
    ** Initialize the data structures
@@ -793,62 +793,62 @@ void CSimpleSocket::m_Initialize( void ) noexcept
 }\
 }
 
-static SOCKET PASCAL FAR accept_thunk( void )
+static SOCKET PASCAL FAR accept_thunk( void ) noexcept
 {
    SetLastError( ERROR_CALL_NOT_IMPLEMENTED );
    return( INVALID_SOCKET );
 }
 
-static int PASCAL FAR generic_thunk( void )
+static int PASCAL FAR generic_thunk( void ) noexcept
 {
    SetLastError( ERROR_CALL_NOT_IMPLEMENTED );
    return( SOCKET_ERROR );
 }
 
-static u_long PASCAL FAR return_u_long_zero( void )
+static u_long PASCAL FAR return_u_long_zero( void ) noexcept
 {
    SetLastError( ERROR_CALL_NOT_IMPLEMENTED );
    return( 0 );
 }
 
-static u_short PASCAL FAR return_u_short_zero( void )
+static u_short PASCAL FAR return_u_short_zero( void ) noexcept
 {
    SetLastError( ERROR_CALL_NOT_IMPLEMENTED );
    return( 0 );
 }
 
-static void * PASCAL FAR return_NULL( void )
+static void * PASCAL FAR return_NULL( void ) noexcept
 {
    SetLastError( ERROR_CALL_NOT_IMPLEMENTED );
    return( nullptr );
 }
 
-static unsigned long PASCAL FAR return_addr_none( void )
+static unsigned long PASCAL FAR return_addr_none( void ) noexcept
 {
    SetLastError( ERROR_CALL_NOT_IMPLEMENTED );
    return( INADDR_NONE );
 }
 
-static int PASCAL FAR return_not_implemented( void )
+static int PASCAL FAR return_not_implemented( void ) noexcept
 {
    SetLastError( ERROR_CALL_NOT_IMPLEMENTED );
    return( ERROR_CALL_NOT_IMPLEMENTED );
 }
 
-static void PASCAL FAR return_nothing( void )
+static void PASCAL FAR return_nothing( void ) noexcept
 {
    SetLastError( ERROR_CALL_NOT_IMPLEMENTED );
    return;
 }
 
 VERSIONHELPERAPI
-IsWindowsNT4OrGreater()
+IsWindowsNT4OrGreater() noexcept
 {
     return IsWindowsVersionOrGreater(HIBYTE(_WIN32_WINNT_NT4), LOBYTE(_WIN32_WINNT_NT4), 0);
 }
 
 VERSIONHELPERAPI
-IsWindows2KOrGreater()
+IsWindows2KOrGreater() noexcept
 {
     return IsWindowsVersionOrGreater(HIBYTE(_WIN32_WINNT_WIN2K), LOBYTE(_WIN32_WINNT_WIN2K), 0);
 }
@@ -1066,7 +1066,7 @@ _Check_return_ bool CSimpleSocket::Read( _Out_ std::string& line_to_read ) noexc
    }
 }
 
-void CSimpleSocket::SetAddress( _In_z_ LPCTSTR address_string ) noexcept
+void CSimpleSocket::SetAddress( _In_ std::wstring_view address_string ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( m_Thunk_p );
@@ -1076,13 +1076,11 @@ void CSimpleSocket::SetAddress( _In_z_ LPCTSTR address_string ) noexcept
    ** client's name for security checking.
    */
 
-   ASSERT( address_string != nullptr );
-
    Name.clear();
    Address.clear();
    AliasList.clear();
 
-   if ( address_string == nullptr )
+   if ( address_string.empty() == true )
    {
       return;
    }
@@ -1508,7 +1506,7 @@ void __stdcall CSimpleSocket::StartWindowsSockets( void ) noexcept
    ** Start WINSOCK
    */
 
-   WSADATA winsock_data;
+   WSADATA winsock_data{ 0 };
 
    int socket_error = 0;
 

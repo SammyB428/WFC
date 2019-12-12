@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright (c) 1998-2003, 2013, Samuel R. Blackburn
+** Copyright (c) 1998-2003, 2019, Samuel R. Blackburn
 ** All rights reserved.
 **
 ** "You can get credit for something or get it done, but not both."
@@ -49,12 +49,6 @@
 static char THIS_FILE[] = __FILE__;
 #endif // _DEBUG
 
-BOOL directory_read_callback_function( void * , const CString& filename )
-{
-   //check_xml_file( filename );
-   return( TRUE );
-}
-
 int _tmain( int number_of_command_line_arguments, LPCTSTR command_line_arguments[] )
 {
    // WFCTRACELEVELON( 31 );
@@ -65,28 +59,6 @@ int _tmain( int number_of_command_line_arguments, LPCTSTR command_line_arguments
       _tprintf( TEXT( "Usage: xml_file [xml_file [xml_file [...]]]\n" ) );
       return( EXIT_SUCCESS );
    }
-
-#if 0
-
-   CFileDirectory directory;
-
-   int index = 1;
-
-   while( index < number_of_command_line_arguments )
-   {
-      if ( directory.Open( command_line_arguments[ index ] ) != FALSE )
-      {
-         directory.ReadRecursively( directory_read_callback_function, NULL );
-      }
-      else
-      {
-         _tprintf( TEXT( "Can't open directory \"%s\"\n" ), command_line_arguments[ index ] );
-      }
-
-      index++;
-   }
-
-#else
 
    HANDLE find_file_handle = (HANDLE) NULL;
 
@@ -108,7 +80,7 @@ int _tmain( int number_of_command_line_arguments, LPCTSTR command_line_arguments
 
                for (auto const& entry : std::filesystem::recursive_directory_iterator(command_line_arguments[index], filesystem_error_code))
                {
-                   if (std::filesystem::is_directory(entry, filesystem_error_code) == false &&
+                   if (std::filesystem::is_directory(entry, filesystem_error_code) == false and
                        std::filesystem::file_size(entry, filesystem_error_code) > 0) // Skip empty files, pffexport likes to write these...
                    {
                        filenames.push_back(entry.path());
@@ -145,8 +117,6 @@ int _tmain( int number_of_command_line_arguments, LPCTSTR command_line_arguments
            }
        }
    }
-
-#endif
 
    return( EXIT_SUCCESS );
 }

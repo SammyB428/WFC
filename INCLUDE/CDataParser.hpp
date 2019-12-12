@@ -706,7 +706,7 @@ public:
             found_at.Copy( parse_point );
 
             uint32_t character_to_test         = 0;
-            uint32_t first_character_of_string = tolower( string_to_find.at( 0 ) );
+            uint32_t const first_character_of_string = tolower( string_to_find.at( 0 ) );
 
             while( ( found_at.GetIndex() + string_length ) <= m_NumberOfBytes )
             {
@@ -1192,7 +1192,7 @@ public:
 
     inline _Check_return_ GUID ReadGUID( _Inout_ CParsePoint& parse_point ) const noexcept
     {
-        GUID return_value;
+        GUID return_value{ 0 };
 
         auto buffer = reinterpret_cast<uint8_t *>(&return_value);
 
@@ -1882,7 +1882,7 @@ public:
 
                     if (temp_buffer_index == 256)
                     {
-                        string_to_get.append(temp_buffer);
+                        string_to_get.append(temp_buffer, 256);
                         temp_buffer_index = 0;
                     }
 
@@ -1898,8 +1898,7 @@ public:
 
             if (temp_buffer_index < 256 and temp_buffer_index > 0)
             {
-                temp_buffer[temp_buffer_index] = 0x00; // zero Terminate
-                string_to_get.append(temp_buffer);
+                string_to_get.append(temp_buffer, temp_buffer_index);
             }
 
             WFC_SET_LAST_ERROR(NO_ERROR);
@@ -1936,7 +1935,7 @@ public:
 
             uint32_t character = 0;
 
-            std::size_t termination_characters_length = termination_characters.length();
+            std::size_t const termination_characters_length = termination_characters.length();
 
 #if defined( CSTRING_APPENDING_IS_FAST )
 
@@ -2468,8 +2467,8 @@ public:
 
         if ( byte_2 == 0x00 and
             byte_4 == 0x00 and
-            wfc_is_ascii( byte_1 ) == true and
-            wfc_is_ascii( byte_3 ) == true)
+            Win32FoundationClasses::wfc_is_ascii( byte_1 ) == true and
+            Win32FoundationClasses::wfc_is_ascii( byte_3 ) == true)
         {
             // UTF-16, Big Endian
             (void) SetTextToASCII( false );
@@ -2479,9 +2478,9 @@ public:
         }
 
         if ( byte_1 == 0x00 and
-            wfc_is_ascii( byte_2 ) == true and
+            Win32FoundationClasses::wfc_is_ascii( byte_2 ) == true and
             byte_3 == 0x00 and
-            wfc_is_ascii( byte_4 ) == true)
+            Win32FoundationClasses::wfc_is_ascii( byte_4 ) == true)
         {
             // UTF-16, Big Endian
             (void) SetTextToASCII( false );
@@ -2591,7 +2590,10 @@ public:
 
     inline _Check_return_ GUID ReadGUID( void ) noexcept
     {
+#pragma warning( push )
+#pragma warning( disable: 6031 )
         return( Parser.ReadGUID( Position ) );
+#pragma warning( pop )
     }
 
     inline constexpr _Check_return_ int16_t ReadInt16( void ) noexcept

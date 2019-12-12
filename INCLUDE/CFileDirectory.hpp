@@ -153,12 +153,12 @@ class CFileDirectory
       }
 
       virtual void Close( void ) noexcept;
-      virtual _Check_return_ bool Open( _In_z_ wchar_t const * const directory_name ) noexcept;
+      virtual _Check_return_ bool Open( _In_ std::wstring_view directory_name ) noexcept;
       virtual _Check_return_ bool Read(__out std::vector<std::wstring>& filenames) noexcept;
       virtual _Check_return_ bool Read( __callback WIDE_FILE_ACTION_FUNCTION action_to_take, __in void * action_parameter ) noexcept;
       virtual _Check_return_ bool ReadRecursively(__out std::vector<std::wstring>& filenames) noexcept;
       virtual _Check_return_ bool ReadRecursively( __callback WIDE_FILE_ACTION_FUNCTION action_to_take, __in void * action_parameter ) noexcept;
-      virtual void SetWildcard( _In_z_ wchar_t const * const wilcard ) noexcept;
+      virtual void SetWildcard(_In_ std::wstring_view wilcard ) noexcept;
       virtual void GetWildcard( __out std::wstring& wildcard ) const noexcept;
       virtual void SetIncludeDirectoriesInCallback( __in bool const include_directories = true ) noexcept;
       virtual _Check_return_ bool GetIncludeDirectoriesInCallback( void ) const noexcept;

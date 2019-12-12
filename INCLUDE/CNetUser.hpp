@@ -187,7 +187,6 @@ class CNetworkUsers : public CNetwork
 
        CNetworkUsers(__in CNetworkUsers const&) = delete;
        CNetworkUsers& operator=(__in CNetworkUsers const&) = delete;
-       CNetworkUsers() noexcept;
       CNetworkUsers(_In_ std::wstring_view machine_name = { nullptr, 0 }) noexcept;
       virtual ~CNetworkUsers();
 

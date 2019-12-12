@@ -499,7 +499,7 @@ _Check_return_ bool CBase64Coding::Decode( _In_ std::vector<uint8_t> const& sour
    return(Decode(source.data(), source.size(), destination));
 }
 
-_Check_return_ bool CBase64Coding::Decode( _In_ std::wstring const& source, _Inout_ std::vector<uint8_t>& destination ) const noexcept
+_Check_return_ bool CBase64Coding::Decode(_In_ std::wstring_view source, _Inout_ std::vector<uint8_t>& destination ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -513,9 +513,7 @@ _Check_return_ bool CBase64Coding::Decode( _In_ std::wstring const& source, _Ino
 
    std::size_t index = 0;
 
-   std::size_t const number_of_bytes_to_decode = source.length();
-
-   destination.resize(DecodeReserveSize(number_of_bytes_to_decode) );
+   destination.resize(DecodeReserveSize(source.length()) );
 
    uint32_t add_index = 0;
 
@@ -523,13 +521,13 @@ _Check_return_ bool CBase64Coding::Decode( _In_ std::wstring const& source, _Ino
    // part of an application, let's go for a speedy method for accessing
    // the source data.
 
-   wchar_t const * input_buffer = source.c_str();
+   wchar_t const * input_buffer = source.data();
 
    WFC_VALIDATE_POINTER( input_buffer );
 
-   while( index < number_of_bytes_to_decode )
+   while( index < source.length())
    {
-      character_1 = __get_character( input_buffer, m_DecoderTable, index, number_of_bytes_to_decode );
+      character_1 = __get_character( input_buffer, m_DecoderTable, index, source.length());
 
       if ( character_1 != END_OF_BASE64_ENCODED_DATA )
       {
@@ -540,7 +538,7 @@ _Check_return_ bool CBase64Coding::Decode( _In_ std::wstring const& source, _Ino
             return( false );
          }
 
-         character_2 = __get_character( input_buffer, m_DecoderTable, index, number_of_bytes_to_decode );
+         character_2 = __get_character( input_buffer, m_DecoderTable, index, source.length());
 
          if ( character_2 != END_OF_BASE64_ENCODED_DATA )
          {
@@ -551,7 +549,7 @@ _Check_return_ bool CBase64Coding::Decode( _In_ std::wstring const& source, _Ino
                return( false );
             }
 
-            character_3 = __get_character( input_buffer, m_DecoderTable, index, number_of_bytes_to_decode );
+            character_3 = __get_character( input_buffer, m_DecoderTable, index, source.length());
 
             if ( character_3 != END_OF_BASE64_ENCODED_DATA )
             {
@@ -562,7 +560,7 @@ _Check_return_ bool CBase64Coding::Decode( _In_ std::wstring const& source, _Ino
                   return( false );
                }
 
-               character_4 = __get_character( input_buffer, m_DecoderTable, index, number_of_bytes_to_decode );
+               character_4 = __get_character( input_buffer, m_DecoderTable, index, source.length());
 
                if ( character_4 != END_OF_BASE64_ENCODED_DATA )
                {
@@ -660,8 +658,7 @@ _Check_return_ bool CBase64Coding::Encode( _In_ std::vector<uint8_t> const& sour
 
    if ( number_of_bytes_to_encode == 0 )
    {
-      destination.resize( 1 );
-      destination[ 0 ] = END_OF_BASE64_ENCODED_DATA;
+      destination.clear();
       return( true );
    }
 
@@ -691,7 +688,7 @@ _Check_return_ bool CBase64Coding::Encode( _In_ std::vector<uint8_t> const& sour
       byte_1 = input_buffer[ source_index ];
       byte_to_add = alphabet[ ( byte_1 >> 2 ) ];
 
-      destination[ add_index ] =  byte_to_add;
+      destination[ add_index ] = byte_to_add;
       add_index++;
 
       source_index++;
@@ -706,13 +703,14 @@ _Check_return_ bool CBase64Coding::Encode( _In_ std::vector<uint8_t> const& sour
          destination[ add_index ] = byte_to_add;
          add_index++;
 
-         destination[ add_index ] = END_OF_BASE64_ENCODED_DATA;
-         add_index++;
-
-         destination[ add_index ] =  END_OF_BASE64_ENCODED_DATA;
-         add_index++;
-
          destination.resize( add_index );
+
+         // .Net will puke on itself if the buffer isn't a length of 4
+         while ((destination.size() % 4) != 0)
+         {
+             destination.push_back(static_cast<uint8_t>(END_OF_BASE64_ENCODED_DATA));
+         }
+
          return( true );
       }
       else
@@ -736,10 +734,14 @@ _Check_return_ bool CBase64Coding::Encode( _In_ std::vector<uint8_t> const& sour
          destination[ add_index ] = byte_to_add;
          add_index++;
 
-         destination[ add_index ] = END_OF_BASE64_ENCODED_DATA;
-         add_index++;
-
          destination.resize( add_index );
+
+         // .Net will puke on itself if the buffer isn't a length of 4
+         while ((destination.size() % 4) != 0)
+         {
+             destination.push_back(static_cast<uint8_t>(END_OF_BASE64_ENCODED_DATA));
+         }
+
          return( true );
       }
       else
@@ -760,10 +762,14 @@ _Check_return_ bool CBase64Coding::Encode( _In_ std::vector<uint8_t> const& sour
       add_index++;
    }
 
-   destination[ add_index ] = END_OF_BASE64_ENCODED_DATA;
-   add_index++;
-
    destination.resize( add_index );
+
+   // .Net will puke on itself if the buffer isn't a length of 4
+   while ((destination.size() % 4) != 0)
+   {
+       destination.push_back(static_cast<uint8_t>(END_OF_BASE64_ENCODED_DATA));
+   }
+
    return( true );
 }
 
@@ -781,7 +787,7 @@ _Check_return_ bool CBase64Coding::Encode( __in_bcount( number_of_bytes_to_encod
 
    if ( number_of_bytes_to_encode < 1 or input_buffer == nullptr )
    {
-      destination_string.assign( WSTRING_VIEW( L"=" ) );
+      destination_string.clear();
       return( true );
    }
 
@@ -789,7 +795,7 @@ _Check_return_ bool CBase64Coding::Encode( __in_bcount( number_of_bytes_to_encod
 
    if (Encode(input_buffer, number_of_bytes_to_encode, the_string) == true)
    {
-       copy( destination_string, the_string.c_str());
+       copy( destination_string, the_string);
        return(true);
    }
 
@@ -803,13 +809,14 @@ _Check_return_ bool CBase64Coding::Encode(__in_bcount(number_of_bytes_to_encode)
 
     if (number_of_bytes_to_encode < 1 or input_buffer == nullptr)
     {
-        destination_string.assign(STRING_VIEW("="));
+        destination_string.clear();
         return(true);
     }
 
     char const alphabet[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
 
     std::size_t loop_index = 0;
+    std::size_t number_of_space_characters_added = 0;
 
     uint8_t byte_to_add = 0;
     uint8_t byte_1 = 0;
@@ -839,6 +846,7 @@ _Check_return_ bool CBase64Coding::Encode(__in_bcount(number_of_bytes_to_encode)
             number_of_bytes_encoded++;
             destination_string[number_of_bytes_encoded] = static_cast< char >(LINE_FEED);
             number_of_bytes_encoded++;
+            number_of_space_characters_added += 2;
             character_index_in_this_line = 0;
         }
 
@@ -862,6 +870,7 @@ _Check_return_ bool CBase64Coding::Encode(__in_bcount(number_of_bytes_to_encode)
                 number_of_bytes_encoded++;
                 destination_string[number_of_bytes_encoded] = static_cast< char >(LINE_FEED);
                 number_of_bytes_encoded++;
+                number_of_space_characters_added += 2;
                 character_index_in_this_line = 0;
             }
 
@@ -876,14 +885,16 @@ _Check_return_ bool CBase64Coding::Encode(__in_bcount(number_of_bytes_to_encode)
                 number_of_bytes_encoded++;
                 destination_string[number_of_bytes_encoded] = static_cast<char>(LINE_FEED);
                 number_of_bytes_encoded++;
+                number_of_space_characters_added += 2;
                 character_index_in_this_line = 0;
             }
 
-            destination_string[number_of_bytes_encoded] = static_cast<char>(END_OF_BASE64_ENCODED_DATA);
+            destination_string.resize(number_of_bytes_encoded);
 
-            if ((number_of_bytes_encoded + 1) < destination_string.size())
+            // .Net will puke on itself if the number of non-space characters isn't a multiple of 4
+            while (((destination_string.length() - number_of_space_characters_added) % 4) != 0)
             {
-                destination_string.resize(number_of_bytes_encoded + 1);
+                destination_string.push_back(static_cast<char>(END_OF_BASE64_ENCODED_DATA));
             }
 
             return(true);
@@ -906,6 +917,7 @@ _Check_return_ bool CBase64Coding::Encode(__in_bcount(number_of_bytes_to_encode)
             number_of_bytes_encoded++;
             destination_string[number_of_bytes_encoded] = static_cast<char>(LINE_FEED);
             number_of_bytes_encoded++;
+            number_of_space_characters_added += 2;
             character_index_in_this_line = 0;
         }
 
@@ -929,14 +941,16 @@ _Check_return_ bool CBase64Coding::Encode(__in_bcount(number_of_bytes_to_encode)
                 number_of_bytes_encoded++;
                 destination_string[number_of_bytes_encoded] = static_cast<char>(LINE_FEED);
                 number_of_bytes_encoded++;
+                number_of_space_characters_added += 2;
                 character_index_in_this_line = 0;
             }
 
-            destination_string[number_of_bytes_encoded] = static_cast<char>(END_OF_BASE64_ENCODED_DATA);
+            destination_string.resize(number_of_bytes_encoded);
 
-            if ((number_of_bytes_encoded + 1) < destination_string.size())
+            // .Net will puke on itself if the number of non-space characters isn't a multiple of 4
+            while (((destination_string.length() - number_of_space_characters_added) % 4) != 0)
             {
-                destination_string.resize(number_of_bytes_encoded + 1);
+                destination_string.push_back(static_cast<char>(END_OF_BASE64_ENCODED_DATA));
             }
 
             return(true);
@@ -961,6 +975,7 @@ _Check_return_ bool CBase64Coding::Encode(__in_bcount(number_of_bytes_to_encode)
             number_of_bytes_encoded++;
             destination_string[number_of_bytes_encoded] = static_cast<char>(LINE_FEED);
             number_of_bytes_encoded++;
+            number_of_space_characters_added += 2;
             character_index_in_this_line = 0;
         }
 
@@ -977,15 +992,17 @@ _Check_return_ bool CBase64Coding::Encode(__in_bcount(number_of_bytes_to_encode)
             number_of_bytes_encoded++;
             destination_string[number_of_bytes_encoded] = static_cast<char>(LINE_FEED);
             number_of_bytes_encoded++;
+            number_of_space_characters_added += 2;
             character_index_in_this_line = 0;
         }
     }
 
-    destination_string[number_of_bytes_encoded] = static_cast<char>(END_OF_BASE64_ENCODED_DATA);
+    destination_string.resize(number_of_bytes_encoded);
 
-    if ((number_of_bytes_encoded + 1) < destination_string.size())
+    // .Net will puke on itself if the number of non-space characters isn't a multiple of 4
+    while (((destination_string.length() - number_of_space_characters_added) % 4) != 0)
     {
-        destination_string.resize(number_of_bytes_encoded + 1);
+        destination_string.push_back(static_cast<char>(END_OF_BASE64_ENCODED_DATA));
     }
 
     return(true);
@@ -1046,8 +1063,8 @@ _Check_return_ bool CBase64Coding::Encode(_Inout_ HANDLE input_file_handle, _In_
         return(true);
     }
 
-    uint8_t input_buffer[54];
-    uint8_t output_buffer[74];
+    uint8_t input_buffer[54]{ 0 };
+    uint8_t output_buffer[74]{ 0 };
 
     std::size_t number_of_bytes_remaining = number_of_bytes_to_encode;
 

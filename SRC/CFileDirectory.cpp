@@ -70,7 +70,7 @@ void CFileDirectory::Close(void) noexcept
     m_Name.clear();
 }
 
-_Check_return_ bool CFileDirectory::Open(_In_z_ wchar_t const * const directory_name) noexcept
+_Check_return_ bool CFileDirectory::Open(_In_ std::wstring_view directory_name) noexcept
 {
     WFC_VALIDATE_POINTER(this);
 
@@ -267,7 +267,7 @@ _Check_return_ bool CFileDirectory::Read(__callback WIDE_FILE_ACTION_FUNCTION ac
         return(false);
 }
 
-typedef struct _recursive_directory_read_parameters
+struct RECURSIVE_DIRECTORY_READ_PARAMETERS
 {
     HANDLE find_file_handle{ INVALID_HANDLE_VALUE };
     WIN32_FIND_DATA find_data;
@@ -275,10 +275,9 @@ typedef struct _recursive_directory_read_parameters
     std::wstring directory_to_open;
     std::wstring new_directory_name;
     std::wstring directory_name_ending_in_a_slash;
-}
-RECURSIVE_DIRECTORY_READ_PARAMETERS;
+};
 
-static void PASCAL __read_recursively(__in std::wstring const& directory_name, _In_ std::wstring const& wildcard, _Out_ std::vector<std::wstring>& filenames)
+static void PASCAL __read_recursively(__in std::wstring const& directory_name, _In_ std::wstring const& wildcard, _Out_ std::vector<std::wstring>& filenames) noexcept
 {
     auto parameters_p = std::make_unique<RECURSIVE_DIRECTORY_READ_PARAMETERS>();
 
@@ -368,7 +367,7 @@ static void PASCAL __read_recursively(__in std::wstring const& directory_name, _
     }
 }
 
-typedef struct _wide_recursive_directory_read_parameters
+struct WIDE_RECURSIVE_DIRECTORY_READ_PARAMETERS
 {
     HANDLE find_file_handle{ INVALID_HANDLE_VALUE };
     WIN32_FIND_DATAW find_data;
@@ -376,8 +375,7 @@ typedef struct _wide_recursive_directory_read_parameters
     std::wstring directory_to_open;
     std::wstring new_directory_name;
     std::wstring directory_name_ending_in_a_slash;
-}
-WIDE_RECURSIVE_DIRECTORY_READ_PARAMETERS;
+};
 
 void PASCAL __wide_read_recursively(_In_ std::wstring const& directory_name, _In_ std::wstring const& wildcard, __out std::vector<std::wstring>& filenames)
 {
@@ -465,7 +463,7 @@ void PASCAL __wide_read_recursively(_In_ std::wstring const& directory_name, _In
     }
 }
 
-static _Check_return_ bool PASCAL __wide_read_recursively(_In_ std::wstring const& directory_name, _In_ std::wstring const& wildcard, _In_ bool const include_directories, __callback WIDE_FILE_ACTION_FUNCTION action_to_take, __in void * action_parameter)
+static _Check_return_ bool PASCAL __wide_read_recursively(_In_ std::wstring const& directory_name, _In_ std::wstring const& wildcard, _In_ bool const include_directories, __callback WIDE_FILE_ACTION_FUNCTION action_to_take, _In_ void * action_parameter) noexcept
 {
     WFC_VALIDATE_POINTER(action_to_take);
 
@@ -897,7 +895,7 @@ _Check_return_ bool CFileDirectory::ReadRecursively(_Out_ std::vector<std::wstri
     return(false);
 }
 
-void CFileDirectory::SetWildcard(_In_ wchar_t const * const wildcard) noexcept
+void CFileDirectory::SetWildcard(_In_ std::wstring_view wildcard) noexcept
 {
     WFC_VALIDATE_POINTER(this);
     m_Wildcard.assign(wildcard);
@@ -921,12 +919,11 @@ _Check_return_ bool CFileDirectory::GetIncludeDirectoriesInCallback(void) const 
     return(m_IncludeDirectoriesInCallback);
 }
 
-typedef struct _sum_count
+struct SUM_COUNT
 {
-    uint64_t number_of_files;
-    uint64_t sum_of_file_sizes;
-}
-SUM_COUNT;
+    uint64_t number_of_files{ 0 };
+    uint64_t sum_of_file_sizes{ 0 };
+};
 
 static _Check_return_ bool sum_action(__in void * parameter, __in wchar_t const * const filename, __in WIN32_FIND_DATA const * data_p) noexcept
 {

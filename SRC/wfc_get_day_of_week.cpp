@@ -100,9 +100,7 @@ _Check_return_ bool PASCAL Win32FoundationClasses::wfc_get_day_of_week( __in int
 
    uint32_t temporary_day_of_week = 0;
 
-   double term_1 = 0.0;
-
-   term_1 = static_cast< double >( month + 1 ) * 3.0;
+   double term_1 = static_cast< double >( month + 1 ) * 3.0;
    term_1 /= 5.0;
 
    temporary_day_of_week  = ( day + ( month * 2 ) + static_cast< int >( term_1 ) + year_with_century + ( year_with_century / 4 ) );

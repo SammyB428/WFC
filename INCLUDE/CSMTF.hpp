@@ -47,7 +47,7 @@
 #include "samtf.h"
 #endif
 
-class CUINT64 : public ___SIXTY_FOUR_BIT_UNSIGNED_INTEGER
+class CUINT64 : public SIXTY_FOUR_BIT_UNSIGNED_INTEGER
 {
    public:
 
@@ -80,7 +80,7 @@ class CUINT64 : public ___SIXTY_FOUR_BIT_UNSIGNED_INTEGER
 #endif
 };
 
-class CMTFDateTime : public ___MTF_DATE_TIME
+class CMTFDateTime : public MTF_DATE_TIME
 {
    public:
 
@@ -116,7 +116,7 @@ class CMTFDateTime : public ___MTF_DATE_TIME
 #endif
 };
 
-class CMTFTapeAddress : public ___MTF_TAPE_ADDRESS
+class CMTFTapeAddress : public MTF_TAPE_ADDRESS
 {
    public:
 
@@ -140,7 +140,7 @@ class CMTFTapeAddress : public ___MTF_TAPE_ADDRESS
 #endif
 };
 
-class CMTFDataBlockHeader : public ___MTF_DB_HDR
+class CMTFDataBlockHeader : public MTF_DB_HDR
 {
    public:
 
@@ -164,15 +164,15 @@ class CMTFDataBlockHeader : public ___MTF_DB_HDR
 #endif
 };
 
-class CMTFTape : public ___MTF_TAPE
+class CMTFTape : public MTF_TAPE
 {
    public:
 
       // Construction
 
       CMTFTape();
-      CMTFTape( __in CMTFTape const& source );
-      CMTFTape( __in MTF_TAPE const * source );
+      CMTFTape( _In_ CMTFTape const& source );
+      CMTFTape(_In_ MTF_TAPE const * source );
       virtual ~CMTFTape();
 
       // Methods

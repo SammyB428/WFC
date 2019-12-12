@@ -139,8 +139,6 @@ _Check_return_ bool CCryptographicKey::Decrypt(__in std::vector<uint8_t> const& 
     WFC_VALIDATE_POINTER(this);
     WFC_VALIDATE_POINTER_NULL_OK(hash_p);
 
-    BOOL return_value = FALSE;
-
     // This is really stupid. The CryptDecrypt function takes an in/out
     // for the buffer parameter. Besides not being const correct, it negates
     // the possibility of using memory mapped files. Normally, Microsoft
@@ -171,7 +169,7 @@ _Check_return_ bool CCryptographicKey::Decrypt(__in std::vector<uint8_t> const& 
 
     DWORD data_length = (DWORD)decrypted_data.size();
 
-    return_value = ::CryptDecrypt(m_Key,
+    BOOL return_value = ::CryptDecrypt(m_Key,
                                    hash_handle,
                                    this_is_the_last_chunk_of_data_to_be_decrypted,
                                    flags,
@@ -361,8 +359,6 @@ _Check_return_ bool CCryptographicKey::Encrypt( std::vector<uint8_t> const&     
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER_NULL_OK( hash_p );
 
-   BOOL return_value = FALSE;
-
    // This is really stupid. The CryptEncrypt function takes an in/out
    // for the buffer parameter. Besides not being const correct, it negates
    // the possibility of using memory mapped files. Normally, Microsoft
@@ -430,7 +426,7 @@ _Check_return_ bool CCryptographicKey::Encrypt( std::vector<uint8_t> const&     
       
       DWORD required_buffer_size = number_of_bytes_to_encrypt;
 
-      return_value = ::CryptEncrypt( m_Key,
+      BOOL return_value = ::CryptEncrypt( m_Key,
                                      hash_handle,
                                      this_is_the_last_chunk_of_data_to_be_encrypted,
                                      flags,
@@ -582,8 +578,6 @@ _Check_return_ bool CCryptographicKey::Export( CCryptographicKey& key_for_whoeve
 {
    WFC_VALIDATE_POINTER( this );
 
-   BOOL return_value = FALSE;
-
    DWORD number_of_bytes_in_exported_key = 0;
 
    HCRYPTKEY their_key = key_for_whoever_we_are_exporting_to.m_Key;
@@ -596,7 +590,7 @@ _Check_return_ bool CCryptographicKey::Export( CCryptographicKey& key_for_whoeve
 
    // Figure out how big an exported key is
 
-   return_value = ::CryptExportKey( m_Key,
+   BOOL return_value = ::CryptExportKey( m_Key,
                                     their_key,
                                     static_cast<DWORD>(format_of_exported_key),
                                     flags,

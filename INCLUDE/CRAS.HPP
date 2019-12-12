@@ -43,7 +43,7 @@
 
 #define REMOTE_ACCESS_SERVICE_CLASS_HEADER
 
-typedef struct _WFC_RAS_THUNK
+struct WFC_RAS_THUNK
 {
    HINSTANCE dll_instance_handle;
    TCHAR     dll_name[ MAX_PATH ];
@@ -115,8 +115,7 @@ typedef struct _WFC_RAS_THUNK
 
 #endif // ( WINVER >= 0x401 )
 
-}
-WFC_RAS_THUNK, *WFC_RAS_THUNK_P;
+};
 
 #pragma warning ( disable : 4097 )
 

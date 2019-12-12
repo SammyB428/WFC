@@ -54,7 +54,7 @@ USING_WFC_NAMESPACE
 #define new DEBUG_NEW
 #endif // _DEBUG
 
-static _Check_return_ LONG _recursively_delete_all_sub_keys( __in HKEY key_handle, __in_z wchar_t const * key_name )
+static _Check_return_ LONG _recursively_delete_all_sub_keys( _In_ HKEY key_handle, __in_z wchar_t const * key_name ) noexcept
 {
     WFC_VALIDATE_POINTER( key_name );
 
@@ -824,7 +824,6 @@ _Check_return_ bool CRegistry::GetStringArrayValue(_In_z_ wchar_t const * name_o
 _Check_return_ bool CRegistry::GetValue( __in_z wchar_t const * name_of_value, __out std::vector<uint8_t>& return_array ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
-
     return( GetBinaryValue( name_of_value, return_array ) );
 }
 

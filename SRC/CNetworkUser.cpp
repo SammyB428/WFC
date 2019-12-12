@@ -54,17 +54,10 @@ USING_WFC_NAMESPACE
 #define new DEBUG_NEW
 #endif // _DEBUG
 
-CNetworkUsers::CNetworkUsers() noexcept
+CNetworkUsers::CNetworkUsers(_In_ std::wstring_view machine_name) noexcept : CNetwork(machine_name)
 {
    WFC_VALIDATE_POINTER( this );
    m_Initialize();
-}
-
-CNetworkUsers::CNetworkUsers(_In_ std::wstring_view machine_name) noexcept
-{
-   WFC_VALIDATE_POINTER( this );
-   m_Initialize();
-   Open( machine_name );
 }
 
 CNetworkUsers::~CNetworkUsers() noexcept

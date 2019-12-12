@@ -234,6 +234,11 @@
 #include <winternl.h>
 #define _NTDEF_
 
+inline constexpr _Check_return_ bool fast_is_digit(_In_ int const character) noexcept
+{
+    return(static_cast<unsigned>(character - '0') < 10);
+}
+
 class RangeIterator
 {
 private:
@@ -735,7 +740,7 @@ static inline _Check_return_ wchar_t const * DefinedStringConstant(_In_ uint64_t
 
     DEFINED_WIDE_STRING const value_to_find{ value, nullptr };
 
-    auto entry = reinterpret_cast<DEFINED_WIDE_STRING const *>(bsearch(&value_to_find, definitions, number_of_definitions, sizeof(DEFINED_WIDE_STRING), compare_defines));
+    auto entry = reinterpret_cast<DEFINED_WIDE_STRING const *>(std::bsearch(&value_to_find, definitions, number_of_definitions, sizeof(DEFINED_WIDE_STRING), compare_defines));
 
     if (entry == nullptr)
     {
@@ -1198,7 +1203,7 @@ inline void PASCAL wfc_get_current_filetime( _Inout_ FILETIME * file_time ) noex
 
 #define RETURN_ALL_POSSIBLE_ENCODINGS (0)
 
-_Check_return_ bool PASCAL wfc_read_xml_from_file( _In_z_ wchar_t const * filename, _Inout_ CExtensibleMarkupLanguageDocument& xml ) noexcept;
+_Check_return_ bool PASCAL wfc_read_xml_from_file( _In_ std::wstring_view filename, _Inout_ CExtensibleMarkupLanguageDocument& xml ) noexcept;
 void PASCAL wfc_free_unicode_conversion_context( _Inout_ VOID * unicode_conversion_context ) noexcept;
 _Check_return_ VOID * PASCAL wfc_get_unicode_conversion_context( _In_ bool const is_com_already_started_in_this_thread ) noexcept;
 _Check_return_ bool PASCAL wfc_detect_code_page( _Inout_ VOID * unicode_conversion_context, _In_reads_bytes_( number_of_bytes_in_buffer ) uint8_t const * buffer, _In_ std::size_t const number_of_bytes_in_buffer, _In_ uint32_t const encoding_hints, _Out_ uint32_t& code_page ) noexcept;

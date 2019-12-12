@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 1995-2016, Samuel R. Blackburn
+** Copyright, 1995-2019, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -443,17 +443,10 @@ CWorkstationTransport const& CWorkstationTransport::operator = ( __in CWorkstati
 ** CNetWorkstation Stuff
 */
 
-CNetWorkstation::CNetWorkstation() noexcept
+CNetWorkstation::CNetWorkstation(_In_ std::wstring_view machine_name) noexcept : CNetwork(machine_name)
 {
    WFC_VALIDATE_POINTER( this );
    m_Initialize();
-}
-
-CNetWorkstation::CNetWorkstation(_In_ std::wstring_view machine_name) noexcept
-{
-   WFC_VALIDATE_POINTER( this );
-   m_Initialize();
-   Open( machine_name );
 }
 
 CNetWorkstation::~CNetWorkstation() noexcept

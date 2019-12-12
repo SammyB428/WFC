@@ -63,6 +63,19 @@ static inline _Check_return_ bool __parse_ymdhmsf( _In_ std::wstring_view time_s
     _Out_ int&    offset_minutes,
     _Out_ double& fraction ) noexcept
 {
+    // Start with some believable defaults
+
+    year = 0;
+    month = 1;
+    day = 1;
+    hours = 0;
+    minutes = 0;
+    seconds = 0;
+    offset_character = TEXT('Z');
+    offset_hours = 0;
+    offset_minutes = 0;
+    fraction = 0;
+
     // Here's a sample ISO8601 date string
     //
     // 1969-07-20T22:56:15-04:00
@@ -74,19 +87,6 @@ static inline _Check_return_ bool __parse_ymdhmsf( _In_ std::wstring_view time_s
         //WFCTRACE( TEXT( "time string is NULL!" ) );
         return( false );
     }
-
-    // Start with some believable defaults
-
-    year             = 0;
-    month            = 1;
-    day              = 1;
-    hours            = 0;
-    minutes          = 0;
-    seconds          = 0;
-    offset_character = TEXT( 'Z' );
-    offset_hours     = 0;
-    offset_minutes   = 0;
-    fraction = 0;
 
     // We were passed a pointer, don't trust it
 
@@ -102,25 +102,25 @@ static inline _Check_return_ bool __parse_ymdhmsf( _In_ std::wstring_view time_s
 
         // OK, let's start parsing
 
-        if ( _istdigit( time_string[ 0 ] ) == 0 )
+        if (fast_is_digit( time_string[ 0 ] ) == false )
         {
             //WFCTRACE( TEXT( "First character is not a digit" ) );
             return(false);
         }
 
-        if ( _istdigit( time_string[ 1 ] ) == 0 )
+        if (fast_is_digit( time_string[ 1 ] ) == false )
         {
             //WFCTRACE( TEXT( "Second character is not a digit" ) );
             return(false);
         }
 
-        if ( _istdigit( time_string[ 2 ] ) == 0 )
+        if (fast_is_digit( time_string[ 2 ] ) == false )
         {
             //WFCTRACE( TEXT( "Third character is not a digit" ) );
             return(false);
         }
 
-        if ( _istdigit( time_string[ 3 ] ) == 0 )
+        if (fast_is_digit( time_string[ 3 ] ) == false )
         {
             //WFCTRACE( TEXT( "Fourth character is not a digit" ) );
             return(false);
@@ -177,7 +177,7 @@ static inline _Check_return_ bool __parse_ymdhmsf( _In_ std::wstring_view time_s
             return( true );
         }
 
-        if ( _istdigit( time_string[ index ] ) == 0 )
+        if (fast_is_digit( time_string[ index ] ) == false )
         {
             //WFCTRACE( TEXT( "First digit of month field isn't a digit at all" ) );
             return(false);
@@ -192,7 +192,7 @@ static inline _Check_return_ bool __parse_ymdhmsf( _In_ std::wstring_view time_s
 
         // This test is safe because we could be sitting on a NULL
 
-        if ( _istdigit( time_string[ index ] ) == 0 )
+        if (fast_is_digit( time_string[ index ] ) == false )
         {
             //WFCTRACE( TEXT( "Second digit of month field isn't a digit at all" ) );
             return(false);
@@ -242,7 +242,7 @@ static inline _Check_return_ bool __parse_ymdhmsf( _In_ std::wstring_view time_s
             return( true );
         }
 
-        if ( _istdigit( time_string[ index ] ) == 0 )
+        if (fast_is_digit( time_string[ index ] ) == false )
         {
             //WFCTRACE( TEXT( "First digit of day field isn't a digit at all" ) );
             return(false);
@@ -257,7 +257,7 @@ static inline _Check_return_ bool __parse_ymdhmsf( _In_ std::wstring_view time_s
 
         // This test is safe because we could be sitting on a NULL
 
-        if ( _istdigit( time_string[ index ] ) == 0 )
+        if (fast_is_digit( time_string[ index ] ) == false )
         {
             //WFCTRACE( TEXT( "Second digit of month field isn't a digit at all" ) );
             return(false);
@@ -310,7 +310,7 @@ static inline _Check_return_ bool __parse_ymdhmsf( _In_ std::wstring_view time_s
             return( true );
         }
 
-        if ( _istdigit( time_string[ index ] ) == 0 )
+        if (fast_is_digit( time_string[ index ] ) == false )
         {
             //WFCTRACE( TEXT( "First digit of hours field isn't a digit at all" ) );
             return(false);
@@ -325,7 +325,7 @@ static inline _Check_return_ bool __parse_ymdhmsf( _In_ std::wstring_view time_s
 
         // This test is safe because we could be sitting on a NULL
 
-        if ( _istdigit( time_string[ index ] ) == 0 )
+        if (fast_is_digit( time_string[ index ] ) == false )
         {
             //WFCTRACE( TEXT( "Second digit of month field isn't a digit at all" ) );
             return(false);
@@ -370,7 +370,7 @@ static inline _Check_return_ bool __parse_ymdhmsf( _In_ std::wstring_view time_s
             return( true );
         }
 
-        if ( _istdigit( time_string[ index ] ) == 0 )
+        if (fast_is_digit( time_string[ index ] ) == false )
         {
             //WFCTRACE( TEXT( "First digit of time ain't no digit" ) );
             return(false);
@@ -383,7 +383,7 @@ static inline _Check_return_ bool __parse_ymdhmsf( _In_ std::wstring_view time_s
         //                v
         // 1969-07-20T22:56:15-04:00
 
-        if ( _istdigit( time_string[ index ] ) == 0 )
+        if (fast_is_digit( time_string[ index ] ) == false )
         {
             //WFCTRACE( TEXT( "First digit of time ain't no digit" ) );
             return(false);
@@ -425,7 +425,7 @@ static inline _Check_return_ bool __parse_ymdhmsf( _In_ std::wstring_view time_s
             return( true );
         }
 
-        if ( _istdigit( time_string[ index ] ) == 0 )
+        if (fast_is_digit( time_string[ index ] ) == false )
         {
             //WFCTRACE( TEXT( "First digit of seconds ain't no digit" ) );
             return(false);
@@ -438,7 +438,7 @@ static inline _Check_return_ bool __parse_ymdhmsf( _In_ std::wstring_view time_s
         //                   v
         // 1969-07-20T22:56:15-04:00
 
-        if ( _istdigit( time_string[ index ] ) == 0 )
+        if (fast_is_digit( time_string[ index ] ) == false )
         {
             //WFCTRACE( TEXT( "Second digit of seconds ain't no digit" ) );
             return(false);
@@ -474,7 +474,7 @@ static inline _Check_return_ bool __parse_ymdhmsf( _In_ std::wstring_view time_s
 
             std::size_t temp_string_index = 1;
 
-            while( _istdigit(time_string[index]) != 0)
+            while(fast_is_digit(time_string[index]) == true)
             {
                 if (temp_string_index < (std::size(temp_string) - 1))
                 {
@@ -534,7 +534,7 @@ static inline _Check_return_ bool __parse_ymdhmsf( _In_ std::wstring_view time_s
         //                     v
         // 1969-07-20T22:56:15-04:00
 
-        if ( _istdigit( time_string[ index ] ) == 0 )
+        if (fast_is_digit( time_string[ index ] ) == false )
         {
             //WFCTRACE( TEXT( "first digit of hours offset ain't a digit" ) );
             return(false);
@@ -547,7 +547,7 @@ static inline _Check_return_ bool __parse_ymdhmsf( _In_ std::wstring_view time_s
         //                      v
         // 1969-07-20T22:56:15-04:00
 
-        if ( _istdigit( time_string[ index ] ) == 0 )
+        if (fast_is_digit( time_string[ index ] ) == false )
         {
             //WFCTRACE( TEXT( "second digit of hours offset ain't a digit" ) );
             return(false);
@@ -578,7 +578,7 @@ static inline _Check_return_ bool __parse_ymdhmsf( _In_ std::wstring_view time_s
         //                        v
         // 1969-07-20T22:56:15-04:00
 
-        if ( _istdigit( time_string[ index ] ) == 0 )
+        if (fast_is_digit( time_string[ index ] ) == false )
         {
             //WFCTRACE( TEXT( "First digit of minutes offset ain't a digit" ) );
             return(false);
@@ -591,7 +591,7 @@ static inline _Check_return_ bool __parse_ymdhmsf( _In_ std::wstring_view time_s
         //                        v
         // 1969-07-20T22:56:15-04:00
 
-        if ( _istdigit( time_string[ index ] ) == 0 )
+        if (fast_is_digit( time_string[ index ] ) == false )
         {
             //WFCTRACE( TEXT( "Second digit of minutes offset ain't a digit" ) );
             return(false);

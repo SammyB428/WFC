@@ -106,15 +106,15 @@ class CTimeEx
       // Construction
 
        inline constexpr CTimeEx() noexcept { m_Time = 0; };
-       inline constexpr CTimeEx(__in CTimeEx const& source) { Copy(source); }
-       inline constexpr CTimeEx(__in CTimeEx const* source) { Copy(source); }
-       inline constexpr CTimeEx(__in time_t const source) { m_Time = source; }
-      CTimeEx( __in struct tm const * source );
-      CTimeEx( __in struct tm const&  source );
-      CTimeEx( __in int const year, __in int const month, __in int const day, __in int const hour, __in int const minute, __in int const second, __in int const daylight_savings_time = -1 );
+       inline constexpr CTimeEx(__in CTimeEx const& source) noexcept { Copy(source); }
+       inline constexpr CTimeEx(__in CTimeEx const* source) noexcept { Copy(source); }
+       inline constexpr CTimeEx(__in time_t const source) noexcept { m_Time = source; }
+      CTimeEx( __in struct tm const * source ) noexcept;
+      CTimeEx( __in struct tm const&  source ) noexcept;
+      CTimeEx( __in int const year, __in int const month, __in int const day, __in int const hour, __in int const minute, __in int const second, __in int const daylight_savings_time = -1 ) noexcept;
       inline constexpr CTimeEx(__in FILETIME const& source) noexcept { Copy(source); }
       inline constexpr CTimeEx(__in FILETIME const* source) noexcept { Copy(source); }
-      inline ~CTimeEx() { m_Time = 0; };
+      inline ~CTimeEx() noexcept { m_Time = 0; };
 
       // Methods
 
@@ -173,13 +173,13 @@ class CTimeEx
           }
       }
 
-      inline constexpr void Copy(__in time_t const source) noexcept
+      inline constexpr void Copy(_In_ time_t const source) noexcept
       {
           m_Time = source;
       }
 
-      void Copy( __in struct tm const * source ) noexcept;
-      void Copy( __in struct tm const&  source ) noexcept;
+      void Copy(_In_ struct tm const * source ) noexcept;
+      inline void Copy(_In_ struct tm const& source) noexcept { Copy(&source); }
       
       inline constexpr void Copy(__in FILETIME const& source) noexcept
       {
@@ -192,7 +192,7 @@ class CTimeEx
           m_Time = static_cast<time_t>(ll / 10000000UI64); // The number of FILETIME ticks in one second
       }
 
-      inline constexpr void Copy(__in FILETIME const* source) noexcept
+      inline constexpr void Copy(_In_ FILETIME const* source) noexcept
       {
           if (source != nullptr)
           {
@@ -204,7 +204,7 @@ class CTimeEx
           }
       }
 
-      void   CopyModifiedJulianDate( __in double const source ) noexcept;
+      void   CopyModifiedJulianDate( _In_ double const number_of_days_since_17_november_1858) noexcept;
       inline constexpr void CopyTo(__out time_t& destination) const noexcept { destination = m_Time; }
       void   CopyTo( __out struct tm& destination ) const noexcept;
       void   CopyTo(__out std::wstring& iso_8601_date) const noexcept;
@@ -254,8 +254,8 @@ class CTimeEx
       }
 
       void Now( void ) noexcept;
-      void Set( __in std::wstring const& iso_8601_date ) noexcept;
-      void Set( __in int year, __in int month, __in int day, __in int hour, __in int minute, __in int second, __in int daylight_savings_time = -1 ) noexcept;
+      void Set(_In_ std::wstring const& iso_8601_date ) noexcept;
+      void Set(_In_ int year, _In_ int month, _In_ int day, _In_ int hour, _In_ int minute, _In_ int second, _In_ int daylight_savings_time = -1 ) noexcept;
 
       // Operators
 
@@ -286,9 +286,9 @@ class CTime
 
    public:
 
-      inline CTime(){};
-      inline CTime( __in time_t const the_time ) : m_Time( the_time ) {};
-      inline CTime( __in int const year, __in int const month, __in int const day, __in int const hour, __in int const minute, __in int const second, __in int const daylight_savings_time = -1 )
+      inline CTime() noexcept {};
+      inline CTime( __in time_t const the_time ) noexcept : m_Time( the_time ) {};
+      inline CTime( __in int const year, __in int const month, __in int const day, __in int const hour, __in int const minute, __in int const second, __in int const daylight_savings_time = -1 ) noexcept
       {
          m_Time.Copy( CTimeEx( year, month, day, hour, minute, second, daylight_savings_time ) );
       }
@@ -298,7 +298,7 @@ class CTime
       // making this compilable in GCC.
       // GCC wants explicit conversion from CTimeEx
       // for CTime operator - (CTimeSpan const&) and CTime operator + (CTimeSpan const&)	
-      inline CTime( CTimeEx const& source ) : m_Time( source ) {};
+      inline CTime( CTimeEx const& source ) noexcept : m_Time( source ) {};
 
       inline ~CTime() {};
 

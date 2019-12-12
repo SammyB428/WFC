@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 1995-2016, Samuel R. Blackburn
+** Copyright, 1995-2019, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -248,7 +248,7 @@ _Check_return_ DWORD CPing::Ping( __in std::wstring const& name_or_address, __ou
 
     WFC_TRY
     {
-       HANDLE icmp_handle = m_Open();
+       auto icmp_handle = m_Open();
 
        if (icmp_handle == static_cast<HANDLE>(INVALID_HANDLE_VALUE))
        {
@@ -271,11 +271,11 @@ _Check_return_ DWORD CPing::Ping( __in std::wstring const& name_or_address, __ou
           SetText(buffer, 59);
        }
 
-       IP_ECHO_REPLY * echo_reply_p = (IP_ECHO_REPLY *)GlobalAllocPtr(GHND, sizeof(IP_ECHO_REPLY) + m_NumberOfTextBytes);
+       auto echo_reply_p = static_cast<IP_ECHO_REPLY *>(GlobalAllocPtr(GHND, sizeof(IP_ECHO_REPLY) + m_NumberOfTextBytes));
 
        if (echo_reply_p != nullptr)
        {
-          SetAddress(name_or_address.c_str());
+          SetAddress(name_or_address);
 
           echo_reply_p->Options.Ttl = (unsigned char)desired_time_to_live;
           echo_reply_p->Data = (VOID *)Name.c_str();
@@ -364,7 +364,7 @@ _Check_return_ bool CPing::Open(void) noexcept
     return(true);
 }
 
-_Check_return_ bool CPing::Open(__in_z LPCTSTR, __in UINT const) noexcept
+_Check_return_ bool CPing::Open(_In_ std::wstring_view, __in UINT const) noexcept
 {
     WFC_VALIDATE_POINTER(this);
     return(true);

@@ -139,20 +139,20 @@ _Check_return_ std::wstring CTimeSpan::Format( _In_z_ wchar_t const * format_str
 
 #endif // WFC_STL
 
-CTimeEx::CTimeEx( __in struct tm const * time_p )
+CTimeEx::CTimeEx( _In_ struct tm const * time_p ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( time_p );
    Copy( time_p );
 }
 
-CTimeEx::CTimeEx( __in struct tm const& time_structure )
+CTimeEx::CTimeEx( _In_ struct tm const& time_structure ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Copy( time_structure );
 }
 
-CTimeEx::CTimeEx( __in int const year, __in int const month, __in int const day, __in int const hour, __in int const minute, __in int const second, __in int const daylight_savings_time )
+CTimeEx::CTimeEx( _In_ int const year, __in int const month, __in int const day, __in int const hour, __in int const minute, __in int const second, __in int const daylight_savings_time ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Set( year, month, day, hour, minute, second, daylight_savings_time );
@@ -169,12 +169,6 @@ void CTimeEx::Copy( __in struct tm const * time_p ) noexcept
    {
       m_Time = 0;
    }
-}
-
-void CTimeEx::Copy( __in struct tm const& source ) noexcept
-{
-   WFC_VALIDATE_POINTER( this );
-   Copy( &source );
 }
 
 void CTimeEx::CopyModifiedJulianDate( __in double const number_of_days_since_17_november_1858 ) noexcept
@@ -237,12 +231,11 @@ _Check_return_ std::wstring CTimeEx::Format( _In_z_ wchar_t const * format_strin
       return( buffer );
    }
 
-   struct tm time_structure;
+   struct tm time_structure { 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 
    // We were passed a pointer, don't trust it
 
    ZeroMemory( buffer, sizeof( buffer ) );
-   ZeroMemory( &time_structure, sizeof( time_structure ) );
 
    GreenwichMeanTime( &m_Time, &time_structure );
 
@@ -263,13 +256,9 @@ _Check_return_ std::wstring CTimeEx::Format( _In_z_ wchar_t const * format_strin
 
 void CTimeEx::GetCurrentTheTime( __out CTimeEx& source ) noexcept
 {
-   struct tm time_structure;
+   struct tm time_structure { 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 
-   ZeroMemory( &time_structure, sizeof( time_structure ) );
-
-   time_t current_time = static_cast< time_t >( NULL );
-
-   current_time = ::time( nullptr );
+   auto const current_time = ::time( nullptr );
 
    GreenwichMeanTime( &current_time, &time_structure );
 
@@ -278,13 +267,9 @@ void CTimeEx::GetCurrentTheTime( __out CTimeEx& source ) noexcept
 
 void CTimeEx::Now( void ) noexcept
 {
-   struct tm time_structure;
+   struct tm time_structure { 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 
-   ZeroMemory( &time_structure, sizeof( time_structure ) );
-
-   time_t current_time = static_cast< time_t >( NULL );
-
-   current_time = ::time( nullptr );
+   auto const current_time = ::time( nullptr );
 
    GreenwichMeanTime( &current_time, &time_structure );
 
@@ -295,7 +280,7 @@ _Check_return_ int CTimeEx::GetDay( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
-   struct tm time_structure;
+   struct tm time_structure { 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 
    GetTime( time_structure );
 
@@ -306,7 +291,7 @@ _Check_return_ int CTimeEx::GetDayOfWeek( void ) const noexcept // 1=Sunday
 {
    WFC_VALIDATE_POINTER( this );
 
-   struct tm time_structure;
+   struct tm time_structure { 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 
    GetTime( time_structure );
 
@@ -317,7 +302,7 @@ _Check_return_ int CTimeEx::GetDayOfYear( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
-   struct tm time_structure;
+   struct tm time_structure { 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 
    GetTime( time_structure );
 
@@ -328,7 +313,7 @@ _Check_return_ int CTimeEx::GetMinuteOfDay( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
-   struct tm time_structure;
+   struct tm time_structure { 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 
    GetTime( time_structure );
 
@@ -341,7 +326,7 @@ _Check_return_ int CTimeEx::GetHour( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
-   struct tm time_structure;
+   struct tm time_structure { 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 
    GetTime( time_structure );
 
@@ -352,7 +337,7 @@ _Check_return_ int CTimeEx::GetMinute( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
-   struct tm time_structure;
+   struct tm time_structure { 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 
    GetTime( time_structure );
 
@@ -374,7 +359,7 @@ _Check_return_ int CTimeEx::GetSecond( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
-   struct tm time_structure;
+   struct tm time_structure { 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 
    GetTime( time_structure );
 
@@ -398,7 +383,7 @@ _Check_return_ int CTimeEx::GetYear( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
-   struct tm time_structure;
+   struct tm time_structure { 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 
    GetTime( time_structure );
 
@@ -579,9 +564,7 @@ _Check_return_ time_t CTimeEx::m_Make_time_t( __in struct tm const * time_parame
    long time_2 = 0;
    long time_3 = 0;
 
-   struct tm tm_time;
-
-   ZeroMemory( &tm_time, sizeof( tm_time ) );
+   struct tm tm_time { 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 
    tm_time.tm_year  = time_parameter->tm_year;
    tm_time.tm_mon   = time_parameter->tm_mon;
@@ -745,9 +728,7 @@ void CTimeEx::Set( __in int const year, __in int const month, __in int const day
    ASSERT( month >= 1 and month <= 12 );
    ASSERT( year  >= 1900 );
 
-   struct tm tm_structure;
-
-   ZeroMemory( &tm_structure, sizeof( tm_structure ) );
+   struct tm tm_structure { 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 
    tm_structure.tm_year  = year  - 1900;
    tm_structure.tm_mon   = month - 1;

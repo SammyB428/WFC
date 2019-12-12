@@ -183,7 +183,7 @@ inline _Check_return_ bool CQueue::Add(_In_ void * item) noexcept
 
     // Make sure m_AddIndex is never invalid
 
-    std::size_t new_add_index = ((m_AddIndex + 1) >= m_Size) ? 0 : m_AddIndex + 1;
+    std::size_t const new_add_index = ((m_AddIndex + 1) >= m_Size) ? 0 : m_AddIndex + 1;
 
     if (new_add_index == m_GetIndex)
     {

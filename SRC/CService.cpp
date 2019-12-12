@@ -283,18 +283,18 @@ void CService::DumpStatus( __inout SERVICE_STATUS *status_p ) const
 
       //WFCTRACE( TEXT( "   SERVICE_CONTROL_INTERROGATE" ) );
 
-      if ( status_p->dwControlsAccepted bitand SERVICE_ACCEPT_STOP )
+      if ( is_flagged(status_p->dwControlsAccepted, SERVICE_ACCEPT_STOP) == true )
       {
          //WFCTRACE( TEXT( "   SERVICE_CONTROL_STOP" ) );
       }
 
-      if ( status_p->dwControlsAccepted bitand SERVICE_ACCEPT_PAUSE_CONTINUE )
+      if (is_flagged(status_p->dwControlsAccepted, SERVICE_ACCEPT_PAUSE_CONTINUE) == true )
       {
          //WFCTRACE( TEXT( "   SERVICE_CONTROL_PAUSE" ) );
          //WFCTRACE( TEXT( "   SERVICE_CONTROL_CONTINUE" ) );
       }
 
-      if ( status_p->dwControlsAccepted bitand SERVICE_ACCEPT_SHUTDOWN )
+      if (is_flagged(status_p->dwControlsAccepted, SERVICE_ACCEPT_SHUTDOWN) == true )
       {
          //WFCTRACE( TEXT( "   SERVICE_CONTROL_SHUTDOWN" ) );
       }

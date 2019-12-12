@@ -96,7 +96,7 @@ class CMixerControlDetails
       // Construction
 
       CMixerControlDetails();
-      CMixerControlDetails( __in CMixerControlDetails const& source );
+      CMixerControlDetails( __in CMixerControlDetails const& source ) noexcept;
       CMixerControlDetails( __in MIXERCONTROLDETAILS const&  source );
       virtual ~CMixerControlDetails();
 
@@ -361,7 +361,7 @@ class CMixerCapabilities
       // Construction
 
       CMixerCapabilities();
-      CMixerCapabilities( __in CMixerCapabilities const& source );
+      CMixerCapabilities( __in CMixerCapabilities const& source ) noexcept;
       CMixerCapabilities( __in MIXERCAPS const&  source );
       virtual ~CMixerCapabilities();
 

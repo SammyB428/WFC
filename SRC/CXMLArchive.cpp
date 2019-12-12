@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 1995-2016, Samuel R. Blackburn
+** Copyright, 1995-2019, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -55,7 +55,7 @@ USING_WFC_NAMESPACE
 // for pointing out my flawed assumption that all times are
 // UTC time.
 
-static inline void _append_time_zone_offset( __inout std::wstring& time_string )
+static inline void _append_time_zone_offset( _Inout_ std::wstring& time_string ) noexcept
 {
    TIME_ZONE_INFORMATION time_zone_information;
 
@@ -161,10 +161,9 @@ _Check_return_ bool CXMLArchive::IsStoring( void ) const noexcept
    return( false );
 }
 
-_Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Read(_In_z_ wchar_t const * tag, __out bool& value ) noexcept
+_Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Read(_In_ std::wstring_view tag, __out bool& value ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
-   WFC_VALIDATE_POINTER(tag);
 
    value = false;
 
@@ -177,23 +176,21 @@ _Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Read(_In_z_ wchar
 
    WFC_TRY
    {
-      CExtensibleMarkupLanguageElement * sub_element_p = nullptr;
-
       uint32_t boolean_value = 0;
 
       // We save them as a DWORD
 
-      sub_element_p = Read( tag, boolean_value );
+      auto sub_element_p = Read( tag, boolean_value );
 
       if ( sub_element_p != nullptr )
       {
          if ( boolean_value == 0 )
          {
-            value = FALSE;
+            value = false;
          }
          else
          {
-            value = TRUE;
+            value = true;
          }
       }
 
@@ -206,10 +203,9 @@ _Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Read(_In_z_ wchar
    WFC_END_CATCH_ALL
 }
 
-_Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Read(_In_z_ wchar_t const * tag, __out std::vector<uint8_t>& value ) noexcept
+_Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Read(_In_ std::wstring_view tag, __out std::vector<uint8_t>& value ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
-   WFC_VALIDATE_POINTER(tag);
 
    if ( m_AmIWriting == true or m_Element_p == nullptr )
    {
@@ -235,7 +231,7 @@ _Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Read(_In_z_ wchar
          
          sub_element_p->GetText( contents );
 
-         (void) coder.Decode( contents.c_str(), value );
+         (void) coder.Decode( contents, value );
       }
 
       return( sub_element_p );
@@ -247,10 +243,9 @@ _Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Read(_In_z_ wchar
    WFC_END_CATCH_ALL
 }
 
-_Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Read(_In_z_ wchar_t const * tag, __out std::vector<uint32_t>& value ) noexcept
+_Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Read(_In_ std::wstring_view tag, __out std::vector<uint32_t>& value ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
-   WFC_VALIDATE_POINTER(tag);
 
    value.clear();
 
@@ -279,7 +274,7 @@ _Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Read(_In_z_ wchar
 
          while( exit_loop == false )
          {
-             auto entry_p = sub_element_p->GetChild( L"ENTRY", index );
+             auto entry_p = sub_element_p->GetChild( WSTRING_VIEW(L"ENTRY"), index );
 
             if ( entry_p == nullptr )
             {
@@ -307,10 +302,9 @@ _Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Read(_In_z_ wchar
    WFC_END_CATCH_ALL
 }
 
-_Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Read(_In_z_ wchar_t const * tag, _Out_ std::wstring& value ) noexcept
+_Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Read(_In_ std::wstring_view tag, _Out_ std::wstring& value ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
-   WFC_VALIDATE_POINTER(tag);
 
    value.clear();
 
@@ -339,10 +333,9 @@ _Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Read(_In_z_ wchar
    WFC_END_CATCH_ALL
 }
 
-_Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Read( _In_z_ wchar_t const * tag, __out std::vector<std::wstring>& value ) noexcept
+_Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Read(_In_ std::wstring_view tag, __out std::vector<std::wstring>& value ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
-   WFC_VALIDATE_POINTER(tag);
 
    value.clear();
 
@@ -370,7 +363,7 @@ _Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Read( _In_z_ wcha
 
          while( exit_loop == false )
          {
-            auto entry_p = sub_element_p->GetChild( L"ENTRY", index );
+            auto entry_p = sub_element_p->GetChild( WSTRING_VIEW(L"ENTRY"), index );
 
             if ( entry_p == nullptr )
             {
@@ -397,10 +390,9 @@ _Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Read( _In_z_ wcha
    WFC_END_CATCH_ALL
 }
 
-_Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Read( _In_z_ wchar_t const * tag, __out double& value ) noexcept
+_Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Read(_In_ std::wstring_view tag, __out double& value ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
-   WFC_VALIDATE_POINTER(tag);
 
    if ( m_AmIWriting == true or m_Element_p == nullptr )
    {
@@ -435,10 +427,9 @@ _Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Read( _In_z_ wcha
    WFC_END_CATCH_ALL
 }
 
-_Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Read( _In_z_ wchar_t const * tag, __out uint32_t& value ) noexcept
+_Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Read(_In_ std::wstring_view tag, __out uint32_t& value ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
-   WFC_VALIDATE_POINTER(tag);
 
    value = 0;
 
@@ -471,10 +462,9 @@ _Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Read( _In_z_ wcha
    WFC_END_CATCH_ALL
 }
 
-_Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Read( _In_z_ wchar_t const * tag, __out int64_t& value ) noexcept
+_Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Read(_In_ std::wstring_view tag, __out int64_t& value ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
-   WFC_VALIDATE_POINTER(tag);
 
    value = 0;
 
@@ -507,10 +497,9 @@ _Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Read( _In_z_ wcha
    WFC_END_CATCH_ALL
 }
 
-_Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Read( _In_z_ wchar_t const * tag, __out uint64_t& value ) noexcept
+_Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Read(_In_ std::wstring_view tag, __out uint64_t& value ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
-   WFC_VALIDATE_POINTER(tag);
 
    value = 0;
 
@@ -543,10 +532,9 @@ _Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Read( _In_z_ wcha
    WFC_END_CATCH_ALL
 }
 
-_Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Read( _In_z_ wchar_t const * tag, __out Win32FoundationClasses::CFileTime& value ) noexcept
+_Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Read(_In_ std::wstring_view tag, __out Win32FoundationClasses::CFileTime& value ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
-   WFC_VALIDATE_POINTER(tag);
 
    value.Empty();
 
@@ -581,10 +569,9 @@ _Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Read( _In_z_ wcha
 
 #if ! defined( WFC_STL )
 
-_Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Read( _In_z_ wchar_t const * tag, __out COleDateTime& value )
+_Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Read(_In_ std::wstring_view tag, __out COleDateTime& value )
 {
    WFC_VALIDATE_POINTER( this );
-   WFC_VALIDATE_POINTER(tag);
 
    if ( m_AmIWriting == true or m_Element_p == nullptr )
    {
@@ -616,10 +603,9 @@ _Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Read( _In_z_ wcha
    WFC_END_CATCH_ALL
 }
 
-_Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Read( _In_z_ wchar_t const * tag, __out COleDateTimeSpan& value )
+_Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Read(_In_ std::wstring_view tag, __out COleDateTimeSpan& value )
 {
    WFC_VALIDATE_POINTER( this );
-   WFC_VALIDATE_POINTER(tag);
 
    if ( m_AmIWriting == true or m_Element_p == nullptr )
    {
@@ -653,10 +639,9 @@ _Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Read( _In_z_ wcha
 
 #endif // WFC_STL
 
-_Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Read( _In_z_ wchar_t const * tag, __out CSystemTime& value ) noexcept
+_Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Read(_In_ std::wstring_view tag, __out CSystemTime& value ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
-   WFC_VALIDATE_POINTER(tag);
 
    value.Empty();
 
@@ -689,10 +674,9 @@ _Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Read( _In_z_ wcha
    WFC_END_CATCH_ALL
 }
 
-_Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Read( _In_ wchar_t const * tag, __out CTime& value ) noexcept
+_Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Read(_In_ std::wstring_view tag, __out CTime& value ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
-   WFC_VALIDATE_POINTER(tag);
 
    value.Empty();
 
@@ -725,7 +709,7 @@ _Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Read( _In_ wchar_
    WFC_END_CATCH_ALL
 }
 
-_Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Read( _In_z_ wchar_t const * tag, __out CTimeSpan& value ) noexcept
+_Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Read(_In_ std::wstring_view tag, __out CTimeSpan& value ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -768,7 +752,7 @@ void CXMLArchive::ReadFrom( __inout CExtensibleMarkupLanguageElement * element_p
    m_Element_p  = element_p;
 }
 
-_Check_return_ bool CXMLArchive::SerializeObject( _In_z_ wchar_t const * tag, __inout void * object_p, __callback XML_ARCHIVE_SERIALIZE_OBJECT serialize_function ) noexcept
+_Check_return_ bool CXMLArchive::SerializeObject(_In_ std::wstring_view tag, __inout void * object_p, __callback XML_ARCHIVE_SERIALIZE_OBJECT serialize_function ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -784,7 +768,7 @@ _Check_return_ bool CXMLArchive::SerializeObject( _In_z_ wchar_t const * tag, __
       return( false );
    }
 
-   if ( wcslen( tag ) == 0 )
+   if ( tag.empty() == true )
    {
       //WFCTRACE( TEXT( "Tag is empty!" ) );
       return( false );
@@ -813,7 +797,7 @@ void CXMLArchive::SetAddNewLineAfterEachElement( __in bool const add_new_line ) 
    m_AddNewLineAfterEachElement = add_new_line;
 }
 
-_Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Write( _In_z_ wchar_t const * tag, __in bool const value ) noexcept
+_Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Write(_In_ std::wstring_view tag, __in bool const value ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -859,7 +843,7 @@ _Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Write( _In_z_ wch
    WFC_END_CATCH_ALL
 }
 
-_Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Write( _In_z_ wchar_t const * tag, __in std::vector<uint8_t> const& value ) noexcept
+_Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Write(_In_ std::wstring_view tag, __in std::vector<uint8_t> const& value ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -901,7 +885,7 @@ _Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Write( _In_z_ wch
    WFC_END_CATCH_ALL
 }
 
-_Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Write( _In_z_ wchar_t const * tag, __in std::vector<uint32_t> const& value ) noexcept
+_Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Write(_In_ std::wstring_view tag, __in std::vector<uint32_t> const& value ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -932,7 +916,7 @@ _Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Write( _In_z_ wch
 
          for ( auto const array_index : Range(value.size()))
          {
-            (void) entry_archiver.Write( L"ENTRY", value.at( array_index ) );
+            (void) entry_archiver.Write( WSTRING_VIEW(L"ENTRY"), value.at( array_index ) );
          }
       }
 
@@ -945,7 +929,7 @@ _Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Write( _In_z_ wch
    WFC_END_CATCH_ALL
 }
 
-_Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Write( _In_z_ wchar_t const * tag, __in Win32FoundationClasses::CFileTime const& value ) noexcept
+_Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Write(_In_ std::wstring_view tag, __in Win32FoundationClasses::CFileTime const& value ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -1004,7 +988,7 @@ _Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Write( _In_z_ wch
 
 #if ! defined( WFC_STL )
 
-_Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Write( _In_z_ wchar_t const * tag, __in COleDateTime const& value, BOOL value_is_UTC_time )
+_Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Write(_In_ std::wstring_view tag, __in COleDateTime const& value, BOOL value_is_UTC_time )
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -1067,7 +1051,7 @@ _Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Write( _In_z_ wch
    WFC_END_CATCH_ALL
 }
 
-_Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Write( _In_z_ wchar_t const * tag, __in COleDateTimeSpan const& value )
+_Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Write(_In_ std::wstring_view tag, __in COleDateTimeSpan const& value )
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -1117,7 +1101,7 @@ _Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Write( _In_z_ wch
 
 #endif // WFC_STL
 
-_Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Write( _In_z_ wchar_t const * tag, __in std::wstring const& value ) noexcept
+_Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Write(_In_ std::wstring_view tag, _In_ std::wstring_view value ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -1151,7 +1135,7 @@ _Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Write( _In_z_ wch
    WFC_END_CATCH_ALL
 }
 
-_Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Write( _In_z_ wchar_t const * tag, __in std::vector<std::wstring> const& value ) noexcept
+_Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Write(_In_ std::wstring_view tag, __in std::vector<std::wstring> const& value ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -1182,7 +1166,7 @@ _Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Write( _In_z_ wch
 
          for ( auto const array_index : Range(value.size()) )
          {
-            (void) entry_archiver.Write( L"ENTRY", value.at( array_index ) );
+            (void) entry_archiver.Write(WSTRING_VIEW(L"ENTRY"), value.at( array_index ) );
          }
       }
 
@@ -1195,7 +1179,7 @@ _Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Write( _In_z_ wch
    WFC_END_CATCH_ALL
 }
 
-_Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Write( _In_z_ wchar_t const * tag, __in CSystemTime const& value ) noexcept
+_Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Write(_In_ std::wstring_view tag, __in CSystemTime const& value ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -1248,7 +1232,7 @@ _Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Write( _In_z_ wch
    WFC_END_CATCH_ALL
 }
 
-_Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Write( _In_z_ wchar_t const * tag, __in CTime const& value, __in bool const value_is_UTC_time ) noexcept
+_Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Write(_In_ std::wstring_view tag, __in CTime const& value, __in bool const value_is_UTC_time ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -1310,7 +1294,7 @@ _Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Write( _In_z_ wch
    WFC_END_CATCH_ALL
 }
 
-_Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Write( _In_z_ wchar_t const * tag, __in CTimeSpan const& value ) noexcept
+_Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Write(_In_ std::wstring_view tag, __in CTimeSpan const& value ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -1359,7 +1343,7 @@ _Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Write( _In_z_ wch
    WFC_END_CATCH_ALL
 }
 
-_Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Write( _In_z_ wchar_t const * tag, __in double const value ) noexcept
+_Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Write(_In_ std::wstring_view tag, __in double const value ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -1436,7 +1420,7 @@ _Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Write( _In_z_ wch
    WFC_END_CATCH_ALL
 }
 
-_Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Write( _In_z_ wchar_t const * tag, __in uint32_t const value ) noexcept
+_Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Write(_In_ std::wstring_view tag, __in uint32_t const value ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -1485,7 +1469,7 @@ _Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Write( _In_z_ wch
    WFC_END_CATCH_ALL
 }
 
-_Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Write( _In_z_ wchar_t const * tag, __in int64_t const value ) noexcept
+_Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Write(_In_ std::wstring_view tag, __in int64_t const value ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -1533,7 +1517,7 @@ _Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Write( _In_z_ wch
    WFC_END_CATCH_ALL
 }
 
-_Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Write( _In_z_ wchar_t const * tag, __in uint64_t const value ) noexcept
+_Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Write(_In_ std::wstring_view tag, __in uint64_t const value ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 

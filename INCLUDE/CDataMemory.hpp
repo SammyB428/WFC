@@ -72,7 +72,7 @@ class CDataMemory : public CDataFile
       virtual _Check_return_ uint8_t const * GetData( void ) const noexcept;
       _Check_return_ uint64_t GetLength( void ) const noexcept override;
       _Check_return_ uint64_t GetPosition( void ) const noexcept override;
-      _Check_return_ bool Open( __in_z LPCTSTR filename, __in UINT const mode ) noexcept override;
+      _Check_return_ bool Open(_In_ std::wstring_view filename, _In_ UINT const mode ) noexcept override;
       _Check_return_ UINT Read( __out_bcount( number_of_bytes_to_read ) void * buffer, __in UINT const number_of_bytes_to_read ) noexcept override;
       _Check_return_ uint64_t Seek( __in int64_t const offset, __in CFile64::SeekPosition const from ) noexcept override;
       void  Write( __in_bcount( number_of_bytes_to_write ) void const * buffer, __in UINT const number_of_bytes_to_write ) noexcept override;

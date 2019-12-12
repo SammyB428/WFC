@@ -55,66 +55,63 @@ class CSystemTime : public _SYSTEMTIME
 {
    public:
 
-      inline CSystemTime()
-      {
-         Empty();
-      }
+      inline constexpr CSystemTime() noexcept : _SYSTEMTIME{0, 0, 0, 0, 0, 0, 0, 0} {}
 
-      inline CSystemTime( __in CSystemTime const& source )
+      inline CSystemTime( __in CSystemTime const& source ) noexcept
       {
          Copy( source );
       }
 
-      inline CSystemTime( __in CFileTime const& source )
+      inline CSystemTime( __in CFileTime const& source ) noexcept
       {
          Copy( source );
       }
 
-      inline CSystemTime( __in CTime const& source )
+      inline CSystemTime( __in CTime const& source ) noexcept
       {
          Copy( source );
       }
 
 #if ! defined( WFC_STL )
-      CSystemTime( _In_ COleDateTime const& source );
+      CSystemTime( _In_ COleDateTime const& source ) noexcept;
 #endif // WFC_STL
 
-      inline CSystemTime( __in SYSTEMTIME const * source )
+      inline CSystemTime( __in SYSTEMTIME const * source ) noexcept
       {
          Copy( source );
       }
 
-      inline CSystemTime( __in SYSTEMTIME const& source )
+      inline CSystemTime( __in SYSTEMTIME const& source ) noexcept
       {
          Copy( source );
       }
 
-      inline CSystemTime( __in FILETIME const * source )
+      inline CSystemTime( __in FILETIME const * source ) noexcept
       {
          Copy( source );
       }
 
-      inline CSystemTime( __in FILETIME const& source )
+      inline CSystemTime( __in FILETIME const& source ) noexcept
       {
          Copy( source );
       }
 
-      inline CSystemTime( __in TIME_OF_DAY_INFO const * source )
+      inline CSystemTime( __in TIME_OF_DAY_INFO const * source ) noexcept
       {
          Copy( source );
       }
 
-      inline CSystemTime( __in TIME_OF_DAY_INFO const& source )
+      inline CSystemTime( __in TIME_OF_DAY_INFO const& source ) noexcept
       {
          Copy( source );
       }
 
-      inline CSystemTime( __in TIMESTAMP_STRUCT const * source ) // from sqltypes.h
+      inline CSystemTime( __in TIMESTAMP_STRUCT const * source ) noexcept // from sqltypes.h
       {
          Copy( source );
       }
 
-      inline CSystemTime( __in TIMESTAMP_STRUCT const& source ) // from sqltypes.h
+      inline CSystemTime( __in TIMESTAMP_STRUCT const& source ) noexcept // from sqltypes.h
       {
          Copy( source );
       }
@@ -177,7 +174,7 @@ class CSystemTime : public _SYSTEMTIME
 
          CTimeEx const now( system_time.wYear, system_time.wMonth, system_time.wDay, system_time.wHour, system_time.wMinute, system_time.wSecond );
 
-         int day_of_week = now.GetDayOfWeek(); // 1 == Sunday, 2  == Monday
+         int const day_of_week = now.GetDayOfWeek(); // 1 == Sunday, 2  == Monday
 
          int days_from_monday = day_of_week - 2;
 

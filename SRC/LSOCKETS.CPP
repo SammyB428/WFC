@@ -177,7 +177,7 @@ _Check_return_ bool CListeningSocket::Open( void ) noexcept
 
 #pragma warning( disable : 4100 )
 
-_Check_return_ bool CListeningSocket::Open( __in_z LPCTSTR ChannelName, __in UINT const port_number ) noexcept
+_Check_return_ bool CListeningSocket::Open(_In_ std::wstring_view ChannelName, _In_ UINT const port_number ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -270,7 +270,7 @@ _Check_return_ bool CListeningSocket::WaitForConnection( void ) noexcept
    */
 
    LPSTR dotted_ip_address = nullptr;
-    
+
    struct in_addr internet_address;
 
    /*

@@ -109,7 +109,6 @@ class CNetworkFiles : public CNetwork
 
        CNetworkFiles(CNetworkFiles const&) = delete;
        CNetworkFiles& operator=(CNetworkFiles const&) = delete;
-       CNetworkFiles();
       CNetworkFiles(_In_ std::wstring_view machine_name = { nullptr, 0 });
       virtual ~CNetworkFiles();
 

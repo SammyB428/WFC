@@ -528,11 +528,7 @@ class CFilterKeys : public tagFILTERKEYS
 {
    public:
 
-      CFilterKeys() noexcept
-      {
-         ::ZeroMemory( (tagFILTERKEYS *) this, sizeof( tagFILTERKEYS ) );
-         cbSize = sizeof( tagFILTERKEYS );
-      }
+     inline constexpr CFilterKeys() noexcept : tagFILTERKEYS{ sizeof(tagFILTERKEYS), 0, 0, 0, 0, 0 } {}
 
      ~CFilterKeys()
       {
@@ -544,11 +540,7 @@ class CStickyKeys : public tagSTICKYKEYS
 {
    public:
 
-      inline constexpr CStickyKeys() noexcept
-      {
-          cbSize = sizeof( tagSTICKYKEYS );
-          dwFlags = 0;
-      }
+      inline constexpr CStickyKeys() noexcept : tagSTICKYKEYS{ sizeof(tagSTICKYKEYS), 0 } {}
 
      ~CStickyKeys()
       {
@@ -561,16 +553,7 @@ class CMouseKeys : public tagMOUSEKEYS
 {
    public:
 
-      inline constexpr CMouseKeys() noexcept
-      {
-         cbSize = sizeof( tagMOUSEKEYS );
-         dwFlags = 0;
-         iMaxSpeed = 0;
-         iTimeToMaxSpeed = 0;
-         iCtrlSpeed = 0;
-         dwReserved1 = 0;
-         dwReserved2 = 0;
-      }
+      inline constexpr CMouseKeys() noexcept : tagMOUSEKEYS{ sizeof(tagMOUSEKEYS), 0, 0, 0, 0, 0, 0 } {}
 
       inline ~CMouseKeys()
       {
@@ -581,11 +564,7 @@ class CToggleKeys : public tagTOGGLEKEYS
 {
    public:
 
-      inline CToggleKeys() noexcept
-      {
-         ::ZeroMemory( (tagTOGGLEKEYS *) this, sizeof( tagTOGGLEKEYS ) );
-         cbSize = sizeof( tagTOGGLEKEYS );
-      }
+      inline constexpr CToggleKeys() noexcept : tagTOGGLEKEYS{ sizeof(tagTOGGLEKEYS), 0 } {}
 
      ~CToggleKeys()
       {
@@ -597,11 +576,7 @@ class CAccessTimeout : public tagACCESSTIMEOUT
 {
    public:
 
-      CAccessTimeout()
-      {
-         ::ZeroMemory( (tagACCESSTIMEOUT *) this, sizeof( tagACCESSTIMEOUT ) );
-         cbSize = sizeof( tagACCESSTIMEOUT );
-      }
+      inline constexpr CAccessTimeout() noexcept : tagACCESSTIMEOUT{ sizeof(tagACCESSTIMEOUT), 0, 0} {}
 
      ~CAccessTimeout()
       {
@@ -613,7 +588,7 @@ class CSoundSentryA : public tagSOUNDSENTRYA
 {
    public:
 
-      CSoundSentryA()
+      CSoundSentryA() noexcept
       {
          ::ZeroMemory( (tagSOUNDSENTRYA *) this, sizeof( tagSOUNDSENTRYA ) );
          cbSize = sizeof( tagSOUNDSENTRYA );
@@ -629,7 +604,7 @@ class CSoundSentryW : public tagSOUNDSENTRYW
 {
    public:
 
-      CSoundSentryW()
+      CSoundSentryW() noexcept
       {
          ::ZeroMemory( (tagSOUNDSENTRYW *) this, sizeof( tagSOUNDSENTRYW ) );
          cbSize = sizeof( tagSOUNDSENTRYW );
@@ -678,7 +653,7 @@ class CDocInfoA : public _DOCINFOA
 {
    public:
 
-      CDocInfoA()
+      CDocInfoA() noexcept
       {
          ::ZeroMemory( (LPDOCINFOA) this, sizeof( DOCINFOA ) );
          cbSize = sizeof( DOCINFOA );
@@ -694,7 +669,7 @@ class CDocInfoW : public _DOCINFOW
 {
    public:
 
-      CDocInfoW()
+      CDocInfoW() noexcept
       {
          ::ZeroMemory( (LPDOCINFOW) this, sizeof( DOCINFOW ) );
          cbSize = sizeof( DOCINFOW );
@@ -718,15 +693,7 @@ class COperatingSystemVersionInformationA : public _OSVERSIONINFOA
 {
    public:
 
-      inline constexpr COperatingSystemVersionInformationA() noexcept
-      {
-         dwOSVersionInfoSize = sizeof( OSVERSIONINFOA );
-         dwMajorVersion = 0;
-         dwMinorVersion = 0;
-         dwBuildNumber = 0;
-         dwPlatformId = 0;
-         szCSDVersion[0] = 0x00;
-      }
+      inline constexpr COperatingSystemVersionInformationA() noexcept : _OSVERSIONINFOA{ sizeof(OSVERSIONINFOA), 0, 0, 0, 0, 0 } {}
 
       inline ~COperatingSystemVersionInformationA()
       {
@@ -735,7 +702,7 @@ class COperatingSystemVersionInformationA : public _OSVERSIONINFOA
       inline _Check_return_ bool Fill( void ) noexcept
       {
 #pragma warning( push )
-#pragma warning(disable: 4996)
+#pragma warning(disable: 4996 28159)
           return( ::GetVersionExA( this ) == FALSE ? false : true );
 #pragma warning( pop )
       }
@@ -747,24 +714,17 @@ class COperatingSystemVersionInformationW : public _OSVERSIONINFOW
 {
    public:
 
-      inline constexpr COperatingSystemVersionInformationW() noexcept
-      {
-         dwOSVersionInfoSize = sizeof( OSVERSIONINFOW );
-         dwMajorVersion = 0;
-         dwMinorVersion = 0;
-         dwBuildNumber = 0;
-         dwPlatformId = 0;
-         szCSDVersion[0] = 0x00;
-      }
+      inline constexpr COperatingSystemVersionInformationW() noexcept : _OSVERSIONINFOW{ sizeof(OSVERSIONINFOW), 0, 0, 0, 0, 0 } {}
 
       inline ~COperatingSystemVersionInformationW()
       {
       }
 
-      _Check_return_ bool Fill( void )
+      inline _Check_return_ bool Fill( void ) noexcept
       {
 #pragma warning( push )
-#pragma warning(disable: 4996)
+#pragma warning(disable: 4996 28159)
+
           return( ::GetVersionExW( this ) == FALSE ? false : true );
 #pragma warning( pop )
       }
@@ -782,7 +742,7 @@ class CStartupInformationA : public _STARTUPINFOA
 {
    public:
 
-      CStartupInformationA()
+      CStartupInformationA() noexcept
       {
          ::ZeroMemory( (LPSTARTUPINFOA) this, sizeof( _STARTUPINFOA ) );
          cb = sizeof( _STARTUPINFOA );
@@ -793,14 +753,14 @@ class CStartupInformationA : public _STARTUPINFOA
          ::ZeroMemory( (LPSTARTUPINFOA) this, sizeof( _STARTUPINFOA ) );
       }
 
-      operator LPSTARTUPINFOA(){ return( (LPSTARTUPINFOA) this ); };
+      operator LPSTARTUPINFOA() noexcept { return( (LPSTARTUPINFOA) this ); };
 };
 
 class CStartupInformationW : public _STARTUPINFOW
 {
    public:
 
-      CStartupInformationW()
+      CStartupInformationW() noexcept
       {
          ::ZeroMemory( (LPSTARTUPINFOW) this, sizeof( _STARTUPINFOW ) );
          cb = sizeof( _STARTUPINFOW );
@@ -823,7 +783,7 @@ class CStartupInformationW : public _STARTUPINFOW
          wShowWindow = SW_SHOWNORMAL;
      }
      
-     operator LPSTARTUPINFOW(){ return( (LPSTARTUPINFOW) this ); };
+     operator LPSTARTUPINFOW() noexcept { return( (LPSTARTUPINFOW) this ); };
 };
 
 #if defined( UNICODE )

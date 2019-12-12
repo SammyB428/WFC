@@ -57,7 +57,7 @@ CMixerCapabilities::CMixerCapabilities()
    Empty();
 }
 
-CMixerCapabilities::CMixerCapabilities( __in CMixerCapabilities const& source )
+CMixerCapabilities::CMixerCapabilities( __in CMixerCapabilities const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );

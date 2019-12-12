@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 2000-2018, Samuel R. Blackburn
+** Copyright, 2000-2019, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -60,7 +60,7 @@ struct WFC_CLIENT_ID
     HANDLE ThreadHandle{ 0 };
 };
 
-typedef enum _WFC_KWAIT_REASON
+enum class WFC_KWAIT_REASON : uint32_t
 {
    Executive,
    FreePage,
@@ -90,38 +90,37 @@ typedef enum _WFC_KWAIT_REASON
    Spare6,
    WrKernel,
    MaximumWaitReason
-}
-WFC_KWAIT_REASON;
+};
 
 struct WFC_SYSTEM_THREAD
 {
-   ULONGLONG        KernelTime;
-   ULONGLONG        UserTime;
-   ULONGLONG        CreateTime;
-   DWORD            WaitTime;
-   VOID *           StartAddress;
+    ULONGLONG        KernelTime{ 0 };
+   ULONGLONG        UserTime{ 0 };
+   ULONGLONG        CreateTime{ 0 };
+   DWORD            WaitTime{ 0 };
+   VOID *           StartAddress{ nullptr };
    WFC_CLIENT_ID    ClientID;
-   DWORD            Priority;
-   DWORD            BasePriority;
-   DWORD            ContextSwitches;
-   DWORD            ThreadState;
-   WFC_KWAIT_REASON WaitReason;
-   DWORD            Reserved;
+   DWORD            Priority{ 0 };
+   DWORD            BasePriority{ 0 };
+   DWORD            ContextSwitches{ 0 };
+   DWORD            ThreadState{ 0 };
+   WFC_KWAIT_REASON WaitReason{ WFC_KWAIT_REASON::Executive };
+   DWORD            Reserved{ 0 };
 };
 
 struct WFC_VM_COUNTERS
 {
-   DWORD PeakVirtualSize;
-   DWORD VirtualSize;
-   DWORD PageFaultCount;
-   DWORD PeakWorkingSetSize;
-   DWORD WorkingSetSize;
-   DWORD QuotaPeakPagedPoolUsage;
-   DWORD QuotaPagedPoolUsage;
-   DWORD QuotaPeakNonPagedPoolUsage;
-   DWORD QuotaNonPagedPoolUsage;
-   DWORD PagefileUsage;
-   DWORD PeakPagefileUsage;
+   DWORD PeakVirtualSize{ 0 };
+   DWORD VirtualSize{ 0 };
+   DWORD PageFaultCount{ 0 };
+   DWORD PeakWorkingSetSize{ 0 };
+   DWORD WorkingSetSize{ 0 };
+   DWORD QuotaPeakPagedPoolUsage{ 0 };
+   DWORD QuotaPagedPoolUsage{ 0 };
+   DWORD QuotaPeakNonPagedPoolUsage{ 0 };
+   DWORD QuotaNonPagedPoolUsage{ 0 };
+   DWORD PagefileUsage{ 0 };
+   DWORD PeakPagefileUsage{ 0 };
 };
 
 inline _Check_return_ const ::SYSTEM_PROCESS_INFORMATION * GetNext( _In_ ::SYSTEM_PROCESS_INFORMATION const * information_p ) noexcept

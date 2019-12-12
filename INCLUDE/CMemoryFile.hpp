@@ -119,12 +119,12 @@ public:
     inline  constexpr _Check_return_ std::size_t GetLength( void ) const noexcept { return( m_Length ); };
     inline  constexpr _Check_return_ void * GetPointer( void ) const noexcept { return( m_Pointer ); };
     virtual _Check_return_ void * Map( __in uint64_t const offset, __in std::size_t const length ) noexcept;
-    virtual _Check_return_ bool Open( __in_z LPCWSTR filename,
+    virtual _Check_return_ bool Open( _In_ std::wstring_view filename,
         __in UINT open_flags                     = (UINT)( (UINT)CFile64::OpenFlags::modeRead bitor (UINT)CFile64::OpenFlags::shareDenyNone),
         __in uint64_t const beginning_at         = 0,
         __in std::size_t const number_of_bytes_to_map = 0,
         __in_opt void const * desired_address    = nullptr ) noexcept;
-    virtual _Check_return_ bool Open( __in_z LPCSTR filename,
+    virtual _Check_return_ bool Open( _In_ std::string_view filename,
         __in UINT const open_flags               = (UINT)( (UINT)CFile64::OpenFlags::modeRead bitor (UINT)CFile64::OpenFlags::shareDenyNone),
         __in uint64_t const beginning_at         = 0,
         __in std::size_t const number_of_bytes_to_map = 0,
@@ -180,9 +180,9 @@ public:
         return( ConvertStringSecurityDescriptorToSecurityDescriptorW(sdd, SDDL_REVISION_1, &sa->lpSecurityDescriptor, nullptr) == TRUE );
     }
 
-    _Check_return_ bool Create( __in_z wchar_t const * name, __in std::size_t const number_of_bytes ) noexcept;
-    _Check_return_ bool Create( __in_z wchar_t const * name, __in std::size_t const number_of_bytes, __in_opt SECURITY_ATTRIBUTES * security_attributes = nullptr ) noexcept;
-    _Check_return_ bool Open( __in_z wchar_t const * name, __in std::size_t const number_of_bytes, __in bool const read_only ) noexcept;
+    _Check_return_ bool Create( _In_ std::wstring_view name, _In_ std::size_t const number_of_bytes ) noexcept;
+    _Check_return_ bool Create(_In_ std::wstring_view name, _In_ std::size_t const number_of_bytes, __in_opt SECURITY_ATTRIBUTES * security_attributes = nullptr ) noexcept;
+    _Check_return_ bool Open(_In_ std::wstring_view name, _In_ std::size_t const number_of_bytes, _In_ bool const read_only ) noexcept;
 
     void Close( void ) noexcept;
 

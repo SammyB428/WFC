@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 1995-2016, Samuel R. Blackburn
+** Copyright, 1995-2019, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -105,7 +105,7 @@ _Check_return_ bool CSimpleSocketFile::Open( void ) noexcept
 
 #pragma warning( disable : 4100 )
 
-_Check_return_ bool CSimpleSocketFile::Open( __in_z LPCTSTR name, __in UINT const port ) noexcept
+_Check_return_ bool CSimpleSocketFile::Open(_In_ std::wstring_view name, __in UINT const port ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
     return( true );

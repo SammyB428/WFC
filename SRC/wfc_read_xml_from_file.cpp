@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 1995-2016, Samuel R. Blackburn
+** Copyright, 1995-2019, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -51,10 +51,8 @@ static char THIS_FILE[] = __FILE__;
 
 USING_WFC_NAMESPACE
 
-_Check_return_ bool PASCAL Win32FoundationClasses::wfc_read_xml_from_file( _In_z_ wchar_t const * filename, _Inout_ CExtensibleMarkupLanguageDocument& document ) noexcept
+_Check_return_ bool PASCAL Win32FoundationClasses::wfc_read_xml_from_file(_In_ std::wstring_view filename, _Inout_ CExtensibleMarkupLanguageDocument& document ) noexcept
 {
-    WFC_VALIDATE_POINTER( filename );
-
     CMemoryFile memory_mapped_file;
 
     if ( memory_mapped_file.Open( filename, static_cast<UINT>(CFile64::OpenFlags::modeRead) ) == true )
@@ -66,7 +64,7 @@ _Check_return_ bool PASCAL Win32FoundationClasses::wfc_read_xml_from_file( _In_z
             return( false );
         }
 
-        return( ( document.Parse( parser ) != FALSE ) ? true : false );
+        return( document.Parse( parser ) );
     }
     else
     {

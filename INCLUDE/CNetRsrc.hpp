@@ -118,7 +118,6 @@ class CNetworkResources : public CNetwork
 
       CNetworkResources(__in CNetworkResources const&) = delete;
       CNetworkResources& operator=(__in CNetworkResources const&) = delete;
-      CNetworkResources();
       CNetworkResources(_In_ std::wstring_view machine_name = { nullptr, 0 });
       virtual ~CNetworkResources();
 

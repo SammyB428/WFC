@@ -62,6 +62,7 @@
 #include <thread>
 #include <chrono>
 #include <charconv>
+#include <iso646.h>
 
 #if ! defined( WFC_DONT_USE_NAMESPACES )
 #if ( _MSC_VER > 1000 )
@@ -153,13 +154,13 @@ namespace Win32FoundationClasses
         // Constructors
 
         // WARNING! The order of the constructors matters!!!!
-        inline CString()
+        inline CString() noexcept
         {
             WFC_VALIDATE_POINTER( this );
             m_Buffer = nullptr;
         }
 
-        inline CString( _In_ const CString& source )
+        inline CString( _In_ const CString& source ) noexcept
         {
             WFC_VALIDATE_POINTER( this );
 
@@ -167,7 +168,7 @@ namespace Win32FoundationClasses
             Copy( source );
         }
 
-        inline CString( _In_ TCHAR character, _In_ size_t number_of_characters = 1 )
+        inline CString( _In_ TCHAR character, _In_ size_t number_of_characters = 1 ) noexcept
         {
             WFC_VALIDATE_POINTER( this );
 
@@ -176,7 +177,7 @@ namespace Win32FoundationClasses
         }
 
         // ANSI Strings
-        inline CString( _In_z_ LPCSTR source )
+        inline CString( _In_z_ LPCSTR source ) noexcept
         {
             WFC_VALIDATE_POINTER( this );
             WFC_VALIDATE_POINTER_NULL_OK( source );
@@ -185,14 +186,14 @@ namespace Win32FoundationClasses
             Copy( source );
         }
 
-        inline CString( _In_z_ LPCSTR ansi_string, _In_ size_t number_of_characters )
+        inline CString( _In_z_ LPCSTR ansi_string, _In_ size_t number_of_characters ) noexcept
         {
             m_Buffer = nullptr;
             Copy( ansi_string, number_of_characters );
         }
 
         // UNICODE Strings
-        inline CString( _In_z_ LPCWSTR source )
+        inline CString( _In_z_ LPCWSTR source ) noexcept
         {
             WFC_VALIDATE_POINTER( this );
             WFC_VALIDATE_POINTER_NULL_OK( source );
@@ -201,14 +202,14 @@ namespace Win32FoundationClasses
             Copy( source );
         }
 
-        inline CString( _In_z_ LPCWSTR unicode_string, _In_ size_t number_of_characters )
+        inline CString( _In_z_ LPCWSTR unicode_string, _In_ size_t number_of_characters ) noexcept
         {
             m_Buffer = nullptr;
             Copy( unicode_string, number_of_characters );
         }
 
         // Bytes that happend to be zero terminated and considered to be an ANSI string
-        inline CString( _In_z_ const unsigned char* ansi_string )
+        inline CString( _In_z_ const unsigned char* ansi_string ) noexcept
         {
             m_Buffer = nullptr;
             Copy( (LPCSTR) ansi_string );
@@ -776,19 +777,18 @@ namespace Win32FoundationClasses
 
         inline bool GetEnvironmentVariable( _In_z_ LPCTSTR variable_name ) noexcept
         {
-            TCHAR temp_string[ 4096 ];
+            wchar_t temp_string[ 4096 ];
 
-            DWORD number_of_characters = ::GetEnvironmentVariable( variable_name, temp_string, (DWORD) ( std::size( temp_string ) - 1 ) );
+            DWORD number_of_characters = ::GetEnvironmentVariableW( variable_name, temp_string, (DWORD) ( std::size( temp_string ) - 1 ) );
 
             if ( number_of_characters > (std::size( temp_string ) - 1 ) )
             {
-                TCHAR * buffer = new TCHAR[ number_of_characters * 2 ];
+                auto buffer = std::make_unique<wchar_t[]>(static_cast<std::size_t>(number_of_characters * 2));
 
-                number_of_characters = ::GetEnvironmentVariable( variable_name, buffer, (DWORD) ( ( number_of_characters * 2 ) - 1 ) );
+                number_of_characters = ::GetEnvironmentVariableW( variable_name, buffer.get(), (DWORD) ( ( number_of_characters * 2 ) - 1 ) );
 
                 buffer[ number_of_characters ] = 0x00;
-                Copy( buffer );
-                delete [] buffer;
+                Copy( buffer.get() );
             }
             else
             {
@@ -815,7 +815,7 @@ namespace Win32FoundationClasses
         {
             WFC_VALIDATE_POINTER( this );
 
-            int string_length = (int) m_String.length();
+            int const string_length = (int) m_String.length();
 
             if ( string_index >= string_length )
             {
@@ -841,7 +841,7 @@ namespace Win32FoundationClasses
 
             if ( string_to_insert != nullptr )
             {
-                int string_length = (int) m_String.length();
+                int const string_length = (int) m_String.length();
 
                 if ( string_index >= string_length )
                 {
@@ -1094,11 +1094,11 @@ namespace Win32FoundationClasses
             WFC_VALIDATE_POINTER( old_string );
             WFC_VALIDATE_POINTER_NULL_OK( replacement_string );
 
-            size_t number_of_replacements = 0;
+            std::size_t number_of_replacements = 0;
 
             WFC_TRY
             {
-                size_t old_string_length = _tcslen( old_string );
+                std::size_t const old_string_length = _tcslen( old_string );
 
                 if ( old_string_length == 0 )
                 {
@@ -1165,9 +1165,9 @@ namespace Win32FoundationClasses
 
             CString our_ending = Right( ending_length );
 
-            int comparison_result = our_ending.Compare( ending );
+            int const comparison_result = our_ending.Compare( ending );
 
-            if ( comparison_result == 0 )
+            if ( comparison_result == I_AM_EQUAL_TO_THAT )
             {
                 return( true );
             }
@@ -1191,9 +1191,9 @@ namespace Win32FoundationClasses
 
             CString our_ending = Right( ending_length );
 
-            int comparison_result = our_ending.CompareNoCase( ending );
+            int const comparison_result = our_ending.CompareNoCase( ending );
 
-            if ( comparison_result == 0 )
+            if ( comparison_result == I_AM_EQUAL_TO_THAT )
             {
                 return( true );
             }
@@ -1318,9 +1318,9 @@ namespace Win32FoundationClasses
         {
             CString our_beginning = Left( _tcslen( beginning ) );
 
-            int comparison_result = our_beginning.Compare( beginning );
+            int const comparison_result = our_beginning.Compare( beginning );
 
-            if ( comparison_result == 0 )
+            if ( comparison_result == I_AM_EQUAL_TO_THAT )
             {
                 return( true );
             }
@@ -1332,9 +1332,9 @@ namespace Win32FoundationClasses
         {
             CString our_beginning = Left( _tcslen( beginning ) );
 
-            int comparison_result = our_beginning.CompareNoCase( beginning );
+            int const comparison_result = our_beginning.CompareNoCase( beginning );
 
-            if ( comparison_result == 0 )
+            if ( comparison_result == I_AM_EQUAL_TO_THAT )
             {
                 return( true );
             }
@@ -1346,7 +1346,7 @@ namespace Win32FoundationClasses
         {
             WFC_VALIDATE_POINTER( this );
 
-            std::size_t string_length = m_String.length();
+            std::size_t const string_length = m_String.length();
 
             if ( string_length > 0 )
             {
@@ -1373,7 +1373,7 @@ namespace Win32FoundationClasses
         {
             WFC_VALIDATE_POINTER( this );
 
-            std::size_t string_length = m_String.length();
+            std::size_t const string_length = m_String.length();
 
             if ( string_length > 0 )
             {

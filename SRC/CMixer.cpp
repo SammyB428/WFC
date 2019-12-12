@@ -53,7 +53,7 @@ USING_WFC_NAMESPACE
 
 #if defined( _WFC_DEBUG_MIXER_GET_CONTROL_DETAILS )
 
-static void dump_mixer_control_details(__in_z LPCTSTR file, __in UINT line, __in_z LPCTSTR get_or_set, __in HMIXEROBJ mixer_object, __in MIXERCONTROLDETAILS * details_p, __in DWORD option)
+static void dump_mixer_control_details(__in_z LPCTSTR file, __in UINT line, __in_z LPCTSTR get_or_set, __in HMIXEROBJ mixer_object, __in MIXERCONTROLDETAILS * details_p, __in DWORD option) noexcept
 {
     TCHAR debug_string[513];
 

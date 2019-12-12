@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 1995-2016, Samuel R. Blackburn
+** Copyright, 1995-2019, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -223,7 +223,7 @@ void CSuperRandomNumberGenerator::SetSeed( __in DWORD jseed ) noexcept
    for( auto const i : Range( 25, 1 ) )
    {
       m_TwoM24 *= (double) 0.5;
-      int k = jseed / 53668;
+      int const k = jseed / 53668;
       jseed = 40014 * ( jseed - ( k * 53668 ) ) - ( k * 12211 );
 
       m_IntegerSeeds[ i ] = jseed % TWENTY_FOUR_BIT_VALUE;
@@ -234,7 +234,7 @@ void CSuperRandomNumberGenerator::SetSeed( __in DWORD jseed ) noexcept
    for( auto const i : Range( 25, 1 ) )
    {
       m_Seeds[ i ] = static_cast< double >( m_IntegerSeeds[ i ] * m_TwoM24 );
-      m_NextValue[ i ] = i - 1;
+      m_NextValue[ i ] = static_cast<int>(i - 1);
    }
 
    m_NextValue[ 1 ] = 24;

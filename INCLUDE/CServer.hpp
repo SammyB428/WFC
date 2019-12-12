@@ -76,8 +76,7 @@ class CServer : public CNetwork
 
        CServer(__in CServer const&) = delete;
        _Check_return_ CServer& operator=(__in CServer const&) = delete;
-       
-       CServer();
+
        CServer(_In_ std::wstring_view machine_name = { nullptr, 0 });
       virtual ~CServer();
 

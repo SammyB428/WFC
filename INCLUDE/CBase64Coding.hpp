@@ -95,7 +95,7 @@ class CBase64Coding
       _Check_return_ std::size_t Decode(_In_reads_bytes_(number_of_bytes) uint8_t const * source, _In_ std::size_t const number_of_bytes, _Inout_ uint8_t * destination, _In_ std::size_t destination_size) const noexcept;
       _Check_return_ bool Decode(_In_reads_bytes_(number_of_bytes) uint8_t const * source, _In_ std::size_t const number_of_bytes, _Inout_ std::vector<uint8_t>& destination) const noexcept;
       _Check_return_ bool Decode(_In_ std::vector<uint8_t> const& source, _Inout_ std::vector<uint8_t>& destination ) const noexcept;
-      _Check_return_ bool Decode(_In_ std::wstring const& source, _Inout_ std::vector<uint8_t>& destination ) const noexcept;
+      _Check_return_ bool Decode(_In_ std::wstring_view source, _Inout_ std::vector<uint8_t>& destination ) const noexcept;
       _Check_return_ bool Encode(_In_ std::vector<uint8_t> const& source, _Inout_ std::vector<uint8_t>& destination ) const noexcept;
       _Check_return_ bool Encode(_In_ std::vector<uint8_t> const& source, _Inout_ std::wstring& destination ) const noexcept;
       _Check_return_ bool Encode(_In_reads_bytes_(number_of_bytes) uint8_t const * source, _In_ std::size_t const number_of_bytes, _Inout_ std::wstring& destination ) const noexcept;

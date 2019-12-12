@@ -181,8 +181,6 @@ bool CCryptographicProvider::CreateKey( CCryptographicAlgorithm const& algorithm
 {
    WFC_VALIDATE_POINTER( this );
 
-   BOOL return_value = FALSE;
-
    auto key_handle = static_cast< HCRYPTKEY >( NULL );
 
    // According to Jeff Spelman (jeffspel@microsoft.com), you
@@ -209,7 +207,7 @@ bool CCryptographicProvider::CreateKey( CCryptographicAlgorithm const& algorithm
       creation_flags = MAKELONG( low_word, high_word );
    }
 
-   return_value = ::CryptGenKey( m_CryptographicProvider,
+   BOOL return_value = ::CryptGenKey( m_CryptographicProvider,
                                  algorithm_that_is_going_to_use_the_key.Identifier,
                                  creation_flags,
                                 &key_handle );

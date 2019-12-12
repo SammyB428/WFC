@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 1995-2016, Samuel R. Blackburn
+** Copyright, 1995-2019, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -135,9 +135,7 @@ _Check_return_ BOOL CSerialFile::CancelWaitFor( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
-   BOOL return_value = FALSE;
-
-   return_value = ::SetCommMask( m_FileHandle, 0 );
+   BOOL return_value = ::SetCommMask( m_FileHandle, 0 );
 
    if ( return_value == FALSE )
    {
@@ -169,9 +167,7 @@ _Check_return_ BOOL CSerialFile::ClearBreak( void ) noexcept
       return( FALSE );
    }
 
-   BOOL return_value = FALSE;
-
-   return_value = ::ClearCommBreak( m_FileHandle );
+   BOOL return_value = ::ClearCommBreak( m_FileHandle );
 
    if ( return_value == FALSE )
    {
@@ -219,7 +215,7 @@ void CSerialFile::Close( void ) noexcept
    m_IsOpen   = FALSE;
 }
 
-_Check_return_ BOOL CSerialFile::ConfigurationDialog( __inout CCommunicationsConfiguration& configuration, __in BOOL const save_changes, __in HWND const parent_window_handle ) noexcept
+_Check_return_ bool CSerialFile::ConfigurationDialog( __inout CCommunicationsConfiguration& configuration, _In_ bool const save_changes, _In_ HWND const parent_window_handle ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -230,20 +226,18 @@ _Check_return_ BOOL CSerialFile::ConfigurationDialog( __inout CCommunicationsCon
 #endif
    {
       m_LastError = ERROR_INVALID_HANDLE;
-      return( FALSE );
+      return( false );
    }
-
-   BOOL return_value = FALSE;
 
    // First, find out how large a buffer we need for the configuration data...
 
    CCommunicationProperties properties;
 
-   return_value = GetProperties( properties );
+   BOOL return_value = GetProperties( properties );
 
    if ( return_value == FALSE )
    {
-      return( FALSE );
+      return( false );
    }
 
    return_value = GetConfiguration( configuration );
@@ -257,26 +251,18 @@ _Check_return_ BOOL CSerialFile::ConfigurationDialog( __inout CCommunicationsCon
 
    if ( colon_location == std::wstring::npos )
    {
-      return( FALSE );
+      return( false );
    }
 
    std::wstring device_name( Name.substr(0, colon_location ) );
 
-   BYTE * buffer = nullptr;
-   
-   WFC_TRY
-   {
-      buffer = new BYTE[ 8192 ]; // insanely large buffer
-   }
-   WFC_CATCH_ALL
-   {
-      buffer = reinterpret_cast< BYTE * >( nullptr );
-   }
-   WFC_END_CATCH_ALL
+   auto allocated_bytes = std::make_unique<uint8_t[]>(8192);
+
+   auto buffer = allocated_bytes.get();
 
    if ( buffer == nullptr )
    {
-      return( FALSE );
+      return( false );
    }
 
    // Always, always always zeroize the buffer
@@ -301,9 +287,7 @@ _Check_return_ BOOL CSerialFile::ConfigurationDialog( __inout CCommunicationsCon
    {
       m_LastError = ::GetLastError();
       //WFCTRACEERROR( m_LastError );
-      delete [] buffer;
-      buffer = nullptr;
-      return( FALSE );
+      return( false );
    }
 
    configuration.Copy( *( reinterpret_cast< LPCOMMCONFIG >( buffer ) ) );
@@ -333,23 +317,14 @@ _Check_return_ BOOL CSerialFile::ConfigurationDialog( __inout CCommunicationsCon
             m_LastError = ::GetLastError();
             //WFCTRACEERROR( m_LastError );
 
-            delete [] buffer;
-            buffer = nullptr;
-
-            return( FALSE );
+            return( false );
          }
 
-         delete [] buffer;
-         buffer = nullptr;
-
-         return( TRUE );
+         return( true );
       }
    }
 
-   delete [] buffer;
-   buffer = nullptr;
-
-   return( TRUE );
+   return( true );
 }
 
 _Check_return_ HANDLE CSerialFile::Detach( void ) noexcept
@@ -516,7 +491,7 @@ _Check_return_ DWORD CSerialFile::GetBaudRate( void ) noexcept
    return( device_control_block.BaudRate );
 }
 
-_Check_return_ BOOL CSerialFile::GetConfiguration( __inout CCommunicationsConfiguration& configuration ) noexcept
+_Check_return_ bool CSerialFile::GetConfiguration( __inout CCommunicationsConfiguration& configuration ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -529,30 +504,20 @@ _Check_return_ BOOL CSerialFile::GetConfiguration( __inout CCommunicationsConfig
 #endif
    {
       m_LastError = ERROR_INVALID_HANDLE;
-      return( FALSE );
+      return( false );
    }
 
    configuration.Empty();
 
-   BOOL return_value = FALSE;
-
    DWORD buffer_size = 8 * 1024;
 
-   BYTE * buffer_p = nullptr;
-   
-   WFC_TRY
-   {
-      buffer_p = new BYTE[ buffer_size ]; // 8K buffer, insanely large
-   }
-   WFC_CATCH_ALL
-   {
-      buffer_p = reinterpret_cast< BYTE * >( nullptr );
-   }
-   WFC_END_CATCH_ALL
+   auto buffer = std::make_unique<uint8_t[]>(buffer_size);
+
+   auto buffer_p = buffer.get();
 
    if ( buffer_p == nullptr )
    {
-      return( FALSE );
+      return( false );
    }
 
    // Always, always always zeroize the buffer
@@ -563,23 +528,18 @@ _Check_return_ BOOL CSerialFile::GetConfiguration( __inout CCommunicationsConfig
    communications_configuration_p->dwSize        = buffer_size;
    communications_configuration_p->dcb.DCBlength = sizeof( DCB );
 
-   return_value = ::GetCommConfig( m_FileHandle, communications_configuration_p, &buffer_size );
+   BOOL const return_value = ::GetCommConfig( m_FileHandle, communications_configuration_p, &buffer_size );
 
    if ( return_value == FALSE )
    {
       m_LastError = ::GetLastError();
       //WFCTRACEERROR( m_LastError );
-      delete [] buffer_p;
-      buffer_p = nullptr;
-      return( FALSE );
+      return( false );
    }
 
    configuration.Copy( *( reinterpret_cast< LPCOMMCONFIG >( buffer_p ) ) );
 
-   delete [] buffer_p;
-   buffer_p = nullptr;
-
-   return( TRUE );
+   return( true );
 }
 
 _Check_return_ DWORD CSerialFile::GetFlowControl( void ) noexcept
@@ -660,11 +620,9 @@ _Check_return_ DWORD CSerialFile::GetModemStatus( void ) noexcept
       return( 0 );
    }
 
-   BOOL return_value = FALSE;
-
    DWORD modem_status = 0;
 
-   return_value = ::GetCommModemStatus( m_FileHandle, &modem_status );
+   BOOL return_value = ::GetCommModemStatus( m_FileHandle, &modem_status );
 
    if ( return_value == FALSE )
    {
@@ -717,9 +675,7 @@ _Check_return_ BOOL CSerialFile::GetProperties( __inout CCommunicationProperties
       return( FALSE );
    }
 
-   BOOL return_value = FALSE;
-
-   return_value = ::GetCommProperties( m_FileHandle, &properties );
+   BOOL return_value = ::GetCommProperties( m_FileHandle, &properties );
 
    if ( return_value == FALSE )
    {
@@ -771,9 +727,7 @@ _Check_return_ BOOL CSerialFile::GetTimeouts( __inout COMMTIMEOUTS& timeouts ) n
       return( FALSE );
    }
 
-   BOOL return_value = FALSE;
-
-   return_value = ::GetCommTimeouts( m_FileHandle, &timeouts );
+   BOOL return_value = ::GetCommTimeouts( m_FileHandle, &timeouts );
 
    if ( return_value == FALSE )
    {
@@ -994,14 +948,13 @@ _Check_return_ DWORD CSerialFile::NumberOfBytesWaitingToBeWritten( void ) noexce
 
 #pragma warning( disable : 4100 )
 
-_Check_return_ bool CSerialFile::Open(__in_z LPCTSTR channel_name, __in UINT const open_flags ) noexcept
+_Check_return_ bool CSerialFile::Open(_In_ std::wstring_view channel_name, __in UINT const open_flags ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
-   WFC_VALIDATE_POINTER( channel_name );
 
    // Choose to live
 
-   if ( channel_name == nullptr )
+   if ( channel_name.empty() == true )
    {
       m_LastError = ERROR_INVALID_PARAMETER;
       return( false );
@@ -1290,9 +1243,7 @@ _Check_return_ BOOL CSerialFile::Purge( __in DWORD const what_to_purge ) noexcep
       return( FALSE );
    }
 
-   BOOL return_value = FALSE;
-
-   return_value = ::PurgeComm( m_FileHandle, what_to_purge );
+   BOOL return_value = ::PurgeComm( m_FileHandle, what_to_purge );
 
    if ( return_value == FALSE )
    {
@@ -1389,9 +1340,7 @@ _Check_return_ BOOL CSerialFile::SetBreak( void ) noexcept
       return( FALSE );
    }
 
-   BOOL return_value = FALSE;
-
-   return_value = ::SetCommBreak( m_FileHandle );
+   BOOL return_value = ::SetCommBreak( m_FileHandle );
 
    if ( return_value == FALSE )
    {
@@ -1567,20 +1516,6 @@ void CSerialFile::SetFlowControl( _In_ DWORD const flow_control ) noexcept
    }
 }
 
-void CSerialFile::SetInputBufferSize( __in DWORD const buffer_size ) noexcept
-{
-   WFC_VALIDATE_POINTER( this );
-
-   m_InputBufferSize = buffer_size;
-}
-
-void CSerialFile::SetOutputBufferSize( __in DWORD const buffer_size ) noexcept
-{
-   WFC_VALIDATE_POINTER( this );
-
-   m_OutputBufferSize = buffer_size;
-}
-
 _Check_return_ bool CSerialFile::SetPurgeBufferOnError( __in bool const purge_buffer ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
@@ -1667,8 +1602,6 @@ _Check_return_ BOOL CSerialFile::SetTimeouts( __in_opt COMMTIMEOUTS const * time
       return( FALSE );
    }
 
-   BOOL return_value = FALSE;
-
    COMMTIMEOUTS communications_timeouts;
 
    ::ZeroMemory( &communications_timeouts, sizeof( communications_timeouts ) );
@@ -1705,7 +1638,7 @@ _Check_return_ BOOL CSerialFile::SetTimeouts( __in_opt COMMTIMEOUTS const * time
       communications_timeouts.WriteTotalTimeoutConstant   = 0;
    }
 
-   return_value = ::SetCommTimeouts( m_FileHandle, &communications_timeouts );
+   BOOL return_value = ::SetCommTimeouts( m_FileHandle, &communications_timeouts );
 
    if ( return_value == FALSE )
    {
@@ -1738,9 +1671,7 @@ _Check_return_ BOOL CSerialFile::TransmitCharacter( __in char const character_to
       return( FALSE );
    }
 
-   BOOL return_value = FALSE;
-
-   return_value = ::TransmitCommChar( m_FileHandle, character_to_transmit );
+   BOOL return_value = ::TransmitCommChar( m_FileHandle, character_to_transmit );
 
    if ( return_value == FALSE )
    {
@@ -1774,9 +1705,7 @@ _Check_return_ BOOL CSerialFile::WaitFor(__inout DWORD& what_to_wait_for ) noexc
       return( FALSE );
    }
 
-   BOOL return_value = FALSE;
-
-   return_value = ::SetCommMask( m_FileHandle, what_to_wait_for );
+   BOOL return_value = ::SetCommMask( m_FileHandle, what_to_wait_for );
 
    if ( return_value == FALSE )
    {

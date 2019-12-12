@@ -45,17 +45,16 @@
 
 #if ! defined( __oledb_h__ )
 
-typedef struct  tagDBTIMESTAMP
+struct DBTIMESTAMP
     {
-    SHORT year;
-    USHORT month;
-    USHORT day;
-    USHORT hour;
-    USHORT minute;
-    USHORT second;
-    ULONG fraction;
-    }
-DBTIMESTAMP;
+    SHORT year{ 0 };
+    USHORT month{ 0 };
+    USHORT day{ 0 };
+    USHORT hour{ 0 };
+    USHORT minute{ 0 };
+    USHORT second{ 0 };
+    ULONG fraction{ 0 };
+    };
 
 #endif // __oledb_h__
 
@@ -156,11 +155,7 @@ class CFileTime : public _FILETIME
            return( li.QuadPart );
        }
 
-       inline constexpr CFileTime() noexcept
-       {
-           dwLowDateTime = 0;
-           dwHighDateTime = 0;
-       }
+       inline constexpr CFileTime() noexcept : _FILETIME{ 0, 0 } {}
 
        inline CFileTime(_In_ CFileTime const& source ) noexcept
        {
@@ -694,7 +689,7 @@ class CFileTime : public _FILETIME
 
       inline void CopyTo( _Out_ DBTIMESTAMP&  destination ) const noexcept
       {
-         SYSTEMTIME system_time;
+          SYSTEMTIME system_time{ 0, 0, 0, 0, 0, 0, 0, 0 };
 
          if ( ::FileTimeToSystemTime( this, &system_time ) == FALSE )
          {
@@ -722,7 +717,7 @@ class CFileTime : public _FILETIME
 
       inline void CopyTo( _Out_ TIMESTAMP_STRUCT& destination ) const noexcept
       {
-         SYSTEMTIME system_time;
+         SYSTEMTIME system_time{ 0, 0, 0, 0, 0, 0, 0, 0 };
 
          if ( ::FileTimeToSystemTime( this, &system_time ) == FALSE )
          {

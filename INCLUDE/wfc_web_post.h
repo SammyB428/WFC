@@ -48,41 +48,38 @@
 #define WFC_WEB_POST_STRING      (3)
 #define WFC_WEB_POST_FILE_HANDLE (4)
 
-typedef struct _wfc_web_post_data
+struct WFC_WEB_POST_DATA
 {
-   const char * variable_name;
-   DWORD       data_type;
+    const char* variable_name{ nullptr };
+    DWORD       data_type{ 0 };
 
    union
    {
       // WFC_WEB_POST_BUFFER
 
-      struct _byte_buffer
+      struct
       {
-         DWORD  buffer_length;
-         BYTE * buffer;
-      }
-      byte_buffer;
+          DWORD  buffer_length{ 0 };
+          BYTE* buffer{ nullptr };
+      } byte_buffer;
 
       // WFC_WEB_POST_CBYTEARRAY
-      std::vector<uint8_t> * bytes;
+      std::vector<uint8_t>* bytes{ nullptr };
 
       // WFC_WEB_POST_STRING
       const char * ascii_string;
 
       // WFC_WEB_POST_FILE_HANDLE
-      struct _file_buffer
+      struct
       {
-         const char *   ascii_filename;
-         HANDLE         file_handle;
-         ULARGE_INTEGER file_offset;
-         ULARGE_INTEGER number_of_bytes;
-      }
-      file;
+          const char* ascii_filename{ nullptr };
+          HANDLE         file_handle{ nullptr };
+          ULARGE_INTEGER file_offset{ 0,0 };
+          ULARGE_INTEGER number_of_bytes{ 0,0 };
+      } file;
    };
-}
-WFC_WEB_POST_DATA, *WFC_WEB_POST_DATA_P;
+};
 
-_Check_return_ bool PASCAL wfc_web_post( __in_z LPCTSTR url, __in WFC_WEB_POST_DATA_P * data, __inout_opt std::wstring * response = nullptr ) noexcept;
+_Check_return_ bool PASCAL wfc_web_post( _In_ std::wstring_view url, _In_ WFC_WEB_POST_DATA ** data, __inout_opt std::wstring * response = nullptr ) noexcept;
 
 #endif // WFC_WEB_POST_HEADER_FILE

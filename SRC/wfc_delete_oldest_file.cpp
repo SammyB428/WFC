@@ -60,8 +60,6 @@ _Check_return_ bool PASCAL Win32FoundationClasses::wfc_delete_oldest_file( _In_z
 
     std::wstring filename;
 
-    BOOL return_value = FALSE;
-
     double oldest_file_time = 0.0;
     double this_file_time   = 0.0;
     double high_value       = static_cast< double >( 0xFFFFFFFF );
@@ -82,7 +80,7 @@ _Check_return_ bool PASCAL Win32FoundationClasses::wfc_delete_oldest_file( _In_z
 
     ZeroMemory( &find_data, sizeof( find_data ) );
 
-    HANDLE find_file_handle = FindFirstFileW( mask.c_str(), &find_data );
+    auto find_file_handle = FindFirstFileW( mask.c_str(), &find_data );
 
     if ( find_file_handle != static_cast< HANDLE >( INVALID_HANDLE_VALUE ) )
     {
@@ -113,9 +111,7 @@ _Check_return_ bool PASCAL Win32FoundationClasses::wfc_delete_oldest_file( _In_z
     mask.erase(mask.length() - 3);
     mask.append( filename );
 
-    return_value = DeleteFile( mask.c_str() );
-
-    if ( return_value == FALSE )
+    if (DeleteFile(mask.c_str()) == FALSE )
     {
         return( false );
     }
@@ -131,8 +127,6 @@ _Check_return_ uint32_t PASCAL Win32FoundationClasses::wfc_number_of_files_in_di
 
     std::wstring filename;
 
-    BOOL return_value = FALSE;
-
     std::wstring mask( directory_path );
 
     if ( mask.at( mask.length() - 1 ) != '\\' and
@@ -147,7 +141,7 @@ _Check_return_ uint32_t PASCAL Win32FoundationClasses::wfc_number_of_files_in_di
 
     ZeroMemory( &find_data, sizeof( find_data ) );
 
-    HANDLE find_file_handle = FindFirstFileW( mask.c_str(), &find_data );
+    auto find_file_handle = FindFirstFileW( mask.c_str(), &find_data );
 
     if ( find_file_handle != static_cast< HANDLE >( INVALID_HANDLE_VALUE ) )
     {
@@ -180,8 +174,6 @@ _Check_return_ uint64_t PASCAL Win32FoundationClasses::wfc_number_of_bytes_in_di
 
     std::wstring filename;
 
-    BOOL return_value = FALSE;
-
     std::wstring mask( directory_path );
 
     if ( mask.at( mask.length() - 1 ) != '\\' and
@@ -196,7 +188,7 @@ _Check_return_ uint64_t PASCAL Win32FoundationClasses::wfc_number_of_bytes_in_di
 
     ZeroMemory( &find_data, sizeof( find_data ) );
 
-    HANDLE find_file_handle = FindFirstFileW( mask.c_str(), &find_data );
+    auto find_file_handle = FindFirstFileW( mask.c_str(), &find_data );
 
     LARGE_INTEGER large_integer;
 

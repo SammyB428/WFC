@@ -50,14 +50,14 @@
 
 #if ! defined( TF_DISCONNECT )
 
-typedef struct _TRANSMIT_FILE_BUFFERS
+struct TRANSMIT_FILE_BUFFERS
 {
-   LPVOID Head;
-   DWORD  HeadLength;
-   LPVOID Tail;
-   DWORD  TailLength;
+    LPVOID Head{ nullptr };
+    DWORD  HeadLength{ 0 };
+    LPVOID Tail{ nullptr };
+    DWORD  TailLength{ 0 };
 }
-TRANSMIT_FILE_BUFFERS, * PTRANSMIT_FILE_BUFFERS, * LPTRANSMIT_FILE_BUFFERS;
+TRANSMIT_FILE_BUFFERS;
 
 #define TF_DISCONNECT   (0x01)
 #define TF_REUSE_SOCKET (0x02)
@@ -77,63 +77,62 @@ TRANSMIT_FILE_BUFFERS, * PTRANSMIT_FILE_BUFFERS, * LPTRANSMIT_FILE_BUFFERS;
 #define TF_USE_KERNEL_APC (0x20)
 #endif
 
-typedef struct _wfc_socket_thunk
+struct WFC_SOCKET_THUNK
 {
-   HINSTANCE dll_instance_handle;
-   TCHAR     dll_name[ MAX_PATH ];
-   SOCKET                 (PASCAL FAR * accept)(SOCKET , struct sockaddr FAR *, int FAR *);
-   int                    (PASCAL FAR * bind)(SOCKET , const struct sockaddr FAR *, int );
-   int                    (PASCAL FAR * closesocket)(SOCKET );
-   int                    (PASCAL FAR * connect)(SOCKET , const struct sockaddr FAR *, int );
-   int                    (PASCAL FAR * ioctlsocket)( SOCKET, long , u_long FAR * );
-   int                    (PASCAL FAR * getpeername)( SOCKET, struct sockaddr FAR *, int FAR * );
-   int                    (PASCAL FAR * getsockname)( SOCKET, struct sockaddr FAR *, int FAR * );
-   int                    (PASCAL FAR * getsockopt)( SOCKET, int, int, char FAR *, int FAR * );
-   u_long                 (PASCAL FAR * htonl)( u_long );
-   u_short                (PASCAL FAR * htons)( u_short );
-   unsigned long          (PASCAL FAR * inet_addr)( const char FAR * );
-   char FAR *             (PASCAL FAR * inet_ntoa)( struct in_addr );
-   int                    (PASCAL FAR * listen)( SOCKET, int );
-   u_long                 (PASCAL FAR * ntohl)( u_long );
-   u_short                (PASCAL FAR * ntohs)( u_short );
-   int                    (PASCAL FAR * recv)( SOCKET, char FAR *, int, int );
-   int                    (PASCAL FAR * recvfrom)( SOCKET, char FAR *, int, int, struct sockaddr FAR *, int FAR * );
-   int                    (PASCAL FAR * select)( int , fd_set FAR *, fd_set FAR *, struct fd_set FAR *, const struct timeval FAR * );
-   int                    (PASCAL FAR * send)( SOCKET, const char FAR *, int, int );
-   int                    (PASCAL FAR * sendto)( SOCKET, const char FAR *, int, int, const struct sockaddr FAR *, int );
-   int                    (PASCAL FAR * setsockopt)( SOCKET, int, int, const char FAR *, int );
-   int                    (PASCAL FAR * shutdown)( SOCKET, int );
-   SOCKET                 (PASCAL FAR * socket)( int, int, int );
-   struct hostent FAR *   (PASCAL FAR * gethostbyaddr)( const char FAR *, int, int );
-   struct hostent FAR *   (PASCAL FAR * gethostbyname)( const char FAR * );
-   int                    (PASCAL FAR * gethostname)( char FAR *, int );
-   struct servent FAR *   (PASCAL FAR * getservbyport)( int port, const char FAR * );
-   struct servent FAR *   (PASCAL FAR * getservbyname)( const char FAR *, const char FAR * );
-   struct protoent FAR *  (PASCAL FAR * getprotobynumber)( int );
-   struct protoent FAR *  (PASCAL FAR * getprotobyname)( const char FAR * );
-   int                    (PASCAL FAR * WSAStartup)( WORD, LPWSADATA );
-   int                    (PASCAL FAR * WSACleanup)( void );
-   void                   (PASCAL FAR * WSASetLastError)( int );
-   int                    (PASCAL FAR * WSAGetLastError)( void );
-   BOOL                   (PASCAL FAR * WSAIsBlocking)( void );
-   int                    (PASCAL FAR * WSAUnhookBlockingHook)( void );
-   FARPROC                (PASCAL FAR * WSASetBlockingHook)( FARPROC );
-   int                    (PASCAL FAR * WSACancelBlockingCall)( void );
-   HANDLE                 (PASCAL FAR * WSAAsyncGetServByName)( HWND, u_int , const char FAR *, const char FAR *, char FAR *, int );
-   HANDLE                 (PASCAL FAR * WSAAsyncGetServByPort)( HWND, u_int , int port, const char FAR *, char FAR *, int );
-   HANDLE                 (PASCAL FAR * WSAAsyncGetProtoByName)( HWND, u_int, const char FAR *, char FAR *, int );
-   HANDLE                 (PASCAL FAR * WSAAsyncGetProtoByNumber)( HWND, u_int, int number, char FAR *, int );
-   HANDLE                 (PASCAL FAR * WSAAsyncGetHostByName)( HWND, u_int, const char FAR *, char FAR *, int );
-   HANDLE                 (PASCAL FAR * WSAAsyncGetHostByAddr)( HWND, u_int, const char FAR *, int, int, char FAR *, int );
-   int                    (PASCAL FAR * WSACancelAsyncRequest)( HANDLE );
-   int                    (PASCAL FAR * WSAAsyncSelect)(SOCKET, HWND, u_int, long );
-   int                    (PASCAL FAR * WSARecvEx)(SOCKET, char FAR *, int, int FAR * );
-   BOOL                   (PASCAL FAR * TransmitFile)( SOCKET, HANDLE, DWORD,  DWORD, LPOVERLAPPED, LPTRANSMIT_FILE_BUFFERS, DWORD );
-   BOOL                   (PASCAL FAR * AcceptEx)( SOCKET, SOCKET, PVOID, DWORD, DWORD, DWORD, LPDWORD, LPOVERLAPPED );
-   VOID                   (PASCAL FAR * GetAcceptExSockaddrs)( PVOID, DWORD, DWORD, DWORD, struct sockaddr **, LPINT, struct sockaddr **, LPINT );
-   int                    (PASCAL FAR * __WSAFDIsSet)(SOCKET, fd_set FAR * );
-}
-WFC_SOCKET_THUNK, *WFC_SOCKET_THUNK_P;
+    HINSTANCE dll_instance_handle{ nullptr };
+    TCHAR     dll_name[MAX_PATH]{ 0 };
+    SOCKET(PASCAL FAR* accept)(SOCKET, struct sockaddr FAR*, int FAR*) { nullptr };
+   int                    (PASCAL FAR * bind)(SOCKET , const struct sockaddr FAR *, int ) { nullptr };
+   int                    (PASCAL FAR * closesocket)(SOCKET ) { nullptr };
+   int                    (PASCAL FAR * connect)(SOCKET , const struct sockaddr FAR *, int ) { nullptr };
+   int                    (PASCAL FAR * ioctlsocket)( SOCKET, long , u_long FAR * ) { nullptr };
+   int                    (PASCAL FAR * getpeername)( SOCKET, struct sockaddr FAR *, int FAR * ) { nullptr };
+   int                    (PASCAL FAR * getsockname)( SOCKET, struct sockaddr FAR *, int FAR * ) { nullptr };
+   int                    (PASCAL FAR * getsockopt)( SOCKET, int, int, char FAR *, int FAR * ) { nullptr };
+   u_long                 (PASCAL FAR * htonl)( u_long ) { nullptr };
+   u_short                (PASCAL FAR * htons)( u_short ) { nullptr };
+   unsigned long          (PASCAL FAR * inet_addr)( const char FAR * ) { nullptr };
+   char FAR *             (PASCAL FAR * inet_ntoa)( struct in_addr ) { nullptr };
+   int                    (PASCAL FAR * listen)( SOCKET, int ) { nullptr };
+   u_long                 (PASCAL FAR * ntohl)( u_long ) { nullptr };
+   u_short                (PASCAL FAR * ntohs)( u_short ) { nullptr };
+   int                    (PASCAL FAR * recv)( SOCKET, char FAR *, int, int ) { nullptr };
+   int                    (PASCAL FAR * recvfrom)( SOCKET, char FAR *, int, int, struct sockaddr FAR *, int FAR * ) { nullptr };
+   int                    (PASCAL FAR * select)( int , fd_set FAR *, fd_set FAR *, struct fd_set FAR *, const struct timeval FAR * ) { nullptr };
+   int                    (PASCAL FAR * send)( SOCKET, const char FAR *, int, int ) { nullptr };
+   int                    (PASCAL FAR * sendto)( SOCKET, const char FAR *, int, int, const struct sockaddr FAR *, int ) { nullptr };
+   int                    (PASCAL FAR * setsockopt)( SOCKET, int, int, const char FAR *, int ) { nullptr };
+   int                    (PASCAL FAR * shutdown)( SOCKET, int ) { nullptr };
+   SOCKET                 (PASCAL FAR * socket)( int, int, int ) { nullptr };
+   struct hostent FAR *   (PASCAL FAR * gethostbyaddr)( const char FAR *, int, int ) { nullptr };
+   struct hostent FAR *   (PASCAL FAR * gethostbyname)( const char FAR * ) { nullptr };
+   int                    (PASCAL FAR * gethostname)( char FAR *, int ) { nullptr };
+   struct servent FAR *   (PASCAL FAR * getservbyport)( int port, const char FAR * ) { nullptr };
+   struct servent FAR *   (PASCAL FAR * getservbyname)( const char FAR *, const char FAR * ) { nullptr };
+   struct protoent FAR *  (PASCAL FAR * getprotobynumber)( int ) { nullptr };
+   struct protoent FAR *  (PASCAL FAR * getprotobyname)( const char FAR * ) { nullptr };
+   int                    (PASCAL FAR * WSAStartup)( WORD, LPWSADATA ) { nullptr };
+   int                    (PASCAL FAR * WSACleanup)( void ) { nullptr };
+   void                   (PASCAL FAR * WSASetLastError)( int ) { nullptr };
+   int                    (PASCAL FAR * WSAGetLastError)( void ) { nullptr };
+   BOOL                   (PASCAL FAR * WSAIsBlocking)( void ) { nullptr };
+   int                    (PASCAL FAR * WSAUnhookBlockingHook)( void ) { nullptr };
+   FARPROC                (PASCAL FAR * WSASetBlockingHook)( FARPROC ) { nullptr };
+   int                    (PASCAL FAR * WSACancelBlockingCall)( void ) { nullptr };
+   HANDLE                 (PASCAL FAR * WSAAsyncGetServByName)( HWND, u_int , const char FAR *, const char FAR *, char FAR *, int ) { nullptr };
+   HANDLE                 (PASCAL FAR * WSAAsyncGetServByPort)( HWND, u_int , int port, const char FAR *, char FAR *, int ) { nullptr };
+   HANDLE                 (PASCAL FAR * WSAAsyncGetProtoByName)( HWND, u_int, const char FAR *, char FAR *, int ) { nullptr };
+   HANDLE                 (PASCAL FAR * WSAAsyncGetProtoByNumber)( HWND, u_int, int number, char FAR *, int ) { nullptr };
+   HANDLE                 (PASCAL FAR * WSAAsyncGetHostByName)( HWND, u_int, const char FAR *, char FAR *, int ) { nullptr };
+   HANDLE                 (PASCAL FAR * WSAAsyncGetHostByAddr)( HWND, u_int, const char FAR *, int, int, char FAR *, int ) { nullptr };
+   int                    (PASCAL FAR * WSACancelAsyncRequest)( HANDLE ) { nullptr };
+   int                    (PASCAL FAR * WSAAsyncSelect)(SOCKET, HWND, u_int, long ) { nullptr };
+   int                    (PASCAL FAR * WSARecvEx)(SOCKET, char FAR *, int, int FAR * ) { nullptr };
+   BOOL                   (PASCAL FAR * TransmitFile)( SOCKET, HANDLE, DWORD,  DWORD, LPOVERLAPPED, LPTRANSMIT_FILE_BUFFERS, DWORD ) { nullptr };
+   BOOL                   (PASCAL FAR * AcceptEx)( SOCKET, SOCKET, PVOID, DWORD, DWORD, DWORD, LPDWORD, LPOVERLAPPED ) { nullptr };
+   VOID                   (PASCAL FAR * GetAcceptExSockaddrs)( PVOID, DWORD, DWORD, DWORD, struct sockaddr **, LPINT, struct sockaddr **, LPINT ) { nullptr };
+   int                    (PASCAL FAR * __WSAFDIsSet)(SOCKET, fd_set FAR * ) { nullptr };
+};
 
 class CSimpleSocket : public CDummyFile
 {
@@ -156,7 +155,7 @@ class CSimpleSocket : public CDummyFile
 
       static long m_ReferenceCount;
 
-      static WFC_SOCKET_THUNK_P m_Thunk_p;
+      static WFC_SOCKET_THUNK * m_Thunk_p;
 
    public:
 
@@ -210,7 +209,7 @@ class CSimpleSocket : public CDummyFile
       ** Putting data into the object
       */
 
-      virtual void SetAddress( __in_z wchar_t const * a ) noexcept; // Fills in Address, Name and AliasList
+      virtual void SetAddress( _In_ std::wstring_view a ) noexcept; // Fills in Address, Name and AliasList
       virtual void SetID( __in SOCKET const id ) noexcept;
       virtual void SetName( __in_z LPCTSTR a ) noexcept;
       virtual void SetPort( __in_z LPCTSTR p ) noexcept;
@@ -222,7 +221,7 @@ class CSimpleSocket : public CDummyFile
       */
 
       virtual _Check_return_ bool Open( void ) = 0;
-      _Check_return_ bool Open(_In_z_ LPCTSTR channel_name, _In_ UINT const port_number = 23 ) noexcept override = 0;
+      _Check_return_ bool Open(_In_ std::wstring_view channel_name, _In_ UINT const port_number = 23 ) noexcept override = 0;
       virtual void Close( void ) noexcept;
       virtual _Check_return_ DWORD GetOptions( void ) const noexcept;
       virtual _Check_return_ bool IsBroken( void ) const noexcept;

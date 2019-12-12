@@ -57,7 +57,7 @@ USING_WFC_NAMESPACE
 
 #if defined( _DEBUG )
 
-static inline __out_z _Check_return_ LPCTSTR __convert_RASCONNSTATE_to_string( __in DWORD ras_state )
+static inline __out_z _Check_return_ LPCTSTR __convert_RASCONNSTATE_to_string( __in DWORD ras_state ) noexcept
 {
    switch( ras_state )
    {

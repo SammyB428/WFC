@@ -43,12 +43,11 @@
 
 #define RANDOM_NUMBER_GENERATOR_2_CLASS_HEADER
 
-typedef struct _value_range
+struct VALUE_RANGE
 {
     uint64_t low{ 0 };
     uint64_t high{ 0 };
-}
-VALUE_RANGE;
+};
 
 class CRandomNumberGenerator2
 {

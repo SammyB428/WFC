@@ -436,9 +436,7 @@ _Check_return_ bool CServiceControlManager::GetDependencies( _In_z_ wchar_t cons
 
         ZeroMemory( status_array.get(), buffer_size );
 
-        BOOL return_value = FALSE;
-
-        return_value = ::EnumDependentServices( service_handle,
+        BOOL return_value = ::EnumDependentServices( service_handle,
                 SERVICE_STATE_ALL, // Both running and stopped services
                 status_array.get(),
                 buffer_size,
@@ -1169,7 +1167,7 @@ _Check_return_ bool CServiceControlManager::SetConfiguration( __in_z wchar_t con
 
                 if ( normalized_executable_name.at( 0 ) != '\"' )
                 {
-                    std::wstring new_name( L"\"" );
+                    std::wstring new_name(WSTRING_VIEW(L"\""));
 
                     new_name.append( normalized_executable_name );
                     normalized_executable_name.assign( new_name );
@@ -1395,15 +1393,13 @@ _Check_return_ bool CServiceControlManager::UnlockDatabase( void ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
 
-    BOOL return_value = FALSE;
-
     if ( m_DatabaseLockHandle == static_cast< SC_LOCK >( NULL ) )
     {
         // Already unlocked
         return( true );
     }
 
-    return_value = ::UnlockServiceDatabase( m_DatabaseLockHandle );
+   BOOL return_value = ::UnlockServiceDatabase( m_DatabaseLockHandle );
 
     if ( return_value == FALSE )
     {
@@ -1575,12 +1571,12 @@ void CServiceNameAndStatusA::Dump( CDumpContext& dump_context ) const
 
     std::wstring temp_string;
 
-    if ( ServiceStatus.dwServiceType bitand SERVICE_WIN32_OWN_PROCESS )
+    if (is_flagged(ServiceStatus.dwServiceType, SERVICE_WIN32_OWN_PROCESS) == true )
     {
         temp_string = TEXT( "SERVICE_WIN32_OWN_PROCESS" );
     }
 
-    if ( ServiceStatus.dwServiceType bitand SERVICE_WIN32_SHARE_PROCESS )
+    if (is_flagged( ServiceStatus.dwServiceType, SERVICE_WIN32_SHARE_PROCESS) == true )
     {
         if ( temp_string.GetLength() > 0 )
         {
@@ -1590,7 +1586,7 @@ void CServiceNameAndStatusA::Dump( CDumpContext& dump_context ) const
         temp_string += TEXT( "SERVICE_WIN32_SHARE_PROCESS" );
     }
 
-    if ( ServiceStatus.dwServiceType bitand SERVICE_KERNEL_DRIVER  )
+    if (is_flagged(ServiceStatus.dwServiceType, SERVICE_KERNEL_DRIVER) == true )
     {
         if ( temp_string.GetLength() > 0 )
         {
@@ -1600,7 +1596,7 @@ void CServiceNameAndStatusA::Dump( CDumpContext& dump_context ) const
         temp_string += TEXT( "SERVICE_KERNEL_DRIVER" );
     }
 
-    if ( ServiceStatus.dwServiceType bitand SERVICE_FILE_SYSTEM_DRIVER )
+    if (is_flagged(ServiceStatus.dwServiceType, SERVICE_FILE_SYSTEM_DRIVER) == true )
     {
         if ( temp_string.GetLength() > 0 )
         {
@@ -1610,7 +1606,7 @@ void CServiceNameAndStatusA::Dump( CDumpContext& dump_context ) const
         temp_string += TEXT( "SERVICE_FILE_SYSTEM_DRIVER" );
     }
 
-    if ( ServiceStatus.dwServiceType bitand SERVICE_INTERACTIVE_PROCESS )
+    if (is_flagged(ServiceStatus.dwServiceType, SERVICE_INTERACTIVE_PROCESS) == true )
     {
         if ( temp_string.GetLength() > 0 )
         {

@@ -5160,16 +5160,6 @@ void CExtensibleMarkupLanguageElement::RemoveChild( _Inout_ CExtensibleMarkupLan
     }
 }
 
-void CExtensibleMarkupLanguageElement::SetDocument(_In_ CExtensibleMarkupLanguageDocument * document_p) noexcept
-{
-    m_Document = document_p;
-
-    for (auto const child_p : m_Children)
-    {
-        child_p->SetDocument(document_p);
-    }
-}
-
 void CExtensibleMarkupLanguageElement::WriteTo( _Inout_ std::vector<uint8_t>& xml ) const noexcept
 {
     WFC_VALIDATE_POINTER( this );
@@ -6069,11 +6059,10 @@ return( false );
 return( true );
 }
 
-typedef struct _sum_total
+struct SUM_TOTAL
 {
-int64_t total;
-}
-SUM_TOTAL, *SUM_TOTAL_P;
+   int64_t total{0};
+};
 
 void <A TITLE="This is an XML_ELEMENT_CALLBACK function.">entry_callback</A>( void * context, <B>CExtensibleMarkupLanguageElement</B> * element_p )
 {

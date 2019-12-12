@@ -55,8 +55,8 @@ class CTalkingSocket : public CSimpleSocket
       CTalkingSocket& operator=(CTalkingSocket const&) = delete;
        
       CTalkingSocket() noexcept;
-      CTalkingSocket( __in std::wstring const& address, __in short const p ) noexcept;
-      CTalkingSocket( __in std::wstring const& host, __in std::wstring const& p ) noexcept;
+      CTalkingSocket(_In_ std::wstring_view address, __in short const p ) noexcept;
+      CTalkingSocket(_In_ std::wstring_view host, __in std::wstring const& p ) noexcept;
 
       /*
       ** Destructor should be virtual according to MSJ article in Sept 1992
@@ -66,9 +66,9 @@ class CTalkingSocket : public CSimpleSocket
       virtual ~CTalkingSocket();
 
       _Check_return_ bool Open( void ) noexcept override;
-      virtual _Check_return_ bool Open( __in std::wstring const& address, __in std::wstring const& port_name ) noexcept;
-      virtual _Check_return_ bool Open( __in std::wstring const& address, __in short const p_number ) noexcept;
-      _Check_return_ bool Open( __in_z LPCTSTR name, __in UINT const port_number = 23 ) noexcept override;
+      virtual _Check_return_ bool Open( _In_ std::wstring_view address, __in std::wstring const& port_name ) noexcept;
+      virtual _Check_return_ bool Open(_In_ std::wstring_view address, __in short const p_number ) noexcept;
+      _Check_return_ bool Open( _In_ std::wstring_view name, __in UINT const port_number = 23 ) noexcept override;
 
 #if defined( _DEBUG ) && ! defined( WFC_NO_DUMPING )
 

@@ -490,17 +490,16 @@ void CMemoryFile::m_Uninitialize( void ) noexcept
     }
 }
 
-_Check_return_ bool CMemoryFile::Open( __in_z LPCWSTR filename, __in UINT const open_flags, __in uint64_t const beginning_at_offset, __in std::size_t const number_of_bytes_to_map, __in_opt void const * desired_address ) noexcept
+_Check_return_ bool CMemoryFile::Open(_In_ std::wstring_view filename, __in UINT const open_flags, __in uint64_t const beginning_at_offset, __in std::size_t const number_of_bytes_to_map, __in_opt void const * desired_address ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
-    WFC_VALIDATE_POINTER( filename );
 
     if ( m_Pointer != nullptr )
     {
         Close();
     }
 
-    if ( filename == nullptr )
+    if ( filename.empty() == true )
     {
         return( false );
     }
@@ -514,7 +513,7 @@ _Check_return_ bool CMemoryFile::Open( __in_z LPCWSTR filename, __in UINT const 
 
     WFC_TRY
     {
-        if ( file.OpenWide( filename, open_flags ) == false )
+        if ( file.Open( filename, open_flags ) == false )
         {
             m_LastError = file.LastError();
             //WFCTRACE( TEXT( "Can't open file" ) );
@@ -539,17 +538,16 @@ _Check_return_ bool CMemoryFile::Open( __in_z LPCWSTR filename, __in UINT const 
         return( false );
 }
 
-_Check_return_ bool CMemoryFile::Open( _In_z_ LPCSTR filename, _In_ UINT const open_flags, _In_ uint64_t const beginning_at_offset, _In_ std::size_t const number_of_bytes_to_map, _In_opt_ void const * desired_address ) noexcept
+_Check_return_ bool CMemoryFile::Open( _In_ std::string_view filename, _In_ UINT const open_flags, _In_ uint64_t const beginning_at_offset, _In_ std::size_t const number_of_bytes_to_map, _In_opt_ void const * desired_address ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
-    WFC_VALIDATE_POINTER( filename );
 
     if ( m_Pointer != nullptr )
     {
         Close();
     }
 
-    if ( filename == nullptr )
+    if ( filename.empty() == true )
     {
         return( false );
     }
@@ -567,7 +565,7 @@ _Check_return_ bool CMemoryFile::Open( _In_z_ LPCSTR filename, _In_ UINT const o
 
         copy(wide_filename, filename);
 
-        if ( file.Open(wide_filename.c_str(), open_flags ) == false )
+        if ( file.Open(wide_filename, open_flags ) == false )
         {
             //WFCTRACE( TEXT( "Can't open file" ) );
             return( false );
@@ -579,7 +577,7 @@ _Check_return_ bool CMemoryFile::Open( _In_z_ LPCSTR filename, _In_ UINT const o
             return( false );
         }
 
-        copy( m_Filename, filename );
+        m_Filename.assign(wide_filename);
 
         return( true );
     }
@@ -647,12 +645,11 @@ static _Check_return_ bool CreateLowIntegritySACL( _Inout_ SECURITY_ATTRIBUTES *
     return ConvertStringSecurityDescriptorToSecurityDescriptor(sdd, SDDL_REVISION_1, &sa->lpSecurityDescriptor, nullptr) == TRUE;
 }
 
-_Check_return_ bool CSharedMemory::Create( _In_z_ wchar_t const * name, _In_ std::size_t const number_of_bytes ) noexcept
+_Check_return_ bool CSharedMemory::Create(_In_ std::wstring_view name, _In_ std::size_t const number_of_bytes ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
-    WFC_VALIDATE_POINTER( name );
 
-    _ASSERTE( name[ 0 ] != 0x00 );
+    _ASSERTE( name.empty() == false );
 
     SECURITY_ATTRIBUTES security_attributes;
 
@@ -673,12 +670,11 @@ _Check_return_ bool CSharedMemory::Create( _In_z_ wchar_t const * name, _In_ std
     return( return_value );
 }
 
-_Check_return_ bool CSharedMemory::Create( _In_z_ wchar_t const * name, _In_ std::size_t const number_of_bytes, _In_opt_ SECURITY_ATTRIBUTES * security_attributes ) noexcept
+_Check_return_ bool CSharedMemory::Create(_In_ std::wstring_view name, _In_ std::size_t const number_of_bytes, _In_opt_ SECURITY_ATTRIBUTES * security_attributes ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
-    WFC_VALIDATE_POINTER( name );
 
-    _ASSERTE( name[ 0 ] != 0x00 );
+    _ASSERTE( name.empty() == false );
 
     Close();
 
@@ -693,7 +689,7 @@ _Check_return_ bool CSharedMemory::Create( _In_z_ wchar_t const * name, _In_ std
                                     PAGE_READWRITE, // | SEC_COMMIT,
                                     buffer_size.HighPart,
                                     buffer_size.LowPart,
-                                    name );
+                                    Name.c_str() );
 
     m_LastError = ::GetLastError();
 
@@ -723,12 +719,11 @@ _Check_return_ bool CSharedMemory::Create( _In_z_ wchar_t const * name, _In_ std
     return( true );
 }
 
-_Check_return_ bool CSharedMemory::Open( _In_z_ wchar_t const * name, _In_ std::size_t const number_of_bytes, _In_ bool const read_only ) noexcept
+_Check_return_ bool CSharedMemory::Open(_In_ std::wstring_view name, _In_ std::size_t const number_of_bytes, _In_ bool const read_only ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
-    WFC_VALIDATE_POINTER( name );
 
-    _ASSERTE( name[ 0 ] != 0x00 );
+    _ASSERTE( name.empty() == false );
 
     Close();
 
@@ -738,7 +733,7 @@ _Check_return_ bool CSharedMemory::Open( _In_z_ wchar_t const * name, _In_ std::
 
     buffer_size.QuadPart = number_of_bytes;
 
-    m_Handle = ::OpenFileMappingW( ( read_only == false ) ? FILE_MAP_ALL_ACCESS : FILE_MAP_READ, FALSE, name );
+    m_Handle = ::OpenFileMappingW( ( read_only == false ) ? FILE_MAP_ALL_ACCESS : FILE_MAP_READ, FALSE, Name.c_str() );
 
     if ( m_Handle == static_cast< HANDLE >( NULL ) )
     {
@@ -749,7 +744,7 @@ _Check_return_ bool CSharedMemory::Open( _In_z_ wchar_t const * name, _In_ std::
         return( false );
     }
 
-    m_Buffer = (BYTE *) ::MapViewOfFile( m_Handle, ( read_only == false ) ? FILE_MAP_ALL_ACCESS : FILE_MAP_READ, 0, 0, number_of_bytes );
+    m_Buffer = static_cast<uint8_t *>(::MapViewOfFile( m_Handle, ( read_only == false ) ? FILE_MAP_ALL_ACCESS : FILE_MAP_READ, 0, 0, number_of_bytes ));
 
     if ( m_Buffer == nullptr )
     {
