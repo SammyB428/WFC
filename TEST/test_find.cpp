@@ -228,7 +228,7 @@ __checkReturn bool execute_test(__in uint8_t const * buffer, __in int64_t const 
 
 __checkReturn bool test_find(__out std::string& class_name, __out int& test_number_that_failed) noexcept
 {
-    class_name.assign("test_find");
+    class_name.assign(STRING_VIEW("test_find"));
 
     uint8_t test_buffer[65];
 

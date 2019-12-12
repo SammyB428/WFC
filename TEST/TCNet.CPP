@@ -52,11 +52,11 @@ _Check_return_ bool test_CNetWorkstation( _Out_ std::string& class_name, _Out_ i
 {
    WFCTRACEINIT( TEXT( "test_CNetWorkstation()" ) );
 
-   class_name.assign( "CNetWorkstation" );
+   class_name.assign(STRING_VIEW("CNetWorkstation"));
 
    test_number_that_failed = 1;
 
-   CNetWorkstation workstation( nullptr ); // Test this workstation
+   CNetWorkstation workstation; // Test this workstation
 
    CWorkstationInformation workstation_information;
 

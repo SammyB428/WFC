@@ -53,7 +53,7 @@ static char THIS_FILE[] = __FILE__;
 
 _Check_return_ bool test_CFile64( _Out_ std::string& class_name, _Out_ int& test_number_that_failed ) noexcept
 {
-   class_name.assign( "CFile64" );
+   class_name.assign(STRING_VIEW("CFile64"));
 
    test_number_that_failed = 0;
 
@@ -104,7 +104,7 @@ _Check_return_ bool test_CFile64( _Out_ std::string& class_name, _Out_ int& test
 
    CFile64 file;
 
-   if ( file.Open( temporary_filename, (UINT) ( (UINT)CFile64::OpenFlags::modeCreate | (UINT) CFile64::OpenFlags::wfcDeleteOnClose | (UINT) CFile64::OpenFlags::modeReadWrite )) == false )
+   if ( file.Open( temporary_filename, (UINT) ( (UINT)CFile64::OpenFlags::modeCreate bitor (UINT) CFile64::OpenFlags::wfcDeleteOnClose bitor (UINT) CFile64::OpenFlags::modeReadWrite )) == false )
    {
       test_number_that_failed = 1;
       return(failure());
@@ -241,7 +241,7 @@ _Check_return_ bool test_CFile64( _Out_ std::string& class_name, _Out_ int& test
 
    // Now test the string reading methods
 
-   if ( file.Open( temporary_filename, (UINT)( (UINT)CFile64::OpenFlags::modeCreate | (UINT) CFile64::OpenFlags::modeReadWrite )) == false )
+   if ( file.Open( temporary_filename, (UINT)( (UINT)CFile64::OpenFlags::modeCreate bitor (UINT) CFile64::OpenFlags::modeReadWrite )) == false )
    {
       test_number_that_failed = 17;
       return(failure());
@@ -303,9 +303,9 @@ _Check_return_ bool test_CFile64( _Out_ std::string& class_name, _Out_ int& test
 
    for ( auto const loop_index : Range(100) )
    {
-      sprintf_s( temp_string, sizeof( temp_string ), "Test String %04lu", (unsigned long) loop_index );
+      std::size_t const number_of_characters = sprintf_s( temp_string, sizeof( temp_string ), "Test String %04lu", (unsigned long) loop_index );
 
-      if ( strings.at( loop_index ).compare( temp_string ) != I_AM_EQUAL_TO_THAT )
+      if ( strings.at( loop_index ).compare( std::string_view(temp_string, number_of_characters)) != I_AM_EQUAL_TO_THAT )
       {
          test_number_that_failed = 20;
          return(failure());
@@ -327,7 +327,7 @@ _Check_return_ bool test_CFile64( _Out_ std::string& class_name, _Out_ int& test
       return(failure());
    }
 
-   auto element_p = xml.GetElement( TEXT( "ROOT.A.B.C" ) );
+   auto element_p = xml.GetElement( WSTRING_VIEW( L"ROOT.A.B.C" ) );
 
    if ( element_p == nullptr )
    {
@@ -339,7 +339,7 @@ _Check_return_ bool test_CFile64( _Out_ std::string& class_name, _Out_ int& test
 
    element_p->GetText( xml_text );
 
-   if ( xml_text.compare( L"WFC" ) != I_AM_EQUAL_TO_THAT)
+   if ( xml_text.compare( WSTRING_VIEW(L"WFC") ) != I_AM_EQUAL_TO_THAT)
    {
       test_number_that_failed = 23;
       return( failure() );
@@ -353,9 +353,9 @@ _Check_return_ bool test_CFile64( _Out_ std::string& class_name, _Out_ int& test
 
    wfc_get_program_data_directory(program_data);
 
-   program_data.append(L"WFC_TEST");
+   program_data.append(WSTRING_VIEW(L"WFC_TEST"));
 
-   wfc_create_wide_path(program_data.c_str(), log_file.GetSecurityAttributes());
+   (void) wfc_create_wide_path(program_data.c_str(), log_file.GetSecurityAttributes());
 
    if (CFileDirectory::IsDirectory(program_data) == false)
    {
@@ -363,7 +363,7 @@ _Check_return_ bool test_CFile64( _Out_ std::string& class_name, _Out_ int& test
        return(failure());
    }
 
-   CFileDirectory::Destroy(program_data);
+   (void)CFileDirectory::Destroy(program_data);
 
    test_number_that_failed = 24;
 

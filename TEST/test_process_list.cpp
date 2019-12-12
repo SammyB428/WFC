@@ -262,7 +262,7 @@ static void print_process_list( BYTE * data_buffer ) noexcept
 
 __checkReturn bool test_process_list( __out std::string& class_name, __out int& test_number_that_failed ) noexcept
 {
-    class_name.assign( "process list" );
+    class_name.assign(STRING_VIEW("process list"));
 
     // The first thing we need to do is get a buffer large
     // enough to hold the raw data. I like overkill so I choose

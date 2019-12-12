@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 2000-2014, Samuel R. Blackburn
+** Copyright, 2000-2019, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -48,11 +48,11 @@ static char THIS_FILE[] = __FILE__;
 #define new DEBUG_NEW
 #endif // _DEBUG
 
-void test_CLZFile( __in_z LPTSTR lz_file_name ) noexcept
+void test_CLZFile( _In_ std::wstring_view lz_file_name ) noexcept
 {
     CLZFile lz_file;
 
-    if ( lz_file_name == (LPTSTR) nullptr )
+    if ( lz_file_name.empty() == true )
     {
         return;
     }
@@ -61,13 +61,13 @@ void test_CLZFile( __in_z LPTSTR lz_file_name ) noexcept
 
     (void) lz_file.GetExpandedName( lz_file_name, expanded_name );
 
-    _tprintf( TEXT( "LZ File \"%s\" expanded name is \"%s\"\n" ), lz_file_name, expanded_name.c_str() );
+    wprintf( L"LZ File \"%.*s\" expanded name is \"%s\"\n", static_cast<int>(lz_file_name.length()), lz_file_name.data(), expanded_name.c_str() );
 
     if ( lz_file.Open( lz_file_name ) != FALSE )
     {
         CLZFile output_file;
 
-        if ( output_file.Open( TEXT( "d:\\temp\\winhlp32.exe" ), OF_CREATE ) != FALSE )
+        if ( output_file.Open(WSTRING_VIEW(L"d:\\temp\\winhlp32.exe"), OF_CREATE ) != FALSE )
         {
             if ( output_file.Copy( lz_file ) != FALSE )
             {
@@ -91,6 +91,6 @@ void test_CLZFile( __in_z LPTSTR lz_file_name ) noexcept
     {
         std::wstring error_message_string;
         CLZFile::TranslateErrorCode( (int) lz_file.LastError(), error_message_string );
-        _tprintf( TEXT( "Can't open LZ file \"%s\" because %s\n" ), lz_file_name, error_message_string.c_str() );
+        wprintf( L"Can't open LZ file \"%.*s\" because %s\n", static_cast<int>(lz_file_name.length()), lz_file_name.data(), error_message_string.c_str() );
     }
 }

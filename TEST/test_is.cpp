@@ -46,7 +46,7 @@ static char THIS_FILE[] = __FILE__;
 
 _Check_return_ bool test_is( _Out_ std::string& class_name, _Out_ int& test_number_that_failed ) noexcept
 {
-   class_name.assign( "test_is" );
+   class_name.assign(STRING_VIEW("test_is"));
 
    char const *    good_plain_ascii_guid =  "0AEE2A9F-BCBB-11d0-8C72-00C04FC2B085";
    wchar_t const * good_plain_wide_guid  = L"0aee2A9F-BCBB-11d0-8C72-00C04FC2B085";
@@ -65,154 +65,154 @@ _Check_return_ bool test_is( _Out_ std::string& class_name, _Out_ int& test_numb
 
    if ( wfc_is_guid( good_plain_ascii_guid ) == false )
    {
-       class_name.assign( "wfc_is_guid( ascii )" );
+       class_name.assign(STRING_VIEW("wfc_is_guid( ascii )"));
        test_number_that_failed = 1;
        return( failure() );
    }
 
    if ( wfc_is_guid( bad1_plain_ascii_guid ) != false )
    {
-       class_name.assign( "wfc_is_guid( ascii )" );
+       class_name.assign(STRING_VIEW("wfc_is_guid( ascii )"));
        test_number_that_failed = 2;
        return( failure() );
    }
 
    if ( wfc_is_guid( bad2_plain_ascii_guid ) == false )
    {
-       class_name.assign( "wfc_is_guid( ascii )" );
+       class_name.assign(STRING_VIEW("wfc_is_guid( ascii )"));
        test_number_that_failed = 3;
        return( failure() );
    }
 
    if ( wfc_is_guid( good_plain_wide_guid ) == false )
    {
-       class_name.assign( "wfc_is_guid( unicode )" );
+       class_name.assign(STRING_VIEW("wfc_is_guid( unicode )"));
        test_number_that_failed = 4;
        return( failure() );
    }
 
    if ( wfc_is_guid( bad1_plain_wide_guid ) != false )
    {
-       class_name.assign( "wfc_is_guid( unicode )" );
+       class_name.assign(STRING_VIEW("wfc_is_guid( unicode )"));
        test_number_that_failed = 5;
        return( failure() );
    }
 
    if ( wfc_is_guid( bad2_plain_wide_guid ) == false )
    {
-       class_name.assign( "wfc_is_guid( unicode )" );
+       class_name.assign(STRING_VIEW("wfc_is_guid( unicode )"));
        test_number_that_failed = 6;
        return( failure() );
    }
 
    if ( wfc_is_guid_with_curlies( good_curly_ascii_guid ) == false )
    {
-       class_name.assign( "wfc_is_guid_with_curlies( ascii )" );
+       class_name.assign(STRING_VIEW("wfc_is_guid_with_curlies( ascii )"));
        test_number_that_failed = 7;
        return( failure() );
    }
 
    if ( wfc_is_guid_with_curlies( bad1_curly_ascii_guid ) != false )
    {
-       class_name.assign( "wfc_is_guid_with_curlies( ascii )" );
+       class_name.assign(STRING_VIEW("wfc_is_guid_with_curlies( ascii )"));
        test_number_that_failed = 8;
        return( failure() );
    }
 
    if ( wfc_is_guid_with_curlies( bad2_curly_ascii_guid ) != false )
    {
-       class_name.assign( "wfc_is_guid_with_curlies( ascii )" );
+       class_name.assign(STRING_VIEW("wfc_is_guid_with_curlies( ascii )"));
        test_number_that_failed = 9;
        return( failure() );
    }
 
    if ( wfc_is_guid_with_curlies( good_curly_wide_guid ) == false )
    {
-       class_name.assign( "wfc_is_guid_with_curlies( unicode )" );
+       class_name.assign(STRING_VIEW("wfc_is_guid_with_curlies( unicode )"));
        test_number_that_failed = 10;
        return( failure() );
    }
 
    if ( wfc_is_guid_with_curlies( bad1_curly_wide_guid ) != false )
    {
-       class_name.assign( "wfc_is_guid_with_curlies( unicode )" );
+       class_name.assign(STRING_VIEW("wfc_is_guid_with_curlies( unicode )"));
        test_number_that_failed = 11;
        return( failure() );
    }
 
    if ( wfc_is_guid_with_curlies( bad2_curly_wide_guid ) != false )
    {
-       class_name.assign( "wfc_is_guid_with_curlies( unicode2 )" );
+       class_name.assign(STRING_VIEW("wfc_is_guid_with_curlies( unicode2 )"));
        test_number_that_failed = 12;
        return( failure() );
    }
 
    if ( wfc_find_curly_guid( reinterpret_cast<uint8_t const *>(good_curly_ascii_guid), strlen( good_curly_ascii_guid ) ) != 0 )
    {
-       class_name.assign( "wfc_find_curly_guid()" );
+       class_name.assign(STRING_VIEW("wfc_find_curly_guid()"));
        test_number_that_failed = 13;
        return( failure() );
    }
 
    if ( wfc_find_wide_curly_guid( reinterpret_cast<uint8_t const *>(good_curly_wide_guid), wcslen( good_curly_wide_guid ) * sizeof( wchar_t ) ) != 0 )
    {
-       class_name.assign( "wfc_find_wide_curly_guid()" );
+       class_name.assign(STRING_VIEW("wfc_find_wide_curly_guid()"));
        test_number_that_failed = 14;
        return( failure() );
    }
 
    if ( is_bad_handle( (HANDLE) NULL ) == false )
    {
-       class_name.assign( "NULL is not a valid handle" );
+       class_name.assign(STRING_VIEW("NULL is not a valid handle"));
        test_number_that_failed = 15;
        return( failure() );
    }
 
    if ( is_bad_handle( (HANDLE) INVALID_HANDLE_VALUE ) == false )
    {
-       class_name.assign( "INVALID_HANDLE_VALUE is not a valid handle" );
+       class_name.assign(STRING_VIEW("INVALID_HANDLE_VALUE is not a valid handle"));
        test_number_that_failed = 16;
        return( failure() );
    }
 
    if (round_down_to_a_multiple_of(1025, 512) != 1024)
    {
-       class_name.assign("round_down_to_a_multiple_of");
+       class_name.assign(STRING_VIEW("round_down_to_a_multiple_of"));
        test_number_that_failed = 17;
        return(failure());
    }
 
    if (round_down_to_a_multiple_of(512, 512) != 512)
    {
-       class_name.assign("round_down_to_a_multiple_of");
+       class_name.assign(STRING_VIEW("round_down_to_a_multiple_of"));
        test_number_that_failed = 18;
        return(failure());
    }
 
    if (round_down_to_a_multiple_of(1023, 512) != 512)
    {
-       class_name.assign("round_down_to_a_multiple_of");
+       class_name.assign(STRING_VIEW("round_down_to_a_multiple_of"));
        test_number_that_failed = 19;
        return(failure());
    }
 
    if (round_down_to_a_multiple_of(1024, 512) != 1024)
    {
-       class_name.assign("round_down_to_a_multiple_of");
+       class_name.assign(STRING_VIEW("round_down_to_a_multiple_of"));
        test_number_that_failed = 20;
        return(failure());
    }
 
    if (round_down_to_a_multiple_of(1024, 0) != 0)
    {
-       class_name.assign("round_down_to_a_multiple_of");
+       class_name.assign(STRING_VIEW("round_down_to_a_multiple_of"));
        test_number_that_failed = 21;
        return(failure());
    }
 
    if (round_down_to_a_multiple_of(511, 512) != 0)
    {
-       class_name.assign("round_down_to_a_multiple_of");
+       class_name.assign(STRING_VIEW("round_down_to_a_multiple_of"));
        test_number_that_failed = 22;
        return(failure());
    }

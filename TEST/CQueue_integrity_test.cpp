@@ -46,19 +46,18 @@
 // to run this test. You will never get into a
 // deadlock.
 
-typedef struct _queue_integrity_workspace
+ struct QUEUE_INTEGRITY_WORKSPACE
 {
-   CQueue *       queue_p;
-   ULARGE_INTEGER number_of_operations;
-   DWORD          number_of_loops;
-   DWORD          checksum;
-   bool           thread_exitted;
-}
-QUEUE_INTEGRITY_WORKSPACE;
+    CQueue *      queue_p{ nullptr };
+    ULARGE_INTEGER number_of_operations{ 0, 0 };
+    DWORD          number_of_loops{ 0 };
+    DWORD          checksum{ 0 };
+    bool           thread_exitted{ false };
+};
 
 void queue_integrity_add_thread( void * p ) noexcept
 {
-   QUEUE_INTEGRITY_WORKSPACE * workspace_p = (QUEUE_INTEGRITY_WORKSPACE *) p;
+   auto workspace_p = static_cast<QUEUE_INTEGRITY_WORKSPACE *>(p);
 
    if ( workspace_p == NULL )
    {
@@ -69,7 +68,7 @@ void queue_integrity_add_thread( void * p ) noexcept
    workspace_p->checksum                      = 0;
    workspace_p->thread_exitted                = false;
 
-   CQueue * queue_p = workspace_p->queue_p;
+   auto queue_p = workspace_p->queue_p;
 
    DWORD item           = 0;
    DWORD checksum_index = 0;
@@ -86,14 +85,14 @@ void queue_integrity_add_thread( void * p ) noexcept
 
       checksum_index = 0;
 
-      while( _bittest( reinterpret_cast<LONG const *>(&workspace_p->checksum), 31 ) == 0 &&
+      while( _bittest( reinterpret_cast<LONG const *>(&workspace_p->checksum), 31 ) == 0 and
              checksum_index < 32 )
       {
          workspace_p->checksum <<= 1;
          checksum_index++;
       }
 
-      workspace_p->checksum ^= item;
+      workspace_p->checksum xor_eq item;
    }
 
    _tprintf( TEXT( "Add: %lu items checksummed to %08lX\n" ),
@@ -105,7 +104,7 @@ void queue_integrity_add_thread( void * p ) noexcept
 
 void queue_integrity_get_thread( void * p ) noexcept
 {
-   QUEUE_INTEGRITY_WORKSPACE * workspace_p = (QUEUE_INTEGRITY_WORKSPACE *) p;
+   auto workspace_p = static_cast<QUEUE_INTEGRITY_WORKSPACE *>(p);
 
    if ( workspace_p == NULL )
    {
@@ -132,14 +131,14 @@ void queue_integrity_get_thread( void * p ) noexcept
 
          checksum_index = 0;
 
-         while( _bittest( reinterpret_cast<LONG const *>(&workspace_p->checksum), 31 ) == 0 &&
+         while( _bittest( reinterpret_cast<LONG const *>(&workspace_p->checksum), 31 ) == 0 and
                 checksum_index < 32 )
          {
             workspace_p->checksum <<= 1;
             checksum_index++;
          }
 
-         workspace_p->checksum ^= item;
+         workspace_p->checksum xor_eq item;
       }
       else
       {
@@ -159,7 +158,7 @@ _Check_return_ bool CQueue_integrity_test( _Out_ std::string& class_name, _Out_ 
 {
    WFCTRACEINIT( TEXT( "CQueue_integrity_test()" ) );
 
-   class_name.assign( "CQueue Integrity" );
+   class_name.assign(STRING_VIEW("CQueue Integrity"));
 
    test_number_that_failed = 1; // There's only one test
 

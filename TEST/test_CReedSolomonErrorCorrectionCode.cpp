@@ -48,9 +48,9 @@ static char THIS_FILE[] = __FILE__;
 #define new DEBUG_NEW
 #endif // _DEBUG
 
-__checkReturn bool test_CReedSolomonErrorCorrectionCode( __out std::string& class_name, __out int& test_number_that_failed ) noexcept
+_Check_return_ bool test_CReedSolomonErrorCorrectionCode( __out std::string& class_name, __out int& test_number_that_failed ) noexcept
 {
-    class_name.assign( "CReedSolomonErrorCorrectionCode" );
+    class_name.assign(STRING_VIEW("CReedSolomonErrorCorrectionCode"));
 
     test_number_that_failed = 1;
 

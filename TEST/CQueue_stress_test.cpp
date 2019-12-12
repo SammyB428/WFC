@@ -46,17 +46,16 @@
 // to run this test. You will never get into a
 // deadlock.
 
-typedef struct _queue_workspace
+ struct QUEUE_WORKSPACE
 {
-   CQueue *       queue_p;
-   ULARGE_INTEGER number_of_operations;
-   bool           exit_thread;
-}
-QUEUE_WORKSPACE;
+    CQueue *       queue_p{ nullptr };
+    ULARGE_INTEGER number_of_operations{ 0, 0 };
+    bool           exit_thread{ false };
+};
 
 void queue_add_thread( void * p )
 {
-   QUEUE_WORKSPACE * workspace_p = (QUEUE_WORKSPACE *) p;
+   auto workspace_p = static_cast<QUEUE_WORKSPACE *>(p);
 
    if ( workspace_p == nullptr)
    {
@@ -65,7 +64,7 @@ void queue_add_thread( void * p )
 
    workspace_p->number_of_operations.QuadPart = 0;
 
-   CQueue * queue_p = workspace_p->queue_p;
+   auto queue_p = workspace_p->queue_p;
 
 #pragma warning( disable : 4312 )
    void * item = (void *) 0xFFFFFFFF;
@@ -81,7 +80,7 @@ void queue_add_thread( void * p )
 
 void queue_get_thread( void * p )
 {
-   QUEUE_WORKSPACE * workspace_p = (QUEUE_WORKSPACE *) p;
+   auto workspace_p = static_cast<QUEUE_WORKSPACE *>(p);
 
    if ( workspace_p == nullptr )
    {
@@ -90,7 +89,7 @@ void queue_get_thread( void * p )
 
    workspace_p->number_of_operations.QuadPart = 0;
 
-   CQueue * queue_p = workspace_p->queue_p;
+   auto queue_p = workspace_p->queue_p;
 
    void * item = nullptr;
 
@@ -105,7 +104,7 @@ void queue_get_thread( void * p )
 
 _Check_return_ bool CQueue_stress_test( _Out_ std::string& class_name, _Out_ int& test_number_that_failed ) noexcept
 {
-   class_name.assign( "CQueue Stress" );
+   class_name.assign(STRING_VIEW("CQueue Stress"));
 
    test_number_that_failed = 1; // There's only one test...
 

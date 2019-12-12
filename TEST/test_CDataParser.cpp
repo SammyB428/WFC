@@ -401,7 +401,7 @@ static _Check_return_ bool test_class(_Inout_ CDataParser& parser, _Inout_ int& 
 
 _Check_return_ bool test_CDataParser( _Out_ std::string& class_name, _Out_ int& test_number_that_failed ) noexcept
 {
-    class_name.assign( "CDataParser" );
+    class_name.assign(STRING_VIEW("CDataParser"));
 
     std::vector<uint8_t> bytes;
 
@@ -960,7 +960,7 @@ _Check_return_ bool test_CDataParser( _Out_ std::string& class_name, _Out_ int& 
         return( failure() );
     }
 
-    std::wstring string_to_find( L"cdE" );
+    std::wstring string_to_find(WSTRING_VIEW(L"cdE"));
 
     found_at.Empty();
 
@@ -1097,7 +1097,7 @@ _Check_return_ bool test_CDataParser( _Out_ std::string& class_name, _Out_ int& 
         return( failure() );
     }
 
-    if ( string_to_be_gotten.compare( L"ABCDE" ) != I_AM_EQUAL_TO_THAT )
+    if ( string_to_be_gotten.compare(WSTRING_VIEW(L"ABCDE")) != I_AM_EQUAL_TO_THAT )
     {
         test_number_that_failed = 1058;
         return( failure() );

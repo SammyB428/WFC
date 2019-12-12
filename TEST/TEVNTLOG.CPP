@@ -80,7 +80,7 @@ void test_CEventLog( void ) noexcept
       WFCTRACEVAL( TEXT( "Log: " ), log_name.c_str() );
    }
 
-   if ( log.CreateCustomLog( TEXT( "WFC" ) ) == false )
+   if ( log.CreateCustomLog(WSTRING_VIEW(L"WFC")) == false )
    {
       WFCTRACE( TEXT( "Can't create WFC event log because" ) );
       WFCTRACEERROR( log.GetErrorCode() );
@@ -92,7 +92,7 @@ void test_CEventLog( void ) noexcept
       WFCTRACEERROR( log.GetErrorCode() );
    }
 
-   if ( log.RegisterSource( TEXT( "WFC" ) ) == false )
+   if ( log.RegisterSource(WSTRING_VIEW(L"WFC")) == false )
    {
       WFCTRACE( TEXT( "Can't Open WFC event log because" ) );
       WFCTRACEERROR( log.GetErrorCode() );
@@ -122,7 +122,7 @@ void test_CEventLog( void ) noexcept
    ASSERT( loop_index != 0 );
 
 #if 1
-   if ( log.Delete( TEXT( "WFC" ) ) == false )
+   if ( log.Delete(WSTRING_VIEW(L"WFC")) == false )
    {
       WFCTRACE( TEXT( "Can't delete WFC event log because" ) );
       WFCTRACEERROR( log.GetErrorCode() );

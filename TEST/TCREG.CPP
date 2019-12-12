@@ -50,7 +50,7 @@ static char THIS_FILE[] = __FILE__;
 
 _Check_return_ bool test_CRegistry(_Out_ std::string& class_name, _Out_ int& test_number_that_failed ) noexcept
 {
-   class_name.assign( "CRegistry" );
+   class_name.assign( STRING_VIEW("CRegistry") );
 
    test_number_that_failed = 1;
 
@@ -64,7 +64,7 @@ _Check_return_ bool test_CRegistry(_Out_ std::string& class_name, _Out_ int& tes
 
    // Open HKEY_CURRENT_USER\Software
 
-   if ( registry.Open( TEXT( "Software" ), (CRegistry::CreatePermissions)(CRegistry::permissionRead | CRegistry::permissionSetValue ) ) == false )
+   if ( registry.Open( L"Software", (CRegistry::CreatePermissions)(CRegistry::permissionRead bitor CRegistry::permissionSetValue ) ) == false )
    {
       ReportError( registry.GetErrorCode() );
       test_number_that_failed = 2;
@@ -73,7 +73,7 @@ _Check_return_ bool test_CRegistry(_Out_ std::string& class_name, _Out_ int& tes
 
    // Let's create a sub-key
 
-   if ( registry.Create( TEXT( "Software\\WFC" ) ) == false )
+   if ( registry.Create( L"Software\\WFC" ) == false )
    {
       ReportError( registry.GetErrorCode() );
       test_number_that_failed = 3;
@@ -100,7 +100,7 @@ _Check_return_ bool test_CRegistry(_Out_ std::string& class_name, _Out_ int& tes
 
    // Now let's enumerate the sub keys.
 
-   if ( registry.Open( TEXT( "Software\\WFC" ), (CRegistry::CreatePermissions)(CRegistry::permissionRead | CRegistry::permissionSetValue ) ) == false )
+   if ( registry.Open( TEXT( "Software\\WFC" ), (CRegistry::CreatePermissions)(CRegistry::permissionRead bitor CRegistry::permissionSetValue ) ) == false )
    {
       ReportError( registry.GetErrorCode() );
       test_number_that_failed = 6;
@@ -160,7 +160,7 @@ _Check_return_ bool test_CRegistry(_Out_ std::string& class_name, _Out_ int& tes
    }
    else
    {
-      if ( temp_sammy.compare( L"Sammy" ) == I_AM_EQUAL_TO_THAT )
+      if ( temp_sammy.compare(WSTRING_VIEW(L"Sammy")) == I_AM_EQUAL_TO_THAT )
       {
          //WFCTRACE( TEXT( "GetValue OK" ) );
       }

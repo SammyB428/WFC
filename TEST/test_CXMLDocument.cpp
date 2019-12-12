@@ -53,14 +53,14 @@ static char THIS_FILE[] = __FILE__;
 
 _Check_return_ bool test_CXMLDocument( _Out_ std::string& class_name, _Out_ int& test_number_that_failed ) noexcept
 {
-    class_name.assign( "CExtensibleMarkupLanguageDocument" );
+    class_name.assign(STRING_VIEW("CExtensibleMarkupLanguageDocument"));
     test_number_that_failed = 0;
 
     CExtensibleMarkupLanguageDocument xml;
 
     std::vector<uint8_t> bytes;
 
-    (void) xml.SetWriteOptions( WFC_XML_WRITE_AS_UNICODE | WFC_XML_WRITE_AS_BIG_ENDIAN );
+    (void) xml.SetWriteOptions( WFC_XML_WRITE_AS_UNICODE bitor WFC_XML_WRITE_AS_BIG_ENDIAN );
 
     xml.WriteTo( bytes );
 
@@ -170,7 +170,7 @@ _Check_return_ bool test_CXMLDocument( _Out_ std::string& class_name, _Out_ int&
 
     // UCS4, Big Endian
 
-    (void) xml.SetWriteOptions( WFC_XML_WRITE_AS_UCS4 | WFC_XML_WRITE_AS_BIG_ENDIAN );
+    (void) xml.SetWriteOptions( WFC_XML_WRITE_AS_UCS4 bitor WFC_XML_WRITE_AS_BIG_ENDIAN );
 
     xml.WriteTo( bytes );
 
@@ -346,7 +346,7 @@ _Check_return_ bool test_CXMLDocument( _Out_ std::string& class_name, _Out_ int&
 
     DWORD parse_options = xml.GetParseOptions();
 
-    (void) xml.SetParseOptions( parse_options | WFC_XML_ALLOW_AMPERSANDS_IN_ELEMENTS );
+    (void) xml.SetParseOptions( parse_options bitor WFC_XML_ALLOW_AMPERSANDS_IN_ELEMENTS );
 
 //    if ( xml.Parse( parser ) != true )
   // {
@@ -426,7 +426,7 @@ _Check_return_ bool test_CXMLDocument( _Out_ std::string& class_name, _Out_ int&
         return(failure());
     }
 
-    auto mhmd_element = root->GetChild(L"mhmd");
+    auto mhmd_element = root->GetChild(WSTRING_VIEW(L"mhmd"));
 
     if (mhmd_element == nullptr)
     {
@@ -475,7 +475,7 @@ _Check_return_ bool test_CXMLDocument( _Out_ std::string& class_name, _Out_ int&
         return(failure());
     }
 
-    std::wstring sam(L"Sam");
+    std::wstring sam(WSTRING_VIEW(L"Sam"));
 
     bytes.clear();
 
@@ -546,12 +546,11 @@ _Check_return_ bool test_CXMLDocument( _Out_ std::string& class_name, _Out_ int&
 
     bytes.clear();
 
-    std::string test_text("<?xml version=\"1.0\" standalone=\"yes\"?>\n");
+    std::string test_text(STRING_VIEW("<?xml version=\"1.0\" standalone=\"yes\"?>\n"));
 
-    test_text.append("<prop>Hello</prop> <prop>World</prop>");
-
-    test_text.assign("<?xml version=\"1.0\" standalone=\"yes\"?>\n");
-    test_text.append("<root><prop>Hello</prop> <prop>World</prop></root>");
+    test_text.append(STRING_VIEW("<prop>Hello</prop> <prop>World</prop>"));
+    test_text.assign(STRING_VIEW("<?xml version=\"1.0\" standalone=\"yes\"?>\n"));
+    test_text.append(STRING_VIEW("<root><prop>Hello</prop> <prop>World</prop></root>"));
 
     (void)parser.Initialize(reinterpret_cast<uint8_t const *>(test_text.data()), test_text.length());
 

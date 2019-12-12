@@ -118,8 +118,8 @@ void test_CNetworkUsers( __in_z LPCTSTR machine_name ) noexcept
 
    user_information.Empty();
 
-   user_information.Name.assign( L"Laura" );
-   user_information.Password.assign( L"LovesSammy" );
+   user_information.Name.assign(WSTRING_VIEW(L"Laura"));
+   user_information.Password.assign(WSTRING_VIEW(L"LovesSammy"));
 
    user_information.SetAddDefaults();
 

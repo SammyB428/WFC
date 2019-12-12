@@ -44,6 +44,7 @@
 #define TESTING_HEADER_FILE_INCLUDED
 
 #define WFC_SILENT
+#include <ciso646>
 #include "../include/wfc.h"
 
 USING_WFC_NAMESPACE
@@ -52,7 +53,7 @@ USING_WFC_NAMESPACE
 
 _Check_return_ bool failure( void ) noexcept;
 
-typedef _Check_return_ bool(*TEST_FUNCTION)( __out std::string&, __out int& );
+using TEST_FUNCTION = bool(*)( __out std::string&, __out int& );
 
 _Check_return_ bool CQueue_integrity_test( __out std::string& class_name, __out int& test_number_that_failed ) noexcept;
 _Check_return_ bool CQueue_stress_test( __out std::string& class_name, __out int& test_number_that_failed ) noexcept;
@@ -79,7 +80,7 @@ void ReportError( __in DWORD const error_code ) noexcept;
 void test_CloseHandle( void ) noexcept;
 void test_CEventLog( void ) noexcept;
 void test_CFileTransferProtocol( void ) noexcept;
-void test_CLZFile( __in_z LPTSTR lz_file_name ) noexcept;
+void test_CLZFile( _In_ std::wstring_view lz_file_name ) noexcept;
 _Check_return_ bool test_CNetResource( __out std::string& class_name, __out int& test_number_that_failed ) noexcept;
 void test_CNetSession( LPCTSTR machine_name ) noexcept;
 void test_CNetwork( LPCTSTR machine_name ) noexcept;

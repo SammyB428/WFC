@@ -50,7 +50,8 @@ static char THIS_FILE[] = __FILE__;
 
 void ReportError( __in DWORD const error_code ) noexcept
 {
-   LPVOID lpMessageBuffer;
+   LPVOID lpMessageBuffer = nullptr;
+
    FormatMessage(
   FORMAT_MESSAGE_ALLOCATE_BUFFER |
   FORMAT_MESSAGE_FROM_SYSTEM,

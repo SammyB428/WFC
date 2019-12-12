@@ -61,7 +61,7 @@ _Check_return_ bool test_CNetResource( _Out_ std::string& class_name, _Out_ int&
 {
    WFCTRACEINIT( TEXT( "test_CNetResource()" ) );
 
-   class_name.assign( "CNetworkResources" );
+   class_name.assign(STRING_VIEW("CNetworkResources"));
    test_number_that_failed = 1;
 
    CNetworkResources net_resource;
@@ -69,7 +69,7 @@ _Check_return_ bool test_CNetResource( _Out_ std::string& class_name, _Out_ int&
    CNetworkResourceInformation information;
 
    information.Scope = static_cast<DWORD>(CNetworkResources::Scope::All);
-   information.Usage = CNetworkResources::usageConnectable | CNetworkResources::usageContainer;
+   information.Usage = CNetworkResources::usageConnectable bitor CNetworkResources::usageContainer;
    information.Type  = CNetworkResources::typeDisk;
 
    if ( net_resource.Enumerate( information ) == true )

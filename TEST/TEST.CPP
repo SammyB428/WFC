@@ -54,7 +54,7 @@ static char THIS_FILE[] = __FILE__;
 extern "C"
 #endif
 
-typedef VOID (*GET_RANDOM_DWORD_FUNCTION)( DWORD * );
+using GET_RANDOM_DWORD_FUNCTION = VOID(*)(DWORD *);
 
 _Check_return_ bool failure( void ) noexcept
 {
@@ -73,7 +73,7 @@ _Check_return_ int _tmain( _In_ int const number_of_command_line_arguments, _In_
    GUID const interface_id   = { 0xdccfc164, 0x2b38, 0x11d2, 0xb7, 0xec, 0x00, 0xc0, 0x4f, 0x8f, 0x5d, 0x9a };
 
    HRESULT result = CoCreateInstance( mlang_class_id, NULL,
-      CLSCTX_INPROC_SERVER | CLSCTX_LOCAL_SERVER,
+      CLSCTX_INPROC_SERVER bitor CLSCTX_LOCAL_SERVER,
       interface_id,
       (LPVOID *) &i );
 
@@ -107,7 +107,7 @@ _Check_return_ int _tmain( _In_ int const number_of_command_line_arguments, _In_
        }
    }
 
-   if (saw_zero != true || saw_one != true || saw_two != true)
+   if (saw_zero == false or saw_one == false or saw_two == false)
    {
        printf("Failed Range test 1\n");
    }
@@ -132,7 +132,7 @@ _Check_return_ int _tmain( _In_ int const number_of_command_line_arguments, _In_
        }
    }
 
-   if (saw_zero == true || saw_one != true || saw_two != true)
+   if (saw_zero == true or saw_one == false or saw_two == false)
    {
        printf("Failed Range test 2\n");
    }
@@ -141,7 +141,7 @@ _Check_return_ int _tmain( _In_ int const number_of_command_line_arguments, _In_
 //   test_CloseHandle();
 //   test_CEventLog();
 //   test_CFileTransferProtocol();
-//   test_CLZFile( TEXT( "b:\\ctl3d32.dl_" ) );
+//   test_CLZFile( WSTRING_VIEW(L"b:\\ctl3d32.dl_") );
 //   test_CNetSession( NULL );
 //   test_CNetwork( NULL );
 //   test_CNetwork( TEXT( "ftp" ) );

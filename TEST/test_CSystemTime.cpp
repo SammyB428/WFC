@@ -48,11 +48,11 @@ static char THIS_FILE[] = __FILE__;
 #define new DEBUG_NEW
 #endif // _DEBUG
 
-__checkReturn bool test_CSystemTime( __out std::string& class_name, __out int& test_number_that_failed ) noexcept
+_Check_return_ bool test_CSystemTime( __out std::string& class_name, __out int& test_number_that_failed ) noexcept
 {
    WFCTRACEINIT( TEXT( "test_CSystemTime()" ) );
 
-   class_name.assign( "CSystemTime" );
+   class_name.assign(STRING_VIEW("CSystemTime"));
 
    TIMESTAMP_STRUCT timestamp_struct;
 
@@ -169,12 +169,12 @@ __checkReturn bool test_CSystemTime( __out std::string& class_name, __out int& t
    uint64_t const ticks = 129748979200327745I64;
 
    CFileTime ft;
-   
+ 
    ft.CopyTicks( ticks );
 
    std::wstring postgresql_timestamp = ft.PostgreSQLTimestamp();
 
-   if ( postgresql_timestamp.compare( L"2012-02-28 10:18:40.032774" ) != I_AM_EQUAL_TO_THAT )
+   if ( postgresql_timestamp.compare(WSTRING_VIEW(L"2012-02-28 10:18:40.032774")) != I_AM_EQUAL_TO_THAT )
    {
        test_number_that_failed = 13;
        return( failure() );

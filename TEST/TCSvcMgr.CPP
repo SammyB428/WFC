@@ -50,7 +50,7 @@ static char THIS_FILE[] = __FILE__;
 
 __checkReturn bool test_CServiceControlManager( __out std::string& class_name, __out int& test_number_that_failed ) noexcept
 {
-   class_name.assign( "CServiceControlManager" );
+   class_name.assign(STRING_VIEW("CServiceControlManager"));
    test_number_that_failed = 1;
 
    CServiceControlManager manager;

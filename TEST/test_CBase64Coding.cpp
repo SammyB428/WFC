@@ -50,7 +50,7 @@ static char THIS_FILE[] = __FILE__;
 
 _Check_return_ bool test_CBase64Coding( _Out_ std::string& class_name, _Out_ int& test_number_that_failed ) noexcept
 {
-    class_name.assign( "CBase64Coding" );
+    class_name.assign(STRING_VIEW("CBase64Coding"));
 
     test_number_that_failed = 0;
 
@@ -69,7 +69,7 @@ _Check_return_ bool test_CBase64Coding( _Out_ std::string& class_name, _Out_ int
 
     (void) coder.Encode( bytes_to_encode, encoded_string );
 
-    if ( encoded_string.compare( L"MTExMA==" ) != I_AM_EQUAL_TO_THAT)
+    if ( encoded_string.compare(WSTRING_VIEW(L"MTExMA==")) != I_AM_EQUAL_TO_THAT)
     {
         //WFCTRACE( TEXT( "Coder failed." ) );
         test_number_that_failed = 1;
@@ -79,7 +79,7 @@ _Check_return_ bool test_CBase64Coding( _Out_ std::string& class_name, _Out_ int
     // 2000-09-14
     // Test scenario from a bug report by Petr Stejskal [stejsky@volny.cz]
 
-    std::wstring data_string( L"SNIMAC_01_________________________________________________________KONEC" );
+    std::wstring data_string(WSTRING_VIEW(L"SNIMAC_01_________________________________________________________KONEC"));
 
     std::vector<uint8_t> data;
 
@@ -193,9 +193,9 @@ _Check_return_ bool test_CBase64Coding( _Out_ std::string& class_name, _Out_ int
         return(failure());
     }
 
-    if (bytes[ 0 ] != 0 ||
-        bytes[ 1 ] != 1 ||
-        bytes[ 2 ] != 0xFF ||
+    if (bytes[ 0 ] != 0 or
+        bytes[ 1 ] != 1 or
+        bytes[ 2 ] != 0xFF or
         bytes[ 3 ] != 0xFE )
     {
         test_number_that_failed = 45;
@@ -217,10 +217,10 @@ _Check_return_ bool test_CBase64Coding( _Out_ std::string& class_name, _Out_ int
         return(failure());
     }
 
-    if (bytes[0] != 0xAA ||
-        bytes[1] != 0xBB ||
-        bytes[2] != 8 ||
-        bytes[3] != 9 ||
+    if (bytes[0] != 0xAA or
+        bytes[1] != 0xBB or
+        bytes[2] != 8 or
+        bytes[3] != 9 or
         bytes[4] != 0x10 )
     {
         test_number_that_failed = 47;
@@ -231,7 +231,7 @@ _Check_return_ bool test_CBase64Coding( _Out_ std::string& class_name, _Out_ int
 
     CFile64 input_file;
 
-    if (input_file.Open(L"C:\\Temp\\Test.b64", read_file_open_mode()) == true)
+    if (input_file.Open(WSTRING_VIEW(L"C:\\Temp\\Test.b64"), read_file_open_mode()) == true)
     {
         std::size_t const buffer_size = input_file.GetLength();
 

@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 2000-2018, Samuel R. Blackburn
+** Copyright, 2000-2019, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -50,7 +50,7 @@ static char THIS_FILE[] = __FILE__;
 
 __checkReturn bool test_CUUCoding( __out std::string& class_name, __out int& test_number_that_failed ) noexcept
 {
-    class_name.assign( "CUUCoding" );
+    class_name.assign(STRING_VIEW("CUUCoding"));
 
     std::vector<uint8_t> bytes_to_encode;
 
@@ -77,13 +77,13 @@ __checkReturn bool test_CUUCoding( __out std::string& class_name, __out int& tes
 
     CFile64 output_file;
 
-    if ( output_file.Open( TEXT( "Output.uue" ), CFile64::modeCreate | CFile64::modeWrite ) != false )
+    if ( output_file.Open( TEXT( "Output.uue" ), CFile64::modeCreate bitor CFile64::modeWrite ) != false )
     {
         output_file.Write( encoded_bytes.GetData(), encoded_bytes.GetSize() );
         output_file.Close();
     }
 
-    if ( output_file.Open( TEXT( "Input.bin" ), CFile64::modeCreate | CFile64::modeWrite ) != false )
+    if ( output_file.Open( TEXT( "Input.bin" ), CFile64::modeCreate bitor CFile64::modeWrite ) != false )
     {
         output_file.Write( bytes_to_encode.GetData(), bytes_to_encode.GetSize() );
         output_file.Close();

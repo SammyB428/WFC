@@ -119,272 +119,272 @@ void list_features( DWORD low, DWORD high )
 {
    WFCTRACEINIT( TEXT( "list_features()" ) );
 
-   if ( low & TAPE_DRIVE_COMPRESSION )
+   if ( is_flagged(low, TAPE_DRIVE_COMPRESSION) == true )
    {
       WFCTRACE( TEXT( "Device supports hardware data compression." ) );
    }
 
-   if ( low & TAPE_DRIVE_ECC )
+   if ( is_flagged(low, TAPE_DRIVE_ECC ) == true )
    {
       WFCTRACE( TEXT( "Device supports hardware error correction." ) );
    }
 
-   if ( low & TAPE_DRIVE_ERASE_BOP_ONLY )
+   if (is_flagged( low, TAPE_DRIVE_ERASE_BOP_ONLY ) == true )
    {
       WFCTRACE( TEXT( "Device performs the erase operation from the beginning-of-partition marker only." ) );
    }
 
-   if ( low & TAPE_DRIVE_ERASE_LONG )
+   if (is_flagged(low, TAPE_DRIVE_ERASE_LONG ) == true )
    {
       WFCTRACE( TEXT( "Device performs a long erase operation." ) );
    }
 
-   if ( low & TAPE_DRIVE_ERASE_IMMEDIATE )
+   if (is_flagged(low, TAPE_DRIVE_ERASE_IMMEDIATE ) == true )
    {
       WFCTRACE( TEXT( "Device performs an immediate erase operation that is, it returns when the erase operation begins." ) );
    }
 
-   if ( low & TAPE_DRIVE_ERASE_SHORT )
+   if (is_flagged(low, TAPE_DRIVE_ERASE_SHORT ) == true )
    {
       WFCTRACE( TEXT( "Device performs a short erase operation." ) );
    }
 
-   if ( low & TAPE_DRIVE_FIXED )
+   if (is_flagged( low, TAPE_DRIVE_FIXED ) == true )
    {
       WFCTRACE( TEXT( "Device creates fixed data partitions." ) );
    }
 
-   if ( low & TAPE_DRIVE_FIXED_BLOCK )
+   if (is_flagged(low, TAPE_DRIVE_FIXED_BLOCK ) == true )
    {
       WFCTRACE( TEXT( "Device supports fixed-length block mode." ) );
    }
 
-   if ( low & TAPE_DRIVE_INITIATOR )
+   if (is_flagged( low, TAPE_DRIVE_INITIATOR ) == true )
    {
       WFCTRACE( TEXT( "Device creates initiator-defined partitions." ) );
    }
 
-   if ( low & TAPE_DRIVE_PADDING )
+   if (is_flagged(low, TAPE_DRIVE_PADDING ) == true )
    {
       WFCTRACE( TEXT( "Device supports data padding." ) );
    }
 
-   if ( low & TAPE_DRIVE_GET_ABSOLUTE_BLK )
+   if (is_flagged(low,  TAPE_DRIVE_GET_ABSOLUTE_BLK ) == true )
    {
       WFCTRACE( TEXT( "Device provides the current device-specific block address." ) );
    }
 
-   if ( low & TAPE_DRIVE_GET_LOGICAL_BLK )
+   if (is_flagged(low, TAPE_DRIVE_GET_LOGICAL_BLK ) == true )
    {
       WFCTRACE( TEXT( "Device provides the current logical block address (and logical tape partition)." ) );
    }
 
-   if ( low & TAPE_DRIVE_REPORT_SMKS )
+   if (is_flagged(low, TAPE_DRIVE_REPORT_SMKS ) == true )
    {
       WFCTRACE( TEXT( "Device supports setmark reporting." ) );
    }
 
-   if ( low & TAPE_DRIVE_SELECT )
+   if (is_flagged(low, TAPE_DRIVE_SELECT ) == true )
    {
       WFCTRACE( TEXT( "Device creates select data partitions." ) );
    }
 
-   if ( low & TAPE_DRIVE_SET_EOT_WZ_SIZE )
+   if (is_flagged(low, TAPE_DRIVE_SET_EOT_WZ_SIZE ) == true )
    {
       WFCTRACE( TEXT( "Device supports setting the end-of-medium warning size." ) );
    }
 
-   if ( low & TAPE_DRIVE_TAPE_CAPACITY )
+   if (is_flagged(low, TAPE_DRIVE_TAPE_CAPACITY ) == true )
    {
       WFCTRACE( TEXT( "Device returns the maximum capacity of the tape." ) );
    }
 
-   if ( low & TAPE_DRIVE_TAPE_REMAINING )
+   if (is_flagged(low, TAPE_DRIVE_TAPE_REMAINING ) == true )
    {
       WFCTRACE( TEXT( "Device returns the remaining capacity of the tape." ) );
    }
 
-   if ( low & TAPE_DRIVE_VARIABLE_BLOCK )
+   if (is_flagged(low, TAPE_DRIVE_VARIABLE_BLOCK ) == true )
    {
       WFCTRACE( TEXT( "Device supports variable-length block mode." ) );
    }
 
-   if ( low & TAPE_DRIVE_WRITE_PROTECT )
+   if (is_flagged(low, TAPE_DRIVE_WRITE_PROTECT ) == true )
    {
       WFCTRACE( TEXT( "Device returns an error if the tape is write-enabled or write-protected." ) );
    }
 
-   if ( low & TAPE_DRIVE_EOT_WZ_SIZE )
+   if (is_flagged(low, TAPE_DRIVE_EOT_WZ_SIZE ) == true )
    {
       WFCTRACE( TEXT( "TAPE_DRIVE_EOT_WZ_SIZE" ) );
    }
 
-   if ( low & TAPE_DRIVE_EJECT_MEDIA )
+   if (is_flagged(low, TAPE_DRIVE_EJECT_MEDIA ) == true )
    {
       WFCTRACE( TEXT( "TAPE_DRIVE_EJECT_MEDIA" ) );
    }
 
-   if ( low & TAPE_DRIVE_CLEAN_REQUESTS )
+   if (is_flagged(low, TAPE_DRIVE_CLEAN_REQUESTS ) == true )
    {
       WFCTRACE( TEXT( "TAPE_DRIVE_CLEAN_REQUESTS" ) );
    }
 
-   if ( low & TAPE_DRIVE_SET_CMP_BOP_ONLY )
+   if (is_flagged(low, TAPE_DRIVE_SET_CMP_BOP_ONLY ) == true )
    {
       WFCTRACE( TEXT( "TAPE_DRIVE_SET_CMP_BOP_ONLY" ) );
    }
 
-   if ( high & TAPE_DRIVE_ABS_BLK_IMMED )
+   if (is_flagged(high,  TAPE_DRIVE_ABS_BLK_IMMED ) == true )
    {
       WFCTRACE( TEXT( "Device moves the tape to a device-specific block address and returns as soon as the move begins." ) );
    }
 
-   if ( high & TAPE_DRIVE_ABSOLUTE_BLK )
+   if (is_flagged(high, TAPE_DRIVE_ABSOLUTE_BLK ) == true )
    {
       WFCTRACE( TEXT( "Device moves the tape to a device specific block address." ) );
    }
 
-   if ( high & TAPE_DRIVE_END_OF_DATA )
+   if (is_flagged(high, TAPE_DRIVE_END_OF_DATA ) == true )
    {
       WFCTRACE( TEXT( "Device moves the tape to the end-of-data marker in a partition." ) );
    }
 
-   if ( high & TAPE_DRIVE_FILEMARKS )
+   if (is_flagged(high, TAPE_DRIVE_FILEMARKS ) == true )
    {
       WFCTRACE( TEXT( "Device moves the tape forward (or backward) a specified number of filemarks." ) );
    }
 
-   if ( high & TAPE_DRIVE_LOAD_UNLOAD )
+   if (is_flagged(high, TAPE_DRIVE_LOAD_UNLOAD ) == true )
    {
       WFCTRACE( TEXT( "Device enables and disables the device for further operations." ) );
    }
 
-   if ( high & TAPE_DRIVE_LOAD_UNLD_IMMED )
+   if (is_flagged(high, TAPE_DRIVE_LOAD_UNLD_IMMED ) == true )
    {
       WFCTRACE( TEXT( "Device supports immediate load and unload operations." ) );
    }
 
-   if ( high & TAPE_DRIVE_LOCK_UNLOCK )
+   if (is_flagged(high, TAPE_DRIVE_LOCK_UNLOCK ) == true )
    {
       WFCTRACE( TEXT( "Device enables and disables the tape ejection mechanism." ) );
    }
 
-   if ( high & TAPE_DRIVE_LOCK_UNLK_IMMED )
+   if (is_flagged(high, TAPE_DRIVE_LOCK_UNLK_IMMED ) == true )
    {
       WFCTRACE( TEXT( "Device supports immediate lock and unlock operations." ) );
    }
 
-   if ( high & TAPE_DRIVE_LOG_BLK_IMMED )
+   if (is_flagged(high, TAPE_DRIVE_LOG_BLK_IMMED ) == true )
    {
       WFCTRACE( TEXT( "Device moves the tape to a logical block address in a partition and returns as soon as the move begins." ) );
    }
 
-   if ( high & TAPE_DRIVE_LOGICAL_BLK )
+   if (is_flagged(high, TAPE_DRIVE_LOGICAL_BLK ) == true )
    {
       WFCTRACE( TEXT( "Device moves the tape to a logical block address in a partition." ) );
    }
 
-   if ( high & TAPE_DRIVE_RELATIVE_BLKS )
+   if (is_flagged(high, TAPE_DRIVE_RELATIVE_BLKS ) == true )
    {
       WFCTRACE( TEXT( "Device moves the tape forward (or backward) a specified number of blocks." ) );
    }
 
-   if ( high & TAPE_DRIVE_REVERSE_POSITION )
+   if (is_flagged(high, TAPE_DRIVE_REVERSE_POSITION ) == true )
    {
       WFCTRACE( TEXT( "Device moves the tape backward over blocks, filemarks, or setmarks." ) );
    }
 
-   if ( high & TAPE_DRIVE_REWIND_IMMEDIATE )
+   if (is_flagged(high, TAPE_DRIVE_REWIND_IMMEDIATE ) == true )
    {
       WFCTRACE( TEXT( "Device supports immediate rewind operation." ) );
    }
 
-   if ( high & TAPE_DRIVE_SEQUENTIAL_FMKS )
+   if (is_flagged(high, TAPE_DRIVE_SEQUENTIAL_FMKS ) == true )
    {
       WFCTRACE( TEXT( "Device moves the tape forward (or backward) to the first occurrence of a specified number of consecutive filemarks." ) );
    }
 
-   if ( high & TAPE_DRIVE_SEQUENTIAL_SMKS )
+   if (is_flagged(high , TAPE_DRIVE_SEQUENTIAL_SMKS ) == true )
    {
       WFCTRACE( TEXT( "Device moves the tape forward (or backward) to the first occurrence of a specified number of consecutive setmarks." ) );
    }
 
-   if ( high & TAPE_DRIVE_SET_BLOCK_SIZE )
+   if (is_flagged(high, TAPE_DRIVE_SET_BLOCK_SIZE ) == true )
    {
       WFCTRACE( TEXT( "Device supports setting the size of a fixed-length logical block or setting the variable-length block mode." ) );
    }
 
-   if ( high & TAPE_DRIVE_SET_COMPRESSION )
+   if (is_flagged(high, TAPE_DRIVE_SET_COMPRESSION ) == true )
    {
       WFCTRACE( TEXT( "Device enables and disables hardware data compression." ) );
    }
 
-   if ( high & TAPE_DRIVE_SET_ECC )
+   if (is_flagged(high, TAPE_DRIVE_SET_ECC ) == true )
    {
       WFCTRACE( TEXT( "Device enables and disables hardware error correction." ) );
    }
 
-   if ( high & TAPE_DRIVE_SET_PADDING )
+   if (is_flagged(high, TAPE_DRIVE_SET_PADDING ) == true )
    {
       WFCTRACE( TEXT( "Device enables and disables data padding." ) );
    }
 
-   if ( high & TAPE_DRIVE_SET_REPORT_SMKS )
+   if (is_flagged(high, TAPE_DRIVE_SET_REPORT_SMKS ) == true )
    {
       WFCTRACE( TEXT( "Device enables and disables the reporting of setmarks." ) );
    }
 
-   if ( high & TAPE_DRIVE_SETMARKS )
+   if (is_flagged(high, TAPE_DRIVE_SETMARKS ) == true )
    {
       WFCTRACE( TEXT( "Device moves the tape forward (or reverse) a specified number of setmarks." ) );
    }
 
-   if ( high & TAPE_DRIVE_SPACE_IMMEDIATE )
+   if (is_flagged(high, TAPE_DRIVE_SPACE_IMMEDIATE ) == true )
    {
       WFCTRACE( TEXT( "Device supports immediate spacing." ) );
    }
 
-   if ( high & TAPE_DRIVE_TENSION )
+   if (is_flagged(high, TAPE_DRIVE_TENSION ) == true )
    {
       WFCTRACE( TEXT( "Device supports tape tensioning." ) );
    }
 
-   if ( high & TAPE_DRIVE_TENSION_IMMED )
+   if (is_flagged(high, TAPE_DRIVE_TENSION_IMMED ) == true )
    {
       WFCTRACE( TEXT( "Device supports immediate tape tensioning." ) );
    }
 
-   if ( high & TAPE_DRIVE_WRITE_FILEMARKS )
+   if (is_flagged(high, TAPE_DRIVE_WRITE_FILEMARKS ) == true )
    {
       WFCTRACE( TEXT( "Device writes filemarks." ) );
    }
 
-   if ( high & TAPE_DRIVE_WRITE_LONG_FMKS )
+   if (is_flagged(high, TAPE_DRIVE_WRITE_LONG_FMKS ) == true )
    {
       WFCTRACE( TEXT( "Device writes long filemarks." ) );
    }
 
-   if ( high & TAPE_DRIVE_WRITE_MARK_IMMED )
+   if (is_flagged(high, TAPE_DRIVE_WRITE_MARK_IMMED ) == true )
    {
       WFCTRACE( TEXT( "Device supports immediate writing of short and long filemarks." ) );
    }
 
-   if ( high & TAPE_DRIVE_WRITE_SETMARKS )
+   if (is_flagged(high, TAPE_DRIVE_WRITE_SETMARKS ) == true )
    {
       WFCTRACE( TEXT( "Device writes setmarks." ) );
    }
 
-   if ( high & TAPE_DRIVE_WRITE_SHORT_FMKS )
+   if (is_flagged(high, TAPE_DRIVE_WRITE_SHORT_FMKS ) == true )
    {
       WFCTRACE( TEXT( "Device writes short filemarks." ) );
    }
 
-   if ( high & TAPE_DRIVE_FORMAT )
+   if (is_flagged(high, TAPE_DRIVE_FORMAT ) == true )
    {
       WFCTRACE( TEXT( "TAPE_DRIVE_FORMAT" ) );
    }
 
-   if ( high & TAPE_DRIVE_FORMAT_IMMEDIATE )
+   if (is_flagged(high, TAPE_DRIVE_FORMAT_IMMEDIATE ) == true )
    {
       WFCTRACE( TEXT( "TAPE_DRIVE_FORMAT_IMMEDIATE" ) );
    }

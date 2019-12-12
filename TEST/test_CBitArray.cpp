@@ -50,7 +50,7 @@ static char THIS_FILE[] = __FILE__;
 
 __checkReturn bool test_CBitArray( __out std::string& class_name, __out int& test_number_that_failed ) noexcept
 {
-    class_name.assign( "CBitArray" );
+    class_name.assign(STRING_VIEW("CBitArray"));
 
     //   CBitArray();
     CBitArray bits;

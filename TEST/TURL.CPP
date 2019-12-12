@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 2000-2003, Samuel R. Blackburn
+** Copyright, 2000-2019, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -52,16 +52,16 @@ __checkReturn bool test_CUniformResourceLocator( __out std::string& class_name, 
 {
    WFCTRACEINIT( TEXT( "test_CUniformResourceLocator()" ) );
 
-   class_name.assign( "CUniformResourceLocator" );
+   class_name.assign(STRING_VIEW("CUniformResourceLocator"));
 
    test_number_that_failed = 1;
 
-   CUniformResourceLocator url( TEXT( "Serial://COM2:9600,n,8,1/Settings.ini" ) );
+   CUniformResourceLocator url(WSTRING_VIEW(L"Serial://COM2:9600,n,8,1/Settings.ini"));
 
-   if ( url.ProtocolName == TEXT( "Serial" )     &&  
-        url.MachineName  == TEXT( "COM2" )       &&
-        url.PortName     == TEXT( "9600,n,8,1" ) &&
-        url.PathName     == TEXT( "Settings.ini" ) )
+   if ( url.ProtocolName.compare(WSTRING_VIEW(L"Serial")) == I_AM_EQUAL_TO_THAT and
+        url.MachineName.compare(WSTRING_VIEW(L"COM2")) == I_AM_EQUAL_TO_THAT and
+        url.PortName.compare(WSTRING_VIEW(L"9600,n,8,1")) == I_AM_EQUAL_TO_THAT and
+        url.PathName.compare(WSTRING_VIEW(L"Settings.ini")) == I_AM_EQUAL_TO_THAT )
    {
       return( true );
    }

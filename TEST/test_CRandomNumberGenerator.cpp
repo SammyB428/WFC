@@ -206,7 +206,7 @@ _Check_return_ bool test_CRandomNumberGenerator( _Out_ std::string& class_name, 
 
    CRandomNumberGenerator random_number( MAKELONG( 1802, 9373 ) );
 
-   class_name.assign( "CRandomNumberGenerator" );
+   class_name.assign(STRING_VIEW("CRandomNumberGenerator"));
 
    double temp_double = 0.0;
 
@@ -298,7 +298,7 @@ _Check_return_ bool test_CRandomNumberGenerator( _Out_ std::string& class_name, 
    {
        test_integer = generator.Uint32(minimum_integer, maximum_integer);
 
-       if (test_integer < minimum_integer || test_integer > maximum_integer)
+       if (test_integer < minimum_integer or test_integer > maximum_integer)
        {
            printf("CRandomNumberGenerator2 failed Uint32 test, seed %08X, iteration %lu\n", seed, (unsigned long) loop_index);
            test_number_that_failed = 8;
@@ -314,7 +314,7 @@ _Check_return_ bool test_CRandomNumberGenerator( _Out_ std::string& class_name, 
    {
        test_double = generator.Double(minimum_double, maximum_double);
 
-       if (test_double < minimum_double || test_double > maximum_double)
+       if (test_double < minimum_double or test_double > maximum_double)
        {
            printf("CRandomNumberGenerator2 failed Double test, seed %08X, iteration %lu\n", seed, (unsigned long)(loop_index + number_of_tests));
            test_number_that_failed = 9;

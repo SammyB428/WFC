@@ -54,7 +54,7 @@ void test_CSerialFile( void ) noexcept
 
    CSerialFile serial;
 
-   if ( serial.Open( TEXT( "COM2:9600,n,8,1" ) ) == FALSE )
+   if ( serial.Open(WSTRING_VIEW(L"COM2:9600,n,8,1")) == false )
    {
       WFCTRACE( TEXT( "Can't open port" ) );
       return;
@@ -80,4 +80,3 @@ void test_CSerialFile( void ) noexcept
       }
    }
 }
-
