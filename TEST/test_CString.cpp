@@ -685,7 +685,7 @@ __checkReturn bool test_CString( __out std::string& class_name, __out int& test_
     string_1.Copy( TEXT( "ABC" ) );
     string_2.Copy( TEXT( "ABC" ) );
 
-    if ( ! ( string_1 == string_2 ) )
+    if ( not ( string_1 == string_2 ) )
     {
         test_number_that_failed = 62;
         return(failure());
@@ -693,7 +693,7 @@ __checkReturn bool test_CString( __out std::string& class_name, __out int& test_
 
     // operator == ( CString&, const char * )
 
-    if ( ! ( string_1 == TEXT( "ABC" ) ) )
+    if ( not ( string_1 == TEXT( "ABC" ) ) )
     {
         test_number_that_failed = 63;
         return(failure());
@@ -701,7 +701,7 @@ __checkReturn bool test_CString( __out std::string& class_name, __out int& test_
 
     // operator == ( const char *, CString& )
 
-    if ( ! ( TEXT( "ABC" ) == string_1 ) )
+    if (not ( TEXT( "ABC" ) == string_1 ) )
     {
         test_number_that_failed = 64;
         return(failure());
@@ -711,7 +711,7 @@ __checkReturn bool test_CString( __out std::string& class_name, __out int& test_
 
     string_2.Copy( TEXT( "abc" ) );
 
-    if ( ! ( string_1 != string_2 ) )
+    if (not ( string_1 != string_2 ) )
     {
         test_number_that_failed = 65;
         return(failure());
@@ -719,7 +719,7 @@ __checkReturn bool test_CString( __out std::string& class_name, __out int& test_
 
     // operator != ( CString&, const char * )
 
-    if ( ! ( string_1 != TEXT( "abc" ) ) )
+    if (not ( string_1 != TEXT( "abc" ) ) )
     {
         test_number_that_failed = 66;
         return(failure());
@@ -727,7 +727,7 @@ __checkReturn bool test_CString( __out std::string& class_name, __out int& test_
 
     // operator != ( const char *, CString& )
 
-    if ( ! ( TEXT( "abc" ) != string_1 ) )
+    if (not ( TEXT( "abc" ) != string_1 ) )
     {
         test_number_that_failed = 67;
         return(failure());
@@ -738,7 +738,7 @@ __checkReturn bool test_CString( __out std::string& class_name, __out int& test_
     string_1.Copy( TEXT( "ABC" ) );
     string_2.Copy( TEXT( "ABc" ) );
 
-    if ( ! ( string_1 < string_2 ) )
+    if (not ( string_1 < string_2 ) )
     {
         test_number_that_failed = 68;
         return(failure());
@@ -746,7 +746,7 @@ __checkReturn bool test_CString( __out std::string& class_name, __out int& test_
 
     // operator < ( CString&, const char * )
 
-    if ( ! ( string_1 < TEXT( "ABc" ) ) )
+    if (not ( string_1 < TEXT( "ABc" ) ) )
     {
         test_number_that_failed = 69;
         return(failure());
@@ -754,7 +754,7 @@ __checkReturn bool test_CString( __out std::string& class_name, __out int& test_
 
     // operator < ( const char *, CString& )
 
-    if ( ! ( TEXT( "AAB" ) < string_1 ) )
+    if (not ( TEXT( "AAB" ) < string_1 ) )
     {
         test_number_that_failed = 70;
         return(failure());
@@ -765,7 +765,7 @@ __checkReturn bool test_CString( __out std::string& class_name, __out int& test_
     string_1.Copy( TEXT( "ABc" ) );
     string_2.Copy( TEXT( "ABC" ) );
 
-    if ( ! ( string_1 > string_2 ) )
+    if (not ( string_1 > string_2 ) )
     {
         test_number_that_failed = 71;
         return(failure());
@@ -773,7 +773,7 @@ __checkReturn bool test_CString( __out std::string& class_name, __out int& test_
 
     // operator > ( CString&, const char * )
 
-    if ( ! ( string_1 > TEXT( "ABC" ) ) )
+    if (not ( string_1 > TEXT( "ABC" ) ) )
     {
         test_number_that_failed = 72;
         return(failure());
@@ -783,7 +783,7 @@ __checkReturn bool test_CString( __out std::string& class_name, __out int& test_
 
     string_1.Copy( TEXT( "ABC" ) );
 
-    if ( ! ( TEXT( "ABc" ) > string_1 ) )
+    if (not ( TEXT( "ABc" ) > string_1 ) )
     {
         test_number_that_failed = 73;
         return(failure());
@@ -796,7 +796,7 @@ __checkReturn bool test_CString( __out std::string& class_name, __out int& test_
     string_1.Copy( TEXT( "ABC" ) );
     string_2.Copy( TEXT( "ABc" ) );
 
-    if ( ! ( string_1 <= string_2 ) )
+    if (not ( string_1 <= string_2 ) )
     {
         test_number_that_failed = 74;
         return(failure());
@@ -804,7 +804,7 @@ __checkReturn bool test_CString( __out std::string& class_name, __out int& test_
 
     // operator <= ( CString&, const char * )
 
-    if ( ! ( string_1 <= "ABc" ) )
+    if (not ( string_1 <= "ABc" ) )
     {
         test_number_that_failed = 75;
         return(failure());
@@ -812,7 +812,7 @@ __checkReturn bool test_CString( __out std::string& class_name, __out int& test_
 
     // operator <= ( const char *, CString& )
 
-    if ( ! ( "AAB" <= string_1 ) )
+    if (not ( "AAB" <= string_1 ) )
     {
         test_number_that_failed = 76;
         return(failure());
@@ -824,7 +824,7 @@ __checkReturn bool test_CString( __out std::string& class_name, __out int& test_
     string_1.Copy( "ABC" );
     string_2.Copy( "ABC" );
 
-    if ( ! ( string_1 <= string_2 ) )
+    if (not ( string_1 <= string_2 ) )
     {
         test_number_that_failed = 77;
         return(failure());
@@ -832,7 +832,7 @@ __checkReturn bool test_CString( __out std::string& class_name, __out int& test_
 
     // operator <= ( CString&, const char * )
 
-    if ( ! ( string_1 <= "ABC" ) )
+    if (not ( string_1 <= "ABC" ) )
     {
         test_number_that_failed = 78;
         return(failure());
@@ -840,7 +840,7 @@ __checkReturn bool test_CString( __out std::string& class_name, __out int& test_
 
     // operator <= ( const char *, CString& )
 
-    if ( ! ( "ABC" <= string_1 ) )
+    if (not ( "ABC" <= string_1 ) )
     {
         test_number_that_failed = 79;
         return(failure());
@@ -852,7 +852,7 @@ __checkReturn bool test_CString( __out std::string& class_name, __out int& test_
     string_1.Copy( "ABc" );
     string_2.Copy( "ABC" );
 
-    if ( ! ( string_1 >= string_2 ) )
+    if (not ( string_1 >= string_2 ) )
     {
         test_number_that_failed = 80;
         return(failure());
@@ -860,7 +860,7 @@ __checkReturn bool test_CString( __out std::string& class_name, __out int& test_
 
     // operator >= ( CString&, const char * )
 
-    if ( ! ( string_1 >= "ABC" ) )
+    if (not ( string_1 >= "ABC" ) )
     {
         test_number_that_failed = 81;
         return(failure());
@@ -870,7 +870,7 @@ __checkReturn bool test_CString( __out std::string& class_name, __out int& test_
 
     string_1.Copy( "ABC" );
 
-    if ( ! ( "ABc" >= string_1 ) )
+    if (not ( "ABc" >= string_1 ) )
     {
         test_number_that_failed = 82;
         return(failure());
@@ -882,7 +882,7 @@ __checkReturn bool test_CString( __out std::string& class_name, __out int& test_
     string_1.Copy( "ABC" );
     string_2.Copy( "ABC" );
 
-    if ( ! ( string_1 >= string_2 ) )
+    if (not ( string_1 >= string_2 ) )
     {
         test_number_that_failed = 83;
         return(failure());
@@ -890,7 +890,7 @@ __checkReturn bool test_CString( __out std::string& class_name, __out int& test_
 
     // operator >= ( CString&, const char * )
 
-    if ( ! ( string_1 >= "ABC" ) )
+    if (not ( string_1 >= "ABC" ) )
     {
         test_number_that_failed = 84;
         return(failure());
@@ -898,7 +898,7 @@ __checkReturn bool test_CString( __out std::string& class_name, __out int& test_
 
     // operator >= ( const char *, CString& )
 
-    if ( ! ( "ABC" >= string_1 ) )
+    if (not ( "ABC" >= string_1 ) )
     {
         test_number_that_failed = 85;
         return(failure());

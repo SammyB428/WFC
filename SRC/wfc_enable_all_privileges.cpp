@@ -106,6 +106,7 @@ _Check_return_ bool PASCAL Win32FoundationClasses::wfc_enable_all_privileges( vo
       SE_SESSION_IMPERSONATION_CAPABILITY,
       SE_MUMA_CAPABILITY,
       SE_DEVELOPMENT_MODE_NETWORK_CAPABILITY,
+      SE_DELEGATE_SESSION_USER_IMPERSONATE_NAME,
    };
 
    bool return_value = true;

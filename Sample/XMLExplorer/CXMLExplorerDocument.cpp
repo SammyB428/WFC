@@ -130,7 +130,7 @@ BOOL CXMLExplorerDocument::OnOpenDocument( LPCTSTR filename )
 {
    WFCTRACEINIT( TEXT( "CXMLExplorerDocument::OnOpenDocument()" ) );
 
-   if ( ! CDocument::OnOpenDocument( filename ) )
+   if ( not CDocument::OnOpenDocument( filename ) )
    {
       return( FALSE );
    }
@@ -168,7 +168,7 @@ void CXMLExplorerDocument::ShowDocument( CExtensibleMarkupLanguageDocument * xml
 {
    WFCTRACEINIT( TEXT( "CXMLExplorerDocument::ShowDocument()" ) );
 
-   if ( ListView != NULL && xml_p != NULL )
+   if ( ListView != nullptr and xml_p != nullptr)
    {
       ListView->ShowDocument( xml_p );
    }
@@ -178,7 +178,7 @@ void CXMLExplorerDocument::ShowElement( CExtensibleMarkupLanguageElement * eleme
 {
    WFCTRACEINIT( TEXT( "CXMLExplorerDocument::ShowElement()" ) );
 
-   if ( ListView != NULL && element_p != NULL )
+   if ( ListView != nullptr and element_p != nullptr)
    {
       ListView->ShowElement( element_p );
    }
@@ -188,7 +188,7 @@ void CXMLExplorerDocument::ShowEntities( CExtensibleMarkupLanguageDocument * xml
 {
    WFCTRACEINIT( TEXT( "CXMLExplorerDocument::ShowEntities()" ) );
 
-   if ( ListView != NULL && xml_p != NULL )
+   if ( ListView != nullptr && xml_p != nullptr )
    {
       ListView->ShowEntities( xml_p );
    }
@@ -208,7 +208,7 @@ void CXMLExplorerDocument::ShowAttribute( CExtensibleMarkupLanguageAttribute * x
 {
    WFCTRACEINIT( TEXT( "CXMLExplorerDocument::ShowAttribute()" ) );
 
-   if ( ListView != NULL && xml_p != NULL )
+   if ( ListView != nullptr and xml_p != nullptr)
    {
       ListView->ShowAttribute( xml_p );
    }
@@ -218,9 +218,8 @@ void CXMLExplorerDocument::ShowListOfAttributes( CExtensibleMarkupLanguageElemen
 {
    WFCTRACEINIT( TEXT( "CXMLExplorerDocument::ShowListOfAttributes()" ) );
 
-   if ( ListView != NULL && xml_p != NULL )
+   if ( ListView != nullptr and xml_p != nullptr )
    {
       ListView->ShowListOfAttributes( xml_p );
    }
 }
-

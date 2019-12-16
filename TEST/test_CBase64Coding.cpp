@@ -183,11 +183,9 @@ _Check_return_ bool test_CBase64Coding( _Out_ std::string& class_name, _Out_ int
         test_number_that_failed++;
     }
 
-    char const * ascii_hex_string = "0001FFfE";
-
     uint8_t bytes[6] = { 0x55, 0xAA, 0x55, 0xAA, 0x55, 0xAA };
 
-    if (wfc_parse_hex_string(ascii_hex_string, strlen(ascii_hex_string), bytes, sizeof(bytes)) == false)
+    if (wfc_parse_hex_string(STRING_VIEW("0001FFfE"), bytes, sizeof(bytes)) == false)
     {
         test_number_that_failed = 44;
         return(failure());
@@ -209,9 +207,7 @@ _Check_return_ bool test_CBase64Coding( _Out_ std::string& class_name, _Out_ int
     bytes[4] = 0xAA;
     bytes[5] = 0x55;
 
-    wchar_t const * wide_hex_string = L"AaBB080910";
-
-    if (wfc_parse_hex_string(wide_hex_string, wcslen(wide_hex_string), bytes, sizeof(bytes)) == false)
+    if (wfc_parse_hex_string(WSTRING_VIEW(L"AaBB080910"), bytes, sizeof(bytes)) == false)
     {
         test_number_that_failed = 46;
         return(failure());

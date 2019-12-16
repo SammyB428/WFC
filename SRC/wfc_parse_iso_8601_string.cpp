@@ -871,20 +871,32 @@ static constexpr uint8_t const g_hex_values[256] =
     0, 0, 0, 0,  0, 0, 0, 0,  0, 0, 0, 0,  0, 0, 0, 0
 };
 
-_Check_return_ bool PASCAL Win32FoundationClasses::wfc_parse_hex_string(__in_z wchar_t const * hex_string, _In_ std::size_t const number_of_characters, __out_bcount(buffer_size) uint8_t * buffer, _In_ std::size_t const buffer_size) noexcept
+_Check_return_ bool PASCAL Win32FoundationClasses::wfc_parse_hex_string(_In_ std::wstring_view hex_string, __out_bcount(buffer_size) uint8_t * buffer, _In_ std::size_t const buffer_size) noexcept
 {
-    WFC_VALIDATE_POINTER(hex_string);
     WFC_VALIDATE_POINTER(buffer);
-    _ASSERTE(number_of_characters <= (buffer_size * 2));
+    _ASSERTE(hex_string.length() <= (buffer_size * 2));
 
-    if (number_of_characters > (buffer_size * 2))
+    if (hex_string.empty() == true)
+    {
+        return(true);
+    }
+
+    if ((hex_string.length() % 2) != 0)
+    {
+        // There's two characters per byte. An odd number of characters is bad.
+        return(false);
+    }
+
+    std::size_t const required_buffer_size = hex_string.length() / 2;
+
+    if (required_buffer_size > buffer_size)
     {
         return(false);
     }
 
     std::size_t string_index = 0;
 
-    for ( auto const buffer_index : Range(buffer_size) )
+    for ( auto const buffer_index : Range(required_buffer_size) )
     {
         buffer[buffer_index] = ((g_hex_values[(uint8_t)hex_string[string_index]]) << 4) bitor g_hex_values[(uint8_t)hex_string[string_index + 1]];
         string_index += 2;
@@ -893,20 +905,32 @@ _Check_return_ bool PASCAL Win32FoundationClasses::wfc_parse_hex_string(__in_z w
     return(true);
 }
 
-_Check_return_ bool PASCAL Win32FoundationClasses::wfc_parse_hex_string(__in_z char const * hex_string, _In_ std::size_t const number_of_characters, __out_bcount(buffer_size) uint8_t * buffer, _In_ std::size_t const buffer_size) noexcept
+_Check_return_ bool PASCAL Win32FoundationClasses::wfc_parse_hex_string(_In_ std::string_view hex_string, __out_bcount(buffer_size) uint8_t * buffer, _In_ std::size_t const buffer_size) noexcept
 {
-    WFC_VALIDATE_POINTER(hex_string);
     WFC_VALIDATE_POINTER(buffer);
-    _ASSERTE(number_of_characters <= (buffer_size * 2));
+    _ASSERTE(hex_string.length() <= (buffer_size * 2));
 
-    if (number_of_characters > (buffer_size * 2))
+    if (hex_string.empty() == true)
+    {
+        return(true);
+    }
+
+    if ((hex_string.length() % 2) != 0)
+    {
+        // There's two characters per byte. An odd number of characters is bad.
+        return(false);
+    }
+
+    std::size_t const required_buffer_size = hex_string.length() / 2;
+
+    if (required_buffer_size > buffer_size)
     {
         return(false);
     }
 
     std::size_t string_index = 0;
 
-    for ( auto const buffer_index : Range(buffer_size) )
+    for ( auto const buffer_index : Range(required_buffer_size) )
     {
         buffer[buffer_index] = ((g_hex_values[hex_string[string_index]]) << 4) bitor g_hex_values[hex_string[string_index + 1]];
         string_index += 2;

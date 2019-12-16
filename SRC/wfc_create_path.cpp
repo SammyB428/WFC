@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 1995-2018, Samuel R. Blackburn
+** Copyright, 1995-2019, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -119,7 +119,7 @@ _Check_return_ bool PASCAL Win32FoundationClasses::wfc_create_path( __in_z LPCTS
          {
             // The path could not be created. Create all directories in the path
 
-             std::wstring directory_path( path_name );
+            std::wstring directory_path( path_name );
 
             replace( directory_path, '/', '\\' );
 

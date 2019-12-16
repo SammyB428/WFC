@@ -893,10 +893,10 @@ __checkReturn bool test_CPtrArray( __out std::string& class_name, __out int& tes
 
     array_1.InsertAt( 1, &array_2 );
 
-    if ( array_1.GetAt( 0 ) != (void *) 1 ||
-        array_1.GetAt( 1 ) != (void *) 2 ||
-        array_1.GetAt( 2 ) != (void *) 3 ||
-        array_1.GetAt( 3 ) != (void *) 4 ||
+    if ( array_1.GetAt( 0 ) != (void *) 1 or
+        array_1.GetAt( 1 ) != (void *) 2 or
+        array_1.GetAt( 2 ) != (void *) 3 or
+        array_1.GetAt( 3 ) != (void *) 4 or
         array_1.GetAt( 4 ) != (void *) 5 )
     {
         test_number_that_failed = 118;
@@ -930,10 +930,10 @@ __checkReturn bool test_CPtrArray( __out std::string& class_name, __out int& tes
 
     array_1.InsertAt( 0, &array_2 );
 
-    if ( array_1.GetAt( 0 ) != (void *) 1 ||
-        array_1.GetAt( 1 ) != (void *) 2 ||
-        array_1.GetAt( 2 ) != (void *) 3 ||
-        array_1.GetAt( 3 ) != (void *) 4 ||
+    if ( array_1.GetAt( 0 ) != (void *) 1 or
+        array_1.GetAt( 1 ) != (void *) 2 or
+        array_1.GetAt( 2 ) != (void *) 3 or
+        array_1.GetAt( 3 ) != (void *) 4 or
         array_1.GetAt( 4 ) != (void *) 5 )
     {
         test_number_that_failed = 121;
@@ -967,10 +967,10 @@ __checkReturn bool test_CPtrArray( __out std::string& class_name, __out int& tes
 
     array_1.InsertAt( 3, &array_2 );
 
-    if ( array_1.GetAt( 0 ) != (void *) 1 ||
-        array_1.GetAt( 1 ) != (void *) 2 ||
-        array_1.GetAt( 2 ) != (void *) 3 ||
-        array_1.GetAt( 3 ) != (void *) 4 ||
+    if ( array_1.GetAt( 0 ) != (void *) 1 or
+        array_1.GetAt( 1 ) != (void *) 2 or
+        array_1.GetAt( 2 ) != (void *) 3 or
+        array_1.GetAt( 3 ) != (void *) 4 or
         array_1.GetAt( 4 ) != (void *) 5 )
     {
         test_number_that_failed = 124;

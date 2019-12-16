@@ -121,7 +121,7 @@ bool convert_table( _ConnectionPtr& connection_p, const CString& table_name, con
 
    bool exit_loop = false;
 
-   while( ! recordset_p->EndOfFile && exit_loop == false )
+   while( not recordset_p->EndOfFile && exit_loop == false )
    {
       _tprintf( TEXT( "   <RECORD>\n" ) );
 

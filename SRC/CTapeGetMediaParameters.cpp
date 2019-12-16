@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 1995-2016, Samuel R. Blackburn
+** Copyright, 1995-2019, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -61,7 +61,7 @@ CTapeGetMediaParameters::CTapeGetMediaParameters( __in CTapeGetMediaParameters c
    Copy( source );
 }
 
-CTapeGetMediaParameters::CTapeGetMediaParameters( __in TAPE_GET_MEDIA_PARAMETERS const * source )
+CTapeGetMediaParameters::CTapeGetMediaParameters(_In_ TAPE_GET_MEDIA_PARAMETERS const * source )
 {
    Copy( source );
 }
@@ -71,12 +71,12 @@ CTapeGetMediaParameters::~CTapeGetMediaParameters()
    Empty();
 }
 
-void CTapeGetMediaParameters::Copy( __in CTapeGetMediaParameters const& source ) noexcept
+void CTapeGetMediaParameters::Copy(_In_ CTapeGetMediaParameters const& source ) noexcept
 {
-   Copy( reinterpret_cast<TAPE_GET_MEDIA_PARAMETERS const *>(&source) );
+   Copy( static_cast<TAPE_GET_MEDIA_PARAMETERS const *>(&source) );
 }
 
-void CTapeGetMediaParameters::Copy( __in TAPE_GET_MEDIA_PARAMETERS const * source ) noexcept
+void CTapeGetMediaParameters::Copy(_In_ TAPE_GET_MEDIA_PARAMETERS const * source ) noexcept
 {
    ASSERT( source != nullptr );
 

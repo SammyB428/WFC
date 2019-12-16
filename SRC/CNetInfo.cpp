@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 1995-2016, Samuel R. Blackburn
+** Copyright, 1995-2019, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -80,7 +80,7 @@ CNetworkInformation::~CNetworkInformation()
    Empty();
 }
 
-void CNetworkInformation::Copy( __in NETINFOSTRUCT const * source ) noexcept
+void CNetworkInformation::Copy(_In_ NETINFOSTRUCT const * source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
@@ -111,7 +111,7 @@ void CNetworkInformation::Copy( __in NETINFOSTRUCT const * source ) noexcept
    WFC_END_CATCH_ALL
 }
 
-void CNetworkInformation::Copy( __in CNetworkInformation const& source ) noexcept
+void CNetworkInformation::Copy(_In_ CNetworkInformation const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -122,7 +122,7 @@ void CNetworkInformation::Copy( __in CNetworkInformation const& source ) noexcep
       return;
    }
 
-   Copy( reinterpret_cast<NETINFOSTRUCT const *>(&source) );
+   Copy( static_cast<NETINFOSTRUCT const *>(&source) );
 }
 
 #if defined( _DEBUG ) && ! defined( WFC_NO_DUMPING )

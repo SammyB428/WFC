@@ -86,19 +86,19 @@ CUINT64::~CUINT64() noexcept
 
 // Methods
 
-void CUINT64::Copy( __in CUINT64 const& source ) noexcept
+void CUINT64::Copy(_In_ CUINT64 const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
-   Copy( reinterpret_cast<SIXTY_FOUR_BIT_UNSIGNED_INTEGER const *>(&source) );
+   Copy( static_cast<SIXTY_FOUR_BIT_UNSIGNED_INTEGER const *>(&source) );
 }
 
-void CUINT64::Copy( __in SIXTY_FOUR_BIT_UNSIGNED_INTEGER const& source ) noexcept
+void CUINT64::Copy(_In_ SIXTY_FOUR_BIT_UNSIGNED_INTEGER const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Copy( &source );
 }
 
-void CUINT64::Copy( __in SIXTY_FOUR_BIT_UNSIGNED_INTEGER const * source ) noexcept
+void CUINT64::Copy(_In_ SIXTY_FOUR_BIT_UNSIGNED_INTEGER const * source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
@@ -505,13 +505,13 @@ void CMTFDateTime::Copy( __in CTime const& source ) noexcept
    dt_field[ 4 ] = byte_4;
 }
 
-void CMTFDateTime::Copy( __in CMTFDateTime const& source ) noexcept
+void CMTFDateTime::Copy(_In_ CMTFDateTime const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
-   Copy( reinterpret_cast<MTF_DATE_TIME const *>(&source) );
+   Copy( static_cast<MTF_DATE_TIME const *>(&source) );
 }
 
-void CMTFDateTime::Copy( __in MTF_DATE_TIME const * source ) noexcept
+void CMTFDateTime::Copy(_In_ MTF_DATE_TIME const * source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
@@ -619,13 +619,13 @@ CMTFTapeAddress::~CMTFTapeAddress()
    Empty();
 }
 
-void CMTFTapeAddress::Copy( __in CMTFTapeAddress const& source ) noexcept
+void CMTFTapeAddress::Copy(_In_ CMTFTapeAddress const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
-   Copy( reinterpret_cast<MTF_TAPE_ADDRESS const *>(&source) );
+   Copy( static_cast<MTF_TAPE_ADDRESS const *>(&source) );
 }
 
-void CMTFTapeAddress::Copy( __in MTF_TAPE_ADDRESS const * source ) noexcept
+void CMTFTapeAddress::Copy(_In_ MTF_TAPE_ADDRESS const * source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
@@ -701,13 +701,13 @@ CMTFDataBlockHeader::~CMTFDataBlockHeader()
    Empty();
 }
 
-void CMTFDataBlockHeader::Copy( __in CMTFDataBlockHeader const& source ) noexcept
+void CMTFDataBlockHeader::Copy(_In_ CMTFDataBlockHeader const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
-   Copy( reinterpret_cast<MTF_DB_HDR const *>(&source) );
+   Copy( static_cast<MTF_DB_HDR const *>(&source) );
 }
 
-void CMTFDataBlockHeader::Copy( __in MTF_DB_HDR const * source ) noexcept
+void CMTFDataBlockHeader::Copy(_In_ MTF_DB_HDR const * source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
@@ -877,13 +877,13 @@ CMTFTape::~CMTFTape()
    Empty();
 }
 
-void CMTFTape::Copy( __in CMTFTape const& source ) noexcept
+void CMTFTape::Copy(_In_ CMTFTape const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
-   Copy( reinterpret_cast<MTF_TAPE const *>(&source) );
+   Copy( static_cast<MTF_TAPE const *>(&source) );
 }
 
-void CMTFTape::Copy( __in MTF_TAPE const * source ) noexcept
+void CMTFTape::Copy(_In_ MTF_TAPE const * source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );

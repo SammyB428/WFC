@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 1995-2014, Samuel R. Blackburn
+** Copyright, 1995-2019, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -46,9 +46,9 @@ static char THIS_FILE[] = __FILE__;
 
 USING_WFC_NAMESPACE
 
-_Check_return_ bool PASCAL Win32FoundationClasses::wfc_is_dotted_ip_address( __in_z_opt const char * ip_address ) noexcept
+_Check_return_ bool PASCAL Win32FoundationClasses::wfc_is_dotted_ip_address( _In_ std::string_view ip_address ) noexcept
 {
-    if ( ip_address == nullptr or ip_address[0] == 0x00 )
+    if ( ip_address.empty() == true or ip_address.length() < 7 )
     {
         return( false );
     }
@@ -59,9 +59,8 @@ _Check_return_ bool PASCAL Win32FoundationClasses::wfc_is_dotted_ip_address( __i
     std::wstring d;
 
     int string_index = 0;
-    int ip_address_index = 0;
 
-    while( ip_address[ ip_address_index ] != 0x00 )
+    for( auto const ip_address_index : Range(ip_address.length()))
     {
         if ( ip_address[ ip_address_index ] != '.' and
              isdigit( (unsigned char) ip_address[ ip_address_index ] ) == 0 )
@@ -123,8 +122,6 @@ _Check_return_ bool PASCAL Win32FoundationClasses::wfc_is_dotted_ip_address( __i
                 }
             }
         }
-
-        ip_address_index++;
     }
 
     if ( a.empty() == true or
@@ -160,9 +157,9 @@ _Check_return_ bool PASCAL Win32FoundationClasses::wfc_is_dotted_ip_address( __i
     return( true );
 }
 
-_Check_return_ bool PASCAL Win32FoundationClasses::wfc_is_dotted_ip_address( __in_z_opt wchar_t const * ip_address ) noexcept
+_Check_return_ bool PASCAL Win32FoundationClasses::wfc_is_dotted_ip_address( _In_ std::wstring_view ip_address ) noexcept
 {
-    if ( ip_address == nullptr or ip_address[0] == 0x00 )
+    if ( ip_address.empty() == true or ip_address.length() < 7)
     {
         return( false );
     }
@@ -173,9 +170,8 @@ _Check_return_ bool PASCAL Win32FoundationClasses::wfc_is_dotted_ip_address( __i
     std::wstring d;
 
     int string_index = 0;
-    int ip_address_index = 0;
 
-    while( ip_address[ ip_address_index ] != 0x00 )
+    for ( auto const ip_address_index : Range(ip_address.length()))
     {
         if ( ip_address[ ip_address_index ] != '.' and
              iswdigit( ip_address[ ip_address_index ] ) == 0 )
@@ -237,8 +233,6 @@ _Check_return_ bool PASCAL Win32FoundationClasses::wfc_is_dotted_ip_address( __i
                 }
             }
         }
-
-        ip_address_index++;
     }
 
     if ( a.empty() == true or
@@ -274,161 +268,239 @@ _Check_return_ bool PASCAL Win32FoundationClasses::wfc_is_dotted_ip_address( __i
     return( true );
 }
 
-_Check_return_ bool PASCAL Win32FoundationClasses::wfc_is_guid( __in_z char const * characters ) noexcept
+_Check_return_ bool PASCAL Win32FoundationClasses::wfc_is_guid( _In_ std::string_view characters ) noexcept
 {
     //           11111111112222222222333333333
     // 012345678901234567890123456789012345678
     // 0AEE2A92-BCBB-11d0-8C72-00C04FC2B085
-    if ( characters == nullptr or characters[ 0 ] == 0x00 )
+    if (characters.length() < 36)
     {
-        return( false );
+        return(false);
     }
 
-    for ( auto const array_index : Range(35) )
+    if (characters[8] != '-' or
+        characters[13] != '-' or
+        characters[18] != '-' or
+        characters[23] != '-')
     {
-        if ( characters[ array_index ] == 0 )
-        {
-            return( false );
-        }
-
-        if ( array_index ==  8 or
-             array_index == 13 or
-             array_index == 18 or
-             array_index == 23 )
-        {
-            if ( characters[ array_index ] != '-' )
-            {
-                return( false );
-            }
-        }
-        else
-        {
-            if (not WFC_IS_HEXADECIMAL( characters[ array_index ] )  )
-            {
-                return( false );
-            }
-        }
+        return(false);
     }
 
-    return( true );
+    if (not WFC_IS_HEXADECIMAL(characters[0]) or
+        not WFC_IS_HEXADECIMAL(characters[1]) or
+        not WFC_IS_HEXADECIMAL(characters[2]) or
+        not WFC_IS_HEXADECIMAL(characters[3]) or
+        not WFC_IS_HEXADECIMAL(characters[4]) or
+        not WFC_IS_HEXADECIMAL(characters[5]) or
+        not WFC_IS_HEXADECIMAL(characters[6]) or
+        not WFC_IS_HEXADECIMAL(characters[7]) or
+        not WFC_IS_HEXADECIMAL(characters[9]) or
+        not WFC_IS_HEXADECIMAL(characters[10]) or
+        not WFC_IS_HEXADECIMAL(characters[11]) or
+        not WFC_IS_HEXADECIMAL(characters[12]) or
+        not WFC_IS_HEXADECIMAL(characters[14]) or
+        not WFC_IS_HEXADECIMAL(characters[15]) or
+        not WFC_IS_HEXADECIMAL(characters[16]) or
+        not WFC_IS_HEXADECIMAL(characters[17]) or
+        not WFC_IS_HEXADECIMAL(characters[19]) or
+        not WFC_IS_HEXADECIMAL(characters[20]) or
+        not WFC_IS_HEXADECIMAL(characters[21]) or
+        not WFC_IS_HEXADECIMAL(characters[22]) or
+        not WFC_IS_HEXADECIMAL(characters[24]) or
+        not WFC_IS_HEXADECIMAL(characters[25]) or
+        not WFC_IS_HEXADECIMAL(characters[26]) or
+        not WFC_IS_HEXADECIMAL(characters[27]) or
+        not WFC_IS_HEXADECIMAL(characters[28]) or
+        not WFC_IS_HEXADECIMAL(characters[29]) or
+        not WFC_IS_HEXADECIMAL(characters[30]) or
+        not WFC_IS_HEXADECIMAL(characters[31]) or
+        not WFC_IS_HEXADECIMAL(characters[32]) or
+        not WFC_IS_HEXADECIMAL(characters[33]) or
+        not WFC_IS_HEXADECIMAL(characters[34]) or
+        not WFC_IS_HEXADECIMAL(characters[35]))
+    {
+        return(false);
+    }
+
+    return(true);
 }
 
-_Check_return_ bool PASCAL Win32FoundationClasses::wfc_is_guid( __in_z wchar_t const * characters ) noexcept
+_Check_return_ bool PASCAL Win32FoundationClasses::wfc_is_guid( _In_ std::wstring_view characters ) noexcept
 {
     //           11111111112222222222333333333
     // 012345678901234567890123456789012345678
     // 0AEE2A92-BCBB-11d0-8C72-00C04FC2B085
-    if ( characters == nullptr or characters[ 0 ] == 0x00 )
+    if ( characters.length() < 36 )
     {
         return( false );
     }
 
-    for ( auto const array_index : Range(35) )
+    if (characters[8] != '-' or
+        characters[13] != '-' or
+        characters[18] != '-' or
+        characters[23] != '-')
     {
-        if ( characters[ array_index ] == 0 )
-        {
-            return( false );
-        }
+        return(false);
+    }
 
-        if ( array_index ==  8 or
-             array_index == 13 or
-             array_index == 18 or
-             array_index == 23 )
-        {
-            if ( characters[ array_index ] != '-' )
-            {
-                return( false );
-            }
-        }
-        else
-        {
-            if (not WFC_IS_HEXADECIMAL( characters[ array_index ] )  )
-            {
-                return( false );
-            }
-        }
+    if (not WFC_IS_HEXADECIMAL(characters[0]) or
+        not WFC_IS_HEXADECIMAL(characters[1]) or
+        not WFC_IS_HEXADECIMAL(characters[2]) or
+        not WFC_IS_HEXADECIMAL(characters[3]) or
+        not WFC_IS_HEXADECIMAL(characters[4]) or
+        not WFC_IS_HEXADECIMAL(characters[5]) or
+        not WFC_IS_HEXADECIMAL(characters[6]) or
+        not WFC_IS_HEXADECIMAL(characters[7]) or
+        not WFC_IS_HEXADECIMAL(characters[9]) or
+        not WFC_IS_HEXADECIMAL(characters[10]) or
+        not WFC_IS_HEXADECIMAL(characters[11]) or
+        not WFC_IS_HEXADECIMAL(characters[12]) or
+        not WFC_IS_HEXADECIMAL(characters[14]) or
+        not WFC_IS_HEXADECIMAL(characters[15]) or
+        not WFC_IS_HEXADECIMAL(characters[16]) or
+        not WFC_IS_HEXADECIMAL(characters[17]) or
+        not WFC_IS_HEXADECIMAL(characters[19]) or
+        not WFC_IS_HEXADECIMAL(characters[20]) or
+        not WFC_IS_HEXADECIMAL(characters[21]) or
+        not WFC_IS_HEXADECIMAL(characters[22]) or
+        not WFC_IS_HEXADECIMAL(characters[24]) or
+        not WFC_IS_HEXADECIMAL(characters[25]) or
+        not WFC_IS_HEXADECIMAL(characters[26]) or
+        not WFC_IS_HEXADECIMAL(characters[27]) or
+        not WFC_IS_HEXADECIMAL(characters[28]) or
+        not WFC_IS_HEXADECIMAL(characters[29]) or
+        not WFC_IS_HEXADECIMAL(characters[30]) or
+        not WFC_IS_HEXADECIMAL(characters[31]) or
+        not WFC_IS_HEXADECIMAL(characters[32]) or
+        not WFC_IS_HEXADECIMAL(characters[33]) or
+        not WFC_IS_HEXADECIMAL(characters[34]) or
+        not WFC_IS_HEXADECIMAL(characters[35]) )
+    {
+        return(false);
     }
 
     return( true );
 }
 
-_Check_return_ bool PASCAL Win32FoundationClasses::wfc_is_guid_with_curlies( __in_z char const * characters ) noexcept
+_Check_return_ bool PASCAL Win32FoundationClasses::wfc_is_guid_with_curlies( _In_ std::string_view characters ) noexcept
 {
     //           11111111112222222222333333333
     // 012345678901234567890123456789012345678
     // {0AEE2A92-BCBB-11d0-8C72-00C04FC2B085}
-    if ( characters == nullptr or characters[ 0 ] != '{' )
+    if (characters.length() < 38)
     {
-        return( false );
+        return(false);
     }
 
-    for( auto const array_index : Range(38, 1) )
+    if (characters[0] != '{' or characters[37] != '}')
     {
-        if ( array_index == 37 )
-        {
-            if ( characters[ array_index ] != '}' )
-            {
-                return( false );
-            }
-        }
-        else if ( array_index ==  9 or
-                  array_index == 14 or
-                  array_index == 19 or
-                  array_index == 24 )
-        {
-            if ( characters[ array_index ] != '-' )
-            {
-                return( false );
-            }
-        }
-        else
-        {
-            if (not WFC_IS_HEXADECIMAL( characters[ array_index ] )  )
-            {
-                return( false );
-            }
-        }
+        return(false);
     }
 
-    return( true );
+    if (characters[9] != '-' or
+        characters[14] != '-' or
+        characters[19] != '-' or
+        characters[24] != '-')
+    {
+        return(false);
+    }
+
+    if (not WFC_IS_HEXADECIMAL(characters[1]) or
+        not WFC_IS_HEXADECIMAL(characters[2]) or
+        not WFC_IS_HEXADECIMAL(characters[3]) or
+        not WFC_IS_HEXADECIMAL(characters[4]) or
+        not WFC_IS_HEXADECIMAL(characters[5]) or
+        not WFC_IS_HEXADECIMAL(characters[6]) or
+        not WFC_IS_HEXADECIMAL(characters[7]) or
+        not WFC_IS_HEXADECIMAL(characters[8]) or
+        not WFC_IS_HEXADECIMAL(characters[10]) or
+        not WFC_IS_HEXADECIMAL(characters[11]) or
+        not WFC_IS_HEXADECIMAL(characters[12]) or
+        not WFC_IS_HEXADECIMAL(characters[13]) or
+        not WFC_IS_HEXADECIMAL(characters[15]) or
+        not WFC_IS_HEXADECIMAL(characters[16]) or
+        not WFC_IS_HEXADECIMAL(characters[17]) or
+        not WFC_IS_HEXADECIMAL(characters[18]) or
+        not WFC_IS_HEXADECIMAL(characters[20]) or
+        not WFC_IS_HEXADECIMAL(characters[21]) or
+        not WFC_IS_HEXADECIMAL(characters[22]) or
+        not WFC_IS_HEXADECIMAL(characters[23]) or
+        not WFC_IS_HEXADECIMAL(characters[25]) or
+        not WFC_IS_HEXADECIMAL(characters[26]) or
+        not WFC_IS_HEXADECIMAL(characters[27]) or
+        not WFC_IS_HEXADECIMAL(characters[28]) or
+        not WFC_IS_HEXADECIMAL(characters[29]) or
+        not WFC_IS_HEXADECIMAL(characters[30]) or
+        not WFC_IS_HEXADECIMAL(characters[31]) or
+        not WFC_IS_HEXADECIMAL(characters[32]) or
+        not WFC_IS_HEXADECIMAL(characters[33]) or
+        not WFC_IS_HEXADECIMAL(characters[34]) or
+        not WFC_IS_HEXADECIMAL(characters[35]) or
+        not WFC_IS_HEXADECIMAL(characters[36]))
+    {
+        return(false);
+    }
+
+    return(true);
 }
 
-_Check_return_ bool PASCAL Win32FoundationClasses::wfc_is_guid_with_curlies( __in_z wchar_t const * characters ) noexcept
+_Check_return_ bool PASCAL Win32FoundationClasses::wfc_is_guid_with_curlies( _In_ std::wstring_view characters ) noexcept
 {
     //           11111111112222222222333333333
     // 012345678901234567890123456789012345678
     // {0AEE2A92-BCBB-11d0-8C72-00C04FC2B085}
-    if ( characters == nullptr or characters[ 0 ] != '{' )
+    if ( characters.length() < 38 )
     {
         return( false );
     }
 
-    for ( auto const array_index : Range(38, 1) )
+    if (characters[0] != '{' or characters[37] != '}')
     {
-        if ( array_index == 37 )
-        {
-            if ( characters[ array_index ] != '}' )
-            {
-                return( false );
-            }
-        }
-        else if ( array_index ==  9 or
-                  array_index == 14 or
-                  array_index == 19 or
-                  array_index == 24 )
-        {
-            if ( characters[ array_index ] != '-' )
-            {
-                return( false );
-            }
-        }
-        else
-        {
-            if (not WFC_IS_HEXADECIMAL( characters[ array_index ] )  )
-            {
-                return( false );
-            }
-        }
+        return(false);
+    }
+
+    if (characters[9] != '-' or
+        characters[14] != '-' or
+        characters[19] != '-' or
+        characters[24] != '-')
+    {
+        return(false);
+    }
+
+    if (not WFC_IS_HEXADECIMAL(characters[1]) or
+        not WFC_IS_HEXADECIMAL(characters[2]) or
+        not WFC_IS_HEXADECIMAL(characters[3]) or
+        not WFC_IS_HEXADECIMAL(characters[4]) or
+        not WFC_IS_HEXADECIMAL(characters[5]) or
+        not WFC_IS_HEXADECIMAL(characters[6]) or
+        not WFC_IS_HEXADECIMAL(characters[7]) or
+        not WFC_IS_HEXADECIMAL(characters[8]) or
+        not WFC_IS_HEXADECIMAL(characters[10]) or
+        not WFC_IS_HEXADECIMAL(characters[11]) or
+        not WFC_IS_HEXADECIMAL(characters[12]) or
+        not WFC_IS_HEXADECIMAL(characters[13]) or
+        not WFC_IS_HEXADECIMAL(characters[15]) or
+        not WFC_IS_HEXADECIMAL(characters[16]) or
+        not WFC_IS_HEXADECIMAL(characters[17]) or
+        not WFC_IS_HEXADECIMAL(characters[18]) or
+        not WFC_IS_HEXADECIMAL(characters[20]) or
+        not WFC_IS_HEXADECIMAL(characters[21]) or
+        not WFC_IS_HEXADECIMAL(characters[22]) or
+        not WFC_IS_HEXADECIMAL(characters[23]) or
+        not WFC_IS_HEXADECIMAL(characters[25]) or
+        not WFC_IS_HEXADECIMAL(characters[26]) or
+        not WFC_IS_HEXADECIMAL(characters[27]) or
+        not WFC_IS_HEXADECIMAL(characters[28]) or
+        not WFC_IS_HEXADECIMAL(characters[29]) or
+        not WFC_IS_HEXADECIMAL(characters[30]) or
+        not WFC_IS_HEXADECIMAL(characters[31]) or
+        not WFC_IS_HEXADECIMAL(characters[32]) or
+        not WFC_IS_HEXADECIMAL(characters[33]) or
+        not WFC_IS_HEXADECIMAL(characters[34]) or
+        not WFC_IS_HEXADECIMAL(characters[35]) or
+        not WFC_IS_HEXADECIMAL(characters[36]))
+    {
+        return(false);
     }
 
     return( true );

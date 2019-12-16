@@ -1474,7 +1474,7 @@ public:
                 return( true );
             }
 
-            field.push_back( field_character );
+            field.push_back( static_cast<wchar_t>(field_character) );
         }
 
         return (field.empty() == true ? false : true);
@@ -1688,7 +1688,7 @@ public:
                 return( true );
             }
 
-            line.push_back( line_character );
+            line.push_back( static_cast<wchar_t>(line_character) );
         }
 
         if ( line.empty() == false )

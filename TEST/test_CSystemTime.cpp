@@ -118,7 +118,7 @@ _Check_return_ bool test_CSystemTime( __out std::string& class_name, __out int& 
 
    CSystemTime time_2( system_time );
 
-   if ( ! ( time_2 == system_time ) )
+   if (not ( time_2 == system_time ) )
    {
       test_number_that_failed = 8;
       return( failure() );

@@ -1161,10 +1161,10 @@ __checkReturn bool test_CByteArray( __out std::string& class_name, __out int& te
 
     array_1.InsertAt( 1, &array_2 );
 
-    if ( array_1.GetAt( 0 ) != 1 ||
-        array_1.GetAt( 1 ) != 2 ||
-        array_1.GetAt( 2 ) != 3 ||
-        array_1.GetAt( 3 ) != 4 ||
+    if ( array_1.GetAt( 0 ) != 1 or
+        array_1.GetAt( 1 ) != 2 or
+        array_1.GetAt( 2 ) != 3 or
+        array_1.GetAt( 3 ) != 4 or
         array_1.GetAt( 4 ) != 5 )
     {
         test_number_that_failed = 153;
@@ -1198,10 +1198,10 @@ __checkReturn bool test_CByteArray( __out std::string& class_name, __out int& te
 
     array_1.InsertAt( 0, &array_2 );
 
-    if ( array_1.GetAt( 0 ) != 1 ||
-        array_1.GetAt( 1 ) != 2 ||
-        array_1.GetAt( 2 ) != 3 ||
-        array_1.GetAt( 3 ) != 4 ||
+    if ( array_1.GetAt( 0 ) != 1 or
+        array_1.GetAt( 1 ) != 2 or
+        array_1.GetAt( 2 ) != 3 or
+        array_1.GetAt( 3 ) != 4 or
         array_1.GetAt( 4 ) != 5 )
     {
         test_number_that_failed = 156;
@@ -1235,10 +1235,10 @@ __checkReturn bool test_CByteArray( __out std::string& class_name, __out int& te
 
     array_1.InsertAt( 3, &array_2 );
 
-    if ( array_1.GetAt( 0 ) != 1 ||
-        array_1.GetAt( 1 ) != 2 ||
-        array_1.GetAt( 2 ) != 3 ||
-        array_1.GetAt( 3 ) != 4 ||
+    if ( array_1.GetAt( 0 ) != 1 or
+        array_1.GetAt( 1 ) != 2 or
+        array_1.GetAt( 2 ) != 3 or
+        array_1.GetAt( 3 ) != 4 or
         array_1.GetAt( 4 ) != 5 )
     {
         WFCTRACEINIT( TEXT( "CB" ) );
@@ -1437,9 +1437,9 @@ __checkReturn bool test_CByteArray( __out std::string& class_name, __out int& te
         return( failure() );
     }
 
-    if ( array_1.GetAt( 0 ) != 0xAB ||
-        array_1.GetAt( 1 ) != 0xCD ||
-        array_1.GetAt( 2 ) != 0x11 ||
+    if ( array_1.GetAt( 0 ) != 0xAB or
+        array_1.GetAt( 1 ) != 0xCD or
+        array_1.GetAt( 2 ) != 0x11 or
         array_1.GetAt( 3 ) != 0x22 )
     {
         WFCTRACEINIT( TEXT( "CB" ) );
@@ -1461,7 +1461,7 @@ __checkReturn bool test_CByteArray( __out std::string& class_name, __out int& te
         return(failure());
     }
 
-    if (bb.at(0) != 'S' || bb.at(1) != 'a' || bb.at(2) != 'm')
+    if (bb.at(0) != 'S' or bb.at(1) != 'a' or bb.at(2) != 'm')
     {
         test_number_that_failed = 185;
         return(failure());
@@ -1475,7 +1475,7 @@ __checkReturn bool test_CByteArray( __out std::string& class_name, __out int& te
         return(failure());
     }
 
-    if (bb.at(0) != 'S' || bb.at(1) != 'a' || bb.at(2) != 'm' || bb.at(3) != 'm' || bb.at(4) != 'y' )
+    if (bb.at(0) != 'S' or bb.at(1) != 'a' or bb.at(2) != 'm' or bb.at(3) != 'm' or bb.at(4) != 'y' )
     {
         test_number_that_failed = 187;
         return(failure());

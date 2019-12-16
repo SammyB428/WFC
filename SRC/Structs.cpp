@@ -175,12 +175,12 @@ CAccessControlEntryHeader::~CAccessControlEntryHeader()
    Empty();
 }
 
-void CAccessControlEntryHeader::Copy( __in CAccessControlEntryHeader const& source ) noexcept
+void CAccessControlEntryHeader::Copy(_In_ CAccessControlEntryHeader const& source ) noexcept
 {
-   Copy( reinterpret_cast<ACE_HEADER const *>(&source) );
+   Copy( static_cast<ACE_HEADER const *>(&source) );
 }
 
-void CAccessControlEntryHeader::Copy( __in ACE_HEADER const * source ) noexcept
+void CAccessControlEntryHeader::Copy(_In_ ACE_HEADER const * source ) noexcept
 {
    WFC_VALIDATE_POINTER( source );
    ASSERT( source != this );
@@ -340,12 +340,12 @@ CAccessControlList::~CAccessControlList()
    Empty();
 }
 
-void CAccessControlList::Copy( __in CAccessControlList const& source ) noexcept
+void CAccessControlList::Copy(_In_ CAccessControlList const& source ) noexcept
 {
-   Copy( reinterpret_cast<ACL const *>(&source) );
+   Copy( static_cast<ACL const *>(&source) );
 }
 
-void CAccessControlList::Copy( __in ACL const * source ) noexcept
+void CAccessControlList::Copy(_In_ ACL const * source ) noexcept
 {
    WFC_VALIDATE_POINTER( source );
    ASSERT( source != this );
@@ -425,12 +425,12 @@ CAccessDeniedEntry::~CAccessDeniedEntry()
    Empty();
 }
 
-void CAccessDeniedEntry::Copy( __in CAccessDeniedEntry const& source ) noexcept
+void CAccessDeniedEntry::Copy(_In_ CAccessDeniedEntry const& source ) noexcept
 {
-   Copy( reinterpret_cast<ACCESS_DENIED_ACE const*>(&source) );
+   Copy( static_cast<ACCESS_DENIED_ACE const*>(&source) );
 }
 
-void CAccessDeniedEntry::Copy( __in ACCESS_DENIED_ACE const * source ) noexcept
+void CAccessDeniedEntry::Copy(_In_ ACCESS_DENIED_ACE const * source ) noexcept
 {
    WFC_VALIDATE_POINTER( source );
    ASSERT( source != this );
@@ -684,12 +684,12 @@ CBitmapFileHeader::~CBitmapFileHeader()
    Empty();
 }
 
-void CBitmapFileHeader::Copy( __in CBitmapFileHeader const& source ) noexcept
+void CBitmapFileHeader::Copy(_In_ CBitmapFileHeader const& source ) noexcept
 {
-   Copy( reinterpret_cast<tagBITMAPFILEHEADER const *>(&source) );
+   Copy( static_cast<tagBITMAPFILEHEADER const *>(&source) );
 }
 
-void CBitmapFileHeader::Copy( __in tagBITMAPFILEHEADER const * source ) noexcept
+void CBitmapFileHeader::Copy(_In_ tagBITMAPFILEHEADER const * source ) noexcept
 {
    WFC_VALIDATE_POINTER( source );
    ASSERT( source != this );
@@ -778,7 +778,7 @@ CBitmapInfoHeader::~CBitmapInfoHeader()
 
 void CBitmapInfoHeader::Copy( __in CBitmapInfoHeader const& source ) noexcept
 {
-   Copy( reinterpret_cast<tagBITMAPINFOHEADER const *>(&source) );
+   Copy( static_cast<tagBITMAPINFOHEADER const *>(&source) );
 }
 
 void CBitmapInfoHeader::Copy( __in tagBITMAPINFOHEADER const * source ) noexcept
@@ -883,12 +883,12 @@ CColorAdjustment::~CColorAdjustment()
    Empty();
 }
 
-void CColorAdjustment::Copy( __in CColorAdjustment const& source ) noexcept
+void CColorAdjustment::Copy( _In_ CColorAdjustment const& source ) noexcept
 {
-   Copy( reinterpret_cast<tagCOLORADJUSTMENT const *>(&source) );
+   Copy( static_cast<tagCOLORADJUSTMENT const *>(&source) );
 }
 
-void CColorAdjustment::Copy( __in tagCOLORADJUSTMENT const * source ) noexcept
+void CColorAdjustment::Copy(_In_ tagCOLORADJUSTMENT const * source ) noexcept
 {
    WFC_VALIDATE_POINTER( source );
    ASSERT( source != this );
@@ -2084,12 +2084,12 @@ CMemoryStatus::~CMemoryStatus()
    Empty();
 }
 
-void CMemoryStatus::Copy( __in CMemoryStatus const& source ) noexcept
+void CMemoryStatus::Copy(_In_ CMemoryStatus const& source ) noexcept
 {
-   Copy( reinterpret_cast<MEMORYSTATUS const *>(&source) );
+   Copy( static_cast<MEMORYSTATUS const *>(&source) );
 }
 
-void CMemoryStatus::Copy( __in MEMORYSTATUS const * source ) noexcept
+void CMemoryStatus::Copy(_In_ MEMORYSTATUS const * source ) noexcept
 {
    WFC_VALIDATE_POINTER( source );
 
@@ -2181,12 +2181,12 @@ COFStruct::~COFStruct()
    Empty();
 }
 
-void COFStruct::Copy( __in COFStruct const& source ) noexcept
+void COFStruct::Copy(_In_ COFStruct const& source ) noexcept
 {
-   Copy( reinterpret_cast<_OFSTRUCT const *>(&source) );
+   Copy( static_cast<_OFSTRUCT const *>(&source) );
 }
 
-void COFStruct::Copy( __in _OFSTRUCT const * source ) noexcept
+void COFStruct::Copy(_In_ _OFSTRUCT const * source ) noexcept
 {
    WFC_VALIDATE_POINTER( source );
    ASSERT( source != this );
@@ -2277,12 +2277,12 @@ COutlineTextMetricA::~COutlineTextMetricA()
    Empty();
 }
 
-void COutlineTextMetricA::Copy( __in COutlineTextMetricA const& source ) noexcept
+void COutlineTextMetricA::Copy(_In_ COutlineTextMetricA const& source ) noexcept
 {
-   Copy( reinterpret_cast<_OUTLINETEXTMETRICA const *>(&source) );
+   Copy( static_cast<_OUTLINETEXTMETRICA const *>(&source) );
 }
 
-void COutlineTextMetricA::Copy( __in _OUTLINETEXTMETRICA const * source ) noexcept
+void COutlineTextMetricA::Copy(_In_ _OUTLINETEXTMETRICA const * source ) noexcept
 {
    WFC_VALIDATE_POINTER( source );
    ASSERT( source != this );
@@ -2572,12 +2572,12 @@ COutlineTextMetricW::~COutlineTextMetricW()
    Empty();
 }
 
-void COutlineTextMetricW::Copy( __in COutlineTextMetricW const& source ) noexcept
+void COutlineTextMetricW::Copy(_In_ COutlineTextMetricW const& source ) noexcept
 {
-   Copy( reinterpret_cast<_OUTLINETEXTMETRICW const *>(&source) );
+   Copy( static_cast<_OUTLINETEXTMETRICW const *>(&source) );
 }
 
-void COutlineTextMetricW::Copy( __in _OUTLINETEXTMETRICW const * source ) noexcept
+void COutlineTextMetricW::Copy(_In_ _OUTLINETEXTMETRICW const * source ) noexcept
 {
    WFC_VALIDATE_POINTER( source );
    ASSERT( source != this );
@@ -2911,12 +2911,12 @@ CPixelFormatDescriptor::~CPixelFormatDescriptor()
    Empty();
 }
 
-void CPixelFormatDescriptor::Copy( __in CPixelFormatDescriptor const& source ) noexcept
+void CPixelFormatDescriptor::Copy(_In_ CPixelFormatDescriptor const& source ) noexcept
 {
-   Copy( reinterpret_cast<tagPIXELFORMATDESCRIPTOR const *>(&source) );
+   Copy( static_cast<tagPIXELFORMATDESCRIPTOR const *>(&source) );
 }
 
-void CPixelFormatDescriptor::Copy( __in tagPIXELFORMATDESCRIPTOR const * source ) noexcept
+void CPixelFormatDescriptor::Copy(_In_ tagPIXELFORMATDESCRIPTOR const * source ) noexcept
 {
    WFC_VALIDATE_POINTER( source );
    ASSERT( source != this );
@@ -3247,12 +3247,12 @@ CSystemAuditEntry::~CSystemAuditEntry() noexcept
    Empty();
 }
 
-void CSystemAuditEntry::Copy( __in CSystemAuditEntry const& source ) noexcept
+void CSystemAuditEntry::Copy(_In_ CSystemAuditEntry const& source ) noexcept
 {
-   Copy( reinterpret_cast<_SYSTEM_AUDIT_ACE const *>(&source) );
+   Copy( static_cast<_SYSTEM_AUDIT_ACE const *>(&source) );
 }
 
-void CSystemAuditEntry::Copy( __in _SYSTEM_AUDIT_ACE const * source ) noexcept
+void CSystemAuditEntry::Copy(_In_ _SYSTEM_AUDIT_ACE const * source ) noexcept
 {
    WFC_VALIDATE_POINTER( source );
    ASSERT( source != this );
@@ -3429,12 +3429,12 @@ CTextMetricA::~CTextMetricA()
    Empty();
 }
 
-void CTextMetricA::Copy( __in CTextMetricA const& source ) noexcept
+void CTextMetricA::Copy(_In_ CTextMetricA const& source ) noexcept
 {
-   Copy( reinterpret_cast<tagTEXTMETRICA const *>(&source) );
+   Copy( static_cast<tagTEXTMETRICA const *>(&source) );
 }
 
-void CTextMetricA::Copy( __in tagTEXTMETRICA const * source ) noexcept
+void CTextMetricA::Copy(_In_ tagTEXTMETRICA const * source ) noexcept
 {
    WFC_VALIDATE_POINTER( source );
    ASSERT( source != this );
@@ -3563,12 +3563,12 @@ CTextMetricW::~CTextMetricW()
    Empty();
 }
 
-void CTextMetricW::Copy( __in CTextMetricW const& source ) noexcept
+void CTextMetricW::Copy(_In_ CTextMetricW const& source ) noexcept
 {
-   Copy( reinterpret_cast<tagTEXTMETRICW const *>(&source) );
+   Copy( static_cast<tagTEXTMETRICW const *>(&source) );
 }
 
-void CTextMetricW::Copy( __in tagTEXTMETRICW const * source ) noexcept
+void CTextMetricW::Copy(_In_ tagTEXTMETRICW const * source ) noexcept
 {
    WFC_VALIDATE_POINTER( source );
    ASSERT( source != this );
@@ -3693,12 +3693,12 @@ CWindowPlacement::~CWindowPlacement() noexcept
    Empty();
 }
 
-void CWindowPlacement::Copy( __in CWindowPlacement const& source ) noexcept
+void CWindowPlacement::Copy(_In_ CWindowPlacement const& source ) noexcept
 {
-   Copy( reinterpret_cast<tagWINDOWPLACEMENT const *>(&source) );
+   Copy( static_cast<tagWINDOWPLACEMENT const *>(&source) );
 }
 
-void CWindowPlacement::Copy( __in tagWINDOWPLACEMENT const * source ) noexcept
+void CWindowPlacement::Copy(_In_ tagWINDOWPLACEMENT const * source ) noexcept
 {
    WFC_VALIDATE_POINTER( source );
    ASSERT( source != this );

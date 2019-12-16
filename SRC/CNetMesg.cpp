@@ -210,7 +210,7 @@ BOOL CNetMessage::GetInformation( const CString& name, CMessageInformation& info
    {
       m_ErrorCode = ::NetMessageNameGetInfo( (LMSTR) m_WideMachineName, 0, (LPBYTE *) &m_InformationBuffer0 );
 
-      if ( m_ErrorCode != NERR_Success || m_InformationBuffer0 == nullptr )
+      if ( m_ErrorCode != NERR_Success or m_InformationBuffer0 == nullptr )
       {
          return( FALSE );
       }
@@ -219,7 +219,7 @@ BOOL CNetMessage::GetInformation( const CString& name, CMessageInformation& info
          information.Copy( m_InformationBuffer0 ); 
       }
    }
-   else if ( m_ErrorCode != NERR_Success || m_InformationBuffer1 == nullptr )
+   else if ( m_ErrorCode != NERR_Success or m_InformationBuffer1 == nullptr )
    {
       return( FALSE );
    }
@@ -249,7 +249,7 @@ BOOL CNetMessage::Enumerate( void )
                                               &m_TotalNumberOfEntries,
                                               &m_ResumeHandle );
 
-   if ( m_ErrorCode != NERR_Success || m_TransportBuffer == nullptr || m_TransportNumberOfEntriesRead == 0 )
+   if ( m_ErrorCode != NERR_Success or m_TransportBuffer == nullptr or m_TransportNumberOfEntriesRead == 0 )
    {
       return( FALSE );
    }

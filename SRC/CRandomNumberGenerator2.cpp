@@ -645,12 +645,11 @@ void CRandomNumberGenerator2::Fill( _In_ uint32_t const min_length, _In_ uint32_
 
     destination.resize( length );
 
-    wchar_t const * alphabet = L" abcdefghijklmnopqrstuvwxyz 01234567890 .! ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    uint32_t const alphabet_length = static_cast<uint32_t>(wcslen( alphabet ));
+    auto alphabet = WSTRING_VIEW(L" abcdefghijklmnopqrstuvwxyz 01234567890 .! ABCDEFGHIJKLMNOPQRSTUVWXYZ");
 
     for ( auto const loop_index : Range(length) )
     {
-        destination.at( loop_index ) = alphabet[ GetInteger() % alphabet_length ];
+        destination.at( loop_index ) = alphabet[ GetInteger() % alphabet.length() ];
     }
 }
 
@@ -660,8 +659,7 @@ void CRandomNumberGenerator2::Fill( _In_ uint32_t const seed, _Out_ std::wstring
 
     destination.resize( length );
 
-    wchar_t const * alphabet = L" abcdefghijklmnopqrstuvwxyz 01234567890 .! ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    uint32_t const alphabet_length = static_cast<uint32_t>(wcslen( alphabet ));
+    auto alphabet = WSTRING_VIEW(L" abcdefghijklmnopqrstuvwxyz 01234567890 .! ABCDEFGHIJKLMNOPQRSTUVWXYZ");
 
     uint32_t loop_index = 0;
 
@@ -669,7 +667,7 @@ void CRandomNumberGenerator2::Fill( _In_ uint32_t const seed, _Out_ std::wstring
 
     while( loop_index < length ) // Can't be converted to range loop
     {
-        destination.at( loop_index ) =  alphabet[ new_seed % alphabet_length ];
+        destination.at( loop_index ) =  alphabet[ new_seed % alphabet.length() ];
 
         new_seed = _rotl( new_seed, 1 );
 

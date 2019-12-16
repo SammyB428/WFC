@@ -80,13 +80,13 @@ CTapeGetDriveParameters::~CTapeGetDriveParameters()
    Empty();
 }
 
-void CTapeGetDriveParameters::Copy( __in CTapeGetDriveParameters const& source ) noexcept
+void CTapeGetDriveParameters::Copy(_In_ CTapeGetDriveParameters const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
-   Copy( reinterpret_cast<TAPE_GET_DRIVE_PARAMETERS const *>(&source) );
+   Copy( static_cast<TAPE_GET_DRIVE_PARAMETERS const *>(&source) );
 }
 
-void CTapeGetDriveParameters::Copy( __in TAPE_GET_DRIVE_PARAMETERS const * source ) noexcept
+void CTapeGetDriveParameters::Copy(_In_ TAPE_GET_DRIVE_PARAMETERS const * source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
@@ -746,13 +746,13 @@ CTapeSetDriveParameters::~CTapeSetDriveParameters() noexcept
    Empty();
 }
 
-void CTapeSetDriveParameters::Copy( __in CTapeSetDriveParameters const& source ) noexcept
+void CTapeSetDriveParameters::Copy(_In_ CTapeSetDriveParameters const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
-   Copy( reinterpret_cast<TAPE_SET_DRIVE_PARAMETERS const *>(&source) );
+   Copy( static_cast<TAPE_SET_DRIVE_PARAMETERS const *>(&source) );
 }
 
-void CTapeSetDriveParameters::Copy( __in TAPE_SET_DRIVE_PARAMETERS const * source ) noexcept
+void CTapeSetDriveParameters::Copy(_In_ TAPE_SET_DRIVE_PARAMETERS const * source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
@@ -848,13 +848,13 @@ CTapeSetMediaParameters::~CTapeSetMediaParameters() noexcept
    Empty();
 }
 
-void CTapeSetMediaParameters::Copy( __in CTapeSetMediaParameters const& source ) noexcept
+void CTapeSetMediaParameters::Copy(_In_ CTapeSetMediaParameters const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
-   Copy( reinterpret_cast<TAPE_SET_MEDIA_PARAMETERS const *>(&source) );
+   Copy( static_cast<TAPE_SET_MEDIA_PARAMETERS const *>(&source) );
 }
 
-void CTapeSetMediaParameters::Copy( __in TAPE_SET_MEDIA_PARAMETERS const * source ) noexcept
+void CTapeSetMediaParameters::Copy(_In_ TAPE_SET_MEDIA_PARAMETERS const * source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );

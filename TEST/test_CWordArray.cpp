@@ -979,10 +979,10 @@ __checkReturn bool test_CWordArray( __out std::string& class_name, __out int& te
 
     array_1.InsertAt( 1, &array_2 );
 
-    if ( array_1.GetAt( 0 ) != 1 ||
-        array_1.GetAt( 1 ) != 2 ||
-        array_1.GetAt( 2 ) != 3 ||
-        array_1.GetAt( 3 ) != 4 ||
+    if ( array_1.GetAt( 0 ) != 1 or
+        array_1.GetAt( 1 ) != 2 or
+        array_1.GetAt( 2 ) != 3 or
+        array_1.GetAt( 3 ) != 4 or
         array_1.GetAt( 4 ) != 5 )
     {
         test_number_that_failed = 129;
@@ -1016,10 +1016,10 @@ __checkReturn bool test_CWordArray( __out std::string& class_name, __out int& te
 
     array_1.InsertAt( 0, &array_2 );
 
-    if ( array_1.GetAt( 0 ) != 1 ||
-        array_1.GetAt( 1 ) != 2 ||
-        array_1.GetAt( 2 ) != 3 ||
-        array_1.GetAt( 3 ) != 4 ||
+    if ( array_1.GetAt( 0 ) != 1 or
+        array_1.GetAt( 1 ) != 2 or
+        array_1.GetAt( 2 ) != 3 or
+        array_1.GetAt( 3 ) != 4 or
         array_1.GetAt( 4 ) != 5 )
     {
         test_number_that_failed = 132;
@@ -1053,10 +1053,10 @@ __checkReturn bool test_CWordArray( __out std::string& class_name, __out int& te
 
     array_1.InsertAt( 3, &array_2 );
 
-    if ( array_1.GetAt( 0 ) != 1 ||
-        array_1.GetAt( 1 ) != 2 ||
-        array_1.GetAt( 2 ) != 3 ||
-        array_1.GetAt( 3 ) != 4 ||
+    if ( array_1.GetAt( 0 ) != 1 or
+        array_1.GetAt( 1 ) != 2 or
+        array_1.GetAt( 2 ) != 3 or
+        array_1.GetAt( 3 ) != 4 or
         array_1.GetAt( 4 ) != 5 )
     {
         test_number_that_failed = 135;

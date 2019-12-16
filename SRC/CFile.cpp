@@ -28,9 +28,9 @@ USING_WFC_NAMESPACE
 
 // Helper functions
 
-static inline __checkReturn bool __is_directory_separation_character( __in TCHAR temp_pointer )
+static inline __checkReturn bool __is_directory_separation_character( _In_ TCHAR const temp_pointer ) noexcept
 {
-   return( temp_pointer == '\\' || temp_pointer == '/' );
+   return( temp_pointer == '\\' or temp_pointer == '/' );
 }
 
 static inline UINT __GetFileName(LPCTSTR lpszPathName, LPTSTR lpszTitle, UINT nMax)
@@ -46,7 +46,7 @@ static inline UINT __GetFileName(LPCTSTR lpszPathName, LPTSTR lpszTitle, UINT nM
    for ( temp_pointer = lpszPathName; *temp_pointer != '\0'; temp_pointer = _tcsinc( temp_pointer ) )
    {
       // remember last directory/drive separator
-      if (*temp_pointer == '\\' || *temp_pointer == '/' || *temp_pointer == ':')
+      if (*temp_pointer == '\\' or *temp_pointer == '/' or *temp_pointer == ':')
       {
          lpszTemp = (LPTSTR) _tcsinc( temp_pointer );
       }

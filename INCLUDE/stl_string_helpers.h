@@ -1986,22 +1986,20 @@ inline void split(_In_ std::string_view source, _In_ char const character, _Inou
     split(source.data(), source.length(), character, string_array);
 }
 
-inline void split_and_trim(_In_z_ wchar_t const* source, _In_ wchar_t const character, _Inout_ std::vector<std::wstring>& string_array) noexcept
+inline void split_and_trim(_In_ std::wstring_view source, _In_ wchar_t const character, _Inout_ std::vector<std::wstring>& string_array) noexcept
 {
     string_array.clear();
 
-    if (source == nullptr or source[0] == 0x00)
+    if (source.empty() == true)
     {
         return;
     }
 
-    int source_index = 0;
-
     std::wstring string_to_add;
 
-    while (source[source_index] != 0x00)
+    for( auto const source_character : source)
     {
-        if (source[source_index] == character)
+        if (source_character == character)
         {
             trim(string_to_add);
 
@@ -2013,10 +2011,8 @@ inline void split_and_trim(_In_z_ wchar_t const* source, _In_ wchar_t const char
         }
         else
         {
-            string_to_add.push_back(source[source_index]);
+            string_to_add.push_back(source_character);
         }
-
-        source_index++;
     }
 
     trim(string_to_add);
@@ -2025,11 +2021,6 @@ inline void split_and_trim(_In_z_ wchar_t const* source, _In_ wchar_t const char
     {
         string_array.push_back(string_to_add);
     }
-}
-
-inline void split_and_trim(_In_ std::wstring const& source, _In_ wchar_t const character, _Inout_ std::vector<std::wstring>& string_array) noexcept
-{
-    split_and_trim(source.c_str(), character, string_array);
 }
 
 inline _Check_return_ int delete_characters(_Inout_ std::wstring& s, _In_ int const index, _In_ int number_of_characters_to_delete = 1) noexcept
@@ -2144,7 +2135,7 @@ inline void replace(_Inout_ std::wstring& s, _In_ std::wstring_view what_to_repl
         translated_string.append(s.substr(0, location));
         translated_string.append(replace_it_with);
 
-        s.erase(0, location + what_to_replace.length());
+        (void) s.erase(0, location + what_to_replace.length());
 
         location = s.find(what_to_replace);
     }
@@ -2166,7 +2157,7 @@ inline void replace(_Inout_ std::string& s, _In_ std::string_view what_to_replac
         translated_string.append(s.substr(0, location));
         translated_string.append(replace_it_with);
 
-        s.erase(0, location + what_to_replace.length());
+        (void) s.erase(0, location + what_to_replace.length());
 
         location = s.find(what_to_replace);
     }

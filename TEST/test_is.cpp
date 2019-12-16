@@ -48,20 +48,20 @@ _Check_return_ bool test_is( _Out_ std::string& class_name, _Out_ int& test_numb
 {
    class_name.assign(STRING_VIEW("test_is"));
 
-   char const *    good_plain_ascii_guid =  "0AEE2A9F-BCBB-11d0-8C72-00C04FC2B085";
-   wchar_t const * good_plain_wide_guid  = L"0aee2A9F-BCBB-11d0-8C72-00C04FC2B085";
-   char const *    good_curly_ascii_guid =  "{0AEE2A9F-BCBB-11d0-8C72-00C04FC2B085}";
-   wchar_t const * good_curly_wide_guid  = L"{0aee2A9F-BCBB-11d0-8C72-00C04FC2B085}";
+   auto good_plain_ascii_guid = STRING_VIEW("0AEE2A9F-BCBB-11d0-8C72-00C04FC2B085");
+   auto good_plain_wide_guid  = WSTRING_VIEW(L"0aee2A9F-BCBB-11d0-8C72-00C04FC2B085");
+   auto good_curly_ascii_guid = STRING_VIEW("{0AEE2A9F-BCBB-11d0-8C72-00C04FC2B085}");
+   auto good_curly_wide_guid  = WSTRING_VIEW(L"{0aee2A9F-BCBB-11d0-8C72-00C04FC2B085}");
 
-   char const *    bad1_plain_ascii_guid =  "0AEE2A9F-BCBB-11d0-8C72 00C04FC2B085";
-   wchar_t const * bad1_plain_wide_guid  = L"0aee2A9F-BCBB-11d0-8C72 00C04FC2B085";
-   char const *    bad1_curly_ascii_guid =  "{0AEE2A9F-BCBB-11d0-8C72 00C04FC2B085}";
-   wchar_t const * bad1_curly_wide_guid  = L"{0aee2A9F-BCBB-11d0-8C72 00C04FC2B085}";
+   auto bad1_plain_ascii_guid = STRING_VIEW("0AEE2A9F-BCBB-11d0-8C72 00C04FC2B085");
+   auto bad1_plain_wide_guid  = WSTRING_VIEW(L"0aee2A9F-BCBB-11d0-8C72 00C04FC2B085");
+   auto bad1_curly_ascii_guid = STRING_VIEW("{0AEE2A9F-BCBB-11d0-8C72 00C04FC2B085}");
+   auto bad1_curly_wide_guid  = WSTRING_VIEW(L"{0aee2A9F-BCBB-11d0-8C72 00C04FC2B085}");
 
-   char const *    bad2_plain_ascii_guid =  "0AEE2A9F-BCBB-11d0-8C72-00C04FC2B08O";
-   wchar_t const * bad2_plain_wide_guid  = L"0aee2A9F-BCBB-11d0-8C72-00C04FC2B08O";
-   char const *    bad2_curly_ascii_guid =  "{0AEE2A9F-BCBB-11d0-8C72-00C04FC2B08O}";
-   wchar_t const * bad2_curly_wide_guid  = L"{0aee2A9F-BCBB-11d0-8C72-00C04FC2B08O}";
+   auto bad2_plain_ascii_guid = STRING_VIEW("0AEE2A9F-BCBB-11d0-8C72-00C04FC2B08O");
+   auto bad2_plain_wide_guid  = WSTRING_VIEW(L"0aee2A9F-BCBB-11d0-8C72-00C04FC2B08O");
+   auto bad2_curly_ascii_guid = STRING_VIEW("{0AEE2A9F-BCBB-11d0-8C72-00C04FC2B08O}");
+   auto bad2_curly_wide_guid  = WSTRING_VIEW(L"{0aee2A9F-BCBB-11d0-8C72-00C04FC2B08O}");
 
    if ( wfc_is_guid( good_plain_ascii_guid ) == false )
    {
@@ -70,14 +70,14 @@ _Check_return_ bool test_is( _Out_ std::string& class_name, _Out_ int& test_numb
        return( failure() );
    }
 
-   if ( wfc_is_guid( bad1_plain_ascii_guid ) != false )
+   if ( wfc_is_guid( bad1_plain_ascii_guid ) == true )
    {
        class_name.assign(STRING_VIEW("wfc_is_guid( ascii )"));
        test_number_that_failed = 2;
        return( failure() );
    }
 
-   if ( wfc_is_guid( bad2_plain_ascii_guid ) == false )
+   if ( wfc_is_guid( bad2_plain_ascii_guid ) == true )
    {
        class_name.assign(STRING_VIEW("wfc_is_guid( ascii )"));
        test_number_that_failed = 3;
@@ -91,14 +91,14 @@ _Check_return_ bool test_is( _Out_ std::string& class_name, _Out_ int& test_numb
        return( failure() );
    }
 
-   if ( wfc_is_guid( bad1_plain_wide_guid ) != false )
+   if ( wfc_is_guid( bad1_plain_wide_guid ) == true )
    {
        class_name.assign(STRING_VIEW("wfc_is_guid( unicode )"));
        test_number_that_failed = 5;
        return( failure() );
    }
 
-   if ( wfc_is_guid( bad2_plain_wide_guid ) == false )
+   if ( wfc_is_guid( bad2_plain_wide_guid ) == true )
    {
        class_name.assign(STRING_VIEW("wfc_is_guid( unicode )"));
        test_number_that_failed = 6;
@@ -112,14 +112,14 @@ _Check_return_ bool test_is( _Out_ std::string& class_name, _Out_ int& test_numb
        return( failure() );
    }
 
-   if ( wfc_is_guid_with_curlies( bad1_curly_ascii_guid ) != false )
+   if ( wfc_is_guid_with_curlies( bad1_curly_ascii_guid ) == true )
    {
        class_name.assign(STRING_VIEW("wfc_is_guid_with_curlies( ascii )"));
        test_number_that_failed = 8;
        return( failure() );
    }
 
-   if ( wfc_is_guid_with_curlies( bad2_curly_ascii_guid ) != false )
+   if ( wfc_is_guid_with_curlies( bad2_curly_ascii_guid ) == true )
    {
        class_name.assign(STRING_VIEW("wfc_is_guid_with_curlies( ascii )"));
        test_number_that_failed = 9;
@@ -133,28 +133,28 @@ _Check_return_ bool test_is( _Out_ std::string& class_name, _Out_ int& test_numb
        return( failure() );
    }
 
-   if ( wfc_is_guid_with_curlies( bad1_curly_wide_guid ) != false )
+   if ( wfc_is_guid_with_curlies( bad1_curly_wide_guid ) == true )
    {
        class_name.assign(STRING_VIEW("wfc_is_guid_with_curlies( unicode )"));
        test_number_that_failed = 11;
        return( failure() );
    }
 
-   if ( wfc_is_guid_with_curlies( bad2_curly_wide_guid ) != false )
+   if ( wfc_is_guid_with_curlies( bad2_curly_wide_guid ) == true )
    {
        class_name.assign(STRING_VIEW("wfc_is_guid_with_curlies( unicode2 )"));
        test_number_that_failed = 12;
        return( failure() );
    }
 
-   if ( wfc_find_curly_guid( reinterpret_cast<uint8_t const *>(good_curly_ascii_guid), strlen( good_curly_ascii_guid ) ) != 0 )
+   if ( wfc_find_curly_guid( reinterpret_cast<uint8_t const *>(good_curly_ascii_guid.data()), good_curly_ascii_guid.length() ) != 0 )
    {
        class_name.assign(STRING_VIEW("wfc_find_curly_guid()"));
        test_number_that_failed = 13;
        return( failure() );
    }
 
-   if ( wfc_find_wide_curly_guid( reinterpret_cast<uint8_t const *>(good_curly_wide_guid), wcslen( good_curly_wide_guid ) * sizeof( wchar_t ) ) != 0 )
+   if ( wfc_find_wide_curly_guid( reinterpret_cast<uint8_t const *>(good_curly_wide_guid.data()), good_curly_wide_guid.length() * sizeof( wchar_t ) ) != 0 )
    {
        class_name.assign(STRING_VIEW("wfc_find_wide_curly_guid()"));
        test_number_that_failed = 14;
@@ -212,10 +212,40 @@ _Check_return_ bool test_is( _Out_ std::string& class_name, _Out_ int& test_numb
 
    if (round_down_to_a_multiple_of(511, 512) != 0)
    {
-       class_name.assign(STRING_VIEW("round_down_to_a_multiple_of"));
+       class_name.assign(STRING_VIEW("round_down_to_a_multiple_of()"));
        test_number_that_failed = 22;
        return(failure());
    }
-   test_number_that_failed = 22;
+
+   if (wfc_is_dotted_ip_address(STRING_VIEW("1.1.1.1")) == false)
+   {
+       class_name.assign(STRING_VIEW("wfc_is_dotted_ip_address()"));
+       test_number_that_failed = 23;
+       return(failure());
+   }
+
+   if (wfc_is_dotted_ip_address(STRING_VIEW("1.11.111.256")) == true)
+   {
+       class_name.assign(STRING_VIEW("wfc_is_dotted_ip_address()"));
+       test_number_that_failed = 24;
+       return(failure());
+   }
+
+   if (wfc_is_dotted_ip_address(WSTRING_VIEW(L"1.1.1.1")) == false)
+   {
+       class_name.assign(STRING_VIEW("wfc_is_dotted_ip_address()"));
+       test_number_that_failed = 25;
+       return(failure());
+   }
+
+   if (wfc_is_dotted_ip_address(WSTRING_VIEW(L"1.11.111.256")) == true)
+   {
+       class_name.assign(STRING_VIEW("wfc_is_dotted_ip_address()"));
+       test_number_that_failed = 26;
+       return(failure());
+   }
+
+   test_number_that_failed = 26;
+
    return( true );
 }

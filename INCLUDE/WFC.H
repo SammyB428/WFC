@@ -1043,6 +1043,10 @@ inline constexpr _Check_return_ uint64_t round_down_to_a_multiple_of(_In_ uint64
 #define SE_CREATE_SYMBOLIC_LINK_NAME    TEXT("SeCreateSymbolicLinkPrivilege")
 #endif
 
+#if ! defined( SE_DELEGATE_SESSION_USER_IMPERSONATE_NAME )
+#define SE_DELEGATE_SESSION_USER_IMPERSONATE_NAME    TEXT("SeDelegateSessionUserImpersonatePrivilege")
+#endif
+
 #define WAIT_FOR_ANY_OBJECT_TO_SIGNAL (FALSE)
 #define WAIT_FOR_ALL_OBJECTS_TO_SIGNAL (TRUE)
 
@@ -1081,8 +1085,8 @@ _Check_return_ bool PASCAL wfc_get_command_line( __out std::wstring& full_comman
 _Check_return_ bool PASCAL wfc_get_day_of_week( __in int year_with_century, __in int month, __in int day, __out int& day_of_week ) noexcept;
 _Check_return_ bool PASCAL wfc_get_filename_from_handle( __in HANDLE const file_handle, __out std::wstring& filename ) noexcept;
 _Check_return_ bool PASCAL wfc_move_file_at_reboot( __in std::wstring const& existing_file, __in std::wstring const& file_to_move ) noexcept;
-_Check_return_ bool PASCAL wfc_parse_hex_string(__in_z wchar_t const * hex_string, _In_ std::size_t const number_of_characters, __out_bcount( buffer_size ) uint8_t * buffer, _In_ std::size_t const buffer_size ) noexcept;
-_Check_return_ bool PASCAL wfc_parse_hex_string(__in_z char const * hex_string, _In_ std::size_t const number_of_characters, __out_bcount( buffer_size ) uint8_t * buffer, _In_ std::size_t const buffer_size ) noexcept;
+_Check_return_ bool PASCAL wfc_parse_hex_string(_In_ std::wstring_view hex_string, __out_bcount( buffer_size ) uint8_t * buffer, _In_ std::size_t const buffer_size ) noexcept;
+_Check_return_ bool PASCAL wfc_parse_hex_string(_In_ std::string_view hex_string, __out_bcount( buffer_size ) uint8_t * buffer, _In_ std::size_t const buffer_size ) noexcept;
 _Check_return_ bool PASCAL wfc_parse_iso_8601_string( _In_ std::wstring_view time_string, __out CFileTime&    the_time ) noexcept;
 _Check_return_ bool PASCAL wfc_parse_iso_8601_string(_In_ std::wstring_view time_string, __out CSystemTime&  the_time ) noexcept;
 _Check_return_ bool PASCAL wfc_parse_iso_8601_string(_In_ std::wstring_view time_string, __out CTime& the_time) noexcept;
@@ -1137,13 +1141,13 @@ void PASCAL wfc_get_program_data_directory(__out std::wstring& program_data_dire
 _Check_return_ bool PASCAL wfc_get_string_from_clipboard( __out std::wstring& string_to_return ) noexcept;
 void PASCAL wfc_get_thread_name( __out std::wstring& thread_name ) noexcept;
 void PASCAL wfc_get_web_page( __in CUniformResourceLocator const& url, __out std::vector<std::wstring>& page_contents, __in DWORD const options = WFC_DEFAULT_WEB_PAGE_OPTIONS ) noexcept;
-void PASCAL wfc_get_web_page( __in CUniformResourceLocator const& url,__out  std::vector<uint8_t>& page_contents, __in DWORD const options = WFC_DEFAULT_WEB_PAGE_OPTIONS ) noexcept;
-_Check_return_ bool PASCAL wfc_is_dotted_ip_address( __in_z_opt char const * ip_address ) noexcept;
-_Check_return_ bool PASCAL wfc_is_dotted_ip_address( __in_z_opt wchar_t const * ip_address ) noexcept;
-_Check_return_ bool PASCAL wfc_is_guid( __in_z char const * characters ) noexcept;
-_Check_return_ bool PASCAL wfc_is_guid( __in_z wchar_t const * character ) noexcept;
-_Check_return_ bool PASCAL wfc_is_guid_with_curlies( __in_z char const * characters ) noexcept;
-_Check_return_ bool PASCAL wfc_is_guid_with_curlies( __in_z wchar_t const * character ) noexcept;
+void PASCAL wfc_get_web_page( __in CUniformResourceLocator const& url, __out std::vector<uint8_t>& page_contents, __in DWORD const options = WFC_DEFAULT_WEB_PAGE_OPTIONS ) noexcept;
+_Check_return_ bool PASCAL wfc_is_dotted_ip_address( _In_ std::string_view ip_address ) noexcept;
+_Check_return_ bool PASCAL wfc_is_dotted_ip_address( _In_ std::wstring_view ip_address ) noexcept;
+_Check_return_ bool PASCAL wfc_is_guid( _In_ std::string_view characters ) noexcept;
+_Check_return_ bool PASCAL wfc_is_guid( _In_ std::wstring_view characters ) noexcept;
+_Check_return_ bool PASCAL wfc_is_guid_with_curlies( _In_ std::string_view characters ) noexcept;
+_Check_return_ bool PASCAL wfc_is_guid_with_curlies( _In_ std::wstring_view character ) noexcept;
 _Check_return_ bool PASCAL wfc_is_octal( __in_bcount( number_of_bytes ) uint8_t const * buffer, __in std::size_t const number_of_bytes ) noexcept;
 _Check_return_ bool PASCAL wfc_is_wide_octal( __in_bcount( number_of_bytes ) uint8_t const * buffer, __in std::size_t const number_of_bytes ) noexcept;
 _Check_return_ bool PASCAL wfc_is_octal_then_NULLs( __in_bcount( number_of_bytes ) uint8_t const * buffer, __in std::size_t const number_of_bytes ) noexcept;

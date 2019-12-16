@@ -81,7 +81,7 @@ std::wstring CMethod::getType(void)
 
 StringVector& CMethod::getParameters( void )
 {
-   if ( ! ParametersResolved )
+   if ( not ParametersResolved )
    {
       std::wstring descriptor = m_GetDescriptor();
 

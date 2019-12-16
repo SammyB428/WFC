@@ -56,7 +56,7 @@ int main(int argc, char** argv)
 			{
 				PCSTR exportedNamesBegin = pDebugInfo->ExportedNames;
 				PCSTR exportedNamesEnd   = exportedNamesBegin + pDebugInfo->ExportedNamesSize;
-				if (exportedNamesBegin == NULL || exportedNamesEnd == exportedNamesBegin)
+				if (exportedNamesBegin == NULL or exportedNamesEnd == exportedNamesBegin)
 				{
 					fprintf(stderr, "%s\n", "No exports?");
 				}

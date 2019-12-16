@@ -102,7 +102,7 @@ bool get_table_names( _ConnectionPtr& connection_p, CStringArray& table_names )
 
       CString desired_table_type( TEXT( "TABLE" ) );
 
-      while( ! recordset_p->EndOfFile )
+      while( not recordset_p->EndOfFile )
       {
          try
          {

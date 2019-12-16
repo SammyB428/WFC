@@ -474,19 +474,19 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
     string_1.assign(WSTRING_VIEW(L"ABC"));
     string_2.assign(WSTRING_VIEW(L"ABC"));
 
-    if ( ! ( string_1 == string_2 ) )
+    if (not ( string_1 == string_2 ) )
     {
         test_number_that_failed = 62;
         return( failure() );
     }
 
-    if ( ! ( string_1 == L"ABC" ) )
+    if (not ( string_1 == L"ABC" ) )
     {
         test_number_that_failed = 63;
         return( failure() );
     }
 
-    if ( ! ( L"ABC" == string_1 ) )
+    if (not ( L"ABC" == string_1 ) )
     {
         test_number_that_failed = 64;
         return( failure() );
@@ -494,7 +494,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     string_2.assign(WSTRING_VIEW(L"abc"));
 
-    if ( ! ( string_1 != string_2 ) )
+    if (not ( string_1 != string_2 ) )
     {
         test_number_that_failed = 65;
         return( failure() );
@@ -502,7 +502,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     // operator != ( CWideString&, char const * )
 
-    if ( ! ( string_1 != L"abc" ) )
+    if (not ( string_1 != L"abc" ) )
     {
         test_number_that_failed = 66;
         return( failure() );
@@ -510,7 +510,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     // operator != ( char const *, CWideString& )
 
-    if ( ! ( L"abc" != string_1 ) )
+    if (not ( L"abc" != string_1 ) )
     {
         test_number_that_failed = 67;
         return( failure() );
@@ -521,7 +521,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
     string_1.assign(WSTRING_VIEW(L"ABC"));
     string_2.assign(WSTRING_VIEW(L"ABc"));
 
-    if ( ! ( string_1 < string_2 ) )
+    if (not ( string_1 < string_2 ) )
     {
         test_number_that_failed = 68;
         return( failure() );
@@ -529,7 +529,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     // operator < ( CWideString&, char const * )
 
-    if ( ! ( string_1 < L"ABc" ) )
+    if (not ( string_1 < L"ABc" ) )
     {
         test_number_that_failed = 69;
         return( failure() );
@@ -537,7 +537,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     // operator < ( char const *, CWideString& )
 
-    if ( ! ( L"AAB" < string_1 ) )
+    if (not ( L"AAB" < string_1 ) )
     {
         test_number_that_failed = 70;
         return( failure() );
@@ -548,7 +548,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
     string_1.assign(WSTRING_VIEW(L"ABc"));
     string_2.assign(WSTRING_VIEW(L"ABC"));
 
-    if ( ! ( string_1 > string_2 ) )
+    if (not ( string_1 > string_2 ) )
     {
         test_number_that_failed = 71;
         return( failure() );
@@ -556,7 +556,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     // operator > ( CWideString&, char const * )
 
-    if ( ! ( string_1 > L"ABC" ) )
+    if (not ( string_1 > L"ABC" ) )
     {
         test_number_that_failed = 72;
         return( failure() );
@@ -566,7 +566,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     string_1.assign(WSTRING_VIEW(L"ABC"));
 
-    if ( ! ( L"ABc" > string_1 ) )
+    if (not ( L"ABc" > string_1 ) )
     {
         test_number_that_failed = 73;
         return( failure() );
@@ -579,7 +579,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
     string_1.assign(WSTRING_VIEW(L"ABC"));
     string_2.assign(WSTRING_VIEW(L"ABc"));
 
-    if ( ! ( string_1 <= string_2 ) )
+    if (not ( string_1 <= string_2 ) )
     {
         test_number_that_failed = 74;
         return( failure() );
@@ -587,7 +587,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     // operator <= ( CWideString&, char const * )
 
-    if ( ! ( string_1 <= L"ABc" ) )
+    if (not ( string_1 <= L"ABc" ) )
     {
         test_number_that_failed = 75;
         return( failure() );
@@ -595,7 +595,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     // operator <= ( char const *, CWideString& )
 
-    if ( ! ( L"AAB" <= string_1 ) )
+    if (not ( L"AAB" <= string_1 ) )
     {
         test_number_that_failed = 76;
         return( failure() );
@@ -607,7 +607,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
     string_1.assign(WSTRING_VIEW(L"ABC"));
     string_2.assign(WSTRING_VIEW(L"ABC"));
 
-    if ( ! ( string_1 <= string_2 ) )
+    if (not ( string_1 <= string_2 ) )
     {
         test_number_that_failed = 77;
         return( failure() );
@@ -615,7 +615,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     // operator <= ( CWideString&, char const * )
 
-    if ( ! ( string_1 <= L"ABC" ) )
+    if (not ( string_1 <= L"ABC" ) )
     {
         test_number_that_failed = 78;
         return( failure() );
@@ -623,7 +623,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     // operator <= ( char const *, CWideString& )
 
-    if ( ! ( L"ABC" <= string_1 ) )
+    if (not ( L"ABC" <= string_1 ) )
     {
         test_number_that_failed = 79;
         return( failure() );
@@ -635,7 +635,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
     string_1.assign(WSTRING_VIEW(L"ABc"));
     string_2.assign(WSTRING_VIEW(L"ABC"));
 
-    if ( ! ( string_1 >= string_2 ) )
+    if (not ( string_1 >= string_2 ) )
     {
         test_number_that_failed = 80;
         return( failure() );
@@ -643,7 +643,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     // operator >= ( CWideString&, char const * )
 
-    if ( ! ( string_1 >= L"ABC" ) )
+    if (not ( string_1 >= L"ABC" ) )
     {
         test_number_that_failed = 81;
         return( failure() );
@@ -653,7 +653,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     string_1.assign(WSTRING_VIEW(L"ABC"));
 
-    if ( ! ( L"ABc" >= string_1 ) )
+    if (not ( L"ABc" >= string_1 ) )
     {
         test_number_that_failed = 82;
         return( failure() );
@@ -665,7 +665,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
     string_1.assign(WSTRING_VIEW(L"ABC"));
     string_2.assign(WSTRING_VIEW(L"ABC"));
 
-    if ( ! ( string_1 >= string_2 ) )
+    if (not ( string_1 >= string_2 ) )
     {
         test_number_that_failed = 83;
         return( failure() );
@@ -673,7 +673,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     // operator >= ( CWideString&, char const * )
 
-    if ( ! ( string_1 >= L"ABC" ) )
+    if (not ( string_1 >= L"ABC" ) )
     {
         test_number_that_failed = 84;
         return( failure() );
@@ -681,7 +681,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     // operator >= ( char const *, CWideString& )
 
-    if ( ! ( L"ABC" >= string_1 ) )
+    if (not ( L"ABC" >= string_1 ) )
     {
         test_number_that_failed = 85;
         return( failure() );
