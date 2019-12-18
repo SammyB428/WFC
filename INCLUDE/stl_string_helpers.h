@@ -27,7 +27,7 @@ inline wchar_t const* PrintfArgument(std::filesystem::path const& value) noexcep
 }
 
 template <typename ... Args>
-void format(_Inout_ std::wstring& result, _In_z_ wchar_t const* format_string, Args const& ... args) noexcept
+void format(_Inout_ std::wstring& result, _In_z_ _Printf_format_string_ wchar_t const* format_string, Args const& ... args) noexcept
 {
 #pragma warning( push )
 #pragma warning( disable : 4996 )
@@ -52,7 +52,7 @@ void format(_Inout_ std::wstring& result, _In_z_ wchar_t const* format_string, A
 }
 
 template <typename ... Args>
-void format(_Inout_ std::string& result, _In_z_ char const* format_string, Args const& ... args) noexcept
+void format(_Inout_ std::string& result, _In_z_ _Printf_format_string_ char const* format_string, Args const& ... args) noexcept
 {
 #pragma warning( push )
 #pragma warning( disable : 4996 )
