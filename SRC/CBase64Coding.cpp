@@ -1080,17 +1080,17 @@ _Check_return_ bool CBase64Coding::Encode(_Inout_ HANDLE input_file_handle, _In_
 
             while (input_buffer_index < number_of_bytes_to_read)
             {
-                std::size_t const number_of_bytes_to_encode = std::min(static_cast<std::size_t>(3), number_of_bytes_to_read - input_buffer_index);
+                std::size_t const number_of_bytes_in_this_block = std::min(static_cast<std::size_t>(3), number_of_bytes_to_read - input_buffer_index);
 
-                if (number_of_bytes_to_encode == 0)
+                if (number_of_bytes_in_this_block == 0)
                 {
                     _ASSERT_EXPR(FALSE, _CRT_WIDE("The number of bytes to base64 encode is zero."));
                     return(false);
                 }
 
-                __encode(&input_buffer[input_buffer_index], number_of_bytes_to_encode, &output_buffer[output_buffer_index]);
+                __encode(&input_buffer[input_buffer_index], number_of_bytes_in_this_block, &output_buffer[output_buffer_index]);
                 output_buffer_index += 4;
-                input_buffer_index += number_of_bytes_to_encode;
+                input_buffer_index += number_of_bytes_in_this_block;
             }
 
             output_buffer[output_buffer_index] = CARRIAGE_RETURN;

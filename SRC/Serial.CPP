@@ -62,8 +62,8 @@ CSerialFile::CSerialFile()
 
    FileHandle = static_cast< HANDLE >( INVALID_HANDLE_VALUE );
    ::ZeroMemory( &m_CommunicationsStatus, sizeof( m_CommunicationsStatus ) );
-   m_IsOpen             = FALSE;
-   m_PurgeBufferOnError = FALSE;
+   m_IsOpen             = false;
+   m_PurgeBufferOnError = false;
    Name.clear();
    m_InputBufferSize  = 4096;
    m_OutputBufferSize = 4096;
@@ -120,7 +120,7 @@ _Check_return_ BOOL CSerialFile::Attach( __in HANDLE new_handle, __out_opt HANDL
       WFC_END_CATCH_ALL
    }
 
-   m_IsOpen   = TRUE;
+   m_IsOpen   = true;
 #if defined( WFC_STL )
    m_FileHandle = new_handle;
 #else
@@ -192,7 +192,7 @@ void CSerialFile::Close( void ) noexcept
    if ( m_hFile == reinterpret_cast< CFILE_HFILE >( INVALID_HANDLE_VALUE ) )
 #endif
    {
-      m_IsOpen = FALSE;
+      m_IsOpen = false;
       return;
    }
 
@@ -212,7 +212,7 @@ void CSerialFile::Close( void ) noexcept
    }
 
    FileHandle = static_cast< HANDLE >( INVALID_HANDLE_VALUE );
-   m_IsOpen   = FALSE;
+   m_IsOpen   = false;
 }
 
 _Check_return_ bool CSerialFile::ConfigurationDialog( __inout CCommunicationsConfiguration& configuration, _In_ bool const save_changes, _In_ HWND const parent_window_handle ) noexcept
@@ -336,7 +336,7 @@ _Check_return_ HANDLE CSerialFile::Detach( void ) noexcept
 
    HANDLE return_value = m_FileHandle;
 
-   m_IsOpen   = FALSE;
+   m_IsOpen   = false;
 #if defined( WFC_STL )
    m_FileHandle = reinterpret_cast< HANDLE >( INVALID_HANDLE_VALUE );
 #else
@@ -355,7 +355,7 @@ void CSerialFile::Dump( CDumpContext& dump_context ) const
 
    dump_context << TEXT( "m_IsOpen                  = " );
    
-   if ( m_IsOpen == FALSE )
+   if ( m_IsOpen == false )
    {
       dump_context << TEXT( "FALSE\n" );
    }
@@ -366,7 +366,7 @@ void CSerialFile::Dump( CDumpContext& dump_context ) const
 
    dump_context << TEXT( "m_PurgeBufferOnError      = " );
    
-   if ( m_PurgeBufferOnError == FALSE )
+   if ( m_PurgeBufferOnError == false )
    {
       dump_context << TEXT( "FALSE\n" );
    }
@@ -948,7 +948,7 @@ _Check_return_ DWORD CSerialFile::NumberOfBytesWaitingToBeWritten( void ) noexce
 
 #pragma warning( disable : 4100 )
 
-_Check_return_ bool CSerialFile::Open(_In_ std::wstring_view channel_name, __in UINT const open_flags ) noexcept
+_Check_return_ bool CSerialFile::Open(_In_ std::filesystem::path const& channel_name, __in UINT const open_flags ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -960,7 +960,7 @@ _Check_return_ bool CSerialFile::Open(_In_ std::wstring_view channel_name, __in 
       return( false );
    }
 
-   if ( m_IsOpen != FALSE )
+   if ( m_IsOpen == true )
    {
       Close();
    }
@@ -987,7 +987,7 @@ _Check_return_ bool CSerialFile::Open( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
-   if ( m_IsOpen != FALSE )
+   if ( m_IsOpen == true )
    {
       Close();
    }
@@ -1011,7 +1011,7 @@ _Check_return_ bool CSerialFile::Open( void ) noexcept
       index++;
    }
 
-   make_upper(com_port_name );
+   make_upper(com_port_name);
 
    std::wstring settings_string( right( Name, ( string_length - index ) - 1 ) );
 
@@ -1516,7 +1516,7 @@ void CSerialFile::SetFlowControl( _In_ DWORD const flow_control ) noexcept
    }
 }
 
-_Check_return_ bool CSerialFile::SetPurgeBufferOnError( __in bool const purge_buffer ) noexcept
+_Check_return_ bool CSerialFile::SetPurgeBufferOnError( _In_ bool const purge_buffer ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -1527,7 +1527,7 @@ _Check_return_ bool CSerialFile::SetPurgeBufferOnError( __in bool const purge_bu
    return( return_value );
 }
 
-_Check_return_ BOOL CSerialFile::SetRequestToSend( __in BOOL const set_RTS_on ) noexcept
+_Check_return_ bool CSerialFile::SetRequestToSend(_In_ bool const set_RTS_on ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -1540,7 +1540,7 @@ _Check_return_ BOOL CSerialFile::SetRequestToSend( __in BOOL const set_RTS_on ) 
 #endif
    {
       m_LastError = ERROR_INVALID_HANDLE;
-      return( FALSE );
+      return( false );
    }
 
    BOOL return_value = FALSE;
@@ -1560,13 +1560,10 @@ _Check_return_ BOOL CSerialFile::SetRequestToSend( __in BOOL const set_RTS_on ) 
    {
       m_LastError = ::GetLastError();
       //WFCTRACEERROR( m_LastError );
-   }
-   else
-   {
-      return_value = TRUE;
+      return(false);
    }
 
-   return( return_value );
+   return( true );
 }
 
 _Check_return_ BOOL CSerialFile::SetState(__inout CDeviceControlBlock& device_control_block ) noexcept
@@ -1833,7 +1830,7 @@ _Check_return_ bool CSerialFile::WaitForString( __in std::string const& string_t
    return( false );
 }
 
-void CSerialFile::Write( __in BYTE const byte_to_write ) noexcept
+void CSerialFile::Write( _In_ BYTE const byte_to_write ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -1913,7 +1910,7 @@ void CSerialFile::Write( __in_bcount( length ) void const * buffer, __in UINT co
    WFC_END_CATCH_ALL
 }
 
-void CSerialFile::Write( __in std::string const& string_to_write ) noexcept
+void CSerialFile::Write( _In_ std::string_view string_to_write ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -1926,7 +1923,7 @@ void CSerialFile::Write( __in std::string const& string_to_write ) noexcept
 
    if ( string_to_write.empty() == false )
    {
-      Write( string_to_write.c_str(), static_cast<UINT>( string_to_write.length() ) );
+      Write( string_to_write.data(), static_cast<UINT>( string_to_write.length() ) );
    }
 }
 

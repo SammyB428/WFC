@@ -333,7 +333,7 @@ _Check_return_ bool CNamedPipe::GetState( void ) noexcept
    return( true );
 }
 
-_Check_return_ bool CNamedPipe::Open(_In_ std::wstring_view pipe_name, __in UINT const) noexcept
+_Check_return_ bool CNamedPipe::Open(_In_ std::filesystem::path const& pipe_name, _In_ UINT const) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -350,7 +350,7 @@ _Check_return_ bool CNamedPipe::Open(_In_ std::wstring_view pipe_name, __in UINT
    ** "\\server_name\PIPE\pipe_name" which is a fully qualified pipe name
    */
 
-   CUniversalNamingConvention unc( pipe_name );
+   CUniversalNamingConvention unc( pipe_name.c_str() );
 
    if ( unc.ServerName.empty() == true )
    {

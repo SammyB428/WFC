@@ -185,7 +185,7 @@ _Check_return_ uint64_t CDataMemory::GetPosition( void ) const noexcept
    return( m_Position );
 }
 
-_Check_return_ bool CDataMemory::Open(_In_ std::wstring_view filename, _In_ UINT const mode ) noexcept
+_Check_return_ bool CDataMemory::Open(_In_ std::filesystem::path const& filename, _In_ UINT const mode ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 

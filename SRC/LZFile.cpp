@@ -159,7 +159,7 @@ void CLZFile::m_Initialize( void ) noexcept
    WFC_VALIDATE_POINTER( this );
 }
 
-_Check_return_ bool CLZFile::Open(_In_ std::wstring_view file_name, __in UINT const style ) noexcept
+_Check_return_ bool CLZFile::Open(_In_ std::filesystem::path const& file_name, __in UINT const style ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 

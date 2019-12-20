@@ -1494,7 +1494,7 @@ _Check_return_ bool CServiceControlManager::WaitForStop(_In_z_ wchar_t const * s
         if (m_ErrorCode != ERROR_SUCCESS)
         {
             ::CloseServiceHandle(service_handle);
-            wfc_close_handle(event_handle);
+            (void)wfc_close_handle(event_handle);
             return(false);
         }
         else
@@ -1503,7 +1503,7 @@ _Check_return_ bool CServiceControlManager::WaitForStop(_In_z_ wchar_t const * s
         }
 
         WaitForSingleObjectEx(event_handle, INFINITE, TRUE);
-        wfc_close_handle(event_handle);
+        (void)wfc_close_handle(event_handle);
         ::CloseServiceHandle(service_handle);
         return(true);
     }

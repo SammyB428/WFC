@@ -240,7 +240,7 @@ _Check_return_ bool CEventLog::CreateApplicationLog( __in_z wchar_t const * appl
       // bug here. I was assuming _tcslen() == sizeof() a string. DOH!
 
       std::wstring dequoted_source(message_resource_file);
-      trim_quotes(dequoted_source);
+      (void)trim_quotes(dequoted_source);
 
       if ( registry.SetValue( L"EventMessageFile", CRegistry::KeyValueTypes::UnexpandedString, (LPBYTE)dequoted_source.c_str(), ( dequoted_source.length() + 1 ) * sizeof( wchar_t ) ) == false )
       {
@@ -455,7 +455,7 @@ _Check_return_ bool CEventLog::DeleteApplicationLog(_In_ std::wstring_view appli
 
    WFC_TRY
    {
-      if ( application_name == nullptr )
+      if ( application_name.empty() == true )
       {
          m_ErrorCode = ERROR_INVALID_PARAMETER;
          return( false );

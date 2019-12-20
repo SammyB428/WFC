@@ -66,9 +66,9 @@ class CTalkingSocket : public CSimpleSocket
       virtual ~CTalkingSocket();
 
       _Check_return_ bool Open( void ) noexcept override;
-      virtual _Check_return_ bool Open( _In_ std::wstring_view address, __in std::wstring const& port_name ) noexcept;
-      virtual _Check_return_ bool Open(_In_ std::wstring_view address, __in short const p_number ) noexcept;
-      _Check_return_ bool Open( _In_ std::wstring_view name, __in UINT const port_number = 23 ) noexcept override;
+      virtual _Check_return_ bool Open( _In_ std::wstring_view address, _In_ std::wstring const& port_name ) noexcept;
+      virtual _Check_return_ bool Open(_In_ std::wstring_view address, _In_ short const p_number ) noexcept;
+      _Check_return_ bool Open(_In_ std::filesystem::path const& name, _In_ UINT const port_number = 23 ) noexcept override;
 
 #if defined( _DEBUG ) && ! defined( WFC_NO_DUMPING )
 

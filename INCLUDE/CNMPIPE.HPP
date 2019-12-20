@@ -160,7 +160,7 @@ class CNamedPipe : public CDummyFile
       ** API's to make life a little easier 
       */
 
-      _Check_return_ bool Open(_In_ std::wstring_view pipe_name, __in UINT const open_flags = PIPE_CLIENT_END ) noexcept override;
+      _Check_return_ bool Open(_In_ std::filesystem::path const& pipe_name, __in UINT const open_flags = PIPE_CLIENT_END ) noexcept override;
       void Close( void ) noexcept override;
 
 #if defined( _DEBUG ) && ! defined( WFC_NO_DUMPING )

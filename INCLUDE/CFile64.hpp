@@ -93,8 +93,8 @@ class CFile64
        HANDLE m_FileHandle{ INVALID_HANDLE_VALUE };
        HANDLE m_TemplateFile{ INVALID_HANDLE_VALUE };
 
-       std::wstring m_PathName;
-       std::wstring m_FileName;
+       std::filesystem::path m_PathName;
+       std::filesystem::path m_FileName;
        std::wstring m_FileTitle;
 
        DWORD m_LastError{ 0 };
@@ -166,45 +166,21 @@ class CFile64
 
       CFile64() noexcept;
       CFile64( _In_ HANDLE const file_handle ) noexcept;
-      CFile64( _In_z_ LPCTSTR filename, _In_ UINT const open_flags ) noexcept;
+      CFile64(_In_ std::filesystem::path const& filename, _In_ UINT const open_flags ) noexcept;
       virtual ~CFile64();
 
-      static _Check_return_ bool Exists( _In_z_ LPCWSTR file_name ) noexcept
+      static _Check_return_ bool Exists( _In_ std::filesystem::path const& file_name ) noexcept
       {
-          auto const attributes = ::GetFileAttributesW( file_name );
+          auto const attributes = ::GetFileAttributesW( file_name.c_str() );
 
           return( attributes == INVALID_FILE_ATTRIBUTES ? false : true );
       }
 
-      static _Check_return_ bool Exists( _In_z_ LPCSTR file_name ) noexcept
+      static void CreatePathTo(_In_ std::filesystem::path const& file_name) noexcept;
+
+      static _Check_return_ bool IsDirectory(_In_ std::filesystem::path const& file_name ) noexcept
       {
-          auto const attributes = ::GetFileAttributesA( file_name );
-
-          return( attributes == INVALID_FILE_ATTRIBUTES ? false : true );
-      }
-
-      static void CreatePathTo(_In_z_ LPCWSTR file_name) noexcept;
-
-      static _Check_return_ bool IsDirectory( _In_z_ LPCWSTR file_name ) noexcept
-      {
-          auto const attributes = ::GetFileAttributesW( file_name );
-
-          if ( attributes == INVALID_FILE_ATTRIBUTES )
-          {
-              return( false );
-          }
-
-          if (is_flagged( attributes, FILE_ATTRIBUTE_DIRECTORY ) == true )
-          {
-              return( true );
-          }
-
-          return( false );
-      }
-
-      static _Check_return_ bool IsDirectory( __in_z LPCSTR file_name ) noexcept
-      {
-          auto const attributes = ::GetFileAttributesA( file_name );
+          auto const attributes = ::GetFileAttributesW( file_name.c_str() );
 
           if ( attributes == INVALID_FILE_ATTRIBUTES )
           {
@@ -227,13 +203,13 @@ class CFile64
       virtual _Check_return_ std::wstring          GetFilePath( void ) const noexcept;
       virtual _Check_return_ std::wstring          GetFileTitle( void ) const noexcept;
       virtual _Check_return_ HANDLE                GetHandle( void ) const noexcept;
-      virtual _Check_return_ bool                  GetInformation( __inout BY_HANDLE_FILE_INFORMATION& information ) const noexcept;
+      virtual _Check_return_ bool                  GetInformation( _Inout_ BY_HANDLE_FILE_INFORMATION& information ) const noexcept;
       virtual _Check_return_ uint64_t              GetLength( void ) const noexcept;
       virtual _Check_return_ uint64_t              GetPosition( void ) const noexcept;
       virtual _Check_return_ SECURITY_ATTRIBUTES * GetSecurityAttributes( void ) const noexcept;
       virtual _Check_return_ SECURITY_DESCRIPTOR * GetSecurityDescriptor( void ) const noexcept;
       virtual _Check_return_ bool                  LockRange(_In_ uint64_t const position, _In_ uint64_t const number_of_bytes_to_lock ) noexcept;
-      virtual _Check_return_ bool                  Open( _In_ std::wstring_view filename, _In_ UINT const open_flags ) noexcept;
+      virtual _Check_return_ bool                  Open(_In_ std::filesystem::path const& filename, _In_ UINT const open_flags ) noexcept;
 
       _Check_return_ uint32_t AtomicRead(_In_ uint64_t const file_offset, __out_bcount( number_of_bytes_to_read ) void * buffer, _In_ uint32_t const number_of_bytes_to_read ) const noexcept;
       _Check_return_ uint32_t AtomicWrite(_In_ uint64_t const file_offset, __in_bcount(number_of_bytes_to_write) void const * buffer, _In_ uint32_t const number_of_bytes_to_write) const noexcept;
@@ -275,15 +251,15 @@ class CFile64
       virtual void                    SeekToBegin( void ) noexcept;
       virtual _Check_return_ uint64_t SeekToEnd( void ) noexcept;
       virtual _Check_return_ bool     SetEndOfFile( __in uint64_t const length ) noexcept;
-      virtual void                    SetFilePath( __in_z LPCTSTR new_name ) noexcept;
+      virtual void                    SetFilePath(_In_ std::filesystem::path const& new_name ) noexcept;
       virtual void                    SetLength( __in uint64_t const length ) noexcept;
       virtual _Check_return_ bool     SetPosition( __in uint64_t const position ) noexcept;
       virtual _Check_return_ bool     SparsifyRegion( __in uint64_t const position, __in uint64_t const number_of_bytes_to_mark_as_empty ) noexcept;
       virtual void                    UnlockRange( __in uint64_t const position, __in uint64_t const number_of_bytes_to_unlock ) noexcept;
       virtual void                    Write( __in_bcount( number_of_bytes_to_write ) void const * buffer, __in uint32_t const number_of_bytes_to_write ) noexcept;
-      virtual void                    Write(_In_ std::string const& string_to_write ) noexcept;
+      virtual void                    Write(_In_ std::string_view string_to_write ) noexcept;
       virtual void                    Write(_In_ std::vector<std::string> const& string_to_write, __in bool const include_crlf_after_every_string ) noexcept;
-      virtual void                    Write(_In_ std::wstring const& string_to_write) noexcept;
+      virtual void                    Write(_In_ std::wstring_view string_to_write) noexcept;
       virtual void                    Write(_In_ std::vector<std::wstring> const& string_to_write, _In_ bool const include_crlf_after_every_string) noexcept;
       virtual void                    WriteHuge( __in_bcount( number_of_bytes_to_write ) void const * buffer, __in DWORD const number_of_bytes_to_write ) noexcept;
 
@@ -301,11 +277,11 @@ class CFile64
 
 #endif // _DEBUG
 
-      static void PASCAL            Rename( __in_z LPCTSTR old_name, __in_z LPCTSTR new_name ) noexcept;
-      static void PASCAL            Remove( __in_z LPCTSTR filename ) noexcept;
+      static void PASCAL            Rename(_In_ std::filesystem::path const& old_name, _In_ std::filesystem::path const& new_name ) noexcept;
+      static void PASCAL            Remove(_In_ std::filesystem::path const& filename ) noexcept;
 
-      virtual _Check_return_ bool SetShortName( __in_z LPCTSTR new_short_name ) noexcept; // New for 73
-      virtual _Check_return_ bool SetValidData( __in int64_t const valid_data_length ) noexcept; // New for 73
+      virtual _Check_return_ bool SetShortName(_In_z_ LPCTSTR new_short_name ) noexcept; // New for 73
+      virtual _Check_return_ bool SetValidData( _In_ int64_t const valid_data_length ) noexcept; // New for 73
 
       /*
       Generating SDDL strings is a royal pain. The easiest way to do it is to use

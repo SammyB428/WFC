@@ -90,8 +90,6 @@ class CDummyFile : public CFile64
       virtual _Check_return_ BOOL  GetStatus( LPCTSTR name, CFileStatus& status ) noexcept;
 #endif // WFC_STL
 
-      virtual void  Remove( __in_z LPCTSTR name ) noexcept;
-      virtual void  Rename( __in_z LPCTSTR OldName, __in_z LPCTSTR NewName ) noexcept;
       _Check_return_ uint64_t Seek( __in int64_t const offset, __in CFile64::SeekPosition const from ) noexcept override;
 
       void SetLength( __in uint64_t const length ) noexcept override;
@@ -103,7 +101,7 @@ class CDummyFile : public CFile64
       ** A couple of utility functions to make life easier
       */
 
-      void Write( __in std::string const& string_to_write  ) noexcept override;
+      void Write( _In_ std::string_view string_to_write  ) noexcept override;
       virtual void Write( __in std::vector<uint8_t> const& data_to_write ) noexcept;
 
       // Abstraction Additions

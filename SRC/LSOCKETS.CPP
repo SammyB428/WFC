@@ -177,7 +177,7 @@ _Check_return_ bool CListeningSocket::Open( void ) noexcept
 
 #pragma warning( disable : 4100 )
 
-_Check_return_ bool CListeningSocket::Open(_In_ std::wstring_view ChannelName, _In_ UINT const port_number ) noexcept
+_Check_return_ bool CListeningSocket::Open(_In_ std::filesystem::path const& ChannelName, _In_ UINT const port_number ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -241,7 +241,11 @@ _Check_return_ bool CListeningSocket::WaitForConnection( void ) noexcept
 #if ! defined( WFC_STL )
    m_strFileName.Format( TEXT( "%s (%s) Port: %d" ), (LPCTSTR) Name, (LPCTSTR) Address, (int) port_number );
 #else // WFC_STL
-   format( m_FileName, L"%s (%s) Port: %d", Name.c_str(), Address.c_str(), (int) port_number );
+
+   std::wstring temp_name;
+
+   format(temp_name, L"%s (%s) Port: %d", Name, Address, (int) port_number );
+   m_FileName.assign(temp_name);
 #endif // WFC_STL
 
    /*

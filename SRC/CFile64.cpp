@@ -253,7 +253,7 @@ static inline _Check_return_ std::size_t __GetFileTitle( _In_z_ wchar_t const * 
     return( ( title == nullptr ) ? _tcslen( lpszTemp ) + 1 : 0 );
 }
 
-void CFile64::CreatePathTo(_In_z_ LPCWSTR full_pathname) noexcept
+void CFile64::CreatePathTo(_In_ std::filesystem::path const& full_pathname) noexcept
 {
     wchar_t drive[_MAX_DRIVE];
     wchar_t directory[_MAX_DIR];
@@ -265,7 +265,7 @@ void CFile64::CreatePathTo(_In_z_ LPCWSTR full_pathname) noexcept
     ZeroMemory(filename, sizeof(filename));
     ZeroMemory(extension_including_period, sizeof(extension_including_period));
 
-    if (_wsplitpath_s(full_pathname,
+    if (_wsplitpath_s(full_pathname.c_str(),
         drive, std::size(drive),
         directory, std::size(directory),
         filename, std::size(filename),
@@ -320,10 +320,9 @@ CFile64::CFile64( _In_ HANDLE const file_handle ) noexcept
     m_CloseOnDelete = false;
 }
 
-CFile64::CFile64( _In_z_ LPCTSTR filename, _In_ UINT const open_flags ) noexcept
+CFile64::CFile64(_In_ std::filesystem::path const& filename, _In_ UINT const open_flags ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
-    WFC_VALIDATE_POINTER( filename );
 
     m_FileHandle           = static_cast< HANDLE >( INVALID_HANDLE_VALUE );
     m_SecurityAttributes_p = nullptr;
@@ -852,13 +851,13 @@ void CFile64::Flush( void ) noexcept
 _Check_return_ std::wstring CFile64::GetFileName( void ) const noexcept
 {
     WFC_VALIDATE_POINTER( this );
-    return( m_FileName );
+    return( m_FileName.c_str() );
 }
 
 _Check_return_ std::wstring CFile64::GetFilePath( void ) const noexcept
 {
     WFC_VALIDATE_POINTER( this );
-    return( m_PathName );
+    return( m_PathName.c_str() );
 }
 
 _Check_return_ std::wstring CFile64::GetFileTitle( void ) const noexcept
@@ -1173,7 +1172,7 @@ void CFile64::SetSecurity(_In_z_ wchar_t const * sddl) noexcept
         m_LastError = ::GetLastError();
     }
 
-    m_SecurityDescriptor_p = (SECURITY_DESCRIPTOR *) m_SecurityAttributes_p->lpSecurityDescriptor;
+    m_SecurityDescriptor_p = static_cast<SECURITY_DESCRIPTOR *>(m_SecurityAttributes_p->lpSecurityDescriptor);
 }
 
 void CFile64::m_Uninitialize( void ) noexcept
@@ -1220,7 +1219,7 @@ _Check_return_ bool CFile64::LockRange( _In_ uint64_t const position, _In_ uint6
     return( true );
 }
 
-_Check_return_ bool CFile64::Open(_In_ std::wstring_view filename, _In_ UINT const open_flags_parameter ) noexcept
+_Check_return_ bool CFile64::Open(_In_ std::filesystem::path const& filename, _In_ UINT const open_flags_parameter ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
 
@@ -1238,7 +1237,7 @@ _Check_return_ bool CFile64::Open(_In_ std::wstring_view filename, _In_ UINT con
 
         m_PathName.assign( full_path );
 
-        m_FileTitle.clear ();
+        m_FileTitle.clear();
 
         open_flags and_eq compl (UINT) OpenFlags::typeBinary;
 
@@ -1637,21 +1636,16 @@ _Check_return_ uint32_t CFile64::ReadHuge( __out_bcount( number_of_bytes_to_read
     return( Read( buffer, number_of_bytes_to_read ) );
 }
 
-void PASCAL CFile64::Rename( _In_z_ LPCTSTR old_name, _In_z_ LPCTSTR new_name ) noexcept // static
+void PASCAL CFile64::Rename(_In_ std::filesystem::path const& old_name, _In_ std::filesystem::path const& new_name ) noexcept // static
 {
-    WFC_VALIDATE_POINTER( old_name );
-    WFC_VALIDATE_POINTER( new_name );
-
-    if ( ::MoveFile( (LPTSTR) old_name, (LPTSTR) new_name ) == FALSE )
+    if ( ::MoveFileW( old_name.c_str(), new_name.c_str() ) == FALSE )
     {
     }
 }
 
-void PASCAL CFile64::Remove( _In_z_ LPCTSTR filename ) noexcept // static
+void PASCAL CFile64::Remove(_In_ std::filesystem::path const& filename ) noexcept // static
 {
-    WFC_VALIDATE_POINTER( filename );
-
-    if ( ::DeleteFile( (LPTSTR) filename ) == FALSE )
+    if ( ::DeleteFileW( filename.c_str() ) == FALSE )
     {
         CFile64 file;
 
@@ -1670,7 +1664,7 @@ _Check_return_ uint64_t CFile64::Seek( _In_ int64_t const offset, _In_ SeekPosit
 
     if ( m_FileHandle == static_cast< HANDLE >( INVALID_HANDLE_VALUE ) )
     {
-        return( (uint64_t) -1 );
+        return(std::numeric_limits<std::uint64_t>::max());
     }
 
     DWORD move_method = 0;
@@ -1697,7 +1691,7 @@ _Check_return_ uint64_t CFile64::Seek( _In_ int64_t const offset, _In_ SeekPosit
 
     default:
 
-        return( (uint64_t) -1 );
+        return(std::numeric_limits<std::uint64_t>::max());
     }
 
     LARGE_INTEGER return_value = { 0, 0 };
@@ -1751,10 +1745,9 @@ _Check_return_ bool CFile64::SetEndOfFile( _In_ uint64_t const length ) noexcept
     return( true );
 }
 
-void CFile64::SetFilePath( _In_z_ LPCTSTR new_name ) noexcept
+void CFile64::SetFilePath(_In_ std::filesystem::path const& new_name ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
-    WFC_VALIDATE_POINTER( new_name );
     m_FileName.assign( new_name );
 }
 
@@ -2015,14 +2008,14 @@ void CFile64::WriteHuge( __in_bcount( number_of_bytes_to_write ) void const * bu
     Write( buffer, number_of_bytes_to_write );
 }
 
-void CFile64::Write( _In_ std::wstring const& string_to_write ) noexcept
+void CFile64::Write( _In_ std::wstring_view string_to_write ) noexcept
 {
-    Write( string_to_write.c_str(), static_cast<UINT>(string_to_write.length() * sizeof( wchar_t ) ) );
+    Write( string_to_write.data(), static_cast<UINT>(string_to_write.length() * sizeof( wchar_t ) ) );
 }
 
-void CFile64::Write( _In_ std::string const& string_to_write ) noexcept
+void CFile64::Write( _In_ std::string_view string_to_write ) noexcept
 {
-    Write( string_to_write.c_str(), static_cast<UINT>(string_to_write.length()) );
+    Write( string_to_write.data(), static_cast<UINT>(string_to_write.length()) );
 }
 
 void CFile64::Write( _In_ std::vector<std::string> const& strings, _In_ bool const include_end_of_lines ) noexcept

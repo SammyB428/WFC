@@ -312,7 +312,7 @@ _Check_return_ bool CPhysicalDiskFile::m_SetSectorSize( void ) noexcept
    return( true );
 }
 
-_Check_return_ bool CPhysicalDiskFile::Open(_In_ std::wstring_view drive_letter, _In_ UINT const) noexcept
+_Check_return_ bool CPhysicalDiskFile::Open(_In_ std::filesystem::path const& drive_letter, _In_ UINT const) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -334,7 +334,7 @@ _Check_return_ bool CPhysicalDiskFile::Open(_In_ std::wstring_view drive_letter,
 
    WFC_TRY
    {
-      format( filename, L"\\\\.\\%c:", drive_letter[ 0 ] );
+      format( filename, L"\\\\.\\%c:", drive_letter.c_str()[ 0 ] );
 
       m_FileHandle = ::CreateFileW( filename.c_str(),
                                    GENERIC_READ bitor GENERIC_WRITE,

@@ -364,7 +364,7 @@ _Check_return_ bool CPing::Open(void) noexcept
     return(true);
 }
 
-_Check_return_ bool CPing::Open(_In_ std::wstring_view, __in UINT const) noexcept
+_Check_return_ bool CPing::Open(_In_ std::filesystem::path const&, _In_ UINT const) noexcept
 {
     WFC_VALIDATE_POINTER(this);
     return(true);

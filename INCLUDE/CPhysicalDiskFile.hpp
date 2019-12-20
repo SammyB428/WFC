@@ -81,7 +81,7 @@ class CPhysicalDiskFile : public CFile64
       // CFile64 overrides
       void  Close( void ) noexcept override;
       _Check_return_ uint64_t GetLength( void ) const noexcept override;
-      _Check_return_ bool Open(_In_ std::wstring_view filename, _In_ UINT const open_flags) noexcept override;
+      _Check_return_ bool Open(_In_ std::filesystem::path const& filename, _In_ UINT const open_flags) noexcept override;
       _Check_return_ UINT Read( __out_bcount( count ) void * buffer, _In_ UINT const count ) noexcept override;
       void  SetLength( _In_ uint64_t const length ) noexcept override;
       void  Write( __in_bcount( count )  void const * buffer, _In_ UINT const count ) noexcept override;

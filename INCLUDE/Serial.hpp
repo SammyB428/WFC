@@ -137,7 +137,7 @@ class CSerialFile : public CDummyFile
       virtual _Check_return_ DWORD NumberOfBytesWaitingToBeRead( void ) noexcept;
       virtual _Check_return_ DWORD NumberOfBytesWaitingToBeWritten( void ) noexcept;
       virtual _Check_return_ bool  Open( void ) noexcept; // Name already filled, used in re-opening an existing session
-      _Check_return_ bool Open(_In_ std::wstring_view channel_name, __in UINT const open_flags = 0 ) noexcept override;
+      _Check_return_ bool Open(std::filesystem::path const& channel_name, __in UINT const open_flags = 0 ) noexcept override;
 
       virtual _Check_return_ BOOL  Purge( __in DWORD const what_to_purge = purgeAll ) noexcept;
       virtual _Check_return_ UINT  Read( __out_bcount( length ) void * buffer, __in UINT const length ) noexcept;
@@ -151,14 +151,14 @@ class CSerialFile : public CDummyFile
       inline void SetInputBufferSize(__in DWORD const buffer_size) noexcept { m_InputBufferSize = buffer_size; }
       inline void SetOutputBufferSize(__in DWORD const buffer_size) noexcept { m_OutputBufferSize = buffer_size; }
       virtual _Check_return_ bool  SetPurgeBufferOnError( __in bool const purge_buffer = true ) noexcept;
-      virtual _Check_return_ BOOL  SetRequestToSend( __in BOOL const set_RTS_on = TRUE ) noexcept;
+      virtual _Check_return_ bool  SetRequestToSend( _In_ bool const set_RTS_on = true ) noexcept;
       virtual _Check_return_ BOOL  SetState( __inout CDeviceControlBlock& device_control_block ) noexcept;
       virtual _Check_return_ BOOL  SetTimeouts( __in_opt COMMTIMEOUTS const * timeouts_p = nullptr ) noexcept;
       virtual _Check_return_ BOOL  TransmitCharacter( __in char const character_to_transmit ) noexcept;
       virtual _Check_return_ BOOL  WaitFor( __inout DWORD& stuff_you_can_wait_for ) noexcept;
       virtual _Check_return_ bool  WaitForString( __in std::string const& string_to_wait_for, __in DWORD const seconds = 5, __inout_opt std::string * what_was_read = nullptr ) noexcept;
       void  Write( __in std::vector<uint8_t> const& bytes ) noexcept override;
-      void  Write( __in std::string const& data_to_write ) noexcept override;
+      void  Write( _In_ std::string_view data_to_write ) noexcept override;
       void  Write( __in_bcount( number_of_bytes ) void const * buffer, __in UINT const number_of_bytes ) noexcept override;
       virtual void  Write( __in BYTE const byte_to_write ) noexcept;
 

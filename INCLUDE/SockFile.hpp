@@ -60,7 +60,7 @@ class CSimpleSocketFile : public CSimpleSocket
       virtual ~CSimpleSocketFile();
 
       _Check_return_ bool Open( void ) noexcept override;
-      _Check_return_ bool Open(_In_ std::wstring_view channel_name, _In_ UINT const port_number = 23 ) noexcept override;
+      _Check_return_ bool Open(_In_ std::filesystem::path const& channel_name, _In_ UINT const port_number = 23 ) noexcept override;
 };
 
 #endif // SIMPLE_SOCKET_FILE_CLASS_HEADER

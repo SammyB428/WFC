@@ -2039,12 +2039,12 @@ void CSimpleSocket::Write( __in_bcount( number_of_bytes_to_write ) VOID const * 
    WFC_END_CATCH_ALL
 }
 
-void CSimpleSocket::Write( __in std::string const& string_to_write ) noexcept
+void CSimpleSocket::Write( _In_ std::string_view string_to_write ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( m_Thunk_p );
 
-   std::string temp_string( string_to_write );
+   std::string const temp_string( string_to_write );
 
    // Thanks go to zschen (zschen@ms.chttl.com.tw) for finding a bug here.
    // I wasn't sending the trailing NULL to the socket. DOH!

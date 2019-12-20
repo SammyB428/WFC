@@ -58,6 +58,7 @@
 
 // Now try to include stuff is a desparate attempt to get <charconv> to compile
 #include <string_view>
+#include <filesystem>
 #include <cstdlib>
 #include <thread>
 #include <chrono>

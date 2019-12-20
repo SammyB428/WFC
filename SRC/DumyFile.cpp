@@ -2,8 +2,6 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 1995-2015, Samuel R. Blackburn
-**
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
 **
@@ -173,18 +171,6 @@ _Check_return_ HANDLE CDummyFile::m_CreateTemplateHandle( void ) const noexcept
    return( m_TemplateHandle );
 }
 
-void CDummyFile::Remove( __in_z LPCTSTR name ) noexcept
-{
-   WFC_VALIDATE_POINTER( this );
-   ASSERT( FALSE ); // Unsupported function
-}
-
-void CDummyFile::Rename( __in_z LPCTSTR OldName, __in_z LPCTSTR NewName ) noexcept
-{
-   WFC_VALIDATE_POINTER( this );
-   ASSERT( FALSE ); // Unsupported function
-}
-
 #pragma warning( disable : 4100 )
 
 _Check_return_ uint64_t CDummyFile::Seek( __in int64_t const /* Offset */, __in SeekPosition const /* From */ ) noexcept
@@ -219,10 +205,10 @@ void CDummyFile::UnlockRange(_In_ uint64_t const /* position */, _In_ uint64_t c
    ASSERT( FALSE ); // Unsupported function
 }
 
-void CDummyFile::Write( _In_ std::string const& string_to_write ) noexcept
+void CDummyFile::Write( _In_ std::string_view string_to_write ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
-   CFile64::Write( static_cast<void const *>(string_to_write.c_str()), static_cast<UINT>(string_to_write.length()));
+   CFile64::Write( static_cast<void const *>(string_to_write.data()), static_cast<UINT>(string_to_write.length()));
 }
 
 void CDummyFile::Write(_In_ std::vector<uint8_t> const& data_to_write ) noexcept

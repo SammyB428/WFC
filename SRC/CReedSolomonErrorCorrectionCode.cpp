@@ -311,11 +311,11 @@ _Check_return_ int CReedSolomonErrorCorrectionCode::m_DecodeChunk(__inout std::v
       {
          tmp = 0;
 
-         for ( auto const j : Range( m_BlockSize) )
+         for ( auto const loop_index : Range( m_BlockSize) )
          {
-            if ( recd[ j ] != m_BlockSize ) /* recd[j] in index form */
+            if ( recd[loop_index] != m_BlockSize ) /* recd[j] in index form */
             {
-               tmp xor_eq m_Alpha_to[ m_Mod( recd[ j ] + ( 1 + i - 1 ) * static_cast<int>(j) ) ];
+               tmp xor_eq m_Alpha_to[ m_Mod( recd[loop_index] + ( 1 + i - 1 ) * static_cast<int>(loop_index) ) ];
             }
 
             syndrome_error or_eq tmp; /* set flag if non-zero syndrome =>error store syndrome in index form  */

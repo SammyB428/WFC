@@ -87,7 +87,10 @@ CSimpleSocketFile::CSimpleSocketFile( __in SOCKET const client_id, __in_z LPCTST
 #if ! defined( WFC_STL )
     m_strFileName.Format( TEXT( "%s (%s)" ), (LPCTSTR) Name, (LPCTSTR) Address );
 #else // WFC_STL
-    format( m_FileName, L"%s (%s)", Name.c_str(), Address.c_str() );
+
+    std::wstring temp_name;
+    format(temp_name, L"%s (%s)", Name.c_str(), Address.c_str() );
+    m_FileName.assign(temp_name);
 #endif // WFC_STL
 }
 
@@ -105,7 +108,7 @@ _Check_return_ bool CSimpleSocketFile::Open( void ) noexcept
 
 #pragma warning( disable : 4100 )
 
-_Check_return_ bool CSimpleSocketFile::Open(_In_ std::wstring_view name, __in UINT const port ) noexcept
+_Check_return_ bool CSimpleSocketFile::Open(_In_ std::filesystem::path const& name, _In_ UINT const port ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
     return( true );
