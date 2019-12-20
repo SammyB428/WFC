@@ -505,7 +505,7 @@ public:
             return( false );
     }
 
-    inline constexpr _Check_return_ bool Find(_In_ CParsePoint const& parse_point, _In_ CParsePoint const& end_parse_point, _In_ wchar_t const * string_to_find, _In_ std::size_t const number_of_characters, _Inout_ CParsePoint& found_at) const noexcept
+    inline constexpr _Check_return_ bool Find(_In_ CParsePoint const& parse_point, _In_ CParsePoint const& end_parse_point, _In_ std::wstring_view string_to_find, _Inout_ CParsePoint& found_at) const noexcept
     {
             found_at.Copy(parse_point);
 
@@ -523,7 +523,7 @@ public:
                 return(false);
             }
 
-            if (number_of_characters < 1)
+            if (string_to_find.length() < 1)
             {
                 found_at.Empty();
                 WFC_SET_LAST_ERROR(ERROR_ALLOTTED_SPACE_EXCEEDED);
@@ -532,7 +532,7 @@ public:
 
             uint32_t character_to_test = 0;
 
-            while ((found_at.GetIndex() + number_of_characters) <= end_parse_point.GetIndex())
+            while ((found_at.GetIndex() + string_to_find.length()) <= end_parse_point.GetIndex())
             {
                 if (PeekAtCharacter(found_at, character_to_test, 0) == true)
                 {
@@ -542,7 +542,7 @@ public:
 
                         uint32_t other_character = 0;
 
-                        for (auto const loop_index : Range(number_of_characters, 1))
+                        for (auto const loop_index : Range(string_to_find.length(), 1))
                         {
                             // We peek at string_length - 1 because the GetNextCharacter() call above
                             // advances the character index
@@ -585,27 +585,13 @@ public:
             return(false);
     }
 
-    inline _Check_return_ bool Find(_In_ CParsePoint const& parse_point, _In_ CParsePoint const& end_parse_point, _In_ std::wstring const& string_to_find, _Inout_ CParsePoint& found_at) const noexcept
-    {
-        return(Find(parse_point, end_parse_point, string_to_find.c_str(), string_to_find.length(), found_at));
-    }
-
-    inline _Check_return_ bool Find(_In_ CParsePoint const& parse_point, _In_ std::wstring const& string_to_find, _Inout_ CParsePoint& found_at) const noexcept
+    inline _Check_return_ bool Find(_In_ CParsePoint const& parse_point, _In_ std::wstring_view string_to_find, _Inout_ CParsePoint& found_at) const noexcept
     {
         CParsePoint end_parse_point;
 
         end_parse_point.SetIndex(m_NumberOfBytes);
 
         return(Find(parse_point, end_parse_point, string_to_find, found_at));
-    }
-
-    inline _Check_return_ bool Find(_In_ CParsePoint const& parse_point, _In_ wchar_t const * string_to_find, _Inout_ CParsePoint& found_at) const noexcept
-    {
-        CParsePoint end_parse_point;
-
-        end_parse_point.SetIndex(m_NumberOfBytes);
-
-        return(Find(parse_point, end_parse_point, string_to_find, wcslen(string_to_find), found_at));
     }
 
     inline _Check_return_ bool Find( _In_ CParsePoint const& parse_point, _In_ CParsePoint const& end_parse_point, _In_ uint8_t const * pattern_buffer, _In_ std::size_t const pattern_length, _Inout_ CParsePoint& found_at ) const noexcept
@@ -676,7 +662,7 @@ public:
         return(Find(parse_point, end_parse_point, bytes_to_find, number_of_bytes_to_find, found_at));
     }
 
-    inline _Check_return_ bool FindNoCase( _In_ CParsePoint const& parse_point, _In_ std::wstring const& string_to_find, _Inout_ CParsePoint& found_at ) const noexcept
+    inline _Check_return_ bool FindNoCase( _In_ CParsePoint const& parse_point, _In_ std::wstring_view string_to_find, _Inout_ CParsePoint& found_at ) const noexcept
     {
         try
         {
@@ -694,9 +680,7 @@ public:
                 return( false );
             }
 
-            std::size_t const string_length = string_to_find.length();
-
-            if ( string_length == 0 )
+            if (string_to_find.length() == 0)
             {
                 found_at.Empty();
                 WFC_SET_LAST_ERROR( ERROR_ALLOTTED_SPACE_EXCEEDED );
@@ -708,7 +692,7 @@ public:
             uint32_t character_to_test         = 0;
             uint32_t const first_character_of_string = tolower( string_to_find.at( 0 ) );
 
-            while( ( found_at.GetIndex() + string_length ) <= m_NumberOfBytes )
+            while( ( found_at.GetIndex() + string_to_find.length()) <= m_NumberOfBytes )
             {
                 if ( PeekAtCharacter( found_at, character_to_test, 0 ) == true )
                 {
@@ -718,7 +702,7 @@ public:
 
                         uint32_t other_character = 0;
 
-                        for ( auto const loop_index : Range(string_length, 1) )
+                        for ( auto const loop_index : Range(string_to_find.length(), 1) )
                         {
                             if ( PeekAtCharacter( found_at, character_to_test, loop_index ) == false)
                             {

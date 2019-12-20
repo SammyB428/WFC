@@ -128,7 +128,7 @@ static _Check_return_ bool test_class(_Inout_ CDataParser& parser, _Inout_ int& 
         return( failure() );
     }
 
-    if ( parser.Find( parse_point, TEXT( "DEF" ), found_at ) == false )
+    if ( parser.Find( parse_point, WSTRING_VIEW(L"DEF"), found_at ) == false )
     {
         test_number_that_failed = 8;
         return( failure() );

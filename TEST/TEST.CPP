@@ -228,9 +228,6 @@ _Check_return_ int _tmain( _In_ int const number_of_command_line_arguments, _In_
    }
 #endif
 
-   CSerialFile cs;
-
-   cs.Open(L"COM1:57600,n,8,1");
    int test_number_that_failed = 0;
 
    std::string class_name;
@@ -239,11 +236,9 @@ _Check_return_ int _tmain( _In_ int const number_of_command_line_arguments, _In_
 
    std::wstring number_of_tests_string;
 
-   TEST_FUNCTION test_function = nullptr;
-
    for ( auto const loop_index : Range( std::size( tests ) ) )
    {
-      test_function = tests[ loop_index ];
+      auto test_function = tests[ loop_index ];
 
       if ( test_function( class_name, test_number_that_failed ) == FALSE )
       {
