@@ -237,7 +237,7 @@ _Check_return_ bool PASCAL Win32FoundationClasses::wfc_check_digital_signature( 
     return( return_flag == FALSE ? false : true );
 }
 
-void PASCAL Win32FoundationClasses::wfc_get_version( _In_z_ wchar_t const * file_name, _Out_ uint16_t& major, _Out_ uint16_t& minor, _Out_ uint16_t& build, _Out_ uint16_t& revision ) noexcept
+void PASCAL Win32FoundationClasses::wfc_get_version(_In_ std::filesystem::path const& file_name, _Out_ uint16_t& major, _Out_ uint16_t& minor, _Out_ uint16_t& build, _Out_ uint16_t& revision ) noexcept
 {
    major = 0;
    minor = 0;
@@ -246,7 +246,7 @@ void PASCAL Win32FoundationClasses::wfc_get_version( _In_z_ wchar_t const * file
 
    DWORD handle = 0;
 
-   uint32_t const number_of_bytes_to_allocate = GetFileVersionInfoSizeW( file_name, &handle );
+   uint32_t const number_of_bytes_to_allocate = GetFileVersionInfoSizeW( file_name.native().c_str(), &handle );
 
    if ( number_of_bytes_to_allocate > 0 )
    {
@@ -258,7 +258,7 @@ void PASCAL Win32FoundationClasses::wfc_get_version( _In_z_ wchar_t const * file
 
          UINT number_of_bytes_at_pointer = 0;
 
-         if ( ::GetFileVersionInfoW( file_name, 0, number_of_bytes_to_allocate, byte_buffer.get() ) != 0 )
+         if ( ::GetFileVersionInfoW( file_name.native().c_str(), 0, number_of_bytes_to_allocate, byte_buffer.get() ) != 0 )
          {
             if ( VerQueryValueW( byte_buffer.get(), L"\\", reinterpret_cast<LPVOID *>(&pointer), &number_of_bytes_at_pointer ) != 0 )
             {
@@ -277,18 +277,18 @@ void PASCAL Win32FoundationClasses::wfc_get_version( _In_z_ wchar_t const * file
    }
 }
 
-void PASCAL Win32FoundationClasses::wfc_get_my_version( __out uint16_t& major, __out uint16_t& minor, __out uint16_t& build, __out uint16_t& revision ) noexcept
+void PASCAL Win32FoundationClasses::wfc_get_my_version( _Out_ uint16_t& major, _Out_ uint16_t& minor, _Out_ uint16_t& build, _Out_ uint16_t& revision ) noexcept
 {
    major = 0;
    minor = 0;
    build = 0;
    revision = 0;
 
-   TCHAR path[ 4096 ];
+   wchar_t path[ 4096 ];
 
    ZeroMemory( path, sizeof( path ) );
 
-   if ( ::GetModuleFileName( static_cast< HMODULE >( NULL ), path, static_cast<DWORD>(std::size( path )) ) != 0 )
+   if ( ::GetModuleFileNameW( static_cast< HMODULE >( NULL ), path, static_cast<DWORD>(std::size( path )) ) != 0 )
    {
       wfc_get_version( path, major, minor, build, revision );
    }

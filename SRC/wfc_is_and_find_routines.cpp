@@ -1102,7 +1102,7 @@ _Check_return_ int Win32FoundationClasses::wfc_find_wide_curly_guid( __in_bcount
     {
         if ( buffer[ buffer_index ] == '{' )
         {
-            if ( Win32FoundationClasses::wfc_is_guid_with_curlies( reinterpret_cast<wchar_t const *>(&buffer[ buffer_index ]) ) == true )
+            if ( Win32FoundationClasses::wfc_is_guid_with_curlies( std::wstring_view(reinterpret_cast<wchar_t const *>(&buffer[ buffer_index ]), 38 ) ) == true )
             {
                 return( static_cast<int>(buffer_index) );
             }

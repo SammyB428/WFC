@@ -287,22 +287,23 @@ _Check_return_ bool CNetworkShares::Add(_Inout_ CNetworkShareInformation& share_
    }
 }
 
-_Check_return_ DWORD CNetworkShares::Check( _In_z_ wchar_t const * name_of_device ) noexcept
+_Check_return_ DWORD CNetworkShares::Check( _In_ std::wstring_view name_of_device ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
+
+   if (name_of_device.empty() == true)
+   {
+       return(0);
+   }
 
    // Network APIs think only in UNICODE. Yes, Microsoft screwed up the
    // function prototypes...
 
-   WCHAR wide_device_name[ 4096 ];
+   wchar_t wide_device_name[ 4096 ];
 
    ::ZeroMemory( wide_device_name, sizeof( wide_device_name ) );
 
-   _tcscpy_s( (LPTSTR) wide_device_name, std::size( wide_device_name ), name_of_device );
-
-#if ! defined( UNICODE )
-   ::ASCII_to_UNICODE(reinterpret_cast<char const*>(name_of_device), wide_device_name );
-#endif // UNICODE
+   wcsncpy(wide_device_name, name_of_device.data(), std::min(std::size(wide_device_name) - 1, name_of_device.length()));
 
    DWORD device_type = 0;
 

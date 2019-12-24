@@ -623,8 +623,8 @@ namespace Win32FoundationClasses
 #define BIT_31 (0x80000000)
 
 #if ! defined( MFC_TO_STL_HEADER_FILE )
-void PASCAL ASCII_to_UNICODE( __in_z LPCSTR ansi_string, __out_z LPWSTR unicode_string ) noexcept;
-void PASCAL UNICODE_to_ASCII( __in_z LPCWSTR unicode_string, __out_z LPSTR ansi_string, long number_of_unicode_characters_to_convert = (-1), UINT code_page = CP_ACP ) noexcept;
+    void PASCAL ASCII_to_UNICODE(_In_ std::string_view ansi_string, __out_z LPWSTR unicode_string) noexcept;
+    void PASCAL UNICODE_to_ASCII(_In_ std::wstring_view unicode_string, __out_z LPSTR ansi_string, _In_ SSIZE_T number_of_unicode_characters_to_convert = (-1), _In_ const UINT code_page = CP_ACP) noexcept;
 #endif
 
 void PASCAL Convert_NERR_Code_to_String( __in DWORD const error_code, __out std::wstring& error_message ) noexcept;
@@ -1132,7 +1132,7 @@ void PASCAL wfc_get_bios_uuid(_Out_ GUID& uuid ) noexcept;
 void PASCAL wfc_get_error_string( _In_ DWORD const error_code, _Out_ std::wstring& error_string ) noexcept;
 void PASCAL wfc_get_executable_directory(_Out_ std::wstring& directory_name_ending_in_a_slash) noexcept;
 void PASCAL wfc_get_dll_directory(_Out_ std::wstring& directory_name_ending_in_a_slash) noexcept;
-void PASCAL wfc_get_version( _In_z_ wchar_t const * file_name, _Out_ uint16_t& major, _Out_ uint16_t& minor, _Out_ uint16_t& build, _Out_ uint16_t& revision ) noexcept;
+void PASCAL wfc_get_version( _In_ std::filesystem::path const& file_name, _Out_ uint16_t& major, _Out_ uint16_t& minor, _Out_ uint16_t& build, _Out_ uint16_t& revision ) noexcept;
 void PASCAL wfc_get_my_version(_Out_ uint16_t& major, _Out_ uint16_t& minor, _Out_ uint16_t& build, _Out_ uint16_t& revision ) noexcept;
 void PASCAL wfc_get_my_version(_Inout_ std::wstring& version ) noexcept;
 _Check_return_ uint64_t PASCAL wfc_get_my_packed_version( void ) noexcept;

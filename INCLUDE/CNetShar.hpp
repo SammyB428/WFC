@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 1995-2016, Samuel R. Blackburn
+** Copyright, 1995-2019, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -119,7 +119,7 @@ class CNetworkShares : public CNetwork
       virtual ~CNetworkShares();
 
       virtual _Check_return_ bool Add( _Inout_ CNetworkShareInformation& share_to_add ) noexcept;
-      virtual _Check_return_ DWORD Check( _In_ wchar_t const * name_of_device ) noexcept;
+      virtual _Check_return_ DWORD Check( _In_ std::wstring_view name_of_device ) noexcept;
       virtual void Close( void ) noexcept override;
       virtual _Check_return_ bool Delete(_Inout_ CNetworkShareInformation& share_to_delete ) noexcept;
       virtual _Check_return_ bool Enumerate( void ) noexcept;

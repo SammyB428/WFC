@@ -948,7 +948,7 @@ _Check_return_ DWORD CSerialFile::NumberOfBytesWaitingToBeWritten( void ) noexce
 
 #pragma warning( disable : 4100 )
 
-_Check_return_ bool CSerialFile::Open(_In_ std::filesystem::path const& channel_name, __in UINT const open_flags ) noexcept
+_Check_return_ bool CSerialFile::Open(_In_ std::filesystem::path const& channel_name, _In_ UINT const open_flags ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 

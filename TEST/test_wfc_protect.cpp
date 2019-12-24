@@ -113,20 +113,9 @@ __checkReturn bool test_wfc_protect( __out std::string& class_name, __out int& t
 
    uint8_t lanman_hash[16];
 
-   memset(lanman_hash, 0x55, sizeof(lanman_hash));
-
-   wfc_calculate_lanman_hash(nullptr, lanman_hash);
-
-   if (lanman_hash[0] != 0x00)
-   {
-       class_name.assign(STRING_VIEW("wfc_calculate_lanman_hash()"));
-       test_number_that_failed = 7;
-       return(failure());
-   }
-
    memset(lanman_hash, 0xAA, sizeof(lanman_hash));
 
-   wfc_calculate_lanman_hash("", lanman_hash);
+   wfc_calculate_lanman_hash(STRING_VIEW(""), lanman_hash);
 
    // Empty hash AAD3B435B51404EEAAD3B435B51404EE
 
@@ -148,13 +137,13 @@ __checkReturn bool test_wfc_protect( __out std::string& class_name, __out int& t
        lanman_hash[15] != 0xee )
    {
        class_name.assign(STRING_VIEW("wfc_calculate_lanman_hash()"));
-       test_number_that_failed = 8;
+       test_number_that_failed = 7;
        return(failure());
    }
 
    ZeroMemory(lanman_hash, sizeof(lanman_hash));
 
-   wfc_calculate_lanman_hash("hashcat", lanman_hash);
+   wfc_calculate_lanman_hash(STRING_VIEW("hashcat"), lanman_hash);
 
    // hashcat - NTLM:b4b9b02e6f09a9bd760f388b67351e2b LM: 29 9B D1 28 C1 10 1F D6 AA D3 B4 35 B5 14 04 EE
 
@@ -176,13 +165,13 @@ __checkReturn bool test_wfc_protect( __out std::string& class_name, __out int& t
        lanman_hash[15] != 0xee)
    {
        class_name.assign(STRING_VIEW("wfc_calculate_lanman_hash()"));
-       test_number_that_failed = 9;
+       test_number_that_failed = 8;
        return(failure());
    }
 
    ZeroMemory(lanman_hash, sizeof(lanman_hash));
 
-   wfc_calculate_nt_hash(L"hashcat", lanman_hash);
+   wfc_calculate_nt_hash(WSTRING_VIEW(L"hashcat"), lanman_hash);
 
    // b4 b9 b0 2e 6f 09 a9 bd 76 0f 38 8b 67 35 1e 2b
    if (lanman_hash[0] != 0xb4 or
@@ -203,10 +192,10 @@ __checkReturn bool test_wfc_protect( __out std::string& class_name, __out int& t
        lanman_hash[15] != 0x2b )
    {
        class_name.assign(STRING_VIEW("wfc_calculate_nt_hash()"));
-       test_number_that_failed = 10;
+       test_number_that_failed = 9;
        return(failure());
    }
 
-   test_number_that_failed = 10;
+   test_number_that_failed = 9;
    return( true );
 }

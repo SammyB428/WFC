@@ -137,15 +137,15 @@ class CSerialFile : public CDummyFile
       virtual _Check_return_ DWORD NumberOfBytesWaitingToBeRead( void ) noexcept;
       virtual _Check_return_ DWORD NumberOfBytesWaitingToBeWritten( void ) noexcept;
       virtual _Check_return_ bool  Open( void ) noexcept; // Name already filled, used in re-opening an existing session
-      _Check_return_ bool Open(std::filesystem::path const& channel_name, __in UINT const open_flags = 0 ) noexcept override;
+      _Check_return_ bool Open(_In_ std::filesystem::path const& channel_name, _In_ UINT const open_flags = 0 ) noexcept override;
 
-      virtual _Check_return_ BOOL  Purge( __in DWORD const what_to_purge = purgeAll ) noexcept;
-      virtual _Check_return_ UINT  Read( __out_bcount( length ) void * buffer, __in UINT const length ) noexcept;
-      virtual void ReplaceGarbledCharacter( __in bool const yes_or_no = true, __in uint8_t const character_to_replace_the_garbled_one_with = ' ' ) noexcept;
+      virtual _Check_return_ BOOL  Purge(_In_ DWORD const what_to_purge = purgeAll ) noexcept;
+      virtual _Check_return_ UINT  Read( __out_bcount( length ) void * buffer, _In_ UINT const length ) noexcept;
+      virtual void ReplaceGarbledCharacter(_In_ bool const yes_or_no = true, _In_ uint8_t const character_to_replace_the_garbled_one_with = ' ' ) noexcept;
 
-      virtual _Check_return_ bool  SetBaudRate( __in uint32_t const baud_rate ) noexcept;
+      virtual _Check_return_ bool  SetBaudRate(_In_ uint32_t const baud_rate ) noexcept;
       virtual _Check_return_ BOOL  SetBreak( void ) noexcept;
-      virtual _Check_return_ BOOL  SetCharacterToWaitFor( __in uint8_t const character_to_wait_for ) noexcept;
+      virtual _Check_return_ BOOL  SetCharacterToWaitFor(_In_ uint8_t const character_to_wait_for ) noexcept;
       virtual _Check_return_ BOOL  SetDataTerminalReady( __in bool const set_DTR_on = true ) noexcept;
       virtual void  SetFlowControl( __in DWORD const flow_control ) noexcept;
       inline void SetInputBufferSize(__in DWORD const buffer_size) noexcept { m_InputBufferSize = buffer_size; }

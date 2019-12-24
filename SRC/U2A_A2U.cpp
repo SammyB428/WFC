@@ -55,7 +55,7 @@ void PASCAL Win32FoundationClasses::ASCII_to_UNICODE(_In_ std::string_view ansi_
 {
     WFC_VALIDATE_POINTER_NULL_OK(unicode_string);
 
-    if (ansi_string.length() == 0 or unicode_string == nullptr)
+    if (ansi_string.empty() == true or unicode_string == nullptr)
     {
         return;
     }

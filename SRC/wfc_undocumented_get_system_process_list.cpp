@@ -204,7 +204,7 @@ _Check_return_ bool PASCAL Win32FoundationClasses::wfc_get_process_command_line(
     return(true);
 }
 
-void PASCAL Win32FoundationClasses::wfc_calculate_lanman_hash(__in_z char const * ascii_string, __out_bcount(16) uint8_t * hash_value) noexcept
+void PASCAL Win32FoundationClasses::wfc_calculate_lanman_hash(_In_ std::string_view ascii_string, __out_bcount(16) uint8_t * hash_value) noexcept
 {
     // This function has no associated import library. You must use the LoadLibrary and GetProcAddress functions to dynamically link to Ntdll.dll.
     static HMODULE advapi32_module_handle = NULL;
@@ -241,21 +241,17 @@ void PASCAL Win32FoundationClasses::wfc_calculate_lanman_hash(__in_z char const 
     }
 #pragma warning(default:4191)
 
-    if (ascii_string == nullptr)
+    if (ascii_string.empty() == true)
     {
-        return;
-    }
-
-    if (ascii_string[0] == 0x00)
-    {
+        char empty_string[1]{ 0 };
         // Empty hash
-        NTSTATUS const return_status = SystemFunction006(ascii_string, hash_value);
+        NTSTATUS const return_status = SystemFunction006(empty_string, hash_value);
         _ASSERTE(return_status == ERROR_SUCCESS);
     }
 
     // To duplicate the behavior LanMan hashing, we need to convert the string to upper case
 
-    std::size_t const upper_case_string_size = strlen(ascii_string) + 1;
+    std::size_t const upper_case_string_size = ascii_string.length() + 1;
 
     auto upper_case_string = std::make_unique<char []>(upper_case_string_size);
 
@@ -264,14 +260,17 @@ void PASCAL Win32FoundationClasses::wfc_calculate_lanman_hash(__in_z char const 
         return;
     }
 
-    strcpy_s(upper_case_string.get(), upper_case_string_size, ascii_string);
-    _strupr_s(upper_case_string.get(), upper_case_string_size);
+    for (auto const string_index : Range(ascii_string.length()))
+    {
+        upper_case_string[string_index] = std::toupper(ascii_string[string_index]);
+        upper_case_string[string_index + 1] = 0x00;
+    }
 
     NTSTATUS const return_status = SystemFunction006(upper_case_string.get(), hash_value);
     _ASSERTE(return_status == ERROR_SUCCESS);
 }
 
-void PASCAL Win32FoundationClasses::wfc_calculate_nt_hash(__in_z wchar_t const * unicode_string, __out_bcount(16) uint8_t * hash_value) noexcept
+void PASCAL Win32FoundationClasses::wfc_calculate_nt_hash(_In_ std::wstring_view unicode_string, __out_bcount(16) uint8_t * hash_value) noexcept
 {
     // This function has no associated import library. You must use the LoadLibrary and GetProcAddress functions to dynamically link to Ntdll.dll.
     static HMODULE advapi32_module_handle = NULL;
@@ -308,16 +307,11 @@ void PASCAL Win32FoundationClasses::wfc_calculate_nt_hash(__in_z wchar_t const *
     }
 #pragma warning(default:4191)
 
-    if (unicode_string == nullptr)
-    {
-        return;
-    }
-
     UNICODE_STRING u;
 
-    u.Length = (USHORT) wcslen(unicode_string) * sizeof(wchar_t);
+    u.Length = (USHORT) unicode_string.length() * sizeof(wchar_t);
     u.MaximumLength = u.Length;
-    u.Buffer = (PWSTR) unicode_string;
+    u.Buffer = (PWSTR) unicode_string.data();
 
     NTSTATUS const return_status = SystemFunction007(&u, hash_value);
 }

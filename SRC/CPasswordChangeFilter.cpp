@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 1995-2016, Samuel R. Blackburn
+** Copyright, 1995-2019, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -61,7 +61,7 @@ CPasswordChangeFilter::~CPasswordChangeFilter()
    WFC_VALIDATE_POINTER( this );
 }
 
-bool CPasswordChangeFilter::AddFilter( _In_ std::wstring const& dll_name ) noexcept
+_Check_return_ bool CPasswordChangeFilter::AddFilter( _In_ std::wstring const& dll_name ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -100,7 +100,7 @@ bool CPasswordChangeFilter::AddFilter( _In_ std::wstring const& dll_name ) noexc
    return( true );
 }
 
-bool CPasswordChangeFilter::GetCurrentFilters( _Out_ std::vector<std::wstring>& current_filters ) noexcept
+_Check_return_ bool CPasswordChangeFilter::GetCurrentFilters( _Out_ std::vector<std::wstring>& current_filters ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -127,19 +127,19 @@ bool CPasswordChangeFilter::GetCurrentFilters( _Out_ std::vector<std::wstring>& 
    return( true );
 }
 
-bool CPasswordChangeFilter::OnChanged( __in PASSWORD_FILTER_STRING * /* user_name */, __in ULONG /* relative_id */, __in PASSWORD_FILTER_STRING * /* new_password */ ) noexcept
+_Check_return_ bool CPasswordChangeFilter::OnChanged( __in PASSWORD_FILTER_STRING * /* user_name */, __in ULONG /* relative_id */, __in PASSWORD_FILTER_STRING * /* new_password */ ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    return( true );
 }
 
-bool CPasswordChangeFilter::OnFilter( __in PASSWORD_FILTER_STRING * /* user_name */, __in PASSWORD_FILTER_STRING * /* full_user_name */, __in PASSWORD_FILTER_STRING * /* new_password */, __in bool /* was_set */ ) noexcept
+_Check_return_ bool CPasswordChangeFilter::OnFilter( __in PASSWORD_FILTER_STRING * /* user_name */, __in PASSWORD_FILTER_STRING * /* full_user_name */, __in PASSWORD_FILTER_STRING * /* new_password */, __in bool /* was_set */ ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    return( true );
 }
 
-bool CPasswordChangeFilter::OnInitialize( void ) noexcept
+_Check_return_ bool CPasswordChangeFilter::OnInitialize( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    return( true );

@@ -66,7 +66,7 @@ class CPasswordChangeFilter
 
       virtual ~CPasswordChangeFilter();
 
-      virtual _Check_return_ bool AddFilter( __in std::wstring const& dll_name ) noexcept;
+      virtual _Check_return_ bool AddFilter(_In_ std::wstring const& dll_name ) noexcept;
       virtual _Check_return_ bool GetCurrentFilters( __out std::vector<std::wstring>& current_filters ) noexcept;
       virtual _Check_return_ bool OnChanged( __in PASSWORD_FILTER_STRING * user_name, __in ULONG relative_id, __in PASSWORD_FILTER_STRING * new_password ) noexcept;
       virtual _Check_return_ bool OnFilter( __in PASSWORD_FILTER_STRING * user_name, __in PASSWORD_FILTER_STRING * full_user_name, __in PASSWORD_FILTER_STRING * new_password, __in bool was_set ) noexcept;

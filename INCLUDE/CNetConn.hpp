@@ -122,7 +122,7 @@ public:
       virtual ~CNetworkConnections();
 
       virtual void Close( void ) noexcept;
-      virtual _Check_return_ bool Enumerate( __in_z_opt LPCTSTR share_or_computer_name ) noexcept;
+      virtual _Check_return_ bool Enumerate( _In_ std::wstring_view share_or_computer_name ) noexcept;
       virtual _Check_return_ bool GetNext( __out CNetworkConnectionInformation& information ) noexcept;
 
 #if defined( _DEBUG ) && ! defined( WFC_NO_DUMPING )

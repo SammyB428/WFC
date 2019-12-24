@@ -94,10 +94,9 @@ void CNetworkConnections::Dump( CDumpContext& dump_context ) const
 
 #endif // _DEBUG
 
-_Check_return_ bool CNetworkConnections::Enumerate(__in_z_opt LPCTSTR share_or_computer_name ) noexcept
+_Check_return_ bool CNetworkConnections::Enumerate(_In_ std::wstring_view share_or_computer_name ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
-   WFC_VALIDATE_POINTER( share_or_computer_name );
 
    if ( m_1InformationBuffer != nullptr )
    {
@@ -105,7 +104,7 @@ _Check_return_ bool CNetworkConnections::Enumerate(__in_z_opt LPCTSTR share_or_c
       m_1InformationBuffer = nullptr;
    }
 
-   if ( share_or_computer_name == nullptr )
+   if ( share_or_computer_name.empty() == true )
    {
       m_ErrorCode = ERROR_INVALID_PARAMETER;
       return( false );
@@ -115,12 +114,7 @@ _Check_return_ bool CNetworkConnections::Enumerate(__in_z_opt LPCTSTR share_or_c
 
    WFC_TRY
    {
-#if ! defined( UNICODE )
-      ::ASCII_to_UNICODE( share_or_computer_name, (LPWSTR) m_WideShareOrComputerName );
-#else
-      _tcscpy_s( m_WideShareOrComputerName, std::size( m_WideShareOrComputerName ), share_or_computer_name );
-#endif // UNICODE
-
+      wcsncpy(m_WideShareOrComputerName, share_or_computer_name.data(), std::min(std::size(m_WideShareOrComputerName) - 1, share_or_computer_name.length()));
       m_1Index                = 0;
       m_1CurrentEntryNumber   = 0;
       m_1NumberOfEntriesRead  = 0;
@@ -137,7 +131,7 @@ _Check_return_ bool CNetworkConnections::Enumerate(__in_z_opt LPCTSTR share_or_c
    WFC_END_CATCH_ALL
 }
 
-_Check_return_ bool CNetworkConnections::GetNext( __out CNetworkConnectionInformation& information ) noexcept
+_Check_return_ bool CNetworkConnections::GetNext( _Out_ CNetworkConnectionInformation& information ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
