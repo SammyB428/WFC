@@ -141,11 +141,6 @@ inline _Check_return_ bool starts_with(_In_ std::wstring const& s, _In_z_ wchar_
     return(starts_with(s, std::wstring_view(beginning, wcslen(beginning))));
 }
 
-inline _Check_return_ bool starts_with(_In_ std::wstring const& s, _In_ std::wstring const& beginning) noexcept
-{
-    return(starts_with(s, beginning));
-}
-
 inline _Check_return_ bool starts_with_no_case(_In_ std::wstring const& s, _In_ std::wstring_view beginning) noexcept
 {
     if (beginning.empty() == true or beginning.length() > s.length())
