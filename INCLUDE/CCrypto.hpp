@@ -84,7 +84,7 @@ class CCryptographicHash : public CCryptography
        // Construction
 
       CCryptographicHash() noexcept;
-      CCryptographicHash( __in HCRYPTHASH source_handle, __in bool automatically_destroy = true ) noexcept;
+      CCryptographicHash( _In_ HCRYPTHASH source_handle, _In_ bool automatically_destroy = true ) noexcept;
       virtual ~CCryptographicHash();
 
       static constexpr DWORD const MD2  = CALG_MD2;
@@ -111,30 +111,30 @@ class CCryptographicHash : public CCryptography
       // Methods
 
       virtual _Check_return_ bool Destroy( void ) noexcept; // CryptDestroyHash
-      virtual _Check_return_ bool FromHandle( __in HCRYPTHASH source_handle, __in bool automatically_destroy = TRUE ) noexcept;
+      virtual _Check_return_ bool FromHandle( _In_ HCRYPTHASH source_handle, _In_ bool automatically_destroy = TRUE ) noexcept;
       virtual _Check_return_ HCRYPTHASH GetHandle( void ) const noexcept;
-      virtual _Check_return_ bool GetParameter( __in uint32_t const parameter_to_get, __inout_bcount( buffer_length ) uint8_t * buffer, __inout uint32_t& buffer_length, __in uint32_t const flags = 0 ) noexcept; // CryptGetKeyParam
+      virtual _Check_return_ bool GetParameter( _In_ uint32_t const parameter_to_get, __inout_bcount( buffer_length ) uint8_t * buffer, __inout uint32_t& buffer_length, _In_ uint32_t const flags = 0 ) noexcept; // CryptGetKeyParam
 
       // GetParameter helpers
 
-      virtual _Check_return_ bool GetAlgorithmIdentifier( __out DWORD& identifier ) noexcept;
-      virtual _Check_return_ bool GetLength( __out uint32_t& length ) noexcept;
-      virtual _Check_return_ bool GetValue( __out std::vector<uint8_t>& value ) noexcept;
-      virtual _Check_return_ bool Hash(__in std::vector<uint8_t> const& data_to_compute_a_hash_on, __in DWORD const flags = CRYPT_USERDATA) noexcept; // CryptHashData
-      virtual _Check_return_ bool Hash( __in_bcount( buffer_size ) uint8_t const * buffer, __in DWORD const buffer_size, __in DWORD const flags = CRYPT_USERDATA ) noexcept; // CryptHashData
-      virtual _Check_return_ bool Hash( __in CCryptographicKey const& key_to_hash, __in DWORD const flags = 0 ) noexcept; // CryptHashSessionKey
+      virtual _Check_return_ bool GetAlgorithmIdentifier( _Out_ DWORD& identifier ) noexcept;
+      virtual _Check_return_ bool GetLength( _Out_ uint32_t& length ) noexcept;
+      virtual _Check_return_ bool GetValue( _Out_ std::vector<uint8_t>& value ) noexcept;
+      virtual _Check_return_ bool Hash(_In_ std::vector<uint8_t> const& data_to_compute_a_hash_on, _In_ DWORD const flags = CRYPT_USERDATA) noexcept; // CryptHashData
+      virtual _Check_return_ bool Hash( __in_bcount( buffer_size ) uint8_t const * buffer, _In_ DWORD const buffer_size, _In_ DWORD const flags = CRYPT_USERDATA ) noexcept; // CryptHashData
+      virtual _Check_return_ bool Hash( _In_ CCryptographicKey const& key_to_hash, _In_ DWORD const flags = 0 ) noexcept; // CryptHashSessionKey
  
       // All of the Setxxx methods parameters cannot be properly typed because
       // the CryptSetHashParam() API is mis-typed. The buffer parameter should
       // be const but it is not. Looks like they didn't think it through enough.
 
-      virtual _Check_return_ bool SetParameter( __in DWORD const parameter_to_set, __inout BYTE *buffer, __in DWORD const flags = 0 ) noexcept; // CryptSetKeyParam
+      virtual _Check_return_ bool SetParameter( _In_ DWORD const parameter_to_set, _Inout_ BYTE *buffer, _In_ DWORD const flags = 0 ) noexcept; // CryptSetKeyParam
 
       // SetParameter helpers
 
-      virtual _Check_return_ bool SetValue( __inout std::vector<uint8_t>& value ) noexcept;
-      virtual _Check_return_ bool Sign( __in DWORD const which_key_to_sign_with, __in std::wstring const& password, __inout std::vector<uint8_t>& signature, __in DWORD const flags = 0 ) noexcept; // CryptSignHash
-      virtual _Check_return_ bool VerifySignature( __inout std::vector<uint8_t>& signature, __inout CCryptographicKey& public_key_to_verify_with, __inout std::wstring& password, __in DWORD const flags = 0 ) noexcept; // CryptVerifySignature
+      virtual _Check_return_ bool SetValue(_Inout_ std::vector<uint8_t>& value ) noexcept;
+      virtual _Check_return_ bool Sign( _In_ DWORD const which_key_to_sign_with, _In_ std::wstring const& password, _Inout_ std::vector<uint8_t>& signature, _In_ DWORD const flags = 0 ) noexcept; // CryptSignHash
+      virtual _Check_return_ bool VerifySignature(_Inout_ std::vector<uint8_t>& signature, _Inout_ CCryptographicKey& public_key_to_verify_with, _Inout_ std::wstring& password, _In_ DWORD const flags = 0 ) noexcept; // CryptVerifySignature
 };
 
 class CCryptographicAlgorithm
@@ -144,8 +144,8 @@ class CCryptographicAlgorithm
       // Construction
 
       CCryptographicAlgorithm() noexcept;
-      CCryptographicAlgorithm( __in CCryptographicAlgorithm const& source ) noexcept;
-      CCryptographicAlgorithm( __in PROV_ENUMALGS const& source ) noexcept;
+      CCryptographicAlgorithm( _In_ CCryptographicAlgorithm const& source ) noexcept;
+      CCryptographicAlgorithm( _In_ PROV_ENUMALGS const& source ) noexcept;
       virtual ~CCryptographicAlgorithm();
 
       // Properties
@@ -230,9 +230,9 @@ class CCryptographicAlgorithm
 
       // Methods
 
-      virtual void Copy( __in CCryptographicAlgorithm const& source ) noexcept;
-      virtual void Copy( __in PROV_ENUMALGS const& source ) noexcept;
-      virtual void Copy( __in PROV_ENUMALGS const * source ) noexcept;
+      virtual void Copy( _In_ CCryptographicAlgorithm const& source ) noexcept;
+      virtual void Copy( _In_ PROV_ENUMALGS const& source ) noexcept;
+      virtual void Copy( _In_ PROV_ENUMALGS const * source ) noexcept;
       virtual void Empty( void ) noexcept;
       virtual _Check_return_ bool IsDataEncrypt( void ) const noexcept;
       virtual _Check_return_ bool IsHash( void ) const noexcept;
@@ -242,8 +242,8 @@ class CCryptographicAlgorithm
 
       // Operators
 
-      virtual _Check_return_ CCryptographicAlgorithm& operator=( __in CCryptographicAlgorithm const& source ) noexcept;
-      virtual _Check_return_ CCryptographicAlgorithm& operator=( __in PROV_ENUMALGS const& source ) noexcept;
+      virtual _Check_return_ CCryptographicAlgorithm& operator=( _In_ CCryptographicAlgorithm const& source ) noexcept;
+      virtual _Check_return_ CCryptographicAlgorithm& operator=( _In_ PROV_ENUMALGS const& source ) noexcept;
 
       // Instrumentation
 
@@ -264,13 +264,13 @@ class CCryptographicKey : public CCryptography
 
    public:
 
-       CCryptographicKey(__in CCryptographicKey const&) = delete;
-       CCryptographicKey& operator=(__in CCryptographicKey const&) = delete;
+       CCryptographicKey(_In_ CCryptographicKey const&) = delete;
+       CCryptographicKey& operator=(_In_ CCryptographicKey const&) = delete;
        
        // Construction
 
       CCryptographicKey() noexcept;
-      CCryptographicKey( __in HCRYPTKEY source_handle, __in bool automatically_destroy = true )  noexcept;
+      CCryptographicKey( _In_ HCRYPTKEY source_handle, _In_ bool automatically_destroy = true )  noexcept;
       virtual ~CCryptographicKey();
 
       // Properties
@@ -358,19 +358,25 @@ class CCryptographicKey : public CCryptography
 
       enum class KeyFormat : uint32_t
       {
-         Simple     = SIMPLEBLOB,
-         PublicKey  = PUBLICKEYBLOB,
-         PrivateKey = PRIVATEKEYBLOB
+         Unused        = 0, // For unencrypted key blobs like public keys
+         Simple        = SIMPLEBLOB,
+         PublicKey     = PUBLICKEYBLOB,
+         PrivateKey    = PRIVATEKEYBLOB,
+         PlainText     = PLAINTEXTKEYBLOB,
+         Opaque        = OPAQUEKEYBLOB,
+         PublicKeyEx   = PUBLICKEYBLOBEX,
+         SymmetricWrap = SYMMETRICWRAPKEYBLOB,
+         KeyState      = 0xC, // KEYSTATEBLOB
       };
 
       // Methods
 
-      virtual _Check_return_ bool Decrypt(__in std::vector<uint8_t> const& data_to_decrypt,
-                                  __out std::vector<uint8_t>&             decrypted_data,
-                                  __in bool const               this_is_the_last_chunk_of_data_to_be_decrypted = true,
+      virtual _Check_return_ bool Decrypt(_In_ std::vector<uint8_t> const& data_to_decrypt,
+                                  _Out_ std::vector<uint8_t>&             decrypted_data,
+                                  _In_ bool const               this_is_the_last_chunk_of_data_to_be_decrypted = true,
                                   __in_opt CCryptographicHash * hash_p = nullptr,
-                                  __in DWORD const              flags  = 0,
-                                  __in bool const              use_wfc_trim = true ) noexcept; // CryptDecrypt
+                                  _In_ DWORD const              flags  = 0,
+                                  _In_ bool const              use_wfc_trim = true ) noexcept; // CryptDecrypt
 
       virtual _Check_return_ bool Destroy( void ) noexcept; // CryptDestroyKey
 
@@ -385,34 +391,34 @@ class CCryptographicKey : public CCryptography
           std::vector<uint8_t>& key_in_exported_form,
           KeyFormat export_format = KeyFormat::Simple,
                            DWORD       flags         = 0 ) noexcept;
-      virtual _Check_return_ bool FromHandle( __in HCRYPTKEY source_handle, __in bool automatically_destroy = TRUE ) noexcept;
+      virtual _Check_return_ bool FromHandle( _In_ HCRYPTKEY source_handle, _In_ bool automatically_destroy = TRUE ) noexcept;
       virtual _Check_return_ HCRYPTKEY GetHandle( void ) const noexcept;
-      virtual _Check_return_ bool GetParameter( __in Parameter const parameter_to_get, __inout_bcount( buffer_length ) uint8_t * buffer, __inout DWORD& buffer_length, __in DWORD const flags = 0 ) noexcept; // CryptGetKeyParam
+      virtual _Check_return_ bool GetParameter( _In_ Parameter const parameter_to_get, __inout_bcount( buffer_length ) uint8_t * buffer, __inout DWORD& buffer_length, _In_ DWORD const flags = 0 ) noexcept; // CryptGetKeyParam
 
       // Helpers for GetParameter
 
-      virtual _Check_return_ bool GetAlgorithmIdentifier( __out DWORD& identifier ) noexcept;
-      virtual _Check_return_ bool GetBlockLength( __out DWORD& block_length ) noexcept;
-      virtual _Check_return_ bool GetCipherMode( __out DWORD& cipher_mode ) noexcept;
-      virtual _Check_return_ bool GetInitializationVector( __out std::vector<uint8_t>& initialization_vector ) noexcept;
-      virtual _Check_return_ bool GetNumberOfBitsProcessedPerCycle( __out DWORD& number_of_bits ) noexcept;
-      virtual _Check_return_ bool GetPaddingMode( __out DWORD& padding_mode ) noexcept;
-      virtual _Check_return_ bool GetPermissions( __out DWORD& permissions ) noexcept;
-      virtual _Check_return_ bool GetSalt( __out std::vector<uint8_t>& salt ) noexcept;
+      virtual _Check_return_ bool GetAlgorithmIdentifier( _Out_ DWORD& identifier ) noexcept;
+      virtual _Check_return_ bool GetBlockLength( _Out_ DWORD& block_length ) noexcept;
+      virtual _Check_return_ bool GetCipherMode( _Out_ DWORD& cipher_mode ) noexcept;
+      virtual _Check_return_ bool GetInitializationVector( _Out_ std::vector<uint8_t>& initialization_vector ) noexcept;
+      virtual _Check_return_ bool GetNumberOfBitsProcessedPerCycle( _Out_ DWORD& number_of_bits ) noexcept;
+      virtual _Check_return_ bool GetPaddingMode( _Out_ DWORD& padding_mode ) noexcept;
+      virtual _Check_return_ bool GetPermissions( _Out_ DWORD& permissions ) noexcept;
+      virtual _Check_return_ bool GetSalt( _Out_ std::vector<uint8_t>& salt ) noexcept;
 
       // All of the Setxxx methods parameters cannot be properly typed because
       // the CryptSetKeyParam() API is mis-typed. The buffer parameter should
       // be const but it is not. Looks like they didn't think it through enough.
 
-      virtual _Check_return_ bool SetParameter( __in Parameter const parameter_to_set, __in uint8_t const * buffer, __in DWORD const flags = 0 ) noexcept; // CryptSetKeyParam
+      virtual _Check_return_ bool SetParameter( _In_ Parameter const parameter_to_set, _In_ uint8_t const * buffer, _In_ DWORD const flags = 0 ) noexcept; // CryptSetKeyParam
 
       // Helpers for SetParameter
-      virtual _Check_return_ bool SetPermissions( __in DWORD const permissions ) noexcept;
-      virtual _Check_return_ bool SetSalt( __in uint8_t const * buffer ) noexcept;
-      virtual _Check_return_ bool SetInitializationVector( __in BYTE const * buffer ) noexcept;
-      virtual _Check_return_ bool SetPaddingMode( __in DWORD const mode ) noexcept;
-      virtual _Check_return_ bool SetCipherMode( __in DWORD const mode ) noexcept;
-      virtual _Check_return_ bool SetNumberOfBitsProcessedPerCycle( __in DWORD const number_of_bits ) noexcept;
+      virtual _Check_return_ bool SetPermissions( _In_ DWORD const permissions ) noexcept;
+      virtual _Check_return_ bool SetSalt( _In_ uint8_t const * buffer ) noexcept;
+      virtual _Check_return_ bool SetInitializationVector( _In_ BYTE const * buffer ) noexcept;
+      virtual _Check_return_ bool SetPaddingMode( _In_ DWORD const mode ) noexcept;
+      virtual _Check_return_ bool SetCipherMode( _In_ DWORD const mode ) noexcept;
+      virtual _Check_return_ bool SetNumberOfBitsProcessedPerCycle( _In_ DWORD const number_of_bits ) noexcept;
 };
 
 // 2002-09-30
@@ -436,8 +442,8 @@ class CCryptographicProvider : public CCryptography
 
    public:
 
-       CCryptographicProvider(__in CCryptographicProvider const&) = delete;
-       CCryptographicProvider& operator=(__in CCryptographicProvider const&) = delete;
+       CCryptographicProvider(_In_ CCryptographicProvider const&) = delete;
+       CCryptographicProvider& operator=(_In_ CCryptographicProvider const&) = delete;
  
        // Construction
 
@@ -547,8 +553,8 @@ class CCryptographicProvider : public CCryptography
       
       virtual _Check_return_ bool  Open( __in_z_opt LPCTSTR container_name = nullptr,
           __in_z_opt LPCTSTR provider_name  = nullptr,
-                          __in DWORD   provider_type  = RsaFull,
-                          __in DWORD   flags          = 0 ) noexcept; // CryptAcquireContext
+                          _In_ DWORD   provider_type  = RsaFull,
+                          _In_ DWORD   flags          = 0 ) noexcept; // CryptAcquireContext
       virtual void  Close( void ) noexcept; // CryptReleaseContext
       virtual bool  CreateHash( CCryptographicAlgorithm const& which_algorithm_you_want_the_key_for,
                                 CCryptographicKey const&       key_for_algorithms_that_need_it,
