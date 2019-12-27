@@ -417,7 +417,7 @@ class CCryptographicKey : public CCryptography
       virtual _Check_return_ bool SetSalt( _In_ uint8_t const * buffer ) noexcept;
       virtual _Check_return_ bool SetInitializationVector( _In_ BYTE const * buffer ) noexcept;
       virtual _Check_return_ bool SetPaddingMode( _In_ DWORD const mode ) noexcept;
-      virtual _Check_return_ bool SetCipherMode( _In_ DWORD const mode ) noexcept;
+      virtual _Check_return_ bool SetCipherMode( _In_ CipherMode const mode ) noexcept;
       virtual _Check_return_ bool SetNumberOfBitsProcessedPerCycle( _In_ DWORD const number_of_bits ) noexcept;
 };
 

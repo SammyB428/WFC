@@ -107,7 +107,7 @@ CCryptographicKey::CCryptographicKey() noexcept
    m_AutomaticallyDestroy = false;
 }
 
-CCryptographicKey::CCryptographicKey( __in HCRYPTKEY source_handle, __in bool automatically_destroy ) noexcept
+CCryptographicKey::CCryptographicKey( _In_ HCRYPTKEY source_handle, _In_ bool automatically_destroy ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -131,10 +131,10 @@ CCryptographicKey::~CCryptographicKey() noexcept
 
 _Check_return_ bool CCryptographicKey::Decrypt(__in std::vector<uint8_t> const&          data_to_decrypt,
     __out std::vector<uint8_t>&          decrypted_data,
-    __in bool const                 this_is_the_last_chunk_of_data_to_be_decrypted,
+    _In_ bool const                 this_is_the_last_chunk_of_data_to_be_decrypted,
     __in_opt CCryptographicHash * hash_p,
-    __in DWORD const               flags,
-    __in bool const                use_wfc_trim) noexcept
+    _In_ DWORD const               flags,
+    _In_ bool const                use_wfc_trim) noexcept
 {
     WFC_VALIDATE_POINTER(this);
     WFC_VALIDATE_POINTER_NULL_OK(hash_p);
@@ -694,7 +694,7 @@ _Check_return_ bool CCryptographicKey::Export( CCryptographicKey& key_for_whoeve
    return( true );
 }
 
-_Check_return_ bool CCryptographicKey::FromHandle( __in HCRYPTKEY source_handle, __in bool automatically_destroy ) noexcept
+_Check_return_ bool CCryptographicKey::FromHandle( _In_ HCRYPTKEY source_handle, _In_ bool automatically_destroy ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -720,7 +720,7 @@ _Check_return_ HCRYPTKEY CCryptographicKey::GetHandle( void ) const noexcept
    return( m_Key );
 }
 
-_Check_return_ bool CCryptographicKey::GetParameter( __in Parameter const parameter_to_get, __inout_bcount( buffer_length ) uint8_t * buffer, __inout DWORD& buffer_length, __in DWORD const flags ) noexcept
+_Check_return_ bool CCryptographicKey::GetParameter( _In_ Parameter const parameter_to_get, __inout_bcount( buffer_length ) uint8_t * buffer, __inout DWORD& buffer_length, _In_ DWORD const flags ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( buffer );
@@ -798,7 +798,7 @@ _Check_return_ bool CCryptographicKey::GetAlgorithmIdentifier( __out DWORD& iden
    return( GetParameter( Parameter::AlgorithmIdentifier, (BYTE *) &identifier, buffer_length ) );
 }
 
-_Check_return_ bool CCryptographicKey::GetBlockLength( __out DWORD& block_length ) noexcept
+_Check_return_ bool CCryptographicKey::GetBlockLength(_Out_ DWORD& block_length ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -807,7 +807,7 @@ _Check_return_ bool CCryptographicKey::GetBlockLength( __out DWORD& block_length
    return( GetParameter( Parameter::BlockLengthInBytes, (BYTE *) &block_length, buffer_length ) );
 }
 
-_Check_return_ bool CCryptographicKey::GetCipherMode( __out DWORD& cipher_mode ) noexcept
+_Check_return_ bool CCryptographicKey::GetCipherMode(_Out_ DWORD& cipher_mode ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -816,7 +816,7 @@ _Check_return_ bool CCryptographicKey::GetCipherMode( __out DWORD& cipher_mode )
    return( GetParameter( Parameter::CipherMode, (BYTE *) &cipher_mode, buffer_length ) );
 }
 
-_Check_return_ bool CCryptographicKey::GetInitializationVector( __out std::vector<uint8_t>& initialization_vector ) noexcept
+_Check_return_ bool CCryptographicKey::GetInitializationVector(_Out_ std::vector<uint8_t>& initialization_vector ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -834,7 +834,7 @@ _Check_return_ bool CCryptographicKey::GetInitializationVector( __out std::vecto
    return( return_value );
 }
 
-_Check_return_ bool CCryptographicKey::GetNumberOfBitsProcessedPerCycle( __out DWORD& number_of_bits ) noexcept
+_Check_return_ bool CCryptographicKey::GetNumberOfBitsProcessedPerCycle(_Out_ DWORD& number_of_bits ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -843,7 +843,7 @@ _Check_return_ bool CCryptographicKey::GetNumberOfBitsProcessedPerCycle( __out D
    return( GetParameter( Parameter::NumberOfBitsProcessedPerCycle, (BYTE *) &number_of_bits, buffer_length ) );
 }
 
-_Check_return_ bool CCryptographicKey::GetPaddingMode( __out DWORD& padding_mode ) noexcept
+_Check_return_ bool CCryptographicKey::GetPaddingMode(_Out_ DWORD& padding_mode ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -852,7 +852,7 @@ _Check_return_ bool CCryptographicKey::GetPaddingMode( __out DWORD& padding_mode
    return( GetParameter( Parameter::PaddingMode, (BYTE *) &padding_mode, buffer_length ) );
 }
 
-_Check_return_ bool CCryptographicKey::GetPermissions( __out DWORD& permissions ) noexcept
+_Check_return_ bool CCryptographicKey::GetPermissions(_Out_ DWORD& permissions ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -861,7 +861,7 @@ _Check_return_ bool CCryptographicKey::GetPermissions( __out DWORD& permissions 
    return( GetParameter( Parameter::Permissions, (BYTE *) &permissions, buffer_length ) );
 }
 
-_Check_return_ bool CCryptographicKey::GetSalt( __out std::vector<uint8_t>& salt ) noexcept
+_Check_return_ bool CCryptographicKey::GetSalt( _Out_ std::vector<uint8_t>& salt ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -879,14 +879,14 @@ _Check_return_ bool CCryptographicKey::GetSalt( __out std::vector<uint8_t>& salt
    return( return_value );
 }
 
-_Check_return_ bool CCryptographicKey::SetCipherMode( __in DWORD const mode ) noexcept
+_Check_return_ bool CCryptographicKey::SetCipherMode( _In_ CipherMode const mode ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
    return( SetParameter( Parameter::CipherMode, (BYTE *) &mode ) );
 }
 
-_Check_return_ bool CCryptographicKey::SetInitializationVector( __in BYTE const * buffer ) noexcept
+_Check_return_ bool CCryptographicKey::SetInitializationVector( _In_ BYTE const * buffer ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER_NULL_OK( this );
@@ -894,21 +894,21 @@ _Check_return_ bool CCryptographicKey::SetInitializationVector( __in BYTE const 
    return( SetParameter( Parameter::InitializationVector, buffer ) );
 }
 
-_Check_return_ bool CCryptographicKey::SetNumberOfBitsProcessedPerCycle( __in DWORD const number_of_bits ) noexcept
+_Check_return_ bool CCryptographicKey::SetNumberOfBitsProcessedPerCycle( _In_ DWORD const number_of_bits ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
    return( SetParameter( Parameter::NumberOfBitsProcessedPerCycle, (BYTE *) &number_of_bits ) );
 }
 
-_Check_return_ bool CCryptographicKey::SetPaddingMode( __in DWORD const mode ) noexcept
+_Check_return_ bool CCryptographicKey::SetPaddingMode( _In_ DWORD const mode ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
    return( SetParameter( Parameter::PaddingMode, (BYTE const *) &mode ) );
 }
 
-_Check_return_ bool CCryptographicKey::SetParameter( __in Parameter const parameter_to_set, __in uint8_t const * buffer, __in DWORD const flags ) noexcept
+_Check_return_ bool CCryptographicKey::SetParameter( _In_ Parameter const parameter_to_set, _In_ uint8_t const * buffer, _In_ DWORD const flags ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER_NULL_OK( buffer );
@@ -986,14 +986,14 @@ _Check_return_ bool CCryptographicKey::SetParameter( __in Parameter const parame
    return( return_value == FALSE ? false : true );
 }
 
-_Check_return_ bool CCryptographicKey::SetPermissions( __in DWORD permissions ) noexcept
+_Check_return_ bool CCryptographicKey::SetPermissions( _In_ DWORD permissions ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
    return( SetParameter( Parameter::Permissions, static_cast<uint8_t *>(IntToPtr(permissions) )));
 }
 
-_Check_return_ bool CCryptographicKey::SetSalt( __in uint8_t const * buffer ) noexcept
+_Check_return_ bool CCryptographicKey::SetSalt( _In_ uint8_t const * buffer ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
