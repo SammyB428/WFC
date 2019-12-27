@@ -1937,6 +1937,43 @@ inline void split(_In_z_ char const* source, _In_ char const character, _Inout_ 
     split(source, strlen(source), character, string_array);
 }
 
+inline void split(_In_ std::string_view source, char const separation_character, _Inout_ std::vector<std::string_view>& string_array) noexcept
+{
+    string_array.clear();
+
+    if (source.empty() == true || separation_character == 0x00)
+    {
+        return;
+    }
+
+    char const* here = nullptr;
+    std::size_t length = 0;
+
+    for (auto const source_index : Range(source.length()))
+    {
+        if (source[source_index] == separation_character)
+        {
+            string_array.push_back(std::string_view(here, length));
+            here = nullptr;
+            length = 0;
+        }
+        else
+        {
+            if (here == nullptr)
+            {
+                here = &source[source_index];
+            }
+
+            length++;
+        }
+    }
+
+    if (length > 0 && here != nullptr)
+    {
+        string_array.push_back(std::string_view(here, length));
+    }
+}
+
 inline void split(_In_z_ wchar_t const* source, _In_ std::size_t const length, _In_ wchar_t const character, _Inout_ std::vector<std::wstring>& string_array) noexcept
 {
     string_array.clear();
@@ -1997,7 +2034,7 @@ inline void split_and_trim(_In_ std::wstring_view source, _In_ wchar_t const cha
 
     std::wstring string_to_add;
 
-    for( auto const source_character : source)
+    for (auto const source_character : source)
     {
         if (source_character == character)
         {
