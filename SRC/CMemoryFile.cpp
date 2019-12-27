@@ -670,7 +670,7 @@ _Check_return_ bool CSharedMemory::Create(_In_ std::wstring_view name, _In_ std:
     return( return_value );
 }
 
-_Check_return_ bool CSharedMemory::Create(_In_ std::wstring_view name, _In_ std::size_t const number_of_bytes, _In_opt_ SECURITY_ATTRIBUTES * security_attributes ) noexcept
+_Check_return_ bool CSharedMemory::Create(_In_ std::wstring_view name, _In_ std::size_t const number_of_bytes, _In_ SECURITY_ATTRIBUTES * security_attributes ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
 

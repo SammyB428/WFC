@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 1995-2017, Samuel R. Blackburn
+** Copyright, 1995-2019, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -181,7 +181,7 @@ public:
     }
 
     _Check_return_ bool Create( _In_ std::wstring_view name, _In_ std::size_t const number_of_bytes ) noexcept;
-    _Check_return_ bool Create(_In_ std::wstring_view name, _In_ std::size_t const number_of_bytes, __in_opt SECURITY_ATTRIBUTES * security_attributes = nullptr ) noexcept;
+    _Check_return_ bool Create(_In_ std::wstring_view name, _In_ std::size_t const number_of_bytes, _In_ SECURITY_ATTRIBUTES * security_attributes ) noexcept;
     _Check_return_ bool Open(_In_ std::wstring_view name, _In_ std::size_t const number_of_bytes, _In_ bool const read_only ) noexcept;
 
     void Close( void ) noexcept;
