@@ -578,7 +578,7 @@ void CService::ParseCommandLineParameters( _In_ DWORD const number_of_command_li
    // default implementation
    // parse command line parameters passed via SCM through ServiceMain
 
-   for( auto const argument_number : Range(number_of_command_line_arguments, 1) )
+   for( auto const argument_number : Range(number_of_command_line_arguments, StartingRangePosition(1)) )
    {
       if ( command_line_arguments[ argument_number ][ 0 ] == '-' or
            command_line_arguments[ argument_number ][ 0 ] == '/' )

@@ -130,7 +130,7 @@ _Check_return_ bool PASCAL Win32FoundationClasses::wfc_get_command_line( _Out_ s
 
         auto argv = CommandLineToArgvW( GetCommandLineW(), &argc );
 
-        for( auto const argv_index : Range(argc, 1) )
+        for( auto const argv_index : Range(argc, StartingRangePosition(1)) )
         {
             full_command_line.append( argv[ argv_index ] );
             full_command_line.push_back( ' ' );

@@ -701,7 +701,7 @@ void CReedSolomonErrorCorrectionCode::m_GenerateGaloisField( void ) noexcept
 
    mask >>= 1;
 
-   for ( auto const loop_index : Range( m_BlockSize, m_NumberOfBitsPerSymbol + 1) )
+   for ( auto const loop_index : Range( m_BlockSize, StartingRangePosition(m_NumberOfBitsPerSymbol + 1)) )
    {
       if ( m_Alpha_to[ loop_index - 1 ] >= mask )
       {

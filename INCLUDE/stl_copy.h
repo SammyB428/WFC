@@ -291,7 +291,7 @@ inline void copy_beginning_at(_Inout_ std::vector<std::wstring>& destination, _I
 {
     destination.clear();
 
-    for ( auto const index : Range(source.size(), starting_index) )
+    for ( auto const index : Range(source.size(), StartingRangePosition(starting_index)) )
     {
         destination.push_back(source[index]);
     }

@@ -542,7 +542,7 @@ public:
 
                         uint32_t other_character = 0;
 
-                        for (auto const loop_index : Range(string_to_find.length(), 1))
+                        for (auto const loop_index : Range(string_to_find.length(), StartingRangePosition(1)))
                         {
                             // We peek at string_length - 1 because the GetNextCharacter() call above
                             // advances the character index
@@ -702,7 +702,7 @@ public:
 
                         uint32_t other_character = 0;
 
-                        for ( auto const loop_index : Range(string_to_find.length(), 1) )
+                        for ( auto const loop_index : Range(string_to_find.length(), StartingRangePosition(1)) )
                         {
                             if ( PeekAtCharacter( found_at, character_to_test, loop_index ) == false)
                             {

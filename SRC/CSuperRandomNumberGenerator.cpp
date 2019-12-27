@@ -175,7 +175,7 @@ _Check_return_ double CSuperRandomNumberGenerator::GetValue( void ) noexcept
    {
       m_Index24 = 0;
 
-      for( auto const i : Range(NUMBER_OF_VALUES_TO_SKIP + 1, 1) )
+      for( auto const i : Range(NUMBER_OF_VALUES_TO_SKIP + 1, StartingRangePosition(1)) )
       {
          temporary_value = m_Seeds[ m_Index_J24 ] - m_Seeds[ m_Index_I24 ] - m_Carry;
 
@@ -220,7 +220,7 @@ void CSuperRandomNumberGenerator::SetSeed( __in DWORD jseed ) noexcept
 
    m_TwoM24 = (double) 1.0;
 
-   for( auto const i : Range( 25, 1 ) )
+   for( auto const i : Range( 25, StartingRangePosition(1) ) )
    {
       m_TwoM24 *= (double) 0.5;
       int const k = jseed / 53668;
@@ -231,7 +231,7 @@ void CSuperRandomNumberGenerator::SetSeed( __in DWORD jseed ) noexcept
 
    m_TwoM12 = m_TwoM24 * (double) 4096.0;
 
-   for( auto const i : Range( 25, 1 ) )
+   for( auto const i : Range( 25, StartingRangePosition(1) ) )
    {
       m_Seeds[ i ] = static_cast< double >( m_IntegerSeeds[ i ] * m_TwoM24 );
       m_NextValue[ i ] = static_cast<int>(i - 1);

@@ -272,6 +272,19 @@ public:
     }
 };
 
+class StartingRangePosition
+{
+private:
+
+    std::size_t const m_Index{ 0 };
+
+public:
+
+    StartingRangePosition() = delete;
+    inline constexpr explicit StartingRangePosition(_In_ std::size_t const position) noexcept : m_Index(position) {}
+    inline constexpr std::size_t Get(void) const noexcept { return m_Index; }
+};
+
 class Range
 {
 private:
@@ -281,7 +294,7 @@ private:
 
 public:
     // This creates a series of std::size_t values ranging from zero to number_of_values
-    inline constexpr Range(std::size_t const number_of_values, std::size_t const starting_position = 0) noexcept : m_NumberOfValues(number_of_values), m_StartingPosition(starting_position)
+    inline constexpr explicit Range(std::size_t const number_of_values, StartingRangePosition const position = StartingRangePosition(0)) noexcept : m_NumberOfValues(number_of_values), m_StartingPosition(position.Get())
     {
     }
 

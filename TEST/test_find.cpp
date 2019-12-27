@@ -234,7 +234,7 @@ __checkReturn bool test_find(__out std::string& class_name, __out int& test_numb
 
     memset(test_buffer, 'A', sizeof(test_buffer));
 
-    for( auto const loop_index : Range( 34, 1 ))
+    for( auto const loop_index : Range( 34, StartingRangePosition(1) ))
     {
         test_buffer[loop_index - 1] = 'B';
 

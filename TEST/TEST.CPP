@@ -116,7 +116,7 @@ _Check_return_ int _tmain( _In_ int const number_of_command_line_arguments, _In_
    saw_one = false;
    saw_two = false;
 
-   for (auto const index : Range(3, 1))
+   for (auto const index : Range(3, StartingRangePosition(1)))
    {
        if (index == 0)
        {

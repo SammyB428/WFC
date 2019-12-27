@@ -121,7 +121,7 @@ _Check_return_ bool PASCAL Win32FoundationClasses::wfc_create_path( __in_z LPCTS
 
             std::wstring directory_path( path_name );
 
-            replace( directory_path, '/', '\\' );
+            (void) replace( directory_path, '/', '\\' );
 
             std::wstring this_directory;
 
@@ -227,7 +227,7 @@ _Check_return_ bool PASCAL Win32FoundationClasses::wfc_create_wide_path( _In_z_ 
 
             std::wstring directory_path( path_name );
 
-            replace( directory_path, '/', '\\');
+            (void) replace( directory_path, '/', '\\');
 
             std::wstring this_directory;
 

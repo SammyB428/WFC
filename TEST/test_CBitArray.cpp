@@ -120,7 +120,7 @@ __checkReturn bool test_CBitArray( __out std::string& class_name, __out int& tes
         return( failure() );
     }
 
-    for ( auto const bit_index : Range( 36, 2 ) )
+    for ( auto const bit_index : Range( 36, StartingRangePosition(2) ) )
     {
         if ( bits.GetAt( bit_index ) != 1 )
         {
@@ -1298,7 +1298,7 @@ __checkReturn bool test_CBitArray( __out std::string& class_name, __out int& tes
         return( failure() );
     }
 
-    for ( auto const array_index : Range(29, 1) )
+    for ( auto const array_index : Range(29, StartingRangePosition(1)) )
     {
         if ( bits.GetAt(array_index) != 1 )
         {
@@ -1340,7 +1340,7 @@ __checkReturn bool test_CBitArray( __out std::string& class_name, __out int& tes
         return( failure() );
     }
 
-    for ( auto const array_index : Range(64, 1) )
+    for ( auto const array_index : Range(64, StartingRangePosition(1) ) )
     {
         if ( bits.GetAt(array_index) != 1 )
         {

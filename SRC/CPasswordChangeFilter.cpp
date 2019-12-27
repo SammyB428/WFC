@@ -79,7 +79,7 @@ _Check_return_ bool CPasswordChangeFilter::AddFilter( _In_ std::wstring const& d
 
    std::vector<std::wstring> current_filters;
 
-   GetCurrentFilters( current_filters );
+   (void)GetCurrentFilters( current_filters );
 
    for ( auto const& entry : current_filters )
    {
@@ -163,7 +163,7 @@ _Check_return_ bool CPasswordChangeFilter::RemoveFilter( __in std::wstring const
 
    std::vector<std::wstring> current_filters;
 
-   GetCurrentFilters( current_filters );
+   (void)GetCurrentFilters( current_filters );
 
    std::size_t index = 0;
    std::size_t number_of_filters = current_filters.size();

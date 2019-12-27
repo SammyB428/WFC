@@ -105,7 +105,7 @@ _Check_return_ bool test_CBase64Coding( _Out_ std::string& class_name, _Out_ int
 
     test_number_that_failed = 3;
 
-    for ( auto const test_index : Range(number_of_tests, 3) )
+    for ( auto const test_index : Range(number_of_tests, StartingRangePosition(3)) )
     {
         // Prepare to test
 
@@ -144,7 +144,7 @@ _Check_return_ bool test_CBase64Coding( _Out_ std::string& class_name, _Out_ int
         test_number_that_failed++;
     }
 
-    for ( auto const test_index : Range(number_of_tests, 2) )
+    for ( auto const test_index : Range(number_of_tests, StartingRangePosition(2)) )
     {
         // Prepare to test
 

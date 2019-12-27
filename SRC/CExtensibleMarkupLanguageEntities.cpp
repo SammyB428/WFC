@@ -101,7 +101,7 @@ _Check_return_ bool CExtensibleMarkupLanguageEntities::Add( _In_ std::wstring_vi
       return( false );
    }
 
-   for ( auto const loop_index : Range(entity.length() - 1, 2) )
+   for ( auto const loop_index : Range(entity.length() - 1, StartingRangePosition(2)) )
    {
       if ( Win32FoundationClasses::is_xml_NameChar( entity[ loop_index ] ) == false )
       {
@@ -369,7 +369,7 @@ _Check_return_ bool CExtensibleMarkupLanguageEntities::IsEntity( _In_ std::wstri
       return( false );
    }
 
-   for ( auto const loop_index : Range(entity.length() - 1, 2) )
+   for ( auto const loop_index : Range(entity.length() - 1, StartingRangePosition(2)) )
    {
       if ( Win32FoundationClasses::is_xml_NameChar( entity[ loop_index ] ) == false )
       {
