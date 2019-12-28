@@ -4720,7 +4720,7 @@ _Check_return_ bool CExtensibleMarkupLanguageElement::Parse( _In_ CParsePoint co
     if ( m_Ending.GetIndex() >= parser.GetSize() )
     {
         //WFCTRACE( TEXT( "Ran out of room before we started" ) );
-        m_ReportParsingError(WSTRING_VIEW(L"There are no more bytes to parse. We ran out of bytes before we rand out of XML."));
+        m_ReportParsingError(WSTRING_VIEW(L"There are no more bytes to parse. We ran out of bytes before we ran out of XML."));
         return( false );
     }
 

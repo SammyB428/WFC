@@ -461,7 +461,7 @@ _Check_return_ bool CExtensibleMarkupLanguageEntities::Resolve( _In_ std::wstrin
 
          for ( auto const loop_index : Range(entity.length() - 4 ) )
          {
-            if ( iswdigit( entity[ loop_index + 3 ] ) == 0 ) // + 3 skips &#x
+            if (iswxdigit( entity[ loop_index + 3 ] ) == 0 ) // + 3 skips &#x
             {
                //WFCTRACEVAL( TEXT( "Ill-formed hexadecimal entity. Character is not a hexadecimal digit at index " ), (uint32_t) ( loop_index + 3 ) );
                text.clear();

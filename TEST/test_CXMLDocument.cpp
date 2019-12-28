@@ -556,7 +556,13 @@ _Check_return_ bool test_CXMLDocument( _Out_ std::string& class_name, _Out_ int&
 
     parser.SetTextToASCII();
 
-    xml.Parse(parser);
+    if (xml.Parse(parser) == false)
+    {
+        test_number_that_failed = 36;
+        ASSERT(FALSE);
+        return(failure());
+    }
+
     xml.Trim();
 
     root = xml.GetRootElement();
@@ -567,11 +573,73 @@ _Check_return_ bool test_CXMLDocument( _Out_ std::string& class_name, _Out_ int&
 
     if (current_text.compare(WSTRING_VIEW(L"HelloWorld")) != I_AM_EQUAL_TO_THAT)
     {
-        test_number_that_failed = 36;
+        test_number_that_failed = 37;
         ASSERT(FALSE);
         return(failure());
     }
 
-    test_number_that_failed = 36;
+    test_text.assign(STRING_VIEW("<?xml version=\"1.0\" standalone=\"yes\"?>\n"));
+    test_text.append(STRING_VIEW("<entity v=\"&#x645;&#x62D;&#x645;&#x62F;\"/>"));
+
+    (void)parser.Initialize(reinterpret_cast<uint8_t const*>(test_text.data()), test_text.length());
+
+    parser.SetTextToASCII();
+
+    xml.Empty();
+
+    if (xml.Parse(parser) == false)
+    {
+        std::wstring error_message;
+        xml.GetParsingErrorInformation(error_message);
+
+        test_number_that_failed = 38;
+        _ASSERT_EXPR( FALSE, error_message.c_str());
+        return(failure());
+    }
+
+    root = xml.GetRootElement();
+
+    mhmd_element = root->GetChild(WSTRING_VIEW(L"entity"));
+
+    std::wstring value;
+
+    (void)mhmd_element->GetAttributeByName(WSTRING_VIEW(L"v"), value);
+
+    if (value.length() != 4)
+    {
+        test_number_that_failed = 39;
+        ASSERT(FALSE);
+        return(failure());
+    }
+
+    if (value.at(0) != 0x645)
+    {
+        test_number_that_failed = 40;
+        ASSERT(FALSE);
+        return(failure());
+    }
+
+    if (value.at(1) != 0x62D)
+    {
+        test_number_that_failed = 41;
+        ASSERT(FALSE);
+        return(failure());
+    }
+
+    if (value.at(2) != 0x645)
+    {
+        test_number_that_failed = 42;
+        ASSERT(FALSE);
+        return(failure());
+    }
+
+    if (value.at(3) != 0x62F)
+    {
+        test_number_that_failed = 43;
+        ASSERT(FALSE);
+        return(failure());
+    }
+
+    test_number_that_failed = 43;
     return( true );
 }

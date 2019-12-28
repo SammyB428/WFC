@@ -66,7 +66,7 @@ int _tmain( int number_of_command_line_arguments, LPCTSTR command_line_arguments
 
    std::error_code filesystem_error_code;
 
-   for( auto const index : Range(number_of_command_line_arguments, 1) )
+   for( auto const index : Range(number_of_command_line_arguments, StartingRangePosition(1)) )
    {
        if (std::filesystem::exists(command_line_arguments[index], filesystem_error_code) == true)
        {
