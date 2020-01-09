@@ -40,6 +40,8 @@
 ** $Reuse Tracing Code: 1 $
 */
 
+/* SPDX-License-Identifier: BSD-2-Clause */
+
 #include <wfc.h>
 #pragma hdrstop
 
@@ -342,8 +344,11 @@ _Check_return_ DWORD CPing::Ping( __in std::wstring const& name_or_address, __ou
              //WFCTRACEERROR( m_LastError );
           }
 
-          GlobalFreePtr(echo_reply_p);
-          echo_reply_p = nullptr;
+          if (echo_reply_p != nullptr)
+          {
+             GlobalFreePtr(echo_reply_p);
+             echo_reply_p = nullptr;
+          }
        }
 
        m_Close(icmp_handle);

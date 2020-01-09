@@ -40,6 +40,8 @@
 ** $Reuse Tracing Code: 1 $
 */
 
+/* SPDX-License-Identifier: BSD-2-Clause */
+
 // Algorithm provided by Guy Gascoigne - Piggford (ggp@informix.com)
 // Guy got it from:
 /************************************************************************

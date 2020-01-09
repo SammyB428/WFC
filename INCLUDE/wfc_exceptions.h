@@ -31,6 +31,8 @@
 ** OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
+/* SPDX-License-Identifier: BSD-2-Clause */
+
 // 2000-11-21
 // Thanks go to Daniel Lanovaz [daniel@precedia.com] for sending
 // me this header file. It allows excpetion handling on platforms

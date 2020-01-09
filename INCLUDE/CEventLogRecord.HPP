@@ -39,6 +39,8 @@
 ** $Modtime: 6/26/01 11:01a $
 */
 
+/* SPDX-License-Identifier: BSD-2-Clause */
+
 #if ! defined ( EVENT_LOG_RECORD_CLASS_HEADER )
 
 #define EVENT_LOG_RECORD_CLASS_HEADER

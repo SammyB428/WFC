@@ -1,3 +1,5 @@
+/* SPDX-License-Identifier: BSD-2-Clause */
+
 #if ! defined( STL_COMPARE_HEADER_FILE )
 
 #define STL_COMPARE_HEADER_FILE

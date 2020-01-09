@@ -1,3 +1,5 @@
+/* SPDX-License-Identifier: BSD-2-Clause */
+
 #if ! defined( STL_SPLIT_JOIN_HEADER_FILE )
 
 #define STL_SPLIT_JOIN_HEADER_FILE
@@ -117,7 +119,7 @@ inline void split(_In_ std::string_view source, char const separation_character,
 {
     string_array.clear();
 
-    if (source.empty() == true || separation_character == 0x00)
+    if (source.empty() == true or separation_character == 0x00)
     {
         return;
     }
@@ -144,7 +146,7 @@ inline void split(_In_ std::string_view source, char const separation_character,
         }
     }
 
-    if (length > 0 && here != nullptr)
+    if (length > 0 and here != nullptr)
     {
         string_array.push_back(std::string_view(here, length));
     }

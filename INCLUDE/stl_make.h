@@ -1,3 +1,5 @@
+/* SPDX-License-Identifier: BSD-2-Clause */
+
 #if ! defined( STL_MAKE_HEADER_FILE )
 
 #define STL_MAKE_HEADER_FILE

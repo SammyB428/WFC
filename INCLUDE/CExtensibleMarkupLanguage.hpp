@@ -39,6 +39,8 @@
 ** $Modtime: 8/30/01 7:01p $
 */
 
+/* SPDX-License-Identifier: BSD-2-Clause */
+
 #if ! defined( XML_CLASSES_HEADER )
 
 #define XML_CLASSES_HEADER

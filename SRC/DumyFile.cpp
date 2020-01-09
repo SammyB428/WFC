@@ -38,6 +38,8 @@
 ** $Reuse Tracing Code: 1 $
 */
 
+/* SPDX-License-Identifier: BSD-2-Clause */
+
 #include <wfc.h>
 #pragma hdrstop
 

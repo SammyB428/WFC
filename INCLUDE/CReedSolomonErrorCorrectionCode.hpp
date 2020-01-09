@@ -39,6 +39,8 @@
 ** $Modtime: 6/26/01 11:04a $
 */
 
+/* SPDX-License-Identifier: BSD-2-Clause */
+
 #if ! defined( REED_SOLOMON_ERROR_CORRECTION_CODE_CLASS_HEADER )
 
 #define REED_SOLOMON_ERROR_CORRECTION_CODE_CLASS_HEADER

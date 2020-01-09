@@ -43,6 +43,8 @@
 ** $Modtime: 6/26/01 11:06a $
 */
 
+/* SPDX-License-Identifier: BSD-2-Clause */
+
 #if ! defined( SAMS_MICROSOFT_TAPE_FORMAT_HEADER )
 
 #define SAMS_MICROSOFT_TAPE_FORMAT_HEADER

@@ -39,6 +39,8 @@
 ** $Modtime: 6/26/01 11:24a $
 */
 
+/* SPDX-License-Identifier: BSD-2-Clause */
+
 #if ! defined( WFC_THREAD_INFORMATION_BLOCK_HEADER_FILE )
 
 #define WFC_THREAD_INFORMATION_BLOCK_HEADER_FILE

@@ -39,6 +39,8 @@
 ** $Modtime: 10/03/01 4:18a $
 */
 
+/* SPDX-License-Identifier: BSD-2-Clause */
+
 #if ! defined ( DATA_PARSER_CLASS_HEADER )
 
 #define DATA_PARSER_CLASS_HEADER

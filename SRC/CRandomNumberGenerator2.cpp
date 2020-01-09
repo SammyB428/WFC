@@ -40,6 +40,8 @@
 ** $Reuse Tracing Code: 1 $
 */
 
+/* SPDX-License-Identifier: BSD-2-Clause */
+
 // Algorithm provided by Yehuda Hahn (ygh@cfsnet.com)
 // Source adapted from http://www.math.keio.ac.jp/matumoto/cokus.c
 

@@ -39,6 +39,8 @@
 ** $Modtime: 6/26/01 11:03a $
 */
 
+/* SPDX-License-Identifier: BSD-2-Clause */
+
 #if ! defined( REMOTE_ACCESS_SERVICE_ADMINISTRATION_CLASS_HEADER )
 
 #define REMOTE_ACCESS_SERVICE_ADMINISTRATION_CLASS_HEADER

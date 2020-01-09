@@ -39,6 +39,8 @@
 ** $Modtime: 8/08/01 4:56a $
 */
 
+/* SPDX-License-Identifier: BSD-2-Clause */
+
 #if ! defined( NAMED_PIPE_CLASS_HEADER )
 
 #define NAMED_PIPE_CLASS_HEADER

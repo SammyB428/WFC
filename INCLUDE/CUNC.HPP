@@ -39,6 +39,8 @@
 ** $Modtime: 6/26/01 11:05a $
 */
 
+/* SPDX-License-Identifier: BSD-2-Clause */
+
 #if ! defined ( UNC_CLASS_HEADER )
 
 #define UNC_CLASS_HEADER

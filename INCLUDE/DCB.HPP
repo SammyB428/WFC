@@ -39,6 +39,8 @@
 ** $Modtime: 6/26/01 11:05a $
 */
 
+/* SPDX-License-Identifier: BSD-2-Clause */
+
 /*
 ** Thanks go to Jim Schollenberger (J_A_S@compuserve.com)
 ** for finding a typo here...

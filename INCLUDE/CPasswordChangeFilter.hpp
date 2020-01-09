@@ -39,6 +39,8 @@
 ** $Modtime: 6/26/01 11:03a $
 */
 
+/* SPDX-License-Identifier: BSD-2-Clause */
+
 #if ! defined( PASSWORD_CHANGE_FILTER_CLASS_HEADER )
 
 #define PASSWORD_CHANGE_FILTER_CLASS_HEADER

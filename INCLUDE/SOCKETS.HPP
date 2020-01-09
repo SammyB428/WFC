@@ -39,6 +39,8 @@
 ** $Modtime: 7/12/01 8:00p $
 */
 
+/* SPDX-License-Identifier: BSD-2-Clause */
+
 #if ! defined( SOCKET_CLASS_HEADER )
 
 #define SOCKET_CLASS_HEADER

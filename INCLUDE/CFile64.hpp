@@ -36,6 +36,8 @@
 ** $Reuse Tracing Code: 1001 $
 */
 
+/* SPDX-License-Identifier: BSD-2-Clause */
+
 /*
 ** NOTICE NOTICE NOTICE
 **

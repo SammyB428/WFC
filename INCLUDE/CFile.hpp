@@ -19,6 +19,8 @@
 ** things like file position.
 */
 
+/* SPDX-License-Identifier: BSD-2-Clause */
+
 #if ! defined( FILE_CLASS_HEADER )
 
 #define FILE_CLASS_HEADER

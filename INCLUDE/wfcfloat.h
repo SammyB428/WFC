@@ -39,6 +39,8 @@
 ** $Modtime: 12/01/00 4:43a $
 */
 
+/* SPDX-License-Identifier: BSD-2-Clause */
+
 #if ! defined( WFC_FLOAT_HEADER_FILE )
 
 #define WFC_FLOAT_HEADER_FILE

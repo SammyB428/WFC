@@ -39,6 +39,8 @@
 ** $Modtime: 6/26/01 11:02a $
 */
 
+/* SPDX-License-Identifier: BSD-2-Clause */
+
 #if ! defined ( GARBAGE_COLLECTOR_CLASS_HEADER )
 
 #define GARBAGE_COLLECTOR_CLASS_HEADER

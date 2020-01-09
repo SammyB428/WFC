@@ -1,3 +1,5 @@
+/* SPDX-License-Identifier: BSD-2-Clause */
+
 #if ! defined( STL_FORMAT_HEADER_FILE )
 
 #define STL_FORMAT_HEADER_FILE

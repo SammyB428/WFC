@@ -39,6 +39,8 @@
 ** $Modtime: 6/26/01 11:09a $
 */
 
+/* SPDX-License-Identifier: BSD-2-Clause */
+
 /*
 ** Now that we've included all the necessary MFC stuff,
 ** it is safe to set the linker options. Otherwise, we may

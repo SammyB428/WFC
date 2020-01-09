@@ -40,6 +40,8 @@
 ** $Reuse Tracing Code: 1 $
 */
 
+/* SPDX-License-Identifier: BSD-2-Clause */
+
 #include <wfc.h>
 #pragma hdrstop
 
@@ -1291,10 +1293,10 @@ is NULL, the local log is openend.
 <DT><PRE>BOOL <B><A NAME="Read">Read</A></B>( DWORD  record_number, 
            LPVOID buffer, 
            DWORD&amp; number_of_bytes_to_read, 
-           DWORD  how_to_read = EVENTLOG_FORWARDS_READ | EVENTLOG_SEQUENTIAL_READ )
+           DWORD  how_to_read = EVENTLOG_FORWARDS_READ bitor EVENTLOG_SEQUENTIAL_READ )
 BOOL <B>Read</B>( DWORD record_number,
                   <A HREF="CEVENT~1.HTM">CEventLogRecord</A>&amp; record,
-                  DWORD how_to_read = EVENTLOG_FORWARDS_READ | EVENTLOG_SEQUENTIAL_READ )</PRE><DD>
+                  DWORD how_to_read = EVENTLOG_FORWARDS_READ bitor EVENTLOG_SEQUENTIAL_READ )</PRE><DD>
 Reads a specific record from the log.
 
 <DT><PRE>BOOL <B><A NAME="RegisterSource">RegisterSource</A></B>( LPCTSTR source_name, LPCTSTR name_of_computer )</PRE><DD>

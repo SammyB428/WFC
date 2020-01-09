@@ -40,6 +40,8 @@
 ** $Reuse Tracing Code: 1 $
 */
 
+/* SPDX-License-Identifier: BSD-2-Clause */
+
 // 2000-10-28
 // Thanks go to Danny Smith (danny_r_smith_2001@yahoo.co.nz) for adding
 // the capability to use a non-Microsoft compiler (namely gcc)

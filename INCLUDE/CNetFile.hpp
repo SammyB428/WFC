@@ -39,6 +39,8 @@
 ** $Modtime: 6/26/01 11:02a $
 */
 
+/* SPDX-License-Identifier: BSD-2-Clause */
+
 #if ! defined( NETWORK_FILE_CLASS_HEADER )
 
 #define NETWORK_FILE_CLASS_HEADER

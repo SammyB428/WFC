@@ -39,6 +39,8 @@
 ** $Modtime: 2/04/00 6:46p $
 */
 
+/* SPDX-License-Identifier: BSD-2-Clause */
+
 #if ! defined( WFC_UNDOCUMENTED_HEADER_FILE )
 
 #define WFC_UNDOCUMENTED_HEADER_FILE

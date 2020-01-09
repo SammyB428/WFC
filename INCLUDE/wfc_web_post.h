@@ -39,6 +39,8 @@
 ** $Modtime: 6/26/01 11:09a $
 */
 
+/* SPDX-License-Identifier: BSD-2-Clause */
+
 #if ! defined( WFC_WEB_POST_HEADER_FILE )
 
 #define WFC_WEB_POST_HEADER_FILE

@@ -39,6 +39,8 @@
 ** $Modtime: 6/26/01 11:00a $
 */
 
+/* SPDX-License-Identifier: BSD-2-Clause */
+
 #if ! defined( CRITICAL_SECTION_CLASS_HEADER )
 
 #define CRITICAL_SECTION_CLASS_HEADER

@@ -39,6 +39,8 @@
 ** $Modtime: 8/27/01 5:02a $
 */
 
+/* SPDX-License-Identifier: BSD-2-Clause */
+
 #if ! defined( WFC_TRACE_CLASS_HEADER )
 
 #define WFC_TRACE_CLASS_HEADER

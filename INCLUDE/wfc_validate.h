@@ -39,6 +39,8 @@
 ** $Modtime: 1/05/02 7:14a $
 */
 
+/* SPDX-License-Identifier: BSD-2-Clause */
+
 #if ! defined( WFC_VALIDATE_HEADER_FILE_INCLUDED )
 
 #define WFC_VALIDATE_HEADER_FILE_INCLUDED

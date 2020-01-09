@@ -39,6 +39,8 @@
 ** $Modtime: 9/16/01 11:56a $
 */
 
+/* SPDX-License-Identifier: BSD-2-Clause */
+
 #if ! defined( MFC_TO_STL_HEADER_FILE )
 
 #define MFC_TO_STL_HEADER_FILE

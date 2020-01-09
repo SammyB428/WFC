@@ -1,3 +1,5 @@
+/* SPDX-License-Identifier: BSD-2-Clause */
+
 #if ! defined( STL_STRING_UNIQUE_SORTED_VECTOR_HEADER_FILE )
 
 #define STL_STRING_UNIQUE_SORTED_VECTOR_HEADER_FILE

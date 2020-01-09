@@ -1,3 +1,5 @@
+/* SPDX-License-Identifier: BSD-2-Clause */
+
 #if ! defined( STL_LEFT_RIGHT_HEADER_FILE )
 
 #define STL_LEFT_RIGHT_HEADER_FILE

@@ -39,6 +39,8 @@
 ** $Modtime: 2/24/02 4:16p $
 */
 
+/* SPDX-License-Identifier: BSD-2-Clause */
+
 #if ! defined( CRYPTO_API_CLASS_HEADER )
 
 #define CRYPTO_API_CLASS_HEADER

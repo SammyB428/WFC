@@ -41,6 +41,8 @@
 ** $Modtime: 6/26/01 11:04a $
 */
 
+/* SPDX-License-Identifier: BSD-2-Clause */
+
 #define SERVICE_CLASS_HEADER
 
 extern CRITICAL_SECTION g_ServiceCriticalSection;

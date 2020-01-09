@@ -39,6 +39,8 @@
 ** $Modtime: 6/26/01 11:06a $
 */
 
+/* SPDX-License-Identifier: BSD-2-Clause */
+
 #if ! defined( MODEM_CLASS_HEADER )
 
 #define MODEM_CLASS_HEADER

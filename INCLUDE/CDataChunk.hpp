@@ -39,13 +39,16 @@
 ** $Modtime: 6/26/01 11:01a $
 */
 
+/* SPDX-License-Identifier: BSD-2-Clause */
+
 #if ! defined( DATA_CHUNK_CLASS_HEADER )
 
 #define DATA_CHUNK_CLASS_HEADER
 
-#define MAKE_DATA_ID( byte_1, byte_2, byte_3, byte_4 ) \
-   ( (DWORD) (BYTE) (byte_1)         bitor ( (DWORD) (BYTE) (byte_2) <<  8 ) bitor \
-   ( (DWORD) (BYTE) (byte_3) << 16 ) bitor ( (DWORD) (BYTE) (byte_4) << 24 ) )
+inline constexpr _Check_return_ uint32_t MAKE_DATA_ID(uint8_t const byte_1, uint8_t const byte_2, uint8_t const byte_3, uint8_t const byte_4) noexcept
+{
+    return((uint32_t)(byte_1) bitor ((uint32_t)(byte_2) << 8) bitor ((uint32_t)(byte_3) << 16) bitor ((uint32_t)(byte_4) << 24));
+}
 
 #define MAKE_DATA_DWORD( byte_1, byte_2, byte_3, byte_4 ) MAKE_DATA_ID( byte_1, byte_2, byte_3, byte_4 )
 
@@ -58,12 +61,12 @@ class CDataChunk
       uint32_t   Identifier{ 0 };
       std::vector<uint8_t> Data;
 
-      CDataChunk() noexcept
+      inline CDataChunk() noexcept
       {
          Identifier = 0;
       };
 
-      CDataChunk( __in CDataChunk const& source ) noexcept
+      inline CDataChunk( _In_ CDataChunk const& source ) noexcept
       {
          Copy( source );
       };

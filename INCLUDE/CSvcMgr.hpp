@@ -39,6 +39,8 @@
 ** $Modtime: 6/26/01 11:04a $
 */
 
+/* SPDX-License-Identifier: BSD-2-Clause */
+
 #if ! defined( SERVICE_MANAGER_CLASS_HEADER )
 
 #define SERVICE_MANAGER_CLASS_HEADER

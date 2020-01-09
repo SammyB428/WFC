@@ -39,6 +39,8 @@
 ** $Modtime: 6/26/01 11:06a $
 */
 
+/* SPDX-License-Identifier: BSD-2-Clause */
+
 #if ! defined( PORT_INFORMATION_CLASS_HEADER )
 
 #define PORT_INFORMATION_CLASS_HEADER

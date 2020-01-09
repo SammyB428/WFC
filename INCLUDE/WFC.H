@@ -39,6 +39,8 @@
 ** $Modtime: 1/05/02 7:14a $
 */
 
+/* SPDX-License-Identifier: BSD-2-Clause */
+
 #if ! defined( WIN32_FOUNDATION_CLASSES ) && ! defined( SUBSET_STLXML )
 
 #define WIN32_FOUNDATION_CLASSES
