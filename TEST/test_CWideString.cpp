@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 2000-2016, Samuel R. Blackburn
+** Copyright, 2000-2020, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -34,6 +34,8 @@
 ** (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 ** OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
+
+// SPDX-License-Identifier: BSD-2-Clause
 
 #include "test.h"
 #pragma hdrstop
@@ -726,7 +728,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
         return( failure() );
     }
 
-    copy( string_1, "0123456789" );
+    copy( string_1, STRING_VIEW("0123456789") );
 
     if ( string_1.length() != 10 )
     {
@@ -1135,7 +1137,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
         return( failure() );
     }
 
-    copy( string_5, "ABCDEFGHIJK" );
+    copy( string_5, STRING_VIEW("ABCDEFGHIJK") );
 
     if ( string_5.length() != 11 )
     {
@@ -1157,7 +1159,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
         return( failure() );
     }
 
-    copy( string_5, "ABCDEFGHIJKL", 11 );
+    copy( string_5, STRING_VIEW("ABCDEFGHIJKL"), 11 );
 
     if ( string_5.length() != 11 )
     {
@@ -1179,7 +1181,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
         return( failure() );
     }
 
-    copy( string_5, "ABCDEFGHIJKL", 11, 1 );
+    copy( string_5, STRING_VIEW("ABCDEFGHIJKL"), 11, 1 );
 
     if ( string_5.length() != 11 )
     {
@@ -1201,7 +1203,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
         return( failure() );
     }
 
-    copy( string_5, "ABCDEFGHIJKL", 99 );
+    copy( string_5, STRING_VIEW("ABCDEFGHIJKL"), 99 );
 
     if ( string_5.length() != 12 )
     {
@@ -1217,7 +1219,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
         return( failure() );
     }
 
-    copy( string_5, "ABC" );
+    copy( string_5, STRING_VIEW("ABC") );
 
     if ( string_5.length() != 3 )
     {
@@ -1231,7 +1233,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
         return( failure() );
     }
 
-    copy( string_5, "ABCDEFGHIJKL", 0, 99 );
+    copy( string_5, STRING_VIEW("ABCDEFGHIJKL"), 0, 99 );
 
     if ( string_5.length() != 0 )
     {
@@ -1247,7 +1249,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
         return( failure() );
     }
 
-    copy( string_5, "ABCDEFGHIJKL", 99, 99 );
+    copy( string_5, STRING_VIEW("ABCDEFGHIJKL"), 99, 99 );
 
     if ( string_5.length() != 0 )
     {
@@ -1263,7 +1265,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
         return( failure() );
     }
 
-    copy( string_5, "ABCDEFGHIJKL", 1, 99 );
+    copy( string_5, STRING_VIEW("ABCDEFGHIJKL"), 1, 99 );
 
     if ( string_5.length() != 0 )
     {
@@ -2020,6 +2022,46 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
         return(failure());
     }
 
-    test_number_that_failed = 282;
+    uint8_t test_bytes[]{ 1, 2, 129, 200, 201 };
+
+    copy(string_5, test_bytes, sizeof(test_bytes));
+
+    if (string_5.length() != sizeof(test_bytes))
+    {
+        test_number_that_failed = 283;
+        return(failure());
+    }
+
+    if (string_5[0] != 1)
+    {
+        test_number_that_failed = 284;
+        return(failure());
+    }
+
+    if (string_5[1] != 2)
+    {
+        test_number_that_failed = 285;
+        return(failure());
+    }
+
+    if (string_5[2] != 129)
+    {
+        test_number_that_failed = 286;
+        return(failure());
+    }
+
+    if (string_5[3] != 200)
+    {
+        test_number_that_failed = 287;
+        return(failure());
+    }
+
+    if (string_5[4] != 201)
+    {
+        test_number_that_failed = 288;
+        return(failure());
+    }
+
+    test_number_that_failed = 288;
     return( true );
 }

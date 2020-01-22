@@ -4,6 +4,29 @@
 
 #define STL_COPY_HEADER_FILE
 
+/// Copy a byte buffer into a wstring without converting to Unicode will terminate at the first null.
+inline void copy(_Inout_ std::wstring& s, _In_ uint8_t const* buffer, _In_ std::size_t const buffer_size) noexcept
+{
+    s.clear();
+
+    if (buffer == nullptr or buffer_size < 1)
+    {
+        return;
+    }
+
+    s.reserve(buffer_size);
+
+    for (auto const buffer_index : Range(buffer_size))
+    {
+        if (buffer[buffer_index] == 0x00)
+        {
+            return;
+        }
+
+        s.push_back(static_cast<wchar_t>(buffer[buffer_index]));
+    }
+}
+
 inline void copy(_Inout_ std::wstring& s, std::string_view ascii_string, _In_ SSIZE_T number_of_characters = (-1), _In_ std::size_t const beginning_at = (0)) noexcept
 {
     s.clear();
@@ -36,7 +59,9 @@ inline void copy(_Inout_ std::wstring& s, std::string_view ascii_string, _In_ SS
                 return;
             }
 
-            s.push_back(ascii_string[loop_index]);
+            // We do all this casting to prevent "negative" characters from going in as Unicode
+            // This stems from converting a signed char to a wchar_t.
+            s.push_back(static_cast<wchar_t>(static_cast<uint8_t>(ascii_string[loop_index])));
             loop_index++;
         }
     }
