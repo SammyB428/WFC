@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 2000-2019, Samuel R. Blackburn
+** Copyright, 2000-2020, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -38,6 +38,8 @@
 ** $Revision: 14 $
 ** $Modtime: 7/23/00 1:43p $
 */
+
+// SPDX-License-Identifier: BSD-2-Clause
 
 #include "test.h"
 #pragma hdrstop
@@ -202,18 +204,6 @@ _Check_return_ int _tmain( _In_ int const number_of_command_line_arguments, _In_
       //CQueue_integrity_test, // The 
       //CQueue_stress_test,
    };
-
-   CTimeEx time_now;
-
-   CTimeEx::GetCurrentTheTime(time_now );
-
-   CTimeEx time_then( 2006, 4, 2, 0, 0, 0 );
-
-   CTimeSpan how_long = time_then - time_now;
-
-   auto total_days = how_long.GetDays();
-
-   _tprintf( TEXT( "%ld days\n" ), total_days );
 
 #if 0
    GET_RANDOM_DWORD_FUNCTION get_random = (GET_RANDOM_DWORD_FUNCTION) GetProcAddress( GetModuleHandle( "NTDLL.DLL" ), "RtlRandomEx" );

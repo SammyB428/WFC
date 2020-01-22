@@ -39,6 +39,8 @@
 ** $Modtime: 8/06/00 3:25p $
 */
 
+// SPDX-License-Identifier: BSD-2-Clause
+
 #include "test.h"
 #pragma hdrstop
 
