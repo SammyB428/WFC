@@ -771,7 +771,7 @@ inline void from_defined(_Inout_ std::wstring& s, _In_ uint64_t const value, __i
 
     auto defined_string = DefinedStringConstant(value, definitions, number_of_definitions);
 
-    if (defined_string != nullptr && defined_string[0] != 0x00)
+    if (defined_string != nullptr and defined_string[0] != 0x00)
     {
         s.assign(defined_string);
     }

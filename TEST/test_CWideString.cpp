@@ -2062,6 +2062,12 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
         return(failure());
     }
 
+    // 2014-05-10T19:21:18-0400
+
+    CFileTime ft;
+
+    wfc_parse_iso_8601_string(WSTRING_VIEW(L"2014-05-10T19:21:18-0400"), ft);
+
     test_number_that_failed = 288;
     return( true );
 }
