@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 1995-2019, Samuel R. Blackburn
+** Copyright, 1995-2020, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -146,7 +146,7 @@ static inline _Check_return_ bool __parse_ymdhmsf( _In_ std::wstring_view time_s
 
         (void)std::from_chars(temp_string, &temp_string[4], year, 10);
 
-        SIZE_T index = 4;
+        std::size_t index = 4;
 
         // index should be pointing here
         //     |
@@ -156,17 +156,13 @@ static inline _Check_return_ bool __parse_ymdhmsf( _In_ std::wstring_view time_s
         if ( index >= time_string.length() )
         {
             // We're at the end of the string
-
             return( true );
         }
 
-        if ( time_string[ index ] != L'-' )
+        if ( time_string[ index ] == L'-' )
         {
-            //WFCTRACE( TEXT( "The separator between year and month is not -" ) );
-            return(false);
+            index++;
         }
-
-        index++;
 
         // index should be pointing here
         //      |
@@ -225,13 +221,10 @@ static inline _Check_return_ bool __parse_ymdhmsf( _In_ std::wstring_view time_s
             return( true );
         }
 
-        if ( time_string[ index ] != L'-' )
+        if ( time_string[ index ] == L'-' )
         {
-            //WFCTRACE( TEXT( "The separator between month and day fields is not -" ) );
-            return(false);
+            index++;
         }
-
-        index++;
 
         // index should be pointing here
         //         |
@@ -353,13 +346,10 @@ static inline _Check_return_ bool __parse_ymdhmsf( _In_ std::wstring_view time_s
             return( true );
         }
 
-        if ( time_string[ index ] != TEXT( ':' ) )
+        if ( time_string[ index ] == L':' )
         {
-            //WFCTRACE( TEXT( "Separator between hours and minutes ain't :" ) );
-            return(false);
+            index++;
         }
-
-        index++;
 
         // index should be pointing here
         //               |
@@ -408,13 +398,10 @@ static inline _Check_return_ bool __parse_ymdhmsf( _In_ std::wstring_view time_s
             return( true );
         }
 
-        if ( time_string[ index ] != L':' )
+        if ( time_string[ index ] == L':' )
         {
-            //WFCTRACE( TEXT( "Separator between minutes and seconds ain't :" ) );
-            return(false);
+            index++;
         }
-
-        index++;
 
         // index should be pointing here
         //                  |
@@ -521,7 +508,7 @@ static inline _Check_return_ bool __parse_ymdhmsf( _In_ std::wstring_view time_s
         }
 
         if ( time_string[ index ] != L'+' and
-            time_string[ index ] != L'-' )
+             time_string[ index ] != L'-' )
         {
             //WFCTRACE( TEXT( "Time zone designator ain't beginning with + or -" ) );
             return(false);
@@ -567,13 +554,10 @@ static inline _Check_return_ bool __parse_ymdhmsf( _In_ std::wstring_view time_s
         //                       v
         // 1969-07-20T22:56:15-04:00
 
-        if ( time_string[ index ] != L':' )
+        if ( time_string[ index ] == L':' )
         {
-            //WFCTRACE( TEXT( "Separator between offset hours and minutes ain't a :" ) );
-            return(false);
+            index++;
         }
-
-        index++;
 
         // index should be pointing here
         //                        |
