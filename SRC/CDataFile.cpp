@@ -51,9 +51,7 @@ static char THIS_FILE[] = __FILE__;
 #define new DEBUG_NEW
 #endif // _DEBUG
 
-USING_WFC_NAMESPACE
-
-void CDataChunk::GetIdentifier( __in uint32_t const id, __out std::wstring& string ) noexcept
+void Win32FoundationClasses::CDataChunk::GetIdentifier( _In_ uint32_t const id, _Out_ std::wstring& string ) noexcept
 {
    string.clear();
 
@@ -125,29 +123,29 @@ void CDataChunk::Dump( CDumpContext& dump_context ) const
 
 #endif // _DEBUG
 
-CDataFile::CDataFile() noexcept
+Win32FoundationClasses::CDataFile::CDataFile() noexcept
 {
    WFC_VALIDATE_POINTER( this );
 }
 
-CDataFile::~CDataFile() noexcept
+Win32FoundationClasses::CDataFile::~CDataFile() noexcept
 {
    WFC_VALIDATE_POINTER( this );
 }
 
-_Check_return_ bool CDataFile::AddData( __in CDataChunk const& data ) noexcept
+_Check_return_ bool Win32FoundationClasses::CDataFile::AddData( _In_ Win32FoundationClasses::CDataChunk const& data ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    return( AddData( data.Identifier, data.Data ) );
 }
 
-_Check_return_ bool CDataFile::AddData( __in uint32_t const identifier, __in std::vector<uint8_t> const& data ) noexcept
+_Check_return_ bool Win32FoundationClasses::CDataFile::AddData( _In_ uint32_t const identifier, _In_ std::vector<uint8_t> const& data ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    return( AddData( identifier, data.data(), data.size() ) );
 }
 
-_Check_return_ bool CDataFile::AddData( __in uint32_t const identifier, __in_bcount( number_of_bytes ) uint8_t const * buffer_p, __in std::size_t const number_of_bytes ) noexcept
+_Check_return_ bool Win32FoundationClasses::CDataFile::AddData( _In_ uint32_t const identifier, __in_bcount( number_of_bytes ) uint8_t const * buffer_p, _In_ std::size_t const number_of_bytes ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -206,13 +204,13 @@ _Check_return_ bool CDataFile::AddData( __in uint32_t const identifier, __in_bco
    return( true );
 }
 
-_Check_return_ bool CDataFile::GetData( __out CDataChunk& data ) noexcept
+_Check_return_ bool Win32FoundationClasses::CDataFile::GetData( _Out_ Win32FoundationClasses::CDataChunk& data ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    return( GetData( data.Identifier, data.Data ) );
 }
 
-_Check_return_ bool CDataFile::GetData( __out uint32_t& identifier, __out std::vector<uint8_t>& data ) noexcept
+_Check_return_ bool Win32FoundationClasses::CDataFile::GetData( _Out_ uint32_t& identifier, _Out_ std::vector<uint8_t>& data ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 

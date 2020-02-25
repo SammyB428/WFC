@@ -60,7 +60,7 @@ __checkReturn bool test_wfc_protect( __out std::string& class_name, __out int& t
 
    std::size_t size_of_ciphertext_buffer = 0;
 
-   if ( wfc_protect_data( reinterpret_cast<uint8_t const *>(plaintext), strlen( plaintext ) + 1, nullptr, &size_of_ciphertext_buffer ) == false )
+   if (Win32FoundationClasses::wfc_protect_data( reinterpret_cast<uint8_t const *>(plaintext), strlen( plaintext ) + 1, nullptr, &size_of_ciphertext_buffer ) == false )
    {
       test_number_that_failed = 1;
       return( failure() );
@@ -68,7 +68,7 @@ __checkReturn bool test_wfc_protect( __out std::string& class_name, __out int& t
 
    auto ciphertext = std::make_unique<uint8_t[]>(size_of_ciphertext_buffer );
 
-   if ( wfc_protect_data( reinterpret_cast<uint8_t const *>(plaintext), strlen( plaintext ) + 1, ciphertext.get(), &size_of_ciphertext_buffer ) == false )
+   if (Win32FoundationClasses::wfc_protect_data( reinterpret_cast<uint8_t const *>(plaintext), strlen( plaintext ) + 1, ciphertext.get(), &size_of_ciphertext_buffer ) == false )
    {
       test_number_that_failed = 2;
       return( failure() );
@@ -76,7 +76,7 @@ __checkReturn bool test_wfc_protect( __out std::string& class_name, __out int& t
 
    std::size_t size_of_decrypted = 0;
 
-   if ( wfc_unprotect_data( ciphertext.get(), size_of_ciphertext_buffer, nullptr, &size_of_decrypted ) == FALSE )
+   if (Win32FoundationClasses::wfc_unprotect_data( ciphertext.get(), size_of_ciphertext_buffer, nullptr, &size_of_decrypted ) == FALSE )
    {
       test_number_that_failed = 3;
       return( failure() );
@@ -84,7 +84,7 @@ __checkReturn bool test_wfc_protect( __out std::string& class_name, __out int& t
 
    auto decrypted = std::make_unique<uint8_t[]>( size_of_decrypted );
 
-   if ( wfc_unprotect_data( ciphertext.get(), size_of_ciphertext_buffer, decrypted.get(), &size_of_decrypted ) == FALSE )
+   if (Win32FoundationClasses::wfc_unprotect_data( ciphertext.get(), size_of_ciphertext_buffer, decrypted.get(), &size_of_decrypted ) == FALSE )
    {
       test_number_that_failed = 4;
       return( failure() );
@@ -104,7 +104,7 @@ __checkReturn bool test_wfc_protect( __out std::string& class_name, __out int& t
 
    _tcscat_s( filename, std::size( filename ), TEXT( "\\Notepad.exe" ) );
 
-   if ( wfc_check_digital_signature( filename ) == false )
+   if (Win32FoundationClasses::wfc_check_digital_signature( filename ) == false )
    {
        class_name.assign(STRING_VIEW("wfc_check_digital_signature()"));
        test_number_that_failed = 6;
@@ -117,7 +117,7 @@ __checkReturn bool test_wfc_protect( __out std::string& class_name, __out int& t
 
    memset(lanman_hash, 0xAA, sizeof(lanman_hash));
 
-   wfc_calculate_lanman_hash(STRING_VIEW(""), lanman_hash);
+   Win32FoundationClasses::wfc_calculate_lanman_hash(STRING_VIEW(""), lanman_hash);
 
    // Empty hash AAD3B435B51404EEAAD3B435B51404EE
 
@@ -145,7 +145,7 @@ __checkReturn bool test_wfc_protect( __out std::string& class_name, __out int& t
 
    ZeroMemory(lanman_hash, sizeof(lanman_hash));
 
-   wfc_calculate_lanman_hash(STRING_VIEW("hashcat"), lanman_hash);
+   Win32FoundationClasses::wfc_calculate_lanman_hash(STRING_VIEW("hashcat"), lanman_hash);
 
    // hashcat - NTLM:b4b9b02e6f09a9bd760f388b67351e2b LM: 29 9B D1 28 C1 10 1F D6 AA D3 B4 35 B5 14 04 EE
 
@@ -173,7 +173,7 @@ __checkReturn bool test_wfc_protect( __out std::string& class_name, __out int& t
 
    ZeroMemory(lanman_hash, sizeof(lanman_hash));
 
-   wfc_calculate_nt_hash(WSTRING_VIEW(L"hashcat"), lanman_hash);
+   Win32FoundationClasses::wfc_calculate_nt_hash(WSTRING_VIEW(L"hashcat"), lanman_hash);
 
    // b4 b9 b0 2e 6f 09 a9 bd 76 0f 38 8b 67 35 1e 2b
    if (lanman_hash[0] != 0xb4 or

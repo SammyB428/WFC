@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 1995-2019, Samuel R. Blackburn
+** Copyright, 1995-2020, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -51,30 +51,28 @@ static char THIS_FILE[] = __FILE__;
 #define new DEBUG_NEW
 #endif // _DEBUG
 
-USING_WFC_NAMESPACE
-
-CPasswordChangeFilter::CPasswordChangeFilter()
+Win32FoundationClasses::CPasswordChangeFilter::CPasswordChangeFilter()
 {
    WFC_VALIDATE_POINTER( this );
 }
 
-CPasswordChangeFilter::~CPasswordChangeFilter()
+Win32FoundationClasses::CPasswordChangeFilter::~CPasswordChangeFilter()
 {
    WFC_VALIDATE_POINTER( this );
 }
 
-_Check_return_ bool CPasswordChangeFilter::AddFilter( _In_ std::wstring const& dll_name ) noexcept
+_Check_return_ bool Win32FoundationClasses::CPasswordChangeFilter::AddFilter( _In_ std::wstring const& dll_name ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
-   CRegistry registry;
+   Win32FoundationClasses::CRegistry registry;
 
-   if ( registry.Connect( (HKEY) CRegistry::keyLocalMachine ) == false )
+   if ( registry.Connect( (HKEY)Win32FoundationClasses::CRegistry::keyLocalMachine ) == false )
    {
       return( false );
    }
 
-   if ( registry.Open( L"SYSTEM\\CurrentControlSet\\Control\\Lsa", (CRegistry::CreatePermissions)(CRegistry::permissionRead bitor CRegistry::permissionSetValue ) ) == FALSE )
+   if ( registry.Open( L"SYSTEM\\CurrentControlSet\\Control\\Lsa", (Win32FoundationClasses::CRegistry::CreatePermissions)(Win32FoundationClasses::CRegistry::permissionRead bitor Win32FoundationClasses::CRegistry::permissionSetValue ) ) == FALSE )
    {
       return( false );
    }
@@ -102,20 +100,20 @@ _Check_return_ bool CPasswordChangeFilter::AddFilter( _In_ std::wstring const& d
    return( true );
 }
 
-_Check_return_ bool CPasswordChangeFilter::GetCurrentFilters( _Out_ std::vector<std::wstring>& current_filters ) noexcept
+_Check_return_ bool Win32FoundationClasses::CPasswordChangeFilter::GetCurrentFilters( _Out_ std::vector<std::wstring>& current_filters ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
    current_filters.clear();
 
-   CRegistry registry;
+   Win32FoundationClasses::CRegistry registry;
 
-   if ( registry.Connect( (HKEY) CRegistry::keyLocalMachine ) == FALSE )
+   if ( registry.Connect( (HKEY)Win32FoundationClasses::CRegistry::keyLocalMachine ) == FALSE )
    {
       return( false );
    }
 
-   if ( registry.Open( L"SYSTEM\\CurrentControlSet\\Control\\Lsa", (CRegistry::CreatePermissions)(CRegistry::permissionRead) ) == FALSE )
+   if ( registry.Open( L"SYSTEM\\CurrentControlSet\\Control\\Lsa", (Win32FoundationClasses::CRegistry::CreatePermissions)(Win32FoundationClasses::CRegistry::permissionRead) ) == FALSE )
    {
       return( false );
    }
@@ -129,36 +127,36 @@ _Check_return_ bool CPasswordChangeFilter::GetCurrentFilters( _Out_ std::vector<
    return( true );
 }
 
-_Check_return_ bool CPasswordChangeFilter::OnChanged( __in PASSWORD_FILTER_STRING * /* user_name */, __in ULONG /* relative_id */, __in PASSWORD_FILTER_STRING * /* new_password */ ) noexcept
+_Check_return_ bool Win32FoundationClasses::CPasswordChangeFilter::OnChanged( _In_ PASSWORD_FILTER_STRING * /* user_name */, _In_ ULONG /* relative_id */, _In_ PASSWORD_FILTER_STRING * /* new_password */ ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    return( true );
 }
 
-_Check_return_ bool CPasswordChangeFilter::OnFilter( __in PASSWORD_FILTER_STRING * /* user_name */, __in PASSWORD_FILTER_STRING * /* full_user_name */, __in PASSWORD_FILTER_STRING * /* new_password */, __in bool /* was_set */ ) noexcept
+_Check_return_ bool Win32FoundationClasses::CPasswordChangeFilter::OnFilter( _In_ PASSWORD_FILTER_STRING * /* user_name */, _In_ PASSWORD_FILTER_STRING * /* full_user_name */, _In_ PASSWORD_FILTER_STRING * /* new_password */, _In_ bool /* was_set */ ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    return( true );
 }
 
-_Check_return_ bool CPasswordChangeFilter::OnInitialize( void ) noexcept
+_Check_return_ bool Win32FoundationClasses::CPasswordChangeFilter::OnInitialize( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    return( true );
 }
 
-_Check_return_ bool CPasswordChangeFilter::RemoveFilter( __in std::wstring const& dll_name ) noexcept
+_Check_return_ bool Win32FoundationClasses::CPasswordChangeFilter::RemoveFilter( _In_ std::wstring const& dll_name ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
-   CRegistry registry;
+   Win32FoundationClasses::CRegistry registry;
 
-   if ( registry.Connect( (HKEY) CRegistry::keyLocalMachine ) == FALSE )
+   if ( registry.Connect( (HKEY)Win32FoundationClasses::CRegistry::keyLocalMachine ) == FALSE )
    {
       return( false );
    }
 
-   if ( registry.Open( L"SYSTEM\\CurrentControlSet\\Control\\Lsa", (CRegistry::CreatePermissions)(CRegistry::permissionRead bitor CRegistry::permissionSetValue ) ) == FALSE )
+   if ( registry.Open( L"SYSTEM\\CurrentControlSet\\Control\\Lsa", (Win32FoundationClasses::CRegistry::CreatePermissions)(Win32FoundationClasses::CRegistry::permissionRead bitor CRegistry::permissionSetValue ) ) == FALSE )
    {
       return( false );
    }

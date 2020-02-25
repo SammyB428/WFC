@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 2000-2011, Samuel R. Blackburn
+** Copyright, 2000-2020, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -54,9 +54,9 @@ void test_CNetworkUsers( __in_z LPCTSTR machine_name ) noexcept
 {
    WFCTRACEINIT( TEXT( "test_CNetworkUsers()" ) );
 
-   CNetworkUsers users( machine_name );
+   Win32FoundationClasses::CNetworkUsers users( machine_name );
 
-   CNetworkUserInformation user_information;
+   Win32FoundationClasses::CNetworkUserInformation user_information;
 
    if ( users.Enumerate() == true )
    {
@@ -113,7 +113,7 @@ void test_CNetworkUsers( __in_z LPCTSTR machine_name ) noexcept
 
       std::wstring error_message;
 
-      Convert_NERR_Code_to_String( error_code, error_message );
+      Win32FoundationClasses::Convert_NERR_Code_to_String( error_code, error_message );
 
       _tprintf( TEXT( "CNetworkUsers.Enumerate( user_information ), ErrorCode == %d \"%s\"\n" ), error_code, error_message.c_str());
    }

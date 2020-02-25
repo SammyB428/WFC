@@ -96,9 +96,7 @@ static char THIS_FILE[] = __FILE__;
 #define new DEBUG_NEW
 #endif // _DEBUG
 
-USING_WFC_NAMESPACE
-
-CRandomNumberGenerator::CRandomNumberGenerator()
+Win32FoundationClasses::CRandomNumberGenerator::CRandomNumberGenerator()
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -112,7 +110,7 @@ CRandomNumberGenerator::CRandomNumberGenerator()
    InitializeSeed();
 }
 
-CRandomNumberGenerator::CRandomNumberGenerator( __in DWORD new_seed )
+Win32FoundationClasses::CRandomNumberGenerator::CRandomNumberGenerator( _In_ DWORD new_seed )
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -126,12 +124,12 @@ CRandomNumberGenerator::CRandomNumberGenerator( __in DWORD new_seed )
    SetSeed( new_seed );
 }
 
-CRandomNumberGenerator::~CRandomNumberGenerator()
+Win32FoundationClasses::CRandomNumberGenerator::~CRandomNumberGenerator()
 {
    WFC_VALIDATE_POINTER( this );
 }
 
-void CRandomNumberGenerator::InitializeSeed( void ) noexcept
+void Win32FoundationClasses::CRandomNumberGenerator::InitializeSeed( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -194,7 +192,7 @@ void CRandomNumberGenerator::InitializeSeed( void ) noexcept
    SetSeed( ( MAKELONG( low_word, high_word ) xor ( ::GetCurrentThreadId() << 11 ) ) );
 }
 
-_Check_return_ DWORD CRandomNumberGenerator::GetInteger( void ) noexcept
+_Check_return_ DWORD Win32FoundationClasses::CRandomNumberGenerator::GetInteger( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -233,7 +231,7 @@ _Check_return_ DWORD CRandomNumberGenerator::GetInteger( void ) noexcept
    return( return_value );
 }
 
-_Check_return_ double CRandomNumberGenerator::GetFloat( void ) noexcept
+_Check_return_ double Win32FoundationClasses::CRandomNumberGenerator::GetFloat( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -279,7 +277,7 @@ _Check_return_ double CRandomNumberGenerator::GetFloat( void ) noexcept
    return( return_value );
 }
 
-void CRandomNumberGenerator::SetSeed( __in DWORD new_seed ) noexcept
+void Win32FoundationClasses::CRandomNumberGenerator::SetSeed( _In_ DWORD new_seed ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -333,7 +331,7 @@ void CRandomNumberGenerator::SetSeed( __in DWORD new_seed ) noexcept
    m_Index_2 = 32;
 }
 
-CRandomNumberGenerator::operator char() noexcept
+Win32FoundationClasses::CRandomNumberGenerator::operator char() noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -344,7 +342,7 @@ CRandomNumberGenerator::operator char() noexcept
    return( return_value );
 }
 
-CRandomNumberGenerator::operator unsigned char() noexcept
+Win32FoundationClasses::CRandomNumberGenerator::operator unsigned char() noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -355,49 +353,49 @@ CRandomNumberGenerator::operator unsigned char() noexcept
    return( return_value );
 }
 
-CRandomNumberGenerator::operator int() noexcept
+Win32FoundationClasses::CRandomNumberGenerator::operator int() noexcept
 {
    WFC_VALIDATE_POINTER( this );
    return( GetInteger() );
 }
 
-CRandomNumberGenerator::operator unsigned int() noexcept
+Win32FoundationClasses::CRandomNumberGenerator::operator unsigned int() noexcept
 {
    WFC_VALIDATE_POINTER( this );
    return( GetInteger() );
 }
 
-CRandomNumberGenerator::operator short() noexcept
+Win32FoundationClasses::CRandomNumberGenerator::operator short() noexcept
 {
    WFC_VALIDATE_POINTER( this );
    return( static_cast< short >( GetInteger() ) );
 }
 
-CRandomNumberGenerator::operator unsigned short() noexcept
+Win32FoundationClasses::CRandomNumberGenerator::operator unsigned short() noexcept
 {
    WFC_VALIDATE_POINTER( this );
    return( static_cast< unsigned short >( GetInteger() ) );
 }
 
-CRandomNumberGenerator::operator long() noexcept
+Win32FoundationClasses::CRandomNumberGenerator::operator long() noexcept
 {
    WFC_VALIDATE_POINTER( this );
    return( static_cast< long >( GetInteger() ) );
 }
 
-CRandomNumberGenerator::operator unsigned long() noexcept
+Win32FoundationClasses::CRandomNumberGenerator::operator unsigned long() noexcept
 {
    WFC_VALIDATE_POINTER( this );
    return( GetInteger() );
 }
 
-CRandomNumberGenerator::operator float() noexcept
+Win32FoundationClasses::CRandomNumberGenerator::operator float() noexcept
 {
    WFC_VALIDATE_POINTER( this );
    return( static_cast< float >( GetFloat() ) );
 }
 
-CRandomNumberGenerator::operator double() noexcept
+Win32FoundationClasses::CRandomNumberGenerator::operator double() noexcept
 {
    WFC_VALIDATE_POINTER( this );
    return( GetFloat() );

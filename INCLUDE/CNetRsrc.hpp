@@ -54,8 +54,8 @@ class CNetworkResourceInformation
    public:
 
       CNetworkResourceInformation();
-      CNetworkResourceInformation( __in NETRESOURCE const * source );
-      CNetworkResourceInformation( __in CNetworkResourceInformation const& source );
+      CNetworkResourceInformation( _In_ NETRESOURCE const * source );
+      CNetworkResourceInformation( _In_ CNetworkResourceInformation const& source );
 
       virtual ~CNetworkResourceInformation();
 
@@ -72,8 +72,8 @@ class CNetworkResourceInformation
       DWORD DisplayType{ 0 };
       DWORD Usage{ 0 };
 
-      virtual void Copy( __in NETRESOURCE const * source ) noexcept;
-      virtual void Copy( __in CNetworkResourceInformation const& source ) noexcept;
+      virtual void Copy( _In_ NETRESOURCE const * source ) noexcept;
+      virtual void Copy( _In_ CNetworkResourceInformation const& source ) noexcept;
       virtual void Empty( void ) noexcept;
 };
 
@@ -118,8 +118,8 @@ class CNetworkResources : public CNetwork
                     usageReserved      = RESOURCEUSAGE_RESERVED
                  };
 
-      CNetworkResources(__in CNetworkResources const&) = delete;
-      CNetworkResources& operator=(__in CNetworkResources const&) = delete;
+      CNetworkResources(_In_ CNetworkResources const&) = delete;
+      CNetworkResources& operator=(_In_ CNetworkResources const&) = delete;
       CNetworkResources(_In_ std::wstring_view machine_name = { nullptr, 0 });
       virtual ~CNetworkResources();
 

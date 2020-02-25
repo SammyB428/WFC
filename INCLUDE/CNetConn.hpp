@@ -60,8 +60,8 @@ class CNetworkConnectionInformation
       ** net API header files...
       */
 
-      CNetworkConnectionInformation( __in CONNECTION_INFO_1 const * information_p );
-      CNetworkConnectionInformation( __in CNetworkConnectionInformation const& source );
+      CNetworkConnectionInformation( _In_ CONNECTION_INFO_1 const * information_p );
+      CNetworkConnectionInformation( _In_ CNetworkConnectionInformation const& source );
       virtual ~CNetworkConnectionInformation();
 
       DWORD   ID{ 0 };
@@ -77,11 +77,11 @@ class CNetworkConnectionInformation
       ** net API header files...
       */
 
-      virtual void Copy( __in CONNECTION_INFO_1 const * source ) noexcept;
-      virtual void Copy( __in CNetworkConnectionInformation const& source ) noexcept;
+      virtual void Copy( _In_ CONNECTION_INFO_1 const * source ) noexcept;
+      virtual void Copy( _In_ CNetworkConnectionInformation const& source ) noexcept;
       virtual void Empty( void ) noexcept;
 
-      virtual CNetworkConnectionInformation const& operator=( __in CNetworkConnectionInformation const& source ) noexcept;
+      virtual CNetworkConnectionInformation const& operator=( _In_ CNetworkConnectionInformation const& source ) noexcept;
 
 #if defined( _DEBUG ) && ! defined( WFC_NO_DUMPING )
       virtual void Dump( CDumpContext& dump_context ) const;
@@ -118,14 +118,14 @@ class CNetworkConnections : public CNetwork
 
 public:
 
-    CNetworkConnections(__in CNetworkConnections const&) = delete;
-    CNetworkConnections& operator=(__in CNetworkConnections const&) = delete;
+    CNetworkConnections(_In_ CNetworkConnections const&) = delete;
+    CNetworkConnections& operator=(_In_ CNetworkConnections const&) = delete;
       CNetworkConnections(_In_ std::wstring_view machine_name = { nullptr, 0 });
       virtual ~CNetworkConnections();
 
       virtual void Close( void ) noexcept;
       virtual _Check_return_ bool Enumerate( _In_ std::wstring_view share_or_computer_name ) noexcept;
-      virtual _Check_return_ bool GetNext( __out CNetworkConnectionInformation& information ) noexcept;
+      virtual _Check_return_ bool GetNext( _Out_ CNetworkConnectionInformation& information ) noexcept;
 
 #if defined( _DEBUG ) && ! defined( WFC_NO_DUMPING )
       virtual void Dump( CDumpContext& dump_context ) const;

@@ -56,7 +56,7 @@ void test_CTape( __in const UINT tape_drive_number_to_test ) noexcept
 {
    WFCTRACEINIT( TEXT( "test_CTape()" ) );
 
-   CMicrosoftTape tape;
+   Win32FoundationClasses::CMicrosoftTape tape;
 
    if ( tape.Open( tape_drive_number_to_test ) == FALSE )
    {
@@ -69,7 +69,7 @@ void test_CTape( __in const UINT tape_drive_number_to_test ) noexcept
       WFCTRACE( TEXT( "Tape opened" ) );
    }
 
-   CTapeGetDriveParameters drive_parameters;
+   Win32FoundationClasses::CTapeGetDriveParameters drive_parameters;
 
    if ( tape.GetParameters( drive_parameters ) == FALSE )
    {
@@ -93,7 +93,7 @@ void test_CTape( __in const UINT tape_drive_number_to_test ) noexcept
 
    list_features( drive_parameters.FeaturesLow, drive_parameters.FeaturesHigh );
 
-   CTapeGetMediaParameters media_parameters;
+   Win32FoundationClasses::CTapeGetMediaParameters media_parameters;
 
    if ( tape.GetParameters( media_parameters ) == FALSE )
    {

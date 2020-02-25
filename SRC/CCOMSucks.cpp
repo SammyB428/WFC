@@ -51,8 +51,6 @@ static char THIS_FILE[] = __FILE__;
 #define new DEBUG_NEW
 #endif // _DEBUG
 
-USING_WFC_NAMESPACE
-
 static DWORD WINAPI com_sucks_message_pump_thread(VOID * parameter) noexcept
 {
     // Use Mutlithreaded apartment model, not that it matters much...
@@ -88,7 +86,7 @@ static DWORD WINAPI com_sucks_message_pump_thread(VOID * parameter) noexcept
     return(0);
 }
 
-CCOMSucks::CCOMSucks() noexcept
+Win32FoundationClasses::CCOMSucks::CCOMSucks() noexcept
 {
     DWORD thread_id = 0;
 
@@ -106,14 +104,14 @@ CCOMSucks::CCOMSucks() noexcept
         if (thread_handle != NULL)
         {
             ::WaitForSingleObject(event_handle, 5000);
-            (void) wfc_close_handle(thread_handle);
+            (void)Win32FoundationClasses::wfc_close_handle(thread_handle);
         }
     }
 
-    (void) wfc_close_handle(event_handle);
+    (void)Win32FoundationClasses::wfc_close_handle(event_handle);
 }
 
-CCOMSucks::~CCOMSucks() noexcept
+Win32FoundationClasses::CCOMSucks::~CCOMSucks() noexcept
 {
 }
 

@@ -52,8 +52,6 @@ static char THIS_FILE[] = __FILE__;
 
 #if ! defined( WFC_NO_RAS )
 
-USING_WFC_NAMESPACE
-
 #if defined( _DEBUG ) && defined( _INC_CRTDBG )
 #define new DEBUG_NEW
 #endif // _DEBUG
@@ -92,7 +90,7 @@ CInternetworkPacketExchangeProjectionResult::~CInternetworkPacketExchangeProject
    Empty();
 }
 
-void CInternetworkPacketExchangeProjectionResult::Copy( __in CInternetworkPacketExchangeProjectionResult const& source )
+void CInternetworkPacketExchangeProjectionResult::Copy( _In_ CInternetworkPacketExchangeProjectionResult const& source )
 {
    WFC_VALIDATE_POINTER( this );
    ErrorCode = source.ErrorCode;

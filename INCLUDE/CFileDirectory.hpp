@@ -76,7 +76,7 @@ class CFileDirectory
       ** Methods
       */
 
-      static _Check_return_ bool Create(__in std::wstring const& directory_name) noexcept
+      static _Check_return_ bool Create(_In_ std::wstring const& directory_name) noexcept
       {
           return(Create(directory_name.c_str()));
       }
@@ -98,14 +98,14 @@ class CFileDirectory
           return(true);
       }
 
-      static _Check_return_ bool Destroy(__in std::wstring const& directory_name) noexcept
+      static _Check_return_ bool Destroy(_In_ std::wstring const& directory_name) noexcept
       {
           return(Destroy(directory_name.c_str()));
       }
 
       static _Check_return_ bool RecursivelyDestroy(__in_z wchar_t const * const directory_name) noexcept;
           
-      static _Check_return_ bool RecursivelyDestroy(__in std::wstring const& directory_name) noexcept
+      static _Check_return_ bool RecursivelyDestroy(_In_ std::wstring const& directory_name) noexcept
       {
           return(RecursivelyDestroy(directory_name.c_str()));
       }
@@ -149,22 +149,22 @@ class CFileDirectory
           return( false );
       }
 
-      static _Check_return_ bool IsDirectory(__in std::wstring const& file_name) noexcept
+      static _Check_return_ bool IsDirectory(_In_ std::wstring const& file_name) noexcept
       {
           return(IsDirectory(file_name.c_str()));
       }
 
       virtual void Close( void ) noexcept;
       virtual _Check_return_ bool Open( _In_ std::wstring_view directory_name ) noexcept;
-      virtual _Check_return_ bool Read(__out std::vector<std::wstring>& filenames) noexcept;
-      virtual _Check_return_ bool Read( __callback WIDE_FILE_ACTION_FUNCTION action_to_take, __in void * action_parameter ) noexcept;
-      virtual _Check_return_ bool ReadRecursively(__out std::vector<std::wstring>& filenames) noexcept;
-      virtual _Check_return_ bool ReadRecursively( __callback WIDE_FILE_ACTION_FUNCTION action_to_take, __in void * action_parameter ) noexcept;
+      virtual _Check_return_ bool Read(_Out_ std::vector<std::wstring>& filenames) noexcept;
+      virtual _Check_return_ bool Read( __callback WIDE_FILE_ACTION_FUNCTION action_to_take, _In_ void * action_parameter ) noexcept;
+      virtual _Check_return_ bool ReadRecursively(_Out_ std::vector<std::wstring>& filenames) noexcept;
+      virtual _Check_return_ bool ReadRecursively( __callback WIDE_FILE_ACTION_FUNCTION action_to_take, _In_ void * action_parameter ) noexcept;
       virtual void SetWildcard(_In_ std::wstring_view wilcard ) noexcept;
-      virtual void GetWildcard( __out std::wstring& wildcard ) const noexcept;
-      virtual void SetIncludeDirectoriesInCallback( __in bool const include_directories = true ) noexcept;
+      virtual void GetWildcard( _Out_ std::wstring& wildcard ) const noexcept;
+      virtual void SetIncludeDirectoriesInCallback( _In_ bool const include_directories = true ) noexcept;
       virtual _Check_return_ bool GetIncludeDirectoriesInCallback( void ) const noexcept;
-      virtual void GetStatistics( __out uint64_t& number_of_files, __out uint64_t& total_storage ) noexcept;
+      virtual void GetStatistics( _Out_ uint64_t& number_of_files, _Out_ uint64_t& total_storage ) noexcept;
 };
 
 #endif // FILE_DIRECTORY_CLASS_HEADER

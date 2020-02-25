@@ -179,7 +179,7 @@ inline constexpr _Check_return_ bool is_all_hex_digits(_In_ std::wstring_view s)
 {
     for (wchar_t const character : s)
     {
-        if (!WFC_IS_HEXADECIMAL(character))
+        if (not WFC_IS_HEXADECIMAL(character))
         {
             return(false);
         }

@@ -56,8 +56,8 @@ class CPasswordChangeFilter
 {
    public:
 
-       CPasswordChangeFilter(__in CPasswordChangeFilter const&) = delete;
-       CPasswordChangeFilter& operator=(__in CPasswordChangeFilter const&) = delete;
+       CPasswordChangeFilter(_In_ CPasswordChangeFilter const&) = delete;
+       CPasswordChangeFilter& operator=(_In_ CPasswordChangeFilter const&) = delete;
        
        CPasswordChangeFilter();
 
@@ -69,11 +69,11 @@ class CPasswordChangeFilter
       virtual ~CPasswordChangeFilter();
 
       virtual _Check_return_ bool AddFilter(_In_ std::wstring const& dll_name ) noexcept;
-      virtual _Check_return_ bool GetCurrentFilters( __out std::vector<std::wstring>& current_filters ) noexcept;
-      virtual _Check_return_ bool OnChanged( __in PASSWORD_FILTER_STRING * user_name, __in ULONG relative_id, __in PASSWORD_FILTER_STRING * new_password ) noexcept;
-      virtual _Check_return_ bool OnFilter( __in PASSWORD_FILTER_STRING * user_name, __in PASSWORD_FILTER_STRING * full_user_name, __in PASSWORD_FILTER_STRING * new_password, __in bool was_set ) noexcept;
+      virtual _Check_return_ bool GetCurrentFilters( _Out_ std::vector<std::wstring>& current_filters ) noexcept;
+      virtual _Check_return_ bool OnChanged( _In_ PASSWORD_FILTER_STRING * user_name, _In_ ULONG relative_id, _In_ PASSWORD_FILTER_STRING * new_password ) noexcept;
+      virtual _Check_return_ bool OnFilter( _In_ PASSWORD_FILTER_STRING * user_name, _In_ PASSWORD_FILTER_STRING * full_user_name, _In_ PASSWORD_FILTER_STRING * new_password, _In_ bool was_set ) noexcept;
       virtual _Check_return_ bool OnInitialize( void ) noexcept;
-      virtual _Check_return_ bool RemoveFilter( __in std::wstring const& dll_name ) noexcept;
+      virtual _Check_return_ bool RemoveFilter( _In_ std::wstring const& dll_name ) noexcept;
 };
 
 #endif // PASSWORD_CHANGE_FILTER_CLASS_HEADER

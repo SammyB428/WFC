@@ -51,9 +51,7 @@ static char THIS_FILE[] = __FILE__;
 #define new DEBUG_NEW
 #endif // _DEBUG
 
-USING_WFC_NAMESPACE
-
-CJulianDate::~CJulianDate() noexcept
+Win32FoundationClasses::CJulianDate::~CJulianDate() noexcept
 {
    WFC_VALIDATE_POINTER( this );
    m_JulianDays = 0.0;
@@ -70,7 +68,7 @@ void CJulianDate::Dump( CDumpContext& dump_context ) const
 
 #endif // _DEBUG
 
-_Check_return_ int CJulianDate::GetDayOfWeek( void ) const noexcept
+_Check_return_ int Win32FoundationClasses::CJulianDate::GetDayOfWeek( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
    long const julian_day = (long) ( m_JulianDays + 0.5 );
@@ -80,7 +78,7 @@ _Check_return_ int CJulianDate::GetDayOfWeek( void ) const noexcept
    return( ( day_of_week == 7 ) ? 0 : day_of_week );
 }
 
-_Check_return_ bool CJulianDate::Set( __in int const year, __in int const month, __in int const day_parameter, __in int const hours, __in int const minutes, __in int const seconds ) noexcept
+_Check_return_ bool Win32FoundationClasses::CJulianDate::Set( _In_ int const year, _In_ int const month, _In_ int const day_parameter, _In_ int const hours, _In_ int const minutes, _In_ int const seconds ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 

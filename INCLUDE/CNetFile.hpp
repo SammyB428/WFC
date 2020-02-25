@@ -60,8 +60,8 @@ class CNetworkFileInformation
       ** net API header files...
       */
 
-      CNetworkFileInformation( __in FILE_INFO_3 const * information_p );
-      CNetworkFileInformation( __in CNetworkFileInformation const& source );
+      CNetworkFileInformation( _In_ FILE_INFO_3 const * information_p );
+      CNetworkFileInformation( _In_ CNetworkFileInformation const& source );
       virtual ~CNetworkFileInformation();
 
       DWORD   ID{ 0 };
@@ -75,10 +75,10 @@ class CNetworkFileInformation
       ** net API header files...
       */
 
-      virtual void Copy( __in FILE_INFO_3 const * source ) noexcept;
-      virtual void Copy( __in CNetworkFileInformation const& source ) noexcept;
+      virtual void Copy( _In_ FILE_INFO_3 const * source ) noexcept;
+      virtual void Copy( _In_ CNetworkFileInformation const& source ) noexcept;
       virtual void Empty( void ) noexcept;
-      virtual CNetworkFileInformation const& operator = ( __in CNetworkFileInformation const& source ) noexcept;
+      virtual CNetworkFileInformation const& operator = ( _In_ CNetworkFileInformation const& source ) noexcept;
 };
 
 class CNetworkFiles : public CNetwork

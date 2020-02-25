@@ -56,9 +56,9 @@ _Check_return_ bool test_CReedSolomonErrorCorrectionCode( __out std::string& cla
 
     test_number_that_failed = 1;
 
-    CReedSolomonErrorCorrectionCode transmitter;
+    Win32FoundationClasses::CReedSolomonErrorCorrectionCode transmitter;
 
-    CRandomNumberGenerator2 random_number; // 1853265048
+    Win32FoundationClasses::CRandomNumberGenerator2 random_number; // 1853265048
 
     int test_set_size = 4096;
 
@@ -119,7 +119,7 @@ _Check_return_ bool test_CReedSolomonErrorCorrectionCode( __out std::string& cla
 
     // We would now transmit data to the receiver
 
-    CReedSolomonErrorCorrectionCode receiver;
+    Win32FoundationClasses::CReedSolomonErrorCorrectionCode receiver;
 
     std::vector<uint8_t> decoded_data;
 

@@ -9,11 +9,16 @@
 
 inline _Check_return_ double as_double(_In_z_ char const * const buffer, _In_ std::size_t buffer_size) noexcept
 {
+#if ! defined( WE_ARE_BUILDING_WFC_ON_UNIX )
     double return_value = 0.0;
 
     (void)std::from_chars(buffer, &buffer[buffer_size], return_value);
 
     return(return_value);
+#else // WE_ARE_BUILDING_WFC_ON_UNIX
+    // gcc doesn't support from_chars(double)
+    return(std::stod(std::string(buffer, buffer_size)));
+#endif // WE_ARE_BUILDING_WFC_ON_UNIX
 }
 
 inline _Check_return_ double as_double(_In_ std::string_view s) noexcept
@@ -194,9 +199,7 @@ inline _Check_return_ int64_t as_integer(_In_ std::wstring_view s) noexcept
         value.erase(0, 1);
     }
 
-    wchar_t * unused = nullptr;
-
-    int64_t const return_value = _wcstoi64(value.c_str(), &unused, radix);
+    int64_t const return_value = std::stoll(value, nullptr, radix);
 
     return(return_value);
 }
@@ -236,18 +239,14 @@ inline _Check_return_ uint64_t as_unsigned_integer(_In_ std::wstring_view s) noe
         value.erase(0, 1);
     }
 
-    wchar_t * unused = nullptr;
-
-    uint64_t const return_value = _wcstoui64(value.c_str(), &unused, radix);
+    uint64_t const return_value = std::stoull(value, nullptr, radix);
 
     return(return_value);
 }
 
 inline _Check_return_ int64_t as_hexadecimal_integer(_In_ std::wstring const& s) noexcept
 {
-    wchar_t* unused = nullptr;
-
-    int64_t const return_value = _wcstoi64(s.c_str(), &unused, 16);
+    int64_t const return_value = std::stoll(s, nullptr, 16);
 
     return(return_value);
 }

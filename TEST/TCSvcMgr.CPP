@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 2000-2016, Samuel R. Blackburn
+** Copyright, 2000-2020, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -55,7 +55,7 @@ __checkReturn bool test_CServiceControlManager( __out std::string& class_name, _
    class_name.assign(STRING_VIEW("CServiceControlManager"));
    test_number_that_failed = 1;
 
-   CServiceControlManager manager;
+   Win32FoundationClasses::CServiceControlManager manager;
 
    std::wstring machine_name;
 
@@ -71,7 +71,7 @@ __checkReturn bool test_CServiceControlManager( __out std::string& class_name, _
    {
      // _tprintf( TEXT( "Services on %s:\n" ), (LPCTSTR) machine_name );
 
-      CServiceNameAndStatus status;
+       Win32FoundationClasses::CServiceNameAndStatus status;
 
       while( manager.GetNext( status ) == true )
       {

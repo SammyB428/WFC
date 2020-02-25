@@ -51,26 +51,24 @@ static char THIS_FILE[] = __FILE__;
 #define new DEBUG_NEW
 #endif // _DEBUG
 
-USING_WFC_NAMESPACE
-
 #if ! defined( SOMAXCONN )
 #define SOMAXCONN (0x7fffffff)
 #endif // SOMAXCONN
 
-CListeningSocket::CListeningSocket() noexcept
+Win32FoundationClasses::CListeningSocket::CListeningSocket() noexcept
 {
    WFC_VALIDATE_POINTER( this );
    m_Initialize();
 }
 
-CListeningSocket::~CListeningSocket() noexcept
+Win32FoundationClasses::CListeningSocket::~CListeningSocket() noexcept
 {
    WFC_VALIDATE_POINTER( this );
 }
 
 #if defined( _DEBUG ) && ! defined( WFC_NO_DUMPING )
 
-void CListeningSocket::Dump( CDumpContext &dump_context ) const
+void Win32FoundationClasses::CListeningSocket::Dump( CDumpContext &dump_context ) const
 {
    CSimpleSocket::Dump( dump_context );
    dump_context << TEXT( "{\n" );
@@ -80,21 +78,21 @@ void CListeningSocket::Dump( CDumpContext &dump_context ) const
 
 #endif // _DEBUG
 
-_Check_return_ unsigned long CListeningSocket::GetBindToAddress( void ) const noexcept
+_Check_return_ unsigned long Win32FoundationClasses::CListeningSocket::GetBindToAddress( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
    return( m_BindToAddress );
 }
 
-_Check_return_ int CListeningSocket::GetConnectionBacklog( void ) const noexcept
+_Check_return_ int Win32FoundationClasses::CListeningSocket::GetConnectionBacklog( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
    return( m_NumberOfSimultaneousSocketsToAllow );
 }
 
-void CListeningSocket::m_Initialize( void ) noexcept
+void Win32FoundationClasses::CListeningSocket::m_Initialize( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -107,7 +105,7 @@ void CListeningSocket::m_Initialize( void ) noexcept
    m_BindToAddress                      = INADDR_ANY;
 }
 
-_Check_return_ bool CListeningSocket::Open( void ) noexcept
+_Check_return_ bool Win32FoundationClasses::CListeningSocket::Open( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( m_Thunk_p );
@@ -179,7 +177,7 @@ _Check_return_ bool CListeningSocket::Open( void ) noexcept
 
 #pragma warning( disable : 4100 )
 
-_Check_return_ bool CListeningSocket::Open(_In_ std::filesystem::path const& ChannelName, _In_ UINT const port_number ) noexcept
+_Check_return_ bool Win32FoundationClasses::CListeningSocket::Open(_In_ std::filesystem::path const& ChannelName, _In_ UINT const port_number ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -188,13 +186,13 @@ _Check_return_ bool CListeningSocket::Open(_In_ std::filesystem::path const& Cha
    return( Open() );
 }
 
-void CListeningSocket::SetBindToAddress( __in unsigned long const address ) noexcept
+void Win32FoundationClasses::CListeningSocket::SetBindToAddress( _In_ unsigned long const address ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    m_BindToAddress = address;
 }
 
-void CListeningSocket::SetConnectionBacklog( __in int const backlog ) noexcept
+void Win32FoundationClasses::CListeningSocket::SetConnectionBacklog( _In_ int const backlog ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    m_NumberOfSimultaneousSocketsToAllow = backlog;
@@ -202,7 +200,7 @@ void CListeningSocket::SetConnectionBacklog( __in int const backlog ) noexcept
 
 #pragma warning( default : 4100 )
 
-_Check_return_ bool CListeningSocket::WaitForConnection( void ) noexcept
+_Check_return_ bool Win32FoundationClasses::CListeningSocket::WaitForConnection( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( m_Thunk_p );
@@ -343,7 +341,7 @@ _Check_return_ bool CListeningSocket::WaitForConnection( void ) noexcept
    return( true );
 }
 
-_Check_return_ bool CListeningSocket::WaitForConnection( __in int const port_number ) noexcept
+_Check_return_ bool Win32FoundationClasses::CListeningSocket::WaitForConnection( _In_ int const port_number ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    ASSERT( port_number > 0 );
@@ -353,7 +351,7 @@ _Check_return_ bool CListeningSocket::WaitForConnection( __in int const port_num
    return( WaitForConnection() );
 }
 
-_Check_return_ bool CListeningSocket::WaitForConnection( __in_z LPCTSTR port_name ) noexcept
+_Check_return_ bool Win32FoundationClasses::CListeningSocket::WaitForConnection( __in_z LPCTSTR port_name ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( port_name );

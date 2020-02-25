@@ -51,9 +51,7 @@ static char THIS_FILE[] = __FILE__;
 #define new DEBUG_NEW
 #endif // _DEBUG
 
-USING_WFC_NAMESPACE
-
-void PASCAL Win32FoundationClasses::wfc_append_text_to_edit_control( __in HWND edit_control_handle, __in_z LPCTSTR text_string ) noexcept
+void Win32FoundationClasses::wfc_append_text_to_edit_control( _In_ HWND edit_control_handle, __in_z LPCTSTR text_string ) noexcept
 {
    if ( text_string == nullptr )
    {

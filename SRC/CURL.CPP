@@ -50,49 +50,47 @@
 static char THIS_FILE[] = __FILE__;
 #endif // _DEBUG
 
-USING_WFC_NAMESPACE
-
 #if defined( _DEBUG ) && defined( _INC_CRTDBG )
 #define new DEBUG_NEW
 #endif // _DEBUG
 
-CUniformResourceLocator::CUniformResourceLocator() noexcept
+Win32FoundationClasses::CUniformResourceLocator::CUniformResourceLocator() noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Empty();
 }
 
-CUniformResourceLocator::CUniformResourceLocator(_In_ CUniformResourceLocator const& source ) noexcept
+Win32FoundationClasses::CUniformResourceLocator::CUniformResourceLocator(_In_ Win32FoundationClasses::CUniformResourceLocator const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );
 }
 
-CUniformResourceLocator::CUniformResourceLocator( _In_ CUniversalNamingConvention const& source ) noexcept
+Win32FoundationClasses::CUniformResourceLocator::CUniformResourceLocator( _In_ Win32FoundationClasses::CUniversalNamingConvention const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );
 }
 
-CUniformResourceLocator::CUniformResourceLocator(_In_ std::wstring_view source ) noexcept
+Win32FoundationClasses::CUniformResourceLocator::CUniformResourceLocator(_In_ std::wstring_view source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );
 }
 
-CUniformResourceLocator::~CUniformResourceLocator()
+Win32FoundationClasses::CUniformResourceLocator::~CUniformResourceLocator()
 {
    WFC_VALIDATE_POINTER( this );
    Empty();
 }
 
-_Check_return_ int CUniformResourceLocator::Compare( _In_ CUniformResourceLocator const& source ) const noexcept
+_Check_return_ int Win32FoundationClasses::CUniformResourceLocator::Compare( _In_ Win32FoundationClasses::CUniformResourceLocator const& source ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
    return( compare_no_case( URL, source.URL ) );
 }
 
-void CUniformResourceLocator::Copy(_In_ CUniformResourceLocator const& source ) noexcept
+void Win32FoundationClasses::CUniformResourceLocator::Copy(_In_ Win32FoundationClasses::CUniformResourceLocator const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    ProtocolName.assign( source.ProtocolName );
@@ -102,7 +100,7 @@ void CUniformResourceLocator::Copy(_In_ CUniformResourceLocator const& source ) 
    URL.assign( source.URL );
 }
 
-void CUniformResourceLocator::Copy( _In_ CUniversalNamingConvention const& source ) noexcept
+void Win32FoundationClasses::CUniformResourceLocator::Copy( _In_ Win32FoundationClasses::CUniversalNamingConvention const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -129,7 +127,7 @@ void CUniformResourceLocator::Copy( _In_ CUniversalNamingConvention const& sourc
    Make();
 }
 
-void CUniformResourceLocator::Copy(_In_ std::wstring_view source ) noexcept
+void Win32FoundationClasses::CUniformResourceLocator::Copy(_In_ std::wstring_view source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -195,7 +193,7 @@ void CUniformResourceLocator::Copy(_In_ std::wstring_view source ) noexcept
    WFC_END_CATCH_ALL
 }
 
-void CUniformResourceLocator::Empty( void ) noexcept
+void Win32FoundationClasses::CUniformResourceLocator::Empty( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    ProtocolName.clear();
@@ -205,7 +203,7 @@ void CUniformResourceLocator::Empty( void ) noexcept
    URL.clear();
 }
 
-void CUniformResourceLocator::Make( void ) noexcept
+void Win32FoundationClasses::CUniformResourceLocator::Make( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -223,21 +221,21 @@ void CUniformResourceLocator::Make( void ) noexcept
    URL.append( PathName );
 }
 
-_Check_return_ CUniformResourceLocator& CUniformResourceLocator::operator = ( __in CUniformResourceLocator const& source ) noexcept
+_Check_return_ Win32FoundationClasses::CUniformResourceLocator& Win32FoundationClasses::CUniformResourceLocator::operator = ( _In_ Win32FoundationClasses::CUniformResourceLocator const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );
    return( *this );
 }
 
-_Check_return_ CUniformResourceLocator& CUniformResourceLocator::operator = ( __in CUniversalNamingConvention const& source ) noexcept
+_Check_return_ Win32FoundationClasses::CUniformResourceLocator& Win32FoundationClasses::CUniformResourceLocator::operator = ( _In_ Win32FoundationClasses::CUniversalNamingConvention const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );
    return( *this );
 }
 
-_Check_return_ CUniformResourceLocator& CUniformResourceLocator::operator = ( __in_z LPCTSTR source ) noexcept
+_Check_return_ Win32FoundationClasses::CUniformResourceLocator& Win32FoundationClasses::CUniformResourceLocator::operator = ( __in_z LPCTSTR source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
@@ -245,7 +243,7 @@ _Check_return_ CUniformResourceLocator& CUniformResourceLocator::operator = ( __
    return( *this );
 }
 
-_Check_return_ bool CUniformResourceLocator::operator == ( __in CUniformResourceLocator const& right_url ) const noexcept
+_Check_return_ bool Win32FoundationClasses::CUniformResourceLocator::operator == ( _In_ Win32FoundationClasses::CUniformResourceLocator const& right_url ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -261,7 +259,7 @@ _Check_return_ bool CUniformResourceLocator::operator == ( __in CUniformResource
 
 #if defined( _DEBUG ) && ! defined( WFC_NO_DUMPING )
 
-void CUniformResourceLocator::Dump( CDumpContext& dump_context ) const
+void Win32FoundationClasses::CUniformResourceLocator::Dump( CDumpContext& dump_context ) const
 {
    CObject::Dump( dump_context );
 

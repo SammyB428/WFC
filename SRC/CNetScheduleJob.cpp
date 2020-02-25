@@ -50,8 +50,6 @@
 static char THIS_FILE[] = __FILE__;
 #endif // _DEBUG
 
-USING_WFC_NAMESPACE
-
 #if defined( _DEBUG ) && defined( _INC_CRTDBG )
 #define new DEBUG_NEW
 #endif // _DEBUG
@@ -60,37 +58,37 @@ USING_WFC_NAMESPACE
 ** CNetworkScheduleJob stuff
 */
 
-CNetworkScheduleJob::CNetworkScheduleJob()
+Win32FoundationClasses::CNetworkScheduleJob::CNetworkScheduleJob()
 {
    WFC_VALIDATE_POINTER( this );
    m_Initialize();
 }
 
-CNetworkScheduleJob::CNetworkScheduleJob( __in AT_ENUM const * source )
+Win32FoundationClasses::CNetworkScheduleJob::CNetworkScheduleJob( _In_ AT_ENUM const * source )
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );
 }
 
-CNetworkScheduleJob::CNetworkScheduleJob( __in AT_INFO const * source )
+Win32FoundationClasses::CNetworkScheduleJob::CNetworkScheduleJob( _In_ AT_INFO const * source )
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );
 }
 
-CNetworkScheduleJob::CNetworkScheduleJob( __in CNetworkScheduleJob const& source )
+Win32FoundationClasses::CNetworkScheduleJob::CNetworkScheduleJob( _In_ Win32FoundationClasses::CNetworkScheduleJob const& source )
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );
 }
 
-CNetworkScheduleJob::~CNetworkScheduleJob()
+Win32FoundationClasses::CNetworkScheduleJob::~CNetworkScheduleJob()
 {
    WFC_VALIDATE_POINTER( this );
    m_Initialize();
 }
 
-void CNetworkScheduleJob::Copy( __in AT_ENUM const * source ) noexcept
+void Win32FoundationClasses::CNetworkScheduleJob::Copy( _In_ AT_ENUM const * source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
@@ -139,7 +137,7 @@ void CNetworkScheduleJob::Copy( __in AT_ENUM const * source ) noexcept
    WFC_END_CATCH_ALL
 }
 
-void CNetworkScheduleJob::Copy( __in AT_INFO const * source ) noexcept
+void Win32FoundationClasses::CNetworkScheduleJob::Copy( _In_ AT_INFO const * source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
@@ -188,7 +186,7 @@ void CNetworkScheduleJob::Copy( __in AT_INFO const * source ) noexcept
    WFC_END_CATCH_ALL
 }
 
-void CNetworkScheduleJob::Copy( __in CNetworkScheduleJob const& source ) noexcept
+void Win32FoundationClasses::CNetworkScheduleJob::Copy( _In_ Win32FoundationClasses::CNetworkScheduleJob const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    ASSERT( this != &source );
@@ -375,13 +373,13 @@ void CNetworkScheduleJob::Dump( CDumpContext& dump_context ) const
 
 #endif // _DEBUG
 
-void CNetworkScheduleJob::Empty( void ) noexcept
+void Win32FoundationClasses::CNetworkScheduleJob::Empty( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    m_Initialize();
 }
 
-void CNetworkScheduleJob::m_Initialize( void ) noexcept
+void Win32FoundationClasses::CNetworkScheduleJob::m_Initialize( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -393,7 +391,7 @@ void CNetworkScheduleJob::m_Initialize( void ) noexcept
    Command.clear();
 }
 
-CNetworkScheduleJob const& CNetworkScheduleJob::operator = ( __in CNetworkScheduleJob const& source ) noexcept
+Win32FoundationClasses::CNetworkScheduleJob const& Win32FoundationClasses::CNetworkScheduleJob::operator = ( _In_ Win32FoundationClasses::CNetworkScheduleJob const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    ASSERT( this != &source );

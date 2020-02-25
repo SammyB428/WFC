@@ -71,7 +71,7 @@ class CGarbageCollector
       virtual _Check_return_ long GetReferenceCount( void ) const noexcept;
       virtual _Check_return_ bool GetSelfDestruct( void ) const noexcept;
       virtual void Release( __out_opt bool * deleted = nullptr ) noexcept;
-      virtual void SetSelfDestruct( __in bool const self_destruct = true ) noexcept;
+      virtual void SetSelfDestruct( _In_ bool const self_destruct = true ) noexcept;
 
 #if defined( _DEBUG ) && ! defined( WFC_NO_DUMPING )
 

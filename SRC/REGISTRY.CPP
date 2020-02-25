@@ -50,8 +50,6 @@
 static char THIS_FILE[] = __FILE__;
 #endif // _DEBUG
 
-USING_WFC_NAMESPACE
-
 #if defined( _DEBUG ) && defined( _INC_CRTDBG )
 #define new DEBUG_NEW
 #endif // _DEBUG
@@ -92,13 +90,13 @@ static _Check_return_ LONG _recursively_delete_all_sub_keys( _In_ HKEY key_handl
     return( return_value );
 }
 
-CRegistry::CRegistry()
+Win32FoundationClasses::CRegistry::CRegistry()
 {
     WFC_VALIDATE_POINTER( this );
     m_Initialize();
 }
 
-CRegistry::~CRegistry()
+Win32FoundationClasses::CRegistry::~CRegistry()
 {
     WFC_VALIDATE_POINTER( this );
 
@@ -110,7 +108,7 @@ CRegistry::~CRegistry()
     m_Initialize();
 }
 
-void CRegistry::m_Initialize( void )
+void Win32FoundationClasses::CRegistry::m_Initialize( void )
 {
     WFC_VALIDATE_POINTER( this );
 
@@ -141,7 +139,7 @@ void CRegistry::m_Initialize( void )
     m_RegistryHandle               = static_cast< HKEY >( NULL );
 }
 
-_Check_return_ bool CRegistry::Close( void ) noexcept
+_Check_return_ bool Win32FoundationClasses::CRegistry::Close( void ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
 
@@ -175,7 +173,7 @@ _Check_return_ bool CRegistry::Close( void ) noexcept
     }
 }
 
-_Check_return_ bool CRegistry::Connect( __in HKEY key_to_open, __in_z_opt wchar_t const * name_of_computer ) noexcept
+_Check_return_ bool Win32FoundationClasses::CRegistry::Connect( _In_ HKEY key_to_open, __in_z_opt wchar_t const * name_of_computer ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
     WFC_VALIDATE_POINTER_NULL_OK( name_of_computer );
@@ -295,10 +293,10 @@ _Check_return_ bool CRegistry::Connect( __in HKEY key_to_open, __in_z_opt wchar_
     WFC_END_CATCH_ALL
 }
 
-_Check_return_ bool CRegistry::Create( __in_z wchar_t const *               name_of_subkey,
+_Check_return_ bool Win32FoundationClasses::CRegistry::Create( __in_z wchar_t const *               name_of_subkey,
                                      __in_z_opt wchar_t const *               name_of_class,
-                                     __in CreateOptions         options, 
-                                     __in CreatePermissions     permissions, 
+                                     _In_ CreateOptions         options, 
+                                     _In_ CreatePermissions     permissions, 
                                      __in_opt LPSECURITY_ATTRIBUTES security_attributes_p,
                                      __in_opt CreationDisposition * disposition_p ) noexcept
 {
@@ -362,7 +360,7 @@ _Check_return_ bool CRegistry::Create( __in_z wchar_t const *               name
     WFC_END_CATCH_ALL
 }
 
-_Check_return_ bool CRegistry::DeleteKey( __in_z wchar_t const * name_of_key_to_delete ) noexcept
+_Check_return_ bool Win32FoundationClasses::CRegistry::DeleteKey( __in_z wchar_t const * name_of_key_to_delete ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
     WFC_VALIDATE_POINTER( name_of_key_to_delete );
@@ -442,7 +440,7 @@ _Check_return_ bool CRegistry::DeleteKey( __in_z wchar_t const * name_of_key_to_
     WFC_END_CATCH_ALL
 }
 
-_Check_return_ bool CRegistry::DeleteValue( __in_z wchar_t const * name_of_value_to_delete ) noexcept
+_Check_return_ bool Win32FoundationClasses::CRegistry::DeleteValue( __in_z wchar_t const * name_of_value_to_delete ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
 
@@ -476,7 +474,7 @@ _Check_return_ bool CRegistry::DeleteValue( __in_z wchar_t const * name_of_value
 
 #if defined( _DEBUG ) && ! defined( WFC_NO_DUMPING )
 
-void CRegistry::Dump( CDumpContext& dump_context ) const
+void Win32FoundationClasses::CRegistry::Dump( CDumpContext& dump_context ) const
 {
     CObject::Dump( dump_context );
 
@@ -503,7 +501,7 @@ void CRegistry::Dump( CDumpContext& dump_context ) const
 
 #endif // _DEBUG
 
-_Check_return_ bool CRegistry::EnumerateKeys( __in DWORD const subkey_index, __out std::wstring& subkey_name, __out std::wstring& class_name ) noexcept
+_Check_return_ bool Win32FoundationClasses::CRegistry::EnumerateKeys( _In_ DWORD const subkey_index, _Out_ std::wstring& subkey_name, _Out_ std::wstring& class_name ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
 
@@ -542,9 +540,9 @@ _Check_return_ bool CRegistry::EnumerateKeys( __in DWORD const subkey_index, __o
     }
 }
 
-_Check_return_ bool CRegistry::EnumerateValues( __in DWORD const    value_index,
-                                              __out std::wstring&       name_of_value,
-                                              __out KeyValueTypes& type_code,
+_Check_return_ bool Win32FoundationClasses::CRegistry::EnumerateValues( _In_ DWORD const    value_index,
+                                              _Out_ std::wstring&       name_of_value,
+                                              _Out_ KeyValueTypes& type_code,
                                               __out_bcount_part( size_of_data_buffer, size_of_data_buffer) LPBYTE data_buffer,
                                               __inout DWORD&         size_of_data_buffer ) noexcept
 {
@@ -599,7 +597,7 @@ _Check_return_ bool CRegistry::EnumerateValues( __in DWORD const    value_index,
     WFC_END_CATCH_ALL
 }
 
-_Check_return_ bool CRegistry::Flush( void ) noexcept
+_Check_return_ bool Win32FoundationClasses::CRegistry::Flush( void ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
 
@@ -616,7 +614,7 @@ _Check_return_ bool CRegistry::Flush( void ) noexcept
     }
 }
 
-_Check_return_ bool CRegistry::GetBinaryValue( __in_z wchar_t const * name_of_value, __out std::vector<uint8_t>& return_array ) noexcept
+_Check_return_ bool Win32FoundationClasses::CRegistry::GetBinaryValue( __in_z wchar_t const * name_of_value, _Out_ std::vector<uint8_t>& return_array ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
 
@@ -670,19 +668,19 @@ _Check_return_ bool CRegistry::GetBinaryValue( __in_z wchar_t const * name_of_va
     return( return_value );
 }
 
-void CRegistry::GetTheClassName( _Out_ std::wstring& class_name ) const noexcept
+void Win32FoundationClasses::CRegistry::GetTheClassName( _Out_ std::wstring& class_name ) const noexcept
 {
     WFC_VALIDATE_POINTER( this );
     class_name.assign( m_ClassName );
 }
 
-void CRegistry::GetComputerName( _Out_ std::wstring& computer_name ) const noexcept
+void Win32FoundationClasses::CRegistry::GetComputerName( _Out_ std::wstring& computer_name ) const noexcept
 {
     WFC_VALIDATE_POINTER( this );
     computer_name.assign( m_ComputerName );
 }
 
-_Check_return_ bool CRegistry::GetDoubleWordValue( _In_z_ wchar_t const * name_of_value, _Out_ DWORD& return_value ) noexcept
+_Check_return_ bool Win32FoundationClasses::CRegistry::GetDoubleWordValue( _In_z_ wchar_t const * name_of_value, _Out_ DWORD& return_value ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
 
@@ -693,19 +691,19 @@ _Check_return_ bool CRegistry::GetDoubleWordValue( _In_z_ wchar_t const * name_o
     return( QueryValue( name_of_value, type, reinterpret_cast<uint8_t *>(&return_value), size_of_buffer ) );
 }
 
-void CRegistry::GetKeyName( __out std::wstring& key_name ) const noexcept
+void Win32FoundationClasses::CRegistry::GetKeyName( _Out_ std::wstring& key_name ) const noexcept
 {
     WFC_VALIDATE_POINTER( this );
     key_name.assign( m_KeyName );
 }
 
-void CRegistry::GetRegistryName( _Out_ std::wstring& registry_name ) const noexcept
+void Win32FoundationClasses::CRegistry::GetRegistryName( _Out_ std::wstring& registry_name ) const noexcept
 {
     WFC_VALIDATE_POINTER( this );
     registry_name.assign( m_RegistryName );
 }
 
-_Check_return_ bool CRegistry::GetSecurity( __in SECURITY_INFORMATION const what_you_want_to_know,
+_Check_return_ bool Win32FoundationClasses::CRegistry::GetSecurity( _In_ SECURITY_INFORMATION const what_you_want_to_know,
                                           __out_bcount_part( size_of_data_buffer, size_of_data_buffer ) PSECURITY_DESCRIPTOR data_buffer,
                                           __inout DWORD&                     size_of_data_buffer ) noexcept
 {
@@ -745,7 +743,7 @@ _Check_return_ bool CRegistry::GetSecurity( __in SECURITY_INFORMATION const what
     WFC_END_CATCH_ALL
 }
 
-_Check_return_ bool CRegistry::GetStringValue(_In_z_ wchar_t const * name_of_value, _Out_ std::wstring& return_string) noexcept
+_Check_return_ bool Win32FoundationClasses::CRegistry::GetStringValue(_In_z_ wchar_t const * name_of_value, _Out_ std::wstring& return_string) noexcept
 {
     WFC_VALIDATE_POINTER(this);
 
@@ -768,7 +766,7 @@ _Check_return_ bool CRegistry::GetStringValue(_In_z_ wchar_t const * name_of_val
     }
 }
 
-_Check_return_ bool CRegistry::GetStringArrayValue(_In_z_ wchar_t const * name_of_value, _Out_ std::vector<std::wstring>& return_array) noexcept
+_Check_return_ bool Win32FoundationClasses::CRegistry::GetStringArrayValue(_In_z_ wchar_t const * name_of_value, _Out_ std::vector<std::wstring>& return_array) noexcept
 {
     WFC_VALIDATE_POINTER(this);
 
@@ -823,31 +821,31 @@ _Check_return_ bool CRegistry::GetStringArrayValue(_In_z_ wchar_t const * name_o
     return(return_value);
 }
 
-_Check_return_ bool CRegistry::GetValue( __in_z wchar_t const * name_of_value, __out std::vector<uint8_t>& return_array ) noexcept
+_Check_return_ bool Win32FoundationClasses::CRegistry::GetValue( __in_z wchar_t const * name_of_value, _Out_ std::vector<uint8_t>& return_array ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
     return( GetBinaryValue( name_of_value, return_array ) );
 }
 
-_Check_return_ bool CRegistry::GetValue( __in_z wchar_t const * name_of_value, __out DWORD& return_value ) noexcept
+_Check_return_ bool Win32FoundationClasses::CRegistry::GetValue( __in_z wchar_t const * name_of_value, _Out_ DWORD& return_value ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
     return( GetDoubleWordValue( name_of_value, return_value ) );
 }
 
-_Check_return_ bool CRegistry::GetValue( __in_z wchar_t const * name_of_value, __out std::wstring& return_string ) noexcept
+_Check_return_ bool Win32FoundationClasses::CRegistry::GetValue( __in_z wchar_t const * name_of_value, _Out_ std::wstring& return_string ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
     return( GetStringValue( name_of_value, return_string ) );
 }
 
-_Check_return_ bool CRegistry::GetValue( __in_z wchar_t const * name_of_value, __out std::vector<std::wstring>& return_array ) noexcept
+_Check_return_ bool Win32FoundationClasses::CRegistry::GetValue( __in_z wchar_t const * name_of_value, _Out_ std::vector<std::wstring>& return_array ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
     return( GetStringArrayValue( name_of_value, return_array ) );
 }
 
-_Check_return_ bool CRegistry::Load( __in_z wchar_t const * name_of_subkey, __in_z wchar_t const * name_of_file_containing_information ) noexcept
+_Check_return_ bool Win32FoundationClasses::CRegistry::Load( __in_z wchar_t const * name_of_subkey, __in_z wchar_t const * name_of_file_containing_information ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
     WFC_VALIDATE_POINTER( name_of_subkey );
@@ -883,10 +881,10 @@ _Check_return_ bool CRegistry::Load( __in_z wchar_t const * name_of_subkey, __in
     WFC_END_CATCH_ALL
 }
 
-_Check_return_ bool CRegistry::NotifyChange( __in HANDLE const           event_handle,
-                                           __in NotifyChangeFilter const changes_to_be_reported,
-                                           __in NotifyChangeFlag const   this_subkey_or_all_subkeys,
-                                           __in bool const               wait_for_change_or_signal_event ) noexcept
+_Check_return_ bool Win32FoundationClasses::CRegistry::NotifyChange( _In_ HANDLE const           event_handle,
+                                           _In_ NotifyChangeFilter const changes_to_be_reported,
+                                           _In_ NotifyChangeFlag const   this_subkey_or_all_subkeys,
+                                           _In_ bool const               wait_for_change_or_signal_event ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
 
@@ -907,7 +905,7 @@ _Check_return_ bool CRegistry::NotifyChange( __in HANDLE const           event_h
     }
 }
 
-_Check_return_ bool CRegistry::Open( __in_z wchar_t const * name_of_subkey_to_open, __in CreatePermissions const security_access_mask ) noexcept
+_Check_return_ bool Win32FoundationClasses::CRegistry::Open( __in_z wchar_t const * name_of_subkey_to_open, _In_ CreatePermissions const security_access_mask ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
 
@@ -948,7 +946,7 @@ _Check_return_ bool CRegistry::Open( __in_z wchar_t const * name_of_subkey_to_op
     WFC_END_CATCH_ALL
 }
 
-_Check_return_ bool CRegistry::QueryInfo( void ) noexcept
+_Check_return_ bool Win32FoundationClasses::CRegistry::QueryInfo( void ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
 
@@ -984,7 +982,7 @@ _Check_return_ bool CRegistry::QueryInfo( void ) noexcept
     }
 }
 
-_Check_return_ bool CRegistry::QueryValue( __in_z wchar_t const * name_of_value,
+_Check_return_ bool Win32FoundationClasses::CRegistry::QueryValue( __in_z wchar_t const * name_of_value,
                                          __inout KeyValueTypes& value_type,
                                          __out_bcount_part( size_of_buffer, size_of_buffer ) uint8_t * address_of_buffer,
                                          __inout std::size_t& size_of_buffer ) noexcept
@@ -1028,7 +1026,7 @@ _Check_return_ bool CRegistry::QueryValue( __in_z wchar_t const * name_of_value,
     WFC_END_CATCH_ALL
 }
 
-_Check_return_ bool CRegistry::Replace( __in_z wchar_t const * name_of_subkey,
+_Check_return_ bool Win32FoundationClasses::CRegistry::Replace( __in_z wchar_t const * name_of_subkey,
                                       __in_z wchar_t const * name_of_file_with_new_data,
                                       __in_z wchar_t const * name_of_backup_file ) noexcept
 {
@@ -1072,7 +1070,7 @@ _Check_return_ bool CRegistry::Replace( __in_z wchar_t const * name_of_subkey,
     WFC_END_CATCH_ALL
 }
 
-_Check_return_ bool CRegistry::Restore( __in_z wchar_t const * name_of_file_holding_saved_tree, __in DWORD const volatility_flags ) noexcept
+_Check_return_ bool Win32FoundationClasses::CRegistry::Restore( __in_z wchar_t const * name_of_file_holding_saved_tree, _In_ DWORD const volatility_flags ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
     WFC_VALIDATE_POINTER( name_of_file_holding_saved_tree );
@@ -1164,7 +1162,7 @@ _Check_return_ bool CRegistry::Restore( __in_z wchar_t const * name_of_file_hold
     WFC_END_CATCH_ALL
 }
 
-_Check_return_ bool CRegistry::Save( __in_z wchar_t const * name_of_file_to_hold_tree, __in_opt LPSECURITY_ATTRIBUTES security_attributes_p ) noexcept
+_Check_return_ bool Win32FoundationClasses::CRegistry::Save( __in_z wchar_t const * name_of_file_to_hold_tree, __in_opt LPSECURITY_ATTRIBUTES security_attributes_p ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
     WFC_VALIDATE_POINTER( name_of_file_to_hold_tree );
@@ -1199,7 +1197,7 @@ _Check_return_ bool CRegistry::Save( __in_z wchar_t const * name_of_file_to_hold
     WFC_END_CATCH_ALL
 }
 
-_Check_return_ bool CRegistry::SetBinaryValue( __in_z wchar_t const * name_of_value, __in std::vector<uint8_t> const& bytes_to_write ) noexcept
+_Check_return_ bool Win32FoundationClasses::CRegistry::SetBinaryValue( __in_z wchar_t const * name_of_value, _In_ std::vector<uint8_t> const& bytes_to_write ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
 
@@ -1224,14 +1222,14 @@ _Check_return_ bool CRegistry::SetBinaryValue( __in_z wchar_t const * name_of_va
     return( return_value );
 }
 
-_Check_return_ bool CRegistry::SetDoubleWordValue( __in_z wchar_t const * name_of_value, __in DWORD value_to_write ) noexcept
+_Check_return_ bool Win32FoundationClasses::CRegistry::SetDoubleWordValue( __in_z wchar_t const * name_of_value, _In_ DWORD value_to_write ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
 
     return( SetValue( name_of_value, KeyValueTypes::DoubleWord, reinterpret_cast<PBYTE const>(&value_to_write), sizeof( DWORD ) ) );
 }
 
-_Check_return_ bool CRegistry::SetSecurity( __in SECURITY_INFORMATION const& security_information, __in PSECURITY_DESCRIPTOR const security_descriptor_p ) noexcept
+_Check_return_ bool Win32FoundationClasses::CRegistry::SetSecurity( _In_ SECURITY_INFORMATION const& security_information, _In_ PSECURITY_DESCRIPTOR const security_descriptor_p ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
     WFC_VALIDATE_POINTER( security_descriptor_p );
@@ -1266,7 +1264,7 @@ _Check_return_ bool CRegistry::SetSecurity( __in SECURITY_INFORMATION const& sec
     WFC_END_CATCH_ALL
 }
 
-_Check_return_ bool CRegistry::SetStringValue( _In_z_ wchar_t const * name_of_value, _In_ std::wstring const& string_value ) noexcept
+_Check_return_ bool Win32FoundationClasses::CRegistry::SetStringValue( _In_z_ wchar_t const * name_of_value, _In_ std::wstring const& string_value ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
 
@@ -1275,7 +1273,7 @@ _Check_return_ bool CRegistry::SetStringValue( _In_z_ wchar_t const * name_of_va
     return( SetValue( name_of_value, KeyValueTypes::String, reinterpret_cast<uint8_t const *>(string_value.c_str()), (DWORD) ( ( string_value.length() + 1 ) * sizeof( wchar_t ) ) ) );
 }
 
-_Check_return_ bool CRegistry::SetStringArrayValue(_In_z_ wchar_t const * name_of_value, _In_ std::vector<std::wstring> const& string_array ) noexcept
+_Check_return_ bool Win32FoundationClasses::CRegistry::SetStringArrayValue(_In_z_ wchar_t const * name_of_value, _In_ std::vector<std::wstring> const& string_array ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
 
@@ -1355,38 +1353,38 @@ _Check_return_ bool CRegistry::SetStringArrayValue(_In_z_ wchar_t const * name_o
     return( return_value );
 }
 
-_Check_return_ bool CRegistry::SetValue( __in_z wchar_t const * name_of_value, __in std::vector<uint8_t> const& bytes_to_write ) noexcept
+_Check_return_ bool Win32FoundationClasses::CRegistry::SetValue( __in_z wchar_t const * name_of_value, _In_ std::vector<uint8_t> const& bytes_to_write ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
 
     return( SetBinaryValue( name_of_value, bytes_to_write ) );
 }
 
-_Check_return_ bool CRegistry::SetValue( __in_z wchar_t const * name_of_value, __in DWORD value ) noexcept
+_Check_return_ bool Win32FoundationClasses::CRegistry::SetValue( __in_z wchar_t const * name_of_value, _In_ DWORD value ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
 
     return( SetDoubleWordValue( name_of_value, value ) );
 }
 
-_Check_return_ bool CRegistry::SetValue( __in_z wchar_t const * name_of_value, __in std::vector<std::wstring> const& strings_to_write ) noexcept
+_Check_return_ bool Win32FoundationClasses::CRegistry::SetValue( __in_z wchar_t const * name_of_value, _In_ std::vector<std::wstring> const& strings_to_write ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
 
     return( SetStringArrayValue( name_of_value, strings_to_write ) );
 }
 
-_Check_return_ bool CRegistry::SetValue( __in_z wchar_t const * name_of_value, __in std::wstring const& string_to_write ) noexcept
+_Check_return_ bool Win32FoundationClasses::CRegistry::SetValue( __in_z wchar_t const * name_of_value, _In_ std::wstring const& string_to_write ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
 
     return( SetStringValue( name_of_value, string_to_write ) );
 }
 
-_Check_return_ bool CRegistry::SetValue( __in_z wchar_t const * name_of_value,
-                                       __in KeyValueTypes const type_of_value_to_set, 
+_Check_return_ bool Win32FoundationClasses::CRegistry::SetValue( __in_z wchar_t const * name_of_value,
+                                       _In_ KeyValueTypes const type_of_value_to_set, 
                                        __in_bcount_opt( size_of_data ) uint8_t const* address_of_value_data,
-                                       __in std::size_t const        size_of_data ) noexcept
+                                       _In_ std::size_t const        size_of_data ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
     WFC_VALIDATE_POINTER( name_of_value );
@@ -1429,7 +1427,7 @@ _Check_return_ bool CRegistry::SetValue( __in_z wchar_t const * name_of_value,
     WFC_END_CATCH_ALL
 }
 
-_Check_return_ bool CRegistry::UnLoad( __in_z wchar_t const * name_of_subkey_to_unload ) noexcept
+_Check_return_ bool Win32FoundationClasses::CRegistry::UnLoad( __in_z wchar_t const * name_of_subkey_to_unload ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
     WFC_VALIDATE_POINTER( name_of_subkey_to_unload );

@@ -51,9 +51,7 @@ static char THIS_FILE[] = __FILE__;
 #define new DEBUG_NEW
 #endif // _DEBUG
 
-USING_WFC_NAMESPACE
-
-CDataArchive::CDataArchive() noexcept
+Win32FoundationClasses::CDataArchive::CDataArchive() noexcept
 {
     WFC_VALIDATE_POINTER(this);
 
@@ -63,7 +61,7 @@ CDataArchive::CDataArchive() noexcept
     m_Position = 0;
 }
 
-CDataArchive::~CDataArchive() noexcept
+Win32FoundationClasses::CDataArchive::~CDataArchive() noexcept
 {
     WFC_VALIDATE_POINTER(this);
 
@@ -73,7 +71,7 @@ CDataArchive::~CDataArchive() noexcept
     m_Position = 0;
 }
 
-_Check_return_ bool CDataArchive::IsLoading(void) const noexcept
+_Check_return_ bool Win32FoundationClasses::CDataArchive::IsLoading(void) const noexcept
 {
     WFC_VALIDATE_POINTER(this);
 
@@ -85,7 +83,7 @@ _Check_return_ bool CDataArchive::IsLoading(void) const noexcept
     return(false);
 }
 
-_Check_return_ bool CDataArchive::IsStoring(void) const noexcept
+_Check_return_ bool Win32FoundationClasses::CDataArchive::IsStoring(void) const noexcept
 {
     WFC_VALIDATE_POINTER(this);
 
@@ -97,7 +95,7 @@ _Check_return_ bool CDataArchive::IsStoring(void) const noexcept
     return(false);
 }
 
-void CDataArchive::Read(__out uint8_t& value) noexcept
+void Win32FoundationClasses::CDataArchive::Read(_Out_ uint8_t& value) noexcept
 {
     WFC_VALIDATE_POINTER(this);
 
@@ -124,7 +122,7 @@ void CDataArchive::Read(__out uint8_t& value) noexcept
     WFC_END_CATCH_ALL
 }
 
-void CDataArchive::Read(__out std::vector<uint8_t>& array) noexcept
+void Win32FoundationClasses::CDataArchive::Read(_Out_ std::vector<uint8_t>& array) noexcept
 {
     WFC_VALIDATE_POINTER(this);
 
@@ -169,7 +167,7 @@ void CDataArchive::Read(__out std::vector<uint8_t>& array) noexcept
         WFC_END_CATCH_ALL
 }
 
-void CDataArchive::Read(__out std::vector<uint32_t>& array) noexcept
+void Win32FoundationClasses::CDataArchive::Read(_Out_ std::vector<uint32_t>& array) noexcept
 {
     WFC_VALIDATE_POINTER(this);
 
@@ -214,7 +212,7 @@ void CDataArchive::Read(__out std::vector<uint32_t>& array) noexcept
         WFC_END_CATCH_ALL
 }
 
-void CDataArchive::Read(__out char& value) noexcept
+void Win32FoundationClasses::CDataArchive::Read(_Out_ char& value) noexcept
 {
     WFC_VALIDATE_POINTER(this);
 
@@ -234,7 +232,7 @@ void CDataArchive::Read(__out char& value) noexcept
     value = character;
 }
 
-void CDataArchive::Read(__out std::vector<std::wstring>& array) noexcept
+void Win32FoundationClasses::CDataArchive::Read(_Out_ std::vector<std::wstring>& array) noexcept
 {
     WFC_VALIDATE_POINTER(this);
 
@@ -273,7 +271,7 @@ void CDataArchive::Read(__out std::vector<std::wstring>& array) noexcept
         WFC_END_CATCH_ALL
 }
 
-void CDataArchive::Read(__out std::wstring& value) noexcept
+void Win32FoundationClasses::CDataArchive::Read(_Out_ std::wstring& value) noexcept
 {
     WFC_VALIDATE_POINTER(this);
 
@@ -306,7 +304,7 @@ void CDataArchive::Read(__out std::wstring& value) noexcept
         WFC_END_CATCH_ALL
 }
 
-void CDataArchive::Read(__out std::vector<uint16_t>& array) noexcept
+void Win32FoundationClasses::CDataArchive::Read(_Out_ std::vector<uint16_t>& array) noexcept
 {
     WFC_VALIDATE_POINTER(this);
 
@@ -351,7 +349,7 @@ void CDataArchive::Read(__out std::vector<uint16_t>& array) noexcept
         WFC_END_CATCH_ALL
 }
 
-void CDataArchive::Read(__out double& value) noexcept
+void Win32FoundationClasses::CDataArchive::Read(_Out_ double& value) noexcept
 {
     WFC_VALIDATE_POINTER(this);
 
@@ -380,7 +378,7 @@ void CDataArchive::Read(__out double& value) noexcept
         WFC_END_CATCH_ALL
 }
 
-void CDataArchive::Read(__out uint32_t& value) noexcept
+void Win32FoundationClasses::CDataArchive::Read(_Out_ uint32_t& value) noexcept
 {
     WFC_VALIDATE_POINTER(this);
 
@@ -410,7 +408,7 @@ void CDataArchive::Read(__out uint32_t& value) noexcept
         WFC_END_CATCH_ALL
 }
 
-void CDataArchive::Read(__out float& value) noexcept
+void Win32FoundationClasses::CDataArchive::Read(_Out_ float& value) noexcept
 {
     WFC_VALIDATE_POINTER(this);
 
@@ -439,7 +437,7 @@ void CDataArchive::Read(__out float& value) noexcept
         WFC_END_CATCH_ALL
 }
 
-void CDataArchive::Read( __out int32_t& value) noexcept
+void Win32FoundationClasses::CDataArchive::Read( _Out_ int32_t& value) noexcept
 {
     WFC_VALIDATE_POINTER(this);
 
@@ -468,7 +466,7 @@ void CDataArchive::Read( __out int32_t& value) noexcept
         WFC_END_CATCH_ALL
 }
 
-void CDataArchive::Read(__out uint64_t& value) noexcept
+void Win32FoundationClasses::CDataArchive::Read(_Out_ uint64_t& value) noexcept
 {
     WFC_VALIDATE_POINTER(this);
 
@@ -497,7 +495,7 @@ void CDataArchive::Read(__out uint64_t& value) noexcept
         WFC_END_CATCH_ALL
 }
 
-void CDataArchive::Read(__out uint16_t& value) noexcept
+void Win32FoundationClasses::CDataArchive::Read(_Out_ uint16_t& value) noexcept
 {
     WFC_VALIDATE_POINTER(this);
 
@@ -526,7 +524,7 @@ void CDataArchive::Read(__out uint16_t& value) noexcept
         WFC_END_CATCH_ALL
 }
 
-void CDataArchive::Read(__out wchar_t& value) noexcept
+void Win32FoundationClasses::CDataArchive::Read(_Out_ wchar_t& value) noexcept
 {
     WFC_VALIDATE_POINTER(this);
 
@@ -555,7 +553,7 @@ void CDataArchive::Read(__out wchar_t& value) noexcept
         WFC_END_CATCH_ALL
 }
 
-void CDataArchive::ReadFrom(__in CDataChunk const * chunk_p) noexcept
+void Win32FoundationClasses::CDataArchive::ReadFrom(_In_ CDataChunk const * chunk_p) noexcept
 {
     WFC_VALIDATE_POINTER(this);
 
@@ -565,7 +563,7 @@ void CDataArchive::ReadFrom(__in CDataChunk const * chunk_p) noexcept
     m_Position = 0;
 }
 
-void CDataArchive::Write( __in uint8_t const value) noexcept
+void Win32FoundationClasses::CDataArchive::Write( _In_ uint8_t const value) noexcept
 {
     WFC_VALIDATE_POINTER(this);
 
@@ -590,7 +588,7 @@ void CDataArchive::Write( __in uint8_t const value) noexcept
         WFC_END_CATCH_ALL
 }
 
-void CDataArchive::Write(__in char const value) noexcept
+void Win32FoundationClasses::CDataArchive::Write(_In_ char const value) noexcept
 {
     WFC_VALIDATE_POINTER(this);
 
@@ -605,7 +603,7 @@ void CDataArchive::Write(__in char const value) noexcept
     Write(byte);
 }
 
-void CDataArchive::Write(__in std::vector<uint8_t> const& array) noexcept
+void Win32FoundationClasses::CDataArchive::Write(_In_ std::vector<uint8_t> const& array) noexcept
 {
     WFC_VALIDATE_POINTER(this);
 
@@ -634,7 +632,7 @@ void CDataArchive::Write(__in std::vector<uint8_t> const& array) noexcept
     WFC_END_CATCH_ALL
 }
 
-void CDataArchive::Write(__in std::vector<uint32_t> const& array) noexcept
+void Win32FoundationClasses::CDataArchive::Write(_In_ std::vector<uint32_t> const& array) noexcept
 {
     WFC_VALIDATE_POINTER(this);
 
@@ -652,7 +650,7 @@ void CDataArchive::Write(__in std::vector<uint32_t> const& array) noexcept
     }
 }
 
-void CDataArchive::Write(__in std::wstring const& value) noexcept
+void Win32FoundationClasses::CDataArchive::Write(_In_ std::wstring const& value) noexcept
 {
     WFC_VALIDATE_POINTER(this);
 
@@ -674,7 +672,7 @@ void CDataArchive::Write(__in std::wstring const& value) noexcept
     Write(character);
 }
 
-void CDataArchive::Write(__in std::vector<std::wstring> const& array) noexcept
+void Win32FoundationClasses::CDataArchive::Write(_In_ std::vector<std::wstring> const& array) noexcept
 {
     WFC_VALIDATE_POINTER(this);
 
@@ -692,7 +690,7 @@ void CDataArchive::Write(__in std::vector<std::wstring> const& array) noexcept
     }
 }
 
-void CDataArchive::Write(__in std::vector<uint16_t> const& array) noexcept
+void Win32FoundationClasses::CDataArchive::Write(_In_ std::vector<uint16_t> const& array) noexcept
 {
     WFC_VALIDATE_POINTER(this);
 
@@ -710,7 +708,7 @@ void CDataArchive::Write(__in std::vector<uint16_t> const& array) noexcept
     }
 }
 
-void CDataArchive::Write(__in double const value) noexcept
+void Win32FoundationClasses::CDataArchive::Write(_In_ double const value) noexcept
 {
     WFC_VALIDATE_POINTER(this);
 
@@ -740,7 +738,7 @@ void CDataArchive::Write(__in double const value) noexcept
         WFC_END_CATCH_ALL
 }
 
-void CDataArchive::Write(__in uint32_t const value) noexcept
+void Win32FoundationClasses::CDataArchive::Write(_In_ uint32_t const value) noexcept
 {
     WFC_VALIDATE_POINTER(this);
 
@@ -770,7 +768,7 @@ void CDataArchive::Write(__in uint32_t const value) noexcept
         WFC_END_CATCH_ALL
 }
 
-void CDataArchive::Write(__in wchar_t const value) noexcept
+void Win32FoundationClasses::CDataArchive::Write(_In_ wchar_t const value) noexcept
 {
     WFC_VALIDATE_POINTER(this);
 
@@ -800,7 +798,7 @@ void CDataArchive::Write(__in wchar_t const value) noexcept
         WFC_END_CATCH_ALL
 }
 
-void CDataArchive::Write(__in float const value) noexcept
+void Win32FoundationClasses::CDataArchive::Write(_In_ float const value) noexcept
 {
     WFC_VALIDATE_POINTER(this);
 
@@ -830,7 +828,7 @@ void CDataArchive::Write(__in float const value) noexcept
         WFC_END_CATCH_ALL
 }
 
-void CDataArchive::Write(__in int32_t const value) noexcept
+void Win32FoundationClasses::CDataArchive::Write(_In_ int32_t const value) noexcept
 {
     WFC_VALIDATE_POINTER(this);
 
@@ -860,7 +858,7 @@ void CDataArchive::Write(__in int32_t const value) noexcept
         WFC_END_CATCH_ALL
 }
 
-void CDataArchive::Write(__in uint64_t const value) noexcept
+void Win32FoundationClasses::CDataArchive::Write(_In_ uint64_t const value) noexcept
 {
     WFC_VALIDATE_POINTER(this);
 
@@ -890,7 +888,7 @@ void CDataArchive::Write(__in uint64_t const value) noexcept
         WFC_END_CATCH_ALL
 }
 
-void CDataArchive::Write(__in uint16_t const value) noexcept
+void Win32FoundationClasses::CDataArchive::Write(_In_ uint16_t const value) noexcept
 {
     WFC_VALIDATE_POINTER(this);
 
@@ -920,7 +918,7 @@ void CDataArchive::Write(__in uint16_t const value) noexcept
         WFC_END_CATCH_ALL
 }
 
-void CDataArchive::WriteTo(__inout CDataChunk * chunk_p) noexcept
+void Win32FoundationClasses::CDataArchive::WriteTo(_Inout_ Win32FoundationClasses::CDataChunk * chunk_p) noexcept
 {
     WFC_VALIDATE_POINTER(this);
 

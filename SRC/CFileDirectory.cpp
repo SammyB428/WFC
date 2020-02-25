@@ -51,28 +51,26 @@ static char THIS_FILE[] = __FILE__;
 #define new DEBUG_NEW
 #endif // _DEBUG
 
-USING_WFC_NAMESPACE
-
-CFileDirectory::CFileDirectory() noexcept
+Win32FoundationClasses::CFileDirectory::CFileDirectory() noexcept
 {
     WFC_VALIDATE_POINTER(this);
     m_Wildcard.assign(WSTRING_VIEW(L"*.*"));
     m_IncludeDirectoriesInCallback = false;
 }
 
-CFileDirectory::~CFileDirectory() noexcept
+Win32FoundationClasses::CFileDirectory::~CFileDirectory() noexcept
 {
     WFC_VALIDATE_POINTER(this);
     Close();
 }
 
-void CFileDirectory::Close(void) noexcept
+void Win32FoundationClasses::CFileDirectory::Close(void) noexcept
 {
     WFC_VALIDATE_POINTER(this);
     m_Name.clear();
 }
 
-_Check_return_ bool CFileDirectory::Open(_In_ std::wstring_view directory_name) noexcept
+_Check_return_ bool Win32FoundationClasses::CFileDirectory::Open(_In_ std::wstring_view directory_name) noexcept
 {
     WFC_VALIDATE_POINTER(this);
 
@@ -92,7 +90,7 @@ _Check_return_ bool CFileDirectory::Open(_In_ std::wstring_view directory_name) 
     return(false); // User passed us an empty string
 }
 
-_Check_return_ bool CFileDirectory::Read(_Out_ std::vector<std::wstring>& filenames) noexcept
+_Check_return_ bool Win32FoundationClasses::CFileDirectory::Read(_Out_ std::vector<std::wstring>& filenames) noexcept
 {
     WFC_VALIDATE_POINTER(this);
 
@@ -151,7 +149,7 @@ _Check_return_ bool CFileDirectory::Read(_Out_ std::vector<std::wstring>& filena
     return(false);
 }
 
-_Check_return_ bool CFileDirectory::Read(__callback WIDE_FILE_ACTION_FUNCTION action_to_take, __in void * action_parameter) noexcept
+_Check_return_ bool Win32FoundationClasses::CFileDirectory::Read(__callback Win32FoundationClasses::WIDE_FILE_ACTION_FUNCTION action_to_take, _In_ void * action_parameter) noexcept
 {
     WFC_VALIDATE_POINTER(this);
     WFC_VALIDATE_POINTER(action_to_take);
@@ -279,7 +277,7 @@ struct RECURSIVE_DIRECTORY_READ_PARAMETERS
     std::wstring directory_name_ending_in_a_slash;
 };
 
-static void PASCAL __read_recursively(__in std::wstring const& directory_name, _In_ std::wstring const& wildcard, _Out_ std::vector<std::wstring>& filenames) noexcept
+static void __read_recursively(_In_ std::wstring const& directory_name, _In_ std::wstring const& wildcard, _Out_ std::vector<std::wstring>& filenames) noexcept
 {
     auto parameters_p = std::make_unique<RECURSIVE_DIRECTORY_READ_PARAMETERS>();
 
@@ -297,8 +295,8 @@ static void PASCAL __read_recursively(__in std::wstring const& directory_name, _
         return;
     }
 
-    if (ends_with( parameters_p->directory_to_open, '/' ) == false and
-        ends_with( parameters_p->directory_to_open, '\\') == false )
+    if (Win32FoundationClasses::ends_with( parameters_p->directory_to_open, '/' ) == false and
+        Win32FoundationClasses::ends_with( parameters_p->directory_to_open, '\\') == false )
     {
         parameters_p->directory_to_open.push_back('/');
     }
@@ -379,7 +377,7 @@ struct WIDE_RECURSIVE_DIRECTORY_READ_PARAMETERS
     std::wstring directory_name_ending_in_a_slash;
 };
 
-void PASCAL __wide_read_recursively(_In_ std::wstring const& directory_name, _In_ std::wstring const& wildcard, __out std::vector<std::wstring>& filenames)
+void __wide_read_recursively(_In_ std::wstring const& directory_name, _In_ std::wstring const& wildcard, _Out_ std::vector<std::wstring>& filenames)
 {
     auto parameters_p = std::make_unique<WIDE_RECURSIVE_DIRECTORY_READ_PARAMETERS>();
 
@@ -392,8 +390,8 @@ void PASCAL __wide_read_recursively(_In_ std::wstring const& directory_name, _In
         return;
     }
 
-    if (ends_with(parameters_p->directory_to_open, '/') == false and
-        ends_with(parameters_p->directory_to_open, '\\' ) == false )
+    if (Win32FoundationClasses::ends_with(parameters_p->directory_to_open, '/') == false and
+        Win32FoundationClasses::ends_with(parameters_p->directory_to_open, '\\' ) == false )
     {
         parameters_p->directory_to_open.push_back('/');
     }
@@ -465,7 +463,7 @@ void PASCAL __wide_read_recursively(_In_ std::wstring const& directory_name, _In
     }
 }
 
-static _Check_return_ bool PASCAL __wide_read_recursively(_In_ std::wstring const& directory_name, _In_ std::wstring const& wildcard, _In_ bool const include_directories, __callback WIDE_FILE_ACTION_FUNCTION action_to_take, _In_ void * action_parameter) noexcept
+static _Check_return_ bool __wide_read_recursively(_In_ std::wstring const& directory_name, _In_ std::wstring const& wildcard, _In_ bool const include_directories, __callback Win32FoundationClasses::WIDE_FILE_ACTION_FUNCTION action_to_take, _In_ void * action_parameter) noexcept
 {
     WFC_VALIDATE_POINTER(action_to_take);
 
@@ -480,8 +478,8 @@ static _Check_return_ bool PASCAL __wide_read_recursively(_In_ std::wstring cons
         return(false);
     }
 
-    if (ends_with( parameters_p->directory_to_open, '/' ) == false and
-        ends_with( parameters_p->directory_to_open, '\\') == false )
+    if (Win32FoundationClasses::ends_with( parameters_p->directory_to_open, '/' ) == false and
+        Win32FoundationClasses::ends_with( parameters_p->directory_to_open, '\\') == false )
     {
         parameters_p->directory_to_open.push_back('/');
     }
@@ -646,7 +644,7 @@ static _Check_return_ bool PASCAL __wide_read_recursively(_In_ std::wstring cons
     return(true);
 }
 
-_Check_return_ bool CFileDirectory::ReadRecursively(__callback WIDE_FILE_ACTION_FUNCTION action_to_take, __in void * action_parameter) noexcept
+_Check_return_ bool Win32FoundationClasses::CFileDirectory::ReadRecursively(__callback Win32FoundationClasses::WIDE_FILE_ACTION_FUNCTION action_to_take, _In_ void * action_parameter) noexcept
 {
     WFC_VALIDATE_POINTER(this);
     WFC_VALIDATE_POINTER(action_to_take);
@@ -815,7 +813,7 @@ _Check_return_ bool CFileDirectory::ReadRecursively(__callback WIDE_FILE_ACTION_
     return(false);
 }
 
-_Check_return_ bool CFileDirectory::ReadRecursively(_Out_ std::vector<std::wstring>& filenames) noexcept
+_Check_return_ bool Win32FoundationClasses::CFileDirectory::ReadRecursively(_Out_ std::vector<std::wstring>& filenames) noexcept
 {
     WFC_VALIDATE_POINTER(this);
 
@@ -897,25 +895,25 @@ _Check_return_ bool CFileDirectory::ReadRecursively(_Out_ std::vector<std::wstri
     return(false);
 }
 
-void CFileDirectory::SetWildcard(_In_ std::wstring_view wildcard) noexcept
+void Win32FoundationClasses::CFileDirectory::SetWildcard(_In_ std::wstring_view wildcard) noexcept
 {
     WFC_VALIDATE_POINTER(this);
     m_Wildcard.assign(wildcard);
 }
 
-void CFileDirectory::GetWildcard(_Out_ std::wstring& wildcard) const noexcept
+void Win32FoundationClasses::CFileDirectory::GetWildcard(_Out_ std::wstring& wildcard) const noexcept
 {
     WFC_VALIDATE_POINTER(this);
     wildcard.assign(m_Wildcard);
 }
 
-void CFileDirectory::SetIncludeDirectoriesInCallback(__in bool const include_directories) noexcept
+void Win32FoundationClasses::CFileDirectory::SetIncludeDirectoriesInCallback(_In_ bool const include_directories) noexcept
 {
     WFC_VALIDATE_POINTER(this);
     m_IncludeDirectoriesInCallback = include_directories;
 }
 
-_Check_return_ bool CFileDirectory::GetIncludeDirectoriesInCallback(void) const noexcept
+_Check_return_ bool Win32FoundationClasses::CFileDirectory::GetIncludeDirectoriesInCallback(void) const noexcept
 {
     WFC_VALIDATE_POINTER(this);
     return(m_IncludeDirectoriesInCallback);
@@ -927,7 +925,7 @@ struct SUM_COUNT
     uint64_t sum_of_file_sizes{ 0 };
 };
 
-static _Check_return_ bool sum_action(__in void * parameter, __in wchar_t const * const filename, __in WIN32_FIND_DATA const * data_p) noexcept
+static _Check_return_ bool sum_action(_In_ void * parameter, _In_ wchar_t const * const filename, _In_ WIN32_FIND_DATA const * data_p) noexcept
 {
     SUM_COUNT * sum_count = static_cast<SUM_COUNT *>(parameter);
 
@@ -943,7 +941,7 @@ static _Check_return_ bool sum_action(__in void * parameter, __in wchar_t const 
     return(true);
 }
 
-void CFileDirectory::GetStatistics(__out uint64_t& number_of_files, __out uint64_t& sum) noexcept
+void Win32FoundationClasses::CFileDirectory::GetStatistics(_Out_ uint64_t& number_of_files, _Out_ uint64_t& sum) noexcept
 {
     WFC_VALIDATE_POINTER(this);
 
@@ -962,17 +960,17 @@ static _Check_return_ bool __delete_file_action(_Inout_ void * parameter, _In_z_
 {
     if (is_flagged( data_p->dwFileAttributes, FILE_ATTRIBUTE_DIRECTORY) == true)
     {
-        (void) CFileDirectory::RecursivelyDestroy(filename);
+        (void)Win32FoundationClasses::CFileDirectory::RecursivelyDestroy(filename);
     }
     else
     {
-        CFile64::Remove(filename);
+        Win32FoundationClasses::CFile64::Remove(filename);
     }
 
     return(true);
 }
 
-_Check_return_ bool CFileDirectory::RecursivelyDestroy(_In_z_ wchar_t const * const folder_name) noexcept// static
+_Check_return_ bool Win32FoundationClasses::CFileDirectory::RecursivelyDestroy(_In_z_ wchar_t const * const folder_name) noexcept// static
 {
     if (folder_name == nullptr or folder_name[0] == 0x00)
     {
@@ -989,7 +987,7 @@ _Check_return_ bool CFileDirectory::RecursivelyDestroy(_In_z_ wchar_t const * co
         dir.Close();
     }
 
-    (void) CFileDirectory::Destroy(folder_name);
+    (void)Win32FoundationClasses::CFileDirectory::Destroy(folder_name);
 
     return(true);
 }

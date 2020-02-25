@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 1995-2019, Samuel R. Blackburn
+** Copyright, 1995-2020, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -45,8 +45,6 @@
 #include <wfc.h>
 #pragma hdrstop
 
-USING_WFC_NAMESPACE
-
 #if ! defined( WFC_STL )
 
 #if defined( _DEBUG ) && defined( _INC_CRTDBG )
@@ -61,7 +59,7 @@ static char THIS_FILE[] = __FILE__;
 #define DWORD_PTR DWORD
 #endif
 
-static inline void append_buffer( __in_bcount( number_of_bytes ) uint8_t const * buffer_parameter, __in std::size_t const number_of_bytes, __inout std::vector<uint8_t>& bytes ) noexcept
+static inline void append_buffer( __in_bcount( number_of_bytes ) uint8_t const * buffer_parameter, _In_ std::size_t const number_of_bytes, __inout std::vector<uint8_t>& bytes ) noexcept
 {
    WFC_VALIDATE_POINTER( buffer_parameter );
    std::size_t const current_length = bytes.size();
@@ -81,7 +79,7 @@ static inline void append_string( __in_z char const * string_p, __inout std::vec
    append_buffer( reinterpret_cast<uint8_t const *>(string_p), string_length, bytes );
 }
 
-static inline void append_item( __in WFC_WEB_POST_DATA * item, __in_z char const * boundary, __inout std::vector<uint8_t>& bytes )
+static inline void append_item( _In_ Win32FoundationClasses::WFC_WEB_POST_DATA * item, __in_z char const * boundary, __inout std::vector<uint8_t>& bytes )
 {
    WFC_VALIDATE_POINTER( item );
    WFC_VALIDATE_POINTER( item->variable_name );
@@ -121,10 +119,10 @@ static inline void append_item( __in WFC_WEB_POST_DATA * item, __in_z char const
          append_string( item->file.ascii_filename, bytes );
          append_string( "\"\r\nContent-Type: application/octet-stream\r\n\r\n", bytes );
 
-         CFile64 file( item->file.file_handle );
+         Win32FoundationClasses::CFile64 file( item->file.file_handle );
 
          // Unlike the children at Microsoft that wrote ISAPI, WFC uses 64-bit file offsets
-         (void) file.Seek( (int64_t) item->file.file_offset.QuadPart, CFile64::SeekPosition::begin );
+         (void) file.Seek( (int64_t) item->file.file_offset.QuadPart, Win32FoundationClasses::CFile64::SeekPosition::begin );
 
          std::vector<uint8_t> bytes_read;
 
@@ -140,7 +138,7 @@ static inline void append_item( __in WFC_WEB_POST_DATA * item, __in_z char const
    append_string( "\r\n", bytes );
 }
 
-_Check_return_ bool PASCAL Win32FoundationClasses::wfc_web_post( _In_ std::wstring_view url, _In_ WFC_WEB_POST_DATA ** data, __inout_opt std::wstring * response ) noexcept
+_Check_return_ bool Win32FoundationClasses::wfc_web_post( _In_ std::wstring_view url, _In_ WFC_WEB_POST_DATA ** data, __inout_opt std::wstring * response ) noexcept
 {
    WFC_VALIDATE_POINTER( data );
 
@@ -175,7 +173,7 @@ _Check_return_ bool PASCAL Win32FoundationClasses::wfc_web_post( _In_ std::wstri
       LPCTSTR internet_open_proxy_bypass = nullptr;
       DWORD const internet_open_flags        = 0;
 
-      auto internet_handle =  InternetOpenW( L"Mozilla/4.0 (compatible; Win32 Foundation Classes; http://www.samblackburn.com)",
+      auto internet_handle =  ::InternetOpenW( L"Mozilla/4.0 (compatible; Win32 Foundation Classes; http://www.samblackburn.com)",
                                       internet_open_access_type,
                                       internet_open_proxy,
                                       internet_open_proxy_bypass,
@@ -198,7 +196,7 @@ _Check_return_ bool PASCAL Win32FoundationClasses::wfc_web_post( _In_ std::wstri
 
       CUniformResourceLocator uniform_resource_locator( url );
 
-      auto internet_connection_handle = InternetConnectW( internet_handle,
+      auto internet_connection_handle = ::InternetConnectW( internet_handle,
                                                     uniform_resource_locator.MachineName.c_str(),
                                                     internet_connect_port,
                                                     internet_connect_user_name,

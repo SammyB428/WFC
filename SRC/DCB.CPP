@@ -51,9 +51,7 @@ static char THIS_FILE[] = __FILE__;
 #define new DEBUG_NEW
 #endif // _DEBUG
 
-USING_WFC_NAMESPACE
-
-CDeviceControlBlock::CDeviceControlBlock()
+Win32FoundationClasses::CDeviceControlBlock::CDeviceControlBlock()
 {
    WFC_VALIDATE_POINTER( this );
    ::ZeroMemory( (DCB *) this, sizeof( DCB ) );
@@ -61,7 +59,7 @@ CDeviceControlBlock::CDeviceControlBlock()
    fBinary = TRUE; // Always TRUE for NT
 }
 
-CDeviceControlBlock::CDeviceControlBlock( __in DCB const * source )
+Win32FoundationClasses::CDeviceControlBlock::CDeviceControlBlock( _In_ DCB const * source )
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
@@ -71,7 +69,7 @@ CDeviceControlBlock::CDeviceControlBlock( __in DCB const * source )
    Copy( source );
 }
 
-CDeviceControlBlock::CDeviceControlBlock( __in DCB const& source )
+Win32FoundationClasses::CDeviceControlBlock::CDeviceControlBlock( _In_ DCB const& source )
 {
    WFC_VALIDATE_POINTER( this );
    DCBlength = sizeof( DCB );
@@ -79,7 +77,7 @@ CDeviceControlBlock::CDeviceControlBlock( __in DCB const& source )
    Copy( source );
 }
 
-CDeviceControlBlock::CDeviceControlBlock( __in CDeviceControlBlock const& source )
+Win32FoundationClasses::CDeviceControlBlock::CDeviceControlBlock( _In_ Win32FoundationClasses::CDeviceControlBlock const& source )
 {
    WFC_VALIDATE_POINTER( this );
    DCBlength = sizeof( DCB );
@@ -87,25 +85,25 @@ CDeviceControlBlock::CDeviceControlBlock( __in CDeviceControlBlock const& source
    Copy( source );
 }
 
-CDeviceControlBlock::~CDeviceControlBlock()
+Win32FoundationClasses::CDeviceControlBlock::~CDeviceControlBlock()
 {
    WFC_VALIDATE_POINTER( this );
    DCBlength = 0;
 }
 
-void CDeviceControlBlock::Copy( __in CDeviceControlBlock const& source ) noexcept
+void Win32FoundationClasses::CDeviceControlBlock::Copy( _In_ Win32FoundationClasses::CDeviceControlBlock const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Copy( (DCB *) &source );
 }
 
-void CDeviceControlBlock::Copy( __in DCB const& source ) noexcept
+void Win32FoundationClasses::CDeviceControlBlock::Copy( _In_ DCB const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Copy( &source );
 }
 
-void CDeviceControlBlock::Copy( __in DCB const * source ) noexcept
+void Win32FoundationClasses::CDeviceControlBlock::Copy( _In_ DCB const * source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
@@ -165,7 +163,7 @@ void CDeviceControlBlock::Copy( __in DCB const * source ) noexcept
 
 #if defined( _DEBUG ) && ! defined( WFC_NO_DUMPING )
 
-void CDeviceControlBlock::Dump( CDumpContext& dump_context ) const
+void Win32FoundationClasses::CDeviceControlBlock::Dump( CDumpContext& dump_context ) const
 {
    dump_context << TEXT( "a CDeviceControlBlock at " ) << (void *) this << TEXT( "\n{\n" );
    dump_context << TEXT( "   DCBlength =         " ) << DCBlength         << TEXT( "\n" );
@@ -379,14 +377,14 @@ void CDeviceControlBlock::Dump( CDumpContext& dump_context ) const
 
 #endif // _DEBUG
 
-CDeviceControlBlock& CDeviceControlBlock::operator=( __in CDeviceControlBlock const& source ) noexcept
+Win32FoundationClasses::CDeviceControlBlock& Win32FoundationClasses::CDeviceControlBlock::operator=( _In_ Win32FoundationClasses::CDeviceControlBlock const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );
    return( *this );
 }
 
-CDeviceControlBlock& CDeviceControlBlock::operator=( __in DCB const& source ) noexcept
+Win32FoundationClasses::CDeviceControlBlock& Win32FoundationClasses::CDeviceControlBlock::operator=( _In_ DCB const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );

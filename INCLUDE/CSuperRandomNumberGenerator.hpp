@@ -75,12 +75,12 @@ class CSuperRandomNumberGenerator
 
    public:
 
-      CSuperRandomNumberGenerator( __in DWORD seed = 0 );
+      CSuperRandomNumberGenerator( _In_ DWORD seed = 0 );
      ~CSuperRandomNumberGenerator();
 
       _Check_return_ double GetValue( void ) noexcept;
       _Check_return_ DWORD  GetInteger( void ) noexcept;
-      void SetSeed( __in DWORD seed ) noexcept;
+      void SetSeed( _In_ DWORD seed ) noexcept;
 
 #if defined( _DEBUG ) && ! defined( WFC_NO_DUMPING )
 

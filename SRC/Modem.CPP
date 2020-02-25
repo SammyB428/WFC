@@ -50,19 +50,17 @@
 static char THIS_FILE[] = __FILE__;
 #endif // _DEBUG
 
-USING_WFC_NAMESPACE
-
 #if defined( _DEBUG ) && defined( _INC_CRTDBG )
 #define new DEBUG_NEW
 #endif // _DEBUG
 
-CModem::CModem()
+Win32FoundationClasses::CModem::CModem()
 {
    WFC_VALIDATE_POINTER( this );
    m_Initialize();
 }
 
-CModem::~CModem()
+Win32FoundationClasses::CModem::~CModem()
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -74,7 +72,7 @@ CModem::~CModem()
    m_Initialize();
 }
 
-_Check_return_ bool CModem::Connect( __in DWORD number_of_seconds_to_wait ) noexcept
+_Check_return_ bool Win32FoundationClasses::CModem::Connect( _In_ DWORD number_of_seconds_to_wait ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    ASSERT( m_IsOpen == true );
@@ -116,7 +114,7 @@ _Check_return_ bool CModem::Connect( __in DWORD number_of_seconds_to_wait ) noex
    return( true );
 }
 
-_Check_return_ bool CModem::Disconnect( void ) noexcept
+_Check_return_ bool Win32FoundationClasses::CModem::Disconnect( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    ASSERT( m_IsOpen == true );
@@ -134,13 +132,13 @@ _Check_return_ bool CModem::Disconnect( void ) noexcept
    return( true );
 }
 
-_Check_return_ bool CModem::IsConnected( void ) const noexcept
+_Check_return_ bool Win32FoundationClasses::CModem::IsConnected( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
    return( m_IsConnected );
 }
 
-void CModem::m_Initialize( void ) noexcept
+void Win32FoundationClasses::CModem::m_Initialize( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    m_IsConnected     = FALSE;
@@ -148,13 +146,13 @@ void CModem::m_Initialize( void ) noexcept
    m_PhoneNumber.clear();
 }
 
-void CModem::GetPhoneNumber( __out std::string& phone_number ) const noexcept
+void Win32FoundationClasses::CModem::GetPhoneNumber( _Out_ std::string& phone_number ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
    phone_number.assign( m_PhoneNumber );
 }
 
-void CModem::SetPhoneNumber( __in std::string const& phone_number ) noexcept
+void Win32FoundationClasses::CModem::SetPhoneNumber( _In_ std::string const& phone_number ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    m_PhoneNumber.assign( phone_number );

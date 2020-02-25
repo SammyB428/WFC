@@ -53,17 +53,17 @@ class CDataSocket : public CDataFile
 
    public:
 
-       CDataSocket(__in CDataSocket const&) = delete;
-       CDataSocket& operator=(__in CDataSocket const&) = delete;
+       CDataSocket(_In_ CDataSocket const&) = delete;
+       CDataSocket& operator=(_In_ CDataSocket const&) = delete;
 
        CDataSocket() noexcept;
       CDataSocket( __inout CSimpleSocket * socket_p ) noexcept;
       virtual ~CDataSocket();
 
       virtual void Attach( __inout CSimpleSocket * socket_p ) noexcept;
-      _Check_return_ uint32_t Read( __out_bcount( number_of_bytes_to_read ) void * buffer, __in uint32_t const number_of_bytes_to_read ) noexcept override;
-      _Check_return_ uint64_t Seek( __in int64_t const offset, __in CFile64::SeekPosition const from ) noexcept override;
-      void Write( __in_bcount( number_of_bytes_to_write ) void const * buffer, __in uint32_t const number_of_bytes_to_write ) noexcept override;
+      _Check_return_ uint32_t Read( __out_bcount( number_of_bytes_to_read ) void * buffer, _In_ uint32_t const number_of_bytes_to_read ) noexcept override;
+      _Check_return_ uint64_t Seek( _In_ int64_t const offset, _In_ CFile64::SeekPosition const from ) noexcept override;
+      void Write( __in_bcount( number_of_bytes_to_write ) void const * buffer, _In_ uint32_t const number_of_bytes_to_write ) noexcept override;
 };
 
 #endif // DATA_SOCKET_CLASS_HEADER

@@ -85,7 +85,7 @@ _Check_return_ int _tmain( _In_ int const number_of_command_line_arguments, _In_
 
    std::wstring operating_system_version_string;
 
-   wfc_get_operating_system_version_string( operating_system_version_string );
+   Win32FoundationClasses::wfc_get_operating_system_version_string( operating_system_version_string );
 
    WFCTRACE( operating_system_version_string.c_str() );
 
@@ -163,7 +163,7 @@ _Check_return_ int _tmain( _In_ int const number_of_command_line_arguments, _In_
 //   test_CServiceControlManager();
 //   test_CXMLDocument();
 
-   if ( wfc_does_file_exist( command_line_arguments[ 0 ] ) == false )
+   if (Win32FoundationClasses::wfc_does_file_exist( command_line_arguments[ 0 ] ) == false )
    {
       _tprintf( TEXT( "wfc_does_file_exist() FAILED!\n" ) );
       return( EXIT_FAILURE );
@@ -250,7 +250,7 @@ _Check_return_ int _tmain( _In_ int const number_of_command_line_arguments, _In_
          }
          else
          {
-            format_number( number_of_tests_string, static_cast<int64_t>(test_number_that_failed) );
+             Win32FoundationClasses::format_number( number_of_tests_string, static_cast<int64_t>(test_number_that_failed) );
             wprintf( L"%S passed %s tests.\n", class_name.c_str(), number_of_tests_string.c_str() );
          }
 
@@ -260,8 +260,8 @@ _Check_return_ int _tmain( _In_ int const number_of_command_line_arguments, _In_
 
    std::wstring number_of_classes;
 
-   format_number( number_of_classes, std::size( tests ) );
-   format_number( number_of_tests_string, static_cast<int64_t>(total_number_of_tests) );
+   Win32FoundationClasses::format_number( number_of_classes, std::size( tests ) );
+   Win32FoundationClasses::format_number( number_of_tests_string, static_cast<int64_t>(total_number_of_tests) );
 
    wprintf( L"All %s classes PASSED %s tests!\n", number_of_classes.c_str(), number_of_tests_string.c_str() );
    return( EXIT_SUCCESS );
@@ -299,7 +299,7 @@ __checkReturn LPTSTR BigNumToString( LONG lNum, LPTSTR szBuf ) noexcept
 
 void memory( void )
 {
-   CMemoryStatus memory_status;
+    Win32FoundationClasses::CMemoryStatus memory_status;
 
    GlobalMemoryStatus( &memory_status );
 

@@ -53,8 +53,6 @@ static char THIS_FILE[] = __FILE__;
 
 #if ! defined( WFC_NO_RAS )
 
-USING_WFC_NAMESPACE
-
 // 1999-07-18
 // Thanks go to Vagif Abilov (vagif@online.no) for finding a bug here.
 // I was not IMPLEMENT_SERIAL()'ing
@@ -63,7 +61,7 @@ USING_WFC_NAMESPACE
 #define new DEBUG_NEW
 #endif // _DEBUG
 
-CRemoteAccessServiceUser::CRemoteAccessServiceUser()
+Win32FoundationClasses::CRemoteAccessServiceUser::CRemoteAccessServiceUser()
 {
    WFC_VALIDATE_POINTER( this );
    Empty();

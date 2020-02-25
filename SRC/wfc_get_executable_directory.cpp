@@ -51,9 +51,7 @@ static char THIS_FILE[] = __FILE__;
 #define new DEBUG_NEW
 #endif // _DEBUG
 
-USING_WFC_NAMESPACE
-
-void PASCAL Win32FoundationClasses::wfc_get_executable_directory(_Out_ std::wstring& directory_name_ending_in_a_slash) noexcept
+void Win32FoundationClasses::wfc_get_executable_directory(_Out_ std::wstring& directory_name_ending_in_a_slash) noexcept
 {
     wchar_t path[4096];
 
@@ -73,7 +71,7 @@ void PASCAL Win32FoundationClasses::wfc_get_executable_directory(_Out_ std::wstr
     }
 }
 
-void PASCAL Win32FoundationClasses::wfc_get_dll_directory(__out std::wstring& directory_name_ending_in_a_slash) noexcept
+void Win32FoundationClasses::wfc_get_dll_directory(_Out_ std::wstring& directory_name_ending_in_a_slash) noexcept
 {
     wchar_t path[4096];
 
@@ -81,7 +79,7 @@ void PASCAL Win32FoundationClasses::wfc_get_dll_directory(__out std::wstring& di
 
     HMODULE module_handle = NULL;
 
-    if (!GetModuleHandleExW(GET_MODULE_HANDLE_EX_FLAG_FROM_ADDRESS bitor
+    if (not GetModuleHandleExW(GET_MODULE_HANDLE_EX_FLAG_FROM_ADDRESS bitor
         GET_MODULE_HANDLE_EX_FLAG_UNCHANGED_REFCOUNT,
         (LPCWSTR)&Win32FoundationClasses::wfc_am_i_administrator,
         &module_handle))

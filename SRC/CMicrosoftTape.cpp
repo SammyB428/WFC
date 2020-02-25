@@ -51,27 +51,25 @@ static char THIS_FILE[] = __FILE__;
 #define new DEBUG_NEW
 #endif // _DEBUG
 
-USING_WFC_NAMESPACE
-
 /*
 ** CMicrosoftTape
 ** As documented in ftp://ftp.microsoft.com/developr/drg/Tape/MTF10.ZIP
 */
 
-CMicrosoftTape::CMicrosoftTape() noexcept
+Win32FoundationClasses::CMicrosoftTape::CMicrosoftTape() noexcept
 {
    WFC_VALIDATE_POINTER( this );
    m_Initialize();
    m_AutomaticallyClose = false;
 }
 
-CMicrosoftTape::~CMicrosoftTape() noexcept
+Win32FoundationClasses::CMicrosoftTape::~CMicrosoftTape() noexcept
 {
    WFC_VALIDATE_POINTER( this );
    m_Initialize();
 }
 
-void CMicrosoftTape::m_Initialize( void ) noexcept
+void Win32FoundationClasses::CMicrosoftTape::m_Initialize( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    m_TapeHeader.Empty();
@@ -79,7 +77,7 @@ void CMicrosoftTape::m_Initialize( void ) noexcept
 
 #if defined( _DEBUG ) && ! defined( WFC_NO_DUMPING )
 
-void CMicrosoftTape::Dump( CDumpContext& dump_context ) const
+void Win32FoundationClasses::CMicrosoftTape::Dump( CDumpContext& dump_context ) const
 {
    WFC_VALIDATE_POINTER( this );
    dump_context << TEXT( "a CMicrosoftTape at " ) << (void *) this << TEXT( "\n" );
@@ -91,18 +89,18 @@ void CMicrosoftTape::Dump( CDumpContext& dump_context ) const
 
 #endif // _DEBUG
 
-void CMicrosoftTape::Empty( void ) noexcept
+void Win32FoundationClasses::CMicrosoftTape::Empty( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 }
 
-_Check_return_ bool CMicrosoftTape::EnumerateSets( void ) noexcept
+_Check_return_ bool Win32FoundationClasses::CMicrosoftTape::EnumerateSets( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    return( true );
 }
 
-_Check_return_ bool CMicrosoftTape::Open( __in UINT const tape_drive_number_starting_at_zero ) noexcept
+_Check_return_ bool Win32FoundationClasses::CMicrosoftTape::Open( _In_ UINT const tape_drive_number_starting_at_zero ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -117,7 +115,7 @@ _Check_return_ bool CMicrosoftTape::Open( __in UINT const tape_drive_number_star
    }
 }
 
-_Check_return_ bool CMicrosoftTape::ReadHeader( void ) noexcept
+_Check_return_ bool Win32FoundationClasses::CMicrosoftTape::ReadHeader( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 

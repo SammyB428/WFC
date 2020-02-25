@@ -51,9 +51,7 @@ static char THIS_FILE[] = __FILE__;
 #define new DEBUG_NEW
 #endif // _DEBUG
 
-USING_WFC_NAMESPACE
-
-CMemoryFile::CMemoryFile() noexcept
+Win32FoundationClasses::CMemoryFile::CMemoryFile() noexcept
 {
     WFC_VALIDATE_POINTER( this );
 
@@ -90,7 +88,7 @@ CMemoryFile::CMemoryFile() noexcept
     ZeroMemory( &m_FileInformation, sizeof( m_FileInformation ) );
 }
 
-CMemoryFile::CMemoryFile( __in std::size_t const allocation_granularity,
+Win32FoundationClasses::CMemoryFile::CMemoryFile( _In_ std::size_t const allocation_granularity,
                          __in_opt SECURITY_ATTRIBUTES * security_attributes,
                          __in_opt SECURITY_DESCRIPTOR * security_descriptor ) noexcept
 {
@@ -126,7 +124,7 @@ CMemoryFile::CMemoryFile( __in std::size_t const allocation_granularity,
     ZeroMemory( &m_FileInformation, sizeof( m_FileInformation ) );
 }
 
-CMemoryFile::~CMemoryFile() noexcept
+Win32FoundationClasses::CMemoryFile::~CMemoryFile() noexcept
 {
     WFC_VALIDATE_POINTER( this );
 
@@ -154,7 +152,7 @@ CMemoryFile::~CMemoryFile() noexcept
     ZeroMemory( &m_FileInformation, sizeof( m_FileInformation ) );
 }
 
-void CMemoryFile::Close( void ) noexcept
+void Win32FoundationClasses::CMemoryFile::Close( void ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
 
@@ -195,7 +193,7 @@ void CMemoryFile::Close( void ) noexcept
     ZeroMemory( &m_FileInformation, sizeof( m_FileInformation ) );
 }
 
-_Check_return_ bool CMemoryFile::Flush( void ) noexcept
+_Check_return_ bool Win32FoundationClasses::CMemoryFile::Flush( void ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
 
@@ -209,7 +207,7 @@ _Check_return_ bool CMemoryFile::Flush( void ) noexcept
     return( true );
 }
 
-_Check_return_ bool CMemoryFile::FromHandle( _In_ HANDLE const file_handle, _In_ UINT const open_flags, _In_ uint64_t const beginning_at_offset, _In_ std::size_t const number_of_bytes_to_map, _In_opt_ void const * desired_address ) noexcept
+_Check_return_ bool Win32FoundationClasses::CMemoryFile::FromHandle( _In_ HANDLE const file_handle, _In_ UINT const open_flags, _In_ uint64_t const beginning_at_offset, _In_ std::size_t const number_of_bytes_to_map, _In_opt_ void const * desired_address ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
 
@@ -218,14 +216,14 @@ _Check_return_ bool CMemoryFile::FromHandle( _In_ HANDLE const file_handle, _In_
     return( return_value );
 }
 
-void CMemoryFile::GetFilename(_Out_ std::wstring& filename) const noexcept
+void Win32FoundationClasses::CMemoryFile::GetFilename(_Out_ std::wstring& filename) const noexcept
 {
     WFC_VALIDATE_POINTER(this);
 
     filename.assign(m_Filename);
 }
 
-_Check_return_ bool CMemoryFile::GetInformation( _Inout_ BY_HANDLE_FILE_INFORMATION& information ) const noexcept
+_Check_return_ bool Win32FoundationClasses::CMemoryFile::GetInformation( _Inout_ BY_HANDLE_FILE_INFORMATION& information ) const noexcept
 {
     WFC_VALIDATE_POINTER( this );
 
@@ -234,7 +232,7 @@ _Check_return_ bool CMemoryFile::GetInformation( _Inout_ BY_HANDLE_FILE_INFORMAT
     return( true );
 }
 
-void CMemoryFile::m_Initialize( void ) noexcept
+void Win32FoundationClasses::CMemoryFile::m_Initialize( void ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
 
@@ -275,7 +273,7 @@ void CMemoryFile::m_Initialize( void ) noexcept
         m_SecurityAttributes_p->bInheritHandle       = TRUE;
 }
 
-_Check_return_ void * CMemoryFile::Map( _In_ uint64_t const offset, _In_ std::size_t const length ) noexcept
+_Check_return_ void * Win32FoundationClasses::CMemoryFile::Map( _In_ uint64_t const offset, _In_ std::size_t const length ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
 
@@ -353,7 +351,7 @@ _Check_return_ void * CMemoryFile::Map( _In_ uint64_t const offset, _In_ std::si
     return( m_Pointer );
 }
 
-_Check_return_ bool CMemoryFile::m_MapTheFile( __in HANDLE const file_handle, __in UINT const open_flags, __in uint64_t const beginning_at_offset, __in std::size_t const number_of_bytes_to_map_parameter, __in_opt void const * desired_address ) noexcept
+_Check_return_ bool Win32FoundationClasses::CMemoryFile::m_MapTheFile( _In_ HANDLE const file_handle, _In_ UINT const open_flags, _In_ uint64_t const beginning_at_offset, _In_ std::size_t const number_of_bytes_to_map_parameter, __in_opt void const * desired_address ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
 
@@ -475,7 +473,7 @@ _Check_return_ bool CMemoryFile::m_MapTheFile( __in HANDLE const file_handle, __
     return( true );
 }
 
-void CMemoryFile::m_Uninitialize( void ) noexcept
+void Win32FoundationClasses::CMemoryFile::m_Uninitialize( void ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
 
@@ -487,12 +485,12 @@ void CMemoryFile::m_Uninitialize( void ) noexcept
 
     if ( m_SecurityDescriptor_p != nullptr )
     {
-        wfc_destroy_null_dacl( m_SecurityDescriptor_p );
+        Win32FoundationClasses::wfc_destroy_null_dacl( m_SecurityDescriptor_p );
         m_SecurityDescriptor_p = nullptr;
     }
 }
 
-_Check_return_ bool CMemoryFile::Open(_In_ std::wstring_view filename, __in UINT const open_flags, __in uint64_t const beginning_at_offset, __in std::size_t const number_of_bytes_to_map, __in_opt void const * desired_address ) noexcept
+_Check_return_ bool Win32FoundationClasses::CMemoryFile::Open(_In_ std::wstring_view filename, _In_ UINT const open_flags, _In_ uint64_t const beginning_at_offset, _In_ std::size_t const number_of_bytes_to_map, __in_opt void const * desired_address ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
 
@@ -506,7 +504,7 @@ _Check_return_ bool CMemoryFile::Open(_In_ std::wstring_view filename, __in UINT
         return( false );
     }
 
-    CFile64 file;
+    Win32FoundationClasses::CFile64 file;
 
     file.SetAttributes( GetAttributes() );
     file.SetTemplateFile( GetTemplateFile() );
@@ -540,7 +538,7 @@ _Check_return_ bool CMemoryFile::Open(_In_ std::wstring_view filename, __in UINT
         return( false );
 }
 
-_Check_return_ bool CMemoryFile::Open( _In_ std::string_view filename, _In_ UINT const open_flags, _In_ uint64_t const beginning_at_offset, _In_ std::size_t const number_of_bytes_to_map, _In_opt_ void const * desired_address ) noexcept
+_Check_return_ bool Win32FoundationClasses::CMemoryFile::Open( _In_ std::string_view filename, _In_ UINT const open_flags, _In_ uint64_t const beginning_at_offset, _In_ std::size_t const number_of_bytes_to_map, _In_opt_ void const * desired_address ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
 
@@ -554,7 +552,7 @@ _Check_return_ bool CMemoryFile::Open( _In_ std::string_view filename, _In_ UINT
         return( false );
     }
 
-    CFile64 file;
+    Win32FoundationClasses::CFile64 file;
 
     file.SetAttributes( GetAttributes() );
     file.SetTemplateFile( GetTemplateFile() );
@@ -565,7 +563,7 @@ _Check_return_ bool CMemoryFile::Open( _In_ std::string_view filename, _In_ UINT
     {
         std::wstring wide_filename;
 
-        copy(wide_filename, filename);
+    Win32FoundationClasses::copy(wide_filename, filename);
 
         if ( file.Open(wide_filename, open_flags ) == false )
         {
@@ -591,7 +589,7 @@ _Check_return_ bool CMemoryFile::Open( _In_ std::string_view filename, _In_ UINT
     return( false );
 }
 
-CSharedMemory::CSharedMemory() noexcept
+Win32FoundationClasses::CSharedMemory::CSharedMemory() noexcept
 {
     WFC_VALIDATE_POINTER( this );
 
@@ -601,14 +599,14 @@ CSharedMemory::CSharedMemory() noexcept
     m_LastError = 0;
 }
 
-CSharedMemory::~CSharedMemory() noexcept
+Win32FoundationClasses::CSharedMemory::~CSharedMemory() noexcept
 {
     WFC_VALIDATE_POINTER( this );
 
     Close();
 }
 
-void CSharedMemory::Close(void) noexcept
+void Win32FoundationClasses::CSharedMemory::Close(void) noexcept
 {
     WFC_VALIDATE_POINTER( this );
 
@@ -620,7 +618,7 @@ void CSharedMemory::Close(void) noexcept
         m_Buffer = nullptr;
     }
 
-    if ( is_bad_handle( m_Handle ) == false )
+    if (Win32FoundationClasses::is_bad_handle( m_Handle ) == false )
     {
         (void) wfc_close_handle( m_Handle );
         m_Handle = INVALID_HANDLE_VALUE;
@@ -647,7 +645,7 @@ static _Check_return_ bool CreateLowIntegritySACL( _Inout_ SECURITY_ATTRIBUTES *
     return ConvertStringSecurityDescriptorToSecurityDescriptor(sdd, SDDL_REVISION_1, &sa->lpSecurityDescriptor, nullptr) == TRUE;
 }
 
-_Check_return_ bool CSharedMemory::Create(_In_ std::wstring_view name, _In_ std::size_t const number_of_bytes ) noexcept
+_Check_return_ bool Win32FoundationClasses::CSharedMemory::Create(_In_ std::wstring_view name, _In_ std::size_t const number_of_bytes ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
 
@@ -656,7 +654,7 @@ _Check_return_ bool CSharedMemory::Create(_In_ std::wstring_view name, _In_ std:
     SECURITY_ATTRIBUTES security_attributes;
 
     security_attributes.nLength              = sizeof( security_attributes );
-    security_attributes.lpSecurityDescriptor = static_cast<void *>(wfc_create_null_dacl());
+    security_attributes.lpSecurityDescriptor = static_cast<void *>(Win32FoundationClasses::wfc_create_null_dacl());
     security_attributes.lpSecurityDescriptor = nullptr;
     security_attributes.bInheritHandle       = TRUE;
 
@@ -667,12 +665,12 @@ _Check_return_ bool CSharedMemory::Create(_In_ std::wstring_view name, _In_ std:
 
     bool const return_value = Create( name, number_of_bytes, &security_attributes );
 
-    wfc_destroy_null_dacl( security_attributes.lpSecurityDescriptor );
+    Win32FoundationClasses::wfc_destroy_null_dacl( security_attributes.lpSecurityDescriptor );
 
     return( return_value );
 }
 
-_Check_return_ bool CSharedMemory::Create(_In_ std::wstring_view name, _In_ std::size_t const number_of_bytes, _In_ SECURITY_ATTRIBUTES * security_attributes ) noexcept
+_Check_return_ bool Win32FoundationClasses::CSharedMemory::Create(_In_ std::wstring_view name, _In_ std::size_t const number_of_bytes, _In_ SECURITY_ATTRIBUTES * security_attributes ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
 
@@ -721,7 +719,7 @@ _Check_return_ bool CSharedMemory::Create(_In_ std::wstring_view name, _In_ std:
     return( true );
 }
 
-_Check_return_ bool CSharedMemory::Open(_In_ std::wstring_view name, _In_ std::size_t const number_of_bytes, _In_ bool const read_only ) noexcept
+_Check_return_ bool Win32FoundationClasses::CSharedMemory::Open(_In_ std::wstring_view name, _In_ std::size_t const number_of_bytes, _In_ bool const read_only ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
 

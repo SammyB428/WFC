@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 1995-2019, Samuel R. Blackburn
+** Copyright, 1995-2020, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -102,7 +102,9 @@ class CBase64Coding
       _Check_return_ bool Encode(_In_ std::vector<uint8_t> const& source, _Inout_ std::wstring& destination ) const noexcept;
       _Check_return_ bool Encode(_In_reads_bytes_(number_of_bytes) uint8_t const * source, _In_ std::size_t const number_of_bytes, _Inout_ std::wstring& destination ) const noexcept;
       _Check_return_ bool Encode(_In_reads_bytes_(number_of_bytes) uint8_t const * source, _In_ std::size_t const number_of_bytes, _Inout_ std::string& destination ) const noexcept;
+#if ! defined(WE_ARE_BUILDING_WFC_ON_UNIX)
       _Check_return_ bool Encode(_Inout_ HANDLE input_file, _In_ std::size_t const number_of_bytes_to_encode, _Inout_ HANDLE output_file_handle) const noexcept;
+#endif // WE_ARE_BUILDING_WFC_ON_UNIX
 };
 
 #endif // BASE_64_CODING_CLASS_HEADER

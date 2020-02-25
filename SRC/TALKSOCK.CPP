@@ -51,15 +51,13 @@ static char THIS_FILE[] = __FILE__;
 #define new DEBUG_NEW
 #endif // _DEBUG
 
-USING_WFC_NAMESPACE
-
-CTalkingSocket::CTalkingSocket() noexcept
+Win32FoundationClasses::CTalkingSocket::CTalkingSocket() noexcept
 {
    WFC_VALIDATE_POINTER( this );
    m_Initialize();
 }
 
-CTalkingSocket::CTalkingSocket(_In_ std::wstring_view a_host_name, __in std::wstring const& p_name ) noexcept
+Win32FoundationClasses::CTalkingSocket::CTalkingSocket(_In_ std::wstring_view a_host_name, _In_ std::wstring const& p_name ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    m_Initialize();
@@ -68,7 +66,7 @@ CTalkingSocket::CTalkingSocket(_In_ std::wstring_view a_host_name, __in std::wst
    SetPort( p_name.c_str() );
 }
 
-CTalkingSocket::CTalkingSocket(_In_ std::wstring_view address, __in short const p_number ) noexcept
+Win32FoundationClasses::CTalkingSocket::CTalkingSocket(_In_ std::wstring_view address, _In_ short const p_number ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    m_Initialize();
@@ -77,7 +75,7 @@ CTalkingSocket::CTalkingSocket(_In_ std::wstring_view address, __in short const 
    SetPort( p_number );
 }
 
-CTalkingSocket::~CTalkingSocket() noexcept
+Win32FoundationClasses::CTalkingSocket::~CTalkingSocket() noexcept
 {
    WFC_VALIDATE_POINTER( this );
 }
@@ -91,7 +89,7 @@ void CTalkingSocket::Dump( CDumpContext &dump_context ) const
 
 #endif // _DEBUG
 
-void CTalkingSocket::m_Initialize( void ) noexcept
+void Win32FoundationClasses::CTalkingSocket::m_Initialize( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 }
@@ -100,7 +98,7 @@ void CTalkingSocket::m_Initialize( void ) noexcept
 ** The Socket manipulation routines
 */
 
-_Check_return_ bool CTalkingSocket::Open( void ) noexcept
+_Check_return_ bool Win32FoundationClasses::CTalkingSocket::Open( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( m_Thunk_p );
@@ -156,7 +154,7 @@ _Check_return_ bool CTalkingSocket::Open( void ) noexcept
 
    ::ZeroMemory( ascii_address_string, sizeof( ascii_address_string ) );
 
-   ::UNICODE_to_ASCII( Address.c_str(), ascii_address_string );
+   Win32FoundationClasses::UNICODE_to_ASCII( Address.c_str(), ascii_address_string );
 
    server_address.sin_addr.s_addr = m_Thunk_p->inet_addr( ascii_address_string );
 
@@ -203,7 +201,7 @@ _Check_return_ bool CTalkingSocket::Open( void ) noexcept
 
 #pragma warning( disable : 4100 )
 
-_Check_return_ bool CTalkingSocket::Open(_In_ std::filesystem::path const& a, _In_ UINT const port_number ) noexcept
+_Check_return_ bool Win32FoundationClasses::CTalkingSocket::Open(_In_ std::filesystem::path const& a, _In_ UINT const port_number ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -221,7 +219,7 @@ _Check_return_ bool CTalkingSocket::Open(_In_ std::filesystem::path const& a, _I
 
 #pragma warning( default : 4100 )
 
-_Check_return_ bool CTalkingSocket::Open(_In_ std::wstring_view a, __in short const p ) noexcept
+_Check_return_ bool Win32FoundationClasses::CTalkingSocket::Open(_In_ std::wstring_view a, _In_ short const p ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    ASSERT( p > 0 );
@@ -232,7 +230,7 @@ _Check_return_ bool CTalkingSocket::Open(_In_ std::wstring_view a, __in short co
    return( Open() );
 }
 
-_Check_return_ bool CTalkingSocket::Open(_In_ std::wstring_view _host_name, __in std::wstring const& _port_name ) noexcept
+_Check_return_ bool Win32FoundationClasses::CTalkingSocket::Open(_In_ std::wstring_view _host_name, _In_ std::wstring const& _port_name ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 

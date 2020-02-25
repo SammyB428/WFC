@@ -52,7 +52,7 @@ class CRemoteAccessServiceConnectionProjection
       // Construction
 
       CRemoteAccessServiceConnectionProjection();
-      CRemoteAccessServiceConnectionProjection( __in CRemoteAccessServiceConnectionProjection const& source );
+      CRemoteAccessServiceConnectionProjection( _In_ CRemoteAccessServiceConnectionProjection const& source );
 
       /*
       ** Destructor should be virtual according to MSJ article in Sept 1992
@@ -67,7 +67,7 @@ class CRemoteAccessServiceConnectionProjection
 
       // Methods
 
-      virtual void Copy( __in CRemoteAccessServiceConnectionProjection const& source ) noexcept;
+      virtual void Copy( _In_ CRemoteAccessServiceConnectionProjection const& source ) noexcept;
       virtual void Empty( void ) noexcept;
 
 #if defined( _DEBUG ) && ! defined( WFC_NO_DUMPING )
@@ -76,7 +76,7 @@ class CRemoteAccessServiceConnectionProjection
 
       // Operators
 
-      virtual CRemoteAccessServiceConnectionProjection& operator = ( __in CRemoteAccessServiceConnectionProjection const& source ) noexcept;
+      virtual CRemoteAccessServiceConnectionProjection& operator = ( _In_ CRemoteAccessServiceConnectionProjection const& source ) noexcept;
 };
 
 class CNetBEUIFramerProjectionResult : public CRemoteAccessServiceConnectionProjection
@@ -84,9 +84,9 @@ class CNetBEUIFramerProjectionResult : public CRemoteAccessServiceConnectionProj
    public:
 
       CNetBEUIFramerProjectionResult();
-      CNetBEUIFramerProjectionResult( __in RAS_PPP_NBFCP_RESULT const * source );
-      CNetBEUIFramerProjectionResult( __in CNetBEUIFramerProjectionResult const& source );
-      CNetBEUIFramerProjectionResult( __in CRemoteAccessServiceConnectionProjection const& source );
+      CNetBEUIFramerProjectionResult( _In_ RAS_PPP_NBFCP_RESULT const * source );
+      CNetBEUIFramerProjectionResult( _In_ CNetBEUIFramerProjectionResult const& source );
+      CNetBEUIFramerProjectionResult( _In_ CRemoteAccessServiceConnectionProjection const& source );
 
       /*
       ** Destructor should be virtual according to MSJ article in Sept 1992
@@ -103,9 +103,9 @@ class CNetBEUIFramerProjectionResult : public CRemoteAccessServiceConnectionProj
 
       // Methods
 
-      virtual void Copy( __in CRemoteAccessServiceConnectionProjection const& source ) noexcept; // Parent's method
-      virtual void Copy( __in CNetBEUIFramerProjectionResult const& source ) noexcept;
-      virtual void Copy( __in RAS_PPP_NBFCP_RESULT const * source ) noexcept;
+      virtual void Copy( _In_ CRemoteAccessServiceConnectionProjection const& source ) noexcept; // Parent's method
+      virtual void Copy( _In_ CNetBEUIFramerProjectionResult const& source ) noexcept;
+      virtual void Copy( _In_ RAS_PPP_NBFCP_RESULT const * source ) noexcept;
       virtual void Empty( void ) noexcept;
 
 #if defined( _DEBUG ) && ! defined( WFC_NO_DUMPING )
@@ -114,7 +114,7 @@ class CNetBEUIFramerProjectionResult : public CRemoteAccessServiceConnectionProj
 
       // Operators
 
-      virtual CNetBEUIFramerProjectionResult& operator = ( __in CNetBEUIFramerProjectionResult const& source ) noexcept;
+      virtual CNetBEUIFramerProjectionResult& operator = ( _In_ CNetBEUIFramerProjectionResult const& source ) noexcept;
 };
 
 class CInternetworkPacketExchangeProjectionResult : public CRemoteAccessServiceConnectionProjection
@@ -122,9 +122,9 @@ class CInternetworkPacketExchangeProjectionResult : public CRemoteAccessServiceC
    public:
 
       CInternetworkPacketExchangeProjectionResult();
-      CInternetworkPacketExchangeProjectionResult( __in RAS_PPP_IPXCP_RESULT const * source );
-      CInternetworkPacketExchangeProjectionResult( __in CInternetworkPacketExchangeProjectionResult const& source );
-      CInternetworkPacketExchangeProjectionResult( __in CRemoteAccessServiceConnectionProjection const& source );
+      CInternetworkPacketExchangeProjectionResult( _In_ RAS_PPP_IPXCP_RESULT const * source );
+      CInternetworkPacketExchangeProjectionResult( _In_ CInternetworkPacketExchangeProjectionResult const& source );
+      CInternetworkPacketExchangeProjectionResult( _In_ CRemoteAccessServiceConnectionProjection const& source );
 
       /*
       ** Destructor should be virtual according to MSJ article in Sept 1992
@@ -158,9 +158,9 @@ class CInternetProtocolProjectionResult : public CRemoteAccessServiceConnectionP
    public:
 
       CInternetProtocolProjectionResult();
-      CInternetProtocolProjectionResult( __in RAS_PPP_IPCP_RESULT const * source );
-      CInternetProtocolProjectionResult( __in CInternetProtocolProjectionResult const& source );
-      CInternetProtocolProjectionResult( __in CRemoteAccessServiceConnectionProjection const& source );
+      CInternetProtocolProjectionResult( _In_ RAS_PPP_IPCP_RESULT const * source );
+      CInternetProtocolProjectionResult( _In_ CInternetProtocolProjectionResult const& source );
+      CInternetProtocolProjectionResult( _In_ CRemoteAccessServiceConnectionProjection const& source );
 
       /*
       ** Destructor should be virtual according to MSJ article in Sept 1992
@@ -175,9 +175,9 @@ class CInternetProtocolProjectionResult : public CRemoteAccessServiceConnectionP
 
       // Methods
 
-      virtual void Copy( __in CRemoteAccessServiceConnectionProjection const& source ) noexcept; // Parent's method
-      virtual void Copy( __in CInternetProtocolProjectionResult const& source ) noexcept;
-      virtual void Copy( __in RAS_PPP_IPCP_RESULT const * source ) noexcept;
+      virtual void Copy( _In_ CRemoteAccessServiceConnectionProjection const& source ) noexcept; // Parent's method
+      virtual void Copy( _In_ CInternetProtocolProjectionResult const& source ) noexcept;
+      virtual void Copy( _In_ RAS_PPP_IPCP_RESULT const * source ) noexcept;
       virtual void Empty( void ) noexcept;
 
 #if defined( _DEBUG ) && ! defined( WFC_NO_DUMPING )
@@ -186,7 +186,7 @@ class CInternetProtocolProjectionResult : public CRemoteAccessServiceConnectionP
 
       // Operators
 
-      virtual CInternetProtocolProjectionResult& operator = ( __in CInternetProtocolProjectionResult const& source ) noexcept;
+      virtual CInternetProtocolProjectionResult& operator = ( _In_ CInternetProtocolProjectionResult const& source ) noexcept;
 };
 
 class CAppleTalkProjectionResult : public CRemoteAccessServiceConnectionProjection
@@ -194,9 +194,9 @@ class CAppleTalkProjectionResult : public CRemoteAccessServiceConnectionProjecti
    public:
 
       CAppleTalkProjectionResult();
-      CAppleTalkProjectionResult( __in RAS_PPP_ATCP_RESULT const * source );
-      CAppleTalkProjectionResult( __in CAppleTalkProjectionResult const& source );
-      CAppleTalkProjectionResult( __in CRemoteAccessServiceConnectionProjection const& source );
+      CAppleTalkProjectionResult( _In_ RAS_PPP_ATCP_RESULT const * source );
+      CAppleTalkProjectionResult( _In_ CAppleTalkProjectionResult const& source );
+      CAppleTalkProjectionResult( _In_ CRemoteAccessServiceConnectionProjection const& source );
 
       /*
       ** Destructor should be virtual according to MSJ article in Sept 1992
@@ -211,9 +211,9 @@ class CAppleTalkProjectionResult : public CRemoteAccessServiceConnectionProjecti
 
       // Methods
 
-      virtual void Copy( __in CRemoteAccessServiceConnectionProjection const& source ) noexcept; // Parent's method
-      virtual void Copy( __in CAppleTalkProjectionResult const& source ) noexcept;
-      virtual void Copy( __in RAS_PPP_ATCP_RESULT const * source ) noexcept;
+      virtual void Copy( _In_ CRemoteAccessServiceConnectionProjection const& source ) noexcept; // Parent's method
+      virtual void Copy( _In_ CAppleTalkProjectionResult const& source ) noexcept;
+      virtual void Copy( _In_ RAS_PPP_ATCP_RESULT const * source ) noexcept;
       virtual void Empty( void ) noexcept;
 
 #if defined( _DEBUG ) && ! defined( WFC_NO_DUMPING )
@@ -222,7 +222,7 @@ class CAppleTalkProjectionResult : public CRemoteAccessServiceConnectionProjecti
 
       // Operators
 
-      virtual CAppleTalkProjectionResult& operator = ( __in CAppleTalkProjectionResult const& source ) noexcept;
+      virtual CAppleTalkProjectionResult& operator = ( _In_ CAppleTalkProjectionResult const& source ) noexcept;
 };
 
 class CPointToPointProtocolProjectionResult
@@ -230,8 +230,8 @@ class CPointToPointProtocolProjectionResult
    public:
 
       CPointToPointProtocolProjectionResult();
-      CPointToPointProtocolProjectionResult( __in CPointToPointProtocolProjectionResult const& source );
-      CPointToPointProtocolProjectionResult( __in RAS_PPP_PROJECTION_RESULT const * source );
+      CPointToPointProtocolProjectionResult( _In_ CPointToPointProtocolProjectionResult const& source );
+      CPointToPointProtocolProjectionResult( _In_ RAS_PPP_PROJECTION_RESULT const * source );
 
       /*
       ** Destructor should be virtual according to MSJ article in Sept 1992
@@ -249,8 +249,8 @@ class CPointToPointProtocolProjectionResult
 
       // Methods
 
-      virtual void Copy( __in CPointToPointProtocolProjectionResult const& source ) noexcept;
-      virtual void Copy( __in RAS_PPP_PROJECTION_RESULT const * source ) noexcept;
+      virtual void Copy( _In_ CPointToPointProtocolProjectionResult const& source ) noexcept;
+      virtual void Copy( _In_ RAS_PPP_PROJECTION_RESULT const * source ) noexcept;
       virtual void Empty( void ) noexcept;
 
 #if defined( _DEBUG ) && ! defined( WFC_NO_DUMPING )
@@ -259,7 +259,7 @@ class CPointToPointProtocolProjectionResult
 
       // Operators
 
-      virtual CPointToPointProtocolProjectionResult& operator = ( __in CPointToPointProtocolProjectionResult const& source ) noexcept;
+      virtual CPointToPointProtocolProjectionResult& operator = ( _In_ CPointToPointProtocolProjectionResult const& source ) noexcept;
 };
 
 class CRemoteAccessServiceUser
@@ -267,8 +267,8 @@ class CRemoteAccessServiceUser
    public:
 
       CRemoteAccessServiceUser();
-      CRemoteAccessServiceUser( __in RAS_USER_0 const * source );
-      CRemoteAccessServiceUser( __in CRemoteAccessServiceUser const& source );
+      CRemoteAccessServiceUser( _In_ RAS_USER_0 const * source );
+      CRemoteAccessServiceUser( _In_ CRemoteAccessServiceUser const& source );
 
       /*
       ** Destructor should be virtual according to MSJ article in Sept 1992
@@ -284,8 +284,8 @@ class CRemoteAccessServiceUser
 
       // Methods
 
-      virtual void Copy( __in RAS_USER_0 const * source ) noexcept;
-      virtual void Copy( __in CRemoteAccessServiceUser const& source ) noexcept;
+      virtual void Copy( _In_ RAS_USER_0 const * source ) noexcept;
+      virtual void Copy( _In_ CRemoteAccessServiceUser const& source ) noexcept;
       virtual void Empty( void ) noexcept;
 
 #if defined( _DEBUG ) && ! defined( WFC_NO_DUMPING )
@@ -294,7 +294,7 @@ class CRemoteAccessServiceUser
 
       // Operators
 
-      virtual CRemoteAccessServiceUser& operator = ( __in CRemoteAccessServiceUser const& source ) noexcept;
+      virtual CRemoteAccessServiceUser& operator = ( _In_ CRemoteAccessServiceUser const& source ) noexcept;
 };
 
 class CRemoteAccessServicePort
@@ -302,9 +302,9 @@ class CRemoteAccessServicePort
    public:
 
       CRemoteAccessServicePort();
-      CRemoteAccessServicePort( __in RAS_PORT_0 const * source );
-      CRemoteAccessServicePort( __in RAS_PORT_1 const * source );
-      CRemoteAccessServicePort( __in CRemoteAccessServicePort const& source );
+      CRemoteAccessServicePort( _In_ RAS_PORT_0 const * source );
+      CRemoteAccessServicePort( _In_ RAS_PORT_1 const * source );
+      CRemoteAccessServicePort( _In_ CRemoteAccessServicePort const& source );
 
       /*
       ** Destructor should be virtual according to MSJ article in Sept 1992
@@ -348,9 +348,9 @@ class CRemoteAccessServicePort
 
       // Methods
 
-      virtual void Copy( __in CRemoteAccessServicePort const& source ) noexcept;
-      virtual void Copy( __in RAS_PORT_0 const * source ) noexcept;
-      virtual void Copy( __in RAS_PORT_1 const * source ) noexcept;
+      virtual void Copy( _In_ CRemoteAccessServicePort const& source ) noexcept;
+      virtual void Copy( _In_ RAS_PORT_0 const * source ) noexcept;
+      virtual void Copy( _In_ RAS_PORT_1 const * source ) noexcept;
       virtual void Empty( void ) noexcept;
 
 #if defined( _DEBUG ) && ! defined( WFC_NO_DUMPING )
@@ -359,7 +359,7 @@ class CRemoteAccessServicePort
 
       // Operators
 
-      virtual CRemoteAccessServicePort& operator = ( __in CRemoteAccessServicePort const& source ) noexcept;
+      virtual CRemoteAccessServicePort& operator = ( _In_ CRemoteAccessServicePort const& source ) noexcept;
 };
 
 class CRemoteAccessServicePortStatistics
@@ -367,8 +367,8 @@ class CRemoteAccessServicePortStatistics
    public:
 
       CRemoteAccessServicePortStatistics();
-      CRemoteAccessServicePortStatistics( __in RAS_PORT_STATISTICS const * source );
-      CRemoteAccessServicePortStatistics( __in CRemoteAccessServicePortStatistics const& source );
+      CRemoteAccessServicePortStatistics( _In_ RAS_PORT_STATISTICS const * source );
+      CRemoteAccessServicePortStatistics( _In_ CRemoteAccessServicePortStatistics const& source );
 
       /*
       ** Destructor should be virtual according to MSJ article in Sept 1992
@@ -397,9 +397,9 @@ class CRemoteAccessServicePortStatistics
 
       // Methods
 
-      virtual _Check_return_ int Compare( __in CRemoteAccessServicePortStatistics const& source ) const noexcept;
-      virtual void Copy( __in RAS_PORT_STATISTICS const * source ) noexcept;
-      virtual void Copy( __in CRemoteAccessServicePortStatistics const& source ) noexcept;
+      virtual _Check_return_ int Compare( _In_ CRemoteAccessServicePortStatistics const& source ) const noexcept;
+      virtual void Copy( _In_ RAS_PORT_STATISTICS const * source ) noexcept;
+      virtual void Copy( _In_ CRemoteAccessServicePortStatistics const& source ) noexcept;
       virtual void Empty( void ) noexcept;
 
 #if defined( _DEBUG ) && ! defined( WFC_NO_DUMPING )
@@ -408,12 +408,12 @@ class CRemoteAccessServicePortStatistics
 
       // Operators
 
-      virtual CRemoteAccessServicePortStatistics& operator = ( __in CRemoteAccessServicePortStatistics const& source ) noexcept;
-      virtual bool operator == ( __in CRemoteAccessServicePortStatistics const& right_port ) const noexcept;
-      virtual bool operator <  ( __in CRemoteAccessServicePortStatistics const& right_port ) const noexcept;
-      virtual bool operator >  ( __in CRemoteAccessServicePortStatistics const& right_port ) const noexcept;
-      virtual bool operator <= ( __in CRemoteAccessServicePortStatistics const& right_port ) const noexcept;
-      virtual bool operator >= ( __in CRemoteAccessServicePortStatistics const& right_port ) const noexcept;
+      virtual CRemoteAccessServicePortStatistics& operator = ( _In_ CRemoteAccessServicePortStatistics const& source ) noexcept;
+      virtual bool operator == ( _In_ CRemoteAccessServicePortStatistics const& right_port ) const noexcept;
+      virtual bool operator <  ( _In_ CRemoteAccessServicePortStatistics const& right_port ) const noexcept;
+      virtual bool operator >  ( _In_ CRemoteAccessServicePortStatistics const& right_port ) const noexcept;
+      virtual bool operator <= ( _In_ CRemoteAccessServicePortStatistics const& right_port ) const noexcept;
+      virtual bool operator >= ( _In_ CRemoteAccessServicePortStatistics const& right_port ) const noexcept;
 };
 
 #endif // REMOTE_ACCESS_SERVICE_PORT_DATA_CLASS_HEADER

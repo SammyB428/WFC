@@ -51,22 +51,20 @@ static char THIS_FILE[] = __FILE__;
 #define new DEBUG_NEW
 #endif // _DEBUG
 
-USING_WFC_NAMESPACE
-
-CSuperRandomNumberGenerator::CSuperRandomNumberGenerator( __in DWORD seed )
+Win32FoundationClasses::CSuperRandomNumberGenerator::CSuperRandomNumberGenerator( _In_ DWORD seed )
 {
    WFC_VALIDATE_POINTER( this );
    SetSeed( seed );
 }
 
-CSuperRandomNumberGenerator::~CSuperRandomNumberGenerator()
+Win32FoundationClasses::CSuperRandomNumberGenerator::~CSuperRandomNumberGenerator()
 {
    WFC_VALIDATE_POINTER( this );
 }
 
 #if defined( _DEBUG ) && ! defined( WFC_NO_DUMPING )
 
-void CSuperRandomNumberGenerator::Dump( CDumpContext& dump_context ) const
+void Win32FoundationClasses::CSuperRandomNumberGenerator::Dump( CDumpContext& dump_context ) const
 {
    dump_context << TEXT( "a CSuperRandomNumberGenerator at " ) << (VOID *) this << TEXT( "\n{\n" );
 
@@ -96,7 +94,7 @@ void CSuperRandomNumberGenerator::Dump( CDumpContext& dump_context ) const
 
 #endif // _DEBUG
 
-_Check_return_ DWORD CSuperRandomNumberGenerator::GetInteger( void ) noexcept
+_Check_return_ DWORD Win32FoundationClasses::CSuperRandomNumberGenerator::GetInteger( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    double value = GetValue();
@@ -134,7 +132,7 @@ _Check_return_ DWORD CSuperRandomNumberGenerator::GetInteger( void ) noexcept
    return( return_value );
 }
 
-_Check_return_ double CSuperRandomNumberGenerator::GetValue( void ) noexcept
+_Check_return_ double Win32FoundationClasses::CSuperRandomNumberGenerator::GetValue( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    double temporary_value = 0.0;
@@ -201,7 +199,7 @@ _Check_return_ double CSuperRandomNumberGenerator::GetValue( void ) noexcept
    return( return_value );
 }
 
-void CSuperRandomNumberGenerator::m_Initialize( void )
+void Win32FoundationClasses::CSuperRandomNumberGenerator::m_Initialize( void )
 {
    WFC_VALIDATE_POINTER( this );
    m_Index_I24 = 24;
@@ -209,13 +207,13 @@ void CSuperRandomNumberGenerator::m_Initialize( void )
    m_Index24   = 0;
 }
 
-void CSuperRandomNumberGenerator::SetSeed( __in DWORD jseed ) noexcept
+void Win32FoundationClasses::CSuperRandomNumberGenerator::SetSeed( _In_ DWORD jseed ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
    if ( jseed == 0 )
    {
-      CRandomNumberGenerator random;
+       Win32FoundationClasses::CRandomNumberGenerator random;
 
       jseed = random;
    }

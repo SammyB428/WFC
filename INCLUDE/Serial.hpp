@@ -64,7 +64,7 @@ class CSerialFile : public CDummyFile
 
       COMSTAT m_CommunicationsStatus;
 
-      virtual void m_ClearError( __in int const line_number = 0 ) noexcept;
+      virtual void m_ClearError( _In_ int const line_number = 0 ) noexcept;
 
    public:
 
@@ -120,7 +120,7 @@ class CSerialFile : public CDummyFile
 
       HANDLE FileHandle{ INVALID_HANDLE_VALUE };
 
-      virtual _Check_return_ BOOL  Attach( __in HANDLE new_handle, __out_opt HANDLE * old_handle ) noexcept;
+      virtual _Check_return_ BOOL  Attach( _In_ HANDLE new_handle, __out_opt HANDLE * old_handle ) noexcept;
       virtual _Check_return_ BOOL  CancelWaitFor( void ) noexcept;
       virtual _Check_return_ BOOL  ClearBreak( void ) noexcept;
       virtual void  Close( void ) noexcept;
@@ -148,21 +148,21 @@ class CSerialFile : public CDummyFile
       virtual _Check_return_ bool  SetBaudRate(_In_ uint32_t const baud_rate ) noexcept;
       virtual _Check_return_ BOOL  SetBreak( void ) noexcept;
       virtual _Check_return_ BOOL  SetCharacterToWaitFor(_In_ uint8_t const character_to_wait_for ) noexcept;
-      virtual _Check_return_ BOOL  SetDataTerminalReady( __in bool const set_DTR_on = true ) noexcept;
-      virtual void  SetFlowControl( __in DWORD const flow_control ) noexcept;
-      inline void SetInputBufferSize(__in DWORD const buffer_size) noexcept { m_InputBufferSize = buffer_size; }
-      inline void SetOutputBufferSize(__in DWORD const buffer_size) noexcept { m_OutputBufferSize = buffer_size; }
-      virtual _Check_return_ bool  SetPurgeBufferOnError( __in bool const purge_buffer = true ) noexcept;
+      virtual _Check_return_ BOOL  SetDataTerminalReady( _In_ bool const set_DTR_on = true ) noexcept;
+      virtual void  SetFlowControl( _In_ DWORD const flow_control ) noexcept;
+      inline void SetInputBufferSize(_In_ DWORD const buffer_size) noexcept { m_InputBufferSize = buffer_size; }
+      inline void SetOutputBufferSize(_In_ DWORD const buffer_size) noexcept { m_OutputBufferSize = buffer_size; }
+      virtual _Check_return_ bool  SetPurgeBufferOnError( _In_ bool const purge_buffer = true ) noexcept;
       virtual _Check_return_ bool  SetRequestToSend( _In_ bool const set_RTS_on = true ) noexcept;
       virtual _Check_return_ BOOL  SetState( __inout CDeviceControlBlock& device_control_block ) noexcept;
       virtual _Check_return_ BOOL  SetTimeouts( __in_opt COMMTIMEOUTS const * timeouts_p = nullptr ) noexcept;
-      virtual _Check_return_ BOOL  TransmitCharacter( __in char const character_to_transmit ) noexcept;
+      virtual _Check_return_ BOOL  TransmitCharacter( _In_ char const character_to_transmit ) noexcept;
       virtual _Check_return_ BOOL  WaitFor( __inout DWORD& stuff_you_can_wait_for ) noexcept;
-      virtual _Check_return_ bool  WaitForString( __in std::string const& string_to_wait_for, __in DWORD const seconds = 5, __inout_opt std::string * what_was_read = nullptr ) noexcept;
-      void  Write( __in std::vector<uint8_t> const& bytes ) noexcept override;
+      virtual _Check_return_ bool  WaitForString( _In_ std::string const& string_to_wait_for, _In_ DWORD const seconds = 5, __inout_opt std::string * what_was_read = nullptr ) noexcept;
+      void  Write( _In_ std::vector<uint8_t> const& bytes ) noexcept override;
       void  Write( _In_ std::string_view data_to_write ) noexcept override;
-      void  Write( __in_bcount( number_of_bytes ) void const * buffer, __in UINT const number_of_bytes ) noexcept override;
-      virtual void  Write( __in BYTE const byte_to_write ) noexcept;
+      void  Write( __in_bcount( number_of_bytes ) void const * buffer, _In_ UINT const number_of_bytes ) noexcept override;
+      virtual void  Write( _In_ BYTE const byte_to_write ) noexcept;
 
 #if defined( _DEBUG ) && ! defined( WFC_NO_DUMPING )
 

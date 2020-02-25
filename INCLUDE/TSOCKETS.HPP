@@ -57,8 +57,8 @@ class CTalkingSocket : public CSimpleSocket
       CTalkingSocket& operator=(CTalkingSocket const&) = delete;
        
       CTalkingSocket() noexcept;
-      CTalkingSocket(_In_ std::wstring_view address, __in short const p ) noexcept;
-      CTalkingSocket(_In_ std::wstring_view host, __in std::wstring const& p ) noexcept;
+      CTalkingSocket(_In_ std::wstring_view address, _In_ short const p ) noexcept;
+      CTalkingSocket(_In_ std::wstring_view host, _In_ std::wstring const& p ) noexcept;
 
       /*
       ** Destructor should be virtual according to MSJ article in Sept 1992

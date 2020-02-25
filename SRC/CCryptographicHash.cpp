@@ -57,11 +57,9 @@
 static char THIS_FILE[] = __FILE__;
 #endif // _DEBUG
 
-USING_WFC_NAMESPACE
-
 // Construction
 
-CCryptographicHash::CCryptographicHash() noexcept
+Win32FoundationClasses::CCryptographicHash::CCryptographicHash() noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -69,7 +67,7 @@ CCryptographicHash::CCryptographicHash() noexcept
    m_AutomaticallyDestroy = FALSE;
 }
 
-CCryptographicHash::CCryptographicHash( __in HCRYPTHASH source_handle, __in bool automatically_destroy ) noexcept
+Win32FoundationClasses::CCryptographicHash::CCryptographicHash( _In_ HCRYPTHASH source_handle, _In_ bool automatically_destroy ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -79,7 +77,7 @@ CCryptographicHash::CCryptographicHash( __in HCRYPTHASH source_handle, __in bool
    (void) FromHandle( source_handle, automatically_destroy );
 }
 
-CCryptographicHash::~CCryptographicHash() noexcept
+Win32FoundationClasses::CCryptographicHash::~CCryptographicHash() noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -91,7 +89,7 @@ CCryptographicHash::~CCryptographicHash() noexcept
 
 // Methods
 
-_Check_return_ bool CCryptographicHash::Destroy( void ) noexcept
+_Check_return_ bool Win32FoundationClasses::CCryptographicHash::Destroy( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -113,7 +111,7 @@ _Check_return_ bool CCryptographicHash::Destroy( void ) noexcept
    return( return_value == FALSE ? false : true );
 }
 
-_Check_return_ bool CCryptographicHash::FromHandle( __in HCRYPTHASH source_handle, __in bool automatically_destroy ) noexcept
+_Check_return_ bool Win32FoundationClasses::CCryptographicHash::FromHandle( _In_ HCRYPTHASH source_handle, _In_ bool automatically_destroy ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -133,7 +131,7 @@ _Check_return_ bool CCryptographicHash::FromHandle( __in HCRYPTHASH source_handl
    return( true );
 }
 
-_Check_return_ bool CCryptographicHash::GetAlgorithmIdentifier( __out DWORD& identifier ) noexcept
+_Check_return_ bool Win32FoundationClasses::CCryptographicHash::GetAlgorithmIdentifier( _Out_ DWORD& identifier ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -142,13 +140,13 @@ _Check_return_ bool CCryptographicHash::GetAlgorithmIdentifier( __out DWORD& ide
    return( GetParameter( parameterAlgorithmIdentifier, (BYTE *) &identifier, buffer_length ) );
 }
 
-_Check_return_ HCRYPTHASH CCryptographicHash::GetHandle( void ) const noexcept
+_Check_return_ HCRYPTHASH Win32FoundationClasses::CCryptographicHash::GetHandle( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
    return( m_Hash );
 }
 
-_Check_return_ bool CCryptographicHash::GetLength( __out uint32_t& length ) noexcept
+_Check_return_ bool Win32FoundationClasses::CCryptographicHash::GetLength( _Out_ uint32_t& length ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -157,7 +155,7 @@ _Check_return_ bool CCryptographicHash::GetLength( __out uint32_t& length ) noex
    return( GetParameter( parameterLength, (BYTE *) &length, buffer_length ) );
 }
 
-_Check_return_ bool CCryptographicHash::GetValue(__out std::vector<uint8_t>& value) noexcept
+_Check_return_ bool Win32FoundationClasses::CCryptographicHash::GetValue(_Out_ std::vector<uint8_t>& value) noexcept
 {
     WFC_VALIDATE_POINTER(this);
 
@@ -175,7 +173,7 @@ _Check_return_ bool CCryptographicHash::GetValue(__out std::vector<uint8_t>& val
     return(return_value);
 }
 
-_Check_return_ bool CCryptographicHash::GetParameter( __in uint32_t const parameter_to_get, __inout_bcount( buffer_length ) uint8_t *buffer, __inout uint32_t& buffer_length, __in uint32_t const flags ) noexcept
+_Check_return_ bool Win32FoundationClasses::CCryptographicHash::GetParameter( _In_ uint32_t const parameter_to_get, __inout_bcount( buffer_length ) uint8_t *buffer, __inout uint32_t& buffer_length, _In_ uint32_t const flags ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( buffer );
@@ -200,7 +198,7 @@ _Check_return_ bool CCryptographicHash::GetParameter( __in uint32_t const parame
    return( return_value == FALSE ? false : true );
 }
 
-_Check_return_ bool CCryptographicHash::Hash( __in_bcount( buffer_size ) uint8_t const * buffer, __in DWORD const buffer_size, __in DWORD const flags ) noexcept
+_Check_return_ bool Win32FoundationClasses::CCryptographicHash::Hash( __in_bcount( buffer_size ) uint8_t const * buffer, _In_ DWORD const buffer_size, _In_ DWORD const flags ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -230,7 +228,7 @@ _Check_return_ bool CCryptographicHash::Hash( __in_bcount( buffer_size ) uint8_t
    return( return_value == FALSE ? false : true );
 }
 
-_Check_return_ bool CCryptographicHash::Hash(__in std::vector<uint8_t> const& data_to_compute_hash_on, __in DWORD const flags) noexcept
+_Check_return_ bool Win32FoundationClasses::CCryptographicHash::Hash(_In_ std::vector<uint8_t> const& data_to_compute_hash_on, _In_ DWORD const flags) noexcept
 {
     WFC_VALIDATE_POINTER(this);
 
@@ -239,7 +237,7 @@ _Check_return_ bool CCryptographicHash::Hash(__in std::vector<uint8_t> const& da
     return(Hash(data_to_compute_hash_on.data(), (DWORD)data_to_compute_hash_on.size(), flags));
 }
 
-_Check_return_ bool CCryptographicHash::Hash( __in CCryptographicKey const& key_to_hash, __in DWORD const flags ) noexcept
+_Check_return_ bool Win32FoundationClasses::CCryptographicHash::Hash( _In_ Win32FoundationClasses::CCryptographicKey const& key_to_hash, _In_ DWORD const flags ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -258,7 +256,7 @@ _Check_return_ bool CCryptographicHash::Hash( __in CCryptographicKey const& key_
    return( return_value == FALSE ? false : true );
 }
 
-_Check_return_ bool CCryptographicHash::SetParameter( __in DWORD const parameter_to_set, __inout BYTE * buffer, __in DWORD const flags ) noexcept
+_Check_return_ bool Win32FoundationClasses::CCryptographicHash::SetParameter( _In_ DWORD const parameter_to_set, __inout BYTE * buffer, _In_ DWORD const flags ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( buffer );
@@ -283,14 +281,14 @@ _Check_return_ bool CCryptographicHash::SetParameter( __in DWORD const parameter
    return( return_value == FALSE ? false : true );
 }
 
-_Check_return_ bool CCryptographicHash::SetValue( __inout std::vector<uint8_t>& value ) noexcept
+_Check_return_ bool Win32FoundationClasses::CCryptographicHash::SetValue( __inout std::vector<uint8_t>& value ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
    return( SetParameter( parameterValue, value.data() ) );
 }
 
-_Check_return_ bool CCryptographicHash::Sign( __in DWORD const which_key_to_sign_with, __in std::wstring const& password, __inout std::vector<uint8_t>& signed_hash, __in DWORD const flags ) noexcept
+_Check_return_ bool Win32FoundationClasses::CCryptographicHash::Sign( _In_ DWORD const which_key_to_sign_with, _In_ std::wstring const& password, __inout std::vector<uint8_t>& signed_hash, _In_ DWORD const flags ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -335,7 +333,7 @@ _Check_return_ bool CCryptographicHash::Sign( __in DWORD const which_key_to_sign
    return( true );
 }
 
-_Check_return_ bool CCryptographicHash::VerifySignature( __inout std::vector<uint8_t>& signature_to_be_verified, __inout CCryptographicKey& public_key_to_verify_with, __inout std::wstring& password, __in DWORD const flags ) noexcept
+_Check_return_ bool Win32FoundationClasses::CCryptographicHash::VerifySignature( __inout std::vector<uint8_t>& signature_to_be_verified, __inout Win32FoundationClasses::CCryptographicKey& public_key_to_verify_with, __inout std::wstring& password, _In_ DWORD const flags ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 

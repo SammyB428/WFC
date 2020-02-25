@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 1995-2018, Samuel R. Blackburn
+** Copyright, 1995-2020, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -50,8 +50,6 @@
 static char THIS_FILE[] = __FILE__;
 #define new DEBUG_NEW
 #endif // _DEBUG
-
-USING_WFC_NAMESPACE
 
 #if ! defined( WFC_STL )
 
@@ -108,11 +106,11 @@ void Win32FoundationClasses::CFileTime::ISO8601(_Out_ std::wstring& return_value
 
         fractional_part += (double)stime.wSecond;
 
-        format(return_value, L"%04d-%02d-%02dT%02d:%02d:", (int)stime.wYear, (int)stime.wMonth, (int)stime.wDay, (int)stime.wHour, (int)stime.wMinute);
+        Win32FoundationClasses::format(return_value, L"%04d-%02d-%02dT%02d:%02d:", (int)stime.wYear, (int)stime.wMonth, (int)stime.wDay, (int)stime.wHour, (int)stime.wMinute);
 
         std::wstring seconds_part;
 
-        format(seconds_part, L"%2.6lf", fractional_part);
+        Win32FoundationClasses::format(seconds_part, L"%2.6lf", fractional_part);
 
         if (seconds_part.at(1) == '.')
         {
@@ -127,7 +125,7 @@ void Win32FoundationClasses::CFileTime::ISO8601(_Out_ std::wstring& return_value
     }
     else
     {
-        format( return_value, L"%04d-%02d-%02dT%02d:%02d:%02dZ", (int)stime.wYear, (int)stime.wMonth, (int)stime.wDay, (int)stime.wHour, (int)stime.wMinute, (int)stime.wSecond);
+        Win32FoundationClasses::format( return_value, L"%04d-%02d-%02dT%02d:%02d:%02dZ", (int)stime.wYear, (int)stime.wMonth, (int)stime.wDay, (int)stime.wHour, (int)stime.wMinute, (int)stime.wSecond);
     }
 }
 

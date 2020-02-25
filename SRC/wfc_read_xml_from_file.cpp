@@ -51,9 +51,7 @@ static char THIS_FILE[] = __FILE__;
 #define new DEBUG_NEW
 #endif // _DEBUG
 
-USING_WFC_NAMESPACE
-
-_Check_return_ bool PASCAL Win32FoundationClasses::wfc_read_xml_from_file(_In_ std::wstring_view filename, _Inout_ CExtensibleMarkupLanguageDocument& document ) noexcept
+_Check_return_ bool Win32FoundationClasses::wfc_read_xml_from_file(_In_ std::wstring_view filename, _Inout_ CExtensibleMarkupLanguageDocument& document ) noexcept
 {
     CMemoryFile memory_mapped_file;
 
@@ -83,7 +81,7 @@ _Check_return_ bool PASCAL Win32FoundationClasses::wfc_read_xml_from_file(_In_ s
     return( true );
 }
 
-void PASCAL Win32FoundationClasses::wfc_get_program_data_directory(__out std::wstring& application_data_directory) noexcept
+void Win32FoundationClasses::wfc_get_program_data_directory(_Out_ std::wstring& application_data_directory) noexcept
 {
     application_data_directory.clear();
 

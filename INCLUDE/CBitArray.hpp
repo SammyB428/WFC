@@ -56,7 +56,7 @@ class CBitArray
       std::size_t m_TotalNumberOfBits{ 0 };
       std::size_t m_IndexOfFirstBit{ 0 };
 
-      inline constexpr _Check_return_ bool m_GetElementIndexOfBitLocation(__in std::size_t const bit_location, __out std::size_t& index, __out uint32_t& bit_number) const noexcept
+      inline constexpr _Check_return_ bool m_GetElementIndexOfBitLocation(_In_ std::size_t const bit_location, _Out_ std::size_t& index, _Out_ uint32_t& bit_number) const noexcept
       {
           // 1998-12-05
           // New calculation provided by Peter Ekberg (peda@sectra.se) to get rid of floating point calculations
@@ -94,24 +94,24 @@ class CBitArray
 
       // Methods
 
-      void                    Add( __in uint32_t const bit_to_add, __in std::size_t const count = 1 ) noexcept;
-      void                    AddByte( __in uint8_t const byte_to_add ) noexcept;
-      void                    AddValue( __in uint32_t const value_to_add, __in uint32_t const number_of_bits_in_value ) noexcept;
-      void                    Append( __in CBitArray const& source ) noexcept;
-      void                    Append( __in_bcount( number_of_bytes ) uint8_t const * data, __in std::size_t const number_of_bytes ) noexcept;
+      void                    Add( _In_ uint32_t const bit_to_add, _In_ std::size_t const count = 1 ) noexcept;
+      void                    AddByte( _In_ uint8_t const byte_to_add ) noexcept;
+      void                    AddValue( _In_ uint32_t const value_to_add, _In_ uint32_t const number_of_bits_in_value ) noexcept;
+      void                    Append( _In_ CBitArray const& source ) noexcept;
+      void                    Append( __in_bcount( number_of_bytes ) uint8_t const * data, _In_ std::size_t const number_of_bytes ) noexcept;
       void                    Complement( void ) noexcept;
-      void                    Copy( __in CBitArray const& source ) noexcept;
-      void                    Copy( __in std::vector<uint8_t> const& source ) noexcept;
-      void                    Copy( __in std::vector<uint32_t> const& source ) noexcept;
+      void                    Copy( _In_ CBitArray const& source ) noexcept;
+      void                    Copy( _In_ std::vector<uint8_t> const& source ) noexcept;
+      void                    Copy( _In_ std::vector<uint32_t> const& source ) noexcept;
       void                    CopyTo( __inout std::vector<uint8_t>& destination ) noexcept;
       void                    CopyTo( __inout std::vector<uint32_t>& destination ) noexcept;
       _Check_return_ bool      EnumerateOnes( __inout std::size_t& enumerator ) const noexcept;
       _Check_return_ bool      EnumerateZeroes( __inout std::size_t& enumerator ) const noexcept;
-      _Check_return_ bool      Find( __in CBitArray const& value, __inout std::size_t& found_at, __in std::size_t const starting_at = 0 ) const noexcept;
-      _Check_return_ bool      Find( __in uint32_t const value, __in std::size_t const number_of_bits_in_value, __inout std::size_t& found_at_index, __in std::size_t const starting_at = 0 ) const noexcept;
+      _Check_return_ bool      Find( _In_ CBitArray const& value, __inout std::size_t& found_at, _In_ std::size_t const starting_at = 0 ) const noexcept;
+      _Check_return_ bool      Find( _In_ uint32_t const value, _In_ std::size_t const number_of_bits_in_value, __inout std::size_t& found_at_index, _In_ std::size_t const starting_at = 0 ) const noexcept;
       void                    FreeExtra( void ) noexcept;
       
-      inline _Check_return_ uint32_t GetAt( __in std::size_t const bit_location ) const noexcept
+      inline _Check_return_ uint32_t GetAt( _In_ std::size_t const bit_location ) const noexcept
       {
          std::size_t const size = GetSize();
 
@@ -157,11 +157,11 @@ class CBitArray
           return(0);
       }
 
-      _Check_return_ uint32_t    GetValue( __in std::size_t const index, __in std::size_t const length ) const noexcept;
-      void                    InsertAt( __in std::size_t const index, __in uint32_t const value ) noexcept;
-      _Check_return_ CBitArray Left( __in std::size_t const number_of_bits ) const noexcept;
-      void                    LeftTrim( __in std::size_t const number_of_bits ) noexcept;
-      _Check_return_ CBitArray Mid( __in std::size_t const starting_at_index, __in std::size_t const number_of_bits ) const noexcept;
+      _Check_return_ uint32_t    GetValue( _In_ std::size_t const index, _In_ std::size_t const length ) const noexcept;
+      void                    InsertAt( _In_ std::size_t const index, _In_ uint32_t const value ) noexcept;
+      _Check_return_ CBitArray Left( _In_ std::size_t const number_of_bits ) const noexcept;
+      void                    LeftTrim( _In_ std::size_t const number_of_bits ) noexcept;
+      _Check_return_ CBitArray Mid( _In_ std::size_t const starting_at_index, _In_ std::size_t const number_of_bits ) const noexcept;
 
       inline void RemoveAll( void ) noexcept
       {
@@ -170,27 +170,27 @@ class CBitArray
          m_IndexOfFirstBit   = 0;
       }
 
-      void                    RemoveAt( __in std::size_t const array_index ) noexcept;
-      _Check_return_ CBitArray Right( __in std::size_t const number_of_bits ) const noexcept;
-      void                    RightTrim( __in std::size_t const number_of_bits ) noexcept;
-      void      SetAll( __in uint32_t const value ) noexcept;
-      void      SetAt( __in std::size_t const array_index, __in uint32_t const value ) noexcept;
+      void                    RemoveAt( _In_ std::size_t const array_index ) noexcept;
+      _Check_return_ CBitArray Right( _In_ std::size_t const number_of_bits ) const noexcept;
+      void                    RightTrim( _In_ std::size_t const number_of_bits ) noexcept;
+      void      SetAll( _In_ uint32_t const value ) noexcept;
+      void      SetAt( _In_ std::size_t const array_index, _In_ uint32_t const value ) noexcept;
 
       /// <summary>Sets the bits to 1 in the given range.</summary>
-      void      SetRange( __in std::size_t const array_index, __in std::size_t const length ) noexcept;
+      void      SetRange( _In_ std::size_t const array_index, _In_ std::size_t const length ) noexcept;
 
       /// <summary>Sets the bits to 0 in the given range.</summary>
-      void      ClearRange( __in std::size_t const array_index, __in std::size_t const length ) noexcept;
-      void      SetSize( __in std::size_t const number_of_bits ) noexcept;
-      void      SetValue( __in std::size_t const array_index, __in uint32_t const value, __in uint32_t const length ) noexcept;
+      void      ClearRange( _In_ std::size_t const array_index, _In_ std::size_t const length ) noexcept;
+      void      SetSize( _In_ std::size_t const number_of_bits ) noexcept;
+      void      SetValue( _In_ std::size_t const array_index, _In_ uint32_t const value, _In_ uint32_t const length ) noexcept;
 
       // Operators
 
-      inline _Check_return_ CBitArray& operator =  ( __in CBitArray const&  source ) noexcept { Copy( source );   return( *this ); }
-      inline _Check_return_ CBitArray& operator =  ( __in std::vector<uint8_t> const& source ) noexcept { Copy( source );   return( *this ); }
-      inline _Check_return_ CBitArray& operator += ( __in CBitArray const&  source ) noexcept { Append( source ); return( *this ); }
-      inline _Check_return_ CBitArray& operator += ( __in std::vector<uint8_t> const& source ) noexcept { Append( source ); return( *this ); }
-      inline _Check_return_ uint32_t      operator [] ( __in std::size_t index ) const noexcept       { return( GetAt( index ) );          }
+      inline _Check_return_ CBitArray& operator =  ( _In_ CBitArray const&  source ) noexcept { Copy( source );   return( *this ); }
+      inline _Check_return_ CBitArray& operator =  ( _In_ std::vector<uint8_t> const& source ) noexcept { Copy( source );   return( *this ); }
+      inline _Check_return_ CBitArray& operator += ( _In_ CBitArray const&  source ) noexcept { Append( source ); return( *this ); }
+      inline _Check_return_ CBitArray& operator += ( _In_ std::vector<uint8_t> const& source ) noexcept { Append( source ); return( *this ); }
+      inline _Check_return_ uint32_t      operator [] ( _In_ std::size_t index ) const noexcept       { return( GetAt( index ) );          }
 
       // Instrumentation
 

@@ -58,7 +58,7 @@ _Check_return_ bool test_CXMLDocument( _Out_ std::string& class_name, _Out_ int&
     class_name.assign(STRING_VIEW("CExtensibleMarkupLanguageDocument"));
     test_number_that_failed = 0;
 
-    CExtensibleMarkupLanguageDocument xml;
+    Win32FoundationClasses::CExtensibleMarkupLanguageDocument xml;
 
     std::vector<uint8_t> bytes;
 
@@ -342,11 +342,11 @@ _Check_return_ bool test_CXMLDocument( _Out_ std::string& class_name, _Out_ int&
 
     //bytes.Append( (const BYTE *) ( (LPCTSTR) test_text ), test_text.GetLength() * sizeof( TCHAR ) );
 
-    CDataParser parser;
+    Win32FoundationClasses::CDataParser parser;
 
     (void) parser.Initialize( &bytes );
 
-    DWORD parse_options = xml.GetParseOptions();
+    uint32_t parse_options = xml.GetParseOptions();
 
     (void) xml.SetParseOptions( parse_options bitor WFC_XML_ALLOW_AMPERSANDS_IN_ELEMENTS );
 
@@ -363,7 +363,7 @@ _Check_return_ bool test_CXMLDocument( _Out_ std::string& class_name, _Out_ int&
     (void) output.push_back( 0 );
     (void) output.push_back( 0 ); // NULL terminate the string
 
-    CString test_string_2;
+    Win32FoundationClasses::CString test_string_2;
 
     test_string_2.Copy( (LPCTSTR) output.data() );
 
@@ -483,7 +483,7 @@ _Check_return_ bool test_CXMLDocument( _Out_ std::string& class_name, _Out_ int&
 
     bytes.push_back(1);
 
-    append_to_bytes(sam, bytes);
+    Win32FoundationClasses::append_to_bytes(sam, bytes);
 
     if (bytes.size() != 7)
     {

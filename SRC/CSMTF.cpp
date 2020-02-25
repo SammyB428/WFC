@@ -51,28 +51,26 @@ static char THIS_FILE[] = __FILE__;
 #define new DEBUG_NEW
 #endif // _DEBUG
 
-USING_WFC_NAMESPACE
-
 /*
 ** CUINT64
 */
 
 // Construction
 
-CUINT64::CUINT64() noexcept
+Win32FoundationClasses::CUINT64::CUINT64() noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Empty();
 }
 
-CUINT64::CUINT64( __in CUINT64 const& source ) noexcept
+Win32FoundationClasses::CUINT64::CUINT64( _In_ Win32FoundationClasses::CUINT64 const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Empty();
    Copy( source );
 }
 
-CUINT64::CUINT64( __in SIXTY_FOUR_BIT_UNSIGNED_INTEGER const * source ) noexcept
+Win32FoundationClasses::CUINT64::CUINT64( _In_ SIXTY_FOUR_BIT_UNSIGNED_INTEGER const * source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
@@ -80,7 +78,7 @@ CUINT64::CUINT64( __in SIXTY_FOUR_BIT_UNSIGNED_INTEGER const * source ) noexcept
    Copy( source );
 }
 
-CUINT64::~CUINT64() noexcept
+Win32FoundationClasses::CUINT64::~CUINT64() noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Empty();
@@ -88,19 +86,19 @@ CUINT64::~CUINT64() noexcept
 
 // Methods
 
-void CUINT64::Copy(_In_ CUINT64 const& source ) noexcept
+void Win32FoundationClasses::CUINT64::Copy(_In_ Win32FoundationClasses::CUINT64 const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Copy( static_cast<SIXTY_FOUR_BIT_UNSIGNED_INTEGER const *>(&source) );
 }
 
-void CUINT64::Copy(_In_ SIXTY_FOUR_BIT_UNSIGNED_INTEGER const& source ) noexcept
+void Win32FoundationClasses::CUINT64::Copy(_In_ SIXTY_FOUR_BIT_UNSIGNED_INTEGER const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Copy( &source );
 }
 
-void CUINT64::Copy(_In_ SIXTY_FOUR_BIT_UNSIGNED_INTEGER const * source ) noexcept
+void Win32FoundationClasses::CUINT64::Copy(_In_ SIXTY_FOUR_BIT_UNSIGNED_INTEGER const * source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
@@ -138,7 +136,7 @@ void CUINT64::Dump( CDumpContext& dump_context ) const
 
 #endif // _DEBUG
 
-void CUINT64::Empty( void ) noexcept
+void Win32FoundationClasses::CUINT64::Empty( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    lsw = 0;
@@ -147,14 +145,14 @@ void CUINT64::Empty( void ) noexcept
 
 // Operators
 
-_Check_return_ CUINT64& CUINT64::operator=( __in CUINT64 const& source ) noexcept
+_Check_return_ Win32FoundationClasses::CUINT64& Win32FoundationClasses::CUINT64::operator=( _In_ Win32FoundationClasses::CUINT64 const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );
    return( *this );
 }
 
-_Check_return_ CUINT64& CUINT64::operator=( __in SIXTY_FOUR_BIT_UNSIGNED_INTEGER const& source ) noexcept
+_Check_return_ Win32FoundationClasses::CUINT64& Win32FoundationClasses::CUINT64::operator=( _In_ SIXTY_FOUR_BIT_UNSIGNED_INTEGER const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );
@@ -167,20 +165,20 @@ _Check_return_ CUINT64& CUINT64::operator=( __in SIXTY_FOUR_BIT_UNSIGNED_INTEGER
 
 // Construction
 
-CMTFDateTime::CMTFDateTime() noexcept
+Win32FoundationClasses::CMTFDateTime::CMTFDateTime() noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Empty();
 }
 
-CMTFDateTime::CMTFDateTime( __in CMTFDateTime const& source ) noexcept
+Win32FoundationClasses::CMTFDateTime::CMTFDateTime( _In_ Win32FoundationClasses::CMTFDateTime const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Empty();
    Copy( source );
 }
 
-CMTFDateTime::CMTFDateTime( __in MTF_DATE_TIME const * source ) noexcept
+Win32FoundationClasses::CMTFDateTime::CMTFDateTime( _In_ MTF_DATE_TIME const * source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
@@ -188,21 +186,21 @@ CMTFDateTime::CMTFDateTime( __in MTF_DATE_TIME const * source ) noexcept
    Copy( source );
 }
 
-CMTFDateTime::CMTFDateTime( __in MTF_DATE_TIME const& source ) noexcept
+Win32FoundationClasses::CMTFDateTime::CMTFDateTime( _In_ MTF_DATE_TIME const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Empty();
    Copy( &source );
 }
 
-CMTFDateTime::CMTFDateTime( __in CTime const& source ) noexcept
+Win32FoundationClasses::CMTFDateTime::CMTFDateTime( _In_ Win32FoundationClasses::CTime const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Empty();
    Copy( source );
 }
 
-CMTFDateTime::~CMTFDateTime() noexcept
+Win32FoundationClasses::CMTFDateTime::~CMTFDateTime() noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Empty();
@@ -210,7 +208,7 @@ CMTFDateTime::~CMTFDateTime() noexcept
 
 // Methods
 
-void CMTFDateTime::Convert( __out CTime& destination ) const noexcept
+void Win32FoundationClasses::CMTFDateTime::Convert( _Out_ Win32FoundationClasses::CTime& destination ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -323,7 +321,7 @@ void CMTFDateTime::Convert( __out CTime& destination ) const noexcept
    destination = CTime( year, month, day, hours, minutes, seconds );
 }
 
-void CMTFDateTime::Copy( __in CTime const& source ) noexcept
+void Win32FoundationClasses::CMTFDateTime::Copy( _In_ Win32FoundationClasses::CTime const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -507,13 +505,13 @@ void CMTFDateTime::Copy( __in CTime const& source ) noexcept
    dt_field[ 4 ] = byte_4;
 }
 
-void CMTFDateTime::Copy(_In_ CMTFDateTime const& source ) noexcept
+void Win32FoundationClasses::CMTFDateTime::Copy(_In_ Win32FoundationClasses::CMTFDateTime const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Copy( static_cast<MTF_DATE_TIME const *>(&source) );
 }
 
-void CMTFDateTime::Copy(_In_ MTF_DATE_TIME const * source ) noexcept
+void Win32FoundationClasses::CMTFDateTime::Copy(_In_ MTF_DATE_TIME const * source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
@@ -542,7 +540,7 @@ void CMTFDateTime::Copy(_In_ MTF_DATE_TIME const * source ) noexcept
 
 #if defined( _DEBUG ) && ! defined( WFC_NO_DUMPING )
 
-void CMTFDateTime::Dump( CDumpContext& dump_context ) const
+void Win32FoundationClasses::CMTFDateTime::Dump( CDumpContext& dump_context ) const
 {
    dump_context << TEXT( " a CMTFDateTime at " ) << (void *) this << TEXT( "\n" );
    dump_context << TEXT( "{\n" );
@@ -556,7 +554,7 @@ void CMTFDateTime::Dump( CDumpContext& dump_context ) const
 
 #endif // _DEBUG
 
-void CMTFDateTime::Empty( void ) noexcept
+void Win32FoundationClasses::CMTFDateTime::Empty( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -569,21 +567,21 @@ void CMTFDateTime::Empty( void ) noexcept
 
 // Operators
 
-CMTFDateTime& CMTFDateTime::operator=( __in CMTFDateTime const& source ) noexcept
+Win32FoundationClasses::CMTFDateTime& Win32FoundationClasses::CMTFDateTime::operator=( _In_ Win32FoundationClasses::CMTFDateTime const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );
    return( *this );
 }
 
-CMTFDateTime& CMTFDateTime::operator=( __in MTF_DATE_TIME const& source ) noexcept
+Win32FoundationClasses::CMTFDateTime& Win32FoundationClasses::CMTFDateTime::operator=( _In_ MTF_DATE_TIME const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );
    return( *this );
 }
 
-CMTFDateTime& CMTFDateTime::operator=( __in CTime const& source ) noexcept
+Win32FoundationClasses::CMTFDateTime& Win32FoundationClasses::CMTFDateTime::operator=( _In_ Win32FoundationClasses::CTime const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );
@@ -594,20 +592,20 @@ CMTFDateTime& CMTFDateTime::operator=( __in CTime const& source ) noexcept
 ** CMTFTapeAddress
 */
 
-CMTFTapeAddress::CMTFTapeAddress()
+Win32FoundationClasses::CMTFTapeAddress::CMTFTapeAddress()
 {
    WFC_VALIDATE_POINTER( this );
    Empty();
 }
 
-CMTFTapeAddress::CMTFTapeAddress( __in CMTFTapeAddress const& source )
+Win32FoundationClasses::CMTFTapeAddress::CMTFTapeAddress( _In_ Win32FoundationClasses::CMTFTapeAddress const& source )
 {
    WFC_VALIDATE_POINTER( this );
    Empty();
    Copy( source );
 }
 
-CMTFTapeAddress::CMTFTapeAddress( __in MTF_TAPE_ADDRESS const * source )
+Win32FoundationClasses::CMTFTapeAddress::CMTFTapeAddress( _In_ MTF_TAPE_ADDRESS const * source )
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
@@ -615,19 +613,19 @@ CMTFTapeAddress::CMTFTapeAddress( __in MTF_TAPE_ADDRESS const * source )
    Copy( source );
 }
 
-CMTFTapeAddress::~CMTFTapeAddress()
+Win32FoundationClasses::CMTFTapeAddress::~CMTFTapeAddress()
 {
    WFC_VALIDATE_POINTER( this );
    Empty();
 }
 
-void CMTFTapeAddress::Copy(_In_ CMTFTapeAddress const& source ) noexcept
+void Win32FoundationClasses::CMTFTapeAddress::Copy(_In_ Win32FoundationClasses::CMTFTapeAddress const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Copy( static_cast<MTF_TAPE_ADDRESS const *>(&source) );
 }
 
-void CMTFTapeAddress::Copy(_In_ MTF_TAPE_ADDRESS const * source ) noexcept
+void Win32FoundationClasses::CMTFTapeAddress::Copy(_In_ MTF_TAPE_ADDRESS const * source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
@@ -654,7 +652,7 @@ void CMTFTapeAddress::Copy(_In_ MTF_TAPE_ADDRESS const * source ) noexcept
 
 #if defined( _DEBUG ) && ! defined( WFC_NO_DUMPING )
 
-void CMTFTapeAddress::Dump( CDumpContext& dump_context ) const
+void Win32FoundationClasses::CMTFTapeAddress::Dump( CDumpContext& dump_context ) const
 {
    dump_context << TEXT( " a CMTFTapeAddress at " ) << (void *) this << TEXT( "\n" );
    dump_context << TEXT( "{\n" );
@@ -665,7 +663,7 @@ void CMTFTapeAddress::Dump( CDumpContext& dump_context ) const
 
 #endif // _DEBUG
 
-void CMTFTapeAddress::Empty( void ) noexcept
+void Win32FoundationClasses::CMTFTapeAddress::Empty( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    elmdata_size = 0;
@@ -676,20 +674,20 @@ void CMTFTapeAddress::Empty( void ) noexcept
 ** CMTFDataBlockHeader
 */
 
-CMTFDataBlockHeader::CMTFDataBlockHeader()
+Win32FoundationClasses::CMTFDataBlockHeader::CMTFDataBlockHeader()
 {
    WFC_VALIDATE_POINTER( this );
    Empty();
 }
 
-CMTFDataBlockHeader::CMTFDataBlockHeader( __in CMTFDataBlockHeader const& source )
+Win32FoundationClasses::CMTFDataBlockHeader::CMTFDataBlockHeader( _In_ Win32FoundationClasses::CMTFDataBlockHeader const& source )
 {
    WFC_VALIDATE_POINTER( this );
    Empty();
    Copy( source );
 }
 
-CMTFDataBlockHeader::CMTFDataBlockHeader( __in MTF_DB_HDR const * source )
+Win32FoundationClasses::CMTFDataBlockHeader::CMTFDataBlockHeader( _In_ MTF_DB_HDR const * source )
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
@@ -697,19 +695,19 @@ CMTFDataBlockHeader::CMTFDataBlockHeader( __in MTF_DB_HDR const * source )
    Copy( source );
 }
 
-CMTFDataBlockHeader::~CMTFDataBlockHeader()
+Win32FoundationClasses::CMTFDataBlockHeader::~CMTFDataBlockHeader()
 {
    WFC_VALIDATE_POINTER( this );
    Empty();
 }
 
-void CMTFDataBlockHeader::Copy(_In_ CMTFDataBlockHeader const& source ) noexcept
+void Win32FoundationClasses::CMTFDataBlockHeader::Copy(_In_ Win32FoundationClasses::CMTFDataBlockHeader const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Copy( static_cast<MTF_DB_HDR const *>(&source) );
 }
 
-void CMTFDataBlockHeader::Copy(_In_ MTF_DB_HDR const * source ) noexcept
+void Win32FoundationClasses::CMTFDataBlockHeader::Copy(_In_ MTF_DB_HDR const * source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
@@ -764,7 +762,7 @@ void CMTFDataBlockHeader::Copy(_In_ MTF_DB_HDR const * source ) noexcept
 
 #if defined( _DEBUG ) && ! defined( WFC_NO_DUMPING )
 
-void CMTFDataBlockHeader::Dump( CDumpContext& dump_context ) const
+void Win32FoundationClasses::CMTFDataBlockHeader::Dump( CDumpContext& dump_context ) const
 {
    TCHAR block_type_string[ 5 ];
    CMTFTapeAddress tape_address;
@@ -812,7 +810,7 @@ void CMTFDataBlockHeader::Dump( CDumpContext& dump_context ) const
 
 #endif // _DEBUG
 
-void CMTFDataBlockHeader::Empty( void ) noexcept
+void Win32FoundationClasses::CMTFDataBlockHeader::Empty( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -852,20 +850,20 @@ void CMTFDataBlockHeader::Empty( void ) noexcept
 ** CMTFTape
 */
 
-CMTFTape::CMTFTape()
+Win32FoundationClasses::CMTFTape::CMTFTape()
 {
    WFC_VALIDATE_POINTER( this );
    Empty();
 }
 
-CMTFTape::CMTFTape( __in CMTFTape const& source )
+Win32FoundationClasses::CMTFTape::CMTFTape( _In_ Win32FoundationClasses::CMTFTape const& source )
 {
    WFC_VALIDATE_POINTER( this );
    Empty();
    Copy( source );
 }
 
-CMTFTape::CMTFTape( __in MTF_TAPE const * source )
+Win32FoundationClasses::CMTFTape::CMTFTape( _In_ MTF_TAPE const * source )
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
@@ -873,19 +871,19 @@ CMTFTape::CMTFTape( __in MTF_TAPE const * source )
    Copy( source );
 }
 
-CMTFTape::~CMTFTape()
+Win32FoundationClasses::CMTFTape::~CMTFTape()
 {
    WFC_VALIDATE_POINTER( this );
    Empty();
 }
 
-void CMTFTape::Copy(_In_ CMTFTape const& source ) noexcept
+void Win32FoundationClasses::CMTFTape::Copy(_In_ Win32FoundationClasses::CMTFTape const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Copy( static_cast<MTF_TAPE const *>(&source) );
 }
 
-void CMTFTape::Copy(_In_ MTF_TAPE const * source ) noexcept
+void Win32FoundationClasses::CMTFTape::Copy(_In_ MTF_TAPE const * source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
@@ -970,7 +968,7 @@ void CMTFTape::Copy(_In_ MTF_TAPE const * source ) noexcept
 
 #if defined( _DEBUG ) && ! defined( WFC_NO_DUMPING )
 
-void CMTFTape::Dump( CDumpContext& dump_context ) const
+void Win32FoundationClasses::CMTFTape::Dump( CDumpContext& dump_context ) const
 {
    dump_context << TEXT( "a CMTFDataBlockHeader at " ) << (void *) this << TEXT( "\n" );
    dump_context << TEXT( "{\n" );
@@ -1004,7 +1002,7 @@ void CMTFTape::Dump( CDumpContext& dump_context ) const
 
 #endif // _DEBUG
 
-void CMTFTape::Empty( void ) noexcept
+void Win32FoundationClasses::CMTFTape::Empty( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 

@@ -51,9 +51,7 @@ static char THIS_FILE[] = __FILE__;
 #define new DEBUG_NEW
 #endif // _DEBUG
 
-USING_WFC_NAMESPACE
-
-void PASCAL Win32FoundationClasses::wfc_start_screen_saver( void ) noexcept
+void Win32FoundationClasses::wfc_start_screen_saver( void ) noexcept
 {
    SendMessage( GetDesktopWindow(), WM_SYSCOMMAND, SC_SCREENSAVE, 0L );
 }

@@ -67,7 +67,7 @@ class CNamedPipe : public CDummyFile
 
    private:
 
-      void m_Initialize( __in uint32_t const input_buffer_size, __in uint32_t const output_buffer_size ) noexcept;
+      void m_Initialize( _In_ uint32_t const input_buffer_size, _In_ uint32_t const output_buffer_size ) noexcept;
 
    protected:
 
@@ -108,7 +108,7 @@ class CNamedPipe : public CDummyFile
        CNamedPipe(CNamedPipe const&) = delete;
        CNamedPipe& operator=(CNamedPipe const&) = delete;
 
-       CNamedPipe( __in uint32_t const input_buffer_size = 4096, __in uint32_t const output_buffer_size = 4096 ) noexcept;
+       CNamedPipe( _In_ uint32_t const input_buffer_size = 4096, _In_ uint32_t const output_buffer_size = 4096 ) noexcept;
 
       /*
       ** Destructor should be virtual according to MSJ article in Sept 1992
@@ -123,19 +123,19 @@ class CNamedPipe : public CDummyFile
 
       virtual _Check_return_ bool Call( __inout    std::wstring& name_of_pipe,
                                     LPVOID   write_buffer,
-                         __in DWORD const   size_of_write_buffer,
+                         _In_ DWORD const   size_of_write_buffer,
                                     LPVOID   read_buffer,
-                         __in DWORD const   size_of_read_buffer,
+                         _In_ DWORD const   size_of_read_buffer,
                                     DWORD   *address_of_number_of_bytes_read,
-                         __in DWORD const   number_of_milliseconds_to_wait = NMPWAIT_WAIT_FOREVER ) noexcept; // CallNamedPipe
+                         _In_ DWORD const   number_of_milliseconds_to_wait = NMPWAIT_WAIT_FOREVER ) noexcept; // CallNamedPipe
 
       virtual _Check_return_ bool Connect( __inout_opt LPOVERLAPPED overlapped_p = nullptr ) noexcept; // ConnectNamedPipe
 
       virtual _Check_return_ bool Create( __in_z LPCTSTR server_name,
                            __in_z LPCTSTR name_of_pipe,
-                           __in DWORD const open_mode       = PIPE_ACCESS_DUPLEX,
-                           __in DWORD const type_of_pipe    = PIPE_TYPE_BYTE,
-                           __in DWORD const number_of_pipes = PIPE_UNLIMITED_INSTANCES,
+                           _In_ DWORD const open_mode       = PIPE_ACCESS_DUPLEX,
+                           _In_ DWORD const type_of_pipe    = PIPE_TYPE_BYTE,
+                           _In_ DWORD const number_of_pipes = PIPE_UNLIMITED_INSTANCES,
                            __inout_opt LPSECURITY_ATTRIBUTES security_attributes_p = nullptr ) noexcept;
 
       virtual _Check_return_ bool Disconnect( void ) noexcept; // DisconnectNamedPipe
@@ -143,26 +143,26 @@ class CNamedPipe : public CDummyFile
       virtual _Check_return_ bool GetInformation( void ) noexcept; // GetNamedPipeInfo
 
       virtual _Check_return_ bool Peek( __out_bcount( size_of_buffer ) LPVOID buffer_address,
-                         __in  DWORD const size_of_buffer,
-                         __out DWORD& number_of_bytes_read,
-                         __out DWORD& number_of_bytes_available,
-                         __out DWORD& number_of_bytes_remaining_in_message ) noexcept;
+                         _In_  DWORD const size_of_buffer,
+                         _Out_ DWORD& number_of_bytes_read,
+                         _Out_ DWORD& number_of_bytes_available,
+                         _Out_ DWORD& number_of_bytes_remaining_in_message ) noexcept;
       
-      virtual _Check_return_ bool SetState( __in uint32_t new_pipe_mode,
-                             __in uint32_t maximum_number_of_bytes_before_transmission,
-                             __in uint32_t maximum_number_of_milliseconds_before_transmission ) noexcept;
+      virtual _Check_return_ bool SetState( _In_ uint32_t new_pipe_mode,
+                             _In_ uint32_t maximum_number_of_bytes_before_transmission,
+                             _In_ uint32_t maximum_number_of_milliseconds_before_transmission ) noexcept;
       
       virtual _Check_return_ bool Transact( __inout_opt LPOVERLAPPED overlapped_p = nullptr ) noexcept; // TransactNamedPipe
       
       virtual _Check_return_ bool Wait( __in_z_opt LPCTSTR server_name,
                          __in_z LPCTSTR name_of_pipe, 
-                         __in uint32_t const number_of_milliseconds = NMPWAIT_USE_DEFAULT_WAIT ) noexcept;
+                         _In_ uint32_t const number_of_milliseconds = NMPWAIT_USE_DEFAULT_WAIT ) noexcept;
 
       /*
       ** API's to make life a little easier 
       */
 
-      _Check_return_ bool Open(_In_ std::filesystem::path const& pipe_name, __in UINT const open_flags = PIPE_CLIENT_END ) noexcept override;
+      _Check_return_ bool Open(_In_ std::filesystem::path const& pipe_name, _In_ UINT const open_flags = PIPE_CLIENT_END ) noexcept override;
       void Close( void ) noexcept override;
 
 #if defined( _DEBUG ) && ! defined( WFC_NO_DUMPING )

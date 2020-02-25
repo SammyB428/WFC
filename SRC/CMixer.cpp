@@ -51,11 +51,9 @@
 static char THIS_FILE[] = __FILE__;
 #endif // _DEBUG
 
-USING_WFC_NAMESPACE
-
 #if defined( _WFC_DEBUG_MIXER_GET_CONTROL_DETAILS )
 
-static void dump_mixer_control_details(__in_z LPCTSTR file, __in UINT line, __in_z LPCTSTR get_or_set, __in HMIXEROBJ mixer_object, __in MIXERCONTROLDETAILS * details_p, __in DWORD option) noexcept
+static void dump_mixer_control_details(__in_z LPCTSTR file, _In_ UINT line, __in_z LPCTSTR get_or_set, _In_ HMIXEROBJ mixer_object, _In_ MIXERCONTROLDETAILS * details_p, _In_ DWORD option) noexcept
 {
     TCHAR debug_string[513];
 
@@ -99,13 +97,13 @@ static void dump_mixer_control_details(__in_z LPCTSTR file, __in UINT line, __in
 
 // Construction
 
-CMixer::CMixer()
+Win32FoundationClasses::CMixer::CMixer()
 {
     WFC_VALIDATE_POINTER(this);
     m_Handle = static_cast<HMIXER>(NULL);
 }
 
-CMixer::~CMixer()
+Win32FoundationClasses::CMixer::~CMixer()
 {
     WFC_VALIDATE_POINTER(this);
     Close();
@@ -114,7 +112,7 @@ CMixer::~CMixer()
 
 // Methods
 
-void CMixer::Close(void) noexcept
+void Win32FoundationClasses::CMixer::Close(void) noexcept
 {
     WFC_VALIDATE_POINTER(this);
 
@@ -137,7 +135,7 @@ void CMixer::Dump(CDumpContext& dump_context) const
 
 #endif // _DEBUG
 
-_Check_return_ bool CMixer::Get(__out CMixerCapabilities& capabilities) noexcept
+_Check_return_ bool Win32FoundationClasses::CMixer::Get(_Out_ Win32FoundationClasses::CMixerCapabilities& capabilities) noexcept
 {
     WFC_VALIDATE_POINTER(this);
 
@@ -158,7 +156,7 @@ _Check_return_ bool CMixer::Get(__out CMixerCapabilities& capabilities) noexcept
     return(true);
 }
 
-_Check_return_ bool CMixer::GetAllControls(__in CMixerLine const& line, __out std::vector<CMixerControl>& array) noexcept
+_Check_return_ bool Win32FoundationClasses::CMixer::GetAllControls(_In_ Win32FoundationClasses::CMixerLine const& line, _Out_ std::vector<CMixerControl>& array) noexcept
 {
     WFC_VALIDATE_POINTER(this);
 
@@ -215,7 +213,7 @@ _Check_return_ bool CMixer::GetAllControls(__in CMixerLine const& line, __out st
     return(return_value);
 }
 
-_Check_return_ bool CMixer::GetByComponent(__in CMixerLine::ComponentType const component, __out CMixerLine& line) noexcept
+_Check_return_ bool Win32FoundationClasses::CMixer::GetByComponent(_In_ Win32FoundationClasses::CMixerLine::ComponentType const component, _Out_ Win32FoundationClasses::CMixerLine& line) noexcept
 {
     WFC_VALIDATE_POINTER(this);
 
@@ -241,7 +239,7 @@ _Check_return_ bool CMixer::GetByComponent(__in CMixerLine::ComponentType const 
     return(true);
 }
 
-_Check_return_ bool CMixer::GetByDestination(__in DWORD const destination, __out CMixerLine& line) noexcept
+_Check_return_ bool Win32FoundationClasses::CMixer::GetByDestination(_In_ DWORD const destination, _Out_ Win32FoundationClasses::CMixerLine& line) noexcept
 {
     WFC_VALIDATE_POINTER(this);
 
@@ -267,7 +265,7 @@ _Check_return_ bool CMixer::GetByDestination(__in DWORD const destination, __out
     return(true);
 }
 
-_Check_return_ bool CMixer::GetByID(__in DWORD const id, __out CMixerLine& line) noexcept
+_Check_return_ bool Win32FoundationClasses::CMixer::GetByID(_In_ DWORD const id, _Out_ Win32FoundationClasses::CMixerLine& line) noexcept
 {
     WFC_VALIDATE_POINTER(this);
 
@@ -293,7 +291,7 @@ _Check_return_ bool CMixer::GetByID(__in DWORD const id, __out CMixerLine& line)
     return(true);
 }
 
-_Check_return_ bool CMixer::GetByConnection( __in DWORD const destination, __in DWORD const source, __out CMixerLine& line) noexcept
+_Check_return_ bool Win32FoundationClasses::CMixer::GetByConnection( _In_ DWORD const destination, _In_ DWORD const source, _Out_ Win32FoundationClasses::CMixerLine& line) noexcept
 {
     WFC_VALIDATE_POINTER(this);
 
@@ -320,7 +318,7 @@ _Check_return_ bool CMixer::GetByConnection( __in DWORD const destination, __in 
     return(true);
 }
 
-_Check_return_ bool CMixer::GetControlDetails(__in CMixerLine const& line, __in CMixerControl const& control, __out std::vector<CMixerControlDetailsData>& array) noexcept
+_Check_return_ bool Win32FoundationClasses::CMixer::GetControlDetails(_In_ Win32FoundationClasses::CMixerLine const& line, _In_ Win32FoundationClasses::CMixerControl const& control, _Out_ std::vector<CMixerControlDetailsData>& array) noexcept
 {
     WFC_VALIDATE_POINTER(this);
 
@@ -464,7 +462,7 @@ _Check_return_ bool CMixer::GetControlDetails(__in CMixerLine const& line, __in 
     return(return_value);
 }
 
-_Check_return_ bool CMixer::GetControlListText(__in CMixerLine const& line, __in CMixerControl const& control, __out std::vector<CMixerControlDetailsData>& array) noexcept
+_Check_return_ bool Win32FoundationClasses::CMixer::GetControlListText(_In_ Win32FoundationClasses::CMixerLine const& line, _In_ Win32FoundationClasses::CMixerControl const& control, _Out_ std::vector<CMixerControlDetailsData>& array) noexcept
 {
     WFC_VALIDATE_POINTER(this);
 
@@ -552,7 +550,7 @@ _Check_return_ bool CMixer::GetControlListText(__in CMixerLine const& line, __in
     return(return_value);
 }
 
-void CMixer::GetErrorString(_Out_ std::wstring& error_string) const noexcept
+void Win32FoundationClasses::CMixer::GetErrorString(_Out_ std::wstring& error_string) const noexcept
 {
     WFC_VALIDATE_POINTER(this);
 
@@ -765,7 +763,7 @@ void CMixer::GetErrorString(_Out_ std::wstring& error_string) const noexcept
 
     default:
 
-        format( error_string, L"Unknown (%lu)", m_ErrorCode);
+        Win32FoundationClasses::format( error_string, L"Unknown (%lu)", m_ErrorCode);
 
 #if defined( _DEBUG )
 
@@ -773,7 +771,7 @@ void CMixer::GetErrorString(_Out_ std::wstring& error_string) const noexcept
         {
             std::wstring debug_string;
 
-            format( debug_string, L"Unknown (MMSYSERR_BASE + %d)", (int)( m_ErrorCode - MMSYSERR_BASE ));
+            Win32FoundationClasses::format( debug_string, L"Unknown (MMSYSERR_BASE + %d)", (int)( m_ErrorCode - MMSYSERR_BASE ));
             //WFCTRACE( debug_string );
         }
         else
@@ -787,14 +785,14 @@ void CMixer::GetErrorString(_Out_ std::wstring& error_string) const noexcept
     }
 }
 
-_Check_return_ std::size_t CMixer::GetNumberOfDevices(void) const noexcept
+_Check_return_ std::size_t Win32FoundationClasses::CMixer::GetNumberOfDevices(void) const noexcept
 {
     WFC_VALIDATE_POINTER(this);
 
     return(::mixerGetNumDevs());
 }
 
-_Check_return_ bool CMixer::Open(__in UINT_PTR device_id, __in DWORD what_to_notify, __in DWORD_PTR who_to_notify, __in DWORD_PTR notify_data) noexcept
+_Check_return_ bool Win32FoundationClasses::CMixer::Open(_In_ UINT_PTR device_id, _In_ DWORD what_to_notify, _In_ DWORD_PTR who_to_notify, _In_ DWORD_PTR notify_data) noexcept
 {
     WFC_VALIDATE_POINTER(this);
 
@@ -810,7 +808,7 @@ _Check_return_ bool CMixer::Open(__in UINT_PTR device_id, __in DWORD what_to_not
     return(true);
 }
 
-_Check_return_ bool CMixer::SetControlDetails(__in CMixerLine const& line, __in CMixerControl const& control, __in std::vector<CMixerControlDetailsData> const& settings_array) noexcept
+_Check_return_ bool Win32FoundationClasses::CMixer::SetControlDetails(_In_ Win32FoundationClasses::CMixerLine const& line, _In_ Win32FoundationClasses::CMixerControl const& control, _In_ std::vector<Win32FoundationClasses::CMixerControlDetailsData> const& settings_array) noexcept
 {
     WFC_VALIDATE_POINTER(this);
 

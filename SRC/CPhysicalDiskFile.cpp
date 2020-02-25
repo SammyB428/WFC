@@ -51,9 +51,7 @@ static char THIS_FILE[] = __FILE__;
 #define new DEBUG_NEW
 #endif // _DEBUG
 
-USING_WFC_NAMESPACE
-
-CPhysicalDiskFile::CPhysicalDiskFile() noexcept
+Win32FoundationClasses::CPhysicalDiskFile::CPhysicalDiskFile() noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -64,7 +62,7 @@ CPhysicalDiskFile::CPhysicalDiskFile() noexcept
    ::ZeroMemory( &m_DiskGeometry, sizeof( m_DiskGeometry ) );
 }
 
-CPhysicalDiskFile::~CPhysicalDiskFile() noexcept
+Win32FoundationClasses::CPhysicalDiskFile::~CPhysicalDiskFile() noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -84,13 +82,13 @@ CPhysicalDiskFile::~CPhysicalDiskFile() noexcept
    ::ZeroMemory( &m_DiskGeometry, sizeof( m_DiskGeometry ) );
 }
 
-void CPhysicalDiskFile::Close( void ) noexcept
+void Win32FoundationClasses::CPhysicalDiskFile::Close( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
    if ( m_FileHandle != reinterpret_cast< CFILE_HFILE >( INVALID_HANDLE_VALUE ) )
    {
-      CFile64::Close();
+       Win32FoundationClasses::CFile64::Close();
    }
 
    if ( m_Buffer != nullptr )
@@ -107,7 +105,7 @@ void CPhysicalDiskFile::Close( void ) noexcept
 
 #if defined( _DEBUG ) && ! defined( WFC_NO_DUMPING )
 
-void CPhysicalDiskFile::Dump( CDumpContext& dump_context ) const
+void Win32FoundationClasses::CPhysicalDiskFile::Dump( CDumpContext& dump_context ) const
 {
    WFC_VALIDATE_POINTER( this );
    dump_context << TEXT( "a CPhysicalDiskFile at " ) << (VOID *) this << TEXT( "\n{\n" );
@@ -199,7 +197,7 @@ void CPhysicalDiskFile::Dump( CDumpContext& dump_context ) const
 
 #endif // _DEBUG
 
-_Check_return_ uint64_t CPhysicalDiskFile::GetLength( void ) const noexcept
+_Check_return_ uint64_t Win32FoundationClasses::CPhysicalDiskFile::GetLength( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -210,7 +208,7 @@ _Check_return_ uint64_t CPhysicalDiskFile::GetLength( void ) const noexcept
    return( total_number_of_bytes.QuadPart );
 }
 
-void CPhysicalDiskFile::GetLength( _Out_ ULARGE_INTEGER& total_number_of_bytes ) const noexcept
+void Win32FoundationClasses::CPhysicalDiskFile::GetLength( _Out_ ULARGE_INTEGER& total_number_of_bytes ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
    total_number_of_bytes.QuadPart = 0;
@@ -220,13 +218,13 @@ void CPhysicalDiskFile::GetLength( _Out_ ULARGE_INTEGER& total_number_of_bytes )
    total_number_of_bytes.QuadPart *= (int64_t) m_DiskGeometry.Cylinders.QuadPart;
 }
 
-_Check_return_ DWORD CPhysicalDiskFile::GetMediaType( void ) const noexcept
+_Check_return_ DWORD Win32FoundationClasses::CPhysicalDiskFile::GetMediaType( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
    return( m_DiskGeometry.MediaType );
 }
 
-_Check_return_ bool CPhysicalDiskFile::GetSectorSize( _Out_ std::size_t& number_of_bytes_per_sector ) const noexcept
+_Check_return_ bool Win32FoundationClasses::CPhysicalDiskFile::GetSectorSize( _Out_ std::size_t& number_of_bytes_per_sector ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -242,7 +240,7 @@ _Check_return_ bool CPhysicalDiskFile::GetSectorSize( _Out_ std::size_t& number_
    }
 }
 
-_Check_return_ bool CPhysicalDiskFile::m_SetSectorSize( void ) noexcept
+_Check_return_ bool Win32FoundationClasses::CPhysicalDiskFile::m_SetSectorSize( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -314,7 +312,7 @@ _Check_return_ bool CPhysicalDiskFile::m_SetSectorSize( void ) noexcept
    return( true );
 }
 
-_Check_return_ bool CPhysicalDiskFile::Open(_In_ std::filesystem::path const& drive_letter, _In_ UINT const) noexcept
+_Check_return_ bool Win32FoundationClasses::CPhysicalDiskFile::Open(_In_ std::filesystem::path const& drive_letter, _In_ UINT const) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -373,7 +371,7 @@ _Check_return_ bool CPhysicalDiskFile::Open(_In_ std::filesystem::path const& dr
    return( false );
 }
 
-_Check_return_ bool CPhysicalDiskFile::Open( _In_ int const physical_disk_number, _In_ UINT const) noexcept
+_Check_return_ bool Win32FoundationClasses::CPhysicalDiskFile::Open( _In_ int const physical_disk_number, _In_ UINT const) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -416,7 +414,7 @@ _Check_return_ bool CPhysicalDiskFile::Open( _In_ int const physical_disk_number
    return( true );
 }
 
-_Check_return_ bool CPhysicalDiskFile::OpenRead(_In_z_ wchar_t const * physical_drive_name) noexcept
+_Check_return_ bool Win32FoundationClasses::CPhysicalDiskFile::OpenRead(_In_z_ wchar_t const * physical_drive_name) noexcept
 {
     WFC_VALIDATE_POINTER(this);
     WFC_VALIDATE_POINTER(physical_drive_name);
@@ -456,7 +454,7 @@ _Check_return_ bool CPhysicalDiskFile::OpenRead(_In_z_ wchar_t const * physical_
     return(true);
 }
 
-_Check_return_ bool CPhysicalDiskFile::OpenRead(_In_ int const physical_disk_number ) noexcept
+_Check_return_ bool Win32FoundationClasses::CPhysicalDiskFile::OpenRead(_In_ int const physical_disk_number ) noexcept
 {
     WFC_VALIDATE_POINTER(this);
 
@@ -467,7 +465,7 @@ _Check_return_ bool CPhysicalDiskFile::OpenRead(_In_ int const physical_disk_num
     return(OpenRead(filename.c_str()));
 }
 
-_Check_return_ UINT CPhysicalDiskFile::Read( __out_bcount( count ) void * buffer, _In_ UINT const count ) noexcept
+_Check_return_ UINT Win32FoundationClasses::CPhysicalDiskFile::Read( __out_bcount( count ) void * buffer, _In_ UINT const count ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER_NULL_OK( buffer );
@@ -513,13 +511,13 @@ _Check_return_ UINT CPhysicalDiskFile::Read( __out_bcount( count ) void * buffer
    WFC_END_CATCH_ALL
 }
 
-void CPhysicalDiskFile::SetLength( __in uint64_t const) noexcept
+void Win32FoundationClasses::CPhysicalDiskFile::SetLength( _In_ uint64_t const) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    ASSERT( FALSE ); // Unsupported function
 }
 
-void CPhysicalDiskFile::Write( __in_bcount( count ) void const * buffer, __in UINT const count ) noexcept
+void Win32FoundationClasses::CPhysicalDiskFile::Write( __in_bcount( count ) void const * buffer, _In_ UINT const count ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER_NULL_OK( buffer );

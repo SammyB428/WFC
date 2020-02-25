@@ -50,38 +50,36 @@
 static char THIS_FILE[] = __FILE__;
 #endif // _DEBUG
 
-USING_WFC_NAMESPACE
-
 #if defined( _DEBUG ) && defined( _INC_CRTDBG )
 #define new DEBUG_NEW
 #endif // _DEBUG
 
-CNetworkResourceInformation::CNetworkResourceInformation()
+Win32FoundationClasses::CNetworkResourceInformation::CNetworkResourceInformation()
 {
    WFC_VALIDATE_POINTER( this );
    m_Initialize();
 }
 
-CNetworkResourceInformation::CNetworkResourceInformation( __in NETRESOURCE const * source )
+Win32FoundationClasses::CNetworkResourceInformation::CNetworkResourceInformation( _In_ NETRESOURCE const * source )
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
    Copy( source );
 }
 
-CNetworkResourceInformation::CNetworkResourceInformation( __in CNetworkResourceInformation const& source )
+Win32FoundationClasses::CNetworkResourceInformation::CNetworkResourceInformation( _In_ Win32FoundationClasses::CNetworkResourceInformation const& source )
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );
 }
 
-CNetworkResourceInformation::~CNetworkResourceInformation()
+Win32FoundationClasses::CNetworkResourceInformation::~CNetworkResourceInformation()
 {
    WFC_VALIDATE_POINTER( this );
    m_Initialize();
 }
 
-void CNetworkResourceInformation::Copy( __in NETRESOURCE const * source ) noexcept
+void Win32FoundationClasses::CNetworkResourceInformation::Copy( _In_ NETRESOURCE const * source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
@@ -152,7 +150,7 @@ void CNetworkResourceInformation::Copy( __in NETRESOURCE const * source ) noexce
    WFC_END_CATCH_ALL
 }
 
-void CNetworkResourceInformation::Copy( __in CNetworkResourceInformation const& source ) noexcept
+void Win32FoundationClasses::CNetworkResourceInformation::Copy( _In_ Win32FoundationClasses::CNetworkResourceInformation const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    ASSERT( this != &source );
@@ -176,13 +174,13 @@ void CNetworkResourceInformation::Copy( __in CNetworkResourceInformation const& 
    Usage       = source.Usage;
 }
 
-void CNetworkResourceInformation::Empty( void ) noexcept
+void Win32FoundationClasses::CNetworkResourceInformation::Empty( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    m_Initialize();
 }
 
-void CNetworkResourceInformation::m_Initialize( void ) noexcept
+void Win32FoundationClasses::CNetworkResourceInformation::m_Initialize( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 

@@ -60,13 +60,11 @@ static char THIS_FILE[] = __FILE__;
 #define new DEBUG_NEW
 #endif // _DEBUG
 
-USING_WFC_NAMESPACE
-
 /*
 ** CRemoteAccessServiceAdministration
 */
 
-CRemoteAccessServiceAdministration::CRemoteAccessServiceAdministration()
+Win32FoundationClasses::CRemoteAccessServiceAdministration::CRemoteAccessServiceAdministration()
 {
    WFC_VALIDATE_POINTER( this );
    m_PortArray = nullptr;

@@ -52,8 +52,8 @@ class CUniversalNamingConvention
    public:
 
       CUniversalNamingConvention();
-      CUniversalNamingConvention( __in CUniversalNamingConvention const& source );
-      CUniversalNamingConvention( __in CUniformResourceLocator const& source );
+      CUniversalNamingConvention( _In_ CUniversalNamingConvention const& source );
+      CUniversalNamingConvention( _In_ CUniformResourceLocator const& source );
       CUniversalNamingConvention( __in_z LPCTSTR source );
 
       /*
@@ -81,16 +81,16 @@ class CUniversalNamingConvention
       ** Methods
       */
 
-      virtual _Check_return_ int Compare( __in CUniversalNamingConvention const& source ) const noexcept;
+      virtual _Check_return_ int Compare( _In_ CUniversalNamingConvention const& source ) const noexcept;
       virtual void Copy( __in_z LPCTSTR source ) noexcept;
-      virtual void Copy( __in CUniversalNamingConvention const& source ) noexcept;
-      virtual void Copy( __in CUniformResourceLocator const& source ) noexcept;
+      virtual void Copy( _In_ CUniversalNamingConvention const& source ) noexcept;
+      virtual void Copy( _In_ CUniformResourceLocator const& source ) noexcept;
       virtual void Empty( void ) noexcept;
       virtual void Make( void ) noexcept;
 
-      virtual _Check_return_ bool operator == ( __in CUniversalNamingConvention const& right_unc ) const noexcept;
-      virtual _Check_return_ CUniversalNamingConvention& operator = ( __in CUniversalNamingConvention const& source ) noexcept;
-      virtual _Check_return_ CUniversalNamingConvention& operator = ( __in CUniformResourceLocator const& source ) noexcept;
+      virtual _Check_return_ bool operator == ( _In_ CUniversalNamingConvention const& right_unc ) const noexcept;
+      virtual _Check_return_ CUniversalNamingConvention& operator = ( _In_ CUniversalNamingConvention const& source ) noexcept;
+      virtual _Check_return_ CUniversalNamingConvention& operator = ( _In_ CUniformResourceLocator const& source ) noexcept;
       virtual _Check_return_ CUniversalNamingConvention& operator = ( __in_z LPCTSTR source ) noexcept;
 
       _Check_return_ operator LPCTSTR() const noexcept { return( UNC.c_str() ); }

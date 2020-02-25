@@ -54,8 +54,8 @@ class CNetworkSessionInformation
    public:
 
       CNetworkSessionInformation();
-      CNetworkSessionInformation( __in SESSION_INFO_502 const * source );
-      CNetworkSessionInformation( __in CNetworkSessionInformation const& source );
+      CNetworkSessionInformation( _In_ SESSION_INFO_502 const * source );
+      CNetworkSessionInformation( _In_ CNetworkSessionInformation const& source );
       virtual ~CNetworkSessionInformation();
 
       /*
@@ -76,11 +76,11 @@ class CNetworkSessionInformation
       ** net API header files...
       */
 
-      virtual void Copy( __in SESSION_INFO_502 const * source ) noexcept;
-      virtual void Copy( __in CNetworkSessionInformation const& source ) noexcept;
+      virtual void Copy( _In_ SESSION_INFO_502 const * source ) noexcept;
+      virtual void Copy( _In_ CNetworkSessionInformation const& source ) noexcept;
       virtual void Empty( void ) noexcept;
 
-      virtual CNetworkSessionInformation& operator=( __in CNetworkSessionInformation const& ) noexcept;
+      virtual CNetworkSessionInformation& operator=( _In_ CNetworkSessionInformation const& ) noexcept;
 };
 
 class CNetworkSessions : public CNetwork

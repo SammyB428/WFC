@@ -4,8 +4,14 @@
 
 #define STL_COPY_HEADER_FILE
 
+inline _Check_return_ std::string to_utf8(_In_ std::wstring const& s) noexcept
+{
+    std::wstring_convert<std::codecvt_utf8<wchar_t>> utf8_converter;
+    return utf8_converter.to_bytes(s);
+}
+
 /// Copy a byte buffer into a wstring without converting to Unicode will terminate at the first null.
-inline void copy(_Inout_ std::wstring& s, _In_ uint8_t const* buffer, _In_ std::size_t const buffer_size) noexcept
+inline void copy(_Inout_ std::wstring& s, _In_ uint8_t const * buffer, _In_ std::size_t const buffer_size) noexcept
 {
     s.clear();
 
@@ -31,7 +37,7 @@ inline void copy(_Inout_ std::wstring& s, std::string_view ascii_string, _In_ SS
 {
     s.clear();
 
-    if (ascii_string.length() == 0)
+    if (ascii_string.empty() == true)
     {
         return;
     }
@@ -46,7 +52,9 @@ inline void copy(_Inout_ std::wstring& s, std::string_view ascii_string, _In_ SS
             return;
         }
 
+#if ! defined( WE_ARE_BUILDING_WFC_ON_UNIX )
         _ASSERTE(loop_index <= string_size);
+#endif // WE_ARE_BUILDING_WFC_ON_UNIX
 
         string_size -= loop_index;
 
@@ -93,7 +101,9 @@ inline void copy(_Inout_ std::wstring& s, std::string_view ascii_string, _In_ SS
         for (auto const loop_index : Range(number_of_characters))
         {
             pointer[destination_string_index] = static_cast<uint8_t>(ascii_string[beginning_at + loop_index]);
+#if ! defined( WE_ARE_BUILDING_WFC_ON_UNIX )
             _ASSERTE(pointer[destination_string_index] > 0 and pointer[destination_string_index] < 256);
+#endif // WE_ARE_BUILDING_WFC_ON_UNIX
             destination_string_index++;
         }
     }
@@ -110,38 +120,90 @@ inline void copy_not_null(_Inout_ std::wstring& s, _In_z_ char const* ascii_stri
     copy(s, std::string_view(ascii_string), number_of_characters, beginning_at);
 }
 
-inline void copy(_Inout_ std::wstring& s, _In_ std::wstring_view string_view, _In_ SSIZE_T const number_of_characters = (-1), _In_ std::size_t const beginning_at = 0) noexcept
+inline void copy(_Inout_ std::wstring& s, _In_ std::u16string_view string_view, _In_ SSIZE_T const number_of_characters = (-1), _In_ std::size_t const beginning_at = 0) noexcept
 {
     s.clear();
 
-    if (string_view.length() == 0)
+    if (string_view.empty() == true or beginning_at >= string_view.length())
     {
         return;
     }
 
-    if (number_of_characters < 0)
-    {
-        s.append(string_view);
-    }
-    else
-    {
-        s.reserve(string_view.length() - number_of_characters);
-        // Only append a finite number of characters...
+    std::size_t number_of_characters_to_copy = string_view.length() - beginning_at;
 
-        for (auto const loop_index : Range(number_of_characters))
+    if (number_of_characters > 0)
+    {
+        if (static_cast<std::size_t>(number_of_characters) < number_of_characters_to_copy)
         {
-            if ((beginning_at + loop_index) >= string_view.length())
-            {
-                return;
-            }
-
-            if (string_view[beginning_at + loop_index] == 0x00)
-            {
-                return;
-            }
-
-            s.push_back(string_view[beginning_at + loop_index]);
+            number_of_characters_to_copy = static_cast<std::size_t>(number_of_characters);
         }
+    }
+
+    s.reserve(number_of_characters_to_copy);
+    // Only append a finite number of characters...
+
+    for (auto const loop_index : Range(number_of_characters_to_copy))
+    {
+        if ((beginning_at + loop_index) >= string_view.length())
+        {
+            return;
+        }
+
+        if (string_view[beginning_at + loop_index] == 0x00)
+        {
+            return;
+        }
+
+        s.push_back(string_view[beginning_at + loop_index]);
+    }
+}
+
+inline void copy_not_null(_Inout_ std::wstring& s, _In_z_ char16_t const * wide_string, _In_ SSIZE_T number_of_characters = (-1), _In_ std::size_t const beginning_at = (0)) noexcept
+{
+    if (wide_string == nullptr or number_of_characters == 0)
+    {
+        s.clear();
+        return;
+    }
+
+    copy(s, std::u16string_view(wide_string), number_of_characters, beginning_at);
+}
+
+inline void copy(_Inout_ std::wstring& s, _In_ std::wstring_view string_view, _In_ SSIZE_T const number_of_characters = (-1), _In_ std::size_t const beginning_at = 0) noexcept
+{
+    s.clear();
+
+    if (string_view.empty() == true or beginning_at >= string_view.length())
+    {
+        return;
+    }
+
+    std::size_t number_of_characters_to_copy = string_view.length() - beginning_at;
+
+    if (number_of_characters > 0)
+    {
+        if (static_cast<std::size_t>(number_of_characters) < number_of_characters_to_copy)
+        {
+            number_of_characters_to_copy = static_cast<std::size_t>(number_of_characters);
+        }
+    }
+
+    s.reserve(number_of_characters_to_copy);
+    // Only append a finite number of characters...
+
+    for (auto const loop_index : Range(number_of_characters_to_copy))
+    {
+        if ((beginning_at + loop_index) >= string_view.length())
+        {
+            return;
+        }
+
+        if (string_view[beginning_at + loop_index] == 0x00)
+        {
+            return;
+        }
+
+        s.push_back(string_view[beginning_at + loop_index]);
     }
 }
 
@@ -155,6 +217,8 @@ inline void copy_not_null(_Inout_ std::wstring& s, _In_z_ wchar_t const* wide_st
 
     copy(s, std::wstring_view(wide_string), number_of_characters, beginning_at);
 }
+
+#if ! defined( WE_ARE_BUILDING_WFC_ON_UNIX )
 
 inline void copy(_Inout_ std::wstring& s, _In_ int const code_page, _In_reads_bytes_(number_of_bytes) uint8_t const* buffer, _In_ std::size_t const number_of_bytes) noexcept
 {
@@ -182,6 +246,8 @@ inline void copy(_Inout_ std::wstring& s, _In_ int const code_page, _In_reads_by
     }
 }
 
+#endif // WE_ARE_BUILDING_WFC_ON_UNIX
+
 /// This will copy the Unicode string to a UTF-8 string.
 inline void copy_to(_In_ std::wstring_view s, _Out_ char * ascii_buffer, _In_ std::size_t const buffer_size) noexcept
 {
@@ -196,6 +262,9 @@ inline void copy_to(_In_ std::wstring_view s, _Out_ char * ascii_buffer, _In_ st
     // NULL terminate the buffer
     ascii_buffer[0] = 0x00;
     ascii_buffer[buffer_size - 1] = 0x00;
+
+#if ! defined( WE_ARE_BUILDING_WFC_ON_UNIX )
+    // Windows version
 
     if (buffer_size == 1)
     {
@@ -216,6 +285,7 @@ inline void copy_to(_In_ std::wstring_view s, _Out_ char * ascii_buffer, _In_ st
         nullptr,
         nullptr);
 
+#if ! defined(WE_ARE_BUILDING_WFC_ON_UNIX)
 #if defined( _DEBUG )
     if (number_of_bytes_written == 0)
     {
@@ -223,10 +293,17 @@ inline void copy_to(_In_ std::wstring_view s, _Out_ char * ascii_buffer, _In_ st
         WFCTRACEINIT(L"ss");
         WFCTRACEERROR(last_error);
     }
-#endif
+#endif // _DEBUG
+#endif // WE_ARE_BUILDING_WFC_ON_UNIX
 
     // Make sure we are null terminated
     ascii_buffer[number_of_bytes_written] = 0x00;
+#else // WE_ARE_BUILDING_WFC_ON_UNIX
+    // Unix version
+    std::string const narrow_string = to_utf8(std::wstring(s));
+
+    strncpy(ascii_buffer, narrow_string.c_str(), std::min(narrow_string.length(), buffer_size - 1));
+#endif // WE_ARE_BUILDING_WFC_ON_UNIX
 }
 
 inline void copy_to(_In_ std::wstring_view s, wchar_t * wide_string, _In_ std::size_t const maximum_length_in_characters_including_null_terminator) noexcept
@@ -258,7 +335,11 @@ inline void from_flags(_Inout_ std::wstring& s, _In_ uint64_t const flags, _In_r
             {
                 wchar_t temp_string[64];
 
+#if defined(WE_ARE_BUILDING_WFC_ON_UNIX)
+                int const number_of_characters = swprintf(temp_string, std::size(temp_string), L"Undefined(%d)", static_cast<int>(bit_number));
+#else
                 int const number_of_characters = swprintf_s(temp_string, std::size(temp_string), L"Undefined(%zd)", bit_number);
+#endif
                 s.append(temp_string, number_of_characters);
             }
 
@@ -283,7 +364,12 @@ inline void copy_utf8(_Inout_ std::wstring& s, _In_opt_z_ char const* ascii_stri
     //std::wstring_convert<std::codecvt_utf8<wchar_t>> utf8_converter;
     //s = utf8_converter.from_bytes(ascii_string_p);
 
+#if ! defined( WE_ARE_BUILDING_WFC_ON_UNIX )
     copy(s, CP_UTF8, reinterpret_cast<uint8_t const*>(ascii_string_p), strlen(ascii_string_p));
+#else
+    std::wstring_convert<std::codecvt_utf8<wchar_t>> utf8_converter;
+    s = utf8_converter.from_bytes(ascii_string_p);
+#endif // WE_ARE_BUILDING_WFC_ON_UNIX
 }
 
 inline void copy_utf8(_Inout_ std::wstring& s, _In_ std::vector<uint8_t> const& bytes) noexcept
@@ -294,7 +380,13 @@ inline void copy_utf8(_Inout_ std::wstring& s, _In_ std::vector<uint8_t> const& 
         return;
     }
 
+#if ! defined( WE_ARE_BUILDING_WFC_ON_UNIX )
     copy(s, CP_UTF8, bytes.data(), bytes.size());
+#else
+    std::wstring_convert<std::codecvt_utf8<wchar_t>> utf8_converter;
+    std::string const narrow_string(reinterpret_cast<char const *>(bytes.data()), bytes.size());
+    s = utf8_converter.from_bytes(narrow_string);
+#endif
 }
 
 inline void copy_utf8(_Inout_ std::wstring& s, _In_ uint8_t const* bytes, _In_ std::size_t const number_of_bytes) noexcept
@@ -305,13 +397,13 @@ inline void copy_utf8(_Inout_ std::wstring& s, _In_ uint8_t const* bytes, _In_ s
         return;
     }
 
+#if ! defined( WE_ARE_BUILDING_WFC_ON_UNIX )
     copy(s, CP_UTF8, bytes, number_of_bytes);
-}
-
-inline _Check_return_ std::string to_utf8(_In_ std::wstring const& s) noexcept
-{
+#else // WE_ARE_BUILDING_WFC_ON_UNIX
     std::wstring_convert<std::codecvt_utf8<wchar_t>> utf8_converter;
-    return utf8_converter.to_bytes(s);
+    std::string const narrow_string(reinterpret_cast<char const*>(bytes), number_of_bytes);
+    s = utf8_converter.from_bytes(narrow_string);
+#endif // WE_ARE_BUILDING_WFC_ON_UNIX
 }
 
 inline void copy_beginning_at(_Inout_ std::vector<std::wstring>& destination, _In_ std::vector<std::wstring> const& source, _In_ std::size_t const starting_index) noexcept
@@ -326,6 +418,7 @@ inline void copy_beginning_at(_Inout_ std::vector<std::wstring>& destination, _I
 
 inline void copy_to_clipboard(_In_ std::wstring_view the_string) noexcept
 {
+#if ! defined( WE_ARE_BUILDING_WFC_ON_UNIX )
     if (OpenClipboard(NULL) != FALSE)
     {
         EmptyClipboard();
@@ -348,6 +441,7 @@ inline void copy_to_clipboard(_In_ std::wstring_view the_string) noexcept
 
         CloseClipboard();
     }
+#endif // WE_ARE_BUILDING_WFC_ON_UNIX
 }
 
 #endif // STL_COPY_HEADER_FILE

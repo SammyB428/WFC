@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 1995-2019, Samuel R. Blackburn
+** Copyright, 1995-2020, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -57,9 +57,7 @@ struct WFC_RANGE
     uint32_t high{ 0 };
 };
 
-USING_WFC_NAMESPACE
-
-static inline constexpr _Check_return_ bool __wfc_range_check( __in uint32_t const value_to_test, __in_ecount( number_of_ranges ) WFC_RANGE const * range, __in std::size_t number_of_ranges ) noexcept
+static inline constexpr _Check_return_ bool __wfc_range_check( _In_ uint32_t const value_to_test, __in_ecount( number_of_ranges ) WFC_RANGE const * range, _In_ std::size_t number_of_ranges ) noexcept
 {
    int32_t bottom = 0;
    int32_t top    = static_cast<int32_t>(number_of_ranges - 1);
@@ -104,7 +102,7 @@ static inline constexpr _Check_return_ bool __wfc_range_check( __in uint32_t con
    return( false );
 }
 
-_Check_return_ bool Win32FoundationClasses::is_xml_BaseChar( __in uint32_t const character_to_test ) noexcept
+_Check_return_ bool Win32FoundationClasses::is_xml_BaseChar( _In_ uint32_t const character_to_test ) noexcept
 {
    // Test according to Rule 85
 
@@ -316,7 +314,7 @@ _Check_return_ bool Win32FoundationClasses::is_xml_BaseChar( __in uint32_t const
    return( __wfc_range_check( character_to_test, static_basechar_range, std::size(static_basechar_range) ) );
 }
 
-_Check_return_ bool Win32FoundationClasses::is_xml_Char( __in uint32_t const character_to_test ) noexcept
+_Check_return_ bool Win32FoundationClasses::is_xml_Char( _In_ uint32_t const character_to_test ) noexcept
 {
    // Test according to Rule 2
 
@@ -333,7 +331,7 @@ _Check_return_ bool Win32FoundationClasses::is_xml_Char( __in uint32_t const cha
    return( __wfc_range_check( character_to_test, static_char_range, std::size(static_char_range) ) );
 }
 
-_Check_return_ bool Win32FoundationClasses::is_xml_CombiningChar( __in uint32_t const character_to_test ) noexcept
+_Check_return_ bool Win32FoundationClasses::is_xml_CombiningChar( _In_ uint32_t const character_to_test ) noexcept
 {
    // Test according to Rule 87
 
@@ -439,7 +437,7 @@ _Check_return_ bool Win32FoundationClasses::is_xml_CombiningChar( __in uint32_t 
    return( __wfc_range_check( character_to_test, static_combiningchar_range, std::size(static_combiningchar_range) ) );
 }
 
-_Check_return_ bool Win32FoundationClasses::is_xml_Digit( __in uint32_t const character_to_test ) noexcept
+_Check_return_ bool Win32FoundationClasses::is_xml_Digit( _In_ uint32_t const character_to_test ) noexcept
 {
    // Test according to Rule 88
 
@@ -465,7 +463,7 @@ _Check_return_ bool Win32FoundationClasses::is_xml_Digit( __in uint32_t const ch
    return( __wfc_range_check( character_to_test, static_digit_range, std::size(static_digit_range) ) );
 }
 
-_Check_return_ bool Win32FoundationClasses::is_xml_Extender( __in uint32_t const character_to_test ) noexcept
+_Check_return_ bool Win32FoundationClasses::is_xml_Extender( _In_ uint32_t const character_to_test ) noexcept
 {
    // Test according to Rule 89
 
@@ -487,7 +485,7 @@ _Check_return_ bool Win32FoundationClasses::is_xml_Extender( __in uint32_t const
    return( __wfc_range_check( character_to_test, static_extender_range, std::size(static_extender_range) ) );
 }
 
-_Check_return_ bool Win32FoundationClasses::is_xml_Ideographic( __in uint32_t const character_to_test ) noexcept
+_Check_return_ bool Win32FoundationClasses::is_xml_Ideographic( _In_ uint32_t const character_to_test ) noexcept
 {
    // Test according to Rule 86
 
@@ -501,7 +499,7 @@ _Check_return_ bool Win32FoundationClasses::is_xml_Ideographic( __in uint32_t co
    return( __wfc_range_check( character_to_test, static_ideographic_range, std::size(static_ideographic_range) ) );
 }
 
-_Check_return_ bool Win32FoundationClasses::is_xml_Letter( __in uint32_t const character_to_test ) noexcept
+_Check_return_ bool Win32FoundationClasses::is_xml_Letter( _In_ uint32_t const character_to_test ) noexcept
 {
    // Test according to Rule 84
 
@@ -518,7 +516,7 @@ _Check_return_ bool Win32FoundationClasses::is_xml_Letter( __in uint32_t const c
    return( false );
 }
 
-_Check_return_ bool Win32FoundationClasses::is_xml_NameChar( __in uint32_t const character_to_test ) noexcept
+_Check_return_ bool Win32FoundationClasses::is_xml_NameChar( _In_ uint32_t const character_to_test ) noexcept
 {
    // Test according to Rule 4
 
@@ -553,7 +551,7 @@ _Check_return_ bool Win32FoundationClasses::is_xml_NameChar( __in uint32_t const
    return( false );
 }
 
-_Check_return_ bool Win32FoundationClasses::is_xml_PubidChar( __in uint32_t const character_to_test ) noexcept
+_Check_return_ bool Win32FoundationClasses::is_xml_PubidChar( _In_ uint32_t const character_to_test ) noexcept
 {
    // Test according to Rule 13
 

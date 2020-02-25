@@ -80,7 +80,7 @@ protected:
     uint32_t m_LastError{ 0 };
 
     virtual void m_Initialize( void ) noexcept;
-    virtual _Check_return_ bool m_MapTheFile( __in HANDLE const file_handle, __in UINT const open_flags, __in uint64_t const begining_at_offset, __in std::size_t const number_of_bytes_to_map, __in_opt void const * desired_pointer ) noexcept;
+    virtual _Check_return_ bool m_MapTheFile( _In_ HANDLE const file_handle, _In_ UINT const open_flags, _In_ uint64_t const begining_at_offset, _In_ std::size_t const number_of_bytes_to_map, __in_opt void const * desired_pointer ) noexcept;
     virtual void m_Uninitialize( void ) noexcept;
 
 public:
@@ -91,7 +91,7 @@ public:
     // Construction
 
     CMemoryFile() noexcept;
-    CMemoryFile( __in std::size_t const allocation_granularity,
+    CMemoryFile( _In_ std::size_t const allocation_granularity,
         __in_opt SECURITY_ATTRIBUTES * security_attributes = nullptr,
         __in_opt SECURITY_DESCRIPTOR * security_descriptor = nullptr ) noexcept;
 
@@ -110,32 +110,32 @@ public:
 
     virtual void      Close( void ) noexcept;
     virtual _Check_return_ bool Flush( void ) noexcept;
-    virtual _Check_return_ bool FromHandle( __in HANDLE file_handle,
-        __in UINT open_flags                     = (UINT)( (UINT)CFile64::OpenFlags::modeRead bitor (UINT)CFile64::OpenFlags::shareDenyNone),
-        __in uint64_t const beginning_at         = 0,
-        __in std::size_t const number_of_bytes_to_map = 0,
+    virtual _Check_return_ bool FromHandle( _In_ HANDLE file_handle,
+        _In_ UINT open_flags                     = (UINT)( (UINT)CFile64::OpenFlags::modeRead bitor (UINT)CFile64::OpenFlags::shareDenyNone),
+        _In_ uint64_t const beginning_at         = 0,
+        _In_ std::size_t const number_of_bytes_to_map = 0,
         __in_opt void const * desired_address    = nullptr ) noexcept;
     inline  constexpr _Check_return_ uint64_t GetFileLength( void ) const noexcept { return( m_FileLength ); }
-    virtual void      GetFilename( __out std::wstring& filename ) const noexcept;
+    virtual void      GetFilename( _Out_ std::wstring& filename ) const noexcept;
     virtual _Check_return_ bool GetInformation( __inout BY_HANDLE_FILE_INFORMATION& information ) const noexcept;
     inline  constexpr _Check_return_ std::size_t GetLength( void ) const noexcept { return( m_Length ); };
     inline  constexpr _Check_return_ void * GetPointer( void ) const noexcept { return( m_Pointer ); };
-    virtual _Check_return_ void * Map( __in uint64_t const offset, __in std::size_t const length ) noexcept;
+    virtual _Check_return_ void * Map( _In_ uint64_t const offset, _In_ std::size_t const length ) noexcept;
     virtual _Check_return_ bool Open( _In_ std::wstring_view filename,
-        __in UINT open_flags                     = (UINT)( (UINT)CFile64::OpenFlags::modeRead bitor (UINT)CFile64::OpenFlags::shareDenyNone),
-        __in uint64_t const beginning_at         = 0,
-        __in std::size_t const number_of_bytes_to_map = 0,
+        _In_ UINT open_flags                     = (UINT)( (UINT)CFile64::OpenFlags::modeRead bitor (UINT)CFile64::OpenFlags::shareDenyNone),
+        _In_ uint64_t const beginning_at         = 0,
+        _In_ std::size_t const number_of_bytes_to_map = 0,
         __in_opt void const * desired_address    = nullptr ) noexcept;
     virtual _Check_return_ bool Open( _In_ std::string_view filename,
-        __in UINT const open_flags               = (UINT)( (UINT)CFile64::OpenFlags::modeRead bitor (UINT)CFile64::OpenFlags::shareDenyNone),
-        __in uint64_t const beginning_at         = 0,
-        __in std::size_t const number_of_bytes_to_map = 0,
+        _In_ UINT const open_flags               = (UINT)( (UINT)CFile64::OpenFlags::modeRead bitor (UINT)CFile64::OpenFlags::shareDenyNone),
+        _In_ uint64_t const beginning_at         = 0,
+        _In_ std::size_t const number_of_bytes_to_map = 0,
         __in_opt void const * desired_address    = nullptr ) noexcept;
 
     // New for Release 50, full control of CreateFile!
 
     inline virtual _Check_return_ uint32_t GetAttributes( void ) const noexcept { return( m_Attributes ); }
-    inline virtual void SetAttributes( __in uint32_t const attributes ) noexcept { m_Attributes = attributes; }
+    inline virtual void SetAttributes( _In_ uint32_t const attributes ) noexcept { m_Attributes = attributes; }
 
     inline virtual _Check_return_ HANDLE GetTemplateFile( void ) const noexcept { return( m_TemplateFile ); }
     inline virtual void SetTemplateFile( _In_ HANDLE const file_handle ) noexcept { m_TemplateFile = file_handle; };

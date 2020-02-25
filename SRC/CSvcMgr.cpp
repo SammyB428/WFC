@@ -51,15 +51,13 @@ static char THIS_FILE[] = __FILE__;
 #define new DEBUG_NEW
 #endif // _DEBUG
 
-USING_WFC_NAMESPACE
-
-CServiceControlManager::CServiceControlManager() noexcept
+Win32FoundationClasses::CServiceControlManager::CServiceControlManager() noexcept
 {
     WFC_VALIDATE_POINTER( this );
     m_Initialize();
 }
 
-CServiceControlManager::~CServiceControlManager() noexcept
+Win32FoundationClasses::CServiceControlManager::~CServiceControlManager() noexcept
 {
     WFC_VALIDATE_POINTER( this );
 
@@ -68,7 +66,7 @@ CServiceControlManager::~CServiceControlManager() noexcept
     m_BufferSize = 0;
 }
 
-void CServiceControlManager::Close( void ) noexcept
+void Win32FoundationClasses::CServiceControlManager::Close( void ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
 
@@ -89,7 +87,7 @@ void CServiceControlManager::Close( void ) noexcept
     }
 }
 
-_Check_return_ bool CServiceControlManager::Continue( _In_z_ wchar_t const * service_name ) noexcept
+_Check_return_ bool Win32FoundationClasses::CServiceControlManager::Continue( _In_z_ wchar_t const * service_name ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
     WFC_VALIDATE_POINTER( service_name );
@@ -97,14 +95,14 @@ _Check_return_ bool CServiceControlManager::Continue( _In_z_ wchar_t const * ser
     if ( m_ManagerHandle == static_cast< SC_HANDLE >( NULL ) )
     {
         m_ErrorCode = ERROR_INVALID_HANDLE;
-        wfc_get_error_string(m_ErrorCode, m_ErrorMessage);
+        Win32FoundationClasses::wfc_get_error_string(m_ErrorCode, m_ErrorMessage);
         return( false );
     }
 
     if ( service_name == nullptr )
     {
         m_ErrorCode = ERROR_INVALID_HANDLE;
-        wfc_get_error_string(m_ErrorCode, m_ErrorMessage);
+        Win32FoundationClasses::wfc_get_error_string(m_ErrorCode, m_ErrorMessage);
         return( false );
     }
 
@@ -158,7 +156,7 @@ _Check_return_ bool CServiceControlManager::Continue( _In_z_ wchar_t const * ser
     WFC_END_CATCH_ALL
 }
 
-_Check_return_ bool CServiceControlManager::EnableInteractiveServices( _In_ bool enable_interactive_services ) noexcept
+_Check_return_ bool Win32FoundationClasses::CServiceControlManager::EnableInteractiveServices( _In_ bool enable_interactive_services ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
 
@@ -214,7 +212,7 @@ _Check_return_ bool CServiceControlManager::EnableInteractiveServices( _In_ bool
     return( true );
 }
 
-_Check_return_ bool CServiceControlManager::EnumerateStatus( _In_ uint32_t state, _In_ uint32_t type ) noexcept
+_Check_return_ bool Win32FoundationClasses::CServiceControlManager::EnumerateStatus( _In_ uint32_t state, _In_ uint32_t type ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
 
@@ -225,7 +223,7 @@ _Check_return_ bool CServiceControlManager::EnumerateStatus( _In_ uint32_t state
     if ( m_ManagerHandle == static_cast< SC_HANDLE >( NULL ) )
     {
         m_ErrorCode = ERROR_INVALID_HANDLE;
-        wfc_get_error_string(m_ErrorCode, m_ErrorMessage);
+        Win32FoundationClasses::wfc_get_error_string(m_ErrorCode, m_ErrorMessage);
         return( false );
     }
 
@@ -239,7 +237,7 @@ _Check_return_ bool CServiceControlManager::EnumerateStatus( _In_ uint32_t state
         {
             m_BufferSize = 0;
             m_ErrorCode = ::GetLastError();
-            wfc_get_error_string(m_ErrorCode, m_ErrorMessage);
+            Win32FoundationClasses::wfc_get_error_string(m_ErrorCode, m_ErrorMessage);
             //WFCTRACEERROR( m_ErrorCode );
             return( false );
         }
@@ -265,7 +263,7 @@ _Check_return_ bool CServiceControlManager::EnumerateStatus( _In_ uint32_t state
     }
 
     m_ErrorCode = ::GetLastError();
-    wfc_get_error_string(m_ErrorCode, m_ErrorMessage);
+    Win32FoundationClasses::wfc_get_error_string(m_ErrorCode, m_ErrorMessage);
     //WFCTRACEERROR( m_ErrorCode );
 
     if ( m_ErrorCode == ERROR_MORE_DATA )
@@ -322,7 +320,7 @@ _Check_return_ bool CServiceControlManager::EnumerateStatus( _In_ uint32_t state
     return( false );
 }
 
-_Check_return_ bool CServiceControlManager::GetConfiguration( __in_z wchar_t const * service_name, __out CServiceConfigurationW& configuration ) noexcept
+_Check_return_ bool Win32FoundationClasses::CServiceControlManager::GetConfiguration( __in_z wchar_t const * service_name, _Out_ Win32FoundationClasses::CServiceConfigurationW& configuration ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
     WFC_VALIDATE_POINTER( service_name );
@@ -373,7 +371,7 @@ _Check_return_ bool CServiceControlManager::GetConfiguration( __in_z wchar_t con
         if ( return_value == FALSE )
         {
             m_ErrorCode = ::GetLastError();
-            wfc_get_error_string(m_ErrorCode, m_ErrorMessage);
+            Win32FoundationClasses::wfc_get_error_string(m_ErrorCode, m_ErrorMessage);
             //WFCTRACEERROR( m_ErrorCode );
 
             if ( m_ErrorCode == ERROR_INSUFFICIENT_BUFFER )
@@ -407,7 +405,7 @@ _Check_return_ bool CServiceControlManager::GetConfiguration( __in_z wchar_t con
     WFC_END_CATCH_ALL
 }
 
-_Check_return_ bool CServiceControlManager::GetDependencies( _In_z_ wchar_t const * service_name, _Out_ std::vector<std::wstring>& dependencies ) noexcept
+_Check_return_ bool Win32FoundationClasses::CServiceControlManager::GetDependencies( _In_z_ wchar_t const * service_name, _Out_ std::vector<std::wstring>& dependencies ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
     ASSERT( m_ManagerHandle != static_cast< SC_HANDLE >( NULL ) );
@@ -466,7 +464,7 @@ _Check_return_ bool CServiceControlManager::GetDependencies( _In_z_ wchar_t cons
     WFC_END_CATCH_ALL
 }
 
-_Check_return_ bool CServiceControlManager::GetDisplayName( _In_z_ wchar_t const * key_name, _Out_ std::wstring& display_name ) noexcept
+_Check_return_ bool Win32FoundationClasses::CServiceControlManager::GetDisplayName( _In_z_ wchar_t const * key_name, _Out_ std::wstring& display_name ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
     ASSERT( m_ManagerHandle != static_cast< SC_HANDLE >( NULL ) );
@@ -481,7 +479,7 @@ _Check_return_ bool CServiceControlManager::GetDisplayName( _In_z_ wchar_t const
 
     auto display_string = std::make_unique<wchar_t[]>(buffer_size);
 
-        BOOL return_value = ::GetServiceDisplayName( m_ManagerHandle,
+        auto return_value = ::GetServiceDisplayName( m_ManagerHandle,
                 key_name,
                 display_string.get(),
                 &buffer_size );
@@ -493,7 +491,7 @@ _Check_return_ bool CServiceControlManager::GetDisplayName( _In_z_ wchar_t const
             else
             {
                 m_ErrorCode = ::GetLastError();
-                wfc_get_error_string(m_ErrorCode, m_ErrorMessage);
+                Win32FoundationClasses::wfc_get_error_string(m_ErrorCode, m_ErrorMessage);
                 //WFCTRACEERROR( m_ErrorCode );
             }
 
@@ -507,19 +505,19 @@ _Check_return_ bool CServiceControlManager::GetDisplayName( _In_z_ wchar_t const
     WFC_CATCH_ALL
     {
         m_ErrorCode = ERROR_EXCEPTION_IN_SERVICE;
-        wfc_get_error_string(m_ErrorCode, m_ErrorMessage);
+        Win32FoundationClasses::wfc_get_error_string(m_ErrorCode, m_ErrorMessage);
         return( false );
     }
     WFC_END_CATCH_ALL
 }
 
-_Check_return_ SC_HANDLE CServiceControlManager::GetHandle( void ) const noexcept
+_Check_return_ SC_HANDLE Win32FoundationClasses::CServiceControlManager::GetHandle( void ) const noexcept
 {
     WFC_VALIDATE_POINTER( this );
     return( m_ManagerHandle );
 }
 
-_Check_return_ bool CServiceControlManager::GetKeyName( __in_z wchar_t const * display_name, __out std::wstring& key_name ) noexcept
+_Check_return_ bool Win32FoundationClasses::CServiceControlManager::GetKeyName( __in_z wchar_t const * display_name, _Out_ std::wstring& key_name ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
     ASSERT( m_ManagerHandle != static_cast< SC_HANDLE >( NULL ) );
@@ -560,13 +558,13 @@ _Check_return_ bool CServiceControlManager::GetKeyName( __in_z wchar_t const * d
     WFC_CATCH_ALL
     {
         m_ErrorCode = ERROR_EXCEPTION_IN_SERVICE;
-        wfc_get_error_string(m_ErrorCode, m_ErrorMessage);
+    Win32FoundationClasses::wfc_get_error_string(m_ErrorCode, m_ErrorMessage);
         return( FALSE );
     }
     WFC_END_CATCH_ALL
 }
 
-_Check_return_ bool CServiceControlManager::GetNext( __out CServiceNameAndStatusW& status ) noexcept
+_Check_return_ bool Win32FoundationClasses::CServiceControlManager::GetNext( _Out_ Win32FoundationClasses::CServiceNameAndStatusW& status ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
 
@@ -583,7 +581,7 @@ _Check_return_ bool CServiceControlManager::GetNext( __out CServiceNameAndStatus
     return( false );
 }
 
-_Check_return_ bool CServiceControlManager::Install( __in_z wchar_t const * service_name, __in_z wchar_t const * friendly_name, __in_z_opt wchar_t const * executable_file ) noexcept
+_Check_return_ bool Win32FoundationClasses::CServiceControlManager::Install( __in_z wchar_t const * service_name, __in_z wchar_t const * friendly_name, __in_z_opt wchar_t const * executable_file ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
     WFC_VALIDATE_POINTER( service_name );
@@ -765,13 +763,13 @@ _Check_return_ bool CServiceControlManager::Install( __in_z wchar_t const * serv
     WFC_CATCH_ALL
     {
         m_ErrorCode = ERROR_EXCEPTION_IN_SERVICE;
-        wfc_get_error_string(m_ErrorCode, m_ErrorMessage);
+        Win32FoundationClasses::wfc_get_error_string(m_ErrorCode, m_ErrorMessage);
         return( false );
     }
     WFC_END_CATCH_ALL
 }
 
-_Check_return_ bool CServiceControlManager::IsDatabaseLocked( __out std::wstring& who_locked_it, __out CTimeSpan& how_long_it_has_been_locked ) noexcept
+_Check_return_ bool Win32FoundationClasses::CServiceControlManager::IsDatabaseLocked( _Out_ std::wstring& who_locked_it, _Out_ Win32FoundationClasses::CTimeSpan& how_long_it_has_been_locked ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
     ASSERT( m_ManagerHandle != static_cast< SC_HANDLE >( NULL ) );
@@ -822,7 +820,7 @@ _Check_return_ bool CServiceControlManager::IsDatabaseLocked( __out std::wstring
     return( return_value == FALSE ? false : true );
 }
 
-_Check_return_ bool CServiceControlManager::LockDatabase( void ) noexcept
+_Check_return_ bool Win32FoundationClasses::CServiceControlManager::LockDatabase( void ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
 
@@ -847,7 +845,7 @@ _Check_return_ bool CServiceControlManager::LockDatabase( void ) noexcept
     return( true );
 }
 
-void CServiceControlManager::m_Initialize( void ) noexcept
+void Win32FoundationClasses::CServiceControlManager::m_Initialize( void ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
 
@@ -860,7 +858,7 @@ void CServiceControlManager::m_Initialize( void ) noexcept
     m_DatabaseLockHandle = reinterpret_cast< SC_LOCK >( NULL );
 }
 
-_Check_return_ bool CServiceControlManager::Open( __in uint32_t const what_to_open, __in_z_opt wchar_t const * database_name, __in_z_opt wchar_t const * machine_name ) noexcept
+_Check_return_ bool Win32FoundationClasses::CServiceControlManager::Open( _In_ uint32_t const what_to_open, __in_z_opt wchar_t const * database_name, __in_z_opt wchar_t const * machine_name ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
 
@@ -903,13 +901,13 @@ _Check_return_ bool CServiceControlManager::Open( __in uint32_t const what_to_op
     WFC_CATCH_ALL
     {
         m_ErrorCode = ERROR_EXCEPTION_IN_SERVICE;
-        wfc_get_error_string(m_ErrorCode, m_ErrorMessage);
+        Win32FoundationClasses::wfc_get_error_string(m_ErrorCode, m_ErrorMessage);
         return( false );
     }
     WFC_END_CATCH_ALL
 }
 
-_Check_return_ bool CServiceControlManager::Pause( __in_z wchar_t const * service_name ) noexcept
+_Check_return_ bool Win32FoundationClasses::CServiceControlManager::Pause( __in_z wchar_t const * service_name ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
     WFC_VALIDATE_POINTER( service_name );
@@ -968,13 +966,13 @@ _Check_return_ bool CServiceControlManager::Pause( __in_z wchar_t const * servic
     WFC_CATCH_ALL
     {
         m_ErrorCode = ERROR_EXCEPTION_IN_SERVICE;
-        wfc_get_error_string(m_ErrorCode, m_ErrorMessage);
+        Win32FoundationClasses::wfc_get_error_string(m_ErrorCode, m_ErrorMessage);
         return( false );
     }
     WFC_END_CATCH_ALL
 }
 
-_Check_return_ bool CServiceControlManager::Remove( __in_z wchar_t const * service_name ) noexcept
+_Check_return_ bool Win32FoundationClasses::CServiceControlManager::Remove( __in_z wchar_t const * service_name ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
     WFC_VALIDATE_POINTER( service_name );
@@ -1094,10 +1092,10 @@ _Check_return_ bool CServiceControlManager::Remove( __in_z wchar_t const * servi
     WFC_END_CATCH_ALL
 }
 
-_Check_return_ bool CServiceControlManager::SetConfiguration( __in_z wchar_t const * service_name,
-                                                            __in uint32_t const  when_to_start,
-                                                            __in uint32_t const  type_of_service,
-                                                            __in uint32_t const  error_control,
+_Check_return_ bool Win32FoundationClasses::CServiceControlManager::SetConfiguration( __in_z wchar_t const * service_name,
+                                                            _In_ uint32_t const  when_to_start,
+                                                            _In_ uint32_t const  type_of_service,
+                                                            _In_ uint32_t const  error_control,
                                                             __in_z_opt wchar_t const * name_of_executable_file,
                                                             __in_z_opt wchar_t const * load_order_group,
                                                             __in_z_opt wchar_t const * dependencies,
@@ -1223,13 +1221,13 @@ _Check_return_ bool CServiceControlManager::SetConfiguration( __in_z wchar_t con
     WFC_CATCH_ALL
     {
         m_ErrorCode = ERROR_EXCEPTION_IN_SERVICE;
-        wfc_get_error_string(m_ErrorCode, m_ErrorMessage);
+        Win32FoundationClasses::wfc_get_error_string(m_ErrorCode, m_ErrorMessage);
         return( false );
     }
     WFC_END_CATCH_ALL
 }
 
-_Check_return_ bool CServiceControlManager::Start( __in_z wchar_t const * service_name, __in uint32_t const service_argc, __in_ecount_z_opt( service_argc ) wchar_t const * * service_argv ) noexcept
+_Check_return_ bool Win32FoundationClasses::CServiceControlManager::Start( __in_z wchar_t const * service_name, _In_ uint32_t const service_argc, __in_ecount_z_opt( service_argc ) wchar_t const * * service_argv ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
     WFC_VALIDATE_POINTER( service_name );
@@ -1284,13 +1282,13 @@ _Check_return_ bool CServiceControlManager::Start( __in_z wchar_t const * servic
     WFC_CATCH_ALL
     {
         m_ErrorCode = ERROR_EXCEPTION_IN_SERVICE;
-        wfc_get_error_string(m_ErrorCode, m_ErrorMessage);
+        Win32FoundationClasses::wfc_get_error_string(m_ErrorCode, m_ErrorMessage);
         return( false );
     }
     WFC_END_CATCH_ALL
 }
 
-_Check_return_ bool CServiceControlManager::Stop( _In_z_ wchar_t const * service_name ) noexcept
+_Check_return_ bool Win32FoundationClasses::CServiceControlManager::Stop( _In_z_ wchar_t const * service_name ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
     WFC_VALIDATE_POINTER( service_name );
@@ -1298,7 +1296,7 @@ _Check_return_ bool CServiceControlManager::Stop( _In_z_ wchar_t const * service
     if ( service_name == nullptr )
     {
         m_ErrorCode = ERROR_INVALID_PARAMETER;
-        wfc_get_error_string(m_ErrorCode, m_ErrorMessage);
+        Win32FoundationClasses::wfc_get_error_string(m_ErrorCode, m_ErrorMessage);
         return( false );
     }
 
@@ -1311,7 +1309,7 @@ _Check_return_ bool CServiceControlManager::Stop( _In_z_ wchar_t const * service
         if ( m_ManagerHandle == static_cast< SC_HANDLE >( NULL ) )
         {
             m_ErrorCode = ERROR_INVALID_HANDLE;
-            wfc_get_error_string(m_ErrorCode, m_ErrorMessage);
+            Win32FoundationClasses::wfc_get_error_string(m_ErrorCode, m_ErrorMessage);
             return( false );
         }
 
@@ -1324,7 +1322,7 @@ _Check_return_ bool CServiceControlManager::Stop( _In_z_ wchar_t const * service
         if ( service_handle == static_cast< SC_HANDLE >( NULL ) )
         {
             m_ErrorCode = ::GetLastError();
-            wfc_get_error_string(m_ErrorCode, m_ErrorMessage);
+            Win32FoundationClasses::wfc_get_error_string(m_ErrorCode, m_ErrorMessage);
             //WFCTRACEERROR( m_ErrorCode );
             return( false );
         }
@@ -1338,7 +1336,7 @@ _Check_return_ bool CServiceControlManager::Stop( _In_z_ wchar_t const * service
         if ( return_value == FALSE )
         {
             m_ErrorCode = ::GetLastError();
-            wfc_get_error_string(m_ErrorCode, m_ErrorMessage);
+            Win32FoundationClasses::wfc_get_error_string(m_ErrorCode, m_ErrorMessage);
             //WFCTRACEERROR( m_ErrorCode );
             ::CloseServiceHandle( service_handle );
 
@@ -1385,13 +1383,13 @@ _Check_return_ bool CServiceControlManager::Stop( _In_z_ wchar_t const * service
     WFC_CATCH_ALL
     {
         m_ErrorCode = ERROR_EXCEPTION_IN_SERVICE;
-        wfc_get_error_string(m_ErrorCode, m_ErrorMessage);
+        Win32FoundationClasses::wfc_get_error_string(m_ErrorCode, m_ErrorMessage);
         return( false );
     }
     WFC_END_CATCH_ALL
 }
 
-_Check_return_ bool CServiceControlManager::UnlockDatabase( void ) noexcept
+_Check_return_ bool Win32FoundationClasses::CServiceControlManager::UnlockDatabase( void ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
 
@@ -1428,7 +1426,7 @@ static VOID CALLBACK __stop_notification_callback(PVOID parameter) noexcept
     SetEvent(event_handle);
 }
 
-_Check_return_ bool CServiceControlManager::WaitForStop(_In_z_ wchar_t const * service_name) noexcept
+_Check_return_ bool Win32FoundationClasses::CServiceControlManager::WaitForStop(_In_z_ wchar_t const * service_name) noexcept
 {
     WFC_VALIDATE_POINTER(this);
     WFC_VALIDATE_POINTER(service_name);
@@ -1505,32 +1503,32 @@ _Check_return_ bool CServiceControlManager::WaitForStop(_In_z_ wchar_t const * s
         }
 
         WaitForSingleObjectEx(event_handle, INFINITE, TRUE);
-        (void)wfc_close_handle(event_handle);
+        (void)Win32FoundationClasses::wfc_close_handle(event_handle);
         ::CloseServiceHandle(service_handle);
         return(true);
     }
         WFC_CATCH_ALL
     {
         m_ErrorCode = ERROR_EXCEPTION_IN_SERVICE;
-        wfc_get_error_string(m_ErrorCode, m_ErrorMessage);
+        Win32FoundationClasses::wfc_get_error_string(m_ErrorCode, m_ErrorMessage);
         return(false);
     }
         WFC_END_CATCH_ALL
 }
 
-CServiceNameAndStatusA::CServiceNameAndStatusA()
+Win32FoundationClasses::CServiceNameAndStatusA::CServiceNameAndStatusA()
 {
     WFC_VALIDATE_POINTER( this );
     Empty();
 }
 
-CServiceNameAndStatusA::~CServiceNameAndStatusA()
+Win32FoundationClasses::CServiceNameAndStatusA::~CServiceNameAndStatusA()
 {
     WFC_VALIDATE_POINTER( this );
     Empty();
 }
 
-void CServiceNameAndStatusA::Copy( __in _ENUM_SERVICE_STATUSA const * source_p ) noexcept
+void Win32FoundationClasses::CServiceNameAndStatusA::Copy( _In_ _ENUM_SERVICE_STATUSA const * source_p ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
     WFC_VALIDATE_POINTER( source_p );
@@ -1564,7 +1562,7 @@ void CServiceNameAndStatusA::Copy( __in _ENUM_SERVICE_STATUSA const * source_p )
 
 #if defined( _DEBUG ) && ! defined( WFC_NO_DUMPING )
 
-void CServiceNameAndStatusA::Dump( CDumpContext& dump_context ) const
+void Win32FoundationClasses::CServiceNameAndStatusA::Dump( CDumpContext& dump_context ) const
 {
     dump_context << TEXT( "a CServiceNameAndStatusA at " ) << (VOID *) this << TEXT( "\n{\n" );
     dump_context << TEXT( "   lpServicename                           = " ) << lpServiceName << TEXT( "\n" );
@@ -1709,7 +1707,7 @@ void CServiceNameAndStatusA::Dump( CDumpContext& dump_context ) const
 
 #endif // _DEBUG
 
-void CServiceNameAndStatusA::Empty( void ) noexcept
+void Win32FoundationClasses::CServiceNameAndStatusA::Empty( void ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
 
@@ -1724,19 +1722,19 @@ void CServiceNameAndStatusA::Empty( void ) noexcept
     ServiceStatus.dwWaitHint                = 0;
 }
 
-CServiceNameAndStatusW::CServiceNameAndStatusW()
+Win32FoundationClasses::CServiceNameAndStatusW::CServiceNameAndStatusW()
 {
     WFC_VALIDATE_POINTER( this );
     Empty();
 }
 
-CServiceNameAndStatusW::~CServiceNameAndStatusW()
+Win32FoundationClasses::CServiceNameAndStatusW::~CServiceNameAndStatusW()
 {
     WFC_VALIDATE_POINTER( this );
     Empty();
 }
 
-void CServiceNameAndStatusW::Copy( __in _ENUM_SERVICE_STATUSW const * source_p ) noexcept
+void Win32FoundationClasses::CServiceNameAndStatusW::Copy( _In_ _ENUM_SERVICE_STATUSW const * source_p ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
     WFC_VALIDATE_POINTER( source_p );
@@ -1770,7 +1768,7 @@ void CServiceNameAndStatusW::Copy( __in _ENUM_SERVICE_STATUSW const * source_p )
 
 #if defined( _DEBUG ) && ! defined( WFC_NO_DUMPING )
 
-void CServiceNameAndStatusW::Dump( CDumpContext& dump_context ) const
+void Win32FoundationClasses::CServiceNameAndStatusW::Dump( CDumpContext& dump_context ) const
 {
     dump_context << TEXT( "a CServiceNameAndStatusW at " ) << (VOID *) this << TEXT( "\n{\n" );
     dump_context << TEXT( "   lpServicename                           = " ) << lpServiceName << TEXT( "\n" );
@@ -1915,7 +1913,7 @@ void CServiceNameAndStatusW::Dump( CDumpContext& dump_context ) const
 
 #endif // _DEBUG
 
-void CServiceNameAndStatusW::Empty( void ) noexcept
+void Win32FoundationClasses::CServiceNameAndStatusW::Empty( void ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
 

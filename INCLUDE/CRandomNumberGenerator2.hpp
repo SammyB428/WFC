@@ -75,10 +75,10 @@ class CRandomNumberGenerator2
      _Check_return_ uint32_t GetInteger( void ) noexcept;
      _Check_return_ double GetFloat( void ) noexcept;
       void   InitializeSeed( void ) noexcept;
-      void   SetSeed( __in uint32_t const new_seed ) noexcept;
-      void   Disable( __in bool const disable = true ) noexcept;
-      _Check_return_ bool   Fill( __out_bcount( number_of_bytes ) uint8_t * buffer, __in std::size_t const number_of_bytes ) noexcept;
-      _Check_return_ bool   Fill( __out GUID& guid ) noexcept
+      void   SetSeed( _In_ uint32_t const new_seed ) noexcept;
+      void   Disable( _In_ bool const disable = true ) noexcept;
+      _Check_return_ bool   Fill( __out_bcount( number_of_bytes ) uint8_t * buffer, _In_ std::size_t const number_of_bytes ) noexcept;
+      _Check_return_ bool   Fill( _Out_ GUID& guid ) noexcept
       {
          return( Fill( reinterpret_cast<uint8_t *>(&guid), sizeof( guid ) ) );
       };
@@ -94,15 +94,15 @@ class CRandomNumberGenerator2
       operator float() noexcept;
       operator double() noexcept;
 
-      _Check_return_ double Double(__in double const minimum_value, __in double const maximum_value) noexcept;
-      _Check_return_ uint32_t Uint32( __in uint32_t const minimum_value, __in uint32_t const maximum_value ) noexcept;
-      _Check_return_ uint64_t Uint64( __in uint64_t const minimum_value, __in uint64_t const maximum_value ) noexcept;
+      _Check_return_ double Double(_In_ double const minimum_value, _In_ double const maximum_value) noexcept;
+      _Check_return_ uint32_t Uint32( _In_ uint32_t const minimum_value, _In_ uint32_t const maximum_value ) noexcept;
+      _Check_return_ uint64_t Uint64( _In_ uint64_t const minimum_value, _In_ uint64_t const maximum_value ) noexcept;
       _Check_return_ uint64_t Uint64(__in_ecount(number_of_values) VALUE_RANGE const * values, _In_ std::size_t const number_of_values) noexcept;
-      _Check_return_ bool IsTrue( __in double const percentage ) noexcept;
-      void Fill( __in uint32_t const minimum_length, __in uint32_t const maximum_length, __out std::wstring& destination ) noexcept;
-      void Fill( __in FILETIME const& minimum_value, __in FILETIME const& maximum_value, __out FILETIME& destination ) noexcept;
-      _Check_return_ uint32_t OneOf( __in_ecount( number_of_values ) uint32_t const * values, __in std::size_t number_of_values ) noexcept;
-      _Check_return_ uint64_t OneOf( __in_ecount( number_of_values ) uint64_t const * values, __in std::size_t number_of_values ) noexcept;
+      _Check_return_ bool IsTrue( _In_ double const percentage ) noexcept;
+      void Fill( _In_ uint32_t const minimum_length, _In_ uint32_t const maximum_length, _Out_ std::wstring& destination ) noexcept;
+      void Fill( _In_ FILETIME const& minimum_value, _In_ FILETIME const& maximum_value, _Out_ FILETIME& destination ) noexcept;
+      _Check_return_ uint32_t OneOf( __in_ecount( number_of_values ) uint32_t const * values, _In_ std::size_t number_of_values ) noexcept;
+      _Check_return_ uint64_t OneOf( __in_ecount( number_of_values ) uint64_t const * values, _In_ std::size_t number_of_values ) noexcept;
       _Check_return_ uint64_t Integer64( void ) noexcept
       {
           uint64_t const high = ( (uint64_t) GetInteger() << 32 );
@@ -110,7 +110,7 @@ class CRandomNumberGenerator2
       }
 
       // Fill the string with a short repeatable value based on seed. This value is NOT random.
-      static void Fill( __in uint32_t const seed, __out std::wstring& destination ) noexcept;
+      static void Fill( _In_ uint32_t const seed, _Out_ std::wstring& destination ) noexcept;
 
 #if defined( _DEBUG ) && ! defined( WFC_NO_DUMPING )
 

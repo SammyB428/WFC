@@ -100,39 +100,39 @@ class CEventLog
       virtual _Check_return_ bool  Close( void ) noexcept;
       virtual _Check_return_ bool  CreateApplicationLog( __in_z wchar_t const * application_name,
                                           __in_z wchar_t const * file_containing_message_table_resource,
-                                          __in DWORD   supported_types ) noexcept;
-      virtual _Check_return_ bool  CreateCustomLog( _In_ std::wstring_view log_name, __in_z_opt LPCTSTR log_filename = nullptr, __in DWORD maximum_file_size = 0x80000, __in DWORD overwrite_after_this_many_seconds = 604800 ) noexcept;
+                                          _In_ DWORD   supported_types ) noexcept;
+      virtual _Check_return_ bool  CreateCustomLog( _In_ std::wstring_view log_name, __in_z_opt LPCTSTR log_filename = nullptr, _In_ DWORD maximum_file_size = 0x80000, _In_ DWORD overwrite_after_this_many_seconds = 604800 ) noexcept;
       virtual _Check_return_ bool  Delete(_In_ std::wstring_view log_name ) noexcept; // Very DANGEROUS! Will delete any log you specify
       virtual _Check_return_ bool  DeleteApplicationLog(_In_ std::wstring_view application_name ) noexcept;
       virtual _Check_return_ bool  DeregisterSource( void ) noexcept;
-      virtual _Check_return_ bool  EnumerateLogs( __out DWORD& enumerator ) const noexcept;
+      virtual _Check_return_ bool  EnumerateLogs( _Out_ DWORD& enumerator ) const noexcept;
       inline constexpr _Check_return_ DWORD GetErrorCode(void) const noexcept { return(m_ErrorCode); }
       inline constexpr _Check_return_ HANDLE GetHandle(void) const noexcept { return(m_LogHandle); }
-      virtual _Check_return_ bool  GetNextLog( __inout DWORD& enumerator, __out std::wstring& log_name ) noexcept;
-      virtual _Check_return_ bool  GetNumberOfRecords( __out DWORD& number_of_records ) noexcept;
+      virtual _Check_return_ bool  GetNextLog( __inout DWORD& enumerator, _Out_ std::wstring& log_name ) noexcept;
+      virtual _Check_return_ bool  GetNumberOfRecords( _Out_ DWORD& number_of_records ) noexcept;
       virtual _Check_return_ DWORD GetOldestRecordNumber( void ) noexcept;
-      virtual _Check_return_ bool  NotifyChange( __in HANDLE event_handle, __in_opt HANDLE log_handle = nullptr ) noexcept;
+      virtual _Check_return_ bool  NotifyChange( _In_ HANDLE event_handle, __in_opt HANDLE log_handle = nullptr ) noexcept;
       virtual _Check_return_ bool  OpenBackup( __in_z LPCTSTR name_of_backup_file, __in_z_opt LPCTSTR name_of_computer = nullptr ) noexcept;
       virtual _Check_return_ bool  Open( __in_z LPCTSTR log_name, __in_z_opt LPCTSTR name_of_computer = nullptr ) noexcept;
-      virtual _Check_return_ bool  Read( __in DWORD  record_number,
-                          __out CEventLogRecord& record,
-                          __in DWORD  how_to_read = EVENTLOG_FORWARDS_READ bitor EVENTLOG_SEQUENTIAL_READ ) noexcept;
-      virtual _Check_return_ bool  Read( __in DWORD  record_number, 
+      virtual _Check_return_ bool  Read( _In_ DWORD  record_number,
+                          _Out_ CEventLogRecord& record,
+                          _In_ DWORD  how_to_read = EVENTLOG_FORWARDS_READ bitor EVENTLOG_SEQUENTIAL_READ ) noexcept;
+      virtual _Check_return_ bool  Read( _In_ DWORD  record_number, 
                           __out_bcount_part( number_of_bytes_to_read, number_of_bytes_to_read ) LPVOID buffer, 
                           __inout DWORD& number_of_bytes_to_read, 
-                          __in DWORD  how_to_read = EVENTLOG_FORWARDS_READ bitor EVENTLOG_SEQUENTIAL_READ ) noexcept;
+                          _In_ DWORD  how_to_read = EVENTLOG_FORWARDS_READ bitor EVENTLOG_SEQUENTIAL_READ ) noexcept;
       virtual _Check_return_ bool  RegisterSource(_In_ std::wstring_view source_name, __in_z_opt wchar_t const * name_of_computer = nullptr ) noexcept;
-      virtual _Check_return_ bool  Report( __in EventType event_type,
-                            __in WORD      category,
-                            __in DWORD     event_id,
-                            __in WORD      number_of_strings        = 0,
+      virtual _Check_return_ bool  Report( _In_ EventType event_type,
+                            _In_ WORD      category,
+                            _In_ DWORD     event_id,
+                            _In_ WORD      number_of_strings        = 0,
                             __in_ecount_z_opt( number_of_strings ) LPCTSTR * string_array = nullptr,
-                            __in DWORD     number_of_raw_data_bytes = 0,
+                            _In_ DWORD     number_of_raw_data_bytes = 0,
                             __in_bcount_opt( number_of_raw_data_bytes ) LPVOID    raw_data_buffer = nullptr,
                             __in_opt PSID      user_sid  = nullptr ) noexcept;
       virtual _Check_return_ bool  Report(_In_ std::wstring_view  log_name,
-                            __in DWORD     message_string_resource_id,
-                            __in WORD      number_of_strings = 0,
+                            _In_ DWORD     message_string_resource_id,
+                            _In_ WORD      number_of_strings = 0,
                             __in_ecount_z_opt( number_of_strings ) LPCTSTR * string_array = nullptr ) noexcept;
       virtual void ReportError(_In_z_ wchar_t const * string_to_report ) noexcept;
       virtual void ReportInformation( _In_z_ wchar_t const * string_to_report ) noexcept;

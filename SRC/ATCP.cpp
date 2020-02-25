@@ -52,8 +52,6 @@ static char THIS_FILE[] = __FILE__;
 
 #if ! defined( WFC_NO_RAS )
 
-USING_WFC_NAMESPACE
-
 #if defined( _DEBUG ) && defined( _INC_CRTDBG )
 #define new DEBUG_NEW
 #endif // _DEBUG

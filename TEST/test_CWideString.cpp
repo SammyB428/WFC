@@ -78,7 +78,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
         return( failure() );
     }
 
-    make_lower( string_1 );
+    Win32FoundationClasses::make_lower( string_1 );
 
     if ( string_1.compare(WSTRING_VIEW(L"abcdefghijklmnopqrstuvwxyz0123456789")) != I_AM_EQUAL_TO_THAT )
     {
@@ -86,7 +86,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
         return( failure() );
     }
 
-    make_upper(string_1);
+    Win32FoundationClasses::make_upper(string_1);
 
     if ( string_1.compare( string_2 ) != I_AM_EQUAL_TO_THAT )
     {
@@ -94,7 +94,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
         return( failure() );
     }
 
-    string_2.assign( left(string_1, 26 ) );
+    string_2.assign(Win32FoundationClasses::left(string_1, 26 ) );
 
     if ( string_2.compare(WSTRING_VIEW(L"ABCDEFGHIJKLMNOPQRSTUVWXYZ")) != I_AM_EQUAL_TO_THAT )
     {
@@ -102,13 +102,13 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
         return( failure() );
     }
 
-    if ( compare_no_case( string_2, WSTRING_VIEW(L"abcDEFGHIJKLMNOPQRSTUVWXYZ")) != I_AM_EQUAL_TO_THAT )
+    if (Win32FoundationClasses::compare_no_case( string_2, WSTRING_VIEW(L"abcDEFGHIJKLMNOPQRSTUVWXYZ")) != I_AM_EQUAL_TO_THAT )
     {
         test_number_that_failed = 7;
         return( failure() );
     }
 
-    string_2.assign( right( string_1, 10 ) );
+    string_2.assign(Win32FoundationClasses::right( string_1, 10 ) );
 
     if ( string_2.compare(WSTRING_VIEW(L"0123456789")) != I_AM_EQUAL_TO_THAT )
     {
@@ -272,7 +272,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     string_1.assign(WSTRING_VIEW(L"ABCD12345")); // An Odd-numbered length
 
-    make_reverse(string_1);
+    Win32FoundationClasses::make_reverse(string_1);
 
     if ( string_1.compare(WSTRING_VIEW(L"54321DCBA")) != I_AM_EQUAL_TO_THAT )
     {
@@ -280,7 +280,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
         return( failure() );
     }
 
-    make_reverse(string_1);
+    Win32FoundationClasses::make_reverse(string_1);
 
     if ( string_1.compare(WSTRING_VIEW(L"ABCD12345")) != I_AM_EQUAL_TO_THAT )
     {
@@ -290,7 +290,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     string_1.assign(WSTRING_VIEW(L"ABCD1234")); // An Even-numbered length
 
-    make_reverse(string_1);
+    Win32FoundationClasses::make_reverse(string_1);
 
     if ( string_1.compare(WSTRING_VIEW(L"4321DCBA")) != I_AM_EQUAL_TO_THAT )
     {
@@ -298,7 +298,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
         return( failure() );
     }
 
-    make_reverse(string_1);
+    Win32FoundationClasses::make_reverse(string_1);
 
     if ( string_1.compare(WSTRING_VIEW(L"ABCD1234")) != I_AM_EQUAL_TO_THAT )
     {
@@ -340,7 +340,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     string_1.assign(WSTRING_VIEW(L" \t\r  ABCD"));
 
-    trim_left( string_1 );
+    Win32FoundationClasses::trim_left( string_1 );
 
     if ( string_1.compare(WSTRING_VIEW(L"ABCD")) != I_AM_EQUAL_TO_THAT)
     {
@@ -352,7 +352,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     string_1.assign(WSTRING_VIEW(L"ABCD \t\r "));
 
-    trim_right( string_1 );
+    Win32FoundationClasses::trim_right( string_1 );
 
     if ( string_1.compare(WSTRING_VIEW(L"ABCD")) != I_AM_EQUAL_TO_THAT)
     {
@@ -728,7 +728,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
         return( failure() );
     }
 
-    copy( string_1, STRING_VIEW("0123456789") );
+    Win32FoundationClasses::copy( string_1, STRING_VIEW("0123456789") );
 
     if ( string_1.length() != 10 )
     {
@@ -766,7 +766,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
         return( failure() );
     }
 
-    format( string_1, L"This is the %d", 1 );
+    Win32FoundationClasses::format( string_1, L"This is the %d", 1 );
 
     if ( string_1.compare(WSTRING_VIEW(L"This is the 1")) != I_AM_EQUAL_TO_THAT)
     {
@@ -774,7 +774,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
         return( failure() );
     }
 
-    format( string_1, L"This is the %d, %lu, %02d \"%s\"", 1, static_cast<unsigned long>(2), 3, L"Sam Loves Laura" );
+    Win32FoundationClasses::format( string_1, L"This is the %d, %lu, %02d \"%s\"", 1, static_cast<unsigned long>(2), 3, L"Sam Loves Laura" );
 
     if ( string_1.compare(WSTRING_VIEW(L"This is the 1, 2, 03 \"Sam Loves Laura\"")) != I_AM_EQUAL_TO_THAT)
     {
@@ -832,7 +832,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     string_6.clear();
 
-    string_6.assign( right( string_7, string_7.length() ) );
+    string_6.assign(Win32FoundationClasses::right( string_7, string_7.length() ) );
 
     if ( string_6.length() != string_7.length() )
     {
@@ -848,7 +848,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     string_6.clear();
 
-    string_6.assign( right( string_7, string_7.length() + 99 ) );
+    string_6.assign(Win32FoundationClasses::right( string_7, string_7.length() + 99 ) );
 
     if ( string_6.length() != string_7.length() )
     {
@@ -898,7 +898,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     string_6.assign(WSTRING_VIEW(L"     ")); // 5 spaces
 
-    trim_right( string_6 );
+    Win32FoundationClasses::trim_right( string_6 );
 
     if ( string_6.length() != 0 )
     {
@@ -908,7 +908,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     string_6.assign(WSTRING_VIEW(L"     ")); // 5 spaces
 
-    trim_left(string_6);
+    Win32FoundationClasses::trim_left(string_6);
 
     if ( string_6.length() != 0 )
     {
@@ -918,7 +918,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     string_6.assign(WSTRING_VIEW(L" \t\r\n")); // all space-like characters
 
-    trim_left(string_6);
+    Win32FoundationClasses::trim_left(string_6);
 
     if ( string_6.length() != 0 )
     {
@@ -928,7 +928,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     string_6.assign(WSTRING_VIEW(L" \t\r\n")); // all space-like characters
 
-    trim_right(string_6);
+    Win32FoundationClasses::trim_right(string_6);
 
     if ( string_6.length() != 0 )
     {
@@ -936,12 +936,12 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
         return( failure() );
     }
 
-    trim_right(string_6 ); // Shouldn't blow up, test 112
-    trim_left(string_6); // Shouldn't blow up, test 113
+    Win32FoundationClasses::trim_right(string_6 ); // Shouldn't blow up, test 112
+    Win32FoundationClasses::trim_left(string_6); // Shouldn't blow up, test 113
 
     string_6.assign(WSTRING_VIEW(L"111"));
 
-    trim_right( string_6, L'1');
+    Win32FoundationClasses::trim_right( string_6, L'1');
 
     if ( string_6.length() != 0 )
     {
@@ -951,7 +951,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     string_6.assign(WSTRING_VIEW(L"111"));
 
-    trim_left( string_6, L'1' );
+    Win32FoundationClasses::trim_left( string_6, L'1' );
 
     if ( string_6.length() != 0 )
     {
@@ -966,7 +966,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     string_6.assign(WSTRING_VIEW(L"0123456789"));
 
-    string_5.assign( right( string_6, string_6.length() + 1 ) );
+    string_5.assign(Win32FoundationClasses::right( string_6, string_6.length() + 1 ) );
 
     if ( string_5.compare(WSTRING_VIEW(L"0123456789")) != I_AM_EQUAL_TO_THAT)
     {
@@ -992,7 +992,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     string_5.assign(WSTRING_VIEW(L"This is a test"));
 
-    remove( string_5, 't' );
+    Win32FoundationClasses::remove( string_5, 't' );
 
     if ( string_5.compare(WSTRING_VIEW(L"This is a es")) != I_AM_EQUAL_TO_THAT )
     {
@@ -1000,7 +1000,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
         return( failure() );
     }
 
-    remove( string_5, 'T' );
+    Win32FoundationClasses::remove( string_5, 'T' );
 
     if ( string_5.compare(WSTRING_VIEW(L"his is a es")) != I_AM_EQUAL_TO_THAT )
     {
@@ -1010,7 +1010,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     string_5.assign(WSTRING_VIEW(L"ttt"));
 
-    remove( string_5, 't' );
+    Win32FoundationClasses::remove( string_5, 't' );
 
     if ( string_5.length() !=  0 )
     {
@@ -1018,11 +1018,11 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
         return( failure() );
     }
 
-    remove( string_5, 't' );
+    Win32FoundationClasses::remove( string_5, 't' );
 
     string_5.assign(WSTRING_VIEW(L"ABCDEFGHIJ"));
 
-    remove( string_5, 'K' );
+    Win32FoundationClasses::remove( string_5, 'K' );
 
     // Replace()
 
@@ -1037,7 +1037,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
     string_5.assign(WSTRING_VIEW(L"a b c d e f g a b c a"));
 
     // replace a character at the beginning, in the middle and at the end
-    if ( replace( string_5, 'a', 'z' ) != 3 )
+    if (Win32FoundationClasses::replace( string_5, 'a', 'z' ) != 3 )
     {
         test_number_that_failed = 157;
         return( failure() );
@@ -1060,7 +1060,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
     string_5.assign(WSTRING_VIEW(L"beginbeginbegin"));
 
     // replace a longer string with a shorter one
-    replace(string_5, WSTRING_VIEW(L"begin"), WSTRING_VIEW(L"end"));
+    Win32FoundationClasses::replace(string_5, WSTRING_VIEW(L"begin"), WSTRING_VIEW(L"end"));
 
     if ( string_5.compare(WSTRING_VIEW(L"endendend")) != I_AM_EQUAL_TO_THAT )
     {
@@ -1079,7 +1079,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
     string_5.assign(WSTRING_VIEW(L"beginbeginbegin"));
 
     // replace a shorter string with a longer one
-    replace(string_5, WSTRING_VIEW(L"begin"), WSTRING_VIEW(L"theend"));
+    Win32FoundationClasses::replace(string_5, WSTRING_VIEW(L"begin"), WSTRING_VIEW(L"theend"));
 
     if ( string_5.compare(WSTRING_VIEW(L"theendtheendtheend")) != I_AM_EQUAL_TO_THAT )
     {
@@ -1098,7 +1098,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
     string_5.assign(WSTRING_VIEW(L"beginbeginbegin"));
 
     // replace a string with a same-sized one
-    replace(string_5, WSTRING_VIEW(L"begin"), WSTRING_VIEW(L"start"));
+    Win32FoundationClasses::replace(string_5, WSTRING_VIEW(L"begin"), WSTRING_VIEW(L"start"));
 
     if ( string_5.compare(WSTRING_VIEW(L"startstartstart")) != I_AM_EQUAL_TO_THAT )
     {
@@ -1119,7 +1119,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     string_5.assign(WSTRING_VIEW(L"begineginbeginegin"));
 
-    replace(string_5, WSTRING_VIEW(L"begin"), WSTRING_VIEW(L"b"));
+    Win32FoundationClasses::replace(string_5, WSTRING_VIEW(L"begin"), WSTRING_VIEW(L"b"));
 
     if ( string_5.compare(WSTRING_VIEW(L"beginbegin")) != I_AM_EQUAL_TO_THAT )
     {
@@ -1137,7 +1137,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
         return( failure() );
     }
 
-    copy( string_5, STRING_VIEW("ABCDEFGHIJK") );
+    Win32FoundationClasses::copy( string_5, STRING_VIEW("ABCDEFGHIJK") );
 
     if ( string_5.length() != 11 )
     {
@@ -1159,7 +1159,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
         return( failure() );
     }
 
-    copy( string_5, STRING_VIEW("ABCDEFGHIJKL"), 11 );
+    Win32FoundationClasses::copy( string_5, STRING_VIEW("ABCDEFGHIJKL"), 11 );
 
     if ( string_5.length() != 11 )
     {
@@ -1181,7 +1181,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
         return( failure() );
     }
 
-    copy( string_5, STRING_VIEW("ABCDEFGHIJKL"), 11, 1 );
+    Win32FoundationClasses::copy( string_5, STRING_VIEW("ABCDEFGHIJKL"), 11, 1 );
 
     if ( string_5.length() != 11 )
     {
@@ -1203,7 +1203,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
         return( failure() );
     }
 
-    copy( string_5, STRING_VIEW("ABCDEFGHIJKL"), 99 );
+    Win32FoundationClasses::copy( string_5, STRING_VIEW("ABCDEFGHIJKL"), 99 );
 
     if ( string_5.length() != 12 )
     {
@@ -1219,7 +1219,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
         return( failure() );
     }
 
-    copy( string_5, STRING_VIEW("ABC") );
+    Win32FoundationClasses::copy( string_5, STRING_VIEW("ABC") );
 
     if ( string_5.length() != 3 )
     {
@@ -1233,7 +1233,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
         return( failure() );
     }
 
-    copy( string_5, STRING_VIEW("ABCDEFGHIJKL"), 0, 99 );
+    Win32FoundationClasses::copy( string_5, STRING_VIEW("ABCDEFGHIJKL"), 0, 99 );
 
     if ( string_5.length() != 0 )
     {
@@ -1249,7 +1249,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
         return( failure() );
     }
 
-    copy( string_5, STRING_VIEW("ABCDEFGHIJKL"), 99, 99 );
+    Win32FoundationClasses::copy( string_5, STRING_VIEW("ABCDEFGHIJKL"), 99, 99 );
 
     if ( string_5.length() != 0 )
     {
@@ -1265,7 +1265,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
         return( failure() );
     }
 
-    copy( string_5, STRING_VIEW("ABCDEFGHIJKL"), 1, 99 );
+    Win32FoundationClasses::copy( string_5, STRING_VIEW("ABCDEFGHIJKL"), 1, 99 );
 
     if ( string_5.length() != 0 )
     {
@@ -1277,7 +1277,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     string_5.assign(WSTRING_VIEW(L" 16 "));
 
-    int64_t test_value = as_integer(string_5);
+    int64_t test_value = Win32FoundationClasses::as_integer(string_5);
 
     if ( test_value != 16 )
     {
@@ -1287,7 +1287,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     string_5.assign(WSTRING_VIEW(L" x16 "));
 
-    test_value = as_integer(string_5);
+    test_value = Win32FoundationClasses::as_integer(string_5);
 
     if ( test_value != 22 )
     {
@@ -1298,7 +1298,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     string_5.assign(WSTRING_VIEW(L" 0x17 "));
 
-    test_value = as_integer(string_5);
+    test_value = Win32FoundationClasses::as_integer(string_5);
 
     if ( test_value != 23 )
     {
@@ -1308,7 +1308,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     string_5.assign(WSTRING_VIEW(L"  1  2   3    4     5 "));
 
-    despace(string_5);
+    Win32FoundationClasses::despace(string_5);
 
     if ( string_5.compare(WSTRING_VIEW(L"1 2 3 4 5")) != I_AM_EQUAL_TO_THAT )
     {
@@ -1318,7 +1318,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     string_5.assign(WSTRING_VIEW(L"1 2   3    4     5 "));
 
-    despace(string_5);
+    Win32FoundationClasses::despace(string_5);
 
     if ( string_5.compare(WSTRING_VIEW(L"1 2 3 4 5")) != I_AM_EQUAL_TO_THAT )
     {
@@ -1328,7 +1328,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     string_5.assign(WSTRING_VIEW(L"1 2   3    4     5"));
 
-    despace(string_5);
+    Win32FoundationClasses::despace(string_5);
 
     if ( string_5.compare(WSTRING_VIEW(L"1 2 3 4 5")) != I_AM_EQUAL_TO_THAT )
     {
@@ -1340,7 +1340,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     string_5.assign(WSTRING_VIEW(L"123"));
 
-    if ( as_integer(string_5) != 123 )
+    if (Win32FoundationClasses::as_integer(string_5) != 123 )
     {
         test_number_that_failed = 197;
         return( failure() );
@@ -1353,7 +1353,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
     string_5.push_back( CARRIAGE_RETURN );
     string_5.push_back( LINE_FEED );
 
-    if ( is_all_space(string_5) == false )
+    if (Win32FoundationClasses::is_all_space(string_5) == false )
     {
         test_number_that_failed = 198;
         return( failure() );
@@ -1361,13 +1361,13 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     string_5.push_back( '.' );
 
-    if ( is_all_space(string_5) != false )
+    if (Win32FoundationClasses::is_all_space(string_5) != false )
     {
         test_number_that_failed = 199;
         return( failure() );
     }
 
-    static constexpr DEFINED_WIDE_STRING defines[] =
+    static constexpr Win32FoundationClasses::DEFINED_WIDE_STRING defines[] =
     {
         { 1, L"1" },
         { 2, L"2" },
@@ -1459,7 +1459,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     string_5.clear();
 
-    from_flags( string_5, 0x00, flags, std::size( flags ) );
+    Win32FoundationClasses::from_flags( string_5, 0x00, flags, std::size( flags ) );
 
     if ( string_5.empty() == false )
     {
@@ -1467,7 +1467,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
         return( failure() );
     }
 
-    from_flags(string_5, 0x01, flags, std::size( flags ) );
+    Win32FoundationClasses::from_flags(string_5, 0x01, flags, std::size( flags ) );
 
     if ( string_5.compare(WSTRING_VIEW(L"0")) != I_AM_EQUAL_TO_THAT)
     {
@@ -1475,7 +1475,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
         return( failure() );
     }
 
-    from_flags( string_5, 0x07, flags, std::size( flags ) );
+    Win32FoundationClasses::from_flags( string_5, 0x07, flags, std::size( flags ) );
 
     if ( string_5.compare(WSTRING_VIEW(L"0, Undefined(1), 2")) != I_AM_EQUAL_TO_THAT)
     {
@@ -1487,7 +1487,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     test_flags <<= 32;
 
-    from_flags( string_5, test_flags, flags, std::size( flags ) );
+    Win32FoundationClasses::from_flags( string_5, test_flags, flags, std::size( flags ) );
 
     if ( string_5.compare(WSTRING_VIEW(L"32")) != I_AM_EQUAL_TO_THAT)
     {
@@ -1497,7 +1497,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     string_5.assign(WSTRING_VIEW(L"'\"'\"5\"'\"'"));
 
-    (void)trim_quotes( string_5 );
+    (void)Win32FoundationClasses::trim_quotes( string_5 );
 
     if ( string_5.compare(WSTRING_VIEW(L"\"'\"5\"'\"")) != I_AM_EQUAL_TO_THAT )
     {
@@ -1505,7 +1505,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
         return( failure() );
     }
 
-    trim_all_quotes(string_5);
+    Win32FoundationClasses::trim_all_quotes(string_5);
 
     if ( string_5.compare(WSTRING_VIEW(L"5")) != I_AM_EQUAL_TO_THAT )
     {
@@ -1517,7 +1517,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     string_5.assign(WSTRING_VIEW(L"ABC123"));
 
-    string_4.assign( skip_first( string_5, 3 ) );
+    string_4.assign(Win32FoundationClasses::skip_first( string_5, 3 ) );
 
     if ( string_4.compare(WSTRING_VIEW(L"123")) != I_AM_EQUAL_TO_THAT )
     {
@@ -1527,25 +1527,25 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     string_5.assign(WSTRING_VIEW(L"123ABc"));
 
-    if ( ends_with( string_5, L"ABc") == false )
+    if (Win32FoundationClasses::ends_with( string_5, L"ABc") == false )
     {
         test_number_that_failed = 218;
         return( failure() );
     }
 
-    if ( ends_with( string_5, L"abc" ) == true )
+    if (Win32FoundationClasses::ends_with( string_5, L"abc" ) == true )
     {
         test_number_that_failed = 219;
         return( failure() );
     }
 
-    if ( ends_with_no_case( string_5, L"abc" ) != true )
+    if (Win32FoundationClasses::ends_with_no_case( string_5, L"abc" ) != true )
     {
         test_number_that_failed = 220;
         return( failure() );
     }
 
-    if ( starts_with( string_5, WSTRING_VIEW(L"123") ) != true )
+    if (Win32FoundationClasses::starts_with( string_5, WSTRING_VIEW(L"123") ) != true )
     {
         test_number_that_failed = 221;
         return( failure() );
@@ -1553,7 +1553,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     string_5.assign(WSTRING_VIEW(L"AbC123"));
 
-    if ( starts_with_no_case( string_5, WSTRING_VIEW(L"abc") ) != true )
+    if (Win32FoundationClasses::starts_with_no_case( string_5, WSTRING_VIEW(L"abc") ) != true )
     {
         test_number_that_failed = 222;
         return( failure() );
@@ -1566,7 +1566,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     string_5.assign(WSTRING_VIEW(L"SRBLLB"));
 
-    copy_to( string_5, output_string, std::size( output_string ) );
+    Win32FoundationClasses::copy_to( string_5, output_string, std::size( output_string ) );
 
     if ( wcslen( output_string ) != 6 )
     {
@@ -1582,7 +1582,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     string_5.assign(WSTRING_VIEW(L"BBD"));
 
-    if ( ends_with_no_case(string_5, L"bbd" ) != true )
+    if (Win32FoundationClasses::ends_with_no_case(string_5, L"bbd" ) != true )
     {
         test_number_that_failed = 225;
         return( failure() );
@@ -1600,7 +1600,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
         return( failure() );
     }
 
-    remove_no_case( string_array, WSTRING_VIEW(L"1A1") );
+    Win32FoundationClasses::remove_no_case( string_array, WSTRING_VIEW(L"1A1") );
 
     if ( string_array.size() != 1 )
     {
@@ -1680,7 +1680,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
         return( failure() );
     }
 
-    join( other_array, std::wstring_view(nullptr,0), string_1 );
+    Win32FoundationClasses::join( other_array, std::wstring_view(nullptr,0), string_1 );
 
     if ( string_1.compare(WSTRING_VIEW(L"OneTwoThree")) != I_AM_EQUAL_TO_THAT)
     {
@@ -1696,7 +1696,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
         return( failure() );
     }
 
-    join( other_array, WSTRING_VIEW(L""), string_1 );
+    Win32FoundationClasses::join( other_array, WSTRING_VIEW(L""), string_1 );
 
     if ( string_1.compare(WSTRING_VIEW(L"OneTwoThree")) != I_AM_EQUAL_TO_THAT)
     {
@@ -1712,7 +1712,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
         return( failure() );
     }
 
-    join( other_array, WSTRING_VIEW(L"."), string_1 );
+    Win32FoundationClasses::join( other_array, WSTRING_VIEW(L"."), string_1 );
 
     if ( string_1.compare(WSTRING_VIEW(L"One.Two.Three")) != I_AM_EQUAL_TO_THAT)
     {
@@ -1728,7 +1728,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
         return( failure() );
     }
 
-    join( other_array, WSTRING_VIEW(L" and a "), string_1 );
+    Win32FoundationClasses::join( other_array, WSTRING_VIEW(L" and a "), string_1 );
 
     if ( string_1.compare(WSTRING_VIEW(L"One and a Two and a Three")) != I_AM_EQUAL_TO_THAT)
     {
@@ -1738,7 +1738,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     string_1.assign(WSTRING_VIEW(L"3.14"));
 
-    double const test_double = as_double( string_1 );
+    double const test_double = Win32FoundationClasses::as_double( string_1 );
 
     if ( test_double < 3.14 or test_double > 3.141 )
     {
@@ -1746,7 +1746,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
         return(failure());
     }
 
-    if (is_all_decimal_digits( string_1 ) == true)
+    if (Win32FoundationClasses::is_all_decimal_digits( string_1 ) == true)
     {
         test_number_that_failed = 247;
         return(failure());
@@ -1754,13 +1754,13 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     string_1.assign(WSTRING_VIEW(L"01293784529346"));
 
-    if (is_all_decimal_digits( string_1 ) == false)
+    if (Win32FoundationClasses::is_all_decimal_digits( string_1 ) == false)
     {
         test_number_that_failed = 248;
         return(failure());
     }
 
-    if ( is_all_hex_digits(string_1) == false)
+    if (Win32FoundationClasses::is_all_hex_digits(string_1) == false)
     {
         test_number_that_failed = 249;
         return(failure());
@@ -1768,7 +1768,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     string_1.assign(WSTRING_VIEW(L"012aBcDEf9"));
 
-    if (is_all_hex_digits( string_1 ) == false)
+    if (Win32FoundationClasses::is_all_hex_digits( string_1 ) == false)
     {
         test_number_that_failed = 250;
         return(failure());
@@ -1776,7 +1776,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     string_1.assign(WSTRING_VIEW(L"ABCDEFG"));
 
-    if (is_all_hex_digits( string_1) == true)
+    if (Win32FoundationClasses::is_all_hex_digits( string_1) == true)
     {
         test_number_that_failed = 251;
         return(failure());
@@ -1824,7 +1824,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     std::vector<std::wstring> sorted;
 
-    SSIZE_T where_it_was_inserted = add_to_unique_sorted_vector(WSTRING_VIEW(L"&amp;"), sorted);
+    SSIZE_T where_it_was_inserted = Win32FoundationClasses::add_to_unique_sorted_vector(WSTRING_VIEW(L"&amp;"), sorted);
 
     if (sorted.size() != 1)
     {
@@ -1838,7 +1838,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
         return(failure());
     }
 
-    where_it_was_inserted = add_to_unique_sorted_vector(WSTRING_VIEW(L"&apos;"), sorted);
+    where_it_was_inserted = Win32FoundationClasses::add_to_unique_sorted_vector(WSTRING_VIEW(L"&apos;"), sorted);
 
     if (sorted.size() != 2)
     {
@@ -1864,7 +1864,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
         return(failure());
     }
 
-    where_it_was_inserted = add_to_unique_sorted_vector(WSTRING_VIEW(L"&amp;"), sorted);
+    where_it_was_inserted = Win32FoundationClasses::add_to_unique_sorted_vector(WSTRING_VIEW(L"&amp;"), sorted);
 
     if (sorted.size() != 2)
     {
@@ -1890,7 +1890,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
         return(failure());
     }
 
-    where_it_was_inserted = add_to_unique_sorted_vector(WSTRING_VIEW(L"&apos;"), sorted);
+    where_it_was_inserted = Win32FoundationClasses::add_to_unique_sorted_vector(WSTRING_VIEW(L"&apos;"), sorted);
 
     if (sorted.size() != 2)
     {
@@ -1916,7 +1916,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
         return(failure());
     }
 
-    where_it_was_inserted = add_to_unique_sorted_vector(WSTRING_VIEW(L"&aaaa;"), sorted);
+    where_it_was_inserted = Win32FoundationClasses::add_to_unique_sorted_vector(WSTRING_VIEW(L"&aaaa;"), sorted);
 
     if (sorted.size() != 3)
     {
@@ -1951,15 +1951,27 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
     std::wstring ss1(WSTRING_VIEW(L"ABCDEF"));
     std::wstring ss2(WSTRING_VIEW(L"abcdef"));
 
-    if (compare_no_case(ss1, ss2) != I_AM_EQUAL_TO_THAT)
+    if (Win32FoundationClasses::compare_no_case(ss1, ss2) != I_AM_EQUAL_TO_THAT)
     {
         test_number_that_failed = 276;
         return(failure());
     }
 
+    std::wstring tg1(WSTRING_VIEW(L"Test String"));
+
+    Win32FoundationClasses::format(ss2, L"This is a %s right here", tg1);
+
+    if (ss2.compare(WSTRING_VIEW(L"This is a Test String right here")) != I_AM_EQUAL_TO_THAT)
+    {
+        test_number_that_failed = 277;
+        return(failure());
+    }
+
     std::filesystem::path p1(L"C:\\t1\\t2\\t3.txt");
 
-    format(ss2, L"%s==", p1);
+    tg1.assign(p1.wstring());
+
+    Win32FoundationClasses::format(ss2, L"%s==", tg1);
 
     if (ss2.compare(WSTRING_VIEW(L"C:\\t1\\t2\\t3.txt==")) != I_AM_EQUAL_TO_THAT)
     {
@@ -1971,7 +1983,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     std::string a_string(" x16 ");
 
-    test_value = as_integer(a_string);
+    test_value = Win32FoundationClasses::as_integer(a_string);
 
     if (test_value != 22)
     {
@@ -1982,7 +1994,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     a_string.assign(STRING_VIEW(" 0x17 "));
 
-    test_value = as_integer(a_string);
+    test_value = Win32FoundationClasses::as_integer(a_string);
 
     if (test_value != 23)
     {
@@ -1993,7 +2005,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     a_string.assign(STRING_VIEW("24"));
 
-    test_value = as_integer(a_string);
+    test_value = Win32FoundationClasses::as_integer(a_string);
 
     if (test_value != 24)
     {
@@ -2002,7 +2014,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
         return(failure());
     }
 
-    test_value = ascii_string_to_integer("567", 2, 10);
+    test_value = Win32FoundationClasses::ascii_string_to_integer("567", 2, 10);
 
     if (test_value != 56)
     {
@@ -2013,7 +2025,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     a_string.assign(STRING_VIEW("X24"));
 
-    test_value = as_integer(a_string);
+    test_value = Win32FoundationClasses::as_integer(a_string);
 
     if (test_value != 36)
     {
@@ -2024,7 +2036,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     uint8_t test_bytes[]{ 1, 2, 129, 200, 201 };
 
-    copy(string_5, test_bytes, sizeof(test_bytes));
+    Win32FoundationClasses::copy(string_5, test_bytes, sizeof(test_bytes));
 
     if (string_5.length() != sizeof(test_bytes))
     {
@@ -2064,9 +2076,9 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     // 2014-05-10T19:21:18-0400
 
-    CFileTime ft;
+    Win32FoundationClasses::CFileTime ft;
 
-    wfc_parse_iso_8601_string(WSTRING_VIEW(L"2014-05-10T19:21:18-0400"), ft);
+    Win32FoundationClasses::wfc_parse_iso_8601_string(WSTRING_VIEW(L"2014-05-10T19:21:18-0400"), ft);
 
     test_number_that_failed = 288;
     return( true );

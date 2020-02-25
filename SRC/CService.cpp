@@ -51,13 +51,11 @@ static char THIS_FILE[] = __FILE__;
 #define new DEBUG_NEW
 #endif // _DEBUG
 
-USING_WFC_NAMESPACE
-
 CRITICAL_SECTION Win32FoundationClasses::g_ServiceCriticalSection;
 
 Win32FoundationClasses::CService *Win32FoundationClasses::CService::m_StaticService_p = 0;
 
-CService::CService( __callback LPTHREAD_START_ROUTINE thread_start_routine, __in DWORD const controls_accepted, __in DWORD const wait_hint ) noexcept
+Win32FoundationClasses::CService::CService( __callback LPTHREAD_START_ROUTINE thread_start_routine, _In_ DWORD const controls_accepted, _In_ DWORD const wait_hint ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( thread_start_routine );
@@ -94,7 +92,7 @@ CService::CService( __callback LPTHREAD_START_ROUTINE thread_start_routine, __in
    ZeroMemory( m_ServiceName, (SERVICE_NAME_LEN + 1) * sizeof(wchar_t));
 }
 
-CService::~CService( void ) noexcept
+Win32FoundationClasses::CService::~CService( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -123,7 +121,7 @@ CService::~CService( void ) noexcept
 
 #if defined( _DEBUG )
 
-void CService::AssertValid( void ) const
+void Win32FoundationClasses::CService::AssertValid( void ) const
 {
    ASSERT( m_Exiting             == false );
    ASSERT( m_ExitEventHandle     != static_cast< HANDLE >( NULL )  );
@@ -134,7 +132,7 @@ void CService::AssertValid( void ) const
 
 #endif // _DEBUG
 
-_Check_return_ HANDLE CService::CreateConfigurationFile( __in_z LPCTSTR filename )  noexcept // static
+_Check_return_ HANDLE Win32FoundationClasses::CService::CreateConfigurationFile( __in_z LPCTSTR filename )  noexcept // static
 {
    WFC_VALIDATE_POINTER( filename );
 
@@ -145,7 +143,7 @@ _Check_return_ HANDLE CService::CreateConfigurationFile( __in_z LPCTSTR filename
    SECURITY_ATTRIBUTES security_attributes;
 
    security_attributes.nLength              = sizeof( security_attributes );
-   security_attributes.lpSecurityDescriptor = (void *) wfc_create_null_dacl();
+   security_attributes.lpSecurityDescriptor = (void *)Win32FoundationClasses::wfc_create_null_dacl();
    security_attributes.bInheritHandle       = TRUE;
 
    if ( security_attributes.lpSecurityDescriptor == nullptr )
@@ -166,7 +164,7 @@ _Check_return_ HANDLE CService::CreateConfigurationFile( __in_z LPCTSTR filename
    return( file_handle );
 }
 
-_Check_return_ bool CService::SpawnProcess( __in_z LPCTSTR command_line, __in_z LPCTSTR current_directory, __out DWORD& last_error ) noexcept // static
+_Check_return_ bool Win32FoundationClasses::CService::SpawnProcess( __in_z LPCTSTR command_line, __in_z LPCTSTR current_directory, _Out_ DWORD& last_error ) noexcept // static
 {
    TCHAR non_const_command_line[ 2048 ];
 
@@ -216,7 +214,7 @@ _Check_return_ bool CService::SpawnProcess( __in_z LPCTSTR command_line, __in_z 
    return( true );
 }
 
-_Check_return_ INT_PTR CService::DialogBoxParam( __in HINSTANCE instance, __in_z LPCTSTR template_name, __in HWND parent_window, __callback DLGPROC dialogbox_procedure, __in LPARAM lParam ) noexcept
+_Check_return_ INT_PTR Win32FoundationClasses::CService::DialogBoxParam( _In_ HINSTANCE instance, __in_z LPCTSTR template_name, _In_ HWND parent_window, __callback DLGPROC dialogbox_procedure, _In_ LPARAM lParam ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -244,7 +242,7 @@ _Check_return_ INT_PTR CService::DialogBoxParam( __in HINSTANCE instance, __in_z
 
 #if defined( _DEBUG )
 
-void CService::DumpStatus( __inout SERVICE_STATUS *status_p ) const
+void Win32FoundationClasses::CService::DumpStatus( __inout SERVICE_STATUS *status_p ) const
 {
    // The user passed us a pointer, don't trust it
 
@@ -365,7 +363,7 @@ void CService::DumpStatus( __inout SERVICE_STATUS *status_p ) const
 
 #endif // _DEBUG
 
-void CService::Exit( void ) noexcept
+void Win32FoundationClasses::CService::Exit( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -383,7 +381,7 @@ void CService::Exit( void ) noexcept
    }
 }
 
-_Check_return_ bool CService::Initialize( __in_z LPCWSTR name_of_service ) noexcept
+_Check_return_ bool Win32FoundationClasses::CService::Initialize( __in_z LPCWSTR name_of_service ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( name_of_service );
@@ -427,17 +425,17 @@ _Check_return_ bool CService::Initialize( __in_z LPCWSTR name_of_service ) noexc
 
 #pragma warning( disable : 4100 )
 
-void CService::LogEvent( __in WORD event_type, __in_z_opt LPCTSTR message_string, __in DWORD error_code ) noexcept
+void Win32FoundationClasses::CService::LogEvent( _In_ WORD event_type, __in_z_opt LPCTSTR message_string, _In_ DWORD error_code ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
-   CEventLog log( m_ServiceName );
+   Win32FoundationClasses::CEventLog log( m_ServiceName );
 
    LPCTSTR strings[ 1 ];
 
    strings[ 0 ] = message_string;
 
-   (void) log.Report( (CEventLog::EventType) event_type, 0, 0, 1, (LPCTSTR *) strings );
+   (void) log.Report( (Win32FoundationClasses::CEventLog::EventType) event_type, 0, 0, 1, (LPCTSTR *) strings );
 }
 
 // I shouldn't have to put this here but WINUSER.H wasn't doing it right...
@@ -452,7 +450,7 @@ void CService::LogEvent( __in WORD event_type, __in_z_opt LPCTSTR message_string
 
 #pragma warning( default : 4100 )
 
-_Check_return_ int CService::ShowMessageBox(__in_z_opt LPCTSTR text, __in_z_opt LPCTSTR caption, __in UINT type ) noexcept
+_Check_return_ int Win32FoundationClasses::CService::ShowMessageBox(__in_z_opt LPCTSTR text, __in_z_opt LPCTSTR caption, _In_ UINT type ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -475,7 +473,7 @@ _Check_return_ int CService::ShowMessageBox(__in_z_opt LPCTSTR text, __in_z_opt 
    return( return_value );
 }
 
-void CService::OnContinue( void ) noexcept
+void Win32FoundationClasses::CService::OnContinue( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -496,14 +494,14 @@ void CService::OnContinue( void ) noexcept
    log.ReportInformation( TEXT( "Service Resumed" ) );
 }
 
-void CService::OnControlCode( __in DWORD /* control_code */ ) noexcept
+void Win32FoundationClasses::CService::OnControlCode( _In_ DWORD /* control_code */ ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    // default implementation
    // handle user-defined control codes (128 - 255 inclusive)
 }
 
-void CService::OnPause( void ) noexcept
+void Win32FoundationClasses::CService::OnPause( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -524,13 +522,13 @@ void CService::OnPause( void ) noexcept
    log.ReportInformation( TEXT( "Service Paused" ) );
 }
 
-_Check_return_ bool CService::OnPrepareServiceThread( void ) noexcept
+_Check_return_ bool Win32FoundationClasses::CService::OnPrepareServiceThread( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    return( true );
 }
 
-void CService::OnShutdown( void ) noexcept
+void Win32FoundationClasses::CService::OnShutdown( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -548,7 +546,7 @@ void CService::OnShutdown( void ) noexcept
    }
 }
 
-void CService::OnStop( void ) noexcept
+void Win32FoundationClasses::CService::OnStop( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -566,7 +564,7 @@ void CService::OnStop( void ) noexcept
    }
 }
 
-void CService::ParseCommandLineParameters( _In_ DWORD const number_of_command_line_arguments, _In_reads_z_( number_of_command_line_arguments ) LPCTSTR command_line_arguments[] ) noexcept
+void Win32FoundationClasses::CService::ParseCommandLineParameters( _In_ DWORD const number_of_command_line_arguments, _In_reads_z_( number_of_command_line_arguments ) LPCTSTR command_line_arguments[] ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -614,11 +612,11 @@ void CService::ParseCommandLineParameters( _In_ DWORD const number_of_command_li
    }
 }
 
-_Check_return_ bool CService::SendStatusToServiceControlManager( __in DWORD current_state, 
-                                                                __in DWORD win32_exit_code,
-                                                                __in DWORD check_point,
-                                                                __in DWORD wait_hint,
-                                                                __in DWORD service_specific_code ) noexcept
+_Check_return_ bool Win32FoundationClasses::CService::SendStatusToServiceControlManager( _In_ DWORD current_state,
+                                                                _In_ DWORD win32_exit_code,
+                                                                _In_ DWORD check_point,
+                                                                _In_ DWORD wait_hint,
+                                                                _In_ DWORD service_specific_code ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -668,7 +666,7 @@ _Check_return_ bool CService::SendStatusToServiceControlManager( __in DWORD curr
    return( true );
 }
 
-void CALLBACK CService::ServiceControlManagerHandler( __in DWORD control_code )
+void CALLBACK Win32FoundationClasses::CService::ServiceControlManagerHandler( _In_ DWORD control_code )
 {
    // entry point for service called by SCM after service is started
 
@@ -764,7 +762,7 @@ void CALLBACK CService::ServiceControlManagerHandler( __in DWORD control_code )
    (void) m_StaticService_p->SendStatusToServiceControlManager( m_StaticService_p->m_CurrentState );
 }
 
-void CALLBACK CService::ServiceMain( _In_ DWORD const number_of_command_line_arguments, _In_reads_z_( number_of_command_line_arguments ) LPCTSTR command_line_arguments[] )
+void CALLBACK Win32FoundationClasses::CService::ServiceMain( _In_ DWORD const number_of_command_line_arguments, _In_reads_z_( number_of_command_line_arguments ) LPCTSTR command_line_arguments[] )
 {
    // entry point for service called by SCM when service is started
 

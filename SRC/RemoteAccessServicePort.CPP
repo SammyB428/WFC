@@ -52,8 +52,6 @@ static char THIS_FILE[] = __FILE__;
 
 #if ! defined( WFC_NO_RAS )
 
-USING_WFC_NAMESPACE
-
 #if defined( _DEBUG ) && defined( _INC_CRTDBG )
 #define new DEBUG_NEW
 #endif // _DEBUG
@@ -155,7 +153,7 @@ void CRemoteAccessServicePort::Copy( RAS_PORT_0 const * source )
    WFC_END_CATCH_ALL
 }
 
-void CRemoteAccessServicePort::Copy( __in RAS_PORT_1 const * source )
+void CRemoteAccessServicePort::Copy( _In_ RAS_PORT_1 const * source )
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
@@ -189,7 +187,7 @@ void CRemoteAccessServicePort::Copy( __in RAS_PORT_1 const * source )
    WFC_END_CATCH_ALL
 }
 
-void CRemoteAccessServicePort::Copy( __in CRemoteAccessServicePort const& source )
+void CRemoteAccessServicePort::Copy( _In_ CRemoteAccessServicePort const& source )
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -374,7 +372,7 @@ void CRemoteAccessServicePort::Empty( void )
 
 // Operators
 
-CRemoteAccessServicePort& CRemoteAccessServicePort::operator=( __in CRemoteAccessServicePort const& source )
+CRemoteAccessServicePort& CRemoteAccessServicePort::operator=( _In_ CRemoteAccessServicePort const& source )
 {
    Copy( source );
    WFC_VALIDATE_POINTER( this );

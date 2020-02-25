@@ -4,17 +4,23 @@
 
 #define STL_STRING_UNIQUE_SORTED_VECTOR_HEADER_FILE
 
-#include "stl_compare.h"
-
 using WSTRING_CONST_ITERATOR = std::vector<std::wstring>::const_iterator;
 using WSTRING_CONST_ITERATOR_PAIR = std::pair<WSTRING_CONST_ITERATOR, WSTRING_CONST_ITERATOR>;
 
-static inline constexpr _Check_return_ bool it_wasnt_found(_In_ WSTRING_CONST_ITERATOR_PAIR const& p) noexcept
+#if defined( WE_ARE_BUILDING_WFC_ON_UNIX )
+inline _Check_return_ bool it_wasnt_found(_In_ WSTRING_CONST_ITERATOR_PAIR const& p) noexcept
+#else
+inline constexpr _Check_return_ bool it_wasnt_found(_In_ WSTRING_CONST_ITERATOR_PAIR const& p) noexcept
+#endif
 {
     return((p.first == p.second) ? true : false);
 }
 
-static inline constexpr _Check_return_ bool it_was_found(_In_ WSTRING_CONST_ITERATOR_PAIR const& p) noexcept
+#if defined( WE_ARE_BUILDING_WFC_ON_UNIX )
+inline _Check_return_ bool it_was_found(_In_ WSTRING_CONST_ITERATOR_PAIR const& p) noexcept
+#else
+inline constexpr _Check_return_ bool it_was_found(_In_ WSTRING_CONST_ITERATOR_PAIR const& p) noexcept
+#endif
 {
     return((p.first != p.second) ? true : false);
 }
@@ -58,12 +64,20 @@ inline _Check_return_ SSIZE_T add_to_unique_sorted_vector(_In_ std::wstring cons
 using STRING_CONST_ITERATOR = std::vector<std::string>::const_iterator;
 using STRING_CONST_ITERATOR_PAIR = std::pair<STRING_CONST_ITERATOR, STRING_CONST_ITERATOR>;
 
+#if defined( WE_ARE_BUILDING_WFC_ON_UNIX )
+static inline _Check_return_ bool it_wasnt_found(_In_ STRING_CONST_ITERATOR_PAIR const& p) noexcept
+#else
 static inline constexpr _Check_return_ bool it_wasnt_found(_In_ STRING_CONST_ITERATOR_PAIR const& p) noexcept
+#endif
 {
     return((p.first == p.second) ? true : false);
 }
 
+#if defined( WE_ARE_BUILDING_WFC_ON_UNIX )
+static inline _Check_return_ bool it_was_found(_In_ STRING_CONST_ITERATOR_PAIR const& p) noexcept
+#else
 static inline constexpr _Check_return_ bool it_was_found(_In_ STRING_CONST_ITERATOR_PAIR const& p) noexcept
+#endif
 {
     return((p.first != p.second) ? true : false);
 }

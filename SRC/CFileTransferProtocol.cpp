@@ -53,8 +53,6 @@ static char THIS_FILE[] = __FILE__;
 #define new DEBUG_NEW
 #endif // _DEBUG
 
-USING_WFC_NAMESPACE
-
 CFileTransferProtocol::CFileTransferProtocol( LPCTSTR user_name, LPCTSTR password )
 {
    WFC_VALIDATE_POINTER( this );
@@ -124,7 +122,7 @@ CFileTransferProtocol::~CFileTransferProtocol()
    m_Password.Empty();
 }
 
-void CFileTransferProtocol::GetDirectory( __in CUniformResourceLocator const& url, __inout std::vector<std::wstring>& directory, __in_z LPCTSTR filter )
+void CFileTransferProtocol::GetDirectory( _In_ CUniformResourceLocator const& url, __inout std::vector<std::wstring>& directory, __in_z LPCTSTR filter )
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER_NULL_OK( filter );
@@ -504,7 +502,7 @@ void CFileTransferProtocol::Dump( CDumpContext& dump_context ) const
 
 #endif // _DEBUG
 
-_Check_return_ BOOL CFileTransferProtocol::PutFile( __in CUniformResourceLocator const& url, __in std::vector<uint8_t> const& file_contents )
+_Check_return_ BOOL CFileTransferProtocol::PutFile( _In_ CUniformResourceLocator const& url, _In_ std::vector<uint8_t> const& file_contents )
 {
    WFC_VALIDATE_POINTER( this );
 

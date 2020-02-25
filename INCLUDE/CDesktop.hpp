@@ -59,11 +59,11 @@ class CDesktop
 
       // Construction
 
-       CDesktop(__in CDesktop const&) = delete;
-       CDesktop& operator=(__in CDesktop const&) = delete;
+       CDesktop(_In_ CDesktop const&) = delete;
+       CDesktop& operator=(_In_ CDesktop const&) = delete;
 
        CDesktop() noexcept;
-      CDesktop( __in HDESK desktop_handle ) noexcept;
+      CDesktop( _In_ HDESK desktop_handle ) noexcept;
 
       /*
       ** Destructor should be virtual according to MSJ article in Sept 1992
@@ -89,22 +89,22 @@ class CDesktop
       ** Methods
       */
 
-      virtual void  Attach( __in HDESK desktop_handle ) noexcept;
+      virtual void  Attach( _In_ HDESK desktop_handle ) noexcept;
       virtual _Check_return_ bool Close( void ) noexcept;
       virtual _Check_return_ bool Create( _In_ std::wstring_view name_of_desktop,
-                                  __in DWORD    desired_access = DESKTOP_CREATEWINDOW,
+                                  _In_ DWORD    desired_access = DESKTOP_CREATEWINDOW,
                      __in_opt LPSECURITY_ATTRIBUTES security_attributes_p = nullptr, 
-                                  __in DWORD    flags = 0 ) noexcept;
+                                  _In_ DWORD    flags = 0 ) noexcept;
       inline constexpr _Check_return_ bool  GetAutomaticallyClose(void) const noexcept { return(m_AutomaticallyClose); }
       inline constexpr _Check_return_ DWORD GetErrorCode(void) const noexcept { return(m_ErrorCode); };
       inline constexpr _Check_return_ HDESK GetHandle(void) const noexcept { return(m_DesktopHandle); }
-      virtual void  GetThread( __in DWORD thread_id = 0 ) noexcept;
+      virtual void  GetThread( _In_ DWORD thread_id = 0 ) noexcept;
       virtual _Check_return_ bool  GetWindows( _Out_ std::vector<HWND>& window_handles ) noexcept; // EnumDesktopWindows
-      virtual _Check_return_ bool  Open( _In_ std::wstring_view desktop_name, __in DWORD desired_access = DESKTOP_CREATEWINDOW, __in DWORD flags = 0, __in bool inherit = false ) noexcept;
-      virtual _Check_return_ bool  OpenInput( __in DWORD desired_access = accessCreateWindow, __in DWORD flags = 0, __in bool inherit = false ) noexcept;
-      virtual void  SetAutomaticallyClose( __in bool const automatically_close = true ) noexcept;
+      virtual _Check_return_ bool  Open( _In_ std::wstring_view desktop_name, _In_ DWORD desired_access = DESKTOP_CREATEWINDOW, _In_ DWORD flags = 0, _In_ bool inherit = false ) noexcept;
+      virtual _Check_return_ bool  OpenInput( _In_ DWORD desired_access = accessCreateWindow, _In_ DWORD flags = 0, _In_ bool inherit = false ) noexcept;
+      virtual void  SetAutomaticallyClose( _In_ bool const automatically_close = true ) noexcept;
       virtual _Check_return_ bool  SetThread( void ) noexcept;
-      virtual _Check_return_ bool  SwitchTo( __in CDesktop const& desktop_to_switch_to ) noexcept;
+      virtual _Check_return_ bool  SwitchTo( _In_ CDesktop const& desktop_to_switch_to ) noexcept;
 
       /*
       ** Operators

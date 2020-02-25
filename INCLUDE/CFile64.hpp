@@ -74,8 +74,6 @@
 #define FILE_ATTRIBUTE_NOT_CONTENT_INDEXED (0x00002000)
 #endif
 
-class CExtensibleMarkupLanguageDocument;
-
 #define SAFE_WRITE_OK   (0)
 #define SAFE_WRITE_WAIT (1)
 #define SAFE_WRITE_FAIL (2)
@@ -247,31 +245,31 @@ class CFile64
           return(m_LastError);
       }
 
-      virtual _Check_return_ bool     ProcessContent( __in std::size_t const step_size, __inout PROCESS_BUFFER_CALLBACK function_to_call, __inout_opt void * callback_context ) const noexcept;
+      virtual _Check_return_ bool     ProcessContent( _In_ std::size_t const step_size, __inout PROCESS_BUFFER_CALLBACK function_to_call, __inout_opt void * callback_context ) const noexcept;
       virtual void                    RegisterSafeWrite( __inout void * context, __callback SAFE_WRITE_CALLBACK callback ) noexcept;
-      virtual _Check_return_ uint64_t Seek( __in int64_t const offset, __in CFile64::SeekPosition const from ) noexcept;
+      virtual _Check_return_ uint64_t Seek( _In_ int64_t const offset, _In_ CFile64::SeekPosition const from ) noexcept;
       virtual void                    SeekToBegin( void ) noexcept;
       virtual _Check_return_ uint64_t SeekToEnd( void ) noexcept;
-      virtual _Check_return_ bool     SetEndOfFile( __in uint64_t const length ) noexcept;
+      virtual _Check_return_ bool     SetEndOfFile( _In_ uint64_t const length ) noexcept;
       virtual void                    SetFilePath(_In_ std::filesystem::path const& new_name ) noexcept;
-      virtual void                    SetLength( __in uint64_t const length ) noexcept;
-      virtual _Check_return_ bool     SetPosition( __in uint64_t const position ) noexcept;
-      virtual _Check_return_ bool     SparsifyRegion( __in uint64_t const position, __in uint64_t const number_of_bytes_to_mark_as_empty ) noexcept;
-      virtual void                    UnlockRange( __in uint64_t const position, __in uint64_t const number_of_bytes_to_unlock ) noexcept;
-      virtual void                    Write( __in_bcount( number_of_bytes_to_write ) void const * buffer, __in uint32_t const number_of_bytes_to_write ) noexcept;
+      virtual void                    SetLength( _In_ uint64_t const length ) noexcept;
+      virtual _Check_return_ bool     SetPosition( _In_ uint64_t const position ) noexcept;
+      virtual _Check_return_ bool     SparsifyRegion( _In_ uint64_t const position, _In_ uint64_t const number_of_bytes_to_mark_as_empty ) noexcept;
+      virtual void                    UnlockRange( _In_ uint64_t const position, _In_ uint64_t const number_of_bytes_to_unlock ) noexcept;
+      virtual void                    Write( __in_bcount( number_of_bytes_to_write ) void const * buffer, _In_ uint32_t const number_of_bytes_to_write ) noexcept;
       virtual void                    Write(_In_ std::string_view string_to_write ) noexcept;
-      virtual void                    Write(_In_ std::vector<std::string> const& string_to_write, __in bool const include_crlf_after_every_string ) noexcept;
+      virtual void                    Write(_In_ std::vector<std::string> const& string_to_write, _In_ bool const include_crlf_after_every_string ) noexcept;
       virtual void                    Write(_In_ std::wstring_view string_to_write) noexcept;
       virtual void                    Write(_In_ std::vector<std::wstring> const& string_to_write, _In_ bool const include_crlf_after_every_string) noexcept;
-      virtual void                    WriteHuge( __in_bcount( number_of_bytes_to_write ) void const * buffer, __in DWORD const number_of_bytes_to_write ) noexcept;
+      virtual void                    WriteHuge( __in_bcount( number_of_bytes_to_write ) void const * buffer, _In_ DWORD const number_of_bytes_to_write ) noexcept;
 
       // New for Release 50, full control of CreateFile!
 
       inline virtual _Check_return_ uint32_t GetAttributes( void ) const noexcept { return( m_Attributes ); }
-      inline virtual void SetAttributes( __in uint32_t attributes ) noexcept { m_Attributes = attributes; }
+      inline virtual void SetAttributes( _In_ uint32_t attributes ) noexcept { m_Attributes = attributes; }
 
       inline virtual _Check_return_ HANDLE GetTemplateFile( void ) const noexcept { return( m_TemplateFile ); }
-      inline virtual void SetTemplateFile( __in HANDLE file_handle ) noexcept { m_TemplateFile = file_handle; };
+      inline virtual void SetTemplateFile( _In_ HANDLE file_handle ) noexcept { m_TemplateFile = file_handle; };
 
 #if defined( _DEBUG ) && ! defined( WFC_NO_DUMPING )
 
@@ -279,8 +277,8 @@ class CFile64
 
 #endif // _DEBUG
 
-      static void PASCAL            Rename(_In_ std::filesystem::path const& old_name, _In_ std::filesystem::path const& new_name ) noexcept;
-      static void PASCAL            Remove(_In_ std::filesystem::path const& filename ) noexcept;
+      static void            Rename(_In_ std::filesystem::path const& old_name, _In_ std::filesystem::path const& new_name ) noexcept;
+      static void            Remove(_In_ std::filesystem::path const& filename ) noexcept;
 
       virtual _Check_return_ bool SetShortName(_In_z_ LPCTSTR new_short_name ) noexcept; // New for 73
       virtual _Check_return_ bool SetValidData( _In_ int64_t const valid_data_length ) noexcept; // New for 73

@@ -51,8 +51,6 @@ static char THIS_FILE[] = __FILE__;
 #define new DEBUG_NEW
 #endif // _DEBUG
 
-USING_WFC_NAMESPACE
-
 void Win32FoundationClasses::wfc_debug_error_code( _In_ DWORD const error_code ) noexcept
 {
     std::wstring error_string;
@@ -68,7 +66,7 @@ void Win32FoundationClasses::wfc_debug_error_code( _In_ DWORD const error_code )
     OutputDebugStringW( error_message.c_str() );
 }
 
-_Check_return_ bool PASCAL Win32FoundationClasses::wfc_undocumented_get_system_process_list( __out_bcount( size_of_buffer ) BYTE * buffer, __in DWORD const size_of_buffer ) noexcept
+_Check_return_ bool Win32FoundationClasses::wfc_undocumented_get_system_process_list( __out_bcount( size_of_buffer ) BYTE * buffer, _In_ DWORD const size_of_buffer ) noexcept
 {
     HMODULE const ntdll_module_handle = GetModuleHandle(TEXT("ntdll.dll"));
 
@@ -98,7 +96,7 @@ _Check_return_ bool PASCAL Win32FoundationClasses::wfc_undocumented_get_system_p
     return( true );
 }
 
-_Check_return_ bool PASCAL Win32FoundationClasses::wfc_get_process_command_line(_In_ HANDLE const process_id, _Inout_ std::wstring& command_line) noexcept
+_Check_return_ bool Win32FoundationClasses::wfc_get_process_command_line(_In_ HANDLE const process_id, _Inout_ std::wstring& command_line) noexcept
 {
     // This function has no associated import library. You must use the LoadLibrary and GetProcAddress functions to dynamically link to Ntdll.dll.
 
@@ -206,7 +204,7 @@ _Check_return_ bool PASCAL Win32FoundationClasses::wfc_get_process_command_line(
     return(true);
 }
 
-void PASCAL Win32FoundationClasses::wfc_calculate_lanman_hash(_In_ std::string_view ascii_string, __out_bcount(16) uint8_t * hash_value) noexcept
+void Win32FoundationClasses::wfc_calculate_lanman_hash(_In_ std::string_view ascii_string, __out_bcount(16) uint8_t * hash_value) noexcept
 {
     // This function has no associated import library. You must use the LoadLibrary and GetProcAddress functions to dynamically link to Ntdll.dll.
     static HMODULE advapi32_module_handle = NULL;
@@ -272,7 +270,7 @@ void PASCAL Win32FoundationClasses::wfc_calculate_lanman_hash(_In_ std::string_v
     _ASSERTE(return_status == ERROR_SUCCESS);
 }
 
-void PASCAL Win32FoundationClasses::wfc_calculate_nt_hash(_In_ std::wstring_view unicode_string, __out_bcount(16) uint8_t * hash_value) noexcept
+void Win32FoundationClasses::wfc_calculate_nt_hash(_In_ std::wstring_view unicode_string, __out_bcount(16) uint8_t * hash_value) noexcept
 {
     // This function has no associated import library. You must use the LoadLibrary and GetProcAddress functions to dynamically link to Ntdll.dll.
     static HMODULE advapi32_module_handle = NULL;

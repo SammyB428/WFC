@@ -50,8 +50,6 @@
 static char THIS_FILE[] = __FILE__;
 #endif // _DEBUG
 
-USING_WFC_NAMESPACE
-
 #if defined( _DEBUG ) && defined( _INC_CRTDBG )
 #define new DEBUG_NEW
 #endif // _DEBUG
@@ -60,26 +58,26 @@ USING_WFC_NAMESPACE
 ** CWorkstationUser stuff
 */
 
-CWorkstationUser::CWorkstationUser()
+Win32FoundationClasses::CWorkstationUser::CWorkstationUser()
 {
    WFC_VALIDATE_POINTER( this );
    m_Initialize();
 }
 
-CWorkstationUser::CWorkstationUser( __in WKSTA_USER_INFO_1 const * source )
+Win32FoundationClasses::CWorkstationUser::CWorkstationUser( _In_ WKSTA_USER_INFO_1 const * source )
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
    Copy( source );
 }
 
-CWorkstationUser::CWorkstationUser( __in CWorkstationUser const& source )
+Win32FoundationClasses::CWorkstationUser::CWorkstationUser( _In_ CWorkstationUser const& source )
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );
 }
 
-CWorkstationUser::~CWorkstationUser()
+Win32FoundationClasses::CWorkstationUser::~CWorkstationUser()
 {
    WFC_VALIDATE_POINTER( this );
    m_Initialize();
@@ -90,7 +88,7 @@ CWorkstationUser::~CWorkstationUser()
 ** net API header files...
 */
 
-void CWorkstationUser::Copy( __in WKSTA_USER_INFO_1 const * source ) noexcept
+void Win32FoundationClasses::CWorkstationUser::Copy( _In_ WKSTA_USER_INFO_1 const * source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
@@ -117,7 +115,7 @@ void CWorkstationUser::Copy( __in WKSTA_USER_INFO_1 const * source ) noexcept
    WFC_END_CATCH_ALL
 }
 
-void CWorkstationUser::Copy( __in CWorkstationUser const& source ) noexcept
+void Win32FoundationClasses::CWorkstationUser::Copy( _In_ Win32FoundationClasses::CWorkstationUser const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    ASSERT( this != &source );
@@ -137,13 +135,13 @@ void CWorkstationUser::Copy( __in CWorkstationUser const& source ) noexcept
    LogonServer.assign(source.LogonServer);
 }
 
-void CWorkstationUser::Empty( void ) noexcept
+void Win32FoundationClasses::CWorkstationUser::Empty( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    m_Initialize();
 }
 
-void CWorkstationUser::m_Initialize( void ) noexcept
+void Win32FoundationClasses::CWorkstationUser::m_Initialize( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -153,7 +151,7 @@ void CWorkstationUser::m_Initialize( void ) noexcept
    LogonServer.clear();
 }
 
-CWorkstationUser const& CWorkstationUser::operator = ( __in CWorkstationUser const& source ) noexcept
+Win32FoundationClasses::CWorkstationUser const& Win32FoundationClasses::CWorkstationUser::operator = ( _In_ Win32FoundationClasses::CWorkstationUser const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );
@@ -164,39 +162,39 @@ CWorkstationUser const& CWorkstationUser::operator = ( __in CWorkstationUser con
 ** CWorkstationInformation stuff
 */
 
-CWorkstationInformation::CWorkstationInformation()
+Win32FoundationClasses::CWorkstationInformation::CWorkstationInformation()
 {
    WFC_VALIDATE_POINTER( this );
    m_Initialize();
 }
 
-CWorkstationInformation::CWorkstationInformation( __in WKSTA_INFO_100 const * source )
+Win32FoundationClasses::CWorkstationInformation::CWorkstationInformation( _In_ WKSTA_INFO_100 const * source )
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
    Copy( source );
 }
 
-CWorkstationInformation::CWorkstationInformation( __in WKSTA_INFO_101 const * source )
+Win32FoundationClasses::CWorkstationInformation::CWorkstationInformation( _In_ WKSTA_INFO_101 const * source )
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
    Copy( source );
 }
 
-CWorkstationInformation::CWorkstationInformation( __in CWorkstationInformation const& source )
+Win32FoundationClasses::CWorkstationInformation::CWorkstationInformation( _In_ Win32FoundationClasses::CWorkstationInformation const& source )
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );
 }
 
-CWorkstationInformation::~CWorkstationInformation()
+Win32FoundationClasses::CWorkstationInformation::~CWorkstationInformation()
 {
    WFC_VALIDATE_POINTER( this );
    m_Initialize();
 }
 
-void CWorkstationInformation::Copy( __in WKSTA_INFO_100 const * source ) noexcept
+void Win32FoundationClasses::CWorkstationInformation::Copy( _In_ WKSTA_INFO_100 const * source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
@@ -227,7 +225,7 @@ void CWorkstationInformation::Copy( __in WKSTA_INFO_100 const * source ) noexcep
    WFC_END_CATCH_ALL
 }
 
-void CWorkstationInformation::Copy( __in WKSTA_INFO_101 const * source ) noexcept
+void Win32FoundationClasses::CWorkstationInformation::Copy( _In_ WKSTA_INFO_101 const * source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
@@ -258,7 +256,7 @@ void CWorkstationInformation::Copy( __in WKSTA_INFO_101 const * source ) noexcep
    WFC_END_CATCH_ALL
 }
 
-void CWorkstationInformation::Copy( __in WKSTA_INFO_102 const * source ) noexcept
+void Win32FoundationClasses::CWorkstationInformation::Copy( _In_ WKSTA_INFO_102 const * source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
@@ -289,7 +287,7 @@ void CWorkstationInformation::Copy( __in WKSTA_INFO_102 const * source ) noexcep
    WFC_END_CATCH_ALL
 }
 
-void CWorkstationInformation::Copy( __in CWorkstationInformation const& source ) noexcept
+void Win32FoundationClasses::CWorkstationInformation::Copy( _In_ Win32FoundationClasses::CWorkstationInformation const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    ASSERT( this != &source );
@@ -312,13 +310,13 @@ void CWorkstationInformation::Copy( __in CWorkstationInformation const& source )
    NumberOfLoggedOnUsers = source.NumberOfLoggedOnUsers;
 }
 
-void CWorkstationInformation::Empty( void ) noexcept
+void Win32FoundationClasses::CWorkstationInformation::Empty( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    m_Initialize();
 }
 
-void CWorkstationInformation::m_Initialize( void ) noexcept
+void Win32FoundationClasses::CWorkstationInformation::m_Initialize( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -331,7 +329,7 @@ void CWorkstationInformation::m_Initialize( void ) noexcept
    NumberOfLoggedOnUsers = 0;
 }
 
-CWorkstationInformation const& CWorkstationInformation::operator = ( __in CWorkstationInformation const& source ) noexcept
+Win32FoundationClasses::CWorkstationInformation const& Win32FoundationClasses::CWorkstationInformation::operator = ( _In_ Win32FoundationClasses::CWorkstationInformation const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );
@@ -342,32 +340,32 @@ CWorkstationInformation const& CWorkstationInformation::operator = ( __in CWorks
 ** CWorkstationTransport stuff
 */
 
-CWorkstationTransport::CWorkstationTransport() noexcept
+Win32FoundationClasses::CWorkstationTransport::CWorkstationTransport() noexcept
 {
    WFC_VALIDATE_POINTER( this );
    m_Initialize();
 }
 
-CWorkstationTransport::CWorkstationTransport( __in WKSTA_TRANSPORT_INFO_0 const * source ) noexcept
+Win32FoundationClasses::CWorkstationTransport::CWorkstationTransport( _In_ WKSTA_TRANSPORT_INFO_0 const * source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
    Copy( source );
 }
 
-CWorkstationTransport::CWorkstationTransport( __in CWorkstationTransport const& source ) noexcept
+Win32FoundationClasses::CWorkstationTransport::CWorkstationTransport( _In_ Win32FoundationClasses::CWorkstationTransport const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );
 }
 
-CWorkstationTransport::~CWorkstationTransport()
+Win32FoundationClasses::CWorkstationTransport::~CWorkstationTransport()
 {
    WFC_VALIDATE_POINTER( this );
    m_Initialize();
 }
 
-void CWorkstationTransport::Copy( __in WKSTA_TRANSPORT_INFO_0 const * source ) noexcept
+void Win32FoundationClasses::CWorkstationTransport::Copy( _In_ WKSTA_TRANSPORT_INFO_0 const * source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
@@ -396,7 +394,7 @@ void CWorkstationTransport::Copy( __in WKSTA_TRANSPORT_INFO_0 const * source ) n
    WFC_END_CATCH_ALL
 }
 
-void CWorkstationTransport::Copy( __in CWorkstationTransport const& source ) noexcept
+void Win32FoundationClasses::CWorkstationTransport::Copy( _In_ Win32FoundationClasses::CWorkstationTransport const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    ASSERT( this != &source );
@@ -417,13 +415,13 @@ void CWorkstationTransport::Copy( __in CWorkstationTransport const& source ) noe
    WANish                  = source.WANish;
 }
 
-void CWorkstationTransport::Empty( void ) noexcept
+void Win32FoundationClasses::CWorkstationTransport::Empty( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    m_Initialize();
 }
 
-void CWorkstationTransport::m_Initialize( void ) noexcept
+void Win32FoundationClasses::CWorkstationTransport::m_Initialize( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -434,7 +432,7 @@ void CWorkstationTransport::m_Initialize( void ) noexcept
    WANish = false;
 }
 
-CWorkstationTransport const& CWorkstationTransport::operator = ( __in CWorkstationTransport const& source ) noexcept
+Win32FoundationClasses::CWorkstationTransport const& Win32FoundationClasses::CWorkstationTransport::operator = ( _In_ Win32FoundationClasses::CWorkstationTransport const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );
@@ -445,19 +443,19 @@ CWorkstationTransport const& CWorkstationTransport::operator = ( __in CWorkstati
 ** CNetWorkstation Stuff
 */
 
-CNetWorkstation::CNetWorkstation(_In_ std::wstring_view machine_name) noexcept : CNetwork(machine_name)
+Win32FoundationClasses::CNetWorkstation::CNetWorkstation(_In_ std::wstring_view machine_name) noexcept : CNetwork(machine_name)
 {
    WFC_VALIDATE_POINTER( this );
    m_Initialize();
 }
 
-CNetWorkstation::~CNetWorkstation() noexcept
+Win32FoundationClasses::CNetWorkstation::~CNetWorkstation() noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Close();
 }
 
-void CNetWorkstation::Close( void ) noexcept
+void Win32FoundationClasses::CNetWorkstation::Close( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -497,7 +495,7 @@ void CNetWorkstation::Close( void ) noexcept
    m_UserBuffer      = nullptr;
 }
 
-void CNetWorkstation::m_Initialize( void ) noexcept
+void Win32FoundationClasses::CNetWorkstation::m_Initialize( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -517,7 +515,7 @@ void CNetWorkstation::m_Initialize( void ) noexcept
    m_UserTotalNumberOfEntries      = 0;
 }
 
-_Check_return_ bool CNetWorkstation::EnumerateInformation( void ) noexcept
+_Check_return_ bool Win32FoundationClasses::CNetWorkstation::EnumerateInformation( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -567,7 +565,7 @@ _Check_return_ bool CNetWorkstation::EnumerateInformation( void ) noexcept
    return( true );
 }
 
-_Check_return_ bool CNetWorkstation::EnumerateTransports( void ) noexcept
+_Check_return_ bool Win32FoundationClasses::CNetWorkstation::EnumerateTransports( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -598,7 +596,7 @@ _Check_return_ bool CNetWorkstation::EnumerateTransports( void ) noexcept
    return( true );
 }
 
-_Check_return_ bool CNetWorkstation::EnumerateUsers( void ) noexcept
+_Check_return_ bool Win32FoundationClasses::CNetWorkstation::EnumerateUsers( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -629,7 +627,7 @@ _Check_return_ bool CNetWorkstation::EnumerateUsers( void ) noexcept
    return( true );
 }
 
-_Check_return_ bool CNetWorkstation::GetCurrentUser( __inout CWorkstationUser& information ) noexcept
+_Check_return_ bool Win32FoundationClasses::CNetWorkstation::GetCurrentUser( __inout Win32FoundationClasses::CWorkstationUser& information ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -650,7 +648,7 @@ _Check_return_ bool CNetWorkstation::GetCurrentUser( __inout CWorkstationUser& i
    return( true );
 }
 
-_Check_return_ bool CNetWorkstation::GetNext( __inout CWorkstationInformation& information ) noexcept
+_Check_return_ bool Win32FoundationClasses::CNetWorkstation::GetNext( __inout Win32FoundationClasses::CWorkstationInformation& information ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -683,7 +681,7 @@ _Check_return_ bool CNetWorkstation::GetNext( __inout CWorkstationInformation& i
    return( false );
 }
 
-_Check_return_ bool CNetWorkstation::GetNext( __inout CWorkstationTransport& information ) noexcept
+_Check_return_ bool Win32FoundationClasses::CNetWorkstation::GetNext( __inout Win32FoundationClasses::CWorkstationTransport& information ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -711,7 +709,7 @@ _Check_return_ bool CNetWorkstation::GetNext( __inout CWorkstationTransport& inf
    return( false );
 }
 
-_Check_return_ bool CNetWorkstation::GetNext( __inout CWorkstationUser& information ) noexcept
+_Check_return_ bool Win32FoundationClasses::CNetWorkstation::GetNext( __inout Win32FoundationClasses::CWorkstationUser& information ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 

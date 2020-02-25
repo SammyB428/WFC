@@ -50,26 +50,24 @@
 static char THIS_FILE[] = __FILE__;
 #endif // _DEBUG
 
-USING_WFC_NAMESPACE
-
 #if defined( _DEBUG ) && defined( _INC_CRTDBG )
 #define new DEBUG_NEW
 #endif // _DEBUG
 
-CNetworkUsers::CNetworkUsers(_In_ std::wstring_view machine_name) noexcept : CNetwork(machine_name)
+Win32FoundationClasses::CNetworkUsers::CNetworkUsers(_In_ std::wstring_view machine_name) noexcept : CNetwork(machine_name)
 {
    WFC_VALIDATE_POINTER( this );
    m_Initialize();
 }
 
-CNetworkUsers::~CNetworkUsers() noexcept
+Win32FoundationClasses::CNetworkUsers::~CNetworkUsers() noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Close();
    m_Initialize();
 }
 
-bool CNetworkUsers::Add( __in CNetworkUserInformation const& user_to_add ) noexcept
+bool Win32FoundationClasses::CNetworkUsers::Add( _In_ Win32FoundationClasses::CNetworkUserInformation const& user_to_add ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -335,7 +333,7 @@ bool CNetworkUsers::Add( __in CNetworkUserInformation const& user_to_add ) noexc
    return( true );
 }
 
-_Check_return_ bool CNetworkUsers::ChangePassword( __in std::wstring const& user_name, __in std::wstring const& old_password, __in std::wstring const& new_password ) noexcept
+_Check_return_ bool Win32FoundationClasses::CNetworkUsers::ChangePassword( _In_ std::wstring const& user_name, _In_ std::wstring const& old_password, _In_ std::wstring const& new_password ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    //WFCTRACEVAL( TEXT( "Changing password for " ), user_name );
@@ -377,11 +375,11 @@ _Check_return_ bool CNetworkUsers::ChangePassword( __in std::wstring const& user
    return( false );
 }
 
-void CNetworkUsers::Close( void ) noexcept
+void Win32FoundationClasses::CNetworkUsers::Close( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
-   CNetwork::Close();
+   Win32FoundationClasses::CNetwork::Close();
 
    if ( m_3InformationBuffer != nullptr )
    {
@@ -414,7 +412,7 @@ void CNetworkUsers::Close( void ) noexcept
    }
 }
 
-_Check_return_ bool CNetworkUsers::CreateComputerAccount( __in_z_opt LPCTSTR computer_name, __in DWORD type_of_account ) noexcept
+_Check_return_ bool Win32FoundationClasses::CNetworkUsers::CreateComputerAccount( __in_z_opt LPCTSTR computer_name, _In_ DWORD type_of_account ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER_NULL_OK( computer_name );
@@ -566,7 +564,7 @@ _Check_return_ bool CNetworkUsers::CreateComputerAccount( __in_z_opt LPCTSTR com
    WFC_END_CATCH_ALL
 }
 
-bool CNetworkUsers::Delete( __in CNetworkUserInformation const& user_to_delete ) noexcept
+bool Win32FoundationClasses::CNetworkUsers::Delete( _In_ Win32FoundationClasses::CNetworkUserInformation const& user_to_delete ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -598,18 +596,18 @@ bool CNetworkUsers::Delete( __in CNetworkUserInformation const& user_to_delete )
    return( false );
 }
 
-bool CNetworkUsers::Delete( __in std::wstring const& user_to_delete ) noexcept
+bool Win32FoundationClasses::CNetworkUsers::Delete( _In_ std::wstring const& user_to_delete ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
-   CNetworkUserInformation user;
+   Win32FoundationClasses::CNetworkUserInformation user;
    
    user.Name.assign( user_to_delete );
 
    return( Delete( user ) );
 }
 
-_Check_return_ bool CNetworkUsers::Enumerate( void ) noexcept
+_Check_return_ bool Win32FoundationClasses::CNetworkUsers::Enumerate( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -678,7 +676,7 @@ _Check_return_ bool CNetworkUsers::Enumerate( void ) noexcept
    return( m_GetChunk() );
 }
 
-bool CNetworkUsers::ExpirePassword( __in std::wstring const& user_name ) noexcept
+bool Win32FoundationClasses::CNetworkUsers::ExpirePassword( _In_ std::wstring const& user_name ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -884,7 +882,7 @@ bool CNetworkUsers::ExpirePassword( __in std::wstring const& user_name ) noexcep
    return( false );
 }
 
-_Check_return_ DWORD CNetworkUsers::GetLevel( void ) const noexcept
+_Check_return_ DWORD Win32FoundationClasses::CNetworkUsers::GetLevel( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -916,7 +914,7 @@ _Check_return_ DWORD CNetworkUsers::GetLevel( void ) const noexcept
    return( 0xFFFFFFFF );
 }
 
-_Check_return_ bool CNetworkUsers::GetNext( __inout CNetworkUserInformation& information ) noexcept
+_Check_return_ bool Win32FoundationClasses::CNetworkUsers::GetNext( __inout Win32FoundationClasses::CNetworkUserInformation& information ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -1043,7 +1041,7 @@ _Check_return_ bool CNetworkUsers::GetNext( __inout CNetworkUserInformation& inf
    return( false );
 }
 
-_Check_return_ bool CNetworkUsers::m_GetChunk( void ) noexcept
+_Check_return_ bool Win32FoundationClasses::CNetworkUsers::m_GetChunk( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -1340,7 +1338,7 @@ _Check_return_ bool CNetworkUsers::m_GetChunk( void ) noexcept
    return( false );
 }
 
-void CNetworkUsers::m_Initialize( void ) noexcept
+void Win32FoundationClasses::CNetworkUsers::m_Initialize( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 

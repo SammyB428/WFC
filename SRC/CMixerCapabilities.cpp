@@ -51,33 +51,31 @@
 static char THIS_FILE[] = __FILE__;
 #endif // _DEBUG
 
-USING_WFC_NAMESPACE
-
-CMixerCapabilities::CMixerCapabilities()
+Win32FoundationClasses::CMixerCapabilities::CMixerCapabilities()
 {
    WFC_VALIDATE_POINTER( this );
    Empty();
 }
 
-CMixerCapabilities::CMixerCapabilities( __in CMixerCapabilities const& source ) noexcept
+Win32FoundationClasses::CMixerCapabilities::CMixerCapabilities( _In_ Win32FoundationClasses::CMixerCapabilities const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );
 }
 
-CMixerCapabilities::CMixerCapabilities( __in MIXERCAPS const& source )
+Win32FoundationClasses::CMixerCapabilities::CMixerCapabilities( _In_ MIXERCAPS const& source )
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );
 }
 
-CMixerCapabilities::~CMixerCapabilities()
+Win32FoundationClasses::CMixerCapabilities::~CMixerCapabilities()
 {
    WFC_VALIDATE_POINTER( this );
    Empty();
 }
 
-void CMixerCapabilities::Copy( __in CMixerCapabilities const& source ) noexcept
+void Win32FoundationClasses::CMixerCapabilities::Copy( _In_ Win32FoundationClasses::CMixerCapabilities const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -97,7 +95,7 @@ void CMixerCapabilities::Copy( __in CMixerCapabilities const& source ) noexcept
    NumberOfDestinations = source.NumberOfDestinations;
 }
 
-void CMixerCapabilities::Copy( __in MIXERCAPS const& source ) noexcept
+void Win32FoundationClasses::CMixerCapabilities::Copy( _In_ MIXERCAPS const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -125,7 +123,7 @@ void CMixerCapabilities::Dump( CDumpContext& dump_context ) const
 
 #endif // _DEBUG
 
-void CMixerCapabilities::Empty( void ) noexcept
+void Win32FoundationClasses::CMixerCapabilities::Empty( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -137,7 +135,7 @@ void CMixerCapabilities::Empty( void ) noexcept
    NumberOfDestinations = 0;
 }
 
-_Check_return_ bool CMixerCapabilities::Get( __in UINT const device_number ) noexcept
+_Check_return_ bool Win32FoundationClasses::CMixerCapabilities::Get( _In_ UINT const device_number ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -159,14 +157,14 @@ _Check_return_ bool CMixerCapabilities::Get( __in UINT const device_number ) noe
    return( true );
 }
 
-CMixerCapabilities& CMixerCapabilities::operator = ( __in CMixerCapabilities const& source ) noexcept
+Win32FoundationClasses::CMixerCapabilities& Win32FoundationClasses::CMixerCapabilities::operator = ( _In_ Win32FoundationClasses::CMixerCapabilities const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );
    return( *this );
 }
 
-CMixerCapabilities& CMixerCapabilities::operator = ( __in MIXERCAPS const& source ) noexcept
+Win32FoundationClasses::CMixerCapabilities& Win32FoundationClasses::CMixerCapabilities::operator = ( _In_ MIXERCAPS const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );

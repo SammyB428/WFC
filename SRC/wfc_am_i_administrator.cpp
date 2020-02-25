@@ -51,9 +51,7 @@ static char THIS_FILE[] = __FILE__;
 #define new DEBUG_NEW
 #endif // _DEBUG
 
-USING_WFC_NAMESPACE
-
-_Check_return_ bool PASCAL Win32FoundationClasses::wfc_am_i_administrator( void ) noexcept
+_Check_return_ bool Win32FoundationClasses::wfc_am_i_administrator( void ) noexcept
 {
    // Plagerized from Microsoft Knowledge Base article Q118626
 

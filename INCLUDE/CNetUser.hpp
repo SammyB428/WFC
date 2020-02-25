@@ -54,17 +54,17 @@ class CNetworkUserInformation
    public:
 
       CNetworkUserInformation();
-      CNetworkUserInformation( __in USER_INFO_0  const * information_p );
-      CNetworkUserInformation( __in USER_INFO_1  const * information_p );
-      CNetworkUserInformation( __in USER_INFO_2  const * information_p );
-      CNetworkUserInformation( __in USER_INFO_3  const * information_p );
-      CNetworkUserInformation( __in USER_INFO_10 const * information_p );
-      CNetworkUserInformation( __in USER_INFO_11 const * information_p );
-      CNetworkUserInformation( __in USER_INFO_20 const * information_p );
-      CNetworkUserInformation( __in USER_INFO_21 const * information_p );
-      CNetworkUserInformation( __in USER_INFO_22 const * information_p );
-      CNetworkUserInformation( __in CNetworkUserInformation const&  source );
-      CNetworkUserInformation( __in CNetworkUserInformation const * source );
+      CNetworkUserInformation( _In_ USER_INFO_0  const * information_p );
+      CNetworkUserInformation( _In_ USER_INFO_1  const * information_p );
+      CNetworkUserInformation( _In_ USER_INFO_2  const * information_p );
+      CNetworkUserInformation( _In_ USER_INFO_3  const * information_p );
+      CNetworkUserInformation( _In_ USER_INFO_10 const * information_p );
+      CNetworkUserInformation( _In_ USER_INFO_11 const * information_p );
+      CNetworkUserInformation( _In_ USER_INFO_20 const * information_p );
+      CNetworkUserInformation( _In_ USER_INFO_21 const * information_p );
+      CNetworkUserInformation( _In_ USER_INFO_22 const * information_p );
+      CNetworkUserInformation( _In_ CNetworkUserInformation const&  source );
+      CNetworkUserInformation( _In_ CNetworkUserInformation const * source );
 
       virtual ~CNetworkUserInformation();
 
@@ -111,20 +111,20 @@ class CNetworkUserInformation
       ** net API header files...
       */
 
-      virtual void Copy( __in USER_INFO_0  const * source ) noexcept;
-      virtual void Copy( __in USER_INFO_1  const * source ) noexcept;
-      virtual void Copy( __in USER_INFO_2  const * source ) noexcept;
-      virtual void Copy( __in USER_INFO_3  const * source ) noexcept;
-      virtual void Copy( __in USER_INFO_10 const * source ) noexcept;
-      virtual void Copy( __in USER_INFO_11 const * source ) noexcept;
-      virtual void Copy( __in USER_INFO_20 const * source ) noexcept;
-      virtual void Copy( __in USER_INFO_21 const * source ) noexcept;
-      virtual void Copy( __in USER_INFO_22 const * source ) noexcept;
-      virtual void Copy( __in CNetworkUserInformation const&  source ) noexcept;
-      virtual void Copy( __in CNetworkUserInformation const * source ) noexcept;
+      virtual void Copy( _In_ USER_INFO_0  const * source ) noexcept;
+      virtual void Copy( _In_ USER_INFO_1  const * source ) noexcept;
+      virtual void Copy( _In_ USER_INFO_2  const * source ) noexcept;
+      virtual void Copy( _In_ USER_INFO_3  const * source ) noexcept;
+      virtual void Copy( _In_ USER_INFO_10 const * source ) noexcept;
+      virtual void Copy( _In_ USER_INFO_11 const * source ) noexcept;
+      virtual void Copy( _In_ USER_INFO_20 const * source ) noexcept;
+      virtual void Copy( _In_ USER_INFO_21 const * source ) noexcept;
+      virtual void Copy( _In_ USER_INFO_22 const * source ) noexcept;
+      virtual void Copy( _In_ CNetworkUserInformation const&  source ) noexcept;
+      virtual void Copy( _In_ CNetworkUserInformation const * source ) noexcept;
       virtual void Empty( void ) noexcept;
       virtual void SetAddDefaults( void ) noexcept;
-      virtual CNetworkUserInformation const& operator = ( __in CNetworkUserInformation const& source ) noexcept;
+      virtual CNetworkUserInformation const& operator = ( _In_ CNetworkUserInformation const& source ) noexcept;
 
 #if defined( _DEBUG ) && ! defined( WFC_NO_DUMPING )
       virtual void Dump( CDumpContext& dump_context ) const;
@@ -187,8 +187,8 @@ class CNetworkUsers : public CNetwork
 
    public:
 
-       CNetworkUsers(__in CNetworkUsers const&) = delete;
-       CNetworkUsers& operator=(__in CNetworkUsers const&) = delete;
+       CNetworkUsers(_In_ CNetworkUsers const&) = delete;
+       CNetworkUsers& operator=(_In_ CNetworkUsers const&) = delete;
       CNetworkUsers(_In_ std::wstring_view machine_name = { nullptr, 0 }) noexcept;
       virtual ~CNetworkUsers();
 
@@ -201,14 +201,14 @@ class CNetworkUsers : public CNetwork
          accountInterdomain            = UF_INTERDOMAIN_TRUST_ACCOUNT
       };
 
-      virtual bool  Add( __in CNetworkUserInformation const& user_to_add ) noexcept;
-      virtual _Check_return_ bool ChangePassword( __in std::wstring const& user_name, __in std::wstring const& old_password, __in std::wstring const& new_password ) noexcept;
+      virtual bool  Add( _In_ CNetworkUserInformation const& user_to_add ) noexcept;
+      virtual _Check_return_ bool ChangePassword( _In_ std::wstring const& user_name, _In_ std::wstring const& old_password, _In_ std::wstring const& new_password ) noexcept;
       virtual void  Close( void ) noexcept;
-      virtual _Check_return_ bool CreateComputerAccount( __in_z_opt LPCTSTR computer_name = nullptr, __in DWORD type = accountMachine ) noexcept;
-      virtual bool  Delete( __in CNetworkUserInformation const& user_to_delete ) noexcept;
-      virtual bool  Delete( __in std::wstring const& user_to_delete ) noexcept;
+      virtual _Check_return_ bool CreateComputerAccount( __in_z_opt LPCTSTR computer_name = nullptr, _In_ DWORD type = accountMachine ) noexcept;
+      virtual bool  Delete( _In_ CNetworkUserInformation const& user_to_delete ) noexcept;
+      virtual bool  Delete( _In_ std::wstring const& user_to_delete ) noexcept;
       virtual _Check_return_ bool Enumerate( void ) noexcept;
-      virtual bool  ExpirePassword( __in std::wstring const& user_name ) noexcept;
+      virtual bool  ExpirePassword( _In_ std::wstring const& user_name ) noexcept;
       virtual _Check_return_ DWORD GetLevel( void ) const noexcept;
       virtual _Check_return_ bool  GetNext( __inout CNetworkUserInformation& information ) noexcept;
 };

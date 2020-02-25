@@ -51,49 +51,47 @@ static char THIS_FILE[] = __FILE__;
 #define new DEBUG_NEW
 #endif // _DEBUG
 
-USING_WFC_NAMESPACE
-
 // Here's the ASCII Version
 
-CServiceConfigurationA::CServiceConfigurationA()
+Win32FoundationClasses::CServiceConfigurationA::CServiceConfigurationA()
 {
    WFC_VALIDATE_POINTER( this );
    Empty();
 }
 
-CServiceConfigurationA::CServiceConfigurationA( __in CServiceConfigurationA const& source )
+Win32FoundationClasses::CServiceConfigurationA::CServiceConfigurationA( _In_ Win32FoundationClasses::CServiceConfigurationA const& source )
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );
 }
 
-CServiceConfigurationA::CServiceConfigurationA( __in CServiceConfigurationA const * source )
+Win32FoundationClasses::CServiceConfigurationA::CServiceConfigurationA( _In_ Win32FoundationClasses::CServiceConfigurationA const * source )
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
    Copy( source );
 }
 
-CServiceConfigurationA::CServiceConfigurationA( __in _QUERY_SERVICE_CONFIGA const& source )
+Win32FoundationClasses::CServiceConfigurationA::CServiceConfigurationA( _In_ _QUERY_SERVICE_CONFIGA const& source )
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );
 }
 
-CServiceConfigurationA::CServiceConfigurationA( __in _QUERY_SERVICE_CONFIGA const * source )
+Win32FoundationClasses::CServiceConfigurationA::CServiceConfigurationA( _In_ _QUERY_SERVICE_CONFIGA const * source )
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
    Copy( source );
 }
 
-CServiceConfigurationA::~CServiceConfigurationA()
+Win32FoundationClasses::CServiceConfigurationA::~CServiceConfigurationA()
 {
    WFC_VALIDATE_POINTER( this );
    Empty();
 }
 
-void CServiceConfigurationA::Copy( __in CServiceConfigurationA const& source ) noexcept
+void Win32FoundationClasses::CServiceConfigurationA::Copy( _In_ Win32FoundationClasses::CServiceConfigurationA const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Empty();
@@ -110,7 +108,7 @@ void CServiceConfigurationA::Copy( __in CServiceConfigurationA const& source ) n
    m_Dependencies.assign(source.m_Dependencies.cbegin(), source.m_Dependencies.cend());
 }
 
-void CServiceConfigurationA::Copy( __in CServiceConfigurationA const * source ) noexcept
+void Win32FoundationClasses::CServiceConfigurationA::Copy( _In_ Win32FoundationClasses::CServiceConfigurationA const * source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
@@ -141,7 +139,7 @@ void CServiceConfigurationA::Copy( __in CServiceConfigurationA const * source ) 
    WFC_END_CATCH_ALL
 }
 
-void CServiceConfigurationA::Copy( __in _QUERY_SERVICE_CONFIGA const& source ) noexcept
+void Win32FoundationClasses::CServiceConfigurationA::Copy( _In_ _QUERY_SERVICE_CONFIGA const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -222,7 +220,7 @@ void CServiceConfigurationA::Copy( __in _QUERY_SERVICE_CONFIGA const& source ) n
    WFC_END_CATCH_ALL
 }
 
-void CServiceConfigurationA::Copy( __in _QUERY_SERVICE_CONFIGA const * source ) noexcept
+void Win32FoundationClasses::CServiceConfigurationA::Copy( _In_ _QUERY_SERVICE_CONFIGA const * source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
@@ -247,7 +245,7 @@ void CServiceConfigurationA::Copy( __in _QUERY_SERVICE_CONFIGA const * source ) 
    WFC_END_CATCH_ALL
 }
 
-void CServiceConfigurationA::Empty( void ) noexcept
+void Win32FoundationClasses::CServiceConfigurationA::Empty( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -274,55 +272,55 @@ void CServiceConfigurationA::Empty( void ) noexcept
    WFC_END_CATCH_ALL
 }
 
-void CServiceConfigurationA::GetDependencies( __out std::vector<std::string>& dependencies ) const noexcept
+void Win32FoundationClasses::CServiceConfigurationA::GetDependencies( _Out_ std::vector<std::string>& dependencies ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
    dependencies.assign(m_Dependencies.cbegin(), m_Dependencies.cend());
 }
 
-void CServiceConfigurationA::GetDisplayName( __out std::string& display_name ) const noexcept
+void Win32FoundationClasses::CServiceConfigurationA::GetDisplayName( _Out_ std::string& display_name ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
    display_name.assign( m_DisplayName );
 }
 
-_Check_return_ DWORD CServiceConfigurationA::GetErrorControl( void ) const noexcept
+_Check_return_ DWORD Win32FoundationClasses::CServiceConfigurationA::GetErrorControl( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
    return( m_ErrorControl );
 }
 
-void CServiceConfigurationA::GetLoadOrderGroup( __out std::string& load_order_group ) const noexcept
+void Win32FoundationClasses::CServiceConfigurationA::GetLoadOrderGroup( _Out_ std::string& load_order_group ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
    load_order_group.assign( m_LoadOrderGroup );
 }
 
-void CServiceConfigurationA::GetNameOfExecutableFile( __out std::string& name_of_executable ) const noexcept
+void Win32FoundationClasses::CServiceConfigurationA::GetNameOfExecutableFile( _Out_ std::string& name_of_executable ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
    name_of_executable.assign( m_NameOfExecutableFile );
 }
 
-void CServiceConfigurationA::GetStartName( __out std::string& start_name ) const noexcept
+void Win32FoundationClasses::CServiceConfigurationA::GetStartName( _Out_ std::string& start_name ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
    start_name.assign( m_StartName );
 }
 
-_Check_return_ DWORD CServiceConfigurationA::GetTag( void ) const noexcept
+_Check_return_ DWORD Win32FoundationClasses::CServiceConfigurationA::GetTag( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
    return( m_Tag );
 }
 
-_Check_return_ DWORD CServiceConfigurationA::GetTypeOfService( void ) const noexcept
+_Check_return_ DWORD Win32FoundationClasses::CServiceConfigurationA::GetTypeOfService( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
    return( m_TypeOfService );
 }
 
-_Check_return_ DWORD CServiceConfigurationA::GetWhenToStart( void ) const noexcept
+_Check_return_ DWORD Win32FoundationClasses::CServiceConfigurationA::GetWhenToStart( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
    return( m_WhenToStart );
@@ -331,14 +329,14 @@ _Check_return_ DWORD CServiceConfigurationA::GetWhenToStart( void ) const noexce
 // Thanks go to Ullrich Pollaehne [Ullrich_Pollaehne@ka2.maus.de] for
 // pointing out I had no implementation for these guys.
 
-_Check_return_ CServiceConfigurationA& CServiceConfigurationA::operator=( __in CServiceConfigurationA const& source ) noexcept
+_Check_return_ Win32FoundationClasses::CServiceConfigurationA& Win32FoundationClasses::CServiceConfigurationA::operator=( _In_ Win32FoundationClasses::CServiceConfigurationA const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );
    return( *this );
 }
 
-_Check_return_ CServiceConfigurationA& CServiceConfigurationA::operator=( __in _QUERY_SERVICE_CONFIGA const& source ) noexcept
+_Check_return_ Win32FoundationClasses::CServiceConfigurationA& Win32FoundationClasses::CServiceConfigurationA::operator=( _In_ _QUERY_SERVICE_CONFIGA const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );
@@ -347,7 +345,7 @@ _Check_return_ CServiceConfigurationA& CServiceConfigurationA::operator=( __in _
 
 #if defined( _DEBUG ) && ! defined( WFC_NO_DUMPING )
 
-void CServiceConfigurationA::Dump( CDumpContext& dump_context ) const
+void Win32FoundationClasses::CServiceConfigurationA::Dump( CDumpContext& dump_context ) const
 {
    CObject::Dump( dump_context );
 
@@ -373,45 +371,45 @@ void CServiceConfigurationA::Dump( CDumpContext& dump_context ) const
 
 // Here's the UNICODE version
 
-CServiceConfigurationW::CServiceConfigurationW()
+Win32FoundationClasses::CServiceConfigurationW::CServiceConfigurationW()
 {
    WFC_VALIDATE_POINTER( this );
    Empty();
 }
 
-CServiceConfigurationW::CServiceConfigurationW( __in CServiceConfigurationW const& source )
+Win32FoundationClasses::CServiceConfigurationW::CServiceConfigurationW( _In_ Win32FoundationClasses::CServiceConfigurationW const& source )
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );
 }
 
-CServiceConfigurationW::CServiceConfigurationW( __in CServiceConfigurationW const * source )
+Win32FoundationClasses::CServiceConfigurationW::CServiceConfigurationW( _In_ Win32FoundationClasses::CServiceConfigurationW const * source )
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
    Copy( source );
 }
 
-CServiceConfigurationW::CServiceConfigurationW( __in QUERY_SERVICE_CONFIGW const& source )
+Win32FoundationClasses::CServiceConfigurationW::CServiceConfigurationW( _In_ QUERY_SERVICE_CONFIGW const& source )
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );
 }
 
-CServiceConfigurationW::CServiceConfigurationW( __in QUERY_SERVICE_CONFIGW const * source )
+Win32FoundationClasses::CServiceConfigurationW::CServiceConfigurationW( _In_ QUERY_SERVICE_CONFIGW const * source )
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
    Copy( source );
 }
 
-CServiceConfigurationW::~CServiceConfigurationW()
+Win32FoundationClasses::CServiceConfigurationW::~CServiceConfigurationW()
 {
    WFC_VALIDATE_POINTER( this );
    Empty();
 }
 
-void CServiceConfigurationW::Copy( __in CServiceConfigurationW const& source ) noexcept
+void Win32FoundationClasses::CServiceConfigurationW::Copy( _In_ Win32FoundationClasses::CServiceConfigurationW const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -429,7 +427,7 @@ void CServiceConfigurationW::Copy( __in CServiceConfigurationW const& source ) n
    m_Dependencies.assign(source.m_Dependencies.cbegin(), source.m_Dependencies.cend());
 }
 
-void CServiceConfigurationW::Copy( __in CServiceConfigurationW const * source ) noexcept
+void Win32FoundationClasses::CServiceConfigurationW::Copy( _In_ Win32FoundationClasses::CServiceConfigurationW const * source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
@@ -460,7 +458,7 @@ void CServiceConfigurationW::Copy( __in CServiceConfigurationW const * source ) 
    WFC_END_CATCH_ALL
 }
 
-void CServiceConfigurationW::Copy( __in QUERY_SERVICE_CONFIGW const& source ) noexcept
+void Win32FoundationClasses::CServiceConfigurationW::Copy( _In_ QUERY_SERVICE_CONFIGW const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -550,7 +548,7 @@ void CServiceConfigurationW::Copy( __in QUERY_SERVICE_CONFIGW const& source ) no
    WFC_END_CATCH_ALL
 }
 
-void CServiceConfigurationW::Copy( __in QUERY_SERVICE_CONFIGW const * source ) noexcept
+void Win32FoundationClasses::CServiceConfigurationW::Copy( _In_ QUERY_SERVICE_CONFIGW const * source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
@@ -575,7 +573,7 @@ void CServiceConfigurationW::Copy( __in QUERY_SERVICE_CONFIGW const * source ) n
    WFC_END_CATCH_ALL
 }
 
-void CServiceConfigurationW::Empty( void ) noexcept
+void Win32FoundationClasses::CServiceConfigurationW::Empty( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -602,31 +600,31 @@ void CServiceConfigurationW::Empty( void ) noexcept
    WFC_END_CATCH_ALL
 }
 
-void CServiceConfigurationW::GetDependencies( __out std::vector<std::wstring>& dependencies ) const noexcept
+void Win32FoundationClasses::CServiceConfigurationW::GetDependencies( _Out_ std::vector<std::wstring>& dependencies ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
    dependencies.assign(m_Dependencies.cbegin(), m_Dependencies.cend());
 }
 
-void CServiceConfigurationW::GetDisplayName( __out std::wstring& display_name ) const noexcept
+void Win32FoundationClasses::CServiceConfigurationW::GetDisplayName( _Out_ std::wstring& display_name ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
    display_name.assign( m_DisplayName );
 }
 
-void CServiceConfigurationW::GetLoadOrderGroup( __out std::wstring& load_order_group ) const noexcept
+void Win32FoundationClasses::CServiceConfigurationW::GetLoadOrderGroup( _Out_ std::wstring& load_order_group ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
    load_order_group.assign( m_LoadOrderGroup );
 }
 
-void CServiceConfigurationW::GetNameOfExecutableFile( __out std::wstring& name_of_executable ) const noexcept
+void Win32FoundationClasses::CServiceConfigurationW::GetNameOfExecutableFile( _Out_ std::wstring& name_of_executable ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
    name_of_executable.assign( m_NameOfExecutableFile );
 }
 
-void CServiceConfigurationW::GetStartName( __out std::wstring& start_name ) const noexcept
+void Win32FoundationClasses::CServiceConfigurationW::GetStartName( _Out_ std::wstring& start_name ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
    start_name.assign( m_StartName );
@@ -635,14 +633,14 @@ void CServiceConfigurationW::GetStartName( __out std::wstring& start_name ) cons
 // Thanks go to Ullrich Pollaehne [Ullrich_Pollaehne@ka2.maus.de] for
 // pointing out I had no implementation for these guys.
 
-_Check_return_ CServiceConfigurationW& CServiceConfigurationW::operator=( __in CServiceConfigurationW const& source ) noexcept
+_Check_return_ Win32FoundationClasses::CServiceConfigurationW& Win32FoundationClasses::CServiceConfigurationW::operator=( _In_ Win32FoundationClasses::CServiceConfigurationW const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );
    return( *this );
 }
 
-_Check_return_ CServiceConfigurationW& CServiceConfigurationW::operator=( __in _QUERY_SERVICE_CONFIGW const& source ) noexcept
+_Check_return_ Win32FoundationClasses::CServiceConfigurationW& Win32FoundationClasses::CServiceConfigurationW::operator=( _In_ _QUERY_SERVICE_CONFIGW const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );
@@ -651,7 +649,7 @@ _Check_return_ CServiceConfigurationW& CServiceConfigurationW::operator=( __in _
 
 #if defined( _DEBUG ) && ! defined( WFC_NO_DUMPING )
 
-void CServiceConfigurationW::Dump( CDumpContext& dump_context ) const
+void Win32FoundationClasses::CServiceConfigurationW::Dump( CDumpContext& dump_context ) const
 {
    CObject::Dump( dump_context );
 

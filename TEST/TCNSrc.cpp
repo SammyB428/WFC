@@ -50,7 +50,7 @@ static char THIS_FILE[] = __FILE__;
 #define new DEBUG_NEW
 #endif // _DEBUG
 
-void print_resource( CNetworkResourceInformation& information ) noexcept
+void print_resource(Win32FoundationClasses::CNetworkResourceInformation& information ) noexcept
 {
    _tprintf( TEXT( "\"%s\" - \"%s\" - \"%s\" - \"%s\"\n" ),
            information.LocalName.c_str(),
@@ -66,13 +66,13 @@ _Check_return_ bool test_CNetResource( _Out_ std::string& class_name, _Out_ int&
    class_name.assign(STRING_VIEW("CNetworkResources"));
    test_number_that_failed = 1;
 
-   CNetworkResources net_resource;
+   Win32FoundationClasses::CNetworkResources net_resource;
 
-   CNetworkResourceInformation information;
+   Win32FoundationClasses::CNetworkResourceInformation information;
 
-   information.Scope = static_cast<DWORD>(CNetworkResources::Scope::All);
-   information.Usage = CNetworkResources::usageConnectable bitor CNetworkResources::usageContainer;
-   information.Type  = CNetworkResources::typeDisk;
+   information.Scope = static_cast<DWORD>(Win32FoundationClasses::CNetworkResources::Scope::All);
+   information.Usage = Win32FoundationClasses::CNetworkResources::usageConnectable bitor Win32FoundationClasses::CNetworkResources::usageContainer;
+   information.Type  = Win32FoundationClasses::CNetworkResources::typeDisk;
 
    if ( net_resource.Enumerate( information ) == true )
    {
@@ -87,7 +87,7 @@ _Check_return_ bool test_CNetResource( _Out_ std::string& class_name, _Out_ int&
 
       std::wstring error_message;
 
-      Convert_NERR_Code_to_String( error_code, error_message );
+      Win32FoundationClasses::Convert_NERR_Code_to_String( error_code, error_message );
 
       _tprintf( TEXT( "CNetSession.ErrorCode == %d \"%s\"\n" ), error_code, error_message.c_str());
    }
@@ -97,7 +97,7 @@ _Check_return_ bool test_CNetResource( _Out_ std::string& class_name, _Out_ int&
 
       std::wstring error_message;
 
-      Convert_NERR_Code_to_String( error_code, error_message );
+      Win32FoundationClasses::Convert_NERR_Code_to_String( error_code, error_message );
 
       _tprintf( TEXT( "CNetSession.ErrorCode == %d \"%s\"\n" ), error_code, error_message.c_str());
       return( failure() );

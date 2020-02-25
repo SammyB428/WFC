@@ -50,32 +50,30 @@
 static char THIS_FILE[] = __FILE__;
 #endif // _DEBUG
 
-USING_WFC_NAMESPACE
-
 #if defined( _DEBUG ) && defined( _INC_CRTDBG )
 #define new DEBUG_NEW
 #endif // _DEBUG
 
-CNetworkSessions::CNetworkSessions(_In_ std::wstring_view machine_name) noexcept : CNetwork(machine_name)
+Win32FoundationClasses::CNetworkSessions::CNetworkSessions(_In_ std::wstring_view machine_name) noexcept : CNetwork(machine_name)
 {
    WFC_VALIDATE_POINTER( this );
    m_Initialize();
 }
 
-CNetworkSessions::~CNetworkSessions() noexcept
+Win32FoundationClasses::CNetworkSessions::~CNetworkSessions() noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Close();
 }
 
-void CNetworkSessions::Close( void ) noexcept
+void Win32FoundationClasses::CNetworkSessions::Close( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    CNetwork::Close();
    m_Initialize();
 }
 
-_Check_return_ bool CNetworkSessions::Delete( __inout CNetworkSessionInformation& information ) noexcept
+_Check_return_ bool Win32FoundationClasses::CNetworkSessions::Delete( __inout Win32FoundationClasses::CNetworkSessionInformation& information ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -124,7 +122,7 @@ _Check_return_ bool CNetworkSessions::Delete( __inout CNetworkSessionInformation
    }
 }
 
-_Check_return_ bool CNetworkSessions::Enumerate( __inout CNetworkSessionInformation& information ) noexcept
+_Check_return_ bool Win32FoundationClasses::CNetworkSessions::Enumerate( __inout Win32FoundationClasses::CNetworkSessionInformation& information ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -159,12 +157,12 @@ _Check_return_ bool CNetworkSessions::Enumerate( __inout CNetworkSessionInformat
    return( false );
 }
 
-_Check_return_ bool CNetworkSessions::GetNext( __inout CNetworkSessionInformation& information ) noexcept
+_Check_return_ bool Win32FoundationClasses::CNetworkSessions::GetNext( __inout Win32FoundationClasses::CNetworkSessionInformation& information ) noexcept
 {
    return( Enumerate( information ) );
 }
 
-void CNetworkSessions::m_Get_0_Data( void ) noexcept
+void Win32FoundationClasses::CNetworkSessions::m_Get_0_Data( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -192,27 +190,27 @@ void CNetworkSessions::m_Get_0_Data( void ) noexcept
    }
 }
 
-void CNetworkSessions::m_Get_1_Data( void ) noexcept
+void Win32FoundationClasses::CNetworkSessions::m_Get_1_Data( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 }
 
-void CNetworkSessions::m_Get_2_Data( void ) noexcept
+void Win32FoundationClasses::CNetworkSessions::m_Get_2_Data( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 }
 
-void CNetworkSessions::m_Get_10_Data( void ) noexcept
+void Win32FoundationClasses::CNetworkSessions::m_Get_10_Data( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 }
 
-void CNetworkSessions::m_Get_502_Data( void ) noexcept
+void Win32FoundationClasses::CNetworkSessions::m_Get_502_Data( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 }
 
-void CNetworkSessions::m_Initialize( void ) noexcept
+void Win32FoundationClasses::CNetworkSessions::m_Initialize( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 

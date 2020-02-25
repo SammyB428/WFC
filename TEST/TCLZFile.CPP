@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 2000-2019, Samuel R. Blackburn
+** Copyright, 2000-2020, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -52,7 +52,7 @@ static char THIS_FILE[] = __FILE__;
 
 void test_CLZFile( _In_ std::wstring_view lz_file_name ) noexcept
 {
-    CLZFile lz_file;
+    Win32FoundationClasses::CLZFile lz_file;
 
     if ( lz_file_name.empty() == true )
     {
@@ -67,7 +67,7 @@ void test_CLZFile( _In_ std::wstring_view lz_file_name ) noexcept
 
     if ( lz_file.Open( lz_file_name ) != FALSE )
     {
-        CLZFile output_file;
+        Win32FoundationClasses::CLZFile output_file;
 
         if ( output_file.Open(WSTRING_VIEW(L"d:\\temp\\winhlp32.exe"), OF_CREATE ) != FALSE )
         {
@@ -78,21 +78,21 @@ void test_CLZFile( _In_ std::wstring_view lz_file_name ) noexcept
             else
             {
                 std::wstring error_message_string;
-                CLZFile::TranslateErrorCode( (int) lz_file.LastError(), error_message_string );
+                Win32FoundationClasses::CLZFile::TranslateErrorCode( (int) lz_file.LastError(), error_message_string );
                 _tprintf( TEXT( "Can't Copy because %s\n" ), error_message_string.c_str() );
             }
         }
         else
         {
             std::wstring error_message_string;
-            CLZFile::TranslateErrorCode( (int) output_file.LastError(), error_message_string );
+            Win32FoundationClasses::CLZFile::TranslateErrorCode( (int) output_file.LastError(), error_message_string );
             _tprintf( TEXT( "Can't open LZ output file because %s\n" ), error_message_string.c_str() );
         }
     }
     else
     {
         std::wstring error_message_string;
-        CLZFile::TranslateErrorCode( (int) lz_file.LastError(), error_message_string );
+        Win32FoundationClasses::CLZFile::TranslateErrorCode( (int) lz_file.LastError(), error_message_string );
         wprintf( L"Can't open LZ file \"%.*s\" because %s\n", static_cast<int>(lz_file_name.length()), lz_file_name.data(), error_message_string.c_str() );
     }
 }

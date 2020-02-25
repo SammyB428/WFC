@@ -51,9 +51,7 @@ static char THIS_FILE[] = __FILE__;
 #define new DEBUG_NEW
 #endif // _DEBUG
 
-USING_WFC_NAMESPACE
-
-_Check_return_ uint32_t PASCAL Win32FoundationClasses::wfc_get_directory_usage_percentage( _In_ std::wstring const& directory_path ) noexcept
+_Check_return_ uint32_t Win32FoundationClasses::wfc_get_directory_usage_percentage( _In_ std::wstring const& directory_path ) noexcept
 {
    double number_of_bytes_free_on_drive     = 0.0;
    double number_of_bytes_used_in_directory = 0.0;

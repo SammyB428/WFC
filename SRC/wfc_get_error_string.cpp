@@ -51,9 +51,7 @@ static char THIS_FILE[] = __FILE__;
 #define new DEBUG_NEW
 #endif // _DEBUG
 
-USING_WFC_NAMESPACE
-
-void PASCAL Win32FoundationClasses::wfc_get_error_string( _In_ DWORD const error_code, _Out_ std::wstring& error_string ) noexcept
+void Win32FoundationClasses::wfc_get_error_string( _In_ DWORD const error_code, _Out_ std::wstring& error_string ) noexcept
 {
    error_string.clear();
 

@@ -22,20 +22,12 @@ inline void append(_Inout_ std::vector<uint8_t>& s, _In_reads_bytes_(number_of_b
 
 inline void append(_Inout_ std::wstring& s, _In_ uint64_t const value) noexcept
 {
-    wchar_t number_string[64];
-
-    _ui64tow_s(value, number_string, std::size(number_string), 10);
-
-    s.append(number_string);
+    s.append(std::to_wstring(value));
 }
 
 inline void append(_Inout_ std::wstring& s, _In_ int64_t const value) noexcept
 {
-    wchar_t number_string[64];
-
-    _i64tow_s(value, number_string, std::size(number_string), 10);
-
-    s.append(number_string);
+    s.append(std::to_wstring(value));
 }
 
 inline void append_to_bytes(_In_ std::wstring_view source, _Inout_ std::vector<uint8_t>& bytes) noexcept
@@ -52,45 +44,29 @@ inline void append_to_bytes(_In_ std::wstring_view source, _Inout_ std::vector<u
 
 inline void append(_Inout_ std::wstring& s, _In_ int const integer) noexcept
 {
-    wchar_t integer_string[40]{ 0 };
-
-    _itow_s(integer, integer_string, std::size(integer_string), 10);
-
-    s.append(integer_string);
+    s.append(std::to_wstring(integer));
 }
 
+#if ! defined( WE_ARE_BUILDING_WFC_ON_UNIX )
 inline void append(_Inout_ std::wstring& s, _In_ long const integer) noexcept
 {
-    wchar_t integer_string[40]{ 0 };
-
-    _ltow_s(integer, integer_string, std::size(integer_string), 10);
-
-    s.append(integer_string);
+    s.append(std::to_wstring(integer));
 }
 
 inline void append(_Inout_ std::wstring& s, _In_ unsigned long const integer) noexcept
 {
-    wchar_t integer_string[40]{ 0 };
-
-    _ultow_s(integer, integer_string, std::size(integer_string), 10);
-
-    s.append(integer_string);
+    s.append(std::to_wstring(integer));
 }
+#endif // WE_ARE_BUILDING_WFC_ON_UNIX
 
 inline void append_integer(_Inout_ std::wstring& s, _In_ uint64_t const value) noexcept
 {
-    wchar_t number_string[65]{ 0 };
-    (void)_ui64tow_s(value, number_string, std::size(number_string), 10);
-
-    s.append(number_string);
+    s.append(std::to_wstring(value));
 }
 
 inline void append_integer(_Inout_ std::wstring& s, _In_ int64_t const value) noexcept
 {
-    wchar_t number_string[65];
-    (void)_i64tow_s(value, number_string, std::size(number_string), 10);
-
-    s.append(number_string);
+    s.append(std::to_wstring(value));
 }
 
 inline void append(_Inout_ std::vector<uint8_t>& bytes, _In_z_ char const* string, _In_ std::size_t const string_length) noexcept

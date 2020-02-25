@@ -51,15 +51,13 @@ static char THIS_FILE[] = __FILE__;
 #define new DEBUG_NEW
 #endif // _DEBUG
 
-USING_WFC_NAMESPACE
-
 #if ! defined( WFC_NO_RAS )
 
 // Let's define a little function to ease debugging
 
 #if defined( _DEBUG )
 
-static inline __out_z _Check_return_ LPCTSTR __convert_RASCONNSTATE_to_string( __in DWORD ras_state ) noexcept
+static inline __out_z _Check_return_ LPCTSTR __convert_RASCONNSTATE_to_string( _In_ DWORD ras_state ) noexcept
 {
    switch( ras_state )
    {

@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 1995-2016, Samuel R. Blackburn
+** Copyright, 1995-2020, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -51,9 +51,7 @@ static char THIS_FILE[] = __FILE__;
 #define new DEBUG_NEW
 #endif // _DEBUG
 
-USING_WFC_NAMESPACE
-
-CServiceApplication::CServiceApplication(__in int const number_of_command_line_arguments,
+Win32FoundationClasses::CServiceApplication::CServiceApplication(_In_ int const number_of_command_line_arguments,
     __in_ecount_z_opt(number_of_command_line_arguments) LPCTSTR command_line_arguments[],
     __in_z LPCTSTR service_name,
     __in_z LPCTSTR friendly_service_name,
@@ -61,7 +59,7 @@ CServiceApplication::CServiceApplication(__in int const number_of_command_line_a
     __callback LPTHREAD_START_ROUTINE worker_thread,
     __callback SHOW_USAGE_ROUTINE show_usage,
     __callback SET_DEFAULTS_ROUTINE set_defaults,
-    __in DWORD const installation_configuration)
+    _In_ DWORD const installation_configuration)
 {
     WFC_VALIDATE_POINTER(this);
     WFC_VALIDATE_POINTER(worker_thread);
@@ -77,17 +75,17 @@ CServiceApplication::CServiceApplication(__in int const number_of_command_line_a
         set_defaults);
 }
 
-CServiceApplication::~CServiceApplication(void)
+Win32FoundationClasses::CServiceApplication::~CServiceApplication(void)
 {
     WFC_VALIDATE_POINTER(this);
 }
 
-_Check_return_ int CServiceApplication::m_Main(__in int const number_of_command_line_arguments,
+_Check_return_ int Win32FoundationClasses::CServiceApplication::m_Main(_In_ int const number_of_command_line_arguments,
     __in_ecount_z_opt(number_of_command_line_arguments) LPCTSTR command_line_arguments[],
     __in_z LPCTSTR service_name,
     __in_z LPCTSTR friendly_service_name,
     __in_z LPCTSTR executable_path,
-    __in DWORD const installation_configuration,
+    _In_ DWORD const installation_configuration,
     __callback LPTHREAD_START_ROUTINE worker_thread,
     __callback SHOW_USAGE_ROUTINE show_usage,
     __callback SET_DEFAULTS_ROUTINE set_defaults) noexcept
@@ -107,7 +105,7 @@ _Check_return_ int CServiceApplication::m_Main(__in int const number_of_command_
     {
         if (_tcsicmp(command_line_arguments[1], TEXT("install")) == 0)
         {
-            CServiceControlManager service_control_manager;
+            Win32FoundationClasses::CServiceControlManager service_control_manager;
 
             if (service_control_manager.Open() == FALSE)
             {

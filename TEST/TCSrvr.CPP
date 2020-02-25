@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 2000-2003, Samuel R. Blackburn
+** Copyright, 2000-2020, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -54,7 +54,7 @@ void test_CServer( _In_z_ LPCTSTR machine_name ) noexcept
 {
    WFCTRACEINIT( TEXT( "test_CServer()" ) );
 
-   CServer server;
+   Win32FoundationClasses::CServer server;
 
    server.Open( machine_name );
 

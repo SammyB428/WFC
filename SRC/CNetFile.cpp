@@ -50,26 +50,24 @@
 static char THIS_FILE[] = __FILE__;
 #endif // _DEBUG
 
-USING_WFC_NAMESPACE
-
 #if defined( _DEBUG ) && defined( _INC_CRTDBG )
 #define new DEBUG_NEW
 #endif // _DEBUG
 
-CNetworkFiles::CNetworkFiles(_In_ std::wstring_view machine_name) : CNetwork(machine_name)
+Win32FoundationClasses::CNetworkFiles::CNetworkFiles(_In_ std::wstring_view machine_name) : CNetwork(machine_name)
 {
    WFC_VALIDATE_POINTER( this );
    m_Initialize();
 }
 
-CNetworkFiles::~CNetworkFiles()
+Win32FoundationClasses::CNetworkFiles::~CNetworkFiles()
 {
    WFC_VALIDATE_POINTER( this );
    Close();
    m_Initialize();
 }
 
-void CNetworkFiles::Close( void ) noexcept
+void Win32FoundationClasses::CNetworkFiles::Close( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -82,7 +80,7 @@ void CNetworkFiles::Close( void ) noexcept
    }
 }
 
-bool CNetworkFiles::Close( __inout CNetworkFileInformation& information ) noexcept
+bool Win32FoundationClasses::CNetworkFiles::Close( __inout Win32FoundationClasses::CNetworkFileInformation& information ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -98,7 +96,7 @@ bool CNetworkFiles::Close( __inout CNetworkFileInformation& information ) noexce
    }
 }
 
-void CNetworkFiles::m_Initialize( void ) noexcept
+void Win32FoundationClasses::CNetworkFiles::m_Initialize( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -111,7 +109,7 @@ void CNetworkFiles::m_Initialize( void ) noexcept
    m_103TotalNumberOfEntries = 0;
 }
 
-_Check_return_ bool CNetworkFiles::Enumerate( void ) noexcept
+_Check_return_ bool Win32FoundationClasses::CNetworkFiles::Enumerate( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -130,7 +128,7 @@ _Check_return_ bool CNetworkFiles::Enumerate( void ) noexcept
    return( m_GetChunk() );
 }
 
-_Check_return_ bool CNetworkFiles::GetNext( __inout CNetworkFileInformation& information ) noexcept
+_Check_return_ bool Win32FoundationClasses::CNetworkFiles::GetNext( __inout Win32FoundationClasses::CNetworkFileInformation& information ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -162,7 +160,7 @@ _Check_return_ bool CNetworkFiles::GetNext( __inout CNetworkFileInformation& inf
    return( false );
 }
 
-bool CNetworkFiles::m_GetChunk( void ) noexcept
+bool Win32FoundationClasses::CNetworkFiles::m_GetChunk( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 

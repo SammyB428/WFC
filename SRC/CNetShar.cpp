@@ -50,8 +50,6 @@
 static char THIS_FILE[] = __FILE__;
 #endif // _DEBUG
 
-USING_WFC_NAMESPACE
-
 /*
 ** CNetworkShareInformation stuff
 */
@@ -60,39 +58,39 @@ USING_WFC_NAMESPACE
 #define new DEBUG_NEW
 #endif // _DEBUG
 
-CNetworkShareInformation::CNetworkShareInformation()
+Win32FoundationClasses::CNetworkShareInformation::CNetworkShareInformation()
 {
    WFC_VALIDATE_POINTER( this );
    m_Initialize();
 }
 
-CNetworkShareInformation::CNetworkShareInformation( _In_ SHARE_INFO_1 const * source )
+Win32FoundationClasses::CNetworkShareInformation::CNetworkShareInformation( _In_ SHARE_INFO_1 const * source )
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
    Copy( source );
 }
 
-CNetworkShareInformation::CNetworkShareInformation( _In_ SHARE_INFO_2 const * source )
+Win32FoundationClasses::CNetworkShareInformation::CNetworkShareInformation( _In_ SHARE_INFO_2 const * source )
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
    Copy( source );
 }
 
-CNetworkShareInformation::CNetworkShareInformation( _In_ CNetworkShareInformation const& source )
+Win32FoundationClasses::CNetworkShareInformation::CNetworkShareInformation( _In_ Win32FoundationClasses::CNetworkShareInformation const& source )
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );
 }
 
-CNetworkShareInformation::~CNetworkShareInformation()
+Win32FoundationClasses::CNetworkShareInformation::~CNetworkShareInformation()
 {
    WFC_VALIDATE_POINTER( this );
    m_Initialize();
 }
 
-void CNetworkShareInformation::Copy( _In_ SHARE_INFO_1 const * source ) noexcept
+void Win32FoundationClasses::CNetworkShareInformation::Copy( _In_ SHARE_INFO_1 const * source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
@@ -120,7 +118,7 @@ void CNetworkShareInformation::Copy( _In_ SHARE_INFO_1 const * source ) noexcept
    WFC_END_CATCH_ALL
 }
 
-void CNetworkShareInformation::Copy( _In_ SHARE_INFO_2 const * source ) noexcept
+void Win32FoundationClasses::CNetworkShareInformation::Copy( _In_ SHARE_INFO_2 const * source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
@@ -152,7 +150,7 @@ void CNetworkShareInformation::Copy( _In_ SHARE_INFO_2 const * source ) noexcept
    WFC_END_CATCH_ALL
 }
 
-void CNetworkShareInformation::Copy( _In_ CNetworkShareInformation const& source ) noexcept
+void Win32FoundationClasses::CNetworkShareInformation::Copy( _In_ Win32FoundationClasses::CNetworkShareInformation const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    ASSERT( this != &source );
@@ -176,13 +174,13 @@ void CNetworkShareInformation::Copy( _In_ CNetworkShareInformation const& source
    Password = source.Password;
 }
 
-void CNetworkShareInformation::Empty( void ) noexcept
+void Win32FoundationClasses::CNetworkShareInformation::Empty( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    m_Initialize();
 }
 
-void CNetworkShareInformation::m_Initialize( void ) noexcept
+void Win32FoundationClasses::CNetworkShareInformation::m_Initialize( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -196,7 +194,7 @@ void CNetworkShareInformation::m_Initialize( void ) noexcept
    Password.clear();
 }
 
-CNetworkShareInformation const& CNetworkShareInformation::operator = ( _In_ CNetworkShareInformation const& source ) noexcept
+Win32FoundationClasses::CNetworkShareInformation const& Win32FoundationClasses::CNetworkShareInformation::operator = ( _In_ Win32FoundationClasses::CNetworkShareInformation const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    ASSERT( this != &source );
@@ -213,20 +211,20 @@ CNetworkShareInformation const& CNetworkShareInformation::operator = ( _In_ CNet
 ** CNetworkConnections Stuff
 */
 
-CNetworkShares::CNetworkShares(_In_ std::wstring_view machine_name) : CNetwork(machine_name)
+Win32FoundationClasses::CNetworkShares::CNetworkShares(_In_ std::wstring_view machine_name) : CNetwork(machine_name)
 {
    WFC_VALIDATE_POINTER( this );
    m_Initialize();
 }
 
-CNetworkShares::~CNetworkShares()
+Win32FoundationClasses::CNetworkShares::~CNetworkShares()
 {
    WFC_VALIDATE_POINTER( this );
    Close();
    m_Initialize();
 }
 
-_Check_return_ bool CNetworkShares::Add(_Inout_ CNetworkShareInformation& share_to_add ) noexcept
+_Check_return_ bool Win32FoundationClasses::CNetworkShares::Add(_Inout_ Win32FoundationClasses::CNetworkShareInformation& share_to_add ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -289,7 +287,7 @@ _Check_return_ bool CNetworkShares::Add(_Inout_ CNetworkShareInformation& share_
    }
 }
 
-_Check_return_ DWORD CNetworkShares::Check( _In_ std::wstring_view name_of_device ) noexcept
+_Check_return_ DWORD Win32FoundationClasses::CNetworkShares::Check( _In_ std::wstring_view name_of_device ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -323,11 +321,11 @@ _Check_return_ DWORD CNetworkShares::Check( _In_ std::wstring_view name_of_devic
    }
 }
 
-void CNetworkShares::Close( void ) noexcept
+void Win32FoundationClasses::CNetworkShares::Close( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
-   CNetwork::Close();
+   Win32FoundationClasses::CNetwork::Close();
 
    if ( m_2InformationBuffer != nullptr )
    {
@@ -342,7 +340,7 @@ void CNetworkShares::Close( void ) noexcept
    }
 }
 
-_Check_return_ bool CNetworkShares::Delete( _Inout_ CNetworkShareInformation& share_to_delete ) noexcept
+_Check_return_ bool Win32FoundationClasses::CNetworkShares::Delete( _Inout_ Win32FoundationClasses::CNetworkShareInformation& share_to_delete ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -371,7 +369,7 @@ _Check_return_ bool CNetworkShares::Delete( _Inout_ CNetworkShareInformation& sh
    }
 }
 
-void CNetworkShares::m_Initialize( void ) noexcept
+void Win32FoundationClasses::CNetworkShares::m_Initialize( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -390,7 +388,7 @@ void CNetworkShares::m_Initialize( void ) noexcept
    m_1TotalNumberOfEntries = 0;
 }
 
-_Check_return_ bool CNetworkShares::Enumerate( void ) noexcept
+_Check_return_ bool Win32FoundationClasses::CNetworkShares::Enumerate( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -421,7 +419,7 @@ _Check_return_ bool CNetworkShares::Enumerate( void ) noexcept
    return( m_GetChunk() );
 }
 
-_Check_return_ bool CNetworkShares::GetNext( _Inout_ CNetworkShareInformation& information ) noexcept
+_Check_return_ bool Win32FoundationClasses::CNetworkShares::GetNext( _Inout_ Win32FoundationClasses::CNetworkShareInformation& information ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -477,7 +475,7 @@ _Check_return_ bool CNetworkShares::GetNext( _Inout_ CNetworkShareInformation& i
    return( false );
 }
 
-_Check_return_ bool CNetworkShares::m_GetChunk( void ) noexcept
+_Check_return_ bool Win32FoundationClasses::CNetworkShares::m_GetChunk( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -579,13 +577,13 @@ _Check_return_ bool CNetworkShares::m_GetChunk( void ) noexcept
    return( false );
 }
 
-void CNetworkShares::GetAll(std::vector<CNetworkShareInformation>& shares) noexcept
+void Win32FoundationClasses::CNetworkShares::GetAll(std::vector<Win32FoundationClasses::CNetworkShareInformation>& shares) noexcept
 {
     WFC_VALIDATE_POINTER(this);
 
     if (Enumerate() == true)
     {
-        CNetworkShareInformation information;
+        Win32FoundationClasses::CNetworkShareInformation information;
 
         while (GetNext(information) == true)
         {

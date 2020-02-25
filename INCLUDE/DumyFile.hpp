@@ -92,26 +92,26 @@ class CDummyFile : public CFile64
       virtual _Check_return_ BOOL  GetStatus( LPCTSTR name, CFileStatus& status ) noexcept;
 #endif // WFC_STL
 
-      _Check_return_ uint64_t Seek( __in int64_t const offset, __in CFile64::SeekPosition const from ) noexcept override;
+      _Check_return_ uint64_t Seek( _In_ int64_t const offset, _In_ CFile64::SeekPosition const from ) noexcept override;
 
-      void SetLength( __in uint64_t const length ) noexcept override;
+      void SetLength( _In_ uint64_t const length ) noexcept override;
 
-      _Check_return_ bool LockRange( __in uint64_t const position, __in uint64_t const number_of_bytes_to_lock ) noexcept override;
-      void UnlockRange( __in uint64_t const position, __in uint64_t const number_of_bytes_to_unlock ) noexcept override;
+      _Check_return_ bool LockRange( _In_ uint64_t const position, _In_ uint64_t const number_of_bytes_to_lock ) noexcept override;
+      void UnlockRange( _In_ uint64_t const position, _In_ uint64_t const number_of_bytes_to_unlock ) noexcept override;
 
       /*
       ** A couple of utility functions to make life easier
       */
 
       void Write( _In_ std::string_view string_to_write  ) noexcept override;
-      virtual void Write( __in std::vector<uint8_t> const& data_to_write ) noexcept;
+      virtual void Write( _In_ std::vector<uint8_t> const& data_to_write ) noexcept;
 
       // Abstraction Additions
 
 #if defined( WFC_STL )
-      inline constexpr void SetHandle( __in HANDLE file_handle ) noexcept { m_FileHandle = (CFILE_HFILE) file_handle; }
+      inline constexpr void SetHandle( _In_ HANDLE file_handle ) noexcept { m_FileHandle = (CFILE_HFILE) file_handle; }
 #else
-      inline void SetHandle( __in HANDLE const file_handle ) noexcept { m_hFile = (CFILE_HFILE) file_handle; }
+      inline void SetHandle( _In_ HANDLE const file_handle ) noexcept { m_hFile = (CFILE_HFILE) file_handle; }
 #endif
 
 #if defined( _DEBUG ) && ! defined( WFC_NO_DUMPING )

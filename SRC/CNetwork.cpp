@@ -50,8 +50,6 @@
 static char THIS_FILE[] = __FILE__;
 #endif // _DEBUG
 
-USING_WFC_NAMESPACE
-
 #if defined( _DEBUG ) && defined( _INC_CRTDBG )
 #define new DEBUG_NEW
 #endif // _DEBUG
@@ -60,21 +58,21 @@ USING_WFC_NAMESPACE
 ** CNetwork stuff
 */
 
-CNetwork::CNetwork(_In_ std::wstring_view machine_name)
+Win32FoundationClasses::CNetwork::CNetwork(_In_ std::wstring_view machine_name)
 {
    WFC_VALIDATE_POINTER( this );
    m_Initialize();
    Open( machine_name );
 }
 
-CNetwork::~CNetwork()
+Win32FoundationClasses::CNetwork::~CNetwork()
 {
    WFC_VALIDATE_POINTER( this );
    Close();
    m_Initialize();
 }
 
-_Check_return_ bool CNetwork::AbortShutdown( void ) noexcept
+_Check_return_ bool Win32FoundationClasses::CNetwork::AbortShutdown( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -189,7 +187,7 @@ _Check_return_ bool CNetwork::AbortShutdown( void ) noexcept
    return( true );
 }
 
-void CNetwork::Close( void ) noexcept
+void Win32FoundationClasses::CNetwork::Close( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -216,7 +214,7 @@ void CNetwork::Close( void ) noexcept
 
 #if defined( _DEBUG ) && ! defined( WFC_NO_DUMPING )
 
-void CNetwork::Dump( CDumpContext& dump_context ) const
+void Win32FoundationClasses::CNetwork::Dump( CDumpContext& dump_context ) const
 {
    CObject::Dump( dump_context );
 
@@ -229,7 +227,7 @@ void CNetwork::Dump( CDumpContext& dump_context ) const
 
 #endif // _DEBUG
 
-_Check_return_ bool CNetwork::EnumeratePorts( void ) noexcept
+_Check_return_ bool Win32FoundationClasses::CNetwork::EnumeratePorts( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -308,7 +306,7 @@ _Check_return_ bool CNetwork::EnumeratePorts( void ) noexcept
    return( true );
 }
 
-_Check_return_ bool CNetwork::GetNext( __inout CPortInformation& port ) noexcept
+_Check_return_ bool Win32FoundationClasses::CNetwork::GetNext( _Inout_ Win32FoundationClasses::CPortInformation& port ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -336,19 +334,19 @@ _Check_return_ bool CNetwork::GetNext( __inout CPortInformation& port ) noexcept
    }
 }
 
-void CNetwork::GetFriendlyMachineName( _Out_ std::wstring& machine_name ) const noexcept
+void Win32FoundationClasses::CNetwork::GetFriendlyMachineName( _Out_ std::wstring& machine_name ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
    machine_name = m_FriendlyMachineName;
 }
 
-_Check_return_ LPCWSTR CNetwork::GetMachineName( void ) const noexcept
+_Check_return_ LPCWSTR Win32FoundationClasses::CNetwork::GetMachineName( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
    return( m_MachineName.c_str() );
 }
 
-_Check_return_ bool CNetwork::GetTime(_Inout_ CTime& machine_time ) noexcept
+_Check_return_ bool Win32FoundationClasses::CNetwork::GetTime(_Inout_ Win32FoundationClasses::CTime& machine_time ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -356,7 +354,7 @@ _Check_return_ bool CNetwork::GetTime(_Inout_ CTime& machine_time ) noexcept
 
    if ( ::NetRemoteTOD( m_WideMachineName.get(), reinterpret_cast<LPBYTE *>(&time_of_day) ) == NERR_Success )
    {
-      machine_time = CTime( time_of_day->tod_elapsedt );
+      machine_time = Win32FoundationClasses::CTime( time_of_day->tod_elapsedt );
       return( true );
    }
    else
@@ -368,7 +366,7 @@ _Check_return_ bool CNetwork::GetTime(_Inout_ CTime& machine_time ) noexcept
    }
 }
 
-_Check_return_ bool CNetwork::GetTime(__inout CSystemTime& machine_time ) noexcept
+_Check_return_ bool Win32FoundationClasses::CNetwork::GetTime(__inout Win32FoundationClasses::CSystemTime& machine_time ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -388,7 +386,7 @@ _Check_return_ bool CNetwork::GetTime(__inout CSystemTime& machine_time ) noexce
    }
 }
 
-_Check_return_ bool CNetwork::IsRebootable( void ) noexcept
+_Check_return_ bool Win32FoundationClasses::CNetwork::IsRebootable( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -471,7 +469,7 @@ _Check_return_ bool CNetwork::IsRebootable( void ) noexcept
    return( true );
 }
 
-void CNetwork::m_Initialize( void ) noexcept
+void Win32FoundationClasses::CNetwork::m_Initialize( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -485,7 +483,7 @@ void CNetwork::m_Initialize( void ) noexcept
    m_PortNumber      = 0;
 }
 
-void CNetwork::Open( _In_ std::wstring_view machine_name ) noexcept
+void Win32FoundationClasses::CNetwork::Open( _In_ std::wstring_view machine_name ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -602,7 +600,7 @@ void CNetwork::Open( _In_ std::wstring_view machine_name ) noexcept
    WFC_END_CATCH_ALL
 }
 
-_Check_return_ bool CNetwork::SetPrivilege( __in_z LPCTSTR privilege_name, __in bool const add_privilege ) noexcept
+_Check_return_ bool Win32FoundationClasses::CNetwork::SetPrivilege( __in_z LPCTSTR privilege_name, _In_ bool const add_privilege ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( privilege_name );
@@ -704,7 +702,7 @@ _Check_return_ bool CNetwork::SetPrivilege( __in_z LPCTSTR privilege_name, __in 
    WFC_END_CATCH_ALL
 }
 
-_Check_return_ bool CNetwork::Shutdown( __in bool const reboot, __in bool const force_applications_to_close, __in_z_opt LPCTSTR message_to_display, __in DWORD const number_of_seconds_before_shutdown ) noexcept
+_Check_return_ bool Win32FoundationClasses::CNetwork::Shutdown( _In_ bool const reboot, _In_ bool const force_applications_to_close, __in_z_opt LPCTSTR message_to_display, _In_ DWORD const number_of_seconds_before_shutdown ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 

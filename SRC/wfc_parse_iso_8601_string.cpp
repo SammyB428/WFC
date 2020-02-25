@@ -51,19 +51,17 @@ static char THIS_FILE[] = __FILE__;
 #define new DEBUG_NEW
 #endif // _DEBUG
 
-USING_WFC_NAMESPACE
-
 static inline _Check_return_ bool __parse_ymdhmsf( _In_ std::wstring_view time_string,
-    _Out_ int&    year,
-    _Out_ int&    month,
-    _Out_ int&    day,
-    _Out_ int&    hours,
-    _Out_ int&    minutes,
-    _Out_ int&    seconds,
-    _Out_ TCHAR&  offset_character,
-    _Out_ int&    offset_hours,
-    _Out_ int&    offset_minutes,
-    _Out_ double& fraction ) noexcept
+    _Out_ int&     year,
+    _Out_ int&     month,
+    _Out_ int&     day,
+    _Out_ int&     hours,
+    _Out_ int&     minutes,
+    _Out_ int&     seconds,
+    _Out_ wchar_t& offset_character,
+    _Out_ int&     offset_hours,
+    _Out_ int&     offset_minutes,
+    _Out_ double&  fraction ) noexcept
 {
     // Start with some believable defaults
 
@@ -73,7 +71,7 @@ static inline _Check_return_ bool __parse_ymdhmsf( _In_ std::wstring_view time_s
     hours = 0;
     minutes = 0;
     seconds = 0;
-    offset_character = TEXT('Z');
+    offset_character = 'Z';
     offset_hours = 0;
     offset_minutes = 0;
     fraction = 0;
@@ -92,224 +90,222 @@ static inline _Check_return_ bool __parse_ymdhmsf( _In_ std::wstring_view time_s
 
     // We were passed a pointer, don't trust it
 
-    WFC_TRY
+    if ( time_string.length() < 4 ) 
     {
-        if ( time_string.length() < 4 ) 
-        {
-            // There ain't enough characters to even attempt to parse
+        // There ain't enough characters to even attempt to parse
 
-            //WFCTRACE( TEXT( "Not enough character to even attempt to parse" ) );
-            return(false);
-        }
+        //WFCTRACE( TEXT( "Not enough character to even attempt to parse" ) );
+        return(false);
+    }
 
-        // OK, let's start parsing
+    // OK, let's start parsing
 
-        if (fast_is_digit( time_string[ 0 ] ) == false )
-        {
-            //WFCTRACE( TEXT( "First character is not a digit" ) );
-            return(false);
-        }
+    if (fast_is_digit( time_string[ 0 ] ) == false )
+    {
+        //WFCTRACE( TEXT( "First character is not a digit" ) );
+        return(false);
+    }
 
-        if (fast_is_digit( time_string[ 1 ] ) == false )
-        {
-            //WFCTRACE( TEXT( "Second character is not a digit" ) );
-            return(false);
-        }
+    if (fast_is_digit( time_string[ 1 ] ) == false )
+    {
+        //WFCTRACE( TEXT( "Second character is not a digit" ) );
+        return(false);
+    }
 
-        if (fast_is_digit( time_string[ 2 ] ) == false )
-        {
-            //WFCTRACE( TEXT( "Third character is not a digit" ) );
-            return(false);
-        }
+    if (fast_is_digit( time_string[ 2 ] ) == false )
+    {
+        //WFCTRACE( TEXT( "Third character is not a digit" ) );
+        return(false);
+    }
 
-        if (fast_is_digit( time_string[ 3 ] ) == false )
-        {
-            //WFCTRACE( TEXT( "Fourth character is not a digit" ) );
-            return(false);
-        }
+    if (fast_is_digit( time_string[ 3 ] ) == false )
+    {
+        //WFCTRACE( TEXT( "Fourth character is not a digit" ) );
+        return(false);
+    }
 
-        // If we get here, it means we've got 4 good digits
+    // If we get here, it means we've got 4 good digits
 
-        char temp_string[ 11 ];
+    char temp_string[ 11 ];
 
-        temp_string[ 0 ] = static_cast<char>(time_string[ 0 ]);
-        temp_string[ 1 ] = static_cast<char>(time_string[ 1 ]);
-        temp_string[ 2 ] = static_cast<char>(time_string[ 2 ]);
-        temp_string[ 3 ] = static_cast<char>(time_string[ 3 ]);
-        temp_string[ 4 ] = 0x00;
-        temp_string[ 5 ] = 0x00;
-        temp_string[ 6 ] = 0x00;
-        temp_string[ 7 ] = 0x00;
-        temp_string[ 8 ] = 0x00;
-        temp_string[ 9 ] = 0x00;
-        temp_string[ 10 ] = 0x00;
+    temp_string[ 0 ] = static_cast<char>(time_string[ 0 ]);
+    temp_string[ 1 ] = static_cast<char>(time_string[ 1 ]);
+    temp_string[ 2 ] = static_cast<char>(time_string[ 2 ]);
+    temp_string[ 3 ] = static_cast<char>(time_string[ 3 ]);
+    temp_string[ 4 ] = 0x00;
+    temp_string[ 5 ] = 0x00;
+    temp_string[ 6 ] = 0x00;
+    temp_string[ 7 ] = 0x00;
+    temp_string[ 8 ] = 0x00;
+    temp_string[ 9 ] = 0x00;
+    temp_string[ 10 ] = 0x00;
 
-        (void)std::from_chars(temp_string, &temp_string[4], year, 10);
+    (void)std::from_chars(temp_string, &temp_string[4], year, 10);
 
-        std::size_t index = 4;
+    std::size_t index = 4;
 
-        // index should be pointing here
-        //     |
-        //     v
-        // 1969-07-20T22:56:15-04:00
+    // index should be pointing here
+    //     |
+    //     v
+    // 1969-07-20T22:56:15-04:00
 
-        if ( index >= time_string.length() )
-        {
-            // We're at the end of the string
-            return( true );
-        }
+    if ( index >= time_string.length() )
+    {
+        // We're at the end of the string
+        return( true );
+    }
 
-        if ( time_string[ index ] == L'-' )
-        {
-            index++;
-        }
-
-        // index should be pointing here
-        //      |
-        //      v
-        // 1969-07-20T22:56:15-04:00
-
-        if (index >= time_string.length())
-        {
-            // We're at the end of the string
-            return( true );
-        }
-
-        if (fast_is_digit( time_string[ index ] ) == false )
-        {
-            //WFCTRACE( TEXT( "First digit of month field isn't a digit at all" ) );
-            return(false);
-        }
-
+    if ( time_string[ index ] == L'-' )
+    {
         index++;
+    }
 
-        // index should be pointing here
-        //       |
-        //       v
-        // 1969-07-20T22:56:15-04:00
+    // index should be pointing here
+    //      |
+    //      v
+    // 1969-07-20T22:56:15-04:00
 
-        // This test is safe because we could be sitting on a NULL
+    if (index >= time_string.length())
+    {
+        // We're at the end of the string
+        return( true );
+    }
 
-        if (fast_is_digit( time_string[ index ] ) == false )
-        {
-            //WFCTRACE( TEXT( "Second digit of month field isn't a digit at all" ) );
-            return(false);
-        }
+    if (fast_is_digit( time_string[ index ] ) == false )
+    {
+        //WFCTRACE( TEXT( "First digit of month field isn't a digit at all" ) );
+        return(false);
+    }
 
-        temp_string[ 0 ] = static_cast<char>(time_string[ index - 1 ]);
-        temp_string[ 1 ] = static_cast<char>(time_string[ index ]);
+    index++;
 
-        (void)std::from_chars(temp_string, &temp_string[2], month, 10);
+    // index should be pointing here
+    //       |
+    //       v
+    // 1969-07-20T22:56:15-04:00
 
-        // Do a little idiot proofing
+    // This test is safe because we could be sitting on a NULL
 
-        if ( month < 1 or month > 12 )
-        {
-            //WFCTRACE( TEXT( "Funky month" ) );
-            return(false);
-        }
+    if (fast_is_digit( time_string[ index ] ) == false )
+    {
+        //WFCTRACE( TEXT( "Second digit of month field isn't a digit at all" ) );
+        return(false);
+    }
 
+    temp_string[ 0 ] = static_cast<char>(time_string[ index - 1 ]);
+    temp_string[ 1 ] = static_cast<char>(time_string[ index ]);
+
+    (void)std::from_chars(temp_string, &temp_string[2], month, 10);
+
+    // Do a little idiot proofing
+
+    if ( month < 1 or month > 12 )
+    {
+        //WFCTRACE( TEXT( "Funky month" ) );
+        return(false);
+    }
+
+    index++;
+
+    // index should be pointing here
+    //        |
+    //        v
+    // 1969-07-20T22:56:15-04:00
+
+    if (index >= time_string.length())
+    {
+        return( true );
+    }
+
+    if ( time_string[ index ] == L'-' )
+    {
         index++;
+    }
 
-        // index should be pointing here
-        //        |
-        //        v
-        // 1969-07-20T22:56:15-04:00
+    // index should be pointing here
+    //         |
+    //         v
+    // 1969-07-20T22:56:15-04:00
 
-        if (index >= time_string.length())
-        {
-            return( true );
-        }
+    if (index >= time_string.length())
+    {
+        // Odd, but not illegal
+        return( true );
+    }
 
-        if ( time_string[ index ] == L'-' )
-        {
-            index++;
-        }
+    if (fast_is_digit( time_string[ index ] ) == false )
+    {
+        //WFCTRACE( TEXT( "First digit of day field isn't a digit at all" ) );
+        return(false);
+    }
 
-        // index should be pointing here
-        //         |
-        //         v
-        // 1969-07-20T22:56:15-04:00
+    index++;
 
-        if (index >= time_string.length())
-        {
-            // Odd, but not illegal
-            return( true );
-        }
+    // index should be pointing here
+    //          |
+    //          v
+    // 1969-07-20T22:56:15-04:00
 
-        if (fast_is_digit( time_string[ index ] ) == false )
-        {
-            //WFCTRACE( TEXT( "First digit of day field isn't a digit at all" ) );
-            return(false);
-        }
+    // This test is safe because we could be sitting on a NULL
 
-        index++;
+    if (fast_is_digit( time_string[ index ] ) == false )
+    {
+        //WFCTRACE( TEXT( "Second digit of month field isn't a digit at all" ) );
+        return(false);
+    }
 
-        // index should be pointing here
-        //          |
-        //          v
-        // 1969-07-20T22:56:15-04:00
+    temp_string[ 0 ] = static_cast<char>(time_string[ index - 1 ]);
+    temp_string[ 1 ] = static_cast<char>(time_string[ index ]);
 
-        // This test is safe because we could be sitting on a NULL
+    // We don't need to set temp_string[ 2 ] because we did that at line 158 above
 
-        if (fast_is_digit( time_string[ index ] ) == false )
-        {
-            //WFCTRACE( TEXT( "Second digit of month field isn't a digit at all" ) );
-            return(false);
-        }
+    (void)std::from_chars(temp_string, &temp_string[2], day, 10);
 
-        temp_string[ 0 ] = static_cast<char>(time_string[ index - 1 ]);
-        temp_string[ 1 ] = static_cast<char>(time_string[ index ]);
+    // Do a very little bit of error checking
 
-        // We don't need to set temp_string[ 2 ] because we did that at line 158 above
+    if ( day < 1 or day > 31 )
+    {
+        //WFCTRACE( TEXT( "Funky day" ) );
+        return(false);
+    }
 
-        (void)std::from_chars(temp_string, &temp_string[2], day, 10);
+    index++;
 
-        // Do a very little bit of error checking
+    // index should be pointing here
+    //           |
+    //           v
+    // 1969-07-20T22:56:15-04:00
 
-        if ( day < 1 or day > 31 )
-        {
-            //WFCTRACE( TEXT( "Funky day" ) );
-            return(false);
-        }
+    if (index >= time_string.length())
+    {
+        // Odd, but not illegal
+        return( true );
+    }
 
-        index++;
+    if ( time_string[ index ] != L'T' )
+    {
+        //WFCTRACE( TEXT( "Separator between date and time ain't T" ) );
+        return(false);
+    }
 
-        // index should be pointing here
-        //           |
-        //           v
-        // 1969-07-20T22:56:15-04:00
+    index++;
 
-        if (index >= time_string.length())
-        {
-            // Odd, but not illegal
-            return( true );
-        }
+    // index should be pointing here
+    //            |
+    //            v
+    // 1969-07-20T22:56:15-04:00
 
-        if ( time_string[ index ] != L'T' )
-        {
-            //WFCTRACE( TEXT( "Separator between date and time ain't T" ) );
-            return(false);
-        }
+    if (index >= time_string.length())
+    {
+        // Odd, but not illegal
+        return( true );
+    }
 
-        index++;
-
-        // index should be pointing here
-        //            |
-        //            v
-        // 1969-07-20T22:56:15-04:00
-
-        if (index >= time_string.length())
-        {
-            // Odd, but not illegal
-            return( true );
-        }
-
-        if (fast_is_digit( time_string[ index ] ) == false )
-        {
-            //WFCTRACE( TEXT( "First digit of hours field isn't a digit at all" ) );
-            return(false);
-        }
+    if (fast_is_digit( time_string[ index ] ) == false )
+    {
+        //WFCTRACE( TEXT( "First digit of hours field isn't a digit at all" ) );
+        return(false);
+    }
 
         index++;
 
@@ -474,7 +470,11 @@ static inline _Check_return_ bool __parse_ymdhmsf( _In_ std::wstring_view time_s
                 index++;
             }
 
+#if ! defined(WE_ARE_BUILDING_WFC_ON_UNIX)
             (void)std::from_chars(temp_string, &temp_string[temp_string_index], fraction);
+#else // WE_ARE_BUILDING_WFC_ON_UNIX
+            fraction = Win32FoundationClasses::as_double(temp_string);
+#endif // WE_ARE_BUILDING_WFC_ON_UNIX
         }
 
         temp_string[0] = 0x00;
@@ -588,20 +588,14 @@ static inline _Check_return_ bool __parse_ymdhmsf( _In_ std::wstring_view time_s
 
         (void)std::from_chars(temp_string, &temp_string[2], offset_minutes, 10);
 
-        return( true );
-    }
-    WFC_CATCH_ALL
-    {
-        return(false);
-    }
-    WFC_END_CATCH_ALL
+    return( true );
 }
 
-_Check_return_ bool PASCAL Win32FoundationClasses::wfc_parse_iso_8601_string(_In_ std::wstring_view time_string, __out Win32FoundationClasses::CFileTime& the_time ) noexcept
+_Check_return_ bool Win32FoundationClasses::wfc_parse_iso_8601_string(_In_ std::wstring_view time_string, _Out_ Win32FoundationClasses::CFileTime& the_time ) noexcept
 {
     the_time.Empty();
 
-    CSystemTime system_time;
+    Win32FoundationClasses::CSystemTime system_time;
 
     if ( Win32FoundationClasses::wfc_parse_iso_8601_string( time_string, system_time ) == false )
     {
@@ -620,7 +614,7 @@ _Check_return_ bool PASCAL Win32FoundationClasses::wfc_parse_iso_8601_string(_In
     int seconds = 0;
     double fraction = 0;
 
-    TCHAR offset_character = 0;
+    wchar_t offset_character = 0;
 
     int offset_hours = 0;
     int offset_minutes = 0;
@@ -631,7 +625,7 @@ _Check_return_ bool PASCAL Win32FoundationClasses::wfc_parse_iso_8601_string(_In
         return(true);
     }
 
-    double const ticks = static_cast<double>(CFileTime::NumberOfFiletimeTicksInOneSecond) * fraction;
+    double const ticks = static_cast<double>(Win32FoundationClasses::CFileTime::NumberOfFiletimeTicksInOneSecond) * fraction;
 
     uint32_t const number_of_ticks = static_cast<uint32_t>(ticks);
 
@@ -645,7 +639,7 @@ _Check_return_ bool PASCAL Win32FoundationClasses::wfc_parse_iso_8601_string(_In
 
 #if ! defined( WFC_STL )
 
-BOOL PASCAL Win32FoundationClasses::wfc_parse_iso_8601_string( LPCTSTR time_string, COleDateTime& the_time )
+BOOL Win32FoundationClasses::wfc_parse_iso_8601_string( LPCTSTR time_string, COleDateTime& the_time )
 {
     the_time = COleDateTime( static_cast< time_t >( 0 ) );
 
@@ -696,7 +690,7 @@ BOOL PASCAL Win32FoundationClasses::wfc_parse_iso_8601_string( LPCTSTR time_stri
 
 #endif // WFC_STL
 
-_Check_return_ bool PASCAL Win32FoundationClasses::wfc_parse_iso_8601_string(_In_ std::wstring_view time_string, __out CSystemTime& the_time ) noexcept
+_Check_return_ bool Win32FoundationClasses::wfc_parse_iso_8601_string(_In_ std::wstring_view time_string, _Out_ Win32FoundationClasses::CSystemTime& the_time ) noexcept
 {
     the_time.Empty();
 
@@ -716,7 +710,7 @@ _Check_return_ bool PASCAL Win32FoundationClasses::wfc_parse_iso_8601_string(_In
     int seconds = 0;
     double fraction = 0;
 
-    TCHAR offset_character = 0;
+    wchar_t offset_character = 0;
 
     int offset_hours   = 0;
     int offset_minutes = 0;
@@ -727,30 +721,37 @@ _Check_return_ bool PASCAL Win32FoundationClasses::wfc_parse_iso_8601_string(_In
         return( false );
     }
 
-    CTime ole_time = CTime( year, month, day, hours, minutes, seconds );
+    auto ole_time = Win32FoundationClasses::CTimeEx( year, month, day, hours, minutes, seconds );
 
     if ( offset_character != L'Z' )
     {
-        CTimeSpan time_zone_offset( 0, offset_hours, offset_minutes, 0 );
+        Win32FoundationClasses::CTimeSpan time_zone_offset( 0, offset_hours, offset_minutes, 0 );
 
         if ( offset_character == L'-' )
         {
-            ole_time += time_zone_offset;
+            ole_time.AddSeconds(time_zone_offset.GetTotalSeconds());
         }
         else if ( offset_character == L'+' )
         {
-            ole_time -= time_zone_offset;
+            ole_time.SubtractSeconds(time_zone_offset.GetTotalSeconds());
         }
     }
 
-    the_time.Copy( ole_time );
+    the_time.Empty();
+    the_time.wYear = ole_time.GetYear();
+    the_time.wMonth = ole_time.GetMonth();
+    the_time.wDay = ole_time.GetDay();
+    the_time.wHour = ole_time.GetHour();
+    the_time.wMinute = ole_time.GetMinute();
 
     return( true );
 }
 
-_Check_return_ bool PASCAL Win32FoundationClasses::wfc_parse_iso_8601_string(_In_ std::wstring_view time_string, __out CTime& the_time ) noexcept
+#if ! defined(WE_ARE_BUILDING_WFC_ON_UNIX)
+
+_Check_return_ bool Win32FoundationClasses::wfc_parse_iso_8601_string(_In_ std::wstring_view time_string, _Out_ Win32FoundationClasses::CTime& the_time ) noexcept
 {
-    the_time = CTime( static_cast< time_t >( 0 ) );
+    the_time = Win32FoundationClasses::CTime( static_cast< time_t >( 0 ) );
 
     // Do a little idiot checking
 
@@ -768,7 +769,7 @@ _Check_return_ bool PASCAL Win32FoundationClasses::wfc_parse_iso_8601_string(_In
     int seconds = 0;
     double fraction = 0;
 
-    TCHAR offset_character = 0;
+    wchar_t offset_character = 0;
 
     int offset_hours   = 0;
     int offset_minutes = 0;
@@ -779,11 +780,11 @@ _Check_return_ bool PASCAL Win32FoundationClasses::wfc_parse_iso_8601_string(_In
         return( false );
     }
 
-    the_time = CTime( year, month, day, hours, minutes, seconds );
+    the_time = Win32FoundationClasses::CTime( year, month, day, hours, minutes, seconds );
 
     if ( offset_character != L'Z' )
     {
-        CTimeSpan time_zone_offset( 0, offset_hours, offset_minutes, 0 );
+        Win32FoundationClasses::CTimeSpan time_zone_offset( 0, offset_hours, offset_minutes, 0 );
 
         if ( offset_character == L'-' )
         {
@@ -798,7 +799,7 @@ _Check_return_ bool PASCAL Win32FoundationClasses::wfc_parse_iso_8601_string(_In
     return( true );
 }
 
-_Check_return_ bool PASCAL Win32FoundationClasses::wfc_parse_xml( __in_z LPCTSTR filename, __inout CExtensibleMarkupLanguageDocument& xml ) noexcept
+_Check_return_ bool Win32FoundationClasses::wfc_parse_xml( _In_z_ wchar_t * filename, __inout Win32FoundationClasses::CExtensibleMarkupLanguageDocument& xml ) noexcept
 {
     WFC_VALIDATE_POINTER( filename );
 
@@ -809,7 +810,7 @@ _Check_return_ bool PASCAL Win32FoundationClasses::wfc_parse_xml( __in_z LPCTSTR
         return( false );
     }
 
-    CMemoryFile memory_mapped_file;
+    Win32FoundationClasses::CMemoryFile memory_mapped_file;
 
     if ( memory_mapped_file.Open( filename ) == false )
     {
@@ -818,14 +819,14 @@ _Check_return_ bool PASCAL Win32FoundationClasses::wfc_parse_xml( __in_z LPCTSTR
 
     auto pointer = reinterpret_cast<uint8_t const *>(memory_mapped_file.GetPointer());
 
-    CDataParser parser;
+    Win32FoundationClasses::CDataParser parser;
 
     if ( parser.Initialize( pointer, memory_mapped_file.GetLength() ) == false)
     {
         return( false );
     }
 
-    CParsePoint here;
+    Win32FoundationClasses::CParsePoint here;
 
     parser.DetectText( here );
 
@@ -857,7 +858,7 @@ static constexpr uint8_t const g_hex_values[256] =
     0, 0, 0, 0,  0, 0, 0, 0,  0, 0, 0, 0,  0, 0, 0, 0
 };
 
-_Check_return_ bool PASCAL Win32FoundationClasses::wfc_parse_hex_string(_In_ std::wstring_view hex_string, __out_bcount(buffer_size) uint8_t * buffer, _In_ std::size_t const buffer_size) noexcept
+_Check_return_ bool Win32FoundationClasses::wfc_parse_hex_string(_In_ std::wstring_view hex_string, __out_bcount(buffer_size) uint8_t * buffer, _In_ std::size_t const buffer_size) noexcept
 {
     WFC_VALIDATE_POINTER(buffer);
     _ASSERTE(hex_string.length() <= (buffer_size * 2));
@@ -891,7 +892,7 @@ _Check_return_ bool PASCAL Win32FoundationClasses::wfc_parse_hex_string(_In_ std
     return(true);
 }
 
-_Check_return_ bool PASCAL Win32FoundationClasses::wfc_parse_hex_string(_In_ std::string_view hex_string, __out_bcount(buffer_size) uint8_t * buffer, _In_ std::size_t const buffer_size) noexcept
+_Check_return_ bool Win32FoundationClasses::wfc_parse_hex_string(_In_ std::string_view hex_string, __out_bcount(buffer_size) uint8_t * buffer, _In_ std::size_t const buffer_size) noexcept
 {
     WFC_VALIDATE_POINTER(buffer);
     _ASSERTE(hex_string.length() <= (buffer_size * 2));
@@ -924,6 +925,8 @@ _Check_return_ bool PASCAL Win32FoundationClasses::wfc_parse_hex_string(_In_ std
 
     return(true);
 }
+
+#endif // WE_ARE_BUILDING_WFC_ON_UNIX
 
 // End of source
 

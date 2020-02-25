@@ -51,13 +51,11 @@ static char THIS_FILE[] = __FILE__;
 #define new DEBUG_NEW
 #endif // _DEBUG
 
-USING_WFC_NAMESPACE
+int  Win32FoundationClasses::CWfcTrace::Indent  = 0;
+bool Win32FoundationClasses::CWfcTrace::Tracing = true;
+std::size_t Win32FoundationClasses::CWfcTrace::Levels = 1;
 
-int  CWfcTrace::Indent  = 0;
-bool CWfcTrace::Tracing = true;
-std::size_t CWfcTrace::Levels = 1;
-
-CWfcTrace::CWfcTrace( __in_z LPCTSTR function_name, __in std::size_t const tracing_level ) noexcept
+Win32FoundationClasses::CWfcTrace::CWfcTrace( __in_z LPCTSTR function_name, _In_ std::size_t const tracing_level ) noexcept
 {
    m_TracingLevel = tracing_level;
 
@@ -81,7 +79,7 @@ CWfcTrace::CWfcTrace( __in_z LPCTSTR function_name, __in std::size_t const traci
    }
 }
 
-CWfcTrace::~CWfcTrace() noexcept
+Win32FoundationClasses::CWfcTrace::~CWfcTrace() noexcept
 {
    if ( is_flagged( Levels, m_TracingLevel ) == true )
    {
@@ -102,7 +100,7 @@ CWfcTrace::~CWfcTrace() noexcept
    }
 }
 
-void CWfcTrace::m_Indent( void ) const noexcept
+void Win32FoundationClasses::CWfcTrace::m_Indent( void ) const noexcept
 {
    if ( is_flagged( Levels, m_TracingLevel ) == true and Tracing == true )
    {
@@ -120,7 +118,7 @@ void CWfcTrace::m_Indent( void ) const noexcept
    }
 }
 
-void CWfcTrace::Output( _In_z_ LPCTSTR message ) const noexcept
+void Win32FoundationClasses::CWfcTrace::Output( _In_z_ LPCTSTR message ) const noexcept
 {
    if ( is_flagged( Levels, m_TracingLevel ) == true and Tracing == true )
    {
@@ -142,7 +140,7 @@ void CWfcTrace::Output( _In_z_ LPCTSTR message ) const noexcept
    }
 }
 
-void CWfcTrace::Output( __in_z LPCTSTR message, __in int const integer ) const noexcept
+void Win32FoundationClasses::CWfcTrace::Output( __in_z LPCTSTR message, _In_ int const integer ) const noexcept
 {
    if (is_flagged( Levels, m_TracingLevel ) == true and Tracing == true )
    {
@@ -159,7 +157,7 @@ void CWfcTrace::Output( __in_z LPCTSTR message, __in int const integer ) const n
    }
 }
 
-void CWfcTrace::Output( __in_z LPCTSTR message, __in UINT const integer ) const noexcept
+void Win32FoundationClasses::CWfcTrace::Output( __in_z LPCTSTR message, _In_ UINT const integer ) const noexcept
 {
    if (is_flagged( Levels, m_TracingLevel ) == true and Tracing == true )
    {
@@ -167,7 +165,7 @@ void CWfcTrace::Output( __in_z LPCTSTR message, __in UINT const integer ) const 
    }
 }
 
-void CWfcTrace::Output( __in_z LPCTSTR message, __in long const a_long ) const noexcept
+void Win32FoundationClasses::CWfcTrace::Output( __in_z LPCTSTR message, _In_ long const a_long ) const noexcept
 {
    if (is_flagged( Levels, m_TracingLevel ) == true and Tracing == true )
    {
@@ -184,7 +182,7 @@ void CWfcTrace::Output( __in_z LPCTSTR message, __in long const a_long ) const n
    }
 }
 
-void CWfcTrace::Output( __in_z LPCTSTR message, __in ULONG const a_long ) const noexcept
+void Win32FoundationClasses::CWfcTrace::Output( __in_z LPCTSTR message, _In_ ULONG const a_long ) const noexcept
 {
    if (is_flagged( Levels, m_TracingLevel ) == true and Tracing == true )
    {
@@ -201,7 +199,7 @@ void CWfcTrace::Output( __in_z LPCTSTR message, __in ULONG const a_long ) const 
    }
 }
 
-void CWfcTrace::Output( __in_z LPCTSTR message, __in LONGLONG const a_long ) const noexcept
+void Win32FoundationClasses::CWfcTrace::Output( __in_z LPCTSTR message, _In_ LONGLONG const a_long ) const noexcept
 {
    if (is_flagged( Levels, m_TracingLevel ) == true and Tracing == true )
    {
@@ -218,7 +216,7 @@ void CWfcTrace::Output( __in_z LPCTSTR message, __in LONGLONG const a_long ) con
    }
 }
 
-void CWfcTrace::Output( __in_z LPCTSTR message, __in ULONGLONG const a_long ) const noexcept
+void Win32FoundationClasses::CWfcTrace::Output( __in_z LPCTSTR message, _In_ ULONGLONG const a_long ) const noexcept
 {
    if (is_flagged( Levels, m_TracingLevel ) == true and Tracing == true )
    {
@@ -235,7 +233,7 @@ void CWfcTrace::Output( __in_z LPCTSTR message, __in ULONGLONG const a_long ) co
    }
 }
 
-void CWfcTrace::Output( __in_z LPCTSTR message, __in double const a_double ) const noexcept
+void Win32FoundationClasses::CWfcTrace::Output( __in_z LPCTSTR message, _In_ double const a_double ) const noexcept
 {
    if (is_flagged( Levels, m_TracingLevel ) == true and Tracing == true )
    {
@@ -321,7 +319,7 @@ void CWfcTrace::Output( __in_z LPCTSTR message, __in double const a_double ) con
    }
 }
 
-void CWfcTrace::Output( __in_z LPCTSTR message, __in std::wstring const& string ) const noexcept
+void Win32FoundationClasses::CWfcTrace::Output( __in_z LPCTSTR message, _In_ std::wstring const& string ) const noexcept
 {
    if (is_flagged( Levels, m_TracingLevel ) == true and Tracing == true )
    {
@@ -331,7 +329,7 @@ void CWfcTrace::Output( __in_z LPCTSTR message, __in std::wstring const& string 
    }
 }
 
-void CWfcTrace::Output( __in_z LPCTSTR message, __in VOID const * pointer ) const noexcept
+void Win32FoundationClasses::CWfcTrace::Output( __in_z LPCTSTR message, _In_ VOID const * pointer ) const noexcept
 {
    if (is_flagged( Levels, m_TracingLevel ) == true and Tracing == true )
    {
@@ -343,33 +341,33 @@ void CWfcTrace::Output( __in_z LPCTSTR message, __in VOID const * pointer ) cons
    }
 }
 
-void CWfcTrace::Output( __in_z LPCTSTR message, __in LARGE_INTEGER const& value ) const noexcept
+void Win32FoundationClasses::CWfcTrace::Output( __in_z LPCTSTR message, _In_ LARGE_INTEGER const& value ) const noexcept
 {
    if (is_flagged( Levels, m_TracingLevel ) == true and Tracing == true )
    {
        std::wstring pointer_string;
 
-      format( pointer_string, L"{ QuadPart=%I64d { LowPart=0x%lX HighPart=0x%lX } }",
+       Win32FoundationClasses::format( pointer_string, L"{ QuadPart=%I64d { LowPart=0x%lX HighPart=0x%lX } }",
                              value.QuadPart, value.LowPart, value.HighPart );
 
       Output( message, pointer_string );
    }
 }
 
-void CWfcTrace::Output( __in_z LPCTSTR message, __in ULARGE_INTEGER const& value ) const noexcept
+void Win32FoundationClasses::CWfcTrace::Output( __in_z LPCTSTR message, _In_ ULARGE_INTEGER const& value ) const noexcept
 {
    if (is_flagged( Levels, m_TracingLevel ) == true and Tracing == true )
    {
        std::wstring pointer_string;
 
-      format( pointer_string, L"{ QuadPart=%I64u { LowPart=0x%lX HighPart=0x%lX } }",
+       Win32FoundationClasses::format( pointer_string, L"{ QuadPart=%I64u { LowPart=0x%lX HighPart=0x%lX } }",
                              value.QuadPart, value.LowPart, value.HighPart );
 
       Output( message, pointer_string );
    }
 }
 
-void CWfcTrace::Output( __in_z LPCTSTR message, __in RECT const& value ) const noexcept
+void Win32FoundationClasses::CWfcTrace::Output( __in_z LPCTSTR message, _In_ RECT const& value ) const noexcept
 {
    if (is_flagged( Levels, m_TracingLevel ) == true and Tracing == true )
    {
@@ -382,20 +380,20 @@ void CWfcTrace::Output( __in_z LPCTSTR message, __in RECT const& value ) const n
    }
 }
 
-void CWfcTrace::Output( __in_z LPCTSTR message, __in POINT const& value ) const noexcept
+void Win32FoundationClasses::CWfcTrace::Output( __in_z LPCTSTR message, _In_ POINT const& value ) const noexcept
 {
    if (is_flagged( Levels, m_TracingLevel ) == true and Tracing == true )
    {
        std::wstring pointer_string;
 
-      format( pointer_string, L"{ x = %ld y = %ld }",
+       Win32FoundationClasses::format( pointer_string, L"{ x = %ld y = %ld }",
                              value.x, value.y );
 
       Output( message, pointer_string );
    }
 }
 
-void CWfcTrace::Output( __in_z LPCTSTR message, __in SIZE const& value ) const noexcept
+void Win32FoundationClasses::CWfcTrace::Output( __in_z LPCTSTR message, _In_ SIZE const& value ) const noexcept
 {
    if (is_flagged( Levels, m_TracingLevel ) == true and Tracing == true )
    {
@@ -408,7 +406,7 @@ void CWfcTrace::Output( __in_z LPCTSTR message, __in SIZE const& value ) const n
    }
 }
 
-void CWfcTrace::Output( __in_z LPCTSTR message, __in GUID const& value ) const noexcept // New for Release 52
+void Win32FoundationClasses::CWfcTrace::Output( __in_z LPCTSTR message, _In_ GUID const& value ) const noexcept // New for Release 52
 {
    if (is_flagged( Levels, m_TracingLevel ) == true and Tracing == true )
    {
@@ -431,7 +429,7 @@ void CWfcTrace::Output( __in_z LPCTSTR message, __in GUID const& value ) const n
    }
 }
 
-void CWfcTrace::Output( __in_z LPCTSTR message, __in FILETIME const& value ) const noexcept // New for Release 52
+void Win32FoundationClasses::CWfcTrace::Output( __in_z LPCTSTR message, _In_ FILETIME const& value ) const noexcept // New for Release 52
 {
    if (is_flagged( Levels, m_TracingLevel ) == true and Tracing == true )
    {
@@ -443,13 +441,13 @@ void CWfcTrace::Output( __in_z LPCTSTR message, __in FILETIME const& value ) con
 
       if ( FileTimeToSystemTime( &value, &system_time ) == FALSE )
       {
-         format( class_name, L"{dwLowDateTime=%08lX dwHighDateTime=%08lX}",
+          Win32FoundationClasses::format( class_name, L"{dwLowDateTime=%08lX dwHighDateTime=%08lX}",
                            (unsigned long) value.dwLowDateTime,
                            (unsigned long) value.dwHighDateTime );
       }
       else
       {
-         format( class_name, L"{dwLowDateTime=%08lX dwHighDateTime=%08lX (%04d-%02d-%02d %02d:%02d:%02d.%04d)}",
+          Win32FoundationClasses::format( class_name, L"{dwLowDateTime=%08lX dwHighDateTime=%08lX (%04d-%02d-%02d %02d:%02d:%02d.%04d)}",
                            (unsigned long) value.dwLowDateTime,
                            (unsigned long) value.dwHighDateTime,
                            (int) system_time.wYear,
@@ -466,13 +464,13 @@ void CWfcTrace::Output( __in_z LPCTSTR message, __in FILETIME const& value ) con
    }
 }
 
-void CWfcTrace::Output( __in_z LPCTSTR message, __in SYSTEMTIME const& value ) const noexcept // New for Release 52
+void Win32FoundationClasses::CWfcTrace::Output( __in_z LPCTSTR message, _In_ SYSTEMTIME const& value ) const noexcept // New for Release 52
 {
    if (is_flagged( Levels, m_TracingLevel ) == true and Tracing == true )
    {
       std::wstring class_name;
 
-      format( class_name, L"{%04d-%02d-%02d %02d:%02d:%02d.%04d}",
+      Win32FoundationClasses::format( class_name, L"{%04d-%02d-%02d %02d:%02d:%02d.%04d}",
                         (int) value.wYear,
                         (int) value.wMonth,
                         (int) value.wDay,
@@ -486,7 +484,7 @@ void CWfcTrace::Output( __in_z LPCTSTR message, __in SYSTEMTIME const& value ) c
    }
 }
 
-void CWfcTrace::OutputBinary( __in_z LPCTSTR message, __in ULONG const a_long ) const noexcept
+void Win32FoundationClasses::CWfcTrace::OutputBinary( __in_z LPCTSTR message, _In_ ULONG const a_long ) const noexcept
 {
    if (is_flagged( Levels, m_TracingLevel ) == true and Tracing == true )
    {
@@ -521,7 +519,7 @@ void CWfcTrace::OutputBinary( __in_z LPCTSTR message, __in ULONG const a_long ) 
    }
 }
 
-void CWfcTrace::OutputVariant( __in_z LPCTSTR message, __in VARIANT const& value ) const noexcept
+void Win32FoundationClasses::CWfcTrace::OutputVariant( __in_z LPCTSTR message, _In_ VARIANT const& value ) const noexcept
 {
    if (is_flagged( Levels, m_TracingLevel ) == true and Tracing == true )
    {
@@ -529,7 +527,7 @@ void CWfcTrace::OutputVariant( __in_z LPCTSTR message, __in VARIANT const& value
    }
 }
 
-void CWfcTrace::OutputVariant( __in_z LPCTSTR message, __in VARIANT const * value ) const noexcept
+void Win32FoundationClasses::CWfcTrace::OutputVariant( __in_z LPCTSTR message, _In_ VARIANT const * value ) const noexcept
 {
    if (is_flagged( Levels, m_TracingLevel ) == true and Tracing == true )
    {
@@ -1025,7 +1023,7 @@ void CWfcTrace::OutputVariant( __in_z LPCTSTR message, __in VARIANT const * valu
    }
 }
 
-void CWfcTrace::ReportError( __in DWORD const error_code ) noexcept
+void Win32FoundationClasses::CWfcTrace::ReportError( _In_ DWORD const error_code ) noexcept
 {
    if ( is_flagged( Levels, m_TracingLevel ) == true and Tracing == true )
    {
@@ -1042,7 +1040,7 @@ void CWfcTrace::ReportError( __in DWORD const error_code ) noexcept
    }
 }
 
-void CWfcTrace::ReportSocketError( __in DWORD const error_code ) noexcept
+void Win32FoundationClasses::CWfcTrace::ReportSocketError( _In_ DWORD const error_code ) noexcept
 {
    if ( is_flagged( Levels, m_TracingLevel ) == true and Tracing == true )
    {
@@ -1054,37 +1052,37 @@ void CWfcTrace::ReportSocketError( __in DWORD const error_code ) noexcept
 
       std::wstring error_message;
 
-      format( error_message, L"SOCKET ERROR %lu - ", error_code );
+      Win32FoundationClasses::format( error_message, L"SOCKET ERROR %lu - ", error_code );
       error_message.append( error_string );
 
       Output( error_message.c_str() );
    }
 }
 
-void CWfcTrace::TraceOff( void ) noexcept
+void Win32FoundationClasses::CWfcTrace::TraceOff( void ) noexcept
 {
    Tracing = false;
 }
 
-void CWfcTrace::TraceOn( void ) noexcept
+void Win32FoundationClasses::CWfcTrace::TraceOn( void ) noexcept
 {
    Tracing = true;
 }
 
-void CWfcTrace::TraceAllOff( void ) noexcept
+void Win32FoundationClasses::CWfcTrace::TraceAllOff( void ) noexcept
 {
    Tracing = false;
    Indent  = 0;
    Levels  = 0;
 }
 
-void CWfcTrace::TraceAllOn( void ) noexcept
+void Win32FoundationClasses::CWfcTrace::TraceAllOn( void ) noexcept
 {
    Tracing = true;
    Levels  = 0xFFFFFFFF;
 }
 
-void CWfcTrace::TraceLevelOn( __in std::size_t const level ) noexcept
+void Win32FoundationClasses::CWfcTrace::TraceLevelOn( _In_ std::size_t const level ) noexcept
 {
    if ( level > 31 )
    {
@@ -1095,7 +1093,7 @@ void CWfcTrace::TraceLevelOn( __in std::size_t const level ) noexcept
    _bittestandset( reinterpret_cast<LONG *>(&Levels), level );
 }
 
-void CWfcTrace::TraceLevelOff( __in std::size_t const level ) noexcept
+void Win32FoundationClasses::CWfcTrace::TraceLevelOff( _In_ std::size_t const level ) noexcept
 {
    if ( level > 31 )
    {

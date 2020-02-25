@@ -55,11 +55,11 @@ class CDataFile : public CFile64
       CDataFile() noexcept;
       virtual ~CDataFile();
 
-      virtual _Check_return_ bool AddData( __in uint32_t const identifier, __in  std::vector<uint8_t> const& data ) noexcept;
-      virtual _Check_return_ bool AddData( __in uint32_t const identifier, __in_bcount( number_of_bytes ) uint8_t const * data, __in std::size_t const number_of_bytes ) noexcept;
-      virtual _Check_return_ bool AddData( __in CDataChunk const& data ) noexcept;
-      virtual _Check_return_ bool GetData( __out uint32_t& identifier, __out std::vector<uint8_t>& data ) noexcept;
-      virtual _Check_return_ bool GetData( __out CDataChunk& data ) noexcept;
+      virtual _Check_return_ bool AddData( _In_ uint32_t const identifier, _In_  std::vector<uint8_t> const& data ) noexcept;
+      virtual _Check_return_ bool AddData( _In_ uint32_t const identifier, __in_bcount( number_of_bytes ) uint8_t const * data, _In_ std::size_t const number_of_bytes ) noexcept;
+      virtual _Check_return_ bool AddData( _In_ CDataChunk const& data ) noexcept;
+      virtual _Check_return_ bool GetData( _Out_ uint32_t& identifier, _Out_ std::vector<uint8_t>& data ) noexcept;
+      virtual _Check_return_ bool GetData( _Out_ CDataChunk& data ) noexcept;
 };
 
 #endif // DATA_FILE_CLASS_HEADER

@@ -76,7 +76,7 @@ class CJulianDate // Don't use this, I'm not finished with it yet
       ** Operators
       */
 
-      inline constexpr CJulianDate& operator=( __in  CJulianDate const& source ) noexcept { m_JulianDays = source.m_JulianDays; return( *this ); };
+      inline constexpr CJulianDate& operator=( _In_  CJulianDate const& source ) noexcept { m_JulianDays = source.m_JulianDays; return( *this ); };
 
 #if defined( _DEBUG ) && ! defined( WFC_NO_DUMPING )
 

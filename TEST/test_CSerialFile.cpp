@@ -54,7 +54,7 @@ void test_CSerialFile( void ) noexcept
 {
    WFCTRACEINIT( TEXT( "test_CSerialFile()" ) );
 
-   CSerialFile serial;
+   Win32FoundationClasses::CSerialFile serial;
 
    if ( serial.Open(WSTRING_VIEW(L"COM2:9600,n,8,1")) == false )
    {
@@ -62,7 +62,7 @@ void test_CSerialFile( void ) noexcept
       return;
    }
 
-   CCommunicationsConfiguration configuration;
+   Win32FoundationClasses::CCommunicationsConfiguration configuration;
 
    if ( serial.ConfigurationDialog( configuration ) == FALSE )
    {

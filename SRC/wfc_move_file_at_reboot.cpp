@@ -51,9 +51,7 @@ static char THIS_FILE[] = __FILE__;
 #define new DEBUG_NEW
 #endif // _DEBUG
 
-USING_WFC_NAMESPACE
-
-_Check_return_ bool PASCAL Win32FoundationClasses::wfc_move_file_at_reboot( _In_ std::wstring const& existing_file, __in std::wstring const& file_to_move ) noexcept
+_Check_return_ bool Win32FoundationClasses::wfc_move_file_at_reboot( _In_ std::wstring const& existing_file, _In_ std::wstring const& file_to_move ) noexcept
 {
    // First, we must delete the destination file
 

@@ -52,8 +52,6 @@ static char THIS_FILE[] = __FILE__;
 
 #if ! defined( WFC_NO_RAS )
 
-USING_WFC_NAMESPACE
-
 #if defined( _DEBUG ) && defined( _INC_CRTDBG )
 #define new DEBUG_NEW
 #endif // _DEBUG
@@ -103,7 +101,7 @@ void CPointToPointProtocolProjectionResult::Copy( CPointToPointProtocolProjectio
    NetBEUI.Copy( source.NetBEUI );
 }
 
-void CPointToPointProtocolProjectionResult::Copy( __in RAS_PPP_PROJECTION_RESULT const * source )
+void CPointToPointProtocolProjectionResult::Copy( _In_ RAS_PPP_PROJECTION_RESULT const * source )
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );

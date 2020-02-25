@@ -60,8 +60,8 @@ class CWorkstationUser
       ** net API header files...
       */
 
-      CWorkstationUser( __in WKSTA_USER_INFO_1 const * source );
-      CWorkstationUser( __in CWorkstationUser const& source );
+      CWorkstationUser( _In_ WKSTA_USER_INFO_1 const * source );
+      CWorkstationUser( _In_ CWorkstationUser const& source );
       virtual ~CWorkstationUser();
 
       /*
@@ -78,10 +78,10 @@ class CWorkstationUser
       ** net API header files...
       */
 
-      virtual void Copy( __in WKSTA_USER_INFO_1 const * source ) noexcept;
-      virtual void Copy( __in CWorkstationUser const& source ) noexcept;
+      virtual void Copy( _In_ WKSTA_USER_INFO_1 const * source ) noexcept;
+      virtual void Copy( _In_ CWorkstationUser const& source ) noexcept;
       virtual void Empty( void ) noexcept;
-      virtual CWorkstationUser const& operator = ( __in CWorkstationUser const& source ) noexcept;
+      virtual CWorkstationUser const& operator = ( _In_ CWorkstationUser const& source ) noexcept;
 };
 
 class CWorkstationInformation
@@ -99,10 +99,10 @@ class CWorkstationInformation
       ** net API header files...
       */
 
-      CWorkstationInformation( __in WKSTA_INFO_100 const * source );
-      CWorkstationInformation( __in WKSTA_INFO_101 const * source );
-      CWorkstationInformation( __in WKSTA_INFO_102 const * source );
-      CWorkstationInformation( __in CWorkstationInformation const& source );
+      CWorkstationInformation( _In_ WKSTA_INFO_100 const * source );
+      CWorkstationInformation( _In_ WKSTA_INFO_101 const * source );
+      CWorkstationInformation( _In_ WKSTA_INFO_102 const * source );
+      CWorkstationInformation( _In_ CWorkstationInformation const& source );
       virtual ~CWorkstationInformation();
 
       /*
@@ -122,12 +122,12 @@ class CWorkstationInformation
       ** net API header files...
       */
 
-      virtual void Copy( __in WKSTA_INFO_100 const * source ) noexcept;
-      virtual void Copy( __in WKSTA_INFO_101 const * source ) noexcept;
-      virtual void Copy( __in WKSTA_INFO_102 const * source ) noexcept;
-      virtual void Copy( __in CWorkstationInformation const& source ) noexcept;
+      virtual void Copy( _In_ WKSTA_INFO_100 const * source ) noexcept;
+      virtual void Copy( _In_ WKSTA_INFO_101 const * source ) noexcept;
+      virtual void Copy( _In_ WKSTA_INFO_102 const * source ) noexcept;
+      virtual void Copy( _In_ CWorkstationInformation const& source ) noexcept;
       virtual void Empty( void ) noexcept;
-      virtual CWorkstationInformation const& operator = ( __in CWorkstationInformation const& source ) noexcept;
+      virtual CWorkstationInformation const& operator = ( _In_ CWorkstationInformation const& source ) noexcept;
 };
 
 class CWorkstationTransport
@@ -145,8 +145,8 @@ class CWorkstationTransport
       ** net API header files...
       */
 
-      CWorkstationTransport( __in WKSTA_TRANSPORT_INFO_0 const * source ) noexcept;
-      CWorkstationTransport( __in CWorkstationTransport const& source ) noexcept;
+      CWorkstationTransport( _In_ WKSTA_TRANSPORT_INFO_0 const * source ) noexcept;
+      CWorkstationTransport( _In_ CWorkstationTransport const& source ) noexcept;
       virtual ~CWorkstationTransport();
 
       /*
@@ -164,10 +164,10 @@ class CWorkstationTransport
       ** net API header files...
       */
 
-      virtual void Copy( __in WKSTA_TRANSPORT_INFO_0 const * source ) noexcept;
-      virtual void Copy( __in CWorkstationTransport const& source ) noexcept;
+      virtual void Copy( _In_ WKSTA_TRANSPORT_INFO_0 const * source ) noexcept;
+      virtual void Copy( _In_ CWorkstationTransport const& source ) noexcept;
       virtual void Empty( void )  noexcept;
-      virtual CWorkstationTransport const& operator = ( __in CWorkstationTransport const& source ) noexcept;
+      virtual CWorkstationTransport const& operator = ( _In_ CWorkstationTransport const& source ) noexcept;
 };
 
 class CNetWorkstation : public CNetwork
@@ -208,8 +208,8 @@ class CNetWorkstation : public CNetwork
 
    public:
 
-       CNetWorkstation(__in CNetWorkstation const&) = delete;
-       CNetWorkstation& operator=(__in CNetWorkstation const&) = delete;
+       CNetWorkstation(_In_ CNetWorkstation const&) = delete;
+       CNetWorkstation& operator=(_In_ CNetWorkstation const&) = delete;
       CNetWorkstation(_In_ std::wstring_view machine_name = { nullptr, 0 }) noexcept;
       virtual ~CNetWorkstation();
 

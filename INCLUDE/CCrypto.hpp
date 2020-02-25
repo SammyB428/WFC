@@ -80,8 +80,8 @@ class CCryptographicHash : public CCryptography
 
    public:
 
-       CCryptographicHash(__in CCryptographicHash const&) = delete;
-       CCryptographicHash& operator=(__in CCryptographicHash const&) = delete;
+       CCryptographicHash(_In_ CCryptographicHash const&) = delete;
+       CCryptographicHash& operator=(_In_ CCryptographicHash const&) = delete;
        
        // Construction
 

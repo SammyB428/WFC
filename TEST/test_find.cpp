@@ -168,7 +168,7 @@ static _Check_return_ std::size_t search_buffer(_Inout_ uint8_t * buffer, _In_ s
 
     needle[0] = value;
 
-    int64_t found_at = find_in_memory(&buffer[buffer_index], number_of_bytes_remaining, needle, sizeof(needle));
+    int64_t found_at = Win32FoundationClasses::find_in_memory(&buffer[buffer_index], number_of_bytes_remaining, needle, sizeof(needle));
 
     while (found_at != BYTES_NOT_FOUND)
     {
@@ -179,7 +179,7 @@ static _Check_return_ std::size_t search_buffer(_Inout_ uint8_t * buffer, _In_ s
 
         number_of_bytes_remaining = buffer_size - buffer_index;
 
-        found_at = find_in_memory(&buffer[buffer_index], number_of_bytes_remaining, needle, sizeof(needle));
+        found_at = Win32FoundationClasses::find_in_memory(&buffer[buffer_index], number_of_bytes_remaining, needle, sizeof(needle));
     }
 
     return(number_of_times_found);
@@ -187,7 +187,7 @@ static _Check_return_ std::size_t search_buffer(_Inout_ uint8_t * buffer, _In_ s
 
 __checkReturn bool execute_test(__in uint8_t const * buffer, __in int64_t const should_be_found_at) noexcept
 {
-    int64_t const found_at = find_byte(NEEDLE, buffer, 32);
+    int64_t const found_at = Win32FoundationClasses::find_byte(NEEDLE, buffer, 32);
 
     if (found_at != should_be_found_at)
     {
@@ -240,7 +240,7 @@ __checkReturn bool test_find(__out std::string& class_name, __out int& test_numb
     {
         test_buffer[loop_index - 1] = 'B';
 
-        if (find_byte('B', test_buffer, loop_index) != (loop_index - 1))
+        if (Win32FoundationClasses::find_byte('B', test_buffer, loop_index) != (loop_index - 1))
         {
             printf("Failed find_byte() test %d\n", (int)loop_index);
             test_number_that_failed = (int) loop_index;
@@ -537,7 +537,7 @@ __checkReturn bool test_find(__out std::string& class_name, __out int& test_numb
 
     constexpr uint8_t const sam_needle[4] = { 'S', 'a', 'm', 'B' };
 
-    find_all_in_memory(buffer, TEST_FIND_BUFFER_SIZE, sam_needle, sizeof(sam_needle), results);
+    Win32FoundationClasses::find_all_in_memory(buffer, TEST_FIND_BUFFER_SIZE, sam_needle, sizeof(sam_needle), results);
 
     if (results.size() != 3)
     {

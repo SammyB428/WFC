@@ -50,15 +50,13 @@
 static char THIS_FILE[] = __FILE__;
 #endif // _DEBUG
 
-USING_WFC_NAMESPACE
-
 #if defined( _DEBUG ) && defined( _INC_CRTDBG )
 #define new DEBUG_NEW
 #endif // _DEBUG
 
 // Construction
 
-CBitArray::CBitArray() noexcept
+Win32FoundationClasses::CBitArray::CBitArray() noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -73,7 +71,7 @@ CBitArray::CBitArray() noexcept
    RemoveAll();
 }
 
-CBitArray::CBitArray( __in std::size_t const initial_size ) noexcept
+Win32FoundationClasses::CBitArray::CBitArray( _In_ std::size_t const initial_size ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -89,7 +87,7 @@ CBitArray::CBitArray( __in std::size_t const initial_size ) noexcept
    SetSize( initial_size );
 }
 
-CBitArray::CBitArray( __in CBitArray const& source ) noexcept
+Win32FoundationClasses::CBitArray::CBitArray( _In_ Win32FoundationClasses::CBitArray const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -104,7 +102,7 @@ CBitArray::CBitArray( __in CBitArray const& source ) noexcept
    Copy( source );   
 }
 
-CBitArray::CBitArray( __in std::vector<uint8_t> const& source ) noexcept
+Win32FoundationClasses::CBitArray::CBitArray( _In_ std::vector<uint8_t> const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -119,7 +117,7 @@ CBitArray::CBitArray( __in std::vector<uint8_t> const& source ) noexcept
    Copy( source );
 }
 
-CBitArray::~CBitArray() noexcept
+Win32FoundationClasses::CBitArray::~CBitArray() noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -136,7 +134,7 @@ CBitArray::~CBitArray() noexcept
 
 // Methods
 
-void CBitArray::ClearRange( __in std::size_t const array_index, __in std::size_t const count ) noexcept
+void Win32FoundationClasses::CBitArray::ClearRange( _In_ std::size_t const array_index, _In_ std::size_t const count ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -176,7 +174,7 @@ void CBitArray::ClearRange( __in std::size_t const array_index, __in std::size_t
    }
 }
 
-void CBitArray::SetRange( __in std::size_t const array_index, __in std::size_t const count ) noexcept
+void Win32FoundationClasses::CBitArray::SetRange( _In_ std::size_t const array_index, _In_ std::size_t const count ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -216,7 +214,7 @@ void CBitArray::SetRange( __in std::size_t const array_index, __in std::size_t c
    }
 }
 
-void CBitArray::Add( __in uint32_t const value, __in std::size_t const count ) noexcept
+void Win32FoundationClasses::CBitArray::Add( _In_ uint32_t const value, _In_ std::size_t const count ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -277,7 +275,7 @@ void CBitArray::Add( __in uint32_t const value, __in std::size_t const count ) n
    }
 }
 
-void CBitArray::AddByte( __in uint8_t const value ) noexcept
+void Win32FoundationClasses::CBitArray::AddByte( _In_ uint8_t const value ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -293,7 +291,7 @@ void CBitArray::AddByte( __in uint8_t const value ) noexcept
    Add( _bittest(reinterpret_cast<LONG const *>(&dword_value), 0 ) );
 }
 
-void CBitArray::AddValue( __in uint32_t const value, __in uint32_t const number_of_bits ) noexcept
+void Win32FoundationClasses::CBitArray::AddValue( _In_ uint32_t const value, _In_ uint32_t const number_of_bits ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    ASSERT( number_of_bits < 33 );
@@ -326,7 +324,7 @@ void CBitArray::AddValue( __in uint32_t const value, __in uint32_t const number_
    }
 }
 
-void CBitArray::Append( __in CBitArray const& source ) noexcept
+void Win32FoundationClasses::CBitArray::Append( _In_ CBitArray const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -341,7 +339,7 @@ void CBitArray::Append( __in CBitArray const& source ) noexcept
    }
 }
 
-void CBitArray::Append( __in_bcount( number_of_bytes ) uint8_t const * data, __in std::size_t const number_of_bytes ) noexcept
+void Win32FoundationClasses::CBitArray::Append( __in_bcount( number_of_bytes ) uint8_t const * data, _In_ std::size_t const number_of_bytes ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( data );
@@ -362,7 +360,7 @@ void CBitArray::Append( __in_bcount( number_of_bytes ) uint8_t const * data, __i
    WFC_END_CATCH_ALL
 }
 
-void CBitArray::Complement( void ) noexcept
+void Win32FoundationClasses::CBitArray::Complement( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    // Set all 1's to 0's and all 0's to 1's
@@ -395,7 +393,7 @@ void CBitArray::Complement( void ) noexcept
    }
 }
 
-void CBitArray::Copy( _In_ CBitArray const& source ) noexcept
+void Win32FoundationClasses::CBitArray::Copy( _In_ Win32FoundationClasses::CBitArray const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    m_Bits = source.m_Bits;
@@ -403,7 +401,7 @@ void CBitArray::Copy( _In_ CBitArray const& source ) noexcept
    m_IndexOfFirstBit   = source.m_IndexOfFirstBit;
 }
 
-void CBitArray::Copy( __in std::vector<uint8_t> const& source ) noexcept
+void Win32FoundationClasses::CBitArray::Copy( _In_ std::vector<uint8_t> const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    RemoveAll();
@@ -433,7 +431,7 @@ void CBitArray::Copy( __in std::vector<uint8_t> const& source ) noexcept
    }
 }
 
-void CBitArray::Copy( _In_ std::vector<uint32_t> const& source ) noexcept
+void Win32FoundationClasses::CBitArray::Copy( _In_ std::vector<uint32_t> const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -450,7 +448,7 @@ void CBitArray::Copy( _In_ std::vector<uint32_t> const& source ) noexcept
    m_IndexOfFirstBit = 0;
 }
 
-void CBitArray::CopyTo( __inout std::vector<uint8_t>& destination ) noexcept
+void Win32FoundationClasses::CBitArray::CopyTo( __inout std::vector<uint8_t>& destination ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    if ( GetSize() == 0 )
@@ -511,7 +509,7 @@ void CBitArray::CopyTo( __inout std::vector<uint8_t>& destination ) noexcept
    _ASSERTE( (uint32_t) destination.size() == number_of_bytes );
 }
 
-void CBitArray::CopyTo( __inout std::vector<uint32_t>& destination ) noexcept
+void Win32FoundationClasses::CBitArray::CopyTo( __inout std::vector<uint32_t>& destination ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    FreeExtra();
@@ -520,14 +518,14 @@ void CBitArray::CopyTo( __inout std::vector<uint32_t>& destination ) noexcept
 
 #if defined( _DEBUG ) && ! defined( WFC_NO_DUMPING )
 
-void CBitArray::SetDumpOptions( int number_of_bits_per_group, int number_of_groups_per_line )
+void Win32FoundationClasses::CBitArray::SetDumpOptions( int number_of_bits_per_group, int number_of_groups_per_line )
 {
    WFC_VALIDATE_POINTER( this );
    m_NumberOfBitsPerGroup  = number_of_bits_per_group;
    m_NumberOfGroupsPerLine = number_of_groups_per_line;
 }
 
-void CBitArray::Dump( CDumpContext& dump_context ) const
+void Win32FoundationClasses::CBitArray::Dump( CDumpContext& dump_context ) const
 {
    CObject::Dump( dump_context );
 
@@ -599,7 +597,7 @@ void CBitArray::Dump( CDumpContext& dump_context ) const
 
 #endif // _DEBUG
 
-_Check_return_ bool CBitArray::EnumerateOnes( __inout std::size_t& enumerator ) const noexcept
+_Check_return_ bool Win32FoundationClasses::CBitArray::EnumerateOnes( __inout std::size_t& enumerator ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
    enumerator = 0xFFFFFFFF;
@@ -612,7 +610,7 @@ _Check_return_ bool CBitArray::EnumerateOnes( __inout std::size_t& enumerator ) 
    return( false );
 }
 
-_Check_return_ bool CBitArray::EnumerateZeroes( __inout std::size_t& enumerator ) const noexcept
+_Check_return_ bool Win32FoundationClasses::CBitArray::EnumerateZeroes( __inout std::size_t& enumerator ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
    enumerator = 0xFFFFFFFF;
@@ -625,7 +623,7 @@ _Check_return_ bool CBitArray::EnumerateZeroes( __inout std::size_t& enumerator 
    return( false );
 }
 
-_Check_return_ bool CBitArray::Find( __in CBitArray const& value, __inout std::size_t& found_at, __in std::size_t const starting_at ) const noexcept
+_Check_return_ bool Win32FoundationClasses::CBitArray::Find( _In_ Win32FoundationClasses::CBitArray const& value, _Inout_ std::size_t& found_at, _In_ std::size_t const starting_at ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
    uint32_t value_to_search_for = 0;
@@ -717,7 +715,7 @@ _Check_return_ bool CBitArray::Find( __in CBitArray const& value, __inout std::s
    return( false );
 }
 
-_Check_return_ bool CBitArray::Find( __in uint32_t const value, __in std::size_t const number_of_bits_in_value, __inout std::size_t& found_at, __in std::size_t const starting_at ) const noexcept
+_Check_return_ bool Win32FoundationClasses::CBitArray::Find( _In_ uint32_t const value, _In_ std::size_t const number_of_bits_in_value, __inout std::size_t& found_at, _In_ std::size_t const starting_at ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
    // Always start at a known state
@@ -834,7 +832,7 @@ _Check_return_ bool CBitArray::Find( __in uint32_t const value, __in std::size_t
    return( false );
 }
 
-void CBitArray::FreeExtra( void ) noexcept
+void Win32FoundationClasses::CBitArray::FreeExtra( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -926,7 +924,7 @@ void CBitArray::FreeExtra( void ) noexcept
    m_IndexOfFirstBit = 0;
 }
 
-_Check_return_ bool CBitArray::GetNextOne( __inout std::size_t& enumerator ) const noexcept
+_Check_return_ bool Win32FoundationClasses::CBitArray::GetNextOne( __inout std::size_t& enumerator ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -1031,7 +1029,7 @@ _Check_return_ bool CBitArray::GetNextOne( __inout std::size_t& enumerator ) con
    return( true );
 }
 
-_Check_return_ bool CBitArray::GetNextZero( __inout std::size_t& enumerator ) const noexcept
+_Check_return_ bool Win32FoundationClasses::CBitArray::GetNextZero( __inout std::size_t& enumerator ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -1136,7 +1134,7 @@ _Check_return_ bool CBitArray::GetNextZero( __inout std::size_t& enumerator ) co
    return( true );
 }
 
-_Check_return_ std::size_t CBitArray::GetNumberOfOnes( void ) const noexcept
+_Check_return_ std::size_t Win32FoundationClasses::CBitArray::GetNumberOfOnes( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -1153,13 +1151,13 @@ _Check_return_ std::size_t CBitArray::GetNumberOfOnes( void ) const noexcept
    return( number_of_ones );
 }
 
-_Check_return_ std::size_t CBitArray::GetNumberOfZeroes( void ) const noexcept
+_Check_return_ std::size_t Win32FoundationClasses::CBitArray::GetNumberOfZeroes( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
    return( GetSize() - GetNumberOfOnes() );
 }
 
-_Check_return_ uint32_t CBitArray::GetValue( __in std::size_t const starting_bit_location, __in std::size_t const number_of_bits ) const noexcept
+_Check_return_ uint32_t Win32FoundationClasses::CBitArray::GetValue( _In_ std::size_t const starting_bit_location, _In_ std::size_t const number_of_bits ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
    ASSERT( number_of_bits < 33 );
@@ -1189,7 +1187,7 @@ _Check_return_ uint32_t CBitArray::GetValue( __in std::size_t const starting_bit
    return( return_value );
 }
 
-void CBitArray::InsertAt( __in std::size_t const bit_location, __in uint32_t const value ) noexcept
+void Win32FoundationClasses::CBitArray::InsertAt( _In_ std::size_t const bit_location, _In_ uint32_t const value ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -1312,11 +1310,11 @@ void CBitArray::InsertAt( __in std::size_t const bit_location, __in uint32_t con
    m_Bits.at( array_index ) = this_set_of_bits;
 }
 
-_Check_return_ CBitArray CBitArray::Left( __in std::size_t const number_of_bits ) const noexcept
+_Check_return_ Win32FoundationClasses::CBitArray Win32FoundationClasses::CBitArray::Left( _In_ std::size_t const number_of_bits ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
-   CBitArray return_value;
+   Win32FoundationClasses::CBitArray return_value;
 
    if ( number_of_bits >= GetSize() )
    {
@@ -1333,7 +1331,7 @@ _Check_return_ CBitArray CBitArray::Left( __in std::size_t const number_of_bits 
    return( return_value );
 }
 
-void CBitArray::LeftTrim( _In_ std::size_t const number_of_bits ) noexcept
+void Win32FoundationClasses::CBitArray::LeftTrim( _In_ std::size_t const number_of_bits ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -1346,11 +1344,11 @@ void CBitArray::LeftTrim( _In_ std::size_t const number_of_bits ) noexcept
    m_IndexOfFirstBit += number_of_bits;
 }
 
-_Check_return_ CBitArray CBitArray::Mid( __in std::size_t const starting_at, __in std::size_t const number_of_bits ) const noexcept
+_Check_return_ Win32FoundationClasses::CBitArray Win32FoundationClasses::CBitArray::Mid( _In_ std::size_t const starting_at, _In_ std::size_t const number_of_bits ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
-   CBitArray return_value;
+   Win32FoundationClasses::CBitArray return_value;
 
    if ( starting_at > GetUpperBound() )
    {
@@ -1371,7 +1369,7 @@ _Check_return_ CBitArray CBitArray::Mid( __in std::size_t const starting_at, __i
    return( return_value );
 }
 
-void CBitArray::RemoveAt( __in std::size_t const bit_location ) noexcept
+void Win32FoundationClasses::CBitArray::RemoveAt( _In_ std::size_t const bit_location ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    ASSERT( GetSize() > 0 );
@@ -1459,11 +1457,11 @@ void CBitArray::RemoveAt( __in std::size_t const bit_location ) noexcept
    m_TotalNumberOfBits--;
 }
 
-_Check_return_ CBitArray CBitArray::Right( _In_ std::size_t const number_of_bits ) const noexcept
+_Check_return_ Win32FoundationClasses::CBitArray Win32FoundationClasses::CBitArray::Right( _In_ std::size_t const number_of_bits ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
-   CBitArray return_value;
+   Win32FoundationClasses::CBitArray return_value;
 
    if ( number_of_bits >= GetSize() )
    {
@@ -1482,7 +1480,7 @@ _Check_return_ CBitArray CBitArray::Right( _In_ std::size_t const number_of_bits
    return( return_value );
 }
 
-void CBitArray::RightTrim( __in std::size_t const number_of_bits ) noexcept
+void Win32FoundationClasses::CBitArray::RightTrim( _In_ std::size_t const number_of_bits ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -1505,7 +1503,7 @@ void CBitArray::RightTrim( __in std::size_t const number_of_bits ) noexcept
    m_Bits.resize( number_of_elements );
 }
 
-void CBitArray::SetAll( __in uint32_t const value ) noexcept
+void Win32FoundationClasses::CBitArray::SetAll( _In_ uint32_t const value ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -1519,7 +1517,7 @@ void CBitArray::SetAll( __in uint32_t const value ) noexcept
    }
 }
 
-void CBitArray::SetAt( __in std::size_t const bit_location, __in uint32_t const value ) noexcept
+void Win32FoundationClasses::CBitArray::SetAt( _In_ std::size_t const bit_location, _In_ uint32_t const value ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -1562,7 +1560,7 @@ void CBitArray::SetAt( __in std::size_t const bit_location, __in uint32_t const 
    m_Bits.at( index ) = this_set_of_bits;
 }
 
-void CBitArray::SetSize( __in std::size_t const number_of_bits ) noexcept
+void Win32FoundationClasses::CBitArray::SetSize( _In_ std::size_t const number_of_bits ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -1611,7 +1609,7 @@ void CBitArray::SetSize( __in std::size_t const number_of_bits ) noexcept
    m_TotalNumberOfBits = number_of_bits + m_IndexOfFirstBit;
 }
 
-void CBitArray::SetValue(_In_ std::size_t const starting_bit_location, _In_ uint32_t const value, _In_ uint32_t const number_of_bits ) noexcept
+void Win32FoundationClasses::CBitArray::SetValue(_In_ std::size_t const starting_bit_location, _In_ uint32_t const value, _In_ uint32_t const number_of_bits ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    ASSERT( number_of_bits <= static_cast<uint32_t>(SizeOfBitRepresentation()) );

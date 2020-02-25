@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 1995-2016, Samuel R. Blackburn
+** Copyright, 1995-2020, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -50,38 +50,36 @@
 static char THIS_FILE[] = __FILE__;
 #endif // _DEBUG
 
-USING_WFC_NAMESPACE
-
 #if defined( _DEBUG ) && defined( _INC_CRTDBG )
 #define new DEBUG_NEW
 #endif // _DEBUG
 
-CNetworkConnectionInformation::CNetworkConnectionInformation()
+Win32FoundationClasses::CNetworkConnectionInformation::CNetworkConnectionInformation()
 {
    WFC_VALIDATE_POINTER( this );
    m_Initialize();
 }
 
-CNetworkConnectionInformation::CNetworkConnectionInformation( __in CONNECTION_INFO_1 const * source )
+Win32FoundationClasses::CNetworkConnectionInformation::CNetworkConnectionInformation( _In_ CONNECTION_INFO_1 const * source )
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
    Copy( source );
 }
 
-CNetworkConnectionInformation::CNetworkConnectionInformation( __in CNetworkConnectionInformation const& source )
+Win32FoundationClasses::CNetworkConnectionInformation::CNetworkConnectionInformation( _In_ Win32FoundationClasses::CNetworkConnectionInformation const& source )
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );
 }
 
-CNetworkConnectionInformation::~CNetworkConnectionInformation()
+Win32FoundationClasses::CNetworkConnectionInformation::~CNetworkConnectionInformation()
 {
    WFC_VALIDATE_POINTER( this );
    m_Initialize();
 }
 
-void CNetworkConnectionInformation::Copy( __in CONNECTION_INFO_1 const * source ) noexcept
+void Win32FoundationClasses::CNetworkConnectionInformation::Copy( _In_ CONNECTION_INFO_1 const * source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
@@ -112,7 +110,7 @@ void CNetworkConnectionInformation::Copy( __in CONNECTION_INFO_1 const * source 
    WFC_END_CATCH_ALL
 }
 
-void CNetworkConnectionInformation::Copy( __in CNetworkConnectionInformation const& source ) noexcept
+void Win32FoundationClasses::CNetworkConnectionInformation::Copy( _In_ Win32FoundationClasses::CNetworkConnectionInformation const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    ASSERT( this != &source );
@@ -152,13 +150,13 @@ void CNetworkConnectionInformation::Dump( CDumpContext& dump_context ) const
 
 #endif // _DEBUG
 
-void CNetworkConnectionInformation::Empty( void ) noexcept
+void Win32FoundationClasses::CNetworkConnectionInformation::Empty( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    m_Initialize();
 }
 
-void CNetworkConnectionInformation::m_Initialize( void ) noexcept
+void Win32FoundationClasses::CNetworkConnectionInformation::m_Initialize( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -171,7 +169,7 @@ void CNetworkConnectionInformation::m_Initialize( void ) noexcept
    Time          = 0;
 }
 
-CNetworkConnectionInformation const& CNetworkConnectionInformation::operator=( __in CNetworkConnectionInformation const& source ) noexcept
+Win32FoundationClasses::CNetworkConnectionInformation const& Win32FoundationClasses::CNetworkConnectionInformation::operator=( _In_ Win32FoundationClasses::CNetworkConnectionInformation const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    ASSERT( this != &source );

@@ -224,7 +224,7 @@ void print_system_information( _In_ const ::SYSTEM_PROCESS_INFORMATION * informa
 
    std::wstring command_line;
 
-   if ( wfc_get_process_command_line( information_p->UniqueProcessId, command_line ) == true )
+   if (Win32FoundationClasses::wfc_get_process_command_line( information_p->UniqueProcessId, command_line ) == true )
    {
 #if defined( _DEBUG )
       wprintf( L"Command line: %s\n", command_line.c_str() );
@@ -254,7 +254,7 @@ static void print_process_list( BYTE * data_buffer ) noexcept
       while( information_p != nullptr )
       {
          print_system_information( information_p );
-         information_p = GetNext( information_p );
+         information_p = Win32FoundationClasses::GetNext( information_p );
       }
    }
    catch( ... )

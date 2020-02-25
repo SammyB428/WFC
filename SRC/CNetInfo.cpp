@@ -51,38 +51,36 @@
 static char THIS_FILE[] = __FILE__;
 #endif // _DEBUG
 
-USING_WFC_NAMESPACE
-
 /*
 ** CNetInformation stuff
 */
 
-CNetworkInformation::CNetworkInformation()
+Win32FoundationClasses::CNetworkInformation::CNetworkInformation()
 {
    WFC_VALIDATE_POINTER( this );
    Empty();
 }
 
-CNetworkInformation::CNetworkInformation( __in NETINFOSTRUCT const * source )
+Win32FoundationClasses::CNetworkInformation::CNetworkInformation( _In_ NETINFOSTRUCT const * source )
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
    Copy( source );
 }
 
-CNetworkInformation::CNetworkInformation( __in CNetworkInformation const& source )
+Win32FoundationClasses::CNetworkInformation::CNetworkInformation( _In_ Win32FoundationClasses::CNetworkInformation const& source )
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );
 }
 
-CNetworkInformation::~CNetworkInformation()
+Win32FoundationClasses::CNetworkInformation::~CNetworkInformation()
 {
    WFC_VALIDATE_POINTER( this );
    Empty();
 }
 
-void CNetworkInformation::Copy(_In_ NETINFOSTRUCT const * source ) noexcept
+void Win32FoundationClasses::CNetworkInformation::Copy(_In_ NETINFOSTRUCT const * source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
@@ -113,7 +111,7 @@ void CNetworkInformation::Copy(_In_ NETINFOSTRUCT const * source ) noexcept
    WFC_END_CATCH_ALL
 }
 
-void CNetworkInformation::Copy(_In_ CNetworkInformation const& source ) noexcept
+void Win32FoundationClasses::CNetworkInformation::Copy(_In_ CNetworkInformation const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -146,7 +144,7 @@ void CNetworkInformation::Dump( CDumpContext& dump_context ) const
 
 #endif // _DEBUG
 
-void CNetworkInformation::Empty( void ) noexcept
+void Win32FoundationClasses::CNetworkInformation::Empty( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -160,7 +158,7 @@ void CNetworkInformation::Empty( void ) noexcept
    dwDrives          = 0;
 }
 
-CNetworkInformation const& CNetworkInformation::operator = ( __in CNetworkInformation const& source ) noexcept
+Win32FoundationClasses::CNetworkInformation const& Win32FoundationClasses::CNetworkInformation::operator = ( _In_ Win32FoundationClasses::CNetworkInformation const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 

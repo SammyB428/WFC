@@ -56,9 +56,9 @@ void test_CNetworkFiles( __in_z LPCTSTR machine_name ) noexcept
 {
    WFCTRACEINIT( TEXT( "test_CNetworkFiles()" ) );
 
-   CNetworkFiles network_files( machine_name );
+   Win32FoundationClasses::CNetworkFiles network_files( machine_name );
 
-   CNetworkFileInformation network_files_information;
+   Win32FoundationClasses::CNetworkFileInformation network_files_information;
 
    if ( network_files.Enumerate() == true )
    {
@@ -79,7 +79,7 @@ void test_CNetworkFiles( __in_z LPCTSTR machine_name ) noexcept
 
       std::wstring error_message;
 
-      Convert_NERR_Code_to_String( error_code, error_message );
+      Win32FoundationClasses::Convert_NERR_Code_to_String( error_code, error_message );
 
       _tprintf( TEXT( "CNetworkFiles.Enumerate( CNetworkFileInformation ), ErrorCode == %d \"%s\"\n" ), error_code, error_message.c_str());
    }

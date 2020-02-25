@@ -54,7 +54,7 @@ void test_CNetwork( LPCTSTR machine_name ) noexcept
 {
    WFCTRACEINIT( TEXT( "test_CNetwork()" ) );
 
-   CNetwork machine( machine_name );
+   Win32FoundationClasses::CNetwork machine( machine_name );
 
    if ( machine.EnumeratePorts() )
    {
@@ -67,7 +67,7 @@ void test_CNetwork( LPCTSTR machine_name ) noexcept
          _tprintf( TEXT( "Ports on local machine\n" ) );
       }
 
-      CPortInformation port;
+      Win32FoundationClasses::CPortInformation port;
 
       while( machine.GetNext( port ) == true )
       {

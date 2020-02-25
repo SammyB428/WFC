@@ -60,9 +60,9 @@ class CNetworkScheduleJob
       ** net API header files...
       */
 
-      CNetworkScheduleJob( __in AT_ENUM const * information_p );
-      CNetworkScheduleJob( __in AT_INFO const * information_p );
-      CNetworkScheduleJob( __in CNetworkScheduleJob const& source );
+      CNetworkScheduleJob( _In_ AT_ENUM const * information_p );
+      CNetworkScheduleJob( _In_ AT_INFO const * information_p );
+      CNetworkScheduleJob( _In_ CNetworkScheduleJob const& source );
       virtual ~CNetworkScheduleJob();
 
       DWORD   ID{ 0 };
@@ -77,11 +77,11 @@ class CNetworkScheduleJob
       ** net API header files...
       */
 
-      virtual void Copy( __in AT_ENUM const * source ) noexcept;
-      virtual void Copy( __in AT_INFO const * source ) noexcept;
-      virtual void Copy( __in CNetworkScheduleJob const& source ) noexcept;
+      virtual void Copy( _In_ AT_ENUM const * source ) noexcept;
+      virtual void Copy( _In_ AT_INFO const * source ) noexcept;
+      virtual void Copy( _In_ CNetworkScheduleJob const& source ) noexcept;
       virtual void Empty( void ) noexcept;
-      virtual CNetworkScheduleJob const& operator = ( __in CNetworkScheduleJob const& source ) noexcept;
+      virtual CNetworkScheduleJob const& operator = ( _In_ CNetworkScheduleJob const& source ) noexcept;
 
 #if defined( _DEBUG ) && ! defined( WFC_NO_DUMPING )
       virtual void Dump( CDumpContext& dump_context ) const;

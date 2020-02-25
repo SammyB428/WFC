@@ -51,41 +51,39 @@ static char THIS_FILE[] = __FILE__;
 #define new DEBUG_NEW
 #endif // _DEBUG
 
-USING_WFC_NAMESPACE
-
-CPortInformation::CPortInformation()
+Win32FoundationClasses::CPortInformation::CPortInformation()
 {
    WFC_VALIDATE_POINTER( this );
    Empty();
 }
 
-CPortInformation::CPortInformation( __in PORT_INFO_1 const * source )
+Win32FoundationClasses::CPortInformation::CPortInformation( _In_ PORT_INFO_1 const * source )
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
    Copy( source );
 }
 
-CPortInformation::CPortInformation( __in PORT_INFO_2 const * source )
+Win32FoundationClasses::CPortInformation::CPortInformation( _In_ PORT_INFO_2 const * source )
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
    Copy( source );
 }
 
-CPortInformation::CPortInformation( __in CPortInformation const& source )
+Win32FoundationClasses::CPortInformation::CPortInformation( _In_ Win32FoundationClasses::CPortInformation const& source )
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );
 }
 
-CPortInformation::~CPortInformation()
+Win32FoundationClasses::CPortInformation::~CPortInformation()
 {
    WFC_VALIDATE_POINTER( this );
    Empty();
 }
 
-void CPortInformation::Copy( __in PORT_INFO_1 const * source ) noexcept
+void Win32FoundationClasses::CPortInformation::Copy( _In_ PORT_INFO_1 const * source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
@@ -113,7 +111,7 @@ void CPortInformation::Copy( __in PORT_INFO_1 const * source ) noexcept
    WFC_END_CATCH_ALL
 }
 
-void CPortInformation::Copy( __in PORT_INFO_2 const * source ) noexcept
+void Win32FoundationClasses::CPortInformation::Copy( _In_ PORT_INFO_2 const * source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
@@ -155,7 +153,7 @@ void CPortInformation::Copy( __in PORT_INFO_2 const * source ) noexcept
    WFC_END_CATCH_ALL
 }
 
-void CPortInformation::Copy( _In_ CPortInformation const& source ) noexcept
+void Win32FoundationClasses::CPortInformation::Copy( _In_ Win32FoundationClasses::CPortInformation const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -165,7 +163,7 @@ void CPortInformation::Copy( _In_ CPortInformation const& source ) noexcept
    TypeToString( Type, TypeName );
 }
 
-void CPortInformation::Empty( void ) noexcept
+void Win32FoundationClasses::CPortInformation::Empty( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Name.clear();
@@ -175,7 +173,7 @@ void CPortInformation::Empty( void ) noexcept
    Type = 0;
 }
 
-void CPortInformation::TypeToString( __in DWORD type, __out std::wstring& string ) const noexcept
+void Win32FoundationClasses::CPortInformation::TypeToString( _In_ DWORD type, _Out_ std::wstring& string ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -217,7 +215,7 @@ void CPortInformation::TypeToString( __in DWORD type, __out std::wstring& string
    }
 }
 
-CPortInformation& CPortInformation::operator = ( _In_ CPortInformation const& source ) noexcept
+Win32FoundationClasses::CPortInformation& Win32FoundationClasses::CPortInformation::operator = ( _In_ Win32FoundationClasses::CPortInformation const& source ) noexcept
 {
    Copy( source );
    WFC_VALIDATE_POINTER( this );
@@ -226,7 +224,7 @@ CPortInformation& CPortInformation::operator = ( _In_ CPortInformation const& so
 
 #if defined( _DEBUG ) && ! defined( WFC_NO_DUMPING )
 
-void CPortInformation::Dump( CDumpContext& dump_context ) const
+void Win32FoundationClasses::CPortInformation::Dump( CDumpContext& dump_context ) const
 {
    dump_context << TEXT( "a CPortInformation at " ) << (void *) this << TEXT( "\n" );
    dump_context << TEXT( "{\n" );

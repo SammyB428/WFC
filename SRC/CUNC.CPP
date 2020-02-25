@@ -50,44 +50,42 @@
 static char THIS_FILE[] = __FILE__;
 #endif // _DEBUG
 
-USING_WFC_NAMESPACE
-
 #if defined( _DEBUG ) && defined( _INC_CRTDBG )
 #define new DEBUG_NEW
 #endif // _DEBUG
 
-CUniversalNamingConvention::CUniversalNamingConvention()
+Win32FoundationClasses::CUniversalNamingConvention::CUniversalNamingConvention()
 {
    WFC_VALIDATE_POINTER( this );
    Empty();
 }
 
-CUniversalNamingConvention::CUniversalNamingConvention( __in CUniversalNamingConvention const& source )
+Win32FoundationClasses::CUniversalNamingConvention::CUniversalNamingConvention( _In_ Win32FoundationClasses::CUniversalNamingConvention const& source )
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );
 }
 
-CUniversalNamingConvention::CUniversalNamingConvention( __in CUniformResourceLocator const& source )
+Win32FoundationClasses::CUniversalNamingConvention::CUniversalNamingConvention( _In_ Win32FoundationClasses::CUniformResourceLocator const& source )
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );
 }
 
-CUniversalNamingConvention::CUniversalNamingConvention( __in_z LPCTSTR source )
+Win32FoundationClasses::CUniversalNamingConvention::CUniversalNamingConvention( __in_z LPCTSTR source )
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
    Copy( source );
 }
 
-CUniversalNamingConvention::~CUniversalNamingConvention()
+Win32FoundationClasses::CUniversalNamingConvention::~CUniversalNamingConvention()
 {
    WFC_VALIDATE_POINTER( this );
    Empty();
 }
 
-_Check_return_ int CUniversalNamingConvention::Compare( _In_ CUniversalNamingConvention const& source ) const noexcept
+_Check_return_ int Win32FoundationClasses::CUniversalNamingConvention::Compare( _In_ Win32FoundationClasses::CUniversalNamingConvention const& source ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -99,7 +97,7 @@ _Check_return_ int CUniversalNamingConvention::Compare( _In_ CUniversalNamingCon
    return( compare_no_case( UNC, source.UNC ) );
 }
 
-void CUniversalNamingConvention::Copy( __in CUniversalNamingConvention const& source ) noexcept
+void Win32FoundationClasses::CUniversalNamingConvention::Copy( _In_ Win32FoundationClasses::CUniversalNamingConvention const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    ASSERT( this != &source );
@@ -124,7 +122,7 @@ void CUniversalNamingConvention::Copy( __in CUniversalNamingConvention const& so
    Make();
 }
 
-void CUniversalNamingConvention::Copy( _In_ CUniformResourceLocator const& source ) noexcept
+void Win32FoundationClasses::CUniversalNamingConvention::Copy( _In_ Win32FoundationClasses::CUniformResourceLocator const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -156,7 +154,7 @@ void CUniversalNamingConvention::Copy( _In_ CUniformResourceLocator const& sourc
    Make();
 }
 
-void CUniversalNamingConvention::Copy( __in_z LPCTSTR source ) noexcept
+void Win32FoundationClasses::CUniversalNamingConvention::Copy( __in_z LPCTSTR source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
@@ -251,7 +249,7 @@ void CUniversalNamingConvention::Copy( __in_z LPCTSTR source ) noexcept
    WFC_END_CATCH_ALL
 }
 
-void CUniversalNamingConvention::Empty( void ) noexcept
+void Win32FoundationClasses::CUniversalNamingConvention::Empty( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    ServerName.clear();
@@ -260,7 +258,7 @@ void CUniversalNamingConvention::Empty( void ) noexcept
    UNC.clear();
 }
 
-void CUniversalNamingConvention::Make( void ) noexcept
+void Win32FoundationClasses::CUniversalNamingConvention::Make( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -279,21 +277,21 @@ void CUniversalNamingConvention::Make( void ) noexcept
    UNC.append( PathName );
 }
 
-_Check_return_ CUniversalNamingConvention& CUniversalNamingConvention::operator = ( _In_ CUniversalNamingConvention const& source ) noexcept
+_Check_return_ Win32FoundationClasses::CUniversalNamingConvention& Win32FoundationClasses::CUniversalNamingConvention::operator = ( _In_ Win32FoundationClasses::CUniversalNamingConvention const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );
    return( *this );
 }
 
-_Check_return_ CUniversalNamingConvention& CUniversalNamingConvention::operator = ( __in CUniformResourceLocator const& source ) noexcept
+_Check_return_ Win32FoundationClasses::CUniversalNamingConvention& Win32FoundationClasses::CUniversalNamingConvention::operator = ( _In_ Win32FoundationClasses::CUniformResourceLocator const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );
    return( *this );
 }
 
-_Check_return_ CUniversalNamingConvention& CUniversalNamingConvention::operator = ( __in_z LPCTSTR source ) noexcept
+_Check_return_ Win32FoundationClasses::CUniversalNamingConvention& Win32FoundationClasses::CUniversalNamingConvention::operator = ( __in_z LPCTSTR source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
@@ -301,7 +299,7 @@ _Check_return_ CUniversalNamingConvention& CUniversalNamingConvention::operator 
    return( *this );
 }
 
-_Check_return_ bool CUniversalNamingConvention::operator == ( __in CUniversalNamingConvention const& right_unc ) const noexcept
+_Check_return_ bool Win32FoundationClasses::CUniversalNamingConvention::operator == ( _In_ Win32FoundationClasses::CUniversalNamingConvention const& right_unc ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 

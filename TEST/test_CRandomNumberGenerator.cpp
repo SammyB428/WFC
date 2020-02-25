@@ -71,9 +71,9 @@ static _Check_return_ bool count_ones_and_zeroes( _In_ DWORD const number_of_dwo
       one_bits[ bit_number ] = 0;
    }
 
-   CRandomNumberGenerator2 generator;
-   //CRandomNumberGenerator generator;
-   //CSuperRandomNumberGenerator generator;
+   Win32FoundationClasses::CRandomNumberGenerator2 generator;
+   //Win32FoundationClasses::CRandomNumberGenerator generator;
+   //Win32FoundationClasses::CSuperRandomNumberGenerator generator;
 
    _tprintf( TEXT( "Testing %lu bits\n" ), number_of_dwords_to_test * 32 );
 
@@ -158,7 +158,7 @@ static _Check_return_ bool count_ones_and_zeroes( _In_ DWORD const number_of_dwo
          minimum_number_of_ones = one_bits[ bit_number ];
       }
 
-      format( output_string, L"bit%lu = %lu", bit_number, one_bits[ bit_number ] );
+      Win32FoundationClasses::format( output_string, L"bit%lu = %lu", bit_number, one_bits[ bit_number ] );
     //  _tprintf( TEXT( "%s\n" ), (LPCTSTR) output_string );
       //WFCTRACEVAL( TEXT( " " ), output_string );
    }
@@ -206,7 +206,7 @@ _Check_return_ bool test_CRandomNumberGenerator( _Out_ std::string& class_name, 
            6172232.0   8354498.0  10633180.0
 ************************************************************************/
 
-   CRandomNumberGenerator random_number( MAKELONG( 1802, 9373 ) );
+    Win32FoundationClasses::CRandomNumberGenerator random_number( MAKELONG( 1802, 9373 ) );
 
    class_name.assign(STRING_VIEW("CRandomNumberGenerator"));
 
@@ -275,7 +275,7 @@ _Check_return_ bool test_CRandomNumberGenerator( _Out_ std::string& class_name, 
       return(failure());
    }
 
-   CRandomNumberGenerator2 generator;
+   Win32FoundationClasses::CRandomNumberGenerator2 generator;
 
    // Don't let the generator produce truely random values.
    generator.Disable(true);

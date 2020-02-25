@@ -51,8 +51,6 @@ static char THIS_FILE[] = __FILE__;
 #define new DEBUG_NEW
 #endif // _DEBUG
 
-USING_WFC_NAMESPACE
-
 // Helper functions
 
 #define CLEAR(a,n) {\
@@ -73,7 +71,7 @@ USING_WFC_NAMESPACE
       (a)[ci] = (b)[ci];\
    }
 
-inline _Check_return_ int CReedSolomonErrorCorrectionCode::m_Mod( __in int x ) noexcept
+inline _Check_return_ int Win32FoundationClasses::CReedSolomonErrorCorrectionCode::m_Mod( _In_ int x ) noexcept
 {
    while ( x >= m_BlockSize )
    {
@@ -86,7 +84,7 @@ inline _Check_return_ int CReedSolomonErrorCorrectionCode::m_Mod( __in int x ) n
 
 // The class
 
-CReedSolomonErrorCorrectionCode::CReedSolomonErrorCorrectionCode()
+Win32FoundationClasses::CReedSolomonErrorCorrectionCode::CReedSolomonErrorCorrectionCode()
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -113,12 +111,12 @@ CReedSolomonErrorCorrectionCode::CReedSolomonErrorCorrectionCode()
    m_Initialize( 223 );
 }
 
-CReedSolomonErrorCorrectionCode::~CReedSolomonErrorCorrectionCode()
+Win32FoundationClasses::CReedSolomonErrorCorrectionCode::~CReedSolomonErrorCorrectionCode()
 {
    WFC_VALIDATE_POINTER( this );
 }
 
-_Check_return_ SSIZE_T CReedSolomonErrorCorrectionCode::Decode( __in std::vector<uint8_t> const& encoded_data, __out std::vector<uint8_t>& decoded_data ) noexcept
+_Check_return_ SSIZE_T Win32FoundationClasses::CReedSolomonErrorCorrectionCode::Decode( _In_ std::vector<uint8_t> const& encoded_data, _Out_ std::vector<uint8_t>& decoded_data ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -183,7 +181,7 @@ _Check_return_ SSIZE_T CReedSolomonErrorCorrectionCode::Decode( __in std::vector
    return( number_of_errors_corrected );
 }
 
-_Check_return_ bool CReedSolomonErrorCorrectionCode::Encode( __in std::vector<uint8_t> const& data, __out std::vector<uint8_t>& encoded_data ) noexcept
+_Check_return_ bool Win32FoundationClasses::CReedSolomonErrorCorrectionCode::Encode( _In_ std::vector<uint8_t> const& data, _Out_ std::vector<uint8_t>& encoded_data ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -258,7 +256,7 @@ _Check_return_ bool CReedSolomonErrorCorrectionCode::Encode( __in std::vector<ui
  * in R. Blahut's "Theory ... of Error-Correcting Codes".
  */
 
-_Check_return_ int CReedSolomonErrorCorrectionCode::m_DecodeChunk(__inout std::vector<uint8_t>& data, __out std::vector<int>& eras_pos, __in int no_eras ) noexcept
+_Check_return_ int Win32FoundationClasses::CReedSolomonErrorCorrectionCode::m_DecodeChunk(__inout std::vector<uint8_t>& data, _Out_ std::vector<int>& eras_pos, _In_ int no_eras ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -595,7 +593,7 @@ _Check_return_ int CReedSolomonErrorCorrectionCode::m_DecodeChunk(__inout std::v
 
 // data.GetSize() must be equal to m_NumberOfSymbolsPerBlock
 
-_Check_return_ bool CReedSolomonErrorCorrectionCode::m_EncodeChunk( __in std::vector<uint8_t> const& data, __out std::vector<uint8_t>& parity ) noexcept
+_Check_return_ bool Win32FoundationClasses::CReedSolomonErrorCorrectionCode::m_EncodeChunk( _In_ std::vector<uint8_t> const& data, _Out_ std::vector<uint8_t>& parity ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -670,7 +668,7 @@ _Check_return_ bool CReedSolomonErrorCorrectionCode::m_EncodeChunk( __in std::ve
    (0,0,...,0) is "infinity".
 */
 
-void CReedSolomonErrorCorrectionCode::m_GenerateGaloisField( void ) noexcept
+void Win32FoundationClasses::CReedSolomonErrorCorrectionCode::m_GenerateGaloisField( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -735,7 +733,7 @@ void CReedSolomonErrorCorrectionCode::m_GenerateGaloisField( void ) noexcept
  * g(x) = (x+1) (x+@) (x+@**2) (x+@**3)
  */
 
-void CReedSolomonErrorCorrectionCode::m_GeneratePolynomial( void ) noexcept
+void Win32FoundationClasses::CReedSolomonErrorCorrectionCode::m_GeneratePolynomial( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -779,7 +777,7 @@ void CReedSolomonErrorCorrectionCode::m_GeneratePolynomial( void ) noexcept
    }
 }
 
-void CReedSolomonErrorCorrectionCode::m_Initialize( _In_ int const number_of_symbols_per_block ) noexcept
+void Win32FoundationClasses::CReedSolomonErrorCorrectionCode::m_Initialize( _In_ int const number_of_symbols_per_block ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 

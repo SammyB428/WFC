@@ -51,29 +51,27 @@
 static char THIS_FILE[] = __FILE__;
 #endif // _DEBUG
 
-USING_WFC_NAMESPACE
-
 // Construction
 
-CMixerControlDetails::CMixerControlDetails()
+Win32FoundationClasses::CMixerControlDetails::CMixerControlDetails()
 {
    WFC_VALIDATE_POINTER( this );
    Empty();
 }
 
-CMixerControlDetails::CMixerControlDetails( __in CMixerControlDetails const& source ) noexcept
+Win32FoundationClasses::CMixerControlDetails::CMixerControlDetails( _In_ Win32FoundationClasses::CMixerControlDetails const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );
 }
 
-CMixerControlDetails::CMixerControlDetails( __in MIXERCONTROLDETAILS const& source )
+Win32FoundationClasses::CMixerControlDetails::CMixerControlDetails( _In_ MIXERCONTROLDETAILS const& source )
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );
 }
 
-CMixerControlDetails::~CMixerControlDetails()
+Win32FoundationClasses::CMixerControlDetails::~CMixerControlDetails()
 {
    WFC_VALIDATE_POINTER( this );
    Empty();
@@ -81,7 +79,7 @@ CMixerControlDetails::~CMixerControlDetails()
 
 // Methods
 
-void CMixerControlDetails::Copy( __in CMixerControlDetails const& source ) noexcept
+void Win32FoundationClasses::CMixerControlDetails::Copy( _In_ Win32FoundationClasses::CMixerControlDetails const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -98,7 +96,7 @@ void CMixerControlDetails::Copy( __in CMixerControlDetails const& source ) noexc
    NumberOfMultipleItemsPerChannel = source.NumberOfMultipleItemsPerChannel;
 }
 
-void CMixerControlDetails::Copy( __in MIXERCONTROLDETAILS const& source ) noexcept
+void Win32FoundationClasses::CMixerControlDetails::Copy( _In_ MIXERCONTROLDETAILS const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -112,7 +110,7 @@ void CMixerControlDetails::Copy( __in MIXERCONTROLDETAILS const& source ) noexce
 
 #if defined( _DEBUG ) && ! defined( WFC_NO_DUMPING )
 
-void CMixerControlDetails::Dump( CDumpContext& dump_context ) const
+void Win32FoundationClasses::CMixerControlDetails::Dump( CDumpContext& dump_context ) const
 {
    WFC_VALIDATE_POINTER( this );
    dump_context << TEXT( "a CMixerControlDetails at "             ) << (VOID *) this                   << TEXT( "\n{\n" );
@@ -125,7 +123,7 @@ void CMixerControlDetails::Dump( CDumpContext& dump_context ) const
 
 #endif // _DEBUG
 
-void CMixerControlDetails::Empty( void ) noexcept
+void Win32FoundationClasses::CMixerControlDetails::Empty( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -137,14 +135,14 @@ void CMixerControlDetails::Empty( void ) noexcept
 
 // Operators
 
-CMixerControlDetails& CMixerControlDetails::operator=( __in CMixerControlDetails const& source ) noexcept
+Win32FoundationClasses::CMixerControlDetails& Win32FoundationClasses::CMixerControlDetails::operator=( _In_ Win32FoundationClasses::CMixerControlDetails const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );
    return( *this );
 }
 
-CMixerControlDetails& CMixerControlDetails::operator=( __in MIXERCONTROLDETAILS const& source ) noexcept
+Win32FoundationClasses::CMixerControlDetails& Win32FoundationClasses::CMixerControlDetails::operator=( _In_ MIXERCONTROLDETAILS const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );

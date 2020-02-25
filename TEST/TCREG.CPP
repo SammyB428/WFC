@@ -56,9 +56,9 @@ _Check_return_ bool test_CRegistry(_Out_ std::string& class_name, _Out_ int& tes
 
    test_number_that_failed = 1;
 
-   CRegistry registry;
+   Win32FoundationClasses::CRegistry registry;
 
-   if ( registry.Connect( (HKEY) CRegistry::keyCurrentUser ) == false )
+   if ( registry.Connect( (HKEY)Win32FoundationClasses::CRegistry::keyCurrentUser ) == false )
    {
       ReportError( registry.GetErrorCode() );
       return( failure() );
@@ -66,7 +66,7 @@ _Check_return_ bool test_CRegistry(_Out_ std::string& class_name, _Out_ int& tes
 
    // Open HKEY_CURRENT_USER\Software
 
-   if ( registry.Open( L"Software", (CRegistry::CreatePermissions)(CRegistry::permissionRead bitor CRegistry::permissionSetValue ) ) == false )
+   if ( registry.Open( L"Software", (Win32FoundationClasses::CRegistry::CreatePermissions)(Win32FoundationClasses::CRegistry::permissionRead bitor Win32FoundationClasses::CRegistry::permissionSetValue ) ) == false )
    {
       ReportError( registry.GetErrorCode() );
       test_number_that_failed = 2;
@@ -102,7 +102,7 @@ _Check_return_ bool test_CRegistry(_Out_ std::string& class_name, _Out_ int& tes
 
    // Now let's enumerate the sub keys.
 
-   if ( registry.Open( TEXT( "Software\\WFC" ), (CRegistry::CreatePermissions)(CRegistry::permissionRead bitor CRegistry::permissionSetValue ) ) == false )
+   if ( registry.Open( TEXT( "Software\\WFC" ), (Win32FoundationClasses::CRegistry::CreatePermissions)(Win32FoundationClasses::CRegistry::permissionRead bitor Win32FoundationClasses::CRegistry::permissionSetValue ) ) == false )
    {
       ReportError( registry.GetErrorCode() );
       test_number_that_failed = 6;
@@ -124,7 +124,7 @@ _Check_return_ bool test_CRegistry(_Out_ std::string& class_name, _Out_ int& tes
    BYTE buffer[ 4096 ];
 
    DWORD size_of_buffer = 4096;
-   CRegistry::KeyValueTypes data_type;
+   Win32FoundationClasses::CRegistry::KeyValueTypes data_type;
 
    while( registry.EnumerateValues( index, sub_key_name, data_type, buffer, size_of_buffer ) == true )
    {

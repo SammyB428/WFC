@@ -51,8 +51,6 @@ static char THIS_FILE[] = __FILE__;
 #define new DEBUG_NEW
 #endif // _DEBUG
 
-USING_WFC_NAMESPACE
-
 _Check_return_ double Win32FoundationClasses::wfc_unicode_atof( __in_z LPCWSTR unicode_string ) noexcept
 {
    char ascii_string[ 4096 ];

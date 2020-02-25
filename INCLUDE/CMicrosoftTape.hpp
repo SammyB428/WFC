@@ -66,7 +66,7 @@ class CMicrosoftTape : public CTape
 
       virtual void Empty( void ) noexcept;
       virtual _Check_return_ bool EnumerateSets( void ) noexcept;
-      virtual _Check_return_ bool Open( __in UINT const tape_drive_number_starting_at_zero ) noexcept;
+      virtual _Check_return_ bool Open( _In_ UINT const tape_drive_number_starting_at_zero ) noexcept;
       virtual _Check_return_ bool ReadHeader( void ) noexcept;
 
 #if defined( _DEBUG ) && ! defined( WFC_NO_DUMPING )

@@ -51,9 +51,7 @@ static char THIS_FILE[] = __FILE__;
 #define new DEBUG_NEW
 #endif // _DEBUG
 
-USING_WFC_NAMESPACE
-
-CSimpleSocketFile::CSimpleSocketFile( __in SOCKET const client_id, __in_z LPCTSTR name, __in_z LPCTSTR dotted_ip_address )
+Win32FoundationClasses::CSimpleSocketFile::CSimpleSocketFile( _In_ SOCKET const client_id, __in_z LPCTSTR name, __in_z LPCTSTR dotted_ip_address )
 {
     WFC_VALIDATE_POINTER( this );
 
@@ -96,13 +94,13 @@ CSimpleSocketFile::CSimpleSocketFile( __in SOCKET const client_id, __in_z LPCTST
 #endif // WFC_STL
 }
 
-CSimpleSocketFile::~CSimpleSocketFile()
+Win32FoundationClasses::CSimpleSocketFile::~CSimpleSocketFile()
 {
     WFC_VALIDATE_POINTER( this );
     Close();
 }
 
-_Check_return_ bool CSimpleSocketFile::Open( void ) noexcept
+_Check_return_ bool Win32FoundationClasses::CSimpleSocketFile::Open( void ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
     return( true );
@@ -110,7 +108,7 @@ _Check_return_ bool CSimpleSocketFile::Open( void ) noexcept
 
 #pragma warning( disable : 4100 )
 
-_Check_return_ bool CSimpleSocketFile::Open(_In_ std::filesystem::path const& name, _In_ UINT const port ) noexcept
+_Check_return_ bool Win32FoundationClasses::CSimpleSocketFile::Open(_In_ std::filesystem::path const& name, _In_ UINT const port ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
     return( true );

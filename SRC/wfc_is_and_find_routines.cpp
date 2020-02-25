@@ -46,9 +46,7 @@ static char THIS_FILE[] = __FILE__;
 #define new DEBUG_NEW
 #endif // _DEBUG
 
-USING_WFC_NAMESPACE
-
-_Check_return_ bool PASCAL Win32FoundationClasses::wfc_is_dotted_ip_address( _In_ std::string_view ip_address ) noexcept
+_Check_return_ bool Win32FoundationClasses::wfc_is_dotted_ip_address( _In_ std::string_view ip_address ) noexcept
 {
     if ( ip_address.empty() == true or ip_address.length() < 7 )
     {
@@ -159,7 +157,118 @@ _Check_return_ bool PASCAL Win32FoundationClasses::wfc_is_dotted_ip_address( _In
     return( true );
 }
 
-_Check_return_ bool PASCAL Win32FoundationClasses::wfc_is_dotted_ip_address( _In_ std::wstring_view ip_address ) noexcept
+_Check_return_ bool Win32FoundationClasses::wfc_is_dotted_ip_address(_In_ std::u16string_view ip_address) noexcept
+{
+    if (ip_address.empty() == true or ip_address.length() < 7)
+    {
+        return(false);
+    }
+
+    std::wstring a;
+    std::wstring b;
+    std::wstring c;
+    std::wstring d;
+
+    int string_index = 0;
+
+    for (auto const ip_address_index : Range(ip_address.length()))
+    {
+        if (ip_address[ip_address_index] != '.' and
+            isdigit(static_cast<int>(ip_address[ip_address_index])) == 0)
+        {
+            // Illegal character
+            return(false);
+        }
+
+        if (ip_address[ip_address_index] == '.')
+        {
+            string_index++;
+
+            if (string_index > 3)
+            {
+                // Too many dots
+                return(false);
+            }
+        }
+        else
+        {
+            if (string_index == 0)
+            {
+                a.push_back(ip_address[ip_address_index]);
+
+                if (a.length() > 3)
+                {
+                    // Too many digits
+                    return(false);
+                }
+            }
+            else if (string_index == 1)
+            {
+                b.push_back(ip_address[ip_address_index]);
+
+                if (b.length() > 3)
+                {
+                    // Too many digits
+                    return(false);
+                }
+            }
+            else if (string_index == 2)
+            {
+                c.push_back(ip_address[ip_address_index]);
+
+                if (c.length() > 3)
+                {
+                    // Too many digits
+                    return(false);
+                }
+            }
+            else
+            {
+                d.push_back(ip_address[ip_address_index]);
+
+                if (d.length() > 3)
+                {
+                    // Too many digits
+                    return(false);
+                }
+            }
+        }
+    }
+
+    if (a.empty() == true or
+        b.empty() == true or
+        c.empty() == true or
+        d.empty() == true)
+    {
+        return(false);
+    }
+
+    // OK, nothing but digits and dots of the right lengths, check the values
+
+    if (as_integer(a) > 255)
+    {
+        return(false);
+    }
+
+    if (as_integer(b) > 255)
+    {
+        return(false);
+    }
+
+    if (as_integer(c) > 255)
+    {
+        return(false);
+    }
+
+    if (as_integer(d) > 255)
+    {
+        return(false);
+    }
+
+    return(true);
+}
+
+_Check_return_ bool Win32FoundationClasses::wfc_is_dotted_ip_address( _In_ std::wstring_view ip_address ) noexcept
 {
     if ( ip_address.empty() == true or ip_address.length() < 7)
     {
@@ -270,7 +379,7 @@ _Check_return_ bool PASCAL Win32FoundationClasses::wfc_is_dotted_ip_address( _In
     return( true );
 }
 
-_Check_return_ bool PASCAL Win32FoundationClasses::wfc_is_guid( _In_ std::string_view characters ) noexcept
+_Check_return_ bool Win32FoundationClasses::wfc_is_guid( _In_ std::string_view characters ) noexcept
 {
     //           11111111112222222222333333333
     // 012345678901234567890123456789012345678
@@ -327,7 +436,64 @@ _Check_return_ bool PASCAL Win32FoundationClasses::wfc_is_guid( _In_ std::string
     return(true);
 }
 
-_Check_return_ bool PASCAL Win32FoundationClasses::wfc_is_guid( _In_ std::wstring_view characters ) noexcept
+_Check_return_ bool Win32FoundationClasses::wfc_is_guid(_In_ std::u16string_view characters) noexcept
+{
+    //           11111111112222222222333333333
+    // 012345678901234567890123456789012345678
+    // 0AEE2A92-BCBB-11d0-8C72-00C04FC2B085
+    if (characters.length() < 36)
+    {
+        return(false);
+    }
+
+    if (characters[8] != '-' or
+        characters[13] != '-' or
+        characters[18] != '-' or
+        characters[23] != '-')
+    {
+        return(false);
+    }
+
+    if (not WFC_IS_HEXADECIMAL(characters[0]) or
+        not WFC_IS_HEXADECIMAL(characters[1]) or
+        not WFC_IS_HEXADECIMAL(characters[2]) or
+        not WFC_IS_HEXADECIMAL(characters[3]) or
+        not WFC_IS_HEXADECIMAL(characters[4]) or
+        not WFC_IS_HEXADECIMAL(characters[5]) or
+        not WFC_IS_HEXADECIMAL(characters[6]) or
+        not WFC_IS_HEXADECIMAL(characters[7]) or
+        not WFC_IS_HEXADECIMAL(characters[9]) or
+        not WFC_IS_HEXADECIMAL(characters[10]) or
+        not WFC_IS_HEXADECIMAL(characters[11]) or
+        not WFC_IS_HEXADECIMAL(characters[12]) or
+        not WFC_IS_HEXADECIMAL(characters[14]) or
+        not WFC_IS_HEXADECIMAL(characters[15]) or
+        not WFC_IS_HEXADECIMAL(characters[16]) or
+        not WFC_IS_HEXADECIMAL(characters[17]) or
+        not WFC_IS_HEXADECIMAL(characters[19]) or
+        not WFC_IS_HEXADECIMAL(characters[20]) or
+        not WFC_IS_HEXADECIMAL(characters[21]) or
+        not WFC_IS_HEXADECIMAL(characters[22]) or
+        not WFC_IS_HEXADECIMAL(characters[24]) or
+        not WFC_IS_HEXADECIMAL(characters[25]) or
+        not WFC_IS_HEXADECIMAL(characters[26]) or
+        not WFC_IS_HEXADECIMAL(characters[27]) or
+        not WFC_IS_HEXADECIMAL(characters[28]) or
+        not WFC_IS_HEXADECIMAL(characters[29]) or
+        not WFC_IS_HEXADECIMAL(characters[30]) or
+        not WFC_IS_HEXADECIMAL(characters[31]) or
+        not WFC_IS_HEXADECIMAL(characters[32]) or
+        not WFC_IS_HEXADECIMAL(characters[33]) or
+        not WFC_IS_HEXADECIMAL(characters[34]) or
+        not WFC_IS_HEXADECIMAL(characters[35]))
+    {
+        return(false);
+    }
+
+    return(true);
+}
+
+_Check_return_ bool Win32FoundationClasses::wfc_is_guid( _In_ std::wstring_view characters ) noexcept
 {
     //           11111111112222222222333333333
     // 012345678901234567890123456789012345678
@@ -384,7 +550,7 @@ _Check_return_ bool PASCAL Win32FoundationClasses::wfc_is_guid( _In_ std::wstrin
     return( true );
 }
 
-_Check_return_ bool PASCAL Win32FoundationClasses::wfc_is_guid_with_curlies( _In_ std::string_view characters ) noexcept
+_Check_return_ bool Win32FoundationClasses::wfc_is_guid_with_curlies( _In_ std::string_view characters ) noexcept
 {
     //           11111111112222222222333333333
     // 012345678901234567890123456789012345678
@@ -446,7 +612,69 @@ _Check_return_ bool PASCAL Win32FoundationClasses::wfc_is_guid_with_curlies( _In
     return(true);
 }
 
-_Check_return_ bool PASCAL Win32FoundationClasses::wfc_is_guid_with_curlies( _In_ std::wstring_view characters ) noexcept
+_Check_return_ bool Win32FoundationClasses::wfc_is_guid_with_curlies(_In_ std::u16string_view characters) noexcept
+{
+    //           11111111112222222222333333333
+    // 012345678901234567890123456789012345678
+    // {0AEE2A92-BCBB-11d0-8C72-00C04FC2B085}
+    if (characters.length() < 38)
+    {
+        return(false);
+    }
+
+    if (characters[0] != '{' or characters[37] != '}')
+    {
+        return(false);
+    }
+
+    if (characters[9] != '-' or
+        characters[14] != '-' or
+        characters[19] != '-' or
+        characters[24] != '-')
+    {
+        return(false);
+    }
+
+    if (not WFC_IS_HEXADECIMAL(characters[1]) or
+        not WFC_IS_HEXADECIMAL(characters[2]) or
+        not WFC_IS_HEXADECIMAL(characters[3]) or
+        not WFC_IS_HEXADECIMAL(characters[4]) or
+        not WFC_IS_HEXADECIMAL(characters[5]) or
+        not WFC_IS_HEXADECIMAL(characters[6]) or
+        not WFC_IS_HEXADECIMAL(characters[7]) or
+        not WFC_IS_HEXADECIMAL(characters[8]) or
+        not WFC_IS_HEXADECIMAL(characters[10]) or
+        not WFC_IS_HEXADECIMAL(characters[11]) or
+        not WFC_IS_HEXADECIMAL(characters[12]) or
+        not WFC_IS_HEXADECIMAL(characters[13]) or
+        not WFC_IS_HEXADECIMAL(characters[15]) or
+        not WFC_IS_HEXADECIMAL(characters[16]) or
+        not WFC_IS_HEXADECIMAL(characters[17]) or
+        not WFC_IS_HEXADECIMAL(characters[18]) or
+        not WFC_IS_HEXADECIMAL(characters[20]) or
+        not WFC_IS_HEXADECIMAL(characters[21]) or
+        not WFC_IS_HEXADECIMAL(characters[22]) or
+        not WFC_IS_HEXADECIMAL(characters[23]) or
+        not WFC_IS_HEXADECIMAL(characters[25]) or
+        not WFC_IS_HEXADECIMAL(characters[26]) or
+        not WFC_IS_HEXADECIMAL(characters[27]) or
+        not WFC_IS_HEXADECIMAL(characters[28]) or
+        not WFC_IS_HEXADECIMAL(characters[29]) or
+        not WFC_IS_HEXADECIMAL(characters[30]) or
+        not WFC_IS_HEXADECIMAL(characters[31]) or
+        not WFC_IS_HEXADECIMAL(characters[32]) or
+        not WFC_IS_HEXADECIMAL(characters[33]) or
+        not WFC_IS_HEXADECIMAL(characters[34]) or
+        not WFC_IS_HEXADECIMAL(characters[35]) or
+        not WFC_IS_HEXADECIMAL(characters[36]))
+    {
+        return(false);
+    }
+
+    return(true);
+}
+
+_Check_return_ bool Win32FoundationClasses::wfc_is_guid_with_curlies( _In_ std::wstring_view characters ) noexcept
 {
     //           11111111112222222222333333333
     // 012345678901234567890123456789012345678
@@ -508,7 +736,7 @@ _Check_return_ bool PASCAL Win32FoundationClasses::wfc_is_guid_with_curlies( _In
     return( true );
 }
 
-_Check_return_ bool PASCAL Win32FoundationClasses::wfc_is_octal( __in_bcount( number_of_bytes ) uint8_t const * buffer, __in std::size_t const number_of_bytes ) noexcept
+_Check_return_ bool Win32FoundationClasses::wfc_is_octal( __in_bcount( number_of_bytes ) uint8_t const * buffer, _In_ std::size_t const number_of_bytes ) noexcept
 {
     if ( buffer == nullptr or number_of_bytes < 1 )
     {
@@ -526,7 +754,7 @@ _Check_return_ bool PASCAL Win32FoundationClasses::wfc_is_octal( __in_bcount( nu
     return( true );
 }
 
-_Check_return_ bool PASCAL Win32FoundationClasses::wfc_is_wide_octal( __in_bcount( number_of_bytes ) uint8_t const * buffer, __in std::size_t const number_of_bytes ) noexcept
+_Check_return_ bool Win32FoundationClasses::wfc_is_wide_octal( __in_bcount( number_of_bytes ) uint8_t const * buffer, _In_ std::size_t const number_of_bytes ) noexcept
 {
     if ( buffer == nullptr or number_of_bytes < 2 )
     {
@@ -548,7 +776,7 @@ _Check_return_ bool PASCAL Win32FoundationClasses::wfc_is_wide_octal( __in_bcoun
     return( true );
 }
 
-_Check_return_ bool PASCAL Win32FoundationClasses::wfc_is_octal_then_NULLs( __in_bcount( number_of_bytes ) uint8_t const * buffer, __in std::size_t const number_of_bytes ) noexcept
+_Check_return_ bool Win32FoundationClasses::wfc_is_octal_then_NULLs( __in_bcount( number_of_bytes ) uint8_t const * buffer, _In_ std::size_t const number_of_bytes ) noexcept
 {
     if ( buffer == nullptr or number_of_bytes < 1 )
     {
@@ -620,7 +848,7 @@ _Check_return_ bool PASCAL Win32FoundationClasses::wfc_is_octal_then_NULLs( __in
     return( true );
 }
 
-_Check_return_ bool PASCAL Win32FoundationClasses::wfc_is_wide_octal_then_NULLs( __in_bcount( number_of_bytes ) uint8_t const * buffer, __in std::size_t const number_of_bytes ) noexcept
+_Check_return_ bool Win32FoundationClasses::wfc_is_wide_octal_then_NULLs( __in_bcount( number_of_bytes ) uint8_t const * buffer, _In_ std::size_t const number_of_bytes ) noexcept
 {
     if ( buffer == nullptr or number_of_bytes < 2 )
     {
@@ -696,7 +924,7 @@ _Check_return_ bool PASCAL Win32FoundationClasses::wfc_is_wide_octal_then_NULLs(
     return( true );
 }
 
-_Check_return_ bool PASCAL Win32FoundationClasses::wfc_is_hexadecimal( __in_bcount( number_of_bytes ) uint8_t const * buffer, __in std::size_t const number_of_bytes ) noexcept
+_Check_return_ bool Win32FoundationClasses::wfc_is_hexadecimal( __in_bcount( number_of_bytes ) uint8_t const * buffer, _In_ std::size_t const number_of_bytes ) noexcept
 {
     if ( buffer == nullptr or number_of_bytes < 1 )
     {
@@ -714,7 +942,7 @@ _Check_return_ bool PASCAL Win32FoundationClasses::wfc_is_hexadecimal( __in_bcou
     return( true );
 }
 
-_Check_return_ bool PASCAL Win32FoundationClasses::wfc_is_wide_hexadecimal( __in_bcount( number_of_bytes ) uint8_t const * buffer, __in std::size_t const number_of_bytes ) noexcept
+_Check_return_ bool Win32FoundationClasses::wfc_is_wide_hexadecimal( __in_bcount( number_of_bytes ) uint8_t const * buffer, _In_ std::size_t const number_of_bytes ) noexcept
 {
     if ( buffer == nullptr or number_of_bytes < 2 )
     {
@@ -736,7 +964,7 @@ _Check_return_ bool PASCAL Win32FoundationClasses::wfc_is_wide_hexadecimal( __in
     return( true );
 }
 
-_Check_return_ bool PASCAL Win32FoundationClasses::wfc_is_hexadecimal_then_NULLs( __in_bcount( number_of_bytes ) uint8_t const * buffer, __in std::size_t const number_of_bytes ) noexcept
+_Check_return_ bool Win32FoundationClasses::wfc_is_hexadecimal_then_NULLs( __in_bcount( number_of_bytes ) uint8_t const * buffer, _In_ std::size_t const number_of_bytes ) noexcept
 {
     if ( buffer == nullptr or number_of_bytes < 1 )
     {
@@ -808,7 +1036,7 @@ _Check_return_ bool PASCAL Win32FoundationClasses::wfc_is_hexadecimal_then_NULLs
     return( true );
 }
 
-_Check_return_ bool PASCAL Win32FoundationClasses::wfc_is_wide_hexadecimal_then_NULLs( __in_bcount( number_of_bytes ) uint8_t const * buffer, __in std::size_t const number_of_bytes ) noexcept
+_Check_return_ bool Win32FoundationClasses::wfc_is_wide_hexadecimal_then_NULLs( __in_bcount( number_of_bytes ) uint8_t const * buffer, _In_ std::size_t const number_of_bytes ) noexcept
 {
     if ( buffer == nullptr or number_of_bytes < 2 )
     {
@@ -884,7 +1112,7 @@ _Check_return_ bool PASCAL Win32FoundationClasses::wfc_is_wide_hexadecimal_then_
     return( true );
 }
 
-_Check_return_ bool PASCAL Win32FoundationClasses::wfc_is_decimal( __in_bcount( number_of_bytes ) uint8_t const * buffer, __in std::size_t const number_of_bytes ) noexcept
+_Check_return_ bool Win32FoundationClasses::wfc_is_decimal( __in_bcount( number_of_bytes ) uint8_t const * buffer, _In_ std::size_t const number_of_bytes ) noexcept
 {
     if ( buffer == nullptr or number_of_bytes < 1 )
     {
@@ -902,7 +1130,7 @@ _Check_return_ bool PASCAL Win32FoundationClasses::wfc_is_decimal( __in_bcount( 
     return( true );
 }
 
-_Check_return_ bool PASCAL Win32FoundationClasses::wfc_is_wide_decimal( __in_bcount( number_of_bytes ) uint8_t const * buffer, __in std::size_t const number_of_bytes ) noexcept
+_Check_return_ bool Win32FoundationClasses::wfc_is_wide_decimal( __in_bcount( number_of_bytes ) uint8_t const * buffer, _In_ std::size_t const number_of_bytes ) noexcept
 {
     if ( buffer == nullptr or number_of_bytes < 2 )
     {
@@ -924,7 +1152,7 @@ _Check_return_ bool PASCAL Win32FoundationClasses::wfc_is_wide_decimal( __in_bco
     return( true );
 }
 
-_Check_return_ bool PASCAL Win32FoundationClasses::wfc_is_decimal_then_NULLs( __in_bcount( number_of_bytes ) uint8_t const * buffer, __in std::size_t const number_of_bytes ) noexcept
+_Check_return_ bool Win32FoundationClasses::wfc_is_decimal_then_NULLs( __in_bcount( number_of_bytes ) uint8_t const * buffer, _In_ std::size_t const number_of_bytes ) noexcept
 {
     if ( buffer == nullptr or number_of_bytes < 1 )
     {
@@ -996,7 +1224,7 @@ _Check_return_ bool PASCAL Win32FoundationClasses::wfc_is_decimal_then_NULLs( __
     return( true );
 }
 
-_Check_return_ bool PASCAL Win32FoundationClasses::wfc_is_wide_decimal_then_NULLs( __in_bcount( number_of_bytes ) uint8_t const * buffer, __in std::size_t const number_of_bytes ) noexcept
+_Check_return_ bool Win32FoundationClasses::wfc_is_wide_decimal_then_NULLs( __in_bcount( number_of_bytes ) uint8_t const * buffer, _In_ std::size_t const number_of_bytes ) noexcept
 {
     if ( buffer == nullptr or number_of_bytes < 2 )
     {
@@ -1072,7 +1300,7 @@ _Check_return_ bool PASCAL Win32FoundationClasses::wfc_is_wide_decimal_then_NULL
     return( true );
 }
 
-_Check_return_ int Win32FoundationClasses::wfc_find_curly_guid( __in_bcount( number_of_bytes_in_buffer ) uint8_t const * buffer, __in std::size_t const number_of_bytes_in_buffer ) noexcept
+_Check_return_ int Win32FoundationClasses::wfc_find_curly_guid( __in_bcount( number_of_bytes_in_buffer ) uint8_t const * buffer, _In_ std::size_t const number_of_bytes_in_buffer ) noexcept
 {
     if ( buffer == nullptr or number_of_bytes_in_buffer < 38 )
     {
@@ -1093,7 +1321,7 @@ _Check_return_ int Win32FoundationClasses::wfc_find_curly_guid( __in_bcount( num
     return( GUID_NOT_FOUND );
 }
 
-_Check_return_ int Win32FoundationClasses::wfc_find_wide_curly_guid( __in_bcount( number_of_bytes_in_buffer ) uint8_t const * buffer, __in std::size_t const number_of_bytes_in_buffer ) noexcept
+_Check_return_ int Win32FoundationClasses::wfc_find_wide_curly_guid( __in_bcount( number_of_bytes_in_buffer ) uint8_t const * buffer, _In_ std::size_t const number_of_bytes_in_buffer ) noexcept
 {
     if ( buffer == nullptr or number_of_bytes_in_buffer < 76 )
     {

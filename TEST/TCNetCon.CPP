@@ -54,9 +54,9 @@ void test_CNetworkConnections( __in_z LPCTSTR machine_name ) noexcept
 {
    WFCTRACEINIT( TEXT( "test_CNetworkConnections()" ) );
 
-   CNetworkConnections connections( machine_name );
+   Win32FoundationClasses::CNetworkConnections connections( machine_name );
 
-   CNetworkConnectionInformation connection_information;
+   Win32FoundationClasses::CNetworkConnectionInformation connection_information;
 
    if ( connections.Enumerate( TEXT( "data" ) ) == true )
    {
@@ -79,7 +79,7 @@ void test_CNetworkConnections( __in_z LPCTSTR machine_name ) noexcept
 
       std::wstring error_message;
 
-      Convert_NERR_Code_to_String( error_code, error_message );
+      Win32FoundationClasses::Convert_NERR_Code_to_String( error_code, error_message );
 
       _tprintf( TEXT( "CNetworkConnections.Enumerate( CNetworkConnectionInformation ), ErrorCode == %d \"%s\"\n" ), error_code, error_message.c_str() );
    }

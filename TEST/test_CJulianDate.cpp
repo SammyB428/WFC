@@ -54,7 +54,7 @@ __checkReturn bool test_CJulianDate( __out std::string& class_name, __out int& t
 {
    class_name.assign(STRING_VIEW("CJulianDate"));
 
-   CJulianDate date;
+   Win32FoundationClasses::CJulianDate date;
 
    (void) date.Set( 2003, 11, 24 );
 

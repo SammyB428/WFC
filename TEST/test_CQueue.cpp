@@ -54,7 +54,7 @@ __checkReturn bool test_CQueue( __out std::string& class_name, __out int& test_n
 {
    class_name.assign(STRING_VIEW("CQueue"));
 
-   CQueue queue( 1 ); // A really small queue
+   Win32FoundationClasses::CQueue queue( 1 ); // A really small queue
 
    if ( queue.Add( 1 ) == false )
    {
@@ -280,7 +280,7 @@ __checkReturn bool test_CQueue( __out std::string& class_name, __out int& test_n
 
    // OK, we passed the simple tests
 
-   CQueue queue2( 5 );
+   Win32FoundationClasses::CQueue queue2( 5 );
 
    if ( queue2.Add( 1 ) == false ) // m_AddIndex is now 1
    {

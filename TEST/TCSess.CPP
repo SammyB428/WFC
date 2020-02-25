@@ -50,7 +50,7 @@ static char THIS_FILE[] = __FILE__;
 #define new DEBUG_NEW
 #endif // _DEBUG
 
-void print_information( CNetworkSessionInformation& information ) noexcept
+void print_information(Win32FoundationClasses::CNetworkSessionInformation& information ) noexcept
 {
    _tprintf( TEXT( "\"%s\" - \"%s\" - %d - %s - %s - %d - \"%s\" - \"%s\"\n" ),
            information.ClientName.c_str(),
@@ -67,9 +67,9 @@ void test_CNetSession( LPCTSTR machine_name ) noexcept
 {
    WFCTRACEINIT( TEXT( "test_CNetSession()" ) );
 
-   CNetworkSessions session;
+   Win32FoundationClasses::CNetworkSessions session;
 
-   CNetworkSessionInformation information;
+   Win32FoundationClasses::CNetworkSessionInformation information;
 
    session.Open( machine_name );
 
@@ -88,7 +88,7 @@ void test_CNetSession( LPCTSTR machine_name ) noexcept
 
       std::wstring error_message;
 
-      Convert_NERR_Code_to_String( error_code, error_message );
+      Win32FoundationClasses::Convert_NERR_Code_to_String( error_code, error_message );
 
       _tprintf( TEXT( "CNetSession.ErrorCode == %d \"%s\"\n" ), error_code, error_message.c_str());
    }

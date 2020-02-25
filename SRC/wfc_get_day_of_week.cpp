@@ -51,9 +51,7 @@ static char THIS_FILE[] = __FILE__;
 #define new DEBUG_NEW
 #endif // _DEBUG
 
-USING_WFC_NAMESPACE
-
-_Check_return_ bool PASCAL Win32FoundationClasses::wfc_get_day_of_week( __in int year_with_century, __in int month, __in int day, __out int& day_of_week ) noexcept
+_Check_return_ bool Win32FoundationClasses::wfc_get_day_of_week( _In_ int year_with_century, _In_ int month, _In_ int day, _Out_ int& day_of_week ) noexcept
 {
    day_of_week = 0;
 

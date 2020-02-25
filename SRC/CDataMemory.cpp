@@ -51,66 +51,64 @@ static char THIS_FILE[] = __FILE__;
 #define new DEBUG_NEW
 #endif // _DEBUG
 
-USING_WFC_NAMESPACE
-
-CDataMemory::CDataMemory() noexcept
+Win32FoundationClasses::CDataMemory::CDataMemory() noexcept
 {
    WFC_VALIDATE_POINTER( this );
    m_Position = 0;
 }
 
-CDataMemory::CDataMemory( __in CDataMemory const& source ) noexcept
+Win32FoundationClasses::CDataMemory::CDataMemory( _In_ Win32FoundationClasses::CDataMemory const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );
 }
 
-CDataMemory::CDataMemory( __in_bcount( number_of_bytes ) uint8_t const * buffer_p, __in std::size_t const number_of_bytes ) noexcept
+Win32FoundationClasses::CDataMemory::CDataMemory( __in_bcount( number_of_bytes ) uint8_t const * buffer_p, _In_ std::size_t const number_of_bytes ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER_NULL_OK( buffer_p );
    Copy( buffer_p, number_of_bytes );
 }
 
-CDataMemory::CDataMemory( __in std::vector<uint8_t> const& source ) noexcept
+Win32FoundationClasses::CDataMemory::CDataMemory( _In_ std::vector<uint8_t> const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );
 }
 
-CDataMemory::~CDataMemory() noexcept
+Win32FoundationClasses::CDataMemory::~CDataMemory() noexcept
 {
    WFC_VALIDATE_POINTER( this );
    m_Position = 0;
 }
 
-void CDataMemory::Append( __in std::vector<uint8_t> const& data ) noexcept
+void Win32FoundationClasses::CDataMemory::Append( _In_ std::vector<uint8_t> const& data ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    m_Data.insert( std::end(m_Data), std::cbegin(data), std::cend(data) );
    m_Position = m_Data.size();
 }
 
-void CDataMemory::Append( __in CDataMemory const& source ) noexcept
+void Win32FoundationClasses::CDataMemory::Append( _In_ Win32FoundationClasses::CDataMemory const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Append( source.m_Data );
 }
 
-void CDataMemory::AppendTo( __out std::vector<uint8_t>& destination ) noexcept
+void Win32FoundationClasses::CDataMemory::AppendTo( _Out_ std::vector<uint8_t>& destination ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    destination.insert( std::end(destination), std::cbegin(m_Data), std::cend(m_Data) );
 }
 
-void CDataMemory::Close( void ) noexcept
+void Win32FoundationClasses::CDataMemory::Close( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    m_Position = 0;
    m_Data.clear();
 }
 
-void CDataMemory::Copy( __in_bcount( number_of_bytes ) uint8_t const * buffer_p, __in std::size_t const number_of_bytes ) noexcept
+void Win32FoundationClasses::CDataMemory::Copy( __in_bcount( number_of_bytes ) uint8_t const * buffer_p, _In_ std::size_t const number_of_bytes ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER_NULL_OK( buffer_p );
@@ -135,7 +133,7 @@ void CDataMemory::Copy( __in_bcount( number_of_bytes ) uint8_t const * buffer_p,
    WFC_END_CATCH_ALL
 }
 
-void CDataMemory::Copy( __in std::vector<uint8_t> const& source ) noexcept
+void Win32FoundationClasses::CDataMemory::Copy( _In_ std::vector<uint8_t> const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -143,7 +141,7 @@ void CDataMemory::Copy( __in std::vector<uint8_t> const& source ) noexcept
    m_Data = source;
 }
 
-void CDataMemory::Copy( __in CDataMemory const& source ) noexcept
+void Win32FoundationClasses::CDataMemory::Copy( _In_ Win32FoundationClasses::CDataMemory const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -151,43 +149,43 @@ void CDataMemory::Copy( __in CDataMemory const& source ) noexcept
    m_Position = source.m_Position;
 }
 
-void CDataMemory::CopyTo( __out std::vector<uint8_t>& data ) noexcept
+void Win32FoundationClasses::CDataMemory::CopyTo( _Out_ std::vector<uint8_t>& data ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    data = m_Data;
 }
 
-void CDataMemory::Empty( void ) noexcept
+void Win32FoundationClasses::CDataMemory::Empty( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    m_Position = 0;
    m_Data.clear();
 }
 
-void CDataMemory::Flush( void ) noexcept
+void Win32FoundationClasses::CDataMemory::Flush( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 }
 
-_Check_return_ BYTE const * CDataMemory::GetData( void ) const noexcept
+_Check_return_ BYTE const * Win32FoundationClasses::CDataMemory::GetData( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
    return( m_Data.data() );
 }
 
-_Check_return_ uint64_t CDataMemory::GetLength( void ) const noexcept
+_Check_return_ uint64_t Win32FoundationClasses::CDataMemory::GetLength( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
    return( m_Data.size() );
 }
 
-_Check_return_ uint64_t CDataMemory::GetPosition( void ) const noexcept
+_Check_return_ uint64_t Win32FoundationClasses::CDataMemory::GetPosition( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
    return( m_Position );
 }
 
-_Check_return_ bool CDataMemory::Open(_In_ std::filesystem::path const& filename, _In_ UINT const mode ) noexcept
+_Check_return_ bool Win32FoundationClasses::CDataMemory::Open(_In_ std::filesystem::path const& filename, _In_ UINT const mode ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -210,7 +208,7 @@ _Check_return_ bool CDataMemory::Open(_In_ std::filesystem::path const& filename
    WFC_END_CATCH_ALL
 }
 
-_Check_return_ UINT CDataMemory::Read(__out_bcount(read_size) void * buffer, __in UINT const read_size ) noexcept
+_Check_return_ UINT Win32FoundationClasses::CDataMemory::Read(__out_bcount(read_size) void * buffer, _In_ UINT const read_size ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER_NULL_OK( buffer );
@@ -264,7 +262,7 @@ _Check_return_ UINT CDataMemory::Read(__out_bcount(read_size) void * buffer, __i
    WFC_END_CATCH_ALL
 }
 
-_Check_return_ uint64_t CDataMemory::Seek(_In_ int64_t const offset, _In_ CFile64::SeekPosition const from ) noexcept
+_Check_return_ uint64_t Win32FoundationClasses::CDataMemory::Seek(_In_ int64_t const offset, _In_ Win32FoundationClasses::CFile64::SeekPosition const from ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -299,7 +297,7 @@ _Check_return_ uint64_t CDataMemory::Seek(_In_ int64_t const offset, _In_ CFile6
    return( m_Position );
 }
 
-void CDataMemory::Write( __in_bcount( number_of_bytes_to_write ) void const * buffer, __in UINT const number_of_bytes_to_write ) noexcept
+void Win32FoundationClasses::CDataMemory::Write( __in_bcount( number_of_bytes_to_write ) void const * buffer, _In_ UINT const number_of_bytes_to_write ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER_NULL_OK( buffer );
@@ -337,28 +335,28 @@ void CDataMemory::Write( __in_bcount( number_of_bytes_to_write ) void const * bu
    WFC_END_CATCH_ALL
 }
 
-_Check_return_ CDataMemory const& CDataMemory::operator=( _In_ CDataMemory const& source ) noexcept
+_Check_return_ Win32FoundationClasses::CDataMemory const& Win32FoundationClasses::CDataMemory::operator=( _In_ Win32FoundationClasses::CDataMemory const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );
    return( *this );
 }
 
-_Check_return_ CDataMemory const& CDataMemory::operator=(_In_ std::vector<uint8_t> const& source ) noexcept
+_Check_return_ Win32FoundationClasses::CDataMemory const& Win32FoundationClasses::CDataMemory::operator=(_In_ std::vector<uint8_t> const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );
    return( *this );
 }
 
-_Check_return_ CDataMemory const& CDataMemory::operator+=(_In_ std::vector<uint8_t> const& source ) noexcept
+_Check_return_ Win32FoundationClasses::CDataMemory const& Win32FoundationClasses::CDataMemory::operator+=(_In_ std::vector<uint8_t> const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Append( source );
    return( *this );
 }
 
-_Check_return_ CDataMemory const& CDataMemory::operator+=(_In_ CDataMemory const& source ) noexcept
+_Check_return_ Win32FoundationClasses::CDataMemory const& Win32FoundationClasses::CDataMemory::operator+=(_In_ Win32FoundationClasses::CDataMemory const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Append( source );

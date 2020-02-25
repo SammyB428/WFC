@@ -72,11 +72,11 @@ class CModem : public CSerialFile
 
       virtual ~CModem();
 
-      virtual _Check_return_ bool Connect( __in DWORD number_of_seonds_to_wait = 30 ) noexcept;
+      virtual _Check_return_ bool Connect( _In_ DWORD number_of_seonds_to_wait = 30 ) noexcept;
       virtual _Check_return_ bool Disconnect( void ) noexcept; // Sends +++ATH
       virtual _Check_return_ bool IsConnected( void ) const noexcept;
-      virtual void GetPhoneNumber( __out std::string& phone_number_to_dial ) const noexcept;
-      virtual void SetPhoneNumber( __in std::string const& phone_number_to_dial ) noexcept;
+      virtual void GetPhoneNumber( _Out_ std::string& phone_number_to_dial ) const noexcept;
+      virtual void SetPhoneNumber( _In_ std::string const& phone_number_to_dial ) noexcept;
       
 #if defined( _DEBUG ) && ! defined( WFC_NO_DUMPING )
 

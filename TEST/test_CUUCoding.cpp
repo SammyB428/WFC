@@ -65,7 +65,7 @@ __checkReturn bool test_CUUCoding( __out std::string& class_name, __out int& tes
 
     std::vector<uint8_t> encoded_bytes;
 
-    CUUCoding coder;
+    Win32FoundationClasses::CUUCoding coder;
 
     // Encode the test data
     if ( coder.Encode( bytes_to_encode, encoded_bytes ) == false )

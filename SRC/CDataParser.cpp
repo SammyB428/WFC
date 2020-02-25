@@ -51,13 +51,11 @@ static char THIS_FILE[] = __FILE__;
 #define new DEBUG_NEW
 #endif // _DEBUG
 
-USING_WFC_NAMESPACE
-
-void CDataParser::GetTextStatistics( _In_ CParsePoint& parse_point, _Inout_ CTextStatistics& statistics ) const noexcept
+void Win32FoundationClasses::CDataParser::GetTextStatistics( _In_ Win32FoundationClasses::CParsePoint& parse_point, _Inout_ Win32FoundationClasses::CTextStatistics& statistics ) const noexcept
 {
    statistics.Empty();
 
-   CParsePoint here( parse_point );
+   Win32FoundationClasses::CParsePoint here( parse_point );
 
    uint32_t last_character = 0;
    uint32_t this_character = 0;
@@ -208,7 +206,7 @@ void CDataParser::GetTextStatistics( _In_ CParsePoint& parse_point, _Inout_ CTex
             {
                statistics.NumberOfLetters++;
             }
-            else if ( wfc_is_punctuation( this_character ) == true )
+            else if (Win32FoundationClasses::wfc_is_punctuation( this_character ) == true )
             {
                statistics.NumberOfPunctuation++;
             }
@@ -282,7 +280,6 @@ void CDataParser::Dump( CDumpContext& dump_context ) const
    }
 
    dump_context << TEXT( "}\n" );
-
 }
 
 #endif // _DEBUG

@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 1995-2019, Samuel R. Blackburn
+** Copyright, 1995-2020, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -51,11 +51,9 @@ static char THIS_FILE[] = __FILE__;
 #define new DEBUG_NEW
 #endif // _DEBUG
 
-USING_WFC_NAMESPACE
-
 #if defined( _DEBUG ) && ! defined( WFC_NO_DUMPING )
 
-void CAccessAllowedEntry::Dump( CDumpContext& dump_context ) const
+void Win32FoundationClasses::CAccessAllowedEntry::Dump( CDumpContext& dump_context ) const
 {
    dump_context << TEXT( " a CAccessAllowedEntry at " ) << (void *) this << TEXT( "\n" );
    dump_context << TEXT( "{\n" );
@@ -155,34 +153,34 @@ void CAccessAllowedEntry::Dump( CDumpContext& dump_context ) const
 
 #endif // _DEBUG
 
-CAccessControlEntryHeader::CAccessControlEntryHeader()
+Win32FoundationClasses::CAccessControlEntryHeader::CAccessControlEntryHeader()
 {
    Empty();
 }
 
-CAccessControlEntryHeader::CAccessControlEntryHeader( __in CAccessControlEntryHeader const& source )
-{
-   Empty();
-   Copy( source );
-}
-
-CAccessControlEntryHeader::CAccessControlEntryHeader( __in ACE_HEADER const * source )
+Win32FoundationClasses::CAccessControlEntryHeader::CAccessControlEntryHeader( _In_ Win32FoundationClasses::CAccessControlEntryHeader const& source )
 {
    Empty();
    Copy( source );
 }
 
-CAccessControlEntryHeader::~CAccessControlEntryHeader()
+Win32FoundationClasses::CAccessControlEntryHeader::CAccessControlEntryHeader( _In_ ACE_HEADER const * source )
+{
+   Empty();
+   Copy( source );
+}
+
+Win32FoundationClasses::CAccessControlEntryHeader::~CAccessControlEntryHeader()
 {
    Empty();
 }
 
-void CAccessControlEntryHeader::Copy(_In_ CAccessControlEntryHeader const& source ) noexcept
+void Win32FoundationClasses::CAccessControlEntryHeader::Copy(_In_ Win32FoundationClasses::CAccessControlEntryHeader const& source ) noexcept
 {
    Copy( static_cast<ACE_HEADER const *>(&source) );
 }
 
-void CAccessControlEntryHeader::Copy(_In_ ACE_HEADER const * source ) noexcept
+void Win32FoundationClasses::CAccessControlEntryHeader::Copy(_In_ ACE_HEADER const * source ) noexcept
 {
    WFC_VALIDATE_POINTER( source );
    ASSERT( source != this );
@@ -307,47 +305,47 @@ void CAccessControlEntryHeader::Dump( CDumpContext& dump_context ) const
 
 #endif // _DEBUG
 
-void CAccessControlEntryHeader::Empty( void ) noexcept
+void Win32FoundationClasses::CAccessControlEntryHeader::Empty( void ) noexcept
 {
    AceType  = 0;
    AceFlags = 0;
    AceSize  = 0;
 }
 
-_Check_return_ CAccessControlEntryHeader& CAccessControlEntryHeader::operator=( __in CAccessControlEntryHeader const& source ) noexcept
+_Check_return_ Win32FoundationClasses::CAccessControlEntryHeader& Win32FoundationClasses::CAccessControlEntryHeader::operator=( _In_ Win32FoundationClasses::CAccessControlEntryHeader const& source ) noexcept
 {
    Copy( source );
    return( *this );
 }
 
-CAccessControlList::CAccessControlList()
+Win32FoundationClasses::CAccessControlList::CAccessControlList()
 {
    Empty();
 }
 
-CAccessControlList::CAccessControlList( __in CAccessControlList const& source )
-{
-   Empty();
-   Copy( source );
-}
-
-CAccessControlList::CAccessControlList( __in ACL const * source )
+Win32FoundationClasses::CAccessControlList::CAccessControlList( _In_ Win32FoundationClasses::CAccessControlList const& source )
 {
    Empty();
    Copy( source );
 }
 
-CAccessControlList::~CAccessControlList()
+Win32FoundationClasses::CAccessControlList::CAccessControlList( _In_ ACL const * source )
+{
+   Empty();
+   Copy( source );
+}
+
+Win32FoundationClasses::CAccessControlList::~CAccessControlList()
 {
    Empty();
 }
 
-void CAccessControlList::Copy(_In_ CAccessControlList const& source ) noexcept
+void Win32FoundationClasses::CAccessControlList::Copy(_In_ Win32FoundationClasses::CAccessControlList const& source ) noexcept
 {
    Copy( static_cast<ACL const *>(&source) );
 }
 
-void CAccessControlList::Copy(_In_ ACL const * source ) noexcept
+void Win32FoundationClasses::CAccessControlList::Copy(_In_ ACL const * source ) noexcept
 {
    WFC_VALIDATE_POINTER( source );
    ASSERT( source != this );
@@ -376,7 +374,7 @@ void CAccessControlList::Copy(_In_ ACL const * source ) noexcept
 
 #if defined( _DEBUG ) && ! defined( WFC_NO_DUMPING )
 
-void CAccessControlList::Dump( CDumpContext& dump_context ) const
+void Win32FoundationClasses::CAccessControlList::Dump( CDumpContext& dump_context ) const
 {
    dump_context << TEXT( " a CAccessControlList at " ) << (void *) this << TEXT( "\n" );
    dump_context << TEXT( "{\n" );
@@ -390,7 +388,7 @@ void CAccessControlList::Dump( CDumpContext& dump_context ) const
 
 #endif // _DEBUG
 
-void CAccessControlList::Empty( void ) noexcept
+void Win32FoundationClasses::CAccessControlList::Empty( void ) noexcept
 {
    AclRevision = ACL_REVISION;
    Sbz1        = 0;
@@ -399,40 +397,40 @@ void CAccessControlList::Empty( void ) noexcept
    Sbz2        = 0;
 }
 
-_Check_return_ CAccessControlList& CAccessControlList::operator=( __in CAccessControlList const& source ) noexcept
+_Check_return_ Win32FoundationClasses::CAccessControlList& Win32FoundationClasses::CAccessControlList::operator=( _In_ Win32FoundationClasses::CAccessControlList const& source ) noexcept
 {
    Copy( source );
    return( *this );
 }
 
-CAccessDeniedEntry::CAccessDeniedEntry()
+Win32FoundationClasses::CAccessDeniedEntry::CAccessDeniedEntry()
 {
    Empty();
 }
 
-CAccessDeniedEntry::CAccessDeniedEntry( __in CAccessDeniedEntry const& source )
-{
-   Empty();
-   Copy( source );
-}
-
-CAccessDeniedEntry::CAccessDeniedEntry( __in ACCESS_DENIED_ACE const * source )
+Win32FoundationClasses::CAccessDeniedEntry::CAccessDeniedEntry( _In_ Win32FoundationClasses::CAccessDeniedEntry const& source )
 {
    Empty();
    Copy( source );
 }
 
-CAccessDeniedEntry::~CAccessDeniedEntry()
+Win32FoundationClasses::CAccessDeniedEntry::CAccessDeniedEntry( _In_ ACCESS_DENIED_ACE const * source )
+{
+   Empty();
+   Copy( source );
+}
+
+Win32FoundationClasses::CAccessDeniedEntry::~CAccessDeniedEntry()
 {
    Empty();
 }
 
-void CAccessDeniedEntry::Copy(_In_ CAccessDeniedEntry const& source ) noexcept
+void Win32FoundationClasses::CAccessDeniedEntry::Copy(_In_ Win32FoundationClasses::CAccessDeniedEntry const& source ) noexcept
 {
    Copy( static_cast<ACCESS_DENIED_ACE const*>(&source) );
 }
 
-void CAccessDeniedEntry::Copy(_In_ ACCESS_DENIED_ACE const * source ) noexcept
+void Win32FoundationClasses::CAccessDeniedEntry::Copy(_In_ ACCESS_DENIED_ACE const * source ) noexcept
 {
    WFC_VALIDATE_POINTER( source );
    ASSERT( source != this );
@@ -561,7 +559,7 @@ void CAccessDeniedEntry::Dump( CDumpContext& dump_context ) const
 
 #endif // _DEBUG
 
-void CAccessDeniedEntry::Empty( void ) noexcept
+void Win32FoundationClasses::CAccessDeniedEntry::Empty( void ) noexcept
 {
    // ACE_HEADER
    Header.AceType  = 0;
@@ -573,40 +571,40 @@ void CAccessDeniedEntry::Empty( void ) noexcept
    SidStart        = 0;
 }
 
-_Check_return_ CAccessDeniedEntry& CAccessDeniedEntry::operator=( __in CAccessDeniedEntry const& source ) noexcept
+_Check_return_ Win32FoundationClasses::CAccessDeniedEntry& Win32FoundationClasses::CAccessDeniedEntry::operator=( _In_ Win32FoundationClasses::CAccessDeniedEntry const& source ) noexcept
 {
    Copy( source );
    return( *this );
 }
 
-CBitmapCoreHeader::CBitmapCoreHeader()
+Win32FoundationClasses::CBitmapCoreHeader::CBitmapCoreHeader()
 {
    Empty();
 }
 
-CBitmapCoreHeader::CBitmapCoreHeader( __in CBitmapCoreHeader const& source )
-{
-   Empty();
-   Copy( source );
-}
-
-CBitmapCoreHeader::CBitmapCoreHeader( __in tagBITMAPCOREHEADER const * source )
+Win32FoundationClasses::CBitmapCoreHeader::CBitmapCoreHeader( _In_ Win32FoundationClasses::CBitmapCoreHeader const& source )
 {
    Empty();
    Copy( source );
 }
 
-CBitmapCoreHeader::~CBitmapCoreHeader()
+Win32FoundationClasses::CBitmapCoreHeader::CBitmapCoreHeader( _In_ tagBITMAPCOREHEADER const * source )
+{
+   Empty();
+   Copy( source );
+}
+
+Win32FoundationClasses::CBitmapCoreHeader::~CBitmapCoreHeader()
 {
    Empty();
 }
 
-void CBitmapCoreHeader::Copy( __in CBitmapCoreHeader const& source ) noexcept
+void Win32FoundationClasses::CBitmapCoreHeader::Copy( _In_ Win32FoundationClasses::CBitmapCoreHeader const& source ) noexcept
 {
    Copy( reinterpret_cast<CBitmapCoreHeader const *>(&source) );
 }
 
-void CBitmapCoreHeader::Copy( __in tagBITMAPCOREHEADER const * source ) noexcept
+void Win32FoundationClasses::CBitmapCoreHeader::Copy( _In_ tagBITMAPCOREHEADER const * source ) noexcept
 {
    WFC_VALIDATE_POINTER( source );
    ASSERT( source != this );
@@ -635,7 +633,7 @@ void CBitmapCoreHeader::Copy( __in tagBITMAPCOREHEADER const * source ) noexcept
 
 #if defined( _DEBUG ) && ! defined( WFC_NO_DUMPING )
 
-void CBitmapCoreHeader::Dump( CDumpContext& dump_context ) const
+void Win32FoundationClasses::CBitmapCoreHeader::Dump( CDumpContext& dump_context ) const
 {
    dump_context << TEXT( " a CBitmapCoreHeader at " ) << (void *) this << TEXT( "\n" );
    dump_context << TEXT( "{\n" );
@@ -649,7 +647,7 @@ void CBitmapCoreHeader::Dump( CDumpContext& dump_context ) const
 
 #endif // _DEBUG
 
-void CBitmapCoreHeader::Empty( void ) noexcept
+void Win32FoundationClasses::CBitmapCoreHeader::Empty( void ) noexcept
 {
    bcSize     = sizeof( tagBITMAPCOREHEADER );
    bcWidth    = 0;
@@ -658,40 +656,40 @@ void CBitmapCoreHeader::Empty( void ) noexcept
    bcBitCount = 0;
 }
 
-_Check_return_ CBitmapCoreHeader& CBitmapCoreHeader::operator=( __in CBitmapCoreHeader const& source ) noexcept
+_Check_return_ Win32FoundationClasses::CBitmapCoreHeader& Win32FoundationClasses::CBitmapCoreHeader::operator=( _In_ Win32FoundationClasses::CBitmapCoreHeader const& source ) noexcept
 {
    Copy( source );
    return( *this );
 }
 
-CBitmapFileHeader::CBitmapFileHeader()
+Win32FoundationClasses::CBitmapFileHeader::CBitmapFileHeader()
 {
    Empty();
 }
 
-CBitmapFileHeader::CBitmapFileHeader( __in CBitmapFileHeader const& source )
-{
-   Empty();
-   Copy( source );
-}
-
-CBitmapFileHeader::CBitmapFileHeader( __in tagBITMAPFILEHEADER const * source )
+Win32FoundationClasses::CBitmapFileHeader::CBitmapFileHeader( _In_ Win32FoundationClasses::CBitmapFileHeader const& source )
 {
    Empty();
    Copy( source );
 }
 
-CBitmapFileHeader::~CBitmapFileHeader()
+Win32FoundationClasses::CBitmapFileHeader::CBitmapFileHeader( _In_ tagBITMAPFILEHEADER const * source )
+{
+   Empty();
+   Copy( source );
+}
+
+Win32FoundationClasses::CBitmapFileHeader::~CBitmapFileHeader()
 {
    Empty();
 }
 
-void CBitmapFileHeader::Copy(_In_ CBitmapFileHeader const& source ) noexcept
+void Win32FoundationClasses::CBitmapFileHeader::Copy(_In_ Win32FoundationClasses::CBitmapFileHeader const& source ) noexcept
 {
    Copy( static_cast<tagBITMAPFILEHEADER const *>(&source) );
 }
 
-void CBitmapFileHeader::Copy(_In_ tagBITMAPFILEHEADER const * source ) noexcept
+void Win32FoundationClasses::CBitmapFileHeader::Copy(_In_ tagBITMAPFILEHEADER const * source ) noexcept
 {
    WFC_VALIDATE_POINTER( source );
    ASSERT( source != this );
@@ -720,7 +718,7 @@ void CBitmapFileHeader::Copy(_In_ tagBITMAPFILEHEADER const * source ) noexcept
 
 #if defined( _DEBUG ) && ! defined( WFC_NO_DUMPING )
 
-void CBitmapFileHeader::Dump( CDumpContext& dump_context ) const
+void Win32FoundationClasses::CBitmapFileHeader::Dump( CDumpContext& dump_context ) const
 {
    dump_context << TEXT( " a CBitmapFileHeader at " ) << (void *) this << TEXT( "\n" );
    dump_context << TEXT( "{\n" );
@@ -734,7 +732,7 @@ void CBitmapFileHeader::Dump( CDumpContext& dump_context ) const
 
 #endif // _DEBUG
 
-void CBitmapFileHeader::Empty( void ) noexcept
+void Win32FoundationClasses::CBitmapFileHeader::Empty( void ) noexcept
 {
    // 2000-11-06
    // Thanks go to Danny Smith for finding a bug in GCC here
@@ -746,7 +744,7 @@ void CBitmapFileHeader::Empty( void ) noexcept
    bfOffBits   = 0;
 }
 
-_Check_return_ CBitmapFileHeader& CBitmapFileHeader::operator=( __in CBitmapFileHeader const& source ) noexcept
+_Check_return_ Win32FoundationClasses::CBitmapFileHeader& Win32FoundationClasses::CBitmapFileHeader::operator=( _In_ Win32FoundationClasses::CBitmapFileHeader const& source ) noexcept
 {
    Copy( source );
    return( *this );
@@ -756,34 +754,34 @@ _Check_return_ CBitmapFileHeader& CBitmapFileHeader::operator=( __in CBitmapFile
 ** CBitmapInfoHeader
 */
 
-CBitmapInfoHeader::CBitmapInfoHeader()
+Win32FoundationClasses::CBitmapInfoHeader::CBitmapInfoHeader()
 {
    Empty();
 }
 
-CBitmapInfoHeader::CBitmapInfoHeader( __in CBitmapInfoHeader const& source )
-{
-   Empty();
-   Copy( source );
-}
-
-CBitmapInfoHeader::CBitmapInfoHeader( __in tagBITMAPINFOHEADER const * source )
+Win32FoundationClasses::CBitmapInfoHeader::CBitmapInfoHeader( _In_ Win32FoundationClasses::CBitmapInfoHeader const& source )
 {
    Empty();
    Copy( source );
 }
 
-CBitmapInfoHeader::~CBitmapInfoHeader()
+Win32FoundationClasses::CBitmapInfoHeader::CBitmapInfoHeader( _In_ tagBITMAPINFOHEADER const * source )
+{
+   Empty();
+   Copy( source );
+}
+
+Win32FoundationClasses::CBitmapInfoHeader::~CBitmapInfoHeader()
 {
    Empty();
 }
 
-void CBitmapInfoHeader::Copy( __in CBitmapInfoHeader const& source ) noexcept
+void Win32FoundationClasses::CBitmapInfoHeader::Copy( _In_ Win32FoundationClasses::CBitmapInfoHeader const& source ) noexcept
 {
    Copy( static_cast<tagBITMAPINFOHEADER const *>(&source) );
 }
 
-void CBitmapInfoHeader::Copy( __in tagBITMAPINFOHEADER const * source ) noexcept
+void Win32FoundationClasses::CBitmapInfoHeader::Copy( _In_ tagBITMAPINFOHEADER const * source ) noexcept
 {
    WFC_VALIDATE_POINTER( source );
    ASSERT( source != this );
@@ -818,7 +816,7 @@ void CBitmapInfoHeader::Copy( __in tagBITMAPINFOHEADER const * source ) noexcept
 
 #if defined( _DEBUG ) && ! defined( WFC_NO_DUMPING )
 
-void CBitmapInfoHeader::Dump( CDumpContext& dump_context ) const
+void Win32FoundationClasses::CBitmapInfoHeader::Dump( CDumpContext& dump_context ) const
 {
    dump_context << TEXT( " a CBitmapInfoHeader at " ) << (void *) this << TEXT( "\n" );
    dump_context << TEXT( "{\n" );
@@ -838,7 +836,7 @@ void CBitmapInfoHeader::Dump( CDumpContext& dump_context ) const
 
 #endif // _DEBUG
 
-void CBitmapInfoHeader::Empty( void ) noexcept
+void Win32FoundationClasses::CBitmapInfoHeader::Empty( void ) noexcept
 {
    biSize          = sizeof( tagBITMAPINFOHEADER );
    biWidth         = 0;
@@ -853,7 +851,7 @@ void CBitmapInfoHeader::Empty( void ) noexcept
    biClrImportant  = 0;
 }
 
-_Check_return_ CBitmapInfoHeader& CBitmapInfoHeader::operator=( __in CBitmapInfoHeader const& source ) noexcept
+_Check_return_ Win32FoundationClasses::CBitmapInfoHeader& Win32FoundationClasses::CBitmapInfoHeader::operator=( _In_ Win32FoundationClasses::CBitmapInfoHeader const& source ) noexcept
 {
    Copy( source );
    return( *this );
@@ -863,34 +861,34 @@ _Check_return_ CBitmapInfoHeader& CBitmapInfoHeader::operator=( __in CBitmapInfo
 ** CColorAdjustment
 */
 
-CColorAdjustment::CColorAdjustment()
+Win32FoundationClasses::CColorAdjustment::CColorAdjustment()
 {
    Empty();
 }
 
-CColorAdjustment::CColorAdjustment( __in CColorAdjustment const& source )
-{
-   Empty();
-   Copy( source );
-}
-
-CColorAdjustment::CColorAdjustment( __in tagCOLORADJUSTMENT const * source )
+Win32FoundationClasses::CColorAdjustment::CColorAdjustment( _In_ Win32FoundationClasses::CColorAdjustment const& source )
 {
    Empty();
    Copy( source );
 }
 
-CColorAdjustment::~CColorAdjustment()
+Win32FoundationClasses::CColorAdjustment::CColorAdjustment( _In_ tagCOLORADJUSTMENT const * source )
+{
+   Empty();
+   Copy( source );
+}
+
+Win32FoundationClasses::CColorAdjustment::~CColorAdjustment()
 {
    Empty();
 }
 
-void CColorAdjustment::Copy( _In_ CColorAdjustment const& source ) noexcept
+void Win32FoundationClasses::CColorAdjustment::Copy( _In_ Win32FoundationClasses::CColorAdjustment const& source ) noexcept
 {
    Copy( static_cast<tagCOLORADJUSTMENT const *>(&source) );
 }
 
-void CColorAdjustment::Copy(_In_ tagCOLORADJUSTMENT const * source ) noexcept
+void Win32FoundationClasses::CColorAdjustment::Copy(_In_ tagCOLORADJUSTMENT const * source ) noexcept
 {
    WFC_VALIDATE_POINTER( source );
    ASSERT( source != this );
@@ -926,7 +924,7 @@ void CColorAdjustment::Copy(_In_ tagCOLORADJUSTMENT const * source ) noexcept
 
 #if defined( _DEBUG ) && ! defined( WFC_NO_DUMPING )
 
-void CColorAdjustment::Dump( CDumpContext& dump_context ) const
+void Win32FoundationClasses::CColorAdjustment::Dump( CDumpContext& dump_context ) const
 {
    dump_context << TEXT( " a CColorAdjustment at " ) << (void *) this << TEXT( "\n" );
    dump_context << TEXT( "{\n" );
@@ -947,7 +945,7 @@ void CColorAdjustment::Dump( CDumpContext& dump_context ) const
 
 #endif // _DEBUG
 
-void CColorAdjustment::Empty( void ) noexcept
+void Win32FoundationClasses::CColorAdjustment::Empty( void ) noexcept
 {
    caSize            = sizeof( tagCOLORADJUSTMENT );
    caFlags           = 0;
@@ -963,7 +961,7 @@ void CColorAdjustment::Empty( void ) noexcept
    caRedGreenTint    = 0;
 }
 
-_Check_return_ CColorAdjustment& CColorAdjustment::operator=( __in CColorAdjustment const& source ) noexcept
+_Check_return_ Win32FoundationClasses::CColorAdjustment& Win32FoundationClasses::CColorAdjustment::operator=( _In_ Win32FoundationClasses::CColorAdjustment const& source ) noexcept
 {
    Copy( source );
    return( *this );
@@ -973,22 +971,14 @@ _Check_return_ CColorAdjustment& CColorAdjustment::operator=( __in CColorAdjustm
 ** CCommunicationsConfiguration
 */
 
-CCommunicationsConfiguration::CCommunicationsConfiguration()
+Win32FoundationClasses::CCommunicationsConfiguration::CCommunicationsConfiguration()
 {
    Empty();
    dwSize        = sizeof( COMMCONFIG );
    dcb.DCBlength = sizeof( DCB );
 }
 
-CCommunicationsConfiguration::CCommunicationsConfiguration( __in CCommunicationsConfiguration const& source )
-{
-   Empty();
-   dwSize        = sizeof( COMMCONFIG );
-   dcb.DCBlength = sizeof( DCB );
-   Copy( source );
-}
-
-CCommunicationsConfiguration::CCommunicationsConfiguration( __in COMMCONFIG const& source )
+Win32FoundationClasses::CCommunicationsConfiguration::CCommunicationsConfiguration( _In_ Win32FoundationClasses::CCommunicationsConfiguration const& source )
 {
    Empty();
    dwSize        = sizeof( COMMCONFIG );
@@ -996,12 +986,20 @@ CCommunicationsConfiguration::CCommunicationsConfiguration( __in COMMCONFIG cons
    Copy( source );
 }
 
-CCommunicationsConfiguration::~CCommunicationsConfiguration()
+Win32FoundationClasses::CCommunicationsConfiguration::CCommunicationsConfiguration( _In_ COMMCONFIG const& source )
+{
+   Empty();
+   dwSize        = sizeof( COMMCONFIG );
+   dcb.DCBlength = sizeof( DCB );
+   Copy( source );
+}
+
+Win32FoundationClasses::CCommunicationsConfiguration::~CCommunicationsConfiguration()
 {
    Empty();
 }
 
-void CCommunicationsConfiguration::Copy( __in CCommunicationsConfiguration const& source ) noexcept
+void Win32FoundationClasses::CCommunicationsConfiguration::Copy( _In_ Win32FoundationClasses::CCommunicationsConfiguration const& source ) noexcept
 {
    ASSERT( &source != this );
 
@@ -1050,7 +1048,7 @@ void CCommunicationsConfiguration::Copy( __in CCommunicationsConfiguration const
    dwProviderSize    = source.dwProviderSize;
 }
 
-void CCommunicationsConfiguration::Copy( __in COMMCONFIG const& source ) noexcept
+void Win32FoundationClasses::CCommunicationsConfiguration::Copy( _In_ COMMCONFIG const& source ) noexcept
 {
    dwSize    = source.dwSize;
    wVersion  = source.wVersion;
@@ -1094,7 +1092,7 @@ void CCommunicationsConfiguration::Copy( __in COMMCONFIG const& source ) noexcep
 
 #if defined( _DEBUG ) && ! defined( WFC_NO_DUMPING )
 
-void CCommunicationsConfiguration::Dump( CDumpContext& dump_context ) const
+void Win32FoundationClasses::CCommunicationsConfiguration::Dump( CDumpContext& dump_context ) const
 {
    dump_context << TEXT( "a CCommunicationsConfiguration at " ) << (VOID *) this << TEXT( "\n{\n" );
    dump_context << TEXT( "   dwSize is            " ) << dwSize            << TEXT( "\n" );
@@ -1192,7 +1190,7 @@ void CCommunicationsConfiguration::Dump( CDumpContext& dump_context ) const
 
 #endif // _DEBUG
 
-void CCommunicationsConfiguration::Empty( void ) noexcept
+void Win32FoundationClasses::CCommunicationsConfiguration::Empty( void ) noexcept
 {
    dwSize              = 0;
    wVersion            = 0;
@@ -1204,13 +1202,13 @@ void CCommunicationsConfiguration::Empty( void ) noexcept
    ZeroMemory( &dcb, sizeof( dcb ) );
 }
 
-_Check_return_ CCommunicationsConfiguration& CCommunicationsConfiguration::operator=( __in CCommunicationsConfiguration const& source ) noexcept
+_Check_return_ Win32FoundationClasses::CCommunicationsConfiguration& Win32FoundationClasses::CCommunicationsConfiguration::operator=( _In_ Win32FoundationClasses::CCommunicationsConfiguration const& source ) noexcept
 {
    Copy( source );
    return( *this );
 }
 
-_Check_return_ CCommunicationsConfiguration& CCommunicationsConfiguration::operator=( __in COMMCONFIG const& source ) noexcept
+_Check_return_ Win32FoundationClasses::CCommunicationsConfiguration& Win32FoundationClasses::CCommunicationsConfiguration::operator=( _In_ COMMCONFIG const& source ) noexcept
 {
    Copy( source );
    return( *this );
@@ -1220,27 +1218,27 @@ _Check_return_ CCommunicationsConfiguration& CCommunicationsConfiguration::opera
 ** CCommunicationProperties
 */
 
-CCommunicationProperties::CCommunicationProperties()
+Win32FoundationClasses::CCommunicationProperties::CCommunicationProperties()
 {
    Empty();
 }
 
-CCommunicationProperties::CCommunicationProperties( __in CCommunicationProperties const& source )
+Win32FoundationClasses::CCommunicationProperties::CCommunicationProperties( _In_ Win32FoundationClasses::CCommunicationProperties const& source )
 {
    Copy( source );
 }
 
-CCommunicationProperties::CCommunicationProperties( __in _COMMPROP const& source )
+Win32FoundationClasses::CCommunicationProperties::CCommunicationProperties( _In_ _COMMPROP const& source )
 {
    Copy( source );
 }
 
-CCommunicationProperties::~CCommunicationProperties()
+Win32FoundationClasses::CCommunicationProperties::~CCommunicationProperties()
 {
    Empty();
 }
 
-void CCommunicationProperties::ConvertBaudRateToString( __in DWORD const baud_rate, __out std::wstring& human_readable_string ) const noexcept
+void Win32FoundationClasses::CCommunicationProperties::ConvertBaudRateToString( _In_ DWORD const baud_rate, _Out_ std::wstring& human_readable_string ) const noexcept
 {
    switch( baud_rate )
    {
@@ -1351,7 +1349,7 @@ void CCommunicationProperties::ConvertBaudRateToString( __in DWORD const baud_ra
    }
 }
 
-void CCommunicationProperties::ConvertBaudRateListToString( __in DWORD const baud_rate, __out std::wstring& human_readable_string ) const noexcept
+void Win32FoundationClasses::CCommunicationProperties::ConvertBaudRateListToString( _In_ DWORD const baud_rate, _Out_ std::wstring& human_readable_string ) const noexcept
 {
    human_readable_string.clear();
 
@@ -1551,7 +1549,7 @@ void CCommunicationProperties::ConvertBaudRateListToString( __in DWORD const bau
    }
 }
 
-void CCommunicationProperties::ConvertDataBitsToString( __in DWORD const data_bits, __out std::wstring& human_readable_string ) const noexcept
+void Win32FoundationClasses::CCommunicationProperties::ConvertDataBitsToString( _In_ DWORD const data_bits, _Out_ std::wstring& human_readable_string ) const noexcept
 {
    human_readable_string.clear();
 
@@ -1611,7 +1609,7 @@ void CCommunicationProperties::ConvertDataBitsToString( __in DWORD const data_bi
    }
 }
 
-void CCommunicationProperties::ConvertProviderCapabilitiesToString( __in DWORD const capabilities, __out std::wstring& human_readable_string ) const noexcept
+void Win32FoundationClasses::CCommunicationProperties::ConvertProviderCapabilitiesToString( _In_ DWORD const capabilities, _Out_ std::wstring& human_readable_string ) const noexcept
 {
    human_readable_string.clear();
 
@@ -1711,7 +1709,7 @@ void CCommunicationProperties::ConvertProviderCapabilitiesToString( __in DWORD c
    }
 }
 
-void CCommunicationProperties::ConvertProviderSubtypeToString( __in DWORD const type, __out std::wstring& human_readable_string ) const noexcept
+void Win32FoundationClasses::CCommunicationProperties::ConvertProviderSubtypeToString( _In_ DWORD const type, _Out_ std::wstring& human_readable_string ) const noexcept
 {
    switch( type )
    {
@@ -1787,7 +1785,7 @@ void CCommunicationProperties::ConvertProviderSubtypeToString( __in DWORD const 
    }
 }
 
-void CCommunicationProperties::ConvertSettableParametersToString( __in DWORD const parameters, __out std::wstring& human_readable_string ) const noexcept
+void Win32FoundationClasses::CCommunicationProperties::ConvertSettableParametersToString( _In_ DWORD const parameters, _Out_ std::wstring& human_readable_string ) const noexcept
 {
    human_readable_string.clear();
 
@@ -1857,7 +1855,7 @@ void CCommunicationProperties::ConvertSettableParametersToString( __in DWORD con
    }
 }
 
-void CCommunicationProperties::ConvertStopParityToString( __in DWORD const stop_parity, __out std::wstring& human_readable_string ) const noexcept
+void Win32FoundationClasses::CCommunicationProperties::ConvertStopParityToString( _In_ DWORD const stop_parity, _Out_ std::wstring& human_readable_string ) const noexcept
 {
    human_readable_string.clear();
 
@@ -1937,7 +1935,7 @@ void CCommunicationProperties::ConvertStopParityToString( __in DWORD const stop_
    }
 }
 
-void CCommunicationProperties::Copy( _In_ CCommunicationProperties const& source ) noexcept
+void Win32FoundationClasses::CCommunicationProperties::Copy( _In_ Win32FoundationClasses::CCommunicationProperties const& source ) noexcept
 {
    ASSERT( &source != this );
 
@@ -1966,7 +1964,7 @@ void CCommunicationProperties::Copy( _In_ CCommunicationProperties const& source
    wcProvChar[ 0 ]     = source.wcProvChar[ 0 ];
 }
 
-void CCommunicationProperties::Copy( __in _COMMPROP const& source ) noexcept
+void Win32FoundationClasses::CCommunicationProperties::Copy( _In_ _COMMPROP const& source ) noexcept
 {
    wPacketLength       = source.wPacketLength;
    wPacketVersion      = source.wPacketVersion;
@@ -1990,7 +1988,7 @@ void CCommunicationProperties::Copy( __in _COMMPROP const& source ) noexcept
 
 #if defined( _DEBUG ) && ! defined( WFC_NO_DUMPING )
 
-void CCommunicationProperties::Dump( CDumpContext& dump_context ) const
+void Win32FoundationClasses::CCommunicationProperties::Dump( CDumpContext& dump_context ) const
 {
     std::wstring temp_string;
 
@@ -2026,7 +2024,7 @@ void CCommunicationProperties::Dump( CDumpContext& dump_context ) const
 
 #endif // _DEBUG
 
-void CCommunicationProperties::Empty( void ) noexcept
+void Win32FoundationClasses::CCommunicationProperties::Empty( void ) noexcept
 {
    wPacketLength       = 0;
    wPacketVersion      = 0;
@@ -2048,13 +2046,13 @@ void CCommunicationProperties::Empty( void ) noexcept
    wcProvChar[ 0 ]     = 0;
 }
 
-_Check_return_ CCommunicationProperties& CCommunicationProperties::operator=( __in CCommunicationProperties const& source ) noexcept
+_Check_return_ Win32FoundationClasses::CCommunicationProperties& Win32FoundationClasses::CCommunicationProperties::operator=( _In_ Win32FoundationClasses::CCommunicationProperties const& source ) noexcept
 {
    Copy( source );
    return( *this );
 }
 
-_Check_return_ CCommunicationProperties& CCommunicationProperties::operator=( __in _COMMPROP const& source ) noexcept
+_Check_return_ Win32FoundationClasses::CCommunicationProperties& Win32FoundationClasses::CCommunicationProperties::operator=( _In_ _COMMPROP const& source ) noexcept
 {
    Copy( source );
    return( *this );
@@ -2064,34 +2062,34 @@ _Check_return_ CCommunicationProperties& CCommunicationProperties::operator=( __
 ** CMemoryStatus
 */
 
-CMemoryStatus::CMemoryStatus()
+Win32FoundationClasses::CMemoryStatus::CMemoryStatus()
 {
    Empty();
 }
 
-CMemoryStatus::CMemoryStatus( __in CMemoryStatus const& source )
-{
-   Empty();
-   Copy( source );
-}
-
-CMemoryStatus::CMemoryStatus( __in MEMORYSTATUS const * source )
+Win32FoundationClasses::CMemoryStatus::CMemoryStatus( _In_ Win32FoundationClasses::CMemoryStatus const& source )
 {
    Empty();
    Copy( source );
 }
 
-CMemoryStatus::~CMemoryStatus()
+Win32FoundationClasses::CMemoryStatus::CMemoryStatus( _In_ MEMORYSTATUS const * source )
+{
+   Empty();
+   Copy( source );
+}
+
+Win32FoundationClasses::CMemoryStatus::~CMemoryStatus()
 {
    Empty();
 }
 
-void CMemoryStatus::Copy(_In_ CMemoryStatus const& source ) noexcept
+void Win32FoundationClasses::CMemoryStatus::Copy(_In_ Win32FoundationClasses::CMemoryStatus const& source ) noexcept
 {
    Copy( static_cast<MEMORYSTATUS const *>(&source) );
 }
 
-void CMemoryStatus::Copy(_In_ MEMORYSTATUS const * source ) noexcept
+void Win32FoundationClasses::CMemoryStatus::Copy(_In_ MEMORYSTATUS const * source ) noexcept
 {
    WFC_VALIDATE_POINTER( source );
 
@@ -2122,7 +2120,7 @@ void CMemoryStatus::Copy(_In_ MEMORYSTATUS const * source ) noexcept
 
 #if defined( _DEBUG ) && ! defined( WFC_NO_DUMPING )
 
-void CMemoryStatus::Dump( CDumpContext& dump_context ) const
+void Win32FoundationClasses::CMemoryStatus::Dump( CDumpContext& dump_context ) const
 {
    dump_context << TEXT( " a CMemoryStatus at " ) << (void *) this << TEXT( "\n" );
    dump_context << TEXT( "{\n" );
@@ -2139,7 +2137,7 @@ void CMemoryStatus::Dump( CDumpContext& dump_context ) const
 
 #endif // _DEBUG
 
-void CMemoryStatus::Empty( void ) noexcept
+void Win32FoundationClasses::CMemoryStatus::Empty( void ) noexcept
 {
    dwLength        = sizeof( MEMORYSTATUS );
    dwMemoryLoad    = 0;
@@ -2151,7 +2149,7 @@ void CMemoryStatus::Empty( void ) noexcept
    dwAvailVirtual  = 0;
 }
 
-_Check_return_ CMemoryStatus& CMemoryStatus::operator=( __in CMemoryStatus const& source ) noexcept
+_Check_return_ Win32FoundationClasses::CMemoryStatus& Win32FoundationClasses::CMemoryStatus::operator=( _In_ Win32FoundationClasses::CMemoryStatus const& source ) noexcept
 {
    Copy( source );
    return( *this );
@@ -2161,34 +2159,34 @@ _Check_return_ CMemoryStatus& CMemoryStatus::operator=( __in CMemoryStatus const
 ** COFStruct
 */
 
-COFStruct::COFStruct()
+Win32FoundationClasses::COFStruct::COFStruct()
 {
    Empty();
 }
 
-COFStruct::COFStruct( __in COFStruct const& source )
-{
-   Empty();
-   Copy( source );
-}
-
-COFStruct::COFStruct( __in _OFSTRUCT const * source )
+Win32FoundationClasses::COFStruct::COFStruct( _In_ Win32FoundationClasses::COFStruct const& source )
 {
    Empty();
    Copy( source );
 }
 
-COFStruct::~COFStruct()
+Win32FoundationClasses::COFStruct::COFStruct( _In_ _OFSTRUCT const * source )
+{
+   Empty();
+   Copy( source );
+}
+
+Win32FoundationClasses::COFStruct::~COFStruct()
 {
    Empty();
 }
 
-void COFStruct::Copy(_In_ COFStruct const& source ) noexcept
+void Win32FoundationClasses::COFStruct::Copy(_In_ Win32FoundationClasses::COFStruct const& source ) noexcept
 {
    Copy( static_cast<_OFSTRUCT const *>(&source) );
 }
 
-void COFStruct::Copy(_In_ _OFSTRUCT const * source ) noexcept
+void Win32FoundationClasses::COFStruct::Copy(_In_ _OFSTRUCT const * source ) noexcept
 {
    WFC_VALIDATE_POINTER( source );
    ASSERT( source != this );
@@ -2218,7 +2216,7 @@ void COFStruct::Copy(_In_ _OFSTRUCT const * source ) noexcept
 
 #if defined( _DEBUG ) && ! defined( WFC_NO_DUMPING )
 
-void COFStruct::Dump( CDumpContext& dump_context ) const
+void Win32FoundationClasses::COFStruct::Dump( CDumpContext& dump_context ) const
 {
    dump_context << TEXT( " a COFStruct at " ) << (void *) this << TEXT( "\n" );
    dump_context << TEXT( "{\n" );
@@ -2233,7 +2231,7 @@ void COFStruct::Dump( CDumpContext& dump_context ) const
 
 #endif // _DEBUG
 
-void COFStruct::Empty( void ) noexcept
+void Win32FoundationClasses::COFStruct::Empty( void ) noexcept
 {
    cBytes     = sizeof( _OFSTRUCT );
    fFixedDisk = 0;
@@ -2247,7 +2245,7 @@ void COFStruct::Empty( void ) noexcept
    }
 }
 
-_Check_return_ COFStruct& COFStruct::operator=( __in COFStruct const& source ) noexcept
+_Check_return_ Win32FoundationClasses::COFStruct& Win32FoundationClasses::COFStruct::operator=( _In_ Win32FoundationClasses::COFStruct const& source ) noexcept
 {
    Copy( source );
    return( *this );
@@ -2257,34 +2255,34 @@ _Check_return_ COFStruct& COFStruct::operator=( __in COFStruct const& source ) n
 ** COutlineTextMetricA
 */
 
-COutlineTextMetricA::COutlineTextMetricA()
+Win32FoundationClasses::COutlineTextMetricA::COutlineTextMetricA()
 {
    Empty();
 }
 
-COutlineTextMetricA::COutlineTextMetricA( __in COutlineTextMetricA const& source )
-{
-   Empty();
-   Copy( source );
-}
-
-COutlineTextMetricA::COutlineTextMetricA( __in _OUTLINETEXTMETRICA const * source )
+Win32FoundationClasses::COutlineTextMetricA::COutlineTextMetricA( _In_ Win32FoundationClasses::COutlineTextMetricA const& source )
 {
    Empty();
    Copy( source );
 }
 
-COutlineTextMetricA::~COutlineTextMetricA()
+Win32FoundationClasses::COutlineTextMetricA::COutlineTextMetricA( _In_ _OUTLINETEXTMETRICA const * source )
+{
+   Empty();
+   Copy( source );
+}
+
+Win32FoundationClasses::COutlineTextMetricA::~COutlineTextMetricA()
 {
    Empty();
 }
 
-void COutlineTextMetricA::Copy(_In_ COutlineTextMetricA const& source ) noexcept
+void Win32FoundationClasses::COutlineTextMetricA::Copy(_In_ Win32FoundationClasses::COutlineTextMetricA const& source ) noexcept
 {
    Copy( static_cast<_OUTLINETEXTMETRICA const *>(&source) );
 }
 
-void COutlineTextMetricA::Copy(_In_ _OUTLINETEXTMETRICA const * source ) noexcept
+void Win32FoundationClasses::COutlineTextMetricA::Copy(_In_ _OUTLINETEXTMETRICA const * source ) noexcept
 {
    WFC_VALIDATE_POINTER( source );
    ASSERT( source != this );
@@ -2387,7 +2385,7 @@ void COutlineTextMetricA::Copy(_In_ _OUTLINETEXTMETRICA const * source ) noexcep
 
 #if defined( _DEBUG ) && ! defined( WFC_NO_DUMPING )
 
-void COutlineTextMetricA::Dump( CDumpContext& dump_context ) const
+void Win32FoundationClasses::COutlineTextMetricA::Dump( CDumpContext& dump_context ) const
 {
    dump_context << TEXT( " a COutlineTextMetricA at " ) << (void *) this << TEXT( "\n" );
    dump_context << TEXT( "{\n" );
@@ -2463,7 +2461,7 @@ void COutlineTextMetricA::Dump( CDumpContext& dump_context ) const
 
 #endif // _DEBUG
 
-void COutlineTextMetricA::Empty( void ) noexcept
+void Win32FoundationClasses::COutlineTextMetricA::Empty( void ) noexcept
 {
    otmSize = sizeof( _OUTLINETEXTMETRICA );
 
@@ -2546,40 +2544,40 @@ void COutlineTextMetricA::Empty( void ) noexcept
    otmpFullName           = nullptr;
 }
 
-_Check_return_ COutlineTextMetricA& COutlineTextMetricA::operator=( __in COutlineTextMetricA const& source ) noexcept
+_Check_return_ Win32FoundationClasses::COutlineTextMetricA& Win32FoundationClasses::COutlineTextMetricA::operator=( _In_ Win32FoundationClasses::COutlineTextMetricA const& source ) noexcept
 {
    Copy( source );
    return( *this );
 }
 
-COutlineTextMetricW::COutlineTextMetricW()
+Win32FoundationClasses::COutlineTextMetricW::COutlineTextMetricW()
 {
    Empty();
 }
 
-COutlineTextMetricW::COutlineTextMetricW( __in COutlineTextMetricW const& source )
-{
-   Empty();
-   Copy( source );
-}
-
-COutlineTextMetricW::COutlineTextMetricW( __in _OUTLINETEXTMETRICW const * source )
+Win32FoundationClasses::COutlineTextMetricW::COutlineTextMetricW( _In_ Win32FoundationClasses::COutlineTextMetricW const& source )
 {
    Empty();
    Copy( source );
 }
 
-COutlineTextMetricW::~COutlineTextMetricW()
+Win32FoundationClasses::COutlineTextMetricW::COutlineTextMetricW( _In_ _OUTLINETEXTMETRICW const * source )
+{
+   Empty();
+   Copy( source );
+}
+
+Win32FoundationClasses::COutlineTextMetricW::~COutlineTextMetricW()
 {
    Empty();
 }
 
-void COutlineTextMetricW::Copy(_In_ COutlineTextMetricW const& source ) noexcept
+void Win32FoundationClasses::COutlineTextMetricW::Copy(_In_ Win32FoundationClasses::COutlineTextMetricW const& source ) noexcept
 {
    Copy( static_cast<_OUTLINETEXTMETRICW const *>(&source) );
 }
 
-void COutlineTextMetricW::Copy(_In_ _OUTLINETEXTMETRICW const * source ) noexcept
+void Win32FoundationClasses::COutlineTextMetricW::Copy(_In_ _OUTLINETEXTMETRICW const * source ) noexcept
 {
    WFC_VALIDATE_POINTER( source );
    ASSERT( source != this );
@@ -2682,7 +2680,7 @@ void COutlineTextMetricW::Copy(_In_ _OUTLINETEXTMETRICW const * source ) noexcep
 
 #if defined( _DEBUG ) && ! defined( WFC_NO_DUMPING )
 
-void COutlineTextMetricW::Dump( CDumpContext& dump_context ) const
+void Win32FoundationClasses::COutlineTextMetricW::Dump( CDumpContext& dump_context ) const
 {
    dump_context << TEXT( " a COutlineTextMetricW at " ) << (void *) this << TEXT( "\n" );
    dump_context << TEXT( "{\n" );
@@ -2758,7 +2756,7 @@ void COutlineTextMetricW::Dump( CDumpContext& dump_context ) const
 
 #endif // _DEBUG
 
-void COutlineTextMetricW::Empty( void ) noexcept
+void Win32FoundationClasses::COutlineTextMetricW::Empty( void ) noexcept
 {
    otmSize = sizeof( _OUTLINETEXTMETRICW );
 
@@ -2841,23 +2839,23 @@ void COutlineTextMetricW::Empty( void ) noexcept
    otmpFullName           = nullptr;
 }
 
-_Check_return_ COutlineTextMetricW& COutlineTextMetricW::operator=( __in COutlineTextMetricW const& source ) noexcept
+_Check_return_ Win32FoundationClasses::COutlineTextMetricW& Win32FoundationClasses::COutlineTextMetricW::operator=( _In_ Win32FoundationClasses::COutlineTextMetricW const& source ) noexcept
 {
    Copy( source );
    return( *this );
 }
 
-CPerfCounterDefinition::CPerfCounterDefinition()
+Win32FoundationClasses::CPerfCounterDefinition::CPerfCounterDefinition()
 {
    Empty();
 }
 
-CPerfCounterDefinition::~CPerfCounterDefinition()
+Win32FoundationClasses::CPerfCounterDefinition::~CPerfCounterDefinition()
 {
    Empty();
 }
 
-void CPerfCounterDefinition::Empty( void ) noexcept
+void Win32FoundationClasses::CPerfCounterDefinition::Empty( void ) noexcept
 {
    ByteLength            = sizeof( PERF_COUNTER_DEFINITION );
    CounterNameTitleIndex = 0;
@@ -2871,17 +2869,17 @@ void CPerfCounterDefinition::Empty( void ) noexcept
    CounterOffset         = 0;
 }
 
-CPerfInstanceDefinition::CPerfInstanceDefinition()
+Win32FoundationClasses::CPerfInstanceDefinition::CPerfInstanceDefinition()
 {
    Empty();
 }
 
-CPerfInstanceDefinition::~CPerfInstanceDefinition()
+Win32FoundationClasses::CPerfInstanceDefinition::~CPerfInstanceDefinition()
 {
    Empty();
 }
 
-void CPerfInstanceDefinition::Empty( void ) noexcept
+void Win32FoundationClasses::CPerfInstanceDefinition::Empty( void ) noexcept
 {
    ByteLength             = sizeof( PERF_INSTANCE_DEFINITION );
    ParentObjectTitleIndex = 0;
@@ -2891,34 +2889,34 @@ void CPerfInstanceDefinition::Empty( void ) noexcept
    NameLength             = 0;
 }
 
-CPixelFormatDescriptor::CPixelFormatDescriptor()
+Win32FoundationClasses::CPixelFormatDescriptor::CPixelFormatDescriptor()
 {
    Empty();
 }
 
-CPixelFormatDescriptor::CPixelFormatDescriptor( __in CPixelFormatDescriptor const& source )
-{
-   Empty();
-   Copy( source );
-}
-
-CPixelFormatDescriptor::CPixelFormatDescriptor( __in tagPIXELFORMATDESCRIPTOR const * source )
+Win32FoundationClasses::CPixelFormatDescriptor::CPixelFormatDescriptor( _In_ Win32FoundationClasses::CPixelFormatDescriptor const& source )
 {
    Empty();
    Copy( source );
 }
 
-CPixelFormatDescriptor::~CPixelFormatDescriptor()
+Win32FoundationClasses::CPixelFormatDescriptor::CPixelFormatDescriptor( _In_ tagPIXELFORMATDESCRIPTOR const * source )
+{
+   Empty();
+   Copy( source );
+}
+
+Win32FoundationClasses::CPixelFormatDescriptor::~CPixelFormatDescriptor()
 {
    Empty();
 }
 
-void CPixelFormatDescriptor::Copy(_In_ CPixelFormatDescriptor const& source ) noexcept
+void Win32FoundationClasses::CPixelFormatDescriptor::Copy(_In_ Win32FoundationClasses::CPixelFormatDescriptor const& source ) noexcept
 {
    Copy( static_cast<tagPIXELFORMATDESCRIPTOR const *>(&source) );
 }
 
-void CPixelFormatDescriptor::Copy(_In_ tagPIXELFORMATDESCRIPTOR const * source ) noexcept
+void Win32FoundationClasses::CPixelFormatDescriptor::Copy(_In_ tagPIXELFORMATDESCRIPTOR const * source ) noexcept
 {
    WFC_VALIDATE_POINTER( source );
    ASSERT( source != this );
@@ -2968,7 +2966,7 @@ void CPixelFormatDescriptor::Copy(_In_ tagPIXELFORMATDESCRIPTOR const * source )
 
 #if defined( _DEBUG ) && ! defined( WFC_NO_DUMPING )
 
-void CPixelFormatDescriptor::Dump( CDumpContext& dump_context ) const
+void Win32FoundationClasses::CPixelFormatDescriptor::Dump( CDumpContext& dump_context ) const
 {
    dump_context << TEXT( " a CPixelFormatDescriptor at " ) << (void *) this << TEXT( "\n" );
    dump_context << TEXT( "{\n" );
@@ -3129,7 +3127,7 @@ void CPixelFormatDescriptor::Dump( CDumpContext& dump_context ) const
 
 #endif // _DEBUG
 
-void CPixelFormatDescriptor::Empty( void ) noexcept
+void Win32FoundationClasses::CPixelFormatDescriptor::Empty( void ) noexcept
 {
    nSize           = sizeof( tagPIXELFORMATDESCRIPTOR );
    nVersion        = 0;
@@ -3159,57 +3157,57 @@ void CPixelFormatDescriptor::Empty( void ) noexcept
    dwDamageMask    = 0;
 }
 
-_Check_return_ CPixelFormatDescriptor& CPixelFormatDescriptor::operator=( __in CPixelFormatDescriptor const& source ) noexcept
+_Check_return_ Win32FoundationClasses::CPixelFormatDescriptor& Win32FoundationClasses::CPixelFormatDescriptor::operator=( _In_ Win32FoundationClasses::CPixelFormatDescriptor const& source ) noexcept
 {
    Copy( source );
    return( *this );
 }
 
-CRasterizerStatus::CRasterizerStatus()
+Win32FoundationClasses::CRasterizerStatus::CRasterizerStatus()
 {
    Empty();
 }
 
-CRasterizerStatus::~CRasterizerStatus()
+Win32FoundationClasses::CRasterizerStatus::~CRasterizerStatus()
 {
    Empty();
 }
 
-void CRasterizerStatus::Empty( void ) noexcept
+void Win32FoundationClasses::CRasterizerStatus::Empty( void ) noexcept
 {
    nSize       = sizeof( _RASTERIZER_STATUS );
    wFlags      = 0;
    nLanguageID = 0;
 }
 
-CSecurityAttributes::CSecurityAttributes() noexcept
+Win32FoundationClasses::CSecurityAttributes::CSecurityAttributes() noexcept
 {
    Empty();
 }
 
-CSecurityAttributes::~CSecurityAttributes() noexcept
+Win32FoundationClasses::CSecurityAttributes::~CSecurityAttributes() noexcept
 {
    Empty();
 }
 
-void CSecurityAttributes::Empty( void ) noexcept
+void Win32FoundationClasses::CSecurityAttributes::Empty( void ) noexcept
 {
    nLength              = sizeof( SECURITY_ATTRIBUTES );
    lpSecurityDescriptor = nullptr;
    bInheritHandle       = FALSE;
 }
 
-CSecurityQualityOfService::CSecurityQualityOfService()
+Win32FoundationClasses::CSecurityQualityOfService::CSecurityQualityOfService()
 {
    Empty();
 }
 
-CSecurityQualityOfService::~CSecurityQualityOfService()
+Win32FoundationClasses::CSecurityQualityOfService::~CSecurityQualityOfService()
 {
    Empty();
 }
 
-void CSecurityQualityOfService::Empty( void ) noexcept
+void Win32FoundationClasses::CSecurityQualityOfService::Empty( void ) noexcept
 {
    Length = sizeof( SECURITY_QUALITY_OF_SERVICE );
 
@@ -3227,34 +3225,34 @@ void CSecurityQualityOfService::Empty( void ) noexcept
 ** CSystemAuditEntry
 */
 
-CSystemAuditEntry::CSystemAuditEntry() noexcept
+Win32FoundationClasses::CSystemAuditEntry::CSystemAuditEntry() noexcept
 {
    Empty();
 }
 
-CSystemAuditEntry::CSystemAuditEntry( __in CSystemAuditEntry const& source ) noexcept
-{
-   Empty();
-   Copy( source );
-}
-
-CSystemAuditEntry::CSystemAuditEntry( __in _SYSTEM_AUDIT_ACE const * source ) noexcept
+Win32FoundationClasses::CSystemAuditEntry::CSystemAuditEntry( _In_ Win32FoundationClasses::CSystemAuditEntry const& source ) noexcept
 {
    Empty();
    Copy( source );
 }
 
-CSystemAuditEntry::~CSystemAuditEntry() noexcept
+Win32FoundationClasses::CSystemAuditEntry::CSystemAuditEntry( _In_ _SYSTEM_AUDIT_ACE const * source ) noexcept
+{
+   Empty();
+   Copy( source );
+}
+
+Win32FoundationClasses::CSystemAuditEntry::~CSystemAuditEntry() noexcept
 {
    Empty();
 }
 
-void CSystemAuditEntry::Copy(_In_ CSystemAuditEntry const& source ) noexcept
+void Win32FoundationClasses::CSystemAuditEntry::Copy(_In_ Win32FoundationClasses::CSystemAuditEntry const& source ) noexcept
 {
    Copy( static_cast<_SYSTEM_AUDIT_ACE const *>(&source) );
 }
 
-void CSystemAuditEntry::Copy(_In_ _SYSTEM_AUDIT_ACE const * source ) noexcept
+void Win32FoundationClasses::CSystemAuditEntry::Copy(_In_ _SYSTEM_AUDIT_ACE const * source ) noexcept
 {
    WFC_VALIDATE_POINTER( source );
    ASSERT( source != this );
@@ -3286,7 +3284,7 @@ void CSystemAuditEntry::Copy(_In_ _SYSTEM_AUDIT_ACE const * source ) noexcept
 
 #if defined( _DEBUG ) && ! defined( WFC_NO_DUMPING )
 
-void CSystemAuditEntry::Dump( CDumpContext& dump_context ) const
+void Win32FoundationClasses::CSystemAuditEntry::Dump( CDumpContext& dump_context ) const
 {
    dump_context << TEXT( " a CSystemAuditEntry at " ) << (void *) this << TEXT( "\n" );
    dump_context << TEXT( "{\n" );
@@ -3386,7 +3384,7 @@ void CSystemAuditEntry::Dump( CDumpContext& dump_context ) const
 
 #endif // _DEBUG
 
-void CSystemAuditEntry::Empty( void ) noexcept
+void Win32FoundationClasses::CSystemAuditEntry::Empty( void ) noexcept
 {
    // ACE_HEADER
    Header.AceType  = 0;
@@ -3399,7 +3397,7 @@ void CSystemAuditEntry::Empty( void ) noexcept
    SidStart        = 0;
 }
 
-_Check_return_ CSystemAuditEntry& CSystemAuditEntry::operator=( __in CSystemAuditEntry const& source ) noexcept
+_Check_return_ Win32FoundationClasses::CSystemAuditEntry& Win32FoundationClasses::CSystemAuditEntry::operator=( _In_ Win32FoundationClasses::CSystemAuditEntry const& source ) noexcept
 {
    Copy( source );
    return( *this );
@@ -3409,34 +3407,34 @@ _Check_return_ CSystemAuditEntry& CSystemAuditEntry::operator=( __in CSystemAudi
 ** CTextMetricA
 */
 
-CTextMetricA::CTextMetricA()
+Win32FoundationClasses::CTextMetricA::CTextMetricA()
 {
    Empty();
 }
 
-CTextMetricA::CTextMetricA( __in CTextMetricA const& source )
-{
-   Empty();
-   Copy( source );
-}
-
-CTextMetricA::CTextMetricA( __in tagTEXTMETRICA const * source )
+Win32FoundationClasses::CTextMetricA::CTextMetricA( _In_ Win32FoundationClasses::CTextMetricA const& source )
 {
    Empty();
    Copy( source );
 }
 
-CTextMetricA::~CTextMetricA()
+Win32FoundationClasses::CTextMetricA::CTextMetricA( _In_ tagTEXTMETRICA const * source )
+{
+   Empty();
+   Copy( source );
+}
+
+Win32FoundationClasses::CTextMetricA::~CTextMetricA()
 {
    Empty();
 }
 
-void CTextMetricA::Copy(_In_ CTextMetricA const& source ) noexcept
+void Win32FoundationClasses::CTextMetricA::Copy(_In_ Win32FoundationClasses::CTextMetricA const& source ) noexcept
 {
    Copy( static_cast<tagTEXTMETRICA const *>(&source) );
 }
 
-void CTextMetricA::Copy(_In_ tagTEXTMETRICA const * source ) noexcept
+void Win32FoundationClasses::CTextMetricA::Copy(_In_ tagTEXTMETRICA const * source ) noexcept
 {
    WFC_VALIDATE_POINTER( source );
    ASSERT( source != this );
@@ -3480,7 +3478,7 @@ void CTextMetricA::Copy(_In_ tagTEXTMETRICA const * source ) noexcept
 
 #if defined( _DEBUG ) && ! defined( WFC_NO_DUMPING )
 
-void CTextMetricA::Dump( CDumpContext& dump_context ) const
+void Win32FoundationClasses::CTextMetricA::Dump( CDumpContext& dump_context ) const
 {
    dump_context << TEXT( " a CTextMetricA at " ) << (void *) this << TEXT( "\n" );
    dump_context << TEXT( "{\n" );
@@ -3509,7 +3507,7 @@ void CTextMetricA::Dump( CDumpContext& dump_context ) const
 
 #endif // _DEBUG
 
-void CTextMetricA::Empty( void ) noexcept
+void Win32FoundationClasses::CTextMetricA::Empty( void ) noexcept
 {
    tmHeight           = 0;
    tmAscent           = 0;
@@ -3533,7 +3531,7 @@ void CTextMetricA::Empty( void ) noexcept
    tmCharSet          = 0;
 }
 
-_Check_return_ CTextMetricA& CTextMetricA::operator=( __in CTextMetricA const& source ) noexcept
+_Check_return_ Win32FoundationClasses::CTextMetricA& Win32FoundationClasses::CTextMetricA::operator=( _In_ Win32FoundationClasses::CTextMetricA const& source ) noexcept
 {
    Copy( source );
    return( *this );
@@ -3543,34 +3541,34 @@ _Check_return_ CTextMetricA& CTextMetricA::operator=( __in CTextMetricA const& s
 ** CTextMetricW
 */
 
-CTextMetricW::CTextMetricW()
+Win32FoundationClasses::CTextMetricW::CTextMetricW()
 {
    Empty();
 }
 
-CTextMetricW::CTextMetricW( __in CTextMetricW const& source )
-{
-   Empty();
-   Copy( source );
-}
-
-CTextMetricW::CTextMetricW( __in tagTEXTMETRICW const * source )
+Win32FoundationClasses::CTextMetricW::CTextMetricW( _In_ Win32FoundationClasses::CTextMetricW const& source )
 {
    Empty();
    Copy( source );
 }
 
-CTextMetricW::~CTextMetricW()
+Win32FoundationClasses::CTextMetricW::CTextMetricW( _In_ tagTEXTMETRICW const * source )
+{
+   Empty();
+   Copy( source );
+}
+
+Win32FoundationClasses::CTextMetricW::~CTextMetricW()
 {
    Empty();
 }
 
-void CTextMetricW::Copy(_In_ CTextMetricW const& source ) noexcept
+void Win32FoundationClasses::CTextMetricW::Copy(_In_ Win32FoundationClasses::CTextMetricW const& source ) noexcept
 {
    Copy( static_cast<tagTEXTMETRICW const *>(&source) );
 }
 
-void CTextMetricW::Copy(_In_ tagTEXTMETRICW const * source ) noexcept
+void Win32FoundationClasses::CTextMetricW::Copy(_In_ tagTEXTMETRICW const * source ) noexcept
 {
    WFC_VALIDATE_POINTER( source );
    ASSERT( source != this );
@@ -3614,7 +3612,7 @@ void CTextMetricW::Copy(_In_ tagTEXTMETRICW const * source ) noexcept
 
 #if defined( _DEBUG ) && ! defined( WFC_NO_DUMPING )
 
-void CTextMetricW::Dump( CDumpContext& dump_context ) const
+void Win32FoundationClasses::CTextMetricW::Dump( CDumpContext& dump_context ) const
 {
    dump_context << TEXT( " a CTextMetricW at " ) << (void *) this << TEXT( "\n" );
    dump_context << TEXT( "{\n" );
@@ -3643,7 +3641,7 @@ void CTextMetricW::Dump( CDumpContext& dump_context ) const
 
 #endif // _DEBUG
 
-void CTextMetricW::Empty( void ) noexcept
+void Win32FoundationClasses::CTextMetricW::Empty( void ) noexcept
 {
    tmHeight           = 0;
    tmAscent           = 0;
@@ -3667,40 +3665,40 @@ void CTextMetricW::Empty( void ) noexcept
    tmCharSet          = 0;
 }
 
-_Check_return_ CTextMetricW& CTextMetricW::operator=( __in CTextMetricW const& source ) noexcept
+_Check_return_ Win32FoundationClasses::CTextMetricW& Win32FoundationClasses::CTextMetricW::operator=( _In_ Win32FoundationClasses::CTextMetricW const& source ) noexcept
 {
    Copy( source );
    return( *this );
 }
 
-CWindowPlacement::CWindowPlacement() noexcept
+Win32FoundationClasses::CWindowPlacement::CWindowPlacement() noexcept
 {
    Empty();
 }
 
-CWindowPlacement::CWindowPlacement( __in CWindowPlacement const& source ) noexcept
-{
-   Empty();
-   Copy( source );
-}
-
-CWindowPlacement::CWindowPlacement( __in tagWINDOWPLACEMENT const * source ) noexcept
+Win32FoundationClasses::CWindowPlacement::CWindowPlacement( _In_ Win32FoundationClasses::CWindowPlacement const& source ) noexcept
 {
    Empty();
    Copy( source );
 }
 
-CWindowPlacement::~CWindowPlacement() noexcept
+Win32FoundationClasses::CWindowPlacement::CWindowPlacement( _In_ tagWINDOWPLACEMENT const * source ) noexcept
+{
+   Empty();
+   Copy( source );
+}
+
+Win32FoundationClasses::CWindowPlacement::~CWindowPlacement() noexcept
 {
    Empty();
 }
 
-void CWindowPlacement::Copy(_In_ CWindowPlacement const& source ) noexcept
+void Win32FoundationClasses::CWindowPlacement::Copy(_In_ Win32FoundationClasses::CWindowPlacement const& source ) noexcept
 {
    Copy( static_cast<tagWINDOWPLACEMENT const *>(&source) );
 }
 
-void CWindowPlacement::Copy(_In_ tagWINDOWPLACEMENT const * source ) noexcept
+void Win32FoundationClasses::CWindowPlacement::Copy(_In_ tagWINDOWPLACEMENT const * source ) noexcept
 {
    WFC_VALIDATE_POINTER( source );
    ASSERT( source != this );
@@ -3739,7 +3737,7 @@ void CWindowPlacement::Copy(_In_ tagWINDOWPLACEMENT const * source ) noexcept
 
 #if defined( _DEBUG ) && ! defined( WFC_NO_DUMPING )
 
-void CWindowPlacement::Dump( CDumpContext& dump_context ) const
+void Win32FoundationClasses::CWindowPlacement::Dump( CDumpContext& dump_context ) const
 {
    dump_context << TEXT( " a CWindowPlacement at " ) << (void *) this << TEXT( "\n" );
    dump_context << TEXT( "{\n" );
@@ -3837,7 +3835,7 @@ void CWindowPlacement::Dump( CDumpContext& dump_context ) const
 
 #endif // _DEBUG
 
-void CWindowPlacement::Empty( void ) noexcept
+void Win32FoundationClasses::CWindowPlacement::Empty( void ) noexcept
 {
    length  = sizeof( tagWINDOWPLACEMENT );
    flags   = 0;
@@ -3856,7 +3854,7 @@ void CWindowPlacement::Empty( void ) noexcept
    rcNormalPosition.bottom = 0;
 }
 
-_Check_return_ CWindowPlacement& CWindowPlacement::operator=( __in CWindowPlacement const& source ) noexcept
+_Check_return_ Win32FoundationClasses::CWindowPlacement& Win32FoundationClasses::CWindowPlacement::operator=( _In_ Win32FoundationClasses::CWindowPlacement const& source ) noexcept
 {
    Copy( source );
    return( *this );

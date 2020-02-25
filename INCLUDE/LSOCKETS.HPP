@@ -61,7 +61,7 @@ class CListeningSocket : public CSimpleSocket
        CListeningSocket& operator=(CListeningSocket const&) = delete;
 
        CListeningSocket() noexcept;
-      //CListeningSocket( __in SOCKET client_id ) noexcept;
+      //CListeningSocket( _In_ SOCKET client_id ) noexcept;
 
       /*
       ** Destructor should be virtual according to MSJ article in Sept 1992
@@ -72,19 +72,19 @@ class CListeningSocket : public CSimpleSocket
 
       virtual void OnNewConnection( _In_ SOCKET socket_id, __in_z LPCTSTR host_name, __in_z LPCTSTR dotted_ip_address_string ) = 0; // Called by WaitForConnection
       _Check_return_ bool Open( void ) noexcept override;
-      _Check_return_ bool Open(_In_ std::filesystem::path const& channel_name, __in UINT const port_number = 23 ) noexcept override;
+      _Check_return_ bool Open(_In_ std::filesystem::path const& channel_name, _In_ UINT const port_number = 23 ) noexcept override;
 
       virtual _Check_return_ bool WaitForConnection( __in_z LPCTSTR p_name ) noexcept;
-      virtual _Check_return_ bool WaitForConnection( __in int const p_number ) noexcept;
+      virtual _Check_return_ bool WaitForConnection( _In_ int const p_number ) noexcept;
       virtual _Check_return_ bool WaitForConnection( void ) noexcept;
 
       // 2000-02-13
       // Good addition suggested by Scott Kolek (scott@skm-software.com)
 
-      virtual void SetBindToAddress( __in unsigned long const address = INADDR_ANY ) noexcept;
+      virtual void SetBindToAddress( _In_ unsigned long const address = INADDR_ANY ) noexcept;
       virtual _Check_return_ unsigned long GetBindToAddress( void ) const noexcept;
 
-      virtual void SetConnectionBacklog( __in int const backlog ) noexcept;
+      virtual void SetConnectionBacklog( _In_ int const backlog ) noexcept;
       virtual _Check_return_ int GetConnectionBacklog( void ) const noexcept;
 
 #if defined( _DEBUG ) && ! defined( WFC_NO_DUMPING )

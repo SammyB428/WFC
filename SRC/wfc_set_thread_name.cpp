@@ -51,8 +51,6 @@ static char THIS_FILE[] = __FILE__;
 #define new DEBUG_NEW
 #endif // _DEBUG
 
-USING_WFC_NAMESPACE
-
 #if ( _MSC_VER >= 1300 ) // Visual Studio 7.0
 
 static void __stdcall __set_visual_studio_thread_name( __in_z LPCSTR thread_name ) noexcept
@@ -88,9 +86,9 @@ static void __stdcall __set_visual_studio_thread_name( __in_z LPCSTR thread_name
 
 #endif // _MSC_VER >= 1300
 
-static inline _Check_return_ WFC_THREAD_INFORMATION_BLOCK * _get_thread_information_block( void ) noexcept
+static inline _Check_return_ Win32FoundationClasses::WFC_THREAD_INFORMATION_BLOCK * _get_thread_information_block( void ) noexcept
 {
-   WFC_THREAD_INFORMATION_BLOCK * return_value = nullptr;
+    Win32FoundationClasses::WFC_THREAD_INFORMATION_BLOCK * return_value = nullptr;
 
 #if 0
 #if defined( _MSC_VER )
@@ -121,7 +119,7 @@ static inline _Check_return_ WFC_THREAD_INFORMATION_BLOCK * _get_thread_informat
 ** This is basically cleaned up code from the Jan 2000 issue of MSJ
 */
 
-void PASCAL Win32FoundationClasses::wfc_set_thread_name( __in_z LPCSTR thread_name ) noexcept
+void Win32FoundationClasses::wfc_set_thread_name( __in_z LPCSTR thread_name ) noexcept
 {
 #if ( _MSC_VER >= 1300 ) // Visual Studio 7.0
    __set_visual_studio_thread_name( thread_name );

@@ -195,6 +195,32 @@ public:
 ** Sorry this is so huge but I had to get performance up...
 */
 
+#if defined(WE_ARE_BUILDING_WFC_ON_UNIX)
+inline _Check_return_ int compare_no_case(_In_ uint8_t const* s1, _In_ uint8_t const* s2, _In_ std::size_t const count) noexcept
+{
+    std::size_t index = 0;
+
+    while (index < count)
+    {
+        auto const s1_character = std::toupper(s1[index]);
+        auto const s2_character = std::toupper(s2[index]);
+
+        if (s1_character < s2_character)
+        {
+            return(I_AM_LESS_THAN_THAT);
+        }
+        else if (s1_character > s2_character)
+        {
+            return(I_AM_GREATER_THAN_THAT);
+        }
+
+        index++;
+    }
+
+    return(I_AM_EQUAL_TO_THAT);
+}
+#endif
+
 class CDataParser
 {
 protected:
@@ -775,7 +801,12 @@ public:
 
             while( ( found_at.GetIndex() + pattern_length ) <= m_NumberOfBytes )
             {
+#if ! defined(WE_ARE_BUILDING_WFC_ON_UNIX)
                 if ( ::_memicmp( &m_Bytes[ found_at.GetIndex() ], pattern_buffer, pattern_length ) == I_AM_EQUAL_TO_THAT)
+#else // WE_ARE_BUILDING_WFC_ON_UNIX
+                // Unix doesn't have memicmp
+                if (compare_no_case(&m_Bytes[found_at.GetIndex()], pattern_buffer, pattern_length) == I_AM_EQUAL_TO_THAT)
+#endif // WE_ARE_BUILDING_WFC_ON_UNIX
                 {
                     return( true );
                 }
@@ -884,7 +915,7 @@ public:
 
             for ( auto const loop_index : Range(length) )
             {
-                string_to_get.push_back( static_cast< TCHAR > ( m_Bytes[ parse_point.GetIndex() ] ) );
+                string_to_get.push_back( static_cast< wchar_t > ( m_Bytes[ parse_point.GetIndex() ] ) );
                 parse_point.AutoIncrement( m_Bytes[ parse_point.GetIndex() ] );
             }
 
@@ -1242,7 +1273,7 @@ public:
 
     // Take a look a the current character without advancing the parse point
 
-    inline constexpr _Check_return_ DWORD GetCharacter( _In_ CParsePoint const& const_parse_point, _In_ uint32_t const number_of_characters_ahead = 0 ) const noexcept
+    inline constexpr _Check_return_ uint32_t GetCharacter( _In_ CParsePoint const& const_parse_point, _In_ uint32_t const number_of_characters_ahead = 0 ) const noexcept
     {
             if ( m_Bytes == nullptr )
             {
@@ -1852,7 +1883,7 @@ public:
 
             uint8_t byte_to_test = 0;
 
-            TCHAR temp_buffer[257];
+            wchar_t temp_buffer[257];
             temp_buffer[256] = 0x00; // zero Terminate
 
             int temp_buffer_index = 0;
@@ -1961,7 +1992,7 @@ public:
                     character = GetUnicodeToASCIITranslationFailureCharacter();
                 }
 
-                byte_array.Add(static_cast< uint8_t >(character));
+                byte_array.push_back(static_cast< uint8_t >(character));
 #else // UNICODE
 
                 (void)byte_array.push_back(LOBYTE(character));
@@ -1972,7 +2003,7 @@ public:
                 if (byte_array.size() >= termination_characters_length)
                 {
                     auto const address = byte_array.data();
-                    uint8_t const * address_to_compare = &address[byte_array.size() - (termination_characters_length * sizeof(TCHAR))];
+                    uint8_t const * address_to_compare = &address[byte_array.size() - (termination_characters_length * sizeof(wchar_t))];
 
                     // Don't forget to take into account that we may be a UNICODE build so we
                     // need to multiply the number of characters by the number of bytes per
@@ -2551,8 +2582,8 @@ public:
     BinaryReader(_In_ BinaryReader const&) = delete;
     _Check_return_ BinaryReader& operator=(_In_ BinaryReader const&) = delete;
 
-    inline constexpr BinaryReader() noexcept {};
-    ~BinaryReader(){};
+    inline constexpr BinaryReader() noexcept = default;
+    ~BinaryReader() = default;
 
     inline constexpr _Check_return_ uint8_t ReadByte( void ) noexcept
     {

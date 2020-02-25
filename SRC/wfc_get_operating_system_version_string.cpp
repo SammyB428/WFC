@@ -51,9 +51,7 @@ static char THIS_FILE[] = __FILE__;
 #define new DEBUG_NEW
 #endif // _DEBUG
 
-USING_WFC_NAMESPACE
-
-void PASCAL Win32FoundationClasses::wfc_get_operating_system_version_string( _Out_ std::wstring& version_string ) noexcept
+void Win32FoundationClasses::wfc_get_operating_system_version_string( _Out_ std::wstring& version_string ) noexcept
 {
     version_string.clear();
 
@@ -215,7 +213,7 @@ static inline void __read_string( _In_ uint8_t const * buffer, _In_ int const de
     }
 }
 
-void PASCAL Win32FoundationClasses::wfc_get_bios_uuid( _Out_ GUID& uuid ) noexcept
+void Win32FoundationClasses::wfc_get_bios_uuid( _Out_ GUID& uuid ) noexcept
 {
     // Can be verified with
     // wmic path Win32_ComputerSystemProduct get UUID
@@ -252,7 +250,7 @@ void PASCAL Win32FoundationClasses::wfc_get_bios_uuid( _Out_ GUID& uuid ) noexce
     buffer = nullptr;
 }
 
-void PASCAL Win32FoundationClasses::wfc_get_bios_serial_number( _Out_ std::wstring& serial_number ) noexcept
+void Win32FoundationClasses::wfc_get_bios_serial_number( _Out_ std::wstring& serial_number ) noexcept
 {
     serial_number.clear();
 

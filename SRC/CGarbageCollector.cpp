@@ -51,9 +51,7 @@ static char THIS_FILE[] = __FILE__;
 #define new DEBUG_NEW
 #endif // _DEBUG
 
-USING_WFC_NAMESPACE
-
-CGarbageCollector::CGarbageCollector() noexcept
+Win32FoundationClasses::CGarbageCollector::CGarbageCollector() noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -61,7 +59,7 @@ CGarbageCollector::CGarbageCollector() noexcept
    m_SelfDestruct   = FALSE;
 }
 
-CGarbageCollector::~CGarbageCollector() noexcept
+Win32FoundationClasses::CGarbageCollector::~CGarbageCollector() noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -69,7 +67,7 @@ CGarbageCollector::~CGarbageCollector() noexcept
    m_SelfDestruct   = FALSE;
 }
 
-void CGarbageCollector::AddReference( void ) noexcept
+void Win32FoundationClasses::CGarbageCollector::AddReference( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -80,7 +78,7 @@ void CGarbageCollector::AddReference( void ) noexcept
 
 #if defined( _DEBUG ) && ! defined( WFC_NO_DUMPING )
 
-void CGarbageCollector::Dump( CDumpContext& dump_context ) const
+void Win32FoundationClasses::CGarbageCollector::Dump( CDumpContext& dump_context ) const
 {
    dump_context << TEXT( "a CGarbageCollector at " ) << (VOID *) this    << TEXT( "\n{\n" );
    dump_context << TEXT( "   m_ReferenceCount is " ) << m_ReferenceCount << TEXT( "\n" );
@@ -100,19 +98,19 @@ void CGarbageCollector::Dump( CDumpContext& dump_context ) const
 
 #endif // _DEBUG
 
-_Check_return_ long CGarbageCollector::GetReferenceCount( void ) const noexcept
+_Check_return_ long Win32FoundationClasses::CGarbageCollector::GetReferenceCount( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
    return( m_ReferenceCount );
 }
 
-_Check_return_ bool CGarbageCollector::GetSelfDestruct( void ) const noexcept
+_Check_return_ bool Win32FoundationClasses::CGarbageCollector::GetSelfDestruct( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
    return( m_SelfDestruct );
 }
 
-void CGarbageCollector::Release(__out_opt bool * object_was_deleted ) noexcept
+void Win32FoundationClasses::CGarbageCollector::Release(__out_opt bool * object_was_deleted ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER_NULL_OK( object_was_deleted );
@@ -158,7 +156,7 @@ void CGarbageCollector::Release(__out_opt bool * object_was_deleted ) noexcept
    WFC_END_CATCH_ALL
 }
 
-void CGarbageCollector::SetSelfDestruct( __in bool const self_destruct ) noexcept
+void Win32FoundationClasses::CGarbageCollector::SetSelfDestruct( _In_ bool const self_destruct ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 

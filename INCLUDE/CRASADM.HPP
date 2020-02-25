@@ -81,13 +81,13 @@ class CRemoteAccessServiceAdministration
 
       virtual ~CRemoteAccessServiceAdministration();
 
-      virtual void  GetErrorString( __in UINT const error_code, __out std::wstring& error_string ) const noexcept;
+      virtual void  GetErrorString( _In_ UINT const error_code, _Out_ std::wstring& error_string ) const noexcept;
       virtual DWORD GetErrorCode( void ) const noexcept;
-      virtual BOOL  GetUserAccountServer( __out std::wstring& user_account_server_name, __in_z LPCTSTR ras_server_name, __in_z_opt LPCTSTR ras_server_domain_name = nullptr ) noexcept;
-      virtual BOOL  ClearPortStatistics( __in std::wstring const& port_name, __in_z_opt LPCTSTR server_name = nullptr ) noexcept; // Default to this machine
-      virtual BOOL  DisconnectPort( __in std::wstring const& port_name, __in_z_opt LPCTSTR server_name = nullptr ) noexcept; // RasAdminPortDisconnect
+      virtual BOOL  GetUserAccountServer( _Out_ std::wstring& user_account_server_name, __in_z LPCTSTR ras_server_name, __in_z_opt LPCTSTR ras_server_domain_name = nullptr ) noexcept;
+      virtual BOOL  ClearPortStatistics( _In_ std::wstring const& port_name, __in_z_opt LPCTSTR server_name = nullptr ) noexcept; // Default to this machine
+      virtual BOOL  DisconnectPort( _In_ std::wstring const& port_name, __in_z_opt LPCTSTR server_name = nullptr ) noexcept; // RasAdminPortDisconnect
       virtual _Check_return_ BOOL EnumeratePorts( __in_z_opt LPCTSTR server_name = nullptr ) noexcept; // RasAdminPortEnum
-      virtual _Check_return_ BOOL GetNext( __out CRemoteAccessServicePort& port ) noexcept;
+      virtual _Check_return_ BOOL GetNext( _Out_ CRemoteAccessServicePort& port ) noexcept;
       //virtual BOOL  GetInformation( CRemoteAccessServicePort& port ); // RasAdminPortGetInfo
       //virtual BOOL  GetInformation(); // RasAdminServerGetInfo
       //virtual BOOL  GetInformation(); // RasAdminUserGetInfo

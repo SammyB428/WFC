@@ -51,9 +51,7 @@ static char THIS_FILE[] = __FILE__;
 #define new DEBUG_NEW
 #endif // _DEBUG
 
-USING_WFC_NAMESPACE
-
-CSharedMemoryObject::CSharedMemoryObject() noexcept
+Win32FoundationClasses::CSharedMemoryObject::CSharedMemoryObject() noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -62,7 +60,7 @@ CSharedMemoryObject::CSharedMemoryObject() noexcept
    m_Size      = 0;
 }
 
-CSharedMemoryObject::~CSharedMemoryObject() noexcept
+Win32FoundationClasses::CSharedMemoryObject::~CSharedMemoryObject() noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -73,7 +71,7 @@ CSharedMemoryObject::~CSharedMemoryObject() noexcept
    m_Size      = 0;
 }
 
-void CSharedMemoryObject::Close( void ) noexcept
+void Win32FoundationClasses::CSharedMemoryObject::Close( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -102,7 +100,7 @@ void CSharedMemoryObject::Close( void ) noexcept
    m_Name.clear();
 }
 
-_Check_return_ bool CSharedMemoryObject::Create( _In_ std::wstring_view object_name, _In_ std::size_t const size_in_bytes ) noexcept
+_Check_return_ bool Win32FoundationClasses::CSharedMemoryObject::Create( _In_ std::wstring_view object_name, _In_ std::size_t const size_in_bytes ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 

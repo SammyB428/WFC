@@ -84,16 +84,16 @@ class CUniformResourceLocator
       ** Methods
       */
 
-      virtual _Check_return_ int Compare( __in CUniformResourceLocator const& source ) const noexcept;
-      virtual void Copy( __in CUniformResourceLocator const& source ) noexcept;
-      virtual void Copy( __in CUniversalNamingConvention const& source ) noexcept;
+      virtual _Check_return_ int Compare( _In_ CUniformResourceLocator const& source ) const noexcept;
+      virtual void Copy( _In_ CUniformResourceLocator const& source ) noexcept;
+      virtual void Copy( _In_ CUniversalNamingConvention const& source ) noexcept;
       virtual void Copy(_In_ std::wstring_view source ) noexcept;
       virtual void Empty( void ) noexcept;
       virtual void Make( void ) noexcept;
 
-      virtual _Check_return_ bool operator == ( __in CUniformResourceLocator const& right_url ) const noexcept;
-      virtual _Check_return_ CUniformResourceLocator& operator = ( __in CUniversalNamingConvention const& source ) noexcept;
-      virtual _Check_return_ CUniformResourceLocator& operator = ( __in CUniformResourceLocator const& source ) noexcept;
+      virtual _Check_return_ bool operator == ( _In_ CUniformResourceLocator const& right_url ) const noexcept;
+      virtual _Check_return_ CUniformResourceLocator& operator = ( _In_ CUniversalNamingConvention const& source ) noexcept;
+      virtual _Check_return_ CUniformResourceLocator& operator = ( _In_ CUniformResourceLocator const& source ) noexcept;
       virtual _Check_return_ CUniformResourceLocator& operator = ( __in_z LPCTSTR source ) noexcept;
 
       _Check_return_ operator LPCTSTR() const noexcept { return( URL.c_str() ); }

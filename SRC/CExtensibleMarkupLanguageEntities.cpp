@@ -51,25 +51,23 @@ static char THIS_FILE[] = __FILE__;
 #define new DEBUG_NEW
 #endif // _DEBUG
 
-USING_WFC_NAMESPACE
-
-CExtensibleMarkupLanguageEntities::CExtensibleMarkupLanguageEntities() noexcept
+Win32FoundationClasses::CExtensibleMarkupLanguageEntities::CExtensibleMarkupLanguageEntities() noexcept
 {
    WFC_VALIDATE_POINTER( this );
 }
 
-CExtensibleMarkupLanguageEntities::CExtensibleMarkupLanguageEntities( _In_ CExtensibleMarkupLanguageEntities const& source ) noexcept
+Win32FoundationClasses::CExtensibleMarkupLanguageEntities::CExtensibleMarkupLanguageEntities( _In_ Win32FoundationClasses::CExtensibleMarkupLanguageEntities const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );
 }
 
-CExtensibleMarkupLanguageEntities::~CExtensibleMarkupLanguageEntities() noexcept
+Win32FoundationClasses::CExtensibleMarkupLanguageEntities::~CExtensibleMarkupLanguageEntities() noexcept
 {
    WFC_VALIDATE_POINTER( this );
 }
 
-_Check_return_ bool CExtensibleMarkupLanguageEntities::Add( _In_ std::wstring_view entity, _In_ std::wstring_view text_parameter ) noexcept
+_Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageEntities::Add( _In_ std::wstring_view entity, _In_ std::wstring_view text_parameter ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -79,16 +77,15 @@ _Check_return_ bool CExtensibleMarkupLanguageEntities::Add( _In_ std::wstring_vi
 
    if (entity.length() < 3 )
    {
-      //WFCTRACE( TEXT( "Entity too short." ) );
       return( false );
    }
 
-   if ( entity[ 0 ] != TEXT( '&' ) )
+   if ( entity[ 0 ] != '&' )
    {
       return( false );
    }
 
-   if ( entity[entity.length() - 1 ] != TEXT( ';' ) )
+   if ( entity[entity.length() - 1 ] != ';' )
    {
       return( false );
    }
@@ -96,8 +93,8 @@ _Check_return_ bool CExtensibleMarkupLanguageEntities::Add( _In_ std::wstring_vi
    // Now validate the name characters according to Rule 68->5
 
    if ( Win32FoundationClasses::is_xml_Letter( entity[ 1 ] ) == false and
-        entity[ 1 ] != TEXT( '_' ) and
-        entity[ 1 ] != TEXT( ':' ) )
+        entity[ 1 ] != '_' and
+        entity[ 1 ] != ':' )
    {
       //WFCTRACE( TEXT( "Bad first character of entity name." ) );
       return( false );
@@ -237,7 +234,7 @@ _Check_return_ bool CExtensibleMarkupLanguageEntities::Add( _In_ std::wstring_vi
    return( true );
 }
 
-_Check_return_ bool CExtensibleMarkupLanguageEntities::Enumerate( _Inout_ std::size_t& enumerator ) const noexcept
+_Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageEntities::Enumerate( _Inout_ std::size_t& enumerator ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -253,7 +250,7 @@ _Check_return_ bool CExtensibleMarkupLanguageEntities::Enumerate( _Inout_ std::s
    return( false );
 }
 
-_Check_return_ bool CExtensibleMarkupLanguageEntities::GetNext( _Inout_ std::size_t& enumerator, _Out_ std::wstring& entity, _Out_ std::wstring& value ) const noexcept
+_Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageEntities::GetNext( _Inout_ std::size_t& enumerator, _Out_ std::wstring& entity, _Out_ std::wstring& value ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -275,7 +272,7 @@ _Check_return_ bool CExtensibleMarkupLanguageEntities::GetNext( _Inout_ std::siz
    return( false );
 }
 
-_Check_return_ bool CExtensibleMarkupLanguageEntities::IsEntity( _In_ std::wstring_view entity, _Out_ uint32_t& rule_that_was_broken ) const noexcept
+_Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageEntities::IsEntity( _In_ std::wstring_view entity, _Out_ uint32_t& rule_that_was_broken ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -291,19 +288,19 @@ _Check_return_ bool CExtensibleMarkupLanguageEntities::IsEntity( _In_ std::wstri
       return( false );
    }
 
-   if ( entity[ 0 ] != TEXT( '&' ) )
+   if ( entity[ 0 ] != '&' )
    {
       rule_that_was_broken = 68;
       return( false );
    }
 
-   if ( entity[entity.length() - 1 ] != TEXT( ';' ) )
+   if ( entity[entity.length() - 1 ] != ';' )
    {
       rule_that_was_broken = 68;
       return( false );
    }
 
-   if ( entity[ 1 ] == TEXT( '#' ) )
+   if ( entity[ 1 ] == '#' )
    {
       // Check to see if mathematical entity is possible
 
@@ -315,13 +312,13 @@ _Check_return_ bool CExtensibleMarkupLanguageEntities::IsEntity( _In_ std::wstri
 
       // Let's see if it is hexadecimal or decimal
 
-      if ( entity[ 2 ] == TEXT( 'X' ) )
+      if ( entity[ 2 ] == 'X' )
       {
          rule_that_was_broken = 66;
          return( false );
       }
 
-      if ( entity[ 2 ] == TEXT( 'x' ) )
+      if ( entity[ 2 ] == 'x' )
       {
          // Yup, we be hexadecimal
 
@@ -331,7 +328,7 @@ _Check_return_ bool CExtensibleMarkupLanguageEntities::IsEntity( _In_ std::wstri
 
          for ( auto const loop_index : Range( entity.length() - 4 ) )
          {
-            if ( _istxdigit( entity[ loop_index + 3 ] ) == 0 ) // + 3 skips &#x
+            if ( WFC_IS_HEXADECIMAL( entity[ loop_index + 3 ] ) == true ) // + 3 skips &#x
             {
                rule_that_was_broken = 66;
                return( false );
@@ -363,8 +360,8 @@ _Check_return_ bool CExtensibleMarkupLanguageEntities::IsEntity( _In_ std::wstri
    // Now validate the name characters according to Rule 68->5
 
    if ( Win32FoundationClasses::is_xml_Letter( entity[ 1 ] ) == false and
-        entity[ 1 ] != TEXT( '_' ) and
-        entity[ 1 ] != TEXT( ':' ) )
+        entity[ 1 ] != '_' and
+        entity[ 1 ] != ':' )
    {
       //WFCTRACE( TEXT( "Bad first character of entity name." ) );
       rule_that_was_broken = 5;
@@ -399,7 +396,7 @@ _Check_return_ bool CExtensibleMarkupLanguageEntities::IsEntity( _In_ std::wstri
    return(true);
 }
 
-_Check_return_ bool CExtensibleMarkupLanguageEntities::Resolve( _In_ std::wstring_view entity, _Out_ std::wstring& text ) const noexcept
+_Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageEntities::Resolve( _In_ std::wstring_view entity, _Out_ std::wstring& text ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -538,9 +535,9 @@ _Check_return_ bool CExtensibleMarkupLanguageEntities::Resolve( _In_ std::wstrin
 
          // number_string now contains the decimal number of the character
 
-         translated_character = _wtol( number_string );
+         translated_character = as_integer( number_string );
 
-         text.push_back( (wchar_t) translated_character );
+         text.push_back( static_cast<wchar_t>(translated_character) );
 
          return( true );
       }
@@ -572,7 +569,7 @@ _Check_return_ bool CExtensibleMarkupLanguageEntities::Resolve( _In_ std::wstrin
    return( false );
 }
 
-_Check_return_ CExtensibleMarkupLanguageEntities& CExtensibleMarkupLanguageEntities::operator=( _In_ CExtensibleMarkupLanguageEntities const& source ) noexcept
+_Check_return_ Win32FoundationClasses::CExtensibleMarkupLanguageEntities& Win32FoundationClasses::CExtensibleMarkupLanguageEntities::operator=( _In_ Win32FoundationClasses::CExtensibleMarkupLanguageEntities const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );

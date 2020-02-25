@@ -51,9 +51,7 @@ static char THIS_FILE[] = __FILE__;
 #define new DEBUG_NEW
 #endif // _DEBUG
 
-USING_WFC_NAMESPACE
-
-_Check_return_ bool PASCAL Win32FoundationClasses::wfc_close_handle( __in_opt HANDLE handle ) noexcept
+_Check_return_ bool Win32FoundationClasses::wfc_close_handle( __in_opt HANDLE handle ) noexcept
 {
     if (handle == 0 or handle == INVALID_HANDLE_VALUE)
     {

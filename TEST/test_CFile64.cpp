@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 2000-2016, Samuel R. Blackburn
+** Copyright, 2000-2020, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -72,7 +72,7 @@ _Check_return_ bool test_CFile64( _Out_ std::string& class_name, _Out_ int& test
 
    ZeroMemory( temporary_filename, sizeof( temporary_filename ) );
 
-   CRandomNumberGenerator2 random_number_generator;
+   Win32FoundationClasses::CRandomNumberGenerator2 random_number_generator;
 
    bool file_exists = true;
 
@@ -86,7 +86,7 @@ _Check_return_ bool test_CFile64( _Out_ std::string& class_name, _Out_ int& test
          return( failure() );
       }
 
-      file_exists = wfc_does_file_exist( temporary_filename );
+      file_exists = Win32FoundationClasses::wfc_does_file_exist( temporary_filename );
    }
 
    // If we get here, it means the filename generated above is a good one. No file
@@ -104,9 +104,9 @@ _Check_return_ bool test_CFile64( _Out_ std::string& class_name, _Out_ int& test
       buffer[ loop_index ] = 'A';
    }
 
-   CFile64 file;
+   Win32FoundationClasses::CFile64 file;
 
-   if ( file.Open( temporary_filename, (UINT) ( (UINT)CFile64::OpenFlags::modeCreate bitor (UINT) CFile64::OpenFlags::wfcDeleteOnClose bitor (UINT) CFile64::OpenFlags::modeReadWrite )) == false )
+   if ( file.Open( temporary_filename, (UINT) ( (UINT)Win32FoundationClasses::CFile64::OpenFlags::modeCreate bitor (UINT)Win32FoundationClasses::CFile64::OpenFlags::wfcDeleteOnClose bitor (UINT)Win32FoundationClasses::CFile64::OpenFlags::modeReadWrite )) == false )
    {
       test_number_that_failed = 1;
       return(failure());
@@ -126,7 +126,7 @@ _Check_return_ bool test_CFile64( _Out_ std::string& class_name, _Out_ int& test
       return(failure());
    }
 
-   if ( file.Seek( 0, CFile64::SeekPosition::begin ) != 0 )
+   if ( file.Seek( 0, Win32FoundationClasses::CFile64::SeekPosition::begin ) != 0 )
    {
       test_number_that_failed = 3;
       return(failure());
@@ -138,7 +138,7 @@ _Check_return_ bool test_CFile64( _Out_ std::string& class_name, _Out_ int& test
       return(failure());
    }
 
-   if ( file.Seek( 0, CFile64::SeekPosition::end ) != ONE_MEGABYTE )
+   if ( file.Seek( 0, Win32FoundationClasses::CFile64::SeekPosition::end ) != ONE_MEGABYTE )
    {
       test_number_that_failed = 5;
       return(failure());
@@ -150,7 +150,7 @@ _Check_return_ bool test_CFile64( _Out_ std::string& class_name, _Out_ int& test
       return(failure());
    }
 
-   ULONGLONG const position = file.Seek( -ONE_MEGABYTE, CFile64::SeekPosition::end );
+   ULONGLONG const position = file.Seek( -ONE_MEGABYTE, Win32FoundationClasses::CFile64::SeekPosition::end );
 
    if ( position != 0 )
    {
@@ -181,9 +181,9 @@ _Check_return_ bool test_CFile64( _Out_ std::string& class_name, _Out_ int& test
       }
    }
 
-   CMemoryFile memory_mapped_file;
+   Win32FoundationClasses::CMemoryFile memory_mapped_file;
 
-   if ( memory_mapped_file.FromHandle( file.GetHandle(), (UINT) CFile64::OpenFlags::modeRead, 0, 64 * ONE_KILOBYTE ) == false )
+   if ( memory_mapped_file.FromHandle( file.GetHandle(), (UINT)Win32FoundationClasses::CFile64::OpenFlags::modeRead, 0, 64 * ONE_KILOBYTE ) == false )
    {
       test_number_that_failed = 11;
       return(failure());
@@ -195,7 +195,7 @@ _Check_return_ bool test_CFile64( _Out_ std::string& class_name, _Out_ int& test
 
    // If we get here it means we have successfully memory mapped the first 64KB of the file
 
-   if ( file.Seek( ONE_MEGABYTE - 1, CFile64::SeekPosition::begin ) != ( ONE_MEGABYTE - 1 ) )
+   if ( file.Seek( ONE_MEGABYTE - 1, Win32FoundationClasses::CFile64::SeekPosition::begin ) != ( ONE_MEGABYTE - 1 ) )
    {
       test_number_that_failed = 12;
       return(failure());
@@ -224,7 +224,7 @@ _Check_return_ bool test_CFile64( _Out_ std::string& class_name, _Out_ int& test
 
    memory_mapped_file.Close();
 
-   if ( wfc_does_file_exist( temporary_filename ) == false )
+   if (Win32FoundationClasses::wfc_does_file_exist( temporary_filename ) == false )
    {
       test_number_that_failed = 15;
       return(failure());
@@ -232,7 +232,7 @@ _Check_return_ bool test_CFile64( _Out_ std::string& class_name, _Out_ int& test
 
    file.Close();
 
-   if ( wfc_does_file_exist( temporary_filename ) != false )
+   if (Win32FoundationClasses::wfc_does_file_exist( temporary_filename ) != false )
    {
       test_number_that_failed = 16;
       return(failure());
@@ -243,7 +243,7 @@ _Check_return_ bool test_CFile64( _Out_ std::string& class_name, _Out_ int& test
 
    // Now test the string reading methods
 
-   if ( file.Open( temporary_filename, (UINT)( (UINT)CFile64::OpenFlags::modeCreate bitor (UINT) CFile64::OpenFlags::modeReadWrite )) == false )
+   if ( file.Open( temporary_filename, (UINT)( (UINT)Win32FoundationClasses::CFile64::OpenFlags::modeCreate bitor (UINT)Win32FoundationClasses::CFile64::OpenFlags::modeReadWrite )) == false )
    {
       test_number_that_failed = 17;
       return(failure());
@@ -321,7 +321,7 @@ _Check_return_ bool test_CFile64( _Out_ std::string& class_name, _Out_ int& test
 
    file.SeekToBegin();
 
-   CExtensibleMarkupLanguageDocument xml;
+   Win32FoundationClasses::CExtensibleMarkupLanguageDocument xml;
 
    if ( file.Read( xml ) != true )
    {
@@ -347,25 +347,25 @@ _Check_return_ bool test_CFile64( _Out_ std::string& class_name, _Out_ int& test
       return( failure() );
    }
 
-   CFile64 log_file;
+   Win32FoundationClasses::CFile64 log_file;
 
    log_file.SetSecurity(SECURITY_SETTINGS);
 
    std::wstring program_data;
 
-   wfc_get_program_data_directory(program_data);
+   Win32FoundationClasses::wfc_get_program_data_directory(program_data);
 
    program_data.append(WSTRING_VIEW(L"WFC_TEST"));
 
-   (void) wfc_create_wide_path(program_data.c_str(), log_file.GetSecurityAttributes());
+   (void)Win32FoundationClasses::wfc_create_wide_path(program_data.c_str(), log_file.GetSecurityAttributes());
 
-   if (CFileDirectory::IsDirectory(program_data) == false)
+   if (Win32FoundationClasses::CFileDirectory::IsDirectory(program_data) == false)
    {
        test_number_that_failed = 24;
        return(failure());
    }
 
-   (void)CFileDirectory::Destroy(program_data);
+   (void)Win32FoundationClasses::CFileDirectory::Destroy(program_data);
 
    test_number_that_failed = 24;
 

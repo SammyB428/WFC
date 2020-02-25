@@ -70,11 +70,11 @@ class CVolume
       _Check_return_ bool   Dismount( void ) noexcept;
       _Check_return_ bool   Eject( void ) noexcept;
       _Check_return_ HANDLE GetHandle( void ) const noexcept;
-      _Check_return_ bool   GetType( __out UINT& drive_type ) noexcept;
+      _Check_return_ bool   GetType( _Out_ UINT& drive_type ) noexcept;
       _Check_return_ bool   Load( void ) noexcept;
       _Check_return_ bool   Lock( void ) noexcept;
-      _Check_return_ bool   Open( __in wchar_t const drive_letter ) noexcept;
-      _Check_return_ bool   PreventRemoval( __in bool const prevent_removal = true ) noexcept;
+      _Check_return_ bool   Open( _In_ wchar_t const drive_letter ) noexcept;
+      _Check_return_ bool   PreventRemoval( _In_ bool const prevent_removal = true ) noexcept;
       _Check_return_ bool   Unlock( void ) noexcept;
 
 #if defined( _DEBUG ) && ! defined( WFC_NO_DUMPING )

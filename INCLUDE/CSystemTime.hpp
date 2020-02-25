@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 1995-2019, Samuel R. Blackburn
+** Copyright, 1995-2020, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -59,61 +59,63 @@ class CSystemTime : public _SYSTEMTIME
 
       inline constexpr CSystemTime() noexcept : _SYSTEMTIME{0, 0, 0, 0, 0, 0, 0, 0} {}
 
-      inline CSystemTime( __in CSystemTime const& source ) noexcept
+      inline CSystemTime( _In_ CSystemTime const& source ) noexcept
       {
          Copy( source );
       }
 
-      inline CSystemTime( __in CFileTime const& source ) noexcept
+      inline CSystemTime( _In_ CFileTime const& source ) noexcept
       {
          Copy( source );
       }
 
-      inline CSystemTime( __in CTime const& source ) noexcept
+#if ! defined(WE_ARE_BUILDING_WFC_ON_UNIX)
+      inline CSystemTime( _In_ CTime const& source ) noexcept
       {
          Copy( source );
       }
+#endif
 
 #if ! defined( WFC_STL )
       CSystemTime( _In_ COleDateTime const& source ) noexcept;
 #endif // WFC_STL
 
-      inline CSystemTime( __in SYSTEMTIME const * source ) noexcept
+      inline CSystemTime( _In_ SYSTEMTIME const * source ) noexcept
       {
          Copy( source );
       }
 
-      inline CSystemTime( __in SYSTEMTIME const& source ) noexcept
+      inline CSystemTime( _In_ SYSTEMTIME const& source ) noexcept
       {
          Copy( source );
       }
 
-      inline CSystemTime( __in FILETIME const * source ) noexcept
+      inline CSystemTime( _In_ FILETIME const * source ) noexcept
       {
          Copy( source );
       }
 
-      inline CSystemTime( __in FILETIME const& source ) noexcept
+      inline CSystemTime( _In_ FILETIME const& source ) noexcept
       {
          Copy( source );
       }
 
-      inline CSystemTime( __in TIME_OF_DAY_INFO const * source ) noexcept
+      inline CSystemTime( _In_ TIME_OF_DAY_INFO const * source ) noexcept
       {
          Copy( source );
       }
 
-      inline CSystemTime( __in TIME_OF_DAY_INFO const& source ) noexcept
+      inline CSystemTime( _In_ TIME_OF_DAY_INFO const& source ) noexcept
       {
          Copy( source );
       }
 
-      inline CSystemTime( __in TIMESTAMP_STRUCT const * source ) noexcept // from sqltypes.h
+      inline CSystemTime( _In_ TIMESTAMP_STRUCT const * source ) noexcept // from sqltypes.h
       {
          Copy( source );
       }
 
-      inline CSystemTime( __in TIMESTAMP_STRUCT const& source ) noexcept // from sqltypes.h
+      inline CSystemTime( _In_ TIMESTAMP_STRUCT const& source ) noexcept // from sqltypes.h
       {
          Copy( source );
       }
@@ -220,7 +222,7 @@ class CSystemTime : public _SYSTEMTIME
           return(true);
       }
 
-      inline constexpr _Check_return_ LONG Compare(__in CSystemTime const& source) const noexcept
+      inline constexpr _Check_return_ int Compare(_In_ CSystemTime const& source) const noexcept
       {
           if (wYear < source.wYear)
           {
@@ -295,7 +297,7 @@ class CSystemTime : public _SYSTEMTIME
           return(I_AM_EQUAL_TO_THAT);
       }
 
-      inline constexpr void Copy( __in CSystemTime const& source ) noexcept
+      inline constexpr void Copy( _In_ CSystemTime const& source ) noexcept
       {
          wYear         = source.wYear;
          wMonth        = source.wMonth;
@@ -307,15 +309,17 @@ class CSystemTime : public _SYSTEMTIME
          wMilliseconds = source.wMilliseconds;
       }
 
-      void Copy( __in Win32FoundationClasses::CFileTime const& source ) noexcept;
+      void Copy( _In_ CFileTime const& source ) noexcept;
 
-      void Copy( __in CTime const& source ) noexcept;
+#if ! defined(WE_ARE_BUILDING_WFC_ON_UNIX)
+      void Copy( _In_ CTime const& source ) noexcept;
+#endif // WE_ARE_BUILDING_WFC_ON_UNIX
 
 #if ! defined( WFC_STL )
       void Copy( COleDateTime const&      source ) noexcept;
 #endif // WFC_STL
 
-      inline constexpr void Copy( __in SYSTEMTIME const * source ) noexcept
+      inline constexpr void Copy( _In_ SYSTEMTIME const * source ) noexcept
       {
          wYear         = source->wYear;
          wMonth        = source->wMonth;
@@ -327,7 +331,7 @@ class CSystemTime : public _SYSTEMTIME
          wMilliseconds = source->wMilliseconds;
       }
 
-      inline constexpr void Copy( __in SYSTEMTIME const& source ) noexcept
+      inline constexpr void Copy( _In_ SYSTEMTIME const& source ) noexcept
       {
          wYear         = source.wYear;
          wMonth        = source.wMonth;
@@ -339,9 +343,9 @@ class CSystemTime : public _SYSTEMTIME
          wMilliseconds = source.wMilliseconds;
       }
 
-      void Copy( __in FILETIME const * source ) noexcept;
+      void Copy( _In_ FILETIME const * source ) noexcept;
 
-      inline void Copy( __in FILETIME const& source ) noexcept
+      inline void Copy( _In_ FILETIME const& source ) noexcept
       {
          WFC_VALIDATE_POINTER( this );
 
@@ -357,20 +361,24 @@ class CSystemTime : public _SYSTEMTIME
          }
       }
 
-      void Copy( __in TIME_OF_DAY_INFO const * source ) noexcept;
-      void Copy( __in TIME_OF_DAY_INFO const&  source ) noexcept;
-      void Copy( __in TIMESTAMP_STRUCT const * source ) noexcept; // from sqltypes.h
-      void Copy( __in TIMESTAMP_STRUCT const&  source ) noexcept; // from sqltypes.h
+      void Copy( _In_ TIME_OF_DAY_INFO const * source ) noexcept;
+      void Copy( _In_ TIME_OF_DAY_INFO const&  source ) noexcept;
+      void Copy( _In_ TIMESTAMP_STRUCT const * source ) noexcept; // from sqltypes.h
+      void Copy( _In_ TIMESTAMP_STRUCT const&  source ) noexcept; // from sqltypes.h
 
 #if ! defined( WFC_STL )
       virtual void CopyTo( COleDateTime&      destination ) const noexcept;
 #endif // WFC_STL
 
-      void CopyTo( __out CTime&             destination ) const noexcept;
-      void CopyTo( __out TIMESTAMP_STRUCT * destination ) const noexcept;
-      void CopyTo( __out TIMESTAMP_STRUCT&  destination ) const noexcept;
-      void CopyTo( __out double&            destination ) const noexcept;
-      void CopyTo( __out SYSTEMTIME&        destination ) const noexcept;
+#if ! defined(WE_ARE_BUILDING_WFC_ON_UNIX)
+      void CopyTo( _Out_ CTime&             destination ) const noexcept;
+#endif
+      void CopyTo( _Out_ TIMESTAMP_STRUCT * destination ) const noexcept;
+      void CopyTo( _Out_ TIMESTAMP_STRUCT&  destination ) const noexcept;
+#if ! defined( WE_ARE_BUILDING_WFC_ON_UNIX )
+      void CopyTo( _Out_ double&            destination ) const noexcept;
+#endif // WE_ARE_BUILDING_WFC_ON_UNIX
+      void CopyTo( _Out_ SYSTEMTIME&        destination ) const noexcept;
 
       inline void GetUTC( void ) noexcept
       {
@@ -385,8 +393,9 @@ class CSystemTime : public _SYSTEMTIME
       }
 
       _Check_return_ uint32_t NumberOfMinutesSinceMonday( void ) const noexcept;
+#if ! defined(WE_ARE_BUILDING_WFC_ON_UNIX)
       _Check_return_ bool Set( void ) const noexcept;
-
+#endif
       inline _Check_return_ int64_t Ticks( void ) const noexcept
       {
           FILETIME ft = { 0, 0 };
@@ -398,8 +407,8 @@ class CSystemTime : public _SYSTEMTIME
 
          LARGE_INTEGER lt;
 
-         lt.HighPart = (LONG) ft.dwHighDateTime;
-         lt.LowPart = ft.dwLowDateTime;
+         lt.u.HighPart = (long) ft.dwHighDateTime;
+         lt.u.LowPart = ft.dwLowDateTime;
 
          return( lt.QuadPart );
       }
@@ -408,23 +417,24 @@ class CSystemTime : public _SYSTEMTIME
       ** Operators
       */
 
-      inline constexpr _Check_return_ CSystemTime& operator = ( __in CSystemTime const& source ) noexcept
+      inline constexpr _Check_return_ CSystemTime& operator = ( _In_ CSystemTime const& source ) noexcept
       {
          Copy( source );
          return( *this );
       }
 
-      _Check_return_ CSystemTime& operator = ( __in CFileTime const&    source ) noexcept;
-      _Check_return_ CSystemTime& operator = ( __in CTime const&        source ) noexcept;
-
+      _Check_return_ CSystemTime& operator = ( _In_ CFileTime const&    source ) noexcept;
+#if ! defined(WE_ARE_BUILDING_WFC_ON_UNIX)
+      _Check_return_ CSystemTime& operator = ( _In_ CTime const&        source ) noexcept;
+#endif
 #if ! defined( WFC_STL )
-      _Check_return_ CSystemTime& operator = ( __in COleDateTime const& source ) noexcept;
+      _Check_return_ CSystemTime& operator = ( _In_ COleDateTime const& source ) noexcept;
 #endif // WFC_STL
 
-      _Check_return_ bool operator == ( __in CSystemTime const& source ) const noexcept;
-      _Check_return_ bool operator != ( __in CSystemTime const& source ) const noexcept;
-      _Check_return_ bool operator >  ( __in CSystemTime const& source ) const noexcept;
-      _Check_return_ bool operator <  ( __in CSystemTime const& source ) const noexcept;
+      _Check_return_ bool operator == ( _In_ CSystemTime const& source ) const noexcept;
+      _Check_return_ bool operator != ( _In_ CSystemTime const& source ) const noexcept;
+      _Check_return_ bool operator >  ( _In_ CSystemTime const& source ) const noexcept;
+      _Check_return_ bool operator <  ( _In_ CSystemTime const& source ) const noexcept;
 
 #if defined( _DEBUG ) && ! defined( WFC_NO_DUMPING )
 

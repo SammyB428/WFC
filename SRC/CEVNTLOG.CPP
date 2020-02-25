@@ -50,19 +50,17 @@
 static char THIS_FILE[] = __FILE__;
 #endif // _DEBUG
 
-USING_WFC_NAMESPACE
-
 #if defined( _DEBUG ) && defined( _INC_CRTDBG )
 #define new DEBUG_NEW
 #endif // _DEBUG
 
-CEventLog::CEventLog() noexcept
+Win32FoundationClasses::CEventLog::CEventLog() noexcept
 {
    WFC_VALIDATE_POINTER( this );
    m_Initialize();
 }
 
-CEventLog::CEventLog( __in_z wchar_t const * source_name ) noexcept
+Win32FoundationClasses::CEventLog::CEventLog( __in_z wchar_t const * source_name ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER_NULL_OK( source_name );
@@ -71,7 +69,7 @@ CEventLog::CEventLog( __in_z wchar_t const * source_name ) noexcept
    (void )RegisterSource( source_name );
 }
 
-CEventLog::~CEventLog() noexcept
+Win32FoundationClasses::CEventLog::~CEventLog() noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -88,7 +86,7 @@ CEventLog::~CEventLog() noexcept
    m_Initialize();
 }
 
-void CEventLog::m_Initialize( void ) noexcept
+void Win32FoundationClasses::CEventLog::m_Initialize( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -102,7 +100,7 @@ void CEventLog::m_Initialize( void ) noexcept
    m_NumberOfBytesInNextRecord = 0;
 }
 
-_Check_return_ bool CEventLog::Backup( __in_z LPCTSTR name_of_backup_file ) noexcept
+_Check_return_ bool Win32FoundationClasses::CEventLog::Backup( __in_z LPCTSTR name_of_backup_file ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( name_of_backup_file );
@@ -135,7 +133,7 @@ _Check_return_ bool CEventLog::Backup( __in_z LPCTSTR name_of_backup_file ) noex
    WFC_END_CATCH_ALL
 }
 
-_Check_return_ bool CEventLog::Clear( __in_z LPCTSTR name_of_backup_file ) noexcept
+_Check_return_ bool Win32FoundationClasses::CEventLog::Clear( __in_z LPCTSTR name_of_backup_file ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER_NULL_OK( name_of_backup_file );
@@ -180,7 +178,7 @@ _Check_return_ bool CEventLog::Clear( __in_z LPCTSTR name_of_backup_file ) noexc
    WFC_END_CATCH_ALL
 }
 
-_Check_return_ bool CEventLog::Close( void ) noexcept
+_Check_return_ bool Win32FoundationClasses::CEventLog::Close( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -198,7 +196,7 @@ _Check_return_ bool CEventLog::Close( void ) noexcept
    return( true );
 }
 
-_Check_return_ bool CEventLog::CreateApplicationLog( __in_z wchar_t const * application_name, __in_z wchar_t const * message_resource_file, __in DWORD supported_types ) noexcept
+_Check_return_ bool Win32FoundationClasses::CEventLog::CreateApplicationLog( __in_z wchar_t const * application_name, __in_z wchar_t const * message_resource_file, _In_ DWORD supported_types ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( application_name );
@@ -300,7 +298,7 @@ _Check_return_ bool CEventLog::CreateApplicationLog( __in_z wchar_t const * appl
    WFC_END_CATCH_ALL
 }
 
-_Check_return_ bool CEventLog::CreateCustomLog(_In_ std::wstring_view log_name_parameter, __in_z_opt LPCTSTR log_filename_parameter, __in DWORD maximum_size_in_bytes, __in DWORD overwrite_after_this_many_seconds ) noexcept
+_Check_return_ bool Win32FoundationClasses::CEventLog::CreateCustomLog(_In_ std::wstring_view log_name_parameter, __in_z_opt LPCTSTR log_filename_parameter, _In_ DWORD maximum_size_in_bytes, _In_ DWORD overwrite_after_this_many_seconds ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER_NULL_OK( log_filename_parameter );
@@ -394,7 +392,7 @@ _Check_return_ bool CEventLog::CreateCustomLog(_In_ std::wstring_view log_name_p
    WFC_END_CATCH_ALL
 }
 
-_Check_return_ bool CEventLog::Delete(_In_ std::wstring_view log_name ) noexcept
+_Check_return_ bool Win32FoundationClasses::CEventLog::Delete(_In_ std::wstring_view log_name ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -449,7 +447,7 @@ _Check_return_ bool CEventLog::Delete(_In_ std::wstring_view log_name ) noexcept
    WFC_END_CATCH_ALL
 }
 
-_Check_return_ bool CEventLog::DeleteApplicationLog(_In_ std::wstring_view application_name ) noexcept
+_Check_return_ bool Win32FoundationClasses::CEventLog::DeleteApplicationLog(_In_ std::wstring_view application_name ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -468,7 +466,7 @@ _Check_return_ bool CEventLog::DeleteApplicationLog(_In_ std::wstring_view appli
          return( false );
       }
 
-      CRegistry registry;
+      Win32FoundationClasses::CRegistry registry;
 
       if ( registry.Connect( (HKEY) CRegistry::keyLocalMachine ) == false )
       {
@@ -533,7 +531,7 @@ _Check_return_ bool CEventLog::DeleteApplicationLog(_In_ std::wstring_view appli
    WFC_END_CATCH_ALL
 }
 
-_Check_return_ bool CEventLog::DeregisterSource( void ) noexcept
+_Check_return_ bool Win32FoundationClasses::CEventLog::DeregisterSource( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -571,20 +569,20 @@ void CEventLog::Dump( CDumpContext& dump_context ) const
 
 #endif // _DEBUG
 
-_Check_return_ bool CEventLog::EnumerateLogs( __out DWORD& enumerator ) const noexcept
+_Check_return_ bool Win32FoundationClasses::CEventLog::EnumerateLogs( _Out_ DWORD& enumerator ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
    enumerator = 0;
    return( true );
 }
 
-_Check_return_ bool CEventLog::GetNextLog( __inout DWORD& enumerator, __out std::wstring& log_name ) noexcept
+_Check_return_ bool Win32FoundationClasses::CEventLog::GetNextLog( __inout DWORD& enumerator, _Out_ std::wstring& log_name ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
    log_name.clear();
 
-   CRegistry registry;
+   Win32FoundationClasses::CRegistry registry;
 
    BOOL return_value = FALSE;
 
@@ -635,7 +633,7 @@ _Check_return_ bool CEventLog::GetNextLog( __inout DWORD& enumerator, __out std:
    return( false );
 }
 
-_Check_return_ bool CEventLog::GetNumberOfRecords( __out DWORD& number_of_records ) noexcept
+_Check_return_ bool Win32FoundationClasses::CEventLog::GetNumberOfRecords( _Out_ DWORD& number_of_records ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -654,7 +652,7 @@ _Check_return_ bool CEventLog::GetNumberOfRecords( __out DWORD& number_of_record
    return( true );
 }
 
-_Check_return_ DWORD CEventLog::GetOldestRecordNumber( void ) noexcept
+_Check_return_ DWORD Win32FoundationClasses::CEventLog::GetOldestRecordNumber( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -673,7 +671,7 @@ _Check_return_ DWORD CEventLog::GetOldestRecordNumber( void ) noexcept
    return( 0 );
 }
 
-_Check_return_ bool CEventLog::NotifyChange( __in HANDLE event_handle, __in_opt HANDLE user_log_handle ) noexcept
+_Check_return_ bool Win32FoundationClasses::CEventLog::NotifyChange( _In_ HANDLE event_handle, __in_opt HANDLE user_log_handle ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    ASSERT( event_handle != static_cast< HANDLE >( INVALID_HANDLE_VALUE ) );
@@ -701,7 +699,7 @@ _Check_return_ bool CEventLog::NotifyChange( __in HANDLE event_handle, __in_opt 
    return( true );
 }
 
-_Check_return_ bool CEventLog::Open( __in_z LPCTSTR log_name, __in_z_opt LPCTSTR name_of_computer ) noexcept
+_Check_return_ bool Win32FoundationClasses::CEventLog::Open( __in_z LPCTSTR log_name, __in_z_opt LPCTSTR name_of_computer ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( log_name );
@@ -767,7 +765,7 @@ _Check_return_ bool CEventLog::Open( __in_z LPCTSTR log_name, __in_z_opt LPCTSTR
    WFC_END_CATCH_ALL
 }
 
-_Check_return_ bool CEventLog::OpenBackup( __in_z LPCTSTR name_of_backup_file, __in_z_opt LPCTSTR name_of_computer ) noexcept
+_Check_return_ bool Win32FoundationClasses::CEventLog::OpenBackup( __in_z LPCTSTR name_of_backup_file, __in_z_opt LPCTSTR name_of_computer ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( name_of_backup_file );
@@ -830,7 +828,7 @@ _Check_return_ bool CEventLog::OpenBackup( __in_z LPCTSTR name_of_backup_file, _
    WFC_END_CATCH_ALL
 }
 
-_Check_return_ bool CEventLog::Read( __in DWORD record_number, __out CEventLogRecord& record, __in DWORD how_to_read ) noexcept
+_Check_return_ bool Win32FoundationClasses::CEventLog::Read( _In_ DWORD record_number, _Out_ Win32FoundationClasses::CEventLogRecord& record, _In_ DWORD how_to_read ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    ASSERT( is_bad_handle( m_LogHandle ) == false );
@@ -910,7 +908,7 @@ _Check_return_ bool CEventLog::Read( __in DWORD record_number, __out CEventLogRe
    WFC_END_CATCH_ALL
 }
 
-_Check_return_ bool CEventLog::Read( __in DWORD record_number, __out_bcount_part( number_of_bytes_to_read, number_of_bytes_to_read ) LPVOID buffer, __inout DWORD& number_of_bytes_to_read, __in DWORD how_to_read ) noexcept
+_Check_return_ bool Win32FoundationClasses::CEventLog::Read( _In_ DWORD record_number, __out_bcount_part( number_of_bytes_to_read, number_of_bytes_to_read ) LPVOID buffer, __inout DWORD& number_of_bytes_to_read, _In_ DWORD how_to_read ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( buffer );
@@ -951,7 +949,7 @@ _Check_return_ bool CEventLog::Read( __in DWORD record_number, __out_bcount_part
    WFC_END_CATCH_ALL
 }
 
-_Check_return_ bool CEventLog::RegisterSource(_In_ std::wstring_view source_name, __in_z_opt wchar_t const * name_of_computer ) noexcept
+_Check_return_ bool Win32FoundationClasses::CEventLog::RegisterSource(_In_ std::wstring_view source_name, __in_z_opt wchar_t const * name_of_computer ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER_NULL_OK( name_of_computer );
@@ -981,7 +979,7 @@ _Check_return_ bool CEventLog::RegisterSource(_In_ std::wstring_view source_name
 
       std::wstring dequoted_path_name(source_name);
 
-      (void) trim_quotes(dequoted_path_name);
+      (void)Win32FoundationClasses::trim_quotes(dequoted_path_name);
 
       m_EventSourceHandle = ::RegisterEventSourceW( name_of_computer, dequoted_path_name.c_str());
 
@@ -1004,12 +1002,12 @@ _Check_return_ bool CEventLog::RegisterSource(_In_ std::wstring_view source_name
    WFC_END_CATCH_ALL
 }
 
-_Check_return_ bool CEventLog::Report( __in EventType event_type,
-                        __in WORD      category,
-                        __in DWORD     event_identifier,
-                        __in WORD      number_of_strings,
+_Check_return_ bool Win32FoundationClasses::CEventLog::Report( _In_ EventType event_type,
+                        _In_ WORD      category,
+                        _In_ DWORD     event_identifier,
+                        _In_ WORD      number_of_strings,
                         __in_ecount_z_opt( number_of_strings ) LPCTSTR * string_array,
-                        __in DWORD     number_of_raw_data_bytes,
+                        _In_ DWORD     number_of_raw_data_bytes,
                         __in_bcount_opt( number_of_raw_data_bytes ) LPVOID raw_data_buffer,
                         __in_opt PSID      user_security_identifier ) noexcept
 {
@@ -1090,7 +1088,7 @@ _Check_return_ bool CEventLog::Report( __in EventType event_type,
    WFC_END_CATCH_ALL
 }
 
-_Check_return_ bool CEventLog::Report(_In_ std::wstring_view log_name, __in DWORD message_string_resource_identifier, __in WORD number_of_strings, __in_ecount_z_opt( number_of_strings ) LPCTSTR * string_array ) noexcept
+_Check_return_ bool Win32FoundationClasses::CEventLog::Report(_In_ std::wstring_view log_name, _In_ DWORD message_string_resource_identifier, _In_ WORD number_of_strings, __in_ecount_z_opt( number_of_strings ) LPCTSTR * string_array ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER_NULL_OK( string_array );
@@ -1136,7 +1134,7 @@ _Check_return_ bool CEventLog::Report(_In_ std::wstring_view log_name, __in DWOR
    WFC_END_CATCH_ALL
 }
 
-void CEventLog::ReportError(_In_z_ wchar_t const * string_to_report) noexcept
+void Win32FoundationClasses::CEventLog::ReportError(_In_z_ wchar_t const * string_to_report) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( string_to_report );
@@ -1155,7 +1153,7 @@ void CEventLog::ReportError(_In_z_ wchar_t const * string_to_report) noexcept
    (void) Report( EventType::eventError, 0, messageNumberZero, 1, string_array );
 }
 
-void CEventLog::ReportInformation(_In_z_ wchar_t const * string_to_report ) noexcept
+void Win32FoundationClasses::CEventLog::ReportInformation(_In_z_ wchar_t const * string_to_report ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( string_to_report );

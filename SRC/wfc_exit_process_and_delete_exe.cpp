@@ -51,14 +51,12 @@ static char THIS_FILE[] = __FILE__;
 #define new DEBUG_NEW
 #endif // _DEBUG
 
-USING_WFC_NAMESPACE
-
 /*
 ** This is basically cleaned up code from the September 2001 issue of Windows Developer Journal
 ** It is the best hack I've seen... by Gary Nebbett
 */
 
-void PASCAL Win32FoundationClasses::wfc_exit_process_and_delete_exe( void ) noexcept
+void Win32FoundationClasses::wfc_exit_process_and_delete_exe( void ) noexcept
 {
    HMODULE module = GetModuleHandle( 0 );
 

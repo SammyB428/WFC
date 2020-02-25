@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 1995-2019, Samuel R. Blackburn
+** Copyright, 1995-2020, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -51,8 +51,6 @@ static char THIS_FILE[] = __FILE__;
 #define new DEBUG_NEW
 #endif // WIN32
 
-USING_WFC_NAMESPACE
-
 /*
 ** This module uses exception handling to trap
 ** for errant pointers. This is useless on Unix
@@ -66,101 +64,91 @@ USING_WFC_NAMESPACE
 
 #if defined( WFC_STL )
 
-_Check_return_ std::wstring CTimeSpan::Format( _In_z_ wchar_t const * format_string ) const noexcept
+_Check_return_ std::wstring Win32FoundationClasses::CTimeSpan::Format( _In_z_ wchar_t const * format_string ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( format_string );
 
    std::wstring return_value;
+   std::wstring number_string;
 
-   WFC_TRY
+   int format_string_index = 0;
+
+   wchar_t character = format_string[ format_string_index ];
+
+   while( character != 0 )
    {
-      std::wstring number_string;
-
-      int format_string_index = 0;
-
-      wchar_t character = 0;
-
-      character = format_string[ format_string_index ];
-
-      while( character != 0 )
+      if ( character == '%' )
       {
-         if ( character == '%' )
-         {
-            format_string_index++;
-            character = format_string[ format_string_index ];
-
-            switch( character )
-            {
-               case '%':
-
-                  return_value.push_back( '%' );
-                  break;
-
-               case 'D':
-
-                  format( number_string, L"%ld", GetDays() );
-                  return_value.append( number_string );
-                  break;
-
-               case 'H':
-
-                  format( number_string, L"%02ld", GetHours() );
-                  return_value.append( number_string );
-                  break;
-
-               case 'M':
-
-                  format( number_string, L"%02ld", GetMinutes() );
-                  return_value.append( number_string );
-                  break;
-
-               case 'S':
-
-                  format( number_string, L"%02ld", GetSeconds() );
-                  return_value.append( number_string );
-                  break;
-            }
-         }
-         else
-         {
-            return_value.push_back( format_string[ format_string_index ] );
-         }
-
          format_string_index++;
          character = format_string[ format_string_index ];
+
+         switch( character )
+         {
+            case '%':
+
+               return_value.push_back( '%' );
+               break;
+
+            case 'D':
+
+               format( number_string, L"%ld", GetDays() );
+               return_value.append( number_string );
+               break;
+
+            case 'H':
+
+               format( number_string, L"%02ld", GetHours() );
+               return_value.append( number_string );
+               break;
+
+            case 'M':
+
+               format( number_string, L"%02ld", GetMinutes() );
+               return_value.append( number_string );
+               break;
+
+            case 'S':
+
+               format( number_string, L"%02ld", GetSeconds() );
+               return_value.append( number_string );
+               break;
+         }
       }
+      else
+      {
+         return_value.push_back( format_string[ format_string_index ] );
+      }
+
+      format_string_index++;
+      character = format_string[ format_string_index ];
    }
-   WFC_CATCH_ALL
-   {
-   }
-   WFC_END_CATCH_ALL
 
    return( return_value );
 }
 
 #endif // WFC_STL
 
-CTimeEx::CTimeEx( _In_ struct tm const * time_p ) noexcept
+Win32FoundationClasses::CTimeEx::CTimeEx( _In_ struct tm const * time_p ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( time_p );
    Copy( time_p );
 }
 
-CTimeEx::CTimeEx( _In_ struct tm const& time_structure ) noexcept
+Win32FoundationClasses::CTimeEx::CTimeEx( _In_ struct tm const& time_structure ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Copy( time_structure );
 }
 
-CTimeEx::CTimeEx( _In_ int const year, __in int const month, __in int const day, __in int const hour, __in int const minute, __in int const second, __in int const daylight_savings_time ) noexcept
+Win32FoundationClasses::CTimeEx::CTimeEx( _In_ int const year, _In_ int const month, _In_ int const day, _In_ int const hour, _In_ int const minute, _In_ int const second, _In_ int const daylight_savings_time ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Set( year, month, day, hour, minute, second, daylight_savings_time );
 }
 
-void CTimeEx::Copy( __in struct tm const * time_p ) noexcept
+void Win32FoundationClasses::CTimeEx::Copy( _In_ struct tm const * time_p ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER_NULL_OK( time_p );
@@ -173,7 +161,7 @@ void CTimeEx::Copy( __in struct tm const * time_p ) noexcept
    }
 }
 
-void CTimeEx::CopyModifiedJulianDate( __in double const number_of_days_since_17_november_1858 ) noexcept
+void Win32FoundationClasses::CTimeEx::CopyModifiedJulianDate( _In_ double const number_of_days_since_17_november_1858 ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -196,7 +184,7 @@ void CTimeEx::CopyModifiedJulianDate( __in double const number_of_days_since_17_
    m_Time += static_cast<long>(whole_seconds);
 }
 
-void CTimeEx::CopyTo(_Out_ std::wstring& iso_8601_format_string ) const noexcept
+void Win32FoundationClasses::CTimeEx::CopyTo(_Out_ std::wstring& iso_8601_format_string ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -204,21 +192,21 @@ void CTimeEx::CopyTo(_Out_ std::wstring& iso_8601_format_string ) const noexcept
    iso_8601_format_string.push_back( 'Z' );
 }
 
-void CTimeEx::FileNameFormat( _Out_ std::wstring& iso_8601_format_string ) const noexcept
+void Win32FoundationClasses::CTimeEx::FileNameFormat( _Out_ std::wstring& iso_8601_format_string ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
    iso_8601_format_string.assign(Format( L"%Y%m%d_%H%M%S" ));
 }
 
-void CTimeEx::CopyTo(_Out_ struct tm& destination ) const noexcept
+void Win32FoundationClasses::CTimeEx::CopyTo(_Out_ struct tm& destination ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
    GreenwichMeanTime( &m_Time, &destination );
 }
 
-_Check_return_ std::wstring CTimeEx::Format( _In_z_ wchar_t const * format_string ) const noexcept
+_Check_return_ std::wstring Win32FoundationClasses::CTimeEx::Format( _In_z_ wchar_t const * format_string ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( format_string );
@@ -256,7 +244,7 @@ _Check_return_ std::wstring CTimeEx::Format( _In_z_ wchar_t const * format_strin
    return( buffer );
 }
 
-void CTimeEx::GetCurrentTheTime( __out CTimeEx& source ) noexcept
+void Win32FoundationClasses::CTimeEx::GetCurrentTheTime( _Out_ CTimeEx& source ) noexcept
 {
    struct tm time_structure { 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 
@@ -267,7 +255,7 @@ void CTimeEx::GetCurrentTheTime( __out CTimeEx& source ) noexcept
    source.Copy( &time_structure );
 }
 
-void CTimeEx::Now( void ) noexcept
+void Win32FoundationClasses::CTimeEx::Now( void ) noexcept
 {
    struct tm time_structure { 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 
@@ -278,7 +266,7 @@ void CTimeEx::Now( void ) noexcept
    Copy( &time_structure );
 }
 
-_Check_return_ int CTimeEx::GetDay( void ) const noexcept
+_Check_return_ int Win32FoundationClasses::CTimeEx::GetDay( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -289,7 +277,7 @@ _Check_return_ int CTimeEx::GetDay( void ) const noexcept
    return( time_structure.tm_mday );
 }
 
-_Check_return_ int CTimeEx::GetDayOfWeek( void ) const noexcept // 1=Sunday
+_Check_return_ int Win32FoundationClasses::CTimeEx::GetDayOfWeek( void ) const noexcept // 1=Sunday
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -300,7 +288,7 @@ _Check_return_ int CTimeEx::GetDayOfWeek( void ) const noexcept // 1=Sunday
    return( time_structure.tm_wday + 1 );
 }
 
-_Check_return_ int CTimeEx::GetDayOfYear( void ) const noexcept
+_Check_return_ int Win32FoundationClasses::CTimeEx::GetDayOfYear( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -311,7 +299,7 @@ _Check_return_ int CTimeEx::GetDayOfYear( void ) const noexcept
    return( time_structure.tm_yday + 1 );
 }
 
-_Check_return_ int CTimeEx::GetMinuteOfDay( void ) const noexcept
+_Check_return_ int Win32FoundationClasses::CTimeEx::GetMinuteOfDay( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -324,7 +312,7 @@ _Check_return_ int CTimeEx::GetMinuteOfDay( void ) const noexcept
    return( minutes );
 }
 
-_Check_return_ int CTimeEx::GetHour( void ) const noexcept
+_Check_return_ int Win32FoundationClasses::CTimeEx::GetHour( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -335,7 +323,7 @@ _Check_return_ int CTimeEx::GetHour( void ) const noexcept
    return( time_structure.tm_hour );
 }
 
-_Check_return_ int CTimeEx::GetMinute( void ) const noexcept
+_Check_return_ int Win32FoundationClasses::CTimeEx::GetMinute( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -346,7 +334,7 @@ _Check_return_ int CTimeEx::GetMinute( void ) const noexcept
    return( time_structure.tm_min );
 }
 
-_Check_return_ int CTimeEx::GetMonth( void ) const noexcept
+_Check_return_ int Win32FoundationClasses::CTimeEx::GetMonth( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -357,7 +345,7 @@ _Check_return_ int CTimeEx::GetMonth( void ) const noexcept
    return( time_structure.tm_mon + 1 );
 }
 
-_Check_return_ int CTimeEx::GetSecond( void ) const noexcept
+_Check_return_ int Win32FoundationClasses::CTimeEx::GetSecond( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -368,20 +356,20 @@ _Check_return_ int CTimeEx::GetSecond( void ) const noexcept
    return( time_structure.tm_sec );
 }
 
-_Check_return_ time_t CTimeEx::GetTotalSeconds( void ) const noexcept
+_Check_return_ time_t Win32FoundationClasses::CTimeEx::GetTotalSeconds( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
    return( m_Time );
 }
 
-void CTimeEx::GetTime( __out struct tm& time_structure ) const noexcept
+void Win32FoundationClasses::CTimeEx::GetTime( _Out_ struct tm& time_structure ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
    GreenwichMeanTime( &m_Time, &time_structure );
 }
 
-_Check_return_ int CTimeEx::GetYear( void ) const noexcept
+_Check_return_ int Win32FoundationClasses::CTimeEx::GetYear( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -397,7 +385,7 @@ _Check_return_ int CTimeEx::GetYear( void ) const noexcept
 #define NUMBER_OF_SECONDS_IN_FOUR_YEARS     (1461L * NUMBER_OF_SECONDS_IN_A_DAY)   /* secs in a 4 year interval */
 #define BASE_DAY_OF_THE_WEEK          4                    /* 01-01-70 was a Thursday */
 
-void CTimeEx::GreenwichMeanTime( __in time_t const * time_t_pointer, __out struct tm * tm_structure_p ) noexcept
+void Win32FoundationClasses::CTimeEx::GreenwichMeanTime( _In_ time_t const * time_t_pointer, _Out_ struct tm * tm_structure_p ) noexcept
 {
    // This method is here because there is not a reliable gmtime() method for
    // all operating systems. Some aren't thread safe. The One of the standard
@@ -547,7 +535,7 @@ void CTimeEx::GreenwichMeanTime( __in time_t const * time_t_pointer, __out struc
    tm_structure_p->tm_isdst = 0;
 }
 
-_Check_return_ time_t CTimeEx::m_Make_time_t( __in struct tm const * time_parameter ) noexcept
+_Check_return_ time_t Win32FoundationClasses::CTimeEx::m_Make_time_t( _In_ struct tm const * time_parameter ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -722,7 +710,7 @@ _Check_return_ time_t CTimeEx::m_Make_time_t( __in struct tm const * time_parame
    return( (time_t) time_1 );
 }
 
-void CTimeEx::Set( __in int const year, __in int const month, __in int const day, __in int const hour, __in int const minute, __in int const second, __in int const daylight_savings_time ) noexcept
+void Win32FoundationClasses::CTimeEx::Set( _In_ int const year, _In_ int const month, _In_ int const day, _In_ int const hour, _In_ int const minute, _In_ int const second, _In_ int const daylight_savings_time ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -748,7 +736,7 @@ void CTimeEx::Set( __in int const year, __in int const month, __in int const day
    }
 }
 
-void CTimeEx::Set( __in std::wstring const& iso_8601_string ) noexcept
+void Win32FoundationClasses::CTimeEx::Set( _In_ std::wstring const& iso_8601_string ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -770,7 +758,7 @@ void CTimeEx::Set( __in std::wstring const& iso_8601_string ) noexcept
 
    std::wstring value( temp_string.substr( 0, 4 ) );
 
-   int const year = static_cast<int>(as_integer( value ));
+   int const year = static_cast<int>(Win32FoundationClasses::as_integer( value ));
 
    temp_string.erase(0, 4);
 
@@ -817,7 +805,7 @@ void CTimeEx::Set( __in std::wstring const& iso_8601_string ) noexcept
 
    temp_string.erase(0, 2);
 
-   int const month = static_cast<int>(as_integer(value));
+   int const month = static_cast<int>(Win32FoundationClasses::as_integer(value));
 
    // Now let's idiot proof the month
 
@@ -1052,7 +1040,7 @@ void CTimeEx::Set( __in std::wstring const& iso_8601_string ) noexcept
       value.assign(WSTRING_VIEW(L"0."));
       value.append( temp_string.substr( 0, character_index ) );
 
-      double fractional_second = fractional_second = _wtof( value.c_str() );
+      double fractional_second = Win32FoundationClasses::as_double( value );
 
       fractional_second *= static_cast<double>(NUMBER_OF_NANOSECONDS_IN_ONE_SECOND);
 
@@ -1099,10 +1087,10 @@ void CTimeEx::Set( __in std::wstring const& iso_8601_string ) noexcept
       return;
    }
 
-   int const offset_hours   = static_cast<int>(as_integer(temp_string.substr( 1, 2 )));
-   int const offset_minutes = static_cast<int>(as_integer(temp_string.substr( 4, 2 )));
+   int const offset_hours   = static_cast<int>(Win32FoundationClasses::as_integer(temp_string.substr( 1, 2 )));
+   int const offset_minutes = static_cast<int>(Win32FoundationClasses::as_integer(temp_string.substr( 4, 2 )));
 
-   CTimeSpan const time_span( 0, offset_hours, offset_minutes, 0 );
+   Win32FoundationClasses::CTimeSpan const time_span( 0, offset_hours, offset_minutes, 0 );
 
    if ( temp_string.at( 0 ) == '-' )
    {

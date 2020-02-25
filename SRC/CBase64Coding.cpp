@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 1995-2019, Samuel R. Blackburn
+** Copyright, 1995-2020, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -51,8 +51,6 @@ static char THIS_FILE[] = __FILE__;
 #define new DEBUG_NEW
 #endif // _DEBUG
 
-USING_WFC_NAMESPACE
-
 static inline constexpr _Check_return_ uint8_t __get_character( _In_reads_( size_of_buffer ) uint8_t const * buffer, __in_ecount( 256 ) uint8_t const * decoder_table, _Inout_ std::size_t& index, _In_ std::size_t const size_of_buffer ) noexcept
 {
    WFC_VALIDATE_POINTER( buffer );
@@ -99,18 +97,18 @@ static inline constexpr _Check_return_ uint8_t __get_character( __in_ecount( siz
    return( return_value );
 }
 
-CBase64Coding::CBase64Coding() noexcept
+Win32FoundationClasses::CBase64Coding::CBase64Coding() noexcept
 {
    WFC_VALIDATE_POINTER( this );
    m_InitializeDecoderTable();
 }
 
-CBase64Coding::~CBase64Coding() noexcept
+Win32FoundationClasses::CBase64Coding::~CBase64Coding() noexcept
 {
    WFC_VALIDATE_POINTER( this );
 }
 
-void CBase64Coding::m_InitializeDecoderTable( void ) noexcept
+void Win32FoundationClasses::CBase64Coding::m_InitializeDecoderTable( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -197,7 +195,7 @@ void CBase64Coding::m_InitializeDecoderTable( void ) noexcept
     m_DecoderTable[ LINE_FEED       ] = BASE64_IGNORABLE_CHARACTER;
 }
 
-_Check_return_ std::size_t CBase64Coding::Decode(_In_reads_bytes_(number_of_bytes) uint8_t const * buffer, _In_ std::size_t const number_of_bytes, _Inout_ uint8_t * destination, _In_ std::size_t destination_size ) const noexcept
+_Check_return_ std::size_t Win32FoundationClasses::CBase64Coding::Decode(_In_reads_bytes_(number_of_bytes) uint8_t const * buffer, _In_ std::size_t const number_of_bytes, _Inout_ uint8_t * destination, _In_ std::size_t destination_size ) const noexcept
 {
     WFC_VALIDATE_POINTER(this);
     WFC_VALIDATE_POINTER_NULL_OK(buffer);
@@ -342,7 +340,7 @@ _Check_return_ std::size_t CBase64Coding::Decode(_In_reads_bytes_(number_of_byte
     return(add_index);
 }
 
-_Check_return_ bool CBase64Coding::Decode(_In_reads_bytes_(number_of_bytes) uint8_t const * buffer, _In_ std::size_t const number_of_bytes, _Inout_ std::vector<uint8_t>& destination) const noexcept
+_Check_return_ bool Win32FoundationClasses::CBase64Coding::Decode(_In_reads_bytes_(number_of_bytes) uint8_t const * buffer, _In_ std::size_t const number_of_bytes, _Inout_ std::vector<uint8_t>& destination) const noexcept
 {
     WFC_VALIDATE_POINTER(this);
     WFC_VALIDATE_POINTER_NULL_OK(buffer);
@@ -494,14 +492,14 @@ _Check_return_ bool CBase64Coding::Decode(_In_reads_bytes_(number_of_bytes) uint
     return(return_value);
 }
 
-_Check_return_ bool CBase64Coding::Decode( _In_ std::vector<uint8_t> const& source, _Inout_ std::vector<uint8_t>& destination ) const noexcept
+_Check_return_ bool Win32FoundationClasses::CBase64Coding::Decode( _In_ std::vector<uint8_t> const& source, _Inout_ std::vector<uint8_t>& destination ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
    return(Decode(source.data(), source.size(), destination));
 }
 
-_Check_return_ bool CBase64Coding::Decode(_In_ std::wstring_view source, _Inout_ std::vector<uint8_t>& destination ) const noexcept
+_Check_return_ bool Win32FoundationClasses::CBase64Coding::Decode(_In_ std::wstring_view source, _Inout_ std::vector<uint8_t>& destination ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -652,7 +650,7 @@ _Check_return_ bool CBase64Coding::Decode(_In_ std::wstring_view source, _Inout_
    return( return_value );
 }
 
-_Check_return_ bool CBase64Coding::Encode( _In_ std::vector<uint8_t> const& source, _Inout_ std::vector<uint8_t>& destination ) const noexcept
+_Check_return_ bool Win32FoundationClasses::CBase64Coding::Encode( _In_ std::vector<uint8_t> const& source, _Inout_ std::vector<uint8_t>& destination ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -775,14 +773,14 @@ _Check_return_ bool CBase64Coding::Encode( _In_ std::vector<uint8_t> const& sour
    return( true );
 }
 
-_Check_return_ bool CBase64Coding::Encode( _In_ std::vector<uint8_t> const& source, _Inout_ std::wstring& destination_string ) const noexcept
+_Check_return_ bool Win32FoundationClasses::CBase64Coding::Encode( _In_ std::vector<uint8_t> const& source, _Inout_ std::wstring& destination_string ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
    return( Encode( source.data(), source.size(), destination_string ) );
 }
 
-_Check_return_ bool CBase64Coding::Encode( __in_bcount( number_of_bytes_to_encode ) uint8_t const * input_buffer, _In_ std::size_t const number_of_bytes_to_encode, _Inout_ std::wstring& destination_string ) const noexcept
+_Check_return_ bool Win32FoundationClasses::CBase64Coding::Encode( __in_bcount( number_of_bytes_to_encode ) uint8_t const * input_buffer, _In_ std::size_t const number_of_bytes_to_encode, _Inout_ std::wstring& destination_string ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER_NULL_OK( input_buffer );
@@ -804,7 +802,7 @@ _Check_return_ bool CBase64Coding::Encode( __in_bcount( number_of_bytes_to_encod
    return( false );
 }
 
-_Check_return_ bool CBase64Coding::Encode(__in_bcount(number_of_bytes_to_encode) uint8_t const * input_buffer, _In_ std::size_t const number_of_bytes_to_encode, _Inout_ std::string& destination_string) const noexcept
+_Check_return_ bool Win32FoundationClasses::CBase64Coding::Encode(__in_bcount(number_of_bytes_to_encode) uint8_t const * input_buffer, _In_ std::size_t const number_of_bytes_to_encode, _Inout_ std::string& destination_string) const noexcept
 {
     WFC_VALIDATE_POINTER(this);
     WFC_VALIDATE_POINTER_NULL_OK(input_buffer);
@@ -1046,7 +1044,8 @@ static inline void __encode(_In_ uint8_t const * input_buffer, _In_ std::size_t 
     }
 }
 
-_Check_return_ bool CBase64Coding::Encode(_Inout_ HANDLE input_file_handle, _In_ std::size_t const number_of_bytes_to_encode, _Inout_ HANDLE output_file_handle ) const noexcept
+#if ! defined( WE_ARE_BUILDING_WFC_ON_UNIX )
+_Check_return_ bool Win32FoundationClasses::CBase64Coding::Encode(_Inout_ HANDLE input_file_handle, _In_ std::size_t const number_of_bytes_to_encode, _Inout_ HANDLE output_file_handle ) const noexcept
 {
     WFC_VALIDATE_POINTER(this);
 
@@ -1116,6 +1115,7 @@ _Check_return_ bool CBase64Coding::Encode(_Inout_ HANDLE input_file_handle, _In_
 
     return(true);
 }
+#endif // WE_ARE_BUILDING_WFC_ON_UNIX
 
 // End of source
 

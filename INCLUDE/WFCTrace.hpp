@@ -47,9 +47,9 @@
 
 #if defined( _DEBUG )
 
-#define WFCTRACEINIT( string )           CWfcTrace ___trace( string, BIT_0 );
-#define WFCLTRACEINIT( string )          CWfcTrace ___trace( string, BIT_31 );
-#define WFCTRACEINITLEVEL( string, x )   CWfcTrace ___trace( string, x );
+#define WFCTRACEINIT( string )           Win32FoundationClasses::CWfcTrace ___trace( string, BIT_0 );
+#define WFCLTRACEINIT( string )          Win32FoundationClasses::CWfcTrace ___trace( string, BIT_31 );
+#define WFCTRACEINITLEVEL( string, x )   Win32FoundationClasses::CWfcTrace ___trace( string, x );
 #define WFCTRACE( string )               { ___trace.Output( string );               }
 #define WFCTRACEVAL( string, value )     { ___trace.Output( string, value );        }
 #define WFCTRACEVARIANT( string, value ) { ___trace.OutputVariant( string, value ); }
@@ -57,12 +57,12 @@
 #define WFCTRACEDUMP( variable )         { ___trace.Output( #variable, variable );  }
 #define WFCTRACEERROR( error_code )      { ___trace.ReportError( error_code );      }
 #define WFCTRACESOCKETERROR( errorcode ) { ___trace.ReportSocketError( errorcode ); }
-#define WFCTRACEON()                     { CWfcTrace::TraceOn();                    }
-#define WFCTRACEOFF()                    { CWfcTrace::TraceOff();                   }
-#define WFCTRACEALLON()                  { CWfcTrace::TraceAllOn();                 }
-#define WFCTRACEALLOFF()                 { CWfcTrace::TraceAllOff();                }
-#define WFCTRACELEVELON( x )             { CWfcTrace::TraceLevelOn( x );            }
-#define WFCTRACELEVELOFF( x )            { CWfcTrace::TraceLevelOff( x );           }
+#define WFCTRACEON()                     { Win32FoundationClasses::CWfcTrace::TraceOn();          }
+#define WFCTRACEOFF()                    { Win32FoundationClasses::CWfcTrace::TraceOff();         }
+#define WFCTRACEALLON()                  { Win32FoundationClasses::CWfcTrace::TraceAllOn();       }
+#define WFCTRACEALLOFF()                 { Win32FoundationClasses::CWfcTrace::TraceAllOff();      }
+#define WFCTRACELEVELON( x )             { Win32FoundationClasses::CWfcTrace::TraceLevelOn( x );  }
+#define WFCTRACELEVELOFF( x )            { Win32FoundationClasses::CWfcTrace::TraceLevelOff( x ); }
 
 #else
 
@@ -104,39 +104,39 @@ class CWfcTrace
       CWfcTrace(CWfcTrace const&) = delete;
       CWfcTrace& operator=(CWfcTrace const&) = delete;
 
-      CWfcTrace( __in_z LPCTSTR function_name, __in std::size_t const tracing_level ) noexcept;
+      CWfcTrace( __in_z LPCTSTR function_name, _In_ std::size_t const tracing_level ) noexcept;
 
       virtual ~CWfcTrace();
 
       static void TraceAllOn( void ) noexcept;
       static void TraceAllOff( void ) noexcept;
-      static void TraceLevelOn( __in std::size_t const level ) noexcept;
-      static void TraceLevelOff( __in std::size_t const level ) noexcept;
+      static void TraceLevelOn( _In_ std::size_t const level ) noexcept;
+      static void TraceLevelOff( _In_ std::size_t const level ) noexcept;
       static void TraceOn( void ) noexcept;
       static void TraceOff( void ) noexcept;
       void Output( __in_z LPCTSTR message ) const noexcept;
-      void Output( __in_z LPCTSTR message, __in int const integer      ) const noexcept;
-      void Output( __in_z LPCTSTR message, __in UINT const integer     ) const noexcept;
-      void Output( __in_z LPCTSTR message, __in long const a_long      ) const noexcept;
-      void Output( __in_z LPCTSTR message, __in ULONG const a_long     ) const noexcept;
-      void Output( __in_z LPCTSTR message, __in LONGLONG const a_long  ) const noexcept;
-      void Output( __in_z LPCTSTR message, __in ULONGLONG const a_long ) const noexcept;
-      void Output( __in_z LPCTSTR message, __in double const a_double  ) const noexcept;
-      void Output( __in_z LPCTSTR message, __in std::wstring const& string  ) const noexcept;
-      void Output( __in_z LPCTSTR message, __in VOID const * pointer   ) const noexcept;
-      void Output( __in_z LPCTSTR message, __in LARGE_INTEGER const& value ) const noexcept;
-      void Output( __in_z LPCTSTR message, __in ULARGE_INTEGER const& value ) const noexcept;
-      void Output( __in_z LPCTSTR message, __in RECT const& value ) const noexcept;
-      void Output( __in_z LPCTSTR message, __in POINT const& value ) const noexcept;
-      void Output( __in_z LPCTSTR message, __in SIZE const& value ) const noexcept;
-      void Output( __in_z LPCTSTR message, __in GUID const& value ) const noexcept; // New for Release 52
-      void Output( __in_z LPCTSTR message, __in FILETIME const& value ) const noexcept; // New for Release 52
-      void Output( __in_z LPCTSTR message, __in SYSTEMTIME const& value ) const noexcept; // New for Release 52
-      void OutputBinary( __in_z LPCTSTR message, __in ULONG const a_long ) const noexcept;
-      void OutputVariant( __in_z LPCTSTR message, __in VARIANT const& value ) const noexcept;
-      void OutputVariant( __in_z LPCTSTR message, __in VARIANT const * value ) const noexcept;
-      void ReportError( __in DWORD const error_code ) noexcept;
-      void ReportSocketError( __in DWORD const error_code ) noexcept;
+      void Output( __in_z LPCTSTR message, _In_ int const integer      ) const noexcept;
+      void Output( __in_z LPCTSTR message, _In_ UINT const integer     ) const noexcept;
+      void Output( __in_z LPCTSTR message, _In_ long const a_long      ) const noexcept;
+      void Output( __in_z LPCTSTR message, _In_ ULONG const a_long     ) const noexcept;
+      void Output( __in_z LPCTSTR message, _In_ LONGLONG const a_long  ) const noexcept;
+      void Output( __in_z LPCTSTR message, _In_ ULONGLONG const a_long ) const noexcept;
+      void Output( __in_z LPCTSTR message, _In_ double const a_double  ) const noexcept;
+      void Output( __in_z LPCTSTR message, _In_ std::wstring const& string  ) const noexcept;
+      void Output( __in_z LPCTSTR message, _In_ VOID const * pointer   ) const noexcept;
+      void Output( __in_z LPCTSTR message, _In_ LARGE_INTEGER const& value ) const noexcept;
+      void Output( __in_z LPCTSTR message, _In_ ULARGE_INTEGER const& value ) const noexcept;
+      void Output( __in_z LPCTSTR message, _In_ RECT const& value ) const noexcept;
+      void Output( __in_z LPCTSTR message, _In_ POINT const& value ) const noexcept;
+      void Output( __in_z LPCTSTR message, _In_ SIZE const& value ) const noexcept;
+      void Output( __in_z LPCTSTR message, _In_ GUID const& value ) const noexcept; // New for Release 52
+      void Output( __in_z LPCTSTR message, _In_ FILETIME const& value ) const noexcept; // New for Release 52
+      void Output( __in_z LPCTSTR message, _In_ SYSTEMTIME const& value ) const noexcept; // New for Release 52
+      void OutputBinary( __in_z LPCTSTR message, _In_ ULONG const a_long ) const noexcept;
+      void OutputVariant( __in_z LPCTSTR message, _In_ VARIANT const& value ) const noexcept;
+      void OutputVariant( __in_z LPCTSTR message, _In_ VARIANT const * value ) const noexcept;
+      void ReportError( _In_ DWORD const error_code ) noexcept;
+      void ReportSocketError( _In_ DWORD const error_code ) noexcept;
 };
 
 #endif // WFC_TRACE_CLASS_HEADER

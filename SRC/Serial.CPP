@@ -50,15 +50,13 @@
 static char THIS_FILE[] = __FILE__;
 #endif // _DEBUG
 
-USING_WFC_NAMESPACE
-
 #if defined( _DEBUG ) && defined( _INC_CRTDBG )
 #define new DEBUG_NEW
 #endif // _DEBUG
 
 #pragma warning( disable : 4302 )
 
-CSerialFile::CSerialFile()
+Win32FoundationClasses::CSerialFile::CSerialFile()
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -71,13 +69,13 @@ CSerialFile::CSerialFile()
    m_OutputBufferSize = 4096;
 }
 
-CSerialFile::~CSerialFile()
+Win32FoundationClasses::CSerialFile::~CSerialFile()
 {
    WFC_VALIDATE_POINTER( this );
    Close();
 }
 
-_Check_return_ BOOL CSerialFile::Attach( __in HANDLE new_handle, __out_opt HANDLE * old_handle_p ) noexcept
+_Check_return_ BOOL Win32FoundationClasses::CSerialFile::Attach( _In_ HANDLE new_handle, __out_opt HANDLE * old_handle_p ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER_NULL_OK( old_handle_p );
@@ -133,7 +131,7 @@ _Check_return_ BOOL CSerialFile::Attach( __in HANDLE new_handle, __out_opt HANDL
    return( TRUE );
 }
 
-_Check_return_ BOOL CSerialFile::CancelWaitFor( void ) noexcept
+_Check_return_ BOOL Win32FoundationClasses::CSerialFile::CancelWaitFor( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -149,7 +147,7 @@ _Check_return_ BOOL CSerialFile::CancelWaitFor( void ) noexcept
    return( return_value );
 }
 
-_Check_return_ BOOL CSerialFile::ClearBreak( void ) noexcept
+_Check_return_ BOOL Win32FoundationClasses::CSerialFile::ClearBreak( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -184,7 +182,7 @@ _Check_return_ BOOL CSerialFile::ClearBreak( void ) noexcept
    return( return_value );
 }
 
-void CSerialFile::Close( void ) noexcept
+void Win32FoundationClasses::CSerialFile::Close( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -217,7 +215,7 @@ void CSerialFile::Close( void ) noexcept
    m_IsOpen   = false;
 }
 
-_Check_return_ bool CSerialFile::ConfigurationDialog( __inout CCommunicationsConfiguration& configuration, _In_ bool const save_changes, _In_ HWND const parent_window_handle ) noexcept
+_Check_return_ bool Win32FoundationClasses::CSerialFile::ConfigurationDialog( __inout Win32FoundationClasses::CCommunicationsConfiguration& configuration, _In_ bool const save_changes, _In_ HWND const parent_window_handle ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -329,7 +327,7 @@ _Check_return_ bool CSerialFile::ConfigurationDialog( __inout CCommunicationsCon
    return( true );
 }
 
-_Check_return_ HANDLE CSerialFile::Detach( void ) noexcept
+_Check_return_ HANDLE Win32FoundationClasses::CSerialFile::Detach( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -464,7 +462,7 @@ void CSerialFile::Dump( CDumpContext& dump_context ) const
 
 #endif // _DEBUG
 
-_Check_return_ DWORD CSerialFile::GetBaudRate( void ) noexcept
+_Check_return_ DWORD Win32FoundationClasses::CSerialFile::GetBaudRate( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -493,7 +491,7 @@ _Check_return_ DWORD CSerialFile::GetBaudRate( void ) noexcept
    return( device_control_block.BaudRate );
 }
 
-_Check_return_ bool CSerialFile::GetConfiguration( __inout CCommunicationsConfiguration& configuration ) noexcept
+_Check_return_ bool Win32FoundationClasses::CSerialFile::GetConfiguration( __inout Win32FoundationClasses::CCommunicationsConfiguration& configuration ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -544,7 +542,7 @@ _Check_return_ bool CSerialFile::GetConfiguration( __inout CCommunicationsConfig
    return( true );
 }
 
-_Check_return_ DWORD CSerialFile::GetFlowControl( void ) noexcept
+_Check_return_ DWORD Win32FoundationClasses::CSerialFile::GetFlowControl( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -587,14 +585,14 @@ _Check_return_ DWORD CSerialFile::GetFlowControl( void ) noexcept
    return( flow_control );
 }
 
-_Check_return_ DWORD CSerialFile::GetInputBufferSize( void ) noexcept
+_Check_return_ DWORD Win32FoundationClasses::CSerialFile::GetInputBufferSize( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
    // A better solution supplied by Fabio Angelini (fabioang@iol.it or nico.sw@ibm.net)
    // 1998-07-14
 
-   CCommunicationProperties properties;
+   Win32FoundationClasses::CCommunicationProperties properties;
 
    if ( GetProperties( properties ) != FALSE )
    {
@@ -606,7 +604,7 @@ _Check_return_ DWORD CSerialFile::GetInputBufferSize( void ) noexcept
    }
 }
 
-_Check_return_ DWORD CSerialFile::GetModemStatus( void ) noexcept
+_Check_return_ DWORD Win32FoundationClasses::CSerialFile::GetModemStatus( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -639,7 +637,7 @@ _Check_return_ DWORD CSerialFile::GetModemStatus( void ) noexcept
    return( 0 );
 }
 
-_Check_return_ DWORD CSerialFile::GetOutputBufferSize( void ) noexcept
+_Check_return_ DWORD Win32FoundationClasses::CSerialFile::GetOutputBufferSize( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -658,7 +656,7 @@ _Check_return_ DWORD CSerialFile::GetOutputBufferSize( void ) noexcept
    }
 }
 
-_Check_return_ BOOL CSerialFile::GetProperties( __inout CCommunicationProperties& properties ) noexcept
+_Check_return_ BOOL Win32FoundationClasses::CSerialFile::GetProperties( __inout Win32FoundationClasses::CCommunicationProperties& properties ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -690,7 +688,7 @@ _Check_return_ BOOL CSerialFile::GetProperties( __inout CCommunicationProperties
    return( TRUE );
 }
 
-_Check_return_ BOOL CSerialFile::GetState( __inout CDeviceControlBlock& device_control_block ) noexcept
+_Check_return_ BOOL Win32FoundationClasses::CSerialFile::GetState( __inout Win32FoundationClasses::CDeviceControlBlock& device_control_block ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -710,7 +708,7 @@ _Check_return_ BOOL CSerialFile::GetState( __inout CDeviceControlBlock& device_c
    return( TRUE );
 }
 
-_Check_return_ BOOL CSerialFile::GetTimeouts( __inout COMMTIMEOUTS& timeouts ) noexcept
+_Check_return_ BOOL Win32FoundationClasses::CSerialFile::GetTimeouts( __inout COMMTIMEOUTS& timeouts ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -745,9 +743,9 @@ _Check_return_ BOOL CSerialFile::GetTimeouts( __inout COMMTIMEOUTS& timeouts ) n
 }
 
 #if defined( _DEBUG )
-void CSerialFile::m_ClearError( __in int const line_number ) noexcept
+void Win32FoundationClasses::CSerialFile::m_ClearError( _In_ int const line_number ) noexcept
 #else
-void CSerialFile::m_ClearError(__in int const ) noexcept
+void Win32FoundationClasses::CSerialFile::m_ClearError(_In_ int const ) noexcept
 #endif // _DEBUG
 {
    WFC_VALIDATE_POINTER( this );
@@ -878,7 +876,7 @@ void CSerialFile::m_ClearError(__in int const ) noexcept
    }
 }
 
-_Check_return_ bool CSerialFile::IsDataWaiting( void ) noexcept
+_Check_return_ bool Win32FoundationClasses::CSerialFile::IsDataWaiting( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -906,7 +904,7 @@ _Check_return_ bool CSerialFile::IsDataWaiting( void ) noexcept
    }
 }
 
-_Check_return_ DWORD CSerialFile::NumberOfBytesWaitingToBeRead( void ) noexcept
+_Check_return_ DWORD Win32FoundationClasses::CSerialFile::NumberOfBytesWaitingToBeRead( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -927,7 +925,7 @@ _Check_return_ DWORD CSerialFile::NumberOfBytesWaitingToBeRead( void ) noexcept
    return( m_CommunicationsStatus.cbInQue );
 }
 
-_Check_return_ DWORD CSerialFile::NumberOfBytesWaitingToBeWritten( void ) noexcept
+_Check_return_ DWORD Win32FoundationClasses::CSerialFile::NumberOfBytesWaitingToBeWritten( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -950,7 +948,7 @@ _Check_return_ DWORD CSerialFile::NumberOfBytesWaitingToBeWritten( void ) noexce
 
 #pragma warning( disable : 4100 )
 
-_Check_return_ bool CSerialFile::Open(_In_ std::filesystem::path const& channel_name, _In_ UINT const open_flags ) noexcept
+_Check_return_ bool Win32FoundationClasses::CSerialFile::Open(_In_ std::filesystem::path const& channel_name, _In_ UINT const open_flags ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -985,7 +983,7 @@ _Check_return_ bool CSerialFile::Open(_In_ std::filesystem::path const& channel_
 
 #pragma warning( default : 4100 )
 
-_Check_return_ bool CSerialFile::Open( void ) noexcept
+_Check_return_ bool Win32FoundationClasses::CSerialFile::Open( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -1013,7 +1011,7 @@ _Check_return_ bool CSerialFile::Open( void ) noexcept
       index++;
    }
 
-   make_upper(com_port_name);
+   Win32FoundationClasses::make_upper(com_port_name);
 
    std::wstring settings_string( right( Name, ( string_length - index ) - 1 ) );
 
@@ -1194,7 +1192,7 @@ _Check_return_ bool CSerialFile::Open( void ) noexcept
    return( true );
 }
 
-_Check_return_ UINT CSerialFile::Read( __out_bcount( length ) void * buffer, __in UINT const length ) noexcept
+_Check_return_ UINT Win32FoundationClasses::CSerialFile::Read( __out_bcount( length ) void * buffer, _In_ UINT const length ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( buffer );
@@ -1229,7 +1227,7 @@ _Check_return_ UINT CSerialFile::Read( __out_bcount( length ) void * buffer, __i
    WFC_END_CATCH_ALL
 }
 
-_Check_return_ BOOL CSerialFile::Purge( __in DWORD const what_to_purge ) noexcept
+_Check_return_ BOOL Win32FoundationClasses::CSerialFile::Purge( _In_ DWORD const what_to_purge ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -1265,11 +1263,11 @@ _Check_return_ BOOL CSerialFile::Purge( __in DWORD const what_to_purge ) noexcep
    return( return_value );
 }
 
-void CSerialFile::ReplaceGarbledCharacter( __in bool const yes_or_no, __in uint8_t const character_to_replace_the_garbled_one_with ) noexcept
+void Win32FoundationClasses::CSerialFile::ReplaceGarbledCharacter( _In_ bool const yes_or_no, _In_ uint8_t const character_to_replace_the_garbled_one_with ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
-   CDeviceControlBlock device_control_block;
+   Win32FoundationClasses::CDeviceControlBlock device_control_block;
 
    if ( GetState( device_control_block ) == FALSE )
    {
@@ -1289,7 +1287,7 @@ void CSerialFile::ReplaceGarbledCharacter( __in bool const yes_or_no, __in uint8
    }
 }
 
-_Check_return_ bool CSerialFile::SetBaudRate( __in uint32_t const baud_rate ) noexcept
+_Check_return_ bool Win32FoundationClasses::CSerialFile::SetBaudRate( _In_ uint32_t const baud_rate ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -1305,7 +1303,7 @@ _Check_return_ bool CSerialFile::SetBaudRate( __in uint32_t const baud_rate ) no
       return( false );
    }
 
-   CDeviceControlBlock device_control_block;
+   Win32FoundationClasses::CDeviceControlBlock device_control_block;
 
    if ( GetState( device_control_block ) == FALSE )
    {
@@ -1326,7 +1324,7 @@ _Check_return_ bool CSerialFile::SetBaudRate( __in uint32_t const baud_rate ) no
    return( true );
 }
 
-_Check_return_ BOOL CSerialFile::SetBreak( void ) noexcept
+_Check_return_ BOOL Win32FoundationClasses::CSerialFile::SetBreak( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -1357,7 +1355,7 @@ _Check_return_ BOOL CSerialFile::SetBreak( void ) noexcept
    return( return_value );
 }
 
-_Check_return_ BOOL CSerialFile::SetCharacterToWaitFor( __in uint8_t const character_to_wait_for ) noexcept
+_Check_return_ BOOL Win32FoundationClasses::CSerialFile::SetCharacterToWaitFor( _In_ uint8_t const character_to_wait_for ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -1394,7 +1392,7 @@ _Check_return_ BOOL CSerialFile::SetCharacterToWaitFor( __in uint8_t const chara
    return( TRUE );
 }
 
-_Check_return_ BOOL CSerialFile::SetDataTerminalReady( _In_ bool const set_DTR_on ) noexcept
+_Check_return_ BOOL Win32FoundationClasses::CSerialFile::SetDataTerminalReady( _In_ bool const set_DTR_on ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -1438,7 +1436,7 @@ _Check_return_ BOOL CSerialFile::SetDataTerminalReady( _In_ bool const set_DTR_o
    return( return_value );
 }
 
-void CSerialFile::SetFlowControl( _In_ DWORD const flow_control ) noexcept
+void Win32FoundationClasses::CSerialFile::SetFlowControl( _In_ DWORD const flow_control ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -1454,7 +1452,7 @@ void CSerialFile::SetFlowControl( _In_ DWORD const flow_control ) noexcept
       return;
    }
 
-   CDeviceControlBlock device_control_block;
+   Win32FoundationClasses::CDeviceControlBlock device_control_block;
 
    if ( GetState( device_control_block ) == FALSE )
    {
@@ -1518,7 +1516,7 @@ void CSerialFile::SetFlowControl( _In_ DWORD const flow_control ) noexcept
    }
 }
 
-_Check_return_ bool CSerialFile::SetPurgeBufferOnError( _In_ bool const purge_buffer ) noexcept
+_Check_return_ bool Win32FoundationClasses::CSerialFile::SetPurgeBufferOnError( _In_ bool const purge_buffer ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -1529,7 +1527,7 @@ _Check_return_ bool CSerialFile::SetPurgeBufferOnError( _In_ bool const purge_bu
    return( return_value );
 }
 
-_Check_return_ bool CSerialFile::SetRequestToSend(_In_ bool const set_RTS_on ) noexcept
+_Check_return_ bool Win32FoundationClasses::CSerialFile::SetRequestToSend(_In_ bool const set_RTS_on ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -1568,7 +1566,7 @@ _Check_return_ bool CSerialFile::SetRequestToSend(_In_ bool const set_RTS_on ) n
    return( true );
 }
 
-_Check_return_ BOOL CSerialFile::SetState(__inout CDeviceControlBlock& device_control_block ) noexcept
+_Check_return_ BOOL Win32FoundationClasses::CSerialFile::SetState(__inout Win32FoundationClasses::CDeviceControlBlock& device_control_block ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -1582,7 +1580,7 @@ _Check_return_ BOOL CSerialFile::SetState(__inout CDeviceControlBlock& device_co
    return( TRUE );
 }
 
-_Check_return_ BOOL CSerialFile::SetTimeouts( __in_opt COMMTIMEOUTS const * timeouts_p ) noexcept
+_Check_return_ BOOL Win32FoundationClasses::CSerialFile::SetTimeouts( __in_opt COMMTIMEOUTS const * timeouts_p ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER_NULL_OK( timeouts_p );
@@ -1652,7 +1650,7 @@ _Check_return_ BOOL CSerialFile::SetTimeouts( __in_opt COMMTIMEOUTS const * time
    return( return_value );
 }
 
-_Check_return_ BOOL CSerialFile::TransmitCharacter( __in char const character_to_transmit ) noexcept
+_Check_return_ BOOL Win32FoundationClasses::CSerialFile::TransmitCharacter( _In_ char const character_to_transmit ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -1686,7 +1684,7 @@ _Check_return_ BOOL CSerialFile::TransmitCharacter( __in char const character_to
    return( return_value );
 }
 
-_Check_return_ BOOL CSerialFile::WaitFor(__inout DWORD& what_to_wait_for ) noexcept
+_Check_return_ BOOL Win32FoundationClasses::CSerialFile::WaitFor(__inout DWORD& what_to_wait_for ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -1730,7 +1728,7 @@ _Check_return_ BOOL CSerialFile::WaitFor(__inout DWORD& what_to_wait_for ) noexc
    return( return_value );
 }
 
-_Check_return_ bool CSerialFile::WaitForString( __in std::string const& string_to_wait_for, __in DWORD const seconds_to_wait, __inout_opt std::string * string_p ) noexcept
+_Check_return_ bool Win32FoundationClasses::CSerialFile::WaitForString( _In_ std::string const& string_to_wait_for, _In_ DWORD const seconds_to_wait, __inout_opt std::string * string_p ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -1832,14 +1830,14 @@ _Check_return_ bool CSerialFile::WaitForString( __in std::string const& string_t
    return( false );
 }
 
-void CSerialFile::Write( _In_ BYTE const byte_to_write ) noexcept
+void Win32FoundationClasses::CSerialFile::Write( _In_ BYTE const byte_to_write ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
    Write( &byte_to_write, 1 );
 }
 
-void CSerialFile::Write( __in_bcount( length ) void const * buffer, __in UINT const length ) noexcept
+void Win32FoundationClasses::CSerialFile::Write( __in_bcount( length ) void const * buffer, _In_ UINT const length ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( buffer );
@@ -1912,7 +1910,7 @@ void CSerialFile::Write( __in_bcount( length ) void const * buffer, __in UINT co
    WFC_END_CATCH_ALL
 }
 
-void CSerialFile::Write( _In_ std::string_view string_to_write ) noexcept
+void Win32FoundationClasses::CSerialFile::Write( _In_ std::string_view string_to_write ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -1929,7 +1927,7 @@ void CSerialFile::Write( _In_ std::string_view string_to_write ) noexcept
    }
 }
 
-void CSerialFile::Write( __in std::vector<uint8_t> const& bytes ) noexcept
+void Win32FoundationClasses::CSerialFile::Write( _In_ std::vector<uint8_t> const& bytes ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    CDummyFile::Write( bytes );

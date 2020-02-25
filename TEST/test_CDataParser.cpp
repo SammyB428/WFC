@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 2000-2019, Samuel R. Blackburn
+** Copyright, 2000-2020, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -52,10 +52,10 @@ static char THIS_FILE[] = __FILE__;
 
 #define NUMBER_OF_TESTS_IN_CDATAPARSER_TEST_CLASS (23)
 
-static _Check_return_ bool test_class(_Inout_ CDataParser& parser, _Inout_ int& test_number_that_failed ) noexcept
+static _Check_return_ bool test_class(_Inout_ Win32FoundationClasses::CDataParser& parser, _Inout_ int& test_number_that_failed ) noexcept
 {
-    CParsePoint parse_point;
-    CParsePoint found_at;
+    Win32FoundationClasses::CParsePoint parse_point;
+    Win32FoundationClasses::CParsePoint found_at;
 
     if ( parser.IsTextASCII() != false )
     {
@@ -407,7 +407,7 @@ _Check_return_ bool test_CDataParser( _Out_ std::string& class_name, _Out_ int& 
 
     std::vector<uint8_t> bytes;
 
-    CDataParser parser;
+    Win32FoundationClasses::CDataParser parser;
 
     if ( parser.GetSize() != 0 )
     {
@@ -888,8 +888,8 @@ _Check_return_ bool test_CDataParser( _Out_ std::string& class_name, _Out_ int& 
     (void) bytes_to_find.push_back( 'A' );
     (void) bytes_to_find.push_back( 'B' );
 
-    CParsePoint found_at;
-    CParsePoint here;
+    Win32FoundationClasses::CParsePoint found_at;
+    Win32FoundationClasses::CParsePoint here;
 
     (void) parser.SetTextToASCII( true );
 

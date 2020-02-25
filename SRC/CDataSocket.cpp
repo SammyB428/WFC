@@ -51,15 +51,13 @@ static char THIS_FILE[] = __FILE__;
 #define new DEBUG_NEW
 #endif // _DEBUG
 
-USING_WFC_NAMESPACE
-
-CDataSocket::CDataSocket() noexcept
+Win32FoundationClasses::CDataSocket::CDataSocket() noexcept
 {
    WFC_VALIDATE_POINTER( this );
    m_Socket_p = nullptr;
 }
 
-CDataSocket::CDataSocket( __inout CSimpleSocket * socket_p ) noexcept
+Win32FoundationClasses::CDataSocket::CDataSocket( __inout Win32FoundationClasses::CSimpleSocket * socket_p ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER_NULL_OK( socket_p );
@@ -67,19 +65,19 @@ CDataSocket::CDataSocket( __inout CSimpleSocket * socket_p ) noexcept
    Attach( socket_p );
 }
 
-CDataSocket::~CDataSocket() noexcept
+Win32FoundationClasses::CDataSocket::~CDataSocket() noexcept
 {
    WFC_VALIDATE_POINTER( this );
 }
 
-void CDataSocket::Attach(__inout CSimpleSocket * socket_p ) noexcept
+void Win32FoundationClasses::CDataSocket::Attach(__inout Win32FoundationClasses::CSimpleSocket * socket_p ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER_NULL_OK( socket_p );
    m_Socket_p = socket_p;
 }
 
-_Check_return_ uint32_t CDataSocket::Read(__out_bcount(size_of_buffer) void * buffer, __in uint32_t const size_of_buffer ) noexcept
+_Check_return_ uint32_t Win32FoundationClasses::CDataSocket::Read(__out_bcount(size_of_buffer) void * buffer, _In_ uint32_t const size_of_buffer ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( m_Socket_p );
@@ -142,13 +140,13 @@ _Check_return_ uint32_t CDataSocket::Read(__out_bcount(size_of_buffer) void * bu
    WFC_END_CATCH_ALL
 }
 
-_Check_return_ uint64_t CDataSocket::Seek( _In_ int64_t const, _In_ CFile64::SeekPosition const) noexcept
+_Check_return_ uint64_t Win32FoundationClasses::CDataSocket::Seek( _In_ int64_t const, _In_ Win32FoundationClasses::CFile64::SeekPosition const) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    return( 0 );
 }
 
-void CDataSocket::Write(__in_bcount(number_of_bytes_to_write) void const * buffer, __in uint32_t const number_of_bytes_to_write) noexcept
+void Win32FoundationClasses::CDataSocket::Write(__in_bcount(number_of_bytes_to_write) void const * buffer, _In_ uint32_t const number_of_bytes_to_write) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 

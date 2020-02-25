@@ -62,9 +62,7 @@ static char THIS_FILE[] = __FILE__;
 #define new DEBUG_NEW
 #endif // _DEBUG
 
-USING_WFC_NAMESPACE
-
-void CString::m_Format( __in_z __format_string LPCTSTR format_string, va_list argument_list ) noexcept
+void Win32FoundationClasses::CString::m_Format( __in_z __format_string LPCTSTR format_string, va_list argument_list ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( format_string );
@@ -75,7 +73,7 @@ void CString::m_Format( __in_z __format_string LPCTSTR format_string, va_list ar
 
       long buffer_size = (long) ( _tcslen( format_string ) * 2 );
 
-      CString format_object( format_string );
+      Win32FoundationClasses::CString format_object( format_string );
 
       SSIZE_T string_index = 0;
 
@@ -158,7 +156,7 @@ void CString::m_Format( __in_z __format_string LPCTSTR format_string, va_list ar
 
 // Methods
 
-void __cdecl CString::Format( __in_z __format_string LPCTSTR printf_format_string, ... ) noexcept
+void __cdecl Win32FoundationClasses::CString::Format( __in_z __format_string LPCTSTR printf_format_string, ... ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( printf_format_string );

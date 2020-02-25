@@ -50,32 +50,30 @@
 static char THIS_FILE[] = __FILE__;
 #endif // _DEBUG
 
-USING_WFC_NAMESPACE
-
 #if defined( _DEBUG ) && defined( _INC_CRTDBG )
 #define new DEBUG_NEW
 #endif // _DEBUG
 
-CServer::CServer(_In_ std::wstring_view machine_name ) : CNetwork(machine_name)
+Win32FoundationClasses::CServer::CServer(_In_ std::wstring_view machine_name ) : CNetwork(machine_name)
 {
    WFC_VALIDATE_POINTER( this );
    m_Initialize();
 }
 
-CServer::~CServer()
+Win32FoundationClasses::CServer::~CServer()
 {
    WFC_VALIDATE_POINTER( this );
    Close();
 }
 
-void CServer::Close( void ) noexcept
+void Win32FoundationClasses::CServer::Close( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    CNetwork::Close();
    m_Initialize();
 }
 
-void CServer::GetComment( _Out_ std::wstring& comment ) noexcept
+void Win32FoundationClasses::CServer::GetComment( _Out_ std::wstring& comment ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -93,7 +91,7 @@ void CServer::GetComment( _Out_ std::wstring& comment ) noexcept
    comment = m_Comment;
 }
 
-void CServer::GetDomain( _Out_ std::wstring& name ) noexcept
+void Win32FoundationClasses::CServer::GetDomain( _Out_ std::wstring& name ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -112,7 +110,7 @@ void CServer::GetDomain( _Out_ std::wstring& name ) noexcept
    name = m_Domain;
 }
 
-_Check_return_ DWORD CServer::GetMajorVersion( void ) noexcept
+_Check_return_ DWORD Win32FoundationClasses::CServer::GetMajorVersion( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -124,7 +122,7 @@ _Check_return_ DWORD CServer::GetMajorVersion( void ) noexcept
    return( m_MajorVersion );
 }
 
-_Check_return_ DWORD CServer::GetMinorVersion( void ) noexcept
+_Check_return_ DWORD Win32FoundationClasses::CServer::GetMinorVersion( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -136,7 +134,7 @@ _Check_return_ DWORD CServer::GetMinorVersion( void ) noexcept
    return( m_MinorVersion );
 }
 
-_Check_return_ DWORD CServer::GetNumberOfOpens( void ) noexcept
+_Check_return_ DWORD Win32FoundationClasses::CServer::GetNumberOfOpens( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -148,7 +146,7 @@ _Check_return_ DWORD CServer::GetNumberOfOpens( void ) noexcept
    return( m_NumberOfOpens );
 }
 
-_Check_return_ DWORD CServer::GetNumberOfUsers( void ) noexcept
+_Check_return_ DWORD Win32FoundationClasses::CServer::GetNumberOfUsers( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -160,7 +158,7 @@ _Check_return_ DWORD CServer::GetNumberOfUsers( void ) noexcept
    return( m_NumberOfUsers );
 }
 
-void CServer::GetName( _Out_ std::wstring& name ) noexcept
+void Win32FoundationClasses::CServer::GetName( _Out_ std::wstring& name ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -174,7 +172,7 @@ void CServer::GetName( _Out_ std::wstring& name ) noexcept
    name = m_MachineName;
 }
 
-_Check_return_ DWORD CServer::GetPlatform( void ) noexcept
+_Check_return_ DWORD Win32FoundationClasses::CServer::GetPlatform( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -186,7 +184,7 @@ _Check_return_ DWORD CServer::GetPlatform( void ) noexcept
    return( m_Platform );
 }
 
-void CServer::GetPlatformName( _Out_ std::wstring& name ) noexcept
+void Win32FoundationClasses::CServer::GetPlatformName( _Out_ std::wstring& name ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -220,7 +218,7 @@ void CServer::GetPlatformName( _Out_ std::wstring& name ) noexcept
    }
 }
 
-void CServer::GetPlatformNameAndVersion( _Out_ std::wstring& name ) noexcept
+void Win32FoundationClasses::CServer::GetPlatformNameAndVersion( _Out_ std::wstring& name ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -230,10 +228,10 @@ void CServer::GetPlatformNameAndVersion( _Out_ std::wstring& name ) noexcept
 
    GetPlatformName( temp_name );
 
-   format( name, L"%s %d.%d", temp_name.c_str(), (int) m_MajorVersion, (int) m_MinorVersion );
+   Win32FoundationClasses::format( name, L"%s %d.%d", temp_name.c_str(), (int) m_MajorVersion, (int) m_MinorVersion );
 }
 
-_Check_return_ DWORD CServer::GetType( void ) noexcept
+_Check_return_ DWORD Win32FoundationClasses::CServer::GetType( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -245,7 +243,7 @@ _Check_return_ DWORD CServer::GetType( void ) noexcept
    return( m_Type );
 }
 
-void CServer::GetUserPath( _Out_ std::wstring& path ) noexcept
+void Win32FoundationClasses::CServer::GetUserPath( _Out_ std::wstring& path ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -259,7 +257,7 @@ void CServer::GetUserPath( _Out_ std::wstring& path ) noexcept
    path = m_UserPath;
 }
 
-_Check_return_ DWORD CServer::GetUsers( void ) noexcept
+_Check_return_ DWORD Win32FoundationClasses::CServer::GetUsers( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -271,7 +269,7 @@ _Check_return_ DWORD CServer::GetUsers( void ) noexcept
    return( m_Users );
 }
 
-void CServer::m_Get_102_Data( void ) noexcept
+void Win32FoundationClasses::CServer::m_Get_102_Data( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -308,7 +306,7 @@ void CServer::m_Get_102_Data( void ) noexcept
    }
 }
 
-void CServer::m_Get_503_Data( void ) noexcept
+void Win32FoundationClasses::CServer::m_Get_503_Data( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -340,7 +338,7 @@ void CServer::m_Get_503_Data( void ) noexcept
    }
 }
 
-void CServer::m_Get_599_Data( void ) noexcept
+void Win32FoundationClasses::CServer::m_Get_599_Data( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -375,7 +373,7 @@ void CServer::m_Get_599_Data( void ) noexcept
    }
 }
 
-void CServer::m_Initialize( void ) noexcept
+void Win32FoundationClasses::CServer::m_Initialize( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 

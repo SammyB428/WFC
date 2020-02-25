@@ -57,17 +57,15 @@
 static char THIS_FILE[] = __FILE__;
 #endif // _DEBUG
 
-USING_WFC_NAMESPACE
-
 // Construction
 
-CCryptographicProvider::CCryptographicProvider() noexcept
+Win32FoundationClasses::CCryptographicProvider::CCryptographicProvider() noexcept
 {
    WFC_VALIDATE_POINTER( this );
    m_Initialize();
 }
 
-CCryptographicProvider::~CCryptographicProvider() noexcept
+Win32FoundationClasses::CCryptographicProvider::~CCryptographicProvider() noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -77,7 +75,7 @@ CCryptographicProvider::~CCryptographicProvider() noexcept
 
 // Methods
 
-void CCryptographicProvider::Close( void ) noexcept
+void Win32FoundationClasses::CCryptographicProvider::Close( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -89,9 +87,9 @@ void CCryptographicProvider::Close( void ) noexcept
    m_CryptographicProvider = static_cast< HCRYPTPROV >( NULL );
 }
 
-bool CCryptographicProvider::CreateHash( CCryptographicAlgorithm const& algorithm_that_is_going_to_use_the_hash,
-                                         CCryptographicKey const&       key_for_hash_algorithms_that_need_it,
-                                         CCryptographicHash&      hash,
+bool Win32FoundationClasses::CCryptographicProvider::CreateHash(Win32FoundationClasses::CCryptographicAlgorithm const& algorithm_that_is_going_to_use_the_hash,
+    Win32FoundationClasses::CCryptographicKey const&       key_for_hash_algorithms_that_need_it,
+    Win32FoundationClasses::CCryptographicHash&      hash,
                                          DWORD                    creation_flags ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
@@ -176,8 +174,8 @@ bool CCryptographicProvider::CreateHash( CCryptographicAlgorithm const& algorith
    return( return_value == FALSE ? false : true );
 }
 
-bool CCryptographicProvider::CreateKey( CCryptographicAlgorithm const& algorithm_that_is_going_to_use_the_key,
-                                        CCryptographicKey&       key,
+bool Win32FoundationClasses::CCryptographicProvider::CreateKey(Win32FoundationClasses::CCryptographicAlgorithm const& algorithm_that_is_going_to_use_the_key,
+    Win32FoundationClasses::CCryptographicKey&       key,
                                         DWORD                    creation_flags,
                                         WORD                     number_of_bits_in_key ) noexcept
 {
@@ -276,7 +274,7 @@ bool CCryptographicProvider::CreateKey( CCryptographicAlgorithm const& algorithm
    return( return_value == FALSE ? false : true );
 }
 
-bool CCryptographicProvider::CreateKeySet( LPCTSTR container_name, LPCTSTR provider_name, DWORD provider_type ) noexcept
+bool Win32FoundationClasses::CCryptographicProvider::CreateKeySet( LPCTSTR container_name, LPCTSTR provider_name, DWORD provider_type ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER_NULL_OK( container_name );
@@ -314,9 +312,9 @@ bool CCryptographicProvider::CreateKeySet( LPCTSTR container_name, LPCTSTR provi
    WFC_END_CATCH_ALL
 }
 
-bool CCryptographicProvider::DeriveKey( CCryptographicAlgorithm const& algorithm,
-                                        CCryptographicHash const&      hash,
-                                        CCryptographicKey&             key,
+bool Win32FoundationClasses::CCryptographicProvider::DeriveKey(Win32FoundationClasses::CCryptographicAlgorithm const& algorithm,
+    Win32FoundationClasses::CCryptographicHash const&      hash,
+    Win32FoundationClasses::CCryptographicKey&             key,
                                         DWORD                          flags ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
@@ -416,13 +414,13 @@ void CCryptographicProvider::Dump( CDumpContext& dump_context ) const
 // CSP so I don't know exactly what multiple providers would look like
 // in the registry.
 
-void CCryptographicProvider::EnumerateAlgorithms( DWORD& enumerator ) noexcept
+void Win32FoundationClasses::CCryptographicProvider::EnumerateAlgorithms( DWORD& enumerator ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    enumerator = CRYPT_FIRST;
 }
 
-bool CCryptographicProvider::GenerateRandomBytes(std::vector<uint8_t>& array, DWORD number_of_bytes_to_get ) noexcept
+bool Win32FoundationClasses::CCryptographicProvider::GenerateRandomBytes(std::vector<uint8_t>& array, DWORD number_of_bytes_to_get ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -488,13 +486,13 @@ bool CCryptographicProvider::GenerateRandomBytes(std::vector<uint8_t>& array, DW
    return( true );
 }
 
-HCRYPTPROV CCryptographicProvider::GetHandle( void ) const noexcept
+HCRYPTPROV Win32FoundationClasses::CCryptographicProvider::GetHandle( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
    return( m_CryptographicProvider );
 }
 
-bool CCryptographicProvider::GetNext( DWORD& flags, CCryptographicAlgorithm& algorithm ) noexcept
+bool Win32FoundationClasses::CCryptographicProvider::GetNext( DWORD& flags, Win32FoundationClasses::CCryptographicAlgorithm& algorithm ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -523,7 +521,7 @@ bool CCryptographicProvider::GetNext( DWORD& flags, CCryptographicAlgorithm& alg
    return( false );
 }
 
-bool CCryptographicProvider::GetParameter( DWORD const parameter_to_get, std::vector<uint8_t>& buffer, DWORD const flags ) noexcept
+bool Win32FoundationClasses::CCryptographicProvider::GetParameter( DWORD const parameter_to_get, std::vector<uint8_t>& buffer, DWORD const flags ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -597,7 +595,7 @@ bool CCryptographicProvider::GetParameter( DWORD const parameter_to_get, std::ve
    return( true );
 }
 
-bool CCryptographicProvider::GetUserKey( DWORD which_user_key_to_get, CCryptographicKey& key ) noexcept
+bool Win32FoundationClasses::CCryptographicProvider::GetUserKey( DWORD which_user_key_to_get, Win32FoundationClasses::CCryptographicKey& key ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -669,7 +667,7 @@ bool CCryptographicProvider::GetUserKey( DWORD which_user_key_to_get, CCryptogra
    return( return_value == FALSE ? false : true );
 }
 
-bool CCryptographicProvider::ImportKey(std::vector<uint8_t>& exported_key_data, CCryptographicKey& key, CCryptographicKey::KeyFormat key_format, DWORD flags) noexcept
+bool Win32FoundationClasses::CCryptographicProvider::ImportKey(std::vector<uint8_t>& exported_key_data, Win32FoundationClasses::CCryptographicKey& key, Win32FoundationClasses::CCryptographicKey::KeyFormat key_format, DWORD flags) noexcept
 {
     WFC_VALIDATE_POINTER(this);
 
@@ -764,14 +762,14 @@ bool CCryptographicProvider::ImportKey(std::vector<uint8_t>& exported_key_data, 
     return(true);
 }
 
-void CCryptographicProvider::m_Initialize( void ) noexcept
+void Win32FoundationClasses::CCryptographicProvider::m_Initialize( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    m_ErrorCode             = 0;
    m_CryptographicProvider = static_cast< HCRYPTPROV >( NULL );
 }
 
-_Check_return_ bool CCryptographicProvider::Open(__in_z_opt LPCTSTR container_name, __in_z_opt LPCTSTR provider_name, __in DWORD provider_type, __in DWORD flags ) noexcept
+_Check_return_ bool Win32FoundationClasses::CCryptographicProvider::Open(__in_z_opt LPCTSTR container_name, __in_z_opt LPCTSTR provider_name, _In_ DWORD provider_type, _In_ DWORD flags ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER_NULL_OK( container_name );
@@ -958,7 +956,7 @@ _Check_return_ bool CCryptographicProvider::Open(__in_z_opt LPCTSTR container_na
    WFC_END_CATCH_ALL
 }
 
-bool CCryptographicProvider::SetDefault( std::wstring const& name, DWORD type ) noexcept
+bool Win32FoundationClasses::CCryptographicProvider::SetDefault( std::wstring const& name, DWORD type ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 

@@ -51,11 +51,9 @@
 static char THIS_FILE[] = __FILE__;
 #endif // _DEBUG
 
-USING_WFC_NAMESPACE
-
 // Methods
 
-void CMixerSource::Copy( __in CMixerSource const& source ) noexcept
+void Win32FoundationClasses::CMixerSource::Copy( _In_ Win32FoundationClasses::CMixerSource const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -66,7 +64,7 @@ void CMixerSource::Copy( __in CMixerSource const& source ) noexcept
       return;
    }
 
-   CMixerControlInstance::Copy( source );
+   Win32FoundationClasses::CMixerControlInstance::Copy( source );
 }
 
 #if defined( _DEBUG ) && ! defined( WFC_NO_DUMPING )
@@ -81,7 +79,7 @@ void CMixerSource::Dump( CDumpContext& dump_context ) const
 
 #endif // _DEBUG
 
-_Check_return_ bool CMixerSource::GetControl( __out CMixerVolumeControl& control ) noexcept
+_Check_return_ bool Win32FoundationClasses::CMixerSource::GetControl( _Out_ Win32FoundationClasses::CMixerVolumeControl& control ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -114,7 +112,7 @@ _Check_return_ bool CMixerSource::GetControl( __out CMixerVolumeControl& control
    return( return_value );
 }
 
-_Check_return_ bool CMixerSource::Open( __in UINT_PTR device_number, __in DWORD what_to_notify, __in DWORD_PTR who_to_notify, __in DWORD_PTR notify_data ) noexcept
+_Check_return_ bool Win32FoundationClasses::CMixerSource::Open( _In_ UINT_PTR device_number, _In_ DWORD what_to_notify, _In_ DWORD_PTR who_to_notify, _In_ DWORD_PTR notify_data ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -132,7 +130,7 @@ _Check_return_ bool CMixerSource::Open( __in UINT_PTR device_number, __in DWORD 
    return( true );
 }
 
-CMixerSource& CMixerSource::operator=( __in CMixerSource const& source ) noexcept
+Win32FoundationClasses::CMixerSource& Win32FoundationClasses::CMixerSource::operator=( _In_ Win32FoundationClasses::CMixerSource const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );

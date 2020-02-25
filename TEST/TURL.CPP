@@ -58,7 +58,7 @@ __checkReturn bool test_CUniformResourceLocator( __out std::string& class_name, 
 
    test_number_that_failed = 1;
 
-   CUniformResourceLocator url(WSTRING_VIEW(L"Serial://COM2:9600,n,8,1/Settings.ini"));
+   Win32FoundationClasses::CUniformResourceLocator url(WSTRING_VIEW(L"Serial://COM2:9600,n,8,1/Settings.ini"));
 
    if ( url.ProtocolName.compare(WSTRING_VIEW(L"Serial")) == I_AM_EQUAL_TO_THAT and
         url.MachineName.compare(WSTRING_VIEW(L"COM2")) == I_AM_EQUAL_TO_THAT and

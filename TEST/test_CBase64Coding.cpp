@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 2000-2019, Samuel R. Blackburn
+** Copyright, 2000-2020, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -56,7 +56,7 @@ _Check_return_ bool test_CBase64Coding( _Out_ std::string& class_name, _Out_ int
 
     test_number_that_failed = 0;
 
-    CBase64Coding coder;
+    Win32FoundationClasses::CBase64Coding coder;
 
     std::vector<uint8_t> bytes_to_encode;
     std::vector<uint8_t> encoded_bytes;
@@ -96,12 +96,12 @@ _Check_return_ bool test_CBase64Coding( _Out_ std::string& class_name, _Out_ int
 
     std::wstring test_encoded_data;
 
-    CBase64Coding string_coder;
+    Win32FoundationClasses::CBase64Coding string_coder;
 
     // This should throw an exception
     (void) string_coder.Encode( data, test_encoded_data );
 
-    CRandomNumberGenerator2 random;
+    Win32FoundationClasses::CRandomNumberGenerator2 random;
 
     int number_of_tests = 72 * 5; // 72 characters per line
 
@@ -187,7 +187,7 @@ _Check_return_ bool test_CBase64Coding( _Out_ std::string& class_name, _Out_ int
 
     uint8_t bytes[6] = { 0x55, 0xAA, 0x55, 0xAA, 0x55, 0xAA };
 
-    if (wfc_parse_hex_string(STRING_VIEW("0001FFfE"), bytes, sizeof(bytes)) == false)
+    if (Win32FoundationClasses::wfc_parse_hex_string(STRING_VIEW("0001FFfE"), bytes, sizeof(bytes)) == false)
     {
         test_number_that_failed = 44;
         return(failure());
@@ -209,7 +209,7 @@ _Check_return_ bool test_CBase64Coding( _Out_ std::string& class_name, _Out_ int
     bytes[4] = 0xAA;
     bytes[5] = 0x55;
 
-    if (wfc_parse_hex_string(WSTRING_VIEW(L"AaBB080910"), bytes, sizeof(bytes)) == false)
+    if (Win32FoundationClasses::wfc_parse_hex_string(WSTRING_VIEW(L"AaBB080910"), bytes, sizeof(bytes)) == false)
     {
         test_number_that_failed = 46;
         return(failure());
@@ -227,9 +227,9 @@ _Check_return_ bool test_CBase64Coding( _Out_ std::string& class_name, _Out_ int
 
     // c9e55affa92a20e6d0cb546cbd262715
 
-    CFile64 input_file;
+    Win32FoundationClasses::CFile64 input_file;
 
-    if (input_file.Open(WSTRING_VIEW(L"C:\\Temp\\Test.b64"), read_file_open_mode()) == true)
+    if (input_file.Open(WSTRING_VIEW(L"C:\\Temp\\Test.b64"), Win32FoundationClasses::read_file_open_mode()) == true)
     {
         std::size_t const buffer_size = input_file.GetLength();
 
@@ -264,7 +264,7 @@ _Check_return_ bool test_CBase64Coding( _Out_ std::string& class_name, _Out_ int
 
     coder.Encode(bytes_to_encode.data(), bytes_to_encode.size(), encoded_buffer);
 
-    std::size_t number_of_bytes_to_allocate = CBase64Coding::DecodeReserveSize(encoded_buffer.size());
+    std::size_t number_of_bytes_to_allocate = Win32FoundationClasses::CBase64Coding::DecodeReserveSize(encoded_buffer.size());
     auto decoded_buffer = std::make_unique<uint8_t[]>(number_of_bytes_to_allocate);
 
     ZeroMemory(decoded_buffer.get(), number_of_bytes_to_allocate);
@@ -288,7 +288,7 @@ _Check_return_ bool test_CBase64Coding( _Out_ std::string& class_name, _Out_ int
 
     coder.Encode(bytes_to_encode.data(), bytes_to_encode.size(), encoded_buffer);
 
-    number_of_bytes_to_allocate = CBase64Coding::DecodeReserveSize(encoded_buffer.size());
+    number_of_bytes_to_allocate = Win32FoundationClasses::CBase64Coding::DecodeReserveSize(encoded_buffer.size());
     decoded_buffer = std::make_unique<uint8_t[]>(number_of_bytes_to_allocate);
 
     ZeroMemory(decoded_buffer.get(), number_of_bytes_to_allocate);
@@ -311,7 +311,7 @@ _Check_return_ bool test_CBase64Coding( _Out_ std::string& class_name, _Out_ int
 
     coder.Encode(bytes_to_encode.data(), bytes_to_encode.size(), encoded_buffer);
 
-    number_of_bytes_to_allocate = CBase64Coding::DecodeReserveSize(encoded_buffer.size());
+    number_of_bytes_to_allocate = Win32FoundationClasses::CBase64Coding::DecodeReserveSize(encoded_buffer.size());
     decoded_buffer = std::make_unique<uint8_t[]>(number_of_bytes_to_allocate);
 
     ZeroMemory(decoded_buffer.get(), number_of_bytes_to_allocate);
@@ -335,7 +335,7 @@ _Check_return_ bool test_CBase64Coding( _Out_ std::string& class_name, _Out_ int
 
     coder.Encode(bytes_to_encode.data(), bytes_to_encode.size(), encoded_buffer);
 
-    number_of_bytes_to_allocate = CBase64Coding::DecodeReserveSize(encoded_buffer.size());
+    number_of_bytes_to_allocate = Win32FoundationClasses::CBase64Coding::DecodeReserveSize(encoded_buffer.size());
     decoded_buffer = std::make_unique<uint8_t[]>(number_of_bytes_to_allocate);
 
     ZeroMemory(decoded_buffer.get(), number_of_bytes_to_allocate);

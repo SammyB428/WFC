@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 1995-2019, Samuel R. Blackburn
+** Copyright, 1995-2020, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -49,8 +49,6 @@
 #include <afxdisp.h> // for COleDateTime
 #endif // WFC_STL
 
-USING_WFC_NAMESPACE
-
 #if defined( _DEBUG ) && defined( _INC_CRTDBG )
 #undef THIS_FILE
 static char THIS_FILE[] = __FILE__;
@@ -63,7 +61,7 @@ static char THIS_FILE[] = __FILE__;
 // were dropped from September 1752. What are they teaching in schools
 // these days?? This method uses Zeller's Conguruence.
 
-static inline constexpr _Check_return_ uint16_t __get_day_of_week( __in int year, __in int month, __in int const day ) noexcept
+static inline constexpr _Check_return_ uint16_t __get_day_of_week( _In_ int year, _In_ int month, _In_ int const day ) noexcept
 {
    if ( month <= 2 )
    {
@@ -108,7 +106,7 @@ static inline constexpr _Check_return_ uint16_t __get_day_of_week( __in int year
 
 #if ! defined( WFC_STL )
 
-CSystemTime::CSystemTime( __in COleDateTime const& source )
+Win32FoundationClasses::CSystemTime::CSystemTime( _In_ COleDateTime const& source )
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );
@@ -116,7 +114,7 @@ CSystemTime::CSystemTime( __in COleDateTime const& source )
 
 #endif // WFC_STL
 
-void CSystemTime::Copy( __in FILETIME const * source ) noexcept
+void Win32FoundationClasses::CSystemTime::Copy( _In_ FILETIME const * source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
@@ -129,27 +127,19 @@ void CSystemTime::Copy( __in FILETIME const * source ) noexcept
 
    // We were passed a pointer, don't trust it
 
-   WFC_TRY
-   {
-      SYSTEMTIME system_time;
+   SYSTEMTIME system_time;
 
-      if ( ::FileTimeToSystemTime( source, &system_time ) != FALSE )
-      {
-         Copy( system_time );
-      }
-      else
-      {
-         Empty();
-      }
+   if ( ::FileTimeToSystemTime( source, &system_time ) != FALSE )
+   {
+      Copy( system_time );
    }
-   WFC_CATCH_ALL
+   else
    {
       Empty();
    }
-   WFC_END_CATCH_ALL
 }
 
-void CSystemTime::Copy( __in Win32FoundationClasses::CFileTime const& source ) noexcept
+void Win32FoundationClasses::CSystemTime::Copy( _In_ Win32FoundationClasses::CFileTime const& source ) noexcept
 {
    FILETIME ft;
 
@@ -169,7 +159,8 @@ void CSystemTime::Copy( __in Win32FoundationClasses::CFileTime const& source ) n
    }
 }
 
-void CSystemTime::Copy( __in CTime const& source ) noexcept
+#if ! defined(WE_ARE_BUILDING_WFC_ON_UNIX)
+void Win32FoundationClasses::CSystemTime::Copy( _In_ CTime const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -184,10 +175,11 @@ void CSystemTime::Copy( __in CTime const& source ) noexcept
    wSecond       = static_cast< WORD >( source.GetSecond()        );
    wMilliseconds = 0;
 }
+#endif // WE_ARE_BUILDING_WFC_ON_UNIX
 
 #if ! defined( WFC_STL )
 
-void CSystemTime::Copy( __in COleDateTime const& source )
+void Win32FoundationClasses::CSystemTime::Copy( _In_ COleDateTime const& source )
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -211,7 +203,7 @@ void CSystemTime::Copy( __in COleDateTime const& source )
 
 #endif // WFC_STL
 
-void CSystemTime::Copy( __in TIME_OF_DAY_INFO const * source ) noexcept
+void Win32FoundationClasses::CSystemTime::Copy( _In_ TIME_OF_DAY_INFO const * source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
@@ -224,41 +216,33 @@ void CSystemTime::Copy( __in TIME_OF_DAY_INFO const * source ) noexcept
 
    // We were passed a pointer, don't trust it
 
-   WFC_TRY
-   {
-      wHour         = static_cast< WORD >( source->tod_hours );
-      wMinute       = static_cast< WORD >( source->tod_mins  );
-      wSecond       = static_cast< WORD >( source->tod_secs  );
-      wDay          = static_cast< WORD >( source->tod_day   );
-      wMonth        = static_cast< WORD >( source->tod_month );
-      wYear         = static_cast< WORD >( source->tod_year  );
-      wMilliseconds = static_cast< WORD >( source->tod_hunds * 10 );
-
-      wDayOfWeek = __get_day_of_week( wYear, wMonth, wDay );
-   }
-   WFC_CATCH_ALL
-   {
-      Empty();
-   }
-   WFC_END_CATCH_ALL
-}
-
-void CSystemTime::Copy( __in TIME_OF_DAY_INFO const& source ) noexcept
-{
-   WFC_VALIDATE_POINTER( this );
-
-   wHour         = static_cast< WORD >( source.tod_hours );
-   wMinute       = static_cast< WORD >( source.tod_mins  );
-   wSecond       = static_cast< WORD >( source.tod_secs  );
-   wDay          = static_cast< WORD >( source.tod_day   );
-   wMonth        = static_cast< WORD >( source.tod_month );
-   wYear         = static_cast< WORD >( source.tod_year  );
-   wMilliseconds = static_cast< WORD >( source.tod_hunds * 10 );
+   wHour         = static_cast<uint16_t>( source->tod_hours );
+   wMinute       = static_cast<uint16_t>( source->tod_mins  );
+   wSecond       = static_cast<uint16_t>( source->tod_secs  );
+   wDay          = static_cast<uint16_t>( source->tod_day   );
+   wMonth        = static_cast<uint16_t>( source->tod_month );
+   wYear         = static_cast<uint16_t>( source->tod_year  );
+   wMilliseconds = static_cast<uint16_t>( source->tod_hunds * 10 );
 
    wDayOfWeek = __get_day_of_week( wYear, wMonth, wDay );
 }
 
-void CSystemTime::Copy( __in TIMESTAMP_STRUCT const * source ) noexcept
+void Win32FoundationClasses::CSystemTime::Copy( _In_ TIME_OF_DAY_INFO const& source ) noexcept
+{
+   WFC_VALIDATE_POINTER( this );
+
+   wHour         = static_cast<uint16_t>( source.tod_hours );
+   wMinute       = static_cast<uint16_t>( source.tod_mins  );
+   wSecond       = static_cast<uint16_t>( source.tod_secs  );
+   wDay          = static_cast<uint16_t>( source.tod_day   );
+   wMonth        = static_cast<uint16_t>( source.tod_month );
+   wYear         = static_cast<uint16_t>( source.tod_year  );
+   wMilliseconds = static_cast<uint16_t>( source.tod_hunds * 10 );
+
+   wDayOfWeek = __get_day_of_week( wYear, wMonth, wDay );
+}
+
+void Win32FoundationClasses::CSystemTime::Copy( _In_ TIMESTAMP_STRUCT const * source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
@@ -271,43 +255,35 @@ void CSystemTime::Copy( __in TIMESTAMP_STRUCT const * source ) noexcept
 
    // We were passed a pointer, don't trust it
 
-   WFC_TRY
-   {
-      wYear         = static_cast< WORD >( source->year   );
-      wMonth        = static_cast< WORD >( source->month  );
-      wDay          = static_cast< WORD >( source->day    );
-      wHour         = static_cast< WORD >( source->hour   );
-      wMinute       = static_cast< WORD >( source->minute );
-      wSecond       = static_cast< WORD >( source->second ); 
-      wMilliseconds = static_cast< WORD >( source->fraction * 10 );
+   wYear         = static_cast<uint16_t>( source->year   );
+   wMonth        = static_cast<uint16_t>( source->month  );
+   wDay          = static_cast<uint16_t>( source->day    );
+   wHour         = static_cast<uint16_t>( source->hour   );
+   wMinute       = static_cast<uint16_t>( source->minute );
+   wSecond       = static_cast<uint16_t>( source->second );
+   wMilliseconds = static_cast<uint16_t>( source->fraction * 10 );
 
-      wDayOfWeek = __get_day_of_week( wYear, wMonth, wDay );
-   }
-   WFC_CATCH_ALL
-   {
-      Empty();
-   }
-   WFC_END_CATCH_ALL
+   wDayOfWeek = __get_day_of_week( wYear, wMonth, wDay );
 }
 
-void CSystemTime::Copy( __in TIMESTAMP_STRUCT const& source ) noexcept
+void Win32FoundationClasses::CSystemTime::Copy( _In_ TIMESTAMP_STRUCT const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
-   wYear         = static_cast< WORD >( source.year   );
-   wMonth        = static_cast< WORD >( source.month  );
-   wDay          = static_cast< WORD >( source.day    );
-   wHour         = static_cast< WORD >( source.hour   );
-   wMinute       = static_cast< WORD >( source.minute );
-   wSecond       = static_cast< WORD >( source.second ); 
-   wMilliseconds = static_cast< WORD >( source.fraction * 10 );
+   wYear         = static_cast<uint16_t>( source.year   );
+   wMonth        = static_cast<uint16_t>( source.month  );
+   wDay          = static_cast<uint16_t>( source.day    );
+   wHour         = static_cast<uint16_t>( source.hour   );
+   wMinute       = static_cast<uint16_t>( source.minute );
+   wSecond       = static_cast<uint16_t>( source.second );
+   wMilliseconds = static_cast<uint16_t>( source.fraction * 10 );
 
    wDayOfWeek = __get_day_of_week( wYear, wMonth, wDay );
 }
 
 #if ! defined( WFC_STL )
 
-void CSystemTime::CopyTo( __out COleDateTime& destination ) const
+void CSystemTime::CopyTo( _Out_ COleDateTime& destination ) const
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -324,7 +300,9 @@ void CSystemTime::CopyTo( __out COleDateTime& destination ) const
 
 #endif // WFC_STL
 
-void CSystemTime::CopyTo( __out CTime& destination ) const noexcept
+#if ! defined(WE_ARE_BUILDING_WFC_ON_UNIX)
+
+void Win32FoundationClasses::CSystemTime::CopyTo( _Out_ CTime& destination ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -337,8 +315,9 @@ void CSystemTime::CopyTo( __out CTime& destination ) const noexcept
       destination = CTime( (time_t) 0 );
    }
 }
+#endif
 
-void CSystemTime::CopyTo( __out TIMESTAMP_STRUCT * destination ) const noexcept
+void Win32FoundationClasses::CSystemTime::CopyTo( _Out_ TIMESTAMP_STRUCT * destination ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( destination );
@@ -350,24 +329,16 @@ void CSystemTime::CopyTo( __out TIMESTAMP_STRUCT * destination ) const noexcept
 
    // We were passed a pointer, don't trust it
 
-   WFC_TRY
-   {
-      destination->year     = wYear;
-      destination->month    = wMonth;
-      destination->day      = wDay;
-      destination->hour     = wHour;
-      destination->minute   = wMinute;
-      destination->second   = wSecond;
-      destination->fraction = ( wMilliseconds / 10 );
-   }
-   WFC_CATCH_ALL
-   {
-      return;
-   }
-   WFC_END_CATCH_ALL
+   destination->year     = wYear;
+   destination->month    = wMonth;
+   destination->day      = wDay;
+   destination->hour     = wHour;
+   destination->minute   = wMinute;
+   destination->second   = wSecond;
+   destination->fraction = ( wMilliseconds / 10 );
 }
 
-void CSystemTime::CopyTo( __out TIMESTAMP_STRUCT& destination ) const noexcept
+void Win32FoundationClasses::CSystemTime::CopyTo( _Out_ TIMESTAMP_STRUCT& destination ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -380,7 +351,8 @@ void CSystemTime::CopyTo( __out TIMESTAMP_STRUCT& destination ) const noexcept
    destination.fraction = ( wMilliseconds / 10 );
 }
 
-void CSystemTime::CopyTo( __out double& destination ) const noexcept
+#if ! defined( WE_ARE_BUILDING_WFC_ON_UNIX )
+void Win32FoundationClasses::CSystemTime::CopyTo( _Out_ double& destination ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -404,8 +376,9 @@ void CSystemTime::CopyTo( __out double& destination ) const noexcept
       destination = 0.0;
    }
 }
+#endif // WE_ARE_BUILDING_WFC_ON_UNIX
 
-void CSystemTime::CopyTo( __out SYSTEMTIME& destination ) const noexcept
+void Win32FoundationClasses::CSystemTime::CopyTo( _Out_ SYSTEMTIME& destination ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -419,9 +392,9 @@ void CSystemTime::CopyTo( __out SYSTEMTIME& destination ) const noexcept
    destination.wMilliseconds = wMilliseconds;
 }
 
-_Check_return_ uint32_t CSystemTime::NumberOfMinutesSinceMonday( void ) const noexcept
+_Check_return_ uint32_t Win32FoundationClasses::CSystemTime::NumberOfMinutesSinceMonday( void ) const noexcept
 {
-   CTimeEx now( wYear, wMonth, wDay, wHour, wMinute, wSecond );
+    Win32FoundationClasses::CTimeEx now( wYear, wMonth, wDay, wHour, wMinute, wSecond );
 
    int day_of_week = now.GetDayOfWeek(); // 1 == Sunday, 2  == Monday
 
@@ -437,7 +410,8 @@ _Check_return_ uint32_t CSystemTime::NumberOfMinutesSinceMonday( void ) const no
    return( return_value );
 }
 
-_Check_return_ bool CSystemTime::Set( void ) const noexcept
+#if ! defined(WE_ARE_BUILDING_WFC_ON_UNIX)
+_Check_return_ bool Win32FoundationClasses::CSystemTime::Set( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -498,28 +472,31 @@ _Check_return_ bool CSystemTime::Set( void ) const noexcept
 
    return( false );
 }
+#endif
 
 /*
 ** Operators
 */
 
-_Check_return_ CSystemTime& CSystemTime::operator = ( __in Win32FoundationClasses::CFileTime const& source ) noexcept
+_Check_return_ Win32FoundationClasses::CSystemTime& Win32FoundationClasses::CSystemTime::operator = ( _In_ Win32FoundationClasses::CFileTime const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );
    return( *this );
 }
 
-_Check_return_ CSystemTime& CSystemTime::operator = ( __in CTime const& source ) noexcept
+#if ! defined(WE_ARE_BUILDING_WFC_ON_UNIX)
+_Check_return_ Win32FoundationClasses::CSystemTime& Win32FoundationClasses::CSystemTime::operator = ( _In_ Win32FoundationClasses::CTime const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );
    return( *this );
 }
+#endif
 
 #if ! defined( WFC_STL )
 
-_Check_return_ CSystemTime& CSystemTime::operator = ( __in COleDateTime const& source )
+_Check_return_ CSystemTime& CSystemTime::operator = ( _In_ COleDateTime const& source )
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );
@@ -528,7 +505,7 @@ _Check_return_ CSystemTime& CSystemTime::operator = ( __in COleDateTime const& s
 
 #endif // WFC_STL
 
-_Check_return_ bool CSystemTime::operator == ( __in CSystemTime const& source ) const noexcept
+_Check_return_ bool Win32FoundationClasses::CSystemTime::operator == ( _In_ Win32FoundationClasses::CSystemTime const& source ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -540,7 +517,7 @@ _Check_return_ bool CSystemTime::operator == ( __in CSystemTime const& source ) 
    return( FALSE );
 }
 
-_Check_return_ bool CSystemTime::operator != ( __in CSystemTime const& source ) const noexcept
+_Check_return_ bool Win32FoundationClasses::CSystemTime::operator != ( _In_ Win32FoundationClasses::CSystemTime const& source ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -552,7 +529,7 @@ _Check_return_ bool CSystemTime::operator != ( __in CSystemTime const& source ) 
    return( FALSE );
 }
 
-_Check_return_ bool CSystemTime::operator > ( __in CSystemTime const& source ) const noexcept
+_Check_return_ bool Win32FoundationClasses::CSystemTime::operator > ( _In_ Win32FoundationClasses::CSystemTime const& source ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -566,7 +543,7 @@ _Check_return_ bool CSystemTime::operator > ( __in CSystemTime const& source ) c
    }
 }
 
-_Check_return_ bool CSystemTime::operator < ( __in CSystemTime const& source ) const noexcept
+_Check_return_ bool Win32FoundationClasses::CSystemTime::operator < ( _In_ Win32FoundationClasses::CSystemTime const& source ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -641,11 +618,11 @@ void CSystemTime::Dump( CDumpContext& dump_context ) const
 
 #endif // _DEBUG
 
-_Check_return_ FILETIME CSystemTime::AsFiletime() const noexcept
+_Check_return_ FILETIME Win32FoundationClasses::CSystemTime::AsFiletime() const noexcept
 {
     FILETIME return_value = { 0, 0 };
 
-    CFileTime as_a_filetime( this );
+    Win32FoundationClasses::CFileTime as_a_filetime( this );
 
     as_a_filetime.CopyTo( return_value );
 

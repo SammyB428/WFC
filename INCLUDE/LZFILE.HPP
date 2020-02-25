@@ -71,19 +71,19 @@ class CLZFile : public CDummyFile
 
       virtual ~CLZFile();
 
-      static void __stdcall TranslateErrorCode(__in int const error_code, __out std::wstring& error_message) noexcept;
+      static void __stdcall TranslateErrorCode(_In_ int const error_code, _Out_ std::wstring& error_message) noexcept;
 
       /*
       ** The Win32 API
       */
 
       virtual void Close( void ) noexcept;
-      virtual _Check_return_ bool Copy( __in CLZFile const&  source ) noexcept;
-      virtual _Check_return_ bool Copy( __in CLZFile const * source ) noexcept;
-      virtual _Check_return_ bool GetExpandedName(_In_ std::wstring_view name_of_compressed_file, __out std::wstring& original_file_name ) noexcept;
-      _Check_return_ bool Open(_In_ std::filesystem::path const& channel_name, __in UINT const style = OF_READ ) noexcept override;
-      _Check_return_ UINT Read( __out_bcount( size_of_buffer ) void * buffer, __in UINT const size_of_buffer ) noexcept override;
-      _Check_return_ uint64_t Seek( __in int64_t const offset, __in CFile64::SeekPosition const from ) noexcept override;
+      virtual _Check_return_ bool Copy( _In_ CLZFile const&  source ) noexcept;
+      virtual _Check_return_ bool Copy( _In_ CLZFile const * source ) noexcept;
+      virtual _Check_return_ bool GetExpandedName(_In_ std::wstring_view name_of_compressed_file, _Out_ std::wstring& original_file_name ) noexcept;
+      _Check_return_ bool Open(_In_ std::filesystem::path const& channel_name, _In_ UINT const style = OF_READ ) noexcept override;
+      _Check_return_ UINT Read( __out_bcount( size_of_buffer ) void * buffer, _In_ UINT const size_of_buffer ) noexcept override;
+      _Check_return_ uint64_t Seek( _In_ int64_t const offset, _In_ CFile64::SeekPosition const from ) noexcept override;
 
 #if defined( _DEBUG ) && ! defined( WFC_NO_DUMPING )
 

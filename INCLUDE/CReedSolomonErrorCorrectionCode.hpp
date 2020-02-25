@@ -81,20 +81,20 @@ class CReedSolomonErrorCorrectionCode
 
       int m_PrimitivePolynomials[9]{ 0 }; // Array of integers
 
-      virtual _Check_return_ bool m_EncodeChunk( __in std::vector<uint8_t> const& input, __out std::vector<uint8_t>& parity ) noexcept;
-      virtual _Check_return_ int  m_DecodeChunk( __inout std::vector<uint8_t>& chunk, __out std::vector<int>& error_polynomials, __in int no_eras = 1 ) noexcept;
+      virtual _Check_return_ bool m_EncodeChunk( _In_ std::vector<uint8_t> const& input, _Out_ std::vector<uint8_t>& parity ) noexcept;
+      virtual _Check_return_ int  m_DecodeChunk( __inout std::vector<uint8_t>& chunk, _Out_ std::vector<int>& error_polynomials, _In_ int no_eras = 1 ) noexcept;
       virtual void m_GenerateGaloisField( void ) noexcept;
       virtual void m_GeneratePolynomial( void ) noexcept;
       virtual void m_Initialize( _In_ int const number_of_symbols_per_block ) noexcept;
-      inline  _Check_return_ int m_Mod( __in int x ) noexcept;
+      inline  _Check_return_ int m_Mod( _In_ int x ) noexcept;
 
    public:
 
       CReedSolomonErrorCorrectionCode();
       virtual ~CReedSolomonErrorCorrectionCode();
 
-      virtual _Check_return_ SSIZE_T Decode( __in std::vector<uint8_t> const& encoded_data, __out std::vector<uint8_t>& decoded_data ) noexcept;
-      virtual _Check_return_ bool    Encode( __in std::vector<uint8_t> const& data, __out std::vector<uint8_t>& encoded_data ) noexcept;
+      virtual _Check_return_ SSIZE_T Decode( _In_ std::vector<uint8_t> const& encoded_data, _Out_ std::vector<uint8_t>& decoded_data ) noexcept;
+      virtual _Check_return_ bool    Encode( _In_ std::vector<uint8_t> const& data, _Out_ std::vector<uint8_t>& encoded_data ) noexcept;
 };
 
 #endif // REED_SOLOMON_ERROR_CORRECTION_CODE_CLASS_HEADER

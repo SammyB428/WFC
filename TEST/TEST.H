@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 2000-2018, Samuel R. Blackburn
+** Copyright, 2000-2020, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -46,8 +46,6 @@
 #define WFC_SILENT
 #include <ciso646>
 #include "../include/wfc.h"
-
-USING_WFC_NAMESPACE
 
 // Standard testing functions
 

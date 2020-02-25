@@ -51,9 +51,7 @@ static char THIS_FILE[] = __FILE__;
 #define new DEBUG_NEW
 #endif // _DEBUG
 
-USING_WFC_NAMESPACE
-
-_Check_return_ bool PASCAL Win32FoundationClasses::wfc_get_filename_from_handle( _In_ HANDLE const file_handle, _Out_ std::wstring& filename ) noexcept
+_Check_return_ bool Win32FoundationClasses::wfc_get_filename_from_handle( _In_ HANDLE const file_handle, _Out_ std::wstring& filename ) noexcept
 {
     struct MY_IO_STATUS_BLOCK
     {
@@ -117,7 +115,7 @@ _Check_return_ bool PASCAL Win32FoundationClasses::wfc_get_filename_from_handle(
     return( true );
 }
 
-_Check_return_ bool PASCAL Win32FoundationClasses::wfc_get_command_line( _Out_ std::wstring& full_command_line ) noexcept
+_Check_return_ bool Win32FoundationClasses::wfc_get_command_line( _Out_ std::wstring& full_command_line ) noexcept
 {
     wchar_t path[ 4096 ];
 

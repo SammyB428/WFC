@@ -50,9 +50,9 @@
 
  struct QUEUE_WORKSPACE
 {
-    CQueue *       queue_p{ nullptr };
-    ULARGE_INTEGER number_of_operations{ 0, 0 };
-    bool           exit_thread{ false };
+    Win32FoundationClasses::CQueue * queue_p{ nullptr };
+    uint64_t number_of_operations{ 0 };
+    bool     exit_thread{ false };
 };
 
 void queue_add_thread( void * p )
@@ -64,7 +64,7 @@ void queue_add_thread( void * p )
       return;
    }
 
-   workspace_p->number_of_operations.QuadPart = 0;
+   workspace_p->number_of_operations = 0;
 
    auto queue_p = workspace_p->queue_p;
 
@@ -75,7 +75,7 @@ void queue_add_thread( void * p )
    {
       if ( queue_p->Add( item ) != false )
       {
-         workspace_p->number_of_operations.QuadPart++;
+         workspace_p->number_of_operations++;
       }
    }
 }
@@ -89,7 +89,7 @@ void queue_get_thread( void * p )
       return;
    }
 
-   workspace_p->number_of_operations.QuadPart = 0;
+   workspace_p->number_of_operations = 0;
 
    auto queue_p = workspace_p->queue_p;
 
@@ -99,7 +99,7 @@ void queue_get_thread( void * p )
    {
       if ( queue_p->TryGet( item ) != false )
       {
-         workspace_p->number_of_operations.QuadPart++;
+         workspace_p->number_of_operations++;
       }
    }
 }
@@ -113,7 +113,7 @@ _Check_return_ bool CQueue_stress_test( _Out_ std::string& class_name, _Out_ int
    QUEUE_WORKSPACE get_workspace;
    QUEUE_WORKSPACE add_workspace;
 
-   CQueue queue;
+   Win32FoundationClasses::CQueue queue;
 
    get_workspace.queue_p = &queue;
    add_workspace.queue_p = &queue;
@@ -121,7 +121,7 @@ _Check_return_ bool CQueue_stress_test( _Out_ std::string& class_name, _Out_ int
    get_workspace.exit_thread = false;
    add_workspace.exit_thread = false;
 
-   DWORD start_time = (DWORD) time(nullptr);
+   uint32_t start_time = (uint32_t) time(nullptr);
 
    SYSTEM_INFO system_information;
 
@@ -189,11 +189,11 @@ _Check_return_ bool CQueue_stress_test( _Out_ std::string& class_name, _Out_ int
 
    _tprintf( TEXT( "We ran for %lu seconds.\n" ), number_of_seconds_we_ran );
    _tprintf( TEXT( "Added %I64u items (%lu operations per second)\n" ),
-             add_workspace.number_of_operations.QuadPart,
-             (DWORD) ( add_workspace.number_of_operations.QuadPart / number_of_seconds_we_ran ) );
+             add_workspace.number_of_operations,
+             (DWORD) ( add_workspace.number_of_operations / number_of_seconds_we_ran ) );
    _tprintf( TEXT( "Got %I64u items (%lu operations per second)\n" ),
-             get_workspace.number_of_operations.QuadPart,
-             (DWORD) ( get_workspace.number_of_operations.QuadPart / number_of_seconds_we_ran ) );
+             get_workspace.number_of_operations,
+             (DWORD) ( get_workspace.number_of_operations / number_of_seconds_we_ran ) );
    _tprintf( TEXT( "Left %lu items on the queue.\n" ), (uint32_t) queue.GetLength() );
    _tprintf( TEXT( "Queue grew to %lu\n" ), (uint32_t) queue.GetMaximumLength() );
 

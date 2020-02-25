@@ -177,54 +177,54 @@ class CRegistry
       */
 
       virtual _Check_return_ bool Close( void ) noexcept;
-      virtual _Check_return_ bool Connect( __in HKEY    key_to_open   = (HKEY) keyCurrentUser,
+      virtual _Check_return_ bool Connect( _In_ HKEY    key_to_open   = (HKEY) keyCurrentUser,
                             __in_z_opt wchar_t const * computer_name = nullptr ) noexcept;
       virtual _Check_return_ bool Create( __in_z wchar_t const *             name_of_subkey,
                            __in_z_opt wchar_t const *         name_of_class         = nullptr,
-                           __in CreateOptions         options               = CreateOptions::NonVolatile,
-                           __in CreatePermissions     permissions           = permissionAllAccess,
+                           _In_ CreateOptions         options               = CreateOptions::NonVolatile,
+                           _In_ CreatePermissions     permissions           = permissionAllAccess,
                            __in_opt LPSECURITY_ATTRIBUTES security_attributes_p = nullptr,
                            __in_opt CreationDisposition * disposition_p         = nullptr ) noexcept;
       virtual _Check_return_ bool DeleteKey( __in_z wchar_t const * name_of_subkey_to_delete ) noexcept;
       virtual _Check_return_ bool DeleteValue( __in_z wchar_t const * name_of_value_to_delete ) noexcept;
-      virtual _Check_return_ bool EnumerateKeys( __in DWORD const subkey_index,
-                                  __out std::wstring&    subkey_name,
-                                  __out std::wstring&    class_name ) noexcept;
-      virtual _Check_return_ bool EnumerateValues( __in DWORD const  value_index,
-                                    __out std::wstring&       name_of_value,
-                                    __out KeyValueTypes& type_code,
+      virtual _Check_return_ bool EnumerateKeys( _In_ DWORD const subkey_index,
+                                  _Out_ std::wstring&    subkey_name,
+                                  _Out_ std::wstring&    class_name ) noexcept;
+      virtual _Check_return_ bool EnumerateValues( _In_ DWORD const  value_index,
+                                    _Out_ std::wstring&       name_of_value,
+                                    _Out_ KeyValueTypes& type_code,
                                     __out_bcount_part( size_of_data_buffer, size_of_data_buffer) LPBYTE data_buffer,
                                     __inout DWORD& size_of_data_buffer ) noexcept;
       virtual _Check_return_ bool Flush( void ) noexcept;
-      virtual _Check_return_ bool GetBinaryValue( __in_z wchar_t const * name_of_value, __out std::vector<uint8_t>& return_array ) noexcept;
+      virtual _Check_return_ bool GetBinaryValue( __in_z wchar_t const * name_of_value, _Out_ std::vector<uint8_t>& return_array ) noexcept;
 
       // 2012-05-18 GetClassName gets #defined to be GetClassNameW which causes problems with managed C++ builds
-      virtual void GetTheClassName( __out std::wstring& class_name ) const noexcept;
-      virtual void GetComputerName( __out std::wstring& computer_name ) const noexcept;
-      virtual _Check_return_ bool GetDoubleWordValue( __in_z wchar_t const * name_of_value, __out DWORD& return_value ) noexcept;
+      virtual void GetTheClassName( _Out_ std::wstring& class_name ) const noexcept;
+      virtual void GetComputerName( _Out_ std::wstring& computer_name ) const noexcept;
+      virtual _Check_return_ bool GetDoubleWordValue( __in_z wchar_t const * name_of_value, _Out_ DWORD& return_value ) noexcept;
       inline constexpr _Check_return_ DWORD GetErrorCode(void) const noexcept { return(m_ErrorCode); };
       inline constexpr _Check_return_ HKEY GetHandle( void ) const noexcept { return( m_KeyHandle ); }
-      virtual void GetKeyName( __out std::wstring& key_name ) const noexcept;
+      virtual void GetKeyName( _Out_ std::wstring& key_name ) const noexcept;
       inline constexpr _Check_return_ DWORD GetNumberOfSubkeys(void) const noexcept { return(m_NumberOfSubkeys); }
       inline constexpr _Check_return_ DWORD GetNumberOfValues(void) const noexcept { return(m_NumberOfValues); }
-      virtual void GetRegistryName( __out std::wstring& registry_name ) const noexcept;
-      virtual _Check_return_ bool GetSecurity( __in SECURITY_INFORMATION const what_you_want_to_know,
+      virtual void GetRegistryName( _Out_ std::wstring& registry_name ) const noexcept;
+      virtual _Check_return_ bool GetSecurity( _In_ SECURITY_INFORMATION const what_you_want_to_know,
                                 __out_bcount_part( size_of_data_buffer, size_of_data_buffer ) PSECURITY_DESCRIPTOR data_buffer,
                                 __inout DWORD& size_of_data_buffer ) noexcept;
-      virtual _Check_return_ bool GetStringValue( __in_z wchar_t const * name_of_value, __out std::wstring& return_string ) noexcept;
-      virtual _Check_return_ bool GetStringArrayValue(__in_z wchar_t const * name_of_value, __out std::vector<std::wstring>& return_array) noexcept;
-      virtual _Check_return_ bool GetValue( __in_z wchar_t const * name_of_value, __out std::vector<uint8_t>& return_array ) noexcept;
-      virtual _Check_return_ bool GetValue( __in_z wchar_t const * name_of_value, __out DWORD& return_value ) noexcept;
-      virtual _Check_return_ bool GetValue( __in_z wchar_t const * name_of_value, __out std::wstring& return_string ) noexcept;
-      virtual _Check_return_ bool GetValue( __in_z wchar_t const * name_of_value, __out std::vector<std::wstring>& return_array ) noexcept;
+      virtual _Check_return_ bool GetStringValue( __in_z wchar_t const * name_of_value, _Out_ std::wstring& return_string ) noexcept;
+      virtual _Check_return_ bool GetStringArrayValue(__in_z wchar_t const * name_of_value, _Out_ std::vector<std::wstring>& return_array) noexcept;
+      virtual _Check_return_ bool GetValue( __in_z wchar_t const * name_of_value, _Out_ std::vector<uint8_t>& return_array ) noexcept;
+      virtual _Check_return_ bool GetValue( __in_z wchar_t const * name_of_value, _Out_ DWORD& return_value ) noexcept;
+      virtual _Check_return_ bool GetValue( __in_z wchar_t const * name_of_value, _Out_ std::wstring& return_string ) noexcept;
+      virtual _Check_return_ bool GetValue( __in_z wchar_t const * name_of_value, _Out_ std::vector<std::wstring>& return_array ) noexcept;
       virtual _Check_return_ bool Load( __in_z wchar_t const * name_of_subkey,
                          __in_z wchar_t const * name_of_file_containing_information ) noexcept;
-      virtual _Check_return_ bool NotifyChange( __in HANDLE const event_handle         = static_cast< HANDLE >( NULL ),
-                                 __in NotifyChangeFilter const changes_to_be_reported = notifyLastSet,
-                                 __in NotifyChangeFlag const this_subkey_or_all_subkeys = NotifyChangeFlag::SpecifiedKeyOnly,
-                                 __in bool const wait_for_change_or_signal_event      = WAIT_FOR_CHANGE ) noexcept;
+      virtual _Check_return_ bool NotifyChange( _In_ HANDLE const event_handle         = static_cast< HANDLE >( NULL ),
+                                 _In_ NotifyChangeFilter const changes_to_be_reported = notifyLastSet,
+                                 _In_ NotifyChangeFlag const this_subkey_or_all_subkeys = NotifyChangeFlag::SpecifiedKeyOnly,
+                                 _In_ bool const wait_for_change_or_signal_event      = WAIT_FOR_CHANGE ) noexcept;
       virtual _Check_return_ bool Open( __in_z wchar_t const * name_of_subkey_to_open,
-                         __in CreatePermissions const security_access_mask = permissionAllAccess ) noexcept;
+                         _In_ CreatePermissions const security_access_mask = permissionAllAccess ) noexcept;
       virtual _Check_return_ bool QueryInfo( void ) noexcept;
       virtual _Check_return_ bool QueryValue( __in_z wchar_t const * name_of_value,
                                __inout KeyValueTypes& value_type,
@@ -233,27 +233,27 @@ class CRegistry
       virtual _Check_return_ bool Replace( __in_z wchar_t const * name_of_subkey,
                             __in_z wchar_t const * name_of_file_with_new_data,
                             __in_z wchar_t const * name_of_backup_file ) noexcept;
-      virtual _Check_return_ bool Restore( __in_z wchar_t const * name_of_file_holding_saved_tree, __in DWORD const volitility_flags = 0 ) noexcept;
+      virtual _Check_return_ bool Restore( __in_z wchar_t const * name_of_file_holding_saved_tree, _In_ DWORD const volitility_flags = 0 ) noexcept;
       virtual _Check_return_ bool Save( __in_z wchar_t const * name_of_file_to_hold_tree, __in_opt LPSECURITY_ATTRIBUTES security_attributes_p = nullptr ) noexcept;
-      virtual _Check_return_ bool SetBinaryValue( __in_z wchar_t const * name_of_value, __in std::vector<uint8_t> const& bytes_to_write ) noexcept;
-      virtual _Check_return_ bool SetDoubleWordValue( __in_z wchar_t const * name_of_value, __in DWORD value_to_write ) noexcept;
-      virtual _Check_return_ bool SetSecurity( __in SECURITY_INFORMATION const& security_information,
-                                __in PSECURITY_DESCRIPTOR const security_descriptor_p ) noexcept;
-      virtual _Check_return_ bool SetStringValue( __in_z wchar_t const * name_of_value, __in std::wstring const& string_value ) noexcept;
-      virtual _Check_return_ bool SetStringArrayValue( __in_z wchar_t const * name_of_value, __in std::vector<std::wstring> const& string_array ) noexcept;
-      virtual _Check_return_ bool SetValue( __in_z wchar_t const * name_of_value, __in std::vector<uint8_t> const& bytes_to_write ) noexcept;
-      virtual _Check_return_ bool SetValue( __in_z wchar_t const * name_of_value, __in DWORD value ) noexcept;
-      virtual _Check_return_ bool SetValue( __in_z wchar_t const * name_of_value, __in std::vector<std::wstring> const& strings_to_write ) noexcept;
-      virtual _Check_return_ bool SetValue( __in_z wchar_t const * name_of_value, __in std::wstring const& string_to_write ) noexcept;
+      virtual _Check_return_ bool SetBinaryValue( __in_z wchar_t const * name_of_value, _In_ std::vector<uint8_t> const& bytes_to_write ) noexcept;
+      virtual _Check_return_ bool SetDoubleWordValue( __in_z wchar_t const * name_of_value, _In_ DWORD value_to_write ) noexcept;
+      virtual _Check_return_ bool SetSecurity( _In_ SECURITY_INFORMATION const& security_information,
+                                _In_ PSECURITY_DESCRIPTOR const security_descriptor_p ) noexcept;
+      virtual _Check_return_ bool SetStringValue( __in_z wchar_t const * name_of_value, _In_ std::wstring const& string_value ) noexcept;
+      virtual _Check_return_ bool SetStringArrayValue( __in_z wchar_t const * name_of_value, _In_ std::vector<std::wstring> const& string_array ) noexcept;
+      virtual _Check_return_ bool SetValue( __in_z wchar_t const * name_of_value, _In_ std::vector<uint8_t> const& bytes_to_write ) noexcept;
+      virtual _Check_return_ bool SetValue( __in_z wchar_t const * name_of_value, _In_ DWORD value ) noexcept;
+      virtual _Check_return_ bool SetValue( __in_z wchar_t const * name_of_value, _In_ std::vector<std::wstring> const& strings_to_write ) noexcept;
+      virtual _Check_return_ bool SetValue( __in_z wchar_t const * name_of_value, _In_ std::wstring const& string_to_write ) noexcept;
 
       virtual _Check_return_ bool SetValue( __in_z wchar_t const *             name_of_subkey,
-                             __in KeyValueTypes const type_of_value_to_set,
+                             _In_ KeyValueTypes const type_of_value_to_set,
                              __in_bcount_opt( size_of_data ) uint8_t const * address_of_value_data,
-                             __in std::size_t const       size_of_data ) noexcept;
+                             _In_ std::size_t const       size_of_data ) noexcept;
 
       virtual _Check_return_ bool UnLoad( __in_z wchar_t const * name_of_subkey_to_unload ) noexcept;
 
-      inline constexpr void GetLastWriteTime( __out FILETIME& last_write_time ) const noexcept
+      inline constexpr void GetLastWriteTime( _Out_ FILETIME& last_write_time ) const noexcept
       {
          last_write_time.dwHighDateTime = m_LastWriteTime.dwHighDateTime;
          last_write_time.dwLowDateTime  = m_LastWriteTime.dwLowDateTime;

@@ -51,33 +51,31 @@
 static char THIS_FILE[] = __FILE__;
 #endif // _DEBUG
 
-USING_WFC_NAMESPACE
-
-CMixerControl::CMixerControl()
+Win32FoundationClasses::CMixerControl::CMixerControl()
 {
    WFC_VALIDATE_POINTER( this );
    Empty();
 }
 
-CMixerControl::CMixerControl( __in CMixerControl const& source )
+Win32FoundationClasses::CMixerControl::CMixerControl( _In_ Win32FoundationClasses::CMixerControl const& source )
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );
 }
 
-CMixerControl::CMixerControl( __in MIXERCONTROL const& source )
+Win32FoundationClasses::CMixerControl::CMixerControl( _In_ MIXERCONTROL const& source )
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );
 }
 
-CMixerControl::~CMixerControl()
+Win32FoundationClasses::CMixerControl::~CMixerControl()
 {
    WFC_VALIDATE_POINTER( this );
    Empty();
 }
 
-void CMixerControl::Copy( __in CMixerControl const& source ) noexcept
+void Win32FoundationClasses::CMixerControl::Copy( _In_ Win32FoundationClasses::CMixerControl const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -102,7 +100,7 @@ void CMixerControl::Copy( __in CMixerControl const& source ) noexcept
    Data = source.Data;
 }
 
-void CMixerControl::Copy( __in MIXERCONTROL const& source ) noexcept
+void Win32FoundationClasses::CMixerControl::Copy( _In_ MIXERCONTROL const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -402,7 +400,7 @@ void CMixerControl::Dump( CDumpContext& dump_context ) const
 
 #endif // _DEBUG
 
-void CMixerControl::Empty( void ) noexcept
+void Win32FoundationClasses::CMixerControl::Empty( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -419,7 +417,7 @@ void CMixerControl::Empty( void ) noexcept
    Data.clear();
 }
 
-_Check_return_ CMixerControl::Types CMixerControl::GetType( void ) const noexcept
+_Check_return_ Win32FoundationClasses::CMixerControl::Types Win32FoundationClasses::CMixerControl::GetType( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -443,7 +441,7 @@ _Check_return_ CMixerControl::Types CMixerControl::GetType( void ) const noexcep
    }
 }
 
-void CMixerControl::GetTypeName( _Out_ std::wstring& name ) const noexcept
+void Win32FoundationClasses::CMixerControl::GetTypeName( _Out_ std::wstring& name ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -606,7 +604,7 @@ void CMixerControl::GetTypeName( _Out_ std::wstring& name ) const noexcept
    }
 }
 
-_Check_return_ CMixerControl::Units CMixerControl::GetUnits( void ) const noexcept
+_Check_return_ Win32FoundationClasses::CMixerControl::Units Win32FoundationClasses::CMixerControl::GetUnits( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -628,7 +626,7 @@ _Check_return_ CMixerControl::Units CMixerControl::GetUnits( void ) const noexce
    }
 }
 
-_Check_return_ bool CMixerControl::IsBooleanUnits( void ) const noexcept
+_Check_return_ bool Win32FoundationClasses::CMixerControl::IsBooleanUnits( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -640,7 +638,7 @@ _Check_return_ bool CMixerControl::IsBooleanUnits( void ) const noexcept
    return( false );
 }
 
-_Check_return_ bool CMixerControl::IsCustom( void ) const noexcept
+_Check_return_ bool Win32FoundationClasses::CMixerControl::IsCustom( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -652,7 +650,7 @@ _Check_return_ bool CMixerControl::IsCustom( void ) const noexcept
    return( false );
 }
 
-_Check_return_ bool CMixerControl::IsCustomUnits( void ) const noexcept
+_Check_return_ bool Win32FoundationClasses::CMixerControl::IsCustomUnits( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -664,7 +662,7 @@ _Check_return_ bool CMixerControl::IsCustomUnits( void ) const noexcept
    return( false );
 }
 
-_Check_return_ bool CMixerControl::IsDecibelsUnits( void ) const noexcept
+_Check_return_ bool Win32FoundationClasses::CMixerControl::IsDecibelsUnits( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -676,7 +674,7 @@ _Check_return_ bool CMixerControl::IsDecibelsUnits( void ) const noexcept
    return( false );
 }
 
-_Check_return_ bool CMixerControl::IsDisabled( void ) const noexcept
+_Check_return_ bool Win32FoundationClasses::CMixerControl::IsDisabled( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -690,7 +688,7 @@ _Check_return_ bool CMixerControl::IsDisabled( void ) const noexcept
    return( false );
 }
 
-_Check_return_ bool CMixerControl::IsFader( void ) const noexcept
+_Check_return_ bool Win32FoundationClasses::CMixerControl::IsFader( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -702,7 +700,7 @@ _Check_return_ bool CMixerControl::IsFader( void ) const noexcept
    return( false );
 }
 
-_Check_return_ bool CMixerControl::IsList( void ) const noexcept
+_Check_return_ bool Win32FoundationClasses::CMixerControl::IsList( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -714,7 +712,7 @@ _Check_return_ bool CMixerControl::IsList( void ) const noexcept
    return( false );
 }
 
-_Check_return_ bool CMixerControl::IsMeter( void ) const noexcept
+_Check_return_ bool Win32FoundationClasses::CMixerControl::IsMeter( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -726,14 +724,14 @@ _Check_return_ bool CMixerControl::IsMeter( void ) const noexcept
    return( false );
 }
 
-_Check_return_ bool CMixerControl::IsMultiple( void ) const noexcept
+_Check_return_ bool Win32FoundationClasses::CMixerControl::IsMultiple( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
    return( is_flagged(StatusFlags, static_cast<uint32_t>(CMixerControl::StatusFlags::Multiple)));
 }
 
-_Check_return_ bool CMixerControl::IsNumber( void ) const noexcept
+_Check_return_ bool Win32FoundationClasses::CMixerControl::IsNumber( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -745,7 +743,7 @@ _Check_return_ bool CMixerControl::IsNumber( void ) const noexcept
    return( false );
 }
 
-_Check_return_ bool CMixerControl::IsPercentUnits( void ) const noexcept
+_Check_return_ bool Win32FoundationClasses::CMixerControl::IsPercentUnits( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -757,7 +755,7 @@ _Check_return_ bool CMixerControl::IsPercentUnits( void ) const noexcept
    return( false );
 }
 
-_Check_return_ bool CMixerControl::IsSignedUnits( void ) const noexcept
+_Check_return_ bool Win32FoundationClasses::CMixerControl::IsSignedUnits( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -769,7 +767,7 @@ _Check_return_ bool CMixerControl::IsSignedUnits( void ) const noexcept
    return( false );
 }
 
-_Check_return_ bool CMixerControl::IsSlider( void ) const noexcept
+_Check_return_ bool Win32FoundationClasses::CMixerControl::IsSlider( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -781,7 +779,7 @@ _Check_return_ bool CMixerControl::IsSlider( void ) const noexcept
    return( false );
 }
 
-_Check_return_ bool CMixerControl::IsSwitch( void ) const noexcept
+_Check_return_ bool Win32FoundationClasses::CMixerControl::IsSwitch( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -793,7 +791,7 @@ _Check_return_ bool CMixerControl::IsSwitch( void ) const noexcept
    return( false );
 }
 
-_Check_return_ bool CMixerControl::IsTime( void ) const noexcept
+_Check_return_ bool Win32FoundationClasses::CMixerControl::IsTime( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -805,14 +803,14 @@ _Check_return_ bool CMixerControl::IsTime( void ) const noexcept
    return( false );
 }
 
-_Check_return_ bool CMixerControl::IsUniform( void ) const noexcept
+_Check_return_ bool Win32FoundationClasses::CMixerControl::IsUniform( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
    return(is_flagged(StatusFlags, static_cast<uint32_t>(CMixerControl::StatusFlags::Uniform)));
 }
 
-_Check_return_ bool CMixerControl::IsUnsignedUnits( void ) const noexcept
+_Check_return_ bool Win32FoundationClasses::CMixerControl::IsUnsignedUnits( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -826,14 +824,14 @@ _Check_return_ bool CMixerControl::IsUnsignedUnits( void ) const noexcept
 
 // Operators
 
-CMixerControl& CMixerControl::operator=( __in CMixerControl const& source ) noexcept
+Win32FoundationClasses::CMixerControl& Win32FoundationClasses::CMixerControl::operator=( _In_ Win32FoundationClasses::CMixerControl const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );
    return( *this );
 }
 
-CMixerControl& CMixerControl::operator=( __in MIXERCONTROL const& source ) noexcept
+Win32FoundationClasses::CMixerControl& Win32FoundationClasses::CMixerControl::operator=( _In_ MIXERCONTROL const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );

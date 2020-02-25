@@ -51,22 +51,20 @@ static char THIS_FILE[] = __FILE__;
 #define new DEBUG_NEW
 #endif // _DEBUG
 
-USING_WFC_NAMESPACE
-
 #define UU_DECODE_CHARACTER( _c ) static_cast< BYTE >( ( (_c) - 0x20 ) bitand 0x3F )
 #define UU_ENCODE_BYTE(      _c ) static_cast< BYTE >( (_c) ? ( (_c) bitand 0x3F ) + 0x20 : '`' )
 
-CUUCoding::CUUCoding()
+Win32FoundationClasses::CUUCoding::CUUCoding()
 {
     WFC_VALIDATE_POINTER( this );
 }
 
-CUUCoding::~CUUCoding()
+Win32FoundationClasses::CUUCoding::~CUUCoding()
 {
     WFC_VALIDATE_POINTER( this );
 }
 
-_Check_return_ bool CUUCoding::OutputFilename(_In_ std::vector<uint8_t> const& source, _Out_ std::wstring& filename) const noexcept
+_Check_return_ bool Win32FoundationClasses::CUUCoding::OutputFilename(_In_ std::vector<uint8_t> const& source, _Out_ std::wstring& filename) const noexcept
 {
     filename.clear();
 
@@ -146,7 +144,7 @@ _Check_return_ bool CUUCoding::OutputFilename(_In_ std::vector<uint8_t> const& s
     return(true);
 }
 
-_Check_return_ bool CUUCoding::Decode(_In_ std::vector<uint8_t> const& source, _Out_ std::vector<uint8_t>& destination) const noexcept
+_Check_return_ bool Win32FoundationClasses::CUUCoding::Decode(_In_ std::vector<uint8_t> const& source, _Out_ std::vector<uint8_t>& destination) const noexcept
 {
     WFC_VALIDATE_POINTER(this);
 
@@ -316,7 +314,7 @@ _Check_return_ bool CUUCoding::Decode(_In_ std::vector<uint8_t> const& source, _
     return(false);
 }
 
-_Check_return_ bool CUUCoding::Decode( _In_ std::wstring const& source, _Out_ std::vector<uint8_t>& destination ) const noexcept
+_Check_return_ bool Win32FoundationClasses::CUUCoding::Decode( _In_ std::wstring const& source, _Out_ std::vector<uint8_t>& destination ) const noexcept
 {
     WFC_VALIDATE_POINTER( this );
 
@@ -356,7 +354,7 @@ _Check_return_ bool CUUCoding::Decode( _In_ std::wstring const& source, _Out_ st
     return( return_value );
 }
 
-_Check_return_ bool CUUCoding::Encode( _In_ std::vector<uint8_t> const& source, _Out_ std::vector<uint8_t>& destination ) const noexcept
+_Check_return_ bool Win32FoundationClasses::CUUCoding::Encode( _In_ std::vector<uint8_t> const& source, _Out_ std::vector<uint8_t>& destination ) const noexcept
 {
     WFC_VALIDATE_POINTER( this );
 

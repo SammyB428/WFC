@@ -51,31 +51,29 @@
 static char THIS_FILE[] = __FILE__;
 #endif // _DEBUG
 
-USING_WFC_NAMESPACE
-
 // Construction
 
-CMixerSwitchControl::CMixerSwitchControl()
+Win32FoundationClasses::CMixerSwitchControl::CMixerSwitchControl()
 {
    WFC_VALIDATE_POINTER( this );
    (void) m_Array.push_back( m_Switch );
 }
 
-CMixerSwitchControl::CMixerSwitchControl( __in CMixerSwitchControl const& source )
+Win32FoundationClasses::CMixerSwitchControl::CMixerSwitchControl( _In_ Win32FoundationClasses::CMixerSwitchControl const& source )
 {
    WFC_VALIDATE_POINTER( this );
    m_Array.push_back( m_Switch );
    Copy( source );
 }
 
-CMixerSwitchControl::~CMixerSwitchControl()
+Win32FoundationClasses::CMixerSwitchControl::~CMixerSwitchControl()
 {
    WFC_VALIDATE_POINTER( this );
 }
 
 // Methods
 
-void CMixerSwitchControl::Copy( __in CMixerSwitchControl const& source ) noexcept
+void Win32FoundationClasses::CMixerSwitchControl::Copy( _In_ Win32FoundationClasses::CMixerSwitchControl const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -102,7 +100,7 @@ void CMixerSwitchControl::Dump( CDumpContext& dump_context ) const
 
 #endif // _DEBUG
 
-_Check_return_ bool CMixerSwitchControl::GetState( void ) noexcept
+_Check_return_ bool Win32FoundationClasses::CMixerSwitchControl::GetState( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -116,7 +114,7 @@ _Check_return_ bool CMixerSwitchControl::GetState( void ) noexcept
    return( return_value );
 }
 
-_Check_return_ bool CMixerSwitchControl::m_GetAll( void ) noexcept
+_Check_return_ bool Win32FoundationClasses::CMixerSwitchControl::m_GetAll( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -139,7 +137,7 @@ _Check_return_ bool CMixerSwitchControl::m_GetAll( void ) noexcept
    return( return_value );
 }
 
-_Check_return_ bool CMixerSwitchControl::SetState( __in bool const turn_on ) noexcept
+_Check_return_ bool Win32FoundationClasses::CMixerSwitchControl::SetState( _In_ bool const turn_on ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -157,7 +155,7 @@ _Check_return_ bool CMixerSwitchControl::SetState( __in bool const turn_on ) noe
    return( return_value );
 }
 
-_Check_return_ bool CMixerSwitchControl::TurnOff( void ) noexcept
+_Check_return_ bool Win32FoundationClasses::CMixerSwitchControl::TurnOff( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -166,7 +164,7 @@ _Check_return_ bool CMixerSwitchControl::TurnOff( void ) noexcept
    return( return_value );
 }
 
-_Check_return_ bool CMixerSwitchControl::TurnOn( void ) noexcept
+_Check_return_ bool Win32FoundationClasses::CMixerSwitchControl::TurnOn( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -175,7 +173,7 @@ _Check_return_ bool CMixerSwitchControl::TurnOn( void ) noexcept
    return( return_value );
 }
 
-_Check_return_ CMixerSwitchControl& CMixerSwitchControl::operator=( __in CMixerSwitchControl const& source ) noexcept
+_Check_return_ Win32FoundationClasses::CMixerSwitchControl& Win32FoundationClasses::CMixerSwitchControl::operator=( _In_ Win32FoundationClasses::CMixerSwitchControl const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );

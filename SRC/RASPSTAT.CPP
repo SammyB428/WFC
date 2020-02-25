@@ -52,8 +52,6 @@ static char THIS_FILE[] = __FILE__;
 
 #if ! defined( WFC_NO_RAS )
 
-USING_WFC_NAMESPACE
-
 #if defined( _DEBUG ) && defined( _INC_CRTDBG )
 #define new DEBUG_NEW
 #endif // _DEBUG
@@ -85,7 +83,7 @@ CRemoteAccessServicePortStatistics::~CRemoteAccessServicePortStatistics()
    Empty();
 }
 
-_Check_return_ int CRemoteAccessServicePortStatistics::Compare( __in CRemoteAccessServicePortStatistics const& right_port ) const
+_Check_return_ int CRemoteAccessServicePortStatistics::Compare( _In_ CRemoteAccessServicePortStatistics const& right_port ) const
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -336,7 +334,7 @@ CRemoteAccessServicePortStatistics& CRemoteAccessServicePortStatistics::operator
    return( *this );
 }
 
-_Check_return_ bool CRemoteAccessServicePortStatistics::operator==( __in CRemoteAccessServicePortStatistics const& right_side ) const
+_Check_return_ bool CRemoteAccessServicePortStatistics::operator==( _In_ CRemoteAccessServicePortStatistics const& right_side ) const
 {
    WFC_VALIDATE_POINTER( this );
 

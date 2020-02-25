@@ -51,9 +51,7 @@ static char THIS_FILE[] = __FILE__;
 #define new DEBUG_NEW
 #endif // _DEBUG
 
-USING_WFC_NAMESPACE
-
-void PASCAL Win32FoundationClasses::wfc_free_unicode_conversion_context( _Inout_ VOID * unicode_conversion_context ) noexcept
+void Win32FoundationClasses::wfc_free_unicode_conversion_context( _Inout_ VOID * unicode_conversion_context ) noexcept
 {
    WFC_VALIDATE_POINTER( unicode_conversion_context );
 
@@ -65,7 +63,7 @@ void PASCAL Win32FoundationClasses::wfc_free_unicode_conversion_context( _Inout_
    }
 }
 
-_Check_return_ VOID * PASCAL Win32FoundationClasses::wfc_get_unicode_conversion_context( _In_ bool const is_com_already_started_in_this_thread ) noexcept
+_Check_return_ VOID * Win32FoundationClasses::wfc_get_unicode_conversion_context( _In_ bool const is_com_already_started_in_this_thread ) noexcept
 {
    if ( is_com_already_started_in_this_thread == false )
    {
@@ -222,7 +220,7 @@ static inline _Check_return_ bool __detect_code_page(_In_ IMultiLanguage2 * inte
    return( false );
 }
 
-_Check_return_ bool PASCAL Win32FoundationClasses::wfc_detect_code_page( _Inout_ VOID * unicode_conversion_context, _In_reads_bytes_( number_of_bytes_in_buffer ) uint8_t const * buffer, _In_ std::size_t const number_of_bytes_in_buffer, _In_ uint32_t const encoding_hints, _Out_ uint32_t& code_page ) noexcept
+_Check_return_ bool Win32FoundationClasses::wfc_detect_code_page( _Inout_ VOID * unicode_conversion_context, _In_reads_bytes_( number_of_bytes_in_buffer ) uint8_t const * buffer, _In_ std::size_t const number_of_bytes_in_buffer, _In_ uint32_t const encoding_hints, _Out_ uint32_t& code_page ) noexcept
 {
    code_page = 0;
 
@@ -257,7 +255,7 @@ _Check_return_ bool PASCAL Win32FoundationClasses::wfc_detect_code_page( _Inout_
    return( true );
 }
 
-_Check_return_ bool PASCAL Win32FoundationClasses::wfc_convert_to_unicode(
+_Check_return_ bool Win32FoundationClasses::wfc_convert_to_unicode(
                                    _Inout_ VOID *            unicode_conversion_context, 
                                    _In_  std::vector<uint8_t> const& bytes,
                                    __out_ecount_z( number_of_wide_characters ) wchar_t * unicode_string,
@@ -271,7 +269,7 @@ _Check_return_ bool PASCAL Win32FoundationClasses::wfc_convert_to_unicode(
    return( Win32FoundationClasses::wfc_convert_to_unicode( unicode_conversion_context, bytes.data(), bytes.size(), unicode_string, number_of_wide_characters, suggested_code_page, encoding_hints, real_code_page_p ) );
 }
 
-_Check_return_ bool PASCAL Win32FoundationClasses::wfc_convert_to_unicode( _Inout_ VOID *       unicode_conversion_context,
+_Check_return_ bool Win32FoundationClasses::wfc_convert_to_unicode( _Inout_ VOID *       unicode_conversion_context,
                                     _In_reads_bytes_( number_of_bytes_in_buffer ) BYTE const * bytes,
                                     _In_ std::size_t const       number_of_bytes_in_buffer,
                                     __out_ecount_z( number_of_wide_characters ) wchar_t *    unicode_string,

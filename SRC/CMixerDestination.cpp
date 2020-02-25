@@ -51,11 +51,9 @@
 static char THIS_FILE[] = __FILE__;
 #endif // _DEBUG
 
-USING_WFC_NAMESPACE
-
 // Methods
 
-void CMixerDestination::Copy( __in CMixerDestination const& source ) noexcept
+void Win32FoundationClasses::CMixerDestination::Copy( _In_ Win32FoundationClasses::CMixerDestination const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -68,14 +66,14 @@ void CMixerDestination::Copy( __in CMixerDestination const& source ) noexcept
 
    m_SourceSelector = nullptr;
 
-   CMixerControlInstance::Copy( source );
+   Win32FoundationClasses::CMixerControlInstance::Copy( source );
 }
 
 // Instrumentation
 
 #if defined( _DEBUG ) && ! defined( WFC_NO_DUMPING )
 
-void CMixerDestination::Dump( CDumpContext& dump_context ) const
+void Win32FoundationClasses::CMixerDestination::Dump( CDumpContext& dump_context ) const
 {
    WFC_VALIDATE_POINTER( this );
    dump_context << TEXT( "a CMixerDestination at " ) << (VOID *) this << TEXT( "\n{\n" );
@@ -96,11 +94,11 @@ void CMixerDestination::Dump( CDumpContext& dump_context ) const
 
 #endif // _DEBUG
 
-_Check_return_ bool CMixerDestination::GetSource( __in CMixerLine::ComponentType const type_of_source, __out CMixerSource& source ) noexcept
+_Check_return_ bool Win32FoundationClasses::CMixerDestination::GetSource( _In_ Win32FoundationClasses::CMixerLine::ComponentType const type_of_source, _Out_ Win32FoundationClasses::CMixerSource& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
-   CMixerLine line;
+   Win32FoundationClasses::CMixerLine line;
 
    for ( auto const source_number : Range(m_MixerLine.NumberOfConnections) )
    {
@@ -118,7 +116,7 @@ _Check_return_ bool CMixerDestination::GetSource( __in CMixerLine::ComponentType
    return( false );
 }
 
-_Check_return_ bool CMixerDestination::IsSourceSelected( __in DWORD const source ) noexcept
+_Check_return_ bool Win32FoundationClasses::CMixerDestination::IsSourceSelected( _In_ DWORD const source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -136,7 +134,7 @@ _Check_return_ bool CMixerDestination::IsSourceSelected( __in DWORD const source
    return( return_value );
 }
 
-_Check_return_ bool CMixerDestination::Open( __in UINT_PTR device_number, __in DWORD what_to_notify, __in DWORD_PTR who_to_notify, __in DWORD_PTR notify_data ) noexcept
+_Check_return_ bool Win32FoundationClasses::CMixerDestination::Open( _In_ UINT_PTR device_number, _In_ DWORD what_to_notify, _In_ DWORD_PTR who_to_notify, _In_ DWORD_PTR notify_data ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -154,7 +152,7 @@ _Check_return_ bool CMixerDestination::Open( __in UINT_PTR device_number, __in D
    return( return_value );
 }
 
-_Check_return_ bool CMixerDestination::SelectSource(__in DWORD const source, __in bool selection) noexcept
+_Check_return_ bool Win32FoundationClasses::CMixerDestination::SelectSource(_In_ DWORD const source, _In_ bool selection) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -168,7 +166,7 @@ _Check_return_ bool CMixerDestination::SelectSource(__in DWORD const source, __i
    return( return_value );
 }
 
-_Check_return_ bool CMixerDestination::UnselectSource( __in DWORD const source ) noexcept
+_Check_return_ bool Win32FoundationClasses::CMixerDestination::UnselectSource( _In_ DWORD const source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -182,7 +180,7 @@ _Check_return_ bool CMixerDestination::UnselectSource( __in DWORD const source )
    return( return_value );
 }
 
-_Check_return_ CMixerDestination& CMixerDestination::operator = ( __in CMixerDestination const& source ) noexcept
+_Check_return_ Win32FoundationClasses::CMixerDestination& Win32FoundationClasses::CMixerDestination::operator = ( _In_ Win32FoundationClasses::CMixerDestination const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );

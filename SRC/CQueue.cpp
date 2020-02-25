@@ -51,11 +51,9 @@ static char THIS_FILE[] = __FILE__;
 #define new DEBUG_NEW
 #endif // _DEBUG
 
-USING_WFC_NAMESPACE
-
 #if defined( _DEBUG ) && ! defined( WFC_NO_DUMPING )
 
-void CQueue::Dump( CDumpContext& dump_context ) const
+void Win32FoundationClasses::CQueue::Dump( CDumpContext& dump_context ) const
 {
    dump_context << TEXT( "a CQueue at " ) << (VOID *) this << TEXT( "\n{\n" );
    dump_context << TEXT( "   m_AddIndex is    " ) << m_AddIndex    << TEXT( "\n" );

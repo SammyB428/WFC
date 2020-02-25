@@ -51,8 +51,6 @@ static char THIS_FILE[] = __FILE__;
 #define new DEBUG_NEW
 #endif // _DEBUG
 
-USING_WFC_NAMESPACE
-
 /*
 ** 2001-08-08
 ** If you are going to use named pipes in your project, you need to be
@@ -62,13 +60,13 @@ USING_WFC_NAMESPACE
 ** named pipes are *almost* useful.
 */
 
-CNamedPipe::CNamedPipe( __in uint32_t const _input_buffer_size, __in uint32_t const _output_buffer_size ) noexcept
+Win32FoundationClasses::CNamedPipe::CNamedPipe( _In_ uint32_t const _input_buffer_size, _In_ uint32_t const _output_buffer_size ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    m_Initialize( _input_buffer_size, _output_buffer_size );
 }
 
-CNamedPipe::~CNamedPipe()
+Win32FoundationClasses::CNamedPipe::~CNamedPipe()
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -84,7 +82,7 @@ CNamedPipe::~CNamedPipe()
    m_OutputBufferSize = 0L;
 }
 
-void CNamedPipe::m_Initialize( __in uint32_t const _input_buffer_size, __in uint32_t const _output_buffer_size ) noexcept
+void Win32FoundationClasses::CNamedPipe::m_Initialize( _In_ uint32_t const _input_buffer_size, _In_ uint32_t const _output_buffer_size ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    m_AutomaticallyDelete = TRUE;
@@ -102,7 +100,7 @@ void CNamedPipe::m_Initialize( __in uint32_t const _input_buffer_size, __in uint
 
 #if defined( _DEBUG ) && ! defined( WFC_NO_DUMPING )
 
-void CNamedPipe::Dump( CDumpContext& dump_context ) const
+void Win32FoundationClasses::CNamedPipe::Dump( CDumpContext& dump_context ) const
 {
    dump_context << TEXT( "m_AutomaticallyDelete = "      ) << m_AutomaticallyDelete      << TEXT( "\n" );
    dump_context << TEXT( "m_PipeHandle = "               ) << m_PipeHandle               << TEXT( "\n" );
@@ -124,13 +122,13 @@ void CNamedPipe::Dump( CDumpContext& dump_context ) const
 
 #endif // _DEBUG
 
-_Check_return_  bool CNamedPipe::Call( __inout std::wstring& pipe_name,
+_Check_return_  bool Win32FoundationClasses::CNamedPipe::Call( __inout std::wstring& pipe_name,
                        LPVOID   write_buffer, 
-                 __in DWORD const   size_of_write_buffer,
+                 _In_ DWORD const   size_of_write_buffer,
                        LPVOID   read_buffer, 
-                 __in DWORD const   size_of_read_buffer,
+                 _In_ DWORD const   size_of_read_buffer,
                        DWORD   *address_of_number_of_bytes_read,
-                 __in DWORD const   number_of_milliseconds_to_wait ) noexcept
+                 _In_ DWORD const   number_of_milliseconds_to_wait ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( write_buffer );
@@ -165,7 +163,7 @@ _Check_return_  bool CNamedPipe::Call( __inout std::wstring& pipe_name,
    return( true );
 }
 
-void CNamedPipe::Close( void ) noexcept
+void Win32FoundationClasses::CNamedPipe::Close( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -176,7 +174,7 @@ void CNamedPipe::Close( void ) noexcept
    }
 }
 
-_Check_return_ bool CNamedPipe::Connect(__inout_opt LPOVERLAPPED overlapped_p ) noexcept
+_Check_return_ bool Win32FoundationClasses::CNamedPipe::Connect(__inout_opt LPOVERLAPPED overlapped_p ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER_NULL_OK( overlapped_p );
@@ -196,11 +194,11 @@ _Check_return_ bool CNamedPipe::Connect(__inout_opt LPOVERLAPPED overlapped_p ) 
    return( true );
 }
 
-_Check_return_ bool CNamedPipe::Create( __in_z LPCTSTR server_name,
+_Check_return_ bool Win32FoundationClasses::CNamedPipe::Create( __in_z LPCTSTR server_name,
                          __in_z LPCTSTR pipe_name,
-                   __in DWORD const open_mode,
-                   __in DWORD const type_of_pipe,
-                   __in DWORD const number_of_pipes,
+                   _In_ DWORD const open_mode,
+                   _In_ DWORD const type_of_pipe,
+                   _In_ DWORD const number_of_pipes,
            __inout_opt LPSECURITY_ATTRIBUTES security_attributes_p ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
@@ -263,7 +261,7 @@ _Check_return_ bool CNamedPipe::Create( __in_z LPCTSTR server_name,
    return( true );
 }
 
-_Check_return_ bool CNamedPipe::Disconnect( void ) noexcept
+_Check_return_ bool Win32FoundationClasses::CNamedPipe::Disconnect( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -280,7 +278,7 @@ _Check_return_ bool CNamedPipe::Disconnect( void ) noexcept
    return( true );
 }
 
-_Check_return_ bool CNamedPipe::GetInformation( void ) noexcept
+_Check_return_ bool Win32FoundationClasses::CNamedPipe::GetInformation( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -306,7 +304,7 @@ _Check_return_ bool CNamedPipe::GetInformation( void ) noexcept
    return( true );
 }
 
-_Check_return_ bool CNamedPipe::GetState( void ) noexcept
+_Check_return_ bool Win32FoundationClasses::CNamedPipe::GetState( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -335,7 +333,7 @@ _Check_return_ bool CNamedPipe::GetState( void ) noexcept
    return( true );
 }
 
-_Check_return_ bool CNamedPipe::Open(_In_ std::filesystem::path const& pipe_name, _In_ UINT const) noexcept
+_Check_return_ bool Win32FoundationClasses::CNamedPipe::Open(_In_ std::filesystem::path const& pipe_name, _In_ UINT const) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -352,7 +350,7 @@ _Check_return_ bool CNamedPipe::Open(_In_ std::filesystem::path const& pipe_name
    ** "\\server_name\PIPE\pipe_name" which is a fully qualified pipe name
    */
 
-   CUniversalNamingConvention unc( pipe_name.c_str() );
+   Win32FoundationClasses::CUniversalNamingConvention unc( pipe_name.c_str() );
 
    if ( unc.ServerName.empty() == true )
    {
@@ -381,11 +379,11 @@ _Check_return_ bool CNamedPipe::Open(_In_ std::filesystem::path const& pipe_name
    return( Create( unc.ServerName.c_str(), unc.PathName.c_str() ) );
 }
 
-_Check_return_ bool CNamedPipe::Peek( __out_bcount( size_of_buffer ) LPVOID buffer_address,
-                 __in DWORD const size_of_buffer,
-                      __out DWORD& number_of_bytes_read,
-                      __out DWORD& number_of_bytes_available,
-                      __out DWORD& number_of_bytes_remaining_in_message ) noexcept
+_Check_return_ bool Win32FoundationClasses::CNamedPipe::Peek( __out_bcount( size_of_buffer ) LPVOID buffer_address,
+                 _In_ DWORD const size_of_buffer,
+                      _Out_ DWORD& number_of_bytes_read,
+                      _Out_ DWORD& number_of_bytes_available,
+                      _Out_ DWORD& number_of_bytes_remaining_in_message ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER_NULL_OK( buffer_address );
@@ -412,9 +410,9 @@ _Check_return_ bool CNamedPipe::Peek( __out_bcount( size_of_buffer ) LPVOID buff
    return( true );
 }
 
-_Check_return_ bool CNamedPipe::SetState( __in uint32_t new_pipe_mode,
-                           __in uint32_t maximum_number_of_bytes_before_transmission,
-                           __in uint32_t maximum_number_of_milliseconds_before_transmission ) noexcept
+_Check_return_ bool Win32FoundationClasses::CNamedPipe::SetState( _In_ uint32_t new_pipe_mode,
+                           _In_ uint32_t maximum_number_of_bytes_before_transmission,
+                           _In_ uint32_t maximum_number_of_milliseconds_before_transmission ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -438,7 +436,7 @@ _Check_return_ bool CNamedPipe::SetState( __in uint32_t new_pipe_mode,
    return( true );
 }
 
-_Check_return_ bool CNamedPipe::Transact( __inout_opt LPOVERLAPPED overlapped_p ) noexcept
+_Check_return_ bool Win32FoundationClasses::CNamedPipe::Transact( __inout_opt LPOVERLAPPED overlapped_p ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER_NULL_OK( overlapped_p );
@@ -464,7 +462,7 @@ _Check_return_ bool CNamedPipe::Transact( __inout_opt LPOVERLAPPED overlapped_p 
    return( true );
 }
 
-_Check_return_ bool CNamedPipe::Wait( __in_z_opt LPCTSTR name_of_server, __in_z LPCTSTR name_of_pipe, __in uint32_t const number_of_milliseconds ) noexcept
+_Check_return_ bool Win32FoundationClasses::CNamedPipe::Wait( __in_z_opt LPCTSTR name_of_server, __in_z LPCTSTR name_of_pipe, _In_ uint32_t const number_of_milliseconds ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( name_of_pipe );

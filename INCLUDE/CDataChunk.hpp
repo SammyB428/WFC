@@ -76,15 +76,15 @@ class CDataChunk
          Identifier = 0;
       };
 
-      static void GetIdentifier( __in uint32_t const identifier, __out std::wstring& string ) noexcept;
+      static void GetIdentifier( _In_ uint32_t const identifier, _Out_ std::wstring& string ) noexcept;
 
-      inline void Copy( __in CDataChunk const& source ) noexcept
+      inline void Copy( _In_ CDataChunk const& source ) noexcept
       {
          Identifier = source.Identifier;
          Data = source.Data;
       };
 
-      inline void Copy( __in uint32_t const identifier, __in std::vector<uint8_t> const& source ) noexcept
+      inline void Copy( _In_ uint32_t const identifier, _In_ std::vector<uint8_t> const& source ) noexcept
       {
          Identifier = identifier;
          Data = source;
@@ -96,7 +96,7 @@ class CDataChunk
          Data.clear();
       };
 
-      inline _Check_return_ CDataChunk& operator=( __in CDataChunk const& source ) noexcept
+      inline _Check_return_ CDataChunk& operator=( _In_ CDataChunk const& source ) noexcept
       {
          Copy( source );
          return( *this );

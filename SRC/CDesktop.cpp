@@ -51,9 +51,7 @@ static char THIS_FILE[] = __FILE__;
 #define new DEBUG_NEW
 #endif // _DEBUG
 
-USING_WFC_NAMESPACE
-
-CDesktop::CDesktop() noexcept
+Win32FoundationClasses::CDesktop::CDesktop() noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -62,7 +60,7 @@ CDesktop::CDesktop() noexcept
    m_ErrorCode          = 0;
 }
 
-CDesktop::CDesktop( _In_ HDESK desktop_handle ) noexcept
+Win32FoundationClasses::CDesktop::CDesktop( _In_ HDESK desktop_handle ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -73,7 +71,7 @@ CDesktop::CDesktop( _In_ HDESK desktop_handle ) noexcept
    Attach( desktop_handle );
 }
 
-CDesktop::~CDesktop() noexcept
+Win32FoundationClasses::CDesktop::~CDesktop() noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -87,7 +85,7 @@ CDesktop::~CDesktop() noexcept
    m_ErrorCode          = 0;
 }
 
-void CDesktop::Attach( __in HDESK desktop_handle ) noexcept
+void Win32FoundationClasses::CDesktop::Attach( _In_ HDESK desktop_handle ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -100,7 +98,7 @@ void CDesktop::Attach( __in HDESK desktop_handle ) noexcept
    m_AutomaticallyClose = false; // We didn't open it so don't close it
 }
 
-_Check_return_ bool CDesktop::Close( void ) noexcept
+_Check_return_ bool Win32FoundationClasses::CDesktop::Close( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -130,7 +128,7 @@ _Check_return_ bool CDesktop::Close( void ) noexcept
    return( return_value == FALSE ? false : true );
 }
 
-_Check_return_ bool CDesktop::Create( _In_ std::wstring_view name_of_desktop, __in DWORD desired_access, __in_opt LPSECURITY_ATTRIBUTES security_attributes_p, __in DWORD flags ) noexcept
+_Check_return_ bool Win32FoundationClasses::CDesktop::Create( _In_ std::wstring_view name_of_desktop, _In_ DWORD desired_access, __in_opt LPSECURITY_ATTRIBUTES security_attributes_p, _In_ DWORD flags ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER_NULL_OK( security_attributes_p );
@@ -211,7 +209,7 @@ static BOOL CALLBACK CDesktop__WindowEnumerator( HWND window_handle, LPARAM lPar
    return( TRUE );
 }
 
-_Check_return_ bool CDesktop::GetWindows( _Out_ std::vector<HWND>& window_handles ) noexcept
+_Check_return_ bool Win32FoundationClasses::CDesktop::GetWindows( _Out_ std::vector<HWND>& window_handles ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -243,7 +241,7 @@ _Check_return_ bool CDesktop::GetWindows( _Out_ std::vector<HWND>& window_handle
    return( return_value );
 }
 
-void CDesktop::GetThread( __in DWORD thread_id ) noexcept
+void Win32FoundationClasses::CDesktop::GetThread( _In_ DWORD thread_id ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -257,7 +255,7 @@ void CDesktop::GetThread( __in DWORD thread_id ) noexcept
    }
 }
 
-_Check_return_ bool CDesktop::Open( _In_ std::wstring_view name_of_desktop, __in DWORD desired_access, __in DWORD flags, __in bool inheritable ) noexcept
+_Check_return_ bool Win32FoundationClasses::CDesktop::Open( _In_ std::wstring_view name_of_desktop, _In_ DWORD desired_access, _In_ DWORD flags, _In_ bool inheritable ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -297,7 +295,7 @@ _Check_return_ bool CDesktop::Open( _In_ std::wstring_view name_of_desktop, __in
    return( return_value );
 }
 
-_Check_return_ bool CDesktop::OpenInput( __in DWORD desired_access, __in DWORD flags, __in bool inheritable ) noexcept
+_Check_return_ bool Win32FoundationClasses::CDesktop::OpenInput( _In_ DWORD desired_access, _In_ DWORD flags, _In_ bool inheritable ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -326,7 +324,7 @@ _Check_return_ bool CDesktop::OpenInput( __in DWORD desired_access, __in DWORD f
    return( return_value );
 }
 
-void CDesktop::SetAutomaticallyClose( __in bool const automatically_close ) noexcept
+void Win32FoundationClasses::CDesktop::SetAutomaticallyClose( _In_ bool const automatically_close ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    if ( automatically_close == false )
@@ -339,7 +337,7 @@ void CDesktop::SetAutomaticallyClose( __in bool const automatically_close ) noex
    }
 }
 
-_Check_return_ bool CDesktop::SetThread( void ) noexcept
+_Check_return_ bool Win32FoundationClasses::CDesktop::SetThread( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -358,7 +356,7 @@ _Check_return_ bool CDesktop::SetThread( void ) noexcept
    return( return_value == FALSE ? false : true );
 }
 
-_Check_return_ bool CDesktop::SwitchTo( __in CDesktop const& desktop_to_switch_to ) noexcept
+_Check_return_ bool Win32FoundationClasses::CDesktop::SwitchTo( _In_ Win32FoundationClasses::CDesktop const& desktop_to_switch_to ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -377,7 +375,7 @@ _Check_return_ bool CDesktop::SwitchTo( __in CDesktop const& desktop_to_switch_t
    return( return_value == FALSE ? false : true );
 }
 
-CDesktop::operator HDESK () const noexcept
+Win32FoundationClasses::CDesktop::operator HDESK () const noexcept
 {
    WFC_VALIDATE_POINTER( this );
    return( m_DesktopHandle );

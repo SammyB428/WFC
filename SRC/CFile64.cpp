@@ -51,8 +51,6 @@ static char THIS_FILE[] = __FILE__;
 #define new DEBUG_NEW
 #endif // _DEBUG
 
-USING_WFC_NAMESPACE
-
 #pragma warning( disable : 4302 )
 
 // Helper functions
@@ -255,7 +253,7 @@ static inline _Check_return_ std::size_t __GetFileTitle( _In_z_ wchar_t const * 
     return( ( title == nullptr ) ? _tcslen( lpszTemp ) + 1 : 0 );
 }
 
-void CFile64::CreatePathTo(_In_ std::filesystem::path const& full_pathname) noexcept
+void Win32FoundationClasses::CFile64::CreatePathTo(_In_ std::filesystem::path const& full_pathname) noexcept
 {
     wchar_t drive[_MAX_DRIVE];
     wchar_t directory[_MAX_DIR];
@@ -284,7 +282,7 @@ void CFile64::CreatePathTo(_In_ std::filesystem::path const& full_pathname) noex
     }
 }
 
-CFile64::CFile64() noexcept
+Win32FoundationClasses::CFile64::CFile64() noexcept
 {
     WFC_VALIDATE_POINTER( this );
 
@@ -304,7 +302,7 @@ CFile64::CFile64() noexcept
     m_Initialize();
 }
 
-CFile64::CFile64( _In_ HANDLE const file_handle ) noexcept
+Win32FoundationClasses::CFile64::CFile64( _In_ HANDLE const file_handle ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
     _ASSERTE(file_handle != INVALID_HANDLE_VALUE);
@@ -322,7 +320,7 @@ CFile64::CFile64( _In_ HANDLE const file_handle ) noexcept
     m_CloseOnDelete = false;
 }
 
-CFile64::CFile64(_In_ std::filesystem::path const& filename, _In_ UINT const open_flags ) noexcept
+Win32FoundationClasses::CFile64::CFile64(_In_ std::filesystem::path const& filename, _In_ UINT const open_flags ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
 
@@ -337,7 +335,7 @@ CFile64::CFile64(_In_ std::filesystem::path const& filename, _In_ UINT const ope
     (void) Open( filename, open_flags );
 }
 
-CFile64::~CFile64() noexcept
+Win32FoundationClasses::CFile64::~CFile64() noexcept
 {
     WFC_VALIDATE_POINTER( this );
 
@@ -354,7 +352,7 @@ CFile64::~CFile64() noexcept
     m_SafeWriteContext     = nullptr;
 }
 
-void CFile64::Abort( void ) noexcept
+void Win32FoundationClasses::CFile64::Abort( void ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
 
@@ -370,7 +368,7 @@ void CFile64::Abort( void ) noexcept
     m_CloseOnDelete = false;
 }
 
-void CFile64::Close( void ) noexcept
+void Win32FoundationClasses::CFile64::Close( void ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
 
@@ -775,7 +773,7 @@ void CFile64::Dump( CDumpContext& dump_context ) const
 
 #endif // _DEBUG
 
-_Check_return_ CFile64 * CFile64::Duplicate( void ) const noexcept
+_Check_return_ Win32FoundationClasses::CFile64 * Win32FoundationClasses::CFile64::Duplicate( void ) const noexcept
 {
     WFC_VALIDATE_POINTER( this );
 
@@ -784,17 +782,7 @@ _Check_return_ CFile64 * CFile64::Duplicate( void ) const noexcept
         return( (CFile64 *) nullptr );
     }
 
-    CFile64 * return_value = nullptr;
-
-    WFC_TRY
-    {
-        return_value = new CFile64;
-    }
-    WFC_CATCH_ALL
-    {
-        return( nullptr );
-    }
-    WFC_END_CATCH_ALL
+    auto return_value =  new Win32FoundationClasses::CFile64;
 
     auto duplicate_file_handle = static_cast< HANDLE >( INVALID_HANDLE_VALUE );
 
@@ -826,7 +814,7 @@ _Check_return_ CFile64 * CFile64::Duplicate( void ) const noexcept
     return( return_value );
 }
 
-void CFile64::Flush( void ) noexcept
+void Win32FoundationClasses::CFile64::Flush( void ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
 
@@ -850,19 +838,19 @@ void CFile64::Flush( void ) noexcept
     }
 }
 
-_Check_return_ std::wstring CFile64::GetFileName( void ) const noexcept
+_Check_return_ std::wstring Win32FoundationClasses::CFile64::GetFileName( void ) const noexcept
 {
     WFC_VALIDATE_POINTER( this );
     return( m_FileName.c_str() );
 }
 
-_Check_return_ std::wstring CFile64::GetFilePath( void ) const noexcept
+_Check_return_ std::wstring Win32FoundationClasses::CFile64::GetFilePath( void ) const noexcept
 {
     WFC_VALIDATE_POINTER( this );
     return( m_PathName.c_str() );
 }
 
-_Check_return_ std::wstring CFile64::GetFileTitle( void ) const noexcept
+_Check_return_ std::wstring Win32FoundationClasses::CFile64::GetFileTitle( void ) const noexcept
 {
     WFC_VALIDATE_POINTER( this );
 
@@ -890,13 +878,13 @@ _Check_return_ std::wstring CFile64::GetFileTitle( void ) const noexcept
     return( m_FileTitle );
 }
 
-_Check_return_ HANDLE CFile64::GetHandle( void ) const noexcept
+_Check_return_ HANDLE Win32FoundationClasses::CFile64::GetHandle( void ) const noexcept
 {
     WFC_VALIDATE_POINTER( this );
     return( m_FileHandle );
 }
 
-_Check_return_ bool CFile64::GetInformation( _Inout_ BY_HANDLE_FILE_INFORMATION& information ) const noexcept
+_Check_return_ bool Win32FoundationClasses::CFile64::GetInformation( _Inout_ BY_HANDLE_FILE_INFORMATION& information ) const noexcept
 {
     WFC_VALIDATE_POINTER( this );
 
@@ -911,7 +899,7 @@ _Check_return_ bool CFile64::GetInformation( _Inout_ BY_HANDLE_FILE_INFORMATION&
     return( true );
 }
 
-_Check_return_ uint64_t CFile64::GetLength( void ) const noexcept
+_Check_return_ uint64_t Win32FoundationClasses::CFile64::GetLength( void ) const noexcept
 {
     WFC_VALIDATE_POINTER( this );
 
@@ -931,7 +919,7 @@ _Check_return_ uint64_t CFile64::GetLength( void ) const noexcept
     return( length.QuadPart );
 }
 
-_Check_return_ uint64_t CFile64::GetPosition( void ) const noexcept
+_Check_return_ uint64_t Win32FoundationClasses::CFile64::GetPosition( void ) const noexcept
 {
     WFC_VALIDATE_POINTER( this );
 
@@ -971,14 +959,14 @@ _Check_return_ uint64_t CFile64::GetPosition( void ) const noexcept
     return( return_value.QuadPart );
 }
 
-_Check_return_ SECURITY_ATTRIBUTES * CFile64::GetSecurityAttributes( void ) const noexcept
+_Check_return_ SECURITY_ATTRIBUTES * Win32FoundationClasses::CFile64::GetSecurityAttributes( void ) const noexcept
 {
     WFC_VALIDATE_POINTER( this );
     WFC_VALIDATE_POINTER_NULL_OK( m_SecurityAttributes_p );
     return( m_SecurityAttributes_p );
 }
 
-_Check_return_ SECURITY_DESCRIPTOR * CFile64::GetSecurityDescriptor( void ) const noexcept
+_Check_return_ SECURITY_DESCRIPTOR * Win32FoundationClasses::CFile64::GetSecurityDescriptor( void ) const noexcept
 {
     WFC_VALIDATE_POINTER( this );
     WFC_VALIDATE_POINTER_NULL_OK( m_SecurityDescriptor_p );
@@ -1042,7 +1030,7 @@ _Check_return_ bool CFile64::GetStatus( CFileStatus& status ) const
     return( true );
 }
 
-_Check_return_ BOOL PASCAL CFile64::GetStatus( _In_z_ LPCTSTR filename, __out CFileStatus& status )
+_Check_return_ BOOL CFile64::GetStatus( _In_z_ LPCTSTR filename, _Out_ CFileStatus& status )
 {
     WFC_VALIDATE_POINTER( filename );
 
@@ -1094,7 +1082,7 @@ _Check_return_ BOOL PASCAL CFile64::GetStatus( _In_z_ LPCTSTR filename, __out CF
 
 #endif // WFC_STL
 
-void CFile64::m_Initialize( void ) noexcept
+void Win32FoundationClasses::CFile64::m_Initialize( void ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
 
@@ -1117,7 +1105,7 @@ void CFile64::m_Initialize( void ) noexcept
             return;
         }
 
-        m_SecurityDescriptor_p = wfc_create_null_dacl();
+        m_SecurityDescriptor_p = Win32FoundationClasses::wfc_create_null_dacl();
 
         if ( m_SecurityDescriptor_p == nullptr )
         {
@@ -1139,7 +1127,7 @@ spawn a command prompt and issue the command:
 cacls myfile.txt /S
 It will print out the SDDL string that you can cut and paste into your code.
 */
-void CFile64::SetSecurity(_In_z_ wchar_t const * sddl) noexcept
+void Win32FoundationClasses::CFile64::SetSecurity(_In_z_ wchar_t const * sddl) noexcept
 {
     WFC_VALIDATE_POINTER(this);
     WFC_VALIDATE_POINTER(sddl);
@@ -1177,7 +1165,7 @@ void CFile64::SetSecurity(_In_z_ wchar_t const * sddl) noexcept
     m_SecurityDescriptor_p = static_cast<SECURITY_DESCRIPTOR *>(m_SecurityAttributes_p->lpSecurityDescriptor);
 }
 
-void CFile64::m_Uninitialize( void ) noexcept
+void Win32FoundationClasses::CFile64::m_Uninitialize( void ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
 
@@ -1189,12 +1177,12 @@ void CFile64::m_Uninitialize( void ) noexcept
 
     if ( m_SecurityDescriptor_p != nullptr )
     {
-        wfc_destroy_null_dacl( m_SecurityDescriptor_p );
+        Win32FoundationClasses::wfc_destroy_null_dacl( m_SecurityDescriptor_p );
         m_SecurityDescriptor_p = nullptr;
     }
 }
 
-_Check_return_ bool CFile64::LockRange( _In_ uint64_t const position, _In_ uint64_t const number_of_bytes_to_lock ) noexcept
+_Check_return_ bool Win32FoundationClasses::CFile64::LockRange( _In_ uint64_t const position, _In_ uint64_t const number_of_bytes_to_lock ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
 
@@ -1221,7 +1209,7 @@ _Check_return_ bool CFile64::LockRange( _In_ uint64_t const position, _In_ uint6
     return( true );
 }
 
-_Check_return_ bool CFile64::Open(_In_ std::filesystem::path const& filename, _In_ UINT const open_flags_parameter ) noexcept
+_Check_return_ bool Win32FoundationClasses::CFile64::Open(_In_ std::filesystem::path const& filename, _In_ UINT const open_flags_parameter ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
 
@@ -1390,7 +1378,7 @@ _Check_return_ bool CFile64::Open(_In_ std::filesystem::path const& filename, _I
     WFC_END_CATCH_ALL
 }
 
-_Check_return_ bool CFile64::Read(_Inout_ std::wstring& string_from_file) noexcept
+_Check_return_ bool Win32FoundationClasses::CFile64::Read(_Inout_ std::wstring& string_from_file) noexcept
 {
     std::string s;
 
@@ -1404,7 +1392,7 @@ _Check_return_ bool CFile64::Read(_Inout_ std::wstring& string_from_file) noexce
     return(false);
 }
 
-_Check_return_ bool CFile64::Read( _Inout_ std::string& string_from_file ) noexcept
+_Check_return_ bool Win32FoundationClasses::CFile64::Read( _Inout_ std::string& string_from_file ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
 
@@ -1454,7 +1442,7 @@ _Check_return_ bool CFile64::Read( _Inout_ std::string& string_from_file ) noexc
     return( false );
 }
 
-_Check_return_ bool CFile64::Read( _Inout_ std::vector<std::string>& array ) noexcept
+_Check_return_ bool Win32FoundationClasses::CFile64::Read( _Inout_ std::vector<std::string>& array ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
 
@@ -1468,7 +1456,7 @@ _Check_return_ bool CFile64::Read( _Inout_ std::vector<std::string>& array ) noe
     return( true );
 }
 
-_Check_return_ bool CFile64::Read(_Inout_ std::vector<std::wstring>& array) noexcept
+_Check_return_ bool Win32FoundationClasses::CFile64::Read(_Inout_ std::vector<std::wstring>& array) noexcept
 {
     WFC_VALIDATE_POINTER(this);
 
@@ -1482,7 +1470,7 @@ _Check_return_ bool CFile64::Read(_Inout_ std::vector<std::wstring>& array) noex
     return(true);
 }
 
-_Check_return_ bool CFile64::Read(_Inout_ std::vector<uint8_t>& bytes, _In_ uint32_t const number_of_bytes_to_read) noexcept
+_Check_return_ bool Win32FoundationClasses::CFile64::Read(_Inout_ std::vector<uint8_t>& bytes, _In_ uint32_t const number_of_bytes_to_read) noexcept
 {
     WFC_VALIDATE_POINTER(this);
 
@@ -1497,7 +1485,7 @@ _Check_return_ bool CFile64::Read(_Inout_ std::vector<uint8_t>& bytes, _In_ uint
     return(false);
 }
 
-_Check_return_ uint32_t CFile64::Read( __out_bcount( number_of_bytes_to_read ) void * buffer, _In_ uint32_t const number_of_bytes_to_read ) noexcept
+_Check_return_ uint32_t Win32FoundationClasses::CFile64::Read( __out_bcount( number_of_bytes_to_read ) void * buffer, _In_ uint32_t const number_of_bytes_to_read ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
     WFC_VALIDATE_POINTER_NULL_OK( buffer );
@@ -1529,7 +1517,7 @@ _Check_return_ uint32_t CFile64::Read( __out_bcount( number_of_bytes_to_read ) v
     return( number_of_bytes_read );
 }
 
-_Check_return_ uint32_t CFile64::AtomicRead( _In_ uint64_t const file_offset, __out_bcount( number_of_bytes_to_read ) void * buffer, _In_ uint32_t const number_of_bytes_to_read ) const noexcept
+_Check_return_ uint32_t Win32FoundationClasses::CFile64::AtomicRead( _In_ uint64_t const file_offset, __out_bcount( number_of_bytes_to_read ) void * buffer, _In_ uint32_t const number_of_bytes_to_read ) const noexcept
 {
     //WFCTRACEVAL( TEXT( "Reading " ), number_of_bytes_to_read );
     WFC_VALIDATE_POINTER( this );
@@ -1582,7 +1570,7 @@ _Check_return_ uint32_t CFile64::AtomicRead( _In_ uint64_t const file_offset, __
     return( number_of_bytes_read );
 }
 
-_Check_return_ uint32_t CFile64::AtomicWrite(_In_ uint64_t const file_offset, __in_bcount(number_of_bytes_to_write) void const * buffer, _In_ uint32_t const number_of_bytes_to_write) const noexcept
+_Check_return_ uint32_t Win32FoundationClasses::CFile64::AtomicWrite(_In_ uint64_t const file_offset, __in_bcount(number_of_bytes_to_write) void const * buffer, _In_ uint32_t const number_of_bytes_to_write) const noexcept
 {
     WFC_VALIDATE_POINTER(this);
     WFC_VALIDATE_POINTER_NULL_OK(buffer);
@@ -1631,21 +1619,21 @@ _Check_return_ uint32_t CFile64::AtomicWrite(_In_ uint64_t const file_offset, __
     return(number_of_bytes_read);
 }
 
-_Check_return_ uint32_t CFile64::ReadHuge( __out_bcount( number_of_bytes_to_read ) void * buffer, _In_ uint32_t const number_of_bytes_to_read ) noexcept
+_Check_return_ uint32_t Win32FoundationClasses::CFile64::ReadHuge( __out_bcount( number_of_bytes_to_read ) void * buffer, _In_ uint32_t const number_of_bytes_to_read ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
     WFC_VALIDATE_POINTER_NULL_OK( buffer );
     return( Read( buffer, number_of_bytes_to_read ) );
 }
 
-void PASCAL CFile64::Rename(_In_ std::filesystem::path const& old_name, _In_ std::filesystem::path const& new_name ) noexcept // static
+void Win32FoundationClasses::CFile64::Rename(_In_ std::filesystem::path const& old_name, _In_ std::filesystem::path const& new_name ) noexcept // static
 {
     if ( ::MoveFileW( old_name.c_str(), new_name.c_str() ) == FALSE )
     {
     }
 }
 
-void PASCAL CFile64::Remove(_In_ std::filesystem::path const& filename ) noexcept // static
+void Win32FoundationClasses::CFile64::Remove(_In_ std::filesystem::path const& filename ) noexcept // static
 {
     if ( ::DeleteFileW( filename.c_str() ) == FALSE )
     {
@@ -1660,7 +1648,7 @@ void PASCAL CFile64::Remove(_In_ std::filesystem::path const& filename ) noexcep
     }
 }
 
-_Check_return_ uint64_t CFile64::Seek( _In_ int64_t const offset, _In_ SeekPosition const from ) noexcept
+_Check_return_ uint64_t Win32FoundationClasses::CFile64::Seek( _In_ int64_t const offset, _In_ SeekPosition const from ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
 
@@ -1717,19 +1705,19 @@ _Check_return_ uint64_t CFile64::Seek( _In_ int64_t const offset, _In_ SeekPosit
     return( return_value.QuadPart );
 }
 
-void CFile64::SeekToBegin( void ) noexcept
+void Win32FoundationClasses::CFile64::SeekToBegin( void ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
     (void) Seek( (int64_t) 0, SeekPosition::begin );
 }
 
-_Check_return_ uint64_t CFile64::SeekToEnd( void ) noexcept
+_Check_return_ uint64_t Win32FoundationClasses::CFile64::SeekToEnd( void ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
     return( Seek( (int64_t) 0, SeekPosition::end ) );
 }
 
-_Check_return_ bool CFile64::SetEndOfFile( _In_ uint64_t const length ) noexcept
+_Check_return_ bool Win32FoundationClasses::CFile64::SetEndOfFile( _In_ uint64_t const length ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
 
@@ -1747,13 +1735,13 @@ _Check_return_ bool CFile64::SetEndOfFile( _In_ uint64_t const length ) noexcept
     return( true );
 }
 
-void CFile64::SetFilePath(_In_ std::filesystem::path const& new_name ) noexcept
+void Win32FoundationClasses::CFile64::SetFilePath(_In_ std::filesystem::path const& new_name ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
     m_FileName.assign( new_name );
 }
 
-void CFile64::SetLength( _In_ uint64_t const new_length ) noexcept
+void Win32FoundationClasses::CFile64::SetLength( _In_ uint64_t const new_length ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
 
@@ -1770,14 +1758,14 @@ void CFile64::SetLength( _In_ uint64_t const new_length ) noexcept
     }
 }
 
-_Check_return_ bool CFile64::SetPosition( _In_ uint64_t const position ) noexcept
+_Check_return_ bool Win32FoundationClasses::CFile64::SetPosition( _In_ uint64_t const position ) noexcept
 {
     return( Seek( position, SeekPosition::begin ) == position ? true : false );
 }
 
 #if ! defined( WFC_STL )
 
-void PASCAL CFile64::SetStatus( LPCTSTR filename, CFileStatus& const status )
+void CFile64::SetStatus( LPCTSTR filename, CFileStatus& const status )
 {
     CFile::SetStatus( filename, status );
 }
@@ -1795,7 +1783,7 @@ struct WFC_SPARSE_REGION
     LARGE_INTEGER beyond_final_zero{ 0,0 };
 };
 
-_Check_return_ bool CFile64::SparsifyRegion( _In_ uint64_t const position, _In_ uint64_t const number_of_bytes_to_mark_as_sparse ) noexcept
+_Check_return_ bool Win32FoundationClasses::CFile64::SparsifyRegion( _In_ uint64_t const position, _In_ uint64_t const number_of_bytes_to_mark_as_sparse ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
 
@@ -1829,7 +1817,7 @@ _Check_return_ bool CFile64::SparsifyRegion( _In_ uint64_t const position, _In_ 
     return( false );
 }
 
-void CFile64::UnlockRange( _In_ uint64_t const position, _In_ uint64_t const number_of_bytes_to_unlock ) noexcept
+void Win32FoundationClasses::CFile64::UnlockRange( _In_ uint64_t const position, _In_ uint64_t const number_of_bytes_to_unlock ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
 
@@ -1854,7 +1842,7 @@ void CFile64::UnlockRange( _In_ uint64_t const position, _In_ uint64_t const num
     }
 }
 
-_Check_return_ bool CFile64::ProcessContent( _In_ std::size_t const step_size, _Inout_ PROCESS_BUFFER_CALLBACK function_to_call, __inout_opt void * callback_context ) const noexcept
+_Check_return_ bool Win32FoundationClasses::CFile64::ProcessContent( _In_ std::size_t const step_size, _Inout_ Win32FoundationClasses::PROCESS_BUFFER_CALLBACK function_to_call, __inout_opt void * callback_context ) const noexcept
 {
     if ( function_to_call == nullptr )
     {
@@ -1908,7 +1896,7 @@ _Check_return_ bool CFile64::ProcessContent( _In_ std::size_t const step_size, _
     return( true );
 }
 
-void CFile64::RegisterSafeWrite( _Inout_ void * context, __callback SAFE_WRITE_CALLBACK callback ) noexcept
+void Win32FoundationClasses::CFile64::RegisterSafeWrite( _Inout_ void * context, __callback Win32FoundationClasses::SAFE_WRITE_CALLBACK callback ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
     WFC_VALIDATE_POINTER_NULL_OK( context );
@@ -1918,7 +1906,7 @@ void CFile64::RegisterSafeWrite( _Inout_ void * context, __callback SAFE_WRITE_C
     m_SafeWriteCallback = callback;
 }
 
-void CFile64::Write( __in_bcount( number_of_bytes_to_write ) void const * buffer, _In_ UINT const number_of_bytes_to_write ) noexcept
+void Win32FoundationClasses::CFile64::Write( __in_bcount( number_of_bytes_to_write ) void const * buffer, _In_ UINT const number_of_bytes_to_write ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
 
@@ -1934,7 +1922,7 @@ void CFile64::Write( __in_bcount( number_of_bytes_to_write ) void const * buffer
 
     uint64_t file_position = GetPosition();
 
-    format( debug_message, L"Writing at offset %I64d", (int64_t) file_position );
+    format( debug_message, L"Writing at offset %" PRIu64, file_position );
 
     //WFCTRACE( debug_message );
 
@@ -2003,24 +1991,24 @@ void CFile64::Write( __in_bcount( number_of_bytes_to_write ) void const * buffer
 #endif // WFC_STL
 }
 
-void CFile64::WriteHuge( __in_bcount( number_of_bytes_to_write ) void const * buffer, _In_ DWORD const number_of_bytes_to_write ) noexcept
+void Win32FoundationClasses::CFile64::WriteHuge( __in_bcount( number_of_bytes_to_write ) void const * buffer, _In_ DWORD const number_of_bytes_to_write ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
     WFC_VALIDATE_POINTER_NULL_OK( buffer );
     Write( buffer, number_of_bytes_to_write );
 }
 
-void CFile64::Write( _In_ std::wstring_view string_to_write ) noexcept
+void Win32FoundationClasses::CFile64::Write( _In_ std::wstring_view string_to_write ) noexcept
 {
     Write( string_to_write.data(), static_cast<UINT>(string_to_write.length() * sizeof( wchar_t ) ) );
 }
 
-void CFile64::Write( _In_ std::string_view string_to_write ) noexcept
+void Win32FoundationClasses::CFile64::Write( _In_ std::string_view string_to_write ) noexcept
 {
     Write( string_to_write.data(), static_cast<UINT>(string_to_write.length()) );
 }
 
-void CFile64::Write( _In_ std::vector<std::string> const& strings, _In_ bool const include_end_of_lines ) noexcept
+void Win32FoundationClasses::CFile64::Write( _In_ std::vector<std::string> const& strings, _In_ bool const include_end_of_lines ) noexcept
 {
     for ( auto const& entry : strings )
     {
@@ -2034,7 +2022,7 @@ void CFile64::Write( _In_ std::vector<std::string> const& strings, _In_ bool con
     }
 }
 
-void CFile64::Write(_In_ std::vector<std::wstring> const& strings, _In_ bool const include_end_of_lines) noexcept
+void Win32FoundationClasses::CFile64::Write(_In_ std::vector<std::wstring> const& strings, _In_ bool const include_end_of_lines) noexcept
 {
     for( auto const& entry : strings )
     {
@@ -2048,12 +2036,12 @@ void CFile64::Write(_In_ std::vector<std::wstring> const& strings, _In_ bool con
     }
 }
 
-_Check_return_ bool CFile64::SetShortName( _In_z_ LPCTSTR new_short_name )  noexcept// New for 73
+_Check_return_ bool Win32FoundationClasses::CFile64::SetShortName( _In_z_ LPCTSTR new_short_name )  noexcept// New for 73
 {
     return( SetFileShortName( m_FileHandle, new_short_name ) == 0 ? false : true );
 }
 
-_Check_return_ bool CFile64::SetValidData( _In_ int64_t const valid_data_length )  noexcept// New for 73
+_Check_return_ bool Win32FoundationClasses::CFile64::SetValidData( _In_ int64_t const valid_data_length )  noexcept// New for 73
 {
     int return_value = ::SetFileValidData( m_FileHandle, valid_data_length );
 

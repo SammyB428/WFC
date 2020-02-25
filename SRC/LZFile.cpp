@@ -51,21 +51,19 @@ static char THIS_FILE[] = __FILE__;
 #define new DEBUG_NEW
 #endif // _DEBUG
 
-USING_WFC_NAMESPACE
-
-CLZFile::CLZFile() noexcept
+Win32FoundationClasses::CLZFile::CLZFile() noexcept
 {
    WFC_VALIDATE_POINTER( this );
    m_Initialize();
 }
 
-CLZFile::~CLZFile() noexcept
+Win32FoundationClasses::CLZFile::~CLZFile() noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Close();
 }
 
-void CLZFile::Close( void ) noexcept
+void Win32FoundationClasses::CLZFile::Close( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -83,14 +81,14 @@ void CLZFile::Close( void ) noexcept
    m_Initialize();
 }
 
-_Check_return_ bool CLZFile::Copy( __in CLZFile const * source_p ) noexcept
+_Check_return_ bool Win32FoundationClasses::CLZFile::Copy( _In_ Win32FoundationClasses::CLZFile const * source_p ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source_p );
    return( Copy( *source_p ) );
 }
 
-_Check_return_ bool CLZFile::Copy( __in CLZFile const& source ) noexcept
+_Check_return_ bool Win32FoundationClasses::CLZFile::Copy( _In_ Win32FoundationClasses::CLZFile const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -120,7 +118,7 @@ void CLZFile::Dump( CDumpContext& dump_context ) const
 
 #endif // _DEBUG
 
-_Check_return_ bool CLZFile::GetExpandedName( _In_ std::wstring_view name_of_compressed_file, __out std::wstring& original_file_name ) noexcept
+_Check_return_ bool Win32FoundationClasses::CLZFile::GetExpandedName( _In_ std::wstring_view name_of_compressed_file, _Out_ std::wstring& original_file_name ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -154,14 +152,14 @@ _Check_return_ bool CLZFile::GetExpandedName( _In_ std::wstring_view name_of_com
    WFC_END_CATCH_ALL
 }
 
-void CLZFile::m_Initialize( void ) noexcept
+void Win32FoundationClasses::CLZFile::m_Initialize( void ) noexcept
 {
    m_LZFileHandle = 0;
    m_OpenFileStructure.Empty();
    WFC_VALIDATE_POINTER( this );
 }
 
-_Check_return_ bool CLZFile::Open(_In_ std::filesystem::path const& file_name, __in UINT const style ) noexcept
+_Check_return_ bool Win32FoundationClasses::CLZFile::Open(_In_ std::filesystem::path const& file_name, _In_ UINT const style ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -198,7 +196,7 @@ _Check_return_ bool CLZFile::Open(_In_ std::filesystem::path const& file_name, _
    WFC_END_CATCH_ALL
 }
 
-_Check_return_ UINT CLZFile::Read( __out_bcount( size_of_buffer ) void * buffer, __in UINT const size_of_buffer ) noexcept
+_Check_return_ UINT Win32FoundationClasses::CLZFile::Read( __out_bcount( size_of_buffer ) void * buffer, _In_ UINT const size_of_buffer ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER_NULL_OK( buffer );
@@ -234,7 +232,7 @@ _Check_return_ UINT CLZFile::Read( __out_bcount( size_of_buffer ) void * buffer,
    WFC_END_CATCH_ALL
 }
 
-_Check_return_ uint64_t CLZFile::Seek(_In_ int64_t const offset, _In_ CFile64::SeekPosition const from ) noexcept
+_Check_return_ uint64_t Win32FoundationClasses::CLZFile::Seek(_In_ int64_t const offset, _In_ Win32FoundationClasses::CFile64::SeekPosition const from ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -243,8 +241,8 @@ _Check_return_ uint64_t CLZFile::Seek(_In_ int64_t const offset, _In_ CFile64::S
 #else
    ASSERT( m_hFile != (CFILE_HFILE) CFile::hFileNull );
 #endif
-  ASSERT( from == CFile64::SeekPosition::begin or from == CFile64::SeekPosition::end or from == CFile64::SeekPosition::current );
-  ASSERT((int)CFile64::SeekPosition::begin == FILE_BEGIN and (int)CFile64::SeekPosition::end == FILE_END and (int)CFile64::SeekPosition::current == FILE_CURRENT );
+  ASSERT( from == Win32FoundationClasses::CFile64::SeekPosition::begin or from == Win32FoundationClasses::CFile64::SeekPosition::end or from == Win32FoundationClasses::CFile64::SeekPosition::current );
+  ASSERT((int)Win32FoundationClasses::CFile64::SeekPosition::begin == FILE_BEGIN and (int)Win32FoundationClasses::CFile64::SeekPosition::end == FILE_END and (int)Win32FoundationClasses::CFile64::SeekPosition::current == FILE_CURRENT );
 
    LONG const offset_from_beginning_of_file = ::LZSeek( m_LZFileHandle, (LONG) offset, (INT) from );
 
@@ -256,7 +254,7 @@ _Check_return_ uint64_t CLZFile::Seek(_In_ int64_t const offset, _In_ CFile64::S
    return( offset_from_beginning_of_file );
 }
 
-void CLZFile::TranslateErrorCode( _In_ int const error_code, _Out_ std::wstring& error_message ) noexcept
+void Win32FoundationClasses::CLZFile::TranslateErrorCode( _In_ int const error_code, _Out_ std::wstring& error_message ) noexcept
 {
    switch( error_code )
    {

@@ -51,44 +51,42 @@ static char THIS_FILE[] = __FILE__;
 #define new DEBUG_NEW
 #endif // _DEBUG
 
-USING_WFC_NAMESPACE
-
 /*
 ** CTapeGetDriveParameters
 */
 
-CTapeGetDriveParameters::CTapeGetDriveParameters()
+Win32FoundationClasses::CTapeGetDriveParameters::CTapeGetDriveParameters()
 {
    WFC_VALIDATE_POINTER( this );
    Empty();
 }
 
-CTapeGetDriveParameters::CTapeGetDriveParameters( __in CTapeGetDriveParameters const& source )
+Win32FoundationClasses::CTapeGetDriveParameters::CTapeGetDriveParameters( _In_ Win32FoundationClasses::CTapeGetDriveParameters const& source )
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );
 }
 
-CTapeGetDriveParameters::CTapeGetDriveParameters( __in TAPE_GET_DRIVE_PARAMETERS const * source )
+Win32FoundationClasses::CTapeGetDriveParameters::CTapeGetDriveParameters( _In_ TAPE_GET_DRIVE_PARAMETERS const * source )
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
    Copy( source );
 }
 
-CTapeGetDriveParameters::~CTapeGetDriveParameters()
+Win32FoundationClasses::CTapeGetDriveParameters::~CTapeGetDriveParameters()
 {
    WFC_VALIDATE_POINTER( this );
    Empty();
 }
 
-void CTapeGetDriveParameters::Copy(_In_ CTapeGetDriveParameters const& source ) noexcept
+void Win32FoundationClasses::CTapeGetDriveParameters::Copy(_In_ Win32FoundationClasses::CTapeGetDriveParameters const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Copy( static_cast<TAPE_GET_DRIVE_PARAMETERS const *>(&source) );
 }
 
-void CTapeGetDriveParameters::Copy(_In_ TAPE_GET_DRIVE_PARAMETERS const * source ) noexcept
+void Win32FoundationClasses::CTapeGetDriveParameters::Copy(_In_ TAPE_GET_DRIVE_PARAMETERS const * source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
@@ -688,7 +686,7 @@ void CTapeGetDriveParameters::Dump( CDumpContext& dump_context ) const
 
 #endif // _DEBUG
 
-void CTapeGetDriveParameters::Empty( void ) noexcept
+void Win32FoundationClasses::CTapeGetDriveParameters::Empty( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -705,14 +703,14 @@ void CTapeGetDriveParameters::Empty( void ) noexcept
    EOTWarningZoneSize    = 0;
 }
 
-CTapeGetDriveParameters& CTapeGetDriveParameters::operator=( __in CTapeGetDriveParameters const& source ) noexcept
+Win32FoundationClasses::CTapeGetDriveParameters& Win32FoundationClasses::CTapeGetDriveParameters::operator=( _In_ Win32FoundationClasses::CTapeGetDriveParameters const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );
    return( *this );
 }
 
-CTapeGetDriveParameters& CTapeGetDriveParameters::operator=( __in TAPE_GET_DRIVE_PARAMETERS const& source ) noexcept
+Win32FoundationClasses::CTapeGetDriveParameters& Win32FoundationClasses::CTapeGetDriveParameters::operator=( _In_ TAPE_GET_DRIVE_PARAMETERS const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Copy( &source );
@@ -723,38 +721,38 @@ CTapeGetDriveParameters& CTapeGetDriveParameters::operator=( __in TAPE_GET_DRIVE
 ** CTapeSetDriveParameters
 */
 
-CTapeSetDriveParameters::CTapeSetDriveParameters() noexcept
+Win32FoundationClasses::CTapeSetDriveParameters::CTapeSetDriveParameters() noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Empty();
 }
 
-CTapeSetDriveParameters::CTapeSetDriveParameters( __in CTapeSetDriveParameters const& source ) noexcept
+Win32FoundationClasses::CTapeSetDriveParameters::CTapeSetDriveParameters( _In_ Win32FoundationClasses::CTapeSetDriveParameters const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );
 }
 
-CTapeSetDriveParameters::CTapeSetDriveParameters( __in TAPE_SET_DRIVE_PARAMETERS const * source ) noexcept
+Win32FoundationClasses::CTapeSetDriveParameters::CTapeSetDriveParameters( _In_ TAPE_SET_DRIVE_PARAMETERS const * source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
    Copy( source );
 }
 
-CTapeSetDriveParameters::~CTapeSetDriveParameters() noexcept
+Win32FoundationClasses::CTapeSetDriveParameters::~CTapeSetDriveParameters() noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Empty();
 }
 
-void CTapeSetDriveParameters::Copy(_In_ CTapeSetDriveParameters const& source ) noexcept
+void Win32FoundationClasses::CTapeSetDriveParameters::Copy(_In_ Win32FoundationClasses::CTapeSetDriveParameters const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Copy( static_cast<TAPE_SET_DRIVE_PARAMETERS const *>(&source) );
 }
 
-void CTapeSetDriveParameters::Copy(_In_ TAPE_SET_DRIVE_PARAMETERS const * source ) noexcept
+void Win32FoundationClasses::CTapeSetDriveParameters::Copy(_In_ TAPE_SET_DRIVE_PARAMETERS const * source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
@@ -783,7 +781,7 @@ void CTapeSetDriveParameters::Copy(_In_ TAPE_SET_DRIVE_PARAMETERS const * source
 
 #if defined( _DEBUG ) && ! defined( WFC_NO_DUMPING )
 
-void CTapeSetDriveParameters::Dump( CDumpContext& dump_context ) const
+void Win32FoundationClasses::CTapeSetDriveParameters::Dump( CDumpContext& dump_context ) const
 {
    dump_context << TEXT( " a CTapeSetDriveParameters at " )<< (void *) this << TEXT( "\n" );
    dump_context << TEXT( "{\n" );
@@ -796,7 +794,7 @@ void CTapeSetDriveParameters::Dump( CDumpContext& dump_context ) const
 
 #endif // _DEBUG
 
-void CTapeSetDriveParameters::Empty( void ) noexcept
+void Win32FoundationClasses::CTapeSetDriveParameters::Empty( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -807,14 +805,14 @@ void CTapeSetDriveParameters::Empty( void ) noexcept
    EOTWarningZoneSize = 0;
 }
 
-CTapeSetDriveParameters& CTapeSetDriveParameters::operator=( __in CTapeSetDriveParameters const& source ) noexcept
+Win32FoundationClasses::CTapeSetDriveParameters& Win32FoundationClasses::CTapeSetDriveParameters::operator=( _In_ Win32FoundationClasses::CTapeSetDriveParameters const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );
    return( *this );
 }
 
-CTapeSetDriveParameters& CTapeSetDriveParameters::operator=( __in TAPE_SET_DRIVE_PARAMETERS const& source ) noexcept
+Win32FoundationClasses::CTapeSetDriveParameters& Win32FoundationClasses::CTapeSetDriveParameters::operator=( _In_ TAPE_SET_DRIVE_PARAMETERS const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Copy( &source );
@@ -825,38 +823,38 @@ CTapeSetDriveParameters& CTapeSetDriveParameters::operator=( __in TAPE_SET_DRIVE
 ** CTapeSetMediaParameters
 */
 
-CTapeSetMediaParameters::CTapeSetMediaParameters() noexcept
+Win32FoundationClasses::CTapeSetMediaParameters::CTapeSetMediaParameters() noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Empty();
 }
 
-CTapeSetMediaParameters::CTapeSetMediaParameters( __in CTapeSetMediaParameters const& source ) noexcept
+Win32FoundationClasses::CTapeSetMediaParameters::CTapeSetMediaParameters( _In_ Win32FoundationClasses::CTapeSetMediaParameters const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );
 }
 
-CTapeSetMediaParameters::CTapeSetMediaParameters( __in TAPE_SET_MEDIA_PARAMETERS const * source ) noexcept
+Win32FoundationClasses::CTapeSetMediaParameters::CTapeSetMediaParameters( _In_ TAPE_SET_MEDIA_PARAMETERS const * source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
    Copy( source );
 }
 
-CTapeSetMediaParameters::~CTapeSetMediaParameters() noexcept
+Win32FoundationClasses::CTapeSetMediaParameters::~CTapeSetMediaParameters() noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Empty();
 }
 
-void CTapeSetMediaParameters::Copy(_In_ CTapeSetMediaParameters const& source ) noexcept
+void Win32FoundationClasses::CTapeSetMediaParameters::Copy(_In_ Win32FoundationClasses::CTapeSetMediaParameters const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Copy( static_cast<TAPE_SET_MEDIA_PARAMETERS const *>(&source) );
 }
 
-void CTapeSetMediaParameters::Copy(_In_ TAPE_SET_MEDIA_PARAMETERS const * source ) noexcept
+void Win32FoundationClasses::CTapeSetMediaParameters::Copy(_In_ TAPE_SET_MEDIA_PARAMETERS const * source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
@@ -882,7 +880,7 @@ void CTapeSetMediaParameters::Copy(_In_ TAPE_SET_MEDIA_PARAMETERS const * source
 
 #if defined( _DEBUG ) && ! defined( WFC_NO_DUMPING )
 
-void CTapeSetMediaParameters::Dump( CDumpContext& dump_context ) const
+void Win32FoundationClasses::CTapeSetMediaParameters::Dump( CDumpContext& dump_context ) const
 {
    dump_context << TEXT( " a CTapeSetMediaParameters at " ) << (void *) this << TEXT( "\n" );
    dump_context << TEXT( "{\n" );
@@ -892,20 +890,20 @@ void CTapeSetMediaParameters::Dump( CDumpContext& dump_context ) const
 
 #endif // _DEBUG
 
-void CTapeSetMediaParameters::Empty( void ) noexcept
+void Win32FoundationClasses::CTapeSetMediaParameters::Empty( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    BlockSize = 0;
 }
 
-CTapeSetMediaParameters& CTapeSetMediaParameters::operator=( __in CTapeSetMediaParameters const& source ) noexcept
+Win32FoundationClasses::CTapeSetMediaParameters& Win32FoundationClasses::CTapeSetMediaParameters::operator=( _In_ Win32FoundationClasses::CTapeSetMediaParameters const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );
    return( *this );
 }
 
-CTapeSetMediaParameters& CTapeSetMediaParameters::operator=( __in TAPE_SET_MEDIA_PARAMETERS const& source ) noexcept
+Win32FoundationClasses::CTapeSetMediaParameters& Win32FoundationClasses::CTapeSetMediaParameters::operator=( _In_ TAPE_SET_MEDIA_PARAMETERS const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Copy( &source );
@@ -916,14 +914,14 @@ CTapeSetMediaParameters& CTapeSetMediaParameters::operator=( __in TAPE_SET_MEDIA
 ** CTape
 */
 
-CTape::CTape() noexcept
+Win32FoundationClasses::CTape::CTape() noexcept
 {
    WFC_VALIDATE_POINTER( this );
    m_Initialize();
    m_AutomaticallyClose = false;
 }
 
-CTape::~CTape() noexcept
+Win32FoundationClasses::CTape::~CTape() noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -935,14 +933,14 @@ CTape::~CTape() noexcept
    m_Initialize();
 }
 
-void CTape::m_Initialize( void ) noexcept
+void Win32FoundationClasses::CTape::m_Initialize( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    m_BackupReadContextPointer  = nullptr;
    m_BackupWriteContextPointer = nullptr;
 }
 
-void CTape::Close( void ) noexcept
+void Win32FoundationClasses::CTape::Close( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -955,9 +953,9 @@ void CTape::Close( void ) noexcept
    }
 }
 
-bool CTape::CreatePartition( __in TypeOfPartition const type_of_partition, 
-                             __in DWORD           const number_of_partitions, 
-                             __in DWORD           const number_of_megabytes_in_each_partition ) noexcept
+bool Win32FoundationClasses::CTape::CreatePartition( _In_ TypeOfPartition const type_of_partition,
+                             _In_ DWORD           const number_of_partitions, 
+                             _In_ DWORD           const number_of_megabytes_in_each_partition ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -971,7 +969,7 @@ bool CTape::CreatePartition( __in TypeOfPartition const type_of_partition,
    return( false );
 }
 
-bool CTape::Erase( __in TypeOfErasure const type_of_erasure, __in bool const return_immediately ) noexcept
+bool Win32FoundationClasses::CTape::Erase( _In_ TypeOfErasure const type_of_erasure, _In_ bool const return_immediately ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -985,7 +983,7 @@ bool CTape::Erase( __in TypeOfErasure const type_of_erasure, __in bool const ret
    return( false );
 }
 
-bool CTape::GetParameters( __out CTapeGetDriveParameters& parameters ) noexcept
+bool Win32FoundationClasses::CTape::GetParameters( _Out_ Win32FoundationClasses::CTapeGetDriveParameters& parameters ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -1006,7 +1004,7 @@ bool CTape::GetParameters( __out CTapeGetDriveParameters& parameters ) noexcept
    return( false );
 }
 
-bool CTape::GetParameters( __out CTapeGetMediaParameters& parameters ) noexcept
+bool Win32FoundationClasses::CTape::GetParameters( _Out_ Win32FoundationClasses::CTapeGetMediaParameters& parameters ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -1027,7 +1025,7 @@ bool CTape::GetParameters( __out CTapeGetMediaParameters& parameters ) noexcept
    return( false );
 }
 
-bool CTape::GetPosition( __in Position const type_of_position_to_get, __out DWORD& partition_number, __out DWORD& position_low, __out DWORD& position_high ) noexcept
+bool Win32FoundationClasses::CTape::GetPosition( _In_ Position const type_of_position_to_get, _Out_ DWORD& partition_number, _Out_ DWORD& position_low, _Out_ DWORD& position_high ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -1041,19 +1039,19 @@ bool CTape::GetPosition( __in Position const type_of_position_to_get, __out DWOR
    return( false );
 }
 
-_Check_return_ DWORD CTape::GetStatus( void ) const noexcept
+_Check_return_ DWORD Win32FoundationClasses::CTape::GetStatus( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
    return( ::GetTapeStatus( m_FileHandle ) );
 }
 
-_Check_return_ DWORD CTape::GetDriveNumber( void ) const noexcept
+_Check_return_ DWORD Win32FoundationClasses::CTape::GetDriveNumber( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
    return( m_TapeDriveNumberStartingAtZero );
 }
 
-_Check_return_ bool CTape::Mark( __in TypeOfMark const type_of_mark, __in DWORD const number_of_marks, __in bool const return_immediately ) noexcept
+_Check_return_ bool Win32FoundationClasses::CTape::Mark( _In_ TypeOfMark const type_of_mark, _In_ DWORD const number_of_marks, _In_ bool const return_immediately ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -1067,19 +1065,19 @@ _Check_return_ bool CTape::Mark( __in TypeOfMark const type_of_mark, __in DWORD 
    return( false );
 }
 
-_Check_return_ bool CTape::Load( void ) noexcept
+_Check_return_ bool Win32FoundationClasses::CTape::Load( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    return( Prepare(Operation::LoadTape) );
 }
 
-_Check_return_ bool CTape::Lock( void ) noexcept
+_Check_return_ bool Win32FoundationClasses::CTape::Lock( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    return( Prepare(Operation::LockTape) );
 }
 
-_Check_return_ bool CTape::Open( __in UINT const tape_drive_number_starting_at_zero ) noexcept
+_Check_return_ bool Win32FoundationClasses::CTape::Open( _In_ UINT const tape_drive_number_starting_at_zero ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -1126,7 +1124,7 @@ _Check_return_ bool CTape::Open( __in UINT const tape_drive_number_starting_at_z
    return( true );
 }
 
-_Check_return_ bool CTape::Prepare( __in Operation const what_to_do, __in bool const return_immediately ) noexcept
+_Check_return_ bool Win32FoundationClasses::CTape::Prepare( _In_ Operation const what_to_do, _In_ bool const return_immediately ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -1142,7 +1140,7 @@ _Check_return_ bool CTape::Prepare( __in Operation const what_to_do, __in bool c
    }
 }
 
-_Check_return_ bool CTape::BackupRead(__out_bcount(number_of_bytes_to_read) uint8_t * buffer, __in DWORD const number_of_bytes_to_read, __out LPDWORD number_of_bytes_read, __in bool abort, __in bool restore_security_data ) noexcept
+_Check_return_ bool Win32FoundationClasses::CTape::BackupRead(__out_bcount(number_of_bytes_to_read) uint8_t * buffer, _In_ DWORD const number_of_bytes_to_read, _Out_ LPDWORD number_of_bytes_read, _In_ bool abort, _In_ bool restore_security_data ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -1175,13 +1173,13 @@ _Check_return_ bool CTape::BackupRead(__out_bcount(number_of_bytes_to_read) uint
    WFC_END_CATCH_ALL
 }
 
-_Check_return_ bool CTape::Rewind( void ) noexcept
+_Check_return_ bool Win32FoundationClasses::CTape::Rewind( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    return( SetPosition(PositionMethod::RewindTape, 0, 0, 0, false ) );
 }
 
-_Check_return_ bool CTape::BackupSeek( __in DWORD const seek_low, __in DWORD const seek_high, __out LPDWORD seeked_low, __out LPDWORD seeked_high ) noexcept
+_Check_return_ bool Win32FoundationClasses::CTape::BackupSeek( _In_ DWORD const seek_low, _In_ DWORD const seek_high, _Out_ LPDWORD seeked_low, _Out_ LPDWORD seeked_high ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -1208,11 +1206,11 @@ _Check_return_ bool CTape::BackupSeek( __in DWORD const seek_low, __in DWORD con
    WFC_END_CATCH_ALL
 }
 
-_Check_return_ bool CTape::SetParameters( __in CTapeSetMediaParameters const& parameters ) noexcept
+_Check_return_ bool Win32FoundationClasses::CTape::SetParameters( _In_ Win32FoundationClasses::CTapeSetMediaParameters const& parameters ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
-   CTapeSetMediaParameters media_parameters( parameters );
+   Win32FoundationClasses::CTapeSetMediaParameters media_parameters( parameters );
 
    m_LastError = ::SetTapeParameters( m_FileHandle, SET_TAPE_MEDIA_INFORMATION, static_cast<TAPE_SET_MEDIA_PARAMETERS *>(&media_parameters) );
 
@@ -1224,11 +1222,11 @@ _Check_return_ bool CTape::SetParameters( __in CTapeSetMediaParameters const& pa
    return( false );
 }
 
-_Check_return_ bool CTape::SetParameters( __in CTapeSetDriveParameters const& parameters ) noexcept
+_Check_return_ bool Win32FoundationClasses::CTape::SetParameters( _In_ Win32FoundationClasses::CTapeSetDriveParameters const& parameters ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
-   CTapeSetDriveParameters drive_parameters( parameters );
+   Win32FoundationClasses::CTapeSetDriveParameters drive_parameters( parameters );
 
    m_LastError = ::SetTapeParameters( m_FileHandle, SET_TAPE_DRIVE_INFORMATION, static_cast<TAPE_SET_DRIVE_PARAMETERS *>(&drive_parameters) );
 
@@ -1240,7 +1238,7 @@ _Check_return_ bool CTape::SetParameters( __in CTapeSetDriveParameters const& pa
    return( false );
 }
 
-_Check_return_ bool CTape::SetPosition( __in PositionMethod const how_to_get_there, __in DWORD const partition_number, __in DWORD const position_low, __in DWORD const position_high, __in bool const return_immediately ) noexcept
+_Check_return_ bool Win32FoundationClasses::CTape::SetPosition( _In_ PositionMethod const how_to_get_there, _In_ DWORD const partition_number, _In_ DWORD const position_low, _In_ DWORD const position_high, _In_ bool const return_immediately ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -1256,19 +1254,19 @@ _Check_return_ bool CTape::SetPosition( __in PositionMethod const how_to_get_the
    }
 }
 
-_Check_return_ bool CTape::Unload( void ) noexcept
+_Check_return_ bool Win32FoundationClasses::CTape::Unload( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    return( Prepare( Operation::UnloadTape ) );
 }
 
-_Check_return_ bool CTape::Unlock( void ) noexcept
+_Check_return_ bool Win32FoundationClasses::CTape::Unlock( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    return( Prepare( Operation::UnlockTape ) );
 }
 
-_Check_return_ bool CTape::BackupWrite(__in_bcount(number_of_bytes_to_write) LPBYTE buffer, __in DWORD const number_of_bytes_to_write, __out LPDWORD number_of_bytes_written, __in bool abort, __in bool restore_security_data ) noexcept
+_Check_return_ bool Win32FoundationClasses::CTape::BackupWrite(__in_bcount(number_of_bytes_to_write) LPBYTE buffer, _In_ DWORD const number_of_bytes_to_write, _Out_ LPDWORD number_of_bytes_written, _In_ bool abort, _In_ bool restore_security_data ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 

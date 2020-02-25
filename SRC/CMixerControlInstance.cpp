@@ -51,9 +51,7 @@
 static char THIS_FILE[] = __FILE__;
 #endif // _DEBUG
 
-USING_WFC_NAMESPACE
-
-void CMixerControlInstance::Copy( __in CMixerControlInstance const& source ) noexcept
+void Win32FoundationClasses::CMixerControlInstance::Copy( _In_ Win32FoundationClasses::CMixerControlInstance const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -69,7 +67,7 @@ void CMixerControlInstance::Copy( __in CMixerControlInstance const& source ) noe
    m_MixerControl.Copy( source.m_MixerControl );
 }
 
-void CMixerControlInstance::Close( void ) noexcept
+void Win32FoundationClasses::CMixerControlInstance::Close( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    m_Mixer.Close();
@@ -77,7 +75,7 @@ void CMixerControlInstance::Close( void ) noexcept
 
 #if defined( _DEBUG ) && ! defined( WFC_NO_DUMPING )
 
-void CMixerControlInstance::Dump( CDumpContext& dump_context ) const
+void Win32FoundationClasses::CMixerControlInstance::Dump( CDumpContext& dump_context ) const
 {
    WFC_VALIDATE_POINTER( this );
    std::wstring temp_string;
@@ -94,7 +92,7 @@ void CMixerControlInstance::Dump( CDumpContext& dump_context ) const
 
 #endif // _DEBUG
 
-_Check_return_ bool CMixerControlInstance::Open( __in UINT_PTR device_number, __in DWORD what_to_notify, __in DWORD_PTR who_to_notify, __in DWORD_PTR notify_data ) noexcept
+_Check_return_ bool Win32FoundationClasses::CMixerControlInstance::Open( _In_ UINT_PTR device_number, _In_ DWORD what_to_notify, _In_ DWORD_PTR who_to_notify, _In_ DWORD_PTR notify_data ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -112,19 +110,19 @@ _Check_return_ bool CMixerControlInstance::Open( __in UINT_PTR device_number, __
    return( true );
 }
 
-void CMixerControlInstance::SetLine( __in CMixerLine const& line ) noexcept
+void Win32FoundationClasses::CMixerControlInstance::SetLine( _In_ Win32FoundationClasses::CMixerLine const& line ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    m_MixerLine.Copy( line );
 }
 
-void CMixerControlInstance::SetControl( __in CMixerControl const& control ) noexcept
+void Win32FoundationClasses::CMixerControlInstance::SetControl( _In_ Win32FoundationClasses::CMixerControl const& control ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    m_MixerControl.Copy( control );
 }
 
-CMixerControlInstance& CMixerControlInstance::operator=( __in CMixerControlInstance const& source ) noexcept
+Win32FoundationClasses::CMixerControlInstance& Win32FoundationClasses::CMixerControlInstance::operator=( _In_ Win32FoundationClasses::CMixerControlInstance const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );

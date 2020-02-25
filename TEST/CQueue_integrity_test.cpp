@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 2000-2016, Samuel R. Blackburn
+** Copyright, 2000-2020, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -50,11 +50,11 @@
 
  struct QUEUE_INTEGRITY_WORKSPACE
 {
-    CQueue *      queue_p{ nullptr };
-    ULARGE_INTEGER number_of_operations{ 0, 0 };
-    DWORD          number_of_loops{ 0 };
-    DWORD          checksum{ 0 };
-    bool           thread_exitted{ false };
+    Win32FoundationClasses::CQueue * queue_p{ nullptr };
+    uint64_t number_of_operations{ 0 };
+    uint32_t number_of_loops{ 0 };
+    uint32_t checksum{ 0 };
+    bool     thread_exitted{ false };
 };
 
 void queue_integrity_add_thread( void * p ) noexcept
@@ -66,16 +66,16 @@ void queue_integrity_add_thread( void * p ) noexcept
       return;
    }
 
-   workspace_p->number_of_operations.QuadPart = 0;
-   workspace_p->checksum                      = 0;
-   workspace_p->thread_exitted                = false;
+   workspace_p->number_of_operations = 0;
+   workspace_p->checksum             = 0;
+   workspace_p->thread_exitted       = false;
 
    auto queue_p = workspace_p->queue_p;
 
-   DWORD item           = 0;
-   DWORD checksum_index = 0;
+   uint32_t item           = 0;
+   uint32_t checksum_index = 0;
 
-   CRandomNumberGenerator2 random;
+   Win32FoundationClasses::CRandomNumberGenerator2 random;
 
    for( auto const loop_index : Range(workspace_p->number_of_loops) )
    {
@@ -83,7 +83,7 @@ void queue_integrity_add_thread( void * p ) noexcept
 
       (void) queue_p->Add( item );
 
-      workspace_p->number_of_operations.QuadPart++;
+      workspace_p->number_of_operations++;
 
       checksum_index = 0;
 
@@ -113,13 +113,13 @@ void queue_integrity_get_thread( void * p ) noexcept
       return;
    }
 
-   workspace_p->number_of_operations.QuadPart = 0;
-   workspace_p->checksum                      = 0;
-   workspace_p->thread_exitted                = false;
+   workspace_p->number_of_operations = 0;
+   workspace_p->checksum             = 0;
+   workspace_p->thread_exitted       = false;
 
    auto queue_p = workspace_p->queue_p;
 
-   DWORD checksum_index = 0;
+   uint32_t checksum_index = 0;
 
    SIZE_T item = 0;
 
@@ -127,9 +127,9 @@ void queue_integrity_get_thread( void * p ) noexcept
    {
       // Only process items that we got. We need to account for
       // getting from an empty queue.
-      if ( queue_p->Get( item ) != FALSE )
+      if ( queue_p->Get( item ) == true )
       {
-         workspace_p->number_of_operations.QuadPart++;
+         workspace_p->number_of_operations++;
 
          checksum_index = 0;
 
@@ -167,7 +167,7 @@ _Check_return_ bool CQueue_integrity_test( _Out_ std::string& class_name, _Out_ 
    QUEUE_INTEGRITY_WORKSPACE get_workspace;
    QUEUE_INTEGRITY_WORKSPACE add_workspace;
 
-   CQueue queue;
+   Win32FoundationClasses::CQueue queue;
 
    get_workspace.queue_p = &queue;
    add_workspace.queue_p = &queue;

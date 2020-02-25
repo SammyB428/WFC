@@ -90,7 +90,7 @@ class CPhysicalDiskFile : public CFile64
 
       // New Methods
       virtual _Check_return_ DWORD GetMediaType( void ) const noexcept;
-      virtual _Check_return_ bool  GetSectorSize( __out std::size_t& number_of_bytes_per_sector ) const noexcept;
+      virtual _Check_return_ bool  GetSectorSize( _Out_ std::size_t& number_of_bytes_per_sector ) const noexcept;
       virtual void  GetLength( _Out_ ULARGE_INTEGER& size_in_bytes ) const noexcept;
       virtual _Check_return_ bool Open(_In_ int physical_disk_number, _In_ UINT const open_flags) noexcept;
       virtual _Check_return_ bool OpenRead(_In_ int physical_disk_number ) noexcept;

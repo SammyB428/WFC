@@ -55,9 +55,9 @@ class CDeviceControlBlock : public _DCB
    public:
 
       CDeviceControlBlock();
-      CDeviceControlBlock( __in DCB const * source );
-      CDeviceControlBlock( __in DCB const& source );
-      CDeviceControlBlock( __in CDeviceControlBlock const& source );
+      CDeviceControlBlock( _In_ DCB const * source );
+      CDeviceControlBlock( _In_ DCB const& source );
+      CDeviceControlBlock( _In_ CDeviceControlBlock const& source );
 
       /*
       ** Destructor should be virtual according to MSJ article in Sept 1992
@@ -70,9 +70,9 @@ class CDeviceControlBlock : public _DCB
       ** Methods
       */
 
-      virtual void Copy( __in CDeviceControlBlock const& source ) noexcept;
-      virtual void Copy( __in DCB const * source ) noexcept;
-      virtual void Copy( __in DCB const&  source ) noexcept;
+      virtual void Copy( _In_ CDeviceControlBlock const& source ) noexcept;
+      virtual void Copy( _In_ DCB const * source ) noexcept;
+      virtual void Copy( _In_ DCB const&  source ) noexcept;
 
 #if defined( _DEBUG ) && ! defined( WFC_NO_DUMPING )
 
@@ -80,8 +80,8 @@ class CDeviceControlBlock : public _DCB
 
 #endif // _DEBUG
 
-      virtual CDeviceControlBlock& operator=( __in CDeviceControlBlock const& source ) noexcept;
-      virtual CDeviceControlBlock& operator=( __in DCB const& source ) noexcept;
+      virtual CDeviceControlBlock& operator=( _In_ CDeviceControlBlock const& source ) noexcept;
+      virtual CDeviceControlBlock& operator=( _In_ DCB const& source ) noexcept;
 };
 
 #endif // DCB_CLASS_HEADER

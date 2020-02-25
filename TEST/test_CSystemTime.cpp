@@ -66,7 +66,7 @@ _Check_return_ bool test_CSystemTime( __out std::string& class_name, __out int& 
    timestamp_struct.second   = 22;
    timestamp_struct.fraction = 14;
 
-   CSystemTime system_time( &timestamp_struct );
+   Win32FoundationClasses::CSystemTime system_time( &timestamp_struct );
 
 #if 0 
    if ( system_time.wDayOfWeek != 6 )
@@ -118,7 +118,7 @@ _Check_return_ bool test_CSystemTime( __out std::string& class_name, __out int& 
       return( failure() );
    }
 
-   CSystemTime time_2( system_time );
+   Win32FoundationClasses::CSystemTime time_2( system_time );
 
    if (not ( time_2 == system_time ) )
    {
@@ -170,7 +170,7 @@ _Check_return_ bool test_CSystemTime( __out std::string& class_name, __out int& 
 
    uint64_t const ticks = 129748979200327745I64;
 
-   CFileTime ft;
+   Win32FoundationClasses::CFileTime ft;
  
    ft.CopyTicks( ticks );
 

@@ -52,12 +52,12 @@ class CServiceApplication
 {
    protected:
 
-      virtual _Check_return_ int m_Main( __in int const number_of_command_line_arguments,
+      virtual _Check_return_ int m_Main( _In_ int const number_of_command_line_arguments,
                           __in_ecount_z_opt( number_of_command_line_arguments ) LPCTSTR command_line_arguments[],
                           __in_z LPCTSTR service_name,
                           __in_z LPCTSTR friendly_service_name,
                           __in_z LPCTSTR executable_path,
-                          __in DWORD const installation_configuration,
+                          _In_ DWORD const installation_configuration,
                           __callback LPTHREAD_START_ROUTINE worker_thread,
                           __callback SHOW_USAGE_ROUTINE show_usage,
                           __callback SET_DEFAULTS_ROUTINE set_defaults ) noexcept;
@@ -68,7 +68,7 @@ class CServiceApplication
        CServiceApplication(CServiceApplication const&) = delete;
        CServiceApplication& operator=(CServiceApplication const&) = delete;
        
-       CServiceApplication( __in int const number_of_command_line_arguments,
+       CServiceApplication( _In_ int const number_of_command_line_arguments,
                            __in_ecount_z_opt( number_of_command_line_arguments ) LPCTSTR command_line_arguments[],
                            __in_z LPCTSTR service_name,
                            __in_z LPCTSTR friendly_service_name,
@@ -76,7 +76,7 @@ class CServiceApplication
                            __callback LPTHREAD_START_ROUTINE worker_thread,
                            __callback SHOW_USAGE_ROUTINE show_usage = nullptr,
                            __callback SET_DEFAULTS_ROUTINE set_defaults = nullptr,
-                           __in DWORD const installation_configuration = SERVICE_DEMAND_START );
+                           _In_ DWORD const installation_configuration = SERVICE_DEMAND_START );
 
       /*
       ** Destructor should be virtual according to MSJ article in Sept 1992

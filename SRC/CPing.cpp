@@ -51,9 +51,7 @@ static char THIS_FILE[] = __FILE__;
 #define new DEBUG_NEW
 #endif // _DEBUG
 
-USING_WFC_NAMESPACE
-
-CPing::CPing()
+Win32FoundationClasses::CPing::CPing()
 {
     WFC_VALIDATE_POINTER(this);
 
@@ -78,7 +76,7 @@ CPing::CPing()
     }
 }
 
-CPing::~CPing()
+Win32FoundationClasses::CPing::~CPing()
 {
     if (m_ICMP_DLL_Instance != static_cast<HMODULE>(NULL))
     {
@@ -98,7 +96,7 @@ CPing::~CPing()
     m_NumberOfTextBytes = 0;
 }
 
-void CPing::ConvertErrorToString(__in DWORD const error_code, __out std::wstring& meaning) const noexcept
+void Win32FoundationClasses::CPing::ConvertErrorToString(_In_ DWORD const error_code, _Out_ std::wstring& meaning) const noexcept
 {
     WFC_VALIDATE_POINTER(this);
 
@@ -226,12 +224,12 @@ void CPing::ConvertErrorToString(__in DWORD const error_code, __out std::wstring
 
     default:
 
-        format( meaning, L"Unknown error %lu", error_code);
+        Win32FoundationClasses::format( meaning, L"Unknown error %lu", error_code);
         break;
     }
 }
 
-_Check_return_ DWORD CPing::Ping( __in std::wstring const& name_or_address, __out_opt CPingResults * results_p, __in short desired_time_to_live) noexcept
+_Check_return_ DWORD Win32FoundationClasses::CPing::Ping( _In_ std::wstring const& name_or_address, __out_opt Win32FoundationClasses::CPingResults * results_p, _In_ short desired_time_to_live) noexcept
 {
     WFC_VALIDATE_POINTER(this);
 
@@ -273,7 +271,7 @@ _Check_return_ DWORD CPing::Ping( __in std::wstring const& name_or_address, __ou
           SetText(buffer, 59);
        }
 
-       auto echo_reply_p = static_cast<IP_ECHO_REPLY *>(GlobalAllocPtr(GHND, sizeof(IP_ECHO_REPLY) + m_NumberOfTextBytes));
+       auto echo_reply_p = static_cast<Win32FoundationClasses::IP_ECHO_REPLY *>(GlobalAllocPtr(GHND, sizeof(IP_ECHO_REPLY) + m_NumberOfTextBytes));
 
        if (echo_reply_p != nullptr)
        {
@@ -363,19 +361,19 @@ _Check_return_ DWORD CPing::Ping( __in std::wstring const& name_or_address, __ou
         WFC_END_CATCH_ALL
 }
 
-_Check_return_ bool CPing::Open(void) noexcept
+_Check_return_ bool Win32FoundationClasses::CPing::Open(void) noexcept
 {
     WFC_VALIDATE_POINTER(this);
     return(true);
 }
 
-_Check_return_ bool CPing::Open(_In_ std::filesystem::path const&, _In_ UINT const) noexcept
+_Check_return_ bool Win32FoundationClasses::CPing::Open(_In_ std::filesystem::path const&, _In_ UINT const) noexcept
 {
     WFC_VALIDATE_POINTER(this);
     return(true);
 }
 
-void CPing::SetText(__in_bcount(number_of_bytes) uint8_t const * bytes, __in std::size_t const number_of_bytes) noexcept
+void Win32FoundationClasses::CPing::SetText(__in_bcount(number_of_bytes) uint8_t const * bytes, _In_ std::size_t const number_of_bytes) noexcept
 {
     WFC_VALIDATE_POINTER(this);
 

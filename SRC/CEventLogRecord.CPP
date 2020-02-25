@@ -50,26 +50,24 @@
 static char THIS_FILE[] = __FILE__;
 #endif // _DEBUG
 
-USING_WFC_NAMESPACE
-
 #if defined( _DEBUG ) && defined( _INC_CRTDBG )
 #define new DEBUG_NEW
 #endif // _DEBUG
 
-CEventLogRecord::CEventLogRecord() noexcept
+Win32FoundationClasses::CEventLogRecord::CEventLogRecord() noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Empty();
 }
 
-CEventLogRecord::CEventLogRecord( __in CEventLogRecord const& source ) noexcept
+Win32FoundationClasses::CEventLogRecord::CEventLogRecord( _In_ Win32FoundationClasses::CEventLogRecord const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Empty();
    Copy( source );
 }
 
-CEventLogRecord::CEventLogRecord( __in EVENTLOGRECORD const * source ) noexcept
+Win32FoundationClasses::CEventLogRecord::CEventLogRecord( _In_ EVENTLOGRECORD const * source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
@@ -77,13 +75,13 @@ CEventLogRecord::CEventLogRecord( __in EVENTLOGRECORD const * source ) noexcept
    Copy( source );
 }
 
-CEventLogRecord::~CEventLogRecord() noexcept
+Win32FoundationClasses::CEventLogRecord::~CEventLogRecord() noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Empty();
 }
 
-_Check_return_ int CEventLogRecord::Compare( __in CEventLogRecord const& source ) const noexcept
+_Check_return_ int Win32FoundationClasses::CEventLogRecord::Compare( _In_ Win32FoundationClasses::CEventLogRecord const& source ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -101,7 +99,7 @@ _Check_return_ int CEventLogRecord::Compare( __in CEventLogRecord const& source 
    return( return_value );
 }
 
-void CEventLogRecord::Copy( __in CEventLogRecord const& source ) noexcept
+void Win32FoundationClasses::CEventLogRecord::Copy( _In_ Win32FoundationClasses::CEventLogRecord const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -129,7 +127,7 @@ void CEventLogRecord::Copy( __in CEventLogRecord const& source ) noexcept
    Strings.assign( source.Strings.cbegin(), source.Strings.cend() );
 }
 
-void CEventLogRecord::Copy( _In_ EVENTLOGRECORD  const * source ) noexcept
+void Win32FoundationClasses::CEventLogRecord::Copy( _In_ EVENTLOGRECORD  const * source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
@@ -287,7 +285,7 @@ void CEventLogRecord::Dump( CDumpContext& dump_context ) const
 
 #endif // _DEBUG
 
-void CEventLogRecord::Empty( void ) noexcept
+void Win32FoundationClasses::CEventLogRecord::Empty( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -307,14 +305,14 @@ void CEventLogRecord::Empty( void ) noexcept
    Strings.clear();
 }
 
-_Check_return_ CEventLogRecord& CEventLogRecord::operator = ( __in CEventLogRecord const& source ) noexcept
+_Check_return_ Win32FoundationClasses::CEventLogRecord& Win32FoundationClasses::CEventLogRecord::operator = ( _In_ Win32FoundationClasses::CEventLogRecord const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );
    return( *this );
 }
 
-_Check_return_ bool CEventLogRecord::operator == ( __in CEventLogRecord const& right_record ) const noexcept
+_Check_return_ bool Win32FoundationClasses::CEventLogRecord::operator == ( _In_ Win32FoundationClasses::CEventLogRecord const& right_record ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 

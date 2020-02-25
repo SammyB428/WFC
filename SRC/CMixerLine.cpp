@@ -51,29 +51,27 @@
 static char THIS_FILE[] = __FILE__;
 #endif // _DEBUG
 
-USING_WFC_NAMESPACE
-
 // Construction
 
-CMixerLine::CMixerLine()
+Win32FoundationClasses::CMixerLine::CMixerLine()
 {
    WFC_VALIDATE_POINTER( this );
    Empty();
 }
 
-CMixerLine::CMixerLine( __in CMixerLine const& source )
+Win32FoundationClasses::CMixerLine::CMixerLine( _In_ Win32FoundationClasses::CMixerLine const& source )
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );
 }
 
-CMixerLine::CMixerLine( __in MIXERLINE const& source )
+Win32FoundationClasses::CMixerLine::CMixerLine( _In_ MIXERLINE const& source )
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );
 }
 
-CMixerLine::~CMixerLine()
+Win32FoundationClasses::CMixerLine::~CMixerLine()
 {
    WFC_VALIDATE_POINTER( this );
    Empty();
@@ -81,7 +79,7 @@ CMixerLine::~CMixerLine()
 
 // Methods
 
-void CMixerLine::Copy( __in CMixerLine const& source ) noexcept
+void Win32FoundationClasses::CMixerLine::Copy( _In_ Win32FoundationClasses::CMixerLine const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -111,7 +109,7 @@ void CMixerLine::Copy( __in CMixerLine const& source ) noexcept
    TargetName.assign(source.TargetName);
 }
 
-void CMixerLine::Copy( __in MIXERLINE const& source ) noexcept
+void Win32FoundationClasses::CMixerLine::Copy( _In_ MIXERLINE const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -136,7 +134,7 @@ void CMixerLine::Copy( __in MIXERLINE const& source ) noexcept
 
 #if defined( _DEBUG ) && ! defined( WFC_NO_DUMPING )
 
-void CMixerLine::Dump( CDumpContext& dump_context ) const
+void Win32FoundationClasses::CMixerLine::Dump( CDumpContext& dump_context ) const
 {
    WFC_VALIDATE_POINTER( this );
    std::wstring temp_string;
@@ -170,7 +168,7 @@ void CMixerLine::Dump( CDumpContext& dump_context ) const
 
 #endif // _DEBUG
 
-void CMixerLine::Empty( void ) noexcept
+void Win32FoundationClasses::CMixerLine::Empty( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -193,7 +191,7 @@ void CMixerLine::Empty( void ) noexcept
    TargetName.clear();
 }
 
-void CMixerLine::GetComponent( _Out_ std::wstring& component_string ) const noexcept
+void Win32FoundationClasses::CMixerLine::GetComponent( _Out_ std::wstring& component_string ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -306,7 +304,7 @@ void CMixerLine::GetComponent( _Out_ std::wstring& component_string ) const noex
    }
 }
 
-void CMixerLine::GetStatus( _Out_ std::wstring& status_string ) const noexcept
+void Win32FoundationClasses::CMixerLine::GetStatus( _Out_ std::wstring& status_string ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -338,7 +336,7 @@ void CMixerLine::GetStatus( _Out_ std::wstring& status_string ) const noexcept
    }
 }
 
-void CMixerLine::GetTarget( _Out_ std::wstring& target_string ) const noexcept
+void Win32FoundationClasses::CMixerLine::GetTarget( _Out_ std::wstring& target_string ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -381,35 +379,35 @@ void CMixerLine::GetTarget( _Out_ std::wstring& target_string ) const noexcept
    }
 }
 
-_Check_return_ bool CMixerLine::IsActive( void ) const noexcept
+_Check_return_ bool Win32FoundationClasses::CMixerLine::IsActive( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
    return(is_flagged( Status, static_cast<uint64_t>(CMixerLine::Status::Active)));
 }
 
-_Check_return_ bool CMixerLine::IsDisconnected( void ) const noexcept
+_Check_return_ bool Win32FoundationClasses::CMixerLine::IsDisconnected( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
-   return(is_flagged( Status, static_cast<uint64_t>(CMixerLine::Status::Disconnected)));
+   return(is_flagged( Status, static_cast<uint64_t>(Win32FoundationClasses::CMixerLine::Status::Disconnected)));
 }
 
-_Check_return_ bool CMixerLine::IsSource( void ) const noexcept
+_Check_return_ bool Win32FoundationClasses::CMixerLine::IsSource( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
-   return(is_flagged( Status, static_cast<uint64_t>(CMixerLine::Status::Source)));
+   return(is_flagged( Status, static_cast<uint64_t>(Win32FoundationClasses::CMixerLine::Status::Source)));
 }
 
-_Check_return_ CMixerLine& CMixerLine::operator=( __in CMixerLine const& source ) noexcept
+_Check_return_ Win32FoundationClasses::CMixerLine& Win32FoundationClasses::CMixerLine::operator=( _In_ Win32FoundationClasses::CMixerLine const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );
    return( *this );
 }
 
-_Check_return_ CMixerLine& CMixerLine::operator=( __in MIXERLINE const& source ) noexcept
+_Check_return_ Win32FoundationClasses::CMixerLine& Win32FoundationClasses::CMixerLine::operator=( _In_ MIXERLINE const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );

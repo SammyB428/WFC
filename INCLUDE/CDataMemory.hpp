@@ -56,19 +56,19 @@ class CDataMemory : public CDataFile
    public:
 
       CDataMemory() noexcept;
-      CDataMemory( __in CDataMemory const& source ) noexcept;
-      CDataMemory( __in_bcount( number_of_bytes ) uint8_t const * buffer_p, __in std::size_t const number_of_bytes ) noexcept;
-      CDataMemory( __in std::vector<uint8_t> const& source ) noexcept;
+      CDataMemory( _In_ CDataMemory const& source ) noexcept;
+      CDataMemory( __in_bcount( number_of_bytes ) uint8_t const * buffer_p, _In_ std::size_t const number_of_bytes ) noexcept;
+      CDataMemory( _In_ std::vector<uint8_t> const& source ) noexcept;
       virtual ~CDataMemory();
 
-      virtual void  Append( __in std::vector<uint8_t> const& source ) noexcept;
-      virtual void  Append( __in CDataMemory const& source ) noexcept;
-      virtual void  AppendTo( __out std::vector<uint8_t>& data ) noexcept;
+      virtual void  Append( _In_ std::vector<uint8_t> const& source ) noexcept;
+      virtual void  Append( _In_ CDataMemory const& source ) noexcept;
+      virtual void  AppendTo( _Out_ std::vector<uint8_t>& data ) noexcept;
       void  Close( void ) noexcept override;
-      virtual void  Copy( __in_bcount( number_of_bytes ) uint8_t const * buffer, __in std::size_t const number_of_bytes ) noexcept;
-      virtual void  Copy( __in std::vector<uint8_t> const& source ) noexcept;
-      virtual void  Copy( __in CDataMemory const& source ) noexcept;
-      virtual void  CopyTo( __out std::vector<uint8_t>& data ) noexcept;
+      virtual void  Copy( __in_bcount( number_of_bytes ) uint8_t const * buffer, _In_ std::size_t const number_of_bytes ) noexcept;
+      virtual void  Copy( _In_ std::vector<uint8_t> const& source ) noexcept;
+      virtual void  Copy( _In_ CDataMemory const& source ) noexcept;
+      virtual void  CopyTo( _Out_ std::vector<uint8_t>& data ) noexcept;
       virtual void  Empty( void ) noexcept;
       void  Flush( void ) noexcept override;
       virtual _Check_return_ uint8_t const * GetData( void ) const noexcept;
@@ -76,7 +76,7 @@ class CDataMemory : public CDataFile
       _Check_return_ uint64_t GetPosition( void ) const noexcept override;
       _Check_return_ bool Open(_In_ std::filesystem::path const& filename, _In_ UINT const mode ) noexcept override;
       _Check_return_ UINT Read( __out_bcount( number_of_bytes_to_read ) void * buffer, _In_ UINT const number_of_bytes_to_read ) noexcept override;
-      _Check_return_ uint64_t Seek( __in int64_t const offset, _In_ CFile64::SeekPosition const from ) noexcept override;
+      _Check_return_ uint64_t Seek( _In_ int64_t const offset, _In_ CFile64::SeekPosition const from ) noexcept override;
       void  Write( __in_bcount( number_of_bytes_to_write ) void const * buffer, _In_ UINT const number_of_bytes_to_write ) noexcept override;
 
       virtual _Check_return_ CDataMemory const& operator=(_In_ CDataMemory const& source ) noexcept;

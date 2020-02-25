@@ -136,8 +136,8 @@ class CRemoteAccessServiceAuthenticationMessageBlock : public _rasamb
    public:
 
       CRemoteAccessServiceAuthenticationMessageBlock();
-      CRemoteAccessServiceAuthenticationMessageBlock( __in RASAMB const * source );
-      CRemoteAccessServiceAuthenticationMessageBlock( __in CRemoteAccessServiceAuthenticationMessageBlock const& source );
+      CRemoteAccessServiceAuthenticationMessageBlock( _In_ RASAMB const * source );
+      CRemoteAccessServiceAuthenticationMessageBlock( _In_ CRemoteAccessServiceAuthenticationMessageBlock const& source );
 
       /*
       ** Destructor should be virtual according to MSJ article in Sept 1992
@@ -146,12 +146,12 @@ class CRemoteAccessServiceAuthenticationMessageBlock : public _rasamb
 
       virtual ~CRemoteAccessServiceAuthenticationMessageBlock();
 
-      void  Copy( __in RASAMB const * source ) noexcept;
-      void  Copy( __in CRemoteAccessServiceAuthenticationMessageBlock const& source ) noexcept;
+      void  Copy( _In_ RASAMB const * source ) noexcept;
+      void  Copy( _In_ CRemoteAccessServiceAuthenticationMessageBlock const& source ) noexcept;
       _Check_return_ BYTE  GetLana( void ) const noexcept;
       inline constexpr _Check_return_ DWORD GetErrorCode(void) const noexcept { return(m_ErrorCode); };
-      void  GetErrorString( __out std::wstring& return_string ) const noexcept;
-      CRemoteAccessServiceAuthenticationMessageBlock& operator=( __in CRemoteAccessServiceAuthenticationMessageBlock const& source ) noexcept;
+      void  GetErrorString( _Out_ std::wstring& return_string ) const noexcept;
+      CRemoteAccessServiceAuthenticationMessageBlock& operator=( _In_ CRemoteAccessServiceAuthenticationMessageBlock const& source ) noexcept;
 };
 
 /*
@@ -169,8 +169,8 @@ class CRemoteAccessServiceNetBEUIFramer : public _raspppnbf
    public:
 
       CRemoteAccessServiceNetBEUIFramer();
-      CRemoteAccessServiceNetBEUIFramer( __in RASPPPNBF const * source );
-      CRemoteAccessServiceNetBEUIFramer( __in CRemoteAccessServiceNetBEUIFramer const& source );
+      CRemoteAccessServiceNetBEUIFramer( _In_ RASPPPNBF const * source );
+      CRemoteAccessServiceNetBEUIFramer( _In_ CRemoteAccessServiceNetBEUIFramer const& source );
 
       /*
       ** Destructor should be virtual according to MSJ article in Sept 1992
@@ -179,14 +179,14 @@ class CRemoteAccessServiceNetBEUIFramer : public _raspppnbf
 
       virtual ~CRemoteAccessServiceNetBEUIFramer();
 
-      void  Copy( __in RASPPPNBF const * source ) noexcept;
-      void  Copy( __in CRemoteAccessServiceNetBEUIFramer const& source ) noexcept;
+      void  Copy( _In_ RASPPPNBF const * source ) noexcept;
+      void  Copy( _In_ CRemoteAccessServiceNetBEUIFramer const& source ) noexcept;
       _Check_return_ BYTE  GetLana( void ) const noexcept;
       inline constexpr _Check_return_ DWORD GetErrorCode(void) const noexcept { return(m_ErrorCode); };
       _Check_return_ DWORD GetNetBiosErrorCode( void ) const noexcept;
-      void GetErrorString( __out std::wstring& return_string ) const noexcept;
-      void GetWorkstationName( __out std::wstring& return_string ) const noexcept;
-      CRemoteAccessServiceNetBEUIFramer& operator=( __in CRemoteAccessServiceNetBEUIFramer const& source ) noexcept;
+      void GetErrorString( _Out_ std::wstring& return_string ) const noexcept;
+      void GetWorkstationName( _Out_ std::wstring& return_string ) const noexcept;
+      CRemoteAccessServiceNetBEUIFramer& operator=( _In_ CRemoteAccessServiceNetBEUIFramer const& source ) noexcept;
 };
 
 /*
@@ -204,8 +204,8 @@ class CRemoteAccessServiceInternetworkPacketExchange : public _raspppipx
    public:
 
       CRemoteAccessServiceInternetworkPacketExchange();
-      CRemoteAccessServiceInternetworkPacketExchange( __in RASPPPIPX const * source );
-      CRemoteAccessServiceInternetworkPacketExchange( __in CRemoteAccessServiceInternetworkPacketExchange const& source );
+      CRemoteAccessServiceInternetworkPacketExchange( _In_ RASPPPIPX const * source );
+      CRemoteAccessServiceInternetworkPacketExchange( _In_ CRemoteAccessServiceInternetworkPacketExchange const& source );
 
       /*
       ** Destructor should be virtual according to MSJ article in Sept 1992
@@ -214,11 +214,11 @@ class CRemoteAccessServiceInternetworkPacketExchange : public _raspppipx
 
       virtual ~CRemoteAccessServiceInternetworkPacketExchange();
 
-      void Copy( __in RASPPPIPX const * source ) noexcept;
-      void Copy( __in CRemoteAccessServiceInternetworkPacketExchange const& source ) noexcept;
+      void Copy( _In_ RASPPPIPX const * source ) noexcept;
+      void Copy( _In_ CRemoteAccessServiceInternetworkPacketExchange const& source ) noexcept;
       inline constexpr _Check_return_ DWORD GetErrorCode(void) const noexcept { return(m_ErrorCode); };
-      void GetIPXAddress( __out std::wstring& return_string ) const noexcept;
-      CRemoteAccessServiceInternetworkPacketExchange& operator=( __in CRemoteAccessServiceInternetworkPacketExchange const& source ) noexcept;
+      void GetIPXAddress( _Out_ std::wstring& return_string ) const noexcept;
+      CRemoteAccessServiceInternetworkPacketExchange& operator=( _In_ CRemoteAccessServiceInternetworkPacketExchange const& source ) noexcept;
 };
 
 /*
@@ -236,8 +236,8 @@ class CRemoteAccessServiceInternetProtocol : public _raspppip
    public:
 
       CRemoteAccessServiceInternetProtocol();
-      CRemoteAccessServiceInternetProtocol( __in RASPPPIP const * source );
-      CRemoteAccessServiceInternetProtocol( __in CRemoteAccessServiceInternetProtocol const& source );
+      CRemoteAccessServiceInternetProtocol( _In_ RASPPPIP const * source );
+      CRemoteAccessServiceInternetProtocol( _In_ CRemoteAccessServiceInternetProtocol const& source );
 
       /*
       ** Destructor should be virtual according to MSJ article in Sept 1992
@@ -246,8 +246,8 @@ class CRemoteAccessServiceInternetProtocol : public _raspppip
 
       virtual ~CRemoteAccessServiceInternetProtocol();
 
-      void Copy( __in RASPPPIP const * source ) noexcept;
-      void Copy( __in CRemoteAccessServiceInternetProtocol const& source ) noexcept;
+      void Copy( _In_ RASPPPIP const * source ) noexcept;
+      void Copy( _In_ CRemoteAccessServiceInternetProtocol const& source ) noexcept;
       inline constexpr _Check_return_ DWORD GetErrorCode(void) const noexcept { return(m_ErrorCode); };
       void GetIPAddress( __inout std::wstring& return_string ) const noexcept;
 
@@ -268,7 +268,7 @@ class CRemoteAccessService
 
       void m_Initialize( void ) noexcept;
       void m_InitializeThunk( void ) noexcept;
-      void m_GetConnectionsIntoMemory( __out LPRASCONN& return_value, __out DWORD& number_of_entries ) noexcept;
+      void m_GetConnectionsIntoMemory( _Out_ LPRASCONN& return_value, _Out_ DWORD& number_of_entries ) noexcept;
 
    protected:
 
@@ -316,8 +316,8 @@ class CRemoteAccessService
       CRemoteAccessService& operator=(CRemoteAccessService const&) = delete;
 
       CRemoteAccessService();
-      CRemoteAccessService( __in DWORD input_buffer_size );
-      CRemoteAccessService( __in DWORD input_buffer_size, __in DWORD output_buffer_size );
+      CRemoteAccessService( _In_ DWORD input_buffer_size );
+      CRemoteAccessService( _In_ DWORD input_buffer_size, _In_ DWORD output_buffer_size );
 
       /*
       ** Destructor should be virtual according to MSJ article in Sept 1992
@@ -344,10 +344,10 @@ class CRemoteAccessService
       virtual BOOL     GetProtocolInformation( __inout CRemoteAccessServiceInternetProtocol& data_to_get ) noexcept;
       virtual BOOL     HangUp( __in_z_opt LPCTSTR name_of_connection = nullptr ) noexcept;
       virtual BOOL     IsConnected( void ) noexcept;
-      virtual BOOL     SetAutomaticallyClose( __in BOOL auto_close ) noexcept; // Returns replaces setting
-      virtual LPVOID   SetConnectionCallback( __in LPVOID RasDialFunc1_function_pointer ) noexcept;
-      virtual HWND     SetConnectionCallbackWindow( __in HWND window_handle ) noexcept;
-      virtual DWORD    SetDialOptions( __in DWORD dial_options ) noexcept;
+      virtual BOOL     SetAutomaticallyClose( _In_ BOOL auto_close ) noexcept; // Returns replaces setting
+      virtual LPVOID   SetConnectionCallback( _In_ LPVOID RasDialFunc1_function_pointer ) noexcept;
+      virtual HWND     SetConnectionCallbackWindow( _In_ HWND window_handle ) noexcept;
+      virtual DWORD    SetDialOptions( _In_ DWORD dial_options ) noexcept;
 
       /*
       ** API's to make life a little easier 
@@ -360,9 +360,9 @@ class CRemoteAccessService
       ** Functions related to RAS
       */
 
-      static BOOL EnableLogging( __in BOOL enable_logging, __in_z_opt LPCTSTR machine_name = nullptr ) noexcept; // Creates DEVICE.LOG
+      static BOOL EnableLogging( _In_ BOOL enable_logging, __in_z_opt LPCTSTR machine_name = nullptr ) noexcept; // Creates DEVICE.LOG
       static BOOL GetKeepConnectionsAfterLogoff( __in_z_opt LPCTSTR machine_name = nullptr ) noexcept;
-      static BOOL SetKeepConnectionsAfterLogoff( __in BOOL keep_connections = TRUE, __in_z_opt LPCTSTR machine_name = nullptr ) noexcept;
+      static BOOL SetKeepConnectionsAfterLogoff( _In_ BOOL keep_connections = TRUE, __in_z_opt LPCTSTR machine_name = nullptr ) noexcept;
 };
 
 #endif // REMOTE_ACCESS_SERVICE_CLASS_HEADER

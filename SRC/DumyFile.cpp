@@ -48,13 +48,11 @@
 static char THIS_FILE[] = __FILE__;
 #endif // _DEBUG
 
-USING_WFC_NAMESPACE
-
 #if defined( _DEBUG ) && defined( _INC_CRTDBG )
 #define new DEBUG_NEW
 #endif // _DEBUG
 
-CDummyFile::CDummyFile()
+Win32FoundationClasses::CDummyFile::CDummyFile()
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -66,7 +64,7 @@ CDummyFile::CDummyFile()
 #endif // WFC_STL
 }
 
-CDummyFile::~CDummyFile()
+Win32FoundationClasses::CDummyFile::~CDummyFile()
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -79,13 +77,13 @@ CDummyFile::~CDummyFile()
 #endif // WFC_STL
 }
 
-void CDummyFile::Abort( void ) noexcept
+void Win32FoundationClasses::CDummyFile::Abort( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Close();
 }
 
-void CDummyFile::Close( void ) noexcept
+void Win32FoundationClasses::CDummyFile::Close( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -102,7 +100,7 @@ void CDummyFile::Close( void ) noexcept
 
 #if defined( _DEBUG ) && ! defined( WFC_NO_DUMPING )
 
-void CDummyFile::Dump( CDumpContext& dump_context ) const
+void Win32FoundationClasses::CDummyFile::Dump( CDumpContext& dump_context ) const
 {
    CFile::Dump( dump_context );
 
@@ -112,62 +110,62 @@ void CDummyFile::Dump( CDumpContext& dump_context ) const
 
 #endif // _DEBUG
 
-void CDummyFile::Flush( void ) noexcept
+void Win32FoundationClasses::CDummyFile::Flush( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 }
 
-_Check_return_ uint64_t CDummyFile::GetLength( void ) const noexcept
+_Check_return_ uint64_t Win32FoundationClasses::CDummyFile::GetLength( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
    return( 0 );
 }
 
-_Check_return_ uint64_t CDummyFile::GetPosition( void ) const noexcept
+_Check_return_ uint64_t Win32FoundationClasses::CDummyFile::GetPosition( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
    ASSERT( FALSE ); // Unsupported function
    return( 0 );
 }
 
-_Check_return_ bool CDummyFile::LockRange( __in uint64_t const /* position */, __in uint64_t const /* number_of_bytes_to_lock */ ) noexcept
+_Check_return_ bool Win32FoundationClasses::CDummyFile::LockRange( _In_ uint64_t const /* position */, _In_ uint64_t const /* number_of_bytes_to_lock */ ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    ASSERT( FALSE ); // Unsupported function
    return( false );
 }
 
-_Check_return_ DWORD CDummyFile::m_CreateCreationDistribution( void ) const noexcept
+_Check_return_ DWORD Win32FoundationClasses::CDummyFile::m_CreateCreationDistribution( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
    return( OPEN_EXISTING );
 }
 
-_Check_return_ DWORD CDummyFile::m_CreateDesiredAccess( void ) const noexcept
+_Check_return_ DWORD Win32FoundationClasses::CDummyFile::m_CreateDesiredAccess( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
    return( GENERIC_READ bitor GENERIC_WRITE );
 }
 
-_Check_return_ DWORD CDummyFile::m_CreateFlagsAndAttributes( void ) const noexcept
+_Check_return_ DWORD Win32FoundationClasses::CDummyFile::m_CreateFlagsAndAttributes( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
    return( 0 );
 }
 
-_Check_return_ LPSECURITY_ATTRIBUTES CDummyFile::m_CreateSecurityAttributes( void ) const noexcept
+_Check_return_ LPSECURITY_ATTRIBUTES Win32FoundationClasses::CDummyFile::m_CreateSecurityAttributes( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
    return( nullptr );
 }
 
-_Check_return_ DWORD CDummyFile::m_CreateShareMode( void ) const noexcept
+_Check_return_ DWORD Win32FoundationClasses::CDummyFile::m_CreateShareMode( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
    return( 0 );
 }
 
-_Check_return_ HANDLE CDummyFile::m_CreateTemplateHandle( void ) const noexcept
+_Check_return_ HANDLE Win32FoundationClasses::CDummyFile::m_CreateTemplateHandle( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
    return( m_TemplateHandle );
@@ -175,7 +173,7 @@ _Check_return_ HANDLE CDummyFile::m_CreateTemplateHandle( void ) const noexcept
 
 #pragma warning( disable : 4100 )
 
-_Check_return_ uint64_t CDummyFile::Seek( __in int64_t const /* Offset */, __in SeekPosition const /* From */ ) noexcept
+_Check_return_ uint64_t Win32FoundationClasses::CDummyFile::Seek( _In_ int64_t const /* Offset */, _In_ SeekPosition const /* From */ ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    ASSERT( FALSE ); // Unsupported function
@@ -186,7 +184,7 @@ _Check_return_ uint64_t CDummyFile::Seek( __in int64_t const /* Offset */, __in 
 
 #pragma warning( disable : 4100 )
 
-void CDummyFile::SetLength( __in uint64_t const /* length */ ) noexcept
+void Win32FoundationClasses::CDummyFile::SetLength( _In_ uint64_t const /* length */ ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    ASSERT( FALSE ); // Unsupported function
@@ -194,26 +192,26 @@ void CDummyFile::SetLength( __in uint64_t const /* length */ ) noexcept
 
 #if ! defined( WFC_STL )
 
-void CDummyFile::SetStatus( __in_z LPCTSTR /* name */, __in CFileStatus const& /* status */ )
+void Win32FoundationClasses::CDummyFile::SetStatus( __in_z LPCTSTR /* name */, _In_ CFileStatus const& /* status */ )
 {
    WFC_VALIDATE_POINTER( this );
 }
 
 #endif // WFC_STL
 
-void CDummyFile::UnlockRange(_In_ uint64_t const /* position */, _In_ uint64_t const /* number_of_bytes_to_unlock */ ) noexcept
+void Win32FoundationClasses::CDummyFile::UnlockRange(_In_ uint64_t const /* position */, _In_ uint64_t const /* number_of_bytes_to_unlock */ ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    ASSERT( FALSE ); // Unsupported function
 }
 
-void CDummyFile::Write( _In_ std::string_view string_to_write ) noexcept
+void Win32FoundationClasses::CDummyFile::Write( _In_ std::string_view string_to_write ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    CFile64::Write( static_cast<void const *>(string_to_write.data()), static_cast<UINT>(string_to_write.length()));
 }
 
-void CDummyFile::Write(_In_ std::vector<uint8_t> const& data_to_write ) noexcept
+void Win32FoundationClasses::CDummyFile::Write(_In_ std::vector<uint8_t> const& data_to_write ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -224,7 +222,7 @@ void CDummyFile::Write(_In_ std::vector<uint8_t> const& data_to_write ) noexcept
 
    auto buffer = data_to_write.data();
 
-   CFile64::Write( static_cast<void const *>(buffer), number_of_bytes_to_write );
+   Win32FoundationClasses::CFile64::Write( static_cast<void const *>(buffer), number_of_bytes_to_write );
 }
 
 #pragma warning( default : 4100 )

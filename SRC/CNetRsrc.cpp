@@ -50,21 +50,19 @@
 static char THIS_FILE[] = __FILE__;
 #endif // _DEBUG
 
-USING_WFC_NAMESPACE
-
 #if defined( _DEBUG ) && defined( _INC_CRTDBG )
 #define new DEBUG_NEW
 #endif // _DEBUG
 
 // TO DO: Add "net use" capability, WNetAddConnection
 
-CNetworkResources::CNetworkResources(_In_ std::wstring_view machine_name) : CNetwork(machine_name)
+Win32FoundationClasses::CNetworkResources::CNetworkResources(_In_ std::wstring_view machine_name) : CNetwork(machine_name)
 {
    WFC_VALIDATE_POINTER( this );
    m_Initialize();
 }
 
-CNetworkResources::~CNetworkResources()
+Win32FoundationClasses::CNetworkResources::~CNetworkResources()
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -78,7 +76,7 @@ CNetworkResources::~CNetworkResources()
    m_Initialize();
 }
 
-void CNetworkResources::m_Initialize( void ) noexcept
+void Win32FoundationClasses::CNetworkResources::m_Initialize( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -87,7 +85,7 @@ void CNetworkResources::m_Initialize( void ) noexcept
    ::ZeroMemory( &m_NetResource, sizeof( m_NetResource ) );
 }
 
-_Check_return_ bool CNetworkResources::Enumerate( __inout CNetworkResourceInformation& information ) noexcept
+_Check_return_ bool Win32FoundationClasses::CNetworkResources::Enumerate( __inout Win32FoundationClasses::CNetworkResourceInformation& information ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -166,7 +164,7 @@ _Check_return_ bool CNetworkResources::Enumerate( __inout CNetworkResourceInform
    return( false );
 }
 
-_Check_return_ bool CNetworkResources::GetNext( __inout CNetworkResourceInformation& information ) noexcept
+_Check_return_ bool Win32FoundationClasses::CNetworkResources::GetNext( __inout Win32FoundationClasses::CNetworkResourceInformation& information ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 

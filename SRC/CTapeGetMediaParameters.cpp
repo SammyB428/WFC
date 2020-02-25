@@ -51,34 +51,32 @@ static char THIS_FILE[] = __FILE__;
 #define new DEBUG_NEW
 #endif // _DEBUG
 
-USING_WFC_NAMESPACE
-
-CTapeGetMediaParameters::CTapeGetMediaParameters()
+Win32FoundationClasses::CTapeGetMediaParameters::CTapeGetMediaParameters()
 {
    Empty();
 }
 
-CTapeGetMediaParameters::CTapeGetMediaParameters( __in CTapeGetMediaParameters const& source )
+Win32FoundationClasses::CTapeGetMediaParameters::CTapeGetMediaParameters( _In_ Win32FoundationClasses::CTapeGetMediaParameters const& source )
 {
    Copy( source );
 }
 
-CTapeGetMediaParameters::CTapeGetMediaParameters(_In_ TAPE_GET_MEDIA_PARAMETERS const * source )
+Win32FoundationClasses::CTapeGetMediaParameters::CTapeGetMediaParameters(_In_ TAPE_GET_MEDIA_PARAMETERS const * source )
 {
    Copy( source );
 }
 
-CTapeGetMediaParameters::~CTapeGetMediaParameters()
+Win32FoundationClasses::CTapeGetMediaParameters::~CTapeGetMediaParameters()
 {
    Empty();
 }
 
-void CTapeGetMediaParameters::Copy(_In_ CTapeGetMediaParameters const& source ) noexcept
+void Win32FoundationClasses::CTapeGetMediaParameters::Copy(_In_ Win32FoundationClasses::CTapeGetMediaParameters const& source ) noexcept
 {
    Copy( static_cast<TAPE_GET_MEDIA_PARAMETERS const *>(&source) );
 }
 
-void CTapeGetMediaParameters::Copy(_In_ TAPE_GET_MEDIA_PARAMETERS const * source ) noexcept
+void Win32FoundationClasses::CTapeGetMediaParameters::Copy(_In_ TAPE_GET_MEDIA_PARAMETERS const * source ) noexcept
 {
    ASSERT( source != nullptr );
 
@@ -109,7 +107,7 @@ void CTapeGetMediaParameters::Copy(_In_ TAPE_GET_MEDIA_PARAMETERS const * source
 
 #if defined( _DEBUG ) && ! defined( WFC_NO_DUMPING )
 
-void CTapeGetMediaParameters::Dump( CDumpContext& dump_context ) const
+void Win32FoundationClasses::CTapeGetMediaParameters::Dump( CDumpContext& dump_context ) const
 {
    dump_context << TEXT( " a CTapeGetMediaParameters at " ) << (void *) this << TEXT( "\n" );
    dump_context << TEXT( "{\n" );
@@ -125,7 +123,7 @@ void CTapeGetMediaParameters::Dump( CDumpContext& dump_context ) const
 
 #endif // _DEBUG
 
-void CTapeGetMediaParameters::Empty( void ) noexcept
+void Win32FoundationClasses::CTapeGetMediaParameters::Empty( void ) noexcept
 {
    Capacity.LowPart   = 0;
    Capacity.HighPart  = 0;
@@ -136,13 +134,13 @@ void CTapeGetMediaParameters::Empty( void ) noexcept
    WriteProtected     = 0;
 }
 
-CTapeGetMediaParameters& CTapeGetMediaParameters::operator=( __in CTapeGetMediaParameters const& source ) noexcept
+Win32FoundationClasses::CTapeGetMediaParameters& Win32FoundationClasses::CTapeGetMediaParameters::operator=( _In_ Win32FoundationClasses::CTapeGetMediaParameters const& source ) noexcept
 {
    Copy( source );
    return( *this );
 }
 
-CTapeGetMediaParameters& CTapeGetMediaParameters::operator=( __in TAPE_GET_MEDIA_PARAMETERS const& source ) noexcept
+Win32FoundationClasses::CTapeGetMediaParameters& Win32FoundationClasses::CTapeGetMediaParameters::operator=( _In_ TAPE_GET_MEDIA_PARAMETERS const& source ) noexcept
 {
    Copy( &source );
    return( *this );

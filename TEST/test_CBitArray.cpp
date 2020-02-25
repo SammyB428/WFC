@@ -55,7 +55,7 @@ __checkReturn bool test_CBitArray( __out std::string& class_name, __out int& tes
     class_name.assign(STRING_VIEW("CBitArray"));
 
     //   CBitArray();
-    CBitArray bits;
+    Win32FoundationClasses::CBitArray bits;
 
     //   virtual void      SetSize( DWORD number_of_bits );
     bits.SetSize( 2 );
@@ -503,7 +503,7 @@ __checkReturn bool test_CBitArray( __out std::string& class_name, __out int& tes
         return( failure() );
     }
 
-    DWORD value_to_check = bits.GetValue( bits.GetSize() - 8, 8 );
+    uint32_t value_to_check = bits.GetValue( bits.GetSize() - 8, 8 );
 
     if ( added_value != value_to_check )
     {
@@ -531,7 +531,7 @@ __checkReturn bool test_CBitArray( __out std::string& class_name, __out int& tes
 
     //   CBitArray( DWORD initial_size );
 
-    CBitArray bits2( 999 );
+    Win32FoundationClasses::CBitArray bits2( 999 );
 
     if ( bits2.GetSize() != 999 )
     {
@@ -550,7 +550,7 @@ __checkReturn bool test_CBitArray( __out std::string& class_name, __out int& tes
 
     //   CBitArray( const CBitArray&  source );
 
-    CBitArray bits3( bits );
+    Win32FoundationClasses::CBitArray bits3( bits );
 
     if ( bits3.GetSize() != bits.GetSize() )
     {
@@ -573,7 +573,7 @@ __checkReturn bool test_CBitArray( __out std::string& class_name, __out int& tes
     (void) bytes.push_back( 128 );
     (void) bytes.push_back( 255 );
 
-    CBitArray bits4( bytes );
+    Win32FoundationClasses::CBitArray bits4( bytes );
 
     if ( bits4.GetSize() != 32 )
     {
@@ -743,7 +743,7 @@ __checkReturn bool test_CBitArray( __out std::string& class_name, __out int& tes
 
     std::vector<uint32_t> dword_array;
 
-    CRandomNumberGenerator2 random;
+    Win32FoundationClasses::CRandomNumberGenerator2 random;
 
     int number_of_array_entries = ( random.GetInteger() % 100 ) + 25;
 

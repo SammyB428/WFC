@@ -50,26 +50,24 @@
 static char THIS_FILE[] = __FILE__;
 #endif // _DEBUG
 
-USING_WFC_NAMESPACE
-
 #if defined( _DEBUG ) && defined( _INC_CRTDBG )
 #define new DEBUG_NEW
 #endif // _DEBUG
 
-CNetworkConnections::CNetworkConnections(_In_ std::wstring_view machine_name) : CNetwork(machine_name)
+Win32FoundationClasses::CNetworkConnections::CNetworkConnections(_In_ std::wstring_view machine_name) : CNetwork(machine_name)
 {
    WFC_VALIDATE_POINTER( this );
    m_Initialize();
 }
 
-CNetworkConnections::~CNetworkConnections()
+Win32FoundationClasses::CNetworkConnections::~CNetworkConnections()
 {
    WFC_VALIDATE_POINTER( this );
    Close();
    m_Initialize();
 }
 
-void CNetworkConnections::Close( void ) noexcept
+void Win32FoundationClasses::CNetworkConnections::Close( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -96,7 +94,7 @@ void CNetworkConnections::Dump( CDumpContext& dump_context ) const
 
 #endif // _DEBUG
 
-_Check_return_ bool CNetworkConnections::Enumerate(_In_ std::wstring_view share_or_computer_name ) noexcept
+_Check_return_ bool Win32FoundationClasses::CNetworkConnections::Enumerate(_In_ std::wstring_view share_or_computer_name ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -133,7 +131,7 @@ _Check_return_ bool CNetworkConnections::Enumerate(_In_ std::wstring_view share_
    WFC_END_CATCH_ALL
 }
 
-_Check_return_ bool CNetworkConnections::GetNext( _Out_ CNetworkConnectionInformation& information ) noexcept
+_Check_return_ bool Win32FoundationClasses::CNetworkConnections::GetNext( _Out_ Win32FoundationClasses::CNetworkConnectionInformation& information ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -167,7 +165,7 @@ _Check_return_ bool CNetworkConnections::GetNext( _Out_ CNetworkConnectionInform
    return( false );
 }
 
-_Check_return_ bool CNetworkConnections::m_GetChunk( void ) noexcept
+_Check_return_ bool Win32FoundationClasses::CNetworkConnections::m_GetChunk( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -202,7 +200,7 @@ _Check_return_ bool CNetworkConnections::m_GetChunk( void ) noexcept
    return( false );
 }
 
-void CNetworkConnections::m_Initialize( void ) noexcept
+void Win32FoundationClasses::CNetworkConnections::m_Initialize( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 

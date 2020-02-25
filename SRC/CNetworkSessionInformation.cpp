@@ -50,38 +50,36 @@
 static char THIS_FILE[] = __FILE__;
 #endif // _DEBUG
 
-USING_WFC_NAMESPACE
-
 #if defined( _DEBUG ) && defined( _INC_CRTDBG )
 #define new DEBUG_NEW
 #endif // _DEBUG
 
-CNetworkSessionInformation::CNetworkSessionInformation()
+Win32FoundationClasses::CNetworkSessionInformation::CNetworkSessionInformation()
 {
    WFC_VALIDATE_POINTER( this );
    m_Initialize();
 }
 
-CNetworkSessionInformation::CNetworkSessionInformation( __in SESSION_INFO_502 const * source )
+Win32FoundationClasses::CNetworkSessionInformation::CNetworkSessionInformation( _In_ SESSION_INFO_502 const * source )
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
    Copy( source );
 }
 
-CNetworkSessionInformation::CNetworkSessionInformation( __in CNetworkSessionInformation const& source )
+Win32FoundationClasses::CNetworkSessionInformation::CNetworkSessionInformation( _In_ Win32FoundationClasses::CNetworkSessionInformation const& source )
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );
 }
 
-CNetworkSessionInformation::~CNetworkSessionInformation()
+Win32FoundationClasses::CNetworkSessionInformation::~CNetworkSessionInformation()
 {
    WFC_VALIDATE_POINTER( this );
    m_Initialize();
 }
 
-void CNetworkSessionInformation::Copy( __in SESSION_INFO_502 const * source ) noexcept
+void Win32FoundationClasses::CNetworkSessionInformation::Copy( _In_ SESSION_INFO_502 const * source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
@@ -118,7 +116,7 @@ void CNetworkSessionInformation::Copy( __in SESSION_INFO_502 const * source ) no
    WFC_END_CATCH_ALL
 }
 
-void CNetworkSessionInformation::Copy( __in CNetworkSessionInformation const& source ) noexcept
+void Win32FoundationClasses::CNetworkSessionInformation::Copy( _In_ Win32FoundationClasses::CNetworkSessionInformation const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    ASSERT( this != &source );
@@ -142,13 +140,13 @@ void CNetworkSessionInformation::Copy( __in CNetworkSessionInformation const& so
    UserFlags      = source.UserFlags;
 }
 
-void CNetworkSessionInformation::Empty( void ) noexcept
+void Win32FoundationClasses::CNetworkSessionInformation::Empty( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    m_Initialize();
 }
 
-void CNetworkSessionInformation::m_Initialize( void ) noexcept
+void Win32FoundationClasses::CNetworkSessionInformation::m_Initialize( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -165,7 +163,7 @@ void CNetworkSessionInformation::m_Initialize( void ) noexcept
 // 2000-05-29
 // Thanks go to Nathan Brown (nathanbrown@letu.edu) for noticing I had a missing = operator
 
-CNetworkSessionInformation& CNetworkSessionInformation::operator=( __in CNetworkSessionInformation const& source ) noexcept
+Win32FoundationClasses::CNetworkSessionInformation& Win32FoundationClasses::CNetworkSessionInformation::operator=( _In_ Win32FoundationClasses::CNetworkSessionInformation const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );

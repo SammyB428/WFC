@@ -51,11 +51,9 @@ static char THIS_FILE[] = __FILE__;
 #define new DEBUG_NEW
 #endif // _DEBUG
 
-USING_WFC_NAMESPACE
-
-static inline _Check_return_ WFC_THREAD_INFORMATION_BLOCK * get_thread_information_block( void ) noexcept
+static inline _Check_return_ Win32FoundationClasses::WFC_THREAD_INFORMATION_BLOCK * get_thread_information_block( void ) noexcept
 {
-   WFC_THREAD_INFORMATION_BLOCK * return_value = nullptr;
+    Win32FoundationClasses::WFC_THREAD_INFORMATION_BLOCK * return_value = nullptr;
 
 #if 0
 #if defined( _MSC_VER )
@@ -86,7 +84,7 @@ static inline _Check_return_ WFC_THREAD_INFORMATION_BLOCK * get_thread_informati
 ** This is basically cleaned up code from the Jan 2000 issue of MSJ
 */
 
-void PASCAL Win32FoundationClasses::wfc_get_thread_name( _Out_ std::wstring& thread_name ) noexcept
+void Win32FoundationClasses::wfc_get_thread_name( _Out_ std::wstring& thread_name ) noexcept
 {
    auto thread_information_block_p = get_thread_information_block();
 

@@ -46,9 +46,7 @@ static char THIS_FILE[] = __FILE__;
 #define new DEBUG_NEW
 #endif // _DEBUG
 
-USING_WFC_NAMESPACE;
-
-static void _to_hex( __in_bcount( number_of_bytes ) uint8_t const * buffer, __in std::size_t const number_of_bytes, __out_ecount_z( number_of_characters ) wchar_t * destination_string, _In_ std::size_t const number_of_characters ) noexcept
+static void _to_hex( __in_bcount( number_of_bytes ) uint8_t const * buffer, _In_ std::size_t const number_of_bytes, __out_ecount_z( number_of_characters ) wchar_t * destination_string, _In_ std::size_t const number_of_characters ) noexcept
 {
     static constexpr wchar_t const * static_hex_digits = L"0123456789abcdef";
 
@@ -78,7 +76,7 @@ static void _to_hex( __in_bcount( number_of_bytes ) uint8_t const * buffer, __in
 
 // http://forum.sysinternals.com/howto-verify-the-digital-signature-of-a-file_topic19247.html
 
-_Check_return_ bool PASCAL Win32FoundationClasses::wfc_check_digital_signature( __in_z LPCTSTR filename ) noexcept
+_Check_return_ bool Win32FoundationClasses::wfc_check_digital_signature( __in_z LPCTSTR filename ) noexcept
 {
     if ( filename == nullptr or filename[ 0 ] == 0x0 )
     {
@@ -93,9 +91,9 @@ _Check_return_ bool PASCAL Win32FoundationClasses::wfc_check_digital_signature( 
         return( false );
     }
 
-    CFile64 file_to_check;
+    Win32FoundationClasses::CFile64 file_to_check;
 
-    if ( file_to_check.Open( filename, (UINT)( (UINT)CFile64::OpenFlags::modeRead bitor (UINT) CFile64::OpenFlags::shareDenyNone )) == false )
+    if ( file_to_check.Open( filename, (UINT)( (UINT)Win32FoundationClasses::CFile64::OpenFlags::modeRead bitor (UINT)Win32FoundationClasses::CFile64::OpenFlags::shareDenyNone )) == false )
     {
         //WFCTRACEERROR( ::GetLastError() );
         //WFCTRACEVAL( TEXT( "Can't open " ), filename );
@@ -238,7 +236,7 @@ _Check_return_ bool PASCAL Win32FoundationClasses::wfc_check_digital_signature( 
     return( return_flag == FALSE ? false : true );
 }
 
-void PASCAL Win32FoundationClasses::wfc_get_version(_In_ std::filesystem::path const& file_name, _Out_ uint16_t& major, _Out_ uint16_t& minor, _Out_ uint16_t& build, _Out_ uint16_t& revision ) noexcept
+void Win32FoundationClasses::wfc_get_version(_In_ std::filesystem::path const& file_name, _Out_ uint16_t& major, _Out_ uint16_t& minor, _Out_ uint16_t& build, _Out_ uint16_t& revision ) noexcept
 {
    major = 0;
    minor = 0;
@@ -278,7 +276,7 @@ void PASCAL Win32FoundationClasses::wfc_get_version(_In_ std::filesystem::path c
    }
 }
 
-void PASCAL Win32FoundationClasses::wfc_get_my_version( _Out_ uint16_t& major, _Out_ uint16_t& minor, _Out_ uint16_t& build, _Out_ uint16_t& revision ) noexcept
+void Win32FoundationClasses::wfc_get_my_version( _Out_ uint16_t& major, _Out_ uint16_t& minor, _Out_ uint16_t& build, _Out_ uint16_t& revision ) noexcept
 {
    major = 0;
    minor = 0;
@@ -295,7 +293,7 @@ void PASCAL Win32FoundationClasses::wfc_get_my_version( _Out_ uint16_t& major, _
    }
 }
 
-void PASCAL Win32FoundationClasses::wfc_get_my_version(_Inout_ std::wstring& version) noexcept
+void Win32FoundationClasses::wfc_get_my_version(_Inout_ std::wstring& version) noexcept
 {
     uint16_t major = 0;
     uint16_t minor = 0;
@@ -307,7 +305,7 @@ void PASCAL Win32FoundationClasses::wfc_get_my_version(_Inout_ std::wstring& ver
     format(version, L"%d.%d.%d.%d", (int)major, (int)minor, (int)build, (int)revision);
 }
 
-_Check_return_ uint64_t PASCAL Win32FoundationClasses::wfc_get_my_packed_version( void ) noexcept
+_Check_return_ uint64_t Win32FoundationClasses::wfc_get_my_packed_version( void ) noexcept
 {
    uint16_t major = 0;
    uint16_t minor = 0;

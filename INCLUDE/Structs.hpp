@@ -50,11 +50,11 @@ class CAccessAllowedEntry : public _ACCESS_ALLOWED_ACE
    public:
 
        inline CAccessAllowedEntry() noexcept { Empty(); }
-       inline CAccessAllowedEntry(__in CAccessAllowedEntry const& source) noexcept { Copy(source); }
-       inline CAccessAllowedEntry(__in ACCESS_ALLOWED_ACE const* source) noexcept { Copy(source); }
-       inline ~CAccessAllowedEntry() {}
+       inline CAccessAllowedEntry(_In_ CAccessAllowedEntry const& source) noexcept { Copy(source); }
+       inline CAccessAllowedEntry(_In_ ACCESS_ALLOWED_ACE const* source) noexcept { Copy(source); }
+       inline ~CAccessAllowedEntry() = default;
 
-      inline constexpr void Copy(__in CAccessAllowedEntry const& source) noexcept
+      inline constexpr void Copy(_In_ CAccessAllowedEntry const& source) noexcept
       {
           Header.AceType = source.Header.AceType;
           Header.AceFlags = source.Header.AceFlags;
@@ -63,7 +63,7 @@ class CAccessAllowedEntry : public _ACCESS_ALLOWED_ACE
           SidStart = source.SidStart;
       }
 
-      inline constexpr void Copy(__in ACCESS_ALLOWED_ACE const* source) noexcept
+      inline constexpr void Copy(_In_ ACCESS_ALLOWED_ACE const* source) noexcept
       {
           Header.AceType = source->Header.AceType;
           Header.AceFlags = source->Header.AceFlags;
@@ -81,7 +81,7 @@ class CAccessAllowedEntry : public _ACCESS_ALLOWED_ACE
           SidStart = 0;
       }
 
-      inline _Check_return_ CAccessAllowedEntry& operator=(__in CAccessAllowedEntry const& source) noexcept { Copy(source); }
+      inline _Check_return_ CAccessAllowedEntry& operator=(_In_ CAccessAllowedEntry const& source) noexcept { Copy(source); }
 
 #if defined( _DEBUG ) && ! defined( WFC_NO_DUMPING )
 
@@ -95,13 +95,13 @@ class CAccessControlEntryHeader : public _ACE_HEADER
    public:
 
       CAccessControlEntryHeader();
-      CAccessControlEntryHeader( __in CAccessControlEntryHeader const& source );
-      CAccessControlEntryHeader( __in ACE_HEADER const * source );
+      CAccessControlEntryHeader( _In_ CAccessControlEntryHeader const& source );
+      CAccessControlEntryHeader( _In_ ACE_HEADER const * source );
       virtual ~CAccessControlEntryHeader();
-      virtual void Copy( __in CAccessControlEntryHeader const& source ) noexcept;
-      virtual void Copy( __in ACE_HEADER const * source ) noexcept;
+      virtual void Copy( _In_ CAccessControlEntryHeader const& source ) noexcept;
+      virtual void Copy( _In_ ACE_HEADER const * source ) noexcept;
       virtual void Empty( void ) noexcept;
-      virtual _Check_return_ CAccessControlEntryHeader& operator=( __in CAccessControlEntryHeader const& source ) noexcept;
+      virtual _Check_return_ CAccessControlEntryHeader& operator=( _In_ CAccessControlEntryHeader const& source ) noexcept;
 
 #if defined( _DEBUG ) && ! defined( WFC_NO_DUMPING )
 
@@ -115,13 +115,13 @@ class CAccessControlList : public _ACL
    public:
 
       CAccessControlList();
-      CAccessControlList( __in CAccessControlList const& source );
-      CAccessControlList( __in ACL const * source );
+      CAccessControlList( _In_ CAccessControlList const& source );
+      CAccessControlList( _In_ ACL const * source );
       virtual ~CAccessControlList();
-      virtual void Copy( __in CAccessControlList const& source ) noexcept;
-      virtual void Copy( __in ACL const * source ) noexcept;
+      virtual void Copy( _In_ CAccessControlList const& source ) noexcept;
+      virtual void Copy( _In_ ACL const * source ) noexcept;
       virtual void Empty( void ) noexcept;
-      virtual _Check_return_ CAccessControlList& operator=( __in CAccessControlList const& source ) noexcept;
+      virtual _Check_return_ CAccessControlList& operator=( _In_ CAccessControlList const& source ) noexcept;
 
 #if defined( _DEBUG ) && ! defined( WFC_NO_DUMPING )
 
@@ -135,13 +135,13 @@ class CAccessDeniedEntry : public _ACCESS_DENIED_ACE
    public:
 
       CAccessDeniedEntry();
-      CAccessDeniedEntry( __in CAccessDeniedEntry const& source );
-      CAccessDeniedEntry( __in ACCESS_DENIED_ACE const * source );
+      CAccessDeniedEntry( _In_ CAccessDeniedEntry const& source );
+      CAccessDeniedEntry( _In_ ACCESS_DENIED_ACE const * source );
       virtual ~CAccessDeniedEntry();
-      virtual void Copy( __in CAccessDeniedEntry const& source ) noexcept;
-      virtual void Copy( __in ACCESS_DENIED_ACE const * source ) noexcept;
+      virtual void Copy( _In_ CAccessDeniedEntry const& source ) noexcept;
+      virtual void Copy( _In_ ACCESS_DENIED_ACE const * source ) noexcept;
       virtual void Empty( void ) noexcept;
-      virtual _Check_return_ CAccessDeniedEntry& operator=( __in CAccessDeniedEntry const& source ) noexcept;
+      virtual _Check_return_ CAccessDeniedEntry& operator=( _In_ CAccessDeniedEntry const& source ) noexcept;
 
 #if defined( _DEBUG ) && ! defined( WFC_NO_DUMPING )
 
@@ -155,13 +155,13 @@ class CBitmapCoreHeader : public tagBITMAPCOREHEADER
    public:
 
       CBitmapCoreHeader();
-      CBitmapCoreHeader( __in CBitmapCoreHeader const& source );
-      CBitmapCoreHeader( __in tagBITMAPCOREHEADER const * source );
+      CBitmapCoreHeader( _In_ CBitmapCoreHeader const& source );
+      CBitmapCoreHeader( _In_ tagBITMAPCOREHEADER const * source );
       virtual ~CBitmapCoreHeader();
-      virtual void Copy( __in CBitmapCoreHeader const& source ) noexcept;
-      virtual void Copy( __in tagBITMAPCOREHEADER const * source ) noexcept;
+      virtual void Copy( _In_ CBitmapCoreHeader const& source ) noexcept;
+      virtual void Copy( _In_ tagBITMAPCOREHEADER const * source ) noexcept;
       virtual void Empty( void ) noexcept;
-      virtual _Check_return_ CBitmapCoreHeader& operator=( __in CBitmapCoreHeader const& source ) noexcept;
+      virtual _Check_return_ CBitmapCoreHeader& operator=( _In_ CBitmapCoreHeader const& source ) noexcept;
 
 #if defined( _DEBUG ) && ! defined( WFC_NO_DUMPING )
 
@@ -175,13 +175,13 @@ class CBitmapFileHeader : public tagBITMAPFILEHEADER
    public:
 
       CBitmapFileHeader();
-      CBitmapFileHeader( __in CBitmapFileHeader const& source );
-      CBitmapFileHeader( __in tagBITMAPFILEHEADER const * source );
+      CBitmapFileHeader( _In_ CBitmapFileHeader const& source );
+      CBitmapFileHeader( _In_ tagBITMAPFILEHEADER const * source );
       virtual ~CBitmapFileHeader();
-      virtual void Copy( __in CBitmapFileHeader const& source ) noexcept;
-       virtual void Copy( __in tagBITMAPFILEHEADER const * source ) noexcept;
+      virtual void Copy( _In_ CBitmapFileHeader const& source ) noexcept;
+       virtual void Copy( _In_ tagBITMAPFILEHEADER const * source ) noexcept;
       virtual void Empty( void ) noexcept;
-      virtual _Check_return_ CBitmapFileHeader& operator=( __in CBitmapFileHeader const& source ) noexcept;
+      virtual _Check_return_ CBitmapFileHeader& operator=( _In_ CBitmapFileHeader const& source ) noexcept;
 
 #if defined( _DEBUG ) && ! defined( WFC_NO_DUMPING )
 
@@ -195,13 +195,13 @@ class CBitmapInfoHeader : public tagBITMAPINFOHEADER
    public:
 
       CBitmapInfoHeader();
-      CBitmapInfoHeader( __in CBitmapInfoHeader const& source );
-      CBitmapInfoHeader( __in tagBITMAPINFOHEADER const * source );
+      CBitmapInfoHeader( _In_ CBitmapInfoHeader const& source );
+      CBitmapInfoHeader( _In_ tagBITMAPINFOHEADER const * source );
       virtual ~CBitmapInfoHeader();
-      virtual void Copy( __in CBitmapInfoHeader const& source ) noexcept;
-      virtual void Copy( __in tagBITMAPINFOHEADER const * source ) noexcept;
+      virtual void Copy( _In_ CBitmapInfoHeader const& source ) noexcept;
+      virtual void Copy( _In_ tagBITMAPINFOHEADER const * source ) noexcept;
       virtual void Empty( void ) noexcept;
-      virtual _Check_return_ CBitmapInfoHeader& operator=( __in CBitmapInfoHeader const& source ) noexcept;
+      virtual _Check_return_ CBitmapInfoHeader& operator=( _In_ CBitmapInfoHeader const& source ) noexcept;
 
 #if defined( _DEBUG ) && ! defined( WFC_NO_DUMPING )
 
@@ -215,13 +215,13 @@ class CColorAdjustment : public tagCOLORADJUSTMENT
    public:
 
       CColorAdjustment();
-      CColorAdjustment( __in CColorAdjustment const& source );
-      CColorAdjustment( __in tagCOLORADJUSTMENT const * source );
+      CColorAdjustment( _In_ CColorAdjustment const& source );
+      CColorAdjustment( _In_ tagCOLORADJUSTMENT const * source );
       virtual ~CColorAdjustment();
-      virtual void Copy( __in CColorAdjustment const& source ) noexcept;
-      virtual void Copy( __in tagCOLORADJUSTMENT const * source ) noexcept;
+      virtual void Copy( _In_ CColorAdjustment const& source ) noexcept;
+      virtual void Copy( _In_ tagCOLORADJUSTMENT const * source ) noexcept;
       virtual void Empty( void ) noexcept;
-      virtual _Check_return_ CColorAdjustment& operator=( __in CColorAdjustment const& source ) noexcept;
+      virtual _Check_return_ CColorAdjustment& operator=( _In_ CColorAdjustment const& source ) noexcept;
 
 #if defined( _DEBUG ) && ! defined( WFC_NO_DUMPING )
 
@@ -235,16 +235,16 @@ class CCommunicationsConfiguration : public _COMMCONFIG
    public:
 
       CCommunicationsConfiguration();
-      CCommunicationsConfiguration( __in CCommunicationsConfiguration const& source );
-      CCommunicationsConfiguration( __in COMMCONFIG const& source );
+      CCommunicationsConfiguration( _In_ CCommunicationsConfiguration const& source );
+      CCommunicationsConfiguration( _In_ COMMCONFIG const& source );
       virtual ~CCommunicationsConfiguration();
 
-      virtual void Copy( __in CCommunicationsConfiguration const& source ) noexcept;
-      virtual void Copy( __in COMMCONFIG const& source ) noexcept;
+      virtual void Copy( _In_ CCommunicationsConfiguration const& source ) noexcept;
+      virtual void Copy( _In_ COMMCONFIG const& source ) noexcept;
       virtual void Empty( void ) noexcept;
 
-      virtual _Check_return_ CCommunicationsConfiguration& operator=( __in CCommunicationsConfiguration const& source ) noexcept;
-      virtual _Check_return_ CCommunicationsConfiguration& operator=( __in COMMCONFIG const& source ) noexcept;
+      virtual _Check_return_ CCommunicationsConfiguration& operator=( _In_ CCommunicationsConfiguration const& source ) noexcept;
+      virtual _Check_return_ CCommunicationsConfiguration& operator=( _In_ COMMCONFIG const& source ) noexcept;
 
 #if defined( _DEBUG ) && ! defined( WFC_NO_DUMPING )
 
@@ -259,21 +259,21 @@ class CCommunicationProperties : public _COMMPROP
    public:
 
       CCommunicationProperties();
-      CCommunicationProperties( __in CCommunicationProperties const& source );
-      CCommunicationProperties( __in _COMMPROP const& source );
+      CCommunicationProperties( _In_ CCommunicationProperties const& source );
+      CCommunicationProperties( _In_ _COMMPROP const& source );
       virtual ~CCommunicationProperties();
-      virtual void ConvertBaudRateToString( __in DWORD const baud_rate, __out std::wstring& human_readable_string ) const noexcept;
-      virtual void ConvertBaudRateListToString( __in DWORD const baud_rate, __out std::wstring& human_readable_string ) const noexcept;
-      virtual void ConvertDataBitsToString( __in DWORD const data_bits, __out std::wstring& human_readable_string ) const noexcept;
-      virtual void ConvertProviderCapabilitiesToString( __in DWORD const capabilities, __out std::wstring& human_readable_string ) const noexcept;
-      virtual void ConvertProviderSubtypeToString( __in DWORD const baud_rate, __out std::wstring& human_readable_string ) const noexcept;
-      virtual void ConvertSettableParametersToString( __in DWORD const parameters, __out std::wstring& human_readable_string ) const noexcept;
-      virtual void ConvertStopParityToString( __in DWORD const stop_parity, __out std::wstring& human_readable_string ) const noexcept;
-      virtual void Copy( __in CCommunicationProperties const& source ) noexcept;
-      virtual void Copy( __in  _COMMPROP const& source ) noexcept;
+      virtual void ConvertBaudRateToString( _In_ DWORD const baud_rate, _Out_ std::wstring& human_readable_string ) const noexcept;
+      virtual void ConvertBaudRateListToString( _In_ DWORD const baud_rate, _Out_ std::wstring& human_readable_string ) const noexcept;
+      virtual void ConvertDataBitsToString( _In_ DWORD const data_bits, _Out_ std::wstring& human_readable_string ) const noexcept;
+      virtual void ConvertProviderCapabilitiesToString( _In_ DWORD const capabilities, _Out_ std::wstring& human_readable_string ) const noexcept;
+      virtual void ConvertProviderSubtypeToString( _In_ DWORD const baud_rate, _Out_ std::wstring& human_readable_string ) const noexcept;
+      virtual void ConvertSettableParametersToString( _In_ DWORD const parameters, _Out_ std::wstring& human_readable_string ) const noexcept;
+      virtual void ConvertStopParityToString( _In_ DWORD const stop_parity, _Out_ std::wstring& human_readable_string ) const noexcept;
+      virtual void Copy( _In_ CCommunicationProperties const& source ) noexcept;
+      virtual void Copy( _In_  _COMMPROP const& source ) noexcept;
       virtual void Empty( void ) noexcept;
-      virtual _Check_return_ CCommunicationProperties& operator=( __in CCommunicationProperties const& source ) noexcept;
-      virtual _Check_return_ CCommunicationProperties& operator=( __in _COMMPROP const& source ) noexcept;
+      virtual _Check_return_ CCommunicationProperties& operator=( _In_ CCommunicationProperties const& source ) noexcept;
+      virtual _Check_return_ CCommunicationProperties& operator=( _In_ _COMMPROP const& source ) noexcept;
 
 #if defined( _DEBUG ) && ! defined( WFC_NO_DUMPING )
 
@@ -287,13 +287,13 @@ class COutlineTextMetricA : public _OUTLINETEXTMETRICA
    public:
 
       COutlineTextMetricA();
-      COutlineTextMetricA( __in COutlineTextMetricA const& source );
-      COutlineTextMetricA( __in _OUTLINETEXTMETRICA const * source );
+      COutlineTextMetricA( _In_ COutlineTextMetricA const& source );
+      COutlineTextMetricA( _In_ _OUTLINETEXTMETRICA const * source );
       virtual ~COutlineTextMetricA();
-      virtual void Copy( __in COutlineTextMetricA const& source ) noexcept;
-      virtual void Copy( __in _OUTLINETEXTMETRICA const * source ) noexcept;
+      virtual void Copy( _In_ COutlineTextMetricA const& source ) noexcept;
+      virtual void Copy( _In_ _OUTLINETEXTMETRICA const * source ) noexcept;
       virtual void Empty( void ) noexcept;
-      virtual _Check_return_ COutlineTextMetricA& operator=( __in COutlineTextMetricA const& source ) noexcept;
+      virtual _Check_return_ COutlineTextMetricA& operator=( _In_ COutlineTextMetricA const& source ) noexcept;
 
 #if defined( _DEBUG ) && ! defined( WFC_NO_DUMPING )
 
@@ -307,13 +307,13 @@ class COutlineTextMetricW : public _OUTLINETEXTMETRICW
    public:
 
       COutlineTextMetricW();
-      COutlineTextMetricW( __in COutlineTextMetricW const& source );
-      COutlineTextMetricW( __in _OUTLINETEXTMETRICW const * source );
+      COutlineTextMetricW( _In_ COutlineTextMetricW const& source );
+      COutlineTextMetricW( _In_ _OUTLINETEXTMETRICW const * source );
       virtual ~COutlineTextMetricW();
-      virtual void Copy( __in COutlineTextMetricW const& source ) noexcept;
-      virtual void Copy( __in _OUTLINETEXTMETRICW const * source ) noexcept;
+      virtual void Copy( _In_ COutlineTextMetricW const& source ) noexcept;
+      virtual void Copy( _In_ _OUTLINETEXTMETRICW const * source ) noexcept;
       virtual void Empty( void ) noexcept;
-      virtual _Check_return_ COutlineTextMetricW& operator=( __in COutlineTextMetricW const& source ) noexcept;
+      virtual _Check_return_ COutlineTextMetricW& operator=( _In_ COutlineTextMetricW const& source ) noexcept;
 
 #if defined( _DEBUG ) && ! defined( WFC_NO_DUMPING )
 
@@ -333,13 +333,13 @@ class CPixelFormatDescriptor : public tagPIXELFORMATDESCRIPTOR
    public:
 
       CPixelFormatDescriptor();
-      CPixelFormatDescriptor( __in CPixelFormatDescriptor const& source );
-      CPixelFormatDescriptor( __in tagPIXELFORMATDESCRIPTOR const * source );
+      CPixelFormatDescriptor( _In_ CPixelFormatDescriptor const& source );
+      CPixelFormatDescriptor( _In_ tagPIXELFORMATDESCRIPTOR const * source );
       virtual ~CPixelFormatDescriptor();
-      virtual void Copy( __in CPixelFormatDescriptor const& source ) noexcept;
-      virtual void Copy( __in tagPIXELFORMATDESCRIPTOR const * source ) noexcept;
+      virtual void Copy( _In_ CPixelFormatDescriptor const& source ) noexcept;
+      virtual void Copy( _In_ tagPIXELFORMATDESCRIPTOR const * source ) noexcept;
       virtual void Empty( void ) noexcept;
-      virtual _Check_return_ CPixelFormatDescriptor& operator=( __in CPixelFormatDescriptor const& source ) noexcept;
+      virtual _Check_return_ CPixelFormatDescriptor& operator=( _In_ CPixelFormatDescriptor const& source ) noexcept;
 
 #if defined( _DEBUG ) && ! defined( WFC_NO_DUMPING )
 
@@ -362,13 +362,13 @@ class CTextMetricA : public tagTEXTMETRICA
    public:
 
       CTextMetricA();
-      CTextMetricA( __in CTextMetricA const& source );
-      CTextMetricA( __in tagTEXTMETRICA const * source );
+      CTextMetricA( _In_ CTextMetricA const& source );
+      CTextMetricA( _In_ tagTEXTMETRICA const * source );
       virtual ~CTextMetricA();
-      virtual void Copy( __in CTextMetricA const& source ) noexcept;
-      virtual void Copy( __in tagTEXTMETRICA const * source ) noexcept;
+      virtual void Copy( _In_ CTextMetricA const& source ) noexcept;
+      virtual void Copy( _In_ tagTEXTMETRICA const * source ) noexcept;
       virtual void Empty( void ) noexcept;
-      virtual _Check_return_ CTextMetricA& operator=( __in CTextMetricA const& source ) noexcept;
+      virtual _Check_return_ CTextMetricA& operator=( _In_ CTextMetricA const& source ) noexcept;
 
 #if defined( _DEBUG ) && ! defined( WFC_NO_DUMPING )
 
@@ -382,13 +382,13 @@ class CTextMetricW : public tagTEXTMETRICW
    public:
 
       CTextMetricW();
-      CTextMetricW( __in CTextMetricW const& source );
-      CTextMetricW( __in tagTEXTMETRICW const * source );
+      CTextMetricW( _In_ CTextMetricW const& source );
+      CTextMetricW( _In_ tagTEXTMETRICW const * source );
       virtual ~CTextMetricW();
-      virtual void Copy( __in CTextMetricW const& source ) noexcept;
-      virtual void Copy( __in tagTEXTMETRICW const * source ) noexcept;
+      virtual void Copy( _In_ CTextMetricW const& source ) noexcept;
+      virtual void Copy( _In_ tagTEXTMETRICW const * source ) noexcept;
       virtual void Empty( void ) noexcept;
-      virtual _Check_return_ CTextMetricW& operator=( __in CTextMetricW const& source ) noexcept;
+      virtual _Check_return_ CTextMetricW& operator=( _In_ CTextMetricW const& source ) noexcept;
 
 #if defined( _DEBUG ) && ! defined( WFC_NO_DUMPING )
 
@@ -408,13 +408,13 @@ class COFStruct : public _OFSTRUCT
    public:
 
       COFStruct();
-      COFStruct( __in COFStruct const& source );
-      COFStruct( __in _OFSTRUCT const * source );
+      COFStruct( _In_ COFStruct const& source );
+      COFStruct( _In_ _OFSTRUCT const * source );
       virtual ~COFStruct();
-      virtual void Copy( __in COFStruct const& source ) noexcept;
-      virtual void Copy( __in _OFSTRUCT const * source ) noexcept;
+      virtual void Copy( _In_ COFStruct const& source ) noexcept;
+      virtual void Copy( _In_ _OFSTRUCT const * source ) noexcept;
       virtual void Empty( void ) noexcept;
-      virtual _Check_return_ COFStruct& operator=( __in COFStruct const& source ) noexcept;
+      virtual _Check_return_ COFStruct& operator=( _In_ COFStruct const& source ) noexcept;
 
 #if defined( _DEBUG ) && ! defined( WFC_NO_DUMPING )
 
@@ -428,13 +428,13 @@ class CMemoryStatus : public _MEMORYSTATUS
    public:
 
       CMemoryStatus();
-      CMemoryStatus( __in CMemoryStatus const& source );
-      CMemoryStatus( __in MEMORYSTATUS const * source );
+      CMemoryStatus( _In_ CMemoryStatus const& source );
+      CMemoryStatus( _In_ MEMORYSTATUS const * source );
       virtual ~CMemoryStatus();
-      virtual void Copy( __in CMemoryStatus const& source ) noexcept;
-      virtual void Copy( __in MEMORYSTATUS const * source ) noexcept;
+      virtual void Copy( _In_ CMemoryStatus const& source ) noexcept;
+      virtual void Copy( _In_ MEMORYSTATUS const * source ) noexcept;
       virtual void Empty( void ) noexcept;
-      virtual _Check_return_ CMemoryStatus& operator=( __in CMemoryStatus const& source ) noexcept;
+      virtual _Check_return_ CMemoryStatus& operator=( _In_ CMemoryStatus const& source ) noexcept;
 
 #if defined( _DEBUG ) && ! defined( WFC_NO_DUMPING )
 
@@ -475,14 +475,14 @@ class CWindowPlacement : public tagWINDOWPLACEMENT
    public:
 
       CWindowPlacement() noexcept;
-      CWindowPlacement( __in CWindowPlacement const& source ) noexcept;
-      CWindowPlacement( __in tagWINDOWPLACEMENT const * source ) noexcept;
+      CWindowPlacement( _In_ CWindowPlacement const& source ) noexcept;
+      CWindowPlacement( _In_ tagWINDOWPLACEMENT const * source ) noexcept;
 
       virtual ~CWindowPlacement();
-      virtual void Copy( __in CWindowPlacement const& source ) noexcept;
-      virtual void Copy( __in tagWINDOWPLACEMENT const * source ) noexcept;
+      virtual void Copy( _In_ CWindowPlacement const& source ) noexcept;
+      virtual void Copy( _In_ tagWINDOWPLACEMENT const * source ) noexcept;
       virtual void Empty( void ) noexcept;
-      virtual _Check_return_ CWindowPlacement& operator=( __in CWindowPlacement const& source ) noexcept;
+      virtual _Check_return_ CWindowPlacement& operator=( _In_ CWindowPlacement const& source ) noexcept;
 
 #if defined( _DEBUG ) && ! defined( WFC_NO_DUMPING )
 
@@ -505,14 +505,14 @@ class CSystemAuditEntry : public _SYSTEM_AUDIT_ACE
    public:
 
       CSystemAuditEntry() noexcept;
-      CSystemAuditEntry( __in CSystemAuditEntry const& source ) noexcept;
-      CSystemAuditEntry( __in _SYSTEM_AUDIT_ACE const * source ) noexcept;
+      CSystemAuditEntry( _In_ CSystemAuditEntry const& source ) noexcept;
+      CSystemAuditEntry( _In_ _SYSTEM_AUDIT_ACE const * source ) noexcept;
       virtual ~CSystemAuditEntry();
 
-      virtual void Copy( __in CSystemAuditEntry const& source ) noexcept;
-      virtual void Copy( __in _SYSTEM_AUDIT_ACE const * source ) noexcept;
+      virtual void Copy( _In_ CSystemAuditEntry const& source ) noexcept;
+      virtual void Copy( _In_ _SYSTEM_AUDIT_ACE const * source ) noexcept;
       virtual void Empty( void ) noexcept;
-      virtual _Check_return_ CSystemAuditEntry& operator=( __in CSystemAuditEntry const& source ) noexcept;
+      virtual _Check_return_ CSystemAuditEntry& operator=( _In_ CSystemAuditEntry const& source ) noexcept;
 
 #if defined( _DEBUG ) && ! defined( WFC_NO_DUMPING )
 

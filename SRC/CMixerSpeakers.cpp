@@ -51,11 +51,9 @@
 static char THIS_FILE[] = __FILE__;
 #endif // _DEBUG
 
-USING_WFC_NAMESPACE
-
 // Methods
 
-void CMixerSpeakers::Copy( __in CMixerSpeakers const& source ) noexcept
+void Win32FoundationClasses::CMixerSpeakers::Copy( _In_ Win32FoundationClasses::CMixerSpeakers const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -90,19 +88,19 @@ void CMixerSpeakers::Dump( CDumpContext& dump_context ) const
 
 #endif // _DEBUG
 
-_Check_return_ DWORD CMixerSpeakers::GetMaximumVolume( void ) noexcept
+_Check_return_ DWORD Win32FoundationClasses::CMixerSpeakers::GetMaximumVolume( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    return( m_Volume.GetMaximum() );
 }
 
-_Check_return_ DWORD CMixerSpeakers::GetMinimumVolume( void ) noexcept
+_Check_return_ DWORD Win32FoundationClasses::CMixerSpeakers::GetMinimumVolume( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    return( m_Volume.GetMinimum() );
 }
 
-_Check_return_ DWORD CMixerSpeakers::GetLeftChannelVolume( void ) noexcept
+_Check_return_ DWORD Win32FoundationClasses::CMixerSpeakers::GetLeftChannelVolume( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -111,7 +109,7 @@ _Check_return_ DWORD CMixerSpeakers::GetLeftChannelVolume( void ) noexcept
    return( volume );
 }
 
-_Check_return_ DWORD CMixerSpeakers::GetVolume( void ) noexcept
+_Check_return_ DWORD Win32FoundationClasses::CMixerSpeakers::GetVolume( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -120,7 +118,7 @@ _Check_return_ DWORD CMixerSpeakers::GetVolume( void ) noexcept
    return( volume );
 }
 
-_Check_return_ DWORD CMixerSpeakers::GetRightChannelVolume( void ) noexcept
+_Check_return_ DWORD Win32FoundationClasses::CMixerSpeakers::GetRightChannelVolume( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -129,7 +127,7 @@ _Check_return_ DWORD CMixerSpeakers::GetRightChannelVolume( void ) noexcept
    return( volume );
 }
 
-_Check_return_ bool CMixerSpeakers::IsMuted( void ) noexcept
+_Check_return_ bool Win32FoundationClasses::CMixerSpeakers::IsMuted( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -141,7 +139,7 @@ _Check_return_ bool CMixerSpeakers::IsMuted( void ) noexcept
    return( false );
 }
 
-_Check_return_ bool CMixerSpeakers::Mute( __in bool const mute_on ) noexcept
+_Check_return_ bool Win32FoundationClasses::CMixerSpeakers::Mute( _In_ bool const mute_on ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -150,7 +148,7 @@ _Check_return_ bool CMixerSpeakers::Mute( __in bool const mute_on ) noexcept
    return( return_value );
 }
 
-_Check_return_ bool CMixerSpeakers::Open( __in UINT_PTR device_number, __in DWORD what_to_notify, __in DWORD_PTR who_to_notify, __in DWORD_PTR notify_data ) noexcept
+_Check_return_ bool Win32FoundationClasses::CMixerSpeakers::Open( _In_ UINT_PTR device_number, _In_ DWORD what_to_notify, _In_ DWORD_PTR who_to_notify, _In_ DWORD_PTR notify_data ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -158,14 +156,14 @@ _Check_return_ bool CMixerSpeakers::Open( __in UINT_PTR device_number, __in DWOR
    m_WhoToNotify  = who_to_notify;
    m_NotifyData   = notify_data;
 
-   bool return_value = CMixerDestination::Open( device_number, what_to_notify, who_to_notify, notify_data );
+   bool return_value = Win32FoundationClasses::CMixerDestination::Open( device_number, what_to_notify, who_to_notify, notify_data );
 
    if ( return_value == false )
    {
       return( false );
    }
 
-   return_value = m_Mixer.GetByComponent( CMixerLine::ComponentType::destinationSpeakers, m_MixerLine );
+   return_value = m_Mixer.GetByComponent(Win32FoundationClasses::CMixerLine::ComponentType::destinationSpeakers, m_MixerLine );
 
    if ( return_value == false )
    {
@@ -244,7 +242,7 @@ _Check_return_ bool CMixerSpeakers::Open( __in UINT_PTR device_number, __in DWOR
    return( return_value );
 }
 
-_Check_return_ bool CMixerSpeakers::SetLeftChannelVolume( __in DWORD const desired_level ) noexcept
+_Check_return_ bool Win32FoundationClasses::CMixerSpeakers::SetLeftChannelVolume( _In_ DWORD const desired_level ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -253,7 +251,7 @@ _Check_return_ bool CMixerSpeakers::SetLeftChannelVolume( __in DWORD const desir
    return( return_value );
 }
 
-_Check_return_ bool CMixerSpeakers::SetVolume( __in DWORD const desired_level ) noexcept
+_Check_return_ bool Win32FoundationClasses::CMixerSpeakers::SetVolume( _In_ DWORD const desired_level ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -262,7 +260,7 @@ _Check_return_ bool CMixerSpeakers::SetVolume( __in DWORD const desired_level ) 
    return( return_value );
 }
 
-_Check_return_ bool CMixerSpeakers::SetRightChannelVolume( __in DWORD const desired_level ) noexcept
+_Check_return_ bool Win32FoundationClasses::CMixerSpeakers::SetRightChannelVolume( _In_ DWORD const desired_level ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -271,7 +269,7 @@ _Check_return_ bool CMixerSpeakers::SetRightChannelVolume( __in DWORD const desi
    return( return_value );
 }
 
-_Check_return_ bool CMixerSpeakers::UnMute( void ) noexcept
+_Check_return_ bool Win32FoundationClasses::CMixerSpeakers::UnMute( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -280,7 +278,7 @@ _Check_return_ bool CMixerSpeakers::UnMute( void ) noexcept
    return( return_value );
 }
 
-_Check_return_ CMixerSpeakers& CMixerSpeakers::operator=( __in CMixerSpeakers const& source ) noexcept
+_Check_return_ Win32FoundationClasses::CMixerSpeakers& Win32FoundationClasses::CMixerSpeakers::operator=( _In_ Win32FoundationClasses::CMixerSpeakers const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );

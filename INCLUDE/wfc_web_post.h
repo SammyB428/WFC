@@ -82,6 +82,6 @@ struct WFC_WEB_POST_DATA
    };
 };
 
-_Check_return_ bool PASCAL wfc_web_post( _In_ std::wstring_view url, _In_ WFC_WEB_POST_DATA ** data, __inout_opt std::wstring * response = nullptr ) noexcept;
+_Check_return_ bool wfc_web_post( _In_ std::wstring_view url, _In_ WFC_WEB_POST_DATA ** data, __inout_opt std::wstring * response = nullptr ) noexcept;
 
 #endif // WFC_WEB_POST_HEADER_FILE

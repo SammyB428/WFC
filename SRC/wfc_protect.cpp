@@ -46,9 +46,7 @@ static char THIS_FILE[] = __FILE__;
 #define new DEBUG_NEW
 #endif // _DEBUG
 
-USING_WFC_NAMESPACE
-
-_Check_return_ bool PASCAL Win32FoundationClasses::wfc_protect_data( __in_bcount( number_of_bytes_in_plaintext ) uint8_t const * plaintext_buffer, __in std::size_t const number_of_bytes_in_plaintext, __inout_opt uint8_t * ciphertext_buffer, __inout std::size_t * address_of_number_of_cipher_bytes ) noexcept
+_Check_return_ bool Win32FoundationClasses::wfc_protect_data( __in_bcount( number_of_bytes_in_plaintext ) uint8_t const * plaintext_buffer, _In_ std::size_t const number_of_bytes_in_plaintext, __inout_opt uint8_t * ciphertext_buffer, __inout std::size_t * address_of_number_of_cipher_bytes ) noexcept
 {
    WFC_VALIDATE_POINTER( address_of_number_of_cipher_bytes );
    WFC_VALIDATE_POINTER_NULL_OK( plaintext_buffer );
@@ -95,7 +93,7 @@ _Check_return_ bool PASCAL Win32FoundationClasses::wfc_protect_data( __in_bcount
    return( true );
 }
 
-_Check_return_ bool PASCAL Win32FoundationClasses::wfc_unprotect_data( __in_bcount( number_of_bytes_in_ciphertext ) uint8_t const * ciphertext_buffer, __in std::size_t const number_of_bytes_in_ciphertext, __inout_opt uint8_t* plaintext_buffer, __inout std::size_t * address_of_number_of_plain_bytes ) noexcept
+_Check_return_ bool Win32FoundationClasses::wfc_unprotect_data( __in_bcount( number_of_bytes_in_ciphertext ) uint8_t const * ciphertext_buffer, _In_ std::size_t const number_of_bytes_in_ciphertext, __inout_opt uint8_t* plaintext_buffer, __inout std::size_t * address_of_number_of_plain_bytes ) noexcept
 {
    WFC_VALIDATE_POINTER( address_of_number_of_plain_bytes );
    WFC_VALIDATE_POINTER_NULL_OK( ciphertext_buffer );

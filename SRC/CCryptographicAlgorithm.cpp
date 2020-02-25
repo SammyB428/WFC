@@ -57,29 +57,27 @@
 static char THIS_FILE[] = __FILE__;
 #endif // _DEBUG
 
-USING_WFC_NAMESPACE
-
 // Construction
 
-CCryptographicAlgorithm::CCryptographicAlgorithm() noexcept
+Win32FoundationClasses::CCryptographicAlgorithm::CCryptographicAlgorithm() noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Empty();
 }
 
-CCryptographicAlgorithm::CCryptographicAlgorithm( __in CCryptographicAlgorithm const& source ) noexcept
+Win32FoundationClasses::CCryptographicAlgorithm::CCryptographicAlgorithm( _In_ Win32FoundationClasses::CCryptographicAlgorithm const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );
 }
 
-CCryptographicAlgorithm::CCryptographicAlgorithm( __in PROV_ENUMALGS const& source ) noexcept
+Win32FoundationClasses::CCryptographicAlgorithm::CCryptographicAlgorithm( _In_ PROV_ENUMALGS const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );
 }
 
-CCryptographicAlgorithm::~CCryptographicAlgorithm() noexcept
+Win32FoundationClasses::CCryptographicAlgorithm::~CCryptographicAlgorithm() noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Empty();
@@ -87,7 +85,7 @@ CCryptographicAlgorithm::~CCryptographicAlgorithm() noexcept
 
 // Methods
 
-void CCryptographicAlgorithm::Copy( __in CCryptographicAlgorithm const& source ) noexcept
+void Win32FoundationClasses::CCryptographicAlgorithm::Copy( _In_ Win32FoundationClasses::CCryptographicAlgorithm const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -104,7 +102,7 @@ void CCryptographicAlgorithm::Copy( __in CCryptographicAlgorithm const& source )
    Name.assign( source.Name );
 }
 
-void CCryptographicAlgorithm::Copy( __in PROV_ENUMALGS const& source ) noexcept
+void Win32FoundationClasses::CCryptographicAlgorithm::Copy( _In_ PROV_ENUMALGS const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -113,7 +111,7 @@ void CCryptographicAlgorithm::Copy( __in PROV_ENUMALGS const& source ) noexcept
    copy( Name, source.szName );
 }
 
-void CCryptographicAlgorithm::Copy( __in PROV_ENUMALGS const * source ) noexcept
+void Win32FoundationClasses::CCryptographicAlgorithm::Copy( _In_ PROV_ENUMALGS const * source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
@@ -131,7 +129,7 @@ void CCryptographicAlgorithm::Copy( __in PROV_ENUMALGS const * source ) noexcept
 
 #if defined( _DEBUG ) && ! defined( WFC_NO_DUMPING )
 
-void CCryptographicAlgorithm::Dump( CDumpContext& dump_context ) const
+void Win32FoundationClasses::CCryptographicAlgorithm::Dump( CDumpContext& dump_context ) const
 {
    dump_context << TEXT( " a CCryptographicAlgorithm at " ) << (VOID *) this << TEXT( "\n{\n" );
    dump_context << TEXT( "   Identifier is "              ) << Identifier    << TEXT( "\n"    );
@@ -142,7 +140,7 @@ void CCryptographicAlgorithm::Dump( CDumpContext& dump_context ) const
 
 #endif // _DEBUG
 
-void CCryptographicAlgorithm::Empty( void ) noexcept
+void Win32FoundationClasses::CCryptographicAlgorithm::Empty( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Identifier = 0;
@@ -150,7 +148,7 @@ void CCryptographicAlgorithm::Empty( void ) noexcept
    Name.clear();
 }
 
-_Check_return_ bool CCryptographicAlgorithm::IsDataEncrypt( void ) const noexcept
+_Check_return_ bool Win32FoundationClasses::CCryptographicAlgorithm::IsDataEncrypt( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -163,7 +161,7 @@ _Check_return_ bool CCryptographicAlgorithm::IsDataEncrypt( void ) const noexcep
    return( false );
 }
 
-_Check_return_ bool CCryptographicAlgorithm::IsHash( void ) const noexcept
+_Check_return_ bool Win32FoundationClasses::CCryptographicAlgorithm::IsHash( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -175,7 +173,7 @@ _Check_return_ bool CCryptographicAlgorithm::IsHash( void ) const noexcept
    return( false );
 }
 
-_Check_return_ bool CCryptographicAlgorithm::IsKeyExchange( void ) const noexcept
+_Check_return_ bool Win32FoundationClasses::CCryptographicAlgorithm::IsKeyExchange( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -187,7 +185,7 @@ _Check_return_ bool CCryptographicAlgorithm::IsKeyExchange( void ) const noexcep
    return( false );
 }
 
-_Check_return_ bool CCryptographicAlgorithm::IsMessageEncrypt( void ) const noexcept
+_Check_return_ bool Win32FoundationClasses::CCryptographicAlgorithm::IsMessageEncrypt( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -199,7 +197,7 @@ _Check_return_ bool CCryptographicAlgorithm::IsMessageEncrypt( void ) const noex
    return( false );
 }
 
-_Check_return_ bool CCryptographicAlgorithm::IsSignature( void ) const noexcept
+_Check_return_ bool Win32FoundationClasses::CCryptographicAlgorithm::IsSignature( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -213,14 +211,14 @@ _Check_return_ bool CCryptographicAlgorithm::IsSignature( void ) const noexcept
 
 // Operators
 
-_Check_return_ CCryptographicAlgorithm& CCryptographicAlgorithm::operator=( __in CCryptographicAlgorithm const& source ) noexcept
+_Check_return_ Win32FoundationClasses::CCryptographicAlgorithm& Win32FoundationClasses::CCryptographicAlgorithm::operator=( _In_ Win32FoundationClasses::CCryptographicAlgorithm const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );
    return( *this );
 }
 
-_Check_return_ CCryptographicAlgorithm& CCryptographicAlgorithm::operator=( __in PROV_ENUMALGS const& source ) noexcept
+_Check_return_ Win32FoundationClasses::CCryptographicAlgorithm& Win32FoundationClasses::CCryptographicAlgorithm::operator=( _In_ PROV_ENUMALGS const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );

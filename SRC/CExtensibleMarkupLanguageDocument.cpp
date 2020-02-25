@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 1995-2019, Samuel R. Blackburn
+** Copyright, 1995-2020, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -51,11 +51,11 @@ static char THIS_FILE[] = __FILE__;
 #define new DEBUG_NEW
 #endif // _DEBUG
 
+#if ! defined(WE_ARE_BUILDING_WFC_ON_UNIX)
 #include <VersionHelpers.h>
+#endif // WE_ARE_BUILDING_WFC_ON_UNIX
 
-USING_WFC_NAMESPACE
-
-CExtensibleMarkupLanguageDocument::CExtensibleMarkupLanguageDocument() noexcept
+Win32FoundationClasses::CExtensibleMarkupLanguageDocument::CExtensibleMarkupLanguageDocument() noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -88,11 +88,13 @@ CExtensibleMarkupLanguageDocument::CExtensibleMarkupLanguageDocument() noexcept
 
    m_ConversionCodePage = CP_UTF8;
 
+#if ! defined(WE_ARE_BUILDING_WFC_ON_UNIX)
    if (IsWindowsXPOrGreater() == false)
    {
        // Piece of crap Windows95 garbage
        m_ConversionCodePage = CP_ACP;
    }
+#endif // WE_ARE_BUILDING_WFC_ON_UNIX
 
    NumberOfBytesPerCharacter = 1;
 
@@ -100,7 +102,7 @@ CExtensibleMarkupLanguageDocument::CExtensibleMarkupLanguageDocument() noexcept
    m_InitializeRootElement();
 }
 
-CExtensibleMarkupLanguageDocument::CExtensibleMarkupLanguageDocument( _In_ CExtensibleMarkupLanguageDocument const& source ) noexcept
+Win32FoundationClasses::CExtensibleMarkupLanguageDocument::CExtensibleMarkupLanguageDocument( _In_ CExtensibleMarkupLanguageDocument const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -119,7 +121,7 @@ CExtensibleMarkupLanguageDocument::CExtensibleMarkupLanguageDocument( _In_ CExte
    m_WriteOptions         = WFC_XML_WRITE_AS_ASCII;
    m_IsStandalone         = true;
    m_UseNamespace         = false;
-   m_ParentChildSeparatorCharacter = TEXT( '.' );
+   m_ParentChildSeparatorCharacter = '.';
 
    // 1998-08-27 Thanks go to Christopher Remington (chrisr@silversoft.net)
    // for finding where I wasn't intializing m_ParseErrorEncountered.
@@ -133,11 +135,13 @@ CExtensibleMarkupLanguageDocument::CExtensibleMarkupLanguageDocument( _In_ CExte
 
    m_ConversionCodePage = CP_UTF8;
 
+#if ! defined(WE_ARE_BUILDING_WFC_ON_UNIX)
    if (IsWindowsXPOrGreater() == false)
    {
        // Piece of crap Windows95 garbage
        m_ConversionCodePage = CP_ACP;
    }
+#endif // WE_ARE_BUILDING_WFC_ON_UNIX
 
    m_InitializeEntities();
    m_InitializeRootElement();
@@ -147,7 +151,7 @@ CExtensibleMarkupLanguageDocument::CExtensibleMarkupLanguageDocument( _In_ CExte
    Copy( source );
 }
 
-CExtensibleMarkupLanguageDocument::~CExtensibleMarkupLanguageDocument()
+Win32FoundationClasses::CExtensibleMarkupLanguageDocument::~CExtensibleMarkupLanguageDocument()
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -166,12 +170,12 @@ CExtensibleMarkupLanguageDocument::~CExtensibleMarkupLanguageDocument()
 
    if ( m_XML != nullptr )
    {
-      CExtensibleMarkupLanguageElement::DeleteElement( m_XML );
+       Win32FoundationClasses::CExtensibleMarkupLanguageElement::DeleteElement( m_XML );
       m_XML = nullptr;
    }
 }
 
-_Check_return_ bool CExtensibleMarkupLanguageDocument::AddCallback( _In_ std::wstring_view element_name, __callback XML_ELEMENT_CALLBACK callback, __inout void * callback_parameter ) noexcept
+_Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageDocument::AddCallback( _In_ std::wstring_view element_name, __callback XML_ELEMENT_CALLBACK callback, __inout void * callback_parameter ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( callback );
@@ -213,7 +217,7 @@ _Check_return_ bool CExtensibleMarkupLanguageDocument::AddCallback( _In_ std::ws
    return( true );
 }
 
-_Check_return_ bool CExtensibleMarkupLanguageDocument::AddEntity( _In_ std::wstring_view entity, _In_ std::wstring_view value ) noexcept
+_Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageDocument::AddEntity( _In_ std::wstring_view entity, _In_ std::wstring_view value ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -260,7 +264,7 @@ _Check_return_ bool CExtensibleMarkupLanguageDocument::AddEntity( _In_ std::wstr
    }
 }
 
-void CExtensibleMarkupLanguageDocument::Append( _In_ CExtensibleMarkupLanguageDocument const& source ) noexcept
+void Win32FoundationClasses::CExtensibleMarkupLanguageDocument::Append( _In_ Win32FoundationClasses::CExtensibleMarkupLanguageDocument const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -274,13 +278,13 @@ void CExtensibleMarkupLanguageDocument::Append( _In_ CExtensibleMarkupLanguageDo
 
    if ( source.m_XML->EnumerateChildren( enumerator ) == true )
    {
-       CExtensibleMarkupLanguageElement * element_to_copy_p = nullptr;
+       Win32FoundationClasses::CExtensibleMarkupLanguageElement * element_to_copy_p = nullptr;
 
        while( source.m_XML->GetNextChild( enumerator, element_to_copy_p ) == true )
        {
          if ( element_to_copy_p != nullptr )
          {
-            auto element_to_add_p = CExtensibleMarkupLanguageElement::NewElement( m_XML );
+            auto element_to_add_p = Win32FoundationClasses::CExtensibleMarkupLanguageElement::NewElement( m_XML );
 
             if ( element_to_add_p == nullptr )
             {
@@ -296,7 +300,7 @@ void CExtensibleMarkupLanguageDocument::Append( _In_ CExtensibleMarkupLanguageDo
    }
 }
 
-void CExtensibleMarkupLanguageDocument::Copy( _In_ CExtensibleMarkupLanguageDocument const& source ) noexcept
+void Win32FoundationClasses::CExtensibleMarkupLanguageDocument::Copy( _In_ Win32FoundationClasses::CExtensibleMarkupLanguageDocument const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -304,7 +308,7 @@ void CExtensibleMarkupLanguageDocument::Copy( _In_ CExtensibleMarkupLanguageDocu
 
    if ( m_XML == nullptr )
    {
-      m_XML = CExtensibleMarkupLanguageElement::NewElement( nullptr, CExtensibleMarkupLanguageElement::ElementType::ProcessingInstruction, this );
+      m_XML = Win32FoundationClasses::CExtensibleMarkupLanguageElement::NewElement( nullptr, Win32FoundationClasses::CExtensibleMarkupLanguageElement::ElementType::ProcessingInstruction, this );
 
       if ( m_XML == nullptr )
       {
@@ -319,7 +323,7 @@ void CExtensibleMarkupLanguageDocument::Copy( _In_ CExtensibleMarkupLanguageDocu
    }
 }
 
-void CExtensibleMarkupLanguageDocument::CopyCallbacks( _In_ CExtensibleMarkupLanguageDocument const& source ) noexcept
+void Win32FoundationClasses::CExtensibleMarkupLanguageDocument::CopyCallbacks( _In_ Win32FoundationClasses::CExtensibleMarkupLanguageDocument const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -339,20 +343,20 @@ struct CONTAINS_ELEMENT_NAME
     std::wstring_view desired_name;
 };
 
-void find_element_name( void * parameter, CExtensibleMarkupLanguageElement * element_p ) noexcept
+void find_element_name( void * parameter, Win32FoundationClasses::CExtensibleMarkupLanguageElement * element_p ) noexcept
 {
     auto context = static_cast<CONTAINS_ELEMENT_NAME *>( parameter );
 
     if ( context->found == false )
     {
-        if ( compare_no_case( context->desired_name, element_p->Tag() ) == 0 )
+        if (Win32FoundationClasses::compare_no_case( context->desired_name, element_p->Tag() ) == 0 )
         {
             context->found = true;
         }
     }
 }
 
-_Check_return_ bool CExtensibleMarkupLanguageDocument::ContainsElementName( _In_ std::wstring_view name ) const noexcept
+_Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageDocument::ContainsElementName( _In_ std::wstring_view name ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -371,7 +375,7 @@ _Check_return_ bool CExtensibleMarkupLanguageDocument::ContainsElementName( _In_
    return( false );
 }
 
-_Check_return_ std::size_t CExtensibleMarkupLanguageDocument::CountElements( _In_ std::wstring_view name ) const noexcept
+_Check_return_ std::size_t Win32FoundationClasses::CExtensibleMarkupLanguageDocument::CountElements( _In_ std::wstring_view name ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -597,7 +601,7 @@ void CExtensibleMarkupLanguageDocument::Dump( CDumpContext& dump_context ) const
 
 #endif // _DEBUG
 
-void CExtensibleMarkupLanguageDocument::Empty( void ) noexcept
+void Win32FoundationClasses::CExtensibleMarkupLanguageDocument::Empty( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -612,7 +616,7 @@ void CExtensibleMarkupLanguageDocument::Empty( void ) noexcept
 
    if ( m_XML != nullptr )
    {
-      CExtensibleMarkupLanguageElement::DeleteElement( m_XML );
+       Win32FoundationClasses::CExtensibleMarkupLanguageElement::DeleteElement( m_XML );
       m_XML = nullptr;
    }
 
@@ -631,7 +635,7 @@ void CExtensibleMarkupLanguageDocument::Empty( void ) noexcept
    m_InitializeRootElement();
 }
 
-_Check_return_ bool CExtensibleMarkupLanguageDocument::EnumerateCallbacks( _Out_ std::size_t& enumerator ) const noexcept
+_Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageDocument::EnumerateCallbacks( _Out_ std::size_t& enumerator ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -646,7 +650,7 @@ _Check_return_ bool CExtensibleMarkupLanguageDocument::EnumerateCallbacks( _Out_
    return( true );
 }
 
-void CExtensibleMarkupLanguageDocument::ExecuteCallbacks( _Inout_ CExtensibleMarkupLanguageElement * element_p ) const noexcept
+void Win32FoundationClasses::CExtensibleMarkupLanguageDocument::ExecuteCallbacks( _Inout_ Win32FoundationClasses::CExtensibleMarkupLanguageElement * element_p ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( element_p );
@@ -659,23 +663,15 @@ void CExtensibleMarkupLanguageDocument::ExecuteCallbacks( _Inout_ CExtensibleMar
 
    for( auto const& entry : m_Callbacks )
    {
-      WFC_TRY
+      if (element_p->Tag().compare( entry.name ) == I_AM_EQUAL_TO_THAT)
       {
-          if (element_p->Tag().compare( entry.name ) == I_AM_EQUAL_TO_THAT)
-          {
-             // We found a callback
-             entry.callback( entry.parameter, element_p );
-          }
+         // We found a callback
+         entry.callback( entry.parameter, element_p );
       }
-      WFC_CATCH_ALL
-      {
-         // Do Nothing
-      }
-      WFC_END_CATCH_ALL
    }
 }
 
-void CExtensibleMarkupLanguageDocument::GetAutomaticIndentation( _Out_ bool& automatically_indent, _Out_ uint32_t& indentation_level, _Out_ uint32_t& indent_by ) const noexcept
+void Win32FoundationClasses::CExtensibleMarkupLanguageDocument::GetAutomaticIndentation( _Out_ bool& automatically_indent, _Out_ uint32_t& indentation_level, _Out_ uint32_t& indent_by ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -684,7 +680,7 @@ void CExtensibleMarkupLanguageDocument::GetAutomaticIndentation( _Out_ bool& aut
    indent_by            = m_IndentBy;
 }
 
-_Check_return_ CExtensibleMarkupLanguageElement * CExtensibleMarkupLanguageDocument::GetElement( _In_ std::wstring_view element_name ) const noexcept
+_Check_return_ Win32FoundationClasses::CExtensibleMarkupLanguageElement * Win32FoundationClasses::CExtensibleMarkupLanguageDocument::GetElement( _In_ std::wstring_view element_name ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER_NULL_OK( m_XML );
@@ -699,7 +695,7 @@ _Check_return_ CExtensibleMarkupLanguageElement * CExtensibleMarkupLanguageDocum
    return( m_XML->GetChild( element_name ) );
 }
 
-void CExtensibleMarkupLanguageDocument::GetEncoding( _Out_ std::wstring& encoding ) const noexcept
+void Win32FoundationClasses::CExtensibleMarkupLanguageDocument::GetEncoding( _Out_ std::wstring& encoding ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -713,20 +709,20 @@ void CExtensibleMarkupLanguageDocument::GetEncoding( _Out_ std::wstring& encodin
    }
 }
 
-void CExtensibleMarkupLanguageDocument::GetNamespace( _Out_ std::wstring& name_space ) const noexcept
+void Win32FoundationClasses::CExtensibleMarkupLanguageDocument::GetNamespace( _Out_ std::wstring& name_space ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
    name_space.assign( m_Namespace );
 }
 
-_Check_return_ bool CExtensibleMarkupLanguageDocument::GetNextCallback( _Inout_ uint32_t& enumerator, _Out_ std::wstring& element_name, _Out_ XML_ELEMENT_CALLBACK& callback, _Out_ void *& parameter ) const noexcept
+_Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageDocument::GetNextCallback( _Inout_ uint32_t& enumerator, _Out_ std::wstring& element_name, _Out_ XML_ELEMENT_CALLBACK& callback, _Out_ void *& parameter ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
    if ( enumerator >= static_cast< uint32_t >( m_Callbacks.size() ) )
    {
       element_name.clear();
-      callback = static_cast< XML_ELEMENT_CALLBACK >( nullptr );
+      callback = static_cast<Win32FoundationClasses::XML_ELEMENT_CALLBACK >( nullptr );
       parameter = nullptr;
 
       return( false );
@@ -741,7 +737,7 @@ _Check_return_ bool CExtensibleMarkupLanguageDocument::GetNextCallback( _Inout_ 
    return( true );
 }
 
-_Check_return_ std::size_t CExtensibleMarkupLanguageDocument::GetNumberOfElements( void ) const noexcept
+_Check_return_ std::size_t Win32FoundationClasses::CExtensibleMarkupLanguageDocument::GetNumberOfElements( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER_NULL_OK( m_XML );
@@ -754,13 +750,13 @@ _Check_return_ std::size_t CExtensibleMarkupLanguageDocument::GetNumberOfElement
    return( m_XML->GetTotalNumberOfChildren() );
 }
 
-void CExtensibleMarkupLanguageDocument::GetParsingErrorInformation(_Out_ std::wstring& message ) const noexcept
+void Win32FoundationClasses::CExtensibleMarkupLanguageDocument::GetParsingErrorInformation(_Out_ std::wstring& message ) const noexcept
 {
     message.clear();
 
     std::wstring name;
-    CParsePoint starting_at;
-    CParsePoint error_location;
+    Win32FoundationClasses::CParsePoint starting_at;
+    Win32FoundationClasses::CParsePoint error_location;
     std::wstring error_message;
 
     GetParsingErrorInformation(name, starting_at, error_location, &error_message);
@@ -774,7 +770,7 @@ void CExtensibleMarkupLanguageDocument::GetParsingErrorInformation(_Out_ std::ws
         (int)error_location.GetLineIndex());
 }
 
-void CExtensibleMarkupLanguageDocument::GetParsingErrorInformation(_Out_ std::wstring& tag_name, _Out_ CParsePoint& beginning, _Out_ CParsePoint& error_location, __out_opt std::wstring * error_message_p ) const noexcept
+void Win32FoundationClasses::CExtensibleMarkupLanguageDocument::GetParsingErrorInformation(_Out_ std::wstring& tag_name, _Out_ CParsePoint& beginning, _Out_ CParsePoint& error_location, __out_opt std::wstring * error_message_p ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER_NULL_OK( error_message_p );
@@ -787,19 +783,11 @@ void CExtensibleMarkupLanguageDocument::GetParsingErrorInformation(_Out_ std::ws
    {
       // We were passed a pointer by the user, don't trust it
 
-      WFC_TRY
-      {
-         error_message_p->assign( m_ErrorMessage );
-      }
-      WFC_CATCH_ALL
-      {
-         // Do Nothing
-      }
-      WFC_END_CATCH_ALL
+      error_message_p->assign( m_ErrorMessage );
    }
 }
 
-void CExtensibleMarkupLanguageDocument::m_InitializeEntities( void ) noexcept
+void Win32FoundationClasses::CExtensibleMarkupLanguageDocument::m_InitializeEntities( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -816,34 +804,34 @@ void CExtensibleMarkupLanguageDocument::m_InitializeEntities( void ) noexcept
    (void) m_Entities.Add(WSTRING_VIEW(L"&quot;"), WSTRING_VIEW(L"\"") );
 }
 
-void CExtensibleMarkupLanguageDocument::m_InitializeRootElement( void ) noexcept
+void Win32FoundationClasses::CExtensibleMarkupLanguageDocument::m_InitializeRootElement( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER_NULL_OK( m_XML );
 
    if ( m_XML != nullptr )
    {
-      CExtensibleMarkupLanguageElement::DeleteElement( m_XML );
+       Win32FoundationClasses::CExtensibleMarkupLanguageElement::DeleteElement( m_XML );
       m_XML = nullptr;
    }
 
-   m_XML = CExtensibleMarkupLanguageElement::NewElement( nullptr, CExtensibleMarkupLanguageElement::ElementType::ProcessingInstruction, this );
+   m_XML = Win32FoundationClasses::CExtensibleMarkupLanguageElement::NewElement( nullptr, Win32FoundationClasses::CExtensibleMarkupLanguageElement::ElementType::ProcessingInstruction, this );
 }
 
-void CExtensibleMarkupLanguageDocument::m_RemoveAllCallbacks( void ) noexcept
+void Win32FoundationClasses::CExtensibleMarkupLanguageDocument::m_RemoveAllCallbacks( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    m_Callbacks.clear();
 }
 
-static inline _Check_return_ bool __is_leading_spaces( _Inout_ CDataParser& source ) noexcept
+static inline _Check_return_ bool __is_leading_spaces( _Inout_ Win32FoundationClasses::CDataParser& source ) noexcept
 {
    uint8_t const byte_1 = source.GetAt( 0 );
    uint8_t const byte_2 = source.GetAt( 1 );
    uint8_t const byte_3 = source.GetAt( 2 );
    uint8_t const byte_4 = source.GetAt( 3 );
 
-   if ( is_xml_white_space( byte_1 ) == true)
+   if (Win32FoundationClasses::is_xml_white_space( byte_1 ) == true)
    {
       // The first character was a space, the possibilities are ASCII, little endian
       // Unicode or UCS-4 little endian
@@ -885,7 +873,7 @@ static inline _Check_return_ bool __is_leading_spaces( _Inout_ CDataParser& sour
 
    if ( byte_2 != 0 )
    {
-      if ( is_xml_white_space( byte_2 ) == false)
+      if (Win32FoundationClasses::is_xml_white_space( byte_2 ) == false)
       {
          return( false );
       }
@@ -922,7 +910,7 @@ static inline _Check_return_ bool __is_leading_spaces( _Inout_ CDataParser& sour
 
    if ( byte_3 == 0 )
    {
-      if ( is_xml_white_space( byte_4 ) == true)
+      if (Win32FoundationClasses::is_xml_white_space( byte_4 ) == true)
       {
          (void) source.SetTextToUCS4( true );
          (void) source.SetUCS4Order( 1234 );
@@ -933,7 +921,7 @@ static inline _Check_return_ bool __is_leading_spaces( _Inout_ CDataParser& sour
    }
    else
    {
-      if ( is_xml_white_space( byte_3 ) == true)
+      if (Win32FoundationClasses::is_xml_white_space( byte_3 ) == true)
       {
          if ( byte_4 == 0 )
          {
@@ -949,12 +937,12 @@ static inline _Check_return_ bool __is_leading_spaces( _Inout_ CDataParser& sour
    return( false );
 }
 
-_Check_return_ bool CExtensibleMarkupLanguageDocument::ParseErrorOccurred(void) const noexcept
+_Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageDocument::ParseErrorOccurred(void) const noexcept
 {
     return(true);
 }
 
-_Check_return_ bool CExtensibleMarkupLanguageDocument::Parse( _Inout_ CDataParser& source ) noexcept
+_Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageDocument::Parse( _Inout_ Win32FoundationClasses::CDataParser& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER_NULL_OK( m_XML );
@@ -967,7 +955,7 @@ _Check_return_ bool CExtensibleMarkupLanguageDocument::Parse( _Inout_ CDataParse
 
    if ( m_XML == nullptr )
    {
-      m_XML = CExtensibleMarkupLanguageElement::NewElement( nullptr, CExtensibleMarkupLanguageElement::ElementType::ProcessingInstruction, this );
+      m_XML = Win32FoundationClasses::CExtensibleMarkupLanguageElement::NewElement( nullptr, Win32FoundationClasses::CExtensibleMarkupLanguageElement::ElementType::ProcessingInstruction, this );
 
       if ( m_XML == nullptr )
       {
@@ -1059,8 +1047,8 @@ _Check_return_ bool CExtensibleMarkupLanguageDocument::Parse( _Inout_ CDataParse
             // Plain old ASCII
             (void) source.SetTextToASCII( true );
          }
-         else if ( byte_1 == 0x00 and wfc_is_ascii( byte_2 ) == true and
-                   byte_3 == 0x00 and wfc_is_ascii( byte_4 ) == true )
+         else if ( byte_1 == 0x00 and Win32FoundationClasses::wfc_is_ascii( byte_2 ) == true and
+                   byte_3 == 0x00 and Win32FoundationClasses::wfc_is_ascii( byte_4 ) == true )
          {
             // UTF-16, Big Endian
             (void) source.SetTextToASCII( false );
@@ -1068,8 +1056,8 @@ _Check_return_ bool CExtensibleMarkupLanguageDocument::Parse( _Inout_ CDataParse
 
             // Don't autoincrement parse_point
          }
-         else if ( wfc_is_ascii( byte_1 ) == true and byte_2 == 0x00 and
-                   wfc_is_ascii( byte_3 ) == true and byte_4 == 0x00 )
+         else if (Win32FoundationClasses::wfc_is_ascii( byte_1 ) == true and byte_2 == 0x00 and
+                  Win32FoundationClasses::wfc_is_ascii( byte_3 ) == true and byte_4 == 0x00 )
          {
             // UTF-16, Little Endian
             (void) source.SetTextToASCII( false );
@@ -1080,13 +1068,13 @@ _Check_return_ bool CExtensibleMarkupLanguageDocument::Parse( _Inout_ CDataParse
          else if ( byte_1 == 0x00 and
                    byte_2 == 0x00 and
                    byte_3 == 0x00 and
-                   wfc_is_ascii( byte_4 ) == true )
+                   Win32FoundationClasses::wfc_is_ascii( byte_4 ) == true )
          {
             // UCS-4 Big Endian
             (void) source.SetTextToUCS4( true );
             (void) source.SetUCS4Order( 1234 );
          }
-         else if ( wfc_is_ascii( byte_1 ) == true and
+         else if (Win32FoundationClasses::wfc_is_ascii( byte_1 ) == true and
                    byte_2 == 0x00 and
                    byte_3 == 0x00 and
                    byte_4 == 0x00 )
@@ -1097,7 +1085,7 @@ _Check_return_ bool CExtensibleMarkupLanguageDocument::Parse( _Inout_ CDataParse
          }
          else if ( byte_1 == 0x00 and
                    byte_2 == 0x00 and
-                   wfc_is_ascii( byte_3 ) == true and
+                   Win32FoundationClasses::wfc_is_ascii( byte_3 ) == true and
                    byte_4 == 0x00 )
          {
             // UCS-4 Unusual
@@ -1105,7 +1093,7 @@ _Check_return_ bool CExtensibleMarkupLanguageDocument::Parse( _Inout_ CDataParse
             (void) source.SetUCS4Order( 2143 );
          }
          else if ( byte_1 == 0x00 and
-                   wfc_is_ascii( byte_2 ) == true and
+                   Win32FoundationClasses::wfc_is_ascii( byte_2 ) == true and
                    byte_3 == 0x00 and
                    byte_4 == 0x00 )
          {
@@ -1129,8 +1117,8 @@ _Check_return_ bool CExtensibleMarkupLanguageDocument::Parse( _Inout_ CDataParse
 
    NumberOfBytesPerCharacter = source.NumberOfBytesPerCharacter();
 
-   CParsePoint beginning_of_tag;
-   CParsePoint end_of_tag;
+   Win32FoundationClasses::CParsePoint beginning_of_tag;
+   Win32FoundationClasses::CParsePoint end_of_tag;
 
    // Now skip leading spaces until we get to a less-than sign.
    // This according to Rule 1->27->3
@@ -1393,7 +1381,7 @@ _Check_return_ bool CExtensibleMarkupLanguageDocument::Parse( _Inout_ CDataParse
    return( true );
 }
 
-_Check_return_ bool CExtensibleMarkupLanguageDocument::RemoveCallback( _In_ std::wstring_view element_name, __callback XML_ELEMENT_CALLBACK callback, __inout void * callback_parameter ) noexcept
+_Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageDocument::RemoveCallback( _In_ std::wstring_view element_name, __callback Win32FoundationClasses::XML_ELEMENT_CALLBACK callback, __inout void * callback_parameter ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER_NULL_OK( callback );
@@ -1420,7 +1408,7 @@ _Check_return_ bool CExtensibleMarkupLanguageDocument::RemoveCallback( _In_ std:
    return( true );
 }
 
-_Check_return_ bool CExtensibleMarkupLanguageDocument::ResolveEntity( _In_ std::wstring_view entity, _Out_ std::wstring& resolved_to ) const noexcept
+_Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageDocument::ResolveEntity( _In_ std::wstring_view entity, _Out_ std::wstring& resolved_to ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -1432,11 +1420,12 @@ _Check_return_ bool CExtensibleMarkupLanguageDocument::ResolveEntity( _In_ std::
    return( true );
 }
 
-void CExtensibleMarkupLanguageDocument::SetConversionCodePage(_In_ uint32_t const new_page ) noexcept
+void Win32FoundationClasses::CExtensibleMarkupLanguageDocument::SetConversionCodePage(_In_ uint32_t const new_page ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    m_ConversionCodePage = new_page;
 
+#if ! defined(WE_ARE_BUILDING_WFC_ON_UNIX)
    if ( m_ConversionCodePage != CP_ACP )
    {
        if (IsWindowsXPOrGreater() == false)
@@ -1445,15 +1434,16 @@ void CExtensibleMarkupLanguageDocument::SetConversionCodePage(_In_ uint32_t cons
            m_ConversionCodePage = CP_ACP;
        }
    }
+#endif // WE_ARE_BUILDING_WFC_ON_UNIX
 }
 
-void CExtensibleMarkupLanguageDocument::SetEncoding( _In_ std::wstring_view encoding ) noexcept
+void Win32FoundationClasses::CExtensibleMarkupLanguageDocument::SetEncoding( _In_ std::wstring_view encoding ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    m_Encoding.assign( encoding );
 }
 
-void CExtensibleMarkupLanguageDocument::SetNamespace( _In_ std::wstring_view name_space ) noexcept
+void Win32FoundationClasses::CExtensibleMarkupLanguageDocument::SetNamespace( _In_ std::wstring_view name_space ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -1469,7 +1459,7 @@ void CExtensibleMarkupLanguageDocument::SetNamespace( _In_ std::wstring_view nam
    }
 }
 
-void CExtensibleMarkupLanguageDocument::SetParsingErrorInformation( _In_ std::wstring_view tag_name, _In_ CParsePoint const& beginning, _In_ CParsePoint const& error_location, _In_ std::wstring_view error_message ) noexcept
+void Win32FoundationClasses::CExtensibleMarkupLanguageDocument::SetParsingErrorInformation( _In_ std::wstring_view tag_name, _In_ CParsePoint const& beginning, _In_ CParsePoint const& error_location, _In_ std::wstring_view error_message ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -1491,7 +1481,7 @@ void CExtensibleMarkupLanguageDocument::SetParsingErrorInformation( _In_ std::ws
    }
 }
 
-_Check_return_ uint32_t CExtensibleMarkupLanguageDocument::SetWriteOptions( _In_ uint32_t const new_options ) noexcept
+_Check_return_ uint32_t Win32FoundationClasses::CExtensibleMarkupLanguageDocument::SetWriteOptions( _In_ uint32_t const new_options ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    uint32_t return_value = m_WriteOptions;
@@ -1569,6 +1559,7 @@ _Check_return_ uint32_t CExtensibleMarkupLanguageDocument::SetWriteOptions( _In_
    }
 #endif // _DEBUG
 
+#if ! defined(WE_ARE_BUILDING_WFC_ON_UNIX)
    if (is_flagged(m_WriteOptions, WFC_XML_WRITE_AS_ASCII) == true)
    {
       SetConversionCodePage( CP_ACP );
@@ -1585,11 +1576,14 @@ _Check_return_ uint32_t CExtensibleMarkupLanguageDocument::SetWriteOptions( _In_
    {
       SetConversionCodePage( CP_ACP );
    }
+#else
+   SetConversionCodePage(CP_UTF8);
+#endif // WE_ARE_BUILDING_WFC_ON_UNIX
 
    return( return_value );
 }
 
-void CExtensibleMarkupLanguageDocument::WriteTo( _Out_ std::vector<uint8_t>& destination ) const noexcept
+void Win32FoundationClasses::CExtensibleMarkupLanguageDocument::WriteTo( _Out_ std::vector<uint8_t>& destination ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( m_XML );
@@ -1611,7 +1605,7 @@ void CExtensibleMarkupLanguageDocument::WriteTo( _Out_ std::vector<uint8_t>& des
 
       if ( m_XML->EnumerateChildren( enumerator ) == true )
       {
-         CExtensibleMarkupLanguageElement * child_p = nullptr;
+          Win32FoundationClasses::CExtensibleMarkupLanguageElement * child_p = nullptr;
 
          while( m_XML->GetNextChild( enumerator, child_p ) == true )
          {

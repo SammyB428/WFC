@@ -51,9 +51,7 @@ static char THIS_FILE[] = __FILE__;
 #define new DEBUG_NEW
 #endif // _DEBUG
 
-USING_WFC_NAMESPACE
-
-_Check_return_ bool PASCAL Win32FoundationClasses::wfc_kill_most_recently_used_document_list( void ) noexcept
+_Check_return_ bool Win32FoundationClasses::wfc_kill_most_recently_used_document_list( void ) noexcept
 {
    CRegistry registry;
 

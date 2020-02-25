@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 1995-2017, Samuel R. Blackburn
+** Copyright, 1995-2020, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -50,12 +50,10 @@ static char THIS_FILE[] = __FILE__;
 
 #endif // WFC_STL
 
-USING_WFC_NAMESPACE
-
 // Define log( 2.0 )
 #define WFC_LOG2 (0.693147180559945309417232121458176568075500134360255254120680009493393621969L)
 
-_Check_return_ double PASCAL Win32FoundationClasses::wfc_calculate_entropy( __in_ecount( number_of_counts ) uint64_t const * counts, _In_ std::size_t const number_of_counts ) noexcept
+_Check_return_ double Win32FoundationClasses::wfc_calculate_entropy( __in_ecount( number_of_counts ) uint64_t const * counts, _In_ std::size_t const number_of_counts ) noexcept
 {
    WFC_VALIDATE_POINTER( counts );
 
@@ -66,48 +64,40 @@ _Check_return_ double PASCAL Win32FoundationClasses::wfc_calculate_entropy( __in
       return( 0.0 );
    }
 
-   WFC_TRY
+   double entropy{ 0.0 };
+
+   int64_t sum{ 0 };
+
+   std::size_t number_of_unique_values{ 0 };
+
+   for ( auto const array_index : Range(number_of_counts) )
    {
-      double entropy{ 0.0 };
-
-      int64_t sum{ 0 };
-
-      std::size_t number_of_unique_values{ 0 };
-
-      for ( auto const array_index : Range(number_of_counts) )
+      if ( counts[ array_index ] > 0 )
       {
-         if ( counts[ array_index ] > 0 )
-         {
-            sum += counts[ array_index ];
+         sum += counts[ array_index ];
 
-            // 2001-08-23
-            // We need all of this casting because VC6SP3 doesn't know how to
-            // convert unsigned int64_t's to double
-            entropy -= ( ((double) ((int64_t)counts[ array_index ])) * log( ((double) ((int64_t)counts[ array_index ])) ) );
+         // 2001-08-23
+         // We need all of this casting because VC6SP3 doesn't know how to
+         // convert unsigned int64_t's to double
+         entropy -= ( ((double) ((int64_t)counts[ array_index ])) * log( ((double) ((int64_t)counts[ array_index ])) ) );
 
-            number_of_unique_values++;
-         }
+         number_of_unique_values++;
       }
-
-      if ( sum <= 0 or number_of_unique_values < 2 ) // If there's only one unique value, the entropy is zero
-      {
-         return( 0.0 );
-      }
-
-      entropy /= sum;
-      entropy += log( (double) sum );
-      entropy /= WFC_LOG2;
-
-      return( entropy );
    }
-   WFC_CATCH_ALL
+
+   if ( sum <= 0 or number_of_unique_values < 2 ) // If there's only one unique value, the entropy is zero
    {
       return( 0.0 );
    }
-   WFC_END_CATCH_ALL
+
+   entropy /= sum;
+   entropy += std::log( (double) sum );
+   entropy /= WFC_LOG2;
+
+   return( entropy );
 }
 
-_Check_return_ double PASCAL Win32FoundationClasses::wfc_calculate_entropy( __in_ecount( number_of_counts ) uint16_t const * counts, _In_ std::size_t const number_of_counts ) noexcept
+_Check_return_ double Win32FoundationClasses::wfc_calculate_entropy( __in_ecount( number_of_counts ) uint16_t const * counts, _In_ std::size_t const number_of_counts ) noexcept
 {
    WFC_VALIDATE_POINTER( counts );
 
@@ -118,43 +108,35 @@ _Check_return_ double PASCAL Win32FoundationClasses::wfc_calculate_entropy( __in
       return( 0.0 );
    }
 
-   WFC_TRY
+   double entropy{ 0.0 };
+
+   int64_t sum{ 0 };
+
+   std::size_t number_of_unique_values{ 0 };
+
+   for ( auto const array_index : Range(number_of_counts) )
    {
-      double entropy{ 0.0 };
-
-      int64_t sum{ 0 };
-
-      std::size_t number_of_unique_values{ 0 };
-
-      for ( auto const array_index : Range(number_of_counts) )
+      if ( counts[ array_index ] > 0 )
       {
-         if ( counts[ array_index ] > 0 )
-         {
-            sum += counts[ array_index ];
-            entropy -= ( counts[ array_index ] * log( (double) counts[ array_index ] ) );
-            number_of_unique_values++;
-         }
+         sum += counts[ array_index ];
+         entropy -= ( counts[ array_index ] * std::log( (double) counts[ array_index ] ) );
+         number_of_unique_values++;
       }
-
-      if (sum <= 0 or number_of_unique_values < 2) // If there's only one unique value, the entropy is zero
-      {
-         return( 0.0 );
-      }
-
-      entropy /= sum;
-      entropy += log( (double) sum );
-      entropy /= WFC_LOG2;
-
-      return( entropy );
    }
-   WFC_CATCH_ALL
+
+   if (sum <= 0 or number_of_unique_values < 2) // If there's only one unique value, the entropy is zero
    {
       return( 0.0 );
    }
-   WFC_END_CATCH_ALL
+
+   entropy /= sum;
+   entropy += std::log( (double) sum );
+   entropy /= WFC_LOG2;
+
+   return( entropy );
 }
 
-_Check_return_ double PASCAL Win32FoundationClasses::wfc_calculate_entropy( __in_ecount( number_of_counts ) uint32_t const * counts, _In_ std::size_t const number_of_counts ) noexcept
+_Check_return_ double Win32FoundationClasses::wfc_calculate_entropy( __in_ecount( number_of_counts ) uint32_t const * counts, _In_ std::size_t const number_of_counts ) noexcept
 {
    WFC_VALIDATE_POINTER( counts );
 
@@ -165,40 +147,32 @@ _Check_return_ double PASCAL Win32FoundationClasses::wfc_calculate_entropy( __in
       return( 0.0 );
    }
 
-   WFC_TRY
+   double entropy{0.0};
+
+   int64_t sum{ 0 };
+
+   std::size_t number_of_unique_values{ 0 };
+
+   for ( auto const array_index : Range(number_of_counts) )
    {
-      double entropy{0.0};
-
-      int64_t sum{ 0 };
-
-      std::size_t number_of_unique_values{ 0 };
-
-      for ( auto const array_index : Range(number_of_counts) )
+      if ( counts[ array_index ] > 0 )
       {
-         if ( counts[ array_index ] > 0 )
-         {
-            sum += counts[ array_index ];
-            entropy -= ( counts[ array_index ] * log( (double) counts[ array_index ] ) );
-            number_of_unique_values++;
-         }
+         sum += counts[ array_index ];
+         entropy -= ( counts[ array_index ] * std::log( (double) counts[ array_index ] ) );
+         number_of_unique_values++;
       }
-
-      if (sum <= 0 or number_of_unique_values < 2) // If there's only one unique value, the entropy is zero
-      {
-         return( 0.0 );
-      }
-
-      entropy /= sum;
-      entropy += log( (double) sum );
-      entropy /= WFC_LOG2;
-
-      return( entropy );
    }
-   WFC_CATCH_ALL
+
+   if (sum <= 0 or number_of_unique_values < 2) // If there's only one unique value, the entropy is zero
    {
       return( 0.0 );
    }
-   WFC_END_CATCH_ALL
+
+   entropy /= sum;
+   entropy += std::log( (double) sum );
+   entropy /= WFC_LOG2;
+
+   return( entropy );
 }
 
 _Check_return_ double Win32FoundationClasses::wfc_get_buffer_entropy(__in_bcount(buffer_size) uint8_t const * buffer, _In_ std::size_t const buffer_size) noexcept
@@ -221,6 +195,23 @@ _Check_return_ double Win32FoundationClasses::wfc_get_buffer_entropy(__in_bcount
 
     return(Win32FoundationClasses::wfc_calculate_entropy(counts, std::size(counts)));
 }
+
+#if ! defined( WE_ARE_BUILDING_WFC_ON_UNIX )
+_Check_return_ int64_t _find_byte_using_nothing_but_C(_In_ uint8_t const byte_value, _In_reads_bytes_(buffer_size) uint8_t const* buffer, _In_ int64_t const buffer_size) noexcept
+{
+    for (auto const buffer_index : Range(buffer_size))
+    {
+        if (buffer[buffer_index] == byte_value)
+        {
+            return(buffer_index);
+        }
+    }
+
+    return(BYTES_NOT_FOUND);
+}
+#endif
+
+#if ! defined(WE_ARE_BUILDING_WFC_ON_UNIX)
 
 _Check_return_ bool Win32FoundationClasses::wfcGenRandom( _Out_writes_bytes_(RandomBufferLength) PVOID RandomBuffer, _In_ ULONG const RandomBufferLength ) noexcept
 {
@@ -257,22 +248,26 @@ _Check_return_ bool Win32FoundationClasses::wfcGenRandom( _Out_writes_bytes_(Ran
    {
       if ( RandomBufferLength == ULONG_MAX )
       {
-         ((BYTE *)RandomBuffer)[ 0 ] = 0x00;
+         ((uint8_t *)RandomBuffer)[ 0 ] = 0x00;
          // Fill nothing. 
          delete static_rng;
          static_rng = nullptr;
          return( true );
       }
 
-      return( static_rng->Fill( (BYTE *) RandomBuffer, RandomBufferLength ) == false ? FALSE : TRUE );
+      return( static_rng->Fill( (uint8_t*) RandomBuffer, RandomBufferLength ) == false ? FALSE : TRUE );
    }
 
    return( false );
 }
 
-using FIND_BYTE_FUNCTION = int64_t (*)( __in uint8_t const byte_value, __in_bcount( buffer_size ) uint8_t const * buffer, __in int64_t const buffer_size );
+#endif // WE_ARE_BUILDING_WFC_ON_UNIX
+
+using FIND_BYTE_FUNCTION = int64_t (*)( _In_ uint8_t const byte_value, __in_bcount( buffer_size ) uint8_t const * buffer, _In_ int64_t const buffer_size );
 
 #if 0
+
+
 // This is the super optimized version 
 // 2016-05-30 - SRB - I cannot get this version to work on our Jenkins build server.
 // A stand-alone project with this code works fine but refuses to work during the build.
@@ -332,7 +327,9 @@ SEARCH_LAST_BLOCK:
     return(BYTES_NOT_FOUND);
 }
 
-#else
+#endif // 0
+
+#if ! defined(WE_ARE_BUILDING_WFC_ON_UNIX)
 
 // This version works
 _Check_return_ static int64_t _find_byte_256( _In_ uint8_t const byte_value, _In_reads_bytes_( buffer_size ) uint8_t const * buffer, _In_ int64_t const buffer_size ) noexcept
@@ -362,7 +359,6 @@ _Check_return_ static int64_t _find_byte_256( _In_ uint8_t const byte_value, _In
 
     return( BYTES_NOT_FOUND );
 }
-#endif
 
 _Check_return_ int64_t _find_byte_SSE41(_In_ uint8_t const byte_value, _In_reads_bytes_(buffer_size) uint8_t const * buffer, _In_ int64_t const buffer_size) noexcept
 {
@@ -421,19 +417,6 @@ SEARCH_LAST_BLOCK:
     return(BYTES_NOT_FOUND);
 }
 
-_Check_return_ int64_t _find_byte_using_nothing_but_C( _In_ uint8_t const byte_value, _In_reads_bytes_( buffer_size ) uint8_t const * buffer, _In_ int64_t const buffer_size ) noexcept
-{
-    for ( auto const buffer_index : Range(buffer_size) )
-    {
-        if ( buffer[ buffer_index ] == byte_value )
-        {
-            return( buffer_index );
-        }
-    }
-
-    return( BYTES_NOT_FOUND );
-}
-
 _Check_return_ int64_t Win32FoundationClasses::find_byte( _In_ uint8_t const byte_value, _In_reads_bytes_( buffer_size ) uint8_t const * __restrict buffer, _In_ int64_t const buffer_size ) noexcept
 {
     static FIND_BYTE_FUNCTION find_byte_implementation = nullptr;
@@ -461,43 +444,61 @@ _Check_return_ int64_t Win32FoundationClasses::find_byte( _In_ uint8_t const byt
     return( find_byte_implementation( byte_value, buffer, buffer_size ) );
 }
 
-_Check_return_ bool Win32FoundationClasses::wfc_process_buffer( __in uint8_t const * buffer, __in std::size_t const number_of_bytes_in_buffer, __in std::size_t const step_size, __inout PROCESS_BUFFER_CALLBACK function_to_call, __inout_opt void * callback_context ) noexcept
+_Check_return_ bool Win32FoundationClasses::wfc_process_buffer(_In_ uint8_t const* buffer, _In_ std::size_t const number_of_bytes_in_buffer, _In_ std::size_t const step_size, __inout Win32FoundationClasses::PROCESS_BUFFER_CALLBACK function_to_call, __inout_opt void* callback_context) noexcept
 {
-    if (function_to_call == nullptr )
+    if (function_to_call == nullptr)
     {
-        return( false );
+        return(false);
     }
 
     int64_t const number_of_bytes_to_process = number_of_bytes_in_buffer;
     int64_t number_of_bytes_processed = 0;
     int64_t number_of_bytes_to_process_in_this_call = 0;
 
-    while( number_of_bytes_processed < number_of_bytes_to_process )
+    while (number_of_bytes_processed < number_of_bytes_to_process)
     {
         number_of_bytes_to_process_in_this_call = number_of_bytes_to_process - number_of_bytes_processed;
 
-        if ( number_of_bytes_to_process_in_this_call <= 0 )
+        if (number_of_bytes_to_process_in_this_call <= 0)
         {
             // No more bytes to processs
-            return( true );
+            return(true);
         }
 
-        if ( number_of_bytes_to_process_in_this_call > (int64_t) step_size )
+        if (number_of_bytes_to_process_in_this_call > (int64_t) step_size)
         {
             number_of_bytes_to_process_in_this_call = step_size;
         }
 
-        if ( function_to_call( callback_context, &buffer[ number_of_bytes_processed ], number_of_bytes_to_process_in_this_call ) == false )
+        if (function_to_call(callback_context, &buffer[number_of_bytes_processed], number_of_bytes_to_process_in_this_call) == false)
         {
             // They told us to stop.
-            return( true );
+            return(true);
         }
 
         number_of_bytes_processed += number_of_bytes_to_process_in_this_call;
     }
 
-    return( true );
+    return(true);
 }
+
+#else // WE_ARE_BUILDING_WFC_ON_UNIX
+
+// Unix version
+_Check_return_ int64_t Win32FoundationClasses::find_byte(_In_ uint8_t const byte_value, _In_reads_bytes_(buffer_size) uint8_t const* __restrict buffer, _In_ int64_t const buffer_size) noexcept
+{
+    for (auto const buffer_index : Range(buffer_size))
+    {
+        if (buffer[buffer_index] == byte_value)
+        {
+            return(buffer_index);
+        }
+    }
+
+    return(BYTES_NOT_FOUND);
+}
+
+#endif // WE_ARE_BUILDING_WFC_ON_UNIX
 
 // End of source
 

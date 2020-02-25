@@ -50,51 +50,49 @@
 static char THIS_FILE[] = __FILE__;
 #endif // _DEBUG
 
-USING_WFC_NAMESPACE
-
 #if defined( _DEBUG ) && defined( _INC_CRTDBG )
 #define new DEBUG_NEW
 #endif // _DEBUG
 
-CPingResults::CPingResults()
+Win32FoundationClasses::CPingResults::CPingResults()
 {
    WFC_VALIDATE_POINTER( this );
    Empty();
 }
 
-CPingResults::CPingResults( __in CPingResults const& source )
+Win32FoundationClasses::CPingResults::CPingResults( _In_ Win32FoundationClasses::CPingResults const& source )
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );
 }
 
-CPingResults::CPingResults( __in CPingResults const * source )
+Win32FoundationClasses::CPingResults::CPingResults( _In_ Win32FoundationClasses::CPingResults const * source )
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
    Copy( source );
 }
 
-CPingResults::CPingResults( __in IP_ECHO_REPLY const& source )
+Win32FoundationClasses::CPingResults::CPingResults( _In_ IP_ECHO_REPLY const& source )
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );
 }
 
-CPingResults::CPingResults( __in IP_ECHO_REPLY const * source )
+Win32FoundationClasses::CPingResults::CPingResults( _In_ IP_ECHO_REPLY const * source )
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
    Copy( source );
 }
 
-CPingResults::~CPingResults()
+Win32FoundationClasses::CPingResults::~CPingResults()
 {
    WFC_VALIDATE_POINTER( this );
    Empty();
 }
 
-void CPingResults::Copy( __in CPingResults const& source ) noexcept
+void Win32FoundationClasses::CPingResults::Copy( _In_ Win32FoundationClasses::CPingResults const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -110,7 +108,7 @@ void CPingResults::Copy( __in CPingResults const& source ) noexcept
    TimeToLive                  = source.TimeToLive;
 }
 
-void CPingResults::Copy( __in CPingResults const * source ) noexcept
+void Win32FoundationClasses::CPingResults::Copy( _In_ Win32FoundationClasses::CPingResults const * source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
@@ -135,11 +133,11 @@ void CPingResults::Copy( __in CPingResults const * source ) noexcept
    WFC_END_CATCH_ALL
 }
 
-void CPingResults::Copy( __in IP_ECHO_REPLY const& source ) noexcept
+void Win32FoundationClasses::CPingResults::Copy( _In_ IP_ECHO_REPLY const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
-   format( Address, "%d.%d.%d.%d",
+   Win32FoundationClasses::format( Address, "%d.%d.%d.%d",
              (int) LOBYTE( LOWORD( source.Address ) ),
              (int) HIBYTE( LOWORD( source.Address ) ),
              (int) LOBYTE( HIWORD( source.Address ) ),
@@ -148,7 +146,7 @@ void CPingResults::Copy( __in IP_ECHO_REPLY const& source ) noexcept
    TimeToLive                  = source.Options.Ttl;
 }
 
-void CPingResults::Copy( __in IP_ECHO_REPLY const * source ) noexcept
+void Win32FoundationClasses::CPingResults::Copy( _In_ IP_ECHO_REPLY const * source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
@@ -173,7 +171,7 @@ void CPingResults::Copy( __in IP_ECHO_REPLY const * source ) noexcept
    WFC_END_CATCH_ALL
 }
 
-void CPingResults::Empty( void ) noexcept
+void Win32FoundationClasses::CPingResults::Empty( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Address.clear();
@@ -181,7 +179,7 @@ void CPingResults::Empty( void ) noexcept
    TimeToLive = 0;
 }
 
-CPingResults& CPingResults::operator = ( __in CPingResults const& source ) noexcept
+Win32FoundationClasses::CPingResults& Win32FoundationClasses::CPingResults::operator = ( _In_ Win32FoundationClasses::CPingResults const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );
@@ -190,7 +188,7 @@ CPingResults& CPingResults::operator = ( __in CPingResults const& source ) noexc
 
 #if defined( _DEBUG ) && ! defined( WFC_NO_DUMPING )
 
-void CPingResults::Dump( CDumpContext& dump_context ) const
+void Win32FoundationClasses::CPingResults::Dump( CDumpContext& dump_context ) const
 {
    CObject::Dump( dump_context );
 

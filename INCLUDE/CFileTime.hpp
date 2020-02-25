@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 1995-2019, Samuel R. Blackburn
+** Copyright, 1995-2020, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -49,13 +49,13 @@
 
 struct DBTIMESTAMP
     {
-    SHORT year{ 0 };
-    USHORT month{ 0 };
-    USHORT day{ 0 };
-    USHORT hour{ 0 };
-    USHORT minute{ 0 };
-    USHORT second{ 0 };
-    ULONG fraction{ 0 };
+    int16_t year{ 0 };
+    uint16_t month{ 0 };
+    uint16_t day{ 0 };
+    uint16_t hour{ 0 };
+    uint16_t minute{ 0 };
+    uint16_t second{ 0 };
+    uint32_t fraction{ 0 };
     };
 
 #endif // __oledb_h__
@@ -64,16 +64,16 @@ class CFileTime : public _FILETIME
 {
     public:
 
-       static constexpr uint64_t const DecThirty1899 = 94353120000000000UI64;
+       static constexpr uint64_t const DecThirty1899 = 94353120000000000ULL;
 
        // The number of FILETIME ticks since Jan 1, 2001
-       static constexpr uint64_t const JanFirst2001                                    = 126227808000000000UI64;
+       static constexpr uint64_t const JanFirst2001                                    = 126227808000000000ULL;
 
        // The number of FILETIME ticks since Jan 1, 1970
-       static constexpr uint64_t const JanFirst1970                                    = 116444736000000000UI64;
+       static constexpr uint64_t const JanFirst1970                                    = 116444736000000000ULL;
 
        // The number of FILETIME ticks between Jan 1, 1 and Jan 1, 1601
-       static constexpr uint64_t const TicksBetween0001And1601                         = 504911232000000000I64;
+       static constexpr uint64_t const TicksBetween0001And1601                         = 504911232000000000LL;
 
        // The number of FILETIME ticks in one microsecond
        static constexpr uint64_t const OneMicrosecond                                  = 10;
@@ -82,25 +82,25 @@ class CFileTime : public _FILETIME
        static constexpr uint64_t const NumberOfTicksPerMillisecond                     = 10000;
 
        // The number of milliseconds between Windows (1601) and Unix (1970) epochs
-       static constexpr uint64_t const NumberOfMillisecondsBetweenWindowsAndUnixEpochs = 11644473600000I64;
+       static constexpr uint64_t const NumberOfMillisecondsBetweenWindowsAndUnixEpochs = 11644473600000LL;
 
        // The number of milliseconds in one minute
-       static constexpr uint64_t const NumberOfMillisecondsInOneMinute                 = 60000I64;
+       static constexpr uint64_t const NumberOfMillisecondsInOneMinute                 = 60000LL;
 
        // The number of milliseconds in one hour
-       static constexpr uint64_t const NumberOfMillisecondsInOneHour                   = 3600000I64;
+       static constexpr uint64_t const NumberOfMillisecondsInOneHour                   = 3600000LL;
 
        // The number of milliseconds in one day
-       static constexpr uint64_t const NumberOfMillisecondsInOneDay                    = 86400000I64;
+       static constexpr uint64_t const NumberOfMillisecondsInOneDay                    = 86400000LL;
 
        // The number of milliseconds in one week
-       static constexpr uint64_t const NumberOfMillisecondsInOneWeek                   = 604800000I64;
+       static constexpr uint64_t const NumberOfMillisecondsInOneWeek                   = 604800000LL;
 
        // The number of nanoseconds in one microsecond
-       static constexpr uint64_t const NumberOfNanosecondsInOneMicrosecond             = 1000I64;
+       static constexpr uint64_t const NumberOfNanosecondsInOneMicrosecond             = 1000LL;
 
        // The number of nanoseconds in one FILETIME tick
-       static constexpr uint64_t const NumberOfNanosecondsInOneFiletimeTick            = 100I64;
+       static constexpr uint64_t const NumberOfNanosecondsInOneFiletimeTick            = 100LL;
 
        // The number of microseconds in one millisecond
        static constexpr uint64_t const NumberOfMicrosecondsInOneMillisecond            = 1000;
@@ -119,13 +119,13 @@ class CFileTime : public _FILETIME
        static constexpr uint64_t const NumberOfFiletimeTicksInOneMinute                = 600000000;
 
        // The number of FILETIME ticks in one hour
-       static constexpr uint64_t const NumberOfFiletimeTicksInOneHour                  = 36000000000I64;
+       static constexpr uint64_t const NumberOfFiletimeTicksInOneHour                  = 36000000000LL;
 
        // The number of FILETIME ticks in one day
-       static constexpr uint64_t const NumberOfFiletimeTicksInOneDay                   = 864000000000I64;
+       static constexpr uint64_t const NumberOfFiletimeTicksInOneDay                   = 864000000000LL;
 
        // The number of FILETIME ticks in one year
-       static constexpr uint64_t const NumberOfFiletimeTicksInOneYear                  = 315360000000000I64;
+       static constexpr uint64_t const NumberOfFiletimeTicksInOneYear                  = 315360000000000LL;
 
        static inline constexpr _Check_return_ int64_t ConvertHoursMinutesToSeconds( _In_ int const hours, _In_ int const minutes ) noexcept
        {
@@ -151,8 +151,8 @@ class CFileTime : public _FILETIME
 
            ULARGE_INTEGER li;
 
-           li.LowPart = file_time.dwLowDateTime;
-           li.HighPart = file_time.dwHighDateTime;
+           li.u.LowPart = file_time.dwLowDateTime;
+           li.u.HighPart = file_time.dwHighDateTime;
 
            return( li.QuadPart );
        }
@@ -169,7 +169,7 @@ class CFileTime : public _FILETIME
           Copy( source );
        }
 
-       inline CFileTime(_In_ WORD ms_dos_date, _In_ WORD ms_dos_time ) noexcept
+       inline CFileTime(_In_ uint16_t ms_dos_date, _In_ uint16_t ms_dos_time ) noexcept
        {
           Copy( ms_dos_date, ms_dos_time );
        }
@@ -257,6 +257,7 @@ class CFileTime : public _FILETIME
          Empty();
       }
 
+#if ! defined(WE_ARE_BUILDING_WFC_ON_UNIX)
       inline void ToLocalTime( void ) noexcept
       {
          FILETIME local_time = { 0, 0 };
@@ -267,6 +268,7 @@ class CFileTime : public _FILETIME
             dwHighDateTime = local_time.dwHighDateTime;
          }
       }
+#endif // WE_ARE_BUILDING_WFC_ON_UNIX
 
       inline constexpr void AddSeconds( _In_ double const number_of_seconds ) noexcept
       {
@@ -277,7 +279,7 @@ class CFileTime : public _FILETIME
          ll += dwLowDateTime;
          ll += number_of_ticks;
 
-         dwLowDateTime = static_cast<DWORD>(ll);
+         dwLowDateTime = static_cast<uint32_t>(ll);
          dwHighDateTime = ll >> 32;
       }
 
@@ -317,7 +319,7 @@ class CFileTime : public _FILETIME
          return( false );
       }
 
-      inline constexpr _Check_return_ LONG Compare(_In_ CFileTime const& that ) const noexcept
+      inline constexpr _Check_return_ long Compare(_In_ CFileTime const& that ) const noexcept
       {
          // David LeBlanc (whisper@accessone.com) had problems with VC4.2
          // not compiling dynamic_cast's correctly. That is why the old-style
@@ -371,17 +373,8 @@ class CFileTime : public _FILETIME
 
          // We were passed a pointer, don't trust it
 
-         WFC_TRY
-         {
-            dwLowDateTime  = source->dwLowDateTime;
-            dwHighDateTime = source->dwHighDateTime;
-         }
-         WFC_CATCH_ALL
-         {
-            Empty();
-            return;
-         }
-         WFC_END_CATCH_ALL
+         dwLowDateTime  = source->dwLowDateTime;
+         dwHighDateTime = source->dwHighDateTime;
       }
 
       inline constexpr void Copy( _In_ FILETIME const& source ) noexcept
@@ -402,23 +395,15 @@ class CFileTime : public _FILETIME
 
          // We were passed a pointer, don't trust it
 
-         WFC_TRY
-         {
-            if ( ::SystemTimeToFileTime( source, &file_time ) != FALSE )
-            {
-               dwLowDateTime  = file_time.dwLowDateTime;
-               dwHighDateTime = file_time.dwHighDateTime;
-            }
-            else
-            {
-               Empty();
-            }
-         }
-         WFC_CATCH_ALL
-         {
-            Empty();
-         }
-         WFC_END_CATCH_ALL
+        if ( ::SystemTimeToFileTime( source, &file_time ) != FALSE )
+        {
+           dwLowDateTime  = file_time.dwLowDateTime;
+           dwHighDateTime = file_time.dwHighDateTime;
+        }
+        else
+        {
+           Empty();
+        }
       }
       
       inline void Copy(_In_ SYSTEMTIME const& source ) noexcept
@@ -436,7 +421,7 @@ class CFileTime : public _FILETIME
          }
       }
 
-      inline void Copy(_In_ WORD ms_dos_date, _In_ WORD ms_dos_time ) noexcept
+      inline void Copy(_In_ uint16_t ms_dos_date, _In_ uint16_t ms_dos_time ) noexcept
       {
           FILETIME file_time{ 0, 0 };
 
@@ -453,20 +438,20 @@ class CFileTime : public _FILETIME
 
       inline constexpr void Copy(_In_ LARGE_INTEGER const& source ) noexcept
       {
-         dwLowDateTime  = source.LowPart;
-         dwHighDateTime = source.HighPart;
+         dwLowDateTime  = source.u.LowPart;
+         dwHighDateTime = source.u.HighPart;
       }
 
       inline constexpr void Copy( _In_ LARGE_INTEGER const * source ) noexcept
       {
-         dwLowDateTime  = source->LowPart;
-         dwHighDateTime = source->HighPart;
+         dwLowDateTime  = source->u.LowPart;
+         dwHighDateTime = source->u.HighPart;
       }
 
       inline constexpr void Copy(_In_ ULARGE_INTEGER const& source ) noexcept
       {
-         dwLowDateTime  = source.LowPart;
-         dwHighDateTime = source.HighPart;
+         dwLowDateTime  = source.u.LowPart;
+         dwHighDateTime = source.u.HighPart;
       }
 
       inline constexpr void CopyTicks( _In_ uint64_t const ticks ) noexcept
@@ -475,8 +460,8 @@ class CFileTime : public _FILETIME
 
           li.QuadPart = ticks;
 
-          dwLowDateTime  = li.LowPart;
-          dwHighDateTime = li.HighPart;
+          dwLowDateTime  = li.u.LowPart;
+          dwHighDateTime = li.u.HighPart;
       }
 
       inline constexpr void CopyTicks(_In_ int64_t const ticks ) noexcept
@@ -484,14 +469,14 @@ class CFileTime : public _FILETIME
           ULARGE_INTEGER li{ { 0, 0 } };
 
          li.QuadPart = static_cast<uint64_t>(ticks);
-         dwLowDateTime  = li.LowPart;
-         dwHighDateTime = li.HighPart;
+         dwLowDateTime  = li.u.LowPart;
+         dwHighDateTime = li.u.HighPart;
       }
 
       inline constexpr void Copy(_In_ ULARGE_INTEGER const * source ) noexcept
       {
-         dwLowDateTime  = source->LowPart;
-         dwHighDateTime = source->HighPart;
+         dwLowDateTime  = source->u.LowPart;
+         dwHighDateTime = source->u.HighPart;
       }
 
       inline void Copy(_In_ TIMESTAMP_STRUCT const * source ) noexcept
@@ -519,15 +504,7 @@ class CFileTime : public _FILETIME
             return;
          }
 
-         WFC_TRY
-         {
-            Copy( *source );
-         }
-         WFC_CATCH_ALL
-         {
-            Empty();
-         }
-         WFC_END_CATCH_ALL
+         Copy( *source );
       }
 
       inline void Copy( _In_ DBTIMESTAMP const& source ) noexcept
@@ -554,20 +531,20 @@ class CFileTime : public _FILETIME
 
          // Filetime is in 100-nanosecond increments so we have to convert
 
-         DWORD const hundred_nanosecond_increments = source.fraction / 100;
+         uint32_t const hundred_nanosecond_increments = source.fraction / 100;
 
          ULARGE_INTEGER large_integer{ file_time.dwLowDateTime, file_time.dwHighDateTime };
 
          large_integer.QuadPart += hundred_nanosecond_increments;
 
-         dwLowDateTime  = large_integer.LowPart;
-         dwHighDateTime = large_integer.HighPart;
+         dwLowDateTime  = large_integer.u.LowPart;
+         dwHighDateTime = large_integer.u.HighPart;
       }
 
       inline constexpr void CopyUnixTime( _In_ time_t const unix_time ) noexcept
       {
          int64_t const ll = Int32x32To64(unix_time, CFileTime::NumberOfFiletimeTicksInOneSecond) + CFileTime::JanFirst1970;
-         dwLowDateTime = static_cast<DWORD>(ll);
+         dwLowDateTime = static_cast<uint32_t>(ll);
          dwHighDateTime = ll >> 32;
       }
 
@@ -578,21 +555,21 @@ class CFileTime : public _FILETIME
           li.QuadPart = static_cast<uint64_t>(static_cast<double>(NumberOfFiletimeTicksInOneDay) * stupid_COM_date);
           li.QuadPart += DecThirty1899;
 
-          dwHighDateTime = li.HighPart;
-          dwLowDateTime = li.LowPart;
+          dwHighDateTime = li.u.HighPart;
+          dwLowDateTime = li.u.LowPart;
       }
 
       inline void Set(_In_ int const year, _In_ int const month, _In_ int const day, _In_ int const hour, _In_ int const minute, _In_ int const second, _In_ int const milliseconds = 0 ) noexcept
       {
          CSystemTime system_time;
 
-         system_time.wYear = static_cast<WORD>(year);
-         system_time.wMonth = static_cast<WORD>(month);
-         system_time.wDay = static_cast<WORD>(day);
-         system_time.wHour = static_cast<WORD>(hour);
-         system_time.wMinute = static_cast<WORD>(minute);
-         system_time.wSecond = static_cast<WORD>(second);
-         system_time.wMilliseconds = static_cast<WORD>(milliseconds);
+         system_time.wYear = static_cast<uint16_t>(year);
+         system_time.wMonth = static_cast<uint16_t>(month);
+         system_time.wDay = static_cast<uint16_t>(day);
+         system_time.wHour = static_cast<uint16_t>(hour);
+         system_time.wMinute = static_cast<uint16_t>(minute);
+         system_time.wSecond = static_cast<uint16_t>(second);
+         system_time.wMilliseconds = static_cast<uint16_t>(milliseconds);
 
          Copy( system_time );
       }
@@ -607,7 +584,7 @@ class CFileTime : public _FILETIME
 
          ll += number_of_ticks;
 
-         dwLowDateTime = static_cast<DWORD>(ll);
+         dwLowDateTime = static_cast<uint32_t>(ll);
          dwHighDateTime = ll >> 32;
       }
 
@@ -628,8 +605,8 @@ class CFileTime : public _FILETIME
               unsigned_large_integer.QuadPart = static_cast<uint64_t>(nsdate * static_cast<double>(CFileTime::NumberOfFiletimeTicksInOneSecond)) + JanFirst2001;
           }
 
-          dwHighDateTime = unsigned_large_integer.HighPart;
-          dwLowDateTime = unsigned_large_integer.LowPart;
+          dwHighDateTime = unsigned_large_integer.u.HighPart;
+          dwLowDateTime = unsigned_large_integer.u.LowPart;
       }
 
       inline constexpr void AddTicks(_In_ int64_t const number_of_ticks ) noexcept
@@ -638,11 +615,16 @@ class CFileTime : public _FILETIME
 
           unsigned_large_integer.QuadPart += number_of_ticks;
 
-          dwHighDateTime = unsigned_large_integer.HighPart;
-          dwLowDateTime = unsigned_large_integer.LowPart;
+          dwHighDateTime = unsigned_large_integer.u.HighPart;
+          dwLowDateTime = unsigned_large_integer.u.LowPart;
       }
 
       inline constexpr void AddNanoseconds(_In_ int64_t const number_of_nanoseconds) noexcept
+      {
+          AddTicks(number_of_nanoseconds / NumberOfNanosecondsInOneFiletimeTick);
+      }
+
+      inline constexpr void AddMicroseconds(_In_ int64_t const number_of_nanoseconds) noexcept
       {
           AddTicks(number_of_nanoseconds / NumberOfNanosecondsInOneFiletimeTick);
       }
@@ -653,8 +635,8 @@ class CFileTime : public _FILETIME
 
           unsigned_large_integer.QuadPart = number_of_microseconds_since_01_Jan_1601 * NumberOfFiletimeTicksInOneMicrosecond;
 
-          dwHighDateTime = unsigned_large_integer.HighPart;
-          dwLowDateTime = unsigned_large_integer.LowPart;
+          dwHighDateTime = unsigned_large_integer.u.HighPart;
+          dwLowDateTime = unsigned_large_integer.u.LowPart;
       }
 
       inline constexpr void CopyPRTime(_In_ uint64_t const pr_time ) noexcept
@@ -663,7 +645,7 @@ class CFileTime : public _FILETIME
 
           integer += JanFirst1970;
 
-          dwLowDateTime = static_cast<DWORD>(integer);
+          dwLowDateTime = static_cast<uint32_t>(integer);
           dwHighDateTime = integer >> 32;
       }
 
@@ -675,19 +657,21 @@ class CFileTime : public _FILETIME
           unsigned_large_integer.QuadPart *= NumberOfTicksPerMillisecond;
           unsigned_large_integer.QuadPart += JanFirst1970;
 
-          dwHighDateTime = unsigned_large_integer.HighPart;
-          dwLowDateTime = unsigned_large_integer.LowPart;
+          dwHighDateTime = unsigned_large_integer.u.HighPart;
+          dwLowDateTime = unsigned_large_integer.u.LowPart;
       }
 
 #if ! defined( WFC_STL )
       void CopyTo( COleDateTime& destination ) const noexcept;
 #endif // WFC_STL
 
+#if ! defined( WE_ARE_BUILDING_WFC_ON_UNIX )
       inline void CopyTo( _Out_ CTime& destination ) const noexcept
       {
          CSystemTime system_time( this );
          system_time.CopyTo( destination );
       }
+#endif // WE_ARE_BUILDING_WFC_ON_UNIX
 
       inline void CopyTo( _Out_ DBTIMESTAMP&  destination ) const noexcept
       {
@@ -714,7 +698,7 @@ class CFileTime : public _FILETIME
 
          ULARGE_INTEGER const large_integer{ dwLowDateTime, dwHighDateTime };
 
-         destination.fraction = ( static_cast<DWORD>( large_integer.QuadPart % 10000000 ) ) * 100;
+         destination.fraction = ( static_cast<uint32_t>( large_integer.QuadPart % 10000000 ) ) * 100;
       }
 
       inline void CopyTo( _Out_ TIMESTAMP_STRUCT& destination ) const noexcept
@@ -742,13 +726,14 @@ class CFileTime : public _FILETIME
 
          ULARGE_INTEGER large_integer;
 
-         large_integer.LowPart  = dwLowDateTime;
-         large_integer.HighPart = dwHighDateTime;
+         large_integer.u.LowPart  = dwLowDateTime;
+         large_integer.u.HighPart = dwHighDateTime;
 
-         destination.fraction = ( static_cast<DWORD>( large_integer.QuadPart % 10000000 ) ) * 100;
+         destination.fraction = ( static_cast<uint32_t>( large_integer.QuadPart % 10000000 ) ) * 100;
       }
 
-      inline void CopyTo( _Out_ WORD& ms_dos_date, _Out_ WORD& ms_dos_time ) const noexcept
+#if ! defined(WE_ARE_BUILDING_WFC_ON_UNIX)
+      inline void CopyTo( _Out_ uint16_t& ms_dos_date, _Out_ uint16_t& ms_dos_time ) const noexcept
       {
          // CoFileTimeToDosDateTime() is not const correct. To prevent
          // the children at Microsoft from harming us, we will copy
@@ -777,6 +762,8 @@ class CFileTime : public _FILETIME
 
          return( unix_time.GetTime() );
       }
+
+#endif // WE_ARE_BUILDING_WFC_ON_UNIX
 
       inline constexpr void CopyTo( _Out_ FILETIME& destination ) const noexcept
       {
@@ -819,7 +806,7 @@ class CFileTime : public _FILETIME
       // This gives you the FILETIME ticks as a sixty-four bit integer.
       inline constexpr _Check_return_ int64_t Ticks( void ) const noexcept
       {
-         LARGE_INTEGER const return_value{ dwLowDateTime, static_cast<LONG>(dwHighDateTime) };
+         LARGE_INTEGER const return_value{ dwLowDateTime, static_cast<int32_t>(dwHighDateTime) };
 
          return( return_value.QuadPart );
       }
@@ -893,7 +880,7 @@ class CFileTime : public _FILETIME
 
       inline constexpr operator LARGE_INTEGER() const noexcept
       {
-          LARGE_INTEGER return_value{ dwLowDateTime, static_cast<LONG>(dwHighDateTime) };
+          LARGE_INTEGER return_value{ dwLowDateTime, static_cast<int32_t>(dwHighDateTime) };
 
          return( return_value );
       }

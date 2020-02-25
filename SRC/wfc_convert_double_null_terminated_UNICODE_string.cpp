@@ -51,9 +51,7 @@ static char THIS_FILE[] = __FILE__;
 #define new DEBUG_NEW
 #endif // _DEBUG
 
-USING_WFC_NAMESPACE
-
-void PASCAL Win32FoundationClasses::wfc_convert_double_null_terminated_UNICODE_string(_In_ WORD const * buffer, _Inout_ std::vector<std::wstring>& string_array) noexcept
+void Win32FoundationClasses::wfc_convert_double_null_terminated_UNICODE_string(_In_ WORD const * buffer, _Inout_ std::vector<std::wstring>& string_array) noexcept
 {
     // Always start with a virgin array
     string_array.clear();
@@ -88,7 +86,7 @@ void PASCAL Win32FoundationClasses::wfc_convert_double_null_terminated_UNICODE_s
         WFC_END_CATCH_ALL
 }
 
-void PASCAL Win32FoundationClasses::wfc_read_string_array(_In_ wchar_t const * const buffer, _In_ std::size_t const number_of_characters, _Inout_ std::vector<std::wstring>& string_array) noexcept
+void Win32FoundationClasses::wfc_read_string_array(_In_ wchar_t const * const buffer, _In_ std::size_t const number_of_characters, _Inout_ std::vector<std::wstring>& string_array) noexcept
 {
     // Always start with a virgin array
     string_array.clear();
@@ -123,7 +121,7 @@ void PASCAL Win32FoundationClasses::wfc_read_string_array(_In_ wchar_t const * c
 }
 
 #if 0
-void PASCAL Win32FoundationClasses::wfc_convert_double_null_terminated_UNICODE_string( __in WORD const * buffer, __inout std::vector<std::wstring> & string_array ) noexcept
+void Win32FoundationClasses::wfc_convert_double_null_terminated_UNICODE_string( _In_ WORD const * buffer, __inout std::vector<std::wstring> & string_array ) noexcept
 {
    // Always start with a virgin array
    string_array.RemoveAll();

@@ -51,11 +51,9 @@ static char THIS_FILE[] = __FILE__;
 #define new DEBUG_NEW
 #endif // _DEBUG
 
-USING_WFC_NAMESPACE
-
 // Construction
 
-COverlapped::COverlapped()
+Win32FoundationClasses::COverlapped::COverlapped()
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -67,7 +65,7 @@ COverlapped::COverlapped()
    m_AutomaticallyDelete = true;
 }
 
-COverlapped::COverlapped( __in OVERLAPPED const * source )
+Win32FoundationClasses::COverlapped::COverlapped( _In_ OVERLAPPED const * source )
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
@@ -82,7 +80,7 @@ COverlapped::COverlapped( __in OVERLAPPED const * source )
    Copy( source );
 }
 
-COverlapped::COverlapped( __in OVERLAPPED const& source )
+Win32FoundationClasses::COverlapped::COverlapped( _In_ OVERLAPPED const& source )
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -96,7 +94,7 @@ COverlapped::COverlapped( __in OVERLAPPED const& source )
    Copy( source );
 }
 
-COverlapped::COverlapped( __in COverlapped const& source )
+Win32FoundationClasses::COverlapped::COverlapped( _In_ Win32FoundationClasses::COverlapped const& source )
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -110,7 +108,7 @@ COverlapped::COverlapped( __in COverlapped const& source )
    Copy( source );
 }
 
-COverlapped::~COverlapped()
+Win32FoundationClasses::COverlapped::~COverlapped()
 {
    WFC_VALIDATE_POINTER( this );
    Empty();
@@ -118,7 +116,7 @@ COverlapped::~COverlapped()
 
 // Methods
 
-void COverlapped::Copy( __in COverlapped const& source ) noexcept
+void Win32FoundationClasses::COverlapped::Copy( _In_ COverlapped const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -132,7 +130,7 @@ void COverlapped::Copy( __in COverlapped const& source ) noexcept
    SetAutomaticallyDelete( false );
 }
 
-void COverlapped::Copy( __in OVERLAPPED const * source ) noexcept
+void Win32FoundationClasses::COverlapped::Copy( _In_ OVERLAPPED const * source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
@@ -157,7 +155,7 @@ void COverlapped::Copy( __in OVERLAPPED const * source ) noexcept
    WFC_END_CATCH_ALL
 }
 
-void COverlapped::Copy( __in OVERLAPPED const& source ) noexcept
+void Win32FoundationClasses::COverlapped::Copy( _In_ OVERLAPPED const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -166,7 +164,7 @@ void COverlapped::Copy( __in OVERLAPPED const& source ) noexcept
    Copy( &source );
 }
 
-void COverlapped::Empty( void ) noexcept
+void Win32FoundationClasses::COverlapped::Empty( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -183,13 +181,13 @@ void COverlapped::Empty( void ) noexcept
    hEvent = static_cast< HANDLE >( NULL );
 }
 
-void COverlapped::SetAutomaticallyDelete( __in bool const automatically_delete ) noexcept
+void Win32FoundationClasses::COverlapped::SetAutomaticallyDelete( _In_ bool const automatically_delete ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    m_AutomaticallyDelete = automatically_delete;
 }
 
-void COverlapped::SetEvent( __in HANDLE new_event_handle ) noexcept
+void Win32FoundationClasses::COverlapped::SetEvent( _In_ HANDLE new_event_handle ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -207,14 +205,14 @@ void COverlapped::SetEvent( __in HANDLE new_event_handle ) noexcept
 
 // Operators
 
-_Check_return_ COverlapped& COverlapped::operator=( __in COverlapped const& source ) noexcept
+_Check_return_ Win32FoundationClasses::COverlapped& Win32FoundationClasses::COverlapped::operator=( _In_ Win32FoundationClasses::COverlapped const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );
    return( *this );
 }
 
-_Check_return_ COverlapped& COverlapped::operator=( __in OVERLAPPED const& source ) noexcept
+_Check_return_ Win32FoundationClasses::COverlapped& Win32FoundationClasses::COverlapped::operator=( _In_ OVERLAPPED const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );

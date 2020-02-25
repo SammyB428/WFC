@@ -51,11 +51,9 @@ static char THIS_FILE[] = __FILE__;
 #define new DEBUG_NEW
 #endif // _DEBUG
 
-USING_WFC_NAMESPACE
-
 // This is a C++ class based on the Microsoft Knowledge Base article Q165721
 
-CVolume::CVolume()
+Win32FoundationClasses::CVolume::CVolume()
 {
    WFC_VALIDATE_POINTER( this );
    m_Handle      = static_cast< HANDLE >( INVALID_HANDLE_VALUE );
@@ -63,13 +61,13 @@ CVolume::CVolume()
    m_DriveType   = DRIVE_UNKNOWN;
 }
 
-CVolume::~CVolume()
+Win32FoundationClasses::CVolume::~CVolume()
 {
    WFC_VALIDATE_POINTER( this );
    (void) Close();
 }
 
-_Check_return_ bool CVolume::AutomaticallyEject( void ) noexcept
+_Check_return_ bool Win32FoundationClasses::CVolume::AutomaticallyEject( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -93,7 +91,7 @@ _Check_return_ bool CVolume::AutomaticallyEject( void ) noexcept
    return( return_value == FALSE ? false : true );
 }
 
-_Check_return_ bool CVolume::Close( void ) noexcept
+_Check_return_ bool Win32FoundationClasses::CVolume::Close( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -111,7 +109,7 @@ _Check_return_ bool CVolume::Close( void ) noexcept
    return( true );
 }
 
-_Check_return_ bool CVolume::Dismount( void ) noexcept
+_Check_return_ bool Win32FoundationClasses::CVolume::Dismount( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -136,7 +134,7 @@ _Check_return_ bool CVolume::Dismount( void ) noexcept
 
 #if defined( _DEBUG ) && ! defined( WFC_NO_DUMPING )
 
-void CVolume::Dump( CDumpContext& dump_context ) const
+void Win32FoundationClasses::CVolume::Dump( CDumpContext& dump_context ) const
 {
    dump_context << TEXT( "a CVolume at " ) << (VOID *) this << TEXT( "\n{\n" );
 
@@ -203,7 +201,7 @@ void CVolume::Dump( CDumpContext& dump_context ) const
 
 #endif // _DEBUG
 
-_Check_return_ bool CVolume::Eject( void ) noexcept
+_Check_return_ bool Win32FoundationClasses::CVolume::Eject( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -239,13 +237,13 @@ _Check_return_ bool CVolume::Eject( void ) noexcept
    return( true );
 }
 
-_Check_return_ HANDLE CVolume::GetHandle( void ) const noexcept
+_Check_return_ HANDLE Win32FoundationClasses::CVolume::GetHandle( void ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
    return( m_Handle );
 }
 
-_Check_return_ bool CVolume::GetType( __out UINT& drive_type ) noexcept
+_Check_return_ bool Win32FoundationClasses::CVolume::GetType( _Out_ UINT& drive_type ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -260,7 +258,7 @@ _Check_return_ bool CVolume::GetType( __out UINT& drive_type ) noexcept
    return( true );
 }
 
-_Check_return_ bool CVolume::Load( void ) noexcept
+_Check_return_ bool Win32FoundationClasses::CVolume::Load( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -284,7 +282,7 @@ _Check_return_ bool CVolume::Load( void ) noexcept
    return( return_value == FALSE ? false : true );
 }
 
-_Check_return_ bool CVolume::Lock( void ) noexcept
+_Check_return_ bool Win32FoundationClasses::CVolume::Lock( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -319,7 +317,7 @@ _Check_return_ bool CVolume::Lock( void ) noexcept
    return( false );
 }
 
-_Check_return_ bool CVolume::Open( _In_ TCHAR const drive_letter ) noexcept
+_Check_return_ bool Win32FoundationClasses::CVolume::Open( _In_ TCHAR const drive_letter ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -376,7 +374,7 @@ _Check_return_ bool CVolume::Open( _In_ TCHAR const drive_letter ) noexcept
    return( true );
 }
 
-_Check_return_ bool CVolume::PreventRemoval( __in bool const prevent_removal ) noexcept
+_Check_return_ bool Win32FoundationClasses::CVolume::PreventRemoval( _In_ bool const prevent_removal ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -405,7 +403,7 @@ _Check_return_ bool CVolume::PreventRemoval( __in bool const prevent_removal ) n
    return(return_value == FALSE ? false : true );
 }
 
-_Check_return_ bool CVolume::Unlock( void ) noexcept
+_Check_return_ bool Win32FoundationClasses::CVolume::Unlock( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 

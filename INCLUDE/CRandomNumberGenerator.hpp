@@ -60,7 +60,7 @@ class CRandomNumberGenerator
    public:
 
       CRandomNumberGenerator();
-      CRandomNumberGenerator( __in DWORD new_seed );
+      CRandomNumberGenerator( _In_ DWORD new_seed );
      ~CRandomNumberGenerator();
 
       /*
@@ -70,7 +70,7 @@ class CRandomNumberGenerator
       _Check_return_ DWORD  GetInteger( void ) noexcept;
       _Check_return_ double GetFloat( void ) noexcept;
       void   InitializeSeed( void ) noexcept;
-      void   SetSeed( __in DWORD new_seed ) noexcept;
+      void   SetSeed( _In_ DWORD new_seed ) noexcept;
 
       operator char() noexcept;
       operator unsigned char() noexcept;

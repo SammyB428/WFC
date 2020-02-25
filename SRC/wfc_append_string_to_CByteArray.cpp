@@ -51,14 +51,12 @@ static char THIS_FILE[] = __FILE__;
 #define new DEBUG_NEW
 #endif // _DEBUG
 
-USING_WFC_NAMESPACE
-
-void PASCAL Win32FoundationClasses::wfc_append_string_to_byte_array( _In_ std::wstring const& string_to_append, __out std::vector<uint8_t>& bytes ) noexcept
+void Win32FoundationClasses::wfc_append_string_to_byte_array( _In_ std::wstring const& string_to_append, _Out_ std::vector<uint8_t>& bytes ) noexcept
 {
    wfc_append_unicode_string_to_byte_array( string_to_append.c_str(), bytes );
 }
 
-void PASCAL Win32FoundationClasses::wfc_append_ascii_string_to_byte_array( __in_z char const * string_to_append, __inout std::vector<uint8_t>& bytes ) noexcept
+void Win32FoundationClasses::wfc_append_ascii_string_to_byte_array( __in_z char const * string_to_append, __inout std::vector<uint8_t>& bytes ) noexcept
 {
    std::size_t const string_length = strlen( string_to_append );
    std::size_t const original_array_size = bytes.size();
@@ -70,7 +68,7 @@ void PASCAL Win32FoundationClasses::wfc_append_ascii_string_to_byte_array( __in_
    CopyMemory( &buffer[ original_array_size ], string_to_append, string_length );
 }
 
-void PASCAL Win32FoundationClasses::wfc_append_unicode_string_to_byte_array( __in_z wchar_t const * string_to_append, __inout std::vector<uint8_t>& bytes ) noexcept
+void Win32FoundationClasses::wfc_append_unicode_string_to_byte_array( __in_z wchar_t const * string_to_append, __inout std::vector<uint8_t>& bytes ) noexcept
 {
    std::size_t const string_length = wcslen( string_to_append ) * sizeof( wchar_t );
    std::size_t const original_array_size = bytes.size();

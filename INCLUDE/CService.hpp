@@ -69,10 +69,10 @@ class CService
 
        static CService* m_StaticService_p;
 
-      CService(__in CService const&) = delete;
-      CService& operator=(__in CService const&) = delete;
+      CService(_In_ CService const&) = delete;
+      CService& operator=(_In_ CService const&) = delete;
 
-      CService( __callback LPTHREAD_START_ROUTINE thread_start_routine, __in DWORD const accepted_controls = ACCEPT_FLAGS, __in DWORD const wait_hint = 30011 ) noexcept;
+      CService( __callback LPTHREAD_START_ROUTINE thread_start_routine, _In_ DWORD const accepted_controls = ACCEPT_FLAGS, _In_ DWORD const wait_hint = 30011 ) noexcept;
 
       /*
       ** Destructor should be virtual according to MSJ article in Sept 1992
@@ -84,37 +84,37 @@ class CService
       std::vector<std::wstring> CommandLineParameters;
 
       static _Check_return_ HANDLE CreateConfigurationFile( __in_z LPCTSTR filename ) noexcept;
-      static _Check_return_ bool   SpawnProcess( __in_z LPCTSTR command_line, __in_z LPCTSTR current_directory, __out DWORD& last_error ) noexcept;
+      static _Check_return_ bool   SpawnProcess( __in_z LPCTSTR command_line, __in_z LPCTSTR current_directory, _Out_ DWORD& last_error ) noexcept;
 
       virtual _Check_return_ bool Initialize( __in_z LPCWSTR name_of_service ) noexcept;
-      void LogEvent( __in WORD event_type = EVENTLOG_ERROR_TYPE, __in_z_opt LPCTSTR message_string = nullptr, __in DWORD error_code = NO_ERROR ) noexcept;
-      virtual _Check_return_ INT_PTR DialogBoxParam( __in HINSTANCE instance, __in_z LPCTSTR template_name, __in HWND parent_window, __callback DLGPROC dialogbox_procedure, __in LPARAM lParam = 0 ) noexcept;
+      void LogEvent( _In_ WORD event_type = EVENTLOG_ERROR_TYPE, __in_z_opt LPCTSTR message_string = nullptr, _In_ DWORD error_code = NO_ERROR ) noexcept;
+      virtual _Check_return_ INT_PTR DialogBoxParam( _In_ HINSTANCE instance, __in_z LPCTSTR template_name, _In_ HWND parent_window, __callback DLGPROC dialogbox_procedure, _In_ LPARAM lParam = 0 ) noexcept;
 
       // 2012-05-128 - MessageBox gets #defined to MessageBoxW which causes problems in managed C++ builds
-      virtual _Check_return_ int ShowMessageBox( __in_z_opt LPCTSTR text, __in_z_opt LPCTSTR caption, __in UINT type ) noexcept;
+      virtual _Check_return_ int ShowMessageBox( __in_z_opt LPCTSTR text, __in_z_opt LPCTSTR caption, _In_ UINT type ) noexcept;
 
       /// <summary>Sets the parameter used in the OnxxxCallback methods</summary>
-      inline constexpr void SetCallbackParameter( __in void * parameter ) noexcept
+      inline constexpr void SetCallbackParameter( _In_ void * parameter ) noexcept
       {
          m_ServiceControlManagerCallbackParameter = parameter;
       }
 
-      inline constexpr void SetOnShutdownCallback( __in SERVICE_CONTROL_MANAGER_MESSAGE_CALLBACK callback ) noexcept
+      inline constexpr void SetOnShutdownCallback( _In_ SERVICE_CONTROL_MANAGER_MESSAGE_CALLBACK callback ) noexcept
       {
          m_OnShutdown = callback;
       }
 
-      inline constexpr void SetOnStopcallback( __in SERVICE_CONTROL_MANAGER_MESSAGE_CALLBACK callback ) noexcept
+      inline constexpr void SetOnStopcallback( _In_ SERVICE_CONTROL_MANAGER_MESSAGE_CALLBACK callback ) noexcept
       {
          m_OnStop = callback;
       }
 
-      inline constexpr void SetOnPauseCallback( __in SERVICE_CONTROL_MANAGER_MESSAGE_CALLBACK callback ) noexcept
+      inline constexpr void SetOnPauseCallback( _In_ SERVICE_CONTROL_MANAGER_MESSAGE_CALLBACK callback ) noexcept
       {
          m_OnPause = callback;
       }
 
-      inline constexpr void SetOnContinueCallback( __in SERVICE_CONTROL_MANAGER_MESSAGE_CALLBACK callback ) noexcept
+      inline constexpr void SetOnContinueCallback( _In_ SERVICE_CONTROL_MANAGER_MESSAGE_CALLBACK callback ) noexcept
       {
          m_OnContinue = callback;
       }
@@ -161,11 +161,11 @@ class CService
 
       virtual void Exit( void ) noexcept;
 
-      virtual _Check_return_ bool SendStatusToServiceControlManager( __in DWORD current_state,
-                                                      __in DWORD win32_exit_code = NO_ERROR,
-                                                      __in DWORD check_point = 0, 
-                                                      __in DWORD wait_hint = 0,
-                                                      __in DWORD service_specific_code = NO_ERROR ) noexcept;
+      virtual _Check_return_ bool SendStatusToServiceControlManager( _In_ DWORD current_state,
+                                                      _In_ DWORD win32_exit_code = NO_ERROR,
+                                                      _In_ DWORD check_point = 0, 
+                                                      _In_ DWORD wait_hint = 0,
+                                                      _In_ DWORD service_specific_code = NO_ERROR ) noexcept;
 
 #if defined ( _DEBUG )
       virtual void AssertValid( void ) const;

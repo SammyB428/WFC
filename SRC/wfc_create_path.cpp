@@ -51,7 +51,6 @@ static char THIS_FILE[] = __FILE__;
 #define new DEBUG_NEW
 #endif // _DEBUG
 
-USING_WFC_NAMESPACE
 static bool inline _Check_return_ does_directory_exist( __in_z LPCTSTR full_path ) noexcept
 {
    auto directory_handle = CreateFileW( full_path,
@@ -90,7 +89,7 @@ static bool inline _Check_return_ does_wide_directory_exist( __in_z wchar_t cons
    return( true );
 }
 
-_Check_return_ bool PASCAL Win32FoundationClasses::wfc_create_path( __in_z LPCTSTR path_name, __in_opt LPSECURITY_ATTRIBUTES const security_attributes_p ) noexcept
+_Check_return_ bool Win32FoundationClasses::wfc_create_path( __in_z LPCTSTR path_name, __in_opt LPSECURITY_ATTRIBUTES const security_attributes_p ) noexcept
 {
    WFC_TRY
    {
@@ -195,7 +194,7 @@ _Check_return_ bool PASCAL Win32FoundationClasses::wfc_create_path( __in_z LPCTS
    WFC_END_CATCH_ALL
 }
 
-_Check_return_ bool PASCAL Win32FoundationClasses::wfc_create_wide_path( _In_z_ wchar_t const * path_name, _In_opt_ LPSECURITY_ATTRIBUTES const security_attributes_p ) noexcept
+_Check_return_ bool Win32FoundationClasses::wfc_create_wide_path( _In_z_ wchar_t const * path_name, _In_opt_ LPSECURITY_ATTRIBUTES const security_attributes_p ) noexcept
 {
    WFC_TRY
    {

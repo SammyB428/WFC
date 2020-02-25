@@ -58,9 +58,9 @@ _Check_return_ bool test_CNetWorkstation( _Out_ std::string& class_name, _Out_ i
 
    test_number_that_failed = 1;
 
-   CNetWorkstation workstation; // Test this workstation
+   Win32FoundationClasses::CNetWorkstation workstation; // Test this workstation
 
-   CWorkstationInformation workstation_information;
+   Win32FoundationClasses::CWorkstationInformation workstation_information;
 
    if ( workstation.EnumerateInformation() == true )
    {
@@ -92,7 +92,7 @@ _Check_return_ bool test_CNetWorkstation( _Out_ std::string& class_name, _Out_ i
    }
 #endif
 
-   CWorkstationUser user_information;
+   Win32FoundationClasses::CWorkstationUser user_information;
 
    if ( workstation.EnumerateUsers() == true )
    {
@@ -153,12 +153,12 @@ _Check_return_ bool test_CNetWorkstation( _Out_ std::string& class_name, _Out_ i
 
       std::wstring error_message;
 
-      Convert_NERR_Code_to_String( error_code, error_message );
+      Win32FoundationClasses::Convert_NERR_Code_to_String( error_code, error_message );
 
       _tprintf( TEXT( "CNetWorkstation.GetCurrentUser( user_information ), ErrorCode == %d \"%s\"\n" ), error_code, error_message.c_str());
    }
 
-   CWorkstationTransport transport_information;
+   Win32FoundationClasses::CWorkstationTransport transport_information;
 
    if ( workstation.EnumerateTransports() == true )
    {

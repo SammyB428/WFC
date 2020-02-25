@@ -57,18 +57,16 @@
 static char THIS_FILE[] = __FILE__;
 #endif // _DEBUG
 
-USING_WFC_NAMESPACE
-
 // Construction
 
-CCryptography::CCryptography() noexcept
+Win32FoundationClasses::CCryptography::CCryptography() noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
    m_ErrorCode = 0;
 }
 
-CCryptography::~CCryptography() noexcept
+Win32FoundationClasses::CCryptography::~CCryptography() noexcept
 {
    WFC_VALIDATE_POINTER( this );
 

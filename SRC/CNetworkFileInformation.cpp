@@ -50,38 +50,36 @@
 static char THIS_FILE[] = __FILE__;
 #endif // _DEBUG
 
-USING_WFC_NAMESPACE
-
 #if defined( _DEBUG ) && defined( _INC_CRTDBG )
 #define new DEBUG_NEW
 #endif // _DEBUG
 
-CNetworkFileInformation::CNetworkFileInformation()
+Win32FoundationClasses::CNetworkFileInformation::CNetworkFileInformation()
 {
    WFC_VALIDATE_POINTER( this );
    m_Initialize();
 }
 
-CNetworkFileInformation::CNetworkFileInformation( __in FILE_INFO_3 const * source )
+Win32FoundationClasses::CNetworkFileInformation::CNetworkFileInformation( _In_ FILE_INFO_3 const * source )
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
    Copy( source );
 }
 
-CNetworkFileInformation::CNetworkFileInformation( __in CNetworkFileInformation const& source )
+Win32FoundationClasses::CNetworkFileInformation::CNetworkFileInformation( _In_ Win32FoundationClasses::CNetworkFileInformation const& source )
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );
 }
 
-CNetworkFileInformation::~CNetworkFileInformation()
+Win32FoundationClasses::CNetworkFileInformation::~CNetworkFileInformation()
 {
    WFC_VALIDATE_POINTER( this );
    m_Initialize();
 }
 
-void CNetworkFileInformation::Copy( __in FILE_INFO_3 const * source ) noexcept
+void Win32FoundationClasses::CNetworkFileInformation::Copy( _In_ FILE_INFO_3 const * source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
@@ -111,7 +109,7 @@ void CNetworkFileInformation::Copy( __in FILE_INFO_3 const * source ) noexcept
    WFC_END_CATCH_ALL
 }
 
-void CNetworkFileInformation::Copy( __in CNetworkFileInformation const& source ) noexcept
+void Win32FoundationClasses::CNetworkFileInformation::Copy( _In_ Win32FoundationClasses::CNetworkFileInformation const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    ASSERT( this != &source );
@@ -132,13 +130,13 @@ void CNetworkFileInformation::Copy( __in CNetworkFileInformation const& source )
    UserName.assign(source.UserName);
 }
 
-void CNetworkFileInformation::Empty( void ) noexcept
+void Win32FoundationClasses::CNetworkFileInformation::Empty( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    m_Initialize();
 }
 
-void CNetworkFileInformation::m_Initialize( void ) noexcept
+void Win32FoundationClasses::CNetworkFileInformation::m_Initialize( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -149,7 +147,7 @@ void CNetworkFileInformation::m_Initialize( void ) noexcept
    NumberOfLocks = 0;
 }
 
-CNetworkFileInformation const& CNetworkFileInformation::operator = ( __in CNetworkFileInformation const& source ) noexcept
+Win32FoundationClasses::CNetworkFileInformation const& Win32FoundationClasses::CNetworkFileInformation::operator = ( _In_ Win32FoundationClasses::CNetworkFileInformation const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    ASSERT( this != &source );
