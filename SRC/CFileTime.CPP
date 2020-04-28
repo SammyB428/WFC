@@ -65,30 +65,30 @@ void Win32FoundationClasses::CFileTime::CopyTo( COleDateTime& destination ) cons
 
 _Check_return_ std::wstring Win32FoundationClasses::CFileTime::SQLDate(void) const noexcept
 {
-    CSystemTime stime( this );
+    Win32FoundationClasses::CSystemTime stime( this );
 
     std::wstring return_value;
-    format( return_value, L"%04d-%02d-%02d", (int) stime.wYear, (int) stime.wMonth, (int) stime.wDay );
+    Win32FoundationClasses::format( return_value, L"%04d-%02d-%02d", (int) stime.wYear, (int) stime.wMonth, (int) stime.wDay );
 
     return( return_value );
 }
 
 _Check_return_ std::wstring Win32FoundationClasses::CFileTime::SQLTime(void) const noexcept
 {
-    CSystemTime stime( this );
+    Win32FoundationClasses::CSystemTime stime( this );
 
     std::wstring return_value;
-    format( return_value, L"%02d:%02d:%02d", (int) stime.wHour, (int) stime.wMinute, (int) stime.wSecond );
+    Win32FoundationClasses::format( return_value, L"%02d:%02d:%02d", (int) stime.wHour, (int) stime.wMinute, (int) stime.wSecond );
 
     return( return_value );
 }
 
 _Check_return_ std::wstring Win32FoundationClasses::CFileTime::SQLTimestamp(void) const noexcept
 {
-    CSystemTime stime( this );
+    Win32FoundationClasses::CSystemTime stime( this );
 
     std::wstring return_value;
-    format( return_value, L"%04d-%02d-%02d %02d:%02d:%02d", (int) stime.wYear, (int) stime.wMonth, (int) stime.wDay, (int) stime.wHour, (int) stime.wMinute, (int) stime.wSecond );
+    Win32FoundationClasses::format( return_value, L"%04d-%02d-%02d %02d:%02d:%02d", (int) stime.wYear, (int) stime.wMonth, (int) stime.wDay, (int) stime.wHour, (int) stime.wMinute, (int) stime.wSecond );
 
     return( return_value );
 }
@@ -98,7 +98,7 @@ void Win32FoundationClasses::CFileTime::ISO8601(_Out_ std::wstring& return_value
     uint64_t const this_time = AsTicks();
     uint64_t const microsecond_remainder = (this_time % CFileTime::NumberOfFiletimeTicksInOneSecond) / CFileTime::NumberOfFiletimeTicksInOneMicrosecond;
 
-    CSystemTime stime(this);
+    Win32FoundationClasses::CSystemTime stime(this);
 
     if (microsecond_remainder > 0)
     {
@@ -120,7 +120,7 @@ void Win32FoundationClasses::CFileTime::ISO8601(_Out_ std::wstring& return_value
 
         return_value.append(seconds_part);
 
-        trim_right(return_value, '0');
+        Win32FoundationClasses::trim_right(return_value, '0');
         return_value.push_back('Z');
     }
     else
@@ -136,7 +136,7 @@ _Check_return_ std::wstring Win32FoundationClasses::CFileTime::PostgreSQLTimesta
     uint64_t const this_time = AsTicks();
     uint64_t const microsecond_remainder = ( this_time % CFileTime::NumberOfFiletimeTicksInOneSecond) / CFileTime::NumberOfFiletimeTicksInOneMicrosecond;
 
-    CSystemTime stime;
+    Win32FoundationClasses::CSystemTime stime;
 
     stime.Copy( *this );
 
@@ -146,11 +146,11 @@ _Check_return_ std::wstring Win32FoundationClasses::CFileTime::PostgreSQLTimesta
 
         fractional_part += (double) stime.wSecond;
 
-        format(return_value, L"%04d-%02d-%02d %02d:%02d:", (int)stime.wYear, (int)stime.wMonth, (int)stime.wDay, (int)stime.wHour, (int)stime.wMinute);
+        Win32FoundationClasses::format(return_value, L"%04d-%02d-%02d %02d:%02d:", (int)stime.wYear, (int)stime.wMonth, (int)stime.wDay, (int)stime.wHour, (int)stime.wMinute);
 
         std::wstring seconds_part;
 
-        format(seconds_part, L"%02.6lf", fractional_part);
+        Win32FoundationClasses::format(seconds_part, L"%02.6lf", fractional_part);
 
         if (seconds_part.at(1) == '.')
         {
@@ -160,11 +160,11 @@ _Check_return_ std::wstring Win32FoundationClasses::CFileTime::PostgreSQLTimesta
 
         return_value.append(seconds_part);
 
-        trim_right( return_value, '0' );
+        Win32FoundationClasses::trim_right( return_value, '0' );
     }
     else
     {
-        format( return_value, L"%04d-%02d-%02d %02d:%02d:%02d", (int) stime.wYear, (int) stime.wMonth, (int) stime.wDay, (int) stime.wHour, (int) stime.wMinute, (int) stime.wSecond );
+        Win32FoundationClasses::format( return_value, L"%04d-%02d-%02d %02d:%02d:%02d", (int) stime.wYear, (int) stime.wMonth, (int) stime.wDay, (int) stime.wHour, (int) stime.wMinute, (int) stime.wSecond );
     }
 
     return( return_value );

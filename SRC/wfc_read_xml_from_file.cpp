@@ -72,7 +72,7 @@ _Check_return_ bool Win32FoundationClasses::wfc_read_xml_from_file(_In_ std::wst
 
         CFile64 input_file;
 
-        if ( input_file.Open( filename, static_cast<UINT>(CFile64::OpenFlags::modeRead) ) != FALSE )
+        if ( input_file.Open( filename, static_cast<UINT>(CFile64::OpenFlags::modeRead) ) == true )
         {
             return( input_file.Read( document ) );
         }

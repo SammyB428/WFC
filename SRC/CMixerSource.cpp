@@ -87,7 +87,7 @@ _Check_return_ bool Win32FoundationClasses::CMixerSource::GetControl( _Out_ Win3
 
    std::vector<CMixerControl> controls_array;
 
-   if ( m_Mixer.GetAllControls( m_MixerLine, controls_array ) != FALSE )
+   if ( m_Mixer.GetAllControls( m_MixerLine, controls_array ) == true )
    {
       for ( auto const& entry : controls_array )
       {

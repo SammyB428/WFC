@@ -45,7 +45,7 @@
 
 #define DATA_MEMORY_CLASS_HEADER
 
-class CDataMemory : public CDataFile
+class CDataMemory final : public CDataFile
 {
    protected:
 

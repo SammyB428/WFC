@@ -96,7 +96,7 @@ enum class WFC_KWAIT_REASON : uint32_t
 
 struct WFC_SYSTEM_THREAD
 {
-    ULONGLONG        KernelTime{ 0 };
+   ULONGLONG        KernelTime{ 0 };
    ULONGLONG        UserTime{ 0 };
    ULONGLONG        CreateTime{ 0 };
    DWORD            WaitTime{ 0 };

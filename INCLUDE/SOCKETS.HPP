@@ -151,7 +151,7 @@ class CSimpleSocket : public CDummyFile
 
       SOCKET m_SocketID{ 0 };
 
-      TCHAR m_StringReadTerminatorCharacter{ 0 };
+      wchar_t m_StringReadTerminatorCharacter{ 0 };
 
       DWORD m_Options{ 0 };
 
