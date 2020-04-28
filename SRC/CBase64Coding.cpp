@@ -68,7 +68,7 @@ static inline constexpr _Check_return_ uint8_t __get_character( _In_reads_( size
       return_value = buffer[ index ];
       index++;
    }
-   while( return_value != END_OF_BASE64_ENCODED_DATA and
+   while( return_value not_eq END_OF_BASE64_ENCODED_DATA and
           decoder_table[ return_value ] == BASE64_IGNORABLE_CHARACTER );
 
    return( return_value );
@@ -91,7 +91,7 @@ static inline constexpr _Check_return_ uint8_t __get_character( __in_ecount( siz
       return_value = static_cast<uint8_t>(buffer[ index ]);
       index++;
    }
-   while( return_value != END_OF_BASE64_ENCODED_DATA and
+   while( return_value not_eq END_OF_BASE64_ENCODED_DATA and
           decoder_table[ return_value ] == BASE64_IGNORABLE_CHARACTER );
 
    return( return_value );
@@ -103,7 +103,7 @@ Win32FoundationClasses::CBase64Coding::CBase64Coding() noexcept
    m_InitializeDecoderTable();
 }
 
-Win32FoundationClasses::CBase64Coding::~CBase64Coding() noexcept
+Win32FoundationClasses::CBase64Coding::~CBase64Coding()
 {
    WFC_VALIDATE_POINTER( this );
 }
@@ -230,7 +230,7 @@ _Check_return_ std::size_t Win32FoundationClasses::CBase64Coding::Decode(_In_rea
     {
         character_1 = __get_character(buffer, m_DecoderTable, index, number_of_bytes);
 
-        if (character_1 != END_OF_BASE64_ENCODED_DATA and character_1 != BASE64_END_OF_BUFFER)
+        if (character_1 not_eq END_OF_BASE64_ENCODED_DATA and character_1 not_eq BASE64_END_OF_BUFFER)
         {
             if (m_DecoderTable[character_1] == BASE64_UNKNOWN_VALUE)
             {
@@ -240,7 +240,7 @@ _Check_return_ std::size_t Win32FoundationClasses::CBase64Coding::Decode(_In_rea
 
             character_2 = __get_character(buffer, m_DecoderTable, index, number_of_bytes);
 
-            if (character_2 != END_OF_BASE64_ENCODED_DATA and character_2 != BASE64_END_OF_BUFFER)
+            if (character_2 not_eq END_OF_BASE64_ENCODED_DATA and character_2 not_eq BASE64_END_OF_BUFFER)
             {
                 if (m_DecoderTable[character_2] == BASE64_UNKNOWN_VALUE)
                 {
@@ -250,7 +250,7 @@ _Check_return_ std::size_t Win32FoundationClasses::CBase64Coding::Decode(_In_rea
 
                 character_3 = __get_character(buffer, m_DecoderTable, index, number_of_bytes);
 
-                if (character_3 != END_OF_BASE64_ENCODED_DATA and character_3 != BASE64_END_OF_BUFFER)
+                if (character_3 not_eq END_OF_BASE64_ENCODED_DATA and character_3 not_eq BASE64_END_OF_BUFFER)
                 {
                     if (m_DecoderTable[character_3] == BASE64_UNKNOWN_VALUE)
                     {
@@ -260,7 +260,7 @@ _Check_return_ std::size_t Win32FoundationClasses::CBase64Coding::Decode(_In_rea
 
                     character_4 = __get_character(buffer, m_DecoderTable, index, number_of_bytes);
 
-                    if (character_4 != END_OF_BASE64_ENCODED_DATA and character_4 != BASE64_END_OF_BUFFER)
+                    if (character_4 not_eq END_OF_BASE64_ENCODED_DATA and character_4 not_eq BASE64_END_OF_BUFFER)
                     {
                         if (m_DecoderTable[character_4] == BASE64_UNKNOWN_VALUE)
                         {
@@ -375,7 +375,7 @@ _Check_return_ bool Win32FoundationClasses::CBase64Coding::Decode(_In_reads_byte
     {
         character_1 = __get_character(buffer, m_DecoderTable, index, number_of_bytes);
 
-        if (character_1 != END_OF_BASE64_ENCODED_DATA and character_1 != BASE64_END_OF_BUFFER)
+        if (character_1 not_eq END_OF_BASE64_ENCODED_DATA and character_1 not_eq BASE64_END_OF_BUFFER)
         {
             if (m_DecoderTable[character_1] == BASE64_UNKNOWN_VALUE)
             {
@@ -386,7 +386,7 @@ _Check_return_ bool Win32FoundationClasses::CBase64Coding::Decode(_In_reads_byte
 
             character_2 = __get_character(buffer, m_DecoderTable, index, number_of_bytes);
 
-            if (character_2 != END_OF_BASE64_ENCODED_DATA and character_2 != BASE64_END_OF_BUFFER)
+            if (character_2 not_eq END_OF_BASE64_ENCODED_DATA and character_2 not_eq BASE64_END_OF_BUFFER)
             {
                 if (m_DecoderTable[character_2] == BASE64_UNKNOWN_VALUE)
                 {
@@ -397,7 +397,7 @@ _Check_return_ bool Win32FoundationClasses::CBase64Coding::Decode(_In_reads_byte
 
                 character_3 = __get_character(buffer, m_DecoderTable, index, number_of_bytes);
 
-                if (character_3 != END_OF_BASE64_ENCODED_DATA and character_3 != BASE64_END_OF_BUFFER)
+                if (character_3 not_eq END_OF_BASE64_ENCODED_DATA and character_3 not_eq BASE64_END_OF_BUFFER)
                 {
                     if (m_DecoderTable[character_3] == BASE64_UNKNOWN_VALUE)
                     {
@@ -408,7 +408,7 @@ _Check_return_ bool Win32FoundationClasses::CBase64Coding::Decode(_In_reads_byte
 
                     character_4 = __get_character(buffer, m_DecoderTable, index, number_of_bytes);
 
-                    if (character_4 != END_OF_BASE64_ENCODED_DATA and character_4 != BASE64_END_OF_BUFFER)
+                    if (character_4 not_eq END_OF_BASE64_ENCODED_DATA and character_4 not_eq BASE64_END_OF_BUFFER)
                     {
                         if (m_DecoderTable[character_4] == BASE64_UNKNOWN_VALUE)
                         {
@@ -529,9 +529,9 @@ _Check_return_ bool Win32FoundationClasses::CBase64Coding::Decode(_In_ std::wstr
    {
       character_1 = __get_character( input_buffer, m_DecoderTable, index, source.length());
 
-      if ( character_1 != END_OF_BASE64_ENCODED_DATA )
+      if ( character_1 not_eq END_OF_BASE64_ENCODED_DATA )
       {
-         if ( m_DecoderTable[ character_1 ] == BASE64_UNKNOWN_VALUE and character_1 != BASE64_END_OF_BUFFER )
+         if ( m_DecoderTable[ character_1 ] == BASE64_UNKNOWN_VALUE and character_1 not_eq BASE64_END_OF_BUFFER )
          {
             //WFCTRACEVAL( TEXT( "Character 1 Failed translation at index " ), (uint32_t) index );
             destination.resize( add_index );
@@ -540,9 +540,9 @@ _Check_return_ bool Win32FoundationClasses::CBase64Coding::Decode(_In_ std::wstr
 
          character_2 = __get_character( input_buffer, m_DecoderTable, index, source.length());
 
-         if ( character_2 != END_OF_BASE64_ENCODED_DATA )
+         if ( character_2 not_eq END_OF_BASE64_ENCODED_DATA )
          {
-            if ( m_DecoderTable[ character_2 ] == BASE64_UNKNOWN_VALUE and character_2 != BASE64_END_OF_BUFFER )
+            if ( m_DecoderTable[ character_2 ] == BASE64_UNKNOWN_VALUE and character_2 not_eq BASE64_END_OF_BUFFER )
             {
                //WFCTRACEVAL( TEXT( "Character 2 Failed translation at index " ), (uint32_t) index );
                destination.resize( add_index );
@@ -551,9 +551,9 @@ _Check_return_ bool Win32FoundationClasses::CBase64Coding::Decode(_In_ std::wstr
 
             character_3 = __get_character( input_buffer, m_DecoderTable, index, source.length());
 
-            if ( character_3 != END_OF_BASE64_ENCODED_DATA )
+            if ( character_3 not_eq END_OF_BASE64_ENCODED_DATA )
             {
-               if ( m_DecoderTable[ character_3 ] == BASE64_UNKNOWN_VALUE and character_3 != BASE64_END_OF_BUFFER )
+               if ( m_DecoderTable[ character_3 ] == BASE64_UNKNOWN_VALUE and character_3 not_eq BASE64_END_OF_BUFFER )
                {
                   //WFCTRACEVAL( TEXT( "Character 3 Failed translation at index " ), (uint32_t) index );
                   destination.resize( add_index );
@@ -562,9 +562,9 @@ _Check_return_ bool Win32FoundationClasses::CBase64Coding::Decode(_In_ std::wstr
 
                character_4 = __get_character( input_buffer, m_DecoderTable, index, source.length());
 
-               if ( character_4 != END_OF_BASE64_ENCODED_DATA )
+               if ( character_4 not_eq END_OF_BASE64_ENCODED_DATA )
                {
-                  if ( m_DecoderTable[ character_4 ] == BASE64_UNKNOWN_VALUE and character_4 != BASE64_END_OF_BUFFER )
+                  if ( m_DecoderTable[ character_4 ] == BASE64_UNKNOWN_VALUE and character_4 not_eq BASE64_END_OF_BUFFER )
                   {
                      //WFCTRACEVAL( TEXT( "Character 4 Failed translation at index " ), (uint32_t) index );
                      destination.resize( add_index );
@@ -706,7 +706,7 @@ _Check_return_ bool Win32FoundationClasses::CBase64Coding::Encode( _In_ std::vec
          destination.resize( add_index );
 
          // .Net will puke on itself if the buffer isn't a length of 4
-         while ((destination.size() % 4) != 0)
+         while ((destination.size() % 4) not_eq 0)
          {
              destination.push_back(static_cast<uint8_t>(END_OF_BASE64_ENCODED_DATA));
          }
@@ -737,7 +737,7 @@ _Check_return_ bool Win32FoundationClasses::CBase64Coding::Encode( _In_ std::vec
          destination.resize( add_index );
 
          // .Net will puke on itself if the buffer isn't a length of 4
-         while ((destination.size() % 4) != 0)
+         while ((destination.size() % 4) not_eq 0)
          {
              destination.push_back(static_cast<uint8_t>(END_OF_BASE64_ENCODED_DATA));
          }
@@ -765,7 +765,7 @@ _Check_return_ bool Win32FoundationClasses::CBase64Coding::Encode( _In_ std::vec
    destination.resize( add_index );
 
    // .Net will puke on itself if the buffer isn't a length of 4
-   while ((destination.size() % 4) != 0)
+   while ((destination.size() % 4) not_eq 0)
    {
        destination.push_back(static_cast<uint8_t>(END_OF_BASE64_ENCODED_DATA));
    }
@@ -892,7 +892,7 @@ _Check_return_ bool Win32FoundationClasses::CBase64Coding::Encode(__in_bcount(nu
             destination_string.resize(number_of_bytes_encoded);
 
             // .Net will puke on itself if the number of non-space characters isn't a multiple of 4
-            while (((destination_string.length() - number_of_space_characters_added) % 4) != 0)
+            while (((destination_string.length() - number_of_space_characters_added) % 4) not_eq 0)
             {
                 destination_string.push_back(static_cast<char>(END_OF_BASE64_ENCODED_DATA));
             }
@@ -948,7 +948,7 @@ _Check_return_ bool Win32FoundationClasses::CBase64Coding::Encode(__in_bcount(nu
             destination_string.resize(number_of_bytes_encoded);
 
             // .Net will puke on itself if the number of non-space characters isn't a multiple of 4
-            while (((destination_string.length() - number_of_space_characters_added) % 4) != 0)
+            while (((destination_string.length() - number_of_space_characters_added) % 4) not_eq 0)
             {
                 destination_string.push_back(static_cast<char>(END_OF_BASE64_ENCODED_DATA));
             }
@@ -1000,7 +1000,7 @@ _Check_return_ bool Win32FoundationClasses::CBase64Coding::Encode(__in_bcount(nu
     destination_string.resize(number_of_bytes_encoded);
 
     // .Net will puke on itself if the number of non-space characters isn't a multiple of 4
-    while (((destination_string.length() - number_of_space_characters_added) % 4) != 0)
+    while (((destination_string.length() - number_of_space_characters_added) % 4) not_eq 0)
     {
         destination_string.push_back(static_cast<char>(END_OF_BASE64_ENCODED_DATA));
     }
@@ -1073,7 +1073,7 @@ _Check_return_ bool Win32FoundationClasses::CBase64Coding::Encode(_Inout_ HANDLE
     {
         std::size_t const number_of_bytes_to_read = std::min(sizeof(input_buffer), number_of_bytes_remaining);
 
-        if (::ReadFile(input_file_handle, input_buffer, static_cast<DWORD>(number_of_bytes_to_read), &ignored, nullptr) != 0)
+        if (::ReadFile(input_file_handle, input_buffer, static_cast<DWORD>(number_of_bytes_to_read), &ignored, nullptr) not_eq 0)
         {
             // Now encode this buffer...
             std::size_t output_buffer_index = 0;

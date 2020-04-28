@@ -143,10 +143,10 @@ _Check_return_ bool Win32FoundationClasses::wfc_check_digital_signature( __in_z 
     //Get catalog for our context.
     auto catalog_context = ::CryptCATAdminEnumCatalogFromHash( context, hash_buffer, number_of_bytes_in_hash, 0, nullptr );
 
-    if ( catalog_context != static_cast< HCATINFO >( NULL ) )
+    if ( catalog_context not_eq static_cast< HCATINFO >( NULL ) )
     {
         //If we couldn't get information
-        if ( ::CryptCATCatalogInfoFromContext( catalog_context, &catalog_information, 0 ) != FALSE )
+        if ( ::CryptCATCatalogInfoFromContext( catalog_context, &catalog_information, 0 ) not_eq FALSE )
         {
             //Release the context and set the context to null so it gets picked up below.
             ::CryptCATAdminReleaseCatalogContext( context, catalog_context, 0 );
@@ -222,7 +222,7 @@ _Check_return_ bool Win32FoundationClasses::wfc_check_digital_signature( __in_z 
 
     BOOLEAN return_flag = SUCCEEDED( return_value );
 
-    if ( catalog_context != static_cast< HCATINFO >( NULL ) )
+    if ( catalog_context not_eq static_cast< HCATINFO >( NULL ) )
     {
         ::CryptCATAdminReleaseCatalogContext( context, catalog_context, 0 );
         catalog_context = static_cast< HCATINFO >( NULL );
@@ -251,15 +251,15 @@ void Win32FoundationClasses::wfc_get_version(_In_ std::filesystem::path const& f
    {
       auto byte_buffer = std::make_unique<uint8_t []>(number_of_bytes_to_allocate);
 
-      if ( byte_buffer.get() != nullptr )
+      if ( byte_buffer.get() not_eq nullptr )
       {
          uint8_t * pointer = nullptr;
 
          UINT number_of_bytes_at_pointer = 0;
 
-         if ( ::GetFileVersionInfoW( file_name.native().c_str(), 0, number_of_bytes_to_allocate, byte_buffer.get() ) != 0 )
+         if ( ::GetFileVersionInfoW( file_name.native().c_str(), 0, number_of_bytes_to_allocate, byte_buffer.get() ) not_eq 0 )
          {
-            if ( VerQueryValueW( byte_buffer.get(), L"\\", reinterpret_cast<LPVOID *>(&pointer), &number_of_bytes_at_pointer ) != 0 )
+            if ( VerQueryValueW( byte_buffer.get(), L"\\", reinterpret_cast<LPVOID *>(&pointer), &number_of_bytes_at_pointer ) not_eq 0 )
             {
                auto version_information = reinterpret_cast<VS_FIXEDFILEINFO *>(pointer);
 
@@ -287,7 +287,7 @@ void Win32FoundationClasses::wfc_get_my_version( _Out_ uint16_t& major, _Out_ ui
 
    ZeroMemory( path, sizeof( path ) );
 
-   if ( ::GetModuleFileNameW( static_cast< HMODULE >( NULL ), path, static_cast<DWORD>(std::size( path )) ) != 0 )
+   if ( ::GetModuleFileNameW( static_cast< HMODULE >( NULL ), path, static_cast<DWORD>(std::size( path )) ) not_eq 0 )
    {
       wfc_get_version( path, major, minor, build, revision );
    }

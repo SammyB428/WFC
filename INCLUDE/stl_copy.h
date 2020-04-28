@@ -60,7 +60,7 @@ inline void copy(_Inout_ std::wstring& s, std::string_view ascii_string, _In_ SS
 
         s.reserve(string_size);
 
-        while (loop_index < ascii_string.length() and ascii_string[loop_index] != 0)
+        while (loop_index < ascii_string.length() and ascii_string[loop_index] not_eq 0)
         {
             if (ascii_string[loop_index] == 0x00)
             {
@@ -263,6 +263,11 @@ inline void copy_to(_In_ std::wstring_view s, _Out_ char * ascii_buffer, _In_ st
     ascii_buffer[0] = 0x00;
     ascii_buffer[buffer_size - 1] = 0x00;
 
+    if (s.empty() == true)
+    {
+        return;
+    }
+
 #if ! defined( WE_ARE_BUILDING_WFC_ON_UNIX )
     // Windows version
 
@@ -327,7 +332,7 @@ inline void from_flags(_Inout_ std::wstring& s, _In_ uint64_t const flags, _In_r
     {
         if (bit_test(flags, bit_number) == 1)
         {
-            if (bit_number < number_of_names and names_of_bits != nullptr and names_of_bits[bit_number] != nullptr and names_of_bits[bit_number][0] != 0x00)
+            if (bit_number < number_of_names and names_of_bits not_eq nullptr and names_of_bits[bit_number] not_eq nullptr and names_of_bits[bit_number][0] not_eq 0x00)
             {
                 s.append(names_of_bits[bit_number]);
             }
@@ -419,17 +424,17 @@ inline void copy_beginning_at(_Inout_ std::vector<std::wstring>& destination, _I
 inline void copy_to_clipboard(_In_ std::wstring_view the_string) noexcept
 {
 #if ! defined( WE_ARE_BUILDING_WFC_ON_UNIX )
-    if (OpenClipboard(NULL) != FALSE)
+    if (OpenClipboard(NULL) not_eq FALSE)
     {
         EmptyClipboard();
 
         auto global_memory_handle = GlobalAlloc(GHND, (the_string.length() * sizeof(wchar_t)) + 2);
 
-        if (global_memory_handle != NULL)
+        if (global_memory_handle not_eq NULL)
         {
             auto output_string = static_cast<wchar_t*>(GlobalLock(global_memory_handle));
 
-            if (output_string != nullptr)
+            if (output_string not_eq nullptr)
             {
                 copy_to(the_string, output_string, the_string.length() + 1);
 

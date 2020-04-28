@@ -55,9 +55,9 @@ void Win32FoundationClasses::CDataChunk::GetIdentifier( _In_ uint32_t const id, 
 {
    string.clear();
 
-   TCHAR character = 0;
+   wchar_t character = 0;
 
-   character = (BYTE) ( id bitand 0xFF );
+   character = static_cast<wchar_t>( id bitand 0xFF );
 
    if ( character == 0 )
    {
@@ -128,7 +128,7 @@ Win32FoundationClasses::CDataFile::CDataFile() noexcept
    WFC_VALIDATE_POINTER( this );
 }
 
-Win32FoundationClasses::CDataFile::~CDataFile() noexcept
+Win32FoundationClasses::CDataFile::~CDataFile()
 {
    WFC_VALIDATE_POINTER( this );
 }
@@ -314,7 +314,7 @@ void read_next_chunk( <B>CDataFile</B>&amp; file, <A HREF="CDataChunk.htm">CData
 {
    <A HREF="WfcTrace.htm">WFCTRACEINIT</A>( TEXT( &quot;read_next_chunk()&quot; ) );
 
-   if ( file.GetData( data ) != FALSE )
+   if ( file.GetData( data ) not_eq FALSE )
    {
       _tprintf( TEXT( &quot;Read %lu bytes\n&quot; ), data.Data.GetSize() );
    }

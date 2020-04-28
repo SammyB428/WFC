@@ -206,7 +206,7 @@ VOID PASCAL dial_monitor( HRASCONN     connection_handle,
 
       default:
 
-         if ( connection_state != 0 )
+         if ( connection_state not_eq 0 )
          {
             TCHAR debug_string[ 99 ];
 
@@ -241,7 +241,7 @@ VOID PASCAL dial_monitor( HRASCONN     connection_handle,
 
       default:
 
-         if ( extended_error_code != 0 )
+         if ( extended_error_code not_eq 0 )
          {
             TCHAR debug_string[ 99 ];
 
@@ -264,7 +264,7 @@ void test_CRAS( void )
    ras.SetConnectionCallback( dial_monitor );
    ras.SetDialOptions( CRemoteAccessService::dialAcceptPausedStates );
 
-   if ( ras.GetPhoneBookEntries( strings ) != FALSE )
+   if ( ras.GetPhoneBookEntries( strings ) not_eq FALSE )
    {
       WFCTRACE( TEXT( "Phone Book Entries:" ) );
 
@@ -276,7 +276,7 @@ void test_CRAS( void )
 
    strings.RemoveAll();
 
-   if ( ras.GetConnections( strings ) != FALSE )
+   if ( ras.GetConnections( strings ) not_eq FALSE )
    {
       DWORD index = 0;
       DWORD number_of_entries = strings.GetSize();
@@ -302,7 +302,7 @@ void test_CRAS( void )
 
    strings.RemoveAll();
 
-   if ( ras.GetConnections( strings ) != FALSE )
+   if ( ras.GetConnections( strings ) not_eq FALSE )
    {
       WFCTRACE( TEXT( "Current Connections:" ) );
 
@@ -315,7 +315,7 @@ void test_CRAS( void )
 
    Sleep( 5000 );
 
-   if ( ras.Close( TEXT( "Erols" ) ) != FALSE )
+   if ( ras.Close( TEXT( "Erols" ) ) not_eq FALSE )
    {
       WFCTRACE( TEXT( "Close OK\n" ) );
    }

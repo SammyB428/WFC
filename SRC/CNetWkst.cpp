@@ -118,7 +118,7 @@ void Win32FoundationClasses::CWorkstationUser::Copy( _In_ WKSTA_USER_INFO_1 cons
 void Win32FoundationClasses::CWorkstationUser::Copy( _In_ Win32FoundationClasses::CWorkstationUser const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
-   ASSERT( this != &source );
+   ASSERT( this not_eq &source );
 
    /*
    ** Make sure we ain't copying ourselves
@@ -290,7 +290,7 @@ void Win32FoundationClasses::CWorkstationInformation::Copy( _In_ WKSTA_INFO_102 
 void Win32FoundationClasses::CWorkstationInformation::Copy( _In_ Win32FoundationClasses::CWorkstationInformation const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
-   ASSERT( this != &source );
+   ASSERT( this not_eq &source );
 
    /*
    ** Make sure we ain't copying ourselves
@@ -397,7 +397,7 @@ void Win32FoundationClasses::CWorkstationTransport::Copy( _In_ WKSTA_TRANSPORT_I
 void Win32FoundationClasses::CWorkstationTransport::Copy( _In_ Win32FoundationClasses::CWorkstationTransport const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
-   ASSERT( this != &source );
+   ASSERT( this not_eq &source );
 
    /*
    ** Make sure we ain't copying ourselves
@@ -461,31 +461,31 @@ void Win32FoundationClasses::CNetWorkstation::Close( void ) noexcept
 
    CNetwork::Close();
 
-   if ( m_InformationBuffer100 != nullptr )
+   if ( m_InformationBuffer100 not_eq nullptr )
    {
       ::NetApiBufferFree( m_InformationBuffer100 );
       m_InformationBuffer100 = nullptr;
    }
 
-   if ( m_InformationBuffer101 != nullptr )
+   if ( m_InformationBuffer101 not_eq nullptr )
    {
       ::NetApiBufferFree( m_InformationBuffer101 );
       m_InformationBuffer101 = nullptr;
    }
 
-   if ( m_InformationBuffer102 != nullptr )
+   if ( m_InformationBuffer102 not_eq nullptr )
    {
       ::NetApiBufferFree( m_InformationBuffer102 );
       m_InformationBuffer102 = nullptr;
    }
 
-   if ( m_TransportBuffer != nullptr )
+   if ( m_TransportBuffer not_eq nullptr )
    {
       ::NetApiBufferFree( m_TransportBuffer );
       m_TransportBuffer = nullptr;
    }
 
-   if ( m_UserBuffer != nullptr )
+   if ( m_UserBuffer not_eq nullptr )
    {
       ::NetApiBufferFree( m_UserBuffer );
       m_UserBuffer = nullptr;
@@ -519,19 +519,19 @@ _Check_return_ bool Win32FoundationClasses::CNetWorkstation::EnumerateInformatio
 {
    WFC_VALIDATE_POINTER( this );
 
-   if ( m_InformationBuffer100 != nullptr )
+   if ( m_InformationBuffer100 not_eq nullptr )
    {
       ::NetApiBufferFree( m_InformationBuffer100 );
       m_InformationBuffer100 = nullptr;
    }
 
-   if ( m_InformationBuffer101 != nullptr )
+   if ( m_InformationBuffer101 not_eq nullptr )
    {
       ::NetApiBufferFree( m_InformationBuffer101 );
       m_InformationBuffer101 = nullptr;
    }
 
-   if ( m_InformationBuffer102 != nullptr )
+   if ( m_InformationBuffer102 not_eq nullptr )
    {
       ::NetApiBufferFree( m_InformationBuffer102 );
       m_InformationBuffer102 = nullptr;
@@ -547,17 +547,17 @@ _Check_return_ bool Win32FoundationClasses::CNetWorkstation::EnumerateInformatio
       {
          m_ErrorCode = ::NetWkstaGetInfo( (LMSTR) m_WideMachineName.get(), 100, (LPBYTE *) &m_InformationBuffer100 );
 
-         if ( m_ErrorCode != NERR_Success or m_InformationBuffer100 == nullptr )
+         if ( m_ErrorCode not_eq NERR_Success or m_InformationBuffer100 == nullptr )
          {
             return( false );
          }
       }
-      else if ( m_ErrorCode != NERR_Success or m_InformationBuffer101 == nullptr )
+      else if ( m_ErrorCode not_eq NERR_Success or m_InformationBuffer101 == nullptr )
       {
          return( false );
       }
    }
-   else if ( m_ErrorCode != NERR_Success or m_InformationBuffer102 == nullptr )
+   else if ( m_ErrorCode not_eq NERR_Success or m_InformationBuffer102 == nullptr )
    {
       return( false );
    }
@@ -569,7 +569,7 @@ _Check_return_ bool Win32FoundationClasses::CNetWorkstation::EnumerateTransports
 {
    WFC_VALIDATE_POINTER( this );
 
-   if ( m_TransportBuffer != nullptr )
+   if ( m_TransportBuffer not_eq nullptr )
    {
       ::NetApiBufferFree( m_TransportBuffer );
       m_TransportBuffer = nullptr;
@@ -588,7 +588,7 @@ _Check_return_ bool Win32FoundationClasses::CNetWorkstation::EnumerateTransports
                                                  &m_TransportTotalNumberOfEntries,
                                                  &m_TransportResumeHandle );
 
-   if ( m_ErrorCode != NERR_Success or m_TransportBuffer == nullptr or m_TransportNumberOfEntriesRead == 0 )
+   if ( m_ErrorCode not_eq NERR_Success or m_TransportBuffer == nullptr or m_TransportNumberOfEntriesRead == 0 )
    {
       return( false );
    }
@@ -600,7 +600,7 @@ _Check_return_ bool Win32FoundationClasses::CNetWorkstation::EnumerateUsers( voi
 {
    WFC_VALIDATE_POINTER( this );
 
-   if ( m_UserBuffer != nullptr )
+   if ( m_UserBuffer not_eq nullptr )
    {
       ::NetApiBufferFree( m_UserBuffer );
       m_UserBuffer = nullptr;
@@ -619,7 +619,7 @@ _Check_return_ bool Win32FoundationClasses::CNetWorkstation::EnumerateUsers( voi
                                     &m_UserTotalNumberOfEntries,
                                     &m_UserResumeHandle );
 
-   if ( m_ErrorCode != NERR_Success or m_UserBuffer == nullptr or m_UserNumberOfEntriesRead == 0 )
+   if ( m_ErrorCode not_eq NERR_Success or m_UserBuffer == nullptr or m_UserNumberOfEntriesRead == 0 )
    {
       return( false );
    }
@@ -635,7 +635,7 @@ _Check_return_ bool Win32FoundationClasses::CNetWorkstation::GetCurrentUser( __i
 
    m_ErrorCode = ::NetWkstaUserGetInfo( nullptr, 1, (LPBYTE *) &buffer );
 
-   if ( m_ErrorCode != NERR_Success or buffer == nullptr )
+   if ( m_ErrorCode not_eq NERR_Success or buffer == nullptr )
    {
       information.Empty();
       return( false );
@@ -652,7 +652,7 @@ _Check_return_ bool Win32FoundationClasses::CNetWorkstation::GetNext( __inout Wi
 {
    WFC_VALIDATE_POINTER( this );
 
-   if ( m_InformationBuffer102 != nullptr )
+   if ( m_InformationBuffer102 not_eq nullptr )
    {
       information.Copy( m_InformationBuffer102 );
       ::NetApiBufferFree( m_InformationBuffer102 );
@@ -660,7 +660,7 @@ _Check_return_ bool Win32FoundationClasses::CNetWorkstation::GetNext( __inout Wi
       return( true );
    }
 
-   if ( m_InformationBuffer101 != nullptr )
+   if ( m_InformationBuffer101 not_eq nullptr )
    {
       information.Copy( m_InformationBuffer101 );
       ::NetApiBufferFree( m_InformationBuffer101 );
@@ -668,7 +668,7 @@ _Check_return_ bool Win32FoundationClasses::CNetWorkstation::GetNext( __inout Wi
       return( true );
    }
 
-   if ( m_InformationBuffer100 != nullptr )
+   if ( m_InformationBuffer100 not_eq nullptr )
    {
       information.Copy( m_InformationBuffer100 );
       ::NetApiBufferFree( m_InformationBuffer100 );
@@ -696,7 +696,7 @@ _Check_return_ bool Win32FoundationClasses::CNetWorkstation::GetNext( __inout Wi
 
    // Go ahead and clean up
 
-   if ( m_TransportBuffer != nullptr )
+   if ( m_TransportBuffer not_eq nullptr )
    {
       ::NetApiBufferFree( m_TransportBuffer );
       m_TransportBuffer = nullptr;
@@ -709,7 +709,7 @@ _Check_return_ bool Win32FoundationClasses::CNetWorkstation::GetNext( __inout Wi
    return( false );
 }
 
-_Check_return_ bool Win32FoundationClasses::CNetWorkstation::GetNext( __inout Win32FoundationClasses::CWorkstationUser& information ) noexcept
+_Check_return_ bool Win32FoundationClasses::CNetWorkstation::GetNext( _Inout_ Win32FoundationClasses::CWorkstationUser& information ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 

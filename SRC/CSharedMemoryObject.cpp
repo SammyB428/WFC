@@ -60,7 +60,7 @@ Win32FoundationClasses::CSharedMemoryObject::CSharedMemoryObject() noexcept
    m_Size      = 0;
 }
 
-Win32FoundationClasses::CSharedMemoryObject::~CSharedMemoryObject() noexcept
+Win32FoundationClasses::CSharedMemoryObject::~CSharedMemoryObject()
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -80,7 +80,7 @@ void Win32FoundationClasses::CSharedMemoryObject::Close( void ) noexcept
       return;
    }
 
-   if ( m_Pointer != nullptr )
+   if ( m_Pointer not_eq nullptr )
    {
       if ( ::UnmapViewOfFile( m_Pointer ) == FALSE )
       {
@@ -205,13 +205,13 @@ void update_time( const std::wstring&amp queue_name )
 
    <B>CSharedMemoryObject</B> queue;
 
-   if ( queue.<B>Create</B>( queue_name, sizeof( APPLICATION_QUEUE ) != FALSE )
+   if ( queue.<B>Create</B>( queue_name, sizeof( APPLICATION_QUEUE ) not_eq FALSE )
    {
       APPLICATION_QUEUE * queue_p = nullptr;
 
       queue_p = (APPLICATION_QUEUE *) queue.<B>GetPointer</B>();
 
-      if ( queue_p != nullptr )
+      if ( queue_p not_eq nullptr )
       {
          <A HREF="CSystemTime.htm">CSystemTime</A> system_time;
 

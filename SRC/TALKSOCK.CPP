@@ -75,7 +75,7 @@ Win32FoundationClasses::CTalkingSocket::CTalkingSocket(_In_ std::wstring_view ad
    SetPort( p_number );
 }
 
-Win32FoundationClasses::CTalkingSocket::~CTalkingSocket() noexcept
+Win32FoundationClasses::CTalkingSocket::~CTalkingSocket()
 {
    WFC_VALIDATE_POINTER( this );
 }
@@ -112,7 +112,7 @@ _Check_return_ bool Win32FoundationClasses::CTalkingSocket::Open( void ) noexcep
       return( false );
    }
 
-   if ( m_SocketID != INVALID_SOCKET )
+   if ( m_SocketID not_eq INVALID_SOCKET )
    {
       // Someone (the user) is trying to open us twice!
 

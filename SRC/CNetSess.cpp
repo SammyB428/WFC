@@ -148,7 +148,7 @@ _Check_return_ bool Win32FoundationClasses::CNetworkSessions::Enumerate( __inout
                                           &total_number_of_entries,
                                           &m_ResumeHandle );
 
-   if ( information_p != (SESSION_INFO_502 *) nullptr )
+   if ( information_p not_eq (SESSION_INFO_502 *) nullptr )
    {
       information.Copy( information_p );
       return( true );
@@ -177,7 +177,7 @@ void Win32FoundationClasses::CNetworkSessions::m_Get_0_Data( void ) noexcept
 
    (void) ::NetSessionGetInfo( (LMSTR) m_WideMachineName.get(), nullptr, nullptr, 0, &buffer );
 
-   if ( buffer != nullptr )
+   if ( buffer not_eq nullptr )
    {
       auto information_p = reinterpret_cast<SESSION_INFO_0 const *>(buffer);
 

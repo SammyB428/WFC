@@ -119,7 +119,7 @@ _Check_return_ bool Win32FoundationClasses::CNetwork::AbortShutdown( void ) noex
       machine_name = nullptr;
    }
 
-   if ( machine_name != nullptr )
+   if ( machine_name not_eq nullptr )
    {
       // Shutdown a machine somewhere on the network
 
@@ -157,7 +157,7 @@ _Check_return_ bool Win32FoundationClasses::CNetwork::AbortShutdown( void ) noex
 
    (void) Win32FoundationClasses::wfc_close_handle( token_handle );
 
-   if ( machine_name != nullptr )
+   if ( machine_name not_eq nullptr )
    {
       // AbortSystemShutdown() is not const correct
       // The first parameter of AbortSystemShutdown() is a LPTSTR when it should be 
@@ -191,17 +191,17 @@ void Win32FoundationClasses::CNetwork::Close( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
-   if ( m_WideMachineName.get() != nullptr )
+   if ( m_WideMachineName.get() not_eq nullptr )
    {
        m_WideMachineName.release();
    }
 
-   if ( m_WideDoubleBackslashPreceededMachineName.get() != nullptr )
+   if ( m_WideDoubleBackslashPreceededMachineName.get() not_eq nullptr )
    {
        m_WideDoubleBackslashPreceededMachineName.release();
    }
 
-   if ( m_PortBuffer.get() != nullptr )
+   if ( m_PortBuffer.get() not_eq nullptr )
    {
       m_PortBuffer.release();
    }
@@ -233,7 +233,7 @@ _Check_return_ bool Win32FoundationClasses::CNetwork::EnumeratePorts( void ) noe
 
    m_PortNumber = 0;
 
-   if ( m_PortBuffer.get() != nullptr )
+   if ( m_PortBuffer.get() not_eq nullptr )
    {
       m_PortBuffer.release();
       m_NumberOfPorts = 0;
@@ -262,7 +262,7 @@ _Check_return_ bool Win32FoundationClasses::CNetwork::EnumeratePorts( void ) noe
 
    m_ErrorCode = ::GetLastError();
 
-   if (result != FALSE )
+   if (result not_eq FALSE )
    {
       //WFCTRACEERROR( m_ErrorCode );
       // Something bad wrong here...
@@ -270,7 +270,7 @@ _Check_return_ bool Win32FoundationClasses::CNetwork::EnumeratePorts( void ) noe
       return( false );
    }
 
-   if ( m_ErrorCode != ERROR_INSUFFICIENT_BUFFER )
+   if ( m_ErrorCode not_eq ERROR_INSUFFICIENT_BUFFER )
    {
       //WFCTRACEERROR( m_ErrorCode );
       return( false );
@@ -431,7 +431,7 @@ _Check_return_ bool Win32FoundationClasses::CNetwork::IsRebootable( void ) noexc
       machine_name = nullptr;
    }
 
-   if ( machine_name != nullptr )
+   if ( machine_name not_eq nullptr )
    {
       // Shutdown a machine somewhere on the network
 
@@ -530,7 +530,7 @@ void Win32FoundationClasses::CNetwork::Open( _In_ std::wstring_view machine_name
 
          m_WideMachineName = std::make_unique<wchar_t[]>(number_of_characters_in_wide_machine_name);
 
-         if ( m_WideMachineName.get() != nullptr )
+         if ( m_WideMachineName.get() not_eq nullptr )
          {
 #if defined( UNICODE )
             ::wcscpy_s( m_WideMachineName.get(), number_of_characters_in_wide_machine_name, machine_name.data() );
@@ -550,7 +550,7 @@ void Win32FoundationClasses::CNetwork::Open( _In_ std::wstring_view machine_name
 
          m_WideDoubleBackslashPreceededMachineName = std::make_unique<wchar_t[]>(number_of_characters_in_m_WideDoubleBackslashPreceededMachineName);
 
-         if ( m_WideDoubleBackslashPreceededMachineName.get() != nullptr )
+         if ( m_WideDoubleBackslashPreceededMachineName.get() not_eq nullptr )
          {
 #if defined( UNICODE )
             ::wcscpy_s( m_WideDoubleBackslashPreceededMachineName.get(), number_of_characters_in_m_WideDoubleBackslashPreceededMachineName, temporary_machine_name.c_str() );
@@ -757,7 +757,7 @@ _Check_return_ bool Win32FoundationClasses::CNetwork::Shutdown( _In_ bool const 
       machine_name = m_MachineName.c_str();
    }
 
-   if ( machine_name != nullptr )
+   if ( machine_name not_eq nullptr )
    {
       // Shutdown a machine somewhere on the network
 
@@ -818,7 +818,7 @@ _Check_return_ bool Win32FoundationClasses::CNetwork::Shutdown( _In_ bool const 
 
    WFC_TRY
    {
-      if ( message_to_display != nullptr )
+      if ( message_to_display not_eq nullptr )
       {
          _tcsncpy_s( message_string, std::size( message_string ), message_to_display, _TRUNCATE );
          corrected_message_parameter = message_string;
@@ -828,7 +828,7 @@ _Check_return_ bool Win32FoundationClasses::CNetwork::Shutdown( _In_ bool const 
          corrected_message_parameter = nullptr;
       }
 
-      if ( machine_name != nullptr )
+      if ( machine_name not_eq nullptr )
       {
          // The first parameter of InitiateSystemShutdown() is a LPTSTR when it should be 
          // a LPCTSTR (const). Because it ain't, we gotta code around it.
@@ -994,7 +994,7 @@ Will reboot the machine set by <B>Open</B>().
 
    if ( machine.EnumeratePorts() )
    {
-      if ( machine_name != nullptr )
+      if ( machine_name not_eq nullptr )
       {
          _tprintf( TEXT( &quot;Ports on %s\n&quot; ), machine_name );
       }
@@ -1023,7 +1023,7 @@ Will reboot the machine set by <B>Open</B>().
 
    if ( machine.IsRebootable() )
    {
-      if ( machine_name != nullptr )
+      if ( machine_name not_eq nullptr )
       {
          _tprintf( TEXT( &quot;Yes, I can reboot %s\n&quot; ), machine_name );
       }

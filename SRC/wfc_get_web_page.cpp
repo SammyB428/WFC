@@ -130,7 +130,7 @@ static char THIS_FILE[] = __FILE__;
 
             int index = 0;
 
-            while( source_file_p->ReadString( temp_string ) != FALSE )
+            while( source_file_p->ReadString( temp_string ) not_eq FALSE )
             {
                 index++;
                 page_contents.Add( temp_string );
@@ -261,7 +261,7 @@ void Win32FoundationClasses::wfc_get_web_page( _In_ CUniformResourceLocator cons
         (DWORD) bytes_read_in_this_chunk.size(),
         &number_of_bytes_read );
 
-    while( return_value != FALSE and number_of_bytes_read > 0 )
+    while( return_value not_eq FALSE and number_of_bytes_read > 0 )
     {
         bytes_read_in_this_chunk.resize( number_of_bytes_read );
         page_contents.insert( std::end(page_contents), std::cbegin(bytes_read_in_this_chunk), std::cend(bytes_read_in_this_chunk));
@@ -297,7 +297,7 @@ void Win32FoundationClasses::wfc_get_web_page( _In_ CUniformResourceLocator cons
 
     location_of_end_of_line_character = web_page.find( '\n' );
 
-    while( location_of_end_of_line_character != std::wstring::npos )
+    while( location_of_end_of_line_character not_eq std::wstring::npos )
     {
         (void) page_contents.push_back( web_page.substr( start_searching_at_index, location_of_end_of_line_character - start_searching_at_index ) );
         start_searching_at_index += ( ( location_of_end_of_line_character - start_searching_at_index ) + 1 );

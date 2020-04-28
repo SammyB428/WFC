@@ -57,20 +57,20 @@ static _Check_return_ bool test_class(_Inout_ Win32FoundationClasses::CDataParse
     Win32FoundationClasses::CParsePoint parse_point;
     Win32FoundationClasses::CParsePoint found_at;
 
-    if ( parser.IsTextASCII() != false )
+    if ( parser.IsTextASCII() not_eq false )
     {
         _ASSERTE( parser.GetSize() == ( 6 * 1 ) );
 
-        if ( parser.GetSize() != ( 6 * 1 ) )
+        if ( parser.GetSize() not_eq ( 6 * 1 ) )
         {
             test_number_that_failed = 1;
             return( failure() );
         }
     }
-    else if ( parser.IsTextUCS4() != false )
+    else if ( parser.IsTextUCS4() not_eq false )
     {
         _ASSERTE( parser.GetSize() == ( 6 * 4 ) );
-        if ( parser.GetSize() != ( 6 * 4 ) )
+        if ( parser.GetSize() not_eq ( 6 * 4 ) )
         {
             test_number_that_failed = 1;
             return( failure() );
@@ -79,7 +79,7 @@ static _Check_return_ bool test_class(_Inout_ Win32FoundationClasses::CDataParse
     else
     {
         _ASSERTE( parser.GetSize() == ( 6 * 2 ) );
-        if ( parser.GetSize() != ( 6 * 2 ) )
+        if ( parser.GetSize() not_eq ( 6 * 2 ) )
         {
             test_number_that_failed = 1;
             return( failure() );
@@ -96,7 +96,7 @@ static _Check_return_ bool test_class(_Inout_ Win32FoundationClasses::CDataParse
 
     _ASSERTE( character == 'A' );
 
-    if ( character != 'A' )
+    if ( character not_eq 'A' )
     {
         test_number_that_failed = 3;
         return( failure() );
@@ -110,7 +110,7 @@ static _Check_return_ bool test_class(_Inout_ Win32FoundationClasses::CDataParse
 
     _ASSERTE( character == 'B' );
 
-    if ( character != 'B' )
+    if ( character not_eq 'B' )
     {
         test_number_that_failed = 5;
         return( failure() );
@@ -124,7 +124,7 @@ static _Check_return_ bool test_class(_Inout_ Win32FoundationClasses::CDataParse
 
     _ASSERTE( character == 'C' );
 
-    if ( character != 'C' )
+    if ( character not_eq 'C' )
     {
         test_number_that_failed = 7;
         return( failure() );
@@ -136,19 +136,19 @@ static _Check_return_ bool test_class(_Inout_ Win32FoundationClasses::CDataParse
         return( failure() );
     }
 
-    if ( parser.IsTextASCII() != false )
+    if ( parser.IsTextASCII() not_eq false )
     {
         _ASSERTE( found_at.GetIndex() == ( 3 * 1 ) );
-        if ( found_at.GetIndex() != ( 3 * 1 ) )
+        if ( found_at.GetIndex() not_eq ( 3 * 1 ) )
         {
             test_number_that_failed = 9;
             return( failure() );
         }
     }
-    else if ( parser.IsTextUCS4() != false )
+    else if ( parser.IsTextUCS4() not_eq false )
     {
         _ASSERTE( found_at.GetIndex() == ( 3 * 4 ) );
-        if ( found_at.GetIndex() != ( 3 * 4 ) )
+        if ( found_at.GetIndex() not_eq ( 3 * 4 ) )
         {
             test_number_that_failed = 9;
             return( failure() );
@@ -158,7 +158,7 @@ static _Check_return_ bool test_class(_Inout_ Win32FoundationClasses::CDataParse
     {
         // Must be Unicode
         _ASSERTE( found_at.GetIndex() == ( 3 * 2 ) );
-        if ( found_at.GetIndex() != ( 3 * 2 ) )
+        if ( found_at.GetIndex() not_eq ( 3 * 2 ) )
         {
             test_number_that_failed = 9;
             return( failure() );
@@ -173,19 +173,19 @@ static _Check_return_ bool test_class(_Inout_ Win32FoundationClasses::CDataParse
         return( failure() );
     }
 
-    if ( parser.IsTextASCII() != false )
+    if ( parser.IsTextASCII() not_eq false )
     {
         _ASSERTE( found_at.GetIndex() == ( 3 * 1 ) );
-        if ( found_at.GetIndex() != ( 3 * 1 ) )
+        if ( found_at.GetIndex() not_eq ( 3 * 1 ) )
         {
             test_number_that_failed = 11;
             return( failure() );
         }
     }
-    else if ( parser.IsTextUCS4() != false )
+    else if ( parser.IsTextUCS4() not_eq false )
     {
         _ASSERTE( found_at.GetIndex() == ( 3 * 4 ) );
-        if ( found_at.GetIndex() != ( 3 * 4 ) )
+        if ( found_at.GetIndex() not_eq ( 3 * 4 ) )
         {
             test_number_that_failed = 11;
             return( failure() );
@@ -195,7 +195,7 @@ static _Check_return_ bool test_class(_Inout_ Win32FoundationClasses::CDataParse
     {
         // Must be Unicode
         _ASSERTE( found_at.GetIndex() == ( 3 * 2 ) );
-        if ( found_at.GetIndex() != ( 3 * 2 ) )
+        if ( found_at.GetIndex() not_eq ( 3 * 2 ) )
         {
             test_number_that_failed = 11;
             return( failure() );
@@ -210,22 +210,22 @@ static _Check_return_ bool test_class(_Inout_ Win32FoundationClasses::CDataParse
         return( failure() );
     }
 
-    if ( parser.IsTextASCII() != false )
+    if ( parser.IsTextASCII() not_eq false )
     {
         _ASSERTE( found_at.GetIndex() == ( 3 * 1 ) );
-        if ( found_at.GetIndex() != ( 3 * 1 ) )
+        if ( found_at.GetIndex() not_eq ( 3 * 1 ) )
         {
             test_number_that_failed = 13;
             return( failure() );
         }
     }
-    else if ( parser.IsTextUCS4() != false )
+    else if ( parser.IsTextUCS4() not_eq false )
     {
         if ( parser.GetUCS4Order() == 1234 )
         {
             _ASSERTE( found_at.GetIndex() == 15 );
 
-            if ( found_at.GetIndex() != 15 )
+            if ( found_at.GetIndex() not_eq 15 )
             {
                 test_number_that_failed = 13;
                 return( failure() );
@@ -235,7 +235,7 @@ static _Check_return_ bool test_class(_Inout_ Win32FoundationClasses::CDataParse
         {
             _ASSERTE( found_at.GetIndex() == 14 );
 
-            if ( found_at.GetIndex() != 14 )
+            if ( found_at.GetIndex() not_eq 14 )
             {
                 test_number_that_failed = 13;
                 return( failure() );
@@ -245,7 +245,7 @@ static _Check_return_ bool test_class(_Inout_ Win32FoundationClasses::CDataParse
         {
             _ASSERTE( found_at.GetIndex() == 13 );
 
-            if ( found_at.GetIndex() != 13 )
+            if ( found_at.GetIndex() not_eq 13 )
             {
                 test_number_that_failed = 13;
                 return( failure() );
@@ -255,7 +255,7 @@ static _Check_return_ bool test_class(_Inout_ Win32FoundationClasses::CDataParse
         {
             _ASSERTE( found_at.GetIndex() == 12 );
 
-            if ( found_at.GetIndex() != 12 )
+            if ( found_at.GetIndex() not_eq 12 )
             {
                 test_number_that_failed = 13;
                 return( failure() );
@@ -275,11 +275,11 @@ static _Check_return_ bool test_class(_Inout_ Win32FoundationClasses::CDataParse
 
         WFC_VALIDATE_bool( parser.IsTextBigEndian() );
 
-        if ( parser.IsTextBigEndian() != false )
+        if ( parser.IsTextBigEndian() not_eq false )
         {
             _ASSERTE( found_at.GetIndex() == 7 );
 
-            if ( found_at.GetIndex() != 7 )
+            if ( found_at.GetIndex() not_eq 7 )
             {
                 test_number_that_failed = 13;
                 return( failure() );
@@ -289,7 +289,7 @@ static _Check_return_ bool test_class(_Inout_ Win32FoundationClasses::CDataParse
         {
             _ASSERTE( found_at.GetIndex() == 6 );
 
-            if ( found_at.GetIndex() != 6 )
+            if ( found_at.GetIndex() not_eq 6 )
             {
                 test_number_that_failed = 13;
                 return( failure() );
@@ -302,7 +302,7 @@ static _Check_return_ bool test_class(_Inout_ Win32FoundationClasses::CDataParse
 
     _ASSERTE( parse_point.GetLineIndex() == 1 );
 
-    if ( parse_point.GetLineIndex() != 1 )
+    if ( parse_point.GetLineIndex() not_eq 1 )
     {
         test_number_that_failed = 14;
         return( failure() );
@@ -312,7 +312,7 @@ static _Check_return_ bool test_class(_Inout_ Win32FoundationClasses::CDataParse
 
     _ASSERTE( parse_point.GetLineIndex() == 2 );
 
-    if ( parse_point.GetLineIndex() != 2 )
+    if ( parse_point.GetLineIndex() not_eq 2 )
     {
         test_number_that_failed = 15;
         return( failure() );
@@ -322,7 +322,7 @@ static _Check_return_ bool test_class(_Inout_ Win32FoundationClasses::CDataParse
 
     _ASSERTE( parse_point.GetLineIndex() == 1 );
 
-    if ( parse_point.GetLineIndex() != 1 )
+    if ( parse_point.GetLineIndex() not_eq 1 )
     {
         test_number_that_failed = 16;
         return( failure() );
@@ -333,7 +333,7 @@ static _Check_return_ bool test_class(_Inout_ Win32FoundationClasses::CDataParse
     _ASSERTE( parse_point.GetLineIndex() == 1 );
 
     // We advanced by one line, that means we should be at column 1 of line 2
-    if ( parse_point.GetLineIndex() != 1 )
+    if ( parse_point.GetLineIndex() not_eq 1 )
     {
         test_number_that_failed = 17;
         return( failure() );
@@ -341,7 +341,7 @@ static _Check_return_ bool test_class(_Inout_ Win32FoundationClasses::CDataParse
 
     _ASSERTE( parse_point.GetLineNumber() == 2 );
 
-    if ( parse_point.GetLineNumber() != 2 )
+    if ( parse_point.GetLineNumber() not_eq 2 )
     {
         test_number_that_failed = 18;
         return( failure() );
@@ -354,7 +354,7 @@ static _Check_return_ bool test_class(_Inout_ Win32FoundationClasses::CDataParse
 
     _ASSERTE( parse_point.GetLineIndex() == 1 );
 
-    if ( parse_point.GetLineIndex() != 1 )
+    if ( parse_point.GetLineIndex() not_eq 1 )
     {
         test_number_that_failed = 19;
         return( failure() );
@@ -362,7 +362,7 @@ static _Check_return_ bool test_class(_Inout_ Win32FoundationClasses::CDataParse
 
     _ASSERTE( parse_point.GetLineNumber() == 1 );
 
-    if ( parse_point.GetLineNumber() != 1 )
+    if ( parse_point.GetLineNumber() not_eq 1 )
     {
         test_number_that_failed = 20;
         return( failure() );
@@ -370,7 +370,7 @@ static _Check_return_ bool test_class(_Inout_ Win32FoundationClasses::CDataParse
 
     _ASSERTE( parse_point.GetIndex() == 0 );
 
-    if ( parse_point.GetIndex() != 0 )
+    if ( parse_point.GetIndex() not_eq 0 )
     {
         test_number_that_failed = 21;
         return( failure() );
@@ -380,7 +380,7 @@ static _Check_return_ bool test_class(_Inout_ Win32FoundationClasses::CDataParse
 
     _ASSERTE( parser.GetUnicodeToASCIITranslationFailureCharacter() == '~' );
 
-    if ( parser.GetUnicodeToASCIITranslationFailureCharacter() != '~' )
+    if ( parser.GetUnicodeToASCIITranslationFailureCharacter() not_eq '~' )
     {
         test_number_that_failed = 22;
         return( failure() );
@@ -390,7 +390,7 @@ static _Check_return_ bool test_class(_Inout_ Win32FoundationClasses::CDataParse
 
     _ASSERTE( parser.GetUnicodeToASCIITranslationFailureCharacter() == '?' );
 
-    if ( parser.GetUnicodeToASCIITranslationFailureCharacter() != '?' )
+    if ( parser.GetUnicodeToASCIITranslationFailureCharacter() not_eq '?' )
     {
         test_number_that_failed = 23;
         return( failure() );
@@ -409,13 +409,13 @@ _Check_return_ bool test_CDataParser( _Out_ std::string& class_name, _Out_ int& 
 
     Win32FoundationClasses::CDataParser parser;
 
-    if ( parser.GetSize() != 0 )
+    if ( parser.GetSize() not_eq 0 )
     {
         test_number_that_failed = 1000;
         return( failure() );
     }
 
-    if ( parser.GetData() != NULL )
+    if ( parser.GetData() not_eq NULL )
     {
         test_number_that_failed = 1001;
         return( failure() );
@@ -432,7 +432,7 @@ _Check_return_ bool test_CDataParser( _Out_ std::string& class_name, _Out_ int& 
 
     (void) parser.Initialize( &bytes );
 
-    if ( parser.GetSize() != 6 )
+    if ( parser.GetSize() not_eq 6 )
     {
         test_number_that_failed = 1002;
         return( failure() );
@@ -453,13 +453,13 @@ _Check_return_ bool test_CDataParser( _Out_ std::string& class_name, _Out_ int& 
 
     parser.Empty();
 
-    if ( parser.GetSize() != 0 )
+    if ( parser.GetSize() not_eq 0 )
     {
         test_number_that_failed = 1004;
         return( failure() );
     }
 
-    if ( parser.GetData() != nullptr)
+    if ( parser.GetData() not_eq nullptr)
     {
         test_number_that_failed = 1005;
         return( failure() );
@@ -489,7 +489,7 @@ _Check_return_ bool test_CDataParser( _Out_ std::string& class_name, _Out_ int& 
 
     (void) parser.Initialize( &bytes );
 
-    if ( parser.GetSize() != 12 )
+    if ( parser.GetSize() not_eq 12 )
     {
         test_number_that_failed = 1006;
         return( failure() );
@@ -512,13 +512,13 @@ _Check_return_ bool test_CDataParser( _Out_ std::string& class_name, _Out_ int& 
 
     parser.Empty();
 
-    if ( parser.GetSize() != 0 )
+    if ( parser.GetSize() not_eq 0 )
     {
         test_number_that_failed = 1008;
         return( failure() );
     }
 
-    if ( parser.GetData() != nullptr)
+    if ( parser.GetData() not_eq nullptr)
     {
         test_number_that_failed = 1009;
         return( failure() );
@@ -548,7 +548,7 @@ _Check_return_ bool test_CDataParser( _Out_ std::string& class_name, _Out_ int& 
 
     (void) parser.Initialize( &bytes );
 
-    if ( parser.GetSize() != 12 )
+    if ( parser.GetSize() not_eq 12 )
     {
         test_number_that_failed = 1010;
         return( failure() );
@@ -571,13 +571,13 @@ _Check_return_ bool test_CDataParser( _Out_ std::string& class_name, _Out_ int& 
 
     parser.Empty();
 
-    if ( parser.GetSize() != 0 )
+    if ( parser.GetSize() not_eq 0 )
     {
         test_number_that_failed = 1012;
         return( failure() );
     }
 
-    if ( parser.GetData() != nullptr)
+    if ( parser.GetData() not_eq nullptr)
     {
         test_number_that_failed = 1013;
         return( failure() );
@@ -619,7 +619,7 @@ _Check_return_ bool test_CDataParser( _Out_ std::string& class_name, _Out_ int& 
 
     (void) parser.Initialize( &bytes );
 
-    if ( parser.GetSize() != 24 )
+    if ( parser.GetSize() not_eq 24 )
     {
         test_number_that_failed = 1014;
         return( failure() );
@@ -642,13 +642,13 @@ _Check_return_ bool test_CDataParser( _Out_ std::string& class_name, _Out_ int& 
 
     parser.Empty();
 
-    if ( parser.GetSize() != 0 )
+    if ( parser.GetSize() not_eq 0 )
     {
         test_number_that_failed = 1016;
         return( failure() );
     }
 
-    if ( parser.GetData() != nullptr)
+    if ( parser.GetData() not_eq nullptr)
     {
         test_number_that_failed = 1017;
         return( failure() );
@@ -690,7 +690,7 @@ _Check_return_ bool test_CDataParser( _Out_ std::string& class_name, _Out_ int& 
 
     (void) parser.Initialize( &bytes );
 
-    if ( parser.GetSize() != 24 )
+    if ( parser.GetSize() not_eq 24 )
     {
         test_number_that_failed = 1018;
         return( failure() );
@@ -713,13 +713,13 @@ _Check_return_ bool test_CDataParser( _Out_ std::string& class_name, _Out_ int& 
 
     parser.Empty();
 
-    if ( parser.GetSize() != 0 )
+    if ( parser.GetSize() not_eq 0 )
     {
         test_number_that_failed = 1020;
         return( failure() );
     }
 
-    if ( parser.GetData() != nullptr)
+    if ( parser.GetData() not_eq nullptr)
     {
         test_number_that_failed = 1021;
         return( failure() );
@@ -761,7 +761,7 @@ _Check_return_ bool test_CDataParser( _Out_ std::string& class_name, _Out_ int& 
 
     (void) parser.Initialize( &bytes );
 
-    if ( parser.GetSize() != 24 )
+    if ( parser.GetSize() not_eq 24 )
     {
         test_number_that_failed = 1022;
         return( failure() );
@@ -784,13 +784,13 @@ _Check_return_ bool test_CDataParser( _Out_ std::string& class_name, _Out_ int& 
 
     parser.Empty();
 
-    if ( parser.GetSize() != 0 )
+    if ( parser.GetSize() not_eq 0 )
     {
         test_number_that_failed = 1024;
         return( failure() );
     }
 
-    if ( parser.GetData() != nullptr )
+    if ( parser.GetData() not_eq nullptr )
     {
         test_number_that_failed = 1025;
         return( failure() );
@@ -832,7 +832,7 @@ _Check_return_ bool test_CDataParser( _Out_ std::string& class_name, _Out_ int& 
 
     (void) parser.Initialize( &bytes );
 
-    if ( parser.GetSize() != 24 )
+    if ( parser.GetSize() not_eq 24 )
     {
         test_number_that_failed = 1026;
         return( failure() );
@@ -855,13 +855,13 @@ _Check_return_ bool test_CDataParser( _Out_ std::string& class_name, _Out_ int& 
 
     parser.Empty();
 
-    if ( parser.GetSize() != 0 )
+    if ( parser.GetSize() not_eq 0 )
     {
         test_number_that_failed = 1028;
         return( failure() );
     }
 
-    if ( parser.GetData() != nullptr )
+    if ( parser.GetData() not_eq nullptr )
     {
         test_number_that_failed = 1029;
         return( failure() );
@@ -877,7 +877,7 @@ _Check_return_ bool test_CDataParser( _Out_ std::string& class_name, _Out_ int& 
 
     (void) parser.Initialize( &bytes );
 
-    if ( parser.GetSize() != 5 )
+    if ( parser.GetSize() not_eq 5 )
     {
         test_number_that_failed = 1030;
         return( failure() );
@@ -899,7 +899,7 @@ _Check_return_ bool test_CDataParser( _Out_ std::string& class_name, _Out_ int& 
         return( failure() );
     }
 
-    if ( found_at.GetIndex() != 0 )
+    if ( found_at.GetIndex() not_eq 0 )
     {
         test_number_that_failed = 1032;
         return( failure() );
@@ -917,7 +917,7 @@ _Check_return_ bool test_CDataParser( _Out_ std::string& class_name, _Out_ int& 
         return( failure() );
     }
 
-    if ( found_at.GetIndex() != 2 )
+    if ( found_at.GetIndex() not_eq 2 )
     {
         test_number_that_failed = 1034;
         return( failure() );
@@ -928,7 +928,7 @@ _Check_return_ bool test_CDataParser( _Out_ std::string& class_name, _Out_ int& 
     (void) bytes_to_find.push_back( 'C' );
     (void) bytes_to_find.push_back( 'E' );
 
-    if ( parser.Find( here, bytes_to_find, found_at ) != false )
+    if ( parser.Find( here, bytes_to_find, found_at ) not_eq false )
     {
         test_number_that_failed = 1035;
         return( failure() );
@@ -942,7 +942,7 @@ _Check_return_ bool test_CDataParser( _Out_ std::string& class_name, _Out_ int& 
 
     found_at.Empty();
 
-    if ( parser.Find( here, bytes_to_find, found_at ) != false )
+    if ( parser.Find( here, bytes_to_find, found_at ) not_eq false )
     {
         test_number_that_failed = 1036;
         return( failure() );
@@ -956,7 +956,7 @@ _Check_return_ bool test_CDataParser( _Out_ std::string& class_name, _Out_ int& 
         return( failure() );
     }
 
-    if ( found_at.GetIndex() != 2 )
+    if ( found_at.GetIndex() not_eq 2 )
     {
         test_number_that_failed = 1038;
         return( failure() );
@@ -972,7 +972,7 @@ _Check_return_ bool test_CDataParser( _Out_ std::string& class_name, _Out_ int& 
         return( failure() );
     }
 
-    if ( found_at.GetIndex() != 2 )
+    if ( found_at.GetIndex() not_eq 2 )
     {
         test_number_that_failed = 1040;
         return( failure() );
@@ -988,25 +988,25 @@ _Check_return_ bool test_CDataParser( _Out_ std::string& class_name, _Out_ int& 
         return( failure() );
     }
 
-    if ( bytes_gotten.size() != 3 )
+    if ( bytes_gotten.size() not_eq 3 )
     {
         test_number_that_failed = 1042;
         return( failure() );
     }
 
-    if ( bytes_gotten.at( 0 ) != 'C' )
+    if ( bytes_gotten.at( 0 ) not_eq 'C' )
     {
         test_number_that_failed = 1043;
         return( failure() );
     }
 
-    if ( bytes_gotten.at( 1 ) != 'D' )
+    if ( bytes_gotten.at( 1 ) not_eq 'D' )
     {
         test_number_that_failed = 1044;
         return( failure() );
     }
 
-    if ( bytes_gotten.at( 2 ) != 'E' )
+    if ( bytes_gotten.at( 2 ) not_eq 'E' )
     {
         test_number_that_failed = 1045;
         return( failure() );
@@ -1017,13 +1017,13 @@ _Check_return_ bool test_CDataParser( _Out_ std::string& class_name, _Out_ int& 
 
     // Try and get three bytes from a five byte array beginning at index 3
     // (this should fail)
-    if ( parser.Get( here, 3, bytes_gotten ) != false )
+    if ( parser.Get( here, 3, bytes_gotten ) not_eq false )
     {
         test_number_that_failed = 1046;
         return( failure() );
     }
 
-    if ( bytes_gotten.size() != 0 )
+    if ( bytes_gotten.size() not_eq 0 )
     {
         test_number_that_failed = 1047;
         return( failure() );
@@ -1039,13 +1039,13 @@ _Check_return_ bool test_CDataParser( _Out_ std::string& class_name, _Out_ int& 
         return( failure() );
     }
 
-    if ( our_bytes[ 0 ] != 'B' )
+    if ( our_bytes[ 0 ] not_eq 'B' )
     {
         test_number_that_failed = 1049;
         return( failure() );
     }
 
-    if ( our_bytes[ 1 ] != 'C' )
+    if ( our_bytes[ 1 ] not_eq 'C' )
     {
         test_number_that_failed = 1050;
         return( failure() );
@@ -1053,7 +1053,7 @@ _Check_return_ bool test_CDataParser( _Out_ std::string& class_name, _Out_ int& 
 
     here.SetIndex( 4 );
 
-    if ( parser.Get( here, sizeof( our_bytes ), our_bytes ) != false )
+    if ( parser.Get( here, sizeof( our_bytes ), our_bytes ) not_eq false )
     {
         test_number_that_failed = 1051;
         return( failure() );
@@ -1065,7 +1065,7 @@ _Check_return_ bool test_CDataParser( _Out_ std::string& class_name, _Out_ int& 
         return( failure() );
     }
 
-    if ( our_bytes[ 0 ] != 'E' )
+    if ( our_bytes[ 0 ] not_eq 'E' )
     {
         test_number_that_failed = 1053;
         return( failure() );
@@ -1075,13 +1075,13 @@ _Check_return_ bool test_CDataParser( _Out_ std::string& class_name, _Out_ int& 
 
     here.SetIndex( 0 );
 
-    if ( parser.Get( here, 6, string_to_be_gotten ) != false )
+    if ( parser.Get( here, 6, string_to_be_gotten ) not_eq false )
     {
         test_number_that_failed = 1054;
         return( failure() );
     }
 
-    if ( string_to_be_gotten.length() != 0 )
+    if ( string_to_be_gotten.length() not_eq 0 )
     {
         test_number_that_failed = 1055;
         return( failure() );
@@ -1093,43 +1093,43 @@ _Check_return_ bool test_CDataParser( _Out_ std::string& class_name, _Out_ int& 
         return( failure() );
     }
 
-    if ( string_to_be_gotten.length() != 5 )
+    if ( string_to_be_gotten.length() not_eq 5 )
     {
         test_number_that_failed = 1057;
         return( failure() );
     }
 
-    if ( string_to_be_gotten.compare(WSTRING_VIEW(L"ABCDE")) != I_AM_EQUAL_TO_THAT )
+    if ( string_to_be_gotten.compare(WSTRING_VIEW(L"ABCDE")) not_eq I_AM_EQUAL_TO_THAT )
     {
         test_number_that_failed = 1058;
         return( failure() );
     }
 
-    if ( parser.GetAt( 0 ) != 'A' )
+    if ( parser.GetAt( 0 ) not_eq 'A' )
     {
         test_number_that_failed = 1059;
         return( failure() );
     }
 
-    if ( parser.GetAt( 4 ) != 'E' )
+    if ( parser.GetAt( 4 ) not_eq 'E' )
     {
         test_number_that_failed = 1060;
         return( failure() );
     }
 
-    if ( parser.GetAt( 5 ) != 0 )
+    if ( parser.GetAt( 5 ) not_eq 0 )
     {
         test_number_that_failed = 1061;
         return( failure() );
     }
 
-    if ( parser.GetAt( 111111 ) != 0 )
+    if ( parser.GetAt( 111111 ) not_eq 0 )
     {
         test_number_that_failed = 1062;
         return( failure() );
     }
 
-    if ( parser.GetSize() != 5 )
+    if ( parser.GetSize() not_eq 5 )
     {
         test_number_that_failed = 1063;
         return( failure() );
@@ -1150,7 +1150,7 @@ _Check_return_ bool test_CDataParser( _Out_ std::string& class_name, _Out_ int& 
 
     uint64_t test_value = parser.ReadHexadecimalInteger( here, 2 );
 
-    if ( test_value != 0x23 )
+    if ( test_value not_eq 0x23 )
     {
         test_number_that_failed = 1064;
         return( failure() );
@@ -1159,7 +1159,7 @@ _Check_return_ bool test_CDataParser( _Out_ std::string& class_name, _Out_ int& 
     here.SetIndex( 1 );
     test_value = parser.ReadInteger( here, 2 );
 
-    if ( test_value != 23 )
+    if ( test_value not_eq 23 )
     {
         test_number_that_failed = 1065;
         return( failure() );
@@ -1168,7 +1168,7 @@ _Check_return_ bool test_CDataParser( _Out_ std::string& class_name, _Out_ int& 
     here.SetIndex( 1 );
     test_value = parser.ReadInteger( here, 3 );
 
-    if ( test_value != 234 )
+    if ( test_value not_eq 234 )
     {
         test_number_that_failed = 1066;
         return( failure() );
@@ -1198,7 +1198,7 @@ _Check_return_ bool test_CDataParser( _Out_ std::string& class_name, _Out_ int& 
         return(failure());
     }
 
-    if (found_at.GetIndex() != 8)
+    if (found_at.GetIndex() not_eq 8)
     {
         test_number_that_failed = 1068;
         return(failure());

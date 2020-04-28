@@ -284,14 +284,14 @@ void Win32FoundationClasses::CServer::m_Get_102_Data( void ) noexcept
 
    m_ErrorCode = ::NetServerGetInfo( (LMSTR) m_WideMachineName.get(), 102, &buffer );
 
-   if ( m_ErrorCode != NERR_Success )
+   if ( m_ErrorCode not_eq NERR_Success )
    {
       //WFCTRACEERROR( m_ErrorCode );
    }
 
-   if ( buffer != nullptr )
+   if ( buffer not_eq nullptr )
    {
-      SERVER_INFO_102 * information_p = (SERVER_INFO_102 *) buffer;
+      auto information_p = (SERVER_INFO_102 *) buffer;
 
       m_MachineName.assign( information_p->sv102_name == nullptr ? L"" : information_p->sv102_name );
       m_UserPath.assign( information_p->sv102_userpath == nullptr ? L"" : information_p->sv102_userpath );
@@ -318,14 +318,14 @@ void Win32FoundationClasses::CServer::m_Get_503_Data( void ) noexcept
 
    m_ErrorCode = ::NetServerGetInfo( (LMSTR) m_WideMachineName.get(), 503, &buffer );
 
-   if ( m_ErrorCode != NERR_Success )
+   if ( m_ErrorCode not_eq NERR_Success )
    {
       //WFCTRACEERROR( m_ErrorCode );
    }
 
-   if ( buffer != nullptr )
+   if ( buffer not_eq nullptr )
    {
-      SERVER_INFO_503 *information_p = (SERVER_INFO_503 *) buffer;
+      auto information_p = (SERVER_INFO_503 *) buffer;
 
       /*
       ** Now store the info we want...
@@ -350,14 +350,14 @@ void Win32FoundationClasses::CServer::m_Get_599_Data( void ) noexcept
 
    m_ErrorCode = ::NetServerGetInfo( (LMSTR) m_WideMachineName.get(), 599, &buffer );
 
-   if ( m_ErrorCode != NERR_Success )
+   if ( m_ErrorCode not_eq NERR_Success )
    {
       //WFCTRACEERROR( m_ErrorCode );
    }
 
-   if ( buffer != nullptr )
+   if ( buffer not_eq nullptr )
    {
-      SERVER_INFO_599 * information_p = (SERVER_INFO_599 *) buffer;
+      auto information_p = (SERVER_INFO_599 *) buffer;
 
       if ( information_p->sv599_domain == nullptr )
       {

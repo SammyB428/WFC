@@ -66,7 +66,7 @@ static inline constexpr _Check_return_ bool __wfc_range_check( _In_ uint32_t con
    {
       int32_t const half = static_cast<int32_t>(number_of_ranges >> 1); // Same as dividing by two only faster
 
-      if ( half != 0 )
+      if ( half not_eq 0 )
       {
          int32_t const middle = static_cast<int32_t>(bottom + ( ( number_of_ranges bitand 1 ) ? half : ( half - 1 ) ));
 

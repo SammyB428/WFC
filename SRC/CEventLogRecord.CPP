@@ -75,7 +75,7 @@ Win32FoundationClasses::CEventLogRecord::CEventLogRecord( _In_ EVENTLOGRECORD co
    Copy( source );
 }
 
-Win32FoundationClasses::CEventLogRecord::~CEventLogRecord() noexcept
+Win32FoundationClasses::CEventLogRecord::~CEventLogRecord()
 {
    WFC_VALIDATE_POINTER( this );
    Empty();
@@ -192,7 +192,7 @@ void Win32FoundationClasses::CEventLogRecord::Copy( _In_ EVENTLOGRECORD  const *
       // 1999-10-11, Thanks go to Louis Beauchamp (louisbea@nortelnetworks.com)
       // For finding a UNICODE problem here
 
-      while( *character_pointer != 0 )
+      while( *character_pointer not_eq 0 )
       {
          Source.push_back( *character_pointer );
          character_pointer++;
@@ -207,7 +207,7 @@ void Win32FoundationClasses::CEventLogRecord::Copy( _In_ EVENTLOGRECORD  const *
 
       // ComputerName
 
-      while( *character_pointer != 0 )
+      while( *character_pointer not_eq 0 )
       {
          ComputerName.push_back( *character_pointer );
          character_pointer++;
@@ -230,7 +230,7 @@ void Win32FoundationClasses::CEventLogRecord::Copy( _In_ EVENTLOGRECORD  const *
       {
          data_string.clear();
 
-         while( *character_pointer != 0 )
+         while( *character_pointer not_eq 0 )
          {
             data_string.push_back( *character_pointer );
             character_pointer++;

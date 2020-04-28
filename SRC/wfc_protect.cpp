@@ -74,7 +74,7 @@ _Check_return_ bool Win32FoundationClasses::wfc_protect_data( __in_bcount( numbe
       return( false );
    }
 
-   if ( ciphertext_buffer != nullptr )
+   if ( ciphertext_buffer not_eq nullptr )
    {
       if ( *address_of_number_of_cipher_bytes >= ciphertext.cbData )
       {
@@ -121,7 +121,7 @@ _Check_return_ bool Win32FoundationClasses::wfc_unprotect_data( __in_bcount( num
       return( false );
    }
 
-   if ( plaintext_buffer != nullptr )
+   if ( plaintext_buffer not_eq nullptr )
    {
       if ( *address_of_number_of_plain_bytes >= plaintext.cbData )
       {

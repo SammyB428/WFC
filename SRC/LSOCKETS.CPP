@@ -61,7 +61,7 @@ Win32FoundationClasses::CListeningSocket::CListeningSocket() noexcept
    m_Initialize();
 }
 
-Win32FoundationClasses::CListeningSocket::~CListeningSocket() noexcept
+Win32FoundationClasses::CListeningSocket::~CListeningSocket()
 {
    WFC_VALIDATE_POINTER( this );
 }
@@ -110,7 +110,7 @@ _Check_return_ bool Win32FoundationClasses::CListeningSocket::Open( void ) noexc
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( m_Thunk_p );
 
-   if ( m_SocketID != INVALID_SOCKET )
+   if ( m_SocketID not_eq INVALID_SOCKET )
    {
       return( true );
    }

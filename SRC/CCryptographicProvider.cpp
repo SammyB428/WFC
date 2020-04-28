@@ -65,7 +65,7 @@ Win32FoundationClasses::CCryptographicProvider::CCryptographicProvider() noexcep
    m_Initialize();
 }
 
-Win32FoundationClasses::CCryptographicProvider::~CCryptographicProvider() noexcept
+Win32FoundationClasses::CCryptographicProvider::~CCryptographicProvider()
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -79,7 +79,7 @@ void Win32FoundationClasses::CCryptographicProvider::Close( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
-   if ( m_CryptographicProvider != static_cast< HCRYPTPROV >( NULL ) )
+   if ( m_CryptographicProvider not_eq static_cast< HCRYPTPROV >( NULL ) )
    {
       ::CryptReleaseContext( m_CryptographicProvider, 0 );
    }
@@ -102,7 +102,7 @@ bool Win32FoundationClasses::CCryptographicProvider::CreateHash(Win32FoundationC
                                      creation_flags,
                                     &hash_handle );
 
-   if ( return_value != FALSE )
+   if ( return_value not_eq FALSE )
    {
       (void) hash.FromHandle( hash_handle );
    }
@@ -187,17 +187,14 @@ bool Win32FoundationClasses::CCryptographicProvider::CreateKey(Win32FoundationCl
    // can put your request for the number of bits in the key
    // in the high word of the creation flags
 
-   if ( number_of_bits_in_key != 0 )
+   if ( number_of_bits_in_key not_eq 0 )
    {
       // WFCTRACE( TEXT( "Specifying the number of bits in the key" ) );
 
-      WORD low_word  = 0;
-      WORD high_word = 0;
+      WORD const low_word  = LOWORD(creation_flags);
+      WORD high_word = HIWORD(creation_flags);
 
-      low_word  = LOWORD( creation_flags );
-      high_word = HIWORD( creation_flags );
-
-      if ( high_word != 0 )
+      if ( high_word not_eq 0 )
       {
          //WFCTRACE( TEXT( "WARNING! something was already set in the high word of creation flags, I might be breaking your code!!!" ) );
       }
@@ -212,7 +209,7 @@ bool Win32FoundationClasses::CCryptographicProvider::CreateKey(Win32FoundationCl
                                  creation_flags,
                                 &key_handle );
 
-   if ( return_value != FALSE )
+   if ( return_value not_eq FALSE )
    {
       (void) key.FromHandle( key_handle );
    }
@@ -605,7 +602,7 @@ bool Win32FoundationClasses::CCryptographicProvider::GetUserKey( DWORD which_use
                                      which_user_key_to_get,
                                     &key_handle );
 
-   if ( return_value != FALSE )
+   if ( return_value not_eq FALSE )
    {
       (void) key.FromHandle( key_handle );
    }
@@ -779,7 +776,7 @@ _Check_return_ bool Win32FoundationClasses::CCryptographicProvider::Open(__in_z_
 
    WFC_TRY
    {
-      if ( m_CryptographicProvider != static_cast< HCRYPTPROV >( NULL ) )
+      if ( m_CryptographicProvider not_eq static_cast< HCRYPTPROV >( NULL ) )
       {
          Close();
       }

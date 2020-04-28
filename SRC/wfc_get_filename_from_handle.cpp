@@ -121,7 +121,7 @@ _Check_return_ bool Win32FoundationClasses::wfc_get_command_line( _Out_ std::wst
 
     ZeroMemory( path, sizeof( path ) );
 
-    if ( GetModuleFileNameW( static_cast< HMODULE >( NULL ), path, static_cast<DWORD>(std::size( path )) ) != 0 )
+    if ( GetModuleFileNameW( static_cast< HMODULE >( NULL ), path, static_cast<DWORD>(std::size( path )) ) not_eq 0 )
     {
         full_command_line.assign( path );
         full_command_line.push_back( ' ' );
@@ -180,7 +180,7 @@ std::wstring something_a_human_can_understand;
 
 std::wstring filename;
 
-if ( <B>wfc_get_filename_from_handle</B>( file_handle, filename ) != FALSE )
+if ( <B>wfc_get_filename_from_handle</B>( file_handle, filename ) not_eq FALSE )
 {
 _tprintf( TEXT( &quot;%s - %s\n&quot; ),
 (LPCTSTR) filename,

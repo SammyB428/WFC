@@ -99,7 +99,7 @@ _Check_return_ bool Win32FoundationClasses::CVolume::Close( void ) noexcept
    m_DriveLetter = 0;
    m_DriveType   = DRIVE_UNKNOWN;
 
-   if ( m_Handle != static_cast< HANDLE >( INVALID_HANDLE_VALUE ) )
+   if ( m_Handle not_eq static_cast< HANDLE >( INVALID_HANDLE_VALUE ) )
    {
       (void) Win32FoundationClasses::wfc_close_handle( m_Handle );
    }
@@ -306,7 +306,7 @@ _Check_return_ bool Win32FoundationClasses::CVolume::Lock( void ) noexcept
                               nullptr,
                               0,
                              &number_of_bytes_returned,
-                              nullptr ) != FALSE )
+                              nullptr ) not_eq FALSE )
       {
          return( true );
       }
@@ -321,7 +321,7 @@ _Check_return_ bool Win32FoundationClasses::CVolume::Open( _In_ TCHAR const driv
 {
    WFC_VALIDATE_POINTER( this );
 
-   if ( m_Handle != static_cast< HANDLE >( INVALID_HANDLE_VALUE ) )
+   if ( m_Handle not_eq static_cast< HANDLE >( INVALID_HANDLE_VALUE ) )
    {
       (void) Close();
    }
@@ -512,7 +512,7 @@ void eject_zip_cartridge( TCHAR zip_drive_letter )
 
    <B>CVolume</B> zip_volume;
 
-   if ( zip_volume.Open( zip_drive_letter ) != FALSE )
+   if ( zip_volume.Open( zip_drive_letter ) not_eq FALSE )
    {
       zip_volume.Eject();
    }

@@ -76,7 +76,7 @@ _Check_return_ bool test_CFile64( _Out_ std::string& class_name, _Out_ int& test
 
    bool file_exists = true;
 
-   while( file_exists != false )
+   while( file_exists not_eq false )
    {
       if ( ::GetTempFileName( temporary_path,
                               TEXT( "WFC" ),
@@ -114,37 +114,37 @@ _Check_return_ bool test_CFile64( _Out_ std::string& class_name, _Out_ int& test
 
    file.Write( buffer.get(), ONE_MEGABYTE );
 
-   if ( file.GetLength() != ONE_MEGABYTE )
+   if ( file.GetLength() not_eq ONE_MEGABYTE )
    {
       test_number_that_failed = 2;
       return(failure());
    }
 
-   if ( file.GetPosition() != ONE_MEGABYTE )
+   if ( file.GetPosition() not_eq ONE_MEGABYTE )
    {
       test_number_that_failed = 2;
       return(failure());
    }
 
-   if ( file.Seek( 0, Win32FoundationClasses::CFile64::SeekPosition::begin ) != 0 )
+   if ( file.Seek( 0, Win32FoundationClasses::CFile64::SeekPosition::begin ) not_eq 0 )
    {
       test_number_that_failed = 3;
       return(failure());
    }
 
-   if ( file.GetPosition() != 0 )
+   if ( file.GetPosition() not_eq 0 )
    {
       test_number_that_failed = 4;
       return(failure());
    }
 
-   if ( file.Seek( 0, Win32FoundationClasses::CFile64::SeekPosition::end ) != ONE_MEGABYTE )
+   if ( file.Seek( 0, Win32FoundationClasses::CFile64::SeekPosition::end ) not_eq ONE_MEGABYTE )
    {
       test_number_that_failed = 5;
       return(failure());
    }
 
-   if ( file.GetPosition() != ONE_MEGABYTE )
+   if ( file.GetPosition() not_eq ONE_MEGABYTE )
    {
       test_number_that_failed = 6;
       return(failure());
@@ -152,13 +152,13 @@ _Check_return_ bool test_CFile64( _Out_ std::string& class_name, _Out_ int& test
 
    ULONGLONG const position = file.Seek( -ONE_MEGABYTE, Win32FoundationClasses::CFile64::SeekPosition::end );
 
-   if ( position != 0 )
+   if ( position not_eq 0 )
    {
       test_number_that_failed = 7;
       return(failure());
    }
 
-   if ( file.GetPosition() != 0 )
+   if ( file.GetPosition() not_eq 0 )
    {
       test_number_that_failed = 8;
       return(failure());
@@ -166,7 +166,7 @@ _Check_return_ bool test_CFile64( _Out_ std::string& class_name, _Out_ int& test
 
    ZeroMemory( buffer.get(), ONE_MEGABYTE );
 
-   if ( file.Read( buffer.get(), ONE_MEGABYTE ) != ONE_MEGABYTE )
+   if ( file.Read( buffer.get(), ONE_MEGABYTE ) not_eq ONE_MEGABYTE )
    {
       test_number_that_failed = 9;
       return(failure());
@@ -174,7 +174,7 @@ _Check_return_ bool test_CFile64( _Out_ std::string& class_name, _Out_ int& test
 
    for ( auto const loop_index : Range(ONE_MEGABYTE) )
    {
-      if ( buffer[ loop_index ] != 'A' )
+      if ( buffer[ loop_index ] not_eq 'A' )
       {
          test_number_that_failed = 10;
          return(failure());
@@ -195,13 +195,13 @@ _Check_return_ bool test_CFile64( _Out_ std::string& class_name, _Out_ int& test
 
    // If we get here it means we have successfully memory mapped the first 64KB of the file
 
-   if ( file.Seek( ONE_MEGABYTE - 1, Win32FoundationClasses::CFile64::SeekPosition::begin ) != ( ONE_MEGABYTE - 1 ) )
+   if ( file.Seek( ONE_MEGABYTE - 1, Win32FoundationClasses::CFile64::SeekPosition::begin ) not_eq ( ONE_MEGABYTE - 1 ) )
    {
       test_number_that_failed = 12;
       return(failure());
    }
 
-   if ( file.GetPosition() != ( ONE_MEGABYTE - 1 ) )
+   if ( file.GetPosition() not_eq ( ONE_MEGABYTE - 1 ) )
    {
       test_number_that_failed = 13;
       return(failure());
@@ -216,7 +216,7 @@ _Check_return_ bool test_CFile64( _Out_ std::string& class_name, _Out_ int& test
    // This next line will cause an ASSERTE() in debug builds. Just click "Ignore" 
    // and let the test continue.
 
-   if ( file.SetEndOfFile( ONE_MEGABYTE - 1 ) != false )
+   if ( file.SetEndOfFile( ONE_MEGABYTE - 1 ) not_eq false )
    {
       test_number_that_failed = 14;
       return(failure());
@@ -232,7 +232,7 @@ _Check_return_ bool test_CFile64( _Out_ std::string& class_name, _Out_ int& test
 
    file.Close();
 
-   if (Win32FoundationClasses::wfc_does_file_exist( temporary_filename ) != false )
+   if (Win32FoundationClasses::wfc_does_file_exist( temporary_filename ) not_eq false )
    {
       test_number_that_failed = 16;
       return(failure());
@@ -289,7 +289,7 @@ _Check_return_ bool test_CFile64( _Out_ std::string& class_name, _Out_ int& test
 
    file.SeekToBegin();
 
-   if ( file.GetPosition() != 0 )
+   if ( file.GetPosition() not_eq 0 )
    {
       test_number_that_failed = 18;
       return(failure());
@@ -297,7 +297,7 @@ _Check_return_ bool test_CFile64( _Out_ std::string& class_name, _Out_ int& test
 
    std::vector<std::string> strings;
 
-   if ( file.Read( strings ) != true )
+   if ( file.Read( strings ) not_eq true )
    {
       test_number_that_failed = 19;
       return(failure());
@@ -307,7 +307,7 @@ _Check_return_ bool test_CFile64( _Out_ std::string& class_name, _Out_ int& test
    {
       std::size_t const number_of_characters = sprintf_s( temp_string, sizeof( temp_string ), "Test String %04lu", (unsigned long) loop_index );
 
-      if ( strings.at( loop_index ).compare( std::string_view(temp_string, number_of_characters)) != I_AM_EQUAL_TO_THAT )
+      if ( strings.at( loop_index ).compare( std::string_view(temp_string, number_of_characters)) not_eq I_AM_EQUAL_TO_THAT )
       {
          test_number_that_failed = 20;
          return(failure());
@@ -323,7 +323,7 @@ _Check_return_ bool test_CFile64( _Out_ std::string& class_name, _Out_ int& test
 
    Win32FoundationClasses::CExtensibleMarkupLanguageDocument xml;
 
-   if ( file.Read( xml ) != true )
+   if ( file.Read( xml ) not_eq true )
    {
       test_number_that_failed = 21;
       return(failure());
@@ -341,7 +341,7 @@ _Check_return_ bool test_CFile64( _Out_ std::string& class_name, _Out_ int& test
 
    element_p->GetText( xml_text );
 
-   if ( xml_text.compare( WSTRING_VIEW(L"WFC") ) != I_AM_EQUAL_TO_THAT)
+   if ( xml_text.compare( WSTRING_VIEW(L"WFC") ) not_eq I_AM_EQUAL_TO_THAT)
    {
       test_number_that_failed = 23;
       return( failure() );

@@ -46,7 +46,7 @@ inline _Check_return_ int compare_no_case(_In_ std::wstring const& s, _In_opt_z_
 {
     WFC_VALIDATE_POINTER_NULL_OK(string_p);
 
-    if (string_p != nullptr)
+    if (string_p not_eq nullptr)
     {
         return(compare_no_case(s, std::wstring_view(string_p, ::wcslen(string_p))));
     }
@@ -96,7 +96,7 @@ inline _Check_return_ int compare_no_case(_In_ std::string const& s, _In_opt_z_ 
 {
     WFC_VALIDATE_POINTER_NULL_OK(string_p);
 
-    if (string_p != nullptr)
+    if (string_p not_eq nullptr)
     {
         return(compare_no_case(s, std::string_view(string_p, ::strlen(string_p))));
     }

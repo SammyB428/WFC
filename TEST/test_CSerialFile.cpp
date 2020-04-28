@@ -74,7 +74,7 @@ void test_CSerialFile( void ) noexcept
    }
    else
    {
-      if ( serial.GetConfiguration( configuration ) != FALSE )
+      if ( serial.GetConfiguration( configuration ) not_eq FALSE )
       {
 #if defined( _DEBUG ) && ! defined( WFC_STL )
          serial.Dump( afxDump );

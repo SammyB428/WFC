@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 1995-2019, Samuel R. Blackburn
+** Copyright, 1995-2020, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -178,7 +178,7 @@ void Win32FoundationClasses::CUniformResourceLocator::Copy(_In_ std::wstring_vie
 
       location = MachineName.find( ':' );
 
-      if ( location != std::wstring::npos )
+      if ( location not_eq std::wstring::npos )
       {
          PortName.assign( right( MachineName, ( MachineName.length() - location ) - 1 ) );
          MachineName.assign( MachineName.substr( 0, location ) );

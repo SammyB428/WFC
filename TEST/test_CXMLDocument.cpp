@@ -77,37 +77,37 @@ _Check_return_ bool test_CXMLDocument( _Out_ std::string& class_name, _Out_ int&
     // Check to make sure the Big End was In first
     // Big End In, big endian, get it?
 
-    if ( bytes.at( 0 ) != 0xFE )// fe
+    if ( bytes.at( 0 ) not_eq 0xFE )// fe
     {
         test_number_that_failed = 2;
         return( failure() );
     }
 
-    if ( bytes.at( 1 ) != 0xFF )// ff
+    if ( bytes.at( 1 ) not_eq 0xFF )// ff
     {
         test_number_that_failed = 3;
         return( failure() );
     }
 
-    if ( bytes.at( 2 ) != 0x00 )
+    if ( bytes.at( 2 ) not_eq 0x00 )
     {
         test_number_that_failed = 4;
         return( failure() );
     }
 
-    if ( bytes.at( 3 ) != 0x3C )
+    if ( bytes.at( 3 ) not_eq 0x3C )
     {
         test_number_that_failed = 5;
         return( failure() );
     }
 
-    if ( bytes.at( 4 ) != 0x00 )
+    if ( bytes.at( 4 ) not_eq 0x00 )
     {
         test_number_that_failed = 6;
         return( failure() );
     }
 
-    if ( bytes.at( 5 ) != 0x3F )
+    if ( bytes.at( 5 ) not_eq 0x3F )
     {
         test_number_that_failed = 7;
         return( failure() );
@@ -132,37 +132,37 @@ _Check_return_ bool test_CXMLDocument( _Out_ std::string& class_name, _Out_ int&
     // Check to make sure the Little End was In first
     // Little End In, little endian, get it?
 
-    if ( bytes.at( 0 ) != 0xFF )
+    if ( bytes.at( 0 ) not_eq 0xFF )
     {
         test_number_that_failed = 9;
         return( failure() );
     }
 
-    if ( bytes.at( 1 ) != 0xFE )
+    if ( bytes.at( 1 ) not_eq 0xFE )
     {
         test_number_that_failed = 10;
         return( failure() );
     }
 
-    if ( bytes.at( 2 ) != 0x3C )
+    if ( bytes.at( 2 ) not_eq 0x3C )
     {
         test_number_that_failed = 11;
         return( failure() );
     }
 
-    if ( bytes.at( 3 ) != 0x00 )
+    if ( bytes.at( 3 ) not_eq 0x00 )
     {
         test_number_that_failed = 12;
         return( failure() );
     }
 
-    if ( bytes.at( 4 ) != 0x3F )
+    if ( bytes.at( 4 ) not_eq 0x3F )
     {
         test_number_that_failed = 13;
         return( failure() );
     }
 
-    if ( bytes.at( 5 ) != 0x00 )
+    if ( bytes.at( 5 ) not_eq 0x00 )
     {
         test_number_that_failed = 14;
         return( failure() );
@@ -184,25 +184,25 @@ _Check_return_ bool test_CXMLDocument( _Out_ std::string& class_name, _Out_ int&
 
     ASSERT( bytes.size() > 3 );
 
-    if ( bytes.at( 0 ) != 0x00 )
+    if ( bytes.at( 0 ) not_eq 0x00 )
     {
         test_number_that_failed = 16;
         return( failure() );
     }
 
-    if ( bytes.at( 1 ) != 0x00 )
+    if ( bytes.at( 1 ) not_eq 0x00 )
     {
         test_number_that_failed = 17;
         return( failure() );
     }
 
-    if ( bytes.at( 2 ) != 0x00 )
+    if ( bytes.at( 2 ) not_eq 0x00 )
     {
         test_number_that_failed = 18;
         return( failure() );
     }
 
-    if ( bytes.at( 3 ) != 0x3C )
+    if ( bytes.at( 3 ) not_eq 0x3C )
     {
         test_number_that_failed = 19;
         return( failure() );
@@ -224,28 +224,28 @@ _Check_return_ bool test_CXMLDocument( _Out_ std::string& class_name, _Out_ int&
 
     ASSERT( bytes.size() > 3 );
 
-    if ( bytes.at( 0 ) != 0x3C )
+    if ( bytes.at( 0 ) not_eq 0x3C )
     {
         ASSERT( FALSE );
         _tprintf( TEXT( "CExtensibleMarkupLanguageDocument failed test 17\n" ) );
         return( failure() );
     }
 
-    if ( bytes.at( 1 ) != 0x00 )
+    if ( bytes.at( 1 ) not_eq 0x00 )
     {
         ASSERT( FALSE );
         _tprintf( TEXT( "CExtensibleMarkupLanguageDocument failed test 18\n" ) );
         return( failure() );
     }
 
-    if ( bytes.at( 2 ) != 0x00 )
+    if ( bytes.at( 2 ) not_eq 0x00 )
     {
         ASSERT( FALSE );
         _tprintf( TEXT( "CExtensibleMarkupLanguageDocument failed test 19\n" ) );
         return( failure() );
     }
 
-    if ( bytes.at( 3 ) != 0x00 )
+    if ( bytes.at( 3 ) not_eq 0x00 )
     {
         ASSERT( FALSE );
         _tprintf( TEXT( "CExtensibleMarkupLanguageDocument failed test 20\n" ) );
@@ -268,28 +268,28 @@ _Check_return_ bool test_CXMLDocument( _Out_ std::string& class_name, _Out_ int&
 
     ASSERT( bytes.size() > 3 );
 
-    if ( bytes.at( 0 ) != 0x00 )
+    if ( bytes.at( 0 ) not_eq 0x00 )
     {
         ASSERT( FALSE );
         _tprintf( TEXT( "CExtensibleMarkupLanguageDocument failed test 22\n" ) );
         return( failure() );
     }
 
-    if ( bytes.at( 1 ) != 0x00 )
+    if ( bytes.at( 1 ) not_eq 0x00 )
     {
         ASSERT( FALSE );
         _tprintf( TEXT( "CExtensibleMarkupLanguageDocument failed test 23\n" ) );
         return( failure() );
     }
 
-    if ( bytes.at( 2 ) != 0x3C )
+    if ( bytes.at( 2 ) not_eq 0x3C )
     {
         ASSERT( FALSE );
         _tprintf( TEXT( "CExtensibleMarkupLanguageDocument failed test 24\n" ) );
         return( failure() );
     }
 
-    if ( bytes.at( 3 ) != 0x00 )
+    if ( bytes.at( 3 ) not_eq 0x00 )
     {
         ASSERT( FALSE );
         _tprintf( TEXT( "CExtensibleMarkupLanguageDocument failed test 25\n" ) );
@@ -312,28 +312,28 @@ _Check_return_ bool test_CXMLDocument( _Out_ std::string& class_name, _Out_ int&
 
     ASSERT( bytes.size() > 3 );
 
-    if ( bytes.at( 0 ) != 0x00 )
+    if ( bytes.at( 0 ) not_eq 0x00 )
     {
         ASSERT( FALSE );
         _tprintf( TEXT( "CExtensibleMarkupLanguageDocument failed test 27\n" ) );
         return( failure() );
     }
 
-    if ( bytes.at( 1 ) != 0x3C )
+    if ( bytes.at( 1 ) not_eq 0x3C )
     {
         ASSERT( FALSE );
         _tprintf( TEXT( "CExtensibleMarkupLanguageDocument failed test 28\n" ) );
         return( failure() );
     }
 
-    if ( bytes.at( 2 ) != 0x00 )
+    if ( bytes.at( 2 ) not_eq 0x00 )
     {
         ASSERT( FALSE );
         _tprintf( TEXT( "CExtensibleMarkupLanguageDocument failed test 29\n" ) );
         return( failure() );
     }
 
-    if ( bytes.at( 3 ) != 0x00 )
+    if ( bytes.at( 3 ) not_eq 0x00 )
     {
         ASSERT( FALSE );
         _tprintf( TEXT( "CExtensibleMarkupLanguageDocument failed test 30\n" ) );
@@ -350,7 +350,7 @@ _Check_return_ bool test_CXMLDocument( _Out_ std::string& class_name, _Out_ int&
 
     (void) xml.SetParseOptions( parse_options bitor WFC_XML_ALLOW_AMPERSANDS_IN_ELEMENTS );
 
-//    if ( xml.Parse( parser ) != true )
+//    if ( xml.Parse( parser ) not_eq true )
   // {
         //ASSERT( FALSE );
  //       _tprintf( TEXT( "CExtensibleMarkupLanguageDocument failed test 31\n" ) );
@@ -376,7 +376,7 @@ _Check_return_ bool test_CXMLDocument( _Out_ std::string& class_name, _Out_ int&
 
     int part_index = 0;
 
-    while (part_1[part_index] != 0x00)
+    while (part_1[part_index] not_eq 0x00)
     {
         output.push_back(part_1[part_index]);
         part_index++;
@@ -393,7 +393,7 @@ _Check_return_ bool test_CXMLDocument( _Out_ std::string& class_name, _Out_ int&
 
     part_index = 0;
 
-    while (part_2[part_index] != 0x00)
+    while (part_2[part_index] not_eq 0x00)
     {
         output.push_back(part_2[part_index]);
         part_index++;
@@ -442,35 +442,35 @@ _Check_return_ bool test_CXMLDocument( _Out_ std::string& class_name, _Out_ int&
 
     mhmd_element->GetText(mhmd_string);
 
-    if (mhmd_string.length() != 4)
+    if (mhmd_string.length() not_eq 4)
     {
         test_number_that_failed = 23;
         ASSERT(FALSE);
         return(failure());
     }
 
-    if (mhmd_string.at(0) != 0x645)
+    if (mhmd_string.at(0) not_eq 0x645)
     {
         test_number_that_failed = 24;
         ASSERT(FALSE);
         return(failure());
     }
 
-    if (mhmd_string.at(1) != 0x62D)
+    if (mhmd_string.at(1) not_eq 0x62D)
     {
         test_number_that_failed = 25;
         ASSERT(FALSE);
         return(failure());
     }
 
-    if (mhmd_string.at(2) != 0x645)
+    if (mhmd_string.at(2) not_eq 0x645)
     {
         test_number_that_failed = 26;
         ASSERT(FALSE);
         return(failure());
     }
 
-    if (mhmd_string.at(3) != 0x62F)
+    if (mhmd_string.at(3) not_eq 0x62F)
     {
         test_number_that_failed = 27;
         ASSERT(FALSE);
@@ -485,56 +485,56 @@ _Check_return_ bool test_CXMLDocument( _Out_ std::string& class_name, _Out_ int&
 
     Win32FoundationClasses::append_to_bytes(sam, bytes);
 
-    if (bytes.size() != 7)
+    if (bytes.size() not_eq 7)
     {
         test_number_that_failed = 28;
         ASSERT(FALSE);
         return(failure());
     }
 
-    if (bytes.at(0) != 1)
+    if (bytes.at(0) not_eq 1)
     {
         test_number_that_failed = 29;
         ASSERT(FALSE);
         return(failure());
     }
 
-    if (bytes.at(1) != 'S')
+    if (bytes.at(1) not_eq 'S')
     {
         test_number_that_failed = 30;
         ASSERT(FALSE);
         return(failure());
     }
 
-    if (bytes.at(2) != 0)
+    if (bytes.at(2) not_eq 0)
     {
         test_number_that_failed = 31;
         ASSERT(FALSE);
         return(failure());
     }
 
-    if (bytes.at(3) != 'a')
+    if (bytes.at(3) not_eq 'a')
     {
         test_number_that_failed = 32;
         ASSERT(FALSE);
         return(failure());
     }
 
-    if (bytes.at(4) != 0)
+    if (bytes.at(4) not_eq 0)
     {
         test_number_that_failed = 33;
         ASSERT(FALSE);
         return(failure());
     }
 
-    if (bytes.at(5) != 'm')
+    if (bytes.at(5) not_eq 'm')
     {
         test_number_that_failed = 34;
         ASSERT(FALSE);
         return(failure());
     }
 
-    if (bytes.at(6) != 0)
+    if (bytes.at(6) not_eq 0)
     {
         test_number_that_failed = 35;
         ASSERT(FALSE);
@@ -573,7 +573,7 @@ _Check_return_ bool test_CXMLDocument( _Out_ std::string& class_name, _Out_ int&
 
     root->GetText(current_text);
 
-    if (current_text.compare(WSTRING_VIEW(L"HelloWorld")) != I_AM_EQUAL_TO_THAT)
+    if (current_text.compare(WSTRING_VIEW(L"HelloWorld")) not_eq I_AM_EQUAL_TO_THAT)
     {
         test_number_that_failed = 37;
         ASSERT(FALSE);
@@ -607,35 +607,35 @@ _Check_return_ bool test_CXMLDocument( _Out_ std::string& class_name, _Out_ int&
 
     (void)mhmd_element->GetAttributeByName(WSTRING_VIEW(L"v"), value);
 
-    if (value.length() != 4)
+    if (value.length() not_eq 4)
     {
         test_number_that_failed = 39;
         ASSERT(FALSE);
         return(failure());
     }
 
-    if (value.at(0) != 0x645)
+    if (value.at(0) not_eq 0x645)
     {
         test_number_that_failed = 40;
         ASSERT(FALSE);
         return(failure());
     }
 
-    if (value.at(1) != 0x62D)
+    if (value.at(1) not_eq 0x62D)
     {
         test_number_that_failed = 41;
         ASSERT(FALSE);
         return(failure());
     }
 
-    if (value.at(2) != 0x645)
+    if (value.at(2) not_eq 0x645)
     {
         test_number_that_failed = 42;
         ASSERT(FALSE);
         return(failure());
     }
 
-    if (value.at(3) != 0x62F)
+    if (value.at(3) not_eq 0x62F)
     {
         test_number_that_failed = 43;
         ASSERT(FALSE);

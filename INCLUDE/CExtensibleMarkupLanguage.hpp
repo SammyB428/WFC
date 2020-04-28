@@ -585,7 +585,7 @@
 
         inline void Trim(void) noexcept
         {
-            if (m_XML != nullptr)
+            if (m_XML not_eq nullptr)
             {
                 m_XML->Trim();
             }

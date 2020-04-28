@@ -63,7 +63,7 @@ Win32FoundationClasses::CMicrosoftTape::CMicrosoftTape() noexcept
    m_AutomaticallyClose = false;
 }
 
-Win32FoundationClasses::CMicrosoftTape::~CMicrosoftTape() noexcept
+Win32FoundationClasses::CMicrosoftTape::~CMicrosoftTape()
 {
    WFC_VALIDATE_POINTER( this );
    m_Initialize();
@@ -120,9 +120,9 @@ _Check_return_ bool Win32FoundationClasses::CMicrosoftTape::ReadHeader( void ) n
    WFC_VALIDATE_POINTER( this );
 
 #if defined( WFC_STL )
-   ASSERT( m_FileHandle != static_cast< HANDLE >( INVALID_HANDLE_VALUE ) );
+   ASSERT( m_FileHandle not_eq static_cast< HANDLE >( INVALID_HANDLE_VALUE ) );
 #else
-   ASSERT( m_hFile != (CFILE_HFILE) hFileNull );
+   ASSERT( m_hFile not_eq (CFILE_HFILE) hFileNull );
 #endif
 
    if ( m_FileHandle == 

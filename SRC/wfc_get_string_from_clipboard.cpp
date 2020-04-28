@@ -64,7 +64,7 @@ _Check_return_ bool Win32FoundationClasses::wfc_get_string_from_clipboard( _Out_
 
    data_handle = GetClipboardData( CF_TEXT );
 
-   if ( data_handle != static_cast< HANDLE >( NULL ) )
+   if ( data_handle not_eq static_cast< HANDLE >( NULL ) )
    {
       copy( string_to_return, reinterpret_cast<LPCSTR>(data_handle)  );
 

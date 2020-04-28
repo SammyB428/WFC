@@ -76,7 +76,7 @@ _Check_return_ std::wstring Win32FoundationClasses::CTimeSpan::Format( _In_z_ wc
 
    wchar_t character = format_string[ format_string_index ];
 
-   while( character != 0 )
+   while( character not_eq 0 )
    {
       if ( character == '%' )
       {
@@ -548,7 +548,7 @@ _Check_return_ time_t Win32FoundationClasses::CTimeEx::m_Make_time_t( _In_ struc
 /*
  * ChkMul evaluates to TRUE if dest = src1 * src2 has overflowed
  */
-#define ChkMul(dest, src1, src2)   ( src1 ? (dest/src1 != src2) : 0 )
+#define ChkMul(dest, src1, src2)   ( src1 ? (dest/src1 not_eq src2) : 0 )
 
    long time_1 = 0;
    long time_2 = 0;
@@ -777,7 +777,7 @@ void Win32FoundationClasses::CTimeEx::Set( _In_ std::wstring const& iso_8601_str
    //     v
    // 1963-05-02T21:30:01.45Z
 
-   if ( temp_string.at( 0 ) != '-' )
+   if ( temp_string.at( 0 ) not_eq '-' )
    {
       return;
    }
@@ -829,7 +829,7 @@ void Win32FoundationClasses::CTimeEx::Set( _In_ std::wstring const& iso_8601_str
    //        v
    // 1963-05-02T21:30:01.45Z
 
-   if ( temp_string.at( 0 ) != '-' )
+   if ( temp_string.at( 0 ) not_eq '-' )
    {
       return;
    }
@@ -882,7 +882,7 @@ void Win32FoundationClasses::CTimeEx::Set( _In_ std::wstring const& iso_8601_str
    //           v
    // 1963-05-02T21:30:01.45Z
 
-   if ( temp_string.at( 0 ) != 'T' )
+   if ( temp_string.at( 0 ) not_eq 'T' )
    {
       return;
    }
@@ -931,7 +931,7 @@ void Win32FoundationClasses::CTimeEx::Set( _In_ std::wstring const& iso_8601_str
    //              v
    // 1963-05-02T21:30:01.45Z
 
-   if ( temp_string.at( 0 ) != ':' )
+   if ( temp_string.at( 0 ) not_eq ':' )
    {
       return;
    }
@@ -974,7 +974,7 @@ void Win32FoundationClasses::CTimeEx::Set( _In_ std::wstring const& iso_8601_str
    //                 v
    // 1963-05-02T21:30:01.45Z
 
-   if ( temp_string.at(0) != ':' )
+   if ( temp_string.at(0) not_eq ':' )
    {
       return;
    }
@@ -1082,7 +1082,7 @@ void Win32FoundationClasses::CTimeEx::Set( _In_ std::wstring const& iso_8601_str
    //                          v
    // 1963-05-02T21:30:01.45-05:00
 
-   if ( temp_string.at( 3 ) != ':' )
+   if ( temp_string.at( 3 ) not_eq ':' )
    {
       return;
    }

@@ -55,10 +55,10 @@ _Check_return_ bool Win32FoundationClasses::wfc_create_hard_link( __in_z LPCTSTR
 {
    WFC_TRY
    {
-      ASSERT( new_filename != nullptr );
-      ASSERT( existing_filename != nullptr );
-      ASSERT( new_filename != existing_filename );
-      ASSERT( _tcscmp( new_filename, existing_filename ) != 0 );
+      ASSERT( new_filename not_eq nullptr );
+      ASSERT( existing_filename not_eq nullptr );
+      ASSERT( new_filename not_eq existing_filename );
+      ASSERT( _tcscmp( new_filename, existing_filename ) not_eq 0 );
 
       if ( new_filename      == nullptr or
            existing_filename == nullptr or

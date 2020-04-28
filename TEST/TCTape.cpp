@@ -79,10 +79,10 @@ void test_CTape( __in const UINT tape_drive_number_to_test ) noexcept
    }
 
    WFCTRACE( TEXT( "Drive Parameters:\n" ) );
-   WFCTRACEVAL( TEXT( "  ECC                   = " ), ( drive_parameters.ECC            != FALSE ) ? TEXT( "True" ) : TEXT( "False" ) );
-   WFCTRACEVAL( TEXT( "  Compression           = " ), ( drive_parameters.Compression    != FALSE ) ? TEXT( "True" ) : TEXT( "False" ) );
-   WFCTRACEVAL( TEXT( "  DataPadding           = " ), ( drive_parameters.DataPadding    != FALSE ) ? TEXT( "True" ) : TEXT( "False" ) );
-   WFCTRACEVAL( TEXT( "  ReportSetmarks        = " ), ( drive_parameters.ReportSetmarks != FALSE ) ? TEXT( "True" ) : TEXT( "False" ) );
+   WFCTRACEVAL( TEXT( "  ECC                   = " ), ( drive_parameters.ECC            not_eq FALSE ) ? TEXT( "True" ) : TEXT( "False" ) );
+   WFCTRACEVAL( TEXT( "  Compression           = " ), ( drive_parameters.Compression    not_eq FALSE ) ? TEXT( "True" ) : TEXT( "False" ) );
+   WFCTRACEVAL( TEXT( "  DataPadding           = " ), ( drive_parameters.DataPadding    not_eq FALSE ) ? TEXT( "True" ) : TEXT( "False" ) );
+   WFCTRACEVAL( TEXT( "  ReportSetmarks        = " ), ( drive_parameters.ReportSetmarks not_eq FALSE ) ? TEXT( "True" ) : TEXT( "False" ) );
    WFCTRACEVAL( TEXT( "  DefaultBlockSize      = " ), drive_parameters.DefaultBlockSize );
    WFCTRACEVAL( TEXT( "  MaximumBlockSize      = " ), drive_parameters.MaximumBlockSize );
    WFCTRACEVAL( TEXT( "  MinimumBlockSize      = " ), drive_parameters.MinimumBlockSize );
@@ -109,7 +109,7 @@ void test_CTape( __in const UINT tape_drive_number_to_test ) noexcept
       WFCTRACEVAL( TEXT( "  Remaining.Low  = " ), media_parameters.Remaining.LowPart  );
       WFCTRACEVAL( TEXT( "  Remaining.High = " ), media_parameters.Remaining.HighPart );
       WFCTRACEVAL( TEXT( "  PartitionCount = " ), media_parameters.PartitionCount     );
-      WFCTRACEVAL( TEXT( "  WriteProtected = " ), ( media_parameters.WriteProtected != FALSE ) ? TEXT( "True" ) : TEXT( "False" ) );
+      WFCTRACEVAL( TEXT( "  WriteProtected = " ), ( media_parameters.WriteProtected not_eq FALSE ) ? TEXT( "True" ) : TEXT( "False" ) );
    }
 
 #if defined( _DEBUG ) && ! defined( WFC_STL )

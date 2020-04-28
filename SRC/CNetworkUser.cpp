@@ -177,7 +177,7 @@ bool Win32FoundationClasses::CNetworkUsers::Add( _In_ Win32FoundationClasses::CN
                      reinterpret_cast<BYTE *>(&user_information),
                               &parameter_causing_the_error );
 
-   if ( m_ErrorCode != NERR_Success ) 
+   if ( m_ErrorCode not_eq NERR_Success )
    {
 #if defined( _DEBUG )
       if ( m_ErrorCode == ERROR_INVALID_PARAMETER )
@@ -381,31 +381,31 @@ void Win32FoundationClasses::CNetworkUsers::Close( void ) noexcept
 
    Win32FoundationClasses::CNetwork::Close();
 
-   if ( m_3InformationBuffer != nullptr )
+   if ( m_3InformationBuffer not_eq nullptr )
    {
       ::NetApiBufferFree( m_3InformationBuffer );
       m_3InformationBuffer = nullptr;
    }
 
-   if ( m_2InformationBuffer != nullptr )
+   if ( m_2InformationBuffer not_eq nullptr )
    {
       ::NetApiBufferFree( m_2InformationBuffer );
       m_2InformationBuffer = nullptr;
    }
 
-   if ( m_1InformationBuffer != nullptr )
+   if ( m_1InformationBuffer not_eq nullptr )
    {
       ::NetApiBufferFree( m_1InformationBuffer );
       m_1InformationBuffer = nullptr;
    }
 
-   if ( m_10InformationBuffer != nullptr )
+   if ( m_10InformationBuffer not_eq nullptr )
    {
       ::NetApiBufferFree( m_10InformationBuffer );
       m_10InformationBuffer = nullptr;
    }
 
-   if ( m_0InformationBuffer != nullptr )
+   if ( m_0InformationBuffer not_eq nullptr )
    {
       ::NetApiBufferFree( m_0InformationBuffer );
       m_0InformationBuffer = nullptr;
@@ -424,9 +424,9 @@ _Check_return_ bool Win32FoundationClasses::CNetworkUsers::CreateComputerAccount
    // Article Q145697 discusses the manipulation of the "Trusted Domains" 
    // side of the domain trust relationship, at the domain controller level.
 
-   if ( type_of_account != accountMachine and
-        type_of_account != accountBackupDomainController and
-        type_of_account != accountInterdomain )
+   if ( type_of_account not_eq accountMachine and
+        type_of_account not_eq accountBackupDomainController and
+        type_of_account not_eq accountInterdomain )
    {
       m_ErrorCode = ERROR_INVALID_PARAMETER;
       return( false );
@@ -442,7 +442,7 @@ _Check_return_ bool Win32FoundationClasses::CNetworkUsers::CreateComputerAccount
 
    WFC_TRY
    {
-      if (computer_name != nullptr)
+      if (computer_name not_eq nullptr)
       {
           information.Name.assign(computer_name);
       }
@@ -495,7 +495,7 @@ _Check_return_ bool Win32FoundationClasses::CNetworkUsers::CreateComputerAccount
       ** TrustingDomainName$. 
       */
 
-      if ( information.Name.at( information.Name.length() - 1 ) != '$' )
+      if ( information.Name.at( information.Name.length() - 1 ) not_eq '$' )
       {
          information.Name.push_back('$');
       }
@@ -515,7 +515,7 @@ _Check_return_ bool Win32FoundationClasses::CNetworkUsers::CreateComputerAccount
 
       BYTE * buffer_p = nullptr;
 
-      if ( ::NetGetDCName( nullptr, nullptr, &buffer_p ) != NERR_Success )
+      if ( ::NetGetDCName( nullptr, nullptr, &buffer_p ) not_eq NERR_Success )
       {
          return( false );
       }
@@ -613,7 +613,7 @@ _Check_return_ bool Win32FoundationClasses::CNetworkUsers::Enumerate( void ) noe
 
    // Search order is 3, 2, 1, 10, 0
 
-   if ( m_3InformationBuffer != nullptr )
+   if ( m_3InformationBuffer not_eq nullptr )
    {
       (void) ::NetApiBufferFree( m_3InformationBuffer );
       m_3InformationBuffer = nullptr;
@@ -625,7 +625,7 @@ _Check_return_ bool Win32FoundationClasses::CNetworkUsers::Enumerate( void ) noe
    m_3ResumeHandle             = 0;
    m_3TotalNumberOfEntries     = 0;
 
-   if ( m_2InformationBuffer != nullptr )
+   if ( m_2InformationBuffer not_eq nullptr )
    {
       ::NetApiBufferFree( m_2InformationBuffer );
       m_2InformationBuffer = nullptr;
@@ -637,7 +637,7 @@ _Check_return_ bool Win32FoundationClasses::CNetworkUsers::Enumerate( void ) noe
    m_2ResumeHandle             = 0;
    m_2TotalNumberOfEntries     = 0;
 
-   if ( m_1InformationBuffer != nullptr )
+   if ( m_1InformationBuffer not_eq nullptr )
    {
       ::NetApiBufferFree( m_1InformationBuffer );
       m_1InformationBuffer = nullptr;
@@ -649,7 +649,7 @@ _Check_return_ bool Win32FoundationClasses::CNetworkUsers::Enumerate( void ) noe
    m_1ResumeHandle             = 0;
    m_1TotalNumberOfEntries     = 0;
 
-   if ( m_10InformationBuffer != nullptr )
+   if ( m_10InformationBuffer not_eq nullptr )
    {
       ::NetApiBufferFree( m_10InformationBuffer );
       m_10InformationBuffer = nullptr;
@@ -661,7 +661,7 @@ _Check_return_ bool Win32FoundationClasses::CNetworkUsers::Enumerate( void ) noe
    m_10ResumeHandle             = 0;
    m_10TotalNumberOfEntries     = 0;
 
-   if ( m_0InformationBuffer != nullptr )
+   if ( m_0InformationBuffer not_eq nullptr )
    {
       ::NetApiBufferFree( m_0InformationBuffer );
       m_0InformationBuffer = nullptr;
@@ -707,7 +707,7 @@ bool Win32FoundationClasses::CNetworkUsers::ExpirePassword( _In_ std::wstring co
 
    if ( m_ErrorCode == NERR_Success )
    {
-      if ( user_information_p != nullptr )
+      if ( user_information_p not_eq nullptr )
       {
          DWORD parameter_error = 0;
 
@@ -886,27 +886,27 @@ _Check_return_ DWORD Win32FoundationClasses::CNetworkUsers::GetLevel( void ) con
 {
    WFC_VALIDATE_POINTER( this );
 
-   if ( m_3InformationBuffer != nullptr )
+   if ( m_3InformationBuffer not_eq nullptr )
    {
       return( 3 );
    }
 
-   if ( m_2InformationBuffer != nullptr )
+   if ( m_2InformationBuffer not_eq nullptr )
    {
       return( 2 );
    }
 
-   if ( m_1InformationBuffer != nullptr )
+   if ( m_1InformationBuffer not_eq nullptr )
    {
       return( 1 );
    }
 
-   if ( m_10InformationBuffer != nullptr )
+   if ( m_10InformationBuffer not_eq nullptr )
    {
       return( 10 );
    }
 
-   if ( m_0InformationBuffer != nullptr )
+   if ( m_0InformationBuffer not_eq nullptr )
    {
       return( 0 );
    }
@@ -922,7 +922,7 @@ _Check_return_ bool Win32FoundationClasses::CNetworkUsers::GetNext( __inout Win3
 
    // We need to see which buffer we're working with...
 
-   if ( m_3InformationBuffer != nullptr )
+   if ( m_3InformationBuffer not_eq nullptr )
    {
       if ( m_3Index < m_3NumberOfEntriesRead )
       {
@@ -948,7 +948,7 @@ _Check_return_ bool Win32FoundationClasses::CNetworkUsers::GetNext( __inout Win3
          }
       }
    }
-   else if ( m_2InformationBuffer != nullptr )
+   else if ( m_2InformationBuffer not_eq nullptr )
    {
       if ( m_2Index < m_2NumberOfEntriesRead )
       {
@@ -970,7 +970,7 @@ _Check_return_ bool Win32FoundationClasses::CNetworkUsers::GetNext( __inout Win3
          }
       }
    }
-   else if ( m_1InformationBuffer != nullptr )
+   else if ( m_1InformationBuffer not_eq nullptr )
    {
       if ( m_1Index < m_1NumberOfEntriesRead )
       {
@@ -992,7 +992,7 @@ _Check_return_ bool Win32FoundationClasses::CNetworkUsers::GetNext( __inout Win3
          }
       }
    }
-   else if ( m_10InformationBuffer != nullptr )
+   else if ( m_10InformationBuffer not_eq nullptr )
    {
       if ( m_10Index < m_10NumberOfEntriesRead )
       {
@@ -1014,7 +1014,7 @@ _Check_return_ bool Win32FoundationClasses::CNetworkUsers::GetNext( __inout Win3
          }
       }
    }
-   else if ( m_0InformationBuffer != nullptr )
+   else if ( m_0InformationBuffer not_eq nullptr )
    {
       if ( m_0Index < m_0NumberOfEntriesRead )
       {
@@ -1052,7 +1052,7 @@ _Check_return_ bool Win32FoundationClasses::CNetworkUsers::m_GetChunk( void ) no
 
    // Let's see if we have already been reading
 
-   if ( m_3NumberOfEntriesRead != 0 and m_3ResumeHandle == 0 )
+   if ( m_3NumberOfEntriesRead not_eq 0 and m_3ResumeHandle == 0 )
    {
       // Yup, we've finished reading
       ::NetApiBufferFree( m_3InformationBuffer );
@@ -1094,7 +1094,7 @@ _Check_return_ bool Win32FoundationClasses::CNetworkUsers::m_GetChunk( void ) no
 
    // Make really sure the OS didn't modify our variables...
 
-   if ( m_3InformationBuffer != nullptr )
+   if ( m_3InformationBuffer not_eq nullptr )
    {
       ::NetApiBufferFree( m_3InformationBuffer );
       m_3InformationBuffer = nullptr;
@@ -1105,7 +1105,7 @@ _Check_return_ bool Win32FoundationClasses::CNetworkUsers::m_GetChunk( void ) no
    m_3ResumeHandle         = 0;
    m_3TotalNumberOfEntries = 0;
 
-   if ( m_ErrorCode != ERROR_ACCESS_DENIED )
+   if ( m_ErrorCode not_eq ERROR_ACCESS_DENIED )
    {
       return( false );
    }
@@ -1114,7 +1114,7 @@ _Check_return_ bool Win32FoundationClasses::CNetworkUsers::m_GetChunk( void ) no
 
    // Let's see if we have already been reading
 
-   if ( m_2NumberOfEntriesRead != 0 and m_2ResumeHandle == 0 )
+   if ( m_2NumberOfEntriesRead not_eq 0 and m_2ResumeHandle == 0 )
    {
       // Yup, we've finished reading
       ::NetApiBufferFree( m_2InformationBuffer );
@@ -1135,7 +1135,7 @@ _Check_return_ bool Win32FoundationClasses::CNetworkUsers::m_GetChunk( void ) no
                                          &m_2TotalNumberOfEntries,
                                          &m_2ResumeHandle );
 
-   if ( m_ErrorCode == NERR_Success and m_2InformationBuffer != nullptr )
+   if ( m_ErrorCode == NERR_Success and m_2InformationBuffer not_eq nullptr )
    {
       // Thanks go to Dirk Tolson (dirk.tolson@srs.gov) for finding a bug
       // here. When there were more accounts than could be read in one read,
@@ -1151,7 +1151,7 @@ _Check_return_ bool Win32FoundationClasses::CNetworkUsers::m_GetChunk( void ) no
 
    // Make really sure the OS didn't modify our variables...
 
-   if ( m_2InformationBuffer != nullptr )
+   if ( m_2InformationBuffer not_eq nullptr )
    {
       ::NetApiBufferFree( m_2InformationBuffer );
       m_2InformationBuffer = nullptr;
@@ -1162,7 +1162,7 @@ _Check_return_ bool Win32FoundationClasses::CNetworkUsers::m_GetChunk( void ) no
    m_2ResumeHandle         = 0;
    m_2TotalNumberOfEntries = 0;
 
-   if ( m_ErrorCode != ERROR_ACCESS_DENIED )
+   if ( m_ErrorCode not_eq ERROR_ACCESS_DENIED )
    {
       return( false );
    }
@@ -1171,7 +1171,7 @@ _Check_return_ bool Win32FoundationClasses::CNetworkUsers::m_GetChunk( void ) no
 
    // Let's see if we have already been reading
 
-   if ( m_1NumberOfEntriesRead != 0 and m_1ResumeHandle == 0 )
+   if ( m_1NumberOfEntriesRead not_eq 0 and m_1ResumeHandle == 0 )
    {
       // Yup, we've finished reading
       ::NetApiBufferFree( m_1InformationBuffer );
@@ -1192,7 +1192,7 @@ _Check_return_ bool Win32FoundationClasses::CNetworkUsers::m_GetChunk( void ) no
                                          &m_1TotalNumberOfEntries,
                                          &m_1ResumeHandle );
 
-   if ( m_ErrorCode == NERR_Success and m_1InformationBuffer != nullptr )
+   if ( m_ErrorCode == NERR_Success and m_1InformationBuffer not_eq nullptr )
    {
       // Thanks go to Dirk Tolson (dirk.tolson@srs.gov) for finding a bug
       // here. When there were more accounts than could be read in one read,
@@ -1208,7 +1208,7 @@ _Check_return_ bool Win32FoundationClasses::CNetworkUsers::m_GetChunk( void ) no
 
    // Make really sure the OS didn't modify our variables...
 
-   if ( m_1InformationBuffer != nullptr )
+   if ( m_1InformationBuffer not_eq nullptr )
    {
       ::NetApiBufferFree( m_1InformationBuffer );
       m_1InformationBuffer = nullptr;
@@ -1219,7 +1219,7 @@ _Check_return_ bool Win32FoundationClasses::CNetworkUsers::m_GetChunk( void ) no
    m_1ResumeHandle         = 0;
    m_1TotalNumberOfEntries = 0;
 
-   if ( m_ErrorCode != ERROR_ACCESS_DENIED )
+   if ( m_ErrorCode not_eq ERROR_ACCESS_DENIED )
    {
       return( false );
    }
@@ -1229,7 +1229,7 @@ _Check_return_ bool Win32FoundationClasses::CNetworkUsers::m_GetChunk( void ) no
 
    // Let's see if we have already been reading
 
-   if ( m_10NumberOfEntriesRead != 0 and m_10ResumeHandle == 0 )
+   if ( m_10NumberOfEntriesRead not_eq 0 and m_10ResumeHandle == 0 )
    {
       // Yup, we've finished reading
       ::NetApiBufferFree( m_10InformationBuffer );
@@ -1250,7 +1250,7 @@ _Check_return_ bool Win32FoundationClasses::CNetworkUsers::m_GetChunk( void ) no
                                         &m_10TotalNumberOfEntries,
                                         &m_10ResumeHandle );
 
-   if ( m_ErrorCode == NERR_Success and m_10InformationBuffer != nullptr )
+   if ( m_ErrorCode == NERR_Success and m_10InformationBuffer not_eq nullptr )
    {
       // Thanks go to Dirk Tolson (dirk.tolson@srs.gov) for finding a bug
       // here. When there were more accounts than could be read in one read,
@@ -1266,7 +1266,7 @@ _Check_return_ bool Win32FoundationClasses::CNetworkUsers::m_GetChunk( void ) no
 
    // Make really sure the OS didn't modify our variables...
 
-   if ( m_10InformationBuffer != nullptr )
+   if ( m_10InformationBuffer not_eq nullptr )
    {
      ::NetApiBufferFree( m_10InformationBuffer );
       m_10InformationBuffer = nullptr;
@@ -1277,7 +1277,7 @@ _Check_return_ bool Win32FoundationClasses::CNetworkUsers::m_GetChunk( void ) no
    m_10ResumeHandle         = 0;
    m_10TotalNumberOfEntries = 0;
 
-   if ( m_ErrorCode != ERROR_ACCESS_DENIED )
+   if ( m_ErrorCode not_eq ERROR_ACCESS_DENIED )
    {
       return( false );
    }
@@ -1287,7 +1287,7 @@ _Check_return_ bool Win32FoundationClasses::CNetworkUsers::m_GetChunk( void ) no
 
    // Let's see if we have already been reading
 
-   if ( m_0NumberOfEntriesRead != 0 and m_0ResumeHandle == 0 )
+   if ( m_0NumberOfEntriesRead not_eq 0 and m_0ResumeHandle == 0 )
    {
       // Yup, we've finished reading
       ::NetApiBufferFree( m_0InformationBuffer );
@@ -1308,7 +1308,7 @@ _Check_return_ bool Win32FoundationClasses::CNetworkUsers::m_GetChunk( void ) no
                                         &m_0TotalNumberOfEntries,
                                         &m_0ResumeHandle );
 
-   if ( m_ErrorCode == NERR_Success and m_0InformationBuffer != nullptr )
+   if ( m_ErrorCode == NERR_Success and m_0InformationBuffer not_eq nullptr )
    {
       // Thanks go to Dirk Tolson (dirk.tolson@srs.gov) for finding a bug
       // here. When there were more accounts than could be read in one read,
@@ -1324,7 +1324,7 @@ _Check_return_ bool Win32FoundationClasses::CNetworkUsers::m_GetChunk( void ) no
 
    // Make really sure the OS didn't modify our variables...
 
-   if ( m_0InformationBuffer != nullptr )
+   if ( m_0InformationBuffer not_eq nullptr )
    {
       ::NetApiBufferFree( m_0InformationBuffer );
       m_0InformationBuffer = nullptr;
@@ -1478,7 +1478,7 @@ void test_CNetworkUsers( LPCTSTR machine_name )
 
    CNetworkUserInformation user_information;
 
-   if ( users.Enumerate() != FALSE )
+   if ( users.Enumerate() not_eq FALSE )
    {
       _tprintf( TEXT( &quot;User Information for %s:\n&quot; ), (LPCTSTR) users.GetMachineName() );
 
@@ -1545,7 +1545,7 @@ void test_CNetworkUsers( LPCTSTR machine_name )
 
    user_information.SetAddDefaults();
 
-   if ( users.Add( user_information ) != FALSE )
+   if ( users.Add( user_information ) not_eq FALSE )
    {
       _tprintf( TEXT( &quot;Laura Added.\n&quot; ) );
    }
@@ -1554,7 +1554,7 @@ void test_CNetworkUsers( LPCTSTR machine_name )
       _tprintf( TEXT( &quot;Can't Add User\n&quot; ) );
    }
 
-   if ( users.Delete( &quot;Laura&quot; ) != FALSE )
+   if ( users.Delete( &quot;Laura&quot; ) not_eq FALSE )
    {
       _tprintf( TEXT( &quot;Deleted Laura\n&quot; ) );
    }

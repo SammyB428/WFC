@@ -92,7 +92,7 @@ Win32FoundationClasses::CCOMSucks::CCOMSucks() noexcept
 
     auto const event_handle = MANUAL_RESET_EVENT();
 
-    if (event_handle != NULL)
+    if (event_handle not_eq NULL)
     {
         auto const thread_handle = ::CreateThread(nullptr,
             0,
@@ -101,7 +101,7 @@ Win32FoundationClasses::CCOMSucks::CCOMSucks() noexcept
             0,
             &thread_id);
 
-        if (thread_handle != NULL)
+        if (thread_handle not_eq NULL)
         {
             ::WaitForSingleObject(event_handle, 5000);
             (void)Win32FoundationClasses::wfc_close_handle(thread_handle);
@@ -111,7 +111,7 @@ Win32FoundationClasses::CCOMSucks::CCOMSucks() noexcept
     (void)Win32FoundationClasses::wfc_close_handle(event_handle);
 }
 
-Win32FoundationClasses::CCOMSucks::~CCOMSucks() noexcept
+Win32FoundationClasses::CCOMSucks::~CCOMSucks()
 {
 }
 

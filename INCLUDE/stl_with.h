@@ -89,7 +89,7 @@ inline _Check_return_ bool starts_with(_In_ std::string_view s, _In_ std::string
 
     for (auto const loop_index : Range(beginning.length()))
     {
-        if (s[loop_index] != beginning[loop_index])
+        if (s[loop_index] not_eq beginning[loop_index])
         {
             return(false);
         }
@@ -129,7 +129,7 @@ inline _Check_return_ bool starts_with(_In_ std::wstring_view s, std::wstring_vi
 
     for (auto const loop_index : Range(beginning.length()))
     {
-        if (s[loop_index] != beginning[loop_index])
+        if (s[loop_index] not_eq beginning[loop_index])
         {
             return(false);
         }
@@ -157,7 +157,7 @@ inline _Check_return_ bool starts_with_no_case(_In_ std::wstring const& s, _In_ 
         auto const this_character = wfc_to_upper(our_string[loop_index]);
         auto const that_character = wfc_to_upper(beginning[loop_index]);
 
-        if (this_character != that_character)
+        if (this_character not_eq that_character)
         {
             return(false);
         }
@@ -180,7 +180,7 @@ inline _Check_return_ bool starts_with_no_case(_In_ std::string const& s, _In_ s
         auto const this_character = wfc_to_upper(our_string[loop_index]);
         auto const that_character = wfc_to_upper(beginning[loop_index]);
 
-        if (this_character != that_character)
+        if (this_character not_eq that_character)
         {
             return(false);
         }

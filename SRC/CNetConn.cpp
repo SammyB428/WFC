@@ -73,7 +73,7 @@ void Win32FoundationClasses::CNetworkConnections::Close( void ) noexcept
 
    CNetwork::Close();
 
-   if ( m_1InformationBuffer != nullptr )
+   if ( m_1InformationBuffer not_eq nullptr )
    {
       ::NetApiBufferFree( m_1InformationBuffer );
       m_1InformationBuffer = nullptr;
@@ -98,7 +98,7 @@ _Check_return_ bool Win32FoundationClasses::CNetworkConnections::Enumerate(_In_ 
 {
    WFC_VALIDATE_POINTER( this );
 
-   if ( m_1InformationBuffer != nullptr )
+   if ( m_1InformationBuffer not_eq nullptr )
    {
       ::NetApiBufferFree( m_1InformationBuffer );
       m_1InformationBuffer = nullptr;
@@ -137,7 +137,7 @@ _Check_return_ bool Win32FoundationClasses::CNetworkConnections::GetNext( _Out_ 
 
    information.Empty();
 
-   if ( m_1InformationBuffer != nullptr )
+   if ( m_1InformationBuffer not_eq nullptr )
    {
       if ( m_1Index < m_1NumberOfEntriesRead )
       {
@@ -171,7 +171,7 @@ _Check_return_ bool Win32FoundationClasses::CNetworkConnections::m_GetChunk( voi
 
    m_1Index = 0;
 
-   if ( m_1NumberOfEntriesRead != 0 and m_1ResumeHandle == 0 )
+   if ( m_1NumberOfEntriesRead not_eq 0 and m_1ResumeHandle == 0 )
    {
       // Yup, we've finished reading
       ::NetApiBufferFree( m_1InformationBuffer );

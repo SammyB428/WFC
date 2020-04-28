@@ -240,7 +240,7 @@ void Win32FoundationClasses::wfc_get_bios_uuid( _Out_ GUID& uuid ) noexcept
 
     auto header = reinterpret_cast<SM_SYSTEM_INFORMATION const *>(__get_smbios_info( SYSTEM_MANAGEMENT_SYSTEM_INFORMATION, &data->SMBIOSTableData[ 0 ], data->Length ));
 
-    if ( header != nullptr )
+    if ( header not_eq nullptr )
     {
         // Woo hoo! We found our structure, now read the string from that buffer.
         (void) memcpy_s( &uuid, sizeof(uuid), &header->uuid, sizeof( uuid ) );
@@ -274,7 +274,7 @@ void Win32FoundationClasses::wfc_get_bios_serial_number( _Out_ std::wstring& ser
 
     auto header = reinterpret_cast<SM_SYSTEM_INFORMATION const *>(__get_smbios_info( SYSTEM_MANAGEMENT_SYSTEM_INFORMATION, &data->SMBIOSTableData[ 0 ], data->Length ));
 
-    if ( header != nullptr )
+    if ( header not_eq nullptr )
     {
         // Woo hoo! We found our structure, now read the string from that buffer.
         __read_string( &header->data[ 0 ], header->SerialNumber, serial_number );

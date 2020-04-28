@@ -77,7 +77,7 @@ void Win32FoundationClasses::CString::m_Format( __in_z __format_string LPCTSTR f
 
       SSIZE_T string_index = 0;
 
-      while( ( string_index = format_object.Find( TEXT( '%' ), string_index ) ) != CHARACTER_NOT_FOUND )
+      while( ( string_index = format_object.Find( TEXT( '%' ), string_index ) ) not_eq CHARACTER_NOT_FOUND )
       {
          string_index++;
          // Add 128 bytes for every % in the string
@@ -135,7 +135,7 @@ void Win32FoundationClasses::CString::m_Format( __in_z __format_string LPCTSTR f
       {
          WFC_TRY
          {
-            if ( buffer_to_write_to != nullptr )
+            if ( buffer_to_write_to not_eq nullptr )
             {
                free( buffer_to_write_to );
                buffer_to_write_to = nullptr;

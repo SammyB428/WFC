@@ -62,7 +62,7 @@ Win32FoundationClasses::CExtensibleMarkupLanguageEntities::CExtensibleMarkupLang
    Copy( source );
 }
 
-Win32FoundationClasses::CExtensibleMarkupLanguageEntities::~CExtensibleMarkupLanguageEntities() noexcept
+Win32FoundationClasses::CExtensibleMarkupLanguageEntities::~CExtensibleMarkupLanguageEntities()
 {
    WFC_VALIDATE_POINTER( this );
 }
@@ -80,12 +80,12 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageEntities::A
       return( false );
    }
 
-   if ( entity[ 0 ] != '&' )
+   if ( entity[ 0 ] not_eq '&' )
    {
       return( false );
    }
 
-   if ( entity[entity.length() - 1 ] != ';' )
+   if ( entity[entity.length() - 1 ] not_eq ';' )
    {
       return( false );
    }
@@ -93,8 +93,8 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageEntities::A
    // Now validate the name characters according to Rule 68->5
 
    if ( Win32FoundationClasses::is_xml_Letter( entity[ 1 ] ) == false and
-        entity[ 1 ] != '_' and
-        entity[ 1 ] != ':' )
+        entity[ 1 ] not_eq '_' and
+        entity[ 1 ] not_eq ':' )
    {
       //WFCTRACE( TEXT( "Bad first character of entity name." ) );
       return( false );
@@ -114,7 +114,7 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageEntities::A
 
    std::wstring const text(text_parameter);
 
-   if ( text.find( '%' ) != std::wstring::npos )
+   if ( text.find( '%' ) not_eq std::wstring::npos )
    {
       return( false );
    }
@@ -135,7 +135,7 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageEntities::A
 
       std::size_t location_of_character_reference = temp_string.find(WSTRING_VIEW(L"&#"));
 
-      while( location_of_character_reference != std::wstring::npos )
+      while( location_of_character_reference not_eq std::wstring::npos )
       {
          resolved_string.append( temp_string.substr( 0, location_of_character_reference ) );
          temp_string.erase(0, location_of_character_reference + 2);
@@ -175,7 +175,7 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageEntities::A
             }
          }
 
-         if ( temp_string.empty() == true or temp_string.at( 0 ) != ';' )
+         if ( temp_string.empty() == true or temp_string.at( 0 ) not_eq ';' )
          {
             //WFCTRACE( TEXT( "Ill-formed character reference" ) );
             return( false );
@@ -288,13 +288,13 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageEntities::I
       return( false );
    }
 
-   if ( entity[ 0 ] != '&' )
+   if ( entity[ 0 ] not_eq '&' )
    {
       rule_that_was_broken = 68;
       return( false );
    }
 
-   if ( entity[entity.length() - 1 ] != ';' )
+   if ( entity[entity.length() - 1 ] not_eq ';' )
    {
       rule_that_was_broken = 68;
       return( false );
@@ -360,8 +360,8 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageEntities::I
    // Now validate the name characters according to Rule 68->5
 
    if ( Win32FoundationClasses::is_xml_Letter( entity[ 1 ] ) == false and
-        entity[ 1 ] != '_' and
-        entity[ 1 ] != ':' )
+        entity[ 1 ] not_eq '_' and
+        entity[ 1 ] not_eq ':' )
    {
       //WFCTRACE( TEXT( "Bad first character of entity name." ) );
       rule_that_was_broken = 5;
@@ -414,12 +414,12 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageEntities::R
       return( false );
    }
 
-   if ( entity[ 0 ] != '&' )
+   if ( entity[ 0 ] not_eq '&' )
    {
       return( false );
    }
 
-   if ( entity[entity.length() - 1 ] != ';' )
+   if ( entity[entity.length() - 1 ] not_eq ';' )
    {
       return( false );
    }
@@ -479,7 +479,7 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageEntities::R
             else
             {
                // Skip any leading zeroes
-               if ( entity[ loop_index + 3 ] != '0' )
+               if ( entity[ loop_index + 3 ] not_eq '0' )
                {
                   number_string[ number_index ] = entity[ loop_index + 3 ];
                   number_index++;
@@ -524,7 +524,7 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageEntities::R
             else
             {
                // Skip any leading zeroes
-               if ( entity[loop_index + 2 ] != '0' )
+               if ( entity[loop_index + 2 ] not_eq '0' )
                {
                   number_string[ number_index ] = entity[ loop_index + 2 ];
                   number_index++;
@@ -535,7 +535,7 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageEntities::R
 
          // number_string now contains the decimal number of the character
 
-         translated_character = as_integer( number_string );
+         translated_character = static_cast<wchar_t>(as_integer( number_string ));
 
          text.push_back( static_cast<wchar_t>(translated_character) );
 
@@ -552,7 +552,7 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageEntities::R
    }
 
    auto lower = std::lower_bound(std::cbegin(m_Entities), std::cend(m_Entities), entity);
-   bool const found = lower != std::cend(m_Entities) and *lower == entity;
+   bool const found = lower not_eq std::cend(m_Entities) and *lower == entity;
 
    if (found == true)
    {

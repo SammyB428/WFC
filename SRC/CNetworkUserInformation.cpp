@@ -541,7 +541,7 @@ void Win32FoundationClasses::CNetworkUserInformation::Copy( _In_ Win32Foundation
 void Win32FoundationClasses::CNetworkUserInformation::Copy( _In_ Win32FoundationClasses::CNetworkUserInformation const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
-   ASSERT( this != &source );
+   ASSERT( this not_eq &source );
 
    /*
    ** Make sure we ain't copying ourselves
@@ -943,9 +943,9 @@ void Win32FoundationClasses::CNetworkUserInformation::SetAddDefaults( void ) noe
 Win32FoundationClasses::CNetworkUserInformation const& Win32FoundationClasses::CNetworkUserInformation::operator = ( _In_ Win32FoundationClasses::CNetworkUserInformation const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
-   ASSERT( this != &source );
+   ASSERT( this not_eq &source );
 
-   if ( this != &source )
+   if ( this not_eq &source )
    {
       Copy( source );
    }

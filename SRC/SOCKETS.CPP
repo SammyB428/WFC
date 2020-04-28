@@ -108,7 +108,7 @@ Win32FoundationClasses::CSimpleSocket::CSimpleSocket() noexcept
    {
       auto const mutex_handle = _create_socket_thunk_mutex();
 
-      if ( mutex_handle != static_cast< HANDLE >( NULL ) )
+      if ( mutex_handle not_eq static_cast< HANDLE >( NULL ) )
       {
          //WFCTRACE( TEXT( "Mutex created." ) );
 
@@ -185,7 +185,7 @@ Win32FoundationClasses::CSimpleSocket::CSimpleSocket( _In_ SOCKET const socket_i
    {
       HANDLE const mutex_handle = _create_socket_thunk_mutex();
 
-      if ( mutex_handle != static_cast< HANDLE >( NULL ) )
+      if ( mutex_handle not_eq static_cast< HANDLE >( NULL ) )
       {
          // Try to take ownership of the mutex.
          // If you're wondering why I didn't use a critical section, it is
@@ -267,7 +267,7 @@ Win32FoundationClasses::CSimpleSocket::~CSimpleSocket() noexcept
    {
       HANDLE const mutex_handle = _create_socket_thunk_mutex();
 
-      if ( mutex_handle != static_cast< HANDLE >( NULL ) )
+      if ( mutex_handle not_eq static_cast< HANDLE >( NULL ) )
       {
          if ( ::WaitForSingleObject( mutex_handle, INFINITE ) == WAIT_OBJECT_0 )
          {
@@ -303,7 +303,7 @@ void Win32FoundationClasses::CSimpleSocket::Close( void ) noexcept
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( m_Thunk_p );
 
-   if ( m_SocketID != INVALID_SOCKET )
+   if ( m_SocketID not_eq INVALID_SOCKET )
    {
       //WFCTRACE( TEXT( "Calling closesocket()" ) );
 
@@ -324,7 +324,7 @@ void Win32FoundationClasses::CSimpleSocket::Close( void ) noexcept
 
 #endif // _DEBUG
 
-      while( number_of_bytes_read > 0 and ( number_of_bytes_read != SOCKET_ERROR ) )
+      while( number_of_bytes_read > 0 and ( number_of_bytes_read not_eq SOCKET_ERROR ) )
       {
          // Read the buffer 4Kb at a time.
          number_of_bytes_read = m_Thunk_p->recv( m_SocketID, buffer, sizeof( buffer ), 0 );
@@ -413,12 +413,12 @@ void Win32FoundationClasses::CSimpleSocket::GetMyAddress( _Out_ std::wstring& ip
 
    int return_value = m_Thunk_p->gethostname( my_name, static_cast<int>(std::size( my_name )) );
 
-   if ( return_value != 0 )
+   if ( return_value not_eq 0 )
    {
       error_code = m_Thunk_p->WSAGetLastError();
       //WFCTRACESOCKETERROR( error_code );
 
-      if ( error_code != WSANOTINITIALISED )
+      if ( error_code not_eq WSANOTINITIALISED )
       {
          return;
       }
@@ -433,7 +433,7 @@ void Win32FoundationClasses::CSimpleSocket::GetMyAddress( _Out_ std::wstring& ip
 
       return_value = m_Thunk_p->gethostname( my_name, static_cast<int>(std::size( my_name )) );
 
-      if ( return_value != 0 )
+      if ( return_value not_eq 0 )
       {
          // Give up
          StopWindowsSockets();
@@ -449,7 +449,7 @@ void Win32FoundationClasses::CSimpleSocket::GetMyAddress( _Out_ std::wstring& ip
 
    if ( host_entry_p == nullptr )
    {
-      if ( i_started_winsock != FALSE )
+      if ( i_started_winsock not_eq FALSE )
       {
          StopWindowsSockets();
       }
@@ -476,7 +476,7 @@ void Win32FoundationClasses::CSimpleSocket::GetMyAddress( _Out_ std::wstring& ip
 
    if ( dotted_ip_address == nullptr )
    {
-      if ( i_started_winsock != FALSE )
+      if ( i_started_winsock not_eq FALSE )
       {
          StopWindowsSockets();
       }
@@ -486,7 +486,7 @@ void Win32FoundationClasses::CSimpleSocket::GetMyAddress( _Out_ std::wstring& ip
 
    copy( ip_address, dotted_ip_address);
 
-   if ( i_started_winsock != FALSE )
+   if ( i_started_winsock not_eq FALSE )
    {
       StopWindowsSockets();
    }
@@ -519,12 +519,12 @@ void Win32FoundationClasses::CSimpleSocket::GetMyAddress( __out_bcount( 4 ) uint
 
    int return_value = m_Thunk_p->gethostname( my_name, static_cast<int>(std::size( my_name )) );
 
-   if ( return_value != 0 )
+   if ( return_value not_eq 0 )
    {
       error_code = m_Thunk_p->WSAGetLastError();
       //WFCTRACESOCKETERROR( error_code );
 
-      if ( error_code != WSANOTINITIALISED )
+      if ( error_code not_eq WSANOTINITIALISED )
       {
          return;
       }
@@ -539,7 +539,7 @@ void Win32FoundationClasses::CSimpleSocket::GetMyAddress( __out_bcount( 4 ) uint
 
       return_value = m_Thunk_p->gethostname( my_name, static_cast<int>(std::size( my_name )) );
 
-      if ( return_value != 0 )
+      if ( return_value not_eq 0 )
       {
          // Give up
          StopWindowsSockets();
@@ -555,7 +555,7 @@ void Win32FoundationClasses::CSimpleSocket::GetMyAddress( __out_bcount( 4 ) uint
 
    if ( host_entry_p == nullptr )
    {
-      if ( i_started_winsock != FALSE )
+      if ( i_started_winsock not_eq FALSE )
       {
          StopWindowsSockets();
       }
@@ -576,7 +576,7 @@ void Win32FoundationClasses::CSimpleSocket::GetMyAddress( __out_bcount( 4 ) uint
    as_bytes[ 2 ] = host_entry_p->h_addr_list[ 0 ][ 2 ];
    as_bytes[ 3 ] = host_entry_p->h_addr_list[ 0 ][ 3 ];
 
-   if ( i_started_winsock != FALSE )
+   if ( i_started_winsock not_eq FALSE )
    {
       StopWindowsSockets();
    }
@@ -606,12 +606,12 @@ void Win32FoundationClasses::CSimpleSocket::GetMyName( _Out_ std::wstring& host_
 
    int return_value = m_Thunk_p->gethostname( my_name, static_cast<int>(std::size( my_name )) );
 
-   if ( return_value != 0 )
+   if ( return_value not_eq 0 )
    {
       error_code = m_Thunk_p->WSAGetLastError();
       //WFCTRACESOCKETERROR( error_code );
 
-      if ( error_code != WSANOTINITIALISED )
+      if ( error_code not_eq WSANOTINITIALISED )
       {
          return;
       }
@@ -626,7 +626,7 @@ void Win32FoundationClasses::CSimpleSocket::GetMyName( _Out_ std::wstring& host_
 
       return_value = m_Thunk_p->gethostname( my_name, static_cast<int>(std::size( my_name )) );
 
-      if ( return_value != 0 )
+      if ( return_value not_eq 0 )
       {
          // Give up
          StopWindowsSockets();
@@ -637,7 +637,7 @@ void Win32FoundationClasses::CSimpleSocket::GetMyName( _Out_ std::wstring& host_
    // We now have our name
    copy( host_name, my_name );
 
-   if ( i_started_winsock != FALSE )
+   if ( i_started_winsock not_eq FALSE )
    {
       StopWindowsSockets();
    }
@@ -853,7 +853,7 @@ IsWindows2KOrGreater() noexcept
 
 void Win32FoundationClasses::CSimpleSocket::m_InitializeThunk( void ) noexcept
 {
-   if ( m_Thunk_p != nullptr )
+   if ( m_Thunk_p not_eq nullptr )
    {
       //WFCTRACE( TEXT( "Thunk layer already initialized." ) );
       return;
@@ -960,7 +960,7 @@ _Check_return_ UINT Win32FoundationClasses::CSimpleSocket::Read( __out_bcount(si
 
    WFC_TRY
    {
-      if ( m_SocketID != INVALID_SOCKET )
+      if ( m_SocketID not_eq INVALID_SOCKET )
       {
          int number_of_bytes_read = 0;
 
@@ -1007,7 +1007,7 @@ _Check_return_ bool Win32FoundationClasses::CSimpleSocket::Read( _Out_ std::stri
 
    line_to_read.clear(); // Always begin from a known state
 
-   if ( m_SocketID != INVALID_SOCKET )
+   if ( m_SocketID not_eq INVALID_SOCKET )
    {
       char character = 0;
 
@@ -1030,7 +1030,7 @@ _Check_return_ bool Win32FoundationClasses::CSimpleSocket::Read( _Out_ std::stri
 
          number_of_bytes_read = m_Thunk_p->recv( m_SocketID, &character, 1, 0 );
 
-         if ( character != 0x00 )
+         if ( character not_eq 0x00 )
          {
             if ( number_of_bytes_read == SOCKET_ERROR )
             {
@@ -1044,8 +1044,8 @@ _Check_return_ bool Win32FoundationClasses::CSimpleSocket::Read( _Out_ std::stri
             line_to_read.push_back( character );
          }
       }
-      while( character != m_StringReadTerminatorCharacter and
-             character != 0x00 );
+      while( character not_eq m_StringReadTerminatorCharacter and
+             character not_eq 0x00 );
 
       if ( number_of_bytes_read == SOCKET_ERROR )
       {
@@ -1106,7 +1106,7 @@ void Win32FoundationClasses::CSimpleSocket::SetAddress( _In_ std::wstring_view a
 
       while( index < address.length() and exit_loop == false )
       {
-         if ( address.at( index ) != '.' and not iswdigit( address.at( index ) ) )
+         if ( address.at( index ) not_eq '.' and not iswdigit( address.at( index ) ) )
          {
             /*
             ** The character is not a period and not a digit so it cannot meet the requirements
@@ -1135,7 +1135,7 @@ void Win32FoundationClasses::CSimpleSocket::SetAddress( _In_ std::wstring_view a
 
 #endif
 
-      if ( exit_loop != false ) // exit_loop is FALSE when we do not have a dotted IP address
+      if ( exit_loop not_eq false ) // exit_loop is FALSE when we do not have a dotted IP address
       {
          if (is_flagged(m_Options, optionsDontResolveHostName) == false)
          {
@@ -1216,7 +1216,7 @@ void Win32FoundationClasses::CSimpleSocket::SetAddress( _In_ std::wstring_view a
 
          index = 0;
 
-         while( dotted_ip_address[ index ] != 0x00 )
+         while( dotted_ip_address[ index ] not_eq 0x00 )
          {
             Address.push_back( dotted_ip_address[ index ] );
             index++;
@@ -1243,12 +1243,12 @@ void Win32FoundationClasses::CSimpleSocket::SetAddress( _In_ std::wstring_view a
 
       int index_2 = 0;
 
-      while( host_entry_p->h_aliases[ index ] != nullptr )
+      while( host_entry_p->h_aliases[ index ] not_eq nullptr )
       {
          index_2 = 0;
          new_string.clear();
 
-         while( host_entry_p->h_aliases[ index ][ index_2 ] != 0x00 )
+         while( host_entry_p->h_aliases[ index ][ index_2 ] not_eq 0x00 )
          {
             new_string.push_back( host_entry_p->h_aliases[ index ][ index_2 ] );
             index_2++;
@@ -1269,7 +1269,7 @@ void Win32FoundationClasses::CSimpleSocket::SetID( _In_ SOCKET const id ) noexce
 {
    WFC_VALIDATE_POINTER( this );
 
-   if ( m_SocketID != INVALID_SOCKET )
+   if ( m_SocketID not_eq INVALID_SOCKET )
    {
       Close();
    }
@@ -1333,7 +1333,7 @@ void Win32FoundationClasses::CSimpleSocket::SetPort( __in_z LPCTSTR name_string 
 
       int number_value = _ttoi( name_string );
 
-      if ( number_value != 0 )
+      if ( number_value not_eq 0 )
       {
          // Well whaddya know, they sent us a number disguised as a string
 
@@ -1438,7 +1438,7 @@ void Win32FoundationClasses::CSimpleSocket::SetPort( _In_ short const p ) noexce
 _Check_return_ bool Win32FoundationClasses::CSimpleSocket::SetReadTimeout( _In_ DWORD const number_of_milliseconds ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
-   ASSERT( m_SocketID != INVALID_SOCKET );
+   ASSERT( m_SocketID not_eq INVALID_SOCKET );
 
    return( SetSocketOption( SOL_SOCKET, SO_RCVTIMEO, reinterpret_cast<char const *>(&number_of_milliseconds), sizeof( number_of_milliseconds ) ) );
 }
@@ -1457,8 +1457,8 @@ _Check_return_ bool Win32FoundationClasses::CSimpleSocket::SetSocketOption( _In_
    // One popular mistake with using setsockopt is to use BOOL types like the
    // documentation seems to say. What they really mean is "address of a BOOL"
 
-   ASSERT( option_value != reinterpret_cast<char const *>(0) );
-   ASSERT( option_value != reinterpret_cast<char const *>(1) );
+   ASSERT( option_value not_eq reinterpret_cast<char const *>(0) );
+   ASSERT( option_value not_eq reinterpret_cast<char const *>(1) );
 
    // We were passed a pointer, don't trust it
 
@@ -1491,7 +1491,7 @@ void Win32FoundationClasses::CSimpleSocket::SetStringReadTerminatorCharacter( _I
 _Check_return_ bool Win32FoundationClasses::CSimpleSocket::SetWriteTimeout( _In_ DWORD const number_of_milliseconds ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
-   ASSERT( m_SocketID != INVALID_SOCKET );
+   ASSERT( m_SocketID not_eq INVALID_SOCKET );
 
    return( SetSocketOption( SOL_SOCKET, SO_SNDTIMEO, reinterpret_cast<char const *>(&number_of_milliseconds), sizeof( number_of_milliseconds ) ) );
 }
@@ -1517,7 +1517,7 @@ void __stdcall Win32FoundationClasses::CSimpleSocket::StartWindowsSockets( void 
 
    socket_error = m_Thunk_p->WSAStartup( desired_winsock_version, (LPWSADATA) &winsock_data );
 
-   if ( socket_error != 0 )
+   if ( socket_error not_eq 0 )
    {
       //WFCTRACE( TEXT( "WSAStartup failed with an error code of %d at line %d of %s\n" ), socket_error, __LINE__, __FILE__ );
       return;
@@ -1536,11 +1536,11 @@ void __stdcall Win32FoundationClasses::CSimpleSocket::StartWindowsSockets( void 
 
 void __stdcall Win32FoundationClasses::CSimpleSocket::StopWindowsSockets( void ) noexcept
 {  
-   if ( m_Thunk_p != nullptr )
+   if ( m_Thunk_p not_eq nullptr )
    {
       m_Thunk_p->WSACleanup();
 
-      if ( m_Thunk_p->dll_instance_handle != static_cast< HINSTANCE >( NULL ) )
+      if ( m_Thunk_p->dll_instance_handle not_eq static_cast< HINSTANCE >( NULL ) )
       {
          ::FreeLibrary( m_Thunk_p->dll_instance_handle );
       }
@@ -1913,14 +1913,14 @@ _Check_return_ bool Win32FoundationClasses::CSimpleSocket::Transmit( __inout Win
 
       TRANSMIT_FILE_BUFFERS *buffers_p = nullptr;
 
-      if ( send_before != nullptr )
+      if ( send_before not_eq nullptr )
       {
          buffers_p                        = &transmit_file_buffers;
          transmit_file_buffers.Head       = (PVOID) send_before->data();
          transmit_file_buffers.HeadLength = (DWORD) send_before->size();
       }
 
-      if ( send_after != nullptr )
+      if ( send_after not_eq nullptr )
       {
          buffers_p                        = &transmit_file_buffers;
          transmit_file_buffers.Tail       = (PVOID) send_after->data();
@@ -2003,7 +2003,7 @@ void Win32FoundationClasses::CSimpleSocket::Write( __in_bcount( number_of_bytes_
             m_LastError = m_Thunk_p->WSAGetLastError();
             //WFCTRACESOCKETERROR( m_LastError );
 
-            if ( m_LastError != WSAENOBUFS and m_LastError != WSAEINPROGRESS )
+            if ( m_LastError not_eq WSAENOBUFS and m_LastError not_eq WSAEINPROGRESS )
             {
                if ( m_LastError == WSAENOTCONN or
                     m_LastError == WSAENETRESET or

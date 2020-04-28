@@ -117,7 +117,7 @@ Win32FoundationClasses::CCryptographicKey::CCryptographicKey( _In_ HCRYPTKEY sou
    (void) FromHandle( source_handle, automatically_destroy );
 }
 
-Win32FoundationClasses::CCryptographicKey::~CCryptographicKey() noexcept
+Win32FoundationClasses::CCryptographicKey::~CCryptographicKey()
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -156,7 +156,7 @@ _Check_return_ bool Win32FoundationClasses::CCryptographicKey::Decrypt(_In_ std:
 
     WFC_TRY
     {
-       if (hash_p != nullptr)
+       if (hash_p not_eq nullptr)
        {
           hash_handle = hash_p->GetHandle();
        }
@@ -376,7 +376,7 @@ _Check_return_ bool Win32FoundationClasses::CCryptographicKey::Encrypt( std::vec
 
    WFC_TRY
    {
-      if ( hash_p != nullptr )
+      if ( hash_p not_eq nullptr )
       {
          hash_handle = hash_p->GetHandle();
       }
@@ -700,7 +700,7 @@ _Check_return_ bool Win32FoundationClasses::CCryptographicKey::FromHandle( _In_ 
 
    // See if we are already handling a key
 
-   if ( m_Key != static_cast< HCRYPTKEY >( NULL ) )
+   if ( m_Key not_eq static_cast< HCRYPTKEY >( NULL ) )
    {
       if ( m_AutomaticallyDestroy == true)
       {

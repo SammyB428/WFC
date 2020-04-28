@@ -110,7 +110,7 @@ _Check_return_ bool Win32FoundationClasses::CUUCoding::OutputFilename(_In_ std::
 
                 // Now skip the mode numbers until we get to another space
                 while (index < number_of_bytes_to_decode and
-                    (input_buffer[index] != ' ' and input_buffer[index] != 0x09))
+                    (input_buffer[index] not_eq ' ' and input_buffer[index] not_eq 0x09))
                 {
                     index++;
                 }
@@ -124,7 +124,7 @@ _Check_return_ bool Win32FoundationClasses::CUUCoding::OutputFilename(_In_ std::
 
                 // FINALLY! We are at the filename
                 while (index < number_of_bytes_to_decode and
-                    (input_buffer[index] != CARRIAGE_RETURN and input_buffer[index] != LINE_FEED))
+                    (input_buffer[index] not_eq CARRIAGE_RETURN and input_buffer[index] not_eq LINE_FEED))
                 {
                     filename.push_back(input_buffer[index]);
                     index++;
@@ -193,8 +193,8 @@ _Check_return_ bool Win32FoundationClasses::CUUCoding::Decode(_In_ std::vector<u
                 index += 5;
 
                 while (index < number_of_bytes_to_decode and
-                    (input_buffer[index] != CARRIAGE_RETURN and
-                        input_buffer[index] != LINE_FEED))
+                    (input_buffer[index] not_eq CARRIAGE_RETURN and
+                        input_buffer[index] not_eq LINE_FEED))
                 {
                     index++;
                 }
@@ -509,7 +509,7 @@ _Check_return_ bool CUUCoding::Encode( _In_ std::vector<uint8_t> const& source, 
 
     while( loop_index < number_of_characters )
     {
-        destination.Append( static_cast< TCHAR >( encoded_buffer[ loop_index ] ) );
+        destination.Append( static_cast<wchar_t>( encoded_buffer[ loop_index ] ) );
         loop_index++;
     }
 
@@ -576,7 +576,7 @@ get_file_contents( command_line_arguments[ 0 ], bytes );
 
 std::wstring encoded_data;
 
-if ( encoder.Encode( bytes, encoded_data ) != FALSE )
+if ( encoder.Encode( bytes, encoded_data ) not_eq FALSE )
 {
 _tprintf( TEXT( &quot;%s\n&quot;, (LPCTSTR) encoded_data );
 }

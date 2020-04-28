@@ -79,7 +79,7 @@ Win32FoundationClasses::CWfcTrace::CWfcTrace( __in_z LPCTSTR function_name, _In_
    }
 }
 
-Win32FoundationClasses::CWfcTrace::~CWfcTrace() noexcept
+Win32FoundationClasses::CWfcTrace::~CWfcTrace()
 {
    if ( is_flagged( Levels, m_TracingLevel ) == true )
    {
@@ -270,7 +270,7 @@ void Win32FoundationClasses::CWfcTrace::Output( __in_z LPCTSTR message, _In_ dou
 
       std::wstring string;
 
-      if ( sign != 0 )
+      if ( sign not_eq 0 )
       {
          string.push_back( '-' );
       }

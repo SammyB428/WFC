@@ -129,7 +129,7 @@ void Win32FoundationClasses::CSystemTime::Copy( _In_ FILETIME const * source ) n
 
    SYSTEMTIME system_time;
 
-   if ( ::FileTimeToSystemTime( source, &system_time ) != FALSE )
+   if ( ::FileTimeToSystemTime( source, &system_time ) not_eq FALSE )
    {
       Copy( system_time );
    }
@@ -148,7 +148,7 @@ void Win32FoundationClasses::CSystemTime::Copy( _In_ Win32FoundationClasses::CFi
 
    SYSTEMTIME system_time;
 
-   if ( ::FileTimeToSystemTime( &ft, &system_time ) != FALSE )
+   if ( ::FileTimeToSystemTime( &ft, &system_time ) not_eq FALSE )
    {
       Copy( system_time );
       return;
@@ -183,7 +183,7 @@ void Win32FoundationClasses::CSystemTime::Copy( _In_ COleDateTime const& source 
 {
    WFC_VALIDATE_POINTER( this );
 
-   if ( source.GetStatus() != COleDateTime::valid )
+   if ( source.GetStatus() not_eq COleDateTime::valid )
    {
       Empty();
       return;
@@ -730,7 +730,7 @@ int _tmain( int number_of_command_line_arguments, LPCTSTR command_line_arguments
 
    the_time.wHour++;
 
-   if ( the_time.Set() != FALSE )
+   if ( the_time.Set() not_eq FALSE )
    {
       _tprintf( TEXT( &quot;Time advanced by one hour\n&quot; ) );
    }

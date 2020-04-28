@@ -50,21 +50,21 @@ static char THIS_FILE[] = __FILE__;
 #define new DEBUG_NEW
 #endif // _DEBUG
 
-static _Check_return_ bool count_ones_and_zeroes( _In_ DWORD const number_of_dwords_to_test ) noexcept
+static _Check_return_ bool count_ones_and_zeroes( _In_ uint32_t const number_of_dwords_to_test ) noexcept
 {
-   DWORD number_of_ones                     = 0;
-   DWORD number_of_zeroes                   = 0;
-   DWORD length_of_longest_series_of_ones   = 0;
-   DWORD length_of_longest_series_of_zeroes = 0;
-   DWORD number_of_consecutive_ones         = 0;
-   DWORD number_of_consecutive_zeroes       = 0;
-   DWORD last_bit                           = 0;
-   DWORD random_value                       = 0;
-   DWORD bit                                = 0;
-   DWORD maximum_number_of_ones             = 0;
-   DWORD minimum_number_of_ones             = 0xFFFFFFFF;
+    uint32_t number_of_ones                     = 0;
+    uint32_t number_of_zeroes                   = 0;
+    uint32_t length_of_longest_series_of_ones   = 0;
+    uint32_t length_of_longest_series_of_zeroes = 0;
+    uint32_t number_of_consecutive_ones         = 0;
+    uint32_t number_of_consecutive_zeroes       = 0;
+    uint32_t last_bit                           = 0;
+    uint32_t random_value                       = 0;
+    uint32_t bit                                = 0;
+    uint32_t maximum_number_of_ones             = 0;
+    uint32_t minimum_number_of_ones             = 0xFFFFFFFF;
 
-   DWORD one_bits[ 32 ]; // Count the one-bits in the locations
+    uint32_t one_bits[ 32 ]; // Count the one-bits in the locations
 
    for ( auto const bit_number : Range(std::size( one_bits )) )
    {
@@ -158,7 +158,7 @@ static _Check_return_ bool count_ones_and_zeroes( _In_ DWORD const number_of_dwo
          minimum_number_of_ones = one_bits[ bit_number ];
       }
 
-      Win32FoundationClasses::format( output_string, L"bit%lu = %lu", bit_number, one_bits[ bit_number ] );
+      Win32FoundationClasses::format( output_string, L"bit%zu = %" PRIu32, bit_number, one_bits[ bit_number ] );
     //  _tprintf( TEXT( "%s\n" ), (LPCTSTR) output_string );
       //WFCTRACEVAL( TEXT( " " ), output_string );
    }
@@ -223,7 +223,7 @@ _Check_return_ bool test_CRandomNumberGenerator( _Out_ std::string& class_name, 
 
    test_number = random_number.GetFloat() * temp_double;
 
-   if ( test_number != (DWORD) 6533892 )
+   if ( test_number not_eq (DWORD) 6533892 )
    {
       test_number_that_failed = 1;
       return(failure());
@@ -231,7 +231,7 @@ _Check_return_ bool test_CRandomNumberGenerator( _Out_ std::string& class_name, 
 
    test_number = random_number.GetFloat() * temp_double;
 
-   if ( test_number != (DWORD) 14220222 )
+   if ( test_number not_eq (DWORD) 14220222 )
    {
       test_number_that_failed = 2;
       return(failure());
@@ -239,7 +239,7 @@ _Check_return_ bool test_CRandomNumberGenerator( _Out_ std::string& class_name, 
 
    test_number = random_number.GetFloat() * temp_double;
 
-   if ( test_number != (DWORD) 7275067 )
+   if ( test_number not_eq (DWORD) 7275067 )
    {
       test_number_that_failed = 3;
       return(failure());
@@ -247,7 +247,7 @@ _Check_return_ bool test_CRandomNumberGenerator( _Out_ std::string& class_name, 
 
    test_number = random_number.GetFloat() * temp_double;
 
-   if ( test_number != (DWORD) 6172232 )
+   if ( test_number not_eq (DWORD) 6172232 )
    {
       test_number_that_failed = 4;
       return(failure());
@@ -255,7 +255,7 @@ _Check_return_ bool test_CRandomNumberGenerator( _Out_ std::string& class_name, 
 
    test_number = random_number.GetFloat() * temp_double;
 
-   if ( test_number != (DWORD) 8354498 )
+   if ( test_number not_eq (DWORD) 8354498 )
    {
       test_number_that_failed = 5;
       return(failure());
@@ -263,7 +263,7 @@ _Check_return_ bool test_CRandomNumberGenerator( _Out_ std::string& class_name, 
 
    test_number = random_number.GetFloat() * temp_double;
 
-   if ( test_number != (DWORD) 10633180 )
+   if ( test_number not_eq (DWORD) 10633180 )
    {
       test_number_that_failed = 6;
       return(failure());

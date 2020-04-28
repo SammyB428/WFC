@@ -96,7 +96,7 @@ void Win32FoundationClasses::CNetworkResourceInformation::Copy( _In_ NETRESOURCE
    {
       WFC_VALIDATE_POINTER_NULL_OK( source->lpLocalName );
 
-      if ( source->lpLocalName != nullptr )
+      if ( source->lpLocalName not_eq nullptr )
       {
          LocalName.assign(source->lpLocalName);
       }
@@ -107,7 +107,7 @@ void Win32FoundationClasses::CNetworkResourceInformation::Copy( _In_ NETRESOURCE
 
       WFC_VALIDATE_POINTER_NULL_OK( source->lpRemoteName );
 
-      if ( source->lpRemoteName != nullptr )
+      if ( source->lpRemoteName not_eq nullptr )
       {
          RemoteName.assign(source->lpRemoteName);
       }
@@ -118,7 +118,7 @@ void Win32FoundationClasses::CNetworkResourceInformation::Copy( _In_ NETRESOURCE
 
       WFC_VALIDATE_POINTER_NULL_OK( source->lpComment );
 
-      if ( source->lpComment != nullptr )
+      if ( source->lpComment not_eq nullptr )
       {
          Comment.assign(source->lpComment);
       }
@@ -129,10 +129,10 @@ void Win32FoundationClasses::CNetworkResourceInformation::Copy( _In_ NETRESOURCE
 
       WFC_VALIDATE_POINTER_NULL_OK( source->lpProvider );
 
-      if ( source->lpProvider != nullptr )
+      if ( source->lpProvider not_eq nullptr )
       {
          Provider.assign(source->lpProvider);
-      }                               
+      }
       else
       {
          Provider.clear();
@@ -153,7 +153,7 @@ void Win32FoundationClasses::CNetworkResourceInformation::Copy( _In_ NETRESOURCE
 void Win32FoundationClasses::CNetworkResourceInformation::Copy( _In_ Win32FoundationClasses::CNetworkResourceInformation const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
-   ASSERT( this != &source );
+   ASSERT( this not_eq &source );
 
    /*
    ** Make sure we ain't copying ourselves

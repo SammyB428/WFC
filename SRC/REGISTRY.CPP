@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 1995-2018, Samuel R. Blackburn
+** Copyright, 1995-2020, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -62,7 +62,7 @@ static _Check_return_ LONG _recursively_delete_all_sub_keys( _In_ HKEY key_handl
 
     LONG return_value = RegOpenKeyEx( key_handle, key_name, 0, KEY_ALL_ACCESS, &child_key_handle );
 
-    if ( return_value != ERROR_SUCCESS )
+    if ( return_value not_eq ERROR_SUCCESS )
     {
         return( return_value );
     }
@@ -100,7 +100,7 @@ Win32FoundationClasses::CRegistry::~CRegistry()
 {
     WFC_VALIDATE_POINTER( this );
 
-    if ( m_RegistryHandle != static_cast< HKEY >( NULL ) )
+    if ( m_RegistryHandle not_eq static_cast< HKEY >( NULL ) )
     {
         (void) Close();
     }
@@ -145,7 +145,7 @@ _Check_return_ bool Win32FoundationClasses::CRegistry::Close( void ) noexcept
 
     // Thanks go to Gareth Isaac (humbert@tcp.co.uk) for finding a resource leak here
 
-    if ( m_KeyHandle != static_cast< HKEY >( NULL ) )
+    if ( m_KeyHandle not_eq static_cast< HKEY >( NULL ) )
     {
         ::RegCloseKey( m_KeyHandle );
         m_KeyHandle = static_cast< HKEY >( NULL );
@@ -320,7 +320,7 @@ _Check_return_ bool Win32FoundationClasses::CRegistry::Create( __in_z wchar_t co
             name_of_class = L""; // Paul Ostrowski [postrowski@xantel.com]
         }
 
-        if ( m_KeyHandle != static_cast< HKEY >( NULL ) )
+        if ( m_KeyHandle not_eq static_cast< HKEY >( NULL ) )
         {
             ::RegCloseKey( m_KeyHandle );
             m_KeyHandle = static_cast< HKEY >( NULL );
@@ -338,7 +338,7 @@ _Check_return_ bool Win32FoundationClasses::CRegistry::Create( __in_z wchar_t co
 
         if ( m_ErrorCode == ERROR_SUCCESS )
         {
-            if ( disposition_p != nullptr )
+            if ( disposition_p not_eq nullptr )
             {
                 *disposition_p = (CreationDisposition) disposition;
             }
@@ -398,7 +398,7 @@ _Check_return_ bool Win32FoundationClasses::CRegistry::DeleteKey( __in_z wchar_t
             ** We know this loop will succeed because a back slash was found in the above if statement
             */
 
-            while( full_key_name.at( last_back_slash_location ) != '\\' )
+            while( full_key_name.at( last_back_slash_location ) not_eq '\\' )
             {
                 last_back_slash_location--;
             }
@@ -805,7 +805,7 @@ _Check_return_ bool Win32FoundationClasses::CRegistry::GetStringArrayValue(_In_z
 
         return_array.clear();
 
-        while (strings[0] != 0x00)
+        while (strings[0] not_eq 0x00)
         {
             (void)return_array.push_back(reinterpret_cast<wchar_t const *>(strings));
             strings += (_tcslen(reinterpret_cast<wchar_t const *>(strings)) + 1); // Paul Ostrowski [postrowski@xantel.com]
@@ -917,7 +917,7 @@ _Check_return_ bool Win32FoundationClasses::CRegistry::Open( __in_z wchar_t cons
 
     WFC_TRY
     {
-        if ( m_KeyHandle != static_cast< HKEY >( NULL ) )
+        if ( m_KeyHandle not_eq static_cast< HKEY >( NULL ) )
         {
             (void) ::RegCloseKey( m_KeyHandle );
             m_KeyHandle = static_cast< HKEY >( NULL );
@@ -1143,7 +1143,7 @@ _Check_return_ bool Win32FoundationClasses::CRegistry::Restore( __in_z wchar_t c
             (void) Win32FoundationClasses::wfc_close_handle( token_handle );
             token_handle = static_cast< HANDLE >( NULL );
 
-            if ( m_ErrorCode != ERROR_SUCCESS )
+            if ( m_ErrorCode not_eq ERROR_SUCCESS )
             {
                 m_ErrorCode = ::GetLastError();
 
@@ -1825,7 +1825,7 @@ std::vector&lt;std::wstring&gt; string_array;
 
 string_array.RemoveAll();
 
-if ( registry.GetStringArrayValue( TEXT( &quot;Sources&quot; ), string_array ) != FALSE )
+if ( registry.GetStringArrayValue( TEXT( &quot;Sources&quot; ), string_array ) not_eq FALSE )
 {
 int index = 0;
 int number_of_strings = string_array.GetSize();

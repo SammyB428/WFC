@@ -77,7 +77,7 @@ Win32FoundationClasses::CCryptographicHash::CCryptographicHash( _In_ HCRYPTHASH 
    (void) FromHandle( source_handle, automatically_destroy );
 }
 
-Win32FoundationClasses::CCryptographicHash::~CCryptographicHash() noexcept
+Win32FoundationClasses::CCryptographicHash::~CCryptographicHash()
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -117,7 +117,7 @@ _Check_return_ bool Win32FoundationClasses::CCryptographicHash::FromHandle( _In_
 
    // See if we are already handling a key
 
-   if ( m_Hash != static_cast< HCRYPTHASH >( NULL ) )
+   if ( m_Hash not_eq static_cast< HCRYPTHASH >( NULL ) )
    {
       if ( m_AutomaticallyDestroy == true)
       {

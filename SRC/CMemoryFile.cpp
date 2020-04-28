@@ -124,7 +124,7 @@ Win32FoundationClasses::CMemoryFile::CMemoryFile( _In_ std::size_t const allocat
     ZeroMemory( &m_FileInformation, sizeof( m_FileInformation ) );
 }
 
-Win32FoundationClasses::CMemoryFile::~CMemoryFile() noexcept
+Win32FoundationClasses::CMemoryFile::~CMemoryFile()
 {
     WFC_VALIDATE_POINTER( this );
 
@@ -156,7 +156,7 @@ void Win32FoundationClasses::CMemoryFile::Close( void ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
 
-    if ( m_MappedPointer != nullptr )
+    if ( m_MappedPointer not_eq nullptr )
     {
         if ( ::UnmapViewOfFile( m_MappedPointer ) == FALSE )
         {
@@ -168,7 +168,7 @@ void Win32FoundationClasses::CMemoryFile::Close( void ) noexcept
         m_Pointer       = nullptr;
     }
 
-    if ( m_MapHandle != static_cast< HANDLE >( INVALID_HANDLE_VALUE ) )
+    if ( m_MapHandle not_eq static_cast< HANDLE >( INVALID_HANDLE_VALUE ) )
     {
         if ( ::CloseHandle( m_MapHandle ) == FALSE )
         {
@@ -283,7 +283,7 @@ _Check_return_ void * Win32FoundationClasses::CMemoryFile::Map( _In_ uint64_t co
         return( m_Pointer );
     }
 
-    if ( m_MappedPointer != nullptr )
+    if ( m_MappedPointer not_eq nullptr )
     {
         if ( ::UnmapViewOfFile( m_MappedPointer ) == FALSE )
         {
@@ -302,7 +302,7 @@ _Check_return_ void * Win32FoundationClasses::CMemoryFile::Map( _In_ uint64_t co
 
     large_file_offset.QuadPart = offset;
 
-    if ( ( large_file_offset.QuadPart % m_AllocationGranularity ) != 0 )
+    if ( ( large_file_offset.QuadPart % m_AllocationGranularity ) not_eq 0 )
     {
         // The user wants to start mapping at a point in the file that doesn't fall
         // on a memory allocation boundary (usually a 64KB boundary). That means we
@@ -355,7 +355,7 @@ _Check_return_ bool Win32FoundationClasses::CMemoryFile::m_MapTheFile( _In_ HAND
 {
     WFC_VALIDATE_POINTER( this );
 
-    if ( m_Pointer != nullptr )
+    if ( m_Pointer not_eq nullptr )
     {
         Close();
     }
@@ -477,13 +477,13 @@ void Win32FoundationClasses::CMemoryFile::m_Uninitialize( void ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
 
-    if ( m_SecurityAttributes_p != nullptr )
+    if ( m_SecurityAttributes_p not_eq nullptr )
     {
         delete m_SecurityAttributes_p;
         m_SecurityAttributes_p = nullptr;
     }
 
-    if ( m_SecurityDescriptor_p != nullptr )
+    if ( m_SecurityDescriptor_p not_eq nullptr )
     {
         Win32FoundationClasses::wfc_destroy_null_dacl( m_SecurityDescriptor_p );
         m_SecurityDescriptor_p = nullptr;
@@ -494,7 +494,7 @@ _Check_return_ bool Win32FoundationClasses::CMemoryFile::Open(_In_ std::wstring_
 {
     WFC_VALIDATE_POINTER( this );
 
-    if ( m_Pointer != nullptr )
+    if ( m_Pointer not_eq nullptr )
     {
         Close();
     }
@@ -542,7 +542,7 @@ _Check_return_ bool Win32FoundationClasses::CMemoryFile::Open( _In_ std::string_
 {
     WFC_VALIDATE_POINTER( this );
 
-    if ( m_Pointer != nullptr )
+    if ( m_Pointer not_eq nullptr )
     {
         Close();
     }
@@ -599,7 +599,7 @@ Win32FoundationClasses::CSharedMemory::CSharedMemory() noexcept
     m_LastError = 0;
 }
 
-Win32FoundationClasses::CSharedMemory::~CSharedMemory() noexcept
+Win32FoundationClasses::CSharedMemory::~CSharedMemory()
 {
     WFC_VALIDATE_POINTER( this );
 
@@ -612,7 +612,7 @@ void Win32FoundationClasses::CSharedMemory::Close(void) noexcept
 
     Name.clear();
 
-    if ( m_Buffer != nullptr )
+    if ( m_Buffer not_eq nullptr )
     {
         ::UnmapViewOfFile( m_Buffer );
         m_Buffer = nullptr;

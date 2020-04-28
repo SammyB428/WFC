@@ -78,7 +78,7 @@ void Win32FoundationClasses::CTapeGetMediaParameters::Copy(_In_ Win32FoundationC
 
 void Win32FoundationClasses::CTapeGetMediaParameters::Copy(_In_ TAPE_GET_MEDIA_PARAMETERS const * source ) noexcept
 {
-   ASSERT( source != nullptr );
+   ASSERT( source not_eq nullptr );
 
    if ( source == nullptr )
    {

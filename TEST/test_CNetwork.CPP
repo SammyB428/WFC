@@ -58,7 +58,7 @@ void test_CNetwork( LPCTSTR machine_name ) noexcept
 
    if ( machine.EnumeratePorts() )
    {
-      if ( machine_name != NULL )
+      if ( machine_name not_eq NULL )
       {
          _tprintf( TEXT( "Ports on %s\n" ), machine_name );
       }
@@ -87,7 +87,7 @@ void test_CNetwork( LPCTSTR machine_name ) noexcept
 
    if ( machine.IsRebootable() )
    {
-      if ( machine_name != NULL )
+      if ( machine_name not_eq NULL )
       {
          _tprintf( TEXT( "Yes, I can reboot %s\n" ), machine_name );
       }

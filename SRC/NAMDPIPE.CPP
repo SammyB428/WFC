@@ -70,9 +70,9 @@ Win32FoundationClasses::CNamedPipe::~CNamedPipe()
 {
    WFC_VALIDATE_POINTER( this );
 
-   if ( m_AutomaticallyDelete != FALSE )
+   if ( m_AutomaticallyDelete not_eq FALSE )
    {
-      if ( m_PipeHandle != static_cast< HANDLE >( NULL ) )
+      if ( m_PipeHandle not_eq static_cast< HANDLE >( NULL ) )
       {
          Close();
       }
@@ -167,7 +167,7 @@ void Win32FoundationClasses::CNamedPipe::Close( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
-   if ( m_PipeHandle != static_cast< HANDLE >( INVALID_HANDLE_VALUE ) )
+   if ( m_PipeHandle not_eq static_cast< HANDLE >( INVALID_HANDLE_VALUE ) )
    {
       (void) Win32FoundationClasses::wfc_close_handle( m_PipeHandle );
       m_PipeHandle = static_cast< HANDLE >( INVALID_HANDLE_VALUE );
@@ -357,7 +357,7 @@ _Check_return_ bool Win32FoundationClasses::CNamedPipe::Open(_In_ std::filesyste
       unc.ServerName.assign(WSTRING_VIEW(L"."));
    }
 
-   if ( compare_no_case( unc.ShareName, WSTRING_VIEW(L"PIPE") ) != I_AM_EQUAL_TO_THAT )
+   if ( compare_no_case( unc.ShareName, WSTRING_VIEW(L"PIPE") ) not_eq I_AM_EQUAL_TO_THAT )
    {
       std::wstring temp_string = unc.ShareName;
 

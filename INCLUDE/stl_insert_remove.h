@@ -24,7 +24,7 @@ inline _Check_return_ std::size_t insert(_Inout_ std::wstring& s, _In_ std::size
 {
     WFC_VALIDATE_POINTER_NULL_OK(string_to_insert);
 
-    if (string_to_insert != nullptr)
+    if (string_to_insert not_eq nullptr)
     {
         if (string_index < 0)
         {
@@ -85,7 +85,7 @@ inline void replace(_Inout_ std::wstring& s, _In_ std::wstring_view what_to_repl
 
     std::size_t location = s.find(what_to_replace);
 
-    while (location != std::wstring::npos)
+    while (location not_eq std::wstring::npos)
     {
         // Append the data up to the what_to_replace to our translated string
 
@@ -107,7 +107,7 @@ inline void replace(_Inout_ std::string& s, _In_ std::string_view what_to_replac
 
     std::size_t location = s.find(what_to_replace);
 
-    while (location != std::string::npos)
+    while (location not_eq std::string::npos)
     {
         // Append the data up to the what_to_replace to our translated string
 
@@ -199,7 +199,7 @@ inline void remove(_Inout_ std::wstring& the_string, _In_ wchar_t const characte
 
     for (auto const& character_to_test : the_string)
     {
-        if (character_to_test != character_to_remove)
+        if (character_to_test not_eq character_to_remove)
         {
             new_string.push_back(character_to_test);
         }

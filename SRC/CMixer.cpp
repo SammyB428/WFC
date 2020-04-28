@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 1995-2016, Samuel R. Blackburn
+** Copyright, 1995-2020, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -118,7 +118,7 @@ void Win32FoundationClasses::CMixer::Close(void) noexcept
 
     m_ErrorCode = ::mixerClose(m_Handle);
 
-    if (m_ErrorCode != MMSYSERR_NOERROR)
+    if (m_ErrorCode not_eq MMSYSERR_NOERROR)
     {
         //WFCTRACE( TEXT( "Close Failed" ) );
     }
@@ -145,7 +145,7 @@ _Check_return_ bool Win32FoundationClasses::CMixer::Get(_Out_ Win32FoundationCla
 
     m_ErrorCode = ::mixerGetDevCaps(m_DeviceID, &mixer_capabilities, sizeof(mixer_capabilities));
 
-    if (m_ErrorCode != MMSYSERR_NOERROR)
+    if (m_ErrorCode not_eq MMSYSERR_NOERROR)
     {
         capabilities.Empty();
         return(false);
@@ -196,7 +196,7 @@ _Check_return_ bool Win32FoundationClasses::CMixer::GetAllControls(_In_ Win32Fou
 
     m_ErrorCode = ::mixerGetLineControls((HMIXEROBJ)m_DeviceID, &line_controls, flags);
 
-    if (m_ErrorCode != MMSYSERR_NOERROR)
+    if (m_ErrorCode not_eq MMSYSERR_NOERROR)
     {
         return_value = false;
     }
@@ -228,7 +228,7 @@ _Check_return_ bool Win32FoundationClasses::CMixer::GetByComponent(_In_ Win32Fou
 
     m_ErrorCode = ::mixerGetLineInfo((HMIXEROBJ)m_DeviceID, &mixer_line, flags);
 
-    if (m_ErrorCode != MMSYSERR_NOERROR)
+    if (m_ErrorCode not_eq MMSYSERR_NOERROR)
     {
         line.Empty();
         return(false);
@@ -254,7 +254,7 @@ _Check_return_ bool Win32FoundationClasses::CMixer::GetByDestination(_In_ DWORD 
 
     m_ErrorCode = ::mixerGetLineInfo((HMIXEROBJ)m_DeviceID, &mixer_line, flags);
 
-    if (m_ErrorCode != MMSYSERR_NOERROR)
+    if (m_ErrorCode not_eq MMSYSERR_NOERROR)
     {
         line.Empty();
         return(false);
@@ -280,7 +280,7 @@ _Check_return_ bool Win32FoundationClasses::CMixer::GetByID(_In_ DWORD const id,
 
     m_ErrorCode = ::mixerGetLineInfo((HMIXEROBJ)m_DeviceID, &mixer_line, flags);
 
-    if (m_ErrorCode != MMSYSERR_NOERROR)
+    if (m_ErrorCode not_eq MMSYSERR_NOERROR)
     {
         line.Empty();
         return(false);
@@ -307,7 +307,7 @@ _Check_return_ bool Win32FoundationClasses::CMixer::GetByConnection( _In_ DWORD 
 
     m_ErrorCode = ::mixerGetLineInfo((HMIXEROBJ)m_DeviceID, &mixer_line, flags);
 
-    if (m_ErrorCode != MMSYSERR_NOERROR)
+    if (m_ErrorCode not_eq MMSYSERR_NOERROR)
     {
         line.Empty();
         return(false);
@@ -383,7 +383,7 @@ _Check_return_ bool Win32FoundationClasses::CMixer::GetControlDetails(_In_ Win32
 
     auto memory_buffer = std::make_unique<uint8_t[]>(buffer_size);
 
-    ASSERT(memory_buffer.get() != nullptr);
+    ASSERT(memory_buffer.get() not_eq nullptr);
 
     // Choose to live
 
@@ -414,7 +414,7 @@ _Check_return_ bool Win32FoundationClasses::CMixer::GetControlDetails(_In_ Win32
 
     bool return_value = false;
 
-    if (m_ErrorCode != MMSYSERR_NOERROR)
+    if (m_ErrorCode not_eq MMSYSERR_NOERROR)
     {
         return_value = false;
     }
@@ -483,7 +483,7 @@ _Check_return_ bool Win32FoundationClasses::CMixer::GetControlListText(_In_ Win3
 
     DWORD number_of_items_per_channel = 0;
 
-    if (control.IsUniform() != FALSE)
+    if (control.IsUniform() == true)
     {
         number_of_items_per_channel = 1;
     }
@@ -530,7 +530,7 @@ _Check_return_ bool Win32FoundationClasses::CMixer::GetControlListText(_In_ Win3
 
     bool return_value = false;
 
-    if (m_ErrorCode != MMSYSERR_NOERROR)
+    if (m_ErrorCode not_eq MMSYSERR_NOERROR)
     {
         return_value = false;
     }
@@ -798,7 +798,7 @@ _Check_return_ bool Win32FoundationClasses::CMixer::Open(_In_ UINT_PTR device_id
 
     m_ErrorCode = ::mixerOpen(&m_Handle, (UINT) device_id, who_to_notify, notify_data, what_to_notify);
 
-    if (m_ErrorCode != MMSYSERR_NOERROR)
+    if (m_ErrorCode not_eq MMSYSERR_NOERROR)
     {
         return(false);
     }
@@ -922,7 +922,7 @@ _Check_return_ bool Win32FoundationClasses::CMixer::SetControlDetails(_In_ Win32
 
     bool return_value = false;
 
-    if (m_ErrorCode != MMSYSERR_NOERROR)
+    if (m_ErrorCode not_eq MMSYSERR_NOERROR)
     {
         //WFCTRACE( TEXT( "mixerSetControlDetails() failed" ) );
         //WFCTRACEVAL( TEXT( "Error code is " ), m_ErrorCode );

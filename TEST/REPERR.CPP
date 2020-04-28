@@ -55,7 +55,7 @@ void ReportError( __in DWORD const error_code ) noexcept
    LPVOID lpMessageBuffer = nullptr;
 
    FormatMessage(
-  FORMAT_MESSAGE_ALLOCATE_BUFFER |
+  FORMAT_MESSAGE_ALLOCATE_BUFFER bitor
   FORMAT_MESSAGE_FROM_SYSTEM,
   NULL,
   error_code,

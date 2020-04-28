@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 1995-2019, Samuel R. Blackburn
+** Copyright, 1995-2020, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -134,7 +134,7 @@ inline CQueue::CQueue(_In_ std::size_t initial_size) noexcept
         (((2 * initial_size * sizeof(void *)) < 65536) ? 65536 : (2 * initial_size * sizeof(void *))),
         0);
 
-    if (m_Heap != nullptr)
+    if (m_Heap not_eq nullptr)
     {
         m_Items = static_cast<void **>(::HeapAlloc(m_Heap, HEAP_NO_SERIALIZE, initial_size * sizeof(void *)));
 
@@ -156,7 +156,7 @@ inline CQueue::~CQueue() noexcept
     m_GetIndex = 0;
     m_Size = 0;
 
-    if (m_Items != nullptr)
+    if (m_Items not_eq nullptr)
     {
         ::HeapFree(m_Heap, HEAP_NO_SERIALIZE, m_Items);
         m_Items = nullptr;
@@ -234,7 +234,7 @@ inline _Check_return_ bool CQueue::TryGet(_Out_ void * & item) noexcept
         {
             // Yup, we're too big for our britches
 
-            if (TryEnterCriticalSection(&m_AddCriticalSection) != 0)
+            if (TryEnterCriticalSection(&m_AddCriticalSection) not_eq 0)
             {
                 // Now, no one can add to the queue
 
@@ -243,7 +243,7 @@ inline _Check_return_ bool CQueue::TryGet(_Out_ void * & item) noexcept
                     // See if we can just shrink it... It is safe to use HeapReAlloc() because the queue is empty
                     auto return_value = ::HeapReAlloc(m_Heap, HEAP_NO_SERIALIZE, m_Items, WFC_QUEUE_DEFAULT_NUMBER_OF_ITEMS * sizeof(void *));
 
-                    if (return_value != nullptr)
+                    if (return_value not_eq nullptr)
                     {
                         m_Items = static_cast<void **>(return_value);
                     }
@@ -260,7 +260,7 @@ inline _Check_return_ bool CQueue::TryGet(_Out_ void * & item) noexcept
                 }
                 else
                 {
-                    // m_GetIndex != m_AddIndex, this means that someone added
+                    // m_GetIndex not_eq m_AddIndex, this means that someone added
                     // to the queue between the time we checked m_Size for being
                     // too big and the time we entered the add critical section.
                     // If this happened then we are too busy to shrink
@@ -307,7 +307,7 @@ inline _Check_return_ bool CQueue::Get(_Out_ void * & item) noexcept
         {
             // Yup, we're too big for our britches
 
-            if (TryEnterCriticalSection(&m_AddCriticalSection) != FALSE)
+            if (TryEnterCriticalSection(&m_AddCriticalSection) not_eq FALSE)
             {
                 // Now, no one can add to the queue
 
@@ -316,7 +316,7 @@ inline _Check_return_ bool CQueue::Get(_Out_ void * & item) noexcept
                     // See if we can just shrink it... It is safe to use HeapReAlloc() because the queue is empty
                     auto return_value = ::HeapReAlloc(m_Heap, HEAP_NO_SERIALIZE, m_Items, WFC_QUEUE_DEFAULT_NUMBER_OF_ITEMS * sizeof(void *));
 
-                    if (return_value != nullptr)
+                    if (return_value not_eq nullptr)
                     {
                         m_Items = static_cast<void **>(return_value);
                     }
@@ -333,7 +333,7 @@ inline _Check_return_ bool CQueue::Get(_Out_ void * & item) noexcept
                 }
                 else
                 {
-                    // m_GetIndex != m_AddIndex, this means that someone added
+                    // m_GetIndex not_eq m_AddIndex, this means that someone added
                     // to the queue between the time we checked m_Size for being
                     // too big and the time we entered the add critical section.
                     // If this happened then we are too busy to shrink
@@ -400,9 +400,9 @@ inline void CQueue::m_GrowBy(_In_ std::size_t number_of_new_items) noexcept
     // a HUGE bug here. I was using HeapReAlloc as a short cut but my logic
     // was flawed. In certain circumstances, queue items were being dropped.
 
-    void**  new_array = (void **) ::HeapAlloc(m_Heap, HEAP_NO_SERIALIZE bitor HEAP_CREATE_ALIGN_16, new_size * sizeof(void *));
+    auto new_array = (void **) ::HeapAlloc(m_Heap, HEAP_NO_SERIALIZE bitor HEAP_CREATE_ALIGN_16, new_size * sizeof(void *));
 
-    if (new_array != nullptr)
+    if (new_array not_eq nullptr)
     {
         // Now copy all of the old items from the old queue to the new one.
 

@@ -68,7 +68,7 @@ void Win32FoundationClasses::CMixerSourceSelector::Copy( _In_ Win32FoundationCla
    m_MixerLine.Copy( source.m_MixerLine );
    m_MixerControl.Copy( source.m_MixerControl );
 
-   if ( m_MixerControl.Type != CMixerControl::ControlType::Mixer )
+   if ( m_MixerControl.Type not_eq CMixerControl::ControlType::Mixer )
    {
       m_MixerControl.Empty();
    }

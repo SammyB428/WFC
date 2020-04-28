@@ -208,13 +208,13 @@ class CSystemTime : public _SYSTEMTIME
 
       inline constexpr _Check_return_ bool IsEmpty(void) const noexcept
       {
-          if (wYear != 0 or
-              wMonth != 0 or
-              wDay != 0 or
-              wHour != 0 or
-              wMinute != 0 or
-              wSecond != 0 or
-              wMilliseconds != 0)
+          if (wYear not_eq 0 or
+              wMonth not_eq 0 or
+              wDay not_eq 0 or
+              wHour not_eq 0 or
+              wMinute not_eq 0 or
+              wSecond not_eq 0 or
+              wMilliseconds not_eq 0)
           {
               return(false);
           }
@@ -351,7 +351,7 @@ class CSystemTime : public _SYSTEMTIME
 
          SYSTEMTIME system_time;
 
-         if ( ::FileTimeToSystemTime( &source, &system_time ) != FALSE )
+         if ( ::FileTimeToSystemTime( &source, &system_time ) not_eq FALSE )
          {
             Copy( system_time );
          }

@@ -145,7 +145,7 @@ _Check_return_ bool Win32FoundationClasses::CMixerCapabilities::Get( _In_ UINT c
 
    const MMRESULT result = ::mixerGetDevCaps( device_number, &mixer_capabilities, sizeof( mixer_capabilities ) );
 
-   if ( result != MMSYSERR_NOERROR )
+   if ( result not_eq MMSYSERR_NOERROR )
    {
       // Leave us with that empty feeling
       Empty();

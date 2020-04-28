@@ -73,7 +73,7 @@ void Win32FoundationClasses::CNetworkFiles::Close( void ) noexcept
 
    CNetwork::Close();
 
-   if ( m_103InformationBuffer != nullptr )
+   if ( m_103InformationBuffer not_eq nullptr )
    {
       ::NetApiBufferFree( m_103InformationBuffer );
       m_103InformationBuffer = nullptr;
@@ -113,7 +113,7 @@ _Check_return_ bool Win32FoundationClasses::CNetworkFiles::Enumerate( void ) noe
 {
    WFC_VALIDATE_POINTER( this );
 
-   if ( m_103InformationBuffer != nullptr )
+   if ( m_103InformationBuffer not_eq nullptr )
    {
       ::NetApiBufferFree( m_103InformationBuffer );
       m_103InformationBuffer = nullptr;
@@ -132,7 +132,7 @@ _Check_return_ bool Win32FoundationClasses::CNetworkFiles::GetNext( __inout Win3
 {
    WFC_VALIDATE_POINTER( this );
 
-   if ( m_103InformationBuffer != nullptr )
+   if ( m_103InformationBuffer not_eq nullptr )
    {
       if ( m_103Index < m_103NumberOfEntriesRead )
       {
@@ -166,7 +166,7 @@ bool Win32FoundationClasses::CNetworkFiles::m_GetChunk( void ) noexcept
 
    m_103Index = 0;
 
-   if ( m_103NumberOfEntriesRead != 0 and m_103ResumeHandle == 0 )
+   if ( m_103NumberOfEntriesRead not_eq 0 and m_103ResumeHandle == 0 )
    {
       // Yup, we've finished reading
       ::NetApiBufferFree( m_103InformationBuffer );
@@ -188,7 +188,7 @@ bool Win32FoundationClasses::CNetworkFiles::m_GetChunk( void ) noexcept
                                        &m_103TotalNumberOfEntries,
                                        &m_103ResumeHandle );
 
-   if ( m_ErrorCode != NERR_Success or m_103InformationBuffer == nullptr )
+   if ( m_ErrorCode not_eq NERR_Success or m_103InformationBuffer == nullptr )
    {
       return( false );
    }

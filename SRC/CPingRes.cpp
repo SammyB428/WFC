@@ -117,7 +117,7 @@ void Win32FoundationClasses::CPingResults::Copy( _In_ Win32FoundationClasses::CP
 
    WFC_TRY
    {
-      if ( source != nullptr )
+      if ( source not_eq nullptr )
       {
          Copy( *source );
       }
@@ -155,7 +155,7 @@ void Win32FoundationClasses::CPingResults::Copy( _In_ IP_ECHO_REPLY const * sour
 
    WFC_TRY
    {
-      if ( source != nullptr )
+      if ( source not_eq nullptr )
       {
          Copy( *source );
       }

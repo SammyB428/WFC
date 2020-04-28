@@ -122,7 +122,7 @@ BOOL CRemoteAccessServiceAdministration::ClearPortStatistics( std::wstring const
 
       m_ErrorCode = ::RasAdminPortClearStatistics( (LPCWSTR) network_server_name, unicode_port_name );
 
-      if ( m_ErrorCode != ERROR_SUCCESS )
+      if ( m_ErrorCode not_eq ERROR_SUCCESS )
       {
          return( FALSE );
       }
@@ -182,7 +182,7 @@ BOOL CRemoteAccessServiceAdministration::DisconnectPort( std::wstring const& por
 
       m_ErrorCode = ::RasAdminPortDisconnect( (LPCWSTR) network_server_name, unicode_port_name );
 
-      if ( m_ErrorCode != ERROR_SUCCESS )
+      if ( m_ErrorCode not_eq ERROR_SUCCESS )
       {
          return( FALSE );
       }
@@ -253,7 +253,7 @@ BOOL CRemoteAccessServiceAdministration::EnumeratePorts( LPCTSTR server_name )
 
       return_value = ::RasAdminPortEnum( (LPCWSTR) wide_machine_name, &m_PortArray, &m_TotalNumberOfEntries );
 
-      if ( return_value != ERROR_SUCCESS )
+      if ( return_value not_eq ERROR_SUCCESS )
       {
          WFCTRACEVAL( TEXT( "RasAdminPortEnum failed with " ), return_value );
          m_Initialize();
@@ -358,7 +358,7 @@ BOOL CRemoteAccessServiceAdministration::GetUserAccountServer(std::wstring& user
 
       DWORD return_value = 0;
 
-      if ( ras_server_domain_name != nullptr and ras_server_name != nullptr )
+      if ( ras_server_domain_name not_eq nullptr and ras_server_name not_eq nullptr )
       {
          // CNetwork is cool because it will convert the name to a real server name
          // taking into account UNICODE and prepending
@@ -406,7 +406,7 @@ void CRemoteAccessServiceAdministration::m_Initialize( void )
    m_TotalNumberOfEntries = 0;
    m_CurrentEntryNumber   = 0;
 
-   if ( m_PortArray != nullptr )
+   if ( m_PortArray not_eq nullptr )
    {
       ::RasAdminFreeBuffer( m_PortArray );
    }

@@ -65,13 +65,13 @@ void test_CLZFile( _In_ std::wstring_view lz_file_name ) noexcept
 
     wprintf( L"LZ File \"%.*s\" expanded name is \"%s\"\n", static_cast<int>(lz_file_name.length()), lz_file_name.data(), expanded_name.c_str() );
 
-    if ( lz_file.Open( lz_file_name ) != FALSE )
+    if ( lz_file.Open( lz_file_name ) not_eq FALSE )
     {
         Win32FoundationClasses::CLZFile output_file;
 
-        if ( output_file.Open(WSTRING_VIEW(L"d:\\temp\\winhlp32.exe"), OF_CREATE ) != FALSE )
+        if ( output_file.Open(WSTRING_VIEW(L"d:\\temp\\winhlp32.exe"), OF_CREATE ) not_eq FALSE )
         {
-            if ( output_file.Copy( lz_file ) != FALSE )
+            if ( output_file.Copy( lz_file ) not_eq FALSE )
             {
                 _tprintf( TEXT( "Successfully copied\n" ) );
             }

@@ -92,7 +92,7 @@ void Win32FoundationClasses::CDummyFile::Close( void ) noexcept
    ** I don't consider this an error but MFC does...
    */
 
-   if ( GetHandle() != static_cast< HANDLE >( INVALID_HANDLE_VALUE ) )
+   if ( GetHandle() not_eq static_cast< HANDLE >( INVALID_HANDLE_VALUE ) )
    {
       CFile64::Close();
    }

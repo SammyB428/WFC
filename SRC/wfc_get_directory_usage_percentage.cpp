@@ -61,8 +61,8 @@ _Check_return_ uint32_t Win32FoundationClasses::wfc_get_directory_usage_percenta
 
    std::wstring mask( directory_path );
 
-   if ( mask.at( mask.length() - 1 ) != '\\' and
-        mask.at( mask.length() - 1 ) != '/' )
+   if ( mask.at( mask.length() - 1 ) not_eq '\\' and
+        mask.at( mask.length() - 1 ) not_eq '/' )
    {
       mask.push_back( '/' );
    }
@@ -75,20 +75,20 @@ _Check_return_ uint32_t Win32FoundationClasses::wfc_get_directory_usage_percenta
 
    auto find_file_handle = FindFirstFileW( mask.c_str(), &find_data );
 
-   if ( find_file_handle != static_cast< HANDLE >( INVALID_HANDLE_VALUE ) )
+   if ( find_file_handle not_eq static_cast< HANDLE >( INVALID_HANDLE_VALUE ) )
    {
       number_of_bytes_used_in_directory += find_data.nFileSizeLow;
 
-      if ( find_data.nFileSizeHigh != 0 )
+      if ( find_data.nFileSizeHigh not_eq 0 )
       {
          number_of_bytes_used_in_directory += static_cast< double >( static_cast< double >( find_data.nFileSizeHigh ) * high_value );
       }
 
-      while( FindNextFileW( find_file_handle, &find_data ) != FALSE )
+      while( FindNextFileW( find_file_handle, &find_data ) not_eq FALSE )
       {
          number_of_bytes_used_in_directory += find_data.nFileSizeLow;
 
-         if ( find_data.nFileSizeHigh != 0 )
+         if ( find_data.nFileSizeHigh not_eq 0 )
          {
             number_of_bytes_used_in_directory += static_cast< double >( static_cast< double >( find_data.nFileSizeHigh ) * high_value );
          }

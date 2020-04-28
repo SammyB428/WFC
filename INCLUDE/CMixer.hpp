@@ -555,7 +555,7 @@ class CMixerSourceSelector : public CMixerControlInstance
        inline CMixerSourceSelector(_In_ CMixerSourceSelector const& source) noexcept { Copy(source); }
        inline CMixerSourceSelector(_In_ CMixerLine const& destination, _In_ CMixerControl const& mixer_control) noexcept
        {
-           if (m_MixerControl.Type != CMixerControl::ControlType::Mixer)
+           if (m_MixerControl.Type not_eq CMixerControl::ControlType::Mixer)
            {
                m_MixerLine.Empty();
            }

@@ -57,7 +57,7 @@ void Win32FoundationClasses::wfc_free_unicode_conversion_context( _Inout_ VOID *
 
    auto IMultilanguage2_interface_p = reinterpret_cast<IMultiLanguage2 *>(unicode_conversion_context);
 
-   if ( IMultilanguage2_interface_p != nullptr )
+   if ( IMultilanguage2_interface_p not_eq nullptr )
    {
       IMultilanguage2_interface_p->Release();
    }
@@ -164,9 +164,9 @@ static inline _Check_return_ bool __detect_code_page(_In_ IMultiLanguage2 * inte
 
       DWORD const error_code = ::GetLastError();
 
-      if ( ole_result != S_OK )
+      if ( ole_result not_eq S_OK )
       {
-         if ( ole_result != S_FALSE )
+         if ( ole_result not_eq S_FALSE )
          {
             //WFCTRACEVAL( TEXT( "Failed with error code " ), ole_result );
             //WFCTRACEVAL( TEXT( "While working on this many bytes " ), (UINT) number_of_bytes_in_buffer );
@@ -280,7 +280,7 @@ _Check_return_ bool Win32FoundationClasses::wfc_convert_to_unicode( _Inout_ VOID
 {
    WFC_VALIDATE_POINTER( unicode_conversion_context );
 
-   if (real_code_page_p != nullptr)
+   if (real_code_page_p not_eq nullptr)
    {
        *real_code_page_p = 0;
    }

@@ -90,7 +90,7 @@ void format(_Inout_ std::wstring& result, _In_z_ _Printf_format_string_ wchar_t 
 
     std::size_t string_index = 0;
 
-    while (format_string[string_index] != 0x00)
+    while (format_string[string_index] not_eq 0x00)
     {
         ascii_format_string.push_back(static_cast<char>(format_string[string_index]));
         string_index++;

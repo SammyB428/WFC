@@ -149,14 +149,14 @@ _Check_return_ bool test_is( _Out_ std::string& class_name, _Out_ int& test_numb
        return( failure() );
    }
 
-   if (Win32FoundationClasses::wfc_find_curly_guid( reinterpret_cast<uint8_t const *>(good_curly_ascii_guid.data()), good_curly_ascii_guid.length() ) != 0 )
+   if (Win32FoundationClasses::wfc_find_curly_guid( reinterpret_cast<uint8_t const *>(good_curly_ascii_guid.data()), good_curly_ascii_guid.length() ) not_eq 0 )
    {
        class_name.assign(STRING_VIEW("wfc_find_curly_guid()"));
        test_number_that_failed = 13;
        return( failure() );
    }
 
-   if (Win32FoundationClasses::wfc_find_wide_curly_guid( reinterpret_cast<uint8_t const *>(good_curly_wide_guid.data()), good_curly_wide_guid.length() * sizeof( wchar_t ) ) != 0 )
+   if (Win32FoundationClasses::wfc_find_wide_curly_guid( reinterpret_cast<uint8_t const *>(good_curly_wide_guid.data()), good_curly_wide_guid.length() * sizeof( wchar_t ) ) not_eq 0 )
    {
        class_name.assign(STRING_VIEW("wfc_find_wide_curly_guid()"));
        test_number_that_failed = 14;
@@ -177,42 +177,42 @@ _Check_return_ bool test_is( _Out_ std::string& class_name, _Out_ int& test_numb
        return( failure() );
    }
 
-   if (Win32FoundationClasses::round_down_to_a_multiple_of(1025, 512) != 1024)
+   if (Win32FoundationClasses::round_down_to_a_multiple_of(1025, 512) not_eq 1024)
    {
        class_name.assign(STRING_VIEW("round_down_to_a_multiple_of"));
        test_number_that_failed = 17;
        return(failure());
    }
 
-   if (Win32FoundationClasses::round_down_to_a_multiple_of(512, 512) != 512)
+   if (Win32FoundationClasses::round_down_to_a_multiple_of(512, 512) not_eq 512)
    {
        class_name.assign(STRING_VIEW("round_down_to_a_multiple_of"));
        test_number_that_failed = 18;
        return(failure());
    }
 
-   if (Win32FoundationClasses::round_down_to_a_multiple_of(1023, 512) != 512)
+   if (Win32FoundationClasses::round_down_to_a_multiple_of(1023, 512) not_eq 512)
    {
        class_name.assign(STRING_VIEW("round_down_to_a_multiple_of"));
        test_number_that_failed = 19;
        return(failure());
    }
 
-   if (Win32FoundationClasses::round_down_to_a_multiple_of(1024, 512) != 1024)
+   if (Win32FoundationClasses::round_down_to_a_multiple_of(1024, 512) not_eq 1024)
    {
        class_name.assign(STRING_VIEW("round_down_to_a_multiple_of"));
        test_number_that_failed = 20;
        return(failure());
    }
 
-   if (Win32FoundationClasses::round_down_to_a_multiple_of(1024, 0) != 0)
+   if (Win32FoundationClasses::round_down_to_a_multiple_of(1024, 0) not_eq 0)
    {
        class_name.assign(STRING_VIEW("round_down_to_a_multiple_of"));
        test_number_that_failed = 21;
        return(failure());
    }
 
-   if (Win32FoundationClasses::round_down_to_a_multiple_of(511, 512) != 0)
+   if (Win32FoundationClasses::round_down_to_a_multiple_of(511, 512) not_eq 0)
    {
        class_name.assign(STRING_VIEW("round_down_to_a_multiple_of()"));
        test_number_that_failed = 22;

@@ -680,7 +680,7 @@ _Check_return_ bool Win32FoundationClasses::CMixerControl::IsDisabled( void ) co
 
    DWORD const status = ( StatusFlags bitand static_cast<uint32_t>(CMixerControl::StatusFlags::Disabled) );
 
-   if ( status != 0 )
+   if ( status not_eq 0 )
    {
       return( true );
    }

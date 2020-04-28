@@ -60,7 +60,7 @@ __checkReturn bool test_CJulianDate( __out std::string& class_name, __out int& t
 
    double const julian_date = date.Get();
 
-   if (julian_date != (double) 2452967.5)
+   if (julian_date not_eq (double) 2452967.5)
    {
        test_number_that_failed = 1;
        return(failure());
@@ -78,7 +78,7 @@ __checkReturn bool test_CJulianDate( __out std::string& class_name, __out int& t
    // 5 - Friday
    // 6 - Saturday
 
-   if ( day_of_week != 1 )
+   if ( day_of_week not_eq 1 )
    {
       test_number_that_failed = 2;
       return( failure() );

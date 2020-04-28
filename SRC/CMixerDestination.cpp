@@ -122,7 +122,7 @@ _Check_return_ bool Win32FoundationClasses::CMixerDestination::IsSourceSelected(
 
    bool return_value = false;
 
-   if ( m_SourceSelector.get() != nullptr )
+   if ( m_SourceSelector.get() not_eq nullptr )
    {
       return_value = m_SourceSelector->IsSelected( source );
    }
@@ -158,7 +158,7 @@ _Check_return_ bool Win32FoundationClasses::CMixerDestination::SelectSource(_In_
 
    bool return_value = false;
 
-   if ( m_SourceSelector.get() != nullptr )
+   if ( m_SourceSelector.get() not_eq nullptr )
    {
       return_value = m_SourceSelector->Select( source, selection );
    }
@@ -172,7 +172,7 @@ _Check_return_ bool Win32FoundationClasses::CMixerDestination::UnselectSource( _
 
    bool return_value = false;
 
-   if ( m_SourceSelector.get() != nullptr )
+   if ( m_SourceSelector.get() not_eq nullptr )
    {
       return_value = m_SourceSelector->Unselect( source );
    }

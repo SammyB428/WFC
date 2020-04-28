@@ -90,7 +90,7 @@ void Win32FoundationClasses::wfc_get_thread_name( _Out_ std::wstring& thread_nam
 
    WFC_TRY
    {
-      if ( thread_information_block_p->Arbitrary != nullptr )
+      if ( thread_information_block_p->Arbitrary not_eq nullptr )
       {
          thread_name.assign( static_cast<wchar_t const *>(thread_information_block_p->Arbitrary) );
       }

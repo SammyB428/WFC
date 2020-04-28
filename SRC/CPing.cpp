@@ -59,7 +59,7 @@ Win32FoundationClasses::CPing::CPing()
     m_NumberOfTextBytes = 0;
     m_ICMP_DLL_Instance = ::LoadLibrary(TEXT("ICMP.DLL"));
 
-    if (m_ICMP_DLL_Instance != static_cast<HMODULE>(NULL))
+    if (m_ICMP_DLL_Instance not_eq static_cast<HMODULE>(NULL))
     {
 #pragma warning(disable:4191)
         m_Open = (ICMP_OPEN_FUNCTION)      ::GetProcAddress(m_ICMP_DLL_Instance, "IcmpCreateFile"); // Cannot be UNICODE string
@@ -78,7 +78,7 @@ Win32FoundationClasses::CPing::CPing()
 
 Win32FoundationClasses::CPing::~CPing()
 {
-    if (m_ICMP_DLL_Instance != static_cast<HMODULE>(NULL))
+    if (m_ICMP_DLL_Instance not_eq static_cast<HMODULE>(NULL))
     {
         ::FreeLibrary(m_ICMP_DLL_Instance);
     }
@@ -87,7 +87,7 @@ Win32FoundationClasses::CPing::~CPing()
     m_Close = nullptr;
     m_SendEcho = nullptr;
 
-    if (m_Text != nullptr)
+    if (m_Text not_eq nullptr)
     {
         free(m_Text);
     }
@@ -233,7 +233,7 @@ _Check_return_ DWORD Win32FoundationClasses::CPing::Ping( _In_ std::wstring cons
 {
     WFC_VALIDATE_POINTER(this);
 
-    if (results_p != nullptr)
+    if (results_p not_eq nullptr)
     {
         results_p->Empty();
     }
@@ -273,7 +273,7 @@ _Check_return_ DWORD Win32FoundationClasses::CPing::Ping( _In_ std::wstring cons
 
        auto echo_reply_p = static_cast<Win32FoundationClasses::IP_ECHO_REPLY *>(GlobalAllocPtr(GHND, sizeof(IP_ECHO_REPLY) + m_NumberOfTextBytes));
 
-       if (echo_reply_p != nullptr)
+       if (echo_reply_p not_eq nullptr)
        {
           SetAddress(name_or_address);
 
@@ -329,9 +329,9 @@ _Check_return_ DWORD Win32FoundationClasses::CPing::Ping( _In_ std::wstring cons
                                sizeof(IP_ECHO_REPLY) + (WORD)m_NumberOfTextBytes,
                                5000);
 
-          if (status != 0)
+          if (status not_eq 0)
           {
-             if (results_p != nullptr)
+             if (results_p not_eq nullptr)
              {
                 results_p->Copy(echo_reply_p);
              }
@@ -342,7 +342,7 @@ _Check_return_ DWORD Win32FoundationClasses::CPing::Ping( _In_ std::wstring cons
              //WFCTRACEERROR( m_LastError );
           }
 
-          if (echo_reply_p != nullptr)
+          if (echo_reply_p not_eq nullptr)
           {
              GlobalFreePtr(echo_reply_p);
              echo_reply_p = nullptr;
@@ -377,7 +377,7 @@ void Win32FoundationClasses::CPing::SetText(__in_bcount(number_of_bytes) uint8_t
 {
     WFC_VALIDATE_POINTER(this);
 
-    if (m_Text != nullptr)
+    if (m_Text not_eq nullptr)
     {
         WFC_VALIDATE_POINTER(m_Text);
         free(m_Text);
@@ -385,11 +385,11 @@ void Win32FoundationClasses::CPing::SetText(__in_bcount(number_of_bytes) uint8_t
         m_NumberOfTextBytes = 0;
     }
 
-    if (bytes != nullptr and number_of_bytes > 0)
+    if (bytes not_eq nullptr and number_of_bytes > 0)
     {
         m_Text = static_cast<uint8_t *>(malloc(number_of_bytes));
 
-        if (m_Text != nullptr)
+        if (m_Text not_eq nullptr)
         {
             (void) memcpy_s(m_Text, number_of_bytes, bytes, number_of_bytes);
             m_NumberOfTextBytes = number_of_bytes;

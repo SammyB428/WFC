@@ -71,7 +71,7 @@ _Check_return_ bool test_CBase64Coding( _Out_ std::string& class_name, _Out_ int
 
     (void) coder.Encode( bytes_to_encode, encoded_string );
 
-    if ( encoded_string.compare(WSTRING_VIEW(L"MTExMA==")) != I_AM_EQUAL_TO_THAT)
+    if ( encoded_string.compare(WSTRING_VIEW(L"MTExMA==")) not_eq I_AM_EQUAL_TO_THAT)
     {
         //WFCTRACE( TEXT( "Coder failed." ) );
         test_number_that_failed = 1;
@@ -130,14 +130,14 @@ _Check_return_ bool test_CBase64Coding( _Out_ std::string& class_name, _Out_ int
 
         // See if what was decoded matches the test data (what was encoded)
 
-        if ( decoded_bytes.size() != bytes_to_encode.size() )
+        if ( decoded_bytes.size() not_eq bytes_to_encode.size() )
         {
             return( failure() );
         }
 
         for( auto const loop_index : Range(decoded_bytes.size()) )
         {
-            if ( decoded_bytes.at( loop_index ) != bytes_to_encode.at( loop_index ) )
+            if ( decoded_bytes.at( loop_index ) not_eq bytes_to_encode.at( loop_index ) )
             {
                 return( failure() );
             }
@@ -169,14 +169,14 @@ _Check_return_ bool test_CBase64Coding( _Out_ std::string& class_name, _Out_ int
 
         // See if what was decoded matches the test data (what was encoded)
 
-        if ( decoded_bytes.size() != bytes_to_encode.size() )
+        if ( decoded_bytes.size() not_eq bytes_to_encode.size() )
         {
             return( failure() );
         }
 
         for ( auto const loop_index : Range(decoded_bytes.size()) )
         {
-            if ( decoded_bytes.at( loop_index ) != bytes_to_encode.at( loop_index ) )
+            if ( decoded_bytes.at( loop_index ) not_eq bytes_to_encode.at( loop_index ) )
             {
                 return( failure() );
             }
@@ -193,10 +193,10 @@ _Check_return_ bool test_CBase64Coding( _Out_ std::string& class_name, _Out_ int
         return(failure());
     }
 
-    if (bytes[ 0 ] != 0 or
-        bytes[ 1 ] != 1 or
-        bytes[ 2 ] != 0xFF or
-        bytes[ 3 ] != 0xFE )
+    if (bytes[ 0 ] not_eq 0 or
+        bytes[ 1 ] not_eq 1 or
+        bytes[ 2 ] not_eq 0xFF or
+        bytes[ 3 ] not_eq 0xFE )
     {
         test_number_that_failed = 45;
         return(failure());
@@ -215,11 +215,11 @@ _Check_return_ bool test_CBase64Coding( _Out_ std::string& class_name, _Out_ int
         return(failure());
     }
 
-    if (bytes[0] != 0xAA or
-        bytes[1] != 0xBB or
-        bytes[2] != 8 or
-        bytes[3] != 9 or
-        bytes[4] != 0x10 )
+    if (bytes[0] not_eq 0xAA or
+        bytes[1] not_eq 0xBB or
+        bytes[2] not_eq 8 or
+        bytes[3] not_eq 9 or
+        bytes[4] not_eq 0x10 )
     {
         test_number_that_failed = 47;
         return(failure());
@@ -271,7 +271,7 @@ _Check_return_ bool test_CBase64Coding( _Out_ std::string& class_name, _Out_ int
 
     std::size_t number_of_bytes_decoded = coder.Decode(reinterpret_cast<uint8_t const *>(encoded_buffer.data()), encoded_buffer.size(), decoded_buffer.get(), number_of_bytes_to_allocate);
 
-    if (memcmp(bytes_to_encode.data(), decoded_buffer.get(), bytes_to_encode.size()) != I_AM_EQUAL_TO_THAT)
+    if (memcmp(bytes_to_encode.data(), decoded_buffer.get(), bytes_to_encode.size()) not_eq I_AM_EQUAL_TO_THAT)
     {
         test_number_that_failed = 48;
         return(failure());
@@ -295,7 +295,7 @@ _Check_return_ bool test_CBase64Coding( _Out_ std::string& class_name, _Out_ int
 
     number_of_bytes_decoded = coder.Decode(reinterpret_cast<uint8_t const *>(encoded_buffer.data()), encoded_buffer.size(), decoded_buffer.get(), number_of_bytes_to_allocate);
 
-    if (memcmp(bytes_to_encode.data(), decoded_buffer.get(), bytes_to_encode.size()) != I_AM_EQUAL_TO_THAT)
+    if (memcmp(bytes_to_encode.data(), decoded_buffer.get(), bytes_to_encode.size()) not_eq I_AM_EQUAL_TO_THAT)
     {
         test_number_that_failed = 49;
         return(failure());
@@ -318,7 +318,7 @@ _Check_return_ bool test_CBase64Coding( _Out_ std::string& class_name, _Out_ int
 
     number_of_bytes_decoded = coder.Decode(reinterpret_cast<uint8_t const *>(encoded_buffer.data()), encoded_buffer.size(), decoded_buffer.get(), number_of_bytes_to_allocate);
 
-    if (memcmp(bytes_to_encode.data(), decoded_buffer.get(), bytes_to_encode.size()) != I_AM_EQUAL_TO_THAT)
+    if (memcmp(bytes_to_encode.data(), decoded_buffer.get(), bytes_to_encode.size()) not_eq I_AM_EQUAL_TO_THAT)
     {
         test_number_that_failed = 50;
         return(failure());
@@ -342,7 +342,7 @@ _Check_return_ bool test_CBase64Coding( _Out_ std::string& class_name, _Out_ int
 
     number_of_bytes_decoded = coder.Decode(reinterpret_cast<uint8_t const *>(encoded_buffer.data()), encoded_buffer.size(), decoded_buffer.get(), number_of_bytes_to_allocate);
 
-    if (memcmp(bytes_to_encode.data(), decoded_buffer.get(), bytes_to_encode.size()) != I_AM_EQUAL_TO_THAT)
+    if (memcmp(bytes_to_encode.data(), decoded_buffer.get(), bytes_to_encode.size()) not_eq I_AM_EQUAL_TO_THAT)
     {
         test_number_that_failed = 51;
         return(failure());

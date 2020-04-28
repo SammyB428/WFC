@@ -101,7 +101,7 @@ _Check_return_ int Win32FoundationClasses::CServiceApplication::m_Main(_In_ int 
         return(EXIT_SUCCESS);
     }
 
-    if (number_of_command_line_arguments > 1 and command_line_arguments != nullptr)
+    if (number_of_command_line_arguments > 1 and command_line_arguments not_eq nullptr)
     {
         if (_tcsicmp(command_line_arguments[1], TEXT("install")) == 0)
         {
@@ -132,7 +132,7 @@ _Check_return_ int Win32FoundationClasses::CServiceApplication::m_Main(_In_ int 
                 return(EXIT_FAILURE);
             }
 
-            if (set_defaults != nullptr)
+            if (set_defaults not_eq nullptr)
             {
                 // We were passed a pointer, don't trust it...
 
@@ -178,7 +178,7 @@ _Check_return_ int Win32FoundationClasses::CServiceApplication::m_Main(_In_ int 
         }
         else
         {
-            if (show_usage != nullptr)
+            if (show_usage not_eq nullptr)
             {
                 // We were passed a pointer, don't trust it...
 
@@ -195,13 +195,13 @@ _Check_return_ int Win32FoundationClasses::CServiceApplication::m_Main(_In_ int 
     }
     else
     {
-        if (show_usage != nullptr)
+        if (show_usage not_eq nullptr)
         {
             // We were passed a pointer, don't trust it...
 
             WFC_TRY
             {
-                if (command_line_arguments != nullptr)
+                if (command_line_arguments not_eq nullptr)
                 {
                    show_usage(command_line_arguments[0]);
                 }
@@ -356,9 +356,9 @@ DWORD WINAPI worker_thread( LPVOID )
          return_value = service_control_manager.Open( GENERIC_READ, nullptr, machine_name );
       }
 
-      if ( return_value != FALSE )
+      if ( return_value not_eq FALSE )
       {
-         if ( service_control_manager.EnumerateStatus( SERVICE_INACTIVE ) != FALSE )
+         if ( service_control_manager.EnumerateStatus( SERVICE_INACTIVE ) not_eq FALSE )
          {
             std::vector&lt;std::wstring&gt; stopped_services;
 
@@ -429,9 +429,9 @@ void set_default_parameters( void )
 
    <A HREF="REGISTRY.htm">CRegistry</A> registry;
 
-   if ( registry.Connect( CRegistry::keyLocalMachine ) != FALSE )
+   if ( registry.Connect( CRegistry::keyLocalMachine ) not_eq FALSE )
    {
-      if ( registry.Create( TEXT( &quot;SYSTEM\\CurrentControlSet\\Services\\WatchDog\\Parameters&quot; ) ) != FALSE )
+      if ( registry.Create( TEXT( &quot;SYSTEM\\CurrentControlSet\\Services\\WatchDog\\Parameters&quot; ) ) not_eq FALSE )
       {
          DWORD default_sleep_time = 60;
 
@@ -460,7 +460,7 @@ void set_default_parameters( void )
                               2,
                   (LPCTSTR *) string_array );
 
-            if ( message_buffer != nullptr )
+            if ( message_buffer not_eq nullptr )
             {
                ::LocalFree( message_buffer );
             }
@@ -492,7 +492,7 @@ void set_default_parameters( void )
 
             event_log.Report( <A HREF="CEVNTLOG.htm">CEventLog</A>::eventError, 0, MSG_CANT_SET_REGISTRY_ENTRY, 2, (LPCTSTR *) string_array );
 
-            if ( message_buffer != nullptr )
+            if ( message_buffer not_eq nullptr )
             {
                ::LocalFree( message_buffer );
             }
@@ -519,7 +519,7 @@ void set_default_parameters( void )
 
          event_log.Report( <A HREF="CEVNTLOG.htm">CEventLog</A>::eventError, 0, MSG_CANT_CREATE_REGISTRY_KEY, 2, (LPCTSTR *) string_array );
 
-         if ( message_buffer != nullptr )
+         if ( message_buffer not_eq nullptr )
          {
             ::LocalFree( message_buffer );
          }
@@ -546,7 +546,7 @@ void set_default_parameters( void )
 
       event_log.Report( <A HREF="CEVNTLOG.htm">CEventLog</A>::eventError, 0, MSG_CANT_CONNECT_TO_REGISTRY, 2, (LPCTSTR *) string_array );
 
-      if ( message_buffer != nullptr )
+      if ( message_buffer not_eq nullptr )
       {
          ::LocalFree( message_buffer );
       }

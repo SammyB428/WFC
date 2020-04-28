@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 1995-2019, Samuel R. Blackburn
+** Copyright, 1995-2020, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -57,7 +57,7 @@ Win32FoundationClasses::CServiceControlManager::CServiceControlManager() noexcep
     m_Initialize();
 }
 
-Win32FoundationClasses::CServiceControlManager::~CServiceControlManager() noexcept
+Win32FoundationClasses::CServiceControlManager::~CServiceControlManager()
 {
     WFC_VALIDATE_POINTER( this );
 
@@ -74,7 +74,7 @@ void Win32FoundationClasses::CServiceControlManager::Close( void ) noexcept
 
     (void) UnlockDatabase();
 
-    if ( m_ManagerHandle != static_cast< SC_HANDLE >( NULL ) )
+    if ( m_ManagerHandle not_eq static_cast< SC_HANDLE >( NULL ) )
     {
         if ( ::CloseServiceHandle( m_ManagerHandle ) == FALSE )
         {
@@ -254,7 +254,7 @@ _Check_return_ bool Win32FoundationClasses::CServiceControlManager::EnumerateSta
         m_BufferSize,
         &number_of_bytes_needed,
         &number_of_services_returned,
-        &resume_handle ) != FALSE )
+        &resume_handle ) not_eq FALSE )
     {
         m_CurrentEntryNumber = 0;
         m_NumberOfEntries    = number_of_services_returned;
@@ -275,7 +275,7 @@ _Check_return_ bool Win32FoundationClasses::CServiceControlManager::EnumerateSta
 
         m_Buffer = std::make_unique<uint8_t[]>(number_of_bytes_needed + m_BufferSize);
 
-        if ( m_Buffer != nullptr )
+        if ( m_Buffer not_eq nullptr )
         {
             m_BufferSize += number_of_bytes_needed;
         }
@@ -297,7 +297,7 @@ _Check_return_ bool Win32FoundationClasses::CServiceControlManager::EnumerateSta
             m_BufferSize,
             &number_of_bytes_needed,
             &number_of_services_returned,
-            &resume_handle ) != FALSE )
+            &resume_handle ) not_eq FALSE )
         {
             m_CurrentEntryNumber = 0;
             m_NumberOfEntries    = number_of_services_returned;
@@ -338,7 +338,7 @@ _Check_return_ bool Win32FoundationClasses::CServiceControlManager::GetConfigura
 
     WFC_TRY
     {
-        ASSERT( m_ManagerHandle != static_cast< SC_HANDLE >( NULL ) );
+        ASSERT( m_ManagerHandle not_eq static_cast< SC_HANDLE >( NULL ) );
 
         if ( m_ManagerHandle == static_cast< SC_HANDLE >( NULL ) )
         {
@@ -408,7 +408,7 @@ _Check_return_ bool Win32FoundationClasses::CServiceControlManager::GetConfigura
 _Check_return_ bool Win32FoundationClasses::CServiceControlManager::GetDependencies( _In_z_ wchar_t const * service_name, _Out_ std::vector<std::wstring>& dependencies ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
-    ASSERT( m_ManagerHandle != static_cast< SC_HANDLE >( NULL ) );
+    ASSERT( m_ManagerHandle not_eq static_cast< SC_HANDLE >( NULL ) );
 
     dependencies.clear();
 
@@ -443,7 +443,7 @@ _Check_return_ bool Win32FoundationClasses::CServiceControlManager::GetDependenc
                 &number_of_bytes_needed,
                 &number_of_services_returned );
 
-        if ( return_value != FALSE )
+        if ( return_value not_eq FALSE )
         {
             for ( auto const index : Range(number_of_services_returned) )
             {
@@ -467,7 +467,7 @@ _Check_return_ bool Win32FoundationClasses::CServiceControlManager::GetDependenc
 _Check_return_ bool Win32FoundationClasses::CServiceControlManager::GetDisplayName( _In_z_ wchar_t const * key_name, _Out_ std::wstring& display_name ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
-    ASSERT( m_ManagerHandle != static_cast< SC_HANDLE >( NULL ) );
+    ASSERT( m_ManagerHandle not_eq static_cast< SC_HANDLE >( NULL ) );
 
     display_name.clear();
 
@@ -484,7 +484,7 @@ _Check_return_ bool Win32FoundationClasses::CServiceControlManager::GetDisplayNa
                 display_string.get(),
                 &buffer_size );
 
-            if ( return_value != FALSE )
+            if ( return_value not_eq FALSE )
             {
                 display_name.assign( display_string.get() );
             }
@@ -520,7 +520,7 @@ _Check_return_ SC_HANDLE Win32FoundationClasses::CServiceControlManager::GetHand
 _Check_return_ bool Win32FoundationClasses::CServiceControlManager::GetKeyName( __in_z wchar_t const * display_name, _Out_ std::wstring& key_name ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
-    ASSERT( m_ManagerHandle != static_cast< SC_HANDLE >( NULL ) );
+    ASSERT( m_ManagerHandle not_eq static_cast< SC_HANDLE >( NULL ) );
 
     // We were passed a pointer, don't trust it
 
@@ -537,7 +537,7 @@ _Check_return_ bool Win32FoundationClasses::CServiceControlManager::GetKeyName( 
                 key_string.get(),
                 &buffer_size );
 
-        if ( return_value != FALSE )
+        if ( return_value not_eq FALSE )
         {
             key_name.assign( key_string.get(), buffer_size );
         }
@@ -629,11 +629,11 @@ _Check_return_ bool Win32FoundationClasses::CServiceControlManager::Install( __i
             return( false );
         }
 
-        if ( normalized_executable_name.find(' ') != std::wstring::npos )
+        if ( normalized_executable_name.find(' ') not_eq std::wstring::npos )
         {
             // The name contains a space. We must make sure the name is in quotes
 
-            if ( normalized_executable_name.at( 0 ) != '\"' )
+            if ( normalized_executable_name.at( 0 ) not_eq '\"' )
             {
                 std::wstring new_name( WSTRING_VIEW(L"\"") );
 
@@ -641,13 +641,13 @@ _Check_return_ bool Win32FoundationClasses::CServiceControlManager::Install( __i
                 normalized_executable_name.assign( new_name );
             }
 
-            if ( normalized_executable_name.at( normalized_executable_name.length() - 1 ) != '\"' )
+            if ( normalized_executable_name.at( normalized_executable_name.length() - 1 ) not_eq '\"' )
             {
                 normalized_executable_name.push_back( '\"' );
             }
         }
 
-        ASSERT( m_ManagerHandle != static_cast< SC_HANDLE >( NULL ) );
+        ASSERT( m_ManagerHandle not_eq static_cast< SC_HANDLE >( NULL ) );
 
         if ( m_ManagerHandle == static_cast< SC_HANDLE >( NULL ) )
         {
@@ -668,7 +668,7 @@ _Check_return_ bool Win32FoundationClasses::CServiceControlManager::Install( __i
 
         auto event_log = std::make_unique<CEventLog>();
 
-        if ( event_log.get() != nullptr )
+        if ( event_log.get() not_eq nullptr )
         {
             if ( event_log->CreateApplicationLog( service_name, normalized_executable_name.c_str(), supported_types ) == FALSE )
             {
@@ -676,7 +676,7 @@ _Check_return_ bool Win32FoundationClasses::CServiceControlManager::Install( __i
             }
         }
 
-        if ( event_log.get() != nullptr )
+        if ( event_log.get() not_eq nullptr )
         {
             if ( event_log->RegisterSource( service_name ) == FALSE )
             {
@@ -706,7 +706,7 @@ _Check_return_ bool Win32FoundationClasses::CServiceControlManager::Install( __i
             wfc_get_error_string(m_ErrorCode, m_ErrorMessage);
             //WFCTRACEERROR( m_ErrorCode );
 
-            if ( event_log != nullptr )
+            if ( event_log not_eq nullptr )
             {
                 LPVOID message_buffer = nullptr;
 
@@ -718,7 +718,7 @@ _Check_return_ bool Win32FoundationClasses::CServiceControlManager::Install( __i
                     0,
                     nullptr );
 
-                if ( message_buffer != nullptr )
+                if ( message_buffer not_eq nullptr )
                 {
                     std::wstring temp_string;
 
@@ -741,7 +741,7 @@ _Check_return_ bool Win32FoundationClasses::CServiceControlManager::Install( __i
         ** We successfully installed a new service, this is something we should log
         */
 
-        if ( event_log != nullptr )
+        if ( event_log not_eq nullptr )
         {
             TCHAR user_name[ 2048 ];
             TCHAR temp_string[ 2100 ];
@@ -772,7 +772,7 @@ _Check_return_ bool Win32FoundationClasses::CServiceControlManager::Install( __i
 _Check_return_ bool Win32FoundationClasses::CServiceControlManager::IsDatabaseLocked( _Out_ std::wstring& who_locked_it, _Out_ Win32FoundationClasses::CTimeSpan& how_long_it_has_been_locked ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
-    ASSERT( m_ManagerHandle != static_cast< SC_HANDLE >( NULL ) );
+    ASSERT( m_ManagerHandle not_eq static_cast< SC_HANDLE >( NULL ) );
 
     // First, initialize the return values
 
@@ -798,12 +798,12 @@ _Check_return_ bool Win32FoundationClasses::CServiceControlManager::IsDatabaseLo
             buffer_size,
             &number_of_bytes_needed );
 
-    if ( return_value != FALSE )
+    if ( return_value not_eq FALSE )
     {
         // Get the data from the structure
         auto status_p = reinterpret_cast< LPQUERY_SERVICE_LOCK_STATUS >( buffer.get() );
 
-        if ( status_p->fIsLocked != 0 )
+        if ( status_p->fIsLocked not_eq 0 )
         {
             // The database is locked
             return_value = TRUE;
@@ -824,7 +824,7 @@ _Check_return_ bool Win32FoundationClasses::CServiceControlManager::LockDatabase
 {
     WFC_VALIDATE_POINTER( this );
 
-    if ( m_DatabaseLockHandle != static_cast< SC_LOCK >( NULL ) )
+    if ( m_DatabaseLockHandle not_eq static_cast< SC_LOCK >( NULL ) )
     {
         // The database is already locked, unlock it
         (void) UnlockDatabase();
@@ -866,7 +866,7 @@ _Check_return_ bool Win32FoundationClasses::CServiceControlManager::Open( _In_ u
     ** database_name can be nullptr
     */
 
-    if ( m_ManagerHandle != static_cast< SC_HANDLE >( NULL ) )
+    if ( m_ManagerHandle not_eq static_cast< SC_HANDLE >( NULL ) )
     {
         Close();
     }
@@ -923,7 +923,7 @@ _Check_return_ bool Win32FoundationClasses::CServiceControlManager::Pause( __in_
 
     WFC_TRY
     {
-        ASSERT( m_ManagerHandle != static_cast< SC_HANDLE >( NULL ) );
+        ASSERT( m_ManagerHandle not_eq static_cast< SC_HANDLE >( NULL ) );
 
         if ( m_ManagerHandle == static_cast< SC_HANDLE >( NULL ) )
         {
@@ -988,7 +988,7 @@ _Check_return_ bool Win32FoundationClasses::CServiceControlManager::Remove( __in
 
     WFC_TRY
     {
-        ASSERT( m_ManagerHandle != static_cast< SC_HANDLE >( NULL ) );
+        ASSERT( m_ManagerHandle not_eq static_cast< SC_HANDLE >( NULL ) );
 
         if ( m_ManagerHandle == static_cast< SC_HANDLE >( NULL ) )
         {
@@ -1050,7 +1050,7 @@ _Check_return_ bool Win32FoundationClasses::CServiceControlManager::Remove( __in
                 0,
                 nullptr );
 
-            if ( message_buffer != nullptr )
+            if ( message_buffer not_eq nullptr )
             {
                 TCHAR temp_string[ 255 ];
 
@@ -1114,7 +1114,7 @@ _Check_return_ bool Win32FoundationClasses::CServiceControlManager::SetConfigura
         return( false );
     }
 
-    ASSERT( m_ManagerHandle != static_cast< SC_HANDLE >( NULL ) );
+    ASSERT( m_ManagerHandle not_eq static_cast< SC_HANDLE >( NULL ) );
 
     if ( m_ManagerHandle == static_cast< SC_HANDLE >( NULL ) )
     {
@@ -1156,16 +1156,16 @@ _Check_return_ bool Win32FoundationClasses::CServiceControlManager::SetConfigura
 
             std::wstring normalized_executable_name;
 
-            if ( name_of_executable_file != nullptr )
+            if ( name_of_executable_file not_eq nullptr )
             {
                 normalized_executable_name.assign( name_of_executable_file );
             }
 
-            if ( normalized_executable_name.find(' ') != std::wstring::npos )
+            if ( normalized_executable_name.find(' ') not_eq std::wstring::npos )
             {
                 // The name contains a space. We must make sure the name is in quotes
 
-                if ( normalized_executable_name.at( 0 ) != '\"' )
+                if ( normalized_executable_name.at( 0 ) not_eq '\"' )
                 {
                     std::wstring new_name(WSTRING_VIEW(L"\""));
 
@@ -1173,7 +1173,7 @@ _Check_return_ bool Win32FoundationClasses::CServiceControlManager::SetConfigura
                     normalized_executable_name.assign( new_name );
                 }
 
-                if ( normalized_executable_name.at( normalized_executable_name.length() - 1 ) != '\"' )
+                if ( normalized_executable_name.at( normalized_executable_name.length() - 1 ) not_eq '\"' )
                 {
                     normalized_executable_name.push_back( '\"' );
                 }
@@ -1243,7 +1243,7 @@ _Check_return_ bool Win32FoundationClasses::CServiceControlManager::Start( __in_
 
     WFC_TRY
     {
-        ASSERT( m_ManagerHandle != static_cast< SC_HANDLE >( NULL ) );
+        ASSERT( m_ManagerHandle not_eq static_cast< SC_HANDLE >( NULL ) );
 
         if ( m_ManagerHandle == static_cast< SC_HANDLE >( NULL ) )
         {
@@ -1304,7 +1304,7 @@ _Check_return_ bool Win32FoundationClasses::CServiceControlManager::Stop( _In_z_
 
     WFC_TRY
     {
-        ASSERT( m_ManagerHandle != static_cast< SC_HANDLE >( NULL ) );
+        ASSERT( m_ManagerHandle not_eq static_cast< SC_HANDLE >( NULL ) );
 
         if ( m_ManagerHandle == static_cast< SC_HANDLE >( NULL ) )
         {
@@ -1346,7 +1346,7 @@ _Check_return_ bool Win32FoundationClasses::CServiceControlManager::Stop( _In_z_
         DWORD old_checkpoint  = 0;
         DWORD number_of_tries = 0;
 
-        while( service_status.dwCurrentState != SERVICE_STOPPED )
+        while( service_status.dwCurrentState not_eq SERVICE_STOPPED )
         {
             old_checkpoint = service_status.dwCheckPoint;
 
@@ -1442,7 +1442,7 @@ _Check_return_ bool Win32FoundationClasses::CServiceControlManager::WaitForStop(
 
     WFC_TRY
     {
-        ASSERT(m_ManagerHandle != static_cast<SC_HANDLE>(NULL));
+        ASSERT(m_ManagerHandle not_eq static_cast<SC_HANDLE>(NULL));
 
         if (m_ManagerHandle == static_cast<SC_HANDLE>(NULL))
         {
@@ -1491,7 +1491,7 @@ _Check_return_ bool Win32FoundationClasses::CServiceControlManager::WaitForStop(
 
         m_ErrorCode = NotifyServiceStatusChangeW(service_handle, SERVICE_NOTIFY_STOPPED, &notify);
 
-        if (m_ErrorCode != ERROR_SUCCESS)
+        if (m_ErrorCode not_eq ERROR_SUCCESS)
         {
             ::CloseServiceHandle(service_handle);
             (void)wfc_close_handle(event_handle);
@@ -2203,9 +2203,9 @@ else
 return_value = service_control_manager.Open( GENERIC_READ, nullptr, machine_name );
 }
 
-if ( return_value != FALSE )
+if ( return_value not_eq FALSE )
 {
-if ( service_control_manager.EnumerateStatus( SERVICE_INACTIVE ) != FALSE )
+if ( service_control_manager.EnumerateStatus( SERVICE_INACTIVE ) not_eq FALSE )
 {
 std::vector&lt;std::wstring&gt; stopped_services;
 
@@ -2276,9 +2276,9 @@ void set_default_parameters( void )
 
 <A HREF="REGISTRY.htm">CRegistry</A> registry;
 
-if ( registry.Connect( CRegistry::keyLocalMachine ) != FALSE )
+if ( registry.Connect( CRegistry::keyLocalMachine ) not_eq FALSE )
 {
-if ( registry.Create( TEXT( &quot;SYSTEM\\CurrentControlSet\\Services\\WatchDog\\Parameters&quot; ) != FALSE ) )
+if ( registry.Create( TEXT( &quot;SYSTEM\\CurrentControlSet\\Services\\WatchDog\\Parameters&quot; ) not_eq FALSE ) )
 {
 DWORD default_sleep_time = 60;
 
@@ -2306,7 +2306,7 @@ MSG_CANT_SET_REGISTRY_ENTRY,
 2,
 (LPCTSTR *) string_array );
 
-if ( message_buffer != nullptr )
+if ( message_buffer not_eq nullptr )
 {
 ::LocalFree( message_buffer );
 }
@@ -2338,7 +2338,7 @@ string_array[ 1 ] = (LPCTSTR) message_buffer;
 
 event_log.Report( <A HREF="CEVNTLOG.htm">CEventLog</A>::eventError, 0, MSG_CANT_SET_REGISTRY_ENTRY, 2, (LPCTSTR *) string_array );
 
-if ( message_buffer != nullptr )
+if ( message_buffer not_eq nullptr )
 {
 ::LocalFree( message_buffer );
 }
@@ -2365,7 +2365,7 @@ string_array[ 1 ] = (LPCTSTR) message_buffer;
 
 event_log.Report( <A HREF="CEVNTLOG.htm">CEventLog</A>::eventError, 0, MSG_CANT_CREATE_REGISTRY_KEY, 2, (LPCTSTR *) string_array );
 
-if ( message_buffer != nullptr )
+if ( message_buffer not_eq nullptr )
 {
 ::LocalFree( message_buffer );
 }
@@ -2392,7 +2392,7 @@ string_array[ 1 ] = (LPCTSTR) message_buffer;
 
 event_log.Report( <A HREF="CEVNTLOG.htm">CEventLog</A>::eventError, 0, MSG_CANT_CONNECT_TO_REGISTRY, 2, (LPCTSTR *) string_array );
 
-if ( message_buffer != nullptr )
+if ( message_buffer not_eq nullptr )
 {
 ::LocalFree( message_buffer );
 }

@@ -162,9 +162,9 @@ Win32FoundationClasses::CNetworkInformation const& Win32FoundationClasses::CNetw
 {
    WFC_VALIDATE_POINTER( this );
 
-   ASSERT( this != &source );
+   ASSERT( this not_eq &source );
 
-   if ( this != &source )
+   if ( this not_eq &source )
    {
       Copy( source );
    }

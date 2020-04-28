@@ -113,7 +113,7 @@ void Win32FoundationClasses::CNetworkConnectionInformation::Copy( _In_ CONNECTIO
 void Win32FoundationClasses::CNetworkConnectionInformation::Copy( _In_ Win32FoundationClasses::CNetworkConnectionInformation const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
-   ASSERT( this != &source );
+   ASSERT( this not_eq &source );
 
    /*
    ** Check to make sure we ain't copying ourselves
@@ -172,9 +172,9 @@ void Win32FoundationClasses::CNetworkConnectionInformation::m_Initialize( void )
 Win32FoundationClasses::CNetworkConnectionInformation const& Win32FoundationClasses::CNetworkConnectionInformation::operator=( _In_ Win32FoundationClasses::CNetworkConnectionInformation const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
-   ASSERT( this != &source );
+   ASSERT( this not_eq &source );
 
-   if ( this != &source )
+   if ( this not_eq &source )
    {
       Copy( source );
    }

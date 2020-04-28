@@ -69,7 +69,7 @@ void Win32FoundationClasses::wfc_convert_double_null_terminated_UNICODE_string(_
 
     WFC_TRY
     {
-        while (buffer[0] != 0x00)
+        while (buffer[0] not_eq 0x00)
         {
             string_to_add.assign(reinterpret_cast<wchar_t const *>(buffer));
             (void)string_array.emplace_back(string_to_add);
@@ -139,7 +139,7 @@ void Win32FoundationClasses::wfc_convert_double_null_terminated_UNICODE_string( 
 
    WFC_TRY
    {
-      while ( buffer[ 0 ] != 0x00 )
+      while ( buffer[ 0 ] not_eq 0x00 )
       {
          (void) string_array.push_back( (LPCWSTR) buffer );
 

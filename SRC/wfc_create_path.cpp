@@ -109,14 +109,14 @@ _Check_return_ bool Win32FoundationClasses::wfc_create_path( __in_z LPCTSTR path
       {
          DWORD last_error = GetLastError();
 
-         if ( last_error != ERROR_PATH_NOT_FOUND and
-              last_error != ERROR_ALREADY_EXISTS )
+         if ( last_error not_eq ERROR_PATH_NOT_FOUND and
+              last_error not_eq ERROR_ALREADY_EXISTS )
          {
             //WFCTRACEERROR( last_error );
             return( false );
          }
 
-         if ( last_error != ERROR_ALREADY_EXISTS )
+         if ( last_error not_eq ERROR_ALREADY_EXISTS )
          {
             // The path could not be created. Create all directories in the path
 
@@ -156,7 +156,7 @@ _Check_return_ bool Win32FoundationClasses::wfc_create_path( __in_z LPCTSTR path
 
             location_of_backslash = directory_path.find( '\\', location_of_backslash + 1 );
 
-            while( location_of_backslash != std::wstring::npos )
+            while( location_of_backslash not_eq std::wstring::npos )
             {
                this_directory.assign( directory_path.substr( 0, location_of_backslash ) );
 
@@ -175,7 +175,7 @@ _Check_return_ bool Win32FoundationClasses::wfc_create_path( __in_z LPCTSTR path
             {
                last_error = GetLastError();
 
-               if ( last_error != ERROR_PATH_NOT_FOUND )
+               if ( last_error not_eq ERROR_PATH_NOT_FOUND )
                {
                   //WFCTRACEERROR( last_error );
                   //WFCTRACE( TEXT( "Last CreateDirectory() failed." ) );
@@ -214,15 +214,15 @@ _Check_return_ bool Win32FoundationClasses::wfc_create_wide_path( _In_z_ wchar_t
       {
          DWORD last_error = GetLastError();
 
-         if ( last_error != ERROR_PATH_NOT_FOUND and
-              last_error != ERROR_ALREADY_EXISTS )
+         if ( last_error not_eq ERROR_PATH_NOT_FOUND and
+              last_error not_eq ERROR_ALREADY_EXISTS )
          {
             //WFCTRACEERROR( last_error );
             //WFCTRACE( TEXT( "CreateDirectory() failed." ) );
             return( false );
          }
 
-         if ( last_error != ERROR_ALREADY_EXISTS )
+         if ( last_error not_eq ERROR_ALREADY_EXISTS )
          {
             // The path could not be created. Create all directories in the path
 
@@ -262,7 +262,7 @@ _Check_return_ bool Win32FoundationClasses::wfc_create_wide_path( _In_z_ wchar_t
 
             location_of_backslash = directory_path.find( '\\', location_of_backslash + 1 );
 
-            while( location_of_backslash != std::wstring::npos)
+            while( location_of_backslash not_eq std::wstring::npos)
             {
                this_directory.assign( directory_path.substr(0, location_of_backslash) );
 
@@ -281,7 +281,7 @@ _Check_return_ bool Win32FoundationClasses::wfc_create_wide_path( _In_z_ wchar_t
             {
                last_error = GetLastError();
 
-               if ( last_error != ERROR_PATH_NOT_FOUND )
+               if ( last_error not_eq ERROR_PATH_NOT_FOUND )
                {
                   //WFCTRACEERROR( last_error );
                   //WFCTRACE( TEXT( "Last CreateDirectory() failed." ) );

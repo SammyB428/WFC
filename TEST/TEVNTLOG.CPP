@@ -121,7 +121,7 @@ void test_CEventLog( void ) noexcept
       loop_index++;
    }
 
-   ASSERT( loop_index != 0 );
+   ASSERT( loop_index not_eq 0 );
 
 #if 1
    if ( log.Delete(WSTRING_VIEW(L"WFC")) == false )

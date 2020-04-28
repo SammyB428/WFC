@@ -95,7 +95,7 @@ _Check_return_ SECURITY_DESCRIPTOR * Win32FoundationClasses::wfc_create_null_dac
       return( nullptr );
    }
 
-   ASSERT( ::IsValidSecurityDescriptor( security_descriptor_p ) != FALSE );
+   ASSERT( ::IsValidSecurityDescriptor( security_descriptor_p ) not_eq FALSE );
 
    if ( ::IsValidSecurityDescriptor( security_descriptor_p ) == FALSE )
    {
@@ -118,7 +118,7 @@ _Check_return_ SECURITY_DESCRIPTOR * Win32FoundationClasses::wfc_create_null_dac
       return( nullptr );
    }
 
-   ASSERT( ::IsValidSecurityDescriptor( security_descriptor_p ) != FALSE );
+   ASSERT( ::IsValidSecurityDescriptor( security_descriptor_p ) not_eq FALSE );
 
    if ( ::IsValidSecurityDescriptor( security_descriptor_p ) == FALSE )
    {
@@ -134,7 +134,7 @@ _Check_return_ SECURITY_DESCRIPTOR * Win32FoundationClasses::wfc_create_null_dac
 
 void Win32FoundationClasses::wfc_destroy_null_dacl( __in_opt void * null_dacl ) noexcept
 {
-   if ( null_dacl != nullptr )
+   if ( null_dacl not_eq nullptr )
    {
       ::LocalFree( (HLOCAL) null_dacl );
    }
@@ -190,7 +190,7 @@ using the <B>CloseHandle</B>() Win32 API.
                              FILE_ATTRIBUTE_NORMAL,
                              0 );
 
-   if ( disk_handle != static_cast< HANDLE >( INVALID_HANDLE_VALUE ) )
+   if ( disk_handle not_eq static_cast< HANDLE >( INVALID_HANDLE_VALUE ) )
    {
       DISK_GEOMETRY disk_geometry;
 
@@ -205,7 +205,7 @@ using the <B>CloseHandle</B>() Win32 API.
                            &amp;disk_geometry,
                             sizeof( disk_geometry ),
                            &amp;number_of_bytes_read,
-                            0 ) != FALSE )
+                            0 ) not_eq FALSE )
       {
          _tprintf( TEXT( &quot;Number of Cylinders (low)     %lu\n&quot; ), disk_geometry.Cylinders.LowPart  );
          _tprintf( TEXT( &quot;Number of Cylinders (high)    %lu\n&quot; ), disk_geometry.Cylinders.HighPart );

@@ -282,7 +282,7 @@ static inline _Check_return_ bool __parse_ymdhmsf( _In_ std::wstring_view time_s
         return( true );
     }
 
-    if ( time_string[ index ] != L'T' )
+    if ( time_string[ index ] not_eq L'T' )
     {
         //WFCTRACE( TEXT( "Separator between date and time ain't T" ) );
         return(false);
@@ -507,8 +507,8 @@ static inline _Check_return_ bool __parse_ymdhmsf( _In_ std::wstring_view time_s
             return( true );
         }
 
-        if ( time_string[ index ] != L'+' and
-             time_string[ index ] != L'-' )
+        if ( time_string[ index ] not_eq L'+' and
+             time_string[ index ] not_eq L'-' )
         {
             //WFCTRACE( TEXT( "Time zone designator ain't beginning with + or -" ) );
             return(false);
@@ -671,7 +671,7 @@ BOOL Win32FoundationClasses::wfc_parse_iso_8601_string( LPCTSTR time_string, COl
 
     the_time = COleDateTime( year, month, day, hours, minutes, seconds );
 
-    if ( offset_character != TEXT( 'Z' ) )
+    if ( offset_character not_eq TEXT( 'Z' ) )
     {
         COleDateTimeSpan time_zone_offset( 0, offset_hours, offset_minutes, 0 );
 
@@ -723,7 +723,7 @@ _Check_return_ bool Win32FoundationClasses::wfc_parse_iso_8601_string(_In_ std::
 
     auto ole_time = Win32FoundationClasses::CTimeEx( year, month, day, hours, minutes, seconds );
 
-    if ( offset_character != L'Z' )
+    if ( offset_character not_eq L'Z' )
     {
         Win32FoundationClasses::CTimeSpan time_zone_offset( 0, offset_hours, offset_minutes, 0 );
 
@@ -782,7 +782,7 @@ _Check_return_ bool Win32FoundationClasses::wfc_parse_iso_8601_string(_In_ std::
 
     the_time = Win32FoundationClasses::CTime( year, month, day, hours, minutes, seconds );
 
-    if ( offset_character != L'Z' )
+    if ( offset_character not_eq L'Z' )
     {
         Win32FoundationClasses::CTimeSpan time_zone_offset( 0, offset_hours, offset_minutes, 0 );
 
@@ -868,7 +868,7 @@ _Check_return_ bool Win32FoundationClasses::wfc_parse_hex_string(_In_ std::wstri
         return(true);
     }
 
-    if ((hex_string.length() % 2) != 0)
+    if ((hex_string.length() % 2) not_eq 0)
     {
         // There's two characters per byte. An odd number of characters is bad.
         return(false);
@@ -902,7 +902,7 @@ _Check_return_ bool Win32FoundationClasses::wfc_parse_hex_string(_In_ std::strin
         return(true);
     }
 
-    if ((hex_string.length() % 2) != 0)
+    if ((hex_string.length() % 2) not_eq 0)
     {
         // There's two characters per byte. An odd number of characters is bad.
         return(false);

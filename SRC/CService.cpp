@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 1995-2019, Samuel R. Blackburn
+** Copyright, 1995-2020, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -92,19 +92,19 @@ Win32FoundationClasses::CService::CService( __callback LPTHREAD_START_ROUTINE th
    ZeroMemory( m_ServiceName, (SERVICE_NAME_LEN + 1) * sizeof(wchar_t));
 }
 
-Win32FoundationClasses::CService::~CService( void ) noexcept
+Win32FoundationClasses::CService::~CService( void )
 {
    WFC_VALIDATE_POINTER( this );
 
    ::DeleteCriticalSection( &g_ServiceCriticalSection );
 
-   if ( m_ExitEventHandle != static_cast< HANDLE >( NULL ) )
+   if ( m_ExitEventHandle not_eq static_cast< HANDLE >( NULL ) )
    {
       (void) Win32FoundationClasses::wfc_close_handle( m_ExitEventHandle );
       m_ExitEventHandle = static_cast< HANDLE >( NULL );
    }
 
-   if ( m_ThreadHandle != static_cast< HANDLE >( NULL ) )
+   if ( m_ThreadHandle not_eq static_cast< HANDLE >( NULL ) )
    {
       (void) Win32FoundationClasses::wfc_close_handle( m_ThreadHandle );
       m_ThreadHandle = static_cast< HANDLE >( NULL );
@@ -112,7 +112,7 @@ Win32FoundationClasses::CService::~CService( void ) noexcept
 
    CommandLineParameters.clear();
 
-   if (m_ServiceName != nullptr)
+   if (m_ServiceName not_eq nullptr)
    {
        _aligned_free(m_ServiceName);
        m_ServiceName = nullptr;
@@ -124,10 +124,10 @@ Win32FoundationClasses::CService::~CService( void ) noexcept
 void Win32FoundationClasses::CService::AssertValid( void ) const
 {
    ASSERT( m_Exiting             == false );
-   ASSERT( m_ExitEventHandle     != static_cast< HANDLE >( NULL )  );
-   ASSERT( m_ServiceStatusHandle != 0     );
-   ASSERT( m_ThreadHandle        != static_cast< HANDLE >( NULL )  );
-   ASSERT( m_StaticService_p     != 0     );
+   ASSERT( m_ExitEventHandle     not_eq static_cast< HANDLE >( NULL )  );
+   ASSERT( m_ServiceStatusHandle not_eq 0     );
+   ASSERT( m_ThreadHandle        not_eq static_cast< HANDLE >( NULL )  );
+   ASSERT( m_StaticService_p     not_eq 0     );
 }
 
 #endif // _DEBUG
@@ -375,7 +375,7 @@ void Win32FoundationClasses::CService::Exit( void ) noexcept
 
    ::LeaveCriticalSection( &g_ServiceCriticalSection );
 
-   if ( m_ExitEventHandle != static_cast< HANDLE >( NULL ) )
+   if ( m_ExitEventHandle not_eq static_cast< HANDLE >( NULL ) )
    {
       ::SetEvent( m_ExitEventHandle );
    }
@@ -477,7 +477,7 @@ void Win32FoundationClasses::CService::OnContinue( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
-   if ( m_OnContinue != nullptr )
+   if ( m_OnContinue not_eq nullptr )
    {
       WFC_TRY
       {
@@ -505,7 +505,7 @@ void Win32FoundationClasses::CService::OnPause( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
-   if ( m_OnPause != nullptr )
+   if ( m_OnPause not_eq nullptr )
    {
       WFC_TRY
       {
@@ -532,7 +532,7 @@ void Win32FoundationClasses::CService::OnShutdown( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
-   if ( m_OnShutdown != nullptr )
+   if ( m_OnShutdown not_eq nullptr )
    {
       WFC_TRY
       {
@@ -550,7 +550,7 @@ void Win32FoundationClasses::CService::OnStop( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
-   if ( m_OnStop != nullptr )
+   if ( m_OnStop not_eq nullptr )
    {
       WFC_TRY
       {
@@ -670,7 +670,7 @@ void CALLBACK Win32FoundationClasses::CService::ServiceControlManagerHandler( _I
 {
    // entry point for service called by SCM after service is started
 
-   ASSERT( m_StaticService_p != 0 );
+   ASSERT( m_StaticService_p not_eq 0 );
 
    switch( control_code )
    {
@@ -768,7 +768,7 @@ void CALLBACK Win32FoundationClasses::CService::ServiceMain( _In_ DWORD const nu
 
    auto thread_handle = static_cast< HANDLE >( NULL );
 
-   ASSERT( m_StaticService_p != nullptr );
+   ASSERT( m_StaticService_p not_eq nullptr );
 
    ::EnterCriticalSection( &g_ServiceCriticalSection );
    m_StaticService_p->m_ServiceStatusHandle = ::RegisterServiceCtrlHandler( m_StaticService_p->m_ServiceName, ServiceControlManagerHandler );
@@ -862,9 +862,9 @@ EXIT_GOTO:
 
          // notify SCM that service has stopped
 
-         ASSERT( m_StaticService_p != 0 );
+         ASSERT( m_StaticService_p not_eq 0 );
 
-         if ( m_StaticService_p->m_ServiceStatusHandle != 0 )
+         if ( m_StaticService_p->m_ServiceStatusHandle not_eq 0 )
          {
             (void) m_StaticService_p->SendStatusToServiceControlManager( SERVICE_STOPPED, m_StaticService_p->m_ErrorCode );
          }
@@ -1066,15 +1066,15 @@ DWORD WINAPI worker_thread( LPVOID )
          return_value = service_control_manager.Open( GENERIC_READ, nullptr, machine_name );
       }
 
-      if ( return_value != FALSE )
+      if ( return_value not_eq FALSE )
       {
-         if ( service_control_manager.EnumerateStatus( SERVICE_INACTIVE ) != FALSE )
+         if ( service_control_manager.EnumerateStatus( SERVICE_INACTIVE ) not_eq FALSE )
          {
             std::vector&lt;std::wstring&gt; stopped_services;
 
             CServiceNameAndStatus status;
 
-            while( service_control_manager.GetNext( status ) != FALSE )
+            while( service_control_manager.GetNext( status ) not_eq FALSE )
             {
                stopped_services.Add( status.lpServiceName );
             }
@@ -1139,9 +1139,9 @@ void set_default_parameters( void )
 
    <A HREF="REGISTRY.htm">CRegistry</A> registry;
 
-   if ( registry.Connect( CRegistry::keyLocalMachine ) != FALSE )
+   if ( registry.Connect( CRegistry::keyLocalMachine ) not_eq FALSE )
    {
-      if ( registry.Create( TEXT( &quot;SYSTEM\\CurrentControlSet\\Services\\WatchDog\\Parameters&quot; ) ) != FALSE )
+      if ( registry.Create( TEXT( &quot;SYSTEM\\CurrentControlSet\\Services\\WatchDog\\Parameters&quot; ) ) not_eq FALSE )
       {
          DWORD default_sleep_time = 60;
 
@@ -1170,7 +1170,7 @@ void set_default_parameters( void )
                               2,
                   (LPCTSTR *) string_array );
 
-            if ( message_buffer != nullptr )
+            if ( message_buffer not_eq nullptr )
             {
                ::LocalFree( message_buffer );
             }
@@ -1202,7 +1202,7 @@ void set_default_parameters( void )
 
             event_log.Report( CEventLog::eventError, 0, MSG_CANT_SET_REGISTRY_ENTRY, 2, (LPCTSTR *) string_array );
 
-            if ( message_buffer != nullptr )
+            if ( message_buffer not_eq nullptr )
             {
                ::LocalFree( message_buffer );
             }
@@ -1229,7 +1229,7 @@ void set_default_parameters( void )
 
          event_log.Report( <A HREF="CEVNTLOG.htm">CEventLog</A>::eventError, 0, MSG_CANT_CREATE_REGISTRY_KEY, 2, (LPCTSTR *) string_array );
 
-         if ( message_buffer != nullptr )
+         if ( message_buffer not_eq nullptr )
          {
             ::LocalFree( message_buffer );
          }
@@ -1256,7 +1256,7 @@ void set_default_parameters( void )
 
       event_log.Report( <A HREF="CEVNTLOG.htm">CEventLog</A>::eventError, 0, MSG_CANT_CONNECT_TO_REGISTRY, 2, (LPCTSTR *) string_array );
 
-      if ( message_buffer != nullptr )
+      if ( message_buffer not_eq nullptr )
       {
          ::LocalFree( message_buffer );
       }

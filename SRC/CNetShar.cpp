@@ -153,7 +153,7 @@ void Win32FoundationClasses::CNetworkShareInformation::Copy( _In_ SHARE_INFO_2 c
 void Win32FoundationClasses::CNetworkShareInformation::Copy( _In_ Win32FoundationClasses::CNetworkShareInformation const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
-   ASSERT( this != &source );
+   ASSERT( this not_eq &source );
 
    /*
    ** Make sure we ain't copying ourselves
@@ -197,9 +197,9 @@ void Win32FoundationClasses::CNetworkShareInformation::m_Initialize( void ) noex
 Win32FoundationClasses::CNetworkShareInformation const& Win32FoundationClasses::CNetworkShareInformation::operator = ( _In_ Win32FoundationClasses::CNetworkShareInformation const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
-   ASSERT( this != &source );
+   ASSERT( this not_eq &source );
 
-   if ( this != &source )
+   if ( this not_eq &source )
    {
       Copy( source );
    }
@@ -327,13 +327,13 @@ void Win32FoundationClasses::CNetworkShares::Close( void ) noexcept
 
    Win32FoundationClasses::CNetwork::Close();
 
-   if ( m_2InformationBuffer != nullptr )
+   if ( m_2InformationBuffer not_eq nullptr )
    {
       ::NetApiBufferFree( m_2InformationBuffer );
       m_2InformationBuffer = nullptr;
    }
 
-   if ( m_1InformationBuffer != nullptr )
+   if ( m_1InformationBuffer not_eq nullptr )
    {
       ::NetApiBufferFree( m_1InformationBuffer );
       m_1InformationBuffer = nullptr;
@@ -392,7 +392,7 @@ _Check_return_ bool Win32FoundationClasses::CNetworkShares::Enumerate( void ) no
 {
    WFC_VALIDATE_POINTER( this );
 
-   if ( m_2InformationBuffer != nullptr )
+   if ( m_2InformationBuffer not_eq nullptr )
    {
       ::NetApiBufferFree( m_2InformationBuffer );
       m_2InformationBuffer = nullptr;
@@ -404,7 +404,7 @@ _Check_return_ bool Win32FoundationClasses::CNetworkShares::Enumerate( void ) no
    m_2ResumeHandle         = 0;
    m_2TotalNumberOfEntries = 0;
 
-   if ( m_1InformationBuffer != nullptr )
+   if ( m_1InformationBuffer not_eq nullptr )
    {
       ::NetApiBufferFree( m_1InformationBuffer );
       m_1InformationBuffer = nullptr;
@@ -425,7 +425,7 @@ _Check_return_ bool Win32FoundationClasses::CNetworkShares::GetNext( _Inout_ Win
 
    // We need to see which buffer we're working with...
 
-   if ( m_2InformationBuffer != nullptr )
+   if ( m_2InformationBuffer not_eq nullptr )
    {
       if ( m_2Index < m_2NumberOfEntriesRead )
       {
@@ -448,7 +448,7 @@ _Check_return_ bool Win32FoundationClasses::CNetworkShares::GetNext( _Inout_ Win
          }
       }
    }
-   else if ( m_1InformationBuffer != nullptr )
+   else if ( m_1InformationBuffer not_eq nullptr )
    {
       if ( m_1Index < m_1NumberOfEntriesRead )
       {
@@ -486,7 +486,7 @@ _Check_return_ bool Win32FoundationClasses::CNetworkShares::m_GetChunk( void ) n
 
    // Let's see if we have already been reading
 
-   if ( m_2NumberOfEntriesRead != 0 and m_2ResumeHandle == 0 )
+   if ( m_2NumberOfEntriesRead not_eq 0 and m_2ResumeHandle == 0 )
    {
       // Yup, we've finished reading
       //WFCTRACE( TEXT( "Freeing Buffer 2" ) );
@@ -519,7 +519,7 @@ _Check_return_ bool Win32FoundationClasses::CNetworkShares::m_GetChunk( void ) n
 
    // Make really sure the OS didn't modify our variables...
 
-   if ( m_2InformationBuffer != nullptr )
+   if ( m_2InformationBuffer not_eq nullptr )
    {
       //WFCTRACE( TEXT( "Freeing Buffer 2" ) );
       ::NetApiBufferFree( m_2InformationBuffer );
@@ -539,7 +539,7 @@ _Check_return_ bool Win32FoundationClasses::CNetworkShares::m_GetChunk( void ) n
 
       // Let's see if we have already been reading
 
-      if ( m_1NumberOfEntriesRead != 0 and m_1ResumeHandle == 0 )
+      if ( m_1NumberOfEntriesRead not_eq 0 and m_1ResumeHandle == 0 )
       {
          // Yup, we've finished reading
          //WFCTRACE( TEXT( "Freeing Buffer 1" ) );
@@ -662,7 +662,7 @@ When you reach the end of the list, <B>GetNext</B>() will return FALSE.
 
    CNetworkShareInformation share_information;
 
-   if ( shares.Enumerate() != FALSE )
+   if ( shares.Enumerate() == true )
    {
       _tprintf( TEXT( &quot;Share Information for %s:\n&quot; ), (LPCTSTR) shares.GetMachineName() );
 

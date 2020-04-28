@@ -658,9 +658,9 @@ CRemoteAccessService::~CRemoteAccessService()
 
    m_Initialize();
 
-   if ( m_Thunk_p != nullptr )
+   if ( m_Thunk_p not_eq nullptr )
    {
-      if ( m_Thunk_p->dll_instance_handle != static_cast< HINSTANCE >( NULL ) )
+      if ( m_Thunk_p->dll_instance_handle not_eq static_cast< HINSTANCE >( NULL ) )
       {
          ::FreeLibrary( m_Thunk_p->dll_instance_handle );
       }
@@ -698,7 +698,7 @@ BOOL CRemoteAccessService::Close( LPCTSTR name_of_connection )
          {
             // Code around the NT bug
 
-            while( m_Thunk_p->RasGetConnectStatus( m_ConnectionHandle, &m_ConnectionStatus ) != ERROR_INVALID_HANDLE )
+            while( m_Thunk_p->RasGetConnectStatus( m_ConnectionHandle, &m_ConnectionStatus ) not_eq ERROR_INVALID_HANDLE )
             {
 #if defined( _DEBUG )
                number_of_tries++;
@@ -726,7 +726,7 @@ BOOL CRemoteAccessService::Close( LPCTSTR name_of_connection )
 
             // Code around he NT bug
 
-            while( m_Thunk_p->RasGetConnectStatus( temp_handle, &m_ConnectionStatus ) != ERROR_INVALID_HANDLE )
+            while( m_Thunk_p->RasGetConnectStatus( temp_handle, &m_ConnectionStatus ) not_eq ERROR_INVALID_HANDLE )
             {
 #if defined( _DEBUG )
                number_of_tries++;
@@ -748,14 +748,14 @@ BOOL CRemoteAccessService::Close( LPCTSTR name_of_connection )
       {
          temp_handle = GetConnection( connection_name );
 
-         if ( temp_handle != static_cast< HRASCONN >( NULL ) )
+         if ( temp_handle not_eq static_cast< HRASCONN >( NULL ) )
          {
             WFCTRACE( TEXT( "Well whaddya know, the connection is still there..." ) );
             m_Thunk_p->RasHangUp( temp_handle );
             std::this_thread::sleep_for(std::chrono::seconds(1));
          }
       }
-      while( temp_handle != static_cast< HRASCONN >( NULL ) );
+      while( temp_handle not_eq static_cast< HRASCONN >( NULL ) );
 
       if ( m_ErrorCode == 0 )
       {
@@ -1082,7 +1082,7 @@ BOOL CRemoteAccessService::GetPhoneBookEntries( std::vector<std::wstring>& phone
 
    m_ErrorCode = m_Thunk_p->RasEnumEntries( nullptr, nullptr, memory_buffer, &number_of_bytes_needed, &number_of_entries );
 
-   if ( m_ErrorCode != 0 )
+   if ( m_ErrorCode not_eq 0 )
    {
       if ( m_ErrorCode == ERROR_BUFFER_TOO_SMALL or m_ErrorCode == ERROR_NOT_ENOUGH_MEMORY )
       {
@@ -1306,7 +1306,7 @@ void CRemoteAccessService::m_GetConnectionsIntoMemory( LPRASCONN& connections, D
 
    m_ErrorCode = m_Thunk_p->RasEnumConnections( memory_buffer, &number_of_bytes_needed, &number_of_entries );
 
-   if ( m_ErrorCode != 0 )
+   if ( m_ErrorCode not_eq 0 )
    {
       if ( m_ErrorCode == ERROR_BUFFER_TOO_SMALL or m_ErrorCode == ERROR_NOT_ENOUGH_MEMORY )
       {
@@ -1406,7 +1406,7 @@ void CRemoteAccessService::m_InitializeThunk( void )
 {
    WFC_VALIDATE_POINTER( this );
 
-   if ( m_Thunk_p != nullptr )
+   if ( m_Thunk_p not_eq nullptr )
    {
       return;
    }
@@ -1581,7 +1581,7 @@ BOOL CRemoteAccessService::Open( LPCTSTR who_to_dial )
 
          while( 1 )
          {
-            if ( GetConnectionStatus() != FALSE )
+            if ( GetConnectionStatus() not_eq FALSE )
             {
                if ( m_ConnectionStatus.rasconnstate == RASCS_Connected )
                {
@@ -1876,7 +1876,7 @@ void test_CRAS( void )
 
    ras.<A HREF="#SetDialOptions">SetDialOptions</A>( CRemoteAccessService::dialAcceptPausedStates );
 
-   if ( ras.<A HREF="#GetPhoneBookEntries">GetPhoneBookEntries</A>( strings ) != FALSE )
+   if ( ras.<A HREF="#GetPhoneBookEntries">GetPhoneBookEntries</A>( strings ) not_eq FALSE )
    {
       DWORD index = 0;
       DWORD number_of_entries = strings.GetSize();
@@ -1892,7 +1892,7 @@ void test_CRAS( void )
 
    strings.RemoveAll();
 
-   if ( ras.<A HREF="#GetConnections">GetConnections</A>( strings ) != FALSE )
+   if ( ras.<A HREF="#GetConnections">GetConnections</A>( strings ) not_eq FALSE )
    {
       DWORD index = 0;
       DWORD number_of_entries = strings.GetSize();
@@ -1919,7 +1919,7 @@ void test_CRAS( void )
 
    strings.RemoveAll();
 
-   if ( ras.<A HREF="#GetConnections">GetConnections</A>( strings ) != FALSE )
+   if ( ras.<A HREF="#GetConnections">GetConnections</A>( strings ) not_eq FALSE )
    {
       DWORD index = 0;
       DWORD number_of_entries = strings.GetSize();
@@ -1933,7 +1933,7 @@ void test_CRAS( void )
       }
    }
 
-   if ( ras.<A HREF="#HangUp">HangUp</A>( TEXT( &quot;EROLS&quot; ) ) != FALSE )
+   if ( ras.<A HREF="#HangUp">HangUp</A>( TEXT( &quot;EROLS&quot; ) ) not_eq FALSE )
    {
       TRACE( TEXT( &quot;Hangup OK\n&quot; ) );
    }

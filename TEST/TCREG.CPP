@@ -135,7 +135,7 @@ _Check_return_ bool test_CRegistry(_Out_ std::string& class_name, _Out_ int& tes
 
    string_array.clear();
 
-   if ( registry.GetStringArrayValue( L"Sources", string_array ) != false )
+   if ( registry.GetStringArrayValue( L"Sources", string_array ) not_eq false )
    {
       if ( registry.SetStringArrayValue( L"TempSources", string_array ) == false )
       {

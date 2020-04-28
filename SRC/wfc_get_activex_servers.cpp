@@ -88,7 +88,7 @@ _Check_return_ bool Win32FoundationClasses::wfc_get_activex_servers( _Out_ std::
 
    std::size_t location_of_semicolon = server_name.find( ';' );
 
-   while( location_of_semicolon != std::wstring::npos )
+   while( location_of_semicolon not_eq std::wstring::npos )
    {
       temp_string.assign( server_name.substr( 0, location_of_semicolon ) );
 

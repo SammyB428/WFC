@@ -88,7 +88,7 @@ _Check_return_ bool Win32FoundationClasses::wfc_undocumented_get_system_process_
         return( 0 );
     }
 
-    if ( NtQuerySystemInformation(SYSTEM_INFORMATION_CLASS::SystemProcessInformation, buffer, size_of_buffer, 0 ) != 0 )
+    if ( NtQuerySystemInformation(SYSTEM_INFORMATION_CLASS::SystemProcessInformation, buffer, size_of_buffer, 0 ) not_eq 0 )
     {
         return( 0 );
     }
@@ -135,7 +135,7 @@ _Check_return_ bool Win32FoundationClasses::wfc_get_process_command_line(_In_ HA
 
     _ASSERTE(return_status == ERROR_SUCCESS);
 
-    if (return_status != ERROR_SUCCESS)
+    if (return_status not_eq ERROR_SUCCESS)
     {
         DWORD const error_code = GetLastError();
         wfc_debug_error_code(error_code);
@@ -399,7 +399,7 @@ return( EXIT_FAILURE );
 
 WFC_SYSTEM_PROCESS_INFORMATION * info_p = (WFC_SYSTEM_PROCESS_INFORMATION *) buffer );
 
-while( info_p != nullptr &amp;&amp; info_p-&gt;Next != 0 )
+while( info_p not_eq nullptr &amp;&amp; info_p-&gt;Next not_eq 0 )
 {
 print_system_record( info_p );
 info_p = GetNext( info_p );

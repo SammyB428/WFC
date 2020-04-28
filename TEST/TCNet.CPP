@@ -137,7 +137,7 @@ _Check_return_ bool test_CNetWorkstation( _Out_ std::string& class_name, _Out_ i
 
    user_information.Empty();
 
-   if ( workstation.GetCurrentUser( user_information ) != FALSE )
+   if ( workstation.GetCurrentUser( user_information ) not_eq FALSE )
    {
 #if 0
       _tprintf( TEXT( "\nWorkstation Current User Information:\n" ) );
@@ -172,7 +172,7 @@ _Check_return_ bool test_CNetWorkstation( _Out_ std::string& class_name, _Out_ i
          _tprintf( TEXT( " Name                       - \"%s\"\n" ), (LPCTSTR) transport_information.Name      );
          _tprintf( TEXT( " Address                    - \"%s\"\n" ), (LPCTSTR) transport_information.Address   );
    
-         if ( transport_information.WANish != FALSE )
+         if ( transport_information.WANish not_eq FALSE )
          {
             _tprintf( TEXT( " WANish                     - TRUE\n\n" ) );
          }

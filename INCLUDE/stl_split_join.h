@@ -22,7 +22,7 @@ inline void split(_In_z_ wchar_t const* source, _In_z_ wchar_t const* terminator
 
     std::wstring string_to_add;
 
-    while (source[source_index] != 0x00)
+    while (source[source_index] not_eq 0x00)
     {
         if (_wcsnicmp(&source[source_index], terminator, terminator_length) == 0)
         {
@@ -57,7 +57,7 @@ inline void split(_In_z_ char const* source, _In_z_ char const* terminator, _Ino
 
     std::string string_to_add;
 
-    while (source[source_index] != 0x00)
+    while (source[source_index] not_eq 0x00)
     {
         if (_strnicmp(&source[source_index], terminator, terminator_length) == 0)
         {
@@ -146,7 +146,7 @@ inline void split(_In_ std::string_view source, char const separation_character,
         }
     }
 
-    if (length > 0 and here != nullptr)
+    if (length > 0 and here not_eq nullptr)
     {
         string_array.push_back(std::string_view(here, length));
     }
@@ -321,7 +321,7 @@ inline void split_path(_In_ std::wstring const& source, _Inout_ std::vector<std:
 
     std::wstring string_to_add;
 
-    while (source[source_index] != 0x00)
+    while (source[source_index] not_eq 0x00)
     {
         if (source[source_index] == '/' or
             source[source_index] == '\\')

@@ -112,7 +112,7 @@ void Win32FoundationClasses::CNetworkFileInformation::Copy( _In_ FILE_INFO_3 con
 void Win32FoundationClasses::CNetworkFileInformation::Copy( _In_ Win32FoundationClasses::CNetworkFileInformation const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
-   ASSERT( this != &source );
+   ASSERT( this not_eq &source );
 
    /*
    ** Make sure we ain't copying ourselves
@@ -150,9 +150,9 @@ void Win32FoundationClasses::CNetworkFileInformation::m_Initialize( void ) noexc
 Win32FoundationClasses::CNetworkFileInformation const& Win32FoundationClasses::CNetworkFileInformation::operator = ( _In_ Win32FoundationClasses::CNetworkFileInformation const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
-   ASSERT( this != &source );
+   ASSERT( this not_eq &source );
 
-   if ( this != &source )
+   if ( this not_eq &source )
    {
       Copy( source );
    }

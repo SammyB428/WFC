@@ -138,7 +138,7 @@ class CFileDirectory
 
           auto const attributes = ::GetFileAttributesW( file_name );
 
-          if ( attributes != INVALID_FILE_ATTRIBUTES )
+          if ( attributes not_eq INVALID_FILE_ATTRIBUTES )
           {
               if (is_flagged( attributes, FILE_ATTRIBUTE_DIRECTORY ) == true )
               {

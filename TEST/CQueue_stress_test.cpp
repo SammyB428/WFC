@@ -73,7 +73,7 @@ void queue_add_thread( void * p )
 
    while( workspace_p->exit_thread == false )
    {
-      if ( queue_p->Add( item ) != false )
+      if ( queue_p->Add( item ) not_eq false )
       {
          workspace_p->number_of_operations++;
       }
@@ -97,7 +97,7 @@ void queue_get_thread( void * p )
 
    while( workspace_p->exit_thread == false )
    {
-      if ( queue_p->TryGet( item ) != false )
+      if ( queue_p->TryGet( item ) not_eq false )
       {
          workspace_p->number_of_operations++;
       }

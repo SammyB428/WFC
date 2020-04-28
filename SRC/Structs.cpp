@@ -183,7 +183,7 @@ void Win32FoundationClasses::CAccessControlEntryHeader::Copy(_In_ Win32Foundatio
 void Win32FoundationClasses::CAccessControlEntryHeader::Copy(_In_ ACE_HEADER const * source ) noexcept
 {
    WFC_VALIDATE_POINTER( source );
-   ASSERT( source != this );
+   ASSERT( source not_eq this );
 
    if ( source == nullptr or source == this )
    {
@@ -348,7 +348,7 @@ void Win32FoundationClasses::CAccessControlList::Copy(_In_ Win32FoundationClasse
 void Win32FoundationClasses::CAccessControlList::Copy(_In_ ACL const * source ) noexcept
 {
    WFC_VALIDATE_POINTER( source );
-   ASSERT( source != this );
+   ASSERT( source not_eq this );
 
    if ( source == nullptr or source == this )
    {
@@ -433,7 +433,7 @@ void Win32FoundationClasses::CAccessDeniedEntry::Copy(_In_ Win32FoundationClasse
 void Win32FoundationClasses::CAccessDeniedEntry::Copy(_In_ ACCESS_DENIED_ACE const * source ) noexcept
 {
    WFC_VALIDATE_POINTER( source );
-   ASSERT( source != this );
+   ASSERT( source not_eq this );
 
    if ( source == nullptr or source == this )
    {
@@ -607,7 +607,7 @@ void Win32FoundationClasses::CBitmapCoreHeader::Copy( _In_ Win32FoundationClasse
 void Win32FoundationClasses::CBitmapCoreHeader::Copy( _In_ tagBITMAPCOREHEADER const * source ) noexcept
 {
    WFC_VALIDATE_POINTER( source );
-   ASSERT( source != this );
+   ASSERT( source not_eq this );
 
    if ( source == nullptr or source == this )
    {
@@ -692,7 +692,7 @@ void Win32FoundationClasses::CBitmapFileHeader::Copy(_In_ Win32FoundationClasses
 void Win32FoundationClasses::CBitmapFileHeader::Copy(_In_ tagBITMAPFILEHEADER const * source ) noexcept
 {
    WFC_VALIDATE_POINTER( source );
-   ASSERT( source != this );
+   ASSERT( source not_eq this );
 
    if ( source == nullptr or source == this )
    {
@@ -784,7 +784,7 @@ void Win32FoundationClasses::CBitmapInfoHeader::Copy( _In_ Win32FoundationClasse
 void Win32FoundationClasses::CBitmapInfoHeader::Copy( _In_ tagBITMAPINFOHEADER const * source ) noexcept
 {
    WFC_VALIDATE_POINTER( source );
-   ASSERT( source != this );
+   ASSERT( source not_eq this );
 
    if ( source == nullptr or source == this )
    {
@@ -891,7 +891,7 @@ void Win32FoundationClasses::CColorAdjustment::Copy( _In_ Win32FoundationClasses
 void Win32FoundationClasses::CColorAdjustment::Copy(_In_ tagCOLORADJUSTMENT const * source ) noexcept
 {
    WFC_VALIDATE_POINTER( source );
-   ASSERT( source != this );
+   ASSERT( source not_eq this );
 
    if ( source == nullptr or source == this )
    {
@@ -1001,7 +1001,7 @@ Win32FoundationClasses::CCommunicationsConfiguration::~CCommunicationsConfigurat
 
 void Win32FoundationClasses::CCommunicationsConfiguration::Copy( _In_ Win32FoundationClasses::CCommunicationsConfiguration const& source ) noexcept
 {
-   ASSERT( &source != this );
+   ASSERT( &source not_eq this );
 
    if ( &source == this )
    {
@@ -1937,7 +1937,7 @@ void Win32FoundationClasses::CCommunicationProperties::ConvertStopParityToString
 
 void Win32FoundationClasses::CCommunicationProperties::Copy( _In_ Win32FoundationClasses::CCommunicationProperties const& source ) noexcept
 {
-   ASSERT( &source != this );
+   ASSERT( &source not_eq this );
 
    if ( &source == this )
    {
@@ -2189,7 +2189,7 @@ void Win32FoundationClasses::COFStruct::Copy(_In_ Win32FoundationClasses::COFStr
 void Win32FoundationClasses::COFStruct::Copy(_In_ _OFSTRUCT const * source ) noexcept
 {
    WFC_VALIDATE_POINTER( source );
-   ASSERT( source != this );
+   ASSERT( source not_eq this );
 
    if ( source == nullptr or source == this )
    {
@@ -2285,7 +2285,7 @@ void Win32FoundationClasses::COutlineTextMetricA::Copy(_In_ Win32FoundationClass
 void Win32FoundationClasses::COutlineTextMetricA::Copy(_In_ _OUTLINETEXTMETRICA const * source ) noexcept
 {
    WFC_VALIDATE_POINTER( source );
-   ASSERT( source != this );
+   ASSERT( source not_eq this );
 
    if ( source == nullptr or source == this )
    {
@@ -2580,7 +2580,7 @@ void Win32FoundationClasses::COutlineTextMetricW::Copy(_In_ Win32FoundationClass
 void Win32FoundationClasses::COutlineTextMetricW::Copy(_In_ _OUTLINETEXTMETRICW const * source ) noexcept
 {
    WFC_VALIDATE_POINTER( source );
-   ASSERT( source != this );
+   ASSERT( source not_eq this );
 
    if ( source == nullptr or source == this )
    {
@@ -2919,7 +2919,7 @@ void Win32FoundationClasses::CPixelFormatDescriptor::Copy(_In_ Win32FoundationCl
 void Win32FoundationClasses::CPixelFormatDescriptor::Copy(_In_ tagPIXELFORMATDESCRIPTOR const * source ) noexcept
 {
    WFC_VALIDATE_POINTER( source );
-   ASSERT( source != this );
+   ASSERT( source not_eq this );
 
    if ( source == nullptr or source == this )
    {
@@ -3185,7 +3185,7 @@ Win32FoundationClasses::CSecurityAttributes::CSecurityAttributes() noexcept
    Empty();
 }
 
-Win32FoundationClasses::CSecurityAttributes::~CSecurityAttributes() noexcept
+Win32FoundationClasses::CSecurityAttributes::~CSecurityAttributes()
 {
    Empty();
 }
@@ -3242,7 +3242,7 @@ Win32FoundationClasses::CSystemAuditEntry::CSystemAuditEntry( _In_ _SYSTEM_AUDIT
    Copy( source );
 }
 
-Win32FoundationClasses::CSystemAuditEntry::~CSystemAuditEntry() noexcept
+Win32FoundationClasses::CSystemAuditEntry::~CSystemAuditEntry()
 {
    Empty();
 }
@@ -3255,7 +3255,7 @@ void Win32FoundationClasses::CSystemAuditEntry::Copy(_In_ Win32FoundationClasses
 void Win32FoundationClasses::CSystemAuditEntry::Copy(_In_ _SYSTEM_AUDIT_ACE const * source ) noexcept
 {
    WFC_VALIDATE_POINTER( source );
-   ASSERT( source != this );
+   ASSERT( source not_eq this );
 
    if ( source == nullptr or source == this )
    {
@@ -3437,7 +3437,7 @@ void Win32FoundationClasses::CTextMetricA::Copy(_In_ Win32FoundationClasses::CTe
 void Win32FoundationClasses::CTextMetricA::Copy(_In_ tagTEXTMETRICA const * source ) noexcept
 {
    WFC_VALIDATE_POINTER( source );
-   ASSERT( source != this );
+   ASSERT( source not_eq this );
 
    if ( source == nullptr or source == this )
    {
@@ -3571,7 +3571,7 @@ void Win32FoundationClasses::CTextMetricW::Copy(_In_ Win32FoundationClasses::CTe
 void Win32FoundationClasses::CTextMetricW::Copy(_In_ tagTEXTMETRICW const * source ) noexcept
 {
    WFC_VALIDATE_POINTER( source );
-   ASSERT( source != this );
+   ASSERT( source not_eq this );
 
    if ( source == nullptr or source == this )
    {
@@ -3688,7 +3688,7 @@ Win32FoundationClasses::CWindowPlacement::CWindowPlacement( _In_ tagWINDOWPLACEM
    Copy( source );
 }
 
-Win32FoundationClasses::CWindowPlacement::~CWindowPlacement() noexcept
+Win32FoundationClasses::CWindowPlacement::~CWindowPlacement()
 {
    Empty();
 }
@@ -3701,7 +3701,7 @@ void Win32FoundationClasses::CWindowPlacement::Copy(_In_ Win32FoundationClasses:
 void Win32FoundationClasses::CWindowPlacement::Copy(_In_ tagWINDOWPLACEMENT const * source ) noexcept
 {
    WFC_VALIDATE_POINTER( source );
-   ASSERT( source != this );
+   ASSERT( source not_eq this );
 
    if ( source == nullptr or source == this )
    {

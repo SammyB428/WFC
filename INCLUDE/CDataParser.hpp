@@ -470,7 +470,7 @@ public:
         {
             if ( m_AutomaticallyDelete == true )
             {
-                if ( m_Data != nullptr )
+                if ( m_Data not_eq nullptr )
                 {
                     delete m_Data;
                     m_Data = nullptr;
@@ -583,7 +583,7 @@ public:
 
                             other_character = string_to_find[loop_index];
 
-                            if (character_to_test != other_character)
+                            if (character_to_test not_eq other_character)
                             {
                                 string_was_found = false;
                                 break;
@@ -740,7 +740,7 @@ public:
 
                             other_character = tolower( string_to_find.at( loop_index ) );
 
-                            if ( other_character != tolower( character_to_test ) )
+                            if ( other_character not_eq tolower( character_to_test ) )
                             {
                                 string_was_found = false;
                                 break;
@@ -1849,7 +1849,7 @@ public:
                     return( false );
                 }
             }
-            while( byte_to_test != termination_byte );
+            while( byte_to_test not_eq termination_byte );
 
             WFC_SET_LAST_ERROR( NO_ERROR );
             return( true );
@@ -1911,7 +1911,7 @@ public:
                     WFC_SET_LAST_ERROR(ERROR_ALLOTTED_SPACE_EXCEEDED);
                     return(false);
                 }
-            } while (byte_to_test != termination_byte);
+            } while (byte_to_test not_eq termination_byte);
 
             if (temp_buffer_index < 256 and temp_buffer_index > 0)
             {
@@ -1967,7 +1967,7 @@ public:
                 }
 #endif // UNICODE
 
-                string_to_get += static_cast< TCHAR >(character);
+                string_to_get += static_cast<wchar_t>(character);
 
                 if (string_to_get.GetLength() >= termination_characters_length)
                 {
@@ -2070,7 +2070,7 @@ public:
                     return( false );
                 }
             }
-            while(I_AM_EQUAL_TO_THAT != ::memcmp( &m_Bytes[ parse_point.GetIndex() ], termination_bytes_p, termination_bytes_length ) );
+            while(I_AM_EQUAL_TO_THAT not_eq ::memcmp( &m_Bytes[ parse_point.GetIndex() ], termination_bytes_p, termination_bytes_length ) );
 
             for( auto const loop_index : Range(termination_bytes_length) )
             {
@@ -2507,9 +2507,9 @@ public:
         }
 
         if ( byte_1 == 0x00 and
-            byte_2 == 0x00 and
-            byte_3 == 0x00 and
-            byte_4 != 0x00 )
+             byte_2 == 0x00 and
+             byte_3 == 0x00 and
+             byte_4 not_eq 0x00 )
         {
             // UCS-4 Big Endian
             (void) SetTextToUCS4( true );
@@ -2518,10 +2518,10 @@ public:
             return;
         }
 
-        if ( byte_1 != 0x00 and
-            byte_2 == 0x00 and
-            byte_3 == 0x00 and
-            byte_4 == 0x00 )
+        if ( byte_1 not_eq 0x00 and
+             byte_2 == 0x00 and
+             byte_3 == 0x00 and
+             byte_4 == 0x00 )
         {
             // UCS-4 Little Endian
             (void) SetTextToUCS4( true );
@@ -2531,9 +2531,9 @@ public:
         }
 
         if ( byte_1 == 0x00 and
-            byte_2 == 0x00 and
-            byte_3 != 0x00 and
-            byte_4 == 0x00 )
+             byte_2 == 0x00 and
+             byte_3 not_eq 0x00 and
+             byte_4 == 0x00 )
         {
             // UCS-4 Little Endian
             (void) SetTextToUCS4( true );
@@ -2543,9 +2543,9 @@ public:
         }
 
         if ( byte_1 == 0x00 and
-            byte_2 != 0x00 and
-            byte_3 == 0x00 and
-            byte_4 == 0x00 )
+             byte_2 not_eq 0x00 and
+             byte_3 == 0x00 and
+             byte_4 == 0x00 )
         {
             // UCS-4 Little Endian
             (void) SetTextToUCS4( true );
@@ -2561,7 +2561,7 @@ public:
 
     inline constexpr void SetUnicodeToASCIITranslationFailureCharacter( _In_ uint8_t const ascii_character ) noexcept
     {
-        _ASSERTE( ascii_character != 0x00 );
+        _ASSERTE( ascii_character not_eq 0x00 );
         m_UnicodeToASCIIErrorCharacter = ascii_character;
     }
 

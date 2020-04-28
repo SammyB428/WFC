@@ -98,7 +98,7 @@ CFileTransferProtocol::CFileTransferProtocol( LPCTSTR user_name, LPCTSTR passwor
 
    SetPassword( default_password );
 
-   if ( password != nullptr )
+   if ( password not_eq nullptr )
    {
       // We were passed a pointer, don't trust it
 
@@ -201,7 +201,7 @@ void CFileTransferProtocol::GetDirectory( _In_ CUniformResourceLocator const& ur
          return;
       }
 
-      if ( url.PathName.GetLength() != 0 )
+      if ( url.PathName.GetLength() not_eq 0 )
       {
          WFC_TRY
          {
@@ -253,11 +253,11 @@ void CFileTransferProtocol::GetDirectory( _In_ CUniformResourceLocator const& ur
          return;
       }
 
-      if ( file_find_p->FindFile( filter ) != FALSE )
+      if ( file_find_p->FindFile( filter ) not_eq FALSE )
       {
          directory.Add( file_find_p->GetFileName() );
 
-         while( file_find_p->FindNextFile() != FALSE )
+         while( file_find_p->FindNextFile() not_eq FALSE )
          {
             WFCTRACEVAL( TEXT( "Now Adding " ), file_find_p->GetFileName() );
             directory.Add( file_find_p->GetFileName() );

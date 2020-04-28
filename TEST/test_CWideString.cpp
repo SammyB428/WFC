@@ -56,7 +56,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     std::wstring string_1;
 
-    if ( string_1.length() != 0 )
+    if ( string_1.length() not_eq 0 )
     {
         test_number_that_failed = 1;
         return( failure() );
@@ -64,7 +64,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     string_1.assign(WSTRING_VIEW(L"ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"));
 
-    if ( string_1.length() != 36 )
+    if ( string_1.length() not_eq 36 )
     {
         test_number_that_failed = 2;
         return( failure() );
@@ -72,7 +72,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     std::wstring string_2( string_1 );
 
-    if ( string_1.compare( string_2 ) != I_AM_EQUAL_TO_THAT )
+    if ( string_1.compare( string_2 ) not_eq I_AM_EQUAL_TO_THAT )
     {
         test_number_that_failed = 3;
         return( failure() );
@@ -80,7 +80,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     Win32FoundationClasses::make_lower( string_1 );
 
-    if ( string_1.compare(WSTRING_VIEW(L"abcdefghijklmnopqrstuvwxyz0123456789")) != I_AM_EQUAL_TO_THAT )
+    if ( string_1.compare(WSTRING_VIEW(L"abcdefghijklmnopqrstuvwxyz0123456789")) not_eq I_AM_EQUAL_TO_THAT )
     {
         test_number_that_failed = 4;
         return( failure() );
@@ -88,7 +88,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     Win32FoundationClasses::make_upper(string_1);
 
-    if ( string_1.compare( string_2 ) != I_AM_EQUAL_TO_THAT )
+    if ( string_1.compare( string_2 ) not_eq I_AM_EQUAL_TO_THAT )
     {
         test_number_that_failed = 5;
         return( failure() );
@@ -96,13 +96,13 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     string_2.assign(Win32FoundationClasses::left(string_1, 26 ) );
 
-    if ( string_2.compare(WSTRING_VIEW(L"ABCDEFGHIJKLMNOPQRSTUVWXYZ")) != I_AM_EQUAL_TO_THAT )
+    if ( string_2.compare(WSTRING_VIEW(L"ABCDEFGHIJKLMNOPQRSTUVWXYZ")) not_eq I_AM_EQUAL_TO_THAT )
     {
         test_number_that_failed = 6;
         return( failure() );
     }
 
-    if (Win32FoundationClasses::compare_no_case( string_2, WSTRING_VIEW(L"abcDEFGHIJKLMNOPQRSTUVWXYZ")) != I_AM_EQUAL_TO_THAT )
+    if (Win32FoundationClasses::compare_no_case( string_2, WSTRING_VIEW(L"abcDEFGHIJKLMNOPQRSTUVWXYZ")) not_eq I_AM_EQUAL_TO_THAT )
     {
         test_number_that_failed = 7;
         return( failure() );
@@ -110,7 +110,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     string_2.assign(Win32FoundationClasses::right( string_1, 10 ) );
 
-    if ( string_2.compare(WSTRING_VIEW(L"0123456789")) != I_AM_EQUAL_TO_THAT )
+    if ( string_2.compare(WSTRING_VIEW(L"0123456789")) not_eq I_AM_EQUAL_TO_THAT )
     {
         test_number_that_failed = 8;
         return( failure() );
@@ -123,19 +123,19 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     std::wstring string_3(WSTRING_VIEW(L"ABCDE"));
 
-    if ( string_3.length() != 5 )
+    if ( string_3.length() not_eq 5 )
     {
         test_number_that_failed = 13;
         return( failure() );
     }
 
-    if ( string_3.at( 4 ) != L'E' )
+    if ( string_3.at( 4 ) not_eq L'E' )
     {
         test_number_that_failed = 14;
         return( failure() );
     }
 
-    if ( string_3.compare(WSTRING_VIEW(L"ABCDE")) != I_AM_EQUAL_TO_THAT)
+    if ( string_3.compare(WSTRING_VIEW(L"ABCDE")) not_eq I_AM_EQUAL_TO_THAT)
     {
         test_number_that_failed = 15;
         return( failure() );
@@ -151,19 +151,19 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     std::wstring string_4( reinterpret_cast<wchar_t const *>(byte_buffer), 4 );
 
-    if ( string_4.length() != 4 )
+    if ( string_4.length() not_eq 4 )
     {
         test_number_that_failed = 16;
         return( failure() );
     }
 
-    if ( string_4.at( 3 ) != L'd' )
+    if ( string_4.at( 3 ) not_eq L'd' )
     {
         test_number_that_failed = 17;
         return( failure() );
     }
 
-    if ( string_4.compare(WSTRING_VIEW(L"abcd")) != I_AM_EQUAL_TO_THAT)
+    if ( string_4.compare(WSTRING_VIEW(L"abcd")) not_eq I_AM_EQUAL_TO_THAT)
     {
         test_number_that_failed = 18;
         return( failure() );
@@ -173,19 +173,19 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     std::wstring string_5( reinterpret_cast<wchar_t const *>(byte_buffer) );
 
-    if ( string_5.length() != 4 )
+    if ( string_5.length() not_eq 4 )
     {
         test_number_that_failed = 19;
         return( failure() );
     }
 
-    if ( string_5.at( 3 ) != L'd' )
+    if ( string_5.at( 3 ) not_eq L'd' )
     {
         test_number_that_failed = 20;
         return( failure() );
     }
 
-    if ( string_5.compare(WSTRING_VIEW(L"abcd")) != I_AM_EQUAL_TO_THAT )
+    if ( string_5.compare(WSTRING_VIEW(L"abcd")) not_eq I_AM_EQUAL_TO_THAT )
     {
         test_number_that_failed = 21;
         return( failure() );
@@ -193,13 +193,13 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     string_5.clear();
 
-    if ( string_5.length() != 0 )
+    if ( string_5.length() not_eq 0 )
     {
         test_number_that_failed = 22;
         return( failure() );
     }
 
-    if ( string_5.empty() != true )
+    if ( string_5.empty() not_eq true )
     {
         test_number_that_failed = 23;
         return( failure() );
@@ -212,7 +212,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     string_1.append( string_2 );
 
-    if ( string_1.compare(WSTRING_VIEW(L"ABCDEF")) != I_AM_EQUAL_TO_THAT )
+    if ( string_1.compare(WSTRING_VIEW(L"ABCDEF")) not_eq I_AM_EQUAL_TO_THAT )
     {
         test_number_that_failed = 23;
         return( failure() );
@@ -220,7 +220,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     string_1.append(WSTRING_VIEW(L"GHI"));
 
-    if ( string_1.compare(WSTRING_VIEW(L"ABCDEFGHI")) != I_AM_EQUAL_TO_THAT )
+    if ( string_1.compare(WSTRING_VIEW(L"ABCDEFGHI")) not_eq I_AM_EQUAL_TO_THAT )
     {
         test_number_that_failed = 24;
         return( failure() );
@@ -228,7 +228,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     string_1.push_back( 'J' );
 
-    if ( string_1.compare(WSTRING_VIEW(L"ABCDEFGHIJ")) != I_AM_EQUAL_TO_THAT )
+    if ( string_1.compare(WSTRING_VIEW(L"ABCDEFGHIJ")) not_eq I_AM_EQUAL_TO_THAT )
     {
         test_number_that_failed = 25;
         return( failure() );
@@ -236,7 +236,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     string_1.append( reinterpret_cast<wchar_t const *>(byte_buffer) );
 
-    if ( string_1.compare(WSTRING_VIEW(L"ABCDEFGHIJabcd")) != I_AM_EQUAL_TO_THAT )
+    if ( string_1.compare(WSTRING_VIEW(L"ABCDEFGHIJabcd")) not_eq I_AM_EQUAL_TO_THAT )
     {
         test_number_that_failed = 26;
         return( failure() );
@@ -250,7 +250,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     found_at_index = string_1.find( 'Z' );
 
-    if ( found_at_index != 3 )
+    if ( found_at_index not_eq 3 )
     {
         test_number_that_failed = 34;
         return( failure() );
@@ -258,13 +258,13 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     found_at_index = string_1.find(WSTRING_VIEW(L"XY"));
 
-    if ( found_at_index != 1 )
+    if ( found_at_index not_eq 1 )
     {
         test_number_that_failed = 35;
         return( failure() );
     }
 
-    if ( string_1.length() != 4 )
+    if ( string_1.length() not_eq 4 )
     {
         test_number_that_failed = 37;
         return( failure() );
@@ -274,7 +274,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     Win32FoundationClasses::make_reverse(string_1);
 
-    if ( string_1.compare(WSTRING_VIEW(L"54321DCBA")) != I_AM_EQUAL_TO_THAT )
+    if ( string_1.compare(WSTRING_VIEW(L"54321DCBA")) not_eq I_AM_EQUAL_TO_THAT )
     {
         test_number_that_failed = 38;
         return( failure() );
@@ -282,7 +282,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     Win32FoundationClasses::make_reverse(string_1);
 
-    if ( string_1.compare(WSTRING_VIEW(L"ABCD12345")) != I_AM_EQUAL_TO_THAT )
+    if ( string_1.compare(WSTRING_VIEW(L"ABCD12345")) not_eq I_AM_EQUAL_TO_THAT )
     {
         test_number_that_failed = 39;
         return( failure() );
@@ -292,7 +292,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     Win32FoundationClasses::make_reverse(string_1);
 
-    if ( string_1.compare(WSTRING_VIEW(L"4321DCBA")) != I_AM_EQUAL_TO_THAT )
+    if ( string_1.compare(WSTRING_VIEW(L"4321DCBA")) not_eq I_AM_EQUAL_TO_THAT )
     {
         test_number_that_failed = 40;
         return( failure() );
@@ -300,7 +300,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     Win32FoundationClasses::make_reverse(string_1);
 
-    if ( string_1.compare(WSTRING_VIEW(L"ABCD1234")) != I_AM_EQUAL_TO_THAT )
+    if ( string_1.compare(WSTRING_VIEW(L"ABCD1234")) not_eq I_AM_EQUAL_TO_THAT )
     {
         test_number_that_failed = 41;
         return( failure() );
@@ -308,7 +308,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     string_2.assign( string_1.substr(2, 4 ) );
 
-    if ( string_2.compare(WSTRING_VIEW(L"CD12")) != I_AM_EQUAL_TO_THAT )
+    if ( string_2.compare(WSTRING_VIEW(L"CD12")) not_eq I_AM_EQUAL_TO_THAT )
     {
         test_number_that_failed = 42;
         return( failure() );
@@ -316,7 +316,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     string_2.assign( string_1.substr( 2 ) );
 
-    if ( string_2.compare(WSTRING_VIEW(L"CD1234")) != I_AM_EQUAL_TO_THAT )
+    if ( string_2.compare(WSTRING_VIEW(L"CD1234")) not_eq I_AM_EQUAL_TO_THAT )
     {
         test_number_that_failed = 43;
         return( failure() );
@@ -326,7 +326,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     string_1.at( 1 ) =  'A';
 
-    if ( string_1.compare(WSTRING_VIEW(L"AAA")) != I_AM_EQUAL_TO_THAT)
+    if ( string_1.compare(WSTRING_VIEW(L"AAA")) not_eq I_AM_EQUAL_TO_THAT)
     {
         test_number_that_failed = 45;
         return( failure() );
@@ -342,7 +342,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     Win32FoundationClasses::trim_left( string_1 );
 
-    if ( string_1.compare(WSTRING_VIEW(L"ABCD")) != I_AM_EQUAL_TO_THAT)
+    if ( string_1.compare(WSTRING_VIEW(L"ABCD")) not_eq I_AM_EQUAL_TO_THAT)
     {
         test_number_that_failed = 48;
         return( failure() );
@@ -354,7 +354,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     Win32FoundationClasses::trim_right( string_1 );
 
-    if ( string_1.compare(WSTRING_VIEW(L"ABCD")) != I_AM_EQUAL_TO_THAT)
+    if ( string_1.compare(WSTRING_VIEW(L"ABCD")) not_eq I_AM_EQUAL_TO_THAT)
     {
         test_number_that_failed = 49;
         return( failure() );
@@ -366,7 +366,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     string_2 = string_1;
 
-    if ( string_2.compare(WSTRING_VIEW(L"ABCD")) != I_AM_EQUAL_TO_THAT)
+    if ( string_2.compare(WSTRING_VIEW(L"ABCD")) not_eq I_AM_EQUAL_TO_THAT)
     {
         test_number_that_failed = 50;
         return( failure() );
@@ -374,13 +374,13 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     string_2 = L'A';
 
-    if ( string_2.compare(WSTRING_VIEW(L"A")) != I_AM_EQUAL_TO_THAT)
+    if ( string_2.compare(WSTRING_VIEW(L"A")) not_eq I_AM_EQUAL_TO_THAT)
     {
         test_number_that_failed = 51;
         return( failure() );
     }
 
-    if ( string_1[ 1 ] != L'B' )
+    if ( string_1[ 1 ] not_eq L'B' )
     {
         test_number_that_failed = 52;
         return( failure() );
@@ -388,7 +388,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     string_2 = reinterpret_cast<wchar_t const *>(byte_buffer);
 
-    if ( string_2.compare(WSTRING_VIEW(L"abcd")) != I_AM_EQUAL_TO_THAT)
+    if ( string_2.compare(WSTRING_VIEW(L"abcd")) not_eq I_AM_EQUAL_TO_THAT)
     {
         test_number_that_failed = 53;
         return( failure() );
@@ -401,7 +401,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     string_1 += string_2;
 
-    if ( string_1.compare(WSTRING_VIEW(L"ABCDEF")) != I_AM_EQUAL_TO_THAT)
+    if ( string_1.compare(WSTRING_VIEW(L"ABCDEF")) not_eq I_AM_EQUAL_TO_THAT)
     {
         test_number_that_failed = 54;
         return( failure() );
@@ -411,7 +411,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     string_1 += L'G';
 
-    if ( string_1.compare(WSTRING_VIEW(L"ABCDEFG")) != I_AM_EQUAL_TO_THAT)
+    if ( string_1.compare(WSTRING_VIEW(L"ABCDEFG")) not_eq I_AM_EQUAL_TO_THAT)
     {
         test_number_that_failed = 55;
         return( failure() );
@@ -421,7 +421,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     string_1 += L"HIJ";
 
-    if ( string_1.compare(WSTRING_VIEW(L"ABCDEFGHIJ")) != I_AM_EQUAL_TO_THAT)
+    if ( string_1.compare(WSTRING_VIEW(L"ABCDEFGHIJ")) not_eq I_AM_EQUAL_TO_THAT)
     {
         test_number_that_failed = 56;
         return( failure() );
@@ -432,7 +432,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     string_3.assign( string_1 + string_2 );
 
-    if ( string_3.compare(WSTRING_VIEW(L"ABCDEF")) != I_AM_EQUAL_TO_THAT)
+    if ( string_3.compare(WSTRING_VIEW(L"ABCDEF")) not_eq I_AM_EQUAL_TO_THAT)
     {
         test_number_that_failed = 57;
         return( failure() );
@@ -440,7 +440,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     string_3.assign( string_1 + L'D' );
 
-    if ( string_3.compare(WSTRING_VIEW(L"ABCD")) != I_AM_EQUAL_TO_THAT)
+    if ( string_3.compare(WSTRING_VIEW(L"ABCD")) not_eq I_AM_EQUAL_TO_THAT)
     {
         wprintf( L"String should have been \"ABCD\" but it is \"%s\"\n", string_3.c_str() );
         test_number_that_failed = 58;
@@ -449,7 +449,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     string_3.assign( L'C' + string_2 );
 
-    if ( string_3.compare(WSTRING_VIEW(L"CDEF")) != I_AM_EQUAL_TO_THAT)
+    if ( string_3.compare(WSTRING_VIEW(L"CDEF")) not_eq I_AM_EQUAL_TO_THAT)
     {
         test_number_that_failed = 59;
         return( failure() );
@@ -457,7 +457,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     string_3.assign( string_1 + L"DEF" );
 
-    if ( string_3.compare(WSTRING_VIEW(L"ABCDEF")) != I_AM_EQUAL_TO_THAT)
+    if ( string_3.compare(WSTRING_VIEW(L"ABCDEF")) not_eq I_AM_EQUAL_TO_THAT)
     {
         test_number_that_failed = 60;
         return( failure() );
@@ -465,7 +465,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     string_3.assign( L"ABC" + string_2 );
 
-    if ( string_3.compare(WSTRING_VIEW(L"ABCDEF")) != I_AM_EQUAL_TO_THAT)
+    if ( string_3.compare(WSTRING_VIEW(L"ABCDEF")) not_eq I_AM_EQUAL_TO_THAT)
     {
         test_number_that_failed = 61;
         return( failure() );
@@ -496,23 +496,23 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     string_2.assign(WSTRING_VIEW(L"abc"));
 
-    if (not ( string_1 != string_2 ) )
+    if (not ( string_1 not_eq string_2 ) )
     {
         test_number_that_failed = 65;
         return( failure() );
     }
 
-    // operator != ( CWideString&, char const * )
+    // operator not_eq ( CWideString&, char const * )
 
-    if (not ( string_1 != L"abc" ) )
+    if (not ( string_1 not_eq L"abc" ) )
     {
         test_number_that_failed = 66;
         return( failure() );
     }
 
-    // operator != ( char const *, CWideString& )
+    // operator not_eq ( char const *, CWideString& )
 
-    if (not ( L"abc" != string_1 ) )
+    if (not ( L"abc" not_eq string_1 ) )
     {
         test_number_that_failed = 67;
         return( failure() );
@@ -691,7 +691,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     string_1.clear();
 
-    if ( string_1.length() != 0 )
+    if ( string_1.length() not_eq 0 )
     {
         test_number_that_failed = 86;
         return( failure() );
@@ -707,7 +707,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
         string_1.push_back( 'A' );
 
-        if ( previous_length != (string_1.length() - 1 ) )
+        if ( previous_length not_eq (string_1.length() - 1 ) )
         {
             printf( "previous length (%lu) failed, length in error is %lu\n",
                 (unsigned long) previous_length,
@@ -718,7 +718,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
         }
     }
 
-    if ( string_1.length() != number_of_characters_to_test )
+    if ( string_1.length() not_eq number_of_characters_to_test )
     {
         printf( "Length is %lu while it should have been %lu\n",
             (unsigned long) string_1.length(),
@@ -730,13 +730,13 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     Win32FoundationClasses::copy( string_1, STRING_VIEW("0123456789") );
 
-    if ( string_1.length() != 10 )
+    if ( string_1.length() not_eq 10 )
     {
         test_number_that_failed = 89;
         return( failure() );
     }
 
-    if ( string_1.compare(WSTRING_VIEW(L"0123456789")) != I_AM_EQUAL_TO_THAT)
+    if ( string_1.compare(WSTRING_VIEW(L"0123456789")) not_eq I_AM_EQUAL_TO_THAT)
     {
         test_number_that_failed = 90;
         return( failure() );
@@ -744,14 +744,14 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     string_1.resize( 9 );
 
-    if ( string_1.length() != 9 )
+    if ( string_1.length() not_eq 9 )
     {
         printf( "Length should have been 9 but it was %lu\n", (unsigned long) string_1.length() );
         test_number_that_failed = 91;
         return( failure() );
     }
 
-    if ( string_1.compare(WSTRING_VIEW(L"012345678")) != I_AM_EQUAL_TO_THAT)
+    if ( string_1.compare(WSTRING_VIEW(L"012345678")) not_eq I_AM_EQUAL_TO_THAT)
     {
         printf( "String is \"%S\" when is should have been \"012345678\"\n", string_1.c_str() );
         test_number_that_failed = 92;
@@ -760,7 +760,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     string_1.clear();
 
-    if ( string_1.length() != 0 )
+    if ( string_1.length() not_eq 0 )
     {
         test_number_that_failed = 93;
         return( failure() );
@@ -768,7 +768,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     Win32FoundationClasses::format( string_1, L"This is the %d", 1 );
 
-    if ( string_1.compare(WSTRING_VIEW(L"This is the 1")) != I_AM_EQUAL_TO_THAT)
+    if ( string_1.compare(WSTRING_VIEW(L"This is the 1")) not_eq I_AM_EQUAL_TO_THAT)
     {
         test_number_that_failed = 94;
         return( failure() );
@@ -776,7 +776,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     Win32FoundationClasses::format( string_1, L"This is the %d, %lu, %02d \"%s\"", 1, static_cast<unsigned long>(2), 3, L"Sam Loves Laura" );
 
-    if ( string_1.compare(WSTRING_VIEW(L"This is the 1, 2, 03 \"Sam Loves Laura\"")) != I_AM_EQUAL_TO_THAT)
+    if ( string_1.compare(WSTRING_VIEW(L"This is the 1, 2, 03 \"Sam Loves Laura\"")) not_eq I_AM_EQUAL_TO_THAT)
     {
         test_number_that_failed = 95;
         return( failure() );
@@ -792,7 +792,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     string_1 = bytes;
 
-    if ( string_1.compare(WSTRING_VIEW(L"ABCD")) != I_AM_EQUAL_TO_THAT)
+    if ( string_1.compare(WSTRING_VIEW(L"ABCD")) not_eq I_AM_EQUAL_TO_THAT)
     {
         test_number_that_failed = 96;
         return( failure() );
@@ -800,7 +800,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     std::wstring string_6(WSTRING_VIEW(L"ABCD"));
 
-    if ( string_6.compare(WSTRING_VIEW(L"ABCD")) != I_AM_EQUAL_TO_THAT)
+    if ( string_6.compare(WSTRING_VIEW(L"ABCD")) not_eq I_AM_EQUAL_TO_THAT)
     {
         test_number_that_failed = 97;
         return( failure() );
@@ -808,7 +808,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     std::wstring string_7( L"ABCD", 2 );
 
-    if ( string_7.compare( WSTRING_VIEW(L"AB")) != I_AM_EQUAL_TO_THAT )
+    if ( string_7.compare( WSTRING_VIEW(L"AB")) not_eq I_AM_EQUAL_TO_THAT )
     {
         test_number_that_failed = 98;
         return( failure() );
@@ -816,7 +816,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     string_7.assign(WSTRING_VIEW(L"WXYZ"));
 
-    if ( string_7.compare(WSTRING_VIEW( L"WXYZ") ) != I_AM_EQUAL_TO_THAT )
+    if ( string_7.compare(WSTRING_VIEW( L"WXYZ") ) not_eq I_AM_EQUAL_TO_THAT )
     {
         test_number_that_failed = 99;
         return( failure() );
@@ -834,13 +834,13 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     string_6.assign(Win32FoundationClasses::right( string_7, string_7.length() ) );
 
-    if ( string_6.length() != string_7.length() )
+    if ( string_6.length() not_eq string_7.length() )
     {
         test_number_that_failed = 100;
         return( failure() );
     }
 
-    if ( string_6.compare( string_7 ) != I_AM_EQUAL_TO_THAT)
+    if ( string_6.compare( string_7 ) not_eq I_AM_EQUAL_TO_THAT)
     {
         test_number_that_failed = 101;
         return( failure() );
@@ -850,13 +850,13 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     string_6.assign(Win32FoundationClasses::right( string_7, string_7.length() + 99 ) );
 
-    if ( string_6.length() != string_7.length() )
+    if ( string_6.length() not_eq string_7.length() )
     {
         test_number_that_failed = 102;
         return( failure() );
     }
 
-    if ( string_6.compare( string_7 ) != I_AM_EQUAL_TO_THAT)
+    if ( string_6.compare( string_7 ) not_eq I_AM_EQUAL_TO_THAT)
     {
         test_number_that_failed = 103;
         return( failure() );
@@ -866,13 +866,13 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     string_6.assign( string_7.substr(0, string_7.length() ) );
 
-    if ( string_6.length() != string_7.length() )
+    if ( string_6.length() not_eq string_7.length() )
     {
         test_number_that_failed = 104;
         return( failure() );
     }
 
-    if ( string_6.compare( string_7 ) != I_AM_EQUAL_TO_THAT)
+    if ( string_6.compare( string_7 ) not_eq I_AM_EQUAL_TO_THAT)
     {
         test_number_that_failed = 105;
         return( failure() );
@@ -882,13 +882,13 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     string_6.assign( string_7.substr( 0, string_7.length() + 99 ) );
 
-    if ( string_6.length() != string_7.length() )
+    if ( string_6.length() not_eq string_7.length() )
     {
         test_number_that_failed = 106;
         return( failure() );
     }
 
-    if ( string_6.compare( string_7 ) != I_AM_EQUAL_TO_THAT)
+    if ( string_6.compare( string_7 ) not_eq I_AM_EQUAL_TO_THAT)
     {
         test_number_that_failed = 107;
         return( failure() );
@@ -900,7 +900,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     Win32FoundationClasses::trim_right( string_6 );
 
-    if ( string_6.length() != 0 )
+    if ( string_6.length() not_eq 0 )
     {
         test_number_that_failed = 108;
         return( failure() );
@@ -910,7 +910,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     Win32FoundationClasses::trim_left(string_6);
 
-    if ( string_6.length() != 0 )
+    if ( string_6.length() not_eq 0 )
     {
         test_number_that_failed = 109;
         return( failure() );
@@ -920,7 +920,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     Win32FoundationClasses::trim_left(string_6);
 
-    if ( string_6.length() != 0 )
+    if ( string_6.length() not_eq 0 )
     {
         test_number_that_failed = 110;
         return( failure() );
@@ -930,7 +930,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     Win32FoundationClasses::trim_right(string_6);
 
-    if ( string_6.length() != 0 )
+    if ( string_6.length() not_eq 0 )
     {
         test_number_that_failed = 111;
         return( failure() );
@@ -943,7 +943,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     Win32FoundationClasses::trim_right( string_6, L'1');
 
-    if ( string_6.length() != 0 )
+    if ( string_6.length() not_eq 0 )
     {
         test_number_that_failed = 114;
         return( failure() );
@@ -953,7 +953,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     Win32FoundationClasses::trim_left( string_6, L'1' );
 
-    if ( string_6.length() != 0 )
+    if ( string_6.length() not_eq 0 )
     {
         WFCTRACEINIT( TEXT( "test_CWideString()" ) );
         WFCTRACEVAL( TEXT( "string_6.length() is " ), string_6.length() );
@@ -968,7 +968,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     string_5.assign(Win32FoundationClasses::right( string_6, string_6.length() + 1 ) );
 
-    if ( string_5.compare(WSTRING_VIEW(L"0123456789")) != I_AM_EQUAL_TO_THAT)
+    if ( string_5.compare(WSTRING_VIEW(L"0123456789")) not_eq I_AM_EQUAL_TO_THAT)
     {
         test_number_that_failed = 116;
         return( failure() );
@@ -976,7 +976,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     string_5.assign(WSTRING_VIEW(L"BEF"));
 
-    if ( string_5.length() != 3 )
+    if ( string_5.length() not_eq 3 )
     {
         test_number_that_failed = 118;
         return( failure() );
@@ -984,7 +984,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     string_5.assign(WSTRING_VIEW(L"CF"));
 
-    if ( string_5.length() != 2 )
+    if ( string_5.length() not_eq 2 )
     {
         test_number_that_failed = 133;
         return( failure() );
@@ -994,7 +994,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     Win32FoundationClasses::remove( string_5, 't' );
 
-    if ( string_5.compare(WSTRING_VIEW(L"This is a es")) != I_AM_EQUAL_TO_THAT )
+    if ( string_5.compare(WSTRING_VIEW(L"This is a es")) not_eq I_AM_EQUAL_TO_THAT )
     {
         test_number_that_failed = 149;
         return( failure() );
@@ -1002,7 +1002,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     Win32FoundationClasses::remove( string_5, 'T' );
 
-    if ( string_5.compare(WSTRING_VIEW(L"his is a es")) != I_AM_EQUAL_TO_THAT )
+    if ( string_5.compare(WSTRING_VIEW(L"his is a es")) not_eq I_AM_EQUAL_TO_THAT )
     {
         test_number_that_failed = 151;
         return( failure() );
@@ -1012,7 +1012,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     Win32FoundationClasses::remove( string_5, 't' );
 
-    if ( string_5.length() !=  0 )
+    if ( string_5.length() not_eq  0 )
     {
         test_number_that_failed = 153;
         return( failure() );
@@ -1028,7 +1028,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     string_5.clear();
 
-    if ( string_5.length() !=  0 )
+    if ( string_5.length() not_eq  0 )
     {
         test_number_that_failed = 156;
         return( failure() );
@@ -1037,13 +1037,13 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
     string_5.assign(WSTRING_VIEW(L"a b c d e f g a b c a"));
 
     // replace a character at the beginning, in the middle and at the end
-    if (Win32FoundationClasses::replace( string_5, 'a', 'z' ) != 3 )
+    if (Win32FoundationClasses::replace( string_5, 'a', 'z' ) not_eq 3 )
     {
         test_number_that_failed = 157;
         return( failure() );
     }
 
-    if ( string_5.compare(WSTRING_VIEW(L"z b c d e f g z b c z")) != I_AM_EQUAL_TO_THAT )
+    if ( string_5.compare(WSTRING_VIEW(L"z b c d e f g z b c z")) not_eq I_AM_EQUAL_TO_THAT )
     {
         test_number_that_failed = 158;
         return( failure() );
@@ -1051,7 +1051,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     string_5.clear();
 
-    if ( string_5.length() !=  0 )
+    if ( string_5.length() not_eq  0 )
     {
         test_number_that_failed = 159;
         return( failure() );
@@ -1062,7 +1062,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
     // replace a longer string with a shorter one
     Win32FoundationClasses::replace(string_5, WSTRING_VIEW(L"begin"), WSTRING_VIEW(L"end"));
 
-    if ( string_5.compare(WSTRING_VIEW(L"endendend")) != I_AM_EQUAL_TO_THAT )
+    if ( string_5.compare(WSTRING_VIEW(L"endendend")) not_eq I_AM_EQUAL_TO_THAT )
     {
         test_number_that_failed = 161;
         return( failure() );
@@ -1070,7 +1070,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     string_5.clear();
 
-    if ( string_5.length() !=  0 )
+    if ( string_5.length() not_eq  0 )
     {
         test_number_that_failed = 162;
         return( failure() );
@@ -1081,7 +1081,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
     // replace a shorter string with a longer one
     Win32FoundationClasses::replace(string_5, WSTRING_VIEW(L"begin"), WSTRING_VIEW(L"theend"));
 
-    if ( string_5.compare(WSTRING_VIEW(L"theendtheendtheend")) != I_AM_EQUAL_TO_THAT )
+    if ( string_5.compare(WSTRING_VIEW(L"theendtheendtheend")) not_eq I_AM_EQUAL_TO_THAT )
     {
         test_number_that_failed = 164;
         return( failure() );
@@ -1089,7 +1089,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     string_5.clear();
 
-    if ( string_5.length() !=  0 )
+    if ( string_5.length() not_eq  0 )
     {
         test_number_that_failed = 165;
         return( failure() );
@@ -1100,7 +1100,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
     // replace a string with a same-sized one
     Win32FoundationClasses::replace(string_5, WSTRING_VIEW(L"begin"), WSTRING_VIEW(L"start"));
 
-    if ( string_5.compare(WSTRING_VIEW(L"startstartstart")) != I_AM_EQUAL_TO_THAT )
+    if ( string_5.compare(WSTRING_VIEW(L"startstartstart")) not_eq I_AM_EQUAL_TO_THAT )
     {
         test_number_that_failed = 167;
         return( failure() );
@@ -1108,7 +1108,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     string_5.clear();
 
-    if ( string_5.length() !=  0 )
+    if ( string_5.length() not_eq  0 )
     {
         test_number_that_failed = 168;
         return( failure() );
@@ -1121,7 +1121,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     Win32FoundationClasses::replace(string_5, WSTRING_VIEW(L"begin"), WSTRING_VIEW(L"b"));
 
-    if ( string_5.compare(WSTRING_VIEW(L"beginbegin")) != I_AM_EQUAL_TO_THAT )
+    if ( string_5.compare(WSTRING_VIEW(L"beginbegin")) not_eq I_AM_EQUAL_TO_THAT )
     {
         test_number_that_failed = 170;
         return( failure() );
@@ -1131,7 +1131,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     string_5.clear();
 
-    if ( string_5.length() != 0 )
+    if ( string_5.length() not_eq 0 )
     {
         test_number_that_failed = 171;
         return( failure() );
@@ -1139,13 +1139,13 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     Win32FoundationClasses::copy( string_5, STRING_VIEW("ABCDEFGHIJK") );
 
-    if ( string_5.length() != 11 )
+    if ( string_5.length() not_eq 11 )
     {
         test_number_that_failed = 172;
         return( failure() );
     }
 
-    if ( string_5.compare(WSTRING_VIEW(L"ABCDEFGHIJK")) != I_AM_EQUAL_TO_THAT )
+    if ( string_5.compare(WSTRING_VIEW(L"ABCDEFGHIJK")) not_eq I_AM_EQUAL_TO_THAT )
     {
         test_number_that_failed = 173;
         return( failure() );
@@ -1153,7 +1153,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     string_5.clear();
 
-    if ( string_5.length() != 0 )
+    if ( string_5.length() not_eq 0 )
     {
         test_number_that_failed = 174;
         return( failure() );
@@ -1161,13 +1161,13 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     Win32FoundationClasses::copy( string_5, STRING_VIEW("ABCDEFGHIJKL"), 11 );
 
-    if ( string_5.length() != 11 )
+    if ( string_5.length() not_eq 11 )
     {
         test_number_that_failed = 175;
         return( failure() );
     }
 
-    if ( string_5.compare(WSTRING_VIEW(L"ABCDEFGHIJK")) != I_AM_EQUAL_TO_THAT )
+    if ( string_5.compare(WSTRING_VIEW(L"ABCDEFGHIJK")) not_eq I_AM_EQUAL_TO_THAT )
     {
         test_number_that_failed = 176;
         return( failure() );
@@ -1175,7 +1175,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     string_5.clear();
 
-    if ( string_5.length() != 0 )
+    if ( string_5.length() not_eq 0 )
     {
         test_number_that_failed = 177;
         return( failure() );
@@ -1183,13 +1183,13 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     Win32FoundationClasses::copy( string_5, STRING_VIEW("ABCDEFGHIJKL"), 11, 1 );
 
-    if ( string_5.length() != 11 )
+    if ( string_5.length() not_eq 11 )
     {
         test_number_that_failed = 178;
         return( failure() );
     }
 
-    if ( string_5.compare(WSTRING_VIEW(L"BCDEFGHIJKL")) != I_AM_EQUAL_TO_THAT )
+    if ( string_5.compare(WSTRING_VIEW(L"BCDEFGHIJKL")) not_eq I_AM_EQUAL_TO_THAT )
     {
         test_number_that_failed = 179;
         return( failure() );
@@ -1197,7 +1197,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     string_5.clear();
 
-    if ( string_5.length() != 0 )
+    if ( string_5.length() not_eq 0 )
     {
         test_number_that_failed = 180;
         return( failure() );
@@ -1205,7 +1205,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     Win32FoundationClasses::copy( string_5, STRING_VIEW("ABCDEFGHIJKL"), 99 );
 
-    if ( string_5.length() != 12 )
+    if ( string_5.length() not_eq 12 )
     {
         test_number_that_failed = 181;
         return( failure() );
@@ -1213,7 +1213,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     string_5.clear();
 
-    if ( string_5.length() != 0 )
+    if ( string_5.length() not_eq 0 )
     {
         test_number_that_failed = 183;
         return( failure() );
@@ -1221,13 +1221,13 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     Win32FoundationClasses::copy( string_5, STRING_VIEW("ABC") );
 
-    if ( string_5.length() != 3 )
+    if ( string_5.length() not_eq 3 )
     {
         test_number_that_failed = 184;
         return( failure() );
     }
 
-    if ( string_5.compare(WSTRING_VIEW(L"ABC")) != I_AM_EQUAL_TO_THAT )
+    if ( string_5.compare(WSTRING_VIEW(L"ABC")) not_eq I_AM_EQUAL_TO_THAT )
     {
         test_number_that_failed = 185;
         return( failure() );
@@ -1235,7 +1235,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     Win32FoundationClasses::copy( string_5, STRING_VIEW("ABCDEFGHIJKL"), 0, 99 );
 
-    if ( string_5.length() != 0 )
+    if ( string_5.length() not_eq 0 )
     {
         test_number_that_failed = 186;
         return( failure() );
@@ -1243,7 +1243,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     string_5.clear();
 
-    if ( string_5.length() != 0 )
+    if ( string_5.length() not_eq 0 )
     {
         test_number_that_failed = 187;
         return( failure() );
@@ -1251,7 +1251,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     Win32FoundationClasses::copy( string_5, STRING_VIEW("ABCDEFGHIJKL"), 99, 99 );
 
-    if ( string_5.length() != 0 )
+    if ( string_5.length() not_eq 0 )
     {
         test_number_that_failed = 188;
         return( failure() );
@@ -1259,7 +1259,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     string_5.clear();
 
-    if ( string_5.length() != 0 )
+    if ( string_5.length() not_eq 0 )
     {
         test_number_that_failed = 189;
         return( failure() );
@@ -1267,7 +1267,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     Win32FoundationClasses::copy( string_5, STRING_VIEW("ABCDEFGHIJKL"), 1, 99 );
 
-    if ( string_5.length() != 0 )
+    if ( string_5.length() not_eq 0 )
     {
         test_number_that_failed = 190;
         return( failure() );
@@ -1279,7 +1279,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     int64_t test_value = Win32FoundationClasses::as_integer(string_5);
 
-    if ( test_value != 16 )
+    if ( test_value not_eq 16 )
     {
         test_number_that_failed = 191;
         return( failure() );
@@ -1289,7 +1289,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     test_value = Win32FoundationClasses::as_integer(string_5);
 
-    if ( test_value != 22 )
+    if ( test_value not_eq 22 )
     {
         wprintf( L"\"%s\" evaluated to %I64d not 22\n", string_5.c_str(), test_value );
         test_number_that_failed = 192;
@@ -1300,7 +1300,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     test_value = Win32FoundationClasses::as_integer(string_5);
 
-    if ( test_value != 23 )
+    if ( test_value not_eq 23 )
     {
         test_number_that_failed = 193;
         return( failure() );
@@ -1310,7 +1310,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     Win32FoundationClasses::despace(string_5);
 
-    if ( string_5.compare(WSTRING_VIEW(L"1 2 3 4 5")) != I_AM_EQUAL_TO_THAT )
+    if ( string_5.compare(WSTRING_VIEW(L"1 2 3 4 5")) not_eq I_AM_EQUAL_TO_THAT )
     {
         test_number_that_failed = 194;
         return( failure() );
@@ -1320,7 +1320,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     Win32FoundationClasses::despace(string_5);
 
-    if ( string_5.compare(WSTRING_VIEW(L"1 2 3 4 5")) != I_AM_EQUAL_TO_THAT )
+    if ( string_5.compare(WSTRING_VIEW(L"1 2 3 4 5")) not_eq I_AM_EQUAL_TO_THAT )
     {
         test_number_that_failed = 195;
         return( failure() );
@@ -1330,7 +1330,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     Win32FoundationClasses::despace(string_5);
 
-    if ( string_5.compare(WSTRING_VIEW(L"1 2 3 4 5")) != I_AM_EQUAL_TO_THAT )
+    if ( string_5.compare(WSTRING_VIEW(L"1 2 3 4 5")) not_eq I_AM_EQUAL_TO_THAT )
     {
         test_number_that_failed = 196;
         return( failure() );
@@ -1340,7 +1340,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     string_5.assign(WSTRING_VIEW(L"123"));
 
-    if (Win32FoundationClasses::as_integer(string_5) != 123 )
+    if (Win32FoundationClasses::as_integer(string_5) not_eq 123 )
     {
         test_number_that_failed = 197;
         return( failure() );
@@ -1361,7 +1361,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     string_5.push_back( '.' );
 
-    if (Win32FoundationClasses::is_all_space(string_5) != false )
+    if (Win32FoundationClasses::is_all_space(string_5) not_eq false )
     {
         test_number_that_failed = 199;
         return( failure() );
@@ -1380,7 +1380,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     from_defined( string_5, 1, defines, 1 );
 
-    if ( string_5.compare(WSTRING_VIEW(L"1")) != I_AM_EQUAL_TO_THAT)
+    if ( string_5.compare(WSTRING_VIEW(L"1")) not_eq I_AM_EQUAL_TO_THAT)
     {
         test_number_that_failed = 200;
         return( failure() );
@@ -1388,7 +1388,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     from_defined( string_5, 1, defines, 2 );
 
-    if ( string_5.compare(WSTRING_VIEW(L"1")) != I_AM_EQUAL_TO_THAT)
+    if ( string_5.compare(WSTRING_VIEW(L"1")) not_eq I_AM_EQUAL_TO_THAT)
     {
         test_number_that_failed = 201;
         return( failure() );
@@ -1396,7 +1396,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     from_defined( string_5, 1, defines, std::size( defines ) );
 
-    if ( string_5.compare(WSTRING_VIEW(L"1")) != I_AM_EQUAL_TO_THAT)
+    if ( string_5.compare(WSTRING_VIEW(L"1")) not_eq I_AM_EQUAL_TO_THAT)
     {
         test_number_that_failed = 202;
         return( failure() );
@@ -1404,7 +1404,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     from_defined( string_5, 3, defines, std::size( defines ) );
 
-    if ( string_5.compare(WSTRING_VIEW(L"3")) != I_AM_EQUAL_TO_THAT)
+    if ( string_5.compare(WSTRING_VIEW(L"3")) not_eq I_AM_EQUAL_TO_THAT)
     {
         test_number_that_failed = 203;
         return( failure() );
@@ -1412,7 +1412,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     from_defined( string_5, 5, defines, std::size( defines ) );
 
-    if ( string_5.compare(WSTRING_VIEW(L"5")) != I_AM_EQUAL_TO_THAT )
+    if ( string_5.compare(WSTRING_VIEW(L"5")) not_eq I_AM_EQUAL_TO_THAT )
     {
         test_number_that_failed = 204;
         return( failure() );
@@ -1469,7 +1469,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     Win32FoundationClasses::from_flags(string_5, 0x01, flags, std::size( flags ) );
 
-    if ( string_5.compare(WSTRING_VIEW(L"0")) != I_AM_EQUAL_TO_THAT)
+    if ( string_5.compare(WSTRING_VIEW(L"0")) not_eq I_AM_EQUAL_TO_THAT)
     {
         test_number_that_failed = 206;
         return( failure() );
@@ -1477,7 +1477,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     Win32FoundationClasses::from_flags( string_5, 0x07, flags, std::size( flags ) );
 
-    if ( string_5.compare(WSTRING_VIEW(L"0, Undefined(1), 2")) != I_AM_EQUAL_TO_THAT)
+    if ( string_5.compare(WSTRING_VIEW(L"0, Undefined(1), 2")) not_eq I_AM_EQUAL_TO_THAT)
     {
         test_number_that_failed = 207;
         return( failure() );
@@ -1489,7 +1489,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     Win32FoundationClasses::from_flags( string_5, test_flags, flags, std::size( flags ) );
 
-    if ( string_5.compare(WSTRING_VIEW(L"32")) != I_AM_EQUAL_TO_THAT)
+    if ( string_5.compare(WSTRING_VIEW(L"32")) not_eq I_AM_EQUAL_TO_THAT)
     {
         test_number_that_failed = 208;
         return( failure() );
@@ -1499,7 +1499,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     (void)Win32FoundationClasses::trim_quotes( string_5 );
 
-    if ( string_5.compare(WSTRING_VIEW(L"\"'\"5\"'\"")) != I_AM_EQUAL_TO_THAT )
+    if ( string_5.compare(WSTRING_VIEW(L"\"'\"5\"'\"")) not_eq I_AM_EQUAL_TO_THAT )
     {
         test_number_that_failed = 209;
         return( failure() );
@@ -1507,7 +1507,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     Win32FoundationClasses::trim_all_quotes(string_5);
 
-    if ( string_5.compare(WSTRING_VIEW(L"5")) != I_AM_EQUAL_TO_THAT )
+    if ( string_5.compare(WSTRING_VIEW(L"5")) not_eq I_AM_EQUAL_TO_THAT )
     {
         test_number_that_failed = 210;
         return( failure() );
@@ -1519,7 +1519,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     string_4.assign(Win32FoundationClasses::skip_first( string_5, 3 ) );
 
-    if ( string_4.compare(WSTRING_VIEW(L"123")) != I_AM_EQUAL_TO_THAT )
+    if ( string_4.compare(WSTRING_VIEW(L"123")) not_eq I_AM_EQUAL_TO_THAT )
     {
         test_number_that_failed = 215;
         return( failure() );
@@ -1539,13 +1539,13 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
         return( failure() );
     }
 
-    if (Win32FoundationClasses::ends_with_no_case( string_5, L"abc" ) != true )
+    if (Win32FoundationClasses::ends_with_no_case( string_5, L"abc" ) not_eq true )
     {
         test_number_that_failed = 220;
         return( failure() );
     }
 
-    if (Win32FoundationClasses::starts_with( string_5, WSTRING_VIEW(L"123") ) != true )
+    if (Win32FoundationClasses::starts_with( string_5, WSTRING_VIEW(L"123") ) not_eq true )
     {
         test_number_that_failed = 221;
         return( failure() );
@@ -1553,7 +1553,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     string_5.assign(WSTRING_VIEW(L"AbC123"));
 
-    if (Win32FoundationClasses::starts_with_no_case( string_5, WSTRING_VIEW(L"abc") ) != true )
+    if (Win32FoundationClasses::starts_with_no_case( string_5, WSTRING_VIEW(L"abc") ) not_eq true )
     {
         test_number_that_failed = 222;
         return( failure() );
@@ -1568,13 +1568,13 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     Win32FoundationClasses::copy_to( string_5, output_string, std::size( output_string ) );
 
-    if ( wcslen( output_string ) != 6 )
+    if ( wcslen( output_string ) not_eq 6 )
     {
         test_number_that_failed = 223;
         return( failure() );
     }
 
-    if ( string_5.compare( output_string ) != I_AM_EQUAL_TO_THAT )
+    if ( string_5.compare( output_string ) not_eq I_AM_EQUAL_TO_THAT )
     {
         test_number_that_failed = 224;
         return( failure() );
@@ -1582,7 +1582,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     string_5.assign(WSTRING_VIEW(L"BBD"));
 
-    if (Win32FoundationClasses::ends_with_no_case(string_5, L"bbd" ) != true )
+    if (Win32FoundationClasses::ends_with_no_case(string_5, L"bbd" ) not_eq true )
     {
         test_number_that_failed = 225;
         return( failure() );
@@ -1594,7 +1594,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
     (void) string_array.push_back(L"2b2");
     (void) string_array.push_back(L"1a1");
 
-    if ( string_array.size() != 3 )
+    if ( string_array.size() not_eq 3 )
     {
         test_number_that_failed = 226;
         return( failure() );
@@ -1602,7 +1602,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     Win32FoundationClasses::remove_no_case( string_array, WSTRING_VIEW(L"1A1") );
 
-    if ( string_array.size() != 1 )
+    if ( string_array.size() not_eq 1 )
     {
         test_number_that_failed = 227;
         return( failure() );
@@ -1610,7 +1610,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     string_5.assign( string_array.at(0) );
 
-    if ( string_5.compare(WSTRING_VIEW(L"2b2")) != I_AM_EQUAL_TO_THAT )
+    if ( string_5.compare(WSTRING_VIEW(L"2b2")) not_eq I_AM_EQUAL_TO_THAT )
     {
         test_number_that_failed = 228;
         return( failure() );
@@ -1623,7 +1623,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     found_at_index = string_1.find( 'B', 3 );
 
-    if ( found_at_index != 3 )
+    if ( found_at_index not_eq 3 )
     {
         test_number_that_failed = 228;
         return( failure() );
@@ -1633,7 +1633,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     found_at_index = string_1.find( L"TZ", 1 );
 
-    if ( found_at_index != 4 )
+    if ( found_at_index not_eq 4 )
     {
         test_number_that_failed = 229;
         return( failure() );
@@ -1643,7 +1643,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     string_1.append( string_2, 7 );
 
-    if ( string_1.compare(WSTRING_VIEW(L"YZYZTZ789")) != I_AM_EQUAL_TO_THAT)
+    if ( string_1.compare(WSTRING_VIEW(L"YZYZTZ789")) not_eq I_AM_EQUAL_TO_THAT)
     {
         test_number_that_failed = 230;
         return( failure() );
@@ -1651,7 +1651,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     string_array.clear();
 
-    if ( string_array.size() != 0 )
+    if ( string_array.size() not_eq 0 )
     {
         test_number_that_failed = 231;
         return( failure() );
@@ -1662,7 +1662,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
     string_array.push_back(L"Bb");
     string_array.push_back(L"Cc");
 
-    if ( string_array.size() != 4 )
+    if ( string_array.size() not_eq 4 )
     {
         test_number_that_failed = 232;
         return( failure() );
@@ -1674,7 +1674,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
     other_array.push_back(L"Two");
     other_array.push_back(L"Three");
 
-    if ( other_array.size() != 3 )
+    if ( other_array.size() not_eq 3 )
     {
         test_number_that_failed = 238;
         return( failure() );
@@ -1682,7 +1682,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     Win32FoundationClasses::join( other_array, std::wstring_view(nullptr,0), string_1 );
 
-    if ( string_1.compare(WSTRING_VIEW(L"OneTwoThree")) != I_AM_EQUAL_TO_THAT)
+    if ( string_1.compare(WSTRING_VIEW(L"OneTwoThree")) not_eq I_AM_EQUAL_TO_THAT)
     {
         test_number_that_failed = 239;
         return( failure() );
@@ -1690,7 +1690,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     string_1.clear();
 
-    if ( string_1.length() != 0 )
+    if ( string_1.length() not_eq 0 )
     {
         test_number_that_failed = 240;
         return( failure() );
@@ -1698,7 +1698,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     Win32FoundationClasses::join( other_array, WSTRING_VIEW(L""), string_1 );
 
-    if ( string_1.compare(WSTRING_VIEW(L"OneTwoThree")) != I_AM_EQUAL_TO_THAT)
+    if ( string_1.compare(WSTRING_VIEW(L"OneTwoThree")) not_eq I_AM_EQUAL_TO_THAT)
     {
         test_number_that_failed = 241;
         return( failure() );
@@ -1706,7 +1706,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     string_1.clear();
 
-    if ( string_1.length() != 0 )
+    if ( string_1.length() not_eq 0 )
     {
         test_number_that_failed = 242;
         return( failure() );
@@ -1714,7 +1714,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     Win32FoundationClasses::join( other_array, WSTRING_VIEW(L"."), string_1 );
 
-    if ( string_1.compare(WSTRING_VIEW(L"One.Two.Three")) != I_AM_EQUAL_TO_THAT)
+    if ( string_1.compare(WSTRING_VIEW(L"One.Two.Three")) not_eq I_AM_EQUAL_TO_THAT)
     {
         test_number_that_failed = 243;
         return( failure() );
@@ -1722,7 +1722,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     string_1.clear();
 
-    if ( string_1.length() != 0 )
+    if ( string_1.length() not_eq 0 )
     {
         test_number_that_failed = 244;
         return( failure() );
@@ -1730,7 +1730,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     Win32FoundationClasses::join( other_array, WSTRING_VIEW(L" and a "), string_1 );
 
-    if ( string_1.compare(WSTRING_VIEW(L"One and a Two and a Three")) != I_AM_EQUAL_TO_THAT)
+    if ( string_1.compare(WSTRING_VIEW(L"One and a Two and a Three")) not_eq I_AM_EQUAL_TO_THAT)
     {
         test_number_that_failed = 245;
         return( failure() );
@@ -1790,7 +1790,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     found_at_index = string_1.find(L'U');
 
-    if (found_at_index != std::wstring::npos)
+    if (found_at_index not_eq std::wstring::npos)
     {
         test_number_that_failed = 252;
         return(failure());
@@ -1798,7 +1798,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     found_at_index = string_1.find(WSTRING_VIEW(L"Z1"));
 
-    if (found_at_index != std::wstring::npos)
+    if (found_at_index not_eq std::wstring::npos)
     {
         test_number_that_failed = 253;
         return(failure());
@@ -1806,7 +1806,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     found_at_index = string_1.find(WSTRING_VIEW(L"YZ"));
 
-    if (found_at_index != 2)
+    if (found_at_index not_eq 2)
     {
         test_number_that_failed = 254;
         return(failure());
@@ -1816,7 +1816,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     found_at_index = string_1.find_first_of(WSTRING_VIEW(L"AbZ"));
 
-    if (found_at_index != std::wstring::npos)
+    if (found_at_index not_eq std::wstring::npos)
     {
         test_number_that_failed = 256;
         return(failure());
@@ -1826,13 +1826,13 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     SSIZE_T where_it_was_inserted = Win32FoundationClasses::add_to_unique_sorted_vector(WSTRING_VIEW(L"&amp;"), sorted);
 
-    if (sorted.size() != 1)
+    if (sorted.size() not_eq 1)
     {
         test_number_that_failed = 257;
         return(failure());
     }
 
-    if (where_it_was_inserted != 0)
+    if (where_it_was_inserted not_eq 0)
     {
         test_number_that_failed = 258;
         return(failure());
@@ -1840,25 +1840,25 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     where_it_was_inserted = Win32FoundationClasses::add_to_unique_sorted_vector(WSTRING_VIEW(L"&apos;"), sorted);
 
-    if (sorted.size() != 2)
+    if (sorted.size() not_eq 2)
     {
         test_number_that_failed = 259;
         return(failure());
     }
 
-    if (where_it_was_inserted != 1)
+    if (where_it_was_inserted not_eq 1)
     {
         test_number_that_failed = 260;
         return(failure());
     }
 
-    if (sorted[0].compare(WSTRING_VIEW(L"&amp;")) != I_AM_EQUAL_TO_THAT)
+    if (sorted[0].compare(WSTRING_VIEW(L"&amp;")) not_eq I_AM_EQUAL_TO_THAT)
     {
         test_number_that_failed = 261;
         return(failure());
     }
 
-    if (sorted[1].compare(WSTRING_VIEW(L"&apos;")) != I_AM_EQUAL_TO_THAT)
+    if (sorted[1].compare(WSTRING_VIEW(L"&apos;")) not_eq I_AM_EQUAL_TO_THAT)
     {
         test_number_that_failed = 262;
         return(failure());
@@ -1866,25 +1866,25 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     where_it_was_inserted = Win32FoundationClasses::add_to_unique_sorted_vector(WSTRING_VIEW(L"&amp;"), sorted);
 
-    if (sorted.size() != 2)
+    if (sorted.size() not_eq 2)
     {
         test_number_that_failed = 263;
         return(failure());
     }
 
-    if (sorted[0].compare(WSTRING_VIEW(L"&amp;")) != I_AM_EQUAL_TO_THAT)
+    if (sorted[0].compare(WSTRING_VIEW(L"&amp;")) not_eq I_AM_EQUAL_TO_THAT)
     {
         test_number_that_failed = 264;
         return(failure());
     }
 
-    if (sorted[1].compare(WSTRING_VIEW(L"&apos;")) != I_AM_EQUAL_TO_THAT)
+    if (sorted[1].compare(WSTRING_VIEW(L"&apos;")) not_eq I_AM_EQUAL_TO_THAT)
     {
         test_number_that_failed = 265;
         return(failure());
     }
 
-    if (where_it_was_inserted != 0)
+    if (where_it_was_inserted not_eq 0)
     {
         test_number_that_failed = 266;
         return(failure());
@@ -1892,25 +1892,25 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     where_it_was_inserted = Win32FoundationClasses::add_to_unique_sorted_vector(WSTRING_VIEW(L"&apos;"), sorted);
 
-    if (sorted.size() != 2)
+    if (sorted.size() not_eq 2)
     {
         test_number_that_failed = 267;
         return(failure());
     }
 
-    if (sorted[0].compare(WSTRING_VIEW(L"&amp;")) != I_AM_EQUAL_TO_THAT)
+    if (sorted[0].compare(WSTRING_VIEW(L"&amp;")) not_eq I_AM_EQUAL_TO_THAT)
     {
         test_number_that_failed = 268;
         return(failure());
     }
 
-    if (sorted[1].compare(WSTRING_VIEW(L"&apos;")) != I_AM_EQUAL_TO_THAT)
+    if (sorted[1].compare(WSTRING_VIEW(L"&apos;")) not_eq I_AM_EQUAL_TO_THAT)
     {
         test_number_that_failed = 269;
         return(failure());
     }
 
-    if (where_it_was_inserted != 1)
+    if (where_it_was_inserted not_eq 1)
     {
         test_number_that_failed = 270;
         return(failure());
@@ -1918,31 +1918,31 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     where_it_was_inserted = Win32FoundationClasses::add_to_unique_sorted_vector(WSTRING_VIEW(L"&aaaa;"), sorted);
 
-    if (sorted.size() != 3)
+    if (sorted.size() not_eq 3)
     {
         test_number_that_failed = 271;
         return(failure());
     }
 
-    if (sorted[0].compare(WSTRING_VIEW(L"&aaaa;")) != I_AM_EQUAL_TO_THAT)
+    if (sorted[0].compare(WSTRING_VIEW(L"&aaaa;")) not_eq I_AM_EQUAL_TO_THAT)
     {
         test_number_that_failed = 272;
         return(failure());
     }
 
-    if (sorted[1].compare(WSTRING_VIEW(L"&amp;")) != I_AM_EQUAL_TO_THAT)
+    if (sorted[1].compare(WSTRING_VIEW(L"&amp;")) not_eq I_AM_EQUAL_TO_THAT)
     {
         test_number_that_failed = 273;
         return(failure());
     }
 
-    if (sorted[2].compare(WSTRING_VIEW(L"&apos;")) != I_AM_EQUAL_TO_THAT)
+    if (sorted[2].compare(WSTRING_VIEW(L"&apos;")) not_eq I_AM_EQUAL_TO_THAT)
     {
         test_number_that_failed = 274;
         return(failure());
     }
 
-    if (where_it_was_inserted != 0)
+    if (where_it_was_inserted not_eq 0)
     {
         test_number_that_failed = 275;
         return(failure());
@@ -1951,7 +1951,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
     std::wstring ss1(WSTRING_VIEW(L"ABCDEF"));
     std::wstring ss2(WSTRING_VIEW(L"abcdef"));
 
-    if (Win32FoundationClasses::compare_no_case(ss1, ss2) != I_AM_EQUAL_TO_THAT)
+    if (Win32FoundationClasses::compare_no_case(ss1, ss2) not_eq I_AM_EQUAL_TO_THAT)
     {
         test_number_that_failed = 276;
         return(failure());
@@ -1961,7 +1961,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     Win32FoundationClasses::format(ss2, L"This is a %s right here", tg1);
 
-    if (ss2.compare(WSTRING_VIEW(L"This is a Test String right here")) != I_AM_EQUAL_TO_THAT)
+    if (ss2.compare(WSTRING_VIEW(L"This is a Test String right here")) not_eq I_AM_EQUAL_TO_THAT)
     {
         test_number_that_failed = 277;
         return(failure());
@@ -1973,7 +1973,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     Win32FoundationClasses::format(ss2, L"%s==", tg1);
 
-    if (ss2.compare(WSTRING_VIEW(L"C:\\t1\\t2\\t3.txt==")) != I_AM_EQUAL_TO_THAT)
+    if (ss2.compare(WSTRING_VIEW(L"C:\\t1\\t2\\t3.txt==")) not_eq I_AM_EQUAL_TO_THAT)
     {
         test_number_that_failed = 277;
         return(failure());
@@ -1985,7 +1985,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     test_value = Win32FoundationClasses::as_integer(a_string);
 
-    if (test_value != 22)
+    if (test_value not_eq 22)
     {
         wprintf(L"\"%S\" evaluated to %I64d not 22\n", a_string.c_str(), test_value);
         test_number_that_failed = 278;
@@ -1996,7 +1996,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     test_value = Win32FoundationClasses::as_integer(a_string);
 
-    if (test_value != 23)
+    if (test_value not_eq 23)
     {
         wprintf(L"\"%S\" evaluated to %I64d not 23\n", a_string.c_str(), test_value);
         test_number_that_failed = 279;
@@ -2007,7 +2007,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     test_value = Win32FoundationClasses::as_integer(a_string);
 
-    if (test_value != 24)
+    if (test_value not_eq 24)
     {
         wprintf(L"\"%S\" evaluated to %I64d not 24\n", a_string.c_str(), test_value);
         test_number_that_failed = 280;
@@ -2016,7 +2016,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     test_value = Win32FoundationClasses::ascii_string_to_integer("567", 2, 10);
 
-    if (test_value != 56)
+    if (test_value not_eq 56)
     {
         wprintf(L"\"567\" evaluated to %I64d not 56\n", test_value);
         test_number_that_failed = 281;
@@ -2027,7 +2027,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     test_value = Win32FoundationClasses::as_integer(a_string);
 
-    if (test_value != 36)
+    if (test_value not_eq 36)
     {
         wprintf(L"\"%S\" evaluated to %I64d not 36\n", a_string.c_str(), test_value);
         test_number_that_failed = 282;
@@ -2038,37 +2038,37 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     Win32FoundationClasses::copy(string_5, test_bytes, sizeof(test_bytes));
 
-    if (string_5.length() != sizeof(test_bytes))
+    if (string_5.length() not_eq sizeof(test_bytes))
     {
         test_number_that_failed = 283;
         return(failure());
     }
 
-    if (string_5[0] != 1)
+    if (string_5[0] not_eq 1)
     {
         test_number_that_failed = 284;
         return(failure());
     }
 
-    if (string_5[1] != 2)
+    if (string_5[1] not_eq 2)
     {
         test_number_that_failed = 285;
         return(failure());
     }
 
-    if (string_5[2] != 129)
+    if (string_5[2] not_eq 129)
     {
         test_number_that_failed = 286;
         return(failure());
     }
 
-    if (string_5[3] != 200)
+    if (string_5[3] not_eq 200)
     {
         test_number_that_failed = 287;
         return(failure());
     }
 
-    if (string_5[4] != 201)
+    if (string_5[4] not_eq 201)
     {
         test_number_that_failed = 288;
         return(failure());

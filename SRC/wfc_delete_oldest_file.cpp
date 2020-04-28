@@ -68,8 +68,8 @@ _Check_return_ bool Win32FoundationClasses::wfc_delete_oldest_file( _In_z_ const
 
     std::wstring mask( directory_path );
 
-    if ( mask.at( mask.length() - 1 ) != '\\' and
-        mask.at( mask.length() - 1 ) != '/' )
+    if ( mask.at( mask.length() - 1 ) not_eq '\\' and
+        mask.at( mask.length() - 1 ) not_eq '/' )
     {
         mask.push_back( '/' );
     }
@@ -82,14 +82,14 @@ _Check_return_ bool Win32FoundationClasses::wfc_delete_oldest_file( _In_z_ const
 
     auto find_file_handle = FindFirstFileW( mask.c_str(), &find_data );
 
-    if ( find_file_handle != static_cast< HANDLE >( INVALID_HANDLE_VALUE ) )
+    if ( find_file_handle not_eq static_cast< HANDLE >( INVALID_HANDLE_VALUE ) )
     {
         oldest_file_time  = find_data.ftLastWriteTime.dwLowDateTime;
         oldest_file_time += static_cast< double >( static_cast< double >( find_data.ftLastWriteTime.dwHighDateTime ) * high_value );
 
         filename.assign( find_data.cFileName );
 
-        while( FindNextFileW( find_file_handle, &find_data ) != FALSE )
+        while( FindNextFileW( find_file_handle, &find_data ) not_eq FALSE )
         {
             this_file_time  = find_data.ftLastWriteTime.dwLowDateTime;
             this_file_time += static_cast< double >( static_cast< double >( find_data.ftLastWriteTime.dwHighDateTime ) * high_value );
@@ -126,11 +126,10 @@ _Check_return_ uint32_t Win32FoundationClasses::wfc_number_of_files_in_directory
     uint32_t number_of_files = 0;
 
     std::wstring filename;
-
     std::wstring mask( directory_path );
 
-    if ( mask.at( mask.length() - 1 ) != '\\' and
-         mask.at( mask.length() - 1 ) != '/' )
+    if ( mask.at( mask.length() - 1 ) not_eq '\\' and
+         mask.at( mask.length() - 1 ) not_eq '/' )
     {
         mask.push_back( '/' );
     }
@@ -143,20 +142,20 @@ _Check_return_ uint32_t Win32FoundationClasses::wfc_number_of_files_in_directory
 
     auto find_file_handle = FindFirstFileW( mask.c_str(), &find_data );
 
-    if ( find_file_handle != static_cast< HANDLE >( INVALID_HANDLE_VALUE ) )
+    if ( find_file_handle not_eq static_cast< HANDLE >( INVALID_HANDLE_VALUE ) )
     {
         filename.assign( find_data.cFileName );
 
-        if ( filename.compare(WSTRING_VIEW(L".")) != I_AM_EQUAL_TO_THAT and filename.compare(WSTRING_VIEW(L"..")) != I_AM_EQUAL_TO_THAT)
+        if ( filename.compare(WSTRING_VIEW(L".")) not_eq I_AM_EQUAL_TO_THAT and filename.compare(WSTRING_VIEW(L"..")) not_eq I_AM_EQUAL_TO_THAT)
         {
             number_of_files++;
         }
 
-        while( FindNextFileW( find_file_handle, &find_data ) != FALSE )
+        while( FindNextFileW( find_file_handle, &find_data ) not_eq FALSE )
         {
             filename.assign( find_data.cFileName );
 
-            if ( filename.compare(WSTRING_VIEW(L".")) != I_AM_EQUAL_TO_THAT and filename.compare(WSTRING_VIEW(L"..")) != I_AM_EQUAL_TO_THAT)
+            if ( filename.compare(WSTRING_VIEW(L".")) not_eq I_AM_EQUAL_TO_THAT and filename.compare(WSTRING_VIEW(L"..")) not_eq I_AM_EQUAL_TO_THAT)
             {
                 number_of_files++;
             }
@@ -173,11 +172,10 @@ _Check_return_ uint64_t Win32FoundationClasses::wfc_number_of_bytes_in_directory
     uint64_t number_of_bytes = 0;
 
     std::wstring filename;
-
     std::wstring mask( directory_path );
 
-    if ( mask.at( mask.length() - 1 ) != '\\' and
-         mask.at( mask.length() - 1 ) != '/' )
+    if ( mask.at( mask.length() - 1 ) not_eq '\\' and
+         mask.at( mask.length() - 1 ) not_eq '/' )
     {
         mask.push_back( '/' );
     }
@@ -192,11 +190,11 @@ _Check_return_ uint64_t Win32FoundationClasses::wfc_number_of_bytes_in_directory
 
     LARGE_INTEGER large_integer;
 
-    if ( find_file_handle != static_cast< HANDLE >( INVALID_HANDLE_VALUE ) )
+    if ( find_file_handle not_eq static_cast< HANDLE >( INVALID_HANDLE_VALUE ) )
     {
         filename.assign( find_data.cFileName );
 
-        if ( filename.compare(WSTRING_VIEW(L".")) != I_AM_EQUAL_TO_THAT and filename.compare(WSTRING_VIEW(L"..")) != I_AM_EQUAL_TO_THAT)
+        if ( filename.compare(WSTRING_VIEW(L".")) not_eq I_AM_EQUAL_TO_THAT and filename.compare(WSTRING_VIEW(L"..")) not_eq I_AM_EQUAL_TO_THAT)
         {
             large_integer.HighPart = find_data.nFileSizeHigh;
             large_integer.LowPart  = find_data.nFileSizeLow;
@@ -204,11 +202,11 @@ _Check_return_ uint64_t Win32FoundationClasses::wfc_number_of_bytes_in_directory
             number_of_bytes += large_integer.QuadPart;
         }
 
-        while( FindNextFileW( find_file_handle, &find_data ) != FALSE )
+        while( FindNextFileW( find_file_handle, &find_data ) not_eq FALSE )
         {
             filename.assign( find_data.cFileName );
 
-            if ( filename.compare(WSTRING_VIEW(L".")) != I_AM_EQUAL_TO_THAT and filename.compare(WSTRING_VIEW(L"..")) != I_AM_EQUAL_TO_THAT)
+            if ( filename.compare(WSTRING_VIEW(L".")) not_eq I_AM_EQUAL_TO_THAT and filename.compare(WSTRING_VIEW(L"..")) not_eq I_AM_EQUAL_TO_THAT)
             {
                 large_integer.HighPart = find_data.nFileSizeHigh;
                 large_integer.LowPart  = find_data.nFileSizeLow;

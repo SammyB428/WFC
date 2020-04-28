@@ -224,7 +224,7 @@ namespace Win32FoundationClasses
 
             WFC_TRY
             {
-                if ( m_Buffer != nullptr )
+                if ( m_Buffer not_eq nullptr )
                 {
                     delete m_Buffer;
                     m_Buffer = nullptr;
@@ -257,7 +257,7 @@ namespace Win32FoundationClasses
 
             BSTR return_value = ::SysAllocStringLen( nullptr, length );
 
-            if ( return_value != nullptr )
+            if ( return_value not_eq nullptr )
             {
                 ::MultiByteToWideChar( code_page,
                     0,
@@ -349,7 +349,7 @@ namespace Win32FoundationClasses
 
             WFC_TRY
             {
-                if ( string_p != nullptr )
+                if ( string_p not_eq nullptr )
                 {
                     return( m_String.compare( string_p ) );
                 }
@@ -373,7 +373,7 @@ namespace Win32FoundationClasses
 
             WFC_TRY
             {
-                if ( string_p != nullptr )
+                if ( string_p not_eq nullptr )
                 {
                     return( _tcsicmp( m_String.c_str(), string_p ) );
                 }
@@ -429,7 +429,7 @@ namespace Win32FoundationClasses
 
                     m_String.resize( string_size );
 
-                    while( ascii_string_p[ loop_index ] != 0 )
+                    while( ascii_string_p[ loop_index ] not_eq 0 )
                     {
                         m_String.at( string_index ) = ascii_string_p[ loop_index ];
                         loop_index++;
@@ -676,7 +676,7 @@ namespace Win32FoundationClasses
             WFC_VALIDATE_POINTER( this );
             WFC_VALIDATE_POINTER_NULL_OK( string_p );
 
-            if ( string_p != nullptr )
+            if ( string_p not_eq nullptr )
             {
                 return( m_String.find( string_p ) );
             }
@@ -691,7 +691,7 @@ namespace Win32FoundationClasses
             WFC_VALIDATE_POINTER( this );
             WFC_VALIDATE_POINTER_NULL_OK( string_p );
 
-            if ( string_p != nullptr )
+            if ( string_p not_eq nullptr )
             {
                 return( (int) m_String.find( string_p, start_index ) );
             }
@@ -706,7 +706,7 @@ namespace Win32FoundationClasses
             WFC_VALIDATE_POINTER( this );
             WFC_VALIDATE_POINTER_NULL_OK( string_p );
 
-            if ( string_p != nullptr )
+            if ( string_p not_eq nullptr )
             {
                 return( m_String.find_first_of( string_p ) );
             }
@@ -734,7 +734,7 @@ namespace Win32FoundationClasses
 
             WFC_TRY
             {
-                if ( m_Buffer != nullptr )
+                if ( m_Buffer not_eq nullptr )
                 {
                     delete m_Buffer;
                     m_Buffer = nullptr;
@@ -842,7 +842,7 @@ namespace Win32FoundationClasses
             WFC_VALIDATE_POINTER( this );
             WFC_VALIDATE_POINTER_NULL_OK( string_to_insert );
 
-            if ( string_to_insert != nullptr )
+            if ( string_to_insert not_eq nullptr )
             {
                 int const string_length = (int) m_String.length();
 
@@ -1054,7 +1054,7 @@ namespace Win32FoundationClasses
             {
                 character_to_test = m_String.at( loop_index );
 
-                if ( character_to_test != character_to_remove )
+                if ( character_to_test not_eq character_to_remove )
                 {
                     new_string.Append( character_to_test, 1 );
                 }
@@ -1114,11 +1114,11 @@ namespace Win32FoundationClasses
 
                 found_at = Find( old_string );
 
-                while( found_at != STRING_NOT_FOUND )
+                while( found_at not_eq STRING_NOT_FOUND )
                 {
                     new_string.Append( Left( found_at ) );
 
-                    if ( replacement_string != nullptr )
+                    if ( replacement_string not_eq nullptr )
                     {
                         new_string.Append( replacement_string );
                     }
@@ -1290,7 +1290,7 @@ namespace Win32FoundationClasses
             WFC_VALIDATE_POINTER( this );
             WFC_VALIDATE_POINTER_NULL_OK( character_set );
 
-            if ( character_set != nullptr and m_String.empty() == false )
+            if ( character_set not_eq nullptr and m_String.empty() == false )
             {
                 return( Left( ::_tcscspn( m_String.c_str(), character_set ) ) );
             }
@@ -1306,7 +1306,7 @@ namespace Win32FoundationClasses
             WFC_VALIDATE_POINTER( this );
             WFC_VALIDATE_POINTER_NULL_OK( character_set );
 
-            if ( character_set != nullptr )
+            if ( character_set not_eq nullptr )
             {
                 return( Left( ::_tcsspn( m_String.c_str(), character_set ) ) );
             }

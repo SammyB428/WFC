@@ -62,7 +62,7 @@ _Check_return_ bool Win32FoundationClasses::wfc_is_dotted_ip_address( _In_ std::
 
     for( auto const ip_address_index : Range(ip_address.length()))
     {
-        if ( ip_address[ ip_address_index ] != '.' and
+        if ( ip_address[ ip_address_index ] not_eq '.' and
              isdigit( (unsigned char) ip_address[ ip_address_index ] ) == 0 )
         {
             // Illegal character
@@ -173,7 +173,7 @@ _Check_return_ bool Win32FoundationClasses::wfc_is_dotted_ip_address(_In_ std::u
 
     for (auto const ip_address_index : Range(ip_address.length()))
     {
-        if (ip_address[ip_address_index] != '.' and
+        if (ip_address[ip_address_index] not_eq '.' and
             isdigit(static_cast<int>(ip_address[ip_address_index])) == 0)
         {
             // Illegal character
@@ -284,7 +284,7 @@ _Check_return_ bool Win32FoundationClasses::wfc_is_dotted_ip_address( _In_ std::
 
     for ( auto const ip_address_index : Range(ip_address.length()))
     {
-        if ( ip_address[ ip_address_index ] != '.' and
+        if ( ip_address[ ip_address_index ] not_eq '.' and
              iswdigit( ip_address[ ip_address_index ] ) == 0 )
         {
             // Illegal character
@@ -389,10 +389,10 @@ _Check_return_ bool Win32FoundationClasses::wfc_is_guid( _In_ std::string_view c
         return(false);
     }
 
-    if (characters[8] != '-' or
-        characters[13] != '-' or
-        characters[18] != '-' or
-        characters[23] != '-')
+    if (characters[8] not_eq '-' or
+        characters[13] not_eq '-' or
+        characters[18] not_eq '-' or
+        characters[23] not_eq '-')
     {
         return(false);
     }
@@ -446,10 +446,10 @@ _Check_return_ bool Win32FoundationClasses::wfc_is_guid(_In_ std::u16string_view
         return(false);
     }
 
-    if (characters[8] != '-' or
-        characters[13] != '-' or
-        characters[18] != '-' or
-        characters[23] != '-')
+    if (characters[8] not_eq '-' or
+        characters[13] not_eq '-' or
+        characters[18] not_eq '-' or
+        characters[23] not_eq '-')
     {
         return(false);
     }
@@ -503,10 +503,10 @@ _Check_return_ bool Win32FoundationClasses::wfc_is_guid( _In_ std::wstring_view 
         return( false );
     }
 
-    if (characters[8] != '-' or
-        characters[13] != '-' or
-        characters[18] != '-' or
-        characters[23] != '-')
+    if (characters[8] not_eq '-' or
+        characters[13] not_eq '-' or
+        characters[18] not_eq '-' or
+        characters[23] not_eq '-')
     {
         return(false);
     }
@@ -560,15 +560,15 @@ _Check_return_ bool Win32FoundationClasses::wfc_is_guid_with_curlies( _In_ std::
         return(false);
     }
 
-    if (characters[0] != '{' or characters[37] != '}')
+    if (characters[0] not_eq '{' or characters[37] not_eq '}')
     {
         return(false);
     }
 
-    if (characters[9] != '-' or
-        characters[14] != '-' or
-        characters[19] != '-' or
-        characters[24] != '-')
+    if (characters[9] not_eq '-' or
+        characters[14] not_eq '-' or
+        characters[19] not_eq '-' or
+        characters[24] not_eq '-')
     {
         return(false);
     }
@@ -622,15 +622,15 @@ _Check_return_ bool Win32FoundationClasses::wfc_is_guid_with_curlies(_In_ std::u
         return(false);
     }
 
-    if (characters[0] != '{' or characters[37] != '}')
+    if (characters[0] not_eq '{' or characters[37] not_eq '}')
     {
         return(false);
     }
 
-    if (characters[9] != '-' or
-        characters[14] != '-' or
-        characters[19] != '-' or
-        characters[24] != '-')
+    if (characters[9] not_eq '-' or
+        characters[14] not_eq '-' or
+        characters[19] not_eq '-' or
+        characters[24] not_eq '-')
     {
         return(false);
     }
@@ -684,15 +684,15 @@ _Check_return_ bool Win32FoundationClasses::wfc_is_guid_with_curlies( _In_ std::
         return( false );
     }
 
-    if (characters[0] != '{' or characters[37] != '}')
+    if (characters[0] not_eq '{' or characters[37] not_eq '}')
     {
         return(false);
     }
 
-    if (characters[9] != '-' or
-        characters[14] != '-' or
-        characters[19] != '-' or
-        characters[24] != '-')
+    if (characters[9] not_eq '-' or
+        characters[14] not_eq '-' or
+        characters[19] not_eq '-' or
+        characters[24] not_eq '-')
     {
         return(false);
     }
@@ -813,7 +813,7 @@ _Check_return_ bool Win32FoundationClasses::wfc_is_octal_then_NULLs( __in_bcount
 
             case 1: // space
 
-                if ( buffer[ buffer_index ] != ' ' )
+                if ( buffer[ buffer_index ] not_eq ' ' )
                 {
                     // Do we advance the state or return false?
 
@@ -831,7 +831,7 @@ _Check_return_ bool Win32FoundationClasses::wfc_is_octal_then_NULLs( __in_bcount
 
             case 2: // NULLs
 
-                if ( buffer[ buffer_index ] != 0x00 )
+                if ( buffer[ buffer_index ] not_eq 0x00 )
                 {
                     return( false );
                 }
@@ -889,7 +889,7 @@ _Check_return_ bool Win32FoundationClasses::wfc_is_wide_octal_then_NULLs( __in_b
 
             case 1: // space
 
-                if ( wide_string[ buffer_index ] != ' ' )
+                if ( wide_string[ buffer_index ] not_eq ' ' )
                 {
                     // Do we advance the state or return false?
 
@@ -907,7 +907,7 @@ _Check_return_ bool Win32FoundationClasses::wfc_is_wide_octal_then_NULLs( __in_b
 
             case 2: // NULLs
 
-                if ( wide_string[ buffer_index ] != 0x00 )
+                if ( wide_string[ buffer_index ] not_eq 0x00 )
                 {
                     return( false );
                 }
@@ -1001,7 +1001,7 @@ _Check_return_ bool Win32FoundationClasses::wfc_is_hexadecimal_then_NULLs( __in_
 
             case 1: // space
 
-                if ( buffer[ buffer_index ] != ' ' )
+                if ( buffer[ buffer_index ] not_eq ' ' )
                 {
                     // Do we advance the state or return false?
 
@@ -1019,7 +1019,7 @@ _Check_return_ bool Win32FoundationClasses::wfc_is_hexadecimal_then_NULLs( __in_
 
             case 2: // NULLs
 
-                if ( buffer[ buffer_index ] != 0x00 )
+                if ( buffer[ buffer_index ] not_eq 0x00 )
                 {
                     return( false );
                 }
@@ -1077,7 +1077,7 @@ _Check_return_ bool Win32FoundationClasses::wfc_is_wide_hexadecimal_then_NULLs( 
 
             case 1: // space
 
-                if ( wide_string[ buffer_index ] != ' ' )
+                if ( wide_string[ buffer_index ] not_eq ' ' )
                 {
                     // Do we advance the state or return false?
 
@@ -1095,7 +1095,7 @@ _Check_return_ bool Win32FoundationClasses::wfc_is_wide_hexadecimal_then_NULLs( 
 
             case 2: // NULLs
 
-                if ( wide_string[ buffer_index ] != 0x00 )
+                if ( wide_string[ buffer_index ] not_eq 0x00 )
                 {
                     return( false );
                 }
@@ -1189,7 +1189,7 @@ _Check_return_ bool Win32FoundationClasses::wfc_is_decimal_then_NULLs( __in_bcou
 
             case 1: // space
 
-                if ( buffer[ buffer_index ] != ' ' )
+                if ( buffer[ buffer_index ] not_eq ' ' )
                 {
                     // Do we advance the state or return false?
 
@@ -1207,7 +1207,7 @@ _Check_return_ bool Win32FoundationClasses::wfc_is_decimal_then_NULLs( __in_bcou
 
             case 2: // NULLs
 
-                if ( buffer[ buffer_index ] != 0x00 )
+                if ( buffer[ buffer_index ] not_eq 0x00 )
                 {
                     return( false );
                 }
@@ -1265,7 +1265,7 @@ _Check_return_ bool Win32FoundationClasses::wfc_is_wide_decimal_then_NULLs( __in
 
             case 1: // space
 
-                if ( wide_string[ buffer_index ] != ' ' )
+                if ( wide_string[ buffer_index ] not_eq ' ' )
                 {
                     // Do we advance the state or return false?
 
@@ -1283,7 +1283,7 @@ _Check_return_ bool Win32FoundationClasses::wfc_is_wide_decimal_then_NULLs( __in
 
             case 2: // NULLs
 
-                if ( wide_string[ buffer_index ] != 0x00 )
+                if ( wide_string[ buffer_index ] not_eq 0x00 )
                 {
                     return( false );
                 }

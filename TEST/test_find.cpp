@@ -137,7 +137,7 @@ static _Check_return_ std::size_t prepare_buffer(_Inout_ uint8_t * buffer, _In_ 
 
     std::size_t end_of_buffer = buffer_size;
 
-    if ((buffer_size % sizeof(_pattern)) != 0)
+    if ((buffer_size % sizeof(_pattern)) not_eq 0)
     {
         end_of_buffer -= (buffer_size % sizeof(_pattern));
     }
@@ -170,7 +170,7 @@ static _Check_return_ std::size_t search_buffer(_Inout_ uint8_t * buffer, _In_ s
 
     int64_t found_at = Win32FoundationClasses::find_in_memory(&buffer[buffer_index], number_of_bytes_remaining, needle, sizeof(needle));
 
-    while (found_at != BYTES_NOT_FOUND)
+    while (found_at not_eq BYTES_NOT_FOUND)
     {
         number_of_times_found++;
 
@@ -189,7 +189,7 @@ __checkReturn bool execute_test(__in uint8_t const * buffer, __in int64_t const 
 {
     int64_t const found_at = Win32FoundationClasses::find_byte(NEEDLE, buffer, 32);
 
-    if (found_at != should_be_found_at)
+    if (found_at not_eq should_be_found_at)
     {
         printf("Failed to find %02X at offset %I64d, it was found at offset %I64d\n", NEEDLE, should_be_found_at, found_at);
 
@@ -240,7 +240,7 @@ __checkReturn bool test_find(__out std::string& class_name, __out int& test_numb
     {
         test_buffer[loop_index - 1] = 'B';
 
-        if (Win32FoundationClasses::find_byte('B', test_buffer, loop_index) != (loop_index - 1))
+        if (Win32FoundationClasses::find_byte('B', test_buffer, loop_index) not_eq (loop_index - 1))
         {
             printf("Failed find_byte() test %d\n", (int)loop_index);
             test_number_that_failed = (int) loop_index;
@@ -480,12 +480,12 @@ __checkReturn bool test_find(__out std::string& class_name, __out int& test_numb
     std::size_t const found_2 = _find_byte_SSE41_2(0xAA, &buffer[1], TEST_FIND_BUFFER_SIZE - 1);
     QueryPerformanceCounter(&end_2);
 
-    if (found_1 != desired_needle_index)
+    if (found_1 not_eq desired_needle_index)
     {
         _ASSERT_EXPR(FALSE, _CRT_WIDE("found_1 is not the desired index"));
     }
 
-    if (found_1 != found_2)
+    if (found_1 not_eq found_2)
     {
         _ASSERT_EXPR(FALSE, _CRT_WIDE("found_1 is not equal to found_2"));
     }
@@ -508,7 +508,7 @@ __checkReturn bool test_find(__out std::string& class_name, __out int& test_numb
 
 #endif
 
-    if (number_of_times_found != number_of_tests)
+    if (number_of_times_found not_eq number_of_tests)
     {
         test_number_that_failed = 34;
         _aligned_free(buffer);
@@ -539,28 +539,28 @@ __checkReturn bool test_find(__out std::string& class_name, __out int& test_numb
 
     Win32FoundationClasses::find_all_in_memory(buffer, TEST_FIND_BUFFER_SIZE, sam_needle, sizeof(sam_needle), results);
 
-    if (results.size() != 3)
+    if (results.size() not_eq 3)
     {
         test_number_that_failed = 35;
         _aligned_free(buffer);
         return(failure());
     }
 
-    if (results[0] != 1)
+    if (results[0] not_eq 1)
     {
         test_number_that_failed = 36;
         _aligned_free(buffer);
         return(failure());
     }
 
-    if (results[1] != 5)
+    if (results[1] not_eq 5)
     {
         test_number_that_failed = 37;
         _aligned_free(buffer);
         return(failure());
     }
 
-    if (results[2] != (TEST_FIND_BUFFER_SIZE - 4))
+    if (results[2] not_eq (TEST_FIND_BUFFER_SIZE - 4))
     {
         test_number_that_failed = 38;
         _aligned_free(buffer);

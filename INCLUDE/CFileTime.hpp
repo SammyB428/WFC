@@ -262,7 +262,7 @@ class CFileTime : public _FILETIME
       {
          FILETIME local_time = { 0, 0 };
 
-         if ( ::FileTimeToLocalFileTime( this, &local_time ) != FALSE )
+         if ( ::FileTimeToLocalFileTime( this, &local_time ) not_eq FALSE )
          {
             dwLowDateTime = local_time.dwLowDateTime;
             dwHighDateTime = local_time.dwHighDateTime;
@@ -395,7 +395,7 @@ class CFileTime : public _FILETIME
 
          // We were passed a pointer, don't trust it
 
-        if ( ::SystemTimeToFileTime( source, &file_time ) != FALSE )
+        if ( ::SystemTimeToFileTime( source, &file_time ) not_eq FALSE )
         {
            dwLowDateTime  = file_time.dwLowDateTime;
            dwHighDateTime = file_time.dwHighDateTime;
@@ -410,7 +410,7 @@ class CFileTime : public _FILETIME
       {
           FILETIME file_time{ 0, 0 };
 
-         if ( ::SystemTimeToFileTime( &source, &file_time ) != FALSE )
+         if ( ::SystemTimeToFileTime( &source, &file_time ) not_eq FALSE )
          {
             dwLowDateTime  = file_time.dwLowDateTime;
             dwHighDateTime = file_time.dwHighDateTime;
@@ -425,7 +425,7 @@ class CFileTime : public _FILETIME
       {
           FILETIME file_time{ 0, 0 };
 
-         if ( ::DosDateTimeToFileTime( ms_dos_date, ms_dos_time, &file_time ) != FALSE )
+         if ( ::DosDateTimeToFileTime( ms_dos_date, ms_dos_time, &file_time ) not_eq FALSE )
          {
             dwLowDateTime  = file_time.dwLowDateTime;
             dwHighDateTime = file_time.dwHighDateTime;

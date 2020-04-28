@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 1995-2015, Samuel R. Blackburn
+** Copyright, 1995-2020, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -100,7 +100,7 @@ _Check_return_ int Win32FoundationClasses::CUniversalNamingConvention::Compare( 
 void Win32FoundationClasses::CUniversalNamingConvention::Copy( _In_ Win32FoundationClasses::CUniversalNamingConvention const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
-   ASSERT( this != &source );
+   ASSERT( this not_eq &source );
 
    /*
    ** Make sure we ain't copying ourselves
@@ -133,7 +133,7 @@ void Win32FoundationClasses::CUniversalNamingConvention::Copy( _In_ Win32Foundat
 
    std::size_t location_of_slash = PathName.find( '/' );
 
-   if ( location_of_slash != std::wstring::npos )
+   if ( location_of_slash not_eq std::wstring::npos )
    {
       ShareName.assign( PathName.substr( 0, location_of_slash ) );
       PathName.assign( right( PathName, ( PathName.length() - location_of_slash ) - 1 ) );
@@ -180,7 +180,7 @@ void Win32FoundationClasses::CUniversalNamingConvention::Copy( __in_z LPCTSTR so
 
       std::wstring temp_string( source );
 
-      if ( temp_string.length() < 2 or temp_string.substr( 0, 2 ).compare(WSTRING_VIEW(L"\\\\")) != I_AM_EQUAL_TO_THAT )
+      if ( temp_string.length() < 2 or temp_string.substr( 0, 2 ).compare(WSTRING_VIEW(L"\\\\")) not_eq I_AM_EQUAL_TO_THAT )
       {
          PathName.assign( temp_string );
          Make();

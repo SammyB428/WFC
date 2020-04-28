@@ -327,7 +327,7 @@ void CRemoteAccessServicePort::Dump( CDumpContext& dump_context ) const
    dump_context << TEXT( "   SessionStartTime is         " ) << SessionStartTime         << TEXT( "\n" );
    dump_context << TEXT( "   LogonDomainName is          " ) << LogonDomainName          << TEXT( "\n" );
    
-   if ( IsAdvancedServer != FALSE )
+   if ( IsAdvancedServer not_eq FALSE )
    {
       dump_context << TEXT( "   IsAdvancedServer is         TRUE\n" );
    }

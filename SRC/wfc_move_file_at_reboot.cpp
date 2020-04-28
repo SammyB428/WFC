@@ -117,7 +117,7 @@ int _tmain( int number_of_command_line_arguments, LPCTSTR command_line_arguments
       return( EXIT_FAILURE );
    }
 
-   if ( <B>wfc_move_file_at_reboot</B>( command_line_arguments[ 1 ], command_line_arguments[ 2 ] ) != FALSE )
+   if ( <B>wfc_move_file_at_reboot</B>( command_line_arguments[ 1 ], command_line_arguments[ 2 ] ) not_eq FALSE )
    {
       _tprintf( &quot;Move OK\n&quot; );
    }

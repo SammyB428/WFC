@@ -61,7 +61,7 @@ Win32FoundationClasses::CDataArchive::CDataArchive() noexcept
     m_Position = 0;
 }
 
-Win32FoundationClasses::CDataArchive::~CDataArchive() noexcept
+Win32FoundationClasses::CDataArchive::~CDataArchive()
 {
     WFC_VALIDATE_POINTER(this);
 
@@ -291,7 +291,7 @@ void Win32FoundationClasses::CDataArchive::Read(_Out_ std::wstring& value) noexc
 
         Read(character);
 
-        while (character != 0)
+        while (character not_eq 0)
         {
            value.push_back( character );
            Read(character);

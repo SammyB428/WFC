@@ -168,10 +168,10 @@ Win32FoundationClasses::CExtensibleMarkupLanguageDocument::~CExtensibleMarkupLan
    m_UseNamespace          = false;
    m_ConversionCodePage    = 0;
 
-   if ( m_XML != nullptr )
+   if ( m_XML not_eq nullptr )
    {
        Win32FoundationClasses::CExtensibleMarkupLanguageElement::DeleteElement( m_XML );
-      m_XML = nullptr;
+       m_XML = nullptr;
    }
 }
 
@@ -282,7 +282,7 @@ void Win32FoundationClasses::CExtensibleMarkupLanguageDocument::Append( _In_ Win
 
        while( source.m_XML->GetNextChild( enumerator, element_to_copy_p ) == true )
        {
-         if ( element_to_copy_p != nullptr )
+         if ( element_to_copy_p not_eq nullptr )
          {
             auto element_to_add_p = Win32FoundationClasses::CExtensibleMarkupLanguageElement::NewElement( m_XML );
 
@@ -317,7 +317,7 @@ void Win32FoundationClasses::CExtensibleMarkupLanguageDocument::Copy( _In_ Win32
       }
    }
 
-   if ( source.m_XML != nullptr )
+   if ( source.m_XML not_eq nullptr )
    {
       m_XML->Copy( *source.m_XML );
    }
@@ -365,7 +365,7 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageDocument::C
    context.desired_name = name;
    context.found = false;
 
-   if ( m_XML != nullptr )
+   if ( m_XML not_eq nullptr )
    {
       (void) m_XML->ForAny( name, find_element_name, &context );
 
@@ -379,7 +379,7 @@ _Check_return_ std::size_t Win32FoundationClasses::CExtensibleMarkupLanguageDocu
 {
    WFC_VALIDATE_POINTER( this );
 
-   if ( m_XML != nullptr )
+   if ( m_XML not_eq nullptr )
    {
       return( m_XML->CountChildren( name ) );
    }
@@ -614,7 +614,7 @@ void Win32FoundationClasses::CExtensibleMarkupLanguageDocument::Empty( void ) no
    m_ErrorTagName.clear();
    m_ErrorMessage.clear();
 
-   if ( m_XML != nullptr )
+   if ( m_XML not_eq nullptr )
    {
        Win32FoundationClasses::CExtensibleMarkupLanguageElement::DeleteElement( m_XML );
       m_XML = nullptr;
@@ -779,7 +779,7 @@ void Win32FoundationClasses::CExtensibleMarkupLanguageDocument::GetParsingErrorI
    beginning.Copy( m_ErrorElementBeganAt );
    error_location.Copy( m_ErrorOccuredAt );
 
-   if ( error_message_p != nullptr )
+   if ( error_message_p not_eq nullptr )
    {
       // We were passed a pointer by the user, don't trust it
 
@@ -809,10 +809,10 @@ void Win32FoundationClasses::CExtensibleMarkupLanguageDocument::m_InitializeRoot
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER_NULL_OK( m_XML );
 
-   if ( m_XML != nullptr )
+   if ( m_XML not_eq nullptr )
    {
        Win32FoundationClasses::CExtensibleMarkupLanguageElement::DeleteElement( m_XML );
-      m_XML = nullptr;
+       m_XML = nullptr;
    }
 
    m_XML = Win32FoundationClasses::CExtensibleMarkupLanguageElement::NewElement( nullptr, Win32FoundationClasses::CExtensibleMarkupLanguageElement::ElementType::ProcessingInstruction, this );
@@ -836,7 +836,7 @@ static inline _Check_return_ bool __is_leading_spaces( _Inout_ Win32FoundationCl
       // The first character was a space, the possibilities are ASCII, little endian
       // Unicode or UCS-4 little endian
 
-      if ( byte_2 != 0 )
+      if ( byte_2 not_eq 0 )
       {
          // ASCII
          (void) source.SetTextToASCII( true );
@@ -866,12 +866,12 @@ static inline _Check_return_ bool __is_leading_spaces( _Inout_ Win32FoundationCl
    
    // First character was not a space
 
-   if ( byte_1 != 0 )
+   if ( byte_1 not_eq 0 )
    {
       return( false );
    }
 
-   if ( byte_2 != 0 )
+   if ( byte_2 not_eq 0 )
    {
       if (Win32FoundationClasses::is_xml_white_space( byte_2 ) == false)
       {
@@ -1156,16 +1156,16 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageDocument::P
       beginning_of_tag.Copy( parse_point );
       xml_declaration_found = true;
 
-      if ( source.PeekCharacter( parse_point, 2 ) != 'x' or
-           source.PeekCharacter( parse_point, 3 ) != 'm' or
-           source.PeekCharacter( parse_point, 4 ) != 'l' )
+      if ( source.PeekCharacter( parse_point, 2 ) not_eq 'x' or
+           source.PeekCharacter( parse_point, 3 ) not_eq 'm' or
+           source.PeekCharacter( parse_point, 4 ) not_eq 'l' )
       {
          xml_declaration_is_mixed_case = true;
       }
    }
    else
    {
-      if ( source.PeekCharacter( parse_point, 0 ) != '<' )
+      if ( source.PeekCharacter( parse_point, 0 ) not_eq '<' )
       {
          m_ParseErrorEncountered = ParseErrorOccurred();
          m_ErrorMessage.assign(WSTRING_VIEW(L"First non-space character is not '<' (Rule 1)."));
@@ -1205,7 +1205,7 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageDocument::P
             m_InitializeRootElement();
          }
 
-         if ( m_XML != nullptr )
+         if ( m_XML not_eq nullptr )
          {
             m_XML->SetContents(WSTRING_VIEW(L"xml version=\"1.0\" standalone=\"yes\""));
             (void) m_XML->AddAttribute(WSTRING_VIEW(L"version"), WSTRING_VIEW(L"1.0") );
@@ -1223,14 +1223,14 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageDocument::P
          {
             uint32_t const character = source.PeekCharacter( beginning_of_tag, 0 );
 
-            auto child_element_p = (character != '<' ) ? CExtensibleMarkupLanguageElement::NewElement(m_XML, CExtensibleMarkupLanguageElement::ElementType::TextSegment, this)
-                                                       : CExtensibleMarkupLanguageElement::NewElement(m_XML, CExtensibleMarkupLanguageElement::ElementType::Element, this);
+            auto child_element_p = (character not_eq '<' ) ? CExtensibleMarkupLanguageElement::NewElement(m_XML, CExtensibleMarkupLanguageElement::ElementType::TextSegment, this)
+                                                           : CExtensibleMarkupLanguageElement::NewElement(m_XML, CExtensibleMarkupLanguageElement::ElementType::Element, this);
 
             if ( child_element_p == nullptr )
             {
                //WFCTRACE( TEXT( "Can't allocate memory for another element" ) );
 
-               if ( m_XML != nullptr )
+               if ( m_XML not_eq nullptr )
                {
                   m_XML->DestroyChildren();
                }
@@ -1242,7 +1242,7 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageDocument::P
             {
                //WFCTRACE( TEXT( "Parse failed." ) );
 
-               if ( m_XML != nullptr )
+               if ( m_XML not_eq nullptr )
                {
                   m_XML->DestroyChildren();
                }
@@ -1426,7 +1426,7 @@ void Win32FoundationClasses::CExtensibleMarkupLanguageDocument::SetConversionCod
    m_ConversionCodePage = new_page;
 
 #if ! defined(WE_ARE_BUILDING_WFC_ON_UNIX)
-   if ( m_ConversionCodePage != CP_ACP )
+   if ( m_ConversionCodePage not_eq CP_ACP )
    {
        if (IsWindowsXPOrGreater() == false)
        {
@@ -1609,7 +1609,7 @@ void Win32FoundationClasses::CExtensibleMarkupLanguageDocument::WriteTo( _Out_ s
 
          while( m_XML->GetNextChild( enumerator, child_p ) == true )
          {
-            if ( child_p != nullptr )
+            if ( child_p not_eq nullptr )
             {
                child_p->WriteTo( destination );
             }
@@ -1878,7 +1878,7 @@ empty, the name will be used and the <A HREF="#UseNamespace">UseNamespace</A> wi
 If <CODE>name_space</CODE> is NULL or empty, a name will not be used (the default) and
 <A HREF="#UseNamespace">UseNamespace</A> will return false.
 
-<DT><PRE>bool <B><A NAME="SetParentChildSeparatorCharacter">SetParentChildSeparatorCharacter</A></B>( TCHAR separator )</PRE><DD>
+<DT><PRE>bool <B><A NAME="SetParentChildSeparatorCharacter">SetParentChildSeparatorCharacter</A></B>( wchar_t separator )</PRE><DD>
 Allows you to specify the character that will separate parent and child
 names in the <B>GetElement()</B> call.
 

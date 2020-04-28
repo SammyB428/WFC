@@ -189,7 +189,7 @@ void Win32FoundationClasses::CNetworkScheduleJob::Copy( _In_ AT_INFO const * sou
 void Win32FoundationClasses::CNetworkScheduleJob::Copy( _In_ Win32FoundationClasses::CNetworkScheduleJob const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
-   ASSERT( this != &source );
+   ASSERT( this not_eq &source );
 
    /*
    ** Make sure we ain't copying ourselves
@@ -394,9 +394,9 @@ void Win32FoundationClasses::CNetworkScheduleJob::m_Initialize( void ) noexcept
 Win32FoundationClasses::CNetworkScheduleJob const& Win32FoundationClasses::CNetworkScheduleJob::operator = ( _In_ Win32FoundationClasses::CNetworkScheduleJob const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
-   ASSERT( this != &source );
+   ASSERT( this not_eq &source );
 
-   if ( this != &source )
+   if ( this not_eq &source )
    {
       Copy( source );
    }

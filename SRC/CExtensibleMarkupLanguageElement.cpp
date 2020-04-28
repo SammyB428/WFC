@@ -134,7 +134,7 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageElement::Ad
 
     std::size_t location_of_character = attribute_p->Value.find( CARRIAGE_RETURN );
 
-    while( location_of_character != std::wstring::npos)
+    while( location_of_character not_eq std::wstring::npos)
     {
         // We found a carriage return, let's normalize it.
 
@@ -163,7 +163,7 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageElement::Ad
 
     location_of_character = attribute_p->Value.find( LINE_FEED );
 
-    while( location_of_character != std::wstring::npos)
+    while( location_of_character not_eq std::wstring::npos)
     {
         // We found a carriage return, let's normalize it.
 
@@ -175,7 +175,7 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageElement::Ad
 
     location_of_character = attribute_p->Value.find(TAB_CHARACTER);
 
-    while( location_of_character != std::wstring::npos)
+    while( location_of_character not_eq std::wstring::npos)
     {
         // We found a carriage return, let's normalize it.
 
@@ -187,7 +187,7 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageElement::Ad
     // Fixed a couple of (unreported, I found them myself) bugs dealing with
     // well formedness constraints in regards to attributes
 
-    if ( GetAttributeByName( attribute_p->Name ) != nullptr )
+    if ( GetAttributeByName( attribute_p->Name ) not_eq nullptr )
     {
         std::wstring parsing_error_message(WSTRING_VIEW(L"Attributes must be unique (Rule 40). An attribute named \""));
  
@@ -202,7 +202,7 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageElement::Ad
         return( false );
     }
 
-    if ( attribute_p->Value.find( '<' ) != std::wstring::npos)
+    if ( attribute_p->Value.find( '<' ) not_eq std::wstring::npos)
     {
         std::wstring parsing_error_message(WSTRING_VIEW(L"Attribute values cannot contain a '<' (Rule 41). Offending attribute is named named \""));
 
@@ -222,7 +222,7 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageElement::Ad
 
     std::size_t const index_of_ampersand = attribute_p->Value.find( '&' );
 
-    if ( index_of_ampersand != std::wstring::npos)
+    if ( index_of_ampersand not_eq std::wstring::npos)
     {
         std::size_t const index_of_semicolon = attribute_p->Value.find( ';', index_of_ampersand + 1 );
 
@@ -251,7 +251,7 @@ void Win32FoundationClasses::CExtensibleMarkupLanguageElement::AddChild( _Inout_
 {
     WFC_VALIDATE_POINTER( this );
     WFC_VALIDATE_POINTER( item_p );
-    ASSERT( item_p != this );
+    ASSERT( item_p not_eq this );
 
     if ( item_p == this )
     {
@@ -259,7 +259,7 @@ void Win32FoundationClasses::CExtensibleMarkupLanguageElement::AddChild( _Inout_
         return;
     }
 
-    if ( item_p != nullptr )
+    if ( item_p not_eq nullptr )
     {
         // First, let's make sure we aren't already in there
 
@@ -353,7 +353,7 @@ void Win32FoundationClasses::CExtensibleMarkupLanguageElement::Copy( _In_ Win32F
 
     for( auto const that_attribute_p : source.m_Attributes )
     {
-        if ( that_attribute_p != nullptr )
+        if ( that_attribute_p not_eq nullptr )
         {
             auto this_attribute_p = new Win32FoundationClasses::CExtensibleMarkupLanguageAttribute;
 
@@ -375,7 +375,7 @@ void Win32FoundationClasses::CExtensibleMarkupLanguageElement::Copy( _In_ Win32F
 
     for( auto const that_item_p : source.m_Children )
     {
-        if ( that_item_p != nullptr )
+        if ( that_item_p not_eq nullptr )
         {
             auto this_item_p = NewElement( this );
 
@@ -404,7 +404,7 @@ _Check_return_ std::size_t Win32FoundationClasses::CExtensibleMarkupLanguageElem
 
     wchar_t parent_child_separator_character = '.';
 
-    if ( m_Document != nullptr )
+    if ( m_Document not_eq nullptr )
     {
         parent_child_separator_character = m_Document->GetParentChildSeparatorCharacter();
     }
@@ -466,7 +466,7 @@ _Check_return_ std::size_t Win32FoundationClasses::CExtensibleMarkupLanguageElem
 
         index_of_character = child_name.find( '(' );
 
-        if ( index_of_character != std::wstring::npos )
+        if ( index_of_character not_eq std::wstring::npos )
         {
             // Yup, we've got us a [
 
@@ -478,7 +478,7 @@ _Check_return_ std::size_t Win32FoundationClasses::CExtensibleMarkupLanguageElem
 
         index_of_character = child_name.find( ')' );
 
-        if ( index_of_character != std::wstring::npos)
+        if ( index_of_character not_eq std::wstring::npos)
         {
             // Yup, we've got us a (
 
@@ -539,7 +539,7 @@ void Win32FoundationClasses::CExtensibleMarkupLanguageElement::DeleteElement( _I
     // This destroys the element in whatever manor is appropriate for how NewElement()
     // created it.
 
-    if ( element_p != nullptr )
+    if ( element_p not_eq nullptr )
     {
         delete element_p;
     }
@@ -556,7 +556,7 @@ void Win32FoundationClasses::CExtensibleMarkupLanguageElement::DestroyAttributeB
     {
         auto attribute_p = m_Attributes[ loop_index ];
 
-        if ( attribute_p != nullptr )
+        if ( attribute_p not_eq nullptr )
         {
             if ( attribute_p->Name.compare( name ) == I_AM_EQUAL_TO_THAT)
             {
@@ -584,7 +584,7 @@ void Win32FoundationClasses::CExtensibleMarkupLanguageElement::DestroyAttributeB
     {
         auto attribute_p = m_Attributes[ loop_index ];
 
-        if ( attribute_p != nullptr )
+        if ( attribute_p not_eq nullptr )
         {
             if ( attribute_p->Value.compare( value ) == I_AM_EQUAL_TO_THAT)
             {
@@ -607,7 +607,7 @@ void Win32FoundationClasses::CExtensibleMarkupLanguageElement::DestroyAttributes
 
     for (auto const& attribute_p : m_Attributes)
     {
-        if (attribute_p != nullptr)
+        if (attribute_p not_eq nullptr)
         {
             delete attribute_p;
         }
@@ -676,7 +676,7 @@ static void __find_any_child_callback( void * parameter, _Inout_ Win32Foundation
 {
     auto context_p = static_cast<FIND_ANY_CHILD_CONTEXT *>( parameter );
 
-    if ( context_p != nullptr )
+    if ( context_p not_eq nullptr )
     {
         context_p->child = element_p;
     }
@@ -797,7 +797,7 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageElement::Ge
 
         while( GetNextAttribute( enumerator, this_attribute_p ) == true )
         {
-            if ( this_attribute_p != nullptr )
+            if ( this_attribute_p not_eq nullptr )
             {
                 if ( attribute.Name.compare( this_attribute_p->Name ) == I_AM_EQUAL_TO_THAT)
                 {
@@ -827,7 +827,7 @@ _Check_return_ Win32FoundationClasses::CExtensibleMarkupLanguageAttribute * Win3
 
         while( GetNextAttribute( enumerator, this_attribute_p ) == true )
         {
-            if ( this_attribute_p != nullptr )
+            if ( this_attribute_p not_eq nullptr )
             {
                 if ( this_attribute_p->Name.compare(name) == I_AM_EQUAL_TO_THAT)
                 {
@@ -855,7 +855,7 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageElement::Ge
 
         while( GetNextAttribute( enumerator, this_attribute_p ) == true )
         {
-            if ( this_attribute_p != nullptr )
+            if ( this_attribute_p not_eq nullptr )
             {
                 if ( this_attribute_p->Name.compare(name) == I_AM_EQUAL_TO_THAT)
                 {
@@ -890,7 +890,7 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageElement::Ge
 
         while( GetNextAttribute( enumerator, this_attribute_p ) == true )
         {
-            if ( this_attribute_p != nullptr )
+            if ( this_attribute_p not_eq nullptr )
             {
                 if ( attribute.Value.compare( this_attribute_p->Value ) == I_AM_EQUAL_TO_THAT)
                 {
@@ -923,7 +923,7 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageElement::Ge
 
     auto const first_child = child->GetTheFirstChild();
 
-    if ( first_child != nullptr )
+    if ( first_child not_eq nullptr )
     {
         first_child->GetBeginning( beginning );
     }
@@ -982,7 +982,7 @@ _Check_return_ Win32FoundationClasses::CExtensibleMarkupLanguageElement * Win32F
     {
         Win32FoundationClasses::CExtensibleMarkupLanguageElement * element_p = m_Children[ loop_index ];
 
-        if ( element_p != nullptr )
+        if ( element_p not_eq nullptr )
         {
             if ( parent_name.compare( element_p->m_Tag ) == I_AM_EQUAL_TO_THAT)
             {
@@ -1034,7 +1034,7 @@ _Check_return_ Win32FoundationClasses::CExtensibleMarkupLanguageElement * Win32F
     {
         auto element_p = m_Children[loop_index];
 
-        if (element_p != nullptr)
+        if (element_p not_eq nullptr)
         {
             if (element_p->m_Tag.compare(name) == I_AM_EQUAL_TO_THAT)
             {
@@ -1068,14 +1068,14 @@ void Win32FoundationClasses::CExtensibleMarkupLanguageElement::GetFullyQualified
 
     wchar_t parent_child_separator_character = '.';
 
-    if ( m_Document != nullptr )
+    if ( m_Document not_eq nullptr )
     {
         parent_child_separator_character = m_Document->GetParentChildSeparatorCharacter();
     }
 
     auto parent_element_p = GetParent();
 
-    while( parent_element_p != nullptr )
+    while( parent_element_p not_eq nullptr )
     {
         parent_element_p->GetNameAndInstance( parent_name );
 
@@ -1113,7 +1113,7 @@ _Check_return_ Win32FoundationClasses::CExtensibleMarkupLanguageElement * Win32F
                 // Now continue the enumeration until we reach a typeElement element
                 while( parent_element_p->GetNextChild( enumerator, child_element_p ) == true )
                 {
-                    if ( child_element_p != nullptr )
+                    if ( child_element_p not_eq nullptr )
                     {
                         if ( child_element_p->GetType() == ElementType::Element )
                         {
@@ -1247,7 +1247,7 @@ _Check_return_ Win32FoundationClasses::CExtensibleMarkupLanguageElement * Win32F
     WFC_VALIDATE_POINTER( this );
     WFC_VALIDATE_POINTER_NULL_OK( m_Parent );
 
-    if ( m_Parent != nullptr )
+    if ( m_Parent not_eq nullptr )
     {
         if ( name.compare( m_Parent->m_Tag ) == I_AM_EQUAL_TO_THAT)
         {
@@ -1321,23 +1321,23 @@ void Win32FoundationClasses::CExtensibleMarkupLanguageElement::GetText( _Out_ st
         // We should ignore white space
 
         if ( m_IsAllWhiteSpace == false and
-             m_Type != ElementType::Comment and
-             m_Type != ElementType::ProcessingInstruction and
-             m_Type != ElementType::Unknown and
-             m_Type != ElementType::MetaData)
+             m_Type not_eq ElementType::Comment and
+             m_Type not_eq ElementType::ProcessingInstruction and
+             m_Type not_eq ElementType::Unknown and
+             m_Type not_eq ElementType::MetaData)
         {
             text = m_Contents;
         }
     }
     else
     {
-        _ASSERTE(m_Type != ElementType::Unknown);
+        _ASSERTE(m_Type not_eq ElementType::Unknown);
 
         // We shouldn't ignore white space
-        if (m_Type != ElementType::Comment and
-            m_Type != ElementType::ProcessingInstruction and
-            m_Type != ElementType::Unknown and
-            m_Type != ElementType::MetaData)
+        if (m_Type not_eq ElementType::Comment and
+            m_Type not_eq ElementType::ProcessingInstruction and
+            m_Type not_eq ElementType::Unknown and
+            m_Type not_eq ElementType::MetaData)
         {
             text = m_Contents;
         }
@@ -1356,14 +1356,14 @@ void Win32FoundationClasses::CExtensibleMarkupLanguageElement::GetText( _Out_ st
 
     for (auto const child : m_Children)
     {
-        if (child != nullptr)
+        if (child not_eq nullptr)
         {
-            _ASSERTE(child->GetType() != ElementType::Unknown);
+            _ASSERTE(child->GetType() not_eq ElementType::Unknown);
 
-            if (child->GetType() != ElementType::Comment and
-                child->GetType() != ElementType::ProcessingInstruction and
-                child->GetType() != ElementType::Unknown and
-                child->GetType() != ElementType::MetaData)
+            if (child->GetType() not_eq ElementType::Comment and
+                child->GetType() not_eq ElementType::ProcessingInstruction and
+                child->GetType() not_eq ElementType::Unknown and
+                child->GetType() not_eq ElementType::MetaData)
             {
                 std::wstring text_segment;
 
@@ -1384,7 +1384,7 @@ _Check_return_ uint32_t Win32FoundationClasses::CExtensibleMarkupLanguageElement
     {
         auto const element_p = m_Children[ loop_index ];
 
-        if ( element_p != nullptr )
+        if ( element_p not_eq nullptr )
         {
             return_value += element_p->GetTotalNumberOfChildren();
         }
@@ -1473,7 +1473,7 @@ void Win32FoundationClasses::CExtensibleMarkupLanguageElement::m_AddCharacterToO
 
         int number_of_bytes_written = 0;
 
-        if ( m_Document != nullptr )
+        if ( m_Document not_eq nullptr )
         {
             number_of_bytes_written = ::WideCharToMultiByte( m_Document->GetConversionCodePage(), 0, string, 1, reinterpret_cast<char *>(output_buffer), 31, nullptr, nullptr );
         }
@@ -1519,7 +1519,7 @@ void Win32FoundationClasses::CExtensibleMarkupLanguageElement::m_AddIndentation(
 
     uint32_t write_options = WFC_XML_WRITE_AS_ASCII;
 
-    if ( m_Document != nullptr )
+    if ( m_Document not_eq nullptr )
     {
         write_options = m_Document->GetWriteOptions();
     }
@@ -1556,7 +1556,7 @@ void Win32FoundationClasses::CExtensibleMarkupLanguageElement::m_AppendAttribute
 
     uint32_t write_options = WFC_XML_WRITE_AS_ASCII;
 
-    if ( m_Document != nullptr )
+    if ( m_Document not_eq nullptr )
     {
         write_options = m_Document->GetWriteOptions();
     }
@@ -1565,7 +1565,7 @@ void Win32FoundationClasses::CExtensibleMarkupLanguageElement::m_AppendAttribute
     {
         auto attribute_p = m_Attributes[ attribute_index ];
 
-        if ( attribute_p != nullptr )
+        if ( attribute_p not_eq nullptr )
         {
             auto const string_length = attribute_p->Name.length();
 
@@ -1624,7 +1624,7 @@ void Win32FoundationClasses::CExtensibleMarkupLanguageElement::m_AppendChildren(
 
     for( auto const element_p : m_Children )
     {
-        if ( element_p != nullptr )
+        if ( element_p not_eq nullptr )
         {
             element_p->WriteTo( data );
         }
@@ -1905,7 +1905,7 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageElement::m_
 
     character = parser.PeekCharacter( m_Ending, 0 );
 
-    if ( character != '<' )
+    if ( character not_eq '<' )
     {
         return( false );
     }
@@ -1914,7 +1914,7 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageElement::m_
 
     character = parser.PeekCharacter( m_Ending, 0 );
 
-    if ( character != '!' )
+    if ( character not_eq '!' )
     {
         return( false );
     }
@@ -1923,7 +1923,7 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageElement::m_
 
     character = parser.PeekCharacter( m_Ending, 0 );
 
-    if ( character != '[' )
+    if ( character not_eq '[' )
     {
         return( false );
     }
@@ -1932,7 +1932,7 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageElement::m_
 
     character = parser.PeekCharacter( m_Ending, 0 );
 
-    if ( character != 'C' )
+    if ( character not_eq 'C' )
     {
         return( false );
     }
@@ -1941,7 +1941,7 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageElement::m_
 
     character = parser.PeekCharacter( m_Ending, 0 );
 
-    if ( character != 'D' )
+    if ( character not_eq 'D' )
     {
         return( false );
     }
@@ -1950,7 +1950,7 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageElement::m_
 
     character = parser.PeekCharacter( m_Ending, 0 );
 
-    if ( character != 'A' )
+    if ( character not_eq 'A' )
     {
         return( false );
     }
@@ -1959,7 +1959,7 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageElement::m_
 
     character = parser.PeekCharacter( m_Ending, 0 );
 
-    if ( character != 'T' )
+    if ( character not_eq 'T' )
     {
         return( false );
     }
@@ -1968,7 +1968,7 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageElement::m_
 
     character = parser.PeekCharacter( m_Ending, 0 );
 
-    if ( character != 'A' )
+    if ( character not_eq 'A' )
     {
         return( false );
     }
@@ -1977,7 +1977,7 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageElement::m_
 
     character = parser.PeekCharacter( m_Ending, 0 );
 
-    if ( character != '[' )
+    if ( character not_eq '[' )
     {
         return( false );
     }
@@ -2039,7 +2039,7 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageElement::m_
     {
         // the first character can also be a _ or a :
 
-        if ( character != '_' and character != ':' )
+        if ( character not_eq '_' and character not_eq ':' )
         {
             m_ReportParsingError(WSTRING_VIEW(L"DOCTYPE Section, illegal first character of Name (Rule 5)."));
             return( false );
@@ -2116,9 +2116,9 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageElement::m_
 
     // The next character can be one of three possibilites, [, S or P
 
-    if ( string_to_parse.at( 0 ) != '[' and
-        string_to_parse.at( 0 ) != 'S' and
-        string_to_parse.at( 0 ) != 'P' )
+    if ( string_to_parse.at( 0 ) not_eq '[' and
+        string_to_parse.at( 0 ) not_eq 'S' and
+        string_to_parse.at( 0 ) not_eq 'P' )
     {
         m_ReportParsingError(WSTRING_VIEW(L"Impossible character in DOCTYPE declaration (Rule 28)."));
         return( false );
@@ -2126,7 +2126,7 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageElement::m_
 
     // If we get here, we know the next thing is either SYSTEM, PUBLIC or [
 
-    if ( string_to_parse.at( 0 ) != '[' )
+    if ( string_to_parse.at( 0 ) not_eq '[' )
     {
         if ( string_to_parse.length() < 6 )
         {
@@ -2169,8 +2169,8 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageElement::m_
                 return( false );
             }
 
-            if ( string_to_parse.at( 0 ) != '\'' and
-                string_to_parse.at( 0 ) != '\"' )
+            if ( string_to_parse.at( 0 ) not_eq '\'' and
+                 string_to_parse.at( 0 ) not_eq '\"' )
             {
                 m_ReportParsingError(WSTRING_VIEW(L"String not properly quoted (Rule 11)."));
                 return( false );
@@ -2244,8 +2244,8 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageElement::m_
                 return( false );
             }
 
-            if ( string_to_parse.at( 0 ) != '\'' and
-                string_to_parse.at( 0 ) != '\"' )
+            if ( string_to_parse.at( 0 ) not_eq '\'' and
+                 string_to_parse.at( 0 ) not_eq '\"' )
             {
                 m_ReportParsingError(WSTRING_VIEW(L"PUBLIC SystemLiteral not properly quoted (Rule 11)."));
                 return( false );
@@ -2328,8 +2328,8 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageElement::m_
                 return( false );
             }
 
-            if ( string_to_parse.at( 0 ) != '\'' and
-                string_to_parse.at( 0 ) != '\"' )
+            if ( string_to_parse.at( 0 ) not_eq '\'' and
+                 string_to_parse.at( 0 ) not_eq '\"' )
             {
                 m_ReportParsingError(WSTRING_VIEW(L"PUBLIC SystemLiteral not properly quoted (Rule 11)."));
                 return( false );
@@ -2403,7 +2403,7 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageElement::m_
         return( true );
     }
 
-    if ( string_to_parse.at( 0 ) != '[' )
+    if ( string_to_parse.at( 0 ) not_eq '[' )
     {
         m_ReportParsingError(WSTRING_VIEW(L"Illegal character at contiuation point (Rule 28)."));
         return( false );
@@ -2450,7 +2450,7 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageElement::m_
 
         // This character must be the closing >
 
-        if ( string_to_parse.at( 0 ) != '>' )
+        if ( string_to_parse.at( 0 ) not_eq '>' )
         {
             m_ReportParsingError(WSTRING_VIEW(L"Missing closing > (Rule 28)."));
             return( false );
@@ -2461,7 +2461,7 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageElement::m_
 
     // It wasn't a ']' so it must be a <
 
-    if ( string_to_parse.at( 0 ) != '<' )
+    if ( string_to_parse.at( 0 ) not_eq '<' )
     {
         m_ReportParsingError(WSTRING_VIEW(L"Ill-formed DOCTYPE child, missing < (Rule 29)."));
         return( false );
@@ -2668,7 +2668,7 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageElement::m_
 
             // We had better be on a closing >
 
-            if ( parser.PeekCharacter( beginning_of_child, 0 ) != '>' )
+            if ( parser.PeekCharacter( beginning_of_child, 0 ) not_eq '>' )
             {
                 m_ReportParsingError(WSTRING_VIEW(L"Ill-formed DOCTYPE child, missing terminating > (Rule 28)."));
                 return( false ); // this should probably be false
@@ -2705,7 +2705,7 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageElement::m_
 
     wchar_t parent_child_separator_character = '.';
 
-    if ( m_Document != nullptr )
+    if ( m_Document not_eq nullptr )
     {
         parent_child_separator_character = m_Document->GetParentChildSeparatorCharacter();
     }
@@ -2716,7 +2716,7 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageElement::m_
 
     std::size_t location_of_separator = parent_name.find( parent_child_separator_character );
 
-    if ( location_of_separator != std::wstring::npos )
+    if ( location_of_separator not_eq std::wstring::npos )
     {
         child_name.assign( right( parent_name, parent_name.length() - ( location_of_separator + 1 ) ) );
         //parent_name.assign( parent_name.substr( 0, location_of_separator ) );
@@ -2733,7 +2733,7 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageElement::m_
 
     std::size_t location_of_beginning = parent_name.find( '(' );
 
-    if (location_of_beginning != std::wstring::npos )
+    if (location_of_beginning not_eq std::wstring::npos )
     {
         // Looks like we've got an instance number in here
 
@@ -3009,7 +3009,7 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageElement::m_
 
             m_Contents.assign( right( tag, tag.length() - 4 ) );
 
-            if ( m_Document != nullptr and ( is_flagged( m_Document->GetParseOptions(), WFC_XML_LOOSE_COMMENT_PARSING) == true ) )
+            if ( m_Document not_eq nullptr and ( is_flagged( m_Document->GetParseOptions(), WFC_XML_LOOSE_COMMENT_PARSING) == true ) )
             {
                 location_of_character = m_Contents.find(WSTRING_VIEW(L"-->"));
 
@@ -3043,7 +3043,7 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageElement::m_
                     return( false );
                 }
 
-                if ( m_Contents.at( location_of_character + 2 ) != '>' )
+                if ( m_Contents.at( location_of_character + 2 ) not_eq '>' )
                 {
                     //WFCTRACE( TEXT( "Comment contains illegal double dashes (Rule 15)." ) );
                     m_ReportParsingError(WSTRING_VIEW(L"Comment contains illegal double dashes (Rule 15)."));
@@ -3173,7 +3173,7 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageElement::m_
 
                     // We should now be on a quote (single or double)
 
-                    if ( tag_data.at( 0 ) != '"' and tag_data.at( 0 ) != '\'' )
+                    if ( tag_data.at( 0 ) not_eq '"' and tag_data.at( 0 ) not_eq '\'' )
                     {
                         // 1999-03-26
                         // Thanks go to Jurgen Lumera (jlumera@vftis.com) for finding
@@ -3184,7 +3184,7 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageElement::m_
 
                         // We must attempt to parse according to rules 75 and 76
 
-                        if ( tag_data.at( 0 ) != 'S' and tag_data.at( 0 ) != 'P' )
+                        if ( tag_data.at( 0 ) not_eq 'S' and tag_data.at( 0 ) not_eq 'P' )
                         {
                             //WFCTRACE( TEXT( "Ill-formed external entity value. Character is not S or P. Refer to rule 75." ) );
                             m_ReportParsingError(WSTRING_VIEW(L"Ill-formed ENTITY section[4] (Rule 71)."));
@@ -3205,11 +3205,11 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageElement::m_
 
                             // See if the next few characters make up YSTEM
 
-                            if ( tag_data.at( 1 ) != 'Y' or
-                                tag_data.at( 2 ) != 'S' or
-                                tag_data.at( 3 ) != 'T' or
-                                tag_data.at( 4 ) != 'E' or
-                                tag_data.at( 5 ) != 'M' )
+                            if ( tag_data.at( 1 ) not_eq 'Y' or
+                                 tag_data.at( 2 ) not_eq 'S' or
+                                 tag_data.at( 3 ) not_eq 'T' or
+                                 tag_data.at( 4 ) not_eq 'E' or
+                                 tag_data.at( 5 ) not_eq 'M' )
                             {
                                 //WFCTRACE( TEXT( "External entity is not SYSTEM. Refer to rule 75." ) );
                                 m_ReportParsingError(WSTRING_VIEW(L"Ill-formed ENTITY section[2] (Rule 75)."));
@@ -3234,11 +3234,11 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageElement::m_
 
                             // See if the next few characters make up UBLIC
 
-                            if ( tag_data.at( 1 ) != 'U' or
-                                tag_data.at( 2 ) != 'B' or
-                                tag_data.at( 3 ) != 'L' or
-                                tag_data.at( 4 ) != 'I' or
-                                tag_data.at( 5 ) != 'C' )
+                            if ( tag_data.at( 1 ) not_eq 'U' or
+                                 tag_data.at( 2 ) not_eq 'B' or
+                                 tag_data.at( 3 ) not_eq 'L' or
+                                 tag_data.at( 4 ) not_eq 'I' or
+                                 tag_data.at( 5 ) not_eq 'C' )
                             {
                                 //WFCTRACE( TEXT( "External entity is not PUBLIC. Refer to rule 75." ) );
                                 m_ReportParsingError(WSTRING_VIEW(L"Ill-formed ENTITY (PUBLIC) section[2] (Rule 75)."));
@@ -3287,7 +3287,7 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageElement::m_
 
                         // Check for more than one double-quote...
 
-                        if (  tag_data.find( '"', location_of_entity + 1 ) != std::wstring::npos )
+                        if (  tag_data.find( '"', location_of_entity + 1 ) not_eq std::wstring::npos )
                         {
                             m_ReportParsingError(WSTRING_VIEW(L"ENTITY value has extra double quote (Rule 9)."));
                             return( false );
@@ -3325,7 +3325,7 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageElement::m_
 
                         // Check for more than one double-quote...
 
-                        if ( tag_data.find( '\'', location_of_entity + 1 ) != std::wstring::npos )
+                        if ( tag_data.find( '\'', location_of_entity + 1 ) not_eq std::wstring::npos )
                         {
                             m_ReportParsingError(WSTRING_VIEW(L"ENTITY value has extra single quote (Rule 9)."));
                             return( false );
@@ -3344,7 +3344,7 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageElement::m_
                     std::size_t location_of_semicolon         = tag_data.find( ';' );
                     std::size_t location_of_illegal_character = tag_data.find( '&' );
 
-                    if ( location_of_illegal_character != std::wstring::npos )
+                    if ( location_of_illegal_character not_eq std::wstring::npos )
                     {
                         if ( location_of_illegal_character > location_of_semicolon )
                         {
@@ -3355,7 +3355,7 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageElement::m_
 
                     location_of_illegal_character = tag_data.find( '%' );
 
-                    if ( location_of_illegal_character != std::wstring::npos )
+                    if ( location_of_illegal_character not_eq std::wstring::npos )
                     {
                         if ( location_of_illegal_character > location_of_semicolon )
                         {
@@ -3366,7 +3366,7 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageElement::m_
 
                     //WFCTRACEVAL( TEXT( "Entity value is " ), tag_data );
 
-                    if ( m_Document != nullptr )
+                    if ( m_Document not_eq nullptr )
                     {
                         std::wstring entity_to_add(WSTRING_VIEW(L"&"));
 
@@ -3473,9 +3473,9 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageElement::m_
         }
 
         if ( Win32FoundationClasses::is_xml_Letter( m_Tag[ 0 ] ) == false and
-            m_Tag[ 0 ] != '/' and
-            m_Tag[ 0 ] != '_' and
-            m_Tag[ 0 ] != ':' )
+            m_Tag[ 0 ] not_eq '/' and
+            m_Tag[ 0 ] not_eq '_' and
+            m_Tag[ 0 ] not_eq ':' )
         {
             m_ReportParsingError(WSTRING_VIEW(L"First character of element name is not legal (Rule 5)."));
             return( false );
@@ -3563,11 +3563,11 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageElement::m_
 
         bool we_started_with_a_double_quote = false;
 
-        if ( tag_data.at( 0 ) != '\"' )
+        if ( tag_data.at( 0 ) not_eq '\"' )
         {
             //WFCTRACE( TEXT( "First character of an attribute value was not a quote!" ) );
 
-            if ( tag_data.at( 0 ) != '\'' )
+            if ( tag_data.at( 0 ) not_eq '\'' )
             {
                 //WFCTRACE( TEXT( "And it ain't a single quote either!" ) );
                 m_ReportParsingError(WSTRING_VIEW(L"Attribute values must begin with a \" or a ' (Rule 10)."));
@@ -3592,7 +3592,7 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageElement::m_
         {
             location_of_character = tag_data.Find( '\"' );
 
-            if ( location_of_character != CHARACTER_NOT_FOUND and location_of_character != tag_data.GetLength() - 1 )
+            if ( location_of_character not_eq CHARACTER_NOT_FOUND and location_of_character not_eq tag_data.GetLength() - 1 )
             {
                 // Looks like we got one of them there doubley terminated strings such as <x att="This"That">
                 m_ReportParsingError(WSTRING_VIEW(L"Attribute value cannot contain another double quote (Rule 10)." ) );
@@ -3602,7 +3602,7 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageElement::m_
         {
             location_of_character = tag_data.Find( TEXT( '\'' ) );
 
-            if ( location_of_character != CHARACTER_NOT_FOUND and location_of_character != tag_data.GetLength() - 1 )
+            if ( location_of_character not_eq CHARACTER_NOT_FOUND and location_of_character not_eq tag_data.GetLength() - 1 )
             {
                 // Looks like we got one of them there doubley terminated strings such as <x att="This"That">
                 m_ReportParsingError(WSTRING_VIEW(L"Attribute value cannot contain another single quote (Rule 10)." ) );
@@ -3637,7 +3637,7 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageElement::m_
             // Since we are the last, we need to check the terminating characters
             // The last character should always be a '>'
 
-            if ( attribute_value.at( attribute_value.length() - 1 ) != '>' )
+            if ( attribute_value.at( attribute_value.length() - 1 ) not_eq '>' )
             {
                 m_ReportParsingError(WSTRING_VIEW(L"Not yet documented error 2785."));
                 return( false );
@@ -3656,7 +3656,7 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageElement::m_
             {
                 // The next-to-last character should be a ?
 
-                if ( attribute_value.at( attribute_value.length() - 1 ) != '?' )
+                if ( attribute_value.at( attribute_value.length() - 1 ) not_eq '?' )
                 {
                     m_ReportParsingError(WSTRING_VIEW(L"Not yet documented error 2804."));
                     return( false );
@@ -3806,7 +3806,7 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageElement::m_
 
     uint32_t parsing_options = 0;
 
-    if ( m_Document != nullptr )
+    if ( m_Document not_eq nullptr )
     {
         parsing_options = m_Document->GetParseOptions();
     }
@@ -3815,7 +3815,7 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageElement::m_
     {
         // We must begin with lower case xml
 
-        if ( temp_string.compare(WSTRING_VIEW(L"xml")) != I_AM_EQUAL_TO_THAT)
+        if ( temp_string.compare(WSTRING_VIEW(L"xml")) not_eq I_AM_EQUAL_TO_THAT)
         {
             m_ReportParsingError(WSTRING_VIEW(L"The xml declaration must be lower case (Rule 23)."));
             return( false );
@@ -3844,7 +3844,7 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageElement::m_
 
     auto attribute_name = string_to_parse.substr( 0, 7 );
 
-    if ( attribute_name.compare(WSTRING_VIEW(L"version")) != I_AM_EQUAL_TO_THAT)
+    if ( attribute_name.compare(WSTRING_VIEW(L"version")) not_eq I_AM_EQUAL_TO_THAT)
     {
         m_ReportParsingError(WSTRING_VIEW(L"The VersionInfo must be lower case (Rule 23)."));
         return( false );
@@ -3861,7 +3861,7 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageElement::m_
         return( false );
     }
 
-    if ( string_to_parse.at( 0 ) != '=' )
+    if ( string_to_parse.at( 0 ) not_eq '=' )
     {
         m_ReportParsingError(WSTRING_VIEW(L"Ill-formed VersionInfo missing = character (Rule 24)."));
         return( false );
@@ -3878,8 +3878,8 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageElement::m_
 
     bool we_started_with_a_double_quote = false;
 
-    if ( string_to_parse.at( 0 ) != '\"' and
-         string_to_parse.at( 0 ) != '\'' )
+    if ( string_to_parse.at( 0 ) not_eq '\"' and
+         string_to_parse.at( 0 ) not_eq '\'' )
     {
         m_ReportParsingError(WSTRING_VIEW(L"Illegal VersionNum delimiter, must be a single or double quote (Rule 24)."));
         return( false );
@@ -3938,7 +3938,7 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageElement::m_
         }
     }
 
-    if ( m_Document != nullptr )
+    if ( m_Document not_eq nullptr )
     {
         m_Document->SetVersion( value );
     }
@@ -3979,7 +3979,7 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageElement::m_
             return( false );
         }
 
-        if ( string_to_parse.at( 0 ) != '=' )
+        if ( string_to_parse.at( 0 ) not_eq '=' )
         {
             m_ReportParsingError(WSTRING_VIEW(L"Ill-formed EncodingDecl missing = character (Rule 80)."));
             return( false );
@@ -3996,8 +3996,8 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageElement::m_
 
         we_started_with_a_double_quote = false;
 
-        if ( string_to_parse.at( 0 ) != '\"' and
-            string_to_parse.at( 0 ) != '\'' )
+        if ( string_to_parse.at( 0 ) not_eq '\"' and
+             string_to_parse.at( 0 ) not_eq '\'' )
         {
             m_ReportParsingError(WSTRING_VIEW(L"Illegal EncName delimiter, must be a single or double quote (Rule 80)."));
             return( false );
@@ -4070,7 +4070,7 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageElement::m_
                 }
             }
 
-            if ( m_Document != nullptr )
+            if ( m_Document not_eq nullptr )
             {
                 m_Document->SetEncoding( value );
             }
@@ -4108,7 +4108,7 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageElement::m_
             return( false );
         }
 
-        if ( string_to_parse.at( 0 ) != '=' )
+        if ( string_to_parse.at( 0 ) not_eq '=' )
         {
             m_ReportParsingError(WSTRING_VIEW(L"Ill-formed SDDecl missing = character (Rule 32)."));
             return( false );
@@ -4125,8 +4125,8 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageElement::m_
 
         we_started_with_a_double_quote = false;
 
-        if ( string_to_parse.at( 0 ) != '\"' and
-            string_to_parse.at( 0 ) != '\'' )
+        if ( string_to_parse.at( 0 ) not_eq '\"' and
+             string_to_parse.at( 0 ) not_eq '\'' )
         {
             m_ReportParsingError(WSTRING_VIEW(L"Illegal SDDecl delimiter, must be a single or double quote (Rule 32)."));
             return( false );
@@ -4169,13 +4169,13 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageElement::m_
 
         // Now validate the contents of SDDecl
 
-        if ( value.compare(WSTRING_VIEW(L"yes")) != I_AM_EQUAL_TO_THAT and value.compare(WSTRING_VIEW(L"no")) != I_AM_EQUAL_TO_THAT)
+        if ( value.compare(WSTRING_VIEW(L"yes")) not_eq I_AM_EQUAL_TO_THAT and value.compare(WSTRING_VIEW(L"no")) not_eq I_AM_EQUAL_TO_THAT)
         {
             m_ReportParsingError(WSTRING_VIEW(L"Illegal value for SDDecl, it must me lower case \"yes\" or \"no\" (Rule 32)."));
             return( false );
         }
 
-        if ( m_Document != nullptr )
+        if ( m_Document not_eq nullptr )
         {
             if ( value.compare(WSTRING_VIEW(L"yes")) == I_AM_EQUAL_TO_THAT)
             {
@@ -4202,7 +4202,7 @@ void Win32FoundationClasses::CExtensibleMarkupLanguageElement::m_ReportParsingEr
     WFC_VALIDATE_POINTER( this );
     WFC_VALIDATE_POINTER_NULL_OK( m_Document );
 
-    if ( m_Document != nullptr )
+    if ( m_Document not_eq nullptr )
     {
         m_Document->SetParsingErrorInformation( m_Tag, m_Beginning, m_Ending, error_message );
     }
@@ -4234,7 +4234,7 @@ void Win32FoundationClasses::CExtensibleMarkupLanguageElement::m_ResolveEntities
 
     std::size_t location = temp_string.find( '&' );
 
-    while( location != std::wstring::npos )
+    while( location not_eq std::wstring::npos )
     {
         // We found the beginning of an entity (hopefully)
         translated_string.append( temp_string.substr( 0, location ) );
@@ -4408,7 +4408,7 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageElement::Ge
 
     int const integer_value = static_cast<int>(Win32FoundationClasses::as_integer(value_text));
 
-    if ( integer_value != 0 )
+    if ( integer_value not_eq 0 )
     {
         value = true;
     }
@@ -4462,7 +4462,7 @@ _Check_return_ Win32FoundationClasses::CExtensibleMarkupLanguageElement * Win32F
 
     auto return_value = NewChild( tag_name );
 
-    if ( return_value != nullptr )
+    if ( return_value not_eq nullptr )
     {
         std::wstring formatted_value;
 
@@ -4480,7 +4480,7 @@ _Check_return_ Win32FoundationClasses::CExtensibleMarkupLanguageElement * Win32F
 
     auto return_value = NewChild( tag_name );
 
-    if ( return_value != nullptr )
+    if ( return_value not_eq nullptr )
     {
         std::wstring formatted_value;
 
@@ -4498,7 +4498,7 @@ _Check_return_ Win32FoundationClasses::CExtensibleMarkupLanguageElement * Win32F
 
     auto return_value = NewChild( tag_name );
 
-    if ( return_value != nullptr )
+    if ( return_value not_eq nullptr )
     {
         std::wstring formatted_value;
 
@@ -4516,7 +4516,7 @@ _Check_return_ Win32FoundationClasses::CExtensibleMarkupLanguageElement * Win32F
 
     auto return_value = NewChild( tag_name );
 
-    if ( return_value != nullptr )
+    if ( return_value not_eq nullptr )
     {
         std::wstring formatted_value;
 
@@ -4534,7 +4534,7 @@ _Check_return_ Win32FoundationClasses::CExtensibleMarkupLanguageElement * Win32F
 
     auto return_value = NewChild( tag_name );
 
-    if ( return_value != nullptr )
+    if ( return_value not_eq nullptr )
     {
         std::wstring formatted_value;
 
@@ -4578,7 +4578,7 @@ _Check_return_ Win32FoundationClasses::CExtensibleMarkupLanguageElement * Win32F
 
     auto return_value = NewChild( tag_name );
 
-    if ( return_value != nullptr and value.empty() == false )
+    if ( return_value not_eq nullptr and value.empty() == false )
     {
         (void) return_value->AddText( value );
     }
@@ -4590,7 +4590,7 @@ _Check_return_ Win32FoundationClasses::CExtensibleMarkupLanguageElement * Win32F
 {
     auto child_p = NewElement( this, element_type );
 
-    if ( child_p != nullptr and tag_name.empty() == false )
+    if ( child_p not_eq nullptr and tag_name.empty() == false )
     {
         child_p->SetTag( tag_name );
     }
@@ -4602,7 +4602,7 @@ _Check_return_ Win32FoundationClasses::CExtensibleMarkupLanguageElement * Win32F
 {
     auto return_value = NewElement(this, ElementType::Comment);
 
-    if (return_value != nullptr and text.empty() == false)
+    if (return_value not_eq nullptr and text.empty() == false)
     {
         return_value->m_Contents.assign(text);
     }
@@ -4615,7 +4615,7 @@ _Check_return_ Win32FoundationClasses::CExtensibleMarkupLanguageElement * Win32F
 {
     auto element_p = new Win32FoundationClasses::CExtensibleMarkupLanguageElement;
 
-    if ( element_p != nullptr )
+    if ( element_p not_eq nullptr )
     {
         element_p->SetType( type );
         element_p->m_Parent   = parent_item;
@@ -4623,7 +4623,7 @@ _Check_return_ Win32FoundationClasses::CExtensibleMarkupLanguageElement * Win32F
 
         // Let's see if we should inherit the document
 
-        if ( element_p->m_Parent != nullptr )
+        if ( element_p->m_Parent not_eq nullptr )
         {
             if ( element_p->m_Document == nullptr )
             {
@@ -4651,7 +4651,7 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageElement::Pa
 
     uint32_t parsing_options = 0;
 
-    if ( m_Document != nullptr )
+    if ( m_Document not_eq nullptr )
     {
         parsing_options = m_Document->GetParseOptions();
     }
@@ -4717,10 +4717,10 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageElement::Pa
 
             if ( m_IsAllWhiteSpace == true)
             {
-                if ( character != 0x20 and
-                     character != TAB_CHARACTER and
-                     character != CARRIAGE_RETURN and
-                     character != LINE_FEED )
+                if ( character not_eq 0x20 and
+                     character not_eq TAB_CHARACTER and
+                     character not_eq CARRIAGE_RETURN and
+                     character not_eq LINE_FEED )
                 {
                     // We didn't find this character in the space string so it must not be a space-like character
 
@@ -4751,7 +4751,7 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageElement::Pa
 
         character = parser.PeekCharacter( m_Ending, 0 );
 
-        if ( character != '<' )
+        if ( character not_eq '<' )
         {
             ASSERT( false );
             return( false );
@@ -4831,10 +4831,10 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageElement::Pa
                 {
                     character = parser.PeekCharacter( m_Ending, 0 );
 
-                    if ( character != '<' )
+                    if ( character not_eq '<' )
                     {
 #if 0
-                        if ( m_Type == typeProcessingInstruction and m_Parent != nullptr )
+                        if ( m_Type == typeProcessingInstruction and m_Parent not_eq nullptr )
                         {
                             // If we are a processing instruction then the child will be the
                             // child of our parent and not us. The child will be a sibling
@@ -4879,7 +4879,7 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageElement::Pa
                         return( false );
                     }
 
-                    if ( m_Document != nullptr )
+                    if ( m_Document not_eq nullptr )
                     {
                         m_Document->ExecuteCallbacks( this );
 
@@ -4893,7 +4893,7 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageElement::Pa
                     return( true );
                 }
 
-                if ( sub_element_p != nullptr )
+                if ( sub_element_p not_eq nullptr )
                 {
                     //WFCTRACE( TEXT( "Sub element was created" ) );
 
@@ -4914,7 +4914,7 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageElement::Pa
 
                                 trim(tag_string);
 
-                                if ( tag_string.compare( m_Tag ) != I_AM_EQUAL_TO_THAT)
+                                if ( tag_string.compare( m_Tag ) not_eq I_AM_EQUAL_TO_THAT)
                                 {
                                     //WFCTRACEVAL( TEXT( "received a terminator for " ), tag_string );
                                     //WFCTRACEVAL( TEXT( "Unfortunately we are a " ), m_Tag );
@@ -4945,7 +4945,7 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageElement::Pa
                                     DeleteElement( sub_element_p );
                                     sub_element_p = nullptr;
 
-                                    if ( m_Document != nullptr )
+                                    if ( m_Document not_eq nullptr )
                                     {
                                         m_Document->ExecuteCallbacks( this );
                                     }
@@ -5002,7 +5002,7 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageElement::Pa
 
                                             std::size_t location_of_ampersand = sub_element_p->m_Contents.find( '&' );
 
-                                            while( location_of_ampersand != std::wstring::npos)
+                                            while( location_of_ampersand not_eq std::wstring::npos)
                                             {
                                                 // There's an ampersand in there, now let's validate it
 
@@ -5066,7 +5066,7 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageElement::Pa
         }
     }
 
-    if ( m_Document != nullptr )
+    if ( m_Document not_eq nullptr )
     {
         m_Document->ExecuteCallbacks( this );
     }
@@ -5111,7 +5111,7 @@ void Win32FoundationClasses::CExtensibleMarkupLanguageElement::WriteTo( _Inout_ 
 
     uint32_t write_options = WFC_XML_WRITE_AS_ASCII;
 
-    if ( m_Document != nullptr )
+    if ( m_Document not_eq nullptr )
     {
         write_options = m_Document->GetWriteOptions();
     }
@@ -5217,7 +5217,7 @@ void Win32FoundationClasses::CExtensibleMarkupLanguageElement::WriteTo( _Inout_ 
 
         std::size_t location_of_string = temp_string.find(WSTRING_VIEW(L"]]>"));
 
-        while( location_of_string != std::wstring::npos )
+        while( location_of_string not_eq std::wstring::npos )
         {
             // There's sections that need escaping
 
@@ -5419,7 +5419,7 @@ void Win32FoundationClasses::CExtensibleMarkupLanguageElement::WriteTo( _Inout_ 
 
         // First, see if we are in a namespace...
 
-        if ( m_Document != nullptr and m_Document->UseNamespace() == true)
+        if ( m_Document not_eq nullptr and m_Document->UseNamespace() == true)
         {
             std::wstring name_space;
 
@@ -5477,7 +5477,7 @@ void Win32FoundationClasses::CExtensibleMarkupLanguageElement::WriteTo( _Inout_ 
             {
                 Win32FoundationClasses::CExtensibleMarkupLanguageElement * first_child_p = m_Children[ 0 ];
 
-                if ( first_child_p->m_Type != ElementType::TextSegment or m_Children.size() > 1 )
+                if ( first_child_p->m_Type not_eq ElementType::TextSegment or m_Children.size() > 1 )
                 {
                     m_AddIndentation( xml );
                 }

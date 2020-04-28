@@ -221,7 +221,7 @@ _Check_return_ bool Win32FoundationClasses::wfcGenRandom( _Out_writes_bytes_(Ran
    {
        if ( RandomBuffer == nullptr and RandomBufferLength == 0 )
        {
-           if ( static_rng != nullptr )
+           if ( static_rng not_eq nullptr )
            {
                // Copy the pointer, this will maybe (not bloody likely) prevent multithreaded problems.
                // It keeps the current RNG valid for just a couple of nanoseconds longer.
@@ -244,7 +244,7 @@ _Check_return_ bool Win32FoundationClasses::wfcGenRandom( _Out_writes_bytes_(Ran
       static_rng = new CRandomNumberGenerator2();
    }
 
-   if ( static_rng != nullptr )
+   if ( static_rng not_eq nullptr )
    {
       if ( RandomBufferLength == ULONG_MAX )
       {
@@ -283,7 +283,7 @@ _Check_return_ static int64_t _find_byte_256(_In_ uint8_t const byte_value, _In_
 
     if (buffer_size > 31)
     {
-        if (_mm256_testc_si256(zero, _mm256_cmpeq_epi8(byte_to_find, _mm256_loadu_si256((__m256i const *) buffer))) != 0)
+        if (_mm256_testc_si256(zero, _mm256_cmpeq_epi8(byte_to_find, _mm256_loadu_si256((__m256i const *) buffer))) not_eq 0)
         {
             // The desired byte was not found in the first block.
             // Make sure the buffer is aligned on a 32 byte boundary so our main loop can avoid the _mm256_loadu_si256 (AVX2) call
@@ -308,7 +308,7 @@ _Check_return_ static int64_t _find_byte_256(_In_ uint8_t const byte_value, _In_
     }
 
     while (buffer_index < last_buffer_index and
-        _mm256_testc_si256(zero, _mm256_cmpeq_epi8(byte_to_find, *((__m256i const *) &buffer[buffer_index]))) != 0) // _mm256_testc_si256 - AVX2
+        _mm256_testc_si256(zero, _mm256_cmpeq_epi8(byte_to_find, *((__m256i const *) &buffer[buffer_index]))) not_eq 0) // _mm256_testc_si256 - AVX2
     {
         buffer_index += 32;
     }
@@ -342,7 +342,7 @@ _Check_return_ static int64_t _find_byte_256( _In_ uint8_t const byte_value, _In
     int64_t buffer_index = 0;
 
     while( buffer_index < last_buffer_index and
-        _mm256_testc_si256( zero, _mm256_cmpeq_epi8( byte_to_find, _mm256_loadu_si256((__m256i const *) &buffer[ buffer_index ]))) != 0 ) // _mm256_testc_si256 - AVX2
+        _mm256_testc_si256( zero, _mm256_cmpeq_epi8( byte_to_find, _mm256_loadu_si256((__m256i const *) &buffer[ buffer_index ]))) not_eq 0 ) // _mm256_testc_si256 - AVX2
     {
         buffer_index += 32;
     }
@@ -371,7 +371,7 @@ _Check_return_ int64_t _find_byte_SSE41(_In_ uint8_t const byte_value, _In_reads
 
     if (buffer_size > 15)
     {
-        if (_mm_testc_si128(zero, _mm_cmpeq_epi8(byte_to_find, _mm_loadu_si128((__m128i const *) buffer))) != 0)
+        if (_mm_testc_si128(zero, _mm_cmpeq_epi8(byte_to_find, _mm_loadu_si128((__m128i const *) buffer))) not_eq 0)
         {
             // The desired byte was not found in the first block.
             // Make sure the buffer is aligned on a 16 byte boundary so our main loop can avoid the _mm_loadu_si128 (SSE2) call
@@ -398,7 +398,7 @@ _Check_return_ int64_t _find_byte_SSE41(_In_ uint8_t const byte_value, _In_reads
     _ASSERTE((((int64_t)&buffer[buffer_index]) % 16) == 0);
 
     while (buffer_index < last_buffer_index and
-        _mm_testc_si128(zero, _mm_cmpeq_epi8(byte_to_find, *((__m128i const *) &buffer[buffer_index]))) != 0) // _mm_cmpeq_epi8-SSE2, _mm_testc_si128-SSE4.1
+        _mm_testc_si128(zero, _mm_cmpeq_epi8(byte_to_find, *((__m128i const *) &buffer[buffer_index]))) not_eq 0) // _mm_cmpeq_epi8-SSE2, _mm_testc_si128-SSE4.1
     {
         buffer_index += 16;
     }

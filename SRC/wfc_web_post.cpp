@@ -156,7 +156,7 @@ _Check_return_ bool Win32FoundationClasses::wfc_web_post( _In_ std::wstring_view
 
    WFC_TRY
    {
-      while( data[ number_of_parameters ] != nullptr )
+      while( data[ number_of_parameters ] not_eq nullptr )
       {
           auto data_p = data[ number_of_parameters ];
 
@@ -360,7 +360,7 @@ _Check_return_ bool Win32FoundationClasses::wfc_web_post( _In_ std::wstring_view
 
       auto response_buffer  = std::make_unique<uint8_t[]>(response_buffer_size);
 
-      if ( response_buffer.get() != nullptr )
+      if ( response_buffer.get() not_eq nullptr )
       {
          ZeroMemory( response_buffer.get(), response_buffer_size );
 
@@ -379,7 +379,7 @@ _Check_return_ bool Win32FoundationClasses::wfc_web_post( _In_ std::wstring_view
       InternetCloseHandle( internet_handle );
       internet_handle = static_cast< HINTERNET >( NULL );
 
-      if ( response != nullptr and response_buffer != nullptr )
+      if ( response not_eq nullptr and response_buffer not_eq nullptr )
       {
          copy( *response, reinterpret_cast<char const *>(response_buffer.get()) );
       }

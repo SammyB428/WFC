@@ -57,7 +57,7 @@ Win32FoundationClasses::CLZFile::CLZFile() noexcept
    m_Initialize();
 }
 
-Win32FoundationClasses::CLZFile::~CLZFile() noexcept
+Win32FoundationClasses::CLZFile::~CLZFile()
 {
    WFC_VALIDATE_POINTER( this );
    Close();
@@ -237,9 +237,9 @@ _Check_return_ uint64_t Win32FoundationClasses::CLZFile::Seek(_In_ int64_t const
    WFC_VALIDATE_POINTER( this );
 
 #if defined( WFC_STL )
-   ASSERT( m_FileHandle != static_cast< HANDLE >( INVALID_HANDLE_VALUE ) );
+   ASSERT( m_FileHandle not_eq static_cast< HANDLE >( INVALID_HANDLE_VALUE ) );
 #else
-   ASSERT( m_hFile != (CFILE_HFILE) CFile::hFileNull );
+   ASSERT( m_hFile not_eq (CFILE_HFILE) CFile::hFileNull );
 #endif
   ASSERT( from == Win32FoundationClasses::CFile64::SeekPosition::begin or from == Win32FoundationClasses::CFile64::SeekPosition::end or from == Win32FoundationClasses::CFile64::SeekPosition::current );
   ASSERT((int)Win32FoundationClasses::CFile64::SeekPosition::begin == FILE_BEGIN and (int)Win32FoundationClasses::CFile64::SeekPosition::end == FILE_END and (int)Win32FoundationClasses::CFile64::SeekPosition::current == FILE_CURRENT );
@@ -376,13 +376,13 @@ void test_CLZFile( LPTSTR lz_file_name )
 
    _tprintf( TEXT( &quot;LZ File \&quot;%s\&quot; expanded name is \&quot;%s\&quot;\n&quot; ), lz_file_name, (LPCTSTR) expanded_name );
 
-   if ( lz_file.Open( lz_file_name ) != FALSE )
+   if ( lz_file.Open( lz_file_name ) not_eq FALSE )
    {
       <B>CLZFile</B> output_file;
 
-      if ( output_file.Open( expanded_name, OF_CREATE ) != FALSE )
+      if ( output_file.Open( expanded_name, OF_CREATE ) not_eq FALSE )
       {
-         if ( output_file.Copy( lz_file ) != FALSE )
+         if ( output_file.Copy( lz_file ) not_eq FALSE )
          {
             _tprintf( TEXT( &quot;Successfully copied\n&quot; ) );
          }

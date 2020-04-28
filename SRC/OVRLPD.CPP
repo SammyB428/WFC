@@ -173,7 +173,7 @@ void Win32FoundationClasses::COverlapped::Empty( void ) noexcept
    Offset       = 0;
    OffsetHigh   = 0;
 
-   if ( m_AutomaticallyDelete == true and hEvent != static_cast< HANDLE >( NULL ) )
+   if ( m_AutomaticallyDelete == true and hEvent not_eq static_cast< HANDLE >( NULL ) )
    {
       (void) Win32FoundationClasses::wfc_close_handle( hEvent );
    }
@@ -191,7 +191,7 @@ void Win32FoundationClasses::COverlapped::SetEvent( _In_ HANDLE new_event_handle
 {
    WFC_VALIDATE_POINTER( this );
 
-   if ( m_AutomaticallyDelete == true and hEvent != static_cast< HANDLE >( NULL ) )
+   if ( m_AutomaticallyDelete == true and hEvent not_eq static_cast< HANDLE >( NULL ) )
    {
       (void) Win32FoundationClasses::wfc_close_handle( hEvent );
       hEvent = static_cast< HANDLE >( NULL );

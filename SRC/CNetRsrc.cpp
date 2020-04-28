@@ -66,7 +66,7 @@ Win32FoundationClasses::CNetworkResources::~CNetworkResources()
 {
    WFC_VALIDATE_POINTER( this );
 
-   if ( m_ResumeHandle != static_cast< HANDLE >( NULL ) )
+   if ( m_ResumeHandle not_eq static_cast< HANDLE >( NULL ) )
    {
       //WFCTRACE( TEXT( "Closing Enumeration Handle" ) );
       (void) ::WNetCloseEnum( m_ResumeHandle );
@@ -89,7 +89,7 @@ _Check_return_ bool Win32FoundationClasses::CNetworkResources::Enumerate( __inou
 {
    WFC_VALIDATE_POINTER( this );
 
-   if ( m_ResumeHandle != static_cast< HANDLE >( NULL ) )
+   if ( m_ResumeHandle not_eq static_cast< HANDLE >( NULL ) )
    {
       //WFCTRACE( TEXT( "Closing Enumeration Handle" ) );
       (void) ::WNetCloseEnum( m_ResumeHandle );

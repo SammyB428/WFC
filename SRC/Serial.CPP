@@ -80,7 +80,7 @@ _Check_return_ BOOL Win32FoundationClasses::CSerialFile::Attach( _In_ HANDLE new
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER_NULL_OK( old_handle_p );
 
-   if (old_handle_p != nullptr)
+   if (old_handle_p not_eq nullptr)
    {
        *old_handle_p = NULL;
    }
@@ -88,12 +88,12 @@ _Check_return_ BOOL Win32FoundationClasses::CSerialFile::Attach( _In_ HANDLE new
    // A new method as suggested by Fabio Angelini (fabioang@iol.it or nico.sw@ibm.net)
    // 1998-07-14
 
-   ASSERT( new_handle != static_cast< HANDLE >( INVALID_HANDLE_VALUE ) );
+   ASSERT( new_handle not_eq static_cast< HANDLE >( INVALID_HANDLE_VALUE ) );
 
 #if defined( WFC_STL )
-   ASSERT( m_FileHandle != static_cast< HANDLE >( INVALID_HANDLE_VALUE ) );
+   ASSERT( m_FileHandle not_eq static_cast< HANDLE >( INVALID_HANDLE_VALUE ) );
 #else
-   ASSERT( m_hFile != reinterpret_cast< CFILE_HFILE >( INVALID_HANDLE_VALUE ) );
+   ASSERT( m_hFile not_eq reinterpret_cast< CFILE_HFILE >( INVALID_HANDLE_VALUE ) );
 #endif
 
    if ( new_handle == static_cast< HANDLE >( INVALID_HANDLE_VALUE ) or
@@ -106,7 +106,7 @@ _Check_return_ BOOL Win32FoundationClasses::CSerialFile::Attach( _In_ HANDLE new
       return( FALSE );
    }
 
-   if ( old_handle_p != nullptr )
+   if ( old_handle_p not_eq nullptr )
    {
       WFC_TRY
       {
@@ -152,9 +152,9 @@ _Check_return_ BOOL Win32FoundationClasses::CSerialFile::ClearBreak( void ) noex
    WFC_VALIDATE_POINTER( this );
 
 #if defined( WFC_STL )
-   ASSERT( m_FileHandle != static_cast< HANDLE >( INVALID_HANDLE_VALUE ) );
+   ASSERT( m_FileHandle not_eq static_cast< HANDLE >( INVALID_HANDLE_VALUE ) );
 #else
-   ASSERT( m_hFile != (CFILE_HFILE) INVALID_HANDLE_VALUE );
+   ASSERT( m_hFile not_eq (CFILE_HFILE) INVALID_HANDLE_VALUE );
 #endif
 
 #if defined( WFC_STL )
@@ -203,9 +203,9 @@ void Win32FoundationClasses::CSerialFile::Close( void ) noexcept
    ::EscapeCommFunction( m_FileHandle, CLRDTR );
 
 #if defined( WFC_STL )
-   if ( m_FileHandle != static_cast< HANDLE >( INVALID_HANDLE_VALUE ) )
+   if ( m_FileHandle not_eq static_cast< HANDLE >( INVALID_HANDLE_VALUE ) )
 #else
-   if ( m_hFile != reinterpret_cast< CFILE_HFILE >( CFile::hFileNull ) )
+   if ( m_hFile not_eq reinterpret_cast< CFILE_HFILE >( CFile::hFileNull ) )
 #endif
    {
       CDummyFile::Close();
@@ -292,7 +292,7 @@ _Check_return_ bool Win32FoundationClasses::CSerialFile::ConfigurationDialog( __
 
    configuration.Copy( *( reinterpret_cast< LPCOMMCONFIG >( buffer ) ) );
 
-   if ( save_changes != FALSE )
+   if ( save_changes not_eq FALSE )
    {
       communications_configuration_p->dcb.DCBlength = sizeof( DCB );
 
@@ -377,7 +377,7 @@ void CSerialFile::Dump( CDumpContext& dump_context ) const
 
    dump_context << TEXT( "m_CommunicationErrorCodes = " ) << m_CommunicationErrorCodes;
 
-   if ( m_CommunicationErrorCodes != 0 )
+   if ( m_CommunicationErrorCodes not_eq 0 )
    {
       dump_context << TEXT( " ( " );
 
@@ -467,10 +467,10 @@ _Check_return_ DWORD Win32FoundationClasses::CSerialFile::GetBaudRate( void ) no
    WFC_VALIDATE_POINTER( this );
 
 #if defined( WFC_STL )
-   ASSERT( m_FileHandle != reinterpret_cast< HANDLE >( INVALID_HANDLE_VALUE ) );
+   ASSERT( m_FileHandle not_eq reinterpret_cast< HANDLE >( INVALID_HANDLE_VALUE ) );
    if ( m_FileHandle == reinterpret_cast< HANDLE >( INVALID_HANDLE_VALUE ) )
 #else
-   ASSERT( m_hFile != reinterpret_cast< CFILE_HFILE >( INVALID_HANDLE_VALUE ) );
+   ASSERT( m_hFile not_eq reinterpret_cast< CFILE_HFILE >( INVALID_HANDLE_VALUE ) );
    if ( m_hFile == reinterpret_cast< CFILE_HFILE >( INVALID_HANDLE_VALUE ) )
 #endif
    {
@@ -496,10 +496,10 @@ _Check_return_ bool Win32FoundationClasses::CSerialFile::GetConfiguration( __ino
    WFC_VALIDATE_POINTER( this );
 
 #if defined( WFC_STL )
-   ASSERT( m_FileHandle != reinterpret_cast< HANDLE >( INVALID_HANDLE_VALUE ) );
+   ASSERT( m_FileHandle not_eq reinterpret_cast< HANDLE >( INVALID_HANDLE_VALUE ) );
    if ( m_FileHandle == reinterpret_cast< HANDLE >( INVALID_HANDLE_VALUE ) )
 #else
-   ASSERT( m_hFile != reinterpret_cast< CFILE_HFILE >( INVALID_HANDLE_VALUE ) );
+   ASSERT( m_hFile not_eq reinterpret_cast< CFILE_HFILE >( INVALID_HANDLE_VALUE ) );
    if ( m_hFile == reinterpret_cast< CFILE_HFILE >( INVALID_HANDLE_VALUE ) )
 #endif
    {
@@ -547,10 +547,10 @@ _Check_return_ DWORD Win32FoundationClasses::CSerialFile::GetFlowControl( void )
    WFC_VALIDATE_POINTER( this );
 
 #if defined( WFC_STL )
-   ASSERT( m_FileHandle != reinterpret_cast< HANDLE >( INVALID_HANDLE_VALUE ) );
+   ASSERT( m_FileHandle not_eq reinterpret_cast< HANDLE >( INVALID_HANDLE_VALUE ) );
    if ( m_FileHandle == reinterpret_cast< HANDLE >( INVALID_HANDLE_VALUE ) )
 #else
-   ASSERT( m_hFile != reinterpret_cast< CFILE_HFILE >( INVALID_HANDLE_VALUE ) );
+   ASSERT( m_hFile not_eq reinterpret_cast< CFILE_HFILE >( INVALID_HANDLE_VALUE ) );
    if ( m_hFile == reinterpret_cast< CFILE_HFILE >( INVALID_HANDLE_VALUE ) )
 #endif
    {
@@ -570,14 +570,14 @@ _Check_return_ DWORD Win32FoundationClasses::CSerialFile::GetFlowControl( void )
       return( 0 );
    }
 
-   if ( device_control_block.fOutxDsrFlow != FALSE and
-        device_control_block.fOutxCtsFlow != FALSE )
+   if ( device_control_block.fOutxDsrFlow not_eq FALSE and
+        device_control_block.fOutxCtsFlow not_eq FALSE )
    {
       flow_control = flowHardware;
    }
 
-   if ( device_control_block.fInX  != FALSE and
-        device_control_block.fOutX != FALSE )
+   if ( device_control_block.fInX not_eq FALSE and
+        device_control_block.fOutX not_eq FALSE )
    {
       flow_control or_eq flowSoftware;
    }
@@ -594,7 +594,7 @@ _Check_return_ DWORD Win32FoundationClasses::CSerialFile::GetInputBufferSize( vo
 
    Win32FoundationClasses::CCommunicationProperties properties;
 
-   if ( GetProperties( properties ) != FALSE )
+   if ( GetProperties( properties ) not_eq FALSE )
    {
       return( properties.dwCurrentRxQueue );
    }
@@ -609,10 +609,10 @@ _Check_return_ DWORD Win32FoundationClasses::CSerialFile::GetModemStatus( void )
    WFC_VALIDATE_POINTER( this );
 
 #if defined( WFC_STL )
-   ASSERT( m_FileHandle != reinterpret_cast< HANDLE >( INVALID_HANDLE_VALUE ) );
+   ASSERT( m_FileHandle not_eq reinterpret_cast< HANDLE >( INVALID_HANDLE_VALUE ) );
    if ( m_FileHandle == reinterpret_cast< HANDLE >( INVALID_HANDLE_VALUE ) )
 #else
-   ASSERT( m_hFile != reinterpret_cast< CFILE_HFILE >( INVALID_HANDLE_VALUE ) );
+   ASSERT( m_hFile not_eq reinterpret_cast< CFILE_HFILE >( INVALID_HANDLE_VALUE ) );
    if ( m_hFile == reinterpret_cast< CFILE_HFILE >( INVALID_HANDLE_VALUE ) )
 #endif
    {
@@ -646,7 +646,7 @@ _Check_return_ DWORD Win32FoundationClasses::CSerialFile::GetOutputBufferSize( v
 
    CCommunicationProperties properties;
 
-   if ( GetProperties( properties ) != FALSE )
+   if ( GetProperties( properties ) not_eq FALSE )
    {
       return( properties.dwCurrentTxQueue );
    }
@@ -663,10 +663,10 @@ _Check_return_ BOOL Win32FoundationClasses::CSerialFile::GetProperties( __inout 
    // Choose to live
 
 #if defined( WFC_STL )
-   ASSERT( m_FileHandle != reinterpret_cast< HANDLE >( INVALID_HANDLE_VALUE ) );
+   ASSERT( m_FileHandle not_eq reinterpret_cast< HANDLE >( INVALID_HANDLE_VALUE ) );
    if ( m_FileHandle == static_cast< HANDLE >( INVALID_HANDLE_VALUE ) )
 #else
-   ASSERT( m_hFile != reinterpret_cast< CFILE_HFILE >( INVALID_HANDLE_VALUE ) );
+   ASSERT( m_hFile not_eq reinterpret_cast< CFILE_HFILE >( INVALID_HANDLE_VALUE ) );
    if ( m_hFile == reinterpret_cast< CFILE_HFILE >( INVALID_HANDLE_VALUE ) )
 #endif
    {
@@ -693,9 +693,9 @@ _Check_return_ BOOL Win32FoundationClasses::CSerialFile::GetState( __inout Win32
    WFC_VALIDATE_POINTER( this );
 
 #if defined( WFC_STL )
-   ASSERT( m_FileHandle != reinterpret_cast< HANDLE >( INVALID_HANDLE_VALUE ) );
+   ASSERT( m_FileHandle not_eq reinterpret_cast< HANDLE >( INVALID_HANDLE_VALUE ) );
 #else
-   ASSERT( m_hFile != reinterpret_cast< CFILE_HFILE >( INVALID_HANDLE_VALUE ) );
+   ASSERT( m_hFile not_eq reinterpret_cast< CFILE_HFILE >( INVALID_HANDLE_VALUE ) );
 #endif
 
    if ( ::GetCommState( m_FileHandle, &device_control_block ) == FALSE )
@@ -715,10 +715,10 @@ _Check_return_ BOOL Win32FoundationClasses::CSerialFile::GetTimeouts( __inout CO
    // Choose to live
 
 #if defined( WFC_STL )
-   ASSERT( m_FileHandle != static_cast< HANDLE >( INVALID_HANDLE_VALUE ) );
+   ASSERT( m_FileHandle not_eq static_cast< HANDLE >( INVALID_HANDLE_VALUE ) );
    if ( m_FileHandle == static_cast< HANDLE >( INVALID_HANDLE_VALUE ) )
 #else
-   ASSERT( m_hFile != (CFILE_HFILE) INVALID_HANDLE_VALUE );
+   ASSERT( m_hFile not_eq (CFILE_HFILE) INVALID_HANDLE_VALUE );
    if ( m_hFile == (CFILE_HFILE) INVALID_HANDLE_VALUE )
 #endif
    {
@@ -751,10 +751,10 @@ void Win32FoundationClasses::CSerialFile::m_ClearError(_In_ int const ) noexcept
    WFC_VALIDATE_POINTER( this );
 
 #if defined( WFC_STL )
-   ASSERT( m_FileHandle != static_cast< HANDLE >( INVALID_HANDLE_VALUE ) );
+   ASSERT( m_FileHandle not_eq static_cast< HANDLE >( INVALID_HANDLE_VALUE ) );
    if ( m_FileHandle == static_cast< HANDLE >( INVALID_HANDLE_VALUE ) )
 #else
-   ASSERT( m_hFile != (CFILE_HFILE) INVALID_HANDLE_VALUE );
+   ASSERT( m_hFile not_eq (CFILE_HFILE) INVALID_HANDLE_VALUE );
    if ( m_hFile == (CFILE_HFILE) INVALID_HANDLE_VALUE )
 #endif
    {
@@ -778,7 +778,7 @@ void Win32FoundationClasses::CSerialFile::m_ClearError(_In_ int const ) noexcept
       return;
    }
 
-   if ( m_CommunicationErrorCodes != 0 )
+   if ( m_CommunicationErrorCodes not_eq 0 )
    {
 #if defined( _DEBUG )
       TCHAR error_message[ 2048 ];
@@ -881,10 +881,10 @@ _Check_return_ bool Win32FoundationClasses::CSerialFile::IsDataWaiting( void ) n
    WFC_VALIDATE_POINTER( this );
 
 #if defined( WFC_STL )
-   ASSERT( m_FileHandle != static_cast< HANDLE >( INVALID_HANDLE_VALUE ) );
+   ASSERT( m_FileHandle not_eq static_cast< HANDLE >( INVALID_HANDLE_VALUE ) );
    if ( m_FileHandle == static_cast< HANDLE >( INVALID_HANDLE_VALUE ) )
 #else
-   ASSERT( m_hFile != (CFILE_HFILE) INVALID_HANDLE_VALUE );
+   ASSERT( m_hFile not_eq (CFILE_HFILE) INVALID_HANDLE_VALUE );
    if ( m_hFile == (CFILE_HFILE) INVALID_HANDLE_VALUE )
 #endif
    {
@@ -909,10 +909,10 @@ _Check_return_ DWORD Win32FoundationClasses::CSerialFile::NumberOfBytesWaitingTo
    WFC_VALIDATE_POINTER( this );
 
 #if defined( WFC_STL )
-   ASSERT( m_FileHandle != static_cast< HANDLE >( INVALID_HANDLE_VALUE ) );
+   ASSERT( m_FileHandle not_eq static_cast< HANDLE >( INVALID_HANDLE_VALUE ) );
    if ( m_FileHandle == static_cast< HANDLE >( INVALID_HANDLE_VALUE ) )
 #else
-   ASSERT( m_hFile != (CFILE_HFILE) INVALID_HANDLE_VALUE );
+   ASSERT( m_hFile not_eq (CFILE_HFILE) INVALID_HANDLE_VALUE );
    if ( m_hFile == (CFILE_HFILE) INVALID_HANDLE_VALUE )
 #endif
    {
@@ -930,10 +930,10 @@ _Check_return_ DWORD Win32FoundationClasses::CSerialFile::NumberOfBytesWaitingTo
    WFC_VALIDATE_POINTER( this );
 
 #if defined( WFC_STL )
-   ASSERT( m_FileHandle != static_cast< HANDLE >( INVALID_HANDLE_VALUE ) );
+   ASSERT( m_FileHandle not_eq static_cast< HANDLE >( INVALID_HANDLE_VALUE ) );
    if ( m_FileHandle == static_cast< HANDLE >( INVALID_HANDLE_VALUE ) )
 #else
-   ASSERT( m_hFile != (CFILE_HFILE) INVALID_HANDLE_VALUE );
+   ASSERT( m_hFile not_eq (CFILE_HFILE) INVALID_HANDLE_VALUE );
    if ( m_hFile == (CFILE_HFILE) INVALID_HANDLE_VALUE )
 #endif
    {
@@ -1005,7 +1005,7 @@ _Check_return_ bool Win32FoundationClasses::CSerialFile::Open( void ) noexcept
    std::size_t index = 0;
    std::size_t string_length = Name.length();
 
-   while( index < string_length and Name.at( index ) != ':' )
+   while( index < string_length and Name.at( index ) not_eq ':' )
    {
       com_port_name.push_back( Name.at( index ) );
       index++;
@@ -1093,7 +1093,7 @@ _Check_return_ bool Win32FoundationClasses::CSerialFile::Open( void ) noexcept
    index = 0;
    string_length = settings_string.length();
 
-   while( index < string_length and settings_string.at( index ) != ',' )
+   while( index < string_length and settings_string.at( index ) not_eq ',' )
    {
       baud_string.push_back( settings_string.at( index ) );
       index++;
@@ -1103,7 +1103,7 @@ _Check_return_ bool Win32FoundationClasses::CSerialFile::Open( void ) noexcept
 
    std::wstring parity_string;
 
-   while( index < string_length and settings_string.at( index ) != ',' )
+   while( index < string_length and settings_string.at( index ) not_eq ',' )
    {
       parity_string.push_back( settings_string.at( index ) );
       index++;
@@ -1113,7 +1113,7 @@ _Check_return_ bool Win32FoundationClasses::CSerialFile::Open( void ) noexcept
 
    std::wstring data_bits_string;
 
-   while( index < string_length and settings_string.at( index ) != ',' )
+   while( index < string_length and settings_string.at( index ) not_eq ',' )
    {
       data_bits_string.push_back( settings_string.at( index ) );
       index++;
@@ -1198,11 +1198,11 @@ _Check_return_ UINT Win32FoundationClasses::CSerialFile::Read( __out_bcount( len
    WFC_VALIDATE_POINTER( buffer );
 
 #if defined( WFC_STL )
-   ASSERT( m_FileHandle != static_cast< HANDLE >( INVALID_HANDLE_VALUE ) );
+   ASSERT( m_FileHandle not_eq static_cast< HANDLE >( INVALID_HANDLE_VALUE ) );
    if ( buffer == nullptr or
        m_FileHandle == static_cast< HANDLE >( INVALID_HANDLE_VALUE ) )
 #else
-   ASSERT( m_hFile != (CFILE_HFILE) INVALID_HANDLE_VALUE );
+   ASSERT( m_hFile not_eq (CFILE_HFILE) INVALID_HANDLE_VALUE );
    if ( buffer == nullptr or
 	   m_hFile == (CFILE_HFILE) INVALID_HANDLE_VALUE )
 #endif
@@ -1232,10 +1232,10 @@ _Check_return_ BOOL Win32FoundationClasses::CSerialFile::Purge( _In_ DWORD const
    WFC_VALIDATE_POINTER( this );
 
 #if defined( WFC_STL )
-   ASSERT( m_FileHandle != static_cast< HANDLE >( INVALID_HANDLE_VALUE ) );
+   ASSERT( m_FileHandle not_eq static_cast< HANDLE >( INVALID_HANDLE_VALUE ) );
    if ( m_FileHandle == static_cast< HANDLE >( INVALID_HANDLE_VALUE ) )
 #else
-   ASSERT( m_hFile != (CFILE_HFILE) INVALID_HANDLE_VALUE );
+   ASSERT( m_hFile not_eq (CFILE_HFILE) INVALID_HANDLE_VALUE );
    if ( m_hFile == (CFILE_HFILE) INVALID_HANDLE_VALUE )
 #endif
    {
@@ -1292,10 +1292,10 @@ _Check_return_ bool Win32FoundationClasses::CSerialFile::SetBaudRate( _In_ uint3
    WFC_VALIDATE_POINTER( this );
 
 #if defined( WFC_STL )
-   ASSERT( m_FileHandle != static_cast< HANDLE >( INVALID_HANDLE_VALUE ) );
+   ASSERT( m_FileHandle not_eq static_cast< HANDLE >( INVALID_HANDLE_VALUE ) );
    if ( m_FileHandle == static_cast< HANDLE >( INVALID_HANDLE_VALUE ) )
 #else
-   ASSERT( m_hFile != (CFILE_HFILE) INVALID_HANDLE_VALUE );
+   ASSERT( m_hFile not_eq (CFILE_HFILE) INVALID_HANDLE_VALUE );
    if ( m_hFile == (CFILE_HFILE) INVALID_HANDLE_VALUE )
 #endif
    {
@@ -1329,10 +1329,10 @@ _Check_return_ BOOL Win32FoundationClasses::CSerialFile::SetBreak( void ) noexce
    WFC_VALIDATE_POINTER( this );
 
 #if defined( WFC_STL )
-   ASSERT( m_FileHandle != static_cast< HANDLE >( INVALID_HANDLE_VALUE ) );
+   ASSERT( m_FileHandle not_eq static_cast< HANDLE >( INVALID_HANDLE_VALUE ) );
    if ( m_FileHandle == static_cast< HANDLE >( INVALID_HANDLE_VALUE ) )
 #else
-   ASSERT( m_hFile != (CFILE_HFILE) INVALID_HANDLE_VALUE );
+   ASSERT( m_hFile not_eq (CFILE_HFILE) INVALID_HANDLE_VALUE );
    if ( m_hFile == (CFILE_HFILE) INVALID_HANDLE_VALUE )
 #endif
    {
@@ -1360,10 +1360,10 @@ _Check_return_ BOOL Win32FoundationClasses::CSerialFile::SetCharacterToWaitFor( 
    WFC_VALIDATE_POINTER( this );
 
 #if defined( WFC_STL )
-   ASSERT( m_FileHandle != static_cast< HANDLE >( INVALID_HANDLE_VALUE ) );
+   ASSERT( m_FileHandle not_eq static_cast< HANDLE >( INVALID_HANDLE_VALUE ) );
    if ( m_FileHandle == static_cast< HANDLE >( INVALID_HANDLE_VALUE ) )
 #else
-   ASSERT( m_hFile != (CFILE_HFILE) INVALID_HANDLE_VALUE );
+   ASSERT( m_hFile not_eq (CFILE_HFILE) INVALID_HANDLE_VALUE );
    if ( m_hFile == (CFILE_HFILE) INVALID_HANDLE_VALUE )
 #endif
    {
@@ -1397,10 +1397,10 @@ _Check_return_ BOOL Win32FoundationClasses::CSerialFile::SetDataTerminalReady( _
    WFC_VALIDATE_POINTER( this );
 
 #if defined( WFC_STL )
-   ASSERT( m_FileHandle != static_cast< HANDLE >( INVALID_HANDLE_VALUE ) );
+   ASSERT( m_FileHandle not_eq static_cast< HANDLE >( INVALID_HANDLE_VALUE ) );
    if ( m_FileHandle == static_cast< HANDLE >( INVALID_HANDLE_VALUE ) )
 #else
-   ASSERT( m_hFile != (CFILE_HFILE) INVALID_HANDLE_VALUE );
+   ASSERT( m_hFile not_eq (CFILE_HFILE) INVALID_HANDLE_VALUE );
    if ( m_hFile == (CFILE_HFILE) INVALID_HANDLE_VALUE )
 #endif
    {
@@ -1441,10 +1441,10 @@ void Win32FoundationClasses::CSerialFile::SetFlowControl( _In_ DWORD const flow_
    WFC_VALIDATE_POINTER( this );
 
 #if defined( WFC_STL )
-   ASSERT( m_FileHandle != static_cast< HANDLE >( INVALID_HANDLE_VALUE ) );
+   ASSERT( m_FileHandle not_eq static_cast< HANDLE >( INVALID_HANDLE_VALUE ) );
    if ( m_FileHandle == static_cast< HANDLE >( INVALID_HANDLE_VALUE ) )
 #else
-   ASSERT( m_hFile != (CFILE_HFILE) INVALID_HANDLE_VALUE );
+   ASSERT( m_hFile not_eq (CFILE_HFILE) INVALID_HANDLE_VALUE );
    if ( m_hFile == (CFILE_HFILE) INVALID_HANDLE_VALUE )
 #endif
    {
@@ -1532,10 +1532,10 @@ _Check_return_ bool Win32FoundationClasses::CSerialFile::SetRequestToSend(_In_ b
    WFC_VALIDATE_POINTER( this );
 
 #if defined( WFC_STL )
-   ASSERT( m_FileHandle != static_cast< HANDLE >( INVALID_HANDLE_VALUE ) );
+   ASSERT( m_FileHandle not_eq static_cast< HANDLE >( INVALID_HANDLE_VALUE ) );
    if ( m_FileHandle == static_cast< HANDLE >( INVALID_HANDLE_VALUE ) )
 #else
-   ASSERT( m_hFile != (CFILE_HFILE) INVALID_HANDLE_VALUE );
+   ASSERT( m_hFile not_eq (CFILE_HFILE) INVALID_HANDLE_VALUE );
    if ( m_hFile == (CFILE_HFILE) INVALID_HANDLE_VALUE )
 #endif
    {
@@ -1545,7 +1545,7 @@ _Check_return_ bool Win32FoundationClasses::CSerialFile::SetRequestToSend(_In_ b
 
    BOOL return_value = FALSE;
 
-   if ( set_RTS_on != FALSE )
+   if ( set_RTS_on not_eq FALSE )
    {
       //WFCTRACE( TEXT( "Setting RTS on" ) );
       return_value = ::EscapeCommFunction( m_FileHandle, SETRTS );
@@ -1588,10 +1588,10 @@ _Check_return_ BOOL Win32FoundationClasses::CSerialFile::SetTimeouts( __in_opt C
    // Choose to live
 
 #if defined( WFC_STL )
-   ASSERT( m_FileHandle != static_cast< HANDLE >( INVALID_HANDLE_VALUE ) );
+   ASSERT( m_FileHandle not_eq static_cast< HANDLE >( INVALID_HANDLE_VALUE ) );
    if ( m_FileHandle == static_cast< HANDLE >( INVALID_HANDLE_VALUE ) )
 #else
-   ASSERT( m_hFile != (CFILE_HFILE) INVALID_HANDLE_VALUE );
+   ASSERT( m_hFile not_eq (CFILE_HFILE) INVALID_HANDLE_VALUE );
    if ( m_hFile == (CFILE_HFILE) INVALID_HANDLE_VALUE )
 #endif
    {
@@ -1603,7 +1603,7 @@ _Check_return_ BOOL Win32FoundationClasses::CSerialFile::SetTimeouts( __in_opt C
 
    ::ZeroMemory( &communications_timeouts, sizeof( communications_timeouts ) );
 
-   if ( timeouts_p != nullptr )
+   if ( timeouts_p not_eq nullptr )
    {
       // We were passed a pointer, do not trust it
 
@@ -1657,10 +1657,10 @@ _Check_return_ BOOL Win32FoundationClasses::CSerialFile::TransmitCharacter( _In_
    // Choose to live
 
 #if defined( WFC_STL )
-   ASSERT( m_FileHandle != static_cast< HANDLE >( INVALID_HANDLE_VALUE ) );
+   ASSERT( m_FileHandle not_eq static_cast< HANDLE >( INVALID_HANDLE_VALUE ) );
    if ( m_FileHandle == static_cast< HANDLE >( INVALID_HANDLE_VALUE ) )
 #else
-   ASSERT( m_hFile != (CFILE_HFILE) INVALID_HANDLE_VALUE );
+   ASSERT( m_hFile not_eq (CFILE_HFILE) INVALID_HANDLE_VALUE );
    if ( m_hFile == (CFILE_HFILE) INVALID_HANDLE_VALUE )
 #endif
    {
@@ -1691,10 +1691,10 @@ _Check_return_ BOOL Win32FoundationClasses::CSerialFile::WaitFor(__inout DWORD& 
    // Choose to live
 
 #if defined( WFC_STL )
-   ASSERT( m_FileHandle != static_cast< HANDLE >( INVALID_HANDLE_VALUE ) );
+   ASSERT( m_FileHandle not_eq static_cast< HANDLE >( INVALID_HANDLE_VALUE ) );
    if ( m_FileHandle == static_cast< HANDLE >( INVALID_HANDLE_VALUE ) )
 #else
-   ASSERT( m_hFile != (CFILE_HFILE) INVALID_HANDLE_VALUE );
+   ASSERT( m_hFile not_eq (CFILE_HFILE) INVALID_HANDLE_VALUE );
    if ( m_hFile == (CFILE_HFILE) INVALID_HANDLE_VALUE )
 #endif
    {
@@ -1773,7 +1773,7 @@ _Check_return_ bool Win32FoundationClasses::CSerialFile::WaitForString( _In_ std
             {
                //WFCTRACE( TEXT( "Returning TRUE" ) );
 
-               if ( string_p != nullptr )
+               if ( string_p not_eq nullptr )
                {
                   // We were passed a pointer, do not trust it
 
@@ -1810,7 +1810,7 @@ _Check_return_ bool Win32FoundationClasses::CSerialFile::WaitForString( _In_ std
       }
    }
 
-   if ( string_p != nullptr )
+   if ( string_p not_eq nullptr )
    {
       // We were passed a pointer, do not trust it
 
@@ -1843,9 +1843,9 @@ void Win32FoundationClasses::CSerialFile::Write( __in_bcount( length ) void cons
    WFC_VALIDATE_POINTER( buffer );
 
 #if defined( WFC_STL )
-   ASSERT( m_FileHandle != static_cast< HANDLE >( INVALID_HANDLE_VALUE ) );
+   ASSERT( m_FileHandle not_eq static_cast< HANDLE >( INVALID_HANDLE_VALUE ) );
 #else
-   ASSERT( m_hFile != (CFILE_HFILE) INVALID_HANDLE_VALUE );
+   ASSERT( m_hFile not_eq (CFILE_HFILE) INVALID_HANDLE_VALUE );
 #endif
 
    if ( buffer == nullptr or
@@ -1885,7 +1885,7 @@ void Win32FoundationClasses::CSerialFile::Write( __in_bcount( length ) void cons
                            number_of_bytes_to_write,
                           &number_of_bytes_written,
                            nullptr ) == FALSE and
-              ::GetLastError() != 0 )
+              ::GetLastError() not_eq 0 )
          {
             // Something bad happened...
             return;
@@ -1914,7 +1914,7 @@ void Win32FoundationClasses::CSerialFile::Write( _In_ std::string_view string_to
 {
    WFC_VALIDATE_POINTER( this );
 
-   ASSERT( m_FileHandle != static_cast< HANDLE >( INVALID_HANDLE_VALUE ) );
+   ASSERT( m_FileHandle not_eq static_cast< HANDLE >( INVALID_HANDLE_VALUE ) );
    if ( m_FileHandle == static_cast< HANDLE >( INVALID_HANDLE_VALUE ) )
    {
       m_LastError = ERROR_INVALID_HANDLE;
@@ -2155,7 +2155,7 @@ the byte to be transmitted.
    {
       _tprintf( TEXT( &quot;Opening serial port\n&quot; ) );
 
-      if ( serial.Open( TEXT( &quot;COM1:57600,n,8,1&quot; ) ) != FALSE )
+      if ( serial.Open( TEXT( &quot;COM1:57600,n,8,1&quot; ) ) not_eq FALSE )
       {
          std::wstring response;
 
@@ -2177,7 +2177,7 @@ the byte to be transmitted.
 
          _tprintf( TEXT( &quot;Received a RING, waiting for them to end\n&quot; ) );
 
-         while( serial.WaitForString( TEXT( &quot;RING&quot; ), 7 ) != FALSE )
+         while( serial.WaitForString( TEXT( &quot;RING&quot; ), 7 ) not_eq FALSE )
          {
             // Do Nothing
          }

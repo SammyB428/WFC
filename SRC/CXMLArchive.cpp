@@ -182,7 +182,7 @@ _Check_return_ Win32FoundationClasses::CExtensibleMarkupLanguageElement * Win32F
 
       auto sub_element_p = Read( tag, boolean_value );
 
-      if ( sub_element_p != nullptr )
+      if ( sub_element_p not_eq nullptr )
       {
          if ( boolean_value == 0 )
          {
@@ -223,7 +223,7 @@ _Check_return_ Win32FoundationClasses::CExtensibleMarkupLanguageElement * Win32F
 
       auto sub_element_p = m_Element_p->GetChild( tag );
 
-      if ( sub_element_p != nullptr )
+      if ( sub_element_p not_eq nullptr )
       {
          CBase64Coding coder;
 
@@ -263,7 +263,7 @@ _Check_return_ Win32FoundationClasses::CExtensibleMarkupLanguageElement * Win32F
 
       auto sub_element_p = m_Element_p->GetChild( tag );
 
-      if ( sub_element_p != nullptr )
+      if ( sub_element_p not_eq nullptr )
       {
          // Cool! We have the top level element. Now we
          // need to cycle through the sub-elements.
@@ -319,7 +319,7 @@ _Check_return_ Win32FoundationClasses::CExtensibleMarkupLanguageElement * Win32F
    {
       auto sub_element_p = m_Element_p->GetChild( tag );
 
-      if ( sub_element_p != nullptr )
+      if ( sub_element_p not_eq nullptr )
       {
          sub_element_p->GetText( value );
       }
@@ -352,7 +352,7 @@ _Check_return_ Win32FoundationClasses::CExtensibleMarkupLanguageElement * Win32F
 
       auto sub_element_p = m_Element_p->GetChild( tag );
 
-      if ( sub_element_p != nullptr )
+      if ( sub_element_p not_eq nullptr )
       {
          // Cool! We have the top level element. Now we
          // need to cycle through the sub-elements.
@@ -409,7 +409,7 @@ _Check_return_ Win32FoundationClasses::CExtensibleMarkupLanguageElement * Win32F
    {
       auto sub_element_p = m_Element_p->GetChild( tag );
 
-      if ( sub_element_p != nullptr )
+      if ( sub_element_p not_eq nullptr )
       {
          std::wstring string_value;
 
@@ -444,7 +444,7 @@ _Check_return_ Win32FoundationClasses::CExtensibleMarkupLanguageElement * Win32F
    {
       auto sub_element_p = m_Element_p->GetChild( tag );
 
-      if ( sub_element_p != nullptr )
+      if ( sub_element_p not_eq nullptr )
       {
          std::wstring string_value;
 
@@ -479,7 +479,7 @@ _Check_return_ Win32FoundationClasses::CExtensibleMarkupLanguageElement * Win32F
    {
       auto sub_element_p = m_Element_p->GetChild( tag );
 
-      if ( sub_element_p != nullptr )
+      if ( sub_element_p not_eq nullptr )
       {
          std::wstring string_value;
 
@@ -514,7 +514,7 @@ _Check_return_ Win32FoundationClasses::CExtensibleMarkupLanguageElement * Win32F
    {
       auto sub_element_p = m_Element_p->GetChild( tag );
 
-      if ( sub_element_p != nullptr )
+      if ( sub_element_p not_eq nullptr )
       {
          std::wstring string_value;
 
@@ -549,7 +549,7 @@ _Check_return_ Win32FoundationClasses::CExtensibleMarkupLanguageElement * Win32F
    {
       auto sub_element_p = m_Element_p->GetChild( tag );
 
-      if ( sub_element_p != nullptr )
+      if ( sub_element_p not_eq nullptr )
       {
          std::wstring string_value;
 
@@ -585,7 +585,7 @@ _Check_return_ Win32FoundationClasses::CExtensibleMarkupLanguageElement * Win32F
    {
       auto sub_element_p = m_Element_p->GetChild( tag );
 
-      if ( sub_element_p != nullptr )
+      if ( sub_element_p not_eq nullptr )
       {
          std::wstring string_value;
 
@@ -619,7 +619,7 @@ _Check_return_ Win32FoundationClasses::CExtensibleMarkupLanguageElement * Win32F
    {
       auto sub_element_p = m_Element_p->GetChild( tag );
 
-      if ( sub_element_p != nullptr )
+      if ( sub_element_p not_eq nullptr )
       {
          std::wstring string_value;
 
@@ -656,7 +656,7 @@ _Check_return_ Win32FoundationClasses::CExtensibleMarkupLanguageElement * Win32F
    {
       auto sub_element_p = m_Element_p->GetChild( tag );
 
-      if ( sub_element_p != nullptr )
+      if ( sub_element_p not_eq nullptr )
       {
          std::wstring string_value;
 
@@ -691,7 +691,7 @@ _Check_return_ Win32FoundationClasses::CExtensibleMarkupLanguageElement * Win32F
    {
       auto sub_element_p = m_Element_p->GetChild( tag );
 
-      if ( sub_element_p != nullptr )
+      if ( sub_element_p not_eq nullptr )
       {
          std::wstring string_value;
 
@@ -726,7 +726,7 @@ _Check_return_ Win32FoundationClasses::CExtensibleMarkupLanguageElement * Win32F
    {
       auto sub_element_p = m_Element_p->GetChild( tag );
 
-      if ( sub_element_p != nullptr )
+      if ( sub_element_p not_eq nullptr )
       {
          std::wstring string_value;
 
@@ -813,7 +813,7 @@ _Check_return_ Win32FoundationClasses::CExtensibleMarkupLanguageElement * Win32F
    {
       auto sub_element_p = Win32FoundationClasses::CExtensibleMarkupLanguageElement::NewElement( m_Element_p );
 
-      if ( sub_element_p != nullptr )
+      if ( sub_element_p not_eq nullptr )
       {
          // Since we're XML, we must convert everything to a string
 
@@ -859,7 +859,7 @@ _Check_return_ Win32FoundationClasses::CExtensibleMarkupLanguageElement * Win32F
    {
       auto sub_element_p = Win32FoundationClasses::CExtensibleMarkupLanguageElement::NewElement( m_Element_p );
 
-      if ( sub_element_p != nullptr )
+      if ( sub_element_p not_eq nullptr )
       {
          std::wstring contents;
 
@@ -899,7 +899,7 @@ _Check_return_ Win32FoundationClasses::CExtensibleMarkupLanguageElement * Win32F
    {
       auto sub_element_p = Win32FoundationClasses::CExtensibleMarkupLanguageElement::NewElement( m_Element_p );
 
-      if ( sub_element_p != nullptr )
+      if ( sub_element_p not_eq nullptr )
       {
          sub_element_p->SetTag( tag );
 
@@ -952,7 +952,7 @@ _Check_return_ Win32FoundationClasses::CExtensibleMarkupLanguageElement * Win32F
 
       auto sub_element_p = Win32FoundationClasses::CExtensibleMarkupLanguageElement::NewElement( m_Element_p );
 
-      if ( sub_element_p != nullptr )
+      if ( sub_element_p not_eq nullptr )
       {
          // Since we're XML, we must convert everything to a string
 
@@ -1010,7 +1010,7 @@ _Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Write(_In_ std::w
 
       auto sub_element_p = CExtensibleMarkupLanguageElement::NewElement( m_Element_p );
 
-      if ( sub_element_p != nullptr )
+      if ( sub_element_p not_eq nullptr )
       {
          // Since we're XML, we must convert everything to a string
 
@@ -1073,7 +1073,7 @@ _Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Write(_In_ std::w
 
       auto sub_element_p = CExtensibleMarkupLanguageElement::NewElement( m_Element_p );
 
-      if ( sub_element_p != nullptr )
+      if ( sub_element_p not_eq nullptr )
       {
          // Since we're XML, we must convert everything to a string
 
@@ -1115,7 +1115,7 @@ _Check_return_ Win32FoundationClasses::CExtensibleMarkupLanguageElement * Win32F
    {
       auto sub_element_p = CExtensibleMarkupLanguageElement::NewElement( m_Element_p );
 
-      if ( sub_element_p != nullptr )
+      if ( sub_element_p not_eq nullptr )
       {
          sub_element_p->SetTag( tag );
          (void) sub_element_p->AddText( value );
@@ -1149,7 +1149,7 @@ _Check_return_ Win32FoundationClasses::CExtensibleMarkupLanguageElement * Win32F
    {
       auto sub_element_p = Win32FoundationClasses::CExtensibleMarkupLanguageElement::NewElement( m_Element_p );
 
-      if ( sub_element_p != nullptr )
+      if ( sub_element_p not_eq nullptr )
       {
          sub_element_p->SetTag( tag );
 
@@ -1202,7 +1202,7 @@ _Check_return_ Win32FoundationClasses::CExtensibleMarkupLanguageElement * Win32F
 
       auto sub_element_p = Win32FoundationClasses::CExtensibleMarkupLanguageElement::NewElement( m_Element_p );
 
-      if ( sub_element_p != nullptr )
+      if ( sub_element_p not_eq nullptr )
       {
          // Since we're XML, we must convert everything to a string
 
@@ -1255,7 +1255,7 @@ _Check_return_ Win32FoundationClasses::CExtensibleMarkupLanguageElement * Win32F
 
       auto sub_element_p = CExtensibleMarkupLanguageElement::NewElement( m_Element_p );
 
-      if ( sub_element_p != nullptr )
+      if ( sub_element_p not_eq nullptr )
       {
          // Since we're XML, we must convert everything to a string
 
@@ -1317,7 +1317,7 @@ _Check_return_ Win32FoundationClasses::CExtensibleMarkupLanguageElement * Win32F
 
       auto sub_element_p = Win32FoundationClasses::CExtensibleMarkupLanguageElement::NewElement( m_Element_p );
 
-      if ( sub_element_p != nullptr )
+      if ( sub_element_p not_eq nullptr )
       {
          // Since we're XML, we must convert everything to a string
 
@@ -1364,7 +1364,7 @@ _Check_return_ Win32FoundationClasses::CExtensibleMarkupLanguageElement * Win32F
 
       auto sub_element_p = Win32FoundationClasses::CExtensibleMarkupLanguageElement::NewElement( m_Element_p );
 
-      if ( sub_element_p != nullptr )
+      if ( sub_element_p not_eq nullptr )
       {
          // Since we're XML, we must convert everything to a string
 
@@ -1441,7 +1441,7 @@ _Check_return_ Win32FoundationClasses::CExtensibleMarkupLanguageElement * Win32F
 
       auto sub_element_p = Win32FoundationClasses::CExtensibleMarkupLanguageElement::NewElement( m_Element_p );
 
-      if ( sub_element_p != nullptr )
+      if ( sub_element_p not_eq nullptr )
       {
          // Since we're XML, we must convert everything to a string
 
@@ -1487,7 +1487,7 @@ _Check_return_ Win32FoundationClasses::CExtensibleMarkupLanguageElement * Win32F
 
       auto sub_element_p = Win32FoundationClasses::CExtensibleMarkupLanguageElement::NewElement( m_Element_p );
 
-      if ( sub_element_p != nullptr )
+      if ( sub_element_p not_eq nullptr )
       {
          // Since we're XML, we must convert everything to a string
 
@@ -1534,7 +1534,7 @@ _Check_return_ Win32FoundationClasses::CExtensibleMarkupLanguageElement * Win32F
 
       auto sub_element_p = Win32FoundationClasses::CExtensibleMarkupLanguageElement::NewElement( m_Element_p );
 
-      if ( sub_element_p != nullptr )
+      if ( sub_element_p not_eq nullptr )
       {
          // Since we're XML, we must convert everything to a string
 

@@ -71,7 +71,7 @@ Win32FoundationClasses::CDesktop::CDesktop( _In_ HDESK desktop_handle ) noexcept
    Attach( desktop_handle );
 }
 
-Win32FoundationClasses::CDesktop::~CDesktop() noexcept
+Win32FoundationClasses::CDesktop::~CDesktop()
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -89,7 +89,7 @@ void Win32FoundationClasses::CDesktop::Attach( _In_ HDESK desktop_handle ) noexc
 {
    WFC_VALIDATE_POINTER( this );
 
-   if ( m_DesktopHandle != static_cast< HDESK >( NULL ) and m_AutomaticallyClose == true)
+   if ( m_DesktopHandle not_eq static_cast< HDESK >( NULL ) and m_AutomaticallyClose == true)
    {
       (void) Close();
    }
@@ -104,7 +104,7 @@ _Check_return_ bool Win32FoundationClasses::CDesktop::Close( void ) noexcept
 
    BOOL return_value = TRUE;
 
-   if ( m_DesktopHandle != static_cast< HDESK >( NULL ) )
+   if ( m_DesktopHandle not_eq static_cast< HDESK >( NULL ) )
    {
       return_value = ::CloseDesktop( m_DesktopHandle );
 
@@ -135,7 +135,7 @@ _Check_return_ bool Win32FoundationClasses::CDesktop::Create( _In_ std::wstring_
 
    bool return_value = false;
 
-   if ( m_DesktopHandle != static_cast< HDESK >( NULL ) and m_AutomaticallyClose == true)
+   if ( m_DesktopHandle not_eq static_cast< HDESK >( NULL ) and m_AutomaticallyClose == true)
    {
       (void) Close();
    }
@@ -196,7 +196,7 @@ static BOOL CALLBACK CDesktop__WindowEnumerator( HWND window_handle, LPARAM lPar
 
    __try
    {
-      if ( window_array != nullptr )
+      if ( window_array not_eq nullptr )
       {
          window_array->push_back( window_handle );
       }
@@ -245,7 +245,7 @@ void Win32FoundationClasses::CDesktop::GetThread( _In_ DWORD thread_id ) noexcep
 {
    WFC_VALIDATE_POINTER( this );
 
-   if ( thread_id != 0 )
+   if ( thread_id not_eq 0 )
    {
       m_DesktopHandle = ::GetThreadDesktop( thread_id );
    }
@@ -261,7 +261,7 @@ _Check_return_ bool Win32FoundationClasses::CDesktop::Open( _In_ std::wstring_vi
 
    bool return_value = FALSE;
 
-   if ( m_DesktopHandle != static_cast< HDESK >( NULL ) and m_AutomaticallyClose == true)
+   if ( m_DesktopHandle not_eq static_cast< HDESK >( NULL ) and m_AutomaticallyClose == true)
    {
       (void) Close();
    }
@@ -301,7 +301,7 @@ _Check_return_ bool Win32FoundationClasses::CDesktop::OpenInput( _In_ DWORD desi
 
    bool return_value = FALSE;
 
-   if ( m_DesktopHandle != static_cast< HDESK >( NULL ) and m_AutomaticallyClose == true)
+   if ( m_DesktopHandle not_eq static_cast< HDESK >( NULL ) and m_AutomaticallyClose == true)
    {
       (void) Close();
    }

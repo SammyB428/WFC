@@ -165,7 +165,7 @@ class CTimeEx
 
       inline constexpr void Copy(_In_ CTimeEx const* source) noexcept
       {
-          if (source != nullptr)
+          if (source not_eq nullptr)
           {
               m_Time = source->m_Time;
           }
@@ -196,7 +196,7 @@ class CTimeEx
 
       inline constexpr void Copy(_In_ FILETIME const * source) noexcept
       {
-          if (source != nullptr)
+          if (source not_eq nullptr)
           {
               Copy(*source);
           }

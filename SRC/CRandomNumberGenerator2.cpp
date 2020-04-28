@@ -169,7 +169,7 @@ Win32FoundationClasses::CRandomNumberGenerator2::CRandomNumberGenerator2( _In_ u
    SetSeed( new_seed );
 }
 
-Win32FoundationClasses::CRandomNumberGenerator2::~CRandomNumberGenerator2() noexcept
+Win32FoundationClasses::CRandomNumberGenerator2::~CRandomNumberGenerator2()
 {
    WFC_VALIDATE_POINTER( this );
 }
@@ -246,7 +246,7 @@ void Win32FoundationClasses::CRandomNumberGenerator2::InitializeSeed( void ) noe
 
    totaler += (uint32_t) ::GetTickCount64();
 
-   if ( ::GetSystemTimes( &a, &b, &c ) != 0 )
+   if ( ::GetSystemTimes( &a, &b, &c ) not_eq 0 )
    {
        totaler += a.dwLowDateTime;
        totaler += b.dwLowDateTime;
@@ -259,7 +259,7 @@ void Win32FoundationClasses::CRandomNumberGenerator2::InitializeSeed( void ) noe
                  (LPDWORD) &number_of_sectors_per_cluster,
                  (LPDWORD) &number_of_bytes_per_sector,
                  (LPDWORD) &number_of_free_clusters,
-                 (LPDWORD) &total_number_of_clusters ) != FALSE )
+                 (LPDWORD) &total_number_of_clusters ) not_eq FALSE )
    {
       low_word = LOWORD( number_of_free_clusters );
 
@@ -671,7 +671,7 @@ void Win32FoundationClasses::CRandomNumberGenerator2::Fill( _In_ uint32_t const 
 
         new_seed = _rotl( new_seed, 1 );
 
-        if ( destination.at( 0 ) != ' ' )
+        if ( destination.at( 0 ) not_eq ' ' )
         {
            loop_index++;
         }

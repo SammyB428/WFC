@@ -68,7 +68,7 @@ _Check_return_ bool Win32FoundationClasses::wfc_am_i_administrator( void ) noexc
                          TRUE,
                         &access_token_handle ) == FALSE )
    {
-      if ( GetLastError() != ERROR_NO_TOKEN )
+      if ( GetLastError() not_eq ERROR_NO_TOKEN )
       {
          return( false );
       }
@@ -122,7 +122,7 @@ _Check_return_ bool Win32FoundationClasses::wfc_am_i_administrator( void ) noexc
 
    for ( auto const x : Range(token_groups_p->GroupCount) )
    {
-      if ( EqualSid( administrators_sid_p, token_groups_p->Groups[ x ].Sid ) != FALSE )
+      if ( EqualSid( administrators_sid_p, token_groups_p->Groups[ x ].Sid ) not_eq FALSE )
       {
          success = TRUE;
          break;
@@ -170,7 +170,7 @@ int _tmain( int number_of_command_line_arguments, LPCTSTR command_line_arguments
 {
    <A HREF="WfcTrace.htm">WFCTRACEINIT</A>( TEXT( &quot;_tmain()&quot; ) );
 
-   if ( <B>wfc_am_i_administrator</B>() != FALSE )
+   if ( <B>wfc_am_i_administrator</B>() not_eq FALSE )
    {
       _tprintf( TEXT( &quot;You are Administrator or in the Administrators group\n&quot; ) );
    }

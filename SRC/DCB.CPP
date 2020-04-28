@@ -107,7 +107,7 @@ void Win32FoundationClasses::CDeviceControlBlock::Copy( _In_ DCB const * source 
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
-   ASSERT( source != this );
+   ASSERT( source not_eq this );
 
    if ( source == this )
    {

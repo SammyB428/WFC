@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 1995-2015, Samuel R. Blackburn
+** Copyright, 1995-2020, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -127,7 +127,7 @@ _Check_return_ SSIZE_T Win32FoundationClasses::CReedSolomonErrorCorrectionCode::
    // Encoded data must be in 255 byte chunks
    ASSERT( ( encoded_data.size() % 255 ) == 0 );
 
-   if ( ( encoded_data.size() % 255 ) != 0 )
+   if ( ( encoded_data.size() % 255 ) not_eq 0 )
    {
       return( -1 );
    }
@@ -267,7 +267,6 @@ _Check_return_ int Win32FoundationClasses::CReedSolomonErrorCorrectionCode::m_De
    int deg_lambda                 = 0;
    int el                         = 0;
    int deg_omega                  = 0;
-   int i                          = 0;
    int j                          = 0;
    int step_number                = 0;
    int u                          = 0;
@@ -296,7 +295,7 @@ _Check_return_ int Win32FoundationClasses::CReedSolomonErrorCorrectionCode::m_De
       eras_pos.resize( m_BlockSize - m_NumberOfSymbolsPerBlock );
 
       /* data[] is in polynomial form, copy and convert to index form */
-      for ( i = m_BlockSize-1; i >= 0; i-- )
+      for ( int i = m_BlockSize-1; i >= 0; i-- )
       {
          recd[ i ] = m_Index_of[ data.at( i ) ];
       }
@@ -307,13 +306,13 @@ _Check_return_ int Win32FoundationClasses::CReedSolomonErrorCorrectionCode::m_De
 
       syndrome_error = 0;
 
-      for ( i = 1; i <= m_BlockSize - m_NumberOfSymbolsPerBlock; i++ )
+      for ( auto const i : Range((m_BlockSize - m_NumberOfSymbolsPerBlock) + 1, StartingRangePosition(1)))
       {
          tmp = 0;
 
-         for ( auto const loop_index : Range( m_BlockSize) )
+         for ( auto const loop_index : Range(m_BlockSize) )
          {
-            if ( recd[loop_index] != m_BlockSize ) /* recd[j] in index form */
+            if ( recd[loop_index] not_eq m_BlockSize ) /* recd[j] in index form */
             {
                tmp xor_eq m_Alpha_to[ m_Mod( recd[loop_index] + ( 1 + i - 1 ) * static_cast<int>(loop_index) ) ];
             }
@@ -343,7 +342,7 @@ _Check_return_ int Win32FoundationClasses::CReedSolomonErrorCorrectionCode::m_De
          /* Init lambda to be the erasure locator polynomial */
          lambda[ 1 ] = m_Alpha_to[ eras_pos.at( 0 ) ];
 
-         for ( i = 1; i < no_eras; i++ )
+         for (auto const i : Range(no_eras, StartingRangePosition(1)))
          {
             u = eras_pos.at( i );
 
@@ -351,7 +350,7 @@ _Check_return_ int Win32FoundationClasses::CReedSolomonErrorCorrectionCode::m_De
             {
                tmp = m_Index_of[ lambda[ j - 1 ] ];
 
-               if( tmp != m_BlockSize )
+               if( tmp not_eq m_BlockSize )
                {
                   lambda[ j ] xor_eq m_Alpha_to[ m_Mod( u + tmp ) ];
                }
@@ -359,7 +358,7 @@ _Check_return_ int Win32FoundationClasses::CReedSolomonErrorCorrectionCode::m_De
          }
       }
 
-      for( i = 0; i < m_BlockSize - m_NumberOfSymbolsPerBlock + 1; i++ )
+      for( auto const i : Range(m_BlockSize - m_NumberOfSymbolsPerBlock + 1) )
       {
          b[ i ] = m_Index_of[ lambda[ i ] ];
       }
@@ -378,9 +377,9 @@ _Check_return_ int Win32FoundationClasses::CReedSolomonErrorCorrectionCode::m_De
 
          discrepancy_at_step_number = 0;
 
-         for ( i = 0; i < step_number; i++ )
+         for( auto const i : Range(step_number) )
          {
-            if ( ( lambda[ i ] != 0 ) and ( s[ step_number - i ] != m_BlockSize ) )
+            if ( ( lambda[ i ] not_eq 0 ) and ( s[ step_number - i ] not_eq m_BlockSize ) )
             {
                discrepancy_at_step_number xor_eq m_Alpha_to[ m_Mod( m_Index_of[ lambda[ i ] ] + s[ step_number - i ] ) ];
             }
@@ -399,9 +398,9 @@ _Check_return_ int Win32FoundationClasses::CReedSolomonErrorCorrectionCode::m_De
             /* 7 lines below: T(x) <-- lambda(x) - discr_r*x*b(x) */
             t[ 0 ] = lambda[ 0 ];
 
-            for ( i = 0 ; i < m_BlockSize - m_NumberOfSymbolsPerBlock; i++ )
+            for ( auto const i : Range(m_BlockSize - m_NumberOfSymbolsPerBlock) )
             {
-               if( b[ i ] != m_BlockSize )
+               if( b[ i ] not_eq m_BlockSize )
                {
                   t[ i + 1 ] = lambda[ i + 1 ] xor m_Alpha_to[ m_Mod( discrepancy_at_step_number + b[ i ] ) ];
                }
@@ -419,7 +418,7 @@ _Check_return_ int Win32FoundationClasses::CReedSolomonErrorCorrectionCode::m_De
                 * 2 lines below: B(x) <-- inv(discrepancy_at_step_number) * lambda(x)
                 */
 
-                for ( i = 0; i <= m_BlockSize - m_NumberOfSymbolsPerBlock; i++ )
+                for ( auto const i : Range((m_BlockSize - m_NumberOfSymbolsPerBlock) + 1) )
                 {
                    b[ i ] = ( lambda[ i ] == 0 ) ? m_BlockSize : m_Mod( m_Index_of[ lambda[ i ] ] - discrepancy_at_step_number + m_BlockSize );
                 }
@@ -440,11 +439,11 @@ _Check_return_ int Win32FoundationClasses::CReedSolomonErrorCorrectionCode::m_De
 
       deg_lambda = 0;
 
-      for( i = 0; i < m_BlockSize - m_NumberOfSymbolsPerBlock + 1; i++ )
+      for( auto const i : Range(m_BlockSize - m_NumberOfSymbolsPerBlock + 1) )
       {
          lambda[ i ] = m_Index_of[ lambda[ i ] ];
 
-         if( lambda[ i ] != m_BlockSize )
+         if( lambda[ i ] not_eq m_BlockSize )
          {
             deg_lambda = i;
          }
@@ -459,13 +458,13 @@ _Check_return_ int Win32FoundationClasses::CReedSolomonErrorCorrectionCode::m_De
 
       count = 0; /* Number of roots of lambda(x) */
 
-      for ( i = 1; i <= m_BlockSize; i++ )
+      for ( auto const i : Range(m_BlockSize + 1, StartingRangePosition(1)) )
       {
          q = 1;
 
          for ( j = deg_lambda; j > 0; j-- )
          {
-            if ( reg[ j ] != m_BlockSize )
+            if ( reg[ j ] not_eq m_BlockSize )
             {
                reg[ j ] = m_Mod( reg[ j ] + j );
                q xor_eq m_Alpha_to[ reg[ j ] ];
@@ -490,7 +489,7 @@ _Check_return_ int Win32FoundationClasses::CReedSolomonErrorCorrectionCode::m_De
       TRACE( TEXT( "\n" ) );
 #endif
 
-      if ( deg_lambda != count )
+      if ( deg_lambda not_eq count )
       {
          /*
           * deg(lambda) unequal to number of roots => uncorrectable
@@ -507,20 +506,20 @@ _Check_return_ int Win32FoundationClasses::CReedSolomonErrorCorrectionCode::m_De
 
       deg_omega = 0;
 
-      for ( i = 0; i < m_BlockSize - m_NumberOfSymbolsPerBlock; i++ )
+      for ( auto const i : Range(m_BlockSize - m_NumberOfSymbolsPerBlock) )
       {
          tmp = 0;
          j = (deg_lambda < i) ? deg_lambda : i;
 
          for( ;j >= 0; j-- )
          {
-            if ( ( s[ i + 1 - j ] != m_BlockSize ) and ( lambda[ j ] != m_BlockSize ) )
+            if ( ( s[ i + 1 - j ] not_eq m_BlockSize ) and ( lambda[ j ] not_eq m_BlockSize ) )
             {
                tmp xor_eq m_Alpha_to[ m_Mod( s[ i + 1 - j ] + lambda[ j ] ) ];
             }
          }
 
-         if( tmp != 0 )
+         if( tmp not_eq 0 )
          {
             deg_omega = i;
          }
@@ -539,9 +538,9 @@ _Check_return_ int Win32FoundationClasses::CReedSolomonErrorCorrectionCode::m_De
       {
          num1 = 0;
 
-         for ( i = deg_omega; i >= 0; i-- )
+         for ( int i = deg_omega; i >= 0; i-- )
          {
-            if ( omega[ i ] != m_BlockSize )
+            if ( omega[ i ] not_eq m_BlockSize )
             {
                num1 xor_eq m_Alpha_to[ m_Mod( omega[ i ] + i * root[ j ] ) ];
             }
@@ -552,9 +551,9 @@ _Check_return_ int Win32FoundationClasses::CReedSolomonErrorCorrectionCode::m_De
 
          /* lambda[i+1] for i even is the formal derivative lambda_pr of lambda[i] */
 
-         for ( i = std::min( deg_lambda, m_BlockSize - m_NumberOfSymbolsPerBlock - 1 ) bitand compl 1; i >= 0; i -=2 )
+         for ( int i = std::min( deg_lambda, m_BlockSize - m_NumberOfSymbolsPerBlock - 1 ) bitand compl 1; i >= 0; i -=2 )
          {
-            if( lambda[ i + 1 ] != m_BlockSize )
+            if( lambda[ i + 1 ] not_eq m_BlockSize )
             {
                denominator xor_eq m_Alpha_to[ m_Mod( lambda[ i + 1 ] + i * root[ j ] ) ];
             }
@@ -567,7 +566,7 @@ _Check_return_ int Win32FoundationClasses::CReedSolomonErrorCorrectionCode::m_De
 
          /* Apply error to data */
 
-         if ( num1 != 0 )
+         if ( num1 not_eq 0 )
          {
             data.at( loc[ j ] ) xor_eq m_Alpha_to[ m_Mod( m_Index_of[ num1 ] + m_Index_of[ num2 ] + m_BlockSize - m_Index_of[ denominator ] ) ];
          }
@@ -608,11 +607,11 @@ _Check_return_ bool Win32FoundationClasses::CReedSolomonErrorCorrectionCode::m_E
    {
       feedback = m_Index_of[ data.at( i ) xor parity.at( m_BlockSize - m_NumberOfSymbolsPerBlock - 1 ) ];
 
-      if ( feedback != m_BlockSize )
+      if ( feedback not_eq m_BlockSize )
       { /* feedback term is non-zero */
          for ( j = m_BlockSize - m_NumberOfSymbolsPerBlock - 1; j > 0; j-- )
          {
-            if ( m_GeneratorPolynomial[ j ] != m_BlockSize )
+            if ( m_GeneratorPolynomial[ j ] not_eq m_BlockSize )
             {
                parity.at( j ) = (uint8_t) ( parity.at( j - 1 ) xor m_Alpha_to[ m_Mod( m_GeneratorPolynomial[ j ] + feedback ) ] );
             }
@@ -683,7 +682,7 @@ void Win32FoundationClasses::CReedSolomonErrorCorrectionCode::m_GenerateGaloisFi
 
       /* If PrimitivePolynomials[loop_index] == 1 then, term @^loop_index occurs in poly-repr of @^m_NumberOfBitsPerSymbol */
 
-      if ( m_PrimitivePolynomials[ loop_index ] != 0)
+      if ( m_PrimitivePolynomials[ loop_index ] not_eq 0)
       {
          m_Alpha_to[ m_NumberOfBitsPerSymbol ] xor_eq mask; /* Bit-wise EXOR operation */
       }
@@ -754,7 +753,7 @@ void Win32FoundationClasses::CReedSolomonErrorCorrectionCode::m_GeneratePolynomi
 
       for ( j = i - 1; j > 0; j-- )
       {
-         if ( m_GeneratorPolynomial[ j ] != 0 )
+         if ( m_GeneratorPolynomial[ j ] not_eq 0 )
          {
             m_GeneratorPolynomial[ j ] = m_GeneratorPolynomial[ j - 1 ] xor m_Alpha_to[ m_Mod( ( m_Index_of[ m_GeneratorPolynomial[ j ] ] ) + 1 + i - 1 ) ];
          }
@@ -789,17 +788,17 @@ void Win32FoundationClasses::CReedSolomonErrorCorrectionCode::m_Initialize( _In_
 
    m_NumberOfSymbolsPerBlock = number_of_symbols_per_block;
 
-   if ( m_Alpha_to.get() != nullptr )
+   if ( m_Alpha_to.get() not_eq nullptr )
    {
       m_Alpha_to.release();
    }
 
-   if ( m_GeneratorPolynomial.get() != nullptr )
+   if ( m_GeneratorPolynomial.get() not_eq nullptr )
    {
       m_GeneratorPolynomial.release();
    }
 
-   if ( m_Index_of.get() != nullptr )
+   if ( m_Index_of.get() not_eq nullptr )
    {
       m_Index_of.release();
    }
@@ -941,7 +940,7 @@ void test_CReedSolomonErrorCorrectionCode( void )
 
    int number_of_errors_corrected = receiver.Decode( encoded_data, decoded_data );
 
-   if ( number_of_errors_corrected != (-1) )
+   if ( number_of_errors_corrected not_eq (-1) )
    {
       // SUCCESS!
 
@@ -951,7 +950,7 @@ void test_CReedSolomonErrorCorrectionCode( void )
    _tprintf( TEXT( &quot;Number of errors corrected %d\n&quot; ), number_of_errors_corrected );
    _tprintf( TEXT( &quot;Number of bytes in decoded data %d\n&quot; ), decoded_data.GetSize() );
 
-   if ( data.GetSize() != decoded_data.GetSize() )
+   if ( data.GetSize() not_eq decoded_data.GetSize() )
    {
       _tprintf( TEXT( &quot;FAILED length test\n&quot; ) );
       _tprintf( TEXT( &quot;Original length was %d&quot; ), data.GetSize() );
@@ -963,7 +962,7 @@ void test_CReedSolomonErrorCorrectionCode( void )
 
    while( index &lt; decoded_data.GetSize() )
    {
-      if ( data.GetAt( index ) != decoded_data.GetAt( index ) )
+      if ( data.GetAt( index ) not_eq decoded_data.GetAt( index ) )
       {
          WFCTRACEVAL( TEXT( &quot;Comparison failed at byte %d\n&quot; ), index );
       }

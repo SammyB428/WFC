@@ -125,7 +125,7 @@ void test_CNetworkUsers( __in_z LPCTSTR machine_name ) noexcept
 
    user_information.SetAddDefaults();
 
-   if ( users.Add( user_information ) != false )
+   if ( users.Add( user_information ) not_eq false )
    {
       _tprintf( TEXT( "Laura Added.\n" ) );
    }
@@ -134,7 +134,7 @@ void test_CNetworkUsers( __in_z LPCTSTR machine_name ) noexcept
       _tprintf( TEXT( "Can't Add User\n" ) );
    }
 
-   if ( users.Delete( TEXT( "Laura" ) ) != FALSE )
+   if ( users.Delete( TEXT( "Laura" ) ) not_eq FALSE )
    {
       _tprintf( TEXT( "Deleted Laura\n" ) );
    }

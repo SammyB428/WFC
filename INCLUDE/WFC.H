@@ -258,7 +258,7 @@ public:
     // a range-based for loop
     inline constexpr bool operator!= (RangeIterator const& other) const noexcept
     {
-        return m_Position != other.m_Position;
+        return m_Position not_eq other.m_Position;
     }
 
     // this method must be defined after the definition of IntVector
@@ -562,10 +562,10 @@ namespace Win32FoundationClasses
                               (id.Data4[0]==0)and(id.Data4[1]==0)and(id.Data4[2]==0)and\
                               (id.Data4[3]==0)and(id.Data4[4]==0)and(id.Data4[5]==0)and\
                               (id.Data4[6]==0)and(id.Data4[7]==0))
-#define WFC_IS_NOT_NULL_GUID(id) ((id.Data1!=0)or(id.Data2!=0)or(id.Data3!=0)or\
-                                  (id.Data4[0]!=0)or(id.Data4[1]!=0)or(id.Data4[2]!=0)or\
-                                  (id.Data4[3]!=0)or(id.Data4[4]!=0)or(id.Data4[5]!=0)or\
-                                  (id.Data4[6]!=0)or(id.Data4[7]!=0))
+#define WFC_IS_NOT_NULL_GUID(id) ((id.Data1 not_eq 0) or (id.Data2 not_eq 0) or (id.Data3 not_eq 0) or \
+                                  (id.Data4[0] not_eq 0 ) or (id.Data4[1] not_eq 0) or (id.Data4[2] not_eq 0) or \
+                                  (id.Data4[3] not_eq 0 ) or (id.Data4[4] not_eq 0) or (id.Data4[5] not_eq 0) or \
+                                  (id.Data4[6] not_eq 0 ) or (id.Data4[7] not_eq 0))
 #define WFC_IS_HEXADECIMAL( _x ) ((_x >= '0' and _x <= '9')or(_x >= 'a' and _x <= 'f')or(_x >= 'A' and _x <= 'F'))
 #define WFC_IS_OCTAL( _x ) (_x >= '0' and _x <= '7')
 #define WFC_IS_DECIMAL( _x ) (_x >= '0' and _x <= '9')
@@ -729,7 +729,7 @@ inline _Check_return_ bool is_cpu_aes_supported( void ) noexcept
 
 inline _Check_return_ bool is_sse2_supported( void ) noexcept
 {
-    return( ::IsProcessorFeaturePresent( PF_XMMI64_INSTRUCTIONS_AVAILABLE ) != 0 ? true : false );
+    return( ::IsProcessorFeaturePresent( PF_XMMI64_INSTRUCTIONS_AVAILABLE ) not_eq 0 ? true : false );
 }
 
 inline constexpr _Check_return_ bool is_bad_handle( _In_opt_ HANDLE const handle_value ) noexcept
@@ -769,7 +769,7 @@ inline void from_defined(_Inout_ std::wstring& s, _In_ uint64_t const value, __i
 
     auto defined_string = DefinedStringConstant(value, definitions, number_of_definitions);
 
-    if (defined_string != nullptr and defined_string[0] != 0x00)
+    if (defined_string not_eq nullptr and defined_string[0] not_eq 0x00)
     {
         s.assign(defined_string);
     }

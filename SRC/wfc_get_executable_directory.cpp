@@ -59,7 +59,7 @@ void Win32FoundationClasses::wfc_get_executable_directory(_Out_ std::wstring& di
 
     directory_name_ending_in_a_slash.clear();
 
-    if (GetModuleFileNameW(static_cast< HMODULE >(NULL), path, static_cast<DWORD>(std::size(path))) != 0)
+    if (GetModuleFileNameW(static_cast< HMODULE >(NULL), path, static_cast<DWORD>(std::size(path))) not_eq 0)
     {
         *(wcsrchr(path, L'\\') + 1) = 0x00;
 
@@ -88,7 +88,7 @@ void Win32FoundationClasses::wfc_get_dll_directory(_Out_ std::wstring& directory
         return;
     }
 
-    if (GetModuleFileNameW(module_handle, path, static_cast<DWORD>(std::size(path))) != 0)
+    if (GetModuleFileNameW(module_handle, path, static_cast<DWORD>(std::size(path))) not_eq 0)
     {
         *(wcsrchr(path, L'\\') + 1) = 0x00;
 

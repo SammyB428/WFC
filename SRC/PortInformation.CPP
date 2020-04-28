@@ -99,7 +99,7 @@ void Win32FoundationClasses::CPortInformation::Copy( _In_ PORT_INFO_1 const * so
 
    WFC_TRY
    {
-      if ( source->pName != nullptr )
+      if ( source->pName not_eq nullptr )
       {
          Name.assign(source->pName);
       }
@@ -127,17 +127,17 @@ void Win32FoundationClasses::CPortInformation::Copy( _In_ PORT_INFO_2 const * so
 
    WFC_TRY
    {
-      if ( source->pPortName != nullptr )
+      if ( source->pPortName not_eq nullptr )
       {
          Name.assign(source->pPortName);
       }
 
-      if ( source->pMonitorName != nullptr )
+      if ( source->pMonitorName not_eq nullptr )
       {
          Monitor.assign(source->pMonitorName);
       }
 
-      if ( source->pDescription != nullptr )
+      if ( source->pDescription not_eq nullptr )
       {
          Description.assign(source->pDescription);
       }

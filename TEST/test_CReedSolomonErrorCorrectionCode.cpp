@@ -107,7 +107,7 @@ _Check_return_ bool test_CReedSolomonErrorCorrectionCode( __out std::string& cla
             _bittestandreset(reinterpret_cast<LONG *>(&value), bit_number_to_smash );
         }
 
-        ASSERT( value != encoded_data.at( error_number ) );
+        ASSERT( value not_eq encoded_data.at( error_number ) );
 
         encoded_data.at( error_number ) = (uint8_t) value;
         number_of_errors_introduced++;
@@ -125,7 +125,7 @@ _Check_return_ bool test_CReedSolomonErrorCorrectionCode( __out std::string& cla
 
     SSIZE_T number_of_errors_corrected = receiver.Decode( encoded_data, decoded_data );
 
-    if ( number_of_errors_corrected != (-1) )
+    if ( number_of_errors_corrected not_eq (-1) )
     {
         // SUCCESS!
         return( true );
@@ -134,7 +134,7 @@ _Check_return_ bool test_CReedSolomonErrorCorrectionCode( __out std::string& cla
     //WFCTRACEVAL( TEXT( "Number of errors corrected " ), number_of_errors_corrected );
     //WFCTRACEVAL( TEXT( "Number of bytes in decoded data " ), decoded_data.GetSize() );
 
-    if ( data.size() != decoded_data.size() )
+    if ( data.size() not_eq decoded_data.size() )
     {
         //WFCTRACE( TEXT( "FAILED length test" ) );
         //WFCTRACEVAL( TEXT( "Original length was " ), data.GetSize() );
@@ -143,7 +143,7 @@ _Check_return_ bool test_CReedSolomonErrorCorrectionCode( __out std::string& cla
 
     for ( auto const loop_index : Range(decoded_data.size()) )
     {
-        if ( data.at( loop_index ) != decoded_data.at( loop_index ) )
+        if ( data.at( loop_index ) not_eq decoded_data.at( loop_index ) )
         {
             //WFCTRACEVAL( TEXT( "Comparison failed at byte " ), loop_index );
         }

@@ -79,13 +79,13 @@ __checkReturn bool test_CUUCoding( __out std::string& class_name, __out int& tes
 
     CFile64 output_file;
 
-    if ( output_file.Open( TEXT( "Output.uue" ), CFile64::modeCreate bitor CFile64::modeWrite ) != false )
+    if ( output_file.Open( TEXT( "Output.uue" ), CFile64::modeCreate bitor CFile64::modeWrite ) not_eq false )
     {
         output_file.Write( encoded_bytes.GetData(), encoded_bytes.GetSize() );
         output_file.Close();
     }
 
-    if ( output_file.Open( TEXT( "Input.bin" ), CFile64::modeCreate bitor CFile64::modeWrite ) != false )
+    if ( output_file.Open( TEXT( "Input.bin" ), CFile64::modeCreate bitor CFile64::modeWrite ) not_eq false )
     {
         output_file.Write( bytes_to_encode.GetData(), bytes_to_encode.GetSize() );
         output_file.Close();
@@ -105,7 +105,7 @@ __checkReturn bool test_CUUCoding( __out std::string& class_name, __out int& tes
 
     std::size_t number_of_decoded_bytes = decoded_bytes.size();
 
-    if ( number_of_decoded_bytes != bytes_to_encode.size() )
+    if ( number_of_decoded_bytes not_eq bytes_to_encode.size() )
     {
         //WFCTRACE( TEXT( "FAILED!!! What was decoded is a different size than what was encoded!" ) );
         //WFCTRACEVAL( TEXT( "Number of bytes decoded is " ), number_of_decoded_bytes );
@@ -117,7 +117,7 @@ __checkReturn bool test_CUUCoding( __out std::string& class_name, __out int& tes
 
     for ( auto const index : Range(number_of_decoded_bytes) )
     {
-        if ( decoded_bytes.at( index ) != bytes_to_encode.at( index ) )
+        if ( decoded_bytes.at( index ) not_eq bytes_to_encode.at( index ) )
         {
             //WFCTRACEVAL( TEXT( "FAILED! Comparison failed at index " ), index );
             //WFCTRACEVAL( TEXT( "This was decoded " ), decoded_bytes.GetAt( index ) );

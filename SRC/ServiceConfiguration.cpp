@@ -112,7 +112,7 @@ void Win32FoundationClasses::CServiceConfigurationA::Copy( _In_ Win32FoundationC
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
-   ASSERT( source != this );
+   ASSERT( source not_eq this );
 
    if ( source == this )
    {
@@ -123,7 +123,7 @@ void Win32FoundationClasses::CServiceConfigurationA::Copy( _In_ Win32FoundationC
 
    WFC_TRY
    {
-      if ( source != nullptr )
+      if ( source not_eq nullptr )
       {
          Copy( *source );
       }
@@ -157,7 +157,7 @@ void Win32FoundationClasses::CServiceConfigurationA::Copy( _In_ _QUERY_SERVICE_C
       m_ErrorControl       = source.dwErrorControl;
       m_Tag                = source.dwTagId;
 
-      if ( source.lpBinaryPathName != nullptr )
+      if ( source.lpBinaryPathName not_eq nullptr )
       {
          m_NameOfExecutableFile.assign( source.lpBinaryPathName );
       }
@@ -166,7 +166,7 @@ void Win32FoundationClasses::CServiceConfigurationA::Copy( _In_ _QUERY_SERVICE_C
          m_NameOfExecutableFile.clear();
       }
 
-      if ( source.lpLoadOrderGroup != nullptr )
+      if ( source.lpLoadOrderGroup not_eq nullptr )
       {
          m_LoadOrderGroup.assign( source.lpLoadOrderGroup );
       }
@@ -175,7 +175,7 @@ void Win32FoundationClasses::CServiceConfigurationA::Copy( _In_ _QUERY_SERVICE_C
          m_LoadOrderGroup.clear();
       }
 
-      if ( source.lpServiceStartName != nullptr )
+      if ( source.lpServiceStartName not_eq nullptr )
       {
          m_StartName.assign( source.lpServiceStartName );
       }
@@ -184,7 +184,7 @@ void Win32FoundationClasses::CServiceConfigurationA::Copy( _In_ _QUERY_SERVICE_C
          m_StartName.clear();
       }
 
-      if ( source.lpDisplayName != nullptr )
+      if ( source.lpDisplayName not_eq nullptr )
       {
          m_DisplayName.assign( source.lpDisplayName );
       }
@@ -197,11 +197,11 @@ void Win32FoundationClasses::CServiceConfigurationA::Copy( _In_ _QUERY_SERVICE_C
 
       std::string string_to_add;
 
-      if ( source.lpDependencies != nullptr )
+      if ( source.lpDependencies not_eq nullptr )
       {
          BYTE *temp_pointer = (BYTE *) source.lpDependencies;
 
-         while ( temp_pointer[ 0 ] != 0x00 )
+         while ( temp_pointer[ 0 ] not_eq 0x00 )
          {
             string_to_add.assign(reinterpret_cast<const char *>(temp_pointer));
 
@@ -229,7 +229,7 @@ void Win32FoundationClasses::CServiceConfigurationA::Copy( _In_ _QUERY_SERVICE_C
 
    WFC_TRY
    {
-      if ( source != nullptr )
+      if ( source not_eq nullptr )
       {
          Copy( *source );
       }
@@ -431,7 +431,7 @@ void Win32FoundationClasses::CServiceConfigurationW::Copy( _In_ Win32FoundationC
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
-   ASSERT( source != this );
+   ASSERT( source not_eq this );
 
    if ( source == this )
    {
@@ -442,7 +442,7 @@ void Win32FoundationClasses::CServiceConfigurationW::Copy( _In_ Win32FoundationC
 
    WFC_TRY
    {
-      if ( source != nullptr )
+      if ( source not_eq nullptr )
       {
          Copy( *source );
       }
@@ -476,7 +476,7 @@ void Win32FoundationClasses::CServiceConfigurationW::Copy( _In_ QUERY_SERVICE_CO
       m_ErrorControl       = source.dwErrorControl;
       m_Tag                = source.dwTagId;
 
-      if ( source.lpBinaryPathName != nullptr )
+      if ( source.lpBinaryPathName not_eq nullptr )
       {
 #if defined( UNICODE )
          m_NameOfExecutableFile.assign( source.lpBinaryPathName );
@@ -489,7 +489,7 @@ void Win32FoundationClasses::CServiceConfigurationW::Copy( _In_ QUERY_SERVICE_CO
          m_NameOfExecutableFile.clear();
       }
 
-      if ( source.lpLoadOrderGroup != nullptr )
+      if ( source.lpLoadOrderGroup not_eq nullptr )
       {
 #if defined( UNICODE )
          m_LoadOrderGroup.assign( source.lpLoadOrderGroup );
@@ -502,7 +502,7 @@ void Win32FoundationClasses::CServiceConfigurationW::Copy( _In_ QUERY_SERVICE_CO
          m_LoadOrderGroup.clear();
       }
 
-      if ( source.lpServiceStartName != nullptr )
+      if ( source.lpServiceStartName not_eq nullptr )
       {
 #if defined( UNICODE )
          m_StartName.assign( source.lpServiceStartName );
@@ -515,7 +515,7 @@ void Win32FoundationClasses::CServiceConfigurationW::Copy( _In_ QUERY_SERVICE_CO
          m_StartName.clear();
       }
 
-      if ( source.lpDisplayName != nullptr )
+      if ( source.lpDisplayName not_eq nullptr )
       {
 #if defined( UNICODE )
          m_DisplayName.assign( source.lpDisplayName );
@@ -530,11 +530,11 @@ void Win32FoundationClasses::CServiceConfigurationW::Copy( _In_ QUERY_SERVICE_CO
 
       // Now for the fun part, double-NULL terminated string....
 
-      if ( source.lpDependencies != nullptr )
+      if ( source.lpDependencies not_eq nullptr )
       {
          wchar_t *temp_pointer = (wchar_t *) source.lpDependencies;
 
-         while ( temp_pointer[ 0 ] != 0x00 )
+         while ( temp_pointer[ 0 ] not_eq 0x00 )
          {
             (void) m_Dependencies.push_back( temp_pointer );
             temp_pointer += wcslen( (LPCWSTR) temp_pointer ) + 1;
@@ -557,7 +557,7 @@ void Win32FoundationClasses::CServiceConfigurationW::Copy( _In_ QUERY_SERVICE_CO
 
    WFC_TRY
    {
-      if ( source != nullptr )
+      if ( source not_eq nullptr )
       {
          Copy( *source );
       }

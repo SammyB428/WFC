@@ -94,7 +94,7 @@ __checkReturn bool test_CQueue( __out std::string& class_name, __out int& test_n
       return(failure());
    }
 
-   if ( item != 1 )
+   if ( item not_eq 1 )
    {
       test_number_that_failed = 7;
       return(failure());
@@ -106,7 +106,7 @@ __checkReturn bool test_CQueue( __out std::string& class_name, __out int& test_n
       return(failure());
    }
 
-   if ( item != 2 )
+   if ( item not_eq 2 )
    {
       test_number_that_failed = 9;
       return(failure());
@@ -118,7 +118,7 @@ __checkReturn bool test_CQueue( __out std::string& class_name, __out int& test_n
       return(failure());
    }
 
-   if ( item != 3 )
+   if ( item not_eq 3 )
    {
       test_number_that_failed = 11;
       return(failure());
@@ -130,7 +130,7 @@ __checkReturn bool test_CQueue( __out std::string& class_name, __out int& test_n
       return(failure());
    }
 
-   if ( item != 4 )
+   if ( item not_eq 4 )
    {
       test_number_that_failed = 13;
       return(failure());
@@ -142,7 +142,7 @@ __checkReturn bool test_CQueue( __out std::string& class_name, __out int& test_n
       return(failure());
    }
 
-   if ( item != 5 )
+   if ( item not_eq 5 )
    {
       test_number_that_failed = 15;
       return(failure());
@@ -150,13 +150,13 @@ __checkReturn bool test_CQueue( __out std::string& class_name, __out int& test_n
 
    // Queue is now empty, it should not Get() anything
 
-   if ( queue.Get( item ) != false )
+   if ( queue.Get( item ) not_eq false )
    {
       test_number_that_failed = 16;
       return(failure());
    }
 
-   if ( queue.GetLength() != 0 )
+   if ( queue.GetLength() not_eq 0 )
    {
       test_number_that_failed = 17;
       return(failure());
@@ -180,7 +180,7 @@ __checkReturn bool test_CQueue( __out std::string& class_name, __out int& test_n
       return(failure());
    }
 
-   if ( queue.GetLength() != 3 )
+   if ( queue.GetLength() not_eq 3 )
    {
       test_number_that_failed = 21;
       return(failure());
@@ -192,7 +192,7 @@ __checkReturn bool test_CQueue( __out std::string& class_name, __out int& test_n
       return(failure());
    }
 
-   if ( item != 6 )
+   if ( item not_eq 6 )
    {
       test_number_that_failed = 23;
       return(failure());
@@ -210,7 +210,7 @@ __checkReturn bool test_CQueue( __out std::string& class_name, __out int& test_n
       return(failure());
    }
 
-   if ( queue.GetLength() != 4 )
+   if ( queue.GetLength() not_eq 4 )
    {
       test_number_that_failed = 26;
       return(failure());
@@ -222,7 +222,7 @@ __checkReturn bool test_CQueue( __out std::string& class_name, __out int& test_n
       return(failure());
    }
 
-   if ( item != 7 )
+   if ( item not_eq 7 )
    {
       test_number_that_failed = 28;
       return(failure());
@@ -234,7 +234,7 @@ __checkReturn bool test_CQueue( __out std::string& class_name, __out int& test_n
       return(failure());
    }
 
-   if ( item != 8 )
+   if ( item not_eq 8 )
    {
       test_number_that_failed = 30;
       return(failure());
@@ -246,7 +246,7 @@ __checkReturn bool test_CQueue( __out std::string& class_name, __out int& test_n
       return(failure());
    }
 
-   if ( item != 9 )
+   if ( item not_eq 9 )
    {
       test_number_that_failed = 32;
       return(failure());
@@ -258,7 +258,7 @@ __checkReturn bool test_CQueue( __out std::string& class_name, __out int& test_n
       return(failure());
    }
 
-   if ( item != 10 )
+   if ( item not_eq 10 )
    {
       test_number_that_failed = 34;
       return(failure());
@@ -266,13 +266,13 @@ __checkReturn bool test_CQueue( __out std::string& class_name, __out int& test_n
 
    // Queue is now empty, it should not Get() anything
 
-   if ( queue.Get( item ) != false )
+   if ( queue.Get( item ) not_eq false )
    {
       test_number_that_failed = 35;
       return(failure());
    }
 
-   if ( queue.GetLength() != 0 )
+   if ( queue.GetLength() not_eq 0 )
    {
       test_number_that_failed = 36;
       return(failure());
@@ -306,7 +306,7 @@ __checkReturn bool test_CQueue( __out std::string& class_name, __out int& test_n
       return(failure());
    }
 
-   if ( item != 1 )
+   if ( item not_eq 1 )
    {
       test_number_that_failed = 41;
       return(failure());
@@ -318,7 +318,7 @@ __checkReturn bool test_CQueue( __out std::string& class_name, __out int& test_n
       return(failure());
    }
 
-   if ( item != 2 )
+   if ( item not_eq 2 )
    {
       test_number_that_failed = 43;
       return(failure());
@@ -354,7 +354,7 @@ __checkReturn bool test_CQueue( __out std::string& class_name, __out int& test_n
       return(failure());
    }
 
-   if ( item != 3 )
+   if ( item not_eq 3 )
    {
       test_number_that_failed = 49;
       return(failure());
@@ -366,7 +366,7 @@ __checkReturn bool test_CQueue( __out std::string& class_name, __out int& test_n
       return(failure());
    }
 
-   if ( item != 4 )
+   if ( item not_eq 4 )
    {
       test_number_that_failed = 51;
       return(failure());
@@ -378,7 +378,7 @@ __checkReturn bool test_CQueue( __out std::string& class_name, __out int& test_n
       return(failure());
    }
 
-   if ( item != 5 )
+   if ( item not_eq 5 )
    {
       test_number_that_failed = 53;
       return(failure());
@@ -390,7 +390,7 @@ __checkReturn bool test_CQueue( __out std::string& class_name, __out int& test_n
       return(failure());
    }
 
-   if ( item != 6 )
+   if ( item not_eq 6 )
    {
       test_number_that_failed = 55;
       return(failure());
@@ -402,7 +402,7 @@ __checkReturn bool test_CQueue( __out std::string& class_name, __out int& test_n
       return(failure());
    }
 
-   if ( item != 7 )
+   if ( item not_eq 7 )
    {
       test_number_that_failed = 57;
       return(failure());
@@ -410,13 +410,13 @@ __checkReturn bool test_CQueue( __out std::string& class_name, __out int& test_n
 
    // Queue is now empty, it should not Get() anything
 
-   if ( queue2.Get( item ) != false )
+   if ( queue2.Get( item ) not_eq false )
    {
       test_number_that_failed = 58;
       return(failure());
    }
 
-   if ( queue2.GetLength() != 0 )
+   if ( queue2.GetLength() not_eq 0 )
    {
       test_number_that_failed = 59;
       return(failure());

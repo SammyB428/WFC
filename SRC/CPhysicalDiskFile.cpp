@@ -70,7 +70,7 @@ Win32FoundationClasses::CPhysicalDiskFile::~CPhysicalDiskFile() noexcept
 
    WFC_VALIDATE_POINTER_NULL_OK( m_Buffer );
 
-   if ( m_Buffer != nullptr )
+   if ( m_Buffer not_eq nullptr )
    {
        _aligned_free( m_Buffer );
    }
@@ -86,12 +86,12 @@ void Win32FoundationClasses::CPhysicalDiskFile::Close( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
-   if ( m_FileHandle != reinterpret_cast< CFILE_HFILE >( INVALID_HANDLE_VALUE ) )
+   if ( m_FileHandle not_eq reinterpret_cast< CFILE_HFILE >( INVALID_HANDLE_VALUE ) )
    {
        Win32FoundationClasses::CFile64::Close();
    }
 
-   if ( m_Buffer != nullptr )
+   if ( m_Buffer not_eq nullptr )
    {
       _aligned_free( m_Buffer );
    }
@@ -244,7 +244,7 @@ _Check_return_ bool Win32FoundationClasses::CPhysicalDiskFile::m_SetSectorSize( 
 {
    WFC_VALIDATE_POINTER( this );
 
-   ASSERT( m_FileHandle != reinterpret_cast< HANDLE >( INVALID_HANDLE_VALUE ) );
+   ASSERT( m_FileHandle not_eq reinterpret_cast< HANDLE >( INVALID_HANDLE_VALUE ) );
 
    if ( m_FileHandle == reinterpret_cast< HANDLE >( INVALID_HANDLE_VALUE ) )
    {
@@ -274,7 +274,7 @@ _Check_return_ bool Win32FoundationClasses::CPhysicalDiskFile::m_SetSectorSize( 
 
    // We must read and write on sector boundaries
 
-   ASSERT( m_DiskGeometry.BytesPerSector != 0 );
+   ASSERT( m_DiskGeometry.BytesPerSector not_eq 0 );
 
    if ( m_DiskGeometry.BytesPerSector == 0 )
    {
@@ -304,7 +304,7 @@ _Check_return_ bool Win32FoundationClasses::CPhysicalDiskFile::m_SetSectorSize( 
 
    // This will probably break when we go to a 64-bit memory address space
 
-   while( (DWORD)( (uint64_t) (&m_Buffer[ m_BufferOffset ]) % m_DiskGeometry.BytesPerSector ) != 0 )
+   while( (DWORD)( (uint64_t) (&m_Buffer[ m_BufferOffset ]) % m_DiskGeometry.BytesPerSector ) not_eq 0 )
    {
       m_BufferOffset++;
    }
@@ -318,7 +318,7 @@ _Check_return_ bool Win32FoundationClasses::CPhysicalDiskFile::Open(_In_ std::fi
 
    ASSERT( m_FileHandle == reinterpret_cast< HANDLE >( INVALID_HANDLE_VALUE ) );
 
-   if ( m_FileHandle != reinterpret_cast< HANDLE >( INVALID_HANDLE_VALUE ) )
+   if ( m_FileHandle not_eq reinterpret_cast< HANDLE >( INVALID_HANDLE_VALUE ) )
    {
       Close();
    }
@@ -377,7 +377,7 @@ _Check_return_ bool Win32FoundationClasses::CPhysicalDiskFile::Open( _In_ int co
 
    ASSERT( m_FileHandle == reinterpret_cast< HANDLE >( INVALID_HANDLE_VALUE ) );
 
-   if ( m_FileHandle != reinterpret_cast< HANDLE >( INVALID_HANDLE_VALUE ) )
+   if ( m_FileHandle not_eq reinterpret_cast< HANDLE >( INVALID_HANDLE_VALUE ) )
    {
       Close();
    }
@@ -421,7 +421,7 @@ _Check_return_ bool Win32FoundationClasses::CPhysicalDiskFile::OpenRead(_In_z_ w
 
     ASSERT(m_FileHandle == reinterpret_cast< HANDLE >(INVALID_HANDLE_VALUE));
 
-    if (m_FileHandle != reinterpret_cast< HANDLE >(INVALID_HANDLE_VALUE))
+    if (m_FileHandle not_eq reinterpret_cast< HANDLE >(INVALID_HANDLE_VALUE))
     {
         Close();
     }
@@ -470,8 +470,8 @@ _Check_return_ UINT Win32FoundationClasses::CPhysicalDiskFile::Read( __out_bcoun
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER_NULL_OK( buffer );
 
-   ASSERT( m_FileHandle != reinterpret_cast< HANDLE >( INVALID_HANDLE_VALUE ) );
-   ASSERT( m_Buffer != nullptr );
+   ASSERT( m_FileHandle not_eq reinterpret_cast< HANDLE >( INVALID_HANDLE_VALUE ) );
+   ASSERT( m_Buffer not_eq nullptr );
 
    if ( m_FileHandle == reinterpret_cast< HANDLE >( INVALID_HANDLE_VALUE ) )
    {
@@ -523,7 +523,7 @@ void Win32FoundationClasses::CPhysicalDiskFile::Write( __in_bcount( count ) void
    WFC_VALIDATE_POINTER_NULL_OK( buffer );
    WFC_VALIDATE_POINTER( m_Buffer );
 
-   ASSERT( m_FileHandle != reinterpret_cast< HANDLE >( INVALID_HANDLE_VALUE ) );
+   ASSERT( m_FileHandle not_eq reinterpret_cast< HANDLE >( INVALID_HANDLE_VALUE ) );
 
    if ( m_FileHandle == reinterpret_cast< HANDLE >( INVALID_HANDLE_VALUE ) )
    {

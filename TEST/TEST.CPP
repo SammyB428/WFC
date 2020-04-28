@@ -208,7 +208,7 @@ _Check_return_ int _tmain( _In_ int const number_of_command_line_arguments, _In_
 #if 0
    GET_RANDOM_DWORD_FUNCTION get_random = (GET_RANDOM_DWORD_FUNCTION) GetProcAddress( GetModuleHandle( "NTDLL.DLL" ), "RtlRandomEx" );
 
-   if ( get_random != NULL )
+   if ( get_random not_eq NULL )
    {
       DWORD new_random_value = GetTickCount();
 
@@ -283,7 +283,7 @@ __checkReturn LPTSTR BigNumToString( LONG lNum, LPTSTR szBuf ) noexcept
 
       lNum /= 10;
    }
-   while( lNum != 0 );
+   while( lNum not_eq 0 );
 
    if ( szBuf[ wNumChars - 1 ] == TEXT( ',' ) )
    {

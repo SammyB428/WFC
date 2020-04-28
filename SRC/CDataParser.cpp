@@ -60,9 +60,12 @@ void Win32FoundationClasses::CDataParser::GetTextStatistics( _In_ Win32Foundatio
    uint32_t last_character = 0;
    uint32_t this_character = 0;
 
+   int64_t this_line_length = 0;
+
    while( GetNextCharacter( here, this_character ) == true )
    {
       statistics.NumberOfCharacters++;
+      this_line_length++;
 
       switch( this_character )
       {
@@ -151,13 +154,29 @@ void Win32FoundationClasses::CDataParser::GetTextStatistics( _In_ Win32Foundatio
          case LINE_FEED:
 
             statistics.NumberOfLines++;
+            this_line_length--;
+
+            if (this_line_length > static_cast<int64_t>(statistics.LongestLine))
+            {
+                statistics.LongestLine = this_line_length;
+            }
+
+            this_line_length = 0;
             break;
 
          case CARRIAGE_RETURN:
 
-            if ( last_character != LINE_FEED )
+            if ( last_character not_eq LINE_FEED )
             {
                statistics.NumberOfLines++;
+               this_line_length--;
+
+               if (this_line_length > static_cast<int64_t>(statistics.LongestLine))
+               {
+                   statistics.LongestLine = this_line_length;
+               }
+
+               this_line_length = 0;
             }
 
             break;
@@ -447,7 +466,7 @@ BOOL parse_document( const std::wstring&amp; filename, <A HREF="CExtensibleMarku
 
    std::vector&lt;uint8_t&gt; bytes;
 
-   if ( get_bytes( filename, bytes ) != TRUE )
+   if ( get_bytes( filename, bytes ) not_eq TRUE )
    {
       return( FALSE );
    }
@@ -456,7 +475,7 @@ BOOL parse_document( const std::wstring&amp; filename, <A HREF="CExtensibleMarku
 
    parser.<A HREF="#Initialize">Initialize</A>( &amp;bytes, FALSE );
 
-   if ( document.Parse( parser ) != FALSE )
+   if ( document.Parse( parser ) not_eq FALSE )
    {
       WFCTRACE( TEXT( &quot;Parsed OK&quot; ) );
       return( TRUE );

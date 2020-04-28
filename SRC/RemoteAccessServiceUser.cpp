@@ -142,7 +142,7 @@ CRemoteAccessServiceUser& CRemoteAccessServiceUser::operator = ( CRemoteAccessSe
 {
    WFC_VALIDATE_POINTER( this );
 
-   if ( this != &source )
+   if ( this not_eq &source )
    {
       Copy( source );
    }

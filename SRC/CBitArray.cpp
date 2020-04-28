@@ -117,7 +117,7 @@ Win32FoundationClasses::CBitArray::CBitArray( _In_ std::vector<uint8_t> const& s
    Copy( source );
 }
 
-Win32FoundationClasses::CBitArray::~CBitArray() noexcept
+Win32FoundationClasses::CBitArray::~CBitArray()
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -236,7 +236,7 @@ void Win32FoundationClasses::CBitArray::Add( _In_ uint32_t const value, _In_ std
 
             if ( ( count - loop_counter ) > SizeOfBitRepresentation() )
             {
-               if ( value != 0 )
+               if ( value not_eq 0 )
                {
                   (void) m_Bits.push_back( AN_ELEMENT_THAT_IS_ALL_ONES );
                }
@@ -676,7 +676,7 @@ _Check_return_ bool Win32FoundationClasses::CBitArray::Find( _In_ Win32Foundatio
          this_bit = 0;
          that_bit = 0;
 
-         while( loop_index < ( size_of_value - SizeOfBitRepresentation() ) )
+         while( loop_index < ( size_of_value - SizeOfBitRepresentation() ) ) // Cannot be converted to a Range loop
          {
             this_bit = value.GetAt( SizeOfBitRepresentation() + loop_index );
 
@@ -878,7 +878,7 @@ void Win32FoundationClasses::CBitArray::FreeExtra( void ) noexcept
          {
             // Why can't I do a left shift here?
 
-            if ( _bittest( reinterpret_cast<LONG const *>(&this_set_of_bits), bit_index ) != 0 )
+            if ( _bittest( reinterpret_cast<LONG const *>(&this_set_of_bits), bit_index ) not_eq 0 )
             {
                _bittestandset( reinterpret_cast<LONG *>(&this_set_of_bits), bit_index + 1 );
             }
@@ -976,7 +976,7 @@ _Check_return_ bool Win32FoundationClasses::CBitArray::GetNextOne( __inout std::
    }
 
    while( bit_index < number_of_bits_in_array and
-          ( bit_index % SizeOfBitRepresentation() ) != 0 )
+          ( bit_index % SizeOfBitRepresentation() ) not_eq 0 )
    {
       if ( GetAt( bit_index ) == 1 )
       {
@@ -1081,7 +1081,7 @@ _Check_return_ bool Win32FoundationClasses::CBitArray::GetNextZero( __inout std:
    }
 
    while( bit_index < number_of_bits_in_array and
-          ( bit_index % SizeOfBitRepresentation() ) != 0 )
+          ( bit_index % SizeOfBitRepresentation() ) not_eq 0 )
    {
       if ( GetAt( bit_index ) == 0 )
       {
@@ -1264,7 +1264,7 @@ void Win32FoundationClasses::CBitArray::InsertAt( _In_ std::size_t const bit_loc
 
       SSIZE_T upper_bound = m_Bits.size() - 1;
 
-      if ( bit_number != 0 and (SSIZE_T) array_index < upper_bound )
+      if ( bit_number not_eq 0 and (SSIZE_T) array_index < upper_bound )
       {
          that_set_of_bits = m_Bits.at( array_index + 1 );
 
@@ -1298,7 +1298,7 @@ void Win32FoundationClasses::CBitArray::InsertAt( _In_ std::size_t const bit_loc
       }
    }
 
-   if ( value != 0 )
+   if ( value not_eq 0 )
    {
       _bittestandset(reinterpret_cast<LONG *>(&this_set_of_bits), bit_number );
    }
@@ -1507,9 +1507,9 @@ void Win32FoundationClasses::CBitArray::SetAll( _In_ uint32_t const value ) noex
 {
    WFC_VALIDATE_POINTER( this );
 
-   if ( value != 0 )
+   if ( value not_eq 0 )
    {
-      memset( m_Bits.data(), 0xFF, ( m_Bits.size() * sizeof( uint32_t ) ) );
+      ::memset( m_Bits.data(), 0xFF, ( m_Bits.size() * sizeof( uint32_t ) ) );
    }
    else
    {
@@ -1548,7 +1548,7 @@ void Win32FoundationClasses::CBitArray::SetAt( _In_ std::size_t const bit_locati
 
    uint32_t this_set_of_bits = m_Bits.at( index );
 
-   if ( value != 0 )
+   if ( value not_eq 0 )
    {
       _bittestandset( reinterpret_cast<LONG *>(&this_set_of_bits), bit_number );
    }

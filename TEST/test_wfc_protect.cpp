@@ -90,7 +90,7 @@ __checkReturn bool test_wfc_protect( __out std::string& class_name, __out int& t
       return( failure() );
    }
 
-   if ( strcmp( plaintext, reinterpret_cast<char const *>(decrypted.get()) ) != 0 )
+   if ( strcmp( plaintext, reinterpret_cast<char const *>(decrypted.get()) ) not_eq 0 )
    {
       test_number_that_failed = 5;
       return( failure() );
@@ -121,22 +121,22 @@ __checkReturn bool test_wfc_protect( __out std::string& class_name, __out int& t
 
    // Empty hash AAD3B435B51404EEAAD3B435B51404EE
 
-   if (lanman_hash[0] != 0xaa or
-       lanman_hash[1] != 0xd3 or
-       lanman_hash[2] != 0xb4 or
-       lanman_hash[3] != 0x35 or
-       lanman_hash[4] != 0xb5 or
-       lanman_hash[5] != 0x14 or
-       lanman_hash[6] != 0x04 or
-       lanman_hash[7] != 0xee or
-       lanman_hash[8] != 0xaa or
-       lanman_hash[9] != 0xd3 or
-       lanman_hash[10] != 0xb4 or
-       lanman_hash[11] != 0x35 or
-       lanman_hash[12] != 0xb5 or
-       lanman_hash[13] != 0x14 or
-       lanman_hash[14] != 0x04 or
-       lanman_hash[15] != 0xee )
+   if (lanman_hash[0] not_eq 0xaa or
+       lanman_hash[1] not_eq 0xd3 or
+       lanman_hash[2] not_eq 0xb4 or
+       lanman_hash[3] not_eq 0x35 or
+       lanman_hash[4] not_eq 0xb5 or
+       lanman_hash[5] not_eq 0x14 or
+       lanman_hash[6] not_eq 0x04 or
+       lanman_hash[7] not_eq 0xee or
+       lanman_hash[8] not_eq 0xaa or
+       lanman_hash[9] not_eq 0xd3 or
+       lanman_hash[10] not_eq 0xb4 or
+       lanman_hash[11] not_eq 0x35 or
+       lanman_hash[12] not_eq 0xb5 or
+       lanman_hash[13] not_eq 0x14 or
+       lanman_hash[14] not_eq 0x04 or
+       lanman_hash[15] not_eq 0xee )
    {
        class_name.assign(STRING_VIEW("wfc_calculate_lanman_hash()"));
        test_number_that_failed = 7;
@@ -149,22 +149,22 @@ __checkReturn bool test_wfc_protect( __out std::string& class_name, __out int& t
 
    // hashcat - NTLM:b4b9b02e6f09a9bd760f388b67351e2b LM: 29 9B D1 28 C1 10 1F D6 AA D3 B4 35 B5 14 04 EE
 
-   if (lanman_hash[0] != 0x29 or
-       lanman_hash[1] != 0x9b or
-       lanman_hash[2] != 0xd1 or
-       lanman_hash[3] != 0x28 or
-       lanman_hash[4] != 0xc1 or
-       lanman_hash[5] != 0x10 or
-       lanman_hash[6] != 0x1f or
-       lanman_hash[7] != 0xd6 or
-       lanman_hash[8] != 0xaa or
-       lanman_hash[9] != 0xd3 or
-       lanman_hash[10] != 0xb4 or
-       lanman_hash[11] != 0x35 or
-       lanman_hash[12] != 0xb5 or
-       lanman_hash[13] != 0x14 or
-       lanman_hash[14] != 0x04 or
-       lanman_hash[15] != 0xee)
+   if (lanman_hash[0] not_eq 0x29 or
+       lanman_hash[1] not_eq 0x9b or
+       lanman_hash[2] not_eq 0xd1 or
+       lanman_hash[3] not_eq 0x28 or
+       lanman_hash[4] not_eq 0xc1 or
+       lanman_hash[5] not_eq 0x10 or
+       lanman_hash[6] not_eq 0x1f or
+       lanman_hash[7] not_eq 0xd6 or
+       lanman_hash[8] not_eq 0xaa or
+       lanman_hash[9] not_eq 0xd3 or
+       lanman_hash[10] not_eq 0xb4 or
+       lanman_hash[11] not_eq 0x35 or
+       lanman_hash[12] not_eq 0xb5 or
+       lanman_hash[13] not_eq 0x14 or
+       lanman_hash[14] not_eq 0x04 or
+       lanman_hash[15] not_eq 0xee)
    {
        class_name.assign(STRING_VIEW("wfc_calculate_lanman_hash()"));
        test_number_that_failed = 8;
@@ -176,22 +176,22 @@ __checkReturn bool test_wfc_protect( __out std::string& class_name, __out int& t
    Win32FoundationClasses::wfc_calculate_nt_hash(WSTRING_VIEW(L"hashcat"), lanman_hash);
 
    // b4 b9 b0 2e 6f 09 a9 bd 76 0f 38 8b 67 35 1e 2b
-   if (lanman_hash[0] != 0xb4 or
-       lanman_hash[1] != 0xb9 or
-       lanman_hash[2] != 0xb0 or
-       lanman_hash[3] != 0x2e or
-       lanman_hash[4] != 0x6f or
-       lanman_hash[5] != 0x09 or
-       lanman_hash[6] != 0xa9 or
-       lanman_hash[7] != 0xbd or
-       lanman_hash[8] != 0x76 or
-       lanman_hash[9] != 0x0f or
-       lanman_hash[10] != 0x38 or
-       lanman_hash[11] != 0x8b or
-       lanman_hash[12] != 0x67 or
-       lanman_hash[13] != 0x35 or
-       lanman_hash[14] != 0x1e or
-       lanman_hash[15] != 0x2b )
+   if (lanman_hash[0] not_eq 0xb4 or
+       lanman_hash[1] not_eq 0xb9 or
+       lanman_hash[2] not_eq 0xb0 or
+       lanman_hash[3] not_eq 0x2e or
+       lanman_hash[4] not_eq 0x6f or
+       lanman_hash[5] not_eq 0x09 or
+       lanman_hash[6] not_eq 0xa9 or
+       lanman_hash[7] not_eq 0xbd or
+       lanman_hash[8] not_eq 0x76 or
+       lanman_hash[9] not_eq 0x0f or
+       lanman_hash[10] not_eq 0x38 or
+       lanman_hash[11] not_eq 0x8b or
+       lanman_hash[12] not_eq 0x67 or
+       lanman_hash[13] not_eq 0x35 or
+       lanman_hash[14] not_eq 0x1e or
+       lanman_hash[15] not_eq 0x2b )
    {
        class_name.assign(STRING_VIEW("wfc_calculate_nt_hash()"));
        test_number_that_failed = 9;

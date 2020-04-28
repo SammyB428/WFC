@@ -1628,7 +1628,7 @@ void Win32FoundationClasses::Convert_NERR_Code_to_String( _In_ DWORD const error
                            0,
                            nullptr );
 
-            if ( message_buffer != nullptr )
+            if ( message_buffer not_eq nullptr )
             {
                TCHAR temp_string[ 255 ];
 
@@ -1695,7 +1695,7 @@ int _tmain( int number_of_command_line_arguments, LPCTSTR command_line_arguments
 
    return_code = NetWkstaGetInfo( nullptr, 302, buffer );
 
-   if ( return_code != NERR_Success )
+   if ( return_code not_eq NERR_Success )
    {
       std::wstring error_message;
 

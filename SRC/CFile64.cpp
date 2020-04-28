@@ -75,7 +75,7 @@ static inline _Check_return_ UINT __GetFileName( _In_z_ LPCTSTR path_name_parame
 
     LPCTSTR temporary_pointer = nullptr;
 
-    for ( temporary_pointer = path_name_parameter; *temporary_pointer != '\0'; temporary_pointer = _tcsinc( temporary_pointer ) )
+    for ( temporary_pointer = path_name_parameter; *temporary_pointer not_eq '\0'; temporary_pointer = _tcsinc( temporary_pointer ) )
     {
         // remember last directory/drive separator
         if ( *temporary_pointer == '\\' or *temporary_pointer == '/' or *temporary_pointer == ':')
@@ -112,7 +112,7 @@ static inline void __GetRoot( _In_z_ wchar_t const * path_name_parameter, _Inout
 
     wchar_t * temporary_pointer = nullptr;
 
-    for ( temporary_pointer = root_pointer; *temporary_pointer != '\0'; temporary_pointer = _wcsinc( temporary_pointer ) )
+    for ( temporary_pointer = root_pointer; *temporary_pointer not_eq '\0'; temporary_pointer = _wcsinc( temporary_pointer ) )
     {
         // find first double slash and stop
         if ( __is_directory_separation_character( temporary_pointer[ 0 ] ) and
@@ -122,7 +122,7 @@ static inline void __GetRoot( _In_z_ wchar_t const * path_name_parameter, _Inout
         }
     }
 
-    if ( *temporary_pointer != '\0' )
+    if ( *temporary_pointer not_eq '\0' )
     {
         // it is a UNC name, find second slash past '\\'
         ASSERT( __is_directory_separation_character( temporary_pointer[ 0 ] ) );
@@ -130,24 +130,24 @@ static inline void __GetRoot( _In_z_ wchar_t const * path_name_parameter, _Inout
 
         temporary_pointer += 2;
 
-        while ( *temporary_pointer != '\0' and (not __is_directory_separation_character( *temporary_pointer ) ) )
+        while ( *temporary_pointer not_eq '\0' and (not __is_directory_separation_character( *temporary_pointer ) ) )
         {
             temporary_pointer = _wcsinc( temporary_pointer );
         }
 
-        if ( *temporary_pointer != '\0' )
+        if ( *temporary_pointer not_eq '\0' )
         {
             temporary_pointer = _wcsinc( temporary_pointer );
         }
 
-        while ( *temporary_pointer != '\0' and (not __is_directory_separation_character( *temporary_pointer ) ) )
+        while ( *temporary_pointer not_eq '\0' and (not __is_directory_separation_character( *temporary_pointer ) ) )
         {
             temporary_pointer = _wcsinc( temporary_pointer );
         }
 
         // terminate it just after the UNC root (ie. '\\server\share\')
 
-        if ( *temporary_pointer != '\0' )
+        if ( *temporary_pointer not_eq '\0' )
         {
             temporary_pointer[ 1 ] = '\0';
         }
@@ -157,13 +157,13 @@ static inline void __GetRoot( _In_z_ wchar_t const * path_name_parameter, _Inout
         // not a UNC, look for just the first slash
         temporary_pointer = root_pointer;
 
-        while ( *temporary_pointer != '\0' and (not __is_directory_separation_character( *temporary_pointer ) ) )
+        while ( *temporary_pointer not_eq '\0' and (not __is_directory_separation_character( *temporary_pointer ) ) )
         {
             temporary_pointer = _wcsinc( temporary_pointer );
         }
 
         // terminate it just after root (ie. 'x:\')
-        if ( *temporary_pointer != '\0' )
+        if ( *temporary_pointer not_eq '\0' )
         {
             temporary_pointer[ 1 ] = '\0';
         }
@@ -217,7 +217,7 @@ static inline _Check_return_ bool __FullPath( _Out_ wchar_t * lpszPathOut, _In_z
 
         auto const h = FindFirstFile( lpszFileIn, &data );
 
-        if ( h != static_cast< HANDLE >( INVALID_HANDLE_VALUE ) )
+        if ( h not_eq static_cast< HANDLE >( INVALID_HANDLE_VALUE ) )
         {
             FindClose( h );
             lstrcpy( lpszFilePart, data.cFileName );
@@ -244,7 +244,7 @@ static inline _Check_return_ std::size_t __GetFileTitle( _In_z_ wchar_t const * 
         maximum_length = static_cast<UINT>(std::size(szTemp));
     }
 
-    if ( ::GetFileTitleW( path_name, lpszTemp, (WORD) maximum_length ) != 0 )
+    if ( ::GetFileTitleW( path_name, lpszTemp, (WORD) maximum_length ) not_eq 0 )
     {
         // when ::GetFileTitle fails, use cheap imitation
         return( __GetFileName( path_name, title, nMax ) );
@@ -271,7 +271,7 @@ void Win32FoundationClasses::CFile64::CreatePathTo(_In_ std::filesystem::path co
         filename, std::size(filename),
         extension_including_period, std::size(extension_including_period)) == 0)
     {
-        if (directory[0] != 0x00 and directory[1] != '\\')
+        if (directory[0] not_eq 0x00 and directory[1] not_eq '\\')
         {
             std::wstring full_directory_path( drive );
 
@@ -305,8 +305,8 @@ Win32FoundationClasses::CFile64::CFile64() noexcept
 Win32FoundationClasses::CFile64::CFile64( _In_ HANDLE const file_handle ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
-    _ASSERTE(file_handle != INVALID_HANDLE_VALUE);
-    _ASSERTE(file_handle != NULL);
+    _ASSERTE(file_handle not_eq INVALID_HANDLE_VALUE);
+    _ASSERTE(file_handle not_eq NULL);
 
     m_FileHandle           = static_cast< HANDLE >( INVALID_HANDLE_VALUE );
     m_SecurityAttributes_p = nullptr;
@@ -335,11 +335,11 @@ Win32FoundationClasses::CFile64::CFile64(_In_ std::filesystem::path const& filen
     (void) Open( filename, open_flags );
 }
 
-Win32FoundationClasses::CFile64::~CFile64() noexcept
+Win32FoundationClasses::CFile64::~CFile64()
 {
     WFC_VALIDATE_POINTER( this );
 
-    if ( m_FileHandle != static_cast< HANDLE >( INVALID_HANDLE_VALUE ) and m_CloseOnDelete == true)
+    if ( m_FileHandle not_eq static_cast< HANDLE >( INVALID_HANDLE_VALUE ) and m_CloseOnDelete == true)
     {
         Close();
     }
@@ -356,7 +356,7 @@ void Win32FoundationClasses::CFile64::Abort( void ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
 
-    if ( m_FileHandle != static_cast< HANDLE >( INVALID_HANDLE_VALUE ) )
+    if ( m_FileHandle not_eq static_cast< HANDLE >( INVALID_HANDLE_VALUE ) )
     {
         (void)Win32FoundationClasses::wfc_close_handle(m_FileHandle);
         m_FileHandle = static_cast< HANDLE >( INVALID_HANDLE_VALUE );
@@ -372,7 +372,7 @@ void Win32FoundationClasses::CFile64::Close( void ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
 
-    if ( m_FileHandle != static_cast< HANDLE >( INVALID_HANDLE_VALUE ) )
+    if ( m_FileHandle not_eq static_cast< HANDLE >( INVALID_HANDLE_VALUE ) )
     {
         (void)Win32FoundationClasses::wfc_close_handle(m_FileHandle);
         m_FileHandle = static_cast< HANDLE >( INVALID_HANDLE_VALUE );
@@ -418,7 +418,7 @@ void CFile64::Dump( CDumpContext& dump_context ) const
 
     dump_context << TEXT( "   m_SecurityAttributes_p is " );
 
-    if ( m_SecurityAttributes_p != nullptr )
+    if ( m_SecurityAttributes_p not_eq nullptr )
     {
         dump_context << (VOID *) m_SecurityDescriptor_p;
         dump_context << TEXT( "\n   {\n" );
@@ -446,7 +446,7 @@ void CFile64::Dump( CDumpContext& dump_context ) const
 
     dump_context << TEXT( "   m_SecurityDescriptor_p is " );
 
-    if ( m_SecurityDescriptor_p != nullptr )
+    if ( m_SecurityDescriptor_p not_eq nullptr )
     {
         dump_context << (VOID *) m_SecurityDescriptor_p;
     }
@@ -470,7 +470,7 @@ void CFile64::Dump( CDumpContext& dump_context ) const
 
     dump_context << TEXT( "\n" );
 
-    if ( dump_context.GetDepth() > 0 and m_FileHandle != static_cast< HANDLE >( INVALID_HANDLE_VALUE ) )
+    if ( dump_context.GetDepth() > 0 and m_FileHandle not_eq static_cast< HANDLE >( INVALID_HANDLE_VALUE ) )
     {
         BY_HANDLE_FILE_INFORMATION information;
 
@@ -989,7 +989,7 @@ _Check_return_ bool CFile64::GetStatus( CFileStatus& status ) const
 
     _tcsncpy( status.m_szFullName, m_FileName, std::size( status.m_szFullName ) );
 
-    if ( information.nFileSizeHigh != 0 )
+    if ( information.nFileSizeHigh not_eq 0 )
     {
         // File is too large to return information about
         return( FALSE );
@@ -1131,20 +1131,20 @@ void Win32FoundationClasses::CFile64::SetSecurity(_In_z_ wchar_t const * sddl) n
 {
     WFC_VALIDATE_POINTER(this);
     WFC_VALIDATE_POINTER(sddl);
-    _ASSERTE(sddl[0] != 0x00);
+    _ASSERTE(sddl[0] not_eq 0x00);
 
     if (sddl == nullptr or sddl[0] == 0x00)
     {
         return;
     }
 
-    if (m_SecurityAttributes_p != nullptr)
+    if (m_SecurityAttributes_p not_eq nullptr)
     {
         delete m_SecurityAttributes_p;
         m_SecurityAttributes_p = nullptr;
     }
 
-    if (m_SecurityDescriptor_p != nullptr)
+    if (m_SecurityDescriptor_p not_eq nullptr)
     {
         wfc_destroy_null_dacl(m_SecurityDescriptor_p);
         m_SecurityDescriptor_p = nullptr;
@@ -1169,13 +1169,13 @@ void Win32FoundationClasses::CFile64::m_Uninitialize( void ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
 
-    if ( m_SecurityAttributes_p != nullptr )
+    if ( m_SecurityAttributes_p not_eq nullptr )
     {
         delete m_SecurityAttributes_p;
         m_SecurityAttributes_p = nullptr;
     }
 
-    if ( m_SecurityDescriptor_p != nullptr )
+    if ( m_SecurityDescriptor_p not_eq nullptr )
     {
         Win32FoundationClasses::wfc_destroy_null_dacl( m_SecurityDescriptor_p );
         m_SecurityDescriptor_p = nullptr;
@@ -1290,7 +1290,7 @@ _Check_return_ bool Win32FoundationClasses::CFile64::Open(_In_ std::filesystem::
             share_mode or_eq FILE_SHARE_DELETE;
         }
 
-        if ( m_SecurityAttributes_p != nullptr )
+        if ( m_SecurityAttributes_p not_eq nullptr )
         {
             m_SecurityAttributes_p->bInheritHandle = ( ( open_flags bitand (UINT) OpenFlags::modeNoInherit ) == 0 ) ? TRUE : FALSE;
         }
@@ -1354,7 +1354,7 @@ _Check_return_ bool Win32FoundationClasses::CFile64::Open(_In_ std::filesystem::
 
 #if ! defined( WFC_STL )
 
-            if ( exception_p != nullptr )
+            if ( exception_p not_eq nullptr )
             {
                 exception_p->m_lOsError    = ::GetLastError();
                 exception_p->m_cause       = CFileException::OsErrorToException( exception_p->m_lOsError );
@@ -1404,7 +1404,7 @@ _Check_return_ bool Win32FoundationClasses::CFile64::Read( _Inout_ std::string& 
 
     while( exit_loop == false )
     {
-        if ( Read( &byte_from_file, 1 ) != 1 )
+        if ( Read( &byte_from_file, 1 ) not_eq 1 )
         {
             return( ( string_from_file.length() > 0 ) ? true : false );
         }
@@ -1421,7 +1421,7 @@ _Check_return_ bool Win32FoundationClasses::CFile64::Read( _Inout_ std::string& 
 
             uint64_t current_position = GetPosition();
 
-            if ( Read( &byte_from_file, 1 ) != 1 )
+            if ( Read( &byte_from_file, 1 ) not_eq 1 )
             {
                 return( true );
             }
@@ -1559,7 +1559,7 @@ _Check_return_ uint32_t Win32FoundationClasses::CFile64::AtomicRead( _In_ uint64
 
         LARGE_INTEGER file_size{ 0, 0 };
 
-        _ASSERTE(::GetFileSizeEx(m_FileHandle, &file_size) != 0);
+        _ASSERTE(::GetFileSizeEx(m_FileHandle, &file_size) not_eq 0);
         _ASSERTE((LONGLONG)(file_offset + number_of_bytes_to_read) <= file_size.QuadPart);
 #endif
         //_ASSERT_EXPR(FALSE, _CRT_WIDE("ReadFile returned FALSE"));
@@ -1809,7 +1809,7 @@ _Check_return_ bool Win32FoundationClasses::CFile64::SparsifyRegion( _In_ uint64
         &number_of_bytes_returned,
         &overlapped );
 
-    if ( return_value != 0 )
+    if ( return_value not_eq 0 )
     {
         return( true );
     }
@@ -1876,7 +1876,7 @@ _Check_return_ bool Win32FoundationClasses::CFile64::ProcessContent( _In_ std::s
         }
 
         // Now read the data.
-        if ( AtomicRead( static_cast<uint64_t const>(number_of_bytes_processed), (void *) buffer, (uint32_t const) number_of_bytes_to_process_in_this_call ) != number_of_bytes_to_process_in_this_call)
+        if ( AtomicRead( static_cast<uint64_t const>(number_of_bytes_processed), (void *) buffer, (uint32_t const) number_of_bytes_to_process_in_this_call ) not_eq number_of_bytes_to_process_in_this_call)
         {
             _aligned_free( buffer );
             return( false );
@@ -1937,7 +1937,7 @@ void Win32FoundationClasses::CFile64::Write( __in_bcount( number_of_bytes_to_wri
         DWORD error_code = ::GetLastError();
         //WFCTRACEERROR( error_code );
 
-        if ( m_SafeWriteCallback != nullptr )
+        if ( m_SafeWriteCallback not_eq nullptr )
         {
             int const return_value = m_SafeWriteCallback( m_SafeWriteContext, error_code, m_FileName.c_str() );
 
@@ -1981,7 +1981,7 @@ void Win32FoundationClasses::CFile64::Write( __in_bcount( number_of_bytes_to_wri
     }
 
 #if ! defined( WFC_STL )
-    if ( number_of_bytes_written != number_of_bytes_to_write )
+    if ( number_of_bytes_written not_eq number_of_bytes_to_write )
     {
         if ( m_BeStupidAndUseExceptions == true )
         {

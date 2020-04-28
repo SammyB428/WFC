@@ -22,7 +22,7 @@ inline _Check_return_ bool it_was_found(_In_ WSTRING_CONST_ITERATOR_PAIR const& 
 inline constexpr _Check_return_ bool it_was_found(_In_ WSTRING_CONST_ITERATOR_PAIR const& p) noexcept
 #endif
 {
-    return((p.first != p.second) ? true : false);
+    return((p.first not_eq p.second) ? true : false);
 }
 
 inline _Check_return_ SSIZE_T add_to_unique_sorted_vector(_In_ std::wstring_view value_to_add, _Inout_ std::vector<std::wstring>& values) noexcept
@@ -79,7 +79,7 @@ static inline _Check_return_ bool it_was_found(_In_ STRING_CONST_ITERATOR_PAIR c
 static inline constexpr _Check_return_ bool it_was_found(_In_ STRING_CONST_ITERATOR_PAIR const& p) noexcept
 #endif
 {
-    return((p.first != p.second) ? true : false);
+    return((p.first not_eq p.second) ? true : false);
 }
 
 inline _Check_return_ SSIZE_T add_to_unique_sorted_vector(_In_ std::string const& value_to_add, _Inout_ std::vector<std::string>& values) noexcept

@@ -69,50 +69,50 @@ _Check_return_ bool test_CSystemTime( __out std::string& class_name, __out int& 
    Win32FoundationClasses::CSystemTime system_time( &timestamp_struct );
 
 #if 0 
-   if ( system_time.wDayOfWeek != 6 )
+   if ( system_time.wDayOfWeek not_eq 6 )
    {
       test_number_that_failed = 1;
       return( failure() );
    }
 #endif
 
-   if ( system_time.wYear != 1752 )
+   if ( system_time.wYear not_eq 1752 )
    {
       test_number_that_failed = 1;
       return( failure() );
    }
 
-   if ( system_time.wMonth != 9 )
+   if ( system_time.wMonth not_eq 9 )
    {
       test_number_that_failed = 2;
       return( failure() );
    }
 
-   if ( system_time.wDay != 2 )
+   if ( system_time.wDay not_eq 2 )
    {
       test_number_that_failed = 3;
       return( failure() );
    }
 
-   if ( system_time.wHour != 7 )
+   if ( system_time.wHour not_eq 7 )
    {
       test_number_that_failed = 4;
       return( failure() );
    }
 
-   if ( system_time.wMinute != 32 )
+   if ( system_time.wMinute not_eq 32 )
    {
       test_number_that_failed = 5;
       return( failure() );
    }
 
-   if ( system_time.wSecond != 22 )
+   if ( system_time.wSecond not_eq 22 )
    {
       test_number_that_failed = 6;
       return( failure() );
    }
 
-   if ( system_time.wMilliseconds != 140 )
+   if ( system_time.wMilliseconds not_eq 140 )
    {
       test_number_that_failed = 7;
       return( failure() );
@@ -142,7 +142,7 @@ _Check_return_ bool test_CSystemTime( __out std::string& class_name, __out int& 
 
    uint32_t minutes_since_monday = time_2.NumberOfMinutesSinceMonday();
 
-   if ( minutes_since_monday != 0 )
+   if ( minutes_since_monday not_eq 0 )
    {
       test_number_that_failed = 10;
       return( failure() );
@@ -152,7 +152,7 @@ _Check_return_ bool test_CSystemTime( __out std::string& class_name, __out int& 
 
    minutes_since_monday = time_2.NumberOfMinutesSinceMonday();
 
-   if ( minutes_since_monday != NUMBER_OF_MINUTES_IN_ONE_DAY )
+   if ( minutes_since_monday not_eq NUMBER_OF_MINUTES_IN_ONE_DAY )
    {
       test_number_that_failed = 11;
       return( failure() );
@@ -162,7 +162,7 @@ _Check_return_ bool test_CSystemTime( __out std::string& class_name, __out int& 
 
    minutes_since_monday = time_2.NumberOfMinutesSinceMonday();
 
-   if ( minutes_since_monday != (NUMBER_OF_MINUTES_IN_ONE_DAY * 6) )
+   if ( minutes_since_monday not_eq (NUMBER_OF_MINUTES_IN_ONE_DAY * 6) )
    {
       test_number_that_failed = 12;
       return( failure() );
@@ -176,7 +176,7 @@ _Check_return_ bool test_CSystemTime( __out std::string& class_name, __out int& 
 
    std::wstring postgresql_timestamp = ft.PostgreSQLTimestamp();
 
-   if ( postgresql_timestamp.compare(WSTRING_VIEW(L"2012-02-28 10:18:40.032774")) != I_AM_EQUAL_TO_THAT )
+   if ( postgresql_timestamp.compare(WSTRING_VIEW(L"2012-02-28 10:18:40.032774")) not_eq I_AM_EQUAL_TO_THAT )
    {
        test_number_that_failed = 13;
        return( failure() );
@@ -210,7 +210,7 @@ _Check_return_ bool test_CSystemTime( __out std::string& class_name, __out int& 
 
    _ASSERT_EXPR( second_time == correct_answer, _CRT_WIDE("CFileTime.Set() failed to convert to 1422870600 correctly.") );
 
-   if ( time_value != second_time )
+   if ( time_value not_eq second_time )
    {
        test_number_that_failed = 15;
        return( failure() );

@@ -153,7 +153,7 @@ void Win32FoundationClasses::CRandomNumberGenerator::InitializeSeed( void ) noex
                            &number_of_sectors_per_cluster,
                            &number_of_bytes_per_sector,
                            &number_of_free_clusters,
-                           &total_number_of_clusters ) != FALSE )
+                           &total_number_of_clusters ) not_eq FALSE )
    {
       low_word = LOWORD( number_of_free_clusters );
 

@@ -740,7 +740,7 @@ Win32FoundationClasses::CTapeSetDriveParameters::CTapeSetDriveParameters( _In_ T
    Copy( source );
 }
 
-Win32FoundationClasses::CTapeSetDriveParameters::~CTapeSetDriveParameters() noexcept
+Win32FoundationClasses::CTapeSetDriveParameters::~CTapeSetDriveParameters()
 {
    WFC_VALIDATE_POINTER( this );
    Empty();
@@ -842,7 +842,7 @@ Win32FoundationClasses::CTapeSetMediaParameters::CTapeSetMediaParameters( _In_ T
    Copy( source );
 }
 
-Win32FoundationClasses::CTapeSetMediaParameters::~CTapeSetMediaParameters() noexcept
+Win32FoundationClasses::CTapeSetMediaParameters::~CTapeSetMediaParameters()
 {
    WFC_VALIDATE_POINTER( this );
    Empty();
@@ -921,11 +921,11 @@ Win32FoundationClasses::CTape::CTape() noexcept
    m_AutomaticallyClose = false;
 }
 
-Win32FoundationClasses::CTape::~CTape() noexcept
+Win32FoundationClasses::CTape::~CTape()
 {
    WFC_VALIDATE_POINTER( this );
 
-   if ( m_AutomaticallyClose != FALSE )
+   if ( m_AutomaticallyClose not_eq FALSE )
    {
       Close();
    }
@@ -947,7 +947,7 @@ void Win32FoundationClasses::CTape::Close( void ) noexcept
    (void) Unlock();
    (void) GetStatus();
 
-   if ( m_FileHandle != static_cast< HANDLE >( NULL ) )
+   if ( m_FileHandle not_eq static_cast< HANDLE >( NULL ) )
    {
       CDummyFile::Close();
    }

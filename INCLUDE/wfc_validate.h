@@ -96,36 +96,36 @@
 #if defined( _W64 )
 // 64-bit version
 #if defined( _DEBUG ) && defined( _ASSERTE )
-#define WFC_VALIDATE_POINTER( _pointer ) _ASSERTE( (SIZE_T) _pointer != NULL ); \
-_ASSERTE( (SIZE_T) _pointer != 1 ); \
-_ASSERTE( (SIZE_T) _pointer != MEMORY_FOLLOWING_A_BLOCK_ALLOCATED_BY_LocalAlloc ); \
-_ASSERTE( (SIZE_T) _pointer != MEMORY_ALLOCATED_BY_LocalAlloc_LMEM_FIXED_BUT_NOT_YET_WRITTEN_TO ); \
-_ASSERTE( (SIZE_T) _pointer != MEMORY_DEDICATED_TO_A_HEAP_BUT_NOT_YET_ALLOCATED_BY_HeapAlloc_OR_LocalAlloc ); \
-_ASSERTE( (SIZE_T) _pointer != VARIABLE_INITIALIZED_BUT_NOT_YET_WRITTEN_TO ); \
-_ASSERTE( (SIZE_T) _pointer != MEMORY_ALLOCATED_BY_malloc_BUT_NOT_YET_WRITTEN_TO ); \
-_ASSERTE( (SIZE_T) _pointer != FREED_MEMORY ); \
-_ASSERTE( (SIZE_T) _pointer != NO_MANS_LAND ); \
-_ASSERTE( (SIZE_T) _pointer != MEMORY_FOLLOWING_A_BLOCK_ALLOCATED_BY_LocalAlloc_64 ); \
-_ASSERTE( (SIZE_T) _pointer != MEMORY_ALLOCATED_BY_LocalAlloc_LMEM_FIXED_BUT_NOT_YET_WRITTEN_TO_64 ); \
-_ASSERTE( (SIZE_T) _pointer != MEMORY_DEDICATED_TO_A_HEAP_BUT_NOT_YET_ALLOCATED_BY_HeapAlloc_OR_LocalAlloc_64 ); \
-_ASSERTE( (SIZE_T) _pointer != VARIABLE_INITIALIZED_BUT_NOT_YET_WRITTEN_TO_64 ); \
-_ASSERTE( (SIZE_T) _pointer != MEMORY_ALLOCATED_BY_malloc_BUT_NOT_YET_WRITTEN_TO_64 ); \
-_ASSERTE( (SIZE_T) _pointer != FREED_MEMORY_64 ); \
-_ASSERTE( (SIZE_T) _pointer != NO_MANS_LAND_64 )
+#define WFC_VALIDATE_POINTER( _pointer ) _ASSERTE( (SIZE_T) _pointer not_eq NULL ); \
+_ASSERTE( (SIZE_T) _pointer not_eq 1 ); \
+_ASSERTE( (SIZE_T) _pointer not_eq MEMORY_FOLLOWING_A_BLOCK_ALLOCATED_BY_LocalAlloc ); \
+_ASSERTE( (SIZE_T) _pointer not_eq MEMORY_ALLOCATED_BY_LocalAlloc_LMEM_FIXED_BUT_NOT_YET_WRITTEN_TO ); \
+_ASSERTE( (SIZE_T) _pointer not_eq MEMORY_DEDICATED_TO_A_HEAP_BUT_NOT_YET_ALLOCATED_BY_HeapAlloc_OR_LocalAlloc ); \
+_ASSERTE( (SIZE_T) _pointer not_eq VARIABLE_INITIALIZED_BUT_NOT_YET_WRITTEN_TO ); \
+_ASSERTE( (SIZE_T) _pointer not_eq MEMORY_ALLOCATED_BY_malloc_BUT_NOT_YET_WRITTEN_TO ); \
+_ASSERTE( (SIZE_T) _pointer not_eq FREED_MEMORY ); \
+_ASSERTE( (SIZE_T) _pointer not_eq NO_MANS_LAND ); \
+_ASSERTE( (SIZE_T) _pointer not_eq MEMORY_FOLLOWING_A_BLOCK_ALLOCATED_BY_LocalAlloc_64 ); \
+_ASSERTE( (SIZE_T) _pointer not_eq MEMORY_ALLOCATED_BY_LocalAlloc_LMEM_FIXED_BUT_NOT_YET_WRITTEN_TO_64 ); \
+_ASSERTE( (SIZE_T) _pointer not_eq MEMORY_DEDICATED_TO_A_HEAP_BUT_NOT_YET_ALLOCATED_BY_HeapAlloc_OR_LocalAlloc_64 ); \
+_ASSERTE( (SIZE_T) _pointer not_eq VARIABLE_INITIALIZED_BUT_NOT_YET_WRITTEN_TO_64 ); \
+_ASSERTE( (SIZE_T) _pointer not_eq MEMORY_ALLOCATED_BY_malloc_BUT_NOT_YET_WRITTEN_TO_64 ); \
+_ASSERTE( (SIZE_T) _pointer not_eq FREED_MEMORY_64 ); \
+_ASSERTE( (SIZE_T) _pointer not_eq NO_MANS_LAND_64 )
 #else // _DEBUG
 #define WFC_VALIDATE_POINTER( _pointer )
 #endif // _DEBUG
 #else // _W64
 #if defined( _DEBUG ) && defined( _ASSERTE )
-#define WFC_VALIDATE_POINTER( _pointer ) _ASSERTE( (SIZE_T) _pointer != nullptr ); \
-_ASSERTE( (SIZE_T) _pointer != 1 ); \
-_ASSERTE( (SIZE_T) _pointer != MEMORY_FOLLOWING_A_BLOCK_ALLOCATED_BY_LocalAlloc ); \
-_ASSERTE( (SIZE_T) _pointer != MEMORY_ALLOCATED_BY_LocalAlloc_LMEM_FIXED_BUT_NOT_YET_WRITTEN_TO ); \
-_ASSERTE( (SIZE_T) _pointer != MEMORY_DEDICATED_TO_A_HEAP_BUT_NOT_YET_ALLOCATED_BY_HeapAlloc_OR_LocalAlloc ); \
-_ASSERTE( (SIZE_T) _pointer != VARIABLE_INITIALIZED_BUT_NOT_YET_WRITTEN_TO ); \
-_ASSERTE( (SIZE_T) _pointer != MEMORY_ALLOCATED_BY_malloc_BUT_NOT_YET_WRITTEN_TO ); \
-_ASSERTE( (SIZE_T) _pointer != FREED_MEMORY ); \
-_ASSERTE( (SIZE_T) _pointer != NO_MANS_LAND )
+#define WFC_VALIDATE_POINTER( _pointer ) _ASSERTE( (SIZE_T) _pointer not_eq nullptr ); \
+_ASSERTE( (SIZE_T) _pointer not_eq 1 ); \
+_ASSERTE( (SIZE_T) _pointer not_eq MEMORY_FOLLOWING_A_BLOCK_ALLOCATED_BY_LocalAlloc ); \
+_ASSERTE( (SIZE_T) _pointer not_eq MEMORY_ALLOCATED_BY_LocalAlloc_LMEM_FIXED_BUT_NOT_YET_WRITTEN_TO ); \
+_ASSERTE( (SIZE_T) _pointer not_eq MEMORY_DEDICATED_TO_A_HEAP_BUT_NOT_YET_ALLOCATED_BY_HeapAlloc_OR_LocalAlloc ); \
+_ASSERTE( (SIZE_T) _pointer not_eq VARIABLE_INITIALIZED_BUT_NOT_YET_WRITTEN_TO ); \
+_ASSERTE( (SIZE_T) _pointer not_eq MEMORY_ALLOCATED_BY_malloc_BUT_NOT_YET_WRITTEN_TO ); \
+_ASSERTE( (SIZE_T) _pointer not_eq FREED_MEMORY ); \
+_ASSERTE( (SIZE_T) _pointer not_eq NO_MANS_LAND )
 #else // _DEBUG
 #define WFC_VALIDATE_POINTER( _pointer )
 #endif // _DEBUG
@@ -137,35 +137,35 @@ _ASSERTE( (SIZE_T) _pointer != NO_MANS_LAND )
 // 64-bit version
 #if defined( _DEBUG ) && defined( _ASSERTE )
 #define WFC_VALIDATE_POINTER_NULL_OK( _pointer ) \
-_ASSERTE( (SIZE_T) _pointer != 1 ); \
-_ASSERTE( (SIZE_T) _pointer != MEMORY_FOLLOWING_A_BLOCK_ALLOCATED_BY_LocalAlloc ); \
-_ASSERTE( (SIZE_T) _pointer != MEMORY_ALLOCATED_BY_LocalAlloc_LMEM_FIXED_BUT_NOT_YET_WRITTEN_TO ); \
-_ASSERTE( (SIZE_T) _pointer != MEMORY_DEDICATED_TO_A_HEAP_BUT_NOT_YET_ALLOCATED_BY_HeapAlloc_OR_LocalAlloc ); \
-_ASSERTE( (SIZE_T) _pointer != VARIABLE_INITIALIZED_BUT_NOT_YET_WRITTEN_TO ); \
-_ASSERTE( (SIZE_T) _pointer != MEMORY_ALLOCATED_BY_malloc_BUT_NOT_YET_WRITTEN_TO ); \
-_ASSERTE( (SIZE_T) _pointer != FREED_MEMORY ); \
-_ASSERTE( (SIZE_T) _pointer != NO_MANS_LAND ); \
-_ASSERTE( (SIZE_T) _pointer != MEMORY_FOLLOWING_A_BLOCK_ALLOCATED_BY_LocalAlloc_64 ); \
-_ASSERTE( (SIZE_T) _pointer != MEMORY_ALLOCATED_BY_LocalAlloc_LMEM_FIXED_BUT_NOT_YET_WRITTEN_TO_64 ); \
-_ASSERTE( (SIZE_T) _pointer != MEMORY_DEDICATED_TO_A_HEAP_BUT_NOT_YET_ALLOCATED_BY_HeapAlloc_OR_LocalAlloc_64 ); \
-_ASSERTE( (SIZE_T) _pointer != VARIABLE_INITIALIZED_BUT_NOT_YET_WRITTEN_TO_64 ); \
-_ASSERTE( (SIZE_T) _pointer != MEMORY_ALLOCATED_BY_malloc_BUT_NOT_YET_WRITTEN_TO_64 ); \
-_ASSERTE( (SIZE_T) _pointer != FREED_MEMORY_64 ); \
-_ASSERTE( (SIZE_T) _pointer != NO_MANS_LAND_64 )
+_ASSERTE( (SIZE_T) _pointer not_eq 1 ); \
+_ASSERTE( (SIZE_T) _pointer not_eq MEMORY_FOLLOWING_A_BLOCK_ALLOCATED_BY_LocalAlloc ); \
+_ASSERTE( (SIZE_T) _pointer not_eq MEMORY_ALLOCATED_BY_LocalAlloc_LMEM_FIXED_BUT_NOT_YET_WRITTEN_TO ); \
+_ASSERTE( (SIZE_T) _pointer not_eq MEMORY_DEDICATED_TO_A_HEAP_BUT_NOT_YET_ALLOCATED_BY_HeapAlloc_OR_LocalAlloc ); \
+_ASSERTE( (SIZE_T) _pointer not_eq VARIABLE_INITIALIZED_BUT_NOT_YET_WRITTEN_TO ); \
+_ASSERTE( (SIZE_T) _pointer not_eq MEMORY_ALLOCATED_BY_malloc_BUT_NOT_YET_WRITTEN_TO ); \
+_ASSERTE( (SIZE_T) _pointer not_eq FREED_MEMORY ); \
+_ASSERTE( (SIZE_T) _pointer not_eq NO_MANS_LAND ); \
+_ASSERTE( (SIZE_T) _pointer not_eq MEMORY_FOLLOWING_A_BLOCK_ALLOCATED_BY_LocalAlloc_64 ); \
+_ASSERTE( (SIZE_T) _pointer not_eq MEMORY_ALLOCATED_BY_LocalAlloc_LMEM_FIXED_BUT_NOT_YET_WRITTEN_TO_64 ); \
+_ASSERTE( (SIZE_T) _pointer not_eq MEMORY_DEDICATED_TO_A_HEAP_BUT_NOT_YET_ALLOCATED_BY_HeapAlloc_OR_LocalAlloc_64 ); \
+_ASSERTE( (SIZE_T) _pointer not_eq VARIABLE_INITIALIZED_BUT_NOT_YET_WRITTEN_TO_64 ); \
+_ASSERTE( (SIZE_T) _pointer not_eq MEMORY_ALLOCATED_BY_malloc_BUT_NOT_YET_WRITTEN_TO_64 ); \
+_ASSERTE( (SIZE_T) _pointer not_eq FREED_MEMORY_64 ); \
+_ASSERTE( (SIZE_T) _pointer not_eq NO_MANS_LAND_64 )
 #else // _DEBUG
 #define WFC_VALIDATE_POINTER_NULL_OK( _pointer )
 #endif // _DEBUG
 #else // _W64
 #if defined( _DEBUG ) && defined( _ASSERTE )
 #define WFC_VALIDATE_POINTER_NULL_OK( _pointer ) \
-_ASSERTE( (SIZE_T) _pointer != 1 ); \
-_ASSERTE( (SIZE_T) _pointer != MEMORY_FOLLOWING_A_BLOCK_ALLOCATED_BY_LocalAlloc ); \
-_ASSERTE( (SIZE_T) _pointer != MEMORY_ALLOCATED_BY_LocalAlloc_LMEM_FIXED_BUT_NOT_YET_WRITTEN_TO ); \
-_ASSERTE( (SIZE_T) _pointer != MEMORY_DEDICATED_TO_A_HEAP_BUT_NOT_YET_ALLOCATED_BY_HeapAlloc_OR_LocalAlloc ); \
-_ASSERTE( (SIZE_T) _pointer != VARIABLE_INITIALIZED_BUT_NOT_YET_WRITTEN_TO ); \
-_ASSERTE( (SIZE_T) _pointer != MEMORY_ALLOCATED_BY_malloc_BUT_NOT_YET_WRITTEN_TO ); \
-_ASSERTE( (SIZE_T) _pointer != FREED_MEMORY ); \
-_ASSERTE( (SIZE_T) _pointer != NO_MANS_LAND )
+_ASSERTE( (SIZE_T) _pointer not_eq 1 ); \
+_ASSERTE( (SIZE_T) _pointer not_eq MEMORY_FOLLOWING_A_BLOCK_ALLOCATED_BY_LocalAlloc ); \
+_ASSERTE( (SIZE_T) _pointer not_eq MEMORY_ALLOCATED_BY_LocalAlloc_LMEM_FIXED_BUT_NOT_YET_WRITTEN_TO ); \
+_ASSERTE( (SIZE_T) _pointer not_eq MEMORY_DEDICATED_TO_A_HEAP_BUT_NOT_YET_ALLOCATED_BY_HeapAlloc_OR_LocalAlloc ); \
+_ASSERTE( (SIZE_T) _pointer not_eq VARIABLE_INITIALIZED_BUT_NOT_YET_WRITTEN_TO ); \
+_ASSERTE( (SIZE_T) _pointer not_eq MEMORY_ALLOCATED_BY_malloc_BUT_NOT_YET_WRITTEN_TO ); \
+_ASSERTE( (SIZE_T) _pointer not_eq FREED_MEMORY ); \
+_ASSERTE( (SIZE_T) _pointer not_eq NO_MANS_LAND )
 #else // _DEBUG
 #define WFC_VALIDATE_POINTER_NULL_OK( _pointer )
 #endif // _DEBUG
@@ -175,13 +175,13 @@ _ASSERTE( (SIZE_T) _pointer != NO_MANS_LAND )
 #if ! defined( WFC_VALIDATE_POINTER_NULL_OK )
 #if defined( _DEBUG ) && defined( _ASSERTE )
 #define WFC_VALIDATE_POINTER_NULL_OK( _pointer ) \
-_ASSERTE( (DWORD) _pointer != MEMORY_FOLLOWING_A_BLOCK_ALLOCATED_BY_LocalAlloc ); \
-_ASSERTE( (DWORD) _pointer != MEMORY_ALLOCATED_BY_LocalAlloc_LMEM_FIXED_BUT_NOT_YET_WRITTEN_TO ); \
-_ASSERTE( (DWORD) _pointer != MEMORY_DEDICATED_TO_A_HEAP_BUT_NOT_YET_ALLOCATED_BY_HeapAlloc_OR_LocalAlloc ); \
-_ASSERTE( (DWORD) _pointer != VARIABLE_INITIALIZED_BUT_NOT_YET_WRITTEN_TO ); \
-_ASSERTE( (DWORD) _pointer != MEMORY_ALLOCATED_BY_malloc_BUT_NOT_YET_WRITTEN_TO ); \
-_ASSERTE( (DWORD) _pointer != FREED_MEMORY ); \
-_ASSERTE( (DWORD) _pointer != NO_MANS_LAND )
+_ASSERTE( (DWORD) _pointer not_eq MEMORY_FOLLOWING_A_BLOCK_ALLOCATED_BY_LocalAlloc ); \
+_ASSERTE( (DWORD) _pointer not_eq MEMORY_ALLOCATED_BY_LocalAlloc_LMEM_FIXED_BUT_NOT_YET_WRITTEN_TO ); \
+_ASSERTE( (DWORD) _pointer not_eq MEMORY_DEDICATED_TO_A_HEAP_BUT_NOT_YET_ALLOCATED_BY_HeapAlloc_OR_LocalAlloc ); \
+_ASSERTE( (DWORD) _pointer not_eq VARIABLE_INITIALIZED_BUT_NOT_YET_WRITTEN_TO ); \
+_ASSERTE( (DWORD) _pointer not_eq MEMORY_ALLOCATED_BY_malloc_BUT_NOT_YET_WRITTEN_TO ); \
+_ASSERTE( (DWORD) _pointer not_eq FREED_MEMORY ); \
+_ASSERTE( (DWORD) _pointer not_eq NO_MANS_LAND )
 #else // _DEBUG
 #define WFC_VALIDATE_POINTER_NULL_OK( _pointer )
 #endif // _DEBUG
@@ -208,14 +208,14 @@ _ASSERTE( _BOOLean_value == true or _BOOLean_value == false )
 #if ! defined( WFC_VALIDATE_SHORT )
 #if defined( _DEBUG ) && defined( _ASSERTE )
 #define WFC_VALIDATE_SHORT( _SHORT_value ) \
-_ASSERTE( (short) _SHORT_value != 0xABAB ); \
-_ASSERTE( (short) _SHORT_value != 0xBAAD ); \
-_ASSERTE( (short) _SHORT_value != 0xF00D ); \
-_ASSERTE( (short) _SHORT_value != 0xFEEE ); \
-_ASSERTE( (short) _SHORT_value != 0xCCCC ); \
-_ASSERTE( (short) _SHORT_value != 0xCDCD ); \
-_ASSERTE( (short) _SHORT_value != 0xDDDD ); \
-_ASSERTE( (short) _SHORT_value != 0xFDFD )
+_ASSERTE( (short) _SHORT_value not_eq 0xABAB ); \
+_ASSERTE( (short) _SHORT_value not_eq 0xBAAD ); \
+_ASSERTE( (short) _SHORT_value not_eq 0xF00D ); \
+_ASSERTE( (short) _SHORT_value not_eq 0xFEEE ); \
+_ASSERTE( (short) _SHORT_value not_eq 0xCCCC ); \
+_ASSERTE( (short) _SHORT_value not_eq 0xCDCD ); \
+_ASSERTE( (short) _SHORT_value not_eq 0xDDDD ); \
+_ASSERTE( (short) _SHORT_value not_eq 0xFDFD )
 #else // _DEBUG
 #define WFC_VALIDATE_SHORT( _SHORT_value )
 #endif // _DEBUG

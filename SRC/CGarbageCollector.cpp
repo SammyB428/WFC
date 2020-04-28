@@ -59,7 +59,7 @@ Win32FoundationClasses::CGarbageCollector::CGarbageCollector() noexcept
    m_SelfDestruct   = FALSE;
 }
 
-Win32FoundationClasses::CGarbageCollector::~CGarbageCollector() noexcept
+Win32FoundationClasses::CGarbageCollector::~CGarbageCollector()
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -126,7 +126,7 @@ void Win32FoundationClasses::CGarbageCollector::Release(__out_opt bool * object_
       {
          if ( m_SelfDestruct == true)
          {
-            if ( object_was_deleted != nullptr )
+            if ( object_was_deleted not_eq nullptr )
             {
                *object_was_deleted = true;
             }
@@ -135,7 +135,7 @@ void Win32FoundationClasses::CGarbageCollector::Release(__out_opt bool * object_
          }
          else
          {
-            if ( object_was_deleted != nullptr )
+            if ( object_was_deleted not_eq nullptr )
             {
                *object_was_deleted = false;
             }
@@ -143,7 +143,7 @@ void Win32FoundationClasses::CGarbageCollector::Release(__out_opt bool * object_
       }
       else
       {
-         if ( object_was_deleted != nullptr )
+         if ( object_was_deleted not_eq nullptr )
          {
             *object_was_deleted = false;
          }

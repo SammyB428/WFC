@@ -119,7 +119,7 @@ void Win32FoundationClasses::CNetworkSessionInformation::Copy( _In_ SESSION_INFO
 void Win32FoundationClasses::CNetworkSessionInformation::Copy( _In_ Win32FoundationClasses::CNetworkSessionInformation const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
-   ASSERT( this != &source );
+   ASSERT( this not_eq &source );
 
    /*
    ** Make sure we ain't copying ourselves

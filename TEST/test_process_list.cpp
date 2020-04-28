@@ -251,7 +251,7 @@ static void print_process_list( BYTE * data_buffer ) noexcept
    {
       auto information_p = reinterpret_cast<::SYSTEM_PROCESS_INFORMATION const *>(data_buffer);
 
-      while( information_p != nullptr )
+      while( information_p not_eq nullptr )
       {
          print_system_information( information_p );
          information_p = Win32FoundationClasses::GetNext( information_p );
@@ -279,7 +279,7 @@ __checkReturn bool test_process_list( __out std::string& class_name, __out int& 
         return( failure() );
     }
 
-    if ( Win32FoundationClasses::wfc_undocumented_get_system_process_list(allocated_buffer.get(), buffer_size) != FALSE )
+    if ( Win32FoundationClasses::wfc_undocumented_get_system_process_list(allocated_buffer.get(), buffer_size) not_eq FALSE )
     {
         print_process_list(allocated_buffer.get());
     }

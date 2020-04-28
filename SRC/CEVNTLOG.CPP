@@ -69,16 +69,16 @@ Win32FoundationClasses::CEventLog::CEventLog( __in_z wchar_t const * source_name
    (void )RegisterSource( source_name );
 }
 
-Win32FoundationClasses::CEventLog::~CEventLog() noexcept
+Win32FoundationClasses::CEventLog::~CEventLog()
 {
    WFC_VALIDATE_POINTER( this );
 
-   if ( m_EventSourceHandle != static_cast< HANDLE >( INVALID_HANDLE_VALUE ) )
+   if ( m_EventSourceHandle not_eq static_cast< HANDLE >( INVALID_HANDLE_VALUE ) )
    {
       (void) DeregisterSource();
    }
 
-   if ( m_LogHandle != static_cast< HANDLE >( INVALID_HANDLE_VALUE ) )
+   if ( m_LogHandle not_eq static_cast< HANDLE >( INVALID_HANDLE_VALUE ) )
    {
       (void) Close();
    }
@@ -148,7 +148,7 @@ _Check_return_ bool Win32FoundationClasses::CEventLog::Clear( __in_z LPCTSTR nam
    {
 #if defined( _DEBUG )
 
-      if ( name_of_backup_file != nullptr )
+      if ( name_of_backup_file not_eq nullptr )
       {
          //WFCTRACEVAL( TEXT( "name of backup file is " ), std::wstring( name_of_backup_file ) );
       }
@@ -413,9 +413,9 @@ _Check_return_ bool Win32FoundationClasses::CEventLog::Delete(_In_ std::wstring_
       // really sure they want to do this. By using ASSERT, Visual C++ will
       // popup an Abort, Retry, or Ignore window.
 
-      ASSERT( compare_no_case( log_to_delete, WSTRING_VIEW(L"Application") ) != I_AM_EQUAL_TO_THAT );
-      ASSERT( compare_no_case( log_to_delete, WSTRING_VIEW(L"Security")    ) != I_AM_EQUAL_TO_THAT );
-      ASSERT( compare_no_case( log_to_delete, WSTRING_VIEW(L"System")      ) != I_AM_EQUAL_TO_THAT );
+      ASSERT( compare_no_case( log_to_delete, WSTRING_VIEW(L"Application") ) not_eq I_AM_EQUAL_TO_THAT );
+      ASSERT( compare_no_case( log_to_delete, WSTRING_VIEW(L"Security")    ) not_eq I_AM_EQUAL_TO_THAT );
+      ASSERT( compare_no_case( log_to_delete, WSTRING_VIEW(L"System")      ) not_eq I_AM_EQUAL_TO_THAT );
 
       CRegistry registry;
 
@@ -535,7 +535,7 @@ _Check_return_ bool Win32FoundationClasses::CEventLog::DeregisterSource( void ) 
 {
    WFC_VALIDATE_POINTER( this );
 
-   if ( m_EventSourceHandle != static_cast< HANDLE >( INVALID_HANDLE_VALUE ) )
+   if ( m_EventSourceHandle not_eq static_cast< HANDLE >( INVALID_HANDLE_VALUE ) )
    {
       BOOL const return_value = ::DeregisterEventSource( m_EventSourceHandle );
 
@@ -658,7 +658,7 @@ _Check_return_ DWORD Win32FoundationClasses::CEventLog::GetOldestRecordNumber( v
 
    DWORD return_value = 0;
 
-   if ( ::GetOldestEventLogRecord( m_LogHandle, &return_value ) != FALSE )
+   if ( ::GetOldestEventLogRecord( m_LogHandle, &return_value ) not_eq FALSE )
    {
       return( return_value );
    }
@@ -674,7 +674,7 @@ _Check_return_ DWORD Win32FoundationClasses::CEventLog::GetOldestRecordNumber( v
 _Check_return_ bool Win32FoundationClasses::CEventLog::NotifyChange( _In_ HANDLE event_handle, __in_opt HANDLE user_log_handle ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
-   ASSERT( event_handle != static_cast< HANDLE >( INVALID_HANDLE_VALUE ) );
+   ASSERT( event_handle not_eq static_cast< HANDLE >( INVALID_HANDLE_VALUE ) );
 
    if ( event_handle == static_cast< HANDLE >( INVALID_HANDLE_VALUE ) )
    {
@@ -740,7 +740,7 @@ _Check_return_ bool Win32FoundationClasses::CEventLog::Open( __in_z LPCTSTR log_
 
             DWORD size = static_cast<DWORD>(std::size( computer_name ));
 
-            if ( ::GetComputerNameExW(COMPUTER_NAME_FORMAT::ComputerNameDnsHostname, computer_name, &size ) != FALSE )
+            if ( ::GetComputerNameExW(COMPUTER_NAME_FORMAT::ComputerNameDnsHostname, computer_name, &size ) not_eq FALSE )
             {
                ComputerName.assign( computer_name );
             }
@@ -803,7 +803,7 @@ _Check_return_ bool Win32FoundationClasses::CEventLog::OpenBackup( __in_z LPCTST
 
             DWORD size = static_cast<DWORD>(std::size( computer_name ));
 
-            if ( ::GetComputerNameExW(COMPUTER_NAME_FORMAT::ComputerNameDnsHostname, computer_name, &size ) != FALSE )
+            if ( ::GetComputerNameExW(COMPUTER_NAME_FORMAT::ComputerNameDnsHostname, computer_name, &size ) not_eq FALSE )
             {
                ComputerName.assign( computer_name );
             }
@@ -864,7 +864,7 @@ _Check_return_ bool Win32FoundationClasses::CEventLog::Read( _In_ DWORD record_n
 
       m_ErrorCode = ::GetLastError();
 
-      if ( return_value == false and m_ErrorCode != ERROR_INSUFFICIENT_BUFFER )
+      if ( return_value == false and m_ErrorCode not_eq ERROR_INSUFFICIENT_BUFFER )
       {
          //WFCTRACEERROR( m_ErrorCode );
          return( false );
@@ -912,7 +912,7 @@ _Check_return_ bool Win32FoundationClasses::CEventLog::Read( _In_ DWORD record_n
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( buffer );
-   ASSERT( m_LogHandle != static_cast< HANDLE >( INVALID_HANDLE_VALUE ) );
+   ASSERT( m_LogHandle not_eq static_cast< HANDLE >( INVALID_HANDLE_VALUE ) );
 
    // We were passed a pointer, do not trust
 
@@ -968,7 +968,7 @@ _Check_return_ bool Win32FoundationClasses::CEventLog::RegisterSource(_In_ std::
          return( false );
       }
 
-      if ( m_EventSourceHandle != static_cast< HANDLE >( INVALID_HANDLE_VALUE ) )
+      if ( m_EventSourceHandle not_eq static_cast< HANDLE >( INVALID_HANDLE_VALUE ) )
       {
          (void) DeregisterSource();
       }
@@ -1045,7 +1045,7 @@ _Check_return_ bool Win32FoundationClasses::CEventLog::Report( _In_ EventType ev
                                   &size_of_security_identifier_buffer,
                                    domain_name,
                                   &size_of_domain_name,
-                                  &type_of_security_identifier ) != FALSE )
+                                  &type_of_security_identifier ) not_eq FALSE )
          {
             user_security_identifier = security_identifier_buffer;
          }
@@ -1053,7 +1053,7 @@ _Check_return_ bool Win32FoundationClasses::CEventLog::Report( _In_ EventType ev
 
       BOOL return_value = FALSE;
 
-      if ( m_EventSourceHandle != static_cast< HANDLE >( INVALID_HANDLE_VALUE ) )
+      if ( m_EventSourceHandle not_eq static_cast< HANDLE >( INVALID_HANDLE_VALUE ) )
       {
          return_value = ::ReportEvent( m_EventSourceHandle,
                                 (WORD) event_type,

@@ -180,7 +180,7 @@ _Check_return_ bool Win32FoundationClasses::CMixerWaveIn::Open( _In_ UINT_PTR de
       {
          m_SourceSelector = std::make_unique<CMixerSourceSelector>( m_MixerLine, entry );
 
-         if ( m_SourceSelector.get() != nullptr )
+         if ( m_SourceSelector.get() not_eq nullptr )
          {
             (void) m_SourceSelector->Open( device_number, what_to_notify, who_to_notify, notify_data );
          }
