@@ -65,12 +65,12 @@ Win32FoundationClasses::CDataSocket::CDataSocket( __inout Win32FoundationClasses
    Attach( socket_p );
 }
 
-Win32FoundationClasses::CDataSocket::~CDataSocket() noexcept
+Win32FoundationClasses::CDataSocket::~CDataSocket()
 {
    WFC_VALIDATE_POINTER( this );
 }
 
-void Win32FoundationClasses::CDataSocket::Attach(__inout Win32FoundationClasses::CSimpleSocket * socket_p ) noexcept
+void Win32FoundationClasses::CDataSocket::Attach(_Inout_ Win32FoundationClasses::CSimpleSocket * socket_p ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER_NULL_OK( socket_p );

@@ -77,7 +77,7 @@ Win32FoundationClasses::CCryptographicAlgorithm::CCryptographicAlgorithm( _In_ P
    Copy( source );
 }
 
-Win32FoundationClasses::CCryptographicAlgorithm::~CCryptographicAlgorithm() noexcept
+Win32FoundationClasses::CCryptographicAlgorithm::~CCryptographicAlgorithm()
 {
    WFC_VALIDATE_POINTER( this );
    Empty();

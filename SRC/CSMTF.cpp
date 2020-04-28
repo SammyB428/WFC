@@ -78,7 +78,7 @@ Win32FoundationClasses::CUINT64::CUINT64( _In_ SIXTY_FOUR_BIT_UNSIGNED_INTEGER c
    Copy( source );
 }
 
-Win32FoundationClasses::CUINT64::~CUINT64() noexcept
+Win32FoundationClasses::CUINT64::~CUINT64()
 {
    WFC_VALIDATE_POINTER( this );
    Empty();
@@ -200,7 +200,7 @@ Win32FoundationClasses::CMTFDateTime::CMTFDateTime( _In_ Win32FoundationClasses:
    Copy( source );
 }
 
-Win32FoundationClasses::CMTFDateTime::~CMTFDateTime() noexcept
+Win32FoundationClasses::CMTFDateTime::~CMTFDateTime()
 {
    WFC_VALIDATE_POINTER( this );
    Empty();

@@ -68,7 +68,7 @@ Win32FoundationClasses::CMixerVolumeControl::CMixerVolumeControl( _In_ Win32Foun
    Copy( source );
 }
 
-Win32FoundationClasses::CMixerVolumeControl::~CMixerVolumeControl() noexcept
+Win32FoundationClasses::CMixerVolumeControl::~CMixerVolumeControl()
 {
    WFC_VALIDATE_POINTER( this );
 }
@@ -222,7 +222,7 @@ _Check_return_ bool Win32FoundationClasses::CMixerVolumeControl::SetLeftChannelV
 
    bool const return_value = m_Mixer.SetControlDetails( m_MixerLine, m_MixerControl, m_Channels );
 
-   if ( return_value != FALSE )
+   if ( return_value == true )
    {
       (void) m_GetAll();
    }

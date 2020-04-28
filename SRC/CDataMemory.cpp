@@ -76,7 +76,7 @@ Win32FoundationClasses::CDataMemory::CDataMemory( _In_ std::vector<uint8_t> cons
    Copy( source );
 }
 
-Win32FoundationClasses::CDataMemory::~CDataMemory() noexcept
+Win32FoundationClasses::CDataMemory::~CDataMemory()
 {
    WFC_VALIDATE_POINTER( this );
    m_Position = 0;

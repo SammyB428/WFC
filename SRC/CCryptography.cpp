@@ -66,7 +66,7 @@ Win32FoundationClasses::CCryptography::CCryptography() noexcept
    m_ErrorCode = 0;
 }
 
-Win32FoundationClasses::CCryptography::~CCryptography() noexcept
+Win32FoundationClasses::CCryptography::~CCryptography()
 {
    WFC_VALIDATE_POINTER( this );
 

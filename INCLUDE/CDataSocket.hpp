@@ -45,7 +45,7 @@
 
 #define DATA_SOCKET_CLASS_HEADER
 
-class CDataSocket : public CDataFile
+class CDataSocket final : public CDataFile
 {
    protected:
 
