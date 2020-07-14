@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 1995-2019, Samuel R. Blackburn
+** Copyright, 1995-2020, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -105,6 +105,18 @@ void Win32FoundationClasses::CListeningSocket::m_Initialize( void ) noexcept
    m_BindToAddress                      = INADDR_ANY;
 }
 
+void Win32FoundationClasses::CListeningSocket::PreBind(void) noexcept
+{
+    WFC_VALIDATE_POINTER(this);
+    WFC_VALIDATE_POINTER(m_Thunk_p);
+}
+
+void Win32FoundationClasses::CListeningSocket::PreListen(void) noexcept
+{
+    WFC_VALIDATE_POINTER(this);
+    WFC_VALIDATE_POINTER(m_Thunk_p);
+}
+
 _Check_return_ bool Win32FoundationClasses::CListeningSocket::Open( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
@@ -135,6 +147,8 @@ _Check_return_ bool Win32FoundationClasses::CListeningSocket::Open( void ) noexc
       return( false );
    }
 
+   PreBind();
+
    /*
    ** We've got a socket thingy but its useless. It doesn't have an address. Let's give it one.
    ** We do this by bind'ing an address and port number to it.
@@ -162,7 +176,9 @@ _Check_return_ bool Win32FoundationClasses::CListeningSocket::Open( void ) noexc
    /*
    ** Now we make it a listening socket and start listening, program execution halts here
    */
-   
+
+   PreListen();
+
    if ( m_Thunk_p->listen( m_SocketID, m_NumberOfSimultaneousSocketsToAllow ) == SOCKET_ERROR )
    {
       //WFCTRACEVAL( TEXT( "Can't listen() at line " ), __LINE__ );

@@ -74,6 +74,8 @@ class CListeningSocket : public CSimpleSocket
       _Check_return_ bool Open( void ) noexcept override;
       _Check_return_ bool Open(_In_ std::filesystem::path const& channel_name, _In_ UINT const port_number = 23 ) noexcept override;
 
+      virtual void PreListen(void) noexcept;
+      virtual void PreBind(void) noexcept;
       virtual _Check_return_ bool WaitForConnection( __in_z LPCTSTR p_name ) noexcept;
       virtual _Check_return_ bool WaitForConnection( _In_ int const p_number ) noexcept;
       virtual _Check_return_ bool WaitForConnection( void ) noexcept;

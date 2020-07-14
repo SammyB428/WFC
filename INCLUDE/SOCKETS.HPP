@@ -222,7 +222,7 @@ class CSimpleSocket : public CDummyFile
       ** Misc Functions
       */
 
-      virtual _Check_return_ bool Open( void ) = 0;
+      virtual _Check_return_ bool Open( void ) noexcept = 0;
       virtual _Check_return_ bool Open(_In_ std::filesystem::path const& channel_name, _In_ UINT const port_number = 23 ) noexcept override = 0;
       virtual void Close( void ) noexcept;
       virtual _Check_return_ DWORD GetOptions( void ) const noexcept;
