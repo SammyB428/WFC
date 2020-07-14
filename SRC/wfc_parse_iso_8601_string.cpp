@@ -799,13 +799,11 @@ _Check_return_ bool Win32FoundationClasses::wfc_parse_iso_8601_string(_In_ std::
     return( true );
 }
 
-_Check_return_ bool Win32FoundationClasses::wfc_parse_xml( _In_z_ wchar_t * filename, __inout Win32FoundationClasses::CExtensibleMarkupLanguageDocument& xml ) noexcept
+_Check_return_ bool Win32FoundationClasses::wfc_parse_xml( _In_ std::wstring_view filename, __inout Win32FoundationClasses::CExtensibleMarkupLanguageDocument& xml ) noexcept
 {
-    WFC_VALIDATE_POINTER( filename );
-
     xml.Empty();
 
-    if ( filename == nullptr or filename[ 0 ] == 0x00 )
+    if ( filename.empty() == true )
     {
         return( false );
     }

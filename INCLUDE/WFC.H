@@ -1105,7 +1105,7 @@ _Check_return_ bool wfc_parse_iso_8601_string(_In_ std::wstring_view time_string
 _Check_return_ bool wfc_parse_iso_8601_string(_In_ std::wstring_view time_string, _Out_ CTime& the_time) noexcept;
 _Check_return_ bool wfc_process_buffer( _In_ uint8_t const * buffer, _In_ std::size_t const number_of_bytes_in_buffer, _In_ std::size_t const step_size, _Inout_ PROCESS_BUFFER_CALLBACK function_to_call, __inout_opt void * callback_context ) noexcept;
 _Check_return_ bool wfcGenRandom( _Out_writes_bytes_(RandomBufferLength) PVOID RandomBuffer, _In_ ULONG const RandomBufferLength ) noexcept;
-_Check_return_ bool wfc_parse_xml(_In_z_ wchar_t* filename, _Inout_ CExtensibleMarkupLanguageDocument& xml ) noexcept;
+_Check_return_ bool wfc_parse_xml(std::wstring_view filename, _Inout_ CExtensibleMarkupLanguageDocument& xml ) noexcept;
 
 _Check_return_ uint32_t wfc_get_directory_usage_percentage( _In_ std::wstring const& directory_path ) noexcept;
 
