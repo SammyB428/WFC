@@ -160,9 +160,7 @@ _Check_return_ bool Win32FoundationClasses::CTalkingSocket::Open( void ) noexcep
 
 #endif // UNICODE
 
-   int connection_status = 0;
-
-   connection_status = m_Thunk_p->connect( m_SocketID, (LPSOCKADDR) &server_address, sizeof( server_address ) );
+   int connection_status = m_Thunk_p->connect( m_SocketID, (LPSOCKADDR) &server_address, sizeof( server_address ) );
 
    if ( connection_status == SOCKET_ERROR )
    {

@@ -132,7 +132,7 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageElement::Ad
 
     std::wstring temporary_string;
 
-    std::size_t location_of_character = attribute_p->Value.find( CARRIAGE_RETURN );
+    auto location_of_character = attribute_p->Value.find( CARRIAGE_RETURN );
 
     while( location_of_character not_eq std::wstring::npos)
     {
@@ -220,11 +220,11 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageElement::Ad
     // I was not allowing entity references in attributes. Apparently, I mis-read
     // the XML spec.
 
-    std::size_t const index_of_ampersand = attribute_p->Value.find( '&' );
+    auto const index_of_ampersand = attribute_p->Value.find( '&' );
 
     if ( index_of_ampersand not_eq std::wstring::npos)
     {
-        std::size_t const index_of_semicolon = attribute_p->Value.find( ';', index_of_ampersand + 1 );
+        auto const index_of_semicolon = attribute_p->Value.find( ';', index_of_ampersand + 1 );
 
         if ( index_of_semicolon == std::wstring::npos)
         {
@@ -263,7 +263,7 @@ void Win32FoundationClasses::CExtensibleMarkupLanguageElement::AddChild( _Inout_
     {
         // First, let's make sure we aren't already in there
 
-        std::size_t const number_of_entries = m_Children.size();
+        auto const number_of_entries = m_Children.size();
 
         if (check_for_uniqueness == true)
         {
@@ -342,8 +342,8 @@ void Win32FoundationClasses::CExtensibleMarkupLanguageElement::Copy( _In_ Win32F
 
     Empty();
 
-    m_Tag = source.m_Tag;
-    m_Contents = source.m_Contents;
+    m_Tag                         = source.m_Tag;
+    m_Contents                    = source.m_Contents;
     m_ShorthandTerminatorDetected = source.m_ShorthandTerminatorDetected;
     m_IsAllWhiteSpace             = source.m_IsAllWhiteSpace;
     m_IsTagTerminated             = source.m_IsTagTerminated;
@@ -550,7 +550,7 @@ void Win32FoundationClasses::CExtensibleMarkupLanguageElement::DestroyAttributeB
     WFC_VALIDATE_POINTER( this );
 
     std::size_t loop_index = 0;
-    std::size_t number_of_attributes = m_Attributes.size();
+    auto number_of_attributes = m_Attributes.size();
 
     while( loop_index < number_of_attributes ) // Cannot be converted to a Range loop
     {
@@ -578,7 +578,7 @@ void Win32FoundationClasses::CExtensibleMarkupLanguageElement::DestroyAttributeB
     WFC_VALIDATE_POINTER( this );
 
     std::size_t loop_index           = 0;
-    std::size_t number_of_attributes = m_Attributes.size();
+    auto number_of_attributes = m_Attributes.size();
 
     while( loop_index < number_of_attributes ) // Cannot be converted to a Range loop
     {
@@ -605,7 +605,7 @@ void Win32FoundationClasses::CExtensibleMarkupLanguageElement::DestroyAttributes
 {
     WFC_VALIDATE_POINTER( this );
 
-    for (auto const& attribute_p : m_Attributes)
+    for (auto const attribute_p : m_Attributes)
     {
         if (attribute_p not_eq nullptr)
         {
@@ -644,7 +644,6 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageElement::En
     if ( m_Attributes.empty() == true )
     {
         // There ain't no attributes to enumerate
-
         return( false );
     }
 
@@ -660,7 +659,6 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageElement::En
     if ( m_Children.empty() == true )
     {
         // There ain't no children to enumerate
-
         return( false );
     }
 
@@ -700,7 +698,7 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageElement::Fo
     WFC_VALIDATE_POINTER( this );
     WFC_VALIDATE_POINTER_NULL_OK( callback_context );
 
-    if ( name .empty() == true )
+    if ( name.empty() == true )
     {
         // Nothing to do
         return( true );
@@ -710,7 +708,7 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageElement::Fo
 
     if (EnumerateChildren(enumerator) == true)
     {
-        Win32FoundationClasses::CExtensibleMarkupLanguageElement* child_p = nullptr;
+        Win32FoundationClasses::CExtensibleMarkupLanguageElement * child_p = nullptr;
 
         bool exit_loop = false;
 
@@ -918,7 +916,6 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageElement::Ge
     }
 
     child->GetText( text );
-
     child->GetBeginning( beginning );
 
     auto const first_child = child->GetTheFirstChild();
@@ -2048,7 +2045,7 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageElement::m_
 
     // Name sections can be terminated by a space or a [
 
-    std::size_t location_of_character = string_to_parse.find_first_of(WSTRING_VIEW(L" \t\r\n["));
+    auto location_of_character = string_to_parse.find_first_of(WSTRING_VIEW(L" \t\r\n["));
 
     if ( location_of_character == std::wstring::npos )
     {
@@ -2714,7 +2711,7 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageElement::m_
 
     // Let's pull off the first field
 
-    std::size_t location_of_separator = parent_name.find( parent_child_separator_character );
+    auto location_of_separator = parent_name.find( parent_child_separator_character );
 
     if ( location_of_separator not_eq std::wstring::npos )
     {
@@ -2731,13 +2728,13 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageElement::m_
 
     desired_instance_number = 0;
 
-    std::size_t location_of_beginning = parent_name.find( '(' );
+    auto location_of_beginning = parent_name.find( '(' );
 
     if (location_of_beginning not_eq std::wstring::npos )
     {
         // Looks like we've got an instance number in here
 
-        std::size_t location_of_ending = parent_name.find( ')' );
+        auto location_of_ending = parent_name.find( ')' );
 
         // Check to make sure they didn't pass us something like "Southpark)0("
 
@@ -2808,7 +2805,7 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageElement::m_
 
     std::wstring_view const legal_characters( WSTRING_VIEW(L"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_:") );
 
-    std::size_t const value_index = legal_characters.find( m_Contents[0] );
+    auto const value_index = legal_characters.find( m_Contents[0] );
 
     if ( value_index == std::wstring::npos )
     {
@@ -2851,7 +2848,7 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageElement::m_
         }
     }
 
-    std::size_t location_of_character = tag_data.find_first_of(WSTRING_VIEW(L" \t\r\n")); // This list of space characters is taken from section 2.3 of the XML 1.0 recommendation (REC-xml-19980210)
+    auto location_of_character = tag_data.find_first_of(WSTRING_VIEW(L" \t\r\n")); // This list of space characters is taken from section 2.3 of the XML 1.0 recommendation (REC-xml-19980210)
 
     if ( location_of_character == std::wstring::npos )
     {
@@ -3125,7 +3122,7 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageElement::m_
 
             // Now add the entity to the document
 
-            std::size_t location_of_entity = tag_data.find(WSTRING_VIEW(L"ENTITY"));
+            auto location_of_entity = tag_data.find(WSTRING_VIEW(L"ENTITY"));
 
             if ( location_of_entity == std::wstring::npos )
             {
@@ -3157,7 +3154,7 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageElement::m_
                 {
                     // We should now be on the entity name
 
-                    std::size_t const location_of_space = tag_data.find_first_of(WSTRING_VIEW(L" \t\r\n"));
+                    auto const location_of_space = tag_data.find_first_of(WSTRING_VIEW(L" \t\r\n"));
 
                     if ( location_of_space == std::wstring::npos )
                     {
@@ -3287,7 +3284,7 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageElement::m_
 
                         // Check for more than one double-quote...
 
-                        if (  tag_data.find( '"', location_of_entity + 1 ) not_eq std::wstring::npos )
+                        if ( tag_data.find( '"', location_of_entity + 1 ) not_eq std::wstring::npos )
                         {
                             m_ReportParsingError(WSTRING_VIEW(L"ENTITY value has extra double quote (Rule 9)."));
                             return( false );
@@ -3341,8 +3338,8 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageElement::m_
                     // This is a tricky rule. You can have entity or character references
                     // (which include & and %) but you can't have & or % stading alone.
 
-                    std::size_t location_of_semicolon         = tag_data.find( ';' );
-                    std::size_t location_of_illegal_character = tag_data.find( '&' );
+                    auto location_of_semicolon         = tag_data.find( ';' );
+                    auto location_of_illegal_character = tag_data.find( '&' );
 
                     if ( location_of_illegal_character not_eq std::wstring::npos )
                     {
@@ -3739,7 +3736,7 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageElement::m_
             temp_string.push_back('\"');
 
             std::size_t offset_of_attribute_name = 0;
-            std::size_t tag_index_of_attribute_name = tag.find(temp_string, m_Tag.length());
+            auto tag_index_of_attribute_name = tag.find(temp_string, m_Tag.length());
 
             if (tag_index_of_attribute_name == std::wstring::npos)
             {
@@ -3754,7 +3751,7 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageElement::m_
             temp_string.push_back('\"');
             temp_string.append(attribute_value);
 
-            std::size_t offset_of_attribute_value = tag.find(temp_string, tag_index_of_attribute_name + 1); // + 1 to skip the equals sign
+            auto offset_of_attribute_value = tag.find(temp_string, tag_index_of_attribute_name + 1); // + 1 to skip the equals sign
 
             if (offset_of_attribute_value == std::wstring::npos)
             {
@@ -4232,7 +4229,7 @@ void Win32FoundationClasses::CExtensibleMarkupLanguageElement::m_ResolveEntities
     std::wstring entity;
     std::wstring text;
 
-    std::size_t location = temp_string.find( '&' );
+    auto location = temp_string.find( '&' );
 
     while( location not_eq std::wstring::npos )
     {
@@ -5000,7 +4997,7 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageElement::Pa
                                         {
                                             // If we get here, it means we need to check the text segment for ampersands
 
-                                            std::size_t location_of_ampersand = sub_element_p->m_Contents.find( '&' );
+                                            auto location_of_ampersand = sub_element_p->m_Contents.find( '&' );
 
                                             while( location_of_ampersand not_eq std::wstring::npos)
                                             {
@@ -5215,7 +5212,7 @@ void Win32FoundationClasses::CExtensibleMarkupLanguageElement::WriteTo( _Inout_ 
 
         std::wstring temp_string = m_Contents;
 
-        std::size_t location_of_string = temp_string.find(WSTRING_VIEW(L"]]>"));
+        auto location_of_string = temp_string.find(WSTRING_VIEW(L"]]>"));
 
         while( location_of_string not_eq std::wstring::npos )
         {

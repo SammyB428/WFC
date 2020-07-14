@@ -1170,9 +1170,7 @@ void Win32FoundationClasses::CSimpleSocket::SetAddress( _In_ std::wstring_view a
 
          if (is_flagged( m_Options, optionsDontResolveHostName ) == false )
          {
-            ULONG internet_address = 0L;
-
-            internet_address = m_Thunk_p->inet_addr( ascii_address_string );
+            ULONG internet_address = m_Thunk_p->inet_addr( ascii_address_string );
             host_entry_p = m_Thunk_p->gethostbyaddr( reinterpret_cast<char const *>(&internet_address), 4, PF_INET );
          }
       }
