@@ -355,9 +355,9 @@ void print_system_record( WFC_SYSTEM_PROCESS_INFORMATION * process_p )
 <A HREF="WfcTrace.htm">WFCTRACEINIT</A>( TEXT( &quot;print_system_record()&quot; ) );
 
 _tprintf( TEXT( &quot;Thread Count     = %lu\n&quot;,  process_p-&gt;ThreadCount );
-_tprintf( TEXT( &quot;CreateTime       = %I64u\n&quot;, process_p-&gt;CreateTime );
-_tprintf( TEXT( &quot;UserTime         = %I64u\n&quot;, process_p-&gt;UsetTime );
-_tprintf( TEXT( &quot;KernelTime       = %I64u\n&quot;, process_p-&gt;KernelTime );
+_tprintf( TEXT( &quot;CreateTime       = %" PRIu64 "\n&quot;, process_p-&gt;CreateTime );
+_tprintf( TEXT( &quot;UserTime         = %" PRIu64 "\n&quot;, process_p-&gt;UsetTime );
+_tprintf( TEXT( &quot;KernelTime       = %" PRIu64 "\n&quot;, process_p-&gt;KernelTime );
 _tprintf( TEXT( &quot;Name             = %S\n&quot;, process_p-&gt;Name.Buffer );
 _tprintf( TEXT( &quot;BasePriority     = %lu\n&quot;, process_p-&gt;BasePriority );
 _tprintf( TEXT( &quot;UniqueProcessID  = %lu\n&quot;, process_p-&gt;UniqueProcessID );

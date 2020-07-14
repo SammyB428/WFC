@@ -347,7 +347,7 @@ void Win32FoundationClasses::CWfcTrace::Output( __in_z LPCTSTR message, _In_ LAR
    {
        std::wstring pointer_string;
 
-       Win32FoundationClasses::format( pointer_string, L"{ QuadPart=%I64d { LowPart=0x%lX HighPart=0x%lX } }",
+       Win32FoundationClasses::format( pointer_string, L"{ QuadPart=%" PRId64 " { LowPart=0x%" PRIX32 " HighPart=0x%" PRIX32 " } }",
                              value.QuadPart, value.LowPart, value.HighPart );
 
       Output( message, pointer_string );
@@ -360,7 +360,7 @@ void Win32FoundationClasses::CWfcTrace::Output( __in_z LPCTSTR message, _In_ ULA
    {
        std::wstring pointer_string;
 
-       Win32FoundationClasses::format( pointer_string, L"{ QuadPart=%I64u { LowPart=0x%lX HighPart=0x%lX } }",
+       Win32FoundationClasses::format( pointer_string, L"{ QuadPart=%" PRIu64 " { LowPart=0x%" PRIX32 " HighPart=0x%" PRIX32 " } }",
                              value.QuadPart, value.LowPart, value.HighPart );
 
       Output( message, pointer_string );
