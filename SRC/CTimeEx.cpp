@@ -92,8 +92,7 @@ _Check_return_ std::wstring Win32FoundationClasses::CTimeSpan::Format( _In_z_ wc
 
             case 'D':
 
-               format( number_string, L"%ld", GetDays() );
-               return_value.append( number_string );
+               return_value.append(std::to_wstring(GetDays()));
                break;
 
             case 'H':
