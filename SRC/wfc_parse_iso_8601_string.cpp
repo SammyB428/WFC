@@ -743,6 +743,7 @@ _Check_return_ bool Win32FoundationClasses::wfc_parse_iso_8601_string(_In_ std::
     the_time.wDay = ole_time.GetDay();
     the_time.wHour = ole_time.GetHour();
     the_time.wMinute = ole_time.GetMinute();
+    the_time.wSecond = ole_time.GetSecond();
 
     return( true );
 }

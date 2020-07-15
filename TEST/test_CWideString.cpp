@@ -2079,6 +2079,16 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
     Win32FoundationClasses::CFileTime ft;
 
     Win32FoundationClasses::wfc_parse_iso_8601_string(WSTRING_VIEW(L"2014-05-10T19:21:18-0400"), ft);
+    //{ 0x01D4452FF46E276E, STRING_VIEW("2018-09-05T15:48:56.722622200Z") }, // Real World - Timestamps in EVTX records
+    Win32FoundationClasses::wfc_parse_iso_8601_string(WSTRING_VIEW(L"2018-09-05T15:48:56.722622200Z"), ft);
+
+    auto ticks = ft.Ticks();
+
+    if (ticks not_eq 0x01D4452FF46E276EULL)
+    {
+        test_number_that_failed = 288;
+        return(failure());
+    }
 
     test_number_that_failed = 288;
     return( true );
