@@ -45,9 +45,9 @@
 
 #define WIN32_FOUNDATION_CLASSES
 
-#define WFC_RELEASE_NUMBER (80)
+#define WFC_RELEASE_NUMBER (83)
 #if ! defined( WFC_SILENT )
-#pragma message( "WFC Release 80." )
+#pragma message( "WFC Release 83." )
 #endif // WFC_SILENT
 
 #define TAB_CHARACTER   (9)
@@ -566,7 +566,7 @@ namespace Win32FoundationClasses
                                   (id.Data4[0] not_eq 0 ) or (id.Data4[1] not_eq 0) or (id.Data4[2] not_eq 0) or \
                                   (id.Data4[3] not_eq 0 ) or (id.Data4[4] not_eq 0) or (id.Data4[5] not_eq 0) or \
                                   (id.Data4[6] not_eq 0 ) or (id.Data4[7] not_eq 0))
-#define WFC_IS_HEXADECIMAL( _x ) ((_x >= '0' and _x <= '9')or(_x >= 'a' and _x <= 'f')or(_x >= 'A' and _x <= 'F'))
+#define WFC_IS_HEXADECIMAL( _x ) ((_x >= '0' and _x <= '9') or (_x >= 'a' and _x <= 'f') or (_x >= 'A' and _x <= 'F'))
 #define WFC_IS_OCTAL( _x ) (_x >= '0' and _x <= '7')
 #define WFC_IS_DECIMAL( _x ) (_x >= '0' and _x <= '9')
 

@@ -247,7 +247,23 @@ _Check_return_ bool test_is( _Out_ std::string& class_name, _Out_ int& test_numb
        return(failure());
    }
 
-   test_number_that_failed = 26;
+   std::filesystem::path p;
+
+   p.append(L"AA");
+   p.append(L"BB");
+   p.append(L"CC");
+
+   std::wstring test_string;
+
+   Win32FoundationClasses::format(test_string, L"%s.txt", p);
+
+   if (test_string.compare(WSTRING_VIEW(L"AA\\BB\\CC.txt")) not_eq I_AM_EQUAL_TO_THAT)
+   {
+       test_number_that_failed = 27;
+       return(failure());
+   }
+
+   test_number_that_failed = 27;
 
    return( true );
 }

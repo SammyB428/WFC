@@ -24,6 +24,11 @@ T const* PrintfArgument(std::basic_string<T> const& value) noexcept
     return value.c_str();
 }
 
+inline wchar_t const * PrintfArgument(std::filesystem::path const& value) noexcept
+{
+    return value.native().c_str();
+}
+
 template <typename ... Args>
 void format(_Inout_ std::string& result, _In_z_ _Printf_format_string_ char const* format_string, Args const& ... args) noexcept
 {
