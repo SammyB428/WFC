@@ -86,7 +86,7 @@ static inline _Check_return_ bool wfc_trim_decrypted_data( __inout std::vector<u
 
    // Now strip off that nasty padding....
 
-   std::size_t const number_of_bytes_to_strip = decrypted_data.size() - size_of_plaintext;
+   auto const number_of_bytes_to_strip = decrypted_data.size() - size_of_plaintext;
 
    Win32FoundationClasses::remove_at( decrypted_data, decrypted_data.size() - number_of_bytes_to_strip, number_of_bytes_to_strip );
 

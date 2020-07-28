@@ -51,11 +51,9 @@
 #include <wfc.h>
 #include <filesystem>
 
-USING_WFC_NAMESPACE
-
 inline constexpr _Check_return_ UINT read_open_mode(void) noexcept
 {
-    return(static_cast<UINT>(static_cast<UINT>(CFile64::OpenFlags::modeRead) | static_cast<UINT>(CFile64::OpenFlags::shareDenyNone) | static_cast<UINT>(CFile64::OpenFlags::shareAllowDelete)));
+    return(static_cast<UINT>(static_cast<UINT>(Win32FoundationClasses::CFile64::OpenFlags::modeRead) bitor static_cast<UINT>(Win32FoundationClasses::CFile64::OpenFlags::shareDenyNone) bitor static_cast<UINT>(Win32FoundationClasses::CFile64::OpenFlags::shareAllowDelete)));
 }
 
 void check_xml_file( wchar_t const * filename ) noexcept;

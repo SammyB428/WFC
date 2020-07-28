@@ -24,7 +24,7 @@ inline _Check_return_ std::wstring get_last(_In_ std::vector<std::wstring> const
 {
     std::wstring return_value;
 
-    std::size_t const count = s.size();
+    auto const count = s.size();
 
     if (count > 0)
     {

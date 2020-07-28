@@ -69,8 +69,7 @@ _Check_return_ bool Win32FoundationClasses::CUUCoding::OutputFilename(_In_ std::
     filename.clear();
 
     std::size_t index = 0;
-
-    std::size_t const number_of_bytes_to_decode = source.size();
+    auto const number_of_bytes_to_decode = source.size();
 
     // Since we're decoding, we are most likely in a performance-minded
     // part of an application, let's go for a speedy method for accessing
@@ -159,9 +158,10 @@ _Check_return_ bool Win32FoundationClasses::CUUCoding::Decode(_In_ std::vector<u
     uint8_t character_4 = 0;
 
     std::size_t index = 0;
-    std::size_t number_of_bytes_to_decode = source.size();
     std::size_t number_of_characters_in_this_line = 0;
     std::size_t line_index = 0;
+
+    auto number_of_bytes_to_decode = source.size();
 
     // Since we're decoding, we are most likely in a performance-minded
     // part of an application, let's go for a speedy method for accessing
@@ -363,7 +363,7 @@ _Check_return_ bool Win32FoundationClasses::CUUCoding::Encode( _In_ std::vector<
 
     // Output bytes 45 at a time
 
-    std::size_t const number_of_bytes_to_encode = source.size();
+    auto const number_of_bytes_to_encode = source.size();
 
     std::size_t index      = 0;
     std::size_t line_index = 0;

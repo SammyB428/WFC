@@ -654,7 +654,7 @@ _Check_return_ bool Win32FoundationClasses::CBase64Coding::Encode( _In_ std::vec
 {
    WFC_VALIDATE_POINTER( this );
 
-   std::size_t const number_of_bytes_to_encode = source.size();
+   auto const number_of_bytes_to_encode = source.size();
 
    if ( number_of_bytes_to_encode == 0 )
    {

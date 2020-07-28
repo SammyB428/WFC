@@ -242,7 +242,7 @@ inline void join(_In_ std::vector<std::wstring> const& s, _In_ std::wstring_view
 {
     result.clear();
 
-    std::size_t const number_of_elements = s.size();
+    auto const number_of_elements = s.size();
 
     if (number_of_elements == 0)
     {
@@ -277,7 +277,7 @@ inline void join(_In_ std::vector<std::string> const& s, _In_ std::string_view d
 {
     result.clear();
 
-    std::size_t const number_of_elements = s.size();
+    auto const number_of_elements = s.size();
 
     if (number_of_elements == 0)
     {

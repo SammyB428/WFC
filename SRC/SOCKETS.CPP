@@ -1425,7 +1425,7 @@ void Win32FoundationClasses::CSimpleSocket::SetPort( _In_ short const p ) noexce
          m_LastError = m_Thunk_p->WSAGetLastError();
          //WFCTRACESOCKETERROR( m_LastError );
 
-         format( m_PortName, L"Port #%d", (int) p );
+         format( m_PortName, L"Port #%" PRIu16, p );
          return;
       }
 
@@ -1873,11 +1873,11 @@ void __stdcall Win32FoundationClasses::CSimpleSocket::TranslateErrorCode( _In_ D
 
                if ( error_code >= WSABASEERR )
                {
-                  _stprintf_s( (LPTSTR) message_string, std::size( message_string ), (LPCTSTR) TEXT( "Unknown WinSock Error Number %d (WSABASEERR + %d)" ), (int) error_code, (int)( error_code - WSABASEERR) );
+                  _stprintf_s( (LPTSTR) message_string, std::size( message_string ), (LPCTSTR) TEXT( "Unknown WinSock Error Number %" PRIu32 " (WSABASEERR + %" PRIu32 ")" ), error_code, error_code - WSABASEERR );
                }
                else
                {
-                  _stprintf_s( (LPTSTR) message_string, std::size( message_string ), (LPCTSTR) TEXT( "Unknown WinSock Error Number %d" ), (int) error_code );
+                  _stprintf_s( (LPTSTR) message_string, std::size( message_string ), (LPCTSTR) TEXT( "Unknown WinSock Error Number %" PRIu32 ), error_code );
                }
 
                _tcsncpy_s( destination_string, size_of_destination_string, message_string, size_of_destination_string );

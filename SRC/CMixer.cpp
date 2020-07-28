@@ -771,7 +771,7 @@ void Win32FoundationClasses::CMixer::GetErrorString(_Out_ std::wstring& error_st
         {
             std::wstring debug_string;
 
-            Win32FoundationClasses::format( debug_string, L"Unknown (MMSYSERR_BASE + %d)", (int)( m_ErrorCode - MMSYSERR_BASE ));
+            Win32FoundationClasses::format( debug_string, L"Unknown (MMSYSERR_BASE + %" PRIu32 ")", m_ErrorCode - MMSYSERR_BASE );
             //WFCTRACE( debug_string );
         }
         else

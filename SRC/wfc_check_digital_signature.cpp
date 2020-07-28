@@ -302,7 +302,7 @@ void Win32FoundationClasses::wfc_get_my_version(_Inout_ std::wstring& version) n
 
     wfc_get_my_version(major, minor, build, revision);
 
-    format(version, L"%d.%d.%d.%d", (int)major, (int)minor, (int)build, (int)revision);
+    format(version, L"%" PRIu16 ".%" PRIu16 ".%" PRIu16 ".%" PRIu16, major, minor, build, revision);
 }
 
 _Check_return_ uint64_t Win32FoundationClasses::wfc_get_my_packed_version( void ) noexcept

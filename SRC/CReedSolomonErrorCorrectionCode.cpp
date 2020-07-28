@@ -137,9 +137,10 @@ _Check_return_ SSIZE_T Win32FoundationClasses::CReedSolomonErrorCorrectionCode::
 
    std::size_t number_of_errors_corrected               = 0;
    std::size_t number_of_errors_corrected_in_this_chunk = 0;
-   std::size_t encoded_data_length                      = encoded_data.size();
    std::size_t encoded_data_index                       = 0;
    std::size_t chunk_index                              = 0;
+
+   auto encoded_data_length = encoded_data.size();
 
    uint8_t chunk_length = 0;
 
@@ -195,8 +196,8 @@ _Check_return_ bool Win32FoundationClasses::CReedSolomonErrorCorrectionCode::Enc
    // We must chunkify the data into 222 byte pieces. This leaves us room for
    // a one-byte data-length value and 1 bit per byte parity (255 bits == 32 bytes)
 
-   std::size_t const data_length = data.size();
-   std::size_t data_index  = 0;
+   auto const data_length = data.size();
+   std::size_t data_index = 0;
 
    uint8_t chunk_length = 0;
 

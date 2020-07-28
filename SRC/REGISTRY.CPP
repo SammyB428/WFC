@@ -1283,7 +1283,7 @@ _Check_return_ bool Win32FoundationClasses::CRegistry::SetStringArrayValue(_In_z
     ** Find out how big our buffer needs to be...
     */
 
-    std::size_t number_of_strings = string_array.size();
+    auto number_of_strings = string_array.size();
 
     std::wstring temp_string;
 

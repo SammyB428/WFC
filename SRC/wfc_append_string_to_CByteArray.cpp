@@ -58,8 +58,8 @@ void Win32FoundationClasses::wfc_append_string_to_byte_array( _In_ std::wstring 
 
 void Win32FoundationClasses::wfc_append_ascii_string_to_byte_array( __in_z char const * string_to_append, __inout std::vector<uint8_t>& bytes ) noexcept
 {
-   std::size_t const string_length = strlen( string_to_append );
-   std::size_t const original_array_size = bytes.size();
+   auto const string_length = strlen( string_to_append );
+   auto const original_array_size = bytes.size();
 
    bytes.resize( string_length + original_array_size );
 
@@ -70,8 +70,8 @@ void Win32FoundationClasses::wfc_append_ascii_string_to_byte_array( __in_z char 
 
 void Win32FoundationClasses::wfc_append_unicode_string_to_byte_array( __in_z wchar_t const * string_to_append, __inout std::vector<uint8_t>& bytes ) noexcept
 {
-   std::size_t const string_length = wcslen( string_to_append ) * sizeof( wchar_t );
-   std::size_t const original_array_size = bytes.size();
+   auto const string_length = wcslen( string_to_append ) * sizeof( wchar_t );
+   auto const original_array_size = bytes.size();
 
    bytes.resize( string_length + original_array_size );
 

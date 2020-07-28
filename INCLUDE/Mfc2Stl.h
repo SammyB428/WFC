@@ -1715,7 +1715,7 @@ namespace Win32FoundationClasses
 
     inline _Check_return_ bool is_all_space( _In_ std::vector<uint8_t> const& s ) noexcept
     {
-        std::size_t const number_of_characters = s.size();
+        auto const number_of_characters = s.size();
 
         if (number_of_characters == 0)
         {

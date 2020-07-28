@@ -55,15 +55,15 @@ void check_xml_file( wchar_t const * filename ) noexcept
    //WFCTRACEVAL( TEXT( "Checking " ), filename );
    // d:\WFC\test\xml\xmltest\not-wf\sa
 
-   CExtensibleMarkupLanguageDocument document;
+   Win32FoundationClasses::CExtensibleMarkupLanguageDocument document;
 
-   DWORD parsing_options = document.GetParseOptions();
+   auto parsing_options = document.GetParseOptions();
 
    parsing_options |= WFC_XML_ALLOW_REPLACEMENT_OF_DEFAULT_ENTITIES;
 
    document.SetParseOptions( parsing_options );
 
-   CFile64 file;
+   Win32FoundationClasses::CFile64 file;
 
    if ( file.Open( filename, read_open_mode()) == FALSE )
    {
@@ -78,15 +78,14 @@ void check_xml_file( wchar_t const * filename ) noexcept
    bytes.resize( file.GetLength() );
 
    file.Read( bytes.data(), (uint32_t) bytes.size() );
-
    file.Close();
 
-   CDataParser parser;
+   Win32FoundationClasses::CDataParser parser;
 
    parser.Initialize( &bytes, false );
 
-   CSystemTime begin_parsing;
-   CSystemTime end_parsing;
+   Win32FoundationClasses::CSystemTime begin_parsing;
+   Win32FoundationClasses::CSystemTime end_parsing;
 
    uint64_t start_tick_count = 0;
    uint64_t end_tick_count   = 0;
@@ -118,13 +117,13 @@ void check_xml_file( wchar_t const * filename ) noexcept
       //WFCTRACEVAL( TEXT( "XML parsed OK " ), filename );
       _tprintf( TEXT( "\"%s\" parsed OK\n" ), (LPCTSTR) filename );
 
-      CTime start_time;
-      CTime end_time;
+      Win32FoundationClasses::CTime start_time;
+      Win32FoundationClasses::CTime end_time;
 
       begin_parsing.CopyTo( start_time );
       end_parsing.CopyTo( end_time );
 
-      CTimeSpan time_span;
+      Win32FoundationClasses::CTimeSpan time_span;
       
       time_span = end_time - start_time;
 
@@ -135,17 +134,17 @@ void check_xml_file( wchar_t const * filename ) noexcept
          uint64_t const number_of_milliseconds = end_tick_count - start_tick_count;
 
          //WFCTRACEVAL( TEXT( "Parse time in Milliseconds is " ), number_of_milliseconds );
-         _tprintf( TEXT( "It took %I64u ms to parse.\n\n" ), number_of_milliseconds );
+         _tprintf( TEXT( "It took %" PRIu64 " milliseconds to parse.\n\n" ), number_of_milliseconds );
       }
       else
       {
           uint64_t const number_of_milliseconds = end_tick_count - start_tick_count;
          //WFCTRACEVAL( TEXT( "Parse time in seconds is " ), time_span.GetTotalSeconds() );
-         _tprintf( TEXT( "It took %lu seconds (%I64u milliseconds) to parse %lu elements (%d bytes).\n\n" ),
-                  (DWORD) time_span.GetTotalSeconds(),
+         _tprintf( TEXT( "It took %" PRIu32 " seconds (%" PRIu64 " milliseconds) to parse %zu elements (%zu bytes).\n\n" ),
+                  (uint32_t) time_span.GetTotalSeconds(),
                   number_of_milliseconds,
-                  (uint32_t) document.GetNumberOfElements(),
-                  (int) bytes.size() );
+                  document.GetNumberOfElements(),
+                  bytes.size() );
       }
 
 #if 0
@@ -198,22 +197,22 @@ void check_xml_file( wchar_t const * filename ) noexcept
       std::wstring tag_name;
       std::wstring error_message;
 
-      CParsePoint began_at;
-      CParsePoint failed_at;
+      Win32FoundationClasses::CParsePoint began_at;
+      Win32FoundationClasses::CParsePoint failed_at;
 
       document.GetParsingErrorInformation( tag_name, began_at, failed_at, &error_message );
 
       _tprintf( TEXT( "Tag is %s\n" ), tag_name.c_str() );
       _tprintf( TEXT( "Reason is %s\n" ), error_message.c_str() );
-      _tprintf( TEXT( "Element began at line %lu, column %lu (byte index %lu)\n" ),
-                (uint32_t) began_at.GetLineNumber(),
-                (uint32_t) began_at.GetLineIndex(),
-                (uint32_t) began_at.GetIndex() );
+      _tprintf( TEXT( "Element began at line %" PRIu64 ", column %" PRIu64 " (byte index %" PRIu64 ")\n" ),
+                began_at.GetLineNumber(),
+                began_at.GetLineIndex(),
+                began_at.GetIndex() );
 
-      _tprintf( TEXT( "Error occurred at line %lu, column %lu (byte index %lu)\n\n" ),
-          (uint32_t)failed_at.GetLineNumber(),
-          (uint32_t)failed_at.GetLineIndex(),
-          (uint32_t)failed_at.GetIndex() );
+      _tprintf( TEXT( "Error occurred at line %" PRIu64 ", column %" PRIu64 " (byte index %" PRIu64 ")\n\n" ),
+          failed_at.GetLineNumber(),
+          failed_at.GetLineIndex(),
+          failed_at.GetIndex() );
 
       WFCTRACEVAL( TEXT( "Tag Name is " ), tag_name.c_str() );
       WFCTRACEVAL( TEXT( "Reason is " ), error_message.c_str() );

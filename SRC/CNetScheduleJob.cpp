@@ -226,7 +226,7 @@ void CNetworkScheduleJob::Dump( CDumpContext& dump_context ) const
    {
       if ( bit_test( DaysOfTheMonth, index ) == 1 )
       {
-         number_string.Format( TEXT( "%d, " ), index + 1 );
+         number_string.Format( TEXT( "%zu, " ), index + 1 );
          temp_string += number_string;
       }
    }

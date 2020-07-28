@@ -11,7 +11,7 @@ inline void append(_Inout_ std::vector<uint8_t>& s, _In_reads_bytes_(number_of_b
         return;
     }
 
-    std::size_t const original_size = s.size();
+    auto const original_size = s.size();
 
     s.resize(original_size + number_of_bytes);
 
@@ -32,8 +32,8 @@ inline void append(_Inout_ std::wstring& s, _In_ int64_t const value) noexcept
 
 inline void append_to_bytes(_In_ std::wstring_view source, _Inout_ std::vector<uint8_t>& bytes) noexcept
 {
-    std::size_t const number_of_bytes_in_string = source.length() * sizeof(wchar_t);
-    std::size_t const original_array_size = bytes.size();
+    auto const number_of_bytes_in_string = source.length() * sizeof(wchar_t);
+    auto const original_array_size = bytes.size();
 
     bytes.resize(number_of_bytes_in_string + original_array_size);
 
@@ -83,7 +83,7 @@ inline void append(_Inout_ std::vector<uint8_t>& bytes, _In_z_ char const* strin
         return;
     }
 
-    std::size_t const original_byte_length = bytes.size();
+    auto const original_byte_length = bytes.size();
 
     bytes.resize(original_byte_length + string_length);
     memcpy_s(&bytes.data()[original_byte_length], string_length, string, string_length);
@@ -101,8 +101,8 @@ inline void append(_Inout_ std::vector<uint8_t>& bytes, _In_z_ char const* strin
 
 inline void append_string_to_byte_array(_In_ char const* the_string, _Inout_ std::vector<uint8_t>& bytes) noexcept
 {
-    std::size_t const original_array_size = bytes.size();
-    std::size_t const string_length = strlen(the_string);
+    auto const original_array_size = bytes.size();
+    auto const string_length = strlen(the_string);
 
     bytes.resize(string_length + original_array_size);
 
@@ -113,7 +113,7 @@ inline void append_string_to_byte_array(_In_ char const* the_string, _Inout_ std
 
 inline void append_string_to_byte_array(_In_ std::string_view the_string, _Inout_ std::vector<uint8_t>& bytes) noexcept
 {
-    std::size_t const original_array_size = bytes.size();
+    auto const original_array_size = bytes.size();
 
     bytes.resize(the_string.length() + original_array_size);
 

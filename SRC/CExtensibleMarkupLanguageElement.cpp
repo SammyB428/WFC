@@ -3925,7 +3925,7 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageElement::m_
         {
             std::wstring error_message;
 
-            format( error_message, L"Character %d (decimal %d) of the \"version\" attribute is illegal (Rule 26).", (int) value_index, (int) value.at( value_index ) );
+            format( error_message, L"Character %zu (decimal %d) of the \"version\" attribute is illegal (Rule 26).", value_index, (int) value.at( value_index ) );
 
             //WFCTRACE( error_message );
 
@@ -4060,7 +4060,7 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageElement::m_
                 {
                     std::wstring error_message;
 
-                    format( error_message, L"Character %d is illegal in EncName of \"%s\" (Rule 81).", static_cast<int>(loop_index + 1), value );
+                    format( error_message, L"Character %zu is illegal in EncName of \"%s\" (Rule 81).", loop_index + 1, value );
 
                     m_ReportParsingError(error_message);
                     return( false );

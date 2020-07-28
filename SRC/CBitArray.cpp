@@ -406,8 +406,8 @@ void Win32FoundationClasses::CBitArray::Copy( _In_ std::vector<uint8_t> const& s
    WFC_VALIDATE_POINTER( this );
    RemoveAll();
 
-   std::size_t index           = 0;
-   std::size_t number_of_bytes = source.size();
+   std::size_t index = 0;
+   auto number_of_bytes = source.size();
 
    if ( number_of_bytes > sizeof( uint32_t ) )
    {
@@ -465,7 +465,7 @@ void Win32FoundationClasses::CBitArray::CopyTo( __inout std::vector<uint8_t>& de
 
    // 1998-12-09 Optimization suggested by Peter Ekberg (peda@sectra.se)
 
-   std::size_t number_of_elements = m_Bits.size();
+   auto number_of_elements = m_Bits.size();
 
    destination.resize( number_of_elements * sizeof( uint32_t ) );
 
@@ -997,7 +997,7 @@ _Check_return_ bool Win32FoundationClasses::CBitArray::GetNextOne( __inout std::
    std::size_t element_index = bit_index >> 5;
 #endif // AN_ELEMENT_THAT_IS_ALL_ONES
 
-   std::size_t number_of_elements = m_Bits.size();
+   auto number_of_elements = m_Bits.size();
 
    while( element_index < ( number_of_elements - 1 ) and
           m_Bits.at( element_index ) == 0 )
@@ -1102,7 +1102,7 @@ _Check_return_ bool Win32FoundationClasses::CBitArray::GetNextZero( __inout std:
    std::size_t element_index = bit_index / SizeOfBitRepresentation();
 #endif // AN_ELEMENT_THAT_IS_ALL_ONES
 
-   std::size_t number_of_elements = m_Bits.size();
+   auto number_of_elements = m_Bits.size();
 
    while( element_index < ( number_of_elements - 1 ) and
           m_Bits.at( element_index ) == AN_ELEMENT_THAT_IS_ALL_ONES )
@@ -1513,7 +1513,7 @@ void Win32FoundationClasses::CBitArray::SetAll( _In_ uint32_t const value ) noex
    }
    else
    {
-      memset( m_Bits.data(), 0x00, ( m_Bits.size() * sizeof( uint32_t ) ) );
+      ::memset( m_Bits.data(), 0x00, ( m_Bits.size() * sizeof( uint32_t ) ) );
    }
 }
 

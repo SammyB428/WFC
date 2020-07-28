@@ -166,7 +166,7 @@ _Check_return_ bool Win32FoundationClasses::CPasswordChangeFilter::RemoveFilter(
    (void)GetCurrentFilters( current_filters );
 
    std::size_t index = 0;
-   std::size_t number_of_filters = current_filters.size();
+   auto number_of_filters = current_filters.size();
 
    std::wstring filter_name;
 

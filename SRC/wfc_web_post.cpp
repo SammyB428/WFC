@@ -62,7 +62,7 @@ static char THIS_FILE[] = __FILE__;
 static inline void append_buffer( __in_bcount( number_of_bytes ) uint8_t const * buffer_parameter, _In_ std::size_t const number_of_bytes, __inout std::vector<uint8_t>& bytes ) noexcept
 {
    WFC_VALIDATE_POINTER( buffer_parameter );
-   std::size_t const current_length = bytes.size();
+   auto const current_length = bytes.size();
 
    bytes.resize( current_length + number_of_bytes );
 

@@ -761,13 +761,13 @@ void Win32FoundationClasses::CExtensibleMarkupLanguageDocument::GetParsingErrorI
 
     GetParsingErrorInformation(name, starting_at, error_location, &error_message);
 
-    format(message, L"%s, %s began at line %d column %d, error location line %d column %d",
+    format(message, L"%s, %s began at line %" PRIu64 " column %" PRIu64 ", error location line %" PRIu64 " column %" PRIu64,
         error_message,
         name,
-        (int)starting_at.GetLineNumber(),
-        (int)starting_at.GetLineIndex(),
-        (int)error_location.GetLineNumber(),
-        (int)error_location.GetLineIndex());
+        starting_at.GetLineNumber(),
+        starting_at.GetLineIndex(),
+        error_location.GetLineNumber(),
+        error_location.GetLineIndex());
 }
 
 void Win32FoundationClasses::CExtensibleMarkupLanguageDocument::GetParsingErrorInformation(_Out_ std::wstring& tag_name, _Out_ CParsePoint& beginning, _Out_ CParsePoint& error_location, __out_opt std::wstring * error_message_p ) const noexcept
@@ -1388,8 +1388,8 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageDocument::R
 
    // Now go find this entry (to make sure we don't call it twice)
 
-   std::size_t loop_index        = 0;
-   std::size_t number_of_entries = m_Callbacks.size();
+   std::size_t loop_index = 0;
+   auto number_of_entries = m_Callbacks.size();
 
    while( loop_index < number_of_entries ) // Cannot be converted to a Range loop
    {

@@ -2054,7 +2054,7 @@ public:
 
             auto termination_bytes_p = termination_bytes.data();
 
-            std::size_t const termination_bytes_length = termination_bytes.size();
+            auto const termination_bytes_length = termination_bytes.size();
 
             do
             {

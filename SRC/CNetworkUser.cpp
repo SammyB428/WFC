@@ -163,7 +163,7 @@ bool Win32FoundationClasses::CNetworkUsers::Add( _In_ Win32FoundationClasses::CN
       }
    }
 
-   std::size_t index = user_to_add.LogonHours.size();
+   auto index = user_to_add.LogonHours.size();
 
    while(index < 21) // Can't be converted to range loop
    {

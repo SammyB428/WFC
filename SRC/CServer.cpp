@@ -213,7 +213,7 @@ void Win32FoundationClasses::CServer::GetPlatformName( _Out_ std::wstring& name 
 
       default:
 
-         format( name, L"Unknown Type %d", (int)m_Platform);
+         format( name, L"Unknown Type %" PRIu32, m_Platform);
          return;
    }
 }
