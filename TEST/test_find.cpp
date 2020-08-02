@@ -185,21 +185,21 @@ static _Check_return_ std::size_t search_buffer(_Inout_ uint8_t * buffer, _In_ s
     return(number_of_times_found);
 }
 
-__checkReturn bool execute_test(__in uint8_t const * buffer, __in int64_t const should_be_found_at) noexcept
+__checkReturn bool execute_test(_In_ uint8_t const * buffer, _In_ int64_t const should_be_found_at) noexcept
 {
-    int64_t const found_at = Win32FoundationClasses::find_byte(NEEDLE, buffer, 32);
+    auto const found_at = Win32FoundationClasses::find_byte(NEEDLE, buffer, 32);
 
     if (found_at not_eq should_be_found_at)
     {
-        printf("Failed to find %02X at offset %I64d, it was found at offset %I64d\n", NEEDLE, should_be_found_at, found_at);
+        printf("Failed to find %02X at offset %" PRId64 ", it was found at offset %" PRId64 "\n", NEEDLE, should_be_found_at, found_at);
 
         if (buffer[should_be_found_at] == NEEDLE)
         {
-            printf("The byte at offset %I64d is NEEDLE. The algorithm is flawed.\n", should_be_found_at);
+            printf("The byte at offset %" PRId64 " is NEEDLE. The algorithm is flawed.\n", should_be_found_at);
         }
         else
         {
-            printf("The byte at offset %I64d is %02X (not NEEDLE). The test buffer is flawed\n", should_be_found_at, (int)buffer[should_be_found_at]);
+            printf("The byte at offset %" PRId64 " is %02X (not NEEDLE). The test buffer is flawed\n", should_be_found_at, (int)buffer[should_be_found_at]);
         }
 
         int loop_index = 0;
@@ -493,17 +493,17 @@ __checkReturn bool test_find(__out std::string& class_name, __out int& test_numb
     int64_t const time_1 = end_1.QuadPart - start_1.QuadPart;
     int64_t const time_2 = end_2.QuadPart - end_1.QuadPart;
 
-    //printf("Method 1: %I64d\nMethod 2: %I64d\n", time_1, time_2);
+    //printf("Method 1: %" PRId64 "\nMethod 2: %" PRId64 "\n", time_1, time_2);
 
     if (time_2 < time_1)
     {
         int64_t const beating_ticks = time_1 - time_2;
-        //printf("_find_byte_SSE41_2 wins by %I64d ticks\n", beating_ticks);
+        //printf("_find_byte_SSE41_2 wins by %" PRId64 " ticks\n", beating_ticks);
     }
     else
     {
         int64_t const beating_ticks = time_2 - time_1;
-        //printf("_find_byte_SSE41 wins by %I64d ticks\n", beating_ticks);
+        //printf("_find_byte_SSE41 wins by %" PRId64 " ticks\n", beating_ticks);
     }
 
 #endif

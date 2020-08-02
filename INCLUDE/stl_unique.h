@@ -9,7 +9,7 @@ inline _Check_return_ SSIZE_T add_to_unique_sorted_vector(_In_ std::wstring_view
     auto const lower = std::lower_bound(std::cbegin(values), std::cend(values), value_to_add);
     auto const return_value = std::distance(std::cbegin(values), lower);
 
-    if (not (lower not_eq std::cend(values) and value_to_add.compare(*lower) == I_AM_EQUAL_TO_THAT))
+    if (not (lower not_eq std::cend(values) and not (value_to_add < *lower)))
     {
         values.emplace(lower, value_to_add);
     }
@@ -22,7 +22,7 @@ inline _Check_return_ SSIZE_T add_to_unique_sorted_vector(_In_ std::string_view 
     auto const lower = std::lower_bound(std::cbegin(values), std::cend(values), value_to_add);
     auto const return_value = std::distance(std::cbegin(values), lower);
 
-    if (not (lower not_eq std::cend(values) and value_to_add.compare(*lower) == I_AM_EQUAL_TO_THAT))
+    if (not (lower not_eq std::cend(values) and not (value_to_add < *lower)))
     {
         values.emplace(lower, value_to_add);
     }
@@ -40,7 +40,7 @@ inline _Check_return_ SSIZE_T add_to_unique_sorted_vector_ignore_case(_In_ std::
     auto const lower = std::lower_bound(std::cbegin(values), std::cend(values), value_to_add, compare_strings_ignoring_case);
     auto const return_value = std::distance(std::cbegin(values), lower);
 
-    if (not (lower not_eq std::cend(values) and value_to_add.compare(*lower) == I_AM_EQUAL_TO_THAT))
+    if (not (lower not_eq std::cend(values) and not (value_to_add < *lower)))
     {
         values.emplace(lower, value_to_add);
     }
@@ -59,7 +59,7 @@ inline _Check_return_ bool contains_no_case_sorted(_In_ std::vector<std::string>
 
     auto const lower = std::lower_bound(std::cbegin(s), std::cend(s), right_hand_side, compare_strings_ignoring_case);
 
-    return (lower not_eq std::cend(s) and right_hand_side.compare(*lower) == I_AM_EQUAL_TO_THAT);
+    return (lower not_eq std::cend(s) and not (right_hand_side < *lower));
 }
 
 inline _Check_return_ bool contains(_In_ std::vector<std::string> const& s, _In_z_ char const* the_string) noexcept

@@ -1291,7 +1291,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     if ( test_value not_eq 22 )
     {
-        wprintf( L"\"%s\" evaluated to %I64d not 22\n", string_5.c_str(), test_value );
+        wprintf( L"\"%s\" evaluated to %" PRId64 " not 22\n", string_5.c_str(), test_value );
         test_number_that_failed = 192;
         return( failure() );
     }
@@ -1824,7 +1824,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     std::vector<std::wstring> sorted;
 
-    SSIZE_T where_it_was_inserted = Win32FoundationClasses::add_to_unique_sorted_vector(WSTRING_VIEW(L"&amp;"), sorted);
+    auto where_it_was_inserted = Win32FoundationClasses::add_to_unique_sorted_vector(WSTRING_VIEW(L"&amp;"), sorted);
 
     if (sorted.size() not_eq 1)
     {
@@ -1987,7 +1987,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     if (test_value not_eq 22)
     {
-        wprintf(L"\"%S\" evaluated to %I64d not 22\n", a_string.c_str(), test_value);
+        wprintf(L"\"%S\" evaluated to %" PRId64 " not 22\n", a_string.c_str(), test_value);
         test_number_that_failed = 278;
         return(failure());
     }
@@ -1998,7 +1998,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     if (test_value not_eq 23)
     {
-        wprintf(L"\"%S\" evaluated to %I64d not 23\n", a_string.c_str(), test_value);
+        wprintf(L"\"%S\" evaluated to %" PRId64 " not 23\n", a_string.c_str(), test_value);
         test_number_that_failed = 279;
         return(failure());
     }
@@ -2009,7 +2009,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     if (test_value not_eq 24)
     {
-        wprintf(L"\"%S\" evaluated to %I64d not 24\n", a_string.c_str(), test_value);
+        wprintf(L"\"%S\" evaluated to %" PRId64 " not 24\n", a_string.c_str(), test_value);
         test_number_that_failed = 280;
         return(failure());
     }
@@ -2018,7 +2018,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     if (test_value not_eq 56)
     {
-        wprintf(L"\"567\" evaluated to %I64d not 56\n", test_value);
+        wprintf(L"\"567\" evaluated to %" PRId64 " not 56\n", test_value);
         test_number_that_failed = 281;
         return(failure());
     }
@@ -2029,7 +2029,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     if (test_value not_eq 36)
     {
-        wprintf(L"\"%S\" evaluated to %I64d not 36\n", a_string.c_str(), test_value);
+        wprintf(L"\"%S\" evaluated to %" PRId64 " not 36\n", a_string.c_str(), test_value);
         test_number_that_failed = 282;
         return(failure());
     }
@@ -2090,6 +2090,132 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
         return(failure());
     }
 
-    test_number_that_failed = 288;
+    std::vector<std::string> sorted2;
+
+    where_it_was_inserted = Win32FoundationClasses::add_to_unique_sorted_vector(STRING_VIEW("&amp;"), sorted2);
+
+    if (sorted2.size() not_eq 1)
+    {
+        test_number_that_failed = 289;
+        return(failure());
+    }
+
+    if (where_it_was_inserted not_eq 0)
+    {
+        test_number_that_failed = 290;
+        return(failure());
+    }
+
+    where_it_was_inserted = Win32FoundationClasses::add_to_unique_sorted_vector(STRING_VIEW("&apos;"), sorted2);
+
+    if (sorted2.size() not_eq 2)
+    {
+        test_number_that_failed = 291;
+        return(failure());
+    }
+
+    if (where_it_was_inserted not_eq 1)
+    {
+        test_number_that_failed = 292;
+        return(failure());
+    }
+
+    if (sorted2[0].compare(STRING_VIEW("&amp;")) not_eq I_AM_EQUAL_TO_THAT)
+    {
+        test_number_that_failed = 293;
+        return(failure());
+    }
+
+    if (sorted2[1].compare(STRING_VIEW("&apos;")) not_eq I_AM_EQUAL_TO_THAT)
+    {
+        test_number_that_failed = 294;
+        return(failure());
+    }
+
+    where_it_was_inserted = Win32FoundationClasses::add_to_unique_sorted_vector(STRING_VIEW("&amp;"), sorted2);
+
+    if (sorted2.size() not_eq 2)
+    {
+        test_number_that_failed = 295;
+        return(failure());
+    }
+
+    if (sorted2[0].compare(STRING_VIEW("&amp;")) not_eq I_AM_EQUAL_TO_THAT)
+    {
+        test_number_that_failed = 296;
+        return(failure());
+    }
+
+    if (sorted2[1].compare(STRING_VIEW("&apos;")) not_eq I_AM_EQUAL_TO_THAT)
+    {
+        test_number_that_failed = 297;
+        return(failure());
+    }
+
+    if (where_it_was_inserted not_eq 0)
+    {
+        test_number_that_failed = 298;
+        return(failure());
+    }
+
+    where_it_was_inserted = Win32FoundationClasses::add_to_unique_sorted_vector(STRING_VIEW("&apos;"), sorted2);
+
+    if (sorted2.size() not_eq 2)
+    {
+        test_number_that_failed = 299;
+        return(failure());
+    }
+
+    if (sorted2[0].compare(STRING_VIEW("&amp;")) not_eq I_AM_EQUAL_TO_THAT)
+    {
+        test_number_that_failed = 300;
+        return(failure());
+    }
+
+    if (sorted2[1].compare(STRING_VIEW("&apos;")) not_eq I_AM_EQUAL_TO_THAT)
+    {
+        test_number_that_failed = 301;
+        return(failure());
+    }
+
+    if (where_it_was_inserted not_eq 1)
+    {
+        test_number_that_failed = 302;
+        return(failure());
+    }
+
+    where_it_was_inserted = Win32FoundationClasses::add_to_unique_sorted_vector(STRING_VIEW("&aaaa;"), sorted2);
+
+    if (sorted2.size() not_eq 3)
+    {
+        test_number_that_failed = 303;
+        return(failure());
+    }
+
+    if (sorted2[0].compare(STRING_VIEW("&aaaa;")) not_eq I_AM_EQUAL_TO_THAT)
+    {
+        test_number_that_failed = 303;
+        return(failure());
+    }
+
+    if (sorted2[1].compare(STRING_VIEW("&amp;")) not_eq I_AM_EQUAL_TO_THAT)
+    {
+        test_number_that_failed = 304;
+        return(failure());
+    }
+
+    if (sorted2[2].compare(STRING_VIEW("&apos;")) not_eq I_AM_EQUAL_TO_THAT)
+    {
+        test_number_that_failed = 305;
+        return(failure());
+    }
+
+    if (where_it_was_inserted not_eq 0)
+    {
+        test_number_that_failed = 306;
+        return(failure());
+    }
+
+    test_number_that_failed = 306;
     return( true );
 }

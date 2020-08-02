@@ -188,14 +188,14 @@ _Check_return_ bool CQueue_stress_test( _Out_ std::string& class_name, _Out_ int
    // Now print the results
 
    _tprintf( TEXT( "We ran for %lu seconds.\n" ), number_of_seconds_we_ran );
-   _tprintf( TEXT( "Added %I64u items (%lu operations per second)\n" ),
+   _tprintf( TEXT( "Added %" PRIu64 " items (%" PRIu32 " operations per second)\n" ),
              add_workspace.number_of_operations,
-             (DWORD) ( add_workspace.number_of_operations / number_of_seconds_we_ran ) );
-   _tprintf( TEXT( "Got %I64u items (%lu operations per second)\n" ),
+             (uint32_t) ( add_workspace.number_of_operations / number_of_seconds_we_ran ) );
+   _tprintf( TEXT( "Got %" PRIu64 " items (%" PRIu32 " operations per second)\n" ),
              get_workspace.number_of_operations,
-             (DWORD) ( get_workspace.number_of_operations / number_of_seconds_we_ran ) );
-   _tprintf( TEXT( "Left %lu items on the queue.\n" ), (uint32_t) queue.GetLength() );
-   _tprintf( TEXT( "Queue grew to %lu\n" ), (uint32_t) queue.GetMaximumLength() );
+             (uint32_t) ( get_workspace.number_of_operations / number_of_seconds_we_ran ) );
+   _tprintf( TEXT( "Left %zu items on the queue.\n" ), queue.GetLength() );
+   _tprintf( TEXT( "Queue grew to %zu\n" ), queue.GetMaximumLength() );
 
    return( true );
 }

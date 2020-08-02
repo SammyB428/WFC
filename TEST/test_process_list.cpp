@@ -170,21 +170,21 @@ static LPCTSTR wait_reason( Win32FoundationClasses::WFC_KWAIT_REASON reason ) no
 
 static void print_thread( Win32FoundationClasses::WFC_SYSTEM_THREAD * thread_p ) noexcept
 {
-   _tprintf( TEXT( "   KernelTime             = %I64u\n" ), thread_p->KernelTime );
-   _tprintf( TEXT( "   UserTime               = %I64u\n" ), thread_p->UserTime );
-   _tprintf( TEXT( "   CreateTime             = %I64u\n" ), thread_p->CreateTime );
-   _tprintf( TEXT( "   WaitTime               = %lu\n" ), thread_p->WaitTime );
+   _tprintf( TEXT( "   KernelTime             = %" PRIu64 "\n" ), thread_p->KernelTime );
+   _tprintf( TEXT( "   UserTime               = %" PRIu64 "\n" ), thread_p->UserTime );
+   _tprintf( TEXT( "   CreateTime             = %" PRIu64 "\n" ), thread_p->CreateTime );
+   _tprintf( TEXT( "   WaitTime               = %" PRIu32 "\n" ), thread_p->WaitTime );
    _tprintf( TEXT( "   StartAddress           = %p\n" ), thread_p->StartAddress );
    _tprintf( TEXT( "   ClientID\n   {\n" ) );
    _tprintf( TEXT( "      ProcessHandle = %p\n" ), thread_p->ClientID.ProcessHandle );
    _tprintf( TEXT( "      ThreadHandle  = %p\n" ), thread_p->ClientID.ThreadHandle );
    _tprintf( TEXT( "   }\n" ) );
-   _tprintf( TEXT( "   Priority              = %lu\n" ), thread_p->Priority );
-   _tprintf( TEXT( "   BasePriority          = %lu\n" ), thread_p->BasePriority );
-   _tprintf( TEXT( "   ContextSwitches       = %lu\n" ), thread_p->ContextSwitches );
-   _tprintf( TEXT( "   ThreadState           = %lu\n" ), thread_p->ThreadState );
+   _tprintf( TEXT( "   Priority              = %" PRIu32 "\n" ), thread_p->Priority );
+   _tprintf( TEXT( "   BasePriority          = %" PRIu32 "\n" ), thread_p->BasePriority );
+   _tprintf( TEXT( "   ContextSwitches       = %" PRIu32 "\n" ), thread_p->ContextSwitches );
+   _tprintf( TEXT( "   ThreadState           = %" PRIu32 "\n" ), thread_p->ThreadState );
    _tprintf( TEXT( "   WaitReason            = %s\n" ),  wait_reason( thread_p->WaitReason ) );
-   _tprintf( TEXT( "   Reserved              = %lu\n" ), thread_p->Reserved );
+   _tprintf( TEXT( "   Reserved              = %" PRIu32 "\n" ), thread_p->Reserved );
 }
 
 #if 0
@@ -208,13 +208,13 @@ void print_system_information( _In_ const ::SYSTEM_PROCESS_INFORMATION * informa
 {
 #if 0
    _tprintf( TEXT( "ThreadCount                  = %lu\n" ), information_p->ThreadCount );
-   _tprintf( TEXT( "WorkingsetPrivateSize        = %I64u\n" ), information_p->WorkingsetPrivateSize );
+   _tprintf( TEXT( "WorkingsetPrivateSize        = %" PRIu64 "\n" ), information_p->WorkingsetPrivateSize );
    _tprintf( TEXT( "HardFaultCount               = %lu\n" ), information_p->HardFaultCount );
    _tprintf( TEXT( "NumberOfThreadsHighWatermark = %lu\n" ), information_p->NumberOfThreadsHighWatermark );
-   _tprintf( TEXT( "CycleTime                    = %I64u\n" ), information_p->CycleTime );
-   _tprintf( TEXT( "CreateTime                   = %I64u\n" ), information_p->CreateTime );
-   _tprintf( TEXT( "UserTime                     = %I64u\n" ), information_p->UserTime );
-   _tprintf( TEXT( "KernelTime                   = %I64u\n" ), information_p->KernelTime );
+   _tprintf( TEXT( "CycleTime                    = %" PRIu64 "\n" ), information_p->CycleTime );
+   _tprintf( TEXT( "CreateTime                   = %" PRIu64 "\n" ), information_p->CreateTime );
+   _tprintf( TEXT( "UserTime                     = %" PRIu64 "\n" ), information_p->UserTime );
+   _tprintf( TEXT( "KernelTime                   = %" PRIu64 "\n" ), information_p->KernelTime );
        wprintf(   L"Name                         = %s\n", information_p->Name.Buffer );
    _tprintf( TEXT( "BasePriority                 = %lu\n" ), information_p->BasePriority );
    _tprintf( TEXT( "UniqueProcessID              = %lu\n" ), information_p->UniqueProcessID );
