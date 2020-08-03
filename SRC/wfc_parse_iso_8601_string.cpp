@@ -816,7 +816,7 @@ _Check_return_ bool Win32FoundationClasses::wfc_parse_xml( _In_ std::wstring_vie
         return( false );
     }
 
-    auto pointer = reinterpret_cast<uint8_t const *>(memory_mapped_file.GetPointer());
+    auto pointer = static_cast<uint8_t const *>(memory_mapped_file.GetPointer());
 
     Win32FoundationClasses::CDataParser parser;
 
@@ -873,7 +873,7 @@ _Check_return_ bool Win32FoundationClasses::wfc_parse_hex_string(_In_ std::wstri
         return(false);
     }
 
-    std::size_t const required_buffer_size = hex_string.length() / 2;
+    auto const required_buffer_size = hex_string.length() / 2;
 
     if (required_buffer_size > buffer_size)
     {
@@ -907,7 +907,7 @@ _Check_return_ bool Win32FoundationClasses::wfc_parse_hex_string(_In_ std::strin
         return(false);
     }
 
-    std::size_t const required_buffer_size = hex_string.length() / 2;
+    auto const required_buffer_size = hex_string.length() / 2;
 
     if (required_buffer_size > buffer_size)
     {

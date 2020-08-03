@@ -207,8 +207,6 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageEntities::A
       resolved_string.append( temp_string );
    }
 
-   //WFCTRACEVAL( TEXT( "resolved_string is " ), resolved_string );
-
    // The list is sorted for quick searching using a binary search
 
    if (m_Entities.empty() == true)
@@ -218,7 +216,7 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageEntities::A
        return(true);
    }
 
-   SSIZE_T const index = add_to_unique_sorted_vector(entity, m_Entities);
+   auto const index = add_to_unique_sorted_vector(entity, m_Entities);
 
    if (index >= (SSIZE_T) m_Values.size())
    {
@@ -227,8 +225,16 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageEntities::A
    }
    else
    {
-       // Replace an existing vaue
-       m_Values[index] = resolved_string;
+       if (m_Values.size() == m_Entities.size())
+       {
+           // Replace an existing value
+           m_Values[index] = resolved_string;
+       }
+       else
+       {
+           // Insert new value at this index
+           m_Values.insert(m_Values.begin() + index, resolved_string);
+       }
    }
 
    return( true );
@@ -259,7 +265,7 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageEntities::G
 
    ASSERT( m_Entities.size() == m_Values.size() );
 
-   if ( enumerator < (uint32_t) m_Entities.size() )
+   if ( enumerator < m_Entities.size() )
    {
       entity = m_Entities[ enumerator ];
       value = m_Values[ enumerator ];

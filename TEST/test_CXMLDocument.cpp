@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 2000-2019, Samuel R. Blackburn
+** Copyright, 2000-2020, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -53,7 +53,7 @@ static char THIS_FILE[] = __FILE__;
 #define new DEBUG_NEW
 #endif // _DEBUG
 
-_Check_return_ bool test_CXMLDocument( _Out_ std::string& class_name, _Out_ int& test_number_that_failed ) noexcept
+_Check_return_ bool test_CXMLDocument(_Out_ std::string& class_name, _Out_ int& test_number_that_failed) noexcept
 {
     class_name.assign(STRING_VIEW("CExtensibleMarkupLanguageDocument"));
     test_number_that_failed = 0;
@@ -62,315 +62,315 @@ _Check_return_ bool test_CXMLDocument( _Out_ std::string& class_name, _Out_ int&
 
     std::vector<uint8_t> bytes;
 
-    (void) xml.SetWriteOptions( WFC_XML_WRITE_AS_UNICODE bitor WFC_XML_WRITE_AS_BIG_ENDIAN );
+    (void)xml.SetWriteOptions(WFC_XML_WRITE_AS_UNICODE bitor WFC_XML_WRITE_AS_BIG_ENDIAN);
 
-    xml.WriteTo( bytes );
+    xml.WriteTo(bytes);
 
-    if ( bytes.empty() == true )
+    if (bytes.empty() == true)
     {
         test_number_that_failed = 1;
-        return( failure() );
+        return(failure());
     }
 
-    ASSERT( bytes.size() > 5 );
+    ASSERT(bytes.size() > 5);
 
     // Check to make sure the Big End was In first
     // Big End In, big endian, get it?
 
-    if ( bytes.at( 0 ) not_eq 0xFE )// fe
+    if (bytes.at(0) not_eq 0xFE)// fe
     {
         test_number_that_failed = 2;
-        return( failure() );
+        return(failure());
     }
 
-    if ( bytes.at( 1 ) not_eq 0xFF )// ff
+    if (bytes.at(1) not_eq 0xFF)// ff
     {
         test_number_that_failed = 3;
-        return( failure() );
+        return(failure());
     }
 
-    if ( bytes.at( 2 ) not_eq 0x00 )
+    if (bytes.at(2) not_eq 0x00)
     {
         test_number_that_failed = 4;
-        return( failure() );
+        return(failure());
     }
 
-    if ( bytes.at( 3 ) not_eq 0x3C )
+    if (bytes.at(3) not_eq 0x3C)
     {
         test_number_that_failed = 5;
-        return( failure() );
+        return(failure());
     }
 
-    if ( bytes.at( 4 ) not_eq 0x00 )
+    if (bytes.at(4) not_eq 0x00)
     {
         test_number_that_failed = 6;
-        return( failure() );
+        return(failure());
     }
 
-    if ( bytes.at( 5 ) not_eq 0x3F )
+    if (bytes.at(5) not_eq 0x3F)
     {
         test_number_that_failed = 7;
-        return( failure() );
+        return(failure());
     }
 
     bytes.clear();
 
     // UNICODE, little endian
 
-    (void) xml.SetWriteOptions( WFC_XML_WRITE_AS_UNICODE );
+    (void)xml.SetWriteOptions(WFC_XML_WRITE_AS_UNICODE);
 
-    xml.WriteTo( bytes );
+    xml.WriteTo(bytes);
 
-    if ( bytes.size() == 0 )
+    if (bytes.size() == 0)
     {
         test_number_that_failed = 8;
-        return( failure() );
+        return(failure());
     }
 
-    ASSERT( bytes.size() > 5 );
+    ASSERT(bytes.size() > 5);
 
     // Check to make sure the Little End was In first
     // Little End In, little endian, get it?
 
-    if ( bytes.at( 0 ) not_eq 0xFF )
+    if (bytes.at(0) not_eq 0xFF)
     {
         test_number_that_failed = 9;
-        return( failure() );
+        return(failure());
     }
 
-    if ( bytes.at( 1 ) not_eq 0xFE )
+    if (bytes.at(1) not_eq 0xFE)
     {
         test_number_that_failed = 10;
-        return( failure() );
+        return(failure());
     }
 
-    if ( bytes.at( 2 ) not_eq 0x3C )
+    if (bytes.at(2) not_eq 0x3C)
     {
         test_number_that_failed = 11;
-        return( failure() );
+        return(failure());
     }
 
-    if ( bytes.at( 3 ) not_eq 0x00 )
+    if (bytes.at(3) not_eq 0x00)
     {
         test_number_that_failed = 12;
-        return( failure() );
+        return(failure());
     }
 
-    if ( bytes.at( 4 ) not_eq 0x3F )
+    if (bytes.at(4) not_eq 0x3F)
     {
         test_number_that_failed = 13;
-        return( failure() );
+        return(failure());
     }
 
-    if ( bytes.at( 5 ) not_eq 0x00 )
+    if (bytes.at(5) not_eq 0x00)
     {
         test_number_that_failed = 14;
-        return( failure() );
+        return(failure());
     }
 
     bytes.clear();
 
     // UCS4, Big Endian
 
-    (void) xml.SetWriteOptions( WFC_XML_WRITE_AS_UCS4 bitor WFC_XML_WRITE_AS_BIG_ENDIAN );
+    (void)xml.SetWriteOptions(WFC_XML_WRITE_AS_UCS4 bitor WFC_XML_WRITE_AS_BIG_ENDIAN);
 
-    xml.WriteTo( bytes );
+    xml.WriteTo(bytes);
 
-    if ( bytes.size() == 0 )
+    if (bytes.size() == 0)
     {
         test_number_that_failed = 15;
-        return( failure() );
+        return(failure());
     }
 
-    ASSERT( bytes.size() > 3 );
+    ASSERT(bytes.size() > 3);
 
-    if ( bytes.at( 0 ) not_eq 0x00 )
+    if (bytes.at(0) not_eq 0x00)
     {
         test_number_that_failed = 16;
-        return( failure() );
+        return(failure());
     }
 
-    if ( bytes.at( 1 ) not_eq 0x00 )
+    if (bytes.at(1) not_eq 0x00)
     {
         test_number_that_failed = 17;
-        return( failure() );
+        return(failure());
     }
 
-    if ( bytes.at( 2 ) not_eq 0x00 )
+    if (bytes.at(2) not_eq 0x00)
     {
         test_number_that_failed = 18;
-        return( failure() );
+        return(failure());
     }
 
-    if ( bytes.at( 3 ) not_eq 0x3C )
+    if (bytes.at(3) not_eq 0x3C)
     {
         test_number_that_failed = 19;
-        return( failure() );
+        return(failure());
     }
 
     bytes.clear();
 
     // UCS4, Little Endian
 
-    (void) xml.SetWriteOptions( WFC_XML_WRITE_AS_UCS4 );
+    (void)xml.SetWriteOptions(WFC_XML_WRITE_AS_UCS4);
 
-    xml.WriteTo( bytes );
+    xml.WriteTo(bytes);
 
-    if ( bytes.size() == 0 )
+    if (bytes.size() == 0)
     {
-        _tprintf( TEXT( "CExtensibleMarkupLanguageDocument failed test 16\n" ) );
-        return( failure() );
+        _tprintf(TEXT("CExtensibleMarkupLanguageDocument failed test 16\n"));
+        return(failure());
     }
 
-    ASSERT( bytes.size() > 3 );
+    ASSERT(bytes.size() > 3);
 
-    if ( bytes.at( 0 ) not_eq 0x3C )
+    if (bytes.at(0) not_eq 0x3C)
     {
-        ASSERT( FALSE );
-        _tprintf( TEXT( "CExtensibleMarkupLanguageDocument failed test 17\n" ) );
-        return( failure() );
+        ASSERT(FALSE);
+        _tprintf(TEXT("CExtensibleMarkupLanguageDocument failed test 17\n"));
+        return(failure());
     }
 
-    if ( bytes.at( 1 ) not_eq 0x00 )
+    if (bytes.at(1) not_eq 0x00)
     {
-        ASSERT( FALSE );
-        _tprintf( TEXT( "CExtensibleMarkupLanguageDocument failed test 18\n" ) );
-        return( failure() );
+        ASSERT(FALSE);
+        _tprintf(TEXT("CExtensibleMarkupLanguageDocument failed test 18\n"));
+        return(failure());
     }
 
-    if ( bytes.at( 2 ) not_eq 0x00 )
+    if (bytes.at(2) not_eq 0x00)
     {
-        ASSERT( FALSE );
-        _tprintf( TEXT( "CExtensibleMarkupLanguageDocument failed test 19\n" ) );
-        return( failure() );
+        ASSERT(FALSE);
+        _tprintf(TEXT("CExtensibleMarkupLanguageDocument failed test 19\n"));
+        return(failure());
     }
 
-    if ( bytes.at( 3 ) not_eq 0x00 )
+    if (bytes.at(3) not_eq 0x00)
     {
-        ASSERT( FALSE );
-        _tprintf( TEXT( "CExtensibleMarkupLanguageDocument failed test 20\n" ) );
-        return( failure() );
+        ASSERT(FALSE);
+        _tprintf(TEXT("CExtensibleMarkupLanguageDocument failed test 20\n"));
+        return(failure());
     }
 
     bytes.clear();
 
     // UCS4, Unusal 2143
 
-    (void) xml.SetWriteOptions( WFC_XML_WRITE_AS_UCS4_UNUSUAL_2143 );
+    (void)xml.SetWriteOptions(WFC_XML_WRITE_AS_UCS4_UNUSUAL_2143);
 
-    xml.WriteTo( bytes );
+    xml.WriteTo(bytes);
 
-    if ( bytes.size() == 0 )
+    if (bytes.size() == 0)
     {
-        _tprintf( TEXT( "CExtensibleMarkupLanguageDocument failed test 21\n" ) );
-        return( failure() );
+        _tprintf(TEXT("CExtensibleMarkupLanguageDocument failed test 21\n"));
+        return(failure());
     }
 
-    ASSERT( bytes.size() > 3 );
+    ASSERT(bytes.size() > 3);
 
-    if ( bytes.at( 0 ) not_eq 0x00 )
+    if (bytes.at(0) not_eq 0x00)
     {
-        ASSERT( FALSE );
-        _tprintf( TEXT( "CExtensibleMarkupLanguageDocument failed test 22\n" ) );
-        return( failure() );
+        ASSERT(FALSE);
+        _tprintf(TEXT("CExtensibleMarkupLanguageDocument failed test 22\n"));
+        return(failure());
     }
 
-    if ( bytes.at( 1 ) not_eq 0x00 )
+    if (bytes.at(1) not_eq 0x00)
     {
-        ASSERT( FALSE );
-        _tprintf( TEXT( "CExtensibleMarkupLanguageDocument failed test 23\n" ) );
-        return( failure() );
+        ASSERT(FALSE);
+        _tprintf(TEXT("CExtensibleMarkupLanguageDocument failed test 23\n"));
+        return(failure());
     }
 
-    if ( bytes.at( 2 ) not_eq 0x3C )
+    if (bytes.at(2) not_eq 0x3C)
     {
-        ASSERT( FALSE );
-        _tprintf( TEXT( "CExtensibleMarkupLanguageDocument failed test 24\n" ) );
-        return( failure() );
+        ASSERT(FALSE);
+        _tprintf(TEXT("CExtensibleMarkupLanguageDocument failed test 24\n"));
+        return(failure());
     }
 
-    if ( bytes.at( 3 ) not_eq 0x00 )
+    if (bytes.at(3) not_eq 0x00)
     {
-        ASSERT( FALSE );
-        _tprintf( TEXT( "CExtensibleMarkupLanguageDocument failed test 25\n" ) );
-        return( failure() );
+        ASSERT(FALSE);
+        _tprintf(TEXT("CExtensibleMarkupLanguageDocument failed test 25\n"));
+        return(failure());
     }
 
     bytes.clear();
 
     // UCS4, Unusal 3412
 
-    (void) xml.SetWriteOptions( WFC_XML_WRITE_AS_UCS4_UNUSUAL_3412 );
+    (void)xml.SetWriteOptions(WFC_XML_WRITE_AS_UCS4_UNUSUAL_3412);
 
-    xml.WriteTo( bytes );
+    xml.WriteTo(bytes);
 
-    if ( bytes.size() == 0 )
+    if (bytes.size() == 0)
     {
-        _tprintf( TEXT( "CExtensibleMarkupLanguageDocument failed test 26\n" ) );
-        return( failure() );
+        _tprintf(TEXT("CExtensibleMarkupLanguageDocument failed test 26\n"));
+        return(failure());
     }
 
-    ASSERT( bytes.size() > 3 );
+    ASSERT(bytes.size() > 3);
 
-    if ( bytes.at( 0 ) not_eq 0x00 )
+    if (bytes.at(0) not_eq 0x00)
     {
-        ASSERT( FALSE );
-        _tprintf( TEXT( "CExtensibleMarkupLanguageDocument failed test 27\n" ) );
-        return( failure() );
+        ASSERT(FALSE);
+        _tprintf(TEXT("CExtensibleMarkupLanguageDocument failed test 27\n"));
+        return(failure());
     }
 
-    if ( bytes.at( 1 ) not_eq 0x3C )
+    if (bytes.at(1) not_eq 0x3C)
     {
-        ASSERT( FALSE );
-        _tprintf( TEXT( "CExtensibleMarkupLanguageDocument failed test 28\n" ) );
-        return( failure() );
+        ASSERT(FALSE);
+        _tprintf(TEXT("CExtensibleMarkupLanguageDocument failed test 28\n"));
+        return(failure());
     }
 
-    if ( bytes.at( 2 ) not_eq 0x00 )
+    if (bytes.at(2) not_eq 0x00)
     {
-        ASSERT( FALSE );
-        _tprintf( TEXT( "CExtensibleMarkupLanguageDocument failed test 29\n" ) );
-        return( failure() );
+        ASSERT(FALSE);
+        _tprintf(TEXT("CExtensibleMarkupLanguageDocument failed test 29\n"));
+        return(failure());
     }
 
-    if ( bytes.at( 3 ) not_eq 0x00 )
+    if (bytes.at(3) not_eq 0x00)
     {
-        ASSERT( FALSE );
-        _tprintf( TEXT( "CExtensibleMarkupLanguageDocument failed test 30\n" ) );
-        return( failure() );
+        ASSERT(FALSE);
+        _tprintf(TEXT("CExtensibleMarkupLanguageDocument failed test 30\n"));
+        return(failure());
     }
 
     //bytes.Append( (const BYTE *) ( (LPCTSTR) test_text ), test_text.GetLength() * sizeof( TCHAR ) );
 
     Win32FoundationClasses::CDataParser parser;
 
-    (void) parser.Initialize( &bytes );
+    (void)parser.Initialize(&bytes);
 
     uint32_t parse_options = xml.GetParseOptions();
 
-    (void) xml.SetParseOptions( parse_options bitor WFC_XML_ALLOW_AMPERSANDS_IN_ELEMENTS );
+    (void)xml.SetParseOptions(parse_options bitor WFC_XML_ALLOW_AMPERSANDS_IN_ELEMENTS);
 
-//    if ( xml.Parse( parser ) not_eq true )
-  // {
-        //ASSERT( FALSE );
- //       _tprintf( TEXT( "CExtensibleMarkupLanguageDocument failed test 31\n" ) );
-   //     return( failure() );
-    //}
+    //    if ( xml.Parse( parser ) not_eq true )
+      // {
+            //ASSERT( FALSE );
+     //       _tprintf( TEXT( "CExtensibleMarkupLanguageDocument failed test 31\n" ) );
+       //     return( failure() );
+        //}
 
     std::vector<uint8_t> output;
 
-    xml.WriteTo( output );
-    (void) output.push_back( 0 );
-    (void) output.push_back( 0 ); // NULL terminate the string
+    xml.WriteTo(output);
+    (void)output.push_back(0);
+    (void)output.push_back(0); // NULL terminate the string
 
     Win32FoundationClasses::CString test_string_2;
 
-    test_string_2.Copy( (LPCTSTR) output.data() );
+    test_string_2.Copy((LPCTSTR)output.data());
 
     //WFCTRACEVAL( TEXT( "Value is " ), test_string_2 );
 
-    char const * part_1 = "<?xml version=\"1.0\"  encoding=\"utf-8\" standalone=\"yes\"?><mhmd>\0";
-    char const * part_2 = "</mhmd>\0";
+    char const* part_1 = "<?xml version=\"1.0\"  encoding=\"utf-8\" standalone=\"yes\"?><mhmd>\0";
+    char const* part_2 = "</mhmd>\0";
 
     output.clear();
 
@@ -386,7 +386,7 @@ _Check_return_ bool test_CXMLDocument( _Out_ std::string& class_name, _Out_ int&
         0xD9, 0x85, 0xD8, 0xAD, 0xD9, 0x85, 0xD8, 0xAF
     };
 
-    for ( auto const mhmd_index : Range(sizeof(mhmd)))
+    for (auto const mhmd_index : Range(sizeof(mhmd)))
     {
         output.push_back(mhmd[mhmd_index]);
     }
@@ -554,7 +554,7 @@ _Check_return_ bool test_CXMLDocument( _Out_ std::string& class_name, _Out_ int&
     test_text.assign(STRING_VIEW("<?xml version=\"1.0\" standalone=\"yes\"?>\n"));
     test_text.append(STRING_VIEW("<root><prop>Hello</prop> <prop>World</prop></root>"));
 
-    (void)parser.Initialize(reinterpret_cast<uint8_t const *>(test_text.data()), test_text.length());
+    (void)parser.Initialize(reinterpret_cast<uint8_t const*>(test_text.data()), test_text.length());
 
     parser.SetTextToASCII();
 
@@ -595,7 +595,7 @@ _Check_return_ bool test_CXMLDocument( _Out_ std::string& class_name, _Out_ int&
         xml.GetParsingErrorInformation(error_message);
 
         test_number_that_failed = 38;
-        _ASSERT_EXPR( FALSE, error_message.c_str());
+        _ASSERT_EXPR(FALSE, error_message.c_str());
         return(failure());
     }
 
@@ -642,6 +642,176 @@ _Check_return_ bool test_CXMLDocument( _Out_ std::string& class_name, _Out_ int&
         return(failure());
     }
 
-    test_number_that_failed = 43;
+    Win32FoundationClasses::CExtensibleMarkupLanguageEntities entities;
+
+    if (entities.GetSize() not_eq 0)
+    {
+        test_number_that_failed = 44;
+        ASSERT(FALSE);
+        return(failure());
+    }
+
+    if (entities.Add(WSTRING_VIEW(L"&amp;"), WSTRING_VIEW(L"&")) == false)
+    {
+        test_number_that_failed = 45;
+        ASSERT(FALSE);
+        return(failure());
+    }
+
+    if (entities.GetSize() not_eq 1)
+    {
+        test_number_that_failed = 46;
+        ASSERT(FALSE);
+        return(failure());
+    }
+
+    if (entities.Add(WSTRING_VIEW(L"&gt;"), WSTRING_VIEW(L">")) == false)
+    {
+        test_number_that_failed = 47;
+        ASSERT(FALSE);
+        return(failure());
+    }
+
+    if (entities.GetSize() not_eq 2)
+    {
+        test_number_that_failed = 48;
+        ASSERT(FALSE);
+        return(failure());
+    }
+
+    if (entities.Add(WSTRING_VIEW(L"&lt;"), WSTRING_VIEW(L"<")) == false)
+    {
+        test_number_that_failed = 49;
+        ASSERT(FALSE);
+        return(failure());
+    }
+
+    if (entities.GetSize() not_eq 3)
+    {
+        test_number_that_failed = 50;
+        ASSERT(FALSE);
+        return(failure());
+    }
+
+    if (entities.Add(WSTRING_VIEW(L"&quot;"), WSTRING_VIEW(L"\"")) == false)
+    {
+        test_number_that_failed = 51;
+        ASSERT(FALSE);
+        return(failure());
+    }
+
+    if (entities.GetSize() not_eq 4)
+    {
+        test_number_that_failed = 52;
+        ASSERT(FALSE);
+        return(failure());
+    }
+
+    if (entities.Add(WSTRING_VIEW(L"&apos;"), WSTRING_VIEW(L"'")) == false)
+    {
+        test_number_that_failed = 53;
+        ASSERT(FALSE);
+        return(failure());
+    }
+
+    if (entities.GetSize() not_eq 5)
+    {
+        test_number_that_failed = 54;
+        ASSERT(FALSE);
+        return(failure());
+    }
+
+    if (entities.Resolve(WSTRING_VIEW(L"&amp;"), value) == false)
+    {
+        test_number_that_failed = 55;
+        ASSERT(FALSE);
+        return(failure());
+    }
+
+    if (value.compare(WSTRING_VIEW(L"&")) not_eq I_AM_EQUAL_TO_THAT)
+    {
+        test_number_that_failed = 56;
+        ASSERT(FALSE);
+        return(failure());
+    }
+
+    if (entities.Resolve(WSTRING_VIEW(L"&gt;"), value) == false)
+    {
+        test_number_that_failed = 57;
+        ASSERT(FALSE);
+        return(failure());
+    }
+
+    if (value.compare(WSTRING_VIEW(L">")) not_eq I_AM_EQUAL_TO_THAT)
+    {
+        test_number_that_failed = 58;
+        ASSERT(FALSE);
+        return(failure());
+    }
+
+    if (entities.Resolve(WSTRING_VIEW(L"&lt;"), value) == false)
+    {
+        test_number_that_failed = 59;
+        ASSERT(FALSE);
+        return(failure());
+    }
+
+    if (value.compare(WSTRING_VIEW(L"<")) not_eq I_AM_EQUAL_TO_THAT)
+    {
+        test_number_that_failed = 60;
+        ASSERT(FALSE);
+        return(failure());
+    }
+
+    if (entities.Resolve(WSTRING_VIEW(L"&quot;"), value) == false)
+    {
+        test_number_that_failed = 61;
+        ASSERT(FALSE);
+        return(failure());
+    }
+
+    if (value.compare(WSTRING_VIEW(L"\"")) not_eq I_AM_EQUAL_TO_THAT)
+    {
+        test_number_that_failed = 62;
+        ASSERT(FALSE);
+        return(failure());
+    }
+
+    if (entities.Resolve(WSTRING_VIEW(L"&apos;"), value) == false)
+    {
+        test_number_that_failed = 63;
+        ASSERT(FALSE);
+        return(failure());
+    }
+
+    if (value.compare(WSTRING_VIEW(L"'")) not_eq I_AM_EQUAL_TO_THAT)
+    {
+        test_number_that_failed = 64;
+        ASSERT(FALSE);
+        return(failure());
+    }
+
+    if (entities.Add(WSTRING_VIEW(L"&apos;"), WSTRING_VIEW(L"Sam")) == false)
+    {
+        test_number_that_failed = 65;
+        ASSERT(FALSE);
+        return(failure());
+    }
+
+    if (entities.Resolve(WSTRING_VIEW(L"&apos;"), value) == false)
+    {
+        test_number_that_failed = 66;
+        ASSERT(FALSE);
+        return(failure());
+    }
+
+    if (value.compare(WSTRING_VIEW(L"Sam")) not_eq I_AM_EQUAL_TO_THAT)
+    {
+        test_number_that_failed = 67;
+        ASSERT(FALSE);
+        return(failure());
+    }
+
+    test_number_that_failed = 67;
     return( true );
 }
