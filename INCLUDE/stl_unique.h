@@ -48,18 +48,16 @@ inline _Check_return_ SSIZE_T add_to_unique_sorted_vector_ignore_case(_In_ std::
     return(return_value);
 }
 
-inline _Check_return_ bool contains_no_case_sorted(_In_ std::vector<std::string> const& s, _In_z_ char const* the_string) noexcept
+inline _Check_return_ bool contains_no_case_sorted(_In_ std::vector<std::string> const& s, _In_ std::string_view the_string) noexcept
 {
-    if (s.empty() == true or the_string == nullptr)
+    if (s.empty() == true or the_string.empty() == true)
     {
         return(false);
     }
 
-    std::string_view right_hand_side(the_string);
+    auto const lower = std::lower_bound(std::cbegin(s), std::cend(s), the_string, compare_strings_ignoring_case);
 
-    auto const lower = std::lower_bound(std::cbegin(s), std::cend(s), right_hand_side, compare_strings_ignoring_case);
-
-    return (lower not_eq std::cend(s) and not (right_hand_side < *lower));
+    return (lower not_eq std::cend(s) and (the_string < *lower));
 }
 
 inline _Check_return_ bool contains(_In_ std::vector<std::string> const& s, _In_z_ char const* the_string) noexcept

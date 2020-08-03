@@ -2216,6 +2216,18 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
         return(failure());
     }
 
-    test_number_that_failed = 306;
+    if (Win32FoundationClasses::contains_no_case_sorted(sorted2, STRING_VIEW("&ApOS;")) == false)
+    {
+        test_number_that_failed = 307;
+        return(failure());
+    }
+
+    if (Win32FoundationClasses::contains_no_case_sorted(sorted2, STRING_VIEW("zAzAz")) == true)
+    {
+        test_number_that_failed = 308;
+        return(failure());
+    }
+
+    test_number_that_failed = 308;
     return( true );
 }

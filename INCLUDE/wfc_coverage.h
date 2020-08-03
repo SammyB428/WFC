@@ -49,9 +49,9 @@ static void __wfc_coverage_report( void )\
    QueryPerformanceFrequency( &number_of_ticks_per_second ); \
    const double number_of_ticks_per_microsecond = (double) ( (double) number_of_ticks_per_second.QuadPart / (double) NUMBER_OF_MICROSECONDS_IN_ONE_SECOND ); \
    const double number_of_ticks_per_millisecond = (double) ( (double) number_of_ticks_per_second.QuadPart / (double) NUMBER_OF_MILLISECONDS_IN_ONE_SECOND ); \
-   unsigned long loop_index = 0; \
+   std::size_t loop_index = 0; \
    CString debug_string; \
-   debug_string.Format( TEXT( "Number of counts per second %I64d\nAPI overhead is %I64d ticks.\n" ), \
+   debug_string.Format( TEXT( "Number of counts per second %" PRId64 "\nAPI overhead is %" PRId64 " ticks.\n" ), \
    number_of_ticks_per_second.QuadPart, __wfc_api_overhead_in_counts ); \
    OutputDebugString( debug_string ); _tprintf( TEXT( "%s" ), (LPCTSTR) debug_string ); \
    int64_t number_of_microseconds = 0; \
@@ -62,7 +62,7 @@ static void __wfc_coverage_report( void )\
       number_of_seconds = (double) ( (double) __wfc_time_count[ loop_index ] / (double) number_of_ticks_per_second.QuadPart ); \
       number_of_milliseconds = (double) ( (double) __wfc_time_count[ loop_index ] / (double) number_of_ticks_per_millisecond ); \
       number_of_microseconds = (double) ( (double) __wfc_time_count[ loop_index ] / (double) number_of_ticks_per_microsecond ); \
-      debug_string.Format( TEXT( "%lu. %s - %lu (%I64dus, %.2lfms, %.4lfs)\n" ), \
+      debug_string.Format( TEXT( "%zu. %s - %lu (%" PRId64 "us, %.2lfms, %.4lfs)\n" ), \
          loop_index, \
          __wfc_names[ loop_index ] == NULL ? TEXT( "" ) : __wfc_names[ loop_index ], \
          __wfc_call_count[ loop_index ], number_of_microseconds, number_of_milliseconds, number_of_seconds ); \
