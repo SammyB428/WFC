@@ -2228,6 +2228,127 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
         return(failure());
     }
 
-    test_number_that_failed = 308;
+    sorted2.clear();
+
+    Win32FoundationClasses::add_to_unique_sorted_vector_ignore_case(STRING_VIEW("keyID"), sorted2);
+
+    if (sorted2.size() not_eq 1)
+    {
+        test_number_that_failed = 309;
+        return(failure());
+    }
+
+    if (sorted2.at(0).compare(STRING_VIEW("keyID")) not_eq I_AM_EQUAL_TO_THAT)
+    {
+        test_number_that_failed = 310;
+        return(failure());
+    }
+
+    Win32FoundationClasses::add_to_unique_sorted_vector_ignore_case(STRING_VIEW("locationKey"), sorted2);
+
+    if (sorted2.size() not_eq 2)
+    {
+        test_number_that_failed = 311;
+        return(failure());
+    }
+
+    if (sorted2.at(0).compare(STRING_VIEW("keyID")) not_eq I_AM_EQUAL_TO_THAT or
+        sorted2.at(1).compare(STRING_VIEW("locationKey")) not_eq I_AM_EQUAL_TO_THAT )
+    {
+        test_number_that_failed = 312;
+        return(failure());
+    }
+
+    Win32FoundationClasses::add_to_unique_sorted_vector_ignore_case(STRING_VIEW("typeName"), sorted2);
+
+    if (sorted2.size() not_eq 3)
+    {
+        test_number_that_failed = 313;
+        return(failure());
+    }
+
+    if (sorted2.at(0).compare(STRING_VIEW("keyID")) not_eq I_AM_EQUAL_TO_THAT or
+        sorted2.at(1).compare(STRING_VIEW("locationKey")) not_eq I_AM_EQUAL_TO_THAT or
+        sorted2.at(2).compare(STRING_VIEW("typeName")) not_eq I_AM_EQUAL_TO_THAT)
+    {
+        test_number_that_failed = 314;
+        return(failure());
+    }
+
+    Win32FoundationClasses::add_to_unique_sorted_vector_ignore_case(STRING_VIEW("uuid"), sorted2);
+
+    if (sorted2.size() not_eq 4)
+    {
+        test_number_that_failed = 315;
+        return(failure());
+    }
+
+    if (sorted2.at(0).compare(STRING_VIEW("keyID")) not_eq I_AM_EQUAL_TO_THAT or
+        sorted2.at(1).compare(STRING_VIEW("locationKey")) not_eq I_AM_EQUAL_TO_THAT or
+        sorted2.at(2).compare(STRING_VIEW("typeName")) not_eq I_AM_EQUAL_TO_THAT or
+        sorted2.at(3).compare(STRING_VIEW("uuid")) not_eq I_AM_EQUAL_TO_THAT)
+    {
+        test_number_that_failed = 316;
+        return(failure());
+    }
+
+    Win32FoundationClasses::add_to_unique_sorted_vector_ignore_case(STRING_VIEW("createdAt"), sorted2);
+
+    if (sorted2.size() not_eq 5)
+    {
+        test_number_that_failed = 317;
+        return(failure());
+    }
+
+    if (sorted2.at(0).compare(STRING_VIEW("createdAt")) not_eq I_AM_EQUAL_TO_THAT or
+        sorted2.at(1).compare(STRING_VIEW("keyID")) not_eq I_AM_EQUAL_TO_THAT or
+        sorted2.at(2).compare(STRING_VIEW("locationKey")) not_eq I_AM_EQUAL_TO_THAT or
+        sorted2.at(3).compare(STRING_VIEW("typeName")) not_eq I_AM_EQUAL_TO_THAT or
+        sorted2.at(4).compare(STRING_VIEW("uuid")) not_eq I_AM_EQUAL_TO_THAT)
+    {
+        test_number_that_failed = 318;
+        return(failure());
+    }
+
+    Win32FoundationClasses::add_to_unique_sorted_vector_ignore_case(STRING_VIEW("securityLevel"), sorted2);
+
+    if (sorted2.size() not_eq 6)
+    {
+        test_number_that_failed = 319;
+        return(failure());
+    }
+
+    if (sorted2.at(0).compare(STRING_VIEW("createdAt")) not_eq I_AM_EQUAL_TO_THAT or
+        sorted2.at(1).compare(STRING_VIEW("keyID")) not_eq I_AM_EQUAL_TO_THAT or
+        sorted2.at(2).compare(STRING_VIEW("locationKey")) not_eq I_AM_EQUAL_TO_THAT or
+        sorted2.at(3).compare(STRING_VIEW("securityLevel")) not_eq I_AM_EQUAL_TO_THAT or
+        sorted2.at(4).compare(STRING_VIEW("typeName")) not_eq I_AM_EQUAL_TO_THAT or
+        sorted2.at(5).compare(STRING_VIEW("uuid")) not_eq I_AM_EQUAL_TO_THAT)
+    {
+        test_number_that_failed = 320;
+        return(failure());
+    }
+
+    Win32FoundationClasses::add_to_unique_sorted_vector_ignore_case(STRING_VIEW("autosubmit"), sorted2);
+
+    if (sorted2.size() not_eq 7)
+    {
+        test_number_that_failed = 321;
+        return(failure());
+    }
+
+    if (sorted2.at(0).compare(STRING_VIEW("autosubmit")) not_eq I_AM_EQUAL_TO_THAT or
+        sorted2.at(1).compare(STRING_VIEW("createdAt")) not_eq I_AM_EQUAL_TO_THAT or
+        sorted2.at(2).compare(STRING_VIEW("keyID")) not_eq I_AM_EQUAL_TO_THAT or
+        sorted2.at(3).compare(STRING_VIEW("locationKey")) not_eq I_AM_EQUAL_TO_THAT or
+        sorted2.at(4).compare(STRING_VIEW("securityLevel")) not_eq I_AM_EQUAL_TO_THAT or
+        sorted2.at(5).compare(STRING_VIEW("typeName")) not_eq I_AM_EQUAL_TO_THAT or
+        sorted2.at(6).compare(STRING_VIEW("uuid")) not_eq I_AM_EQUAL_TO_THAT)
+    {
+        test_number_that_failed = 322;
+        return(failure());
+    }
+
+    test_number_that_failed = 322;
     return( true );
 }

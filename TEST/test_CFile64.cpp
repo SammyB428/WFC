@@ -305,7 +305,7 @@ _Check_return_ bool test_CFile64( _Out_ std::string& class_name, _Out_ int& test
 
    for ( auto const loop_index : Range(100) )
    {
-      std::size_t const number_of_characters = sprintf_s( temp_string, sizeof( temp_string ), "Test String %04lu", (unsigned long) loop_index );
+      std::size_t const number_of_characters = sprintf_s( temp_string, sizeof( temp_string ), "Test String %04zu", loop_index );
 
       if ( strings.at( loop_index ).compare( std::string_view(temp_string, number_of_characters)) not_eq I_AM_EQUAL_TO_THAT )
       {

@@ -74,7 +74,7 @@ _Check_return_ int _tmain( _In_ int const number_of_command_line_arguments, _In_
    GUID const mlang_class_id = { 0x275c23e2, 0x3747, 0x11d0, 0x9f, 0xea, 0x00, 0xaa, 0x00, 0x3f, 0x86, 0x46 };
    GUID const interface_id   = { 0xdccfc164, 0x2b38, 0x11d2, 0xb7, 0xec, 0x00, 0xc0, 0x4f, 0x8f, 0x5d, 0x9a };
 
-   HRESULT result = CoCreateInstance( mlang_class_id, NULL,
+   auto result = CoCreateInstance( mlang_class_id, NULL,
       CLSCTX_INPROC_SERVER bitor CLSCTX_LOCAL_SERVER,
       interface_id,
       (LPVOID *) &i );

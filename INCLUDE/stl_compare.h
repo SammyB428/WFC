@@ -59,19 +59,11 @@ inline _Check_return_ int compare_no_case(_In_ std::wstring const& s, _In_opt_z_
 
 inline _Check_return_ int compare_no_case(_In_ std::string_view s1, _In_ std::string_view s2) noexcept
 {
-    if (s1.length() < s2.length())
-    {
-        return(I_AM_LESS_THAN_THAT);
-    }
-
-    if (s1.length() > s2.length())
-    {
-        return(I_AM_GREATER_THAN_THAT);
-    }
+    auto const length = std::min(s1.length(), s2.length());
 
     std::size_t index = 0;
 
-    while (index < s2.length())
+    while (index < length)
     {
         auto const s1_character = std::toupper(s1.at(index));
         auto const s2_character = std::toupper(s2.at(index));
@@ -86,6 +78,16 @@ inline _Check_return_ int compare_no_case(_In_ std::string_view s1, _In_ std::st
         }
 
         index++;
+    }
+
+    if (s1.length() < s2.length())
+    {
+        return(I_AM_LESS_THAN_THAT);
+    }
+
+    if (s1.length() > s2.length())
+    {
+        return(I_AM_GREATER_THAN_THAT);
     }
 
     return(I_AM_EQUAL_TO_THAT);

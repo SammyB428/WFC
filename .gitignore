@@ -38,3 +38,12 @@
 *.ipch
 *.VC.db
 *.suo
+
+*.idb
+*.ilk
+*.iobj
+*.ipdb
+*.FileListAbsolute.txt
+LIB/x64/*
+Sample/XMLCheck/x64/*
+TEST/Win32_STL_Unicode_Release/*
