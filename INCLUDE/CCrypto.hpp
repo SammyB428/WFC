@@ -146,8 +146,8 @@ class CCryptographicAlgorithm
       // Construction
 
       CCryptographicAlgorithm() noexcept;
-      CCryptographicAlgorithm( _In_ CCryptographicAlgorithm const& source ) noexcept;
-      CCryptographicAlgorithm( _In_ PROV_ENUMALGS const& source ) noexcept;
+      explicit CCryptographicAlgorithm( _In_ CCryptographicAlgorithm const& source ) noexcept;
+      explicit CCryptographicAlgorithm( _In_ PROV_ENUMALGS const& source ) noexcept;
       virtual ~CCryptographicAlgorithm();
 
       // Properties
@@ -226,8 +226,8 @@ class CCryptographicAlgorithm
          hashTLS1PRF   = ALG_SID_TLS1PRF
       };
 
-      DWORD   Identifier{ 0 };
-      DWORD   BitLength{ 0 };
+      DWORD Identifier{ 0 };
+      DWORD BitLength{ 0 };
       std::wstring Name;
 
       // Methods

@@ -65,13 +65,6 @@ class CCOMSucks
        CCOMSucks& operator=(CCOMSucks const&) = delete;
 
        CCOMSucks() noexcept;
-
-      /*
-      ** Destructor should be virtual according to MSJ article in Sept 1992
-      ** "Do More with Less Code:..."
-      */
-
-      virtual ~CCOMSucks();
 };
 
 #endif // COM_SUCKS_CLASS_HEADER

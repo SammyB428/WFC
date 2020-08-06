@@ -53,16 +53,15 @@ class CNetworkFileInformation
 
    public:
 
-      CNetworkFileInformation();
+      CNetworkFileInformation() noexcept;
 
       /*
       ** Can't make Copy take a const pointer because Microsoft screwed up the 
       ** net API header files...
       */
 
-      CNetworkFileInformation( _In_ FILE_INFO_3 const * information_p );
-      CNetworkFileInformation( _In_ CNetworkFileInformation const& source );
-      virtual ~CNetworkFileInformation();
+      explicit CNetworkFileInformation( _In_ FILE_INFO_3 const * information_p ) noexcept;
+      explicit CNetworkFileInformation( _In_ CNetworkFileInformation const& source ) noexcept;
 
       DWORD   ID{ 0 };
       DWORD   Permissions{ 0 };
@@ -75,10 +74,10 @@ class CNetworkFileInformation
       ** net API header files...
       */
 
-      virtual void Copy( _In_ FILE_INFO_3 const * source ) noexcept;
-      virtual void Copy( _In_ CNetworkFileInformation const& source ) noexcept;
-      virtual void Empty( void ) noexcept;
-      virtual CNetworkFileInformation const& operator = ( _In_ CNetworkFileInformation const& source ) noexcept;
+      void Copy( _In_ FILE_INFO_3 const * source ) noexcept;
+      void Copy( _In_ CNetworkFileInformation const& source ) noexcept;
+      void Empty( void ) noexcept;
+      CNetworkFileInformation const& operator = ( _In_ CNetworkFileInformation const& source ) noexcept;
 };
 
 class CNetworkFiles : public CNetwork

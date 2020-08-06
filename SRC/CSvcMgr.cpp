@@ -110,7 +110,7 @@ _Check_return_ bool Win32FoundationClasses::CServiceControlManager::Continue( _I
 
     WFC_TRY
     {
-        SC_HANDLE service_handle = ::OpenServiceW( m_ManagerHandle, service_name, SERVICE_PAUSE_CONTINUE );
+        auto service_handle = ::OpenServiceW( m_ManagerHandle, service_name, SERVICE_PAUSE_CONTINUE );
 
         if ( service_handle == static_cast< SC_HANDLE >( NULL ) )
         {
@@ -120,11 +120,9 @@ _Check_return_ bool Win32FoundationClasses::CServiceControlManager::Continue( _I
             return( false );
         }
 
-        SERVICE_STATUS service_status;
+        SERVICE_STATUS service_status{ 0, 0, 0, 0, 0, 0, 0 };
 
-        ::ZeroMemory( &service_status, sizeof( service_status ) );
-
-        BOOL return_value = ::ControlService( service_handle, SERVICE_CONTROL_CONTINUE, &service_status );
+        auto return_value = ::ControlService( service_handle, SERVICE_CONTROL_CONTINUE, &service_status );
 
         if ( return_value == FALSE )
         {
@@ -349,7 +347,7 @@ _Check_return_ bool Win32FoundationClasses::CServiceControlManager::GetConfigura
 
         configuration.Empty();
 
-        SC_HANDLE service_handle = ::OpenServiceW( m_ManagerHandle, service_name, SERVICE_QUERY_CONFIG );
+        auto service_handle = ::OpenServiceW( m_ManagerHandle, service_name, SERVICE_QUERY_CONFIG );
 
         if ( service_handle == static_cast< SC_HANDLE >( NULL ) )
         {
@@ -363,7 +361,7 @@ _Check_return_ bool Win32FoundationClasses::CServiceControlManager::GetConfigura
 
         DWORD number_of_bytes_needed = 0;
 
-        BOOL return_value = ::QueryServiceConfig( service_handle, 
+        auto return_value = ::QueryServiceConfig( service_handle, 
                 reinterpret_cast<QUERY_SERVICE_CONFIG *>(buffer.get()),
                 4000,
                 &number_of_bytes_needed );
@@ -416,7 +414,7 @@ _Check_return_ bool Win32FoundationClasses::CServiceControlManager::GetDependenc
 
     WFC_TRY
     {
-        SC_HANDLE service_handle = ::OpenServiceW( m_ManagerHandle, service_name, SERVICE_ENUMERATE_DEPENDENTS );
+        auto service_handle = ::OpenServiceW( m_ManagerHandle, service_name, SERVICE_ENUMERATE_DEPENDENTS );
 
         if ( service_handle == static_cast< SC_HANDLE >( NULL ) )
         {
@@ -436,7 +434,7 @@ _Check_return_ bool Win32FoundationClasses::CServiceControlManager::GetDependenc
 
         ZeroMemory( status_array.get(), buffer_size );
 
-        BOOL return_value = ::EnumDependentServices( service_handle,
+        auto return_value = ::EnumDependentServices( service_handle,
                 SERVICE_STATE_ALL, // Both running and stopped services
                 status_array.get(),
                 buffer_size,
@@ -932,7 +930,7 @@ _Check_return_ bool Win32FoundationClasses::CServiceControlManager::Pause( __in_
             return( false );
         }
 
-        SC_HANDLE service_handle = ::OpenServiceW( m_ManagerHandle, service_name, SERVICE_PAUSE_CONTINUE );
+        auto service_handle = ::OpenServiceW( m_ManagerHandle, service_name, SERVICE_PAUSE_CONTINUE );
 
         if ( service_handle == static_cast< SC_HANDLE >( NULL ) )
         {
@@ -942,11 +940,9 @@ _Check_return_ bool Win32FoundationClasses::CServiceControlManager::Pause( __in_
             return( false );
         }
 
-        SERVICE_STATUS service_status;
+        SERVICE_STATUS service_status{ 0, 0, 0, 0, 0, 0, 0 };
 
-        ::ZeroMemory( &service_status, sizeof( service_status ) );
-
-        BOOL return_value = ::ControlService( service_handle, SERVICE_CONTROL_PAUSE, &service_status );
+        auto return_value = ::ControlService( service_handle, SERVICE_CONTROL_PAUSE, &service_status );
 
         if ( return_value == FALSE )
         {
@@ -997,7 +993,7 @@ _Check_return_ bool Win32FoundationClasses::CServiceControlManager::Remove( __in
             return( false );
         }
 
-        SC_HANDLE service_handle = ::OpenServiceW( m_ManagerHandle, service_name, SERVICE_ALL_ACCESS );
+        auto service_handle = ::OpenServiceW( m_ManagerHandle, service_name, SERVICE_ALL_ACCESS );
 
         if ( service_handle == static_cast< SC_HANDLE >( NULL ) )
         {
@@ -1317,7 +1313,7 @@ _Check_return_ bool Win32FoundationClasses::CServiceControlManager::Stop( _In_z_
         // I was not opening the service with permission to query it's status.
         // That caused the QueryServiceStatus() later on to fail.
 
-        SC_HANDLE service_handle = ::OpenServiceW( m_ManagerHandle, service_name, SERVICE_STOP bitor SERVICE_QUERY_STATUS );
+        auto service_handle = ::OpenServiceW( m_ManagerHandle, service_name, SERVICE_STOP bitor SERVICE_QUERY_STATUS );
 
         if ( service_handle == static_cast< SC_HANDLE >( NULL ) )
         {
@@ -1327,11 +1323,9 @@ _Check_return_ bool Win32FoundationClasses::CServiceControlManager::Stop( _In_z_
             return( false );
         }
 
-        SERVICE_STATUS service_status;
+        SERVICE_STATUS service_status{ 0, 0, 0, 0, 0, 0, 0 };
 
-        ::ZeroMemory( &service_status, sizeof( service_status ) );
-
-        BOOL return_value = ::ControlService( service_handle, SERVICE_CONTROL_STOP, &service_status );
+        auto return_value = ::ControlService( service_handle, SERVICE_CONTROL_STOP, &service_status );
 
         if ( return_value == FALSE )
         {
@@ -1399,7 +1393,7 @@ _Check_return_ bool Win32FoundationClasses::CServiceControlManager::UnlockDataba
         return( true );
     }
 
-   BOOL return_value = ::UnlockServiceDatabase( m_DatabaseLockHandle );
+    auto return_value = ::UnlockServiceDatabase( m_DatabaseLockHandle );
 
     if ( return_value == FALSE )
     {
@@ -1451,7 +1445,7 @@ _Check_return_ bool Win32FoundationClasses::CServiceControlManager::WaitForStop(
             return(false);
         }
 
-        SC_HANDLE service_handle = ::OpenServiceW(m_ManagerHandle, service_name, SERVICE_QUERY_STATUS);
+        auto service_handle = ::OpenServiceW(m_ManagerHandle, service_name, SERVICE_QUERY_STATUS);
 
         if (service_handle == static_cast<SC_HANDLE>(NULL))
         {
@@ -1461,9 +1455,7 @@ _Check_return_ bool Win32FoundationClasses::CServiceControlManager::WaitForStop(
             return(false);
         }
 
-        SERVICE_STATUS service_status;
-
-        ::ZeroMemory(&service_status, sizeof(service_status));
+        SERVICE_STATUS service_status{ 0, 0, 0, 0, 0, 0, 0 };
 
         if (::QueryServiceStatus(service_handle, &service_status) == FALSE)
         {
@@ -1516,13 +1508,7 @@ _Check_return_ bool Win32FoundationClasses::CServiceControlManager::WaitForStop(
         WFC_END_CATCH_ALL
 }
 
-Win32FoundationClasses::CServiceNameAndStatusA::CServiceNameAndStatusA()
-{
-    WFC_VALIDATE_POINTER( this );
-    Empty();
-}
-
-Win32FoundationClasses::CServiceNameAndStatusA::~CServiceNameAndStatusA()
+Win32FoundationClasses::CServiceNameAndStatusA::CServiceNameAndStatusA() noexcept
 {
     WFC_VALIDATE_POINTER( this );
     Empty();
@@ -1722,13 +1708,7 @@ void Win32FoundationClasses::CServiceNameAndStatusA::Empty( void ) noexcept
     ServiceStatus.dwWaitHint                = 0;
 }
 
-Win32FoundationClasses::CServiceNameAndStatusW::CServiceNameAndStatusW()
-{
-    WFC_VALIDATE_POINTER( this );
-    Empty();
-}
-
-Win32FoundationClasses::CServiceNameAndStatusW::~CServiceNameAndStatusW()
+Win32FoundationClasses::CServiceNameAndStatusW::CServiceNameAndStatusW() noexcept
 {
     WFC_VALIDATE_POINTER( this );
     Empty();

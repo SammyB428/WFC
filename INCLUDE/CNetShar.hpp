@@ -53,11 +53,10 @@ class CNetworkShareInformation
 
    public:
 
-      CNetworkShareInformation();
-      CNetworkShareInformation(_In_ SHARE_INFO_1 const * information_p );
-      CNetworkShareInformation(_In_ SHARE_INFO_2 const * information_p );
-      CNetworkShareInformation(_In_ CNetworkShareInformation const& source );
-      virtual ~CNetworkShareInformation();
+      CNetworkShareInformation() noexcept;
+      explicit CNetworkShareInformation(_In_ SHARE_INFO_1 const * information_p ) noexcept;
+      explicit CNetworkShareInformation(_In_ SHARE_INFO_2 const * information_p ) noexcept;
+      explicit CNetworkShareInformation(_In_ CNetworkShareInformation const& source ) noexcept;
 
       std::wstring NetworkName;
       DWORD   Type{ 0 };
@@ -73,11 +72,11 @@ class CNetworkShareInformation
       ** net API header files...
       */
 
-      virtual void Copy( _In_ SHARE_INFO_1 const * source ) noexcept;
-      virtual void Copy(_In_ SHARE_INFO_2 const * source ) noexcept;
-      virtual void Copy(_In_ CNetworkShareInformation const& source ) noexcept;
-      virtual void Empty( void ) noexcept;
-      virtual CNetworkShareInformation const& operator = (_In_ CNetworkShareInformation const& source ) noexcept;
+      void Copy( _In_ SHARE_INFO_1 const * source ) noexcept;
+      void Copy(_In_ SHARE_INFO_2 const * source ) noexcept;
+      void Copy(_In_ CNetworkShareInformation const& source ) noexcept;
+      void Empty( void ) noexcept;
+      CNetworkShareInformation const& operator = (_In_ CNetworkShareInformation const& source ) noexcept;
 };
 
 class CNetworkShares : public CNetwork

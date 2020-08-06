@@ -53,42 +53,36 @@ static char THIS_FILE[] = __FILE__;
 
 // Here's the ASCII Version
 
-Win32FoundationClasses::CServiceConfigurationA::CServiceConfigurationA()
+Win32FoundationClasses::CServiceConfigurationA::CServiceConfigurationA() noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Empty();
 }
 
-Win32FoundationClasses::CServiceConfigurationA::CServiceConfigurationA( _In_ Win32FoundationClasses::CServiceConfigurationA const& source )
+Win32FoundationClasses::CServiceConfigurationA::CServiceConfigurationA( _In_ Win32FoundationClasses::CServiceConfigurationA const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );
 }
 
-Win32FoundationClasses::CServiceConfigurationA::CServiceConfigurationA( _In_ Win32FoundationClasses::CServiceConfigurationA const * source )
+Win32FoundationClasses::CServiceConfigurationA::CServiceConfigurationA( _In_ Win32FoundationClasses::CServiceConfigurationA const * source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
    Copy( source );
 }
 
-Win32FoundationClasses::CServiceConfigurationA::CServiceConfigurationA( _In_ _QUERY_SERVICE_CONFIGA const& source )
+Win32FoundationClasses::CServiceConfigurationA::CServiceConfigurationA( _In_ _QUERY_SERVICE_CONFIGA const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );
 }
 
-Win32FoundationClasses::CServiceConfigurationA::CServiceConfigurationA( _In_ _QUERY_SERVICE_CONFIGA const * source )
+Win32FoundationClasses::CServiceConfigurationA::CServiceConfigurationA( _In_ _QUERY_SERVICE_CONFIGA const * source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
    Copy( source );
-}
-
-Win32FoundationClasses::CServiceConfigurationA::~CServiceConfigurationA()
-{
-   WFC_VALIDATE_POINTER( this );
-   Empty();
 }
 
 void Win32FoundationClasses::CServiceConfigurationA::Copy( _In_ Win32FoundationClasses::CServiceConfigurationA const& source ) noexcept
@@ -371,42 +365,36 @@ void Win32FoundationClasses::CServiceConfigurationA::Dump( CDumpContext& dump_co
 
 // Here's the UNICODE version
 
-Win32FoundationClasses::CServiceConfigurationW::CServiceConfigurationW()
+Win32FoundationClasses::CServiceConfigurationW::CServiceConfigurationW() noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Empty();
 }
 
-Win32FoundationClasses::CServiceConfigurationW::CServiceConfigurationW( _In_ Win32FoundationClasses::CServiceConfigurationW const& source )
+Win32FoundationClasses::CServiceConfigurationW::CServiceConfigurationW( _In_ Win32FoundationClasses::CServiceConfigurationW const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );
 }
 
-Win32FoundationClasses::CServiceConfigurationW::CServiceConfigurationW( _In_ Win32FoundationClasses::CServiceConfigurationW const * source )
+Win32FoundationClasses::CServiceConfigurationW::CServiceConfigurationW( _In_ Win32FoundationClasses::CServiceConfigurationW const * source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
    Copy( source );
 }
 
-Win32FoundationClasses::CServiceConfigurationW::CServiceConfigurationW( _In_ QUERY_SERVICE_CONFIGW const& source )
+Win32FoundationClasses::CServiceConfigurationW::CServiceConfigurationW( _In_ QUERY_SERVICE_CONFIGW const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );
 }
 
-Win32FoundationClasses::CServiceConfigurationW::CServiceConfigurationW( _In_ QUERY_SERVICE_CONFIGW const * source )
+Win32FoundationClasses::CServiceConfigurationW::CServiceConfigurationW( _In_ QUERY_SERVICE_CONFIGW const * source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
    Copy( source );
-}
-
-Win32FoundationClasses::CServiceConfigurationW::~CServiceConfigurationW()
-{
-   WFC_VALIDATE_POINTER( this );
-   Empty();
 }
 
 void Win32FoundationClasses::CServiceConfigurationW::Copy( _In_ Win32FoundationClasses::CServiceConfigurationW const& source ) noexcept

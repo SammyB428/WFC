@@ -54,92 +54,86 @@ static char THIS_FILE[] = __FILE__;
 #define new DEBUG_NEW
 #endif // _DEBUG
 
-Win32FoundationClasses::CNetworkUserInformation::CNetworkUserInformation()
+Win32FoundationClasses::CNetworkUserInformation::CNetworkUserInformation() noexcept
 {
    WFC_VALIDATE_POINTER( this );
    m_Initialize();
 }
 
-Win32FoundationClasses::CNetworkUserInformation::CNetworkUserInformation( _In_ USER_INFO_0 const *source )
+Win32FoundationClasses::CNetworkUserInformation::CNetworkUserInformation( _In_ USER_INFO_0 const *source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
    Copy( source );
 }
 
-Win32FoundationClasses::CNetworkUserInformation::CNetworkUserInformation( _In_ USER_INFO_1 const *source )
+Win32FoundationClasses::CNetworkUserInformation::CNetworkUserInformation( _In_ USER_INFO_1 const *source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
    Copy( source );
 }
 
-Win32FoundationClasses::CNetworkUserInformation::CNetworkUserInformation( _In_ USER_INFO_2 const *source )
+Win32FoundationClasses::CNetworkUserInformation::CNetworkUserInformation( _In_ USER_INFO_2 const *source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
    Copy( source );
 }
 
-Win32FoundationClasses::CNetworkUserInformation::CNetworkUserInformation( _In_ USER_INFO_3 const *source )
+Win32FoundationClasses::CNetworkUserInformation::CNetworkUserInformation( _In_ USER_INFO_3 const *source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
    Copy( source );
 }
 
-Win32FoundationClasses::CNetworkUserInformation::CNetworkUserInformation( _In_ USER_INFO_10 const *source )
+Win32FoundationClasses::CNetworkUserInformation::CNetworkUserInformation( _In_ USER_INFO_10 const *source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
    Copy( source );
 }
 
-Win32FoundationClasses::CNetworkUserInformation::CNetworkUserInformation( _In_ USER_INFO_11 const *source )
+Win32FoundationClasses::CNetworkUserInformation::CNetworkUserInformation( _In_ USER_INFO_11 const *source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
    Copy( source );
 }
 
-Win32FoundationClasses::CNetworkUserInformation::CNetworkUserInformation( _In_ USER_INFO_20 const *source )
+Win32FoundationClasses::CNetworkUserInformation::CNetworkUserInformation( _In_ USER_INFO_20 const *source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
    Copy( source );
 }
 
-Win32FoundationClasses::CNetworkUserInformation::CNetworkUserInformation( _In_ USER_INFO_21 const *source )
+Win32FoundationClasses::CNetworkUserInformation::CNetworkUserInformation( _In_ USER_INFO_21 const *source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
    Copy( source );
 }
 
-Win32FoundationClasses::CNetworkUserInformation::CNetworkUserInformation( _In_ USER_INFO_22 const *source )
+Win32FoundationClasses::CNetworkUserInformation::CNetworkUserInformation( _In_ USER_INFO_22 const *source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
    Copy( source );
 }
 
-Win32FoundationClasses::CNetworkUserInformation::CNetworkUserInformation( _In_ Win32FoundationClasses::CNetworkUserInformation const *source )
+Win32FoundationClasses::CNetworkUserInformation::CNetworkUserInformation( _In_ Win32FoundationClasses::CNetworkUserInformation const *source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
    Copy( source );
 }
 
-Win32FoundationClasses::CNetworkUserInformation::CNetworkUserInformation( _In_ Win32FoundationClasses::CNetworkUserInformation const& source )
+Win32FoundationClasses::CNetworkUserInformation::CNetworkUserInformation( _In_ Win32FoundationClasses::CNetworkUserInformation const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );
-}
-
-Win32FoundationClasses::CNetworkUserInformation::~CNetworkUserInformation()
-{
-   WFC_VALIDATE_POINTER( this );
-   m_Initialize();
 }
 
 void Win32FoundationClasses::CNetworkUserInformation::Copy( _In_ USER_INFO_0 const *source ) noexcept

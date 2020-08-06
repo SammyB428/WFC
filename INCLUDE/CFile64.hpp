@@ -165,7 +165,7 @@ class CFile64
       _Check_return_ CFile64& operator=(_In_ CFile64 const&) = delete;
 
       CFile64() noexcept;
-      CFile64( _In_ HANDLE const file_handle ) noexcept;
+      explicit CFile64( _In_ HANDLE const file_handle ) noexcept;
       CFile64(_In_ std::filesystem::path const& filename, _In_ UINT const open_flags ) noexcept;
       virtual ~CFile64();
 

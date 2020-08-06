@@ -54,29 +54,23 @@ static char THIS_FILE[] = __FILE__;
 #define new DEBUG_NEW
 #endif // _DEBUG
 
-Win32FoundationClasses::CNetworkSessionInformation::CNetworkSessionInformation()
+Win32FoundationClasses::CNetworkSessionInformation::CNetworkSessionInformation() noexcept
 {
    WFC_VALIDATE_POINTER( this );
    m_Initialize();
 }
 
-Win32FoundationClasses::CNetworkSessionInformation::CNetworkSessionInformation( _In_ SESSION_INFO_502 const * source )
+Win32FoundationClasses::CNetworkSessionInformation::CNetworkSessionInformation( _In_ SESSION_INFO_502 const * source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
    Copy( source );
 }
 
-Win32FoundationClasses::CNetworkSessionInformation::CNetworkSessionInformation( _In_ Win32FoundationClasses::CNetworkSessionInformation const& source )
+Win32FoundationClasses::CNetworkSessionInformation::CNetworkSessionInformation( _In_ Win32FoundationClasses::CNetworkSessionInformation const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );
-}
-
-Win32FoundationClasses::CNetworkSessionInformation::~CNetworkSessionInformation()
-{
-   WFC_VALIDATE_POINTER( this );
-   m_Initialize();
 }
 
 void Win32FoundationClasses::CNetworkSessionInformation::Copy( _In_ SESSION_INFO_502 const * source ) noexcept

@@ -65,8 +65,7 @@ class CRandomNumberGenerator2
    public:
 
       CRandomNumberGenerator2() noexcept;
-      CRandomNumberGenerator2( _In_ uint32_t const new_seed ) noexcept;
-     ~CRandomNumberGenerator2();
+      explicit CRandomNumberGenerator2( _In_ uint32_t const new_seed ) noexcept;
 
       /*
       ** Methods

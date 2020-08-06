@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 1995-2014, Samuel R. Blackburn
+** Copyright, 1995-2020, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -56,17 +56,16 @@ class CUINT64 : public SIXTY_FOUR_BIT_UNSIGNED_INTEGER
       // Construction
 
        CUINT64() noexcept;
-      CUINT64( _In_ CUINT64 const& source ) noexcept;
-      CUINT64( _In_ SIXTY_FOUR_BIT_UNSIGNED_INTEGER const&  source ) noexcept;
-      CUINT64( _In_ SIXTY_FOUR_BIT_UNSIGNED_INTEGER const * source ) noexcept;
-      virtual ~CUINT64();
+       explicit CUINT64( _In_ CUINT64 const& source ) noexcept;
+       explicit CUINT64( _In_ SIXTY_FOUR_BIT_UNSIGNED_INTEGER const&  source ) noexcept;
+       explicit CUINT64( _In_ SIXTY_FOUR_BIT_UNSIGNED_INTEGER const * source ) noexcept;
 
       // Methods
 
-      virtual void Copy( _In_ CUINT64 const& source ) noexcept;
-      virtual void Copy( _In_ SIXTY_FOUR_BIT_UNSIGNED_INTEGER const * source ) noexcept;
-      virtual void Copy( _In_ SIXTY_FOUR_BIT_UNSIGNED_INTEGER const&  source ) noexcept;
-      virtual void Empty( void ) noexcept;
+      void Copy( _In_ CUINT64 const& source ) noexcept;
+      void Copy( _In_ SIXTY_FOUR_BIT_UNSIGNED_INTEGER const * source ) noexcept;
+      void Copy( _In_ SIXTY_FOUR_BIT_UNSIGNED_INTEGER const&  source ) noexcept;
+      void Empty( void ) noexcept;
 
       // Operators
 
@@ -76,9 +75,7 @@ class CUINT64 : public SIXTY_FOUR_BIT_UNSIGNED_INTEGER
       // Instrumentation
 
 #if defined( _DEBUG ) && ! defined( WFC_NO_DUMPING )
-
-      virtual void Dump( CDumpContext& dump_context ) const;
-
+      void Dump( CDumpContext& dump_context ) const;
 #endif
 };
 
@@ -89,19 +86,19 @@ class CMTFDateTime : public MTF_DATE_TIME
       // Construction
 
        CMTFDateTime() noexcept;
-      CMTFDateTime( _In_ CMTFDateTime const&   source ) noexcept;
-      CMTFDateTime( _In_ MTF_DATE_TIME const * source ) noexcept;
-      CMTFDateTime( _In_ MTF_DATE_TIME const&  source ) noexcept;
-      CMTFDateTime( _In_ CTime const&          source ) noexcept;
-      virtual ~CMTFDateTime();
+       explicit CMTFDateTime( _In_ CMTFDateTime const&   source ) noexcept;
+       explicit CMTFDateTime( _In_ MTF_DATE_TIME const * source ) noexcept;
+       explicit CMTFDateTime( _In_ MTF_DATE_TIME const&  source ) noexcept;
+       explicit CMTFDateTime( _In_ CTime const&          source ) noexcept;
 
       // Methods
 
-      virtual void Convert( _Out_ CTime& destination ) const noexcept;
-      virtual void Copy( _In_ CMTFDateTime const& source ) noexcept;
-      virtual void Copy( _In_ MTF_DATE_TIME const * source ) noexcept;
-      virtual void Copy( _In_ CTime const& source ) noexcept;
-      virtual void Empty( void ) noexcept;
+      void Convert( _Out_ CTime& destination ) const noexcept;
+      void Copy( _In_ CMTFDateTime const& source ) noexcept;
+      void Copy( _In_ MTF_DATE_TIME const * source ) noexcept;
+      void Copy( _In_ MTF_DATE_TIME const& source) noexcept;
+      void Copy( _In_ CTime const& source ) noexcept;
+      void Empty( void ) noexcept;
 
       // Operators
 
@@ -112,9 +109,7 @@ class CMTFDateTime : public MTF_DATE_TIME
       // Instrumentation
 
 #if defined( _DEBUG ) && ! defined( WFC_NO_DUMPING )
-
-      virtual void Dump( CDumpContext& dump_context ) const;
-
+      void Dump( CDumpContext& dump_context ) const;
 #endif
 };
 
@@ -124,21 +119,18 @@ class CMTFTapeAddress : public MTF_TAPE_ADDRESS
 
       // Construction
 
-      CMTFTapeAddress();
-      CMTFTapeAddress( _In_ CMTFTapeAddress const& source );
-      CMTFTapeAddress( _In_ MTF_TAPE_ADDRESS const * source );
-      virtual ~CMTFTapeAddress();
+      CMTFTapeAddress() noexcept;
+      explicit CMTFTapeAddress( _In_ CMTFTapeAddress const& source ) noexcept;
+      explicit CMTFTapeAddress( _In_ MTF_TAPE_ADDRESS const * source ) noexcept;
 
       // Methods
 
-      virtual void Copy( _In_ CMTFTapeAddress const& source ) noexcept;
-      virtual void Copy( _In_ MTF_TAPE_ADDRESS const * source ) noexcept;
-      virtual void Empty( void ) noexcept;
+      void Copy( _In_ CMTFTapeAddress const& source ) noexcept;
+      void Copy( _In_ MTF_TAPE_ADDRESS const * source ) noexcept;
+      void Empty( void ) noexcept;
 
 #if defined( _DEBUG ) && ! defined( WFC_NO_DUMPING )
-
-      virtual void Dump( CDumpContext& dump_context ) const;
-
+      void Dump( CDumpContext& dump_context ) const;
 #endif
 };
 
@@ -148,21 +140,18 @@ class CMTFDataBlockHeader : public MTF_DB_HDR
 
       // Construction
 
-      CMTFDataBlockHeader();
-      CMTFDataBlockHeader( _In_ CMTFDataBlockHeader const& source );
-      CMTFDataBlockHeader( _In_ MTF_DB_HDR const * source );
-      virtual ~CMTFDataBlockHeader();
+      CMTFDataBlockHeader() noexcept;
+      explicit CMTFDataBlockHeader( _In_ CMTFDataBlockHeader const& source ) noexcept;
+      explicit CMTFDataBlockHeader( _In_ MTF_DB_HDR const * source ) noexcept;
 
       // Methods
 
-      virtual void Copy( _In_ CMTFDataBlockHeader const& source ) noexcept;
-      virtual void Copy( _In_ MTF_DB_HDR const * source ) noexcept;
-      virtual void Empty( void ) noexcept;
+      void Copy( _In_ CMTFDataBlockHeader const& source ) noexcept;
+      void Copy( _In_ MTF_DB_HDR const * source ) noexcept;
+      void Empty( void ) noexcept;
 
 #if defined( _DEBUG ) && ! defined( WFC_NO_DUMPING )
-
-      virtual void Dump( CDumpContext& dump_context ) const;
-
+      void Dump( CDumpContext& dump_context ) const;
 #endif
 };
 
@@ -172,21 +161,18 @@ class CMTFTape : public MTF_TAPE
 
       // Construction
 
-      CMTFTape();
-      CMTFTape( _In_ CMTFTape const& source );
-      CMTFTape(_In_ MTF_TAPE const * source );
-      virtual ~CMTFTape();
+      CMTFTape() noexcept;
+      explicit CMTFTape( _In_ CMTFTape const& source ) noexcept;
+      explicit CMTFTape(_In_ MTF_TAPE const * source ) noexcept;
 
       // Methods
 
-      virtual void Copy( _In_ CMTFTape const& source ) noexcept;
-      virtual void Copy( _In_ MTF_TAPE const * source ) noexcept;
-      virtual void Empty( void ) noexcept;
+      void Copy( _In_ CMTFTape const& source ) noexcept;
+      void Copy( _In_ MTF_TAPE const * source ) noexcept;
+      void Empty( void ) noexcept;
 
 #if defined( _DEBUG ) && ! defined( WFC_NO_DUMPING )
-
-      virtual void Dump( CDumpContext& dump_context ) const;
-
+      void Dump( CDumpContext& dump_context ) const;
 #endif
 };
 

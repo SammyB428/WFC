@@ -69,12 +69,6 @@ Win32FoundationClasses::CMixerCapabilities::CMixerCapabilities( _In_ MIXERCAPS c
    Copy( source );
 }
 
-Win32FoundationClasses::CMixerCapabilities::~CMixerCapabilities()
-{
-   WFC_VALIDATE_POINTER( this );
-   Empty();
-}
-
 void Win32FoundationClasses::CMixerCapabilities::Copy( _In_ Win32FoundationClasses::CMixerCapabilities const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );

@@ -53,15 +53,8 @@ class CJulianDate // Don't use this, I'm not finished with it yet
 
    public:
 
-      CJulianDate() noexcept { m_JulianDays = 0.0; };
-      CJulianDate( _In_ CJulianDate const& source ) noexcept { m_JulianDays = source.m_JulianDays; };
-
-      /*
-      ** Destructor should be virtual according to MSJ article in Sept 1992
-      ** "Do More with Less Code:..."
-      */
-
-      virtual ~CJulianDate();
+      inline constexpr CJulianDate() noexcept { m_JulianDays = 0.0; };
+      inline constexpr explicit CJulianDate( _In_ CJulianDate const& source ) noexcept { m_JulianDays = source.m_JulianDays; };
 
       /*
       ** Methods
@@ -69,8 +62,8 @@ class CJulianDate // Don't use this, I'm not finished with it yet
 
       inline  constexpr void   Copy(_In_ CJulianDate const& source ) noexcept { m_JulianDays = source.m_JulianDays; }; // Don't use this
       inline  constexpr _Check_return_ double Get( void ) const noexcept { return( m_JulianDays ); }; // Don't use this
-      virtual _Check_return_ int    GetDayOfWeek( void ) const noexcept; // Don't use this
-      virtual _Check_return_ bool   Set(_In_ int const year, _In_ int const month, _In_ int const day, _In_ int const hours = 0, _In_ int const minutes = 0, _In_ int const seconds = 0 ) noexcept; // Don't use this
+      _Check_return_ int    GetDayOfWeek( void ) const noexcept; // Don't use this
+      _Check_return_ bool   Set(_In_ int const year, _In_ int const month, _In_ int const day, _In_ int const hours = 0, _In_ int const minutes = 0, _In_ int const seconds = 0 ) noexcept; // Don't use this
 
       /*
       ** Operators
@@ -79,9 +72,7 @@ class CJulianDate // Don't use this, I'm not finished with it yet
       inline constexpr CJulianDate& operator=( _In_  CJulianDate const& source ) noexcept { m_JulianDays = source.m_JulianDays; return( *this ); };
 
 #if defined( _DEBUG ) && ! defined( WFC_NO_DUMPING )
-
-      virtual void Dump( CDumpContext& dump_context ) const;
-
+      void Dump( CDumpContext& dump_context ) const;
 #endif // _DEBUG
 };   
 

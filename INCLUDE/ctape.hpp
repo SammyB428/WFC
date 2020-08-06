@@ -49,23 +49,19 @@ class CTapeGetDriveParameters : public _TAPE_GET_DRIVE_PARAMETERS
 {
    public:
 
-      CTapeGetDriveParameters();
-      CTapeGetDriveParameters( _In_ CTapeGetDriveParameters const& source );
-      CTapeGetDriveParameters( _In_ TAPE_GET_DRIVE_PARAMETERS const * source );
+      CTapeGetDriveParameters() noexcept;
+      explicit CTapeGetDriveParameters( _In_ CTapeGetDriveParameters const& source ) noexcept;
+      explicit CTapeGetDriveParameters( _In_ TAPE_GET_DRIVE_PARAMETERS const * source ) noexcept;
 
-      virtual ~CTapeGetDriveParameters();
+      void Copy( _In_ CTapeGetDriveParameters const& source ) noexcept;
+      void Copy( _In_ TAPE_GET_DRIVE_PARAMETERS const * source ) noexcept;
+      void Empty( void ) noexcept;
 
-      virtual void Copy( _In_ CTapeGetDriveParameters const& source ) noexcept;
-      virtual void Copy( _In_ TAPE_GET_DRIVE_PARAMETERS const * source ) noexcept;
-      virtual void Empty( void ) noexcept;
-
-      virtual CTapeGetDriveParameters& operator=( _In_ CTapeGetDriveParameters const&   source ) noexcept;
-      virtual CTapeGetDriveParameters& operator=( _In_ TAPE_GET_DRIVE_PARAMETERS const& source ) noexcept;
+      CTapeGetDriveParameters& operator=( _In_ CTapeGetDriveParameters const&   source ) noexcept;
+      CTapeGetDriveParameters& operator=( _In_ TAPE_GET_DRIVE_PARAMETERS const& source ) noexcept;
 
 #if defined( _DEBUG ) && ! defined( WFC_NO_DUMPING )
-
-      virtual void Dump( CDumpContext& dump_context ) const;
-
+      void Dump( CDumpContext& dump_context ) const;
 #endif
 };
 
@@ -73,23 +69,19 @@ class CTapeGetMediaParameters : public _TAPE_GET_MEDIA_PARAMETERS
 {
    public:
 
-      CTapeGetMediaParameters();
-      CTapeGetMediaParameters( _In_ CTapeGetMediaParameters const& source );
-      CTapeGetMediaParameters( _In_ TAPE_GET_MEDIA_PARAMETERS const * source );
+      CTapeGetMediaParameters() noexcept;
+      explicit CTapeGetMediaParameters( _In_ CTapeGetMediaParameters const& source ) noexcept;
+      explicit CTapeGetMediaParameters( _In_ TAPE_GET_MEDIA_PARAMETERS const * source ) noexcept;
 
-      virtual ~CTapeGetMediaParameters();
+      void Copy( _In_ CTapeGetMediaParameters const& source ) noexcept;
+      void Copy( _In_ TAPE_GET_MEDIA_PARAMETERS const * source ) noexcept;
+      void Empty( void ) noexcept;
 
-      virtual void Copy( _In_ CTapeGetMediaParameters const& source ) noexcept;
-      virtual void Copy( _In_ TAPE_GET_MEDIA_PARAMETERS const * source ) noexcept;
-      virtual void Empty( void ) noexcept;
-
-      virtual CTapeGetMediaParameters& operator = ( _In_ CTapeGetMediaParameters const&   source ) noexcept;
-      virtual CTapeGetMediaParameters& operator = ( _In_ TAPE_GET_MEDIA_PARAMETERS const& source ) noexcept;
+      CTapeGetMediaParameters& operator = ( _In_ CTapeGetMediaParameters const&   source ) noexcept;
+      CTapeGetMediaParameters& operator = ( _In_ TAPE_GET_MEDIA_PARAMETERS const& source ) noexcept;
 
 #if defined( _DEBUG ) && ! defined( WFC_NO_DUMPING )
-
-      virtual void Dump( CDumpContext& dump_context ) const;
-
+      void Dump( CDumpContext& dump_context ) const;
 #endif
 };
 
@@ -98,22 +90,18 @@ class CTapeSetDriveParameters : public _TAPE_SET_DRIVE_PARAMETERS
    public:
 
       CTapeSetDriveParameters() noexcept;
-      CTapeSetDriveParameters( _In_ CTapeSetDriveParameters const& source ) noexcept;
-      CTapeSetDriveParameters( _In_ TAPE_SET_DRIVE_PARAMETERS const * source ) noexcept;
+      explicit CTapeSetDriveParameters( _In_ CTapeSetDriveParameters const& source ) noexcept;
+      explicit CTapeSetDriveParameters( _In_ TAPE_SET_DRIVE_PARAMETERS const * source ) noexcept;
 
-      virtual ~CTapeSetDriveParameters();
+      void Copy( _In_ CTapeSetDriveParameters const& source ) noexcept;
+      void Copy( _In_ TAPE_SET_DRIVE_PARAMETERS const * source ) noexcept;
+      void Empty( void ) noexcept;
 
-      virtual void Copy( _In_ CTapeSetDriveParameters const& source ) noexcept;
-      virtual void Copy( _In_ TAPE_SET_DRIVE_PARAMETERS const * source ) noexcept;
-      virtual void Empty( void ) noexcept;
-
-      virtual CTapeSetDriveParameters& operator=( _In_ CTapeSetDriveParameters const&   source ) noexcept;
-      virtual CTapeSetDriveParameters& operator=( _In_ TAPE_SET_DRIVE_PARAMETERS const& source ) noexcept;
+      CTapeSetDriveParameters& operator=( _In_ CTapeSetDriveParameters const&   source ) noexcept;
+      CTapeSetDriveParameters& operator=( _In_ TAPE_SET_DRIVE_PARAMETERS const& source ) noexcept;
 
 #if defined( _DEBUG ) && ! defined( WFC_NO_DUMPING )
-
-      virtual void Dump( CDumpContext& dump_context ) const;
-
+      void Dump( CDumpContext& dump_context ) const;
 #endif
 };
 
@@ -122,22 +110,18 @@ class CTapeSetMediaParameters : public _TAPE_SET_MEDIA_PARAMETERS
    public:
 
       CTapeSetMediaParameters() noexcept;
-      CTapeSetMediaParameters( _In_ CTapeSetMediaParameters const& source ) noexcept;
-      CTapeSetMediaParameters( _In_ TAPE_SET_MEDIA_PARAMETERS const * source ) noexcept;
+      explicit CTapeSetMediaParameters( _In_ CTapeSetMediaParameters const& source ) noexcept;
+      explicit CTapeSetMediaParameters( _In_ TAPE_SET_MEDIA_PARAMETERS const * source ) noexcept;
 
-      virtual ~CTapeSetMediaParameters();
+      void Copy( _In_ CTapeSetMediaParameters const& source ) noexcept;
+      void Copy( _In_ TAPE_SET_MEDIA_PARAMETERS const * source ) noexcept;
+      void Empty( void ) noexcept;
 
-      virtual void Copy( _In_ CTapeSetMediaParameters const& source ) noexcept;
-      virtual void Copy( _In_ TAPE_SET_MEDIA_PARAMETERS const * source ) noexcept;
-      virtual void Empty( void ) noexcept;
-
-      virtual CTapeSetMediaParameters& operator=( _In_ CTapeSetMediaParameters const&   source ) noexcept;
-      virtual CTapeSetMediaParameters& operator=( _In_ TAPE_SET_MEDIA_PARAMETERS const& source ) noexcept;
+      CTapeSetMediaParameters& operator=( _In_ CTapeSetMediaParameters const&   source ) noexcept;
+      CTapeSetMediaParameters& operator=( _In_ TAPE_SET_MEDIA_PARAMETERS const& source ) noexcept;
 
 #if defined( _DEBUG ) && ! defined( WFC_NO_DUMPING )
-
-      virtual void Dump( CDumpContext& dump_context ) const;
-
+      void Dump( CDumpContext& dump_context ) const;
 #endif
 };
 

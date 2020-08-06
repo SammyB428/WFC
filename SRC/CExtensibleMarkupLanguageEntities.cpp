@@ -62,11 +62,6 @@ Win32FoundationClasses::CExtensibleMarkupLanguageEntities::CExtensibleMarkupLang
    Copy( source );
 }
 
-Win32FoundationClasses::CExtensibleMarkupLanguageEntities::~CExtensibleMarkupLanguageEntities()
-{
-   WFC_VALIDATE_POINTER( this );
-}
-
 _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageEntities::Add( _In_ std::wstring_view entity, _In_ std::wstring_view text_parameter ) noexcept
 {
    WFC_VALIDATE_POINTER( this );

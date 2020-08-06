@@ -169,11 +169,6 @@ Win32FoundationClasses::CRandomNumberGenerator2::CRandomNumberGenerator2( _In_ u
    SetSeed( new_seed );
 }
 
-Win32FoundationClasses::CRandomNumberGenerator2::~CRandomNumberGenerator2()
-{
-   WFC_VALIDATE_POINTER( this );
-}
-
 void Win32FoundationClasses::CRandomNumberGenerator2::Disable( _In_ bool const disable ) noexcept
 {
    WFC_VALIDATE_POINTER( this );

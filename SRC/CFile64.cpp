@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 1995-2019, Samuel R. Blackburn
+** Copyright, 1995-2020, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -1906,7 +1906,7 @@ void Win32FoundationClasses::CFile64::RegisterSafeWrite( _Inout_ void * context,
     m_SafeWriteCallback = callback;
 }
 
-void Win32FoundationClasses::CFile64::Write( __in_bcount( number_of_bytes_to_write ) void const * buffer, _In_ UINT const number_of_bytes_to_write ) noexcept
+void Win32FoundationClasses::CFile64::Write( __in_bcount( number_of_bytes_to_write ) void const * buffer, _In_ uint32_t const number_of_bytes_to_write ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
 

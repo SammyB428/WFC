@@ -52,12 +52,11 @@ class CMixerControlDetailsData
       // Construction
 
       CMixerControlDetailsData();
-      CMixerControlDetailsData( _In_ CMixerControlDetailsData const&     source );
-      CMixerControlDetailsData( _In_ MIXERCONTROLDETAILS_LISTTEXT const& source );
-      CMixerControlDetailsData( _In_ MIXERCONTROLDETAILS_BOOLEAN const&  source );
-      CMixerControlDetailsData( _In_ MIXERCONTROLDETAILS_SIGNED const&   source );
-      CMixerControlDetailsData( _In_ MIXERCONTROLDETAILS_UNSIGNED const& source );
-      virtual ~CMixerControlDetailsData();
+      explicit CMixerControlDetailsData( _In_ CMixerControlDetailsData const&     source );
+      explicit CMixerControlDetailsData( _In_ MIXERCONTROLDETAILS_LISTTEXT const& source );
+      explicit CMixerControlDetailsData( _In_ MIXERCONTROLDETAILS_BOOLEAN const&  source );
+      explicit CMixerControlDetailsData( _In_ MIXERCONTROLDETAILS_SIGNED const&   source );
+      explicit CMixerControlDetailsData( _In_ MIXERCONTROLDETAILS_UNSIGNED const& source );
 
       // Properties
 
@@ -67,27 +66,25 @@ class CMixerControlDetailsData
 
       // Methods
 
-      virtual void Copy( _In_ CMixerControlDetailsData const&     source ) noexcept;
-      virtual void Copy( _In_ MIXERCONTROLDETAILS_LISTTEXT const& source ) noexcept;
-      virtual void Copy( _In_ MIXERCONTROLDETAILS_BOOLEAN const&  source ) noexcept;
-      virtual void Copy( _In_ MIXERCONTROLDETAILS_SIGNED const&   source ) noexcept;
-      virtual void Copy( _In_ MIXERCONTROLDETAILS_UNSIGNED const& source ) noexcept;
-      virtual void Empty( void ) noexcept;
+      void Copy( _In_ CMixerControlDetailsData const&     source ) noexcept;
+      void Copy( _In_ MIXERCONTROLDETAILS_LISTTEXT const& source ) noexcept;
+      void Copy( _In_ MIXERCONTROLDETAILS_BOOLEAN const&  source ) noexcept;
+      void Copy( _In_ MIXERCONTROLDETAILS_SIGNED const&   source ) noexcept;
+      void Copy( _In_ MIXERCONTROLDETAILS_UNSIGNED const& source ) noexcept;
+      void Empty( void ) noexcept;
 
       // Operators
 
-      virtual CMixerControlDetailsData& operator = ( _In_ CMixerControlDetailsData const&     source ) noexcept;
-      virtual CMixerControlDetailsData& operator = ( _In_ MIXERCONTROLDETAILS_LISTTEXT const& source ) noexcept;
-      virtual CMixerControlDetailsData& operator = ( _In_ MIXERCONTROLDETAILS_BOOLEAN const&  source ) noexcept;
-      virtual CMixerControlDetailsData& operator = ( _In_ MIXERCONTROLDETAILS_SIGNED const&   source ) noexcept;
-      virtual CMixerControlDetailsData& operator = ( _In_ MIXERCONTROLDETAILS_UNSIGNED const& source ) noexcept;
+      CMixerControlDetailsData& operator = ( _In_ CMixerControlDetailsData const&     source ) noexcept;
+      CMixerControlDetailsData& operator = ( _In_ MIXERCONTROLDETAILS_LISTTEXT const& source ) noexcept;
+      CMixerControlDetailsData& operator = ( _In_ MIXERCONTROLDETAILS_BOOLEAN const&  source ) noexcept;
+      CMixerControlDetailsData& operator = ( _In_ MIXERCONTROLDETAILS_SIGNED const&   source ) noexcept;
+      CMixerControlDetailsData& operator = ( _In_ MIXERCONTROLDETAILS_UNSIGNED const& source ) noexcept;
 
       // Instrumentation
 
 #if defined( _DEBUG ) && ! defined( WFC_NO_DUMPING )
-
-      virtual void Dump( CDumpContext& dump_context ) const;
-
+      void Dump( CDumpContext& dump_context ) const;
 #endif
 };
 
@@ -98,9 +95,8 @@ class CMixerControlDetails
       // Construction
 
       CMixerControlDetails();
-      CMixerControlDetails( _In_ CMixerControlDetails const& source ) noexcept;
-      CMixerControlDetails( _In_ MIXERCONTROLDETAILS const&  source );
-      virtual ~CMixerControlDetails();
+      explicit CMixerControlDetails( _In_ CMixerControlDetails const& source ) noexcept;
+      explicit CMixerControlDetails( _In_ MIXERCONTROLDETAILS const&  source );
 
       // Properties
 
@@ -111,21 +107,19 @@ class CMixerControlDetails
 
       // Methods
 
-      virtual void Copy( _In_ CMixerControlDetails const& source ) noexcept;
-      virtual void Copy( _In_ MIXERCONTROLDETAILS const&  source ) noexcept;
-      virtual void Empty( void ) noexcept;
+      void Copy( _In_ CMixerControlDetails const& source ) noexcept;
+      void Copy( _In_ MIXERCONTROLDETAILS const&  source ) noexcept;
+      void Empty( void ) noexcept;
 
       // Operators
 
-      virtual CMixerControlDetails& operator = ( _In_ CMixerControlDetails const& source ) noexcept;
-      virtual CMixerControlDetails& operator = ( _In_ MIXERCONTROLDETAILS const&  source ) noexcept;
+      CMixerControlDetails& operator = ( _In_ CMixerControlDetails const& source ) noexcept;
+      CMixerControlDetails& operator = ( _In_ MIXERCONTROLDETAILS const&  source ) noexcept;
 
       // Instrumentation
 
 #if defined( _DEBUG ) && ! defined( WFC_NO_DUMPING )
-
-      virtual void Dump( CDumpContext& dump_context ) const;
-
+      void Dump( CDumpContext& dump_context ) const;
 #endif // _DEBUG
 };
 
@@ -136,9 +130,8 @@ class CMixerControl
       // Construction
 
       CMixerControl();
-      CMixerControl( _In_ CMixerControl const& source );
-      CMixerControl( _In_ MIXERCONTROL const&  source );
-      virtual ~CMixerControl();
+      explicit CMixerControl( _In_ CMixerControl const& source );
+      explicit CMixerControl( _In_ MIXERCONTROL const&  source );
 
       // Properties
 
@@ -220,41 +213,39 @@ class CMixerControl
 
       // Methods
 
-      virtual void  Copy( _In_ CMixerControl const& source ) noexcept;
-      virtual void  Copy( _In_ MIXERCONTROL const& source  ) noexcept;
-      virtual void  Empty( void ) noexcept;
-      virtual _Check_return_ CMixerControl::Types GetType( void ) const noexcept;
-      virtual void  GetTypeName( _Out_ std::wstring& name ) const noexcept;
-      virtual _Check_return_ Units GetUnits( void ) const noexcept;
-      virtual _Check_return_ bool  IsBooleanUnits(  void ) const noexcept;
-      virtual _Check_return_ bool  IsCustom(        void ) const noexcept;
-      virtual _Check_return_ bool  IsCustomUnits(   void ) const noexcept;
-      virtual _Check_return_ bool  IsDecibelsUnits( void ) const noexcept;
-      virtual _Check_return_ bool  IsDisabled(      void ) const noexcept;
-      virtual _Check_return_ bool  IsFader(         void ) const noexcept;
-      virtual _Check_return_ bool  IsList(          void ) const noexcept;
-      virtual _Check_return_ bool  IsMeter(         void ) const noexcept;
-      virtual _Check_return_ bool  IsMultiple(      void ) const noexcept;
-      virtual _Check_return_ bool  IsNumber(        void ) const noexcept;
-      virtual _Check_return_ bool  IsPercentUnits(  void ) const noexcept;
-      virtual _Check_return_ bool  IsSignedUnits(   void ) const noexcept;
-      virtual _Check_return_ bool  IsSlider(        void ) const noexcept;
-      virtual _Check_return_ bool  IsSwitch(        void ) const noexcept;
-      virtual _Check_return_ bool  IsTime(          void ) const noexcept;
-      virtual _Check_return_ bool  IsUniform(       void ) const noexcept;
-      virtual _Check_return_ bool  IsUnsignedUnits( void ) const noexcept;
+      void  Copy( _In_ CMixerControl const& source ) noexcept;
+      void  Copy( _In_ MIXERCONTROL const& source  ) noexcept;
+      void  Empty( void ) noexcept;
+      _Check_return_ CMixerControl::Types GetType( void ) const noexcept;
+      void  GetTypeName( _Out_ std::wstring& name ) const noexcept;
+      _Check_return_ Units GetUnits( void ) const noexcept;
+      _Check_return_ bool  IsBooleanUnits(  void ) const noexcept;
+      _Check_return_ bool  IsCustom(        void ) const noexcept;
+      _Check_return_ bool  IsCustomUnits(   void ) const noexcept;
+      _Check_return_ bool  IsDecibelsUnits( void ) const noexcept;
+      _Check_return_ bool  IsDisabled(      void ) const noexcept;
+      _Check_return_ bool  IsFader(         void ) const noexcept;
+      _Check_return_ bool  IsList(          void ) const noexcept;
+      _Check_return_ bool  IsMeter(         void ) const noexcept;
+      _Check_return_ bool  IsMultiple(      void ) const noexcept;
+      _Check_return_ bool  IsNumber(        void ) const noexcept;
+      _Check_return_ bool  IsPercentUnits(  void ) const noexcept;
+      _Check_return_ bool  IsSignedUnits(   void ) const noexcept;
+      _Check_return_ bool  IsSlider(        void ) const noexcept;
+      _Check_return_ bool  IsSwitch(        void ) const noexcept;
+      _Check_return_ bool  IsTime(          void ) const noexcept;
+      _Check_return_ bool  IsUniform(       void ) const noexcept;
+      _Check_return_ bool  IsUnsignedUnits( void ) const noexcept;
 
       // Operators
 
-      virtual CMixerControl& operator = ( _In_ CMixerControl const& source ) noexcept;
-      virtual CMixerControl& operator = ( _In_ MIXERCONTROL const&  source ) noexcept;
+      CMixerControl& operator = ( _In_ CMixerControl const& source ) noexcept;
+      CMixerControl& operator = ( _In_ MIXERCONTROL const&  source ) noexcept;
 
       // Instrumentation
 
 #if defined( _DEBUG ) && ! defined( WFC_NO_DUMPING )
-
-      virtual void Dump( CDumpContext& dump_context ) const;
-
+      void Dump( CDumpContext& dump_context ) const;
 #endif // _DEBUG
 };
 
@@ -265,9 +256,8 @@ class CMixerLine
       // Construction
 
       CMixerLine();
-      CMixerLine( _In_ CMixerLine const& source );
-      CMixerLine( _In_ MIXERLINE const&  source );
-      virtual ~CMixerLine();
+      explicit CMixerLine( _In_ CMixerLine const& source );
+      explicit CMixerLine( _In_ MIXERLINE const&  source );
 
       // Properties
 
@@ -332,27 +322,25 @@ class CMixerLine
 
       // Methods
 
-      virtual void Copy( _In_ CMixerLine const& source ) noexcept;
-      virtual void Copy( _In_ MIXERLINE const&  source ) noexcept;
-      virtual void Empty( void ) noexcept;
-      virtual void GetComponent( _Out_ std::wstring& component_string ) const noexcept;
-      virtual void GetStatus( _Out_ std::wstring& status_string ) const noexcept;
-      virtual void GetTarget( _Out_ std::wstring& target_string ) const noexcept;
-      virtual _Check_return_ bool IsActive( void ) const noexcept;
-      virtual _Check_return_ bool IsDisconnected( void ) const noexcept;
-      virtual _Check_return_ bool IsSource( void ) const noexcept;
+      void Copy( _In_ CMixerLine const& source ) noexcept;
+      void Copy( _In_ MIXERLINE const&  source ) noexcept;
+      void Empty( void ) noexcept;
+      void GetComponent( _Out_ std::wstring& component_string ) const noexcept;
+      void GetStatus( _Out_ std::wstring& status_string ) const noexcept;
+      void GetTarget( _Out_ std::wstring& target_string ) const noexcept;
+      _Check_return_ bool IsActive( void ) const noexcept;
+      _Check_return_ bool IsDisconnected( void ) const noexcept;
+      _Check_return_ bool IsSource( void ) const noexcept;
 
       // Operators
 
-      virtual _Check_return_ CMixerLine& operator = ( _In_ CMixerLine const& source ) noexcept;
-      virtual _Check_return_ CMixerLine& operator = ( _In_ MIXERLINE const&  source ) noexcept;
+      _Check_return_ CMixerLine& operator = ( _In_ CMixerLine const& source ) noexcept;
+      _Check_return_ CMixerLine& operator = ( _In_ MIXERLINE const&  source ) noexcept;
 
       // Instrumentation
 
 #if defined( _DEBUG ) && ! defined( WFC_NO_DUMPING )
-
-      virtual void Dump( CDumpContext& dump_context ) const;
-
+      void Dump( CDumpContext& dump_context ) const;
 #endif // _DEBUG
 };
 
@@ -363,9 +351,8 @@ class CMixerCapabilities
       // Construction
 
       CMixerCapabilities();
-      CMixerCapabilities( _In_ CMixerCapabilities const& source ) noexcept;
-      CMixerCapabilities( _In_ MIXERCAPS const&  source );
-      virtual ~CMixerCapabilities();
+      explicit CMixerCapabilities( _In_ CMixerCapabilities const& source ) noexcept;
+      explicit CMixerCapabilities( _In_ MIXERCAPS const&  source );
 
       // Properties
 
@@ -378,22 +365,20 @@ class CMixerCapabilities
 
       // Methods
 
-      virtual void Copy( _In_ CMixerCapabilities const& source ) noexcept;
-      virtual void Copy( _In_ MIXERCAPS const& source ) noexcept;
-      virtual void Empty( void ) noexcept;
-      virtual _Check_return_ bool Get( _In_ UINT const device_number ) noexcept;
+      void Copy( _In_ CMixerCapabilities const& source ) noexcept;
+      void Copy( _In_ MIXERCAPS const& source ) noexcept;
+      void Empty( void ) noexcept;
+      _Check_return_ bool Get( _In_ UINT const device_number ) noexcept;
 
       // Operators
 
-      virtual CMixerCapabilities& operator = ( _In_ CMixerCapabilities const& source ) noexcept;
-      virtual CMixerCapabilities& operator = ( _In_ MIXERCAPS const&  source ) noexcept;
+      CMixerCapabilities& operator = ( _In_ CMixerCapabilities const& source ) noexcept;
+      CMixerCapabilities& operator = ( _In_ MIXERCAPS const&  source ) noexcept;
 
       // Instrumentation
 
 #if defined( _DEBUG ) && ! defined( WFC_NO_DUMPING )
-
-      virtual void Dump( CDumpContext& dump_context ) const;
-
+      void Dump( CDumpContext& dump_context ) const;
 #endif
 };
 
@@ -401,9 +386,9 @@ class CMixer
 {
    protected:
 
-       DWORD m_ErrorCode{ 0 };
+      DWORD m_ErrorCode{ 0 };
 
-       HMIXER m_Handle{ nullptr };
+      HMIXER m_Handle{ nullptr };
 
       UINT_PTR m_DeviceID{ 0 };
 
@@ -504,7 +489,7 @@ class CMixerControlInstance
            m_NotifyData = 0;
        }
 
-       inline CMixerControlInstance(_In_ CMixerControlInstance const& source) noexcept
+       inline explicit  CMixerControlInstance(_In_ CMixerControlInstance const& source) noexcept
        {
            Copy(source);
        }
@@ -552,7 +537,7 @@ class CMixerSourceSelector : public CMixerControlInstance
 
       // Construction
 
-       inline CMixerSourceSelector(_In_ CMixerSourceSelector const& source) noexcept { Copy(source); }
+       inline explicit CMixerSourceSelector(_In_ CMixerSourceSelector const& source) noexcept { Copy(source); }
        inline CMixerSourceSelector(_In_ CMixerLine const& destination, _In_ CMixerControl const& mixer_control) noexcept
        {
            if (m_MixerControl.Type not_eq CMixerControl::ControlType::Mixer)
@@ -607,7 +592,7 @@ class CMixerVolumeControl : public CMixerControlInstance
       // Construction
 
       CMixerVolumeControl() noexcept;
-      CMixerVolumeControl( _In_ CMixerVolumeControl const& source ) noexcept;
+      explicit CMixerVolumeControl( _In_ CMixerVolumeControl const& source ) noexcept;
       virtual ~CMixerVolumeControl();
 
       // Methods
@@ -652,7 +637,7 @@ class CMixerSwitchControl : public CMixerControlInstance
       // Construction
 
       CMixerSwitchControl();
-      CMixerSwitchControl( _In_ CMixerSwitchControl const& source );
+      explicit CMixerSwitchControl( _In_ CMixerSwitchControl const& source );
       virtual ~CMixerSwitchControl();
 
       // Methods
@@ -683,7 +668,7 @@ class CMixerSource : public CMixerControlInstance
       // Construction
 
        inline CMixerSource() noexcept = default;
-       inline CMixerSource(_In_ CMixerSource const& source) noexcept { Copy(source); }
+       inline explicit CMixerSource(_In_ CMixerSource const& source) noexcept { Copy(source); }
        inline virtual ~CMixerSource() = default;
 
       // Methods
@@ -718,7 +703,7 @@ class CMixerDestination : public CMixerControlInstance
       // Construction
 
        inline CMixerDestination() noexcept = default;
-       inline CMixerDestination(_In_ CMixerDestination const& source) noexcept { Copy(source); }
+       inline explicit CMixerDestination(_In_ CMixerDestination const& source) noexcept { Copy(source); }
        inline virtual ~CMixerDestination() = default;
 
       // Methods
@@ -756,7 +741,7 @@ class CMixerWaveIn : public CMixerDestination
       // Construction
 
       CMixerWaveIn();
-      CMixerWaveIn( _In_ CMixerWaveIn const& source );
+      explicit CMixerWaveIn( _In_ CMixerWaveIn const& source );
       virtual ~CMixerWaveIn();
 
       // Methods
@@ -799,7 +784,7 @@ class CMixerSpeakers : public CMixerDestination
       // Construction
 
        inline CMixerSpeakers() noexcept = default;
-       inline CMixerSpeakers(_In_ CMixerSpeakers const& source) noexcept { Copy(source); }
+       inline explicit CMixerSpeakers(_In_ CMixerSpeakers const& source) noexcept { Copy(source); }
        inline virtual ~CMixerSpeakers() = default;
 
       // Methods

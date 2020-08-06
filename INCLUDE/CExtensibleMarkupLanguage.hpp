@@ -97,8 +97,7 @@
         // Construction
 
         CExtensibleMarkupLanguageEntities() noexcept;
-        CExtensibleMarkupLanguageEntities(_In_ CExtensibleMarkupLanguageEntities const& source) noexcept;
-        ~CExtensibleMarkupLanguageEntities();
+        explicit CExtensibleMarkupLanguageEntities(_In_ CExtensibleMarkupLanguageEntities const& source) noexcept;
 
         // Methods
 
@@ -147,13 +146,11 @@
         // Construction
 
         CExtensibleMarkupLanguageAttribute() noexcept = default;
-        inline CExtensibleMarkupLanguageAttribute(_In_ CExtensibleMarkupLanguageAttribute const& source) noexcept
+        inline explicit CExtensibleMarkupLanguageAttribute(_In_ CExtensibleMarkupLanguageAttribute const& source) noexcept
         {
             Name = source.Name;
             Value = source.Value;
         }
-
-        inline ~CExtensibleMarkupLanguageAttribute() = default;
 
         // Properties
 
@@ -226,7 +223,7 @@
         // Don't allow stack objects...
 
         CExtensibleMarkupLanguageElement() noexcept;
-        CExtensibleMarkupLanguageElement(_In_ CExtensibleMarkupLanguageElement const& source) noexcept;
+        explicit CExtensibleMarkupLanguageElement(_In_ CExtensibleMarkupLanguageElement const& source) noexcept;
 
     protected:
 
@@ -504,7 +501,7 @@
         std::size_t NumberOfBytesPerCharacter{ 1 };
 
         CExtensibleMarkupLanguageDocument() noexcept;
-        CExtensibleMarkupLanguageDocument(_In_ CExtensibleMarkupLanguageDocument const& source) noexcept;
+        explicit CExtensibleMarkupLanguageDocument(_In_ CExtensibleMarkupLanguageDocument const& source) noexcept;
         virtual ~CExtensibleMarkupLanguageDocument();
 
         _Check_return_ bool AddEntity(_In_ std::wstring_view entity, _In_ std::wstring_view value) noexcept;

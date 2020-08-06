@@ -2583,7 +2583,6 @@ public:
     _Check_return_ BinaryReader& operator=(_In_ BinaryReader const&) = delete;
 
     inline constexpr BinaryReader() noexcept = default;
-    ~BinaryReader() = default;
 
     inline constexpr _Check_return_ uint8_t ReadByte( void ) noexcept
     {

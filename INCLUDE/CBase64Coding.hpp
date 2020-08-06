@@ -68,13 +68,6 @@ class CBase64Coding
 
       CBase64Coding() noexcept;
 
-      /*
-      ** Destructor should be virtual according to MSJ article in Sept 1992
-      ** "Do More with Less Code:..."
-      */
-
-      virtual ~CBase64Coding();
-
       static inline constexpr _Check_return_ std::size_t DecodeReserveSize(_In_ std::size_t const number_of_encoded_bytes) noexcept
       {
           return(static_cast<std::size_t>(static_cast<double>(number_of_encoded_bytes) * static_cast<double>(0.75)) + 1);

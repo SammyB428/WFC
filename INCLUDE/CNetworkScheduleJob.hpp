@@ -53,23 +53,22 @@ class CNetworkScheduleJob
 
    public:
 
-      CNetworkScheduleJob();
+      CNetworkScheduleJob() noexcept;
 
       /*
       ** Can't make Copy take a const pointer because Microsoft screwed up the 
       ** net API header files...
       */
 
-      CNetworkScheduleJob( _In_ AT_ENUM const * information_p );
-      CNetworkScheduleJob( _In_ AT_INFO const * information_p );
-      CNetworkScheduleJob( _In_ CNetworkScheduleJob const& source );
-      virtual ~CNetworkScheduleJob();
+      explicit CNetworkScheduleJob( _In_ AT_ENUM const * information_p ) noexcept;
+      explicit CNetworkScheduleJob( _In_ AT_INFO const * information_p ) noexcept;
+      explicit CNetworkScheduleJob( _In_ CNetworkScheduleJob const& source ) noexcept;
 
-      DWORD   ID{ 0 };
-      DWORD   NumberOfMillisecondsFromMidnight{ 0 };
-      DWORD   DaysOfTheMonth{ 0 };
-      DWORD   DaysOfTheWeek{ 0 };
-      DWORD   Flags{ 0 };
+      DWORD ID{ 0 };
+      DWORD NumberOfMillisecondsFromMidnight{ 0 };
+      DWORD DaysOfTheMonth{ 0 };
+      DWORD DaysOfTheWeek{ 0 };
+      DWORD Flags{ 0 };
       std::wstring Command;
 
       /*
@@ -77,14 +76,14 @@ class CNetworkScheduleJob
       ** net API header files...
       */
 
-      virtual void Copy( _In_ AT_ENUM const * source ) noexcept;
-      virtual void Copy( _In_ AT_INFO const * source ) noexcept;
-      virtual void Copy( _In_ CNetworkScheduleJob const& source ) noexcept;
-      virtual void Empty( void ) noexcept;
-      virtual CNetworkScheduleJob const& operator = ( _In_ CNetworkScheduleJob const& source ) noexcept;
+      void Copy( _In_ AT_ENUM const * source ) noexcept;
+      void Copy( _In_ AT_INFO const * source ) noexcept;
+      void Copy( _In_ CNetworkScheduleJob const& source ) noexcept;
+      void Empty( void ) noexcept;
+      CNetworkScheduleJob const& operator = ( _In_ CNetworkScheduleJob const& source ) noexcept;
 
 #if defined( _DEBUG ) && ! defined( WFC_NO_DUMPING )
-      virtual void Dump( CDumpContext& dump_context ) const;
+      void Dump( CDumpContext& dump_context ) const;
 #endif // _DEBUG
 };
 

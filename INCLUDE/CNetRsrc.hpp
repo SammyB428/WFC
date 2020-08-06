@@ -53,28 +53,26 @@ class CNetworkResourceInformation
 
    public:
 
-      CNetworkResourceInformation();
-      CNetworkResourceInformation( _In_ NETRESOURCE const * source );
-      CNetworkResourceInformation( _In_ CNetworkResourceInformation const& source );
-
-      virtual ~CNetworkResourceInformation();
+      CNetworkResourceInformation() noexcept;
+      explicit CNetworkResourceInformation( _In_ NETRESOURCE const * source ) noexcept;
+      explicit CNetworkResourceInformation( _In_ CNetworkResourceInformation const& source ) noexcept;
 
       /*
       ** Patterned after NETRESOURCE
       */
 
-      std::wstring   LocalName;
-      std::wstring   RemoteName;
-      std::wstring   Comment;
-      std::wstring   Provider;
+      std::wstring LocalName;
+      std::wstring RemoteName;
+      std::wstring Comment;
+      std::wstring Provider;
       DWORD Scope{ 0 };
       DWORD Type{ 0 };
       DWORD DisplayType{ 0 };
       DWORD Usage{ 0 };
 
-      virtual void Copy( _In_ NETRESOURCE const * source ) noexcept;
-      virtual void Copy( _In_ CNetworkResourceInformation const& source ) noexcept;
-      virtual void Empty( void ) noexcept;
+      void Copy( _In_ NETRESOURCE const * source ) noexcept;
+      void Copy( _In_ CNetworkResourceInformation const& source ) noexcept;
+      void Empty( void ) noexcept;
 };
 
 class CNetworkResources : public CNetwork

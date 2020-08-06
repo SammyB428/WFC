@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 1995-2015, Samuel R. Blackburn
+** Copyright, 1995-2020, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -53,16 +53,15 @@ class CWorkstationUser
 
    public:
 
-      CWorkstationUser();
+      CWorkstationUser() noexcept;
 
       /*
       ** Can't make Copy take a const pointer because Microsoft screwed up the 
       ** net API header files...
       */
 
-      CWorkstationUser( _In_ WKSTA_USER_INFO_1 const * source );
-      CWorkstationUser( _In_ CWorkstationUser const& source );
-      virtual ~CWorkstationUser();
+      explicit CWorkstationUser( _In_ WKSTA_USER_INFO_1 const * source ) noexcept;
+      explicit CWorkstationUser( _In_ CWorkstationUser const& source ) noexcept;
 
       /*
       ** Patterned after WKSTA_USER_INFO_1
@@ -78,10 +77,10 @@ class CWorkstationUser
       ** net API header files...
       */
 
-      virtual void Copy( _In_ WKSTA_USER_INFO_1 const * source ) noexcept;
-      virtual void Copy( _In_ CWorkstationUser const& source ) noexcept;
-      virtual void Empty( void ) noexcept;
-      virtual CWorkstationUser const& operator = ( _In_ CWorkstationUser const& source ) noexcept;
+      void Copy( _In_ WKSTA_USER_INFO_1 const * source ) noexcept;
+      void Copy( _In_ CWorkstationUser const& source ) noexcept;
+      void Empty( void ) noexcept;
+      CWorkstationUser const& operator = ( _In_ CWorkstationUser const& source ) noexcept;
 };
 
 class CWorkstationInformation
@@ -92,42 +91,41 @@ class CWorkstationInformation
 
    public:
 
-      CWorkstationInformation();
+      CWorkstationInformation() noexcept;
 
       /*
       ** Can't make Copy take a const pointer because Microsoft screwed up the 
       ** net API header files...
       */
 
-      CWorkstationInformation( _In_ WKSTA_INFO_100 const * source );
-      CWorkstationInformation( _In_ WKSTA_INFO_101 const * source );
-      CWorkstationInformation( _In_ WKSTA_INFO_102 const * source );
-      CWorkstationInformation( _In_ CWorkstationInformation const& source );
-      virtual ~CWorkstationInformation();
+      explicit CWorkstationInformation( _In_ WKSTA_INFO_100 const * source ) noexcept;
+      explicit CWorkstationInformation( _In_ WKSTA_INFO_101 const * source ) noexcept;
+      explicit CWorkstationInformation( _In_ WKSTA_INFO_102 const * source ) noexcept;
+      explicit CWorkstationInformation( _In_ CWorkstationInformation const& source ) noexcept;
 
       /*
       ** Patterned after WKSTA_INFO_102
       */
 
-      DWORD   PlatformID{ 0 };
+      DWORD PlatformID{ 0 };
       std::wstring ComputerName;
       std::wstring LANGroup;
-      DWORD   MajorVersion{ 0 };
-      DWORD   MinorVersion{ 0 };
+      DWORD MajorVersion{ 0 };
+      DWORD MinorVersion{ 0 };
       std::wstring LANRoot;
-      DWORD   NumberOfLoggedOnUsers{ 0 };
+      DWORD NumberOfLoggedOnUsers{ 0 };
 
       /*
       ** Can't make Copy take a const pointer because Microsoft screwed up the 
       ** net API header files...
       */
 
-      virtual void Copy( _In_ WKSTA_INFO_100 const * source ) noexcept;
-      virtual void Copy( _In_ WKSTA_INFO_101 const * source ) noexcept;
-      virtual void Copy( _In_ WKSTA_INFO_102 const * source ) noexcept;
-      virtual void Copy( _In_ CWorkstationInformation const& source ) noexcept;
-      virtual void Empty( void ) noexcept;
-      virtual CWorkstationInformation const& operator = ( _In_ CWorkstationInformation const& source ) noexcept;
+      void Copy( _In_ WKSTA_INFO_100 const * source ) noexcept;
+      void Copy( _In_ WKSTA_INFO_101 const * source ) noexcept;
+      void Copy( _In_ WKSTA_INFO_102 const * source ) noexcept;
+      void Copy( _In_ CWorkstationInformation const& source ) noexcept;
+      void Empty( void ) noexcept;
+      CWorkstationInformation const& operator = ( _In_ CWorkstationInformation const& source ) noexcept;
 };
 
 class CWorkstationTransport
@@ -145,9 +143,8 @@ class CWorkstationTransport
       ** net API header files...
       */
 
-      CWorkstationTransport( _In_ WKSTA_TRANSPORT_INFO_0 const * source ) noexcept;
-      CWorkstationTransport( _In_ CWorkstationTransport const& source ) noexcept;
-      virtual ~CWorkstationTransport();
+      explicit CWorkstationTransport( _In_ WKSTA_TRANSPORT_INFO_0 const * source ) noexcept;
+      explicit CWorkstationTransport( _In_ CWorkstationTransport const& source ) noexcept;
 
       /*
       ** Patterned after WKSTA_USER_INFO_1
@@ -157,17 +154,17 @@ class CWorkstationTransport
       DWORD NumberOfVirtualCircuits{ 0 };
       std::wstring Name;
       std::wstring Address;
-      bool  WANish{ false };
+      bool WANish{ false };
 
       /*
       ** Can't make Copy take a const pointer because Microsoft screwed up the 
       ** net API header files...
       */
 
-      virtual void Copy( _In_ WKSTA_TRANSPORT_INFO_0 const * source ) noexcept;
-      virtual void Copy( _In_ CWorkstationTransport const& source ) noexcept;
-      virtual void Empty( void )  noexcept;
-      virtual CWorkstationTransport const& operator = ( _In_ CWorkstationTransport const& source ) noexcept;
+      void Copy( _In_ WKSTA_TRANSPORT_INFO_0 const * source ) noexcept;
+      void Copy( _In_ CWorkstationTransport const& source ) noexcept;
+      void Empty( void )  noexcept;
+      CWorkstationTransport const& operator = ( _In_ CWorkstationTransport const& source ) noexcept;
 };
 
 class CNetWorkstation : public CNetwork

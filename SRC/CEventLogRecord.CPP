@@ -75,12 +75,6 @@ Win32FoundationClasses::CEventLogRecord::CEventLogRecord( _In_ EVENTLOGRECORD co
    Copy( source );
 }
 
-Win32FoundationClasses::CEventLogRecord::~CEventLogRecord()
-{
-   WFC_VALIDATE_POINTER( this );
-   Empty();
-}
-
 _Check_return_ int Win32FoundationClasses::CEventLogRecord::Compare( _In_ Win32FoundationClasses::CEventLogRecord const& source ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );

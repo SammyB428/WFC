@@ -284,27 +284,26 @@ class CPingResults
 {
    public:
 
-      CPingResults();
-      CPingResults( _In_ CPingResults const &  source );
-      CPingResults( _In_ CPingResults const * source );
-      CPingResults( _In_ IP_ECHO_REPLY const & source );
-      CPingResults( _In_ IP_ECHO_REPLY const * source );
-      virtual ~CPingResults();
+      CPingResults() noexcept;
+      explicit CPingResults( _In_ CPingResults const & source ) noexcept;
+      explicit CPingResults( _In_ CPingResults const * source ) noexcept;
+      explicit CPingResults( _In_ IP_ECHO_REPLY const & source ) noexcept;
+      explicit CPingResults( _In_ IP_ECHO_REPLY const * source ) noexcept;
 
       std::string Address;
       DWORD       RoundTripTimeInMilliseconds{ 0 };
       uint8_t     TimeToLive{ 0 };
 
-      virtual void Copy( _In_ CPingResults const&   source ) noexcept;
-      virtual void Copy( _In_ CPingResults const *  source ) noexcept;
-      virtual void Copy( _In_ IP_ECHO_REPLY const&  source ) noexcept;
-      virtual void Copy( _In_ IP_ECHO_REPLY const * source ) noexcept;
-      virtual void Empty( void ) noexcept;
+      void Copy( _In_ CPingResults const&   source ) noexcept;
+      void Copy( _In_ CPingResults const *  source ) noexcept;
+      void Copy( _In_ IP_ECHO_REPLY const&  source ) noexcept;
+      void Copy( _In_ IP_ECHO_REPLY const * source ) noexcept;
+      void Empty( void ) noexcept;
 
-      virtual CPingResults& operator = ( _In_ CPingResults const& source ) noexcept;
+      CPingResults& operator = ( _In_ CPingResults const& source ) noexcept;
 
 #if defined( _DEBUG ) && ! defined( WFC_NO_DUMPING )
-      virtual void Dump( CDumpContext& dump_context ) const;
+      void Dump( CDumpContext& dump_context ) const;
 #endif // _DEBUG
 };
 

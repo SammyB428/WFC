@@ -49,21 +49,17 @@ class CNetworkInformation : public _NETINFOSTRUCT
 {
    public:
 
-      CNetworkInformation();
-      CNetworkInformation( _In_ NETINFOSTRUCT const * source );
-      CNetworkInformation( _In_ CNetworkInformation const& source );
+      CNetworkInformation() noexcept;
+      explicit CNetworkInformation( _In_ NETINFOSTRUCT const * source ) noexcept;
+      explicit CNetworkInformation( _In_ CNetworkInformation const& source ) noexcept;
 
-      virtual ~CNetworkInformation();
-
-      virtual void Copy( _In_ NETINFOSTRUCT const * source ) noexcept;
-      virtual void Copy( _In_ CNetworkInformation const& source ) noexcept;
-      virtual void Empty( void ) noexcept;
-      virtual CNetworkInformation const& operator = ( _In_ CNetworkInformation const& source ) noexcept;
+      void Copy( _In_ NETINFOSTRUCT const * source ) noexcept;
+      void Copy( _In_ CNetworkInformation const& source ) noexcept;
+      void Empty( void ) noexcept;
+      CNetworkInformation const& operator = ( _In_ CNetworkInformation const& source ) noexcept;
 
 #if defined( _DEBUG ) && ! defined( WFC_NO_DUMPING )
-
-      virtual void Dump( CDumpContext& dump_context ) const;
-
+      void Dump( CDumpContext& dump_context ) const;
 #endif // _DEBUG
 };
 

@@ -96,7 +96,7 @@ static char THIS_FILE[] = __FILE__;
 #define new DEBUG_NEW
 #endif // _DEBUG
 
-Win32FoundationClasses::CRandomNumberGenerator::CRandomNumberGenerator()
+Win32FoundationClasses::CRandomNumberGenerator::CRandomNumberGenerator() noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -110,7 +110,7 @@ Win32FoundationClasses::CRandomNumberGenerator::CRandomNumberGenerator()
    InitializeSeed();
 }
 
-Win32FoundationClasses::CRandomNumberGenerator::CRandomNumberGenerator( _In_ DWORD new_seed )
+Win32FoundationClasses::CRandomNumberGenerator::CRandomNumberGenerator( _In_ DWORD new_seed ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -122,11 +122,6 @@ Win32FoundationClasses::CRandomNumberGenerator::CRandomNumberGenerator( _In_ DWO
 
    ZeroMemory( m_Array, sizeof( m_Array ) );
    SetSeed( new_seed );
-}
-
-Win32FoundationClasses::CRandomNumberGenerator::~CRandomNumberGenerator()
-{
-   WFC_VALIDATE_POINTER( this );
 }
 
 void Win32FoundationClasses::CRandomNumberGenerator::InitializeSeed( void ) noexcept

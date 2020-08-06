@@ -84,7 +84,7 @@ inline _Check_return_ int Win32FoundationClasses::CReedSolomonErrorCorrectionCod
 
 // The class
 
-Win32FoundationClasses::CReedSolomonErrorCorrectionCode::CReedSolomonErrorCorrectionCode()
+Win32FoundationClasses::CReedSolomonErrorCorrectionCode::CReedSolomonErrorCorrectionCode() noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -109,11 +109,6 @@ Win32FoundationClasses::CReedSolomonErrorCorrectionCode::CReedSolomonErrorCorrec
    m_PrimitivePolynomials[ 8 ] = 1;
 
    m_Initialize( 223 );
-}
-
-Win32FoundationClasses::CReedSolomonErrorCorrectionCode::~CReedSolomonErrorCorrectionCode()
-{
-   WFC_VALIDATE_POINTER( this );
 }
 
 _Check_return_ SSIZE_T Win32FoundationClasses::CReedSolomonErrorCorrectionCode::Decode( _In_ std::vector<uint8_t> const& encoded_data, _Out_ std::vector<uint8_t>& decoded_data ) noexcept

@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 1995-2016, Samuel R. Blackburn
+** Copyright, 1995-2020, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -54,29 +54,23 @@ static char THIS_FILE[] = __FILE__;
 #define new DEBUG_NEW
 #endif // _DEBUG
 
-Win32FoundationClasses::CNetworkFileInformation::CNetworkFileInformation()
+Win32FoundationClasses::CNetworkFileInformation::CNetworkFileInformation() noexcept
 {
    WFC_VALIDATE_POINTER( this );
    m_Initialize();
 }
 
-Win32FoundationClasses::CNetworkFileInformation::CNetworkFileInformation( _In_ FILE_INFO_3 const * source )
+Win32FoundationClasses::CNetworkFileInformation::CNetworkFileInformation( _In_ FILE_INFO_3 const * source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
    Copy( source );
 }
 
-Win32FoundationClasses::CNetworkFileInformation::CNetworkFileInformation( _In_ Win32FoundationClasses::CNetworkFileInformation const& source )
+Win32FoundationClasses::CNetworkFileInformation::CNetworkFileInformation( _In_ Win32FoundationClasses::CNetworkFileInformation const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );
-}
-
-Win32FoundationClasses::CNetworkFileInformation::~CNetworkFileInformation()
-{
-   WFC_VALIDATE_POINTER( this );
-   m_Initialize();
 }
 
 void Win32FoundationClasses::CNetworkFileInformation::Copy( _In_ FILE_INFO_3 const * source ) noexcept

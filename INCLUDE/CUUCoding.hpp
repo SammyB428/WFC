@@ -51,17 +51,10 @@ class CUUCoding
 
        CUUCoding(CUUCoding const&) = delete;
        CUUCoding& operator=(CUUCoding const&) = delete;
-       
+
        // Construction
 
-      CUUCoding();
-
-      /*
-      ** Destructor should be virtual according to MSJ article in Sept 1992
-      ** "Do More with Less Code:..."
-      */
-
-      virtual ~CUUCoding();
+      CUUCoding() noexcept;
 
       _Check_return_ bool OutputFilename(_In_ std::vector<uint8_t> const& source, _Out_ std::wstring& destination) const noexcept;
       _Check_return_ bool Decode(_In_ std::vector<uint8_t> const& source, _Out_ std::vector<uint8_t>& destination) const noexcept;

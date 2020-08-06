@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 1995-2019, Samuel R. Blackburn
+** Copyright, 1995-2020, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -83,11 +83,9 @@ class CBitArray
       // Construction
 
       CBitArray() noexcept;
-      CBitArray( _In_ std::size_t const initial_size ) noexcept;
+      explicit CBitArray( _In_ std::size_t const initial_size ) noexcept;
       CBitArray(_In_ CBitArray const& source ) noexcept;
-      CBitArray(_In_ std::vector<uint8_t> const& source ) noexcept;
-
-      virtual ~CBitArray();
+      explicit CBitArray(_In_ std::vector<uint8_t> const& source ) noexcept;
 
       static inline constexpr int SizeOfBitRepresentation(void) noexcept { return(32); }
       static inline constexpr int MostSignificantBitLocation(void) noexcept { return(31); }
@@ -186,11 +184,10 @@ class CBitArray
 
       // Operators
 
-      inline _Check_return_ CBitArray& operator =  ( _In_ CBitArray const&  source ) noexcept { Copy( source );   return( *this ); }
-      inline _Check_return_ CBitArray& operator =  ( _In_ std::vector<uint8_t> const& source ) noexcept { Copy( source );   return( *this ); }
+      inline _Check_return_ CBitArray& operator =  ( _In_ CBitArray const&  source ) noexcept { Copy( source ); return( *this ); }
+      inline _Check_return_ CBitArray& operator =  ( _In_ std::vector<uint8_t> const& source ) noexcept { Copy( source ); return( *this ); }
       inline _Check_return_ CBitArray& operator += ( _In_ CBitArray const&  source ) noexcept { Append( source ); return( *this ); }
-      inline _Check_return_ CBitArray& operator += ( _In_ std::vector<uint8_t> const& source ) noexcept { Append( source ); return( *this ); }
-      inline _Check_return_ uint32_t      operator [] ( _In_ std::size_t index ) const noexcept       { return( GetAt( index ) );          }
+      inline _Check_return_ uint32_t   operator [] ( _In_ std::size_t index ) const noexcept { return( GetAt( index ) ); }
 
       // Instrumentation
 

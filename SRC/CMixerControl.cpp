@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 1995-2016, Samuel R. Blackburn
+** Copyright, 1995-2020, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -67,12 +67,6 @@ Win32FoundationClasses::CMixerControl::CMixerControl( _In_ MIXERCONTROL const& s
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );
-}
-
-Win32FoundationClasses::CMixerControl::~CMixerControl()
-{
-   WFC_VALIDATE_POINTER( this );
-   Empty();
 }
 
 void Win32FoundationClasses::CMixerControl::Copy( _In_ Win32FoundationClasses::CMixerControl const& source ) noexcept

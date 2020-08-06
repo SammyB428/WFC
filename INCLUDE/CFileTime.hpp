@@ -159,12 +159,12 @@ class CFileTime : public _FILETIME
 
        inline constexpr CFileTime() noexcept : _FILETIME{ 0, 0 } {}
 
-       inline CFileTime(_In_ CFileTime const& source ) noexcept
+       inline explicit CFileTime(_In_ CFileTime const& source ) noexcept
        {
           Copy( source );
        }
 
-       inline CFileTime(_In_ CSystemTime const& source ) noexcept
+       inline explicit CFileTime(_In_ CSystemTime const& source ) noexcept
        {
           Copy( source );
        }
@@ -174,65 +174,65 @@ class CFileTime : public _FILETIME
           Copy( ms_dos_date, ms_dos_time );
        }
 
-       inline CFileTime(_In_ FILETIME const * source ) noexcept
+       inline explicit CFileTime(_In_ FILETIME const * source ) noexcept
        {
           Copy( source );
        }
 
-       inline constexpr CFileTime( _In_ FILETIME const& source ) noexcept
+       inline constexpr explicit CFileTime( _In_ FILETIME const& source ) noexcept
        {
            dwLowDateTime = source.dwLowDateTime;
            dwHighDateTime = source.dwHighDateTime;
        }
 
-       inline CFileTime(_In_ SYSTEMTIME const * source ) noexcept
+       inline explicit CFileTime(_In_ SYSTEMTIME const * source ) noexcept
        {
           Copy( source );
        }
 
-       inline CFileTime(_In_ SYSTEMTIME const& source ) noexcept
+       inline explicit CFileTime(_In_ SYSTEMTIME const& source ) noexcept
        {
           Copy( source );
        }
 
-       inline CFileTime(_In_ TIMESTAMP_STRUCT const * timestamp ) noexcept
+       inline explicit CFileTime(_In_ TIMESTAMP_STRUCT const * timestamp ) noexcept
        {
           Copy( timestamp );
        }
 
-       inline CFileTime(_In_ DBTIMESTAMP const * timestamp ) noexcept
+       inline explicit CFileTime(_In_ DBTIMESTAMP const * timestamp ) noexcept
        {
           Copy( timestamp );
        }
 
-       inline CFileTime(_In_ TIMESTAMP_STRUCT const& timestamp ) noexcept
+       inline explicit CFileTime(_In_ TIMESTAMP_STRUCT const& timestamp ) noexcept
        {
           Copy( timestamp );
        }
 
-       inline CFileTime(_In_ DBTIMESTAMP const& timestamp ) noexcept
+       inline explicit CFileTime(_In_ DBTIMESTAMP const& timestamp ) noexcept
        {
           Copy( timestamp );
        }
 
        // 2000-07-20
        // As suggested by Josh Parris (Josh.Parris@auspost.com.au)
-       inline constexpr CFileTime(_In_ LARGE_INTEGER const& source ) noexcept
+       inline constexpr explicit CFileTime(_In_ LARGE_INTEGER const& source ) noexcept
        {
           Copy( source );
        }
 
-       inline constexpr CFileTime(_In_ LARGE_INTEGER const * source ) noexcept
+       inline constexpr explicit CFileTime(_In_ LARGE_INTEGER const * source ) noexcept
        {
           Copy( source );
        }
 
-       inline constexpr CFileTime(_In_ ULARGE_INTEGER const& source ) noexcept
+       inline constexpr explicit CFileTime(_In_ ULARGE_INTEGER const& source ) noexcept
        {
           Copy( source );
        }
 
-       inline constexpr CFileTime(_In_ ULARGE_INTEGER const * source ) noexcept
+       inline constexpr explicit CFileTime(_In_ ULARGE_INTEGER const * source ) noexcept
        {
           Copy( source );
        }
@@ -246,16 +246,6 @@ class CFileTime : public _FILETIME
        {
           Set( year, month, day, hour, minute, seconds );
        }
-
-      /*
-      ** Destructor should be virtual according to MSJ article in Sept 1992
-      ** "Do More with Less Code:..."
-      */
-
-      virtual ~CFileTime()
-      {
-         Empty();
-      }
 
 #if ! defined(WE_ARE_BUILDING_WFC_ON_UNIX)
       inline void ToLocalTime( void ) noexcept

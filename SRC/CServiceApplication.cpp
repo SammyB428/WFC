@@ -107,14 +107,14 @@ _Check_return_ int Win32FoundationClasses::CServiceApplication::m_Main(_In_ int 
         {
             Win32FoundationClasses::CServiceControlManager service_control_manager;
 
-            if (service_control_manager.Open() == FALSE)
+            if (service_control_manager.Open() == false)
             {
                 //WFCTRACEERROR( service_control_manager.GetErrorCode() );
                 _tprintf(TEXT("Can't open service control manager, INSTALL FAILED!\n"));
                 return(EXIT_FAILURE);
             }
 
-            if (service_control_manager.Install(service_name, friendly_service_name, executable_path) == FALSE)
+            if (service_control_manager.Install(service_name, friendly_service_name, executable_path) == false)
             {
                 //WFCTRACEERROR( service_control_manager.GetErrorCode() );
                 _tprintf(TEXT("Install failed. Please see Application Log for details.\n"));
@@ -125,7 +125,7 @@ _Check_return_ int Win32FoundationClasses::CServiceApplication::m_Main(_In_ int 
                 installation_configuration,
                 SERVICE_NO_CHANGE,
                 SERVICE_NO_CHANGE,
-                executable_path) == FALSE)
+                executable_path) == false)
             {
                 //WFCTRACEERROR( service_control_manager.GetErrorCode() );
                 _tprintf(TEXT("Can't set service configuration.\n"));
@@ -148,7 +148,7 @@ _Check_return_ int Win32FoundationClasses::CServiceApplication::m_Main(_In_ int 
 
             return(EXIT_SUCCESS);
         }
-        else if (_tcsicmp(command_line_arguments[1], TEXT("remove")) == 0)
+        else if (_tcsicmp(command_line_arguments[1], TEXT("remove")) == I_AM_EQUAL_TO_THAT)
         {
             CServiceControlManager service_control_manager;
 
@@ -158,7 +158,7 @@ _Check_return_ int Win32FoundationClasses::CServiceApplication::m_Main(_In_ int 
                 _tprintf(TEXT("Can't open service control manager, attempting to carry on...\n"));
             }
 
-            if (service_control_manager.Remove(service_name) == FALSE)
+            if (service_control_manager.Remove(service_name) == false)
             {
                 //WFCTRACEERROR( service_control_manager.GetErrorCode() );
                 std::wstring error_message;

@@ -54,29 +54,23 @@ static char THIS_FILE[] = __FILE__;
 #define new DEBUG_NEW
 #endif // _DEBUG
 
-Win32FoundationClasses::CNetworkConnectionInformation::CNetworkConnectionInformation()
+Win32FoundationClasses::CNetworkConnectionInformation::CNetworkConnectionInformation() noexcept
 {
    WFC_VALIDATE_POINTER( this );
    m_Initialize();
 }
 
-Win32FoundationClasses::CNetworkConnectionInformation::CNetworkConnectionInformation( _In_ CONNECTION_INFO_1 const * source )
+Win32FoundationClasses::CNetworkConnectionInformation::CNetworkConnectionInformation( _In_ CONNECTION_INFO_1 const * source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
    Copy( source );
 }
 
-Win32FoundationClasses::CNetworkConnectionInformation::CNetworkConnectionInformation( _In_ Win32FoundationClasses::CNetworkConnectionInformation const& source )
+Win32FoundationClasses::CNetworkConnectionInformation::CNetworkConnectionInformation( _In_ Win32FoundationClasses::CNetworkConnectionInformation const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );
-}
-
-Win32FoundationClasses::CNetworkConnectionInformation::~CNetworkConnectionInformation()
-{
-   WFC_VALIDATE_POINTER( this );
-   m_Initialize();
 }
 
 void Win32FoundationClasses::CNetworkConnectionInformation::Copy( _In_ CONNECTION_INFO_1 const * source ) noexcept

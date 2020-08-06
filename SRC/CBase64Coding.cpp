@@ -103,11 +103,6 @@ Win32FoundationClasses::CBase64Coding::CBase64Coding() noexcept
    m_InitializeDecoderTable();
 }
 
-Win32FoundationClasses::CBase64Coding::~CBase64Coding()
-{
-   WFC_VALIDATE_POINTER( this );
-}
-
 void Win32FoundationClasses::CBase64Coding::m_InitializeDecoderTable( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );

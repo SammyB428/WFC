@@ -56,19 +56,19 @@ class CCriticalSectionGuard
        CCriticalSectionGuard(_In_ CCriticalSectionGuard const&) = delete;
        CCriticalSectionGuard& operator=(_In_ CCriticalSectionGuard const&) = delete;
  
-       inline CCriticalSectionGuard( __inout CCriticalSection * section ) noexcept
+       inline explicit CCriticalSectionGuard( __inout CCriticalSection * section ) noexcept
       {
          m_CriticalSection = section;
          m_CriticalSection->Enter();
       };
 
-      inline CCriticalSectionGuard( __inout CCriticalSection& section ) noexcept
+      inline explicit CCriticalSectionGuard( __inout CCriticalSection& section ) noexcept
       {
          m_CriticalSection = &section;
          m_CriticalSection->Enter();
       };
 
-      inline ~CCriticalSectionGuard()
+      inline ~CCriticalSectionGuard() noexcept
       {
          m_CriticalSection->Exit();
       };

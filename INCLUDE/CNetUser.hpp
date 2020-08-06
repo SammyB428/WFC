@@ -53,20 +53,18 @@ class CNetworkUserInformation
 
    public:
 
-      CNetworkUserInformation();
-      CNetworkUserInformation( _In_ USER_INFO_0  const * information_p );
-      CNetworkUserInformation( _In_ USER_INFO_1  const * information_p );
-      CNetworkUserInformation( _In_ USER_INFO_2  const * information_p );
-      CNetworkUserInformation( _In_ USER_INFO_3  const * information_p );
-      CNetworkUserInformation( _In_ USER_INFO_10 const * information_p );
-      CNetworkUserInformation( _In_ USER_INFO_11 const * information_p );
-      CNetworkUserInformation( _In_ USER_INFO_20 const * information_p );
-      CNetworkUserInformation( _In_ USER_INFO_21 const * information_p );
-      CNetworkUserInformation( _In_ USER_INFO_22 const * information_p );
-      CNetworkUserInformation( _In_ CNetworkUserInformation const&  source );
-      CNetworkUserInformation( _In_ CNetworkUserInformation const * source );
-
-      virtual ~CNetworkUserInformation();
+      CNetworkUserInformation() noexcept;
+      explicit CNetworkUserInformation( _In_ USER_INFO_0  const * information_p ) noexcept;
+      explicit CNetworkUserInformation( _In_ USER_INFO_1  const * information_p ) noexcept;
+      explicit CNetworkUserInformation( _In_ USER_INFO_2  const * information_p ) noexcept;
+      explicit CNetworkUserInformation( _In_ USER_INFO_3  const * information_p ) noexcept;
+      explicit CNetworkUserInformation( _In_ USER_INFO_10 const * information_p ) noexcept;
+      explicit CNetworkUserInformation( _In_ USER_INFO_11 const * information_p ) noexcept;
+      explicit CNetworkUserInformation( _In_ USER_INFO_20 const * information_p ) noexcept;
+      explicit CNetworkUserInformation( _In_ USER_INFO_21 const * information_p ) noexcept;
+      explicit CNetworkUserInformation( _In_ USER_INFO_22 const * information_p ) noexcept;
+      explicit CNetworkUserInformation( _In_ CNetworkUserInformation const&  source ) noexcept;
+      explicit CNetworkUserInformation( _In_ CNetworkUserInformation const * source ) noexcept;
 
       enum _Priveleges
       {
@@ -111,23 +109,23 @@ class CNetworkUserInformation
       ** net API header files...
       */
 
-      virtual void Copy( _In_ USER_INFO_0  const * source ) noexcept;
-      virtual void Copy( _In_ USER_INFO_1  const * source ) noexcept;
-      virtual void Copy( _In_ USER_INFO_2  const * source ) noexcept;
-      virtual void Copy( _In_ USER_INFO_3  const * source ) noexcept;
-      virtual void Copy( _In_ USER_INFO_10 const * source ) noexcept;
-      virtual void Copy( _In_ USER_INFO_11 const * source ) noexcept;
-      virtual void Copy( _In_ USER_INFO_20 const * source ) noexcept;
-      virtual void Copy( _In_ USER_INFO_21 const * source ) noexcept;
-      virtual void Copy( _In_ USER_INFO_22 const * source ) noexcept;
-      virtual void Copy( _In_ CNetworkUserInformation const&  source ) noexcept;
-      virtual void Copy( _In_ CNetworkUserInformation const * source ) noexcept;
-      virtual void Empty( void ) noexcept;
-      virtual void SetAddDefaults( void ) noexcept;
-      virtual CNetworkUserInformation const& operator = ( _In_ CNetworkUserInformation const& source ) noexcept;
+      void Copy( _In_ USER_INFO_0  const * source ) noexcept;
+      void Copy( _In_ USER_INFO_1  const * source ) noexcept;
+      void Copy( _In_ USER_INFO_2  const * source ) noexcept;
+      void Copy( _In_ USER_INFO_3  const * source ) noexcept;
+      void Copy( _In_ USER_INFO_10 const * source ) noexcept;
+      void Copy( _In_ USER_INFO_11 const * source ) noexcept;
+      void Copy( _In_ USER_INFO_20 const * source ) noexcept;
+      void Copy( _In_ USER_INFO_21 const * source ) noexcept;
+      void Copy( _In_ USER_INFO_22 const * source ) noexcept;
+      void Copy( _In_ CNetworkUserInformation const&  source ) noexcept;
+      void Copy( _In_ CNetworkUserInformation const * source ) noexcept;
+      void Empty( void ) noexcept;
+      void SetAddDefaults( void ) noexcept;
+      CNetworkUserInformation const& operator = ( _In_ CNetworkUserInformation const& source ) noexcept;
 
 #if defined( _DEBUG ) && ! defined( WFC_NO_DUMPING )
-      virtual void Dump( CDumpContext& dump_context ) const;
+      void Dump( CDumpContext& dump_context ) const;
 #endif // _DEBUG
 };
 

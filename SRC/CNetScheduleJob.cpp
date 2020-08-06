@@ -58,34 +58,28 @@ static char THIS_FILE[] = __FILE__;
 ** CNetworkScheduleJob stuff
 */
 
-Win32FoundationClasses::CNetworkScheduleJob::CNetworkScheduleJob()
+Win32FoundationClasses::CNetworkScheduleJob::CNetworkScheduleJob() noexcept
 {
    WFC_VALIDATE_POINTER( this );
    m_Initialize();
 }
 
-Win32FoundationClasses::CNetworkScheduleJob::CNetworkScheduleJob( _In_ AT_ENUM const * source )
+Win32FoundationClasses::CNetworkScheduleJob::CNetworkScheduleJob( _In_ AT_ENUM const * source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );
 }
 
-Win32FoundationClasses::CNetworkScheduleJob::CNetworkScheduleJob( _In_ AT_INFO const * source )
+Win32FoundationClasses::CNetworkScheduleJob::CNetworkScheduleJob( _In_ AT_INFO const * source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );
 }
 
-Win32FoundationClasses::CNetworkScheduleJob::CNetworkScheduleJob( _In_ Win32FoundationClasses::CNetworkScheduleJob const& source )
+Win32FoundationClasses::CNetworkScheduleJob::CNetworkScheduleJob( _In_ Win32FoundationClasses::CNetworkScheduleJob const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );
-}
-
-Win32FoundationClasses::CNetworkScheduleJob::~CNetworkScheduleJob()
-{
-   WFC_VALIDATE_POINTER( this );
-   m_Initialize();
 }
 
 void Win32FoundationClasses::CNetworkScheduleJob::Copy( _In_ AT_ENUM const * source ) noexcept

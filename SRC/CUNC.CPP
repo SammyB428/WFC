@@ -54,35 +54,29 @@ static char THIS_FILE[] = __FILE__;
 #define new DEBUG_NEW
 #endif // _DEBUG
 
-Win32FoundationClasses::CUniversalNamingConvention::CUniversalNamingConvention()
+Win32FoundationClasses::CUniversalNamingConvention::CUniversalNamingConvention() noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Empty();
 }
 
-Win32FoundationClasses::CUniversalNamingConvention::CUniversalNamingConvention( _In_ Win32FoundationClasses::CUniversalNamingConvention const& source )
+Win32FoundationClasses::CUniversalNamingConvention::CUniversalNamingConvention( _In_ Win32FoundationClasses::CUniversalNamingConvention const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );
 }
 
-Win32FoundationClasses::CUniversalNamingConvention::CUniversalNamingConvention( _In_ Win32FoundationClasses::CUniformResourceLocator const& source )
+Win32FoundationClasses::CUniversalNamingConvention::CUniversalNamingConvention( _In_ Win32FoundationClasses::CUniformResourceLocator const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );
 }
 
-Win32FoundationClasses::CUniversalNamingConvention::CUniversalNamingConvention( __in_z LPCTSTR source )
+Win32FoundationClasses::CUniversalNamingConvention::CUniversalNamingConvention( __in_z LPCTSTR source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
    Copy( source );
-}
-
-Win32FoundationClasses::CUniversalNamingConvention::~CUniversalNamingConvention()
-{
-   WFC_VALIDATE_POINTER( this );
-   Empty();
 }
 
 _Check_return_ int Win32FoundationClasses::CUniversalNamingConvention::Compare( _In_ Win32FoundationClasses::CUniversalNamingConvention const& source ) const noexcept

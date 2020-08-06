@@ -58,36 +58,30 @@ static char THIS_FILE[] = __FILE__;
 #define new DEBUG_NEW
 #endif // _DEBUG
 
-Win32FoundationClasses::CNetworkShareInformation::CNetworkShareInformation()
+Win32FoundationClasses::CNetworkShareInformation::CNetworkShareInformation() noexcept
 {
    WFC_VALIDATE_POINTER( this );
    m_Initialize();
 }
 
-Win32FoundationClasses::CNetworkShareInformation::CNetworkShareInformation( _In_ SHARE_INFO_1 const * source )
+Win32FoundationClasses::CNetworkShareInformation::CNetworkShareInformation( _In_ SHARE_INFO_1 const * source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
    Copy( source );
 }
 
-Win32FoundationClasses::CNetworkShareInformation::CNetworkShareInformation( _In_ SHARE_INFO_2 const * source )
+Win32FoundationClasses::CNetworkShareInformation::CNetworkShareInformation( _In_ SHARE_INFO_2 const * source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
    Copy( source );
 }
 
-Win32FoundationClasses::CNetworkShareInformation::CNetworkShareInformation( _In_ Win32FoundationClasses::CNetworkShareInformation const& source )
+Win32FoundationClasses::CNetworkShareInformation::CNetworkShareInformation( _In_ Win32FoundationClasses::CNetworkShareInformation const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );
-}
-
-Win32FoundationClasses::CNetworkShareInformation::~CNetworkShareInformation()
-{
-   WFC_VALIDATE_POINTER( this );
-   m_Initialize();
 }
 
 void Win32FoundationClasses::CNetworkShareInformation::Copy( _In_ SHARE_INFO_1 const * source ) noexcept

@@ -49,10 +49,10 @@ class CServiceConfigurationA
 {
    protected:
 
-      DWORD   m_TypeOfService{ 0 };
-      DWORD   m_WhenToStart{ 0 };
-      DWORD   m_ErrorControl{ 0 };
-      DWORD   m_Tag{ 0 };
+      DWORD m_TypeOfService{ 0 };
+      DWORD m_WhenToStart{ 0 };
+      DWORD m_ErrorControl{ 0 };
+      DWORD m_Tag{ 0 };
       std::string m_NameOfExecutableFile;
       std::string m_LoadOrderGroup;
       std::string m_StartName;
@@ -62,12 +62,13 @@ class CServiceConfigurationA
 
    public:
 
-      CServiceConfigurationA();
-      CServiceConfigurationA( _In_ _QUERY_SERVICE_CONFIGA const& source );
-      CServiceConfigurationA( _In_ _QUERY_SERVICE_CONFIGA const * source );
-      CServiceConfigurationA( _In_ CServiceConfigurationA const& source );
-      CServiceConfigurationA( _In_ CServiceConfigurationA const * source );
-      virtual ~CServiceConfigurationA();
+      CServiceConfigurationA() noexcept;
+      explicit CServiceConfigurationA( _In_ _QUERY_SERVICE_CONFIGA const& source ) noexcept;
+      explicit CServiceConfigurationA( _In_ _QUERY_SERVICE_CONFIGA const * source ) noexcept;
+      explicit CServiceConfigurationA( _In_ CServiceConfigurationA const& source ) noexcept;
+      explicit CServiceConfigurationA( _In_ CServiceConfigurationA const * source ) noexcept;
+
+      virtual ~CServiceConfigurationA() = default;
 
       virtual void  Copy( _In_ _QUERY_SERVICE_CONFIGA const&  source ) noexcept;
       virtual void  Copy( _In_ _QUERY_SERVICE_CONFIGA const * source ) noexcept;
@@ -109,11 +110,11 @@ class CServiceConfigurationW
 
    public:
 
-      CServiceConfigurationW();
-      CServiceConfigurationW( _In_ _QUERY_SERVICE_CONFIGW const&  source );
-      CServiceConfigurationW( _In_ _QUERY_SERVICE_CONFIGW const * source );
-      CServiceConfigurationW( _In_ CServiceConfigurationW const&  source );
-      CServiceConfigurationW( _In_ CServiceConfigurationW const * source );
+      CServiceConfigurationW() noexcept;
+      explicit CServiceConfigurationW( _In_ _QUERY_SERVICE_CONFIGW const&  source ) noexcept;
+      explicit CServiceConfigurationW( _In_ _QUERY_SERVICE_CONFIGW const * source ) noexcept;
+      explicit CServiceConfigurationW( _In_ CServiceConfigurationW const&  source ) noexcept;
+      explicit CServiceConfigurationW( _In_ CServiceConfigurationW const * source ) noexcept;
       virtual ~CServiceConfigurationW();
 
       virtual void  Copy( _In_ _QUERY_SERVICE_CONFIGW const&  source ) noexcept;

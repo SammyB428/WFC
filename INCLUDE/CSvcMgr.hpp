@@ -49,15 +49,12 @@ class CServiceNameAndStatusA : public _ENUM_SERVICE_STATUSA
 {
    public:
 
-      CServiceNameAndStatusA();
-      virtual ~CServiceNameAndStatusA();
-      virtual void Copy( _In_ _ENUM_SERVICE_STATUSA const * source ) noexcept;
-      virtual void Empty( void ) noexcept;
+      CServiceNameAndStatusA() noexcept;
+      void Copy( _In_ _ENUM_SERVICE_STATUSA const * source ) noexcept;
+      void Empty( void ) noexcept;
 
 #if defined( _DEBUG ) && ! defined( WFC_NO_DUMPING )
-
-      virtual void Dump( CDumpContext& dump_context ) const;
-
+      void Dump( CDumpContext& dump_context ) const;
 #endif // _DEBUG
 };
 
@@ -65,15 +62,12 @@ class CServiceNameAndStatusW : public _ENUM_SERVICE_STATUSW
 {
    public:
 
-      CServiceNameAndStatusW();
-      virtual ~CServiceNameAndStatusW();
-      virtual void Copy(_In_ _ENUM_SERVICE_STATUSW const * source ) noexcept;
-      virtual void Empty( void ) noexcept;
+      CServiceNameAndStatusW() noexcept;
+      void Copy(_In_ _ENUM_SERVICE_STATUSW const * source ) noexcept;
+      void Empty( void ) noexcept;
 
 #if defined( _DEBUG ) && ! defined( WFC_NO_DUMPING )
-
-      virtual void Dump( CDumpContext& dump_context ) const;
-
+      void Dump( CDumpContext& dump_context ) const;
 #endif // _DEBUG
 };
 

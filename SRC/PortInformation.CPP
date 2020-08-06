@@ -51,36 +51,30 @@ static char THIS_FILE[] = __FILE__;
 #define new DEBUG_NEW
 #endif // _DEBUG
 
-Win32FoundationClasses::CPortInformation::CPortInformation()
+Win32FoundationClasses::CPortInformation::CPortInformation() noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Empty();
 }
 
-Win32FoundationClasses::CPortInformation::CPortInformation( _In_ PORT_INFO_1 const * source )
+Win32FoundationClasses::CPortInformation::CPortInformation( _In_ PORT_INFO_1 const * source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
    Copy( source );
 }
 
-Win32FoundationClasses::CPortInformation::CPortInformation( _In_ PORT_INFO_2 const * source )
+Win32FoundationClasses::CPortInformation::CPortInformation( _In_ PORT_INFO_2 const * source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
    Copy( source );
 }
 
-Win32FoundationClasses::CPortInformation::CPortInformation( _In_ Win32FoundationClasses::CPortInformation const& source )
+Win32FoundationClasses::CPortInformation::CPortInformation( _In_ Win32FoundationClasses::CPortInformation const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );
-}
-
-Win32FoundationClasses::CPortInformation::~CPortInformation()
-{
-   WFC_VALIDATE_POINTER( this );
-   Empty();
 }
 
 void Win32FoundationClasses::CPortInformation::Copy( _In_ PORT_INFO_1 const * source ) noexcept

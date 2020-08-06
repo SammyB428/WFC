@@ -51,17 +51,10 @@ class CUniversalNamingConvention
 {
    public:
 
-      CUniversalNamingConvention();
-      CUniversalNamingConvention( _In_ CUniversalNamingConvention const& source );
-      CUniversalNamingConvention( _In_ CUniformResourceLocator const& source );
-      CUniversalNamingConvention( __in_z LPCTSTR source );
-
-      /*
-      ** Destructor should be virtual according to MSJ article in Sept 1992
-      ** "Do More with Less Code:..."
-      */
-
-      virtual ~CUniversalNamingConvention();
+      CUniversalNamingConvention() noexcept;
+      explicit CUniversalNamingConvention( _In_ CUniversalNamingConvention const& source ) noexcept;
+      explicit CUniversalNamingConvention( _In_ CUniformResourceLocator const& source ) noexcept;
+      explicit CUniversalNamingConvention( __in_z LPCTSTR source ) noexcept;
 
       /*
       ** Parse stuff like:
@@ -81,22 +74,22 @@ class CUniversalNamingConvention
       ** Methods
       */
 
-      virtual _Check_return_ int Compare( _In_ CUniversalNamingConvention const& source ) const noexcept;
-      virtual void Copy( __in_z LPCTSTR source ) noexcept;
-      virtual void Copy( _In_ CUniversalNamingConvention const& source ) noexcept;
-      virtual void Copy( _In_ CUniformResourceLocator const& source ) noexcept;
-      virtual void Empty( void ) noexcept;
-      virtual void Make( void ) noexcept;
+      _Check_return_ int Compare( _In_ CUniversalNamingConvention const& source ) const noexcept;
+      void Copy( __in_z LPCTSTR source ) noexcept;
+      void Copy( _In_ CUniversalNamingConvention const& source ) noexcept;
+      void Copy( _In_ CUniformResourceLocator const& source ) noexcept;
+      void Empty( void ) noexcept;
+      void Make( void ) noexcept;
 
-      virtual _Check_return_ bool operator == ( _In_ CUniversalNamingConvention const& right_unc ) const noexcept;
-      virtual _Check_return_ CUniversalNamingConvention& operator = ( _In_ CUniversalNamingConvention const& source ) noexcept;
-      virtual _Check_return_ CUniversalNamingConvention& operator = ( _In_ CUniformResourceLocator const& source ) noexcept;
-      virtual _Check_return_ CUniversalNamingConvention& operator = ( __in_z LPCTSTR source ) noexcept;
+      _Check_return_ bool operator == ( _In_ CUniversalNamingConvention const& right_unc ) const noexcept;
+      _Check_return_ CUniversalNamingConvention& operator = ( _In_ CUniversalNamingConvention const& source ) noexcept;
+      _Check_return_ CUniversalNamingConvention& operator = ( _In_ CUniformResourceLocator const& source ) noexcept;
+      _Check_return_ CUniversalNamingConvention& operator = ( __in_z LPCTSTR source ) noexcept;
 
       _Check_return_ operator LPCTSTR() const noexcept { return( UNC.c_str() ); }
 
 #if defined( _DEBUG ) && ! defined( WFC_NO_DUMPING )
-      virtual void Dump( CDumpContext& dump_context ) const;
+      void Dump( CDumpContext& dump_context ) const;
 #endif // _DEBUG
 };   
 

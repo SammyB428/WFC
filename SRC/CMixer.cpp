@@ -100,7 +100,6 @@ static void dump_mixer_control_details(__in_z LPCTSTR file, _In_ UINT line, __in
 Win32FoundationClasses::CMixer::CMixer()
 {
     WFC_VALIDATE_POINTER(this);
-    m_Handle = static_cast<HMIXER>(NULL);
 }
 
 Win32FoundationClasses::CMixer::~CMixer()

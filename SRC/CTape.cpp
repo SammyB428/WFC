@@ -55,29 +55,23 @@ static char THIS_FILE[] = __FILE__;
 ** CTapeGetDriveParameters
 */
 
-Win32FoundationClasses::CTapeGetDriveParameters::CTapeGetDriveParameters()
+Win32FoundationClasses::CTapeGetDriveParameters::CTapeGetDriveParameters() noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Empty();
 }
 
-Win32FoundationClasses::CTapeGetDriveParameters::CTapeGetDriveParameters( _In_ Win32FoundationClasses::CTapeGetDriveParameters const& source )
+Win32FoundationClasses::CTapeGetDriveParameters::CTapeGetDriveParameters( _In_ Win32FoundationClasses::CTapeGetDriveParameters const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );
 }
 
-Win32FoundationClasses::CTapeGetDriveParameters::CTapeGetDriveParameters( _In_ TAPE_GET_DRIVE_PARAMETERS const * source )
+Win32FoundationClasses::CTapeGetDriveParameters::CTapeGetDriveParameters( _In_ TAPE_GET_DRIVE_PARAMETERS const * source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
    Copy( source );
-}
-
-Win32FoundationClasses::CTapeGetDriveParameters::~CTapeGetDriveParameters()
-{
-   WFC_VALIDATE_POINTER( this );
-   Empty();
 }
 
 void Win32FoundationClasses::CTapeGetDriveParameters::Copy(_In_ Win32FoundationClasses::CTapeGetDriveParameters const& source ) noexcept
@@ -740,12 +734,6 @@ Win32FoundationClasses::CTapeSetDriveParameters::CTapeSetDriveParameters( _In_ T
    Copy( source );
 }
 
-Win32FoundationClasses::CTapeSetDriveParameters::~CTapeSetDriveParameters()
-{
-   WFC_VALIDATE_POINTER( this );
-   Empty();
-}
-
 void Win32FoundationClasses::CTapeSetDriveParameters::Copy(_In_ Win32FoundationClasses::CTapeSetDriveParameters const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
@@ -840,12 +828,6 @@ Win32FoundationClasses::CTapeSetMediaParameters::CTapeSetMediaParameters( _In_ T
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
    Copy( source );
-}
-
-Win32FoundationClasses::CTapeSetMediaParameters::~CTapeSetMediaParameters()
-{
-   WFC_VALIDATE_POINTER( this );
-   Empty();
 }
 
 void Win32FoundationClasses::CTapeSetMediaParameters::Copy(_In_ Win32FoundationClasses::CTapeSetMediaParameters const& source ) noexcept

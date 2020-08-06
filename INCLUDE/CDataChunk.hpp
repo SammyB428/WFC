@@ -58,7 +58,7 @@ class CDataChunk
 {
    public:
 
-      uint32_t   Identifier{ 0 };
+      uint32_t Identifier{ 0 };
       std::vector<uint8_t> Data;
 
       inline CDataChunk() noexcept
@@ -66,14 +66,9 @@ class CDataChunk
          Identifier = 0;
       };
 
-      inline CDataChunk( _In_ CDataChunk const& source ) noexcept
+      inline explicit CDataChunk( _In_ CDataChunk const& source ) noexcept
       {
          Copy( source );
-      };
-
-     ~CDataChunk()
-      {
-         Identifier = 0;
       };
 
       static void GetIdentifier( _In_ uint32_t const identifier, _Out_ std::wstring& string ) noexcept;

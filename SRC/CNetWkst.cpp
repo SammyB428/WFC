@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 1995-2019, Samuel R. Blackburn
+** Copyright, 1995-2020, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -58,29 +58,23 @@ static char THIS_FILE[] = __FILE__;
 ** CWorkstationUser stuff
 */
 
-Win32FoundationClasses::CWorkstationUser::CWorkstationUser()
+Win32FoundationClasses::CWorkstationUser::CWorkstationUser() noexcept
 {
    WFC_VALIDATE_POINTER( this );
    m_Initialize();
 }
 
-Win32FoundationClasses::CWorkstationUser::CWorkstationUser( _In_ WKSTA_USER_INFO_1 const * source )
+Win32FoundationClasses::CWorkstationUser::CWorkstationUser( _In_ WKSTA_USER_INFO_1 const * source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
    Copy( source );
 }
 
-Win32FoundationClasses::CWorkstationUser::CWorkstationUser( _In_ CWorkstationUser const& source )
+Win32FoundationClasses::CWorkstationUser::CWorkstationUser( _In_ CWorkstationUser const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );
-}
-
-Win32FoundationClasses::CWorkstationUser::~CWorkstationUser()
-{
-   WFC_VALIDATE_POINTER( this );
-   m_Initialize();
 }
 
 /*
@@ -162,36 +156,37 @@ Win32FoundationClasses::CWorkstationUser const& Win32FoundationClasses::CWorksta
 ** CWorkstationInformation stuff
 */
 
-Win32FoundationClasses::CWorkstationInformation::CWorkstationInformation()
+Win32FoundationClasses::CWorkstationInformation::CWorkstationInformation() noexcept
 {
    WFC_VALIDATE_POINTER( this );
    m_Initialize();
 }
 
-Win32FoundationClasses::CWorkstationInformation::CWorkstationInformation( _In_ WKSTA_INFO_100 const * source )
+Win32FoundationClasses::CWorkstationInformation::CWorkstationInformation( _In_ WKSTA_INFO_100 const * source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
    Copy( source );
 }
 
-Win32FoundationClasses::CWorkstationInformation::CWorkstationInformation( _In_ WKSTA_INFO_101 const * source )
+Win32FoundationClasses::CWorkstationInformation::CWorkstationInformation( _In_ WKSTA_INFO_101 const * source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
    Copy( source );
 }
 
-Win32FoundationClasses::CWorkstationInformation::CWorkstationInformation( _In_ Win32FoundationClasses::CWorkstationInformation const& source )
+Win32FoundationClasses::CWorkstationInformation::CWorkstationInformation(_In_ WKSTA_INFO_102 const* source) noexcept
+{
+    WFC_VALIDATE_POINTER(this);
+    WFC_VALIDATE_POINTER(source);
+    Copy(source);
+}
+
+Win32FoundationClasses::CWorkstationInformation::CWorkstationInformation( _In_ Win32FoundationClasses::CWorkstationInformation const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );
-}
-
-Win32FoundationClasses::CWorkstationInformation::~CWorkstationInformation()
-{
-   WFC_VALIDATE_POINTER( this );
-   m_Initialize();
 }
 
 void Win32FoundationClasses::CWorkstationInformation::Copy( _In_ WKSTA_INFO_100 const * source ) noexcept
@@ -357,12 +352,6 @@ Win32FoundationClasses::CWorkstationTransport::CWorkstationTransport( _In_ Win32
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );
-}
-
-Win32FoundationClasses::CWorkstationTransport::~CWorkstationTransport()
-{
-   WFC_VALIDATE_POINTER( this );
-   m_Initialize();
 }
 
 void Win32FoundationClasses::CWorkstationTransport::Copy( _In_ WKSTA_TRANSPORT_INFO_0 const * source ) noexcept

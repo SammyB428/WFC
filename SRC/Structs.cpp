@@ -153,26 +153,21 @@ void Win32FoundationClasses::CAccessAllowedEntry::Dump( CDumpContext& dump_conte
 
 #endif // _DEBUG
 
-Win32FoundationClasses::CAccessControlEntryHeader::CAccessControlEntryHeader()
+Win32FoundationClasses::CAccessControlEntryHeader::CAccessControlEntryHeader() noexcept
 {
    Empty();
 }
 
-Win32FoundationClasses::CAccessControlEntryHeader::CAccessControlEntryHeader( _In_ Win32FoundationClasses::CAccessControlEntryHeader const& source )
+Win32FoundationClasses::CAccessControlEntryHeader::CAccessControlEntryHeader( _In_ Win32FoundationClasses::CAccessControlEntryHeader const& source ) noexcept
 {
    Empty();
    Copy( source );
 }
 
-Win32FoundationClasses::CAccessControlEntryHeader::CAccessControlEntryHeader( _In_ ACE_HEADER const * source )
+Win32FoundationClasses::CAccessControlEntryHeader::CAccessControlEntryHeader( _In_ ACE_HEADER const * source ) noexcept
 {
    Empty();
    Copy( source );
-}
-
-Win32FoundationClasses::CAccessControlEntryHeader::~CAccessControlEntryHeader()
-{
-   Empty();
 }
 
 void Win32FoundationClasses::CAccessControlEntryHeader::Copy(_In_ Win32FoundationClasses::CAccessControlEntryHeader const& source ) noexcept
@@ -318,26 +313,21 @@ _Check_return_ Win32FoundationClasses::CAccessControlEntryHeader& Win32Foundatio
    return( *this );
 }
 
-Win32FoundationClasses::CAccessControlList::CAccessControlList()
+Win32FoundationClasses::CAccessControlList::CAccessControlList() noexcept
 {
    Empty();
 }
 
-Win32FoundationClasses::CAccessControlList::CAccessControlList( _In_ Win32FoundationClasses::CAccessControlList const& source )
+Win32FoundationClasses::CAccessControlList::CAccessControlList( _In_ Win32FoundationClasses::CAccessControlList const& source ) noexcept
 {
    Empty();
    Copy( source );
 }
 
-Win32FoundationClasses::CAccessControlList::CAccessControlList( _In_ ACL const * source )
+Win32FoundationClasses::CAccessControlList::CAccessControlList( _In_ ACL const * source ) noexcept
 {
    Empty();
    Copy( source );
-}
-
-Win32FoundationClasses::CAccessControlList::~CAccessControlList()
-{
-   Empty();
 }
 
 void Win32FoundationClasses::CAccessControlList::Copy(_In_ Win32FoundationClasses::CAccessControlList const& source ) noexcept
@@ -403,26 +393,21 @@ _Check_return_ Win32FoundationClasses::CAccessControlList& Win32FoundationClasse
    return( *this );
 }
 
-Win32FoundationClasses::CAccessDeniedEntry::CAccessDeniedEntry()
+Win32FoundationClasses::CAccessDeniedEntry::CAccessDeniedEntry() noexcept
 {
    Empty();
 }
 
-Win32FoundationClasses::CAccessDeniedEntry::CAccessDeniedEntry( _In_ Win32FoundationClasses::CAccessDeniedEntry const& source )
+Win32FoundationClasses::CAccessDeniedEntry::CAccessDeniedEntry( _In_ Win32FoundationClasses::CAccessDeniedEntry const& source ) noexcept
 {
    Empty();
    Copy( source );
 }
 
-Win32FoundationClasses::CAccessDeniedEntry::CAccessDeniedEntry( _In_ ACCESS_DENIED_ACE const * source )
+Win32FoundationClasses::CAccessDeniedEntry::CAccessDeniedEntry( _In_ ACCESS_DENIED_ACE const * source ) noexcept
 {
    Empty();
    Copy( source );
-}
-
-Win32FoundationClasses::CAccessDeniedEntry::~CAccessDeniedEntry()
-{
-   Empty();
 }
 
 void Win32FoundationClasses::CAccessDeniedEntry::Copy(_In_ Win32FoundationClasses::CAccessDeniedEntry const& source ) noexcept
@@ -577,26 +562,21 @@ _Check_return_ Win32FoundationClasses::CAccessDeniedEntry& Win32FoundationClasse
    return( *this );
 }
 
-Win32FoundationClasses::CBitmapCoreHeader::CBitmapCoreHeader()
+Win32FoundationClasses::CBitmapCoreHeader::CBitmapCoreHeader() noexcept
 {
    Empty();
 }
 
-Win32FoundationClasses::CBitmapCoreHeader::CBitmapCoreHeader( _In_ Win32FoundationClasses::CBitmapCoreHeader const& source )
+Win32FoundationClasses::CBitmapCoreHeader::CBitmapCoreHeader( _In_ Win32FoundationClasses::CBitmapCoreHeader const& source ) noexcept
 {
    Empty();
    Copy( source );
 }
 
-Win32FoundationClasses::CBitmapCoreHeader::CBitmapCoreHeader( _In_ tagBITMAPCOREHEADER const * source )
+Win32FoundationClasses::CBitmapCoreHeader::CBitmapCoreHeader( _In_ tagBITMAPCOREHEADER const * source ) noexcept
 {
    Empty();
    Copy( source );
-}
-
-Win32FoundationClasses::CBitmapCoreHeader::~CBitmapCoreHeader()
-{
-   Empty();
 }
 
 void Win32FoundationClasses::CBitmapCoreHeader::Copy( _In_ Win32FoundationClasses::CBitmapCoreHeader const& source ) noexcept
@@ -662,26 +642,21 @@ _Check_return_ Win32FoundationClasses::CBitmapCoreHeader& Win32FoundationClasses
    return( *this );
 }
 
-Win32FoundationClasses::CBitmapFileHeader::CBitmapFileHeader()
+Win32FoundationClasses::CBitmapFileHeader::CBitmapFileHeader() noexcept
 {
    Empty();
 }
 
-Win32FoundationClasses::CBitmapFileHeader::CBitmapFileHeader( _In_ Win32FoundationClasses::CBitmapFileHeader const& source )
+Win32FoundationClasses::CBitmapFileHeader::CBitmapFileHeader( _In_ Win32FoundationClasses::CBitmapFileHeader const& source ) noexcept
 {
    Empty();
    Copy( source );
 }
 
-Win32FoundationClasses::CBitmapFileHeader::CBitmapFileHeader( _In_ tagBITMAPFILEHEADER const * source )
+Win32FoundationClasses::CBitmapFileHeader::CBitmapFileHeader( _In_ tagBITMAPFILEHEADER const * source ) noexcept
 {
    Empty();
    Copy( source );
-}
-
-Win32FoundationClasses::CBitmapFileHeader::~CBitmapFileHeader()
-{
-   Empty();
 }
 
 void Win32FoundationClasses::CBitmapFileHeader::Copy(_In_ Win32FoundationClasses::CBitmapFileHeader const& source ) noexcept
@@ -754,26 +729,21 @@ _Check_return_ Win32FoundationClasses::CBitmapFileHeader& Win32FoundationClasses
 ** CBitmapInfoHeader
 */
 
-Win32FoundationClasses::CBitmapInfoHeader::CBitmapInfoHeader()
+Win32FoundationClasses::CBitmapInfoHeader::CBitmapInfoHeader() noexcept
 {
    Empty();
 }
 
-Win32FoundationClasses::CBitmapInfoHeader::CBitmapInfoHeader( _In_ Win32FoundationClasses::CBitmapInfoHeader const& source )
+Win32FoundationClasses::CBitmapInfoHeader::CBitmapInfoHeader( _In_ Win32FoundationClasses::CBitmapInfoHeader const& source ) noexcept
 {
    Empty();
    Copy( source );
 }
 
-Win32FoundationClasses::CBitmapInfoHeader::CBitmapInfoHeader( _In_ tagBITMAPINFOHEADER const * source )
+Win32FoundationClasses::CBitmapInfoHeader::CBitmapInfoHeader( _In_ tagBITMAPINFOHEADER const * source ) noexcept
 {
    Empty();
    Copy( source );
-}
-
-Win32FoundationClasses::CBitmapInfoHeader::~CBitmapInfoHeader()
-{
-   Empty();
 }
 
 void Win32FoundationClasses::CBitmapInfoHeader::Copy( _In_ Win32FoundationClasses::CBitmapInfoHeader const& source ) noexcept
@@ -861,26 +831,21 @@ _Check_return_ Win32FoundationClasses::CBitmapInfoHeader& Win32FoundationClasses
 ** CColorAdjustment
 */
 
-Win32FoundationClasses::CColorAdjustment::CColorAdjustment()
+Win32FoundationClasses::CColorAdjustment::CColorAdjustment() noexcept
 {
    Empty();
 }
 
-Win32FoundationClasses::CColorAdjustment::CColorAdjustment( _In_ Win32FoundationClasses::CColorAdjustment const& source )
+Win32FoundationClasses::CColorAdjustment::CColorAdjustment( _In_ Win32FoundationClasses::CColorAdjustment const& source ) noexcept
 {
    Empty();
    Copy( source );
 }
 
-Win32FoundationClasses::CColorAdjustment::CColorAdjustment( _In_ tagCOLORADJUSTMENT const * source )
+Win32FoundationClasses::CColorAdjustment::CColorAdjustment( _In_ tagCOLORADJUSTMENT const * source ) noexcept
 {
    Empty();
    Copy( source );
-}
-
-Win32FoundationClasses::CColorAdjustment::~CColorAdjustment()
-{
-   Empty();
 }
 
 void Win32FoundationClasses::CColorAdjustment::Copy( _In_ Win32FoundationClasses::CColorAdjustment const& source ) noexcept
@@ -971,22 +936,14 @@ _Check_return_ Win32FoundationClasses::CColorAdjustment& Win32FoundationClasses:
 ** CCommunicationsConfiguration
 */
 
-Win32FoundationClasses::CCommunicationsConfiguration::CCommunicationsConfiguration()
+Win32FoundationClasses::CCommunicationsConfiguration::CCommunicationsConfiguration() noexcept
 {
    Empty();
    dwSize        = sizeof( COMMCONFIG );
    dcb.DCBlength = sizeof( DCB );
 }
 
-Win32FoundationClasses::CCommunicationsConfiguration::CCommunicationsConfiguration( _In_ Win32FoundationClasses::CCommunicationsConfiguration const& source )
-{
-   Empty();
-   dwSize        = sizeof( COMMCONFIG );
-   dcb.DCBlength = sizeof( DCB );
-   Copy( source );
-}
-
-Win32FoundationClasses::CCommunicationsConfiguration::CCommunicationsConfiguration( _In_ COMMCONFIG const& source )
+Win32FoundationClasses::CCommunicationsConfiguration::CCommunicationsConfiguration( _In_ Win32FoundationClasses::CCommunicationsConfiguration const& source ) noexcept
 {
    Empty();
    dwSize        = sizeof( COMMCONFIG );
@@ -994,9 +951,12 @@ Win32FoundationClasses::CCommunicationsConfiguration::CCommunicationsConfigurati
    Copy( source );
 }
 
-Win32FoundationClasses::CCommunicationsConfiguration::~CCommunicationsConfiguration()
+Win32FoundationClasses::CCommunicationsConfiguration::CCommunicationsConfiguration( _In_ COMMCONFIG const& source ) noexcept
 {
    Empty();
+   dwSize        = sizeof( COMMCONFIG );
+   dcb.DCBlength = sizeof( DCB );
+   Copy( source );
 }
 
 void Win32FoundationClasses::CCommunicationsConfiguration::Copy( _In_ Win32FoundationClasses::CCommunicationsConfiguration const& source ) noexcept
@@ -1218,24 +1178,19 @@ _Check_return_ Win32FoundationClasses::CCommunicationsConfiguration& Win32Founda
 ** CCommunicationProperties
 */
 
-Win32FoundationClasses::CCommunicationProperties::CCommunicationProperties()
+Win32FoundationClasses::CCommunicationProperties::CCommunicationProperties() noexcept
 {
    Empty();
 }
 
-Win32FoundationClasses::CCommunicationProperties::CCommunicationProperties( _In_ Win32FoundationClasses::CCommunicationProperties const& source )
+Win32FoundationClasses::CCommunicationProperties::CCommunicationProperties( _In_ Win32FoundationClasses::CCommunicationProperties const& source ) noexcept
 {
    Copy( source );
 }
 
-Win32FoundationClasses::CCommunicationProperties::CCommunicationProperties( _In_ _COMMPROP const& source )
+Win32FoundationClasses::CCommunicationProperties::CCommunicationProperties( _In_ _COMMPROP const& source ) noexcept
 {
    Copy( source );
-}
-
-Win32FoundationClasses::CCommunicationProperties::~CCommunicationProperties()
-{
-   Empty();
 }
 
 void Win32FoundationClasses::CCommunicationProperties::ConvertBaudRateToString( _In_ DWORD const baud_rate, _Out_ std::wstring& human_readable_string ) const noexcept
@@ -2062,26 +2017,21 @@ _Check_return_ Win32FoundationClasses::CCommunicationProperties& Win32Foundation
 ** CMemoryStatus
 */
 
-Win32FoundationClasses::CMemoryStatus::CMemoryStatus()
+Win32FoundationClasses::CMemoryStatus::CMemoryStatus() noexcept
 {
    Empty();
 }
 
-Win32FoundationClasses::CMemoryStatus::CMemoryStatus( _In_ Win32FoundationClasses::CMemoryStatus const& source )
+Win32FoundationClasses::CMemoryStatus::CMemoryStatus( _In_ Win32FoundationClasses::CMemoryStatus const& source ) noexcept
 {
    Empty();
    Copy( source );
 }
 
-Win32FoundationClasses::CMemoryStatus::CMemoryStatus( _In_ MEMORYSTATUS const * source )
+Win32FoundationClasses::CMemoryStatus::CMemoryStatus( _In_ MEMORYSTATUS const * source ) noexcept
 {
    Empty();
    Copy( source );
-}
-
-Win32FoundationClasses::CMemoryStatus::~CMemoryStatus()
-{
-   Empty();
 }
 
 void Win32FoundationClasses::CMemoryStatus::Copy(_In_ Win32FoundationClasses::CMemoryStatus const& source ) noexcept
@@ -2159,26 +2109,21 @@ _Check_return_ Win32FoundationClasses::CMemoryStatus& Win32FoundationClasses::CM
 ** COFStruct
 */
 
-Win32FoundationClasses::COFStruct::COFStruct()
+Win32FoundationClasses::COFStruct::COFStruct() noexcept
 {
    Empty();
 }
 
-Win32FoundationClasses::COFStruct::COFStruct( _In_ Win32FoundationClasses::COFStruct const& source )
+Win32FoundationClasses::COFStruct::COFStruct( _In_ Win32FoundationClasses::COFStruct const& source ) noexcept
 {
    Empty();
    Copy( source );
 }
 
-Win32FoundationClasses::COFStruct::COFStruct( _In_ _OFSTRUCT const * source )
+Win32FoundationClasses::COFStruct::COFStruct( _In_ _OFSTRUCT const * source ) noexcept
 {
    Empty();
    Copy( source );
-}
-
-Win32FoundationClasses::COFStruct::~COFStruct()
-{
-   Empty();
 }
 
 void Win32FoundationClasses::COFStruct::Copy(_In_ Win32FoundationClasses::COFStruct const& source ) noexcept
@@ -2255,26 +2200,21 @@ _Check_return_ Win32FoundationClasses::COFStruct& Win32FoundationClasses::COFStr
 ** COutlineTextMetricA
 */
 
-Win32FoundationClasses::COutlineTextMetricA::COutlineTextMetricA()
+Win32FoundationClasses::COutlineTextMetricA::COutlineTextMetricA() noexcept
 {
    Empty();
 }
 
-Win32FoundationClasses::COutlineTextMetricA::COutlineTextMetricA( _In_ Win32FoundationClasses::COutlineTextMetricA const& source )
+Win32FoundationClasses::COutlineTextMetricA::COutlineTextMetricA( _In_ Win32FoundationClasses::COutlineTextMetricA const& source ) noexcept
 {
    Empty();
    Copy( source );
 }
 
-Win32FoundationClasses::COutlineTextMetricA::COutlineTextMetricA( _In_ _OUTLINETEXTMETRICA const * source )
+Win32FoundationClasses::COutlineTextMetricA::COutlineTextMetricA( _In_ _OUTLINETEXTMETRICA const * source ) noexcept
 {
    Empty();
    Copy( source );
-}
-
-Win32FoundationClasses::COutlineTextMetricA::~COutlineTextMetricA()
-{
-   Empty();
 }
 
 void Win32FoundationClasses::COutlineTextMetricA::Copy(_In_ Win32FoundationClasses::COutlineTextMetricA const& source ) noexcept
@@ -2550,26 +2490,21 @@ _Check_return_ Win32FoundationClasses::COutlineTextMetricA& Win32FoundationClass
    return( *this );
 }
 
-Win32FoundationClasses::COutlineTextMetricW::COutlineTextMetricW()
+Win32FoundationClasses::COutlineTextMetricW::COutlineTextMetricW() noexcept
 {
    Empty();
 }
 
-Win32FoundationClasses::COutlineTextMetricW::COutlineTextMetricW( _In_ Win32FoundationClasses::COutlineTextMetricW const& source )
+Win32FoundationClasses::COutlineTextMetricW::COutlineTextMetricW( _In_ Win32FoundationClasses::COutlineTextMetricW const& source ) noexcept
 {
    Empty();
    Copy( source );
 }
 
-Win32FoundationClasses::COutlineTextMetricW::COutlineTextMetricW( _In_ _OUTLINETEXTMETRICW const * source )
+Win32FoundationClasses::COutlineTextMetricW::COutlineTextMetricW( _In_ _OUTLINETEXTMETRICW const * source ) noexcept
 {
    Empty();
    Copy( source );
-}
-
-Win32FoundationClasses::COutlineTextMetricW::~COutlineTextMetricW()
-{
-   Empty();
 }
 
 void Win32FoundationClasses::COutlineTextMetricW::Copy(_In_ Win32FoundationClasses::COutlineTextMetricW const& source ) noexcept
@@ -2845,12 +2780,7 @@ _Check_return_ Win32FoundationClasses::COutlineTextMetricW& Win32FoundationClass
    return( *this );
 }
 
-Win32FoundationClasses::CPerfCounterDefinition::CPerfCounterDefinition()
-{
-   Empty();
-}
-
-Win32FoundationClasses::CPerfCounterDefinition::~CPerfCounterDefinition()
+Win32FoundationClasses::CPerfCounterDefinition::CPerfCounterDefinition() noexcept
 {
    Empty();
 }
@@ -2869,12 +2799,7 @@ void Win32FoundationClasses::CPerfCounterDefinition::Empty( void ) noexcept
    CounterOffset         = 0;
 }
 
-Win32FoundationClasses::CPerfInstanceDefinition::CPerfInstanceDefinition()
-{
-   Empty();
-}
-
-Win32FoundationClasses::CPerfInstanceDefinition::~CPerfInstanceDefinition()
+Win32FoundationClasses::CPerfInstanceDefinition::CPerfInstanceDefinition() noexcept
 {
    Empty();
 }
@@ -2889,26 +2814,21 @@ void Win32FoundationClasses::CPerfInstanceDefinition::Empty( void ) noexcept
    NameLength             = 0;
 }
 
-Win32FoundationClasses::CPixelFormatDescriptor::CPixelFormatDescriptor()
+Win32FoundationClasses::CPixelFormatDescriptor::CPixelFormatDescriptor() noexcept
 {
    Empty();
 }
 
-Win32FoundationClasses::CPixelFormatDescriptor::CPixelFormatDescriptor( _In_ Win32FoundationClasses::CPixelFormatDescriptor const& source )
+Win32FoundationClasses::CPixelFormatDescriptor::CPixelFormatDescriptor( _In_ Win32FoundationClasses::CPixelFormatDescriptor const& source ) noexcept
 {
    Empty();
    Copy( source );
 }
 
-Win32FoundationClasses::CPixelFormatDescriptor::CPixelFormatDescriptor( _In_ tagPIXELFORMATDESCRIPTOR const * source )
+Win32FoundationClasses::CPixelFormatDescriptor::CPixelFormatDescriptor( _In_ tagPIXELFORMATDESCRIPTOR const * source ) noexcept
 {
    Empty();
    Copy( source );
-}
-
-Win32FoundationClasses::CPixelFormatDescriptor::~CPixelFormatDescriptor()
-{
-   Empty();
 }
 
 void Win32FoundationClasses::CPixelFormatDescriptor::Copy(_In_ Win32FoundationClasses::CPixelFormatDescriptor const& source ) noexcept
@@ -3163,12 +3083,7 @@ _Check_return_ Win32FoundationClasses::CPixelFormatDescriptor& Win32FoundationCl
    return( *this );
 }
 
-Win32FoundationClasses::CRasterizerStatus::CRasterizerStatus()
-{
-   Empty();
-}
-
-Win32FoundationClasses::CRasterizerStatus::~CRasterizerStatus()
+Win32FoundationClasses::CRasterizerStatus::CRasterizerStatus() noexcept
 {
    Empty();
 }
@@ -3185,11 +3100,6 @@ Win32FoundationClasses::CSecurityAttributes::CSecurityAttributes() noexcept
    Empty();
 }
 
-Win32FoundationClasses::CSecurityAttributes::~CSecurityAttributes()
-{
-   Empty();
-}
-
 void Win32FoundationClasses::CSecurityAttributes::Empty( void ) noexcept
 {
    nLength              = sizeof( SECURITY_ATTRIBUTES );
@@ -3197,12 +3107,7 @@ void Win32FoundationClasses::CSecurityAttributes::Empty( void ) noexcept
    bInheritHandle       = FALSE;
 }
 
-Win32FoundationClasses::CSecurityQualityOfService::CSecurityQualityOfService()
-{
-   Empty();
-}
-
-Win32FoundationClasses::CSecurityQualityOfService::~CSecurityQualityOfService()
+Win32FoundationClasses::CSecurityQualityOfService::CSecurityQualityOfService() noexcept
 {
    Empty();
 }
@@ -3240,11 +3145,6 @@ Win32FoundationClasses::CSystemAuditEntry::CSystemAuditEntry( _In_ _SYSTEM_AUDIT
 {
    Empty();
    Copy( source );
-}
-
-Win32FoundationClasses::CSystemAuditEntry::~CSystemAuditEntry()
-{
-   Empty();
 }
 
 void Win32FoundationClasses::CSystemAuditEntry::Copy(_In_ Win32FoundationClasses::CSystemAuditEntry const& source ) noexcept
@@ -3407,26 +3307,21 @@ _Check_return_ Win32FoundationClasses::CSystemAuditEntry& Win32FoundationClasses
 ** CTextMetricA
 */
 
-Win32FoundationClasses::CTextMetricA::CTextMetricA()
+Win32FoundationClasses::CTextMetricA::CTextMetricA() noexcept
 {
    Empty();
 }
 
-Win32FoundationClasses::CTextMetricA::CTextMetricA( _In_ Win32FoundationClasses::CTextMetricA const& source )
+Win32FoundationClasses::CTextMetricA::CTextMetricA( _In_ Win32FoundationClasses::CTextMetricA const& source ) noexcept
 {
    Empty();
    Copy( source );
 }
 
-Win32FoundationClasses::CTextMetricA::CTextMetricA( _In_ tagTEXTMETRICA const * source )
+Win32FoundationClasses::CTextMetricA::CTextMetricA( _In_ tagTEXTMETRICA const * source ) noexcept
 {
    Empty();
    Copy( source );
-}
-
-Win32FoundationClasses::CTextMetricA::~CTextMetricA()
-{
-   Empty();
 }
 
 void Win32FoundationClasses::CTextMetricA::Copy(_In_ Win32FoundationClasses::CTextMetricA const& source ) noexcept
@@ -3541,26 +3436,21 @@ _Check_return_ Win32FoundationClasses::CTextMetricA& Win32FoundationClasses::CTe
 ** CTextMetricW
 */
 
-Win32FoundationClasses::CTextMetricW::CTextMetricW()
+Win32FoundationClasses::CTextMetricW::CTextMetricW() noexcept
 {
    Empty();
 }
 
-Win32FoundationClasses::CTextMetricW::CTextMetricW( _In_ Win32FoundationClasses::CTextMetricW const& source )
+Win32FoundationClasses::CTextMetricW::CTextMetricW( _In_ Win32FoundationClasses::CTextMetricW const& source ) noexcept
 {
    Empty();
    Copy( source );
 }
 
-Win32FoundationClasses::CTextMetricW::CTextMetricW( _In_ tagTEXTMETRICW const * source )
+Win32FoundationClasses::CTextMetricW::CTextMetricW( _In_ tagTEXTMETRICW const * source ) noexcept
 {
    Empty();
    Copy( source );
-}
-
-Win32FoundationClasses::CTextMetricW::~CTextMetricW()
-{
-   Empty();
 }
 
 void Win32FoundationClasses::CTextMetricW::Copy(_In_ Win32FoundationClasses::CTextMetricW const& source ) noexcept
@@ -3686,11 +3576,6 @@ Win32FoundationClasses::CWindowPlacement::CWindowPlacement( _In_ tagWINDOWPLACEM
 {
    Empty();
    Copy( source );
-}
-
-Win32FoundationClasses::CWindowPlacement::~CWindowPlacement()
-{
-   Empty();
 }
 
 void Win32FoundationClasses::CWindowPlacement::Copy(_In_ Win32FoundationClasses::CWindowPlacement const& source ) noexcept

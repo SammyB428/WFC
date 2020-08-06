@@ -53,7 +53,7 @@ static char THIS_FILE[] = __FILE__;
 
 // Construction
 
-Win32FoundationClasses::COverlapped::COverlapped()
+Win32FoundationClasses::COverlapped::COverlapped() noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -65,7 +65,7 @@ Win32FoundationClasses::COverlapped::COverlapped()
    m_AutomaticallyDelete = true;
 }
 
-Win32FoundationClasses::COverlapped::COverlapped( _In_ OVERLAPPED const * source )
+Win32FoundationClasses::COverlapped::COverlapped( _In_ OVERLAPPED const * source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
@@ -80,7 +80,7 @@ Win32FoundationClasses::COverlapped::COverlapped( _In_ OVERLAPPED const * source
    Copy( source );
 }
 
-Win32FoundationClasses::COverlapped::COverlapped( _In_ OVERLAPPED const& source )
+Win32FoundationClasses::COverlapped::COverlapped( _In_ OVERLAPPED const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -94,7 +94,7 @@ Win32FoundationClasses::COverlapped::COverlapped( _In_ OVERLAPPED const& source 
    Copy( source );
 }
 
-Win32FoundationClasses::COverlapped::COverlapped( _In_ Win32FoundationClasses::COverlapped const& source )
+Win32FoundationClasses::COverlapped::COverlapped( _In_ Win32FoundationClasses::COverlapped const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
@@ -106,12 +106,6 @@ Win32FoundationClasses::COverlapped::COverlapped( _In_ Win32FoundationClasses::C
    m_AutomaticallyDelete = false;
 
    Copy( source );
-}
-
-Win32FoundationClasses::COverlapped::~COverlapped()
-{
-   WFC_VALIDATE_POINTER( this );
-   Empty();
 }
 
 // Methods

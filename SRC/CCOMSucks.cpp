@@ -111,10 +111,6 @@ Win32FoundationClasses::CCOMSucks::CCOMSucks() noexcept
     (void)Win32FoundationClasses::wfc_close_handle(event_handle);
 }
 
-Win32FoundationClasses::CCOMSucks::~CCOMSucks()
-{
-}
-
 // End of source
 
 /*

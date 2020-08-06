@@ -54,42 +54,36 @@ static char THIS_FILE[] = __FILE__;
 #define new DEBUG_NEW
 #endif // _DEBUG
 
-Win32FoundationClasses::CPingResults::CPingResults()
+Win32FoundationClasses::CPingResults::CPingResults() noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Empty();
 }
 
-Win32FoundationClasses::CPingResults::CPingResults( _In_ Win32FoundationClasses::CPingResults const& source )
+Win32FoundationClasses::CPingResults::CPingResults( _In_ Win32FoundationClasses::CPingResults const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );
 }
 
-Win32FoundationClasses::CPingResults::CPingResults( _In_ Win32FoundationClasses::CPingResults const * source )
+Win32FoundationClasses::CPingResults::CPingResults( _In_ Win32FoundationClasses::CPingResults const * source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
    Copy( source );
 }
 
-Win32FoundationClasses::CPingResults::CPingResults( _In_ IP_ECHO_REPLY const& source )
+Win32FoundationClasses::CPingResults::CPingResults( _In_ IP_ECHO_REPLY const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );
 }
 
-Win32FoundationClasses::CPingResults::CPingResults( _In_ IP_ECHO_REPLY const * source )
+Win32FoundationClasses::CPingResults::CPingResults( _In_ IP_ECHO_REPLY const * source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
    Copy( source );
-}
-
-Win32FoundationClasses::CPingResults::~CPingResults()
-{
-   WFC_VALIDATE_POINTER( this );
-   Empty();
 }
 
 void Win32FoundationClasses::CPingResults::Copy( _In_ Win32FoundationClasses::CPingResults const& source ) noexcept

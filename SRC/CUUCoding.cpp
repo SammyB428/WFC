@@ -54,12 +54,7 @@ static char THIS_FILE[] = __FILE__;
 #define UU_DECODE_CHARACTER( _c ) static_cast< BYTE >( ( (_c) - 0x20 ) bitand 0x3F )
 #define UU_ENCODE_BYTE(      _c ) static_cast< BYTE >( (_c) ? ( (_c) bitand 0x3F ) + 0x20 : '`' )
 
-Win32FoundationClasses::CUUCoding::CUUCoding()
-{
-    WFC_VALIDATE_POINTER( this );
-}
-
-Win32FoundationClasses::CUUCoding::~CUUCoding()
+Win32FoundationClasses::CUUCoding::CUUCoding() noexcept
 {
     WFC_VALIDATE_POINTER( this );
 }

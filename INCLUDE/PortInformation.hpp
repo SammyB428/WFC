@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 1995-2016, Samuel R. Blackburn
+** Copyright, 1995-2020, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -49,29 +49,27 @@ class CPortInformation
 {
    public:
 
-      CPortInformation();
-      CPortInformation( _In_ PORT_INFO_1 const * source );
-      CPortInformation( _In_ PORT_INFO_2 const * source );
-      CPortInformation( _In_ CPortInformation const& source );
-
-      virtual ~CPortInformation();
+      CPortInformation() noexcept;
+      explicit CPortInformation( _In_ PORT_INFO_1 const * source ) noexcept;
+      explicit CPortInformation( _In_ PORT_INFO_2 const * source ) noexcept;
+      explicit CPortInformation( _In_ CPortInformation const& source ) noexcept;
 
       std::wstring Name;
       std::wstring Monitor;
       std::wstring Description;
-      DWORD   Type{ 0 };
+      DWORD Type{ 0 };
       std::wstring TypeName;
 
-      virtual void Copy( _In_ PORT_INFO_1 const * source ) noexcept;
-      virtual void Copy( _In_ PORT_INFO_2 const * source ) noexcept;
-      virtual void Copy( _In_ CPortInformation const& source ) noexcept;
-      virtual void Empty( void ) noexcept;
-      virtual void TypeToString( _In_ DWORD type, _Out_ std::wstring& string ) const noexcept;
+      void Copy( _In_ PORT_INFO_1 const * source ) noexcept;
+      void Copy( _In_ PORT_INFO_2 const * source ) noexcept;
+      void Copy( _In_ CPortInformation const& source ) noexcept;
+      void Empty( void ) noexcept;
+      void TypeToString( _In_ DWORD type, _Out_ std::wstring& string ) const noexcept;
 
-      virtual CPortInformation& operator = ( _In_ CPortInformation const& source ) noexcept;
+      CPortInformation& operator = ( _In_ CPortInformation const& source ) noexcept;
 
 #if defined( _DEBUG ) && ! defined( WFC_NO_DUMPING )
-      virtual void Dump( CDumpContext& dump_context ) const;
+      void Dump( CDumpContext& dump_context ) const;
 #endif // _DEBUG
 };
 

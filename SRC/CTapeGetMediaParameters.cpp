@@ -51,24 +51,19 @@ static char THIS_FILE[] = __FILE__;
 #define new DEBUG_NEW
 #endif // _DEBUG
 
-Win32FoundationClasses::CTapeGetMediaParameters::CTapeGetMediaParameters()
+Win32FoundationClasses::CTapeGetMediaParameters::CTapeGetMediaParameters() noexcept
 {
    Empty();
 }
 
-Win32FoundationClasses::CTapeGetMediaParameters::CTapeGetMediaParameters( _In_ Win32FoundationClasses::CTapeGetMediaParameters const& source )
+Win32FoundationClasses::CTapeGetMediaParameters::CTapeGetMediaParameters( _In_ Win32FoundationClasses::CTapeGetMediaParameters const& source ) noexcept
 {
    Copy( source );
 }
 
-Win32FoundationClasses::CTapeGetMediaParameters::CTapeGetMediaParameters(_In_ TAPE_GET_MEDIA_PARAMETERS const * source )
+Win32FoundationClasses::CTapeGetMediaParameters::CTapeGetMediaParameters(_In_ TAPE_GET_MEDIA_PARAMETERS const * source ) noexcept
 {
    Copy( source );
-}
-
-Win32FoundationClasses::CTapeGetMediaParameters::~CTapeGetMediaParameters()
-{
-   Empty();
 }
 
 void Win32FoundationClasses::CTapeGetMediaParameters::Copy(_In_ Win32FoundationClasses::CTapeGetMediaParameters const& source ) noexcept

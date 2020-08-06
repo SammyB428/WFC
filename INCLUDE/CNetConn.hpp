@@ -53,16 +53,15 @@ class CNetworkConnectionInformation
 
    public:
 
-      CNetworkConnectionInformation();
+      CNetworkConnectionInformation() noexcept;
 
       /*
       ** Can't make Copy take a const pointer because Microsoft screwed up the 
       ** net API header files...
       */
 
-      CNetworkConnectionInformation( _In_ CONNECTION_INFO_1 const * information_p );
-      CNetworkConnectionInformation( _In_ CNetworkConnectionInformation const& source );
-      virtual ~CNetworkConnectionInformation();
+      explicit CNetworkConnectionInformation( _In_ CONNECTION_INFO_1 const * information_p ) noexcept;
+      explicit CNetworkConnectionInformation( _In_ CNetworkConnectionInformation const& source ) noexcept;
 
       DWORD   ID{ 0 };
       DWORD   Type{ 0 };
@@ -77,11 +76,11 @@ class CNetworkConnectionInformation
       ** net API header files...
       */
 
-      virtual void Copy( _In_ CONNECTION_INFO_1 const * source ) noexcept;
-      virtual void Copy( _In_ CNetworkConnectionInformation const& source ) noexcept;
-      virtual void Empty( void ) noexcept;
+      void Copy( _In_ CONNECTION_INFO_1 const * source ) noexcept;
+      void Copy( _In_ CNetworkConnectionInformation const& source ) noexcept;
+      void Empty( void ) noexcept;
 
-      virtual CNetworkConnectionInformation const& operator=( _In_ CNetworkConnectionInformation const& source ) noexcept;
+      CNetworkConnectionInformation const& operator=( _In_ CNetworkConnectionInformation const& source ) noexcept;
 
 #if defined( _DEBUG ) && ! defined( WFC_NO_DUMPING )
       virtual void Dump( CDumpContext& dump_context ) const;

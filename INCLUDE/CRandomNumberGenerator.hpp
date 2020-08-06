@@ -49,7 +49,7 @@ class CRandomNumberGenerator
 {
    protected:
 
-       double m_Array[97]{ 0 };
+      double m_Array[97]{ 0 };
       double m_C{ 0 };
       double m_Cd{ 0 };
       double m_Cm{ 0 };
@@ -59,9 +59,8 @@ class CRandomNumberGenerator
 
    public:
 
-      CRandomNumberGenerator();
-      CRandomNumberGenerator( _In_ DWORD new_seed );
-     ~CRandomNumberGenerator();
+      CRandomNumberGenerator() noexcept;
+      explicit CRandomNumberGenerator( _In_ DWORD new_seed ) noexcept;
 
       /*
       ** Methods

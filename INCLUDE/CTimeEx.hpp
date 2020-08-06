@@ -56,8 +56,8 @@ class CTimeSpan
    public:
 
       inline constexpr CTimeSpan() noexcept { m_NumberOfSeconds = 0; }
-      inline  CTimeSpan( _In_ unsigned long const number_of_seconds ) noexcept { m_NumberOfSeconds = number_of_seconds; }
-      inline  CTimeSpan( _In_ unsigned long const days, _In_ unsigned long const hours, _In_ unsigned long const minutes, _In_ unsigned long const number_of_seconds ) noexcept
+      inline constexpr explicit CTimeSpan( _In_ unsigned long const number_of_seconds ) noexcept { m_NumberOfSeconds = number_of_seconds; }
+      inline explicit  CTimeSpan( _In_ unsigned long const days, _In_ unsigned long const hours, _In_ unsigned long const minutes, _In_ unsigned long const number_of_seconds ) noexcept
       {
          m_NumberOfSeconds  = number_of_seconds;
          m_NumberOfSeconds += ( minutes * 60L );
@@ -65,8 +65,7 @@ class CTimeSpan
          m_NumberOfSeconds += ( 24L * 60L * 60L * days );
       }
 
-      inline CTimeSpan( _In_ CTimeSpan const& source ) noexcept { m_NumberOfSeconds = source.m_NumberOfSeconds; }
-      inline ~CTimeSpan() { m_NumberOfSeconds = 0; }
+      inline constexpr explicit CTimeSpan( _In_ CTimeSpan const& source ) noexcept { m_NumberOfSeconds = source.m_NumberOfSeconds; }
 
       inline constexpr void Empty( void ) noexcept { m_NumberOfSeconds = 0; }
 
@@ -108,15 +107,14 @@ class CTimeEx
       // Construction
 
        inline constexpr CTimeEx() noexcept { m_Time = 0; };
-       inline constexpr CTimeEx(_In_ CTimeEx const& source) noexcept { Copy(source); }
-       inline constexpr CTimeEx(_In_ CTimeEx const* source) noexcept { Copy(source); }
-       inline constexpr CTimeEx(_In_ time_t const source) noexcept { m_Time = source; }
-      CTimeEx( _In_ struct tm const * source ) noexcept;
-      CTimeEx( _In_ struct tm const&  source ) noexcept;
-      CTimeEx( _In_ int const year, _In_ int const month, _In_ int const day, _In_ int const hour, _In_ int const minute, _In_ int const second, _In_ int const daylight_savings_time = -1 ) noexcept;
-      inline constexpr CTimeEx(_In_ FILETIME const& source) noexcept { Copy(source); }
-      inline constexpr CTimeEx(_In_ FILETIME const* source) noexcept { Copy(source); }
-      inline ~CTimeEx() noexcept { m_Time = 0; };
+       inline constexpr explicit CTimeEx(_In_ CTimeEx const& source) noexcept { Copy(source); }
+       inline constexpr explicit CTimeEx(_In_ CTimeEx const* source) noexcept { Copy(source); }
+       inline constexpr explicit CTimeEx(_In_ time_t const source) noexcept { m_Time = source; }
+       explicit CTimeEx( _In_ struct tm const * source ) noexcept;
+       explicit CTimeEx( _In_ struct tm const&  source ) noexcept;
+       explicit CTimeEx( _In_ int const year, _In_ int const month, _In_ int const day, _In_ int const hour, _In_ int const minute, _In_ int const second, _In_ int const daylight_savings_time = -1 ) noexcept;
+      inline constexpr explicit CTimeEx(_In_ FILETIME const& source) noexcept { Copy(source); }
+      inline constexpr explicit CTimeEx(_In_ FILETIME const* source) noexcept { Copy(source); }
 
       // Methods
 
@@ -289,7 +287,7 @@ class CTime
    public:
 
       inline CTime() noexcept = default;
-      inline CTime( _In_ time_t const the_time ) noexcept : m_Time( the_time ) {};
+      inline explicit CTime( _In_ time_t const the_time ) noexcept : m_Time( the_time ) {};
       inline CTime( _In_ int const year, _In_ int const month, _In_ int const day, _In_ int const hour, _In_ int const minute, _In_ int const second, _In_ int const daylight_savings_time = -1 ) noexcept
       {
          m_Time.Copy( CTimeEx( year, month, day, hour, minute, second, daylight_savings_time ) );
@@ -300,9 +298,7 @@ class CTime
       // making this compilable in GCC.
       // GCC wants explicit conversion from CTimeEx
       // for CTime operator - (CTimeSpan const&) and CTime operator + (CTimeSpan const&)	
-      inline CTime( CTimeEx const& source ) noexcept : m_Time( source ) {};
-
-      inline ~CTime() = default;
+      inline constexpr explicit CTime( CTimeEx const& source ) noexcept : m_Time( source ) {};
 
       inline constexpr void Empty(void) noexcept
       {
@@ -334,8 +330,8 @@ class CTime
       inline       bool      operator >          ( _In_ CTime const&      source ) const noexcept { return( m_Time.operator> ( source.m_Time ) ); }
       inline       bool      operator <          ( _In_ CTime const&      source ) const noexcept { return( m_Time.operator< ( source.m_Time ) ); }
       inline       CTimeSpan operator -          ( _In_ CTime const&      source ) const noexcept { return( m_Time.operator- ( source.m_Time ) ); }
-      inline       CTime     operator -          ( _In_ CTimeSpan const&  source ) const noexcept { return( m_Time.operator- ( source        ) ); }
-      inline       CTime     operator +          ( _In_ CTimeSpan const&  source ) const noexcept { return( m_Time.operator+ ( source        ) ); }
+      inline       CTime     operator -          ( _In_ CTimeSpan const&  source ) const noexcept { return( CTime(m_Time.operator- ( source ) ) ); }
+      inline       CTime     operator +          ( _In_ CTimeSpan const&  source ) const noexcept { return( CTime(m_Time.operator+ ( source ) ) ); }
       inline CTime const&    operator +=         ( _In_ CTimeSpan const&  source )       noexcept { m_Time.AddSeconds( source.GetTotalSeconds() ); return( *this ); }
       inline CTime const&    operator -=         ( _In_ CTimeSpan const&  source )       noexcept { m_Time.SubtractSeconds( source.GetTotalSeconds() ); return( *this ); }
 };

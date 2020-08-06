@@ -73,16 +73,16 @@ bool Win32FoundationClasses::CNetworkUsers::Add( _In_ Win32FoundationClasses::CN
 
    USER_INFO_2 user_information;
 
-   WCHAR wide_name[ 1024 ];
-   WCHAR wide_password[ 1024 ];
-   WCHAR wide_home_directory[ 1024 ];
-   WCHAR wide_comment[ 1024 ];
-   WCHAR wide_script_path[ 1024 ];
-   WCHAR wide_full_name[ 1024 ];
-   WCHAR wide_user_comment[ 1024 ];
-   WCHAR wide_parameters[ 1024 ];
-   WCHAR wide_workstations[ 1024 ];
-   WCHAR wide_logon_server[ 1024 ];
+   WCHAR wide_name[ 512 ];
+   WCHAR wide_password[512];
+   WCHAR wide_home_directory[512];
+   WCHAR wide_comment[512];
+   WCHAR wide_script_path[512];
+   WCHAR wide_full_name[512];
+   WCHAR wide_user_comment[512];
+   WCHAR wide_parameters[512];
+   WCHAR wide_workstations[512];
+   WCHAR wide_logon_server[512];
 
    ::ZeroMemory( &user_information,   sizeof( user_information    ) );
    ::ZeroMemory( wide_name,           sizeof( wide_name           ) );

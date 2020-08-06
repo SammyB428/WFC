@@ -117,21 +117,6 @@ Win32FoundationClasses::CBitArray::CBitArray( _In_ std::vector<uint8_t> const& s
    Copy( source );
 }
 
-Win32FoundationClasses::CBitArray::~CBitArray()
-{
-   WFC_VALIDATE_POINTER( this );
-
-   RemoveAll();
-
-#if defined( _DEBUG )
-   m_NumberOfBitsPerGroup  = 0;
-   m_NumberOfGroupsPerLine = 0;
-#endif // _DEBUG
-
-   m_IndexOfFirstBit   = 0;
-   m_TotalNumberOfBits = 0;
-}
-
 // Methods
 
 void Win32FoundationClasses::CBitArray::ClearRange( _In_ std::size_t const array_index, _In_ std::size_t const count ) noexcept
@@ -407,7 +392,7 @@ void Win32FoundationClasses::CBitArray::Copy( _In_ std::vector<uint8_t> const& s
    RemoveAll();
 
    std::size_t index = 0;
-   auto number_of_bytes = source.size();
+   auto const number_of_bytes = source.size();
 
    if ( number_of_bytes > sizeof( uint32_t ) )
    {
@@ -465,7 +450,7 @@ void Win32FoundationClasses::CBitArray::CopyTo( __inout std::vector<uint8_t>& de
 
    // 1998-12-09 Optimization suggested by Peter Ekberg (peda@sectra.se)
 
-   auto number_of_elements = m_Bits.size();
+   auto const number_of_elements = m_Bits.size();
 
    destination.resize( number_of_elements * sizeof( uint32_t ) );
 
@@ -646,10 +631,11 @@ _Check_return_ bool Win32FoundationClasses::CBitArray::Find( _In_ Win32Foundatio
    bool value_was_found = false;
 
    std::size_t starting_index = starting_at;
-   std::size_t ending_index   = GetSize();
-   std::size_t size_of_value  = value.GetSize();
    std::size_t found_index    = 0;
    std::size_t loop_index     = 0;
+
+   auto ending_index = GetSize();
+   auto size_of_value = value.GetSize();
 
    uint32_t this_bit = 0;
    uint32_t that_bit = 0;
@@ -730,7 +716,7 @@ _Check_return_ bool Win32FoundationClasses::CBitArray::Find( _In_ uint32_t const
       return( false );
    }
 
-   std::size_t upper_bound = GetUpperBound();
+   auto upper_bound = GetUpperBound();
    std::size_t starting_at_index = starting_at;
 
    // Let's do a Boyer-Moore'ish kind of search
@@ -968,7 +954,7 @@ _Check_return_ bool Win32FoundationClasses::CBitArray::GetNextOne( __inout std::
    // We're picking up where we left off from a previous call to GetNextOne().
 
    std::size_t bit_index = enumerator + 1; // Always start after the one we previously found
-   std::size_t const number_of_bits_in_array = GetSize();
+   auto const number_of_bits_in_array = GetSize();
 
    if ( bit_index >= number_of_bits_in_array )
    {
@@ -1054,7 +1040,7 @@ _Check_return_ bool Win32FoundationClasses::CBitArray::GetNextZero( __inout std:
       std::size_t bit_index = element_index * m_SizeOfBitRepresentation;
 #endif // AN_ELEMENT_THAT_IS_ALL_ONES
 
-      std::size_t const number_of_bits_in_array = GetSize();
+      auto const number_of_bits_in_array = GetSize();
 
       while( bit_index < number_of_bits_in_array and GetAt( bit_index ) == 1 )
       {
@@ -1073,7 +1059,7 @@ _Check_return_ bool Win32FoundationClasses::CBitArray::GetNextZero( __inout std:
    // We're picking up where we left off from a previous call to GetNextZero().
 
    std::size_t bit_index = enumerator + 1; // Always start after the one we previously found
-   std::size_t const number_of_bits_in_array = GetSize();
+   auto const number_of_bits_in_array = GetSize();
 
    if ( bit_index >= number_of_bits_in_array )
    {

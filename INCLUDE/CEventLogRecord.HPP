@@ -54,13 +54,6 @@ class CEventLogRecord
       CEventLogRecord( _In_ EVENTLOGRECORD const * source ) noexcept;
 
       /*
-      ** Destructor should be virtual according to MSJ article in Sept 1992
-      ** "Do More with Less Code:..."
-      */
-
-      virtual ~CEventLogRecord();
-
-      /*
       ** Data
       */
 
@@ -84,17 +77,15 @@ class CEventLogRecord
       ** Methods
       */
 
-      virtual _Check_return_ int Compare( _In_ CEventLogRecord const& source ) const noexcept;
-      virtual void Copy( _In_ EVENTLOGRECORD const * source ) noexcept;
-      virtual void Copy( _In_ CEventLogRecord const& source ) noexcept;
-      virtual void Empty( void ) noexcept;
-      virtual _Check_return_ bool operator == ( _In_ CEventLogRecord const& right_record ) const noexcept;
-      virtual _Check_return_ CEventLogRecord& operator = ( _In_ CEventLogRecord const& source ) noexcept;
+      _Check_return_ int Compare( _In_ CEventLogRecord const& source ) const noexcept;
+      void Copy( _In_ EVENTLOGRECORD const * source ) noexcept;
+      void Copy( _In_ CEventLogRecord const& source ) noexcept;
+      void Empty( void ) noexcept;
+      _Check_return_ bool operator == ( _In_ CEventLogRecord const& right_record ) const noexcept;
+      _Check_return_ CEventLogRecord& operator = ( _In_ CEventLogRecord const& source ) noexcept;
 
 #if defined( _DEBUG ) && ! defined( WFC_NO_DUMPING )
-
-      virtual void Dump( CDumpContext& dump_context ) const;
-
+      void Dump( CDumpContext& dump_context ) const;
 #endif // _DEBUG
 };   
 

@@ -75,7 +75,7 @@ class CEventLog
       CEventLog& operator=(CEventLog const&) = delete;
 
       CEventLog() noexcept;
-      CEventLog( __in_z wchar_t const * source_name ) noexcept;
+      explicit CEventLog( __in_z wchar_t const * source_name ) noexcept;
 
       /*
       ** Destructor should be virtual according to MSJ article in Sept 1992

@@ -54,29 +54,23 @@ static char THIS_FILE[] = __FILE__;
 #define new DEBUG_NEW
 #endif // _DEBUG
 
-Win32FoundationClasses::CNetworkResourceInformation::CNetworkResourceInformation()
+Win32FoundationClasses::CNetworkResourceInformation::CNetworkResourceInformation() noexcept
 {
    WFC_VALIDATE_POINTER( this );
    m_Initialize();
 }
 
-Win32FoundationClasses::CNetworkResourceInformation::CNetworkResourceInformation( _In_ NETRESOURCE const * source )
+Win32FoundationClasses::CNetworkResourceInformation::CNetworkResourceInformation( _In_ NETRESOURCE const * source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( source );
    Copy( source );
 }
 
-Win32FoundationClasses::CNetworkResourceInformation::CNetworkResourceInformation( _In_ Win32FoundationClasses::CNetworkResourceInformation const& source )
+Win32FoundationClasses::CNetworkResourceInformation::CNetworkResourceInformation( _In_ Win32FoundationClasses::CNetworkResourceInformation const& source ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    Copy( source );
-}
-
-Win32FoundationClasses::CNetworkResourceInformation::~CNetworkResourceInformation()
-{
-   WFC_VALIDATE_POINTER( this );
-   m_Initialize();
 }
 
 void Win32FoundationClasses::CNetworkResourceInformation::Copy( _In_ NETRESOURCE const * source ) noexcept

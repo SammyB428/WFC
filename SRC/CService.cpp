@@ -683,7 +683,10 @@ void CALLBACK Win32FoundationClasses::CService::ServiceControlManagerHandler( _I
          m_StaticService_p->m_CurrentState = SERVICE_STOPPED;
          ::LeaveCriticalSection( &g_ServiceCriticalSection );
 
+         (void)m_StaticService_p->SendStatusToServiceControlManager(SERVICE_STOP_PENDING, NO_ERROR, 2, m_StaticService_p->m_WaitHint);
+
          m_StaticService_p->OnStop();
+         (void)m_StaticService_p->SendStatusToServiceControlManager(SERVICE_STOPPED, NO_ERROR, 1, m_StaticService_p->m_WaitHint);
          m_StaticService_p->Exit();
 
          return;
@@ -744,10 +747,18 @@ void CALLBACK Win32FoundationClasses::CService::ServiceControlManagerHandler( _I
 
          ::EnterCriticalSection( &g_ServiceCriticalSection );
          m_StaticService_p->m_Running      = false;
-         m_StaticService_p->m_CurrentState = SERVICE_STOPPED;
+         m_StaticService_p->m_CurrentState = SERVICE_STOP_PENDING;
          ::LeaveCriticalSection( &g_ServiceCriticalSection );
 
+         (void)m_StaticService_p->SendStatusToServiceControlManager(SERVICE_STOP_PENDING, NO_ERROR, 2, m_StaticService_p->m_WaitHint);
          m_StaticService_p->OnShutdown();
+
+         ::EnterCriticalSection(&g_ServiceCriticalSection);
+         m_StaticService_p->m_Running = false;
+         m_StaticService_p->m_CurrentState = SERVICE_STOPPED;
+         ::LeaveCriticalSection(&g_ServiceCriticalSection);
+
+         (void)m_StaticService_p->SendStatusToServiceControlManager(SERVICE_STOPPED, NO_ERROR, 1, m_StaticService_p->m_WaitHint);
          m_StaticService_p->Exit();
 
          return;

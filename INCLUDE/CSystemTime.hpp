@@ -59,18 +59,18 @@ class CSystemTime : public _SYSTEMTIME
 
       inline constexpr CSystemTime() noexcept : _SYSTEMTIME{0, 0, 0, 0, 0, 0, 0, 0} {}
 
-      inline CSystemTime( _In_ CSystemTime const& source ) noexcept
+      inline explicit CSystemTime( _In_ CSystemTime const& source ) noexcept
       {
          Copy( source );
       }
 
-      inline CSystemTime( _In_ CFileTime const& source ) noexcept
+      inline explicit CSystemTime( _In_ CFileTime const& source ) noexcept
       {
          Copy( source );
       }
 
 #if ! defined(WE_ARE_BUILDING_WFC_ON_UNIX)
-      inline CSystemTime( _In_ CTime const& source ) noexcept
+      inline explicit CSystemTime( _In_ CTime const& source ) noexcept
       {
          Copy( source );
       }
@@ -80,49 +80,44 @@ class CSystemTime : public _SYSTEMTIME
       CSystemTime( _In_ COleDateTime const& source ) noexcept;
 #endif // WFC_STL
 
-      inline CSystemTime( _In_ SYSTEMTIME const * source ) noexcept
+      inline explicit CSystemTime( _In_ SYSTEMTIME const * source ) noexcept
       {
          Copy( source );
       }
 
-      inline CSystemTime( _In_ SYSTEMTIME const& source ) noexcept
+      inline explicit CSystemTime( _In_ SYSTEMTIME const& source ) noexcept
       {
          Copy( source );
       }
 
-      inline CSystemTime( _In_ FILETIME const * source ) noexcept
+      inline explicit CSystemTime( _In_ FILETIME const * source ) noexcept
       {
          Copy( source );
       }
 
-      inline CSystemTime( _In_ FILETIME const& source ) noexcept
+      inline explicit CSystemTime( _In_ FILETIME const& source ) noexcept
       {
          Copy( source );
       }
 
-      inline CSystemTime( _In_ TIME_OF_DAY_INFO const * source ) noexcept
+      inline explicit CSystemTime( _In_ TIME_OF_DAY_INFO const * source ) noexcept
       {
          Copy( source );
       }
 
-      inline CSystemTime( _In_ TIME_OF_DAY_INFO const& source ) noexcept
+      inline explicit CSystemTime( _In_ TIME_OF_DAY_INFO const& source ) noexcept
       {
          Copy( source );
       }
 
-      inline CSystemTime( _In_ TIMESTAMP_STRUCT const * source ) noexcept // from sqltypes.h
+      inline explicit CSystemTime( _In_ TIMESTAMP_STRUCT const * source ) noexcept // from sqltypes.h
       {
          Copy( source );
       }
 
-      inline CSystemTime( _In_ TIMESTAMP_STRUCT const& source ) noexcept // from sqltypes.h
+      inline explicit CSystemTime( _In_ TIMESTAMP_STRUCT const& source ) noexcept // from sqltypes.h
       {
          Copy( source );
-      }
-
-      inline virtual ~CSystemTime()
-      {
-         Empty();
       }
 
       /*
@@ -156,7 +151,7 @@ class CSystemTime : public _SYSTEMTIME
 
          CTimeEx const now( system_time.wYear, system_time.wMonth, system_time.wDay, system_time.wHour, system_time.wMinute, system_time.wSecond );
 
-         int const day_of_week = now.GetDayOfWeek(); // 1 == Sunday, 2  == Monday
+         auto const day_of_week = now.GetDayOfWeek(); // 1 == Sunday, 2  == Monday
 
          int days_from_monday = day_of_week - 2;
 
@@ -178,7 +173,7 @@ class CSystemTime : public _SYSTEMTIME
 
          CTimeEx const now( system_time.wYear, system_time.wMonth, system_time.wDay, system_time.wHour, system_time.wMinute, system_time.wSecond );
 
-         int const day_of_week = now.GetDayOfWeek(); // 1 == Sunday, 2  == Monday
+         auto const day_of_week = now.GetDayOfWeek(); // 1 == Sunday, 2  == Monday
 
          int days_from_monday = day_of_week - 2;
 

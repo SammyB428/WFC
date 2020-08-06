@@ -55,28 +55,21 @@ class COverlapped : public _OVERLAPPED
 
       // Construction
 
-      COverlapped();
-      COverlapped( _In_ COverlapped const& source );
-      COverlapped( _In_ OVERLAPPED const&  source );
-      COverlapped( _In_ OVERLAPPED const * source );
-
-      /*
-      ** Destructor should be virtual according to MSJ article in Sept 1992
-      ** "Do More with Less Code:..."
-      */
-
-      virtual ~COverlapped();
+      COverlapped() noexcept;
+      explicit COverlapped( _In_ COverlapped const& source ) noexcept;
+      explicit COverlapped( _In_ OVERLAPPED const&  source ) noexcept;
+      explicit COverlapped( _In_ OVERLAPPED const * source ) noexcept;
 
       /*
       ** Methods
       */
 
-      virtual void Copy( _In_ COverlapped const& source ) noexcept;
-      virtual void Copy( _In_ OVERLAPPED const&  source ) noexcept;
-      virtual void Copy( _In_ OVERLAPPED const * source ) noexcept;
-      virtual void Empty( void ) noexcept;
-      virtual void SetEvent( _In_ HANDLE event_handle ) noexcept;
-      virtual void SetAutomaticallyDelete( _In_ bool const automatically_delete = true ) noexcept;
+      void Copy( _In_ COverlapped const& source ) noexcept;
+      void Copy( _In_ OVERLAPPED const&  source ) noexcept;
+      void Copy( _In_ OVERLAPPED const * source ) noexcept;
+      void Empty( void ) noexcept;
+      void SetEvent( _In_ HANDLE event_handle ) noexcept;
+      void SetAutomaticallyDelete( _In_ bool const automatically_delete = true ) noexcept;
 
       /*
       ** Operators

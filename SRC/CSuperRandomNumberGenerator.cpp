@@ -51,15 +51,10 @@ static char THIS_FILE[] = __FILE__;
 #define new DEBUG_NEW
 #endif // _DEBUG
 
-Win32FoundationClasses::CSuperRandomNumberGenerator::CSuperRandomNumberGenerator( _In_ DWORD seed )
+Win32FoundationClasses::CSuperRandomNumberGenerator::CSuperRandomNumberGenerator( _In_ DWORD seed ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    SetSeed( seed );
-}
-
-Win32FoundationClasses::CSuperRandomNumberGenerator::~CSuperRandomNumberGenerator()
-{
-   WFC_VALIDATE_POINTER( this );
 }
 
 #if defined( _DEBUG ) && ! defined( WFC_NO_DUMPING )

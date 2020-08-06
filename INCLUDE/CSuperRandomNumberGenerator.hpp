@@ -75,8 +75,7 @@ class CSuperRandomNumberGenerator
 
    public:
 
-      CSuperRandomNumberGenerator( _In_ DWORD seed = 0 );
-     ~CSuperRandomNumberGenerator();
+      CSuperRandomNumberGenerator( _In_ DWORD seed = 0 ) noexcept;
 
       _Check_return_ double GetValue( void ) noexcept;
       _Check_return_ DWORD  GetInteger( void ) noexcept;

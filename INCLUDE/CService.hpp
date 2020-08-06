@@ -56,8 +56,6 @@ class CService
 {
    private:
 
-      void m_Initialize( void ) noexcept;
-
       SERVICE_CONTROL_MANAGER_MESSAGE_CALLBACK m_OnShutdown{ nullptr };
       SERVICE_CONTROL_MANAGER_MESSAGE_CALLBACK m_OnStop{ nullptr };
       SERVICE_CONTROL_MANAGER_MESSAGE_CALLBACK m_OnPause{ nullptr };
@@ -121,7 +119,7 @@ class CService
 
    protected:
 
-       HANDLE m_ExitEventHandle{ INVALID_HANDLE_VALUE };
+      HANDLE m_ExitEventHandle{ INVALID_HANDLE_VALUE };
       HANDLE m_ThreadHandle{ INVALID_HANDLE_VALUE };
 
       DWORD m_ControlsAccepted{ 0 };
@@ -164,12 +162,12 @@ class CService
       virtual _Check_return_ bool SendStatusToServiceControlManager( _In_ DWORD current_state,
                                                       _In_ DWORD win32_exit_code = NO_ERROR,
                                                       _In_ DWORD check_point = 0, 
-                                                      _In_ DWORD wait_hint = 0,
+                                                      _In_ DWORD wait_hint = 30011,
                                                       _In_ DWORD service_specific_code = NO_ERROR ) noexcept;
 
 #if defined ( _DEBUG )
       virtual void AssertValid( void ) const;
-      void DumpStatus( __inout SERVICE_STATUS * status_p ) const;
+      void DumpStatus( _Inout_ SERVICE_STATUS * status_p ) const;
 #endif _DEBUG
 };
 

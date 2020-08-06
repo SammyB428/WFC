@@ -78,12 +78,6 @@ Win32FoundationClasses::CUniformResourceLocator::CUniformResourceLocator(_In_ st
    Copy( source );
 }
 
-Win32FoundationClasses::CUniformResourceLocator::~CUniformResourceLocator()
-{
-   WFC_VALIDATE_POINTER( this );
-   Empty();
-}
-
 _Check_return_ int Win32FoundationClasses::CUniformResourceLocator::Compare( _In_ Win32FoundationClasses::CUniformResourceLocator const& source ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
