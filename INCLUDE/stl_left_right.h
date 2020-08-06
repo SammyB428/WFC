@@ -73,7 +73,7 @@ inline _Check_return_ std::string left(_In_ std::string const& s, _In_ std::size
 /// <summary>Returns a string skipping the first 'count' characters specified.</summary>
 inline _Check_return_ std::wstring skip_first(_In_ std::wstring const& s, _In_ std::size_t const count) noexcept
 {
-    std::size_t const string_length = s.length();
+    auto const string_length = s.length();
 
     if (count == 0 or count > string_length)
     {
@@ -88,7 +88,7 @@ inline _Check_return_ std::wstring skip_first(_In_ std::wstring const& s, _In_ s
 /// <summary>Returns a string skipping the first 'count' characters specified.</summary>
 inline _Check_return_ std::string skip_first(_In_ std::string const& s, _In_ std::size_t const count) noexcept
 {
-    std::size_t const string_length = s.length();
+    auto const string_length = s.length();
 
     if (count == 0 or count > string_length)
     {

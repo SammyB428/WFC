@@ -58,7 +58,7 @@ inline void trim_right(_Inout_ std::string& the_string) noexcept
 {
     if (the_string.empty() == false)
     {
-        while (is_space_character(the_string.at(the_string.length() - 1)))
+        while (Win32FoundationClasses::is_space_character(the_string.at(the_string.length() - 1)))
         {
             the_string.resize(the_string.length() - 1);
 
@@ -104,7 +104,7 @@ inline void trim_left(_Inout_ std::string& the_string) noexcept
         std::size_t number_of_elements_to_erase = 0;
 
         while (number_of_elements_to_erase < string_length and
-            is_space_character(the_string.at(number_of_elements_to_erase)))
+            Win32FoundationClasses::is_space_character(the_string.at(number_of_elements_to_erase)))
         {
             number_of_elements_to_erase++;
         }
@@ -122,7 +122,7 @@ inline void trim_left(_Inout_ std::string& the_string) noexcept
 
 inline void trim_left(_Inout_ std::wstring& s, _In_ wchar_t const character) noexcept
 {
-    std::size_t const string_length = s.length();
+    auto const string_length = s.length();
 
     if (string_length > 0)
     {
@@ -147,7 +147,7 @@ inline void trim_left(_Inout_ std::wstring& s, _In_ wchar_t const character) noe
 
 inline void trim_left(_Inout_ std::string& s, _In_ char const character) noexcept
 {
-    std::size_t const string_length = s.length();
+    auto const string_length = s.length();
 
     if (string_length > 0)
     {
@@ -186,7 +186,7 @@ inline void despace(_Inout_ std::wstring& s) noexcept
 {
     // First see if we need to do anything
 
-    std::size_t number_of_characters = s.length();
+    auto number_of_characters = s.length();
 
     if (number_of_characters < 1)
     {
@@ -326,6 +326,88 @@ inline void trim_all_quotes(_Inout_ std::wstring& s) noexcept
     {
         ;
     }
+}
+
+// String View versions
+inline constexpr std::string_view trim_left_view(_In_ std::string_view the_string) noexcept
+{
+    auto const string_length = the_string.length();
+
+    if (string_length > 0)
+    {
+        std::size_t number_of_elements_to_erase = 0;
+
+        while (number_of_elements_to_erase < string_length and
+            Win32FoundationClasses::is_space_character(the_string.at(number_of_elements_to_erase)))
+        {
+            number_of_elements_to_erase++;
+        }
+
+        if (number_of_elements_to_erase >= string_length)
+        {
+            return(std::string_view(the_string.data(), 0));
+        }
+        else
+        {
+            return(std::string_view(&the_string.data()[number_of_elements_to_erase], string_length - number_of_elements_to_erase));
+        }
+    }
+
+    return(std::string_view(the_string.data(), 0));
+}
+
+inline constexpr std::string_view trim_left_view(_In_ std::string_view s, _In_ char const character) noexcept
+{
+    auto const string_length = s.length();
+
+    if (string_length > 0)
+    {
+        std::size_t number_of_elements_to_erase = 0;
+
+        while (number_of_elements_to_erase < string_length and
+            character == (s.at(number_of_elements_to_erase)))
+        {
+            number_of_elements_to_erase++;
+        }
+
+        if (number_of_elements_to_erase >= string_length)
+        {
+            return(std::string_view(s.data(), 0));
+        }
+        else
+        {
+            return(std::string_view(&s.data()[number_of_elements_to_erase], string_length - number_of_elements_to_erase));
+        }
+    }
+
+    return(std::string_view(s.data(), 0));
+}
+
+inline constexpr std::string_view trim_right_view(_In_ std::string_view the_string) noexcept
+{
+    if (the_string.empty() == false)
+    {
+        auto string_length = the_string.length();
+
+        while (Win32FoundationClasses::is_space_character(the_string.at(string_length - 1)))
+        {
+            string_length--;
+
+            if (string_length <= 0)
+            {
+                return(std::string_view(the_string.data(), 0));
+            }
+        }
+
+        return(std::string_view(the_string.data(), string_length));
+    }
+
+    return(the_string);
+}
+
+inline constexpr std::string_view trim_view(_In_ std::string_view the_string) noexcept
+{
+    return(trim_left_view(trim_right_view(the_string)));
 }
 
 #endif // STL_TRIM_HEADER_FILE

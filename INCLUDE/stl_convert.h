@@ -30,7 +30,7 @@ inline _Check_return_ double as_double(_In_ std::wstring_view s) noexcept
 {
     // See if we can optimize for small strings
 
-    std::size_t const string_length = s.length();
+    auto const string_length = s.length();
 
     if (string_length < 26)
     {
@@ -168,11 +168,11 @@ inline _Check_return_ int64_t as_integer(_In_ std::wstring_view s) noexcept
 {
     // See if we can optimize for small strings
 
-    std::size_t const string_length = s.length();
+    auto const string_length = s.length();
 
     if (string_length < 26)
     {
-        char ascii_string[27]{ 0 }; // Deliberately NOT initializing for speed, we don't need null termination
+        char ascii_string[27]; // Deliberately NOT initializing for speed, we don't need null termination
 
         for (auto const string_index : Range(string_length))
         {
@@ -208,7 +208,7 @@ inline _Check_return_ uint64_t as_unsigned_integer(_In_ std::wstring_view s) noe
 {
     // See if we can optimize for small strings
 
-    std::size_t const string_length = s.length();
+    auto const string_length = s.length();
 
     if (string_length < 26)
     {

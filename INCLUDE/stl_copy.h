@@ -45,7 +45,7 @@ inline void copy(_Inout_ std::wstring& s, std::string_view ascii_string, _In_ SS
     if (number_of_characters < 0) // used to be -1 but that opened us up to errors
     {
         std::size_t loop_index = beginning_at;
-        std::size_t string_size = ascii_string.length();
+        auto string_size = ascii_string.length();
 
         if (loop_index >= string_size)
         {
@@ -77,7 +77,7 @@ inline void copy(_Inout_ std::wstring& s, std::string_view ascii_string, _In_ SS
     {
         // Only append a finite number of characters...
 
-        std::size_t const ascii_string_length = ascii_string.length();
+        auto const ascii_string_length = ascii_string.length();
 
         if (beginning_at > 0)
         {
@@ -129,7 +129,7 @@ inline void copy(_Inout_ std::wstring& s, _In_ std::u16string_view string_view, 
         return;
     }
 
-    std::size_t number_of_characters_to_copy = string_view.length() - beginning_at;
+    auto number_of_characters_to_copy = string_view.length() - beginning_at;
 
     if (number_of_characters > 0)
     {
@@ -178,7 +178,7 @@ inline void copy(_Inout_ std::wstring& s, _In_ std::wstring_view string_view, _I
         return;
     }
 
-    std::size_t number_of_characters_to_copy = string_view.length() - beginning_at;
+    auto number_of_characters_to_copy = string_view.length() - beginning_at;
 
     if (number_of_characters > 0)
     {
@@ -228,7 +228,7 @@ inline void copy(_Inout_ std::wstring& s, _In_ int const code_page, _In_reads_by
         return;
     }
 
-    std::size_t const new_buffer_size = (number_of_bytes * 3) + 2;
+    auto const new_buffer_size = (number_of_bytes * 3) + 2;
 
     auto output_buffer = std::make_unique<wchar_t[]>(new_buffer_size);
 

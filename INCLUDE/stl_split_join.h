@@ -201,6 +201,68 @@ inline void split(_In_ std::string_view source, _In_ char const character, _Inou
     split(source.data(), source.length(), character, string_array);
 }
 
+inline void split_view(_In_z_ wchar_t const* source, _In_ std::size_t const length, _In_ wchar_t const character, _Inout_ std::vector<std::wstring_view>& view_array) noexcept
+{
+    view_array.clear();
+
+    if (source == nullptr or source[0] == 0x00 or character == 0x00 or length < 1)
+    {
+        return;
+    }
+
+    std::size_t beginning_index_of_string = 0;
+
+    for (auto const string_index : Range(length))
+    {
+        if (source[string_index] == character)
+        {
+            view_array.push_back(std::wstring_view(&source[beginning_index_of_string], string_index - beginning_index_of_string));
+            beginning_index_of_string = string_index + 1;
+        }
+    }
+
+    if (beginning_index_of_string < length)
+    {
+        view_array.push_back(std::wstring_view(&source[beginning_index_of_string], length - beginning_index_of_string));
+    }
+}
+
+inline void split_view(_In_ std::wstring_view source, _In_ std::size_t const length, _In_ wchar_t const character, _Inout_ std::vector<std::wstring_view>& view_array) noexcept
+{
+    split_view(source.data(), source.length(), character, view_array);
+}
+
+inline void split_view(_In_z_ char const* source, _In_ std::size_t const length, _In_ char const character, _Inout_ std::vector<std::string_view>& view_array) noexcept
+{
+    view_array.clear();
+
+    if (source == nullptr or source[0] == 0x00 or character == 0x00 or length < 1)
+    {
+        return;
+    }
+
+    std::size_t beginning_index_of_string = 0;
+
+    for (auto const string_index : Range(length))
+    {
+        if (source[string_index] == character)
+        {
+            view_array.push_back(std::string_view(&source[beginning_index_of_string], string_index - beginning_index_of_string));
+            beginning_index_of_string = string_index + 1;
+        }
+    }
+
+    if (beginning_index_of_string < length)
+    {
+        view_array.push_back(std::string_view(&source[beginning_index_of_string], length - beginning_index_of_string));
+    }
+}
+
+inline void split_view(_In_ std::string_view source, _In_ std::size_t const length, _In_ char const character, _Inout_ std::vector<std::string_view>& view_array) noexcept
+{
+    split_view(source.data(), source.length(), character, view_array);
+}
+
 inline void split_and_trim(_In_ std::wstring_view source, _In_ wchar_t const character, _Inout_ std::vector<std::wstring>& string_array) noexcept
 {
     string_array.clear();
@@ -216,7 +278,7 @@ inline void split_and_trim(_In_ std::wstring_view source, _In_ wchar_t const cha
     {
         if (source_character == character)
         {
-            trim(string_to_add);
+            Win32FoundationClasses::trim(string_to_add);
 
             if (string_to_add.empty() == false)
             {
@@ -230,7 +292,7 @@ inline void split_and_trim(_In_ std::wstring_view source, _In_ wchar_t const cha
         }
     }
 
-    trim(string_to_add);
+    Win32FoundationClasses::trim(string_to_add);
 
     if (string_to_add.empty() == false)
     {

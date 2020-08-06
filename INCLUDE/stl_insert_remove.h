@@ -83,7 +83,7 @@ inline void replace(_Inout_ std::wstring& s, _In_ std::wstring_view what_to_repl
 {
     std::wstring translated_string;
 
-    std::size_t location = s.find(what_to_replace);
+    auto location = s.find(what_to_replace);
 
     while (location not_eq std::wstring::npos)
     {
@@ -105,7 +105,7 @@ inline void replace(_Inout_ std::string& s, _In_ std::string_view what_to_replac
 {
     std::string translated_string;
 
-    std::size_t location = s.find(what_to_replace);
+    auto location = s.find(what_to_replace);
 
     while (location not_eq std::string::npos)
     {
