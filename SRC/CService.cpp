@@ -151,7 +151,7 @@ _Check_return_ HANDLE Win32FoundationClasses::CService::CreateConfigurationFile(
       return( INVALID_HANDLE_VALUE );
    }
 
-   auto const file_handle = CreateFile( filename,
+   auto const file_handle = ::CreateFile( filename,
                                     GENERIC_WRITE,
                                     FILE_SHARE_READ,
                                    &security_attributes,
@@ -189,7 +189,7 @@ _Check_return_ bool Win32FoundationClasses::CService::SpawnProcess( __in_z LPCTS
    security_attributes.lpSecurityDescriptor = (void *) wfc_create_null_dacl();
    security_attributes.bInheritHandle       = TRUE;
 
-   if ( CreateProcess( nullptr, // THIS MUST BE NULL IN ORDER TO WORK!
+   if ( ::CreateProcess( nullptr, // THIS MUST BE NULL IN ORDER TO WORK!
                        non_const_command_line,
                       &security_attributes,
                       &security_attributes,
@@ -476,12 +476,13 @@ _Check_return_ int Win32FoundationClasses::CService::ShowMessageBox(__in_z_opt L
 void Win32FoundationClasses::CService::OnContinue( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
+   WFC_VALIDATE_POINTER_NULL_OK(m_OnContinue);
 
    if ( m_OnContinue not_eq nullptr )
    {
       WFC_TRY
       {
-         m_OnContinue( this );
+         m_OnContinue(this, m_ServiceControlManagerCallbackParameter);
       }
       WFC_CATCH_ALL
       {
@@ -491,7 +492,7 @@ void Win32FoundationClasses::CService::OnContinue( void ) noexcept
    }
 
    CEventLog log( m_ServiceName );
-   log.ReportInformation( TEXT( "Service Resumed" ) );
+   log.ReportInformation( L"Service Resumed" );
 }
 
 void Win32FoundationClasses::CService::OnControlCode( _In_ DWORD /* control_code */ ) noexcept
@@ -504,12 +505,13 @@ void Win32FoundationClasses::CService::OnControlCode( _In_ DWORD /* control_code
 void Win32FoundationClasses::CService::OnPause( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
+   WFC_VALIDATE_POINTER_NULL_OK(m_OnPause);
 
    if ( m_OnPause not_eq nullptr )
    {
       WFC_TRY
       {
-         m_OnPause( this );
+         m_OnPause(this, m_ServiceControlManagerCallbackParameter);
       }
       WFC_CATCH_ALL
       {
@@ -519,7 +521,7 @@ void Win32FoundationClasses::CService::OnPause( void ) noexcept
    }
 
    CEventLog log( m_ServiceName );
-   log.ReportInformation( TEXT( "Service Paused" ) );
+   log.ReportInformation( L"Service Paused" );
 }
 
 _Check_return_ bool Win32FoundationClasses::CService::OnPrepareServiceThread( void ) noexcept
@@ -531,12 +533,13 @@ _Check_return_ bool Win32FoundationClasses::CService::OnPrepareServiceThread( vo
 void Win32FoundationClasses::CService::OnShutdown( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
+   WFC_VALIDATE_POINTER_NULL_OK(m_OnShutdown);
 
    if ( m_OnShutdown not_eq nullptr )
    {
       WFC_TRY
       {
-         m_OnShutdown( this );
+         m_OnShutdown(this, m_ServiceControlManagerCallbackParameter);
       }
       WFC_CATCH_ALL
       {
@@ -549,12 +552,13 @@ void Win32FoundationClasses::CService::OnShutdown( void ) noexcept
 void Win32FoundationClasses::CService::OnStop( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
+   WFC_VALIDATE_POINTER_NULL_OK(m_OnStop);
 
    if ( m_OnStop not_eq nullptr )
    {
       WFC_TRY
       {
-         m_OnStop( this );
+         m_OnStop(this, m_ServiceControlManagerCallbackParameter);
       }
       WFC_CATCH_ALL
       {
@@ -670,7 +674,7 @@ void CALLBACK Win32FoundationClasses::CService::ServiceControlManagerHandler( _I
 {
    // entry point for service called by SCM after service is started
 
-   ASSERT( m_StaticService_p not_eq 0 );
+   WFC_VALIDATE_POINTER(m_StaticService_p);
 
    switch( control_code )
    {
@@ -779,7 +783,7 @@ void CALLBACK Win32FoundationClasses::CService::ServiceMain( _In_ DWORD const nu
 
    auto thread_handle = static_cast< HANDLE >( NULL );
 
-   ASSERT( m_StaticService_p not_eq nullptr );
+   WFC_VALIDATE_POINTER( m_StaticService_p );
 
    ::EnterCriticalSection( &g_ServiceCriticalSection );
    m_StaticService_p->m_ServiceStatusHandle = ::RegisterServiceCtrlHandler( m_StaticService_p->m_ServiceName, ServiceControlManagerHandler );
@@ -873,7 +877,7 @@ EXIT_GOTO:
 
          // notify SCM that service has stopped
 
-         ASSERT( m_StaticService_p not_eq 0 );
+         WFC_VALIDATE_POINTER( m_StaticService_p );
 
          if ( m_StaticService_p->m_ServiceStatusHandle not_eq 0 )
          {

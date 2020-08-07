@@ -63,9 +63,53 @@ _Check_return_ bool failure( void ) noexcept
    return( false );
 }
 
+inline void split_view(_In_z_ wchar_t const* source, _In_ std::size_t const length, _In_ wchar_t const character, _Inout_ std::vector<std::wstring_view>& string_array) noexcept
+{
+    string_array.clear();
+
+    if (source == nullptr or source[0] == 0x00 or character == 0x00)
+    {
+        return;
+    }
+
+    std::size_t beginning_index_of_string = 0;
+
+    for (auto const string_index : Range(length))
+    {
+        if (source[string_index] == character)
+        {
+            string_array.push_back(std::wstring_view(&source[beginning_index_of_string], string_index - beginning_index_of_string));
+            beginning_index_of_string = string_index + 1;
+        }
+    }
+
+    if (beginning_index_of_string < length)
+    {
+        string_array.push_back(std::wstring_view(&source[beginning_index_of_string], length - beginning_index_of_string));
+    }
+}
+
 _Check_return_ int _tmain( _In_ int const number_of_command_line_arguments, _In_reads_z_(number_of_command_line_arguments) LPCTSTR command_line_arguments[] )
 {
    WFCTRACEINIT( TEXT( "_tmain()" ) );
+
+   wchar_t const * ss = L"12,34,56,78";
+
+   std::vector<std::wstring_view> views;
+
+   split_view(ss, wcslen(ss), ',', views);
+
+   std::string s3(STRING_VIEW("   abc "));
+   auto lt = Win32FoundationClasses::trim_left_view(s3);
+   auto rt = Win32FoundationClasses::trim_right_view(lt);
+   auto tt = Win32FoundationClasses::trim_view(s3);
+   auto t3 = Win32FoundationClasses::trim_view(STRING_VIEW("      "));
+
+   std::wstring s4(WSTRING_VIEW(L"   xyz "));
+   auto wlt = Win32FoundationClasses::trim_left_view(s4);
+   auto wrt = Win32FoundationClasses::trim_right_view(wlt);
+   auto wtt = Win32FoundationClasses::trim_view(s4);
+   auto wt3 = Win32FoundationClasses::trim_view(WSTRING_VIEW(L"      "));
 
    WFC_INITIALIZE_SINGLE_THREADED_COM();
 

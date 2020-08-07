@@ -410,4 +410,85 @@ inline constexpr std::string_view trim_view(_In_ std::string_view the_string) no
     return(trim_left_view(trim_right_view(the_string)));
 }
 
+inline constexpr std::wstring_view trim_left_view(_In_ std::wstring_view the_string) noexcept
+{
+    auto const string_length = the_string.length();
+
+    if (string_length > 0)
+    {
+        std::size_t number_of_elements_to_erase = 0;
+
+        while (number_of_elements_to_erase < string_length and
+            Win32FoundationClasses::is_space_character(the_string.at(number_of_elements_to_erase)))
+        {
+            number_of_elements_to_erase++;
+        }
+
+        if (number_of_elements_to_erase >= string_length)
+        {
+            return(std::wstring_view(the_string.data(), 0));
+        }
+        else
+        {
+            return(std::wstring_view(&the_string.data()[number_of_elements_to_erase], string_length - number_of_elements_to_erase));
+        }
+    }
+
+    return(std::wstring_view(the_string.data(), 0));
+}
+
+inline constexpr std::wstring_view trim_left_view(_In_ std::wstring_view s, _In_ wchar_t const character) noexcept
+{
+    auto const string_length = s.length();
+
+    if (string_length > 0)
+    {
+        std::size_t number_of_elements_to_erase = 0;
+
+        while (number_of_elements_to_erase < string_length and
+            character == (s.at(number_of_elements_to_erase)))
+        {
+            number_of_elements_to_erase++;
+        }
+
+        if (number_of_elements_to_erase >= string_length)
+        {
+            return(std::wstring_view(s.data(), 0));
+        }
+        else
+        {
+            return(std::wstring_view(&s.data()[number_of_elements_to_erase], string_length - number_of_elements_to_erase));
+        }
+    }
+
+    return(std::wstring_view(s.data(), 0));
+}
+
+inline constexpr std::wstring_view trim_right_view(_In_ std::wstring_view the_string) noexcept
+{
+    if (the_string.empty() == false)
+    {
+        auto string_length = the_string.length();
+
+        while (Win32FoundationClasses::is_space_character(the_string.at(string_length - 1)))
+        {
+            string_length--;
+
+            if (string_length <= 0)
+            {
+                return(std::wstring_view(the_string.data(), 0));
+            }
+        }
+
+        return(std::wstring_view(the_string.data(), string_length));
+    }
+
+    return(the_string);
+}
+
+inline constexpr std::wstring_view trim_view(_In_ std::wstring_view the_string) noexcept
+{
+    return(trim_left_view(trim_right_view(the_string)));
+}
+
 #endif // STL_TRIM_HEADER_FILE

@@ -4,7 +4,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 1995-2019, Samuel R. Blackburn
+** Copyright, 1995-2020, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -50,7 +50,7 @@ extern CRITICAL_SECTION g_ServiceCriticalSection;
 #define SERVICE_NAME_LEN (256)
 #define ACCEPT_FLAGS ( SERVICE_ACCEPT_STOP bitor SERVICE_ACCEPT_PAUSE_CONTINUE bitor SERVICE_ACCEPT_SHUTDOWN )
 
-using SERVICE_CONTROL_MANAGER_MESSAGE_CALLBACK = void (WINAPI *)( LPVOID service_class_pointer );
+using SERVICE_CONTROL_MANAGER_MESSAGE_CALLBACK = void (WINAPI *)(class CService * service_class_pointer, void * callback_parameter );
 
 class CService
 {
@@ -61,11 +61,11 @@ class CService
       SERVICE_CONTROL_MANAGER_MESSAGE_CALLBACK m_OnPause{ nullptr };
       SERVICE_CONTROL_MANAGER_MESSAGE_CALLBACK m_OnContinue{ nullptr };
 
-      VOID * m_ServiceControlManagerCallbackParameter{ nullptr };
+      void * m_ServiceControlManagerCallbackParameter{ nullptr };
 
    public:
 
-       static CService* m_StaticService_p;
+      static CService * m_StaticService_p;
 
       CService(_In_ CService const&) = delete;
       CService& operator=(_In_ CService const&) = delete;
