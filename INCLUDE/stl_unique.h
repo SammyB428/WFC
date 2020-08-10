@@ -9,9 +9,13 @@ inline _Check_return_ SSIZE_T add_to_unique_sorted_vector(_In_ std::wstring_view
     auto const lower = std::lower_bound(std::cbegin(values), std::cend(values), value_to_add);
     auto const return_value = std::distance(std::cbegin(values), lower);
 
-    if (not (lower not_eq std::cend(values) and not (value_to_add < *lower)))
+    if (lower == std::cend(values))
     {
-        values.emplace(lower, value_to_add);
+        values.push_back(std::wstring(value_to_add));
+    }
+    else if (value_to_add < (*lower))
+    {
+        values.emplace(lower, std::wstring(value_to_add));
     }
 
     return(return_value);
@@ -22,9 +26,13 @@ inline _Check_return_ SSIZE_T add_to_unique_sorted_vector(_In_ std::string_view 
     auto const lower = std::lower_bound(std::cbegin(values), std::cend(values), value_to_add);
     auto const return_value = std::distance(std::cbegin(values), lower);
 
-    if (not (lower not_eq std::cend(values) and not (value_to_add < *lower)))
+    if (lower == std::cend(values))
     {
-        values.emplace(lower, value_to_add);
+        values.push_back(std::string(value_to_add));
+    }
+    else if (value_to_add < (*lower))
+    {
+        values.emplace(lower, std::string(value_to_add));
     }
 
     return(return_value);
@@ -40,9 +48,35 @@ inline _Check_return_ SSIZE_T add_to_unique_sorted_vector_ignore_case(_In_ std::
     auto const lower = std::lower_bound(std::cbegin(values), std::cend(values), value_to_add, compare_strings_ignoring_case);
     auto const return_value = std::distance(std::cbegin(values), lower);
 
-    if (not (lower not_eq std::cend(values) and not (compare_strings_ignoring_case(value_to_add, *lower))))
+    if (lower == std::cend(values))
     {
-        values.emplace(lower, value_to_add);
+        values.push_back(std::string(value_to_add));
+    }
+    else if (compare_strings_ignoring_case(value_to_add, (*lower)) == true)
+    {
+        values.emplace(lower, std::string(value_to_add));
+    }
+
+    return(return_value);
+}
+
+inline _Check_return_ bool compare_wide_strings_ignoring_case(_In_ std::wstring_view left, _In_ std::wstring_view right) noexcept
+{
+    return(Win32FoundationClasses::compare_no_case(left, right) < I_AM_EQUAL_TO_THAT);
+}
+
+inline _Check_return_ SSIZE_T add_to_unique_sorted_vector_ignore_case(_In_ std::wstring_view value_to_add, _Inout_ std::vector<std::wstring>& values) noexcept
+{
+    auto const lower = std::lower_bound(std::cbegin(values), std::cend(values), value_to_add, compare_wide_strings_ignoring_case);
+    auto const return_value = std::distance(std::cbegin(values), lower);
+
+    if (lower == std::cend(values))
+    {
+        values.push_back(std::wstring(value_to_add));
+    }
+    else if (compare_wide_strings_ignoring_case(value_to_add, (*lower)) == true)
+    {
+        values.emplace(lower, std::wstring(value_to_add));
     }
 
     return(return_value);
