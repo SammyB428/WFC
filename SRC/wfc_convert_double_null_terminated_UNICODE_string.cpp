@@ -72,7 +72,7 @@ void Win32FoundationClasses::wfc_convert_double_null_terminated_UNICODE_string(_
         while (buffer[0] not_eq 0x00)
         {
             string_to_add.assign(reinterpret_cast<wchar_t const *>(buffer));
-            (void)string_array.emplace_back(string_to_add);
+            (void)string_array.push_back(string_to_add);
 
             number_of_bytes_in_string_including_null = (string_to_add.length() * sizeof(wchar_t)) + (1 * sizeof(wchar_t));
 

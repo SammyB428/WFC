@@ -28,9 +28,9 @@ inline _Check_return_ SSIZE_T add_to_unique_sorted_vector(_In_ std::wstring_view
     {
         values.push_back(std::wstring(value_to_add));
     }
-    else if (value_to_add < (*lower))
+    else if (value_to_add < *lower)
     {
-        values.emplace(lower, std::wstring(value_to_add));
+        values.insert(lower, std::wstring(value_to_add));
     }
 
     return(return_value);
@@ -60,9 +60,9 @@ inline _Check_return_ SSIZE_T add_to_unique_sorted_vector(_In_ std::string_view 
     {
         values.push_back(std::string(value_to_add));
     }
-    else if (value_to_add < (*lower))
+    else if (value_to_add < *lower)
     {
-        values.emplace(lower, std::string(value_to_add));
+        values.insert(lower, std::string(value_to_add));
     }
 
     return(return_value);
@@ -97,9 +97,9 @@ inline _Check_return_ SSIZE_T add_to_unique_sorted_vector_ignore_case(_In_ std::
     {
         values.push_back(std::string(value_to_add));
     }
-    else if (compare_strings_ignoring_case(value_to_add, (*lower)) == true)
+    else if (compare_strings_ignoring_case(value_to_add, *lower) == true)
     {
-        values.emplace(lower, std::string(value_to_add));
+        values.insert(lower, std::string(value_to_add));
     }
 
     return(return_value);
@@ -134,9 +134,9 @@ inline _Check_return_ SSIZE_T add_to_unique_sorted_vector_ignore_case(_In_ std::
     {
         values.push_back(std::wstring(value_to_add));
     }
-    else if (compare_wide_strings_ignoring_case(value_to_add, (*lower)) == true)
+    else if (compare_wide_strings_ignoring_case(value_to_add, *lower) == true)
     {
-        values.emplace(lower, std::wstring(value_to_add));
+        values.insert(lower, std::wstring(value_to_add));
     }
 
     return(return_value);
