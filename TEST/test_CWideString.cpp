@@ -2014,7 +2014,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
         return(failure());
     }
 
-    test_value = Win32FoundationClasses::ascii_string_to_integer("567", 2, 10);
+    test_value = Win32FoundationClasses::ascii_string_to_integer(std::string_view("567", 2), 10);
 
     if (test_value not_eq 56)
     {
@@ -2349,6 +2349,133 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
         return(failure());
     }
 
-    test_number_that_failed = 322;
+    auto needle = STRING_VIEW("uuid");
+
+    auto lower = std::lower_bound(std::cbegin(sorted2), std::cend(sorted2), needle, Win32FoundationClasses::compare_strings_ignoring_case);
+
+    if (Win32FoundationClasses::it_was_found_ignoring_case(lower, needle, sorted2) == false)
+    {
+        test_number_that_failed = 323;
+        return(failure());
+    }
+
+    needle = STRING_VIEW("uuid2");
+
+    lower = std::lower_bound(std::cbegin(sorted2), std::cend(sorted2), needle, Win32FoundationClasses::compare_strings_ignoring_case);
+
+    if (Win32FoundationClasses::it_was_found_ignoring_case(lower, needle, sorted2) == true)
+    {
+        test_number_that_failed = 325;
+        return(failure());
+    }
+
+    needle = STRING_VIEW("uuic");
+
+    lower = std::lower_bound(std::cbegin(sorted2), std::cend(sorted2), needle, Win32FoundationClasses::compare_strings_ignoring_case);
+
+    if (Win32FoundationClasses::it_was_found_ignoring_case(lower, needle, sorted2) == true)
+    {
+        test_number_that_failed = 326;
+        return(failure());
+    }
+
+    needle = STRING_VIEW("uuie");
+
+    lower = std::lower_bound(std::cbegin(sorted2), std::cend(sorted2), needle, Win32FoundationClasses::compare_strings_ignoring_case);
+
+    if (Win32FoundationClasses::it_was_found_ignoring_case(lower, needle, sorted2) == true)
+    {
+        test_number_that_failed = 327;
+        return(failure());
+    }
+
+    needle = STRING_VIEW("autosubmit");
+
+    lower = std::lower_bound(std::cbegin(sorted2), std::cend(sorted2), needle, Win32FoundationClasses::compare_strings_ignoring_case);
+
+    if (Win32FoundationClasses::it_was_found_ignoring_case(lower, needle, sorted2) == false)
+    {
+        test_number_that_failed = 328;
+        return(failure());
+    }
+
+    needle = STRING_VIEW("aa");
+
+    lower = std::lower_bound(std::cbegin(sorted2), std::cend(sorted2), needle, Win32FoundationClasses::compare_strings_ignoring_case);
+
+    if (Win32FoundationClasses::it_was_found_ignoring_case(lower, needle, sorted2) == true)
+    {
+        test_number_that_failed = 329;
+        return(failure());
+    }
+
+    needle = STRING_VIEW("autosubmis");
+
+    lower = std::lower_bound(std::cbegin(sorted2), std::cend(sorted2), needle, Win32FoundationClasses::compare_strings_ignoring_case);
+
+    if (Win32FoundationClasses::it_was_found_ignoring_case(lower, needle, sorted2) == true)
+    {
+        test_number_that_failed = 330;
+        return(failure());
+    }
+
+    needle = STRING_VIEW("autosubmit1");
+
+    lower = std::lower_bound(std::cbegin(sorted2), std::cend(sorted2), needle, Win32FoundationClasses::compare_strings_ignoring_case);
+
+    if (Win32FoundationClasses::it_was_found_ignoring_case(lower, needle, sorted2) == true)
+    {
+        test_number_that_failed = 331;
+        return(failure());
+    }
+
+    sorted2.clear();
+
+    (void)Win32FoundationClasses::add_to_unique_sorted_vector(STRING_VIEW("ccc"), sorted2);
+    (void)Win32FoundationClasses::add_to_unique_sorted_vector(STRING_VIEW("bbb"), sorted2);
+    (void)Win32FoundationClasses::add_to_unique_sorted_vector(STRING_VIEW("aaa"), sorted2);
+    (void)Win32FoundationClasses::add_to_unique_sorted_vector(STRING_VIEW("zzz"), sorted2);
+
+    needle = STRING_VIEW("aaa");
+
+    lower = std::lower_bound(std::cbegin(sorted2), std::cend(sorted2), needle);
+
+    if (Win32FoundationClasses::it_was_found(lower, needle, sorted2) == false)
+    {
+        test_number_that_failed = 332;
+        return(failure());
+    }
+
+    needle = STRING_VIEW("zzz");
+
+    lower = std::lower_bound(std::cbegin(sorted2), std::cend(sorted2), needle);
+
+    if (Win32FoundationClasses::it_was_found(lower, needle, sorted2) == false)
+    {
+        test_number_that_failed = 333;
+        return(failure());
+    }
+
+    needle = STRING_VIEW("zza");
+
+    lower = std::lower_bound(std::cbegin(sorted2), std::cend(sorted2), needle);
+
+    if (Win32FoundationClasses::it_was_found(lower, needle, sorted2) == true)
+    {
+        test_number_that_failed = 334;
+        return(failure());
+    }
+
+    needle = STRING_VIEW("aa");
+
+    lower = std::lower_bound(std::cbegin(sorted2), std::cend(sorted2), needle);
+
+    if (Win32FoundationClasses::it_was_found(lower, needle, sorted2) == true)
+    {
+        test_number_that_failed = 335;
+        return(failure());
+    }
+
+    test_number_that_failed = 335;
     return( true );
 }

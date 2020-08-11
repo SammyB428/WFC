@@ -234,7 +234,7 @@ inline void copy(_Inout_ std::wstring& s, _In_ int const code_page, _In_reads_by
 
     ZeroMemory(output_buffer.get(), new_buffer_size * 2);
 
-    std::size_t const number_of_characters_copied = ::MultiByteToWideChar(code_page, 0, reinterpret_cast<LPCCH>(buffer), static_cast<int>(number_of_bytes), output_buffer.get(), static_cast<int>(new_buffer_size));
+    auto const number_of_characters_copied = ::MultiByteToWideChar(code_page, 0, reinterpret_cast<LPCCH>(buffer), static_cast<int>(number_of_bytes), output_buffer.get(), static_cast<int>(new_buffer_size));
 
     if (number_of_characters_copied > 0)
     {
@@ -253,7 +253,7 @@ inline void copy_to(_In_ std::wstring_view s, _Out_ char * ascii_buffer, _In_ st
 {
     WFC_VALIDATE_POINTER(ascii_buffer);
 
-    if (buffer_size == 0 or ascii_buffer == nullptr)
+    if (buffer_size < 2 or ascii_buffer == nullptr)
     {
         // No buffer to write to, just give up
         return;
@@ -270,12 +270,6 @@ inline void copy_to(_In_ std::wstring_view s, _Out_ char * ascii_buffer, _In_ st
 
 #if ! defined( WE_ARE_BUILDING_WFC_ON_UNIX )
     // Windows version
-
-    if (buffer_size == 1)
-    {
-        // No room for a single character, give up
-        return;
-    }
 
     // Looks like we may succeed, even for a single character.
 

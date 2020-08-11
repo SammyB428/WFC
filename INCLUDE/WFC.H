@@ -45,9 +45,9 @@
 
 #define WIN32_FOUNDATION_CLASSES
 
-#define WFC_RELEASE_NUMBER (93)
+#define WFC_RELEASE_NUMBER (94)
 #if ! defined( WFC_SILENT )
-#pragma message( "WFC Release 93." )
+#pragma message( "WFC Release 94." )
 #endif // WFC_SILENT
 
 #define TAB_CHARACTER   (9)

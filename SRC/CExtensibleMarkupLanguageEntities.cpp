@@ -553,9 +553,8 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageEntities::R
    }
 
    auto lower = std::lower_bound(std::cbegin(m_Entities), std::cend(m_Entities), entity);
-   bool const found = lower not_eq std::cend(m_Entities) and not (entity < *lower);
 
-   if (found == true)
+   if (it_was_found(lower, entity, m_Entities) == true)
    {
        std::size_t const array_index = std::distance(std::cbegin(m_Entities), lower);
        text = m_Values[ array_index ];

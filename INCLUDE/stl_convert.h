@@ -7,12 +7,17 @@
 #include "stl_trim.h"
 #include "stl_with.h"
 
-inline _Check_return_ double as_double(_In_z_ char const * const buffer, _In_ std::size_t buffer_size) noexcept
+inline _Check_return_ double as_double(_In_ std::string_view buffer) noexcept
 {
+    if (buffer.empty() == true)
+    {
+        return(0);
+    }
+
 #if ! defined( WE_ARE_BUILDING_WFC_ON_UNIX )
     double return_value = 0.0;
 
-    (void)std::from_chars(buffer, &buffer[buffer_size], return_value);
+    (void)std::from_chars(buffer.data(), buffer.data() + buffer.length(), return_value);
 
     return(return_value);
 #else // WE_ARE_BUILDING_WFC_ON_UNIX
@@ -21,13 +26,13 @@ inline _Check_return_ double as_double(_In_z_ char const * const buffer, _In_ st
 #endif // WE_ARE_BUILDING_WFC_ON_UNIX
 }
 
-inline _Check_return_ double as_double(_In_ std::string_view s) noexcept
-{
-   return(as_double(s.data(), s.length()));
-}
-
 inline _Check_return_ double as_double(_In_ std::wstring_view s) noexcept
 {
+    if (s.empty() == true)
+    {
+        return(0);
+    }
+
     // See if we can optimize for small strings
 
     auto const string_length = s.length();
@@ -41,7 +46,7 @@ inline _Check_return_ double as_double(_In_ std::wstring_view s) noexcept
             ascii_string[string_index] = static_cast<char>(s[string_index]);
         }
 
-        return(as_double(ascii_string, string_length));
+        return(as_double(std::string_view(ascii_string, string_length)));
     }
     else
     {
@@ -54,40 +59,35 @@ inline _Check_return_ double as_double(_In_ std::wstring_view s) noexcept
             ascii_string.push_back(static_cast<char>(s[string_index]));
         }
 
-        return(as_double(ascii_string.c_str(), ascii_string.length()));
+        return(as_double(ascii_string));
     }
 }
 
-inline _Check_return_ int64_t ascii_string_to_integer( _In_ char const * ascii_string, _In_ std::size_t string_length, _In_ int radix ) noexcept
+inline _Check_return_ int64_t ascii_string_to_integer(_In_ std::string_view ascii_string, _In_ int radix = 10 ) noexcept
 {
     int64_t return_value = 0;
 
-    (void) std::from_chars(ascii_string, &ascii_string[string_length], return_value, radix);
+    (void) std::from_chars(ascii_string.data(), ascii_string.data() + ascii_string.length(), return_value, radix);
 
     return(return_value);
 }
 
-inline _Check_return_ int64_t ascii_string_to_integer(_In_ std::string_view ascii_string) noexcept
-{
-    return(ascii_string_to_integer(ascii_string.data(), ascii_string.length(), 10));
-}
-
-inline _Check_return_ uint64_t ascii_string_to_unsigned_integer(_In_ char const * ascii_string, _In_ std::size_t string_length, _In_ int radix) noexcept
+inline _Check_return_ uint64_t ascii_string_to_unsigned_integer(_In_ std::string_view ascii_string, _In_ int radix = 10) noexcept
 {
     uint64_t return_value = 0;
 
-    (void)std::from_chars(ascii_string, &ascii_string[string_length], return_value, radix);
+    (void)std::from_chars(ascii_string.data(), ascii_string.data() + ascii_string.length(), return_value, radix);
 
     return(return_value);
 }
 
-inline _Check_return_ uint64_t ascii_string_to_unsigned_integer(_In_ std::string_view ascii_string) noexcept
+inline _Check_return_ int64_t as_integer(_In_ std::string_view buffer) noexcept
 {
-    return(ascii_string_to_unsigned_integer(ascii_string.data(), ascii_string.length(), 10));
-}
+    if (buffer.empty() == true)
+    {
+        return(0);
+    }
 
-inline _Check_return_ int64_t as_integer(_In_z_ char const * const buffer, _In_ std::size_t const buffer_size) noexcept
-{
     int radix = 10;
 
     std::size_t offset_of_first_digit = 0;
@@ -97,12 +97,12 @@ inline _Check_return_ int64_t as_integer(_In_z_ char const * const buffer, _In_ 
         offset_of_first_digit++;
     }
 
-    if (offset_of_first_digit >= buffer_size)
+    if (offset_of_first_digit >= buffer.length())
     {
         return(0);
     }
 
-    if ((buffer_size - offset_of_first_digit) > 1)
+    if ((buffer.length() - offset_of_first_digit) > 1)
     {
         if (buffer[offset_of_first_digit] == '0' and
             (buffer[offset_of_first_digit + 1] == 'x' or buffer[offset_of_first_digit + 1] == 'X'))
@@ -117,11 +117,16 @@ inline _Check_return_ int64_t as_integer(_In_z_ char const * const buffer, _In_ 
         }
     }
 
-    return(ascii_string_to_integer(&buffer[offset_of_first_digit], buffer_size - offset_of_first_digit, radix));
+    return(ascii_string_to_integer(buffer.substr(offset_of_first_digit), radix));
 }
 
-inline _Check_return_ uint64_t as_unsigned_integer(_In_z_ char const* const buffer, _In_ std::size_t const buffer_size) noexcept
+inline _Check_return_ uint64_t as_unsigned_integer(_In_ std::string_view buffer) noexcept
 {
+    if (buffer.empty() == true)
+    {
+        return(0);
+    }
+
     int radix = 10;
 
     std::size_t offset_of_first_digit = 0;
@@ -131,12 +136,12 @@ inline _Check_return_ uint64_t as_unsigned_integer(_In_z_ char const* const buff
         offset_of_first_digit++;
     }
 
-    if (offset_of_first_digit >= buffer_size)
+    if (offset_of_first_digit >= buffer.length())
     {
         return(0);
     }
 
-    if ((buffer_size - offset_of_first_digit) > 1)
+    if ((buffer.length() - offset_of_first_digit) > 1)
     {
         if (buffer[offset_of_first_digit] == '0' and
             (buffer[offset_of_first_digit + 1] == 'x' or buffer[offset_of_first_digit + 1] == 'X'))
@@ -151,21 +156,16 @@ inline _Check_return_ uint64_t as_unsigned_integer(_In_z_ char const* const buff
         }
     }
 
-    return(ascii_string_to_unsigned_integer(&buffer[offset_of_first_digit], buffer_size - offset_of_first_digit, radix));
-}
-
-inline _Check_return_ int64_t as_integer(_In_ std::string_view s) noexcept
-{
-    return(as_integer(s.data(), s.length()));
-}
-
-inline _Check_return_ int64_t as_unsigned_integer(_In_ std::string_view s) noexcept
-{
-    return(as_unsigned_integer(s.data(), s.length()));
+    return(ascii_string_to_unsigned_integer(buffer.substr(offset_of_first_digit), radix));
 }
 
 inline _Check_return_ int64_t as_integer(_In_ std::wstring_view s) noexcept
 {
+    if (s.empty() == true)
+    {
+        return(0);
+    }
+
     // See if we can optimize for small strings
 
     auto const string_length = s.length();
@@ -179,7 +179,7 @@ inline _Check_return_ int64_t as_integer(_In_ std::wstring_view s) noexcept
             ascii_string[string_index] = static_cast<char>(s[string_index]);
         }
 
-        return(as_integer(ascii_string, string_length));
+        return(as_integer(std::string_view(ascii_string, string_length)));
     }
 
     int radix = 10;
@@ -206,20 +206,25 @@ inline _Check_return_ int64_t as_integer(_In_ std::wstring_view s) noexcept
 
 inline _Check_return_ uint64_t as_unsigned_integer(_In_ std::wstring_view s) noexcept
 {
+    if (s.empty() == true)
+    {
+        return(0);
+    }
+
     // See if we can optimize for small strings
 
     auto const string_length = s.length();
 
     if (string_length < 26)
     {
-        char ascii_string[27]{ 0 }; // Deliberately NOT initializing for speed, we don't need null termination
+        char ascii_string[27]; // Deliberately NOT initializing for speed, we don't need null termination
 
         for (auto const string_index : Range(string_length))
         {
             ascii_string[string_index] = static_cast<char>(s[string_index]);
         }
 
-        return(as_unsigned_integer(ascii_string, string_length));
+        return(as_unsigned_integer(std::string_view(ascii_string, string_length)));
     }
 
     int radix = 10;

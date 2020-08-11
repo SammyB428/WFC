@@ -505,7 +505,7 @@ _Check_return_ int Win32FoundationClasses::CReedSolomonErrorCorrectionCode::m_De
       for ( auto const i : Range(m_BlockSize - m_NumberOfSymbolsPerBlock) )
       {
          tmp = 0;
-         j = (deg_lambda < i) ? deg_lambda : i;
+         j = static_cast<int>((deg_lambda < i) ? deg_lambda : i);
 
          for( ;j >= 0; j-- )
          {
@@ -517,7 +517,7 @@ _Check_return_ int Win32FoundationClasses::CReedSolomonErrorCorrectionCode::m_De
 
          if( tmp not_eq 0 )
          {
-            deg_omega = i;
+            deg_omega = static_cast<int>(i);
          }
 
          omega[ i ] = m_Index_of[ tmp ];
