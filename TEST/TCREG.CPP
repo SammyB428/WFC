@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 2000-2016, Samuel R. Blackburn
+** Copyright, 2000-2020, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -145,10 +145,27 @@ _Check_return_ bool test_CRegistry(_Out_ std::string& class_name, _Out_ int& tes
       }
    }
 
+   string_array.clear();
+   string_array.push_back(L"AAA");
+   string_array.push_back(L"BBB");
+   string_array.push_back(L"CCC");
+   string_array.push_back(L"DDD");
+   string_array.push_back(L"EEE");
+   string_array.push_back(L"FFF");
+
+   // 6 strings, three unicode chars long, 6 nulls, one extra null times 2 equals = 50 bytes
+
+   if (registry.SetStringArrayValue(L"TempSources2", string_array) == false)
+   {
+       ReportError(registry.GetErrorCode());
+       test_number_that_failed = 8;
+       return(failure());
+   }
+
    if ( registry.SetValue( L"QFile", L"Sammy" ) == false )
    {
       ReportError( registry.GetErrorCode() );
-      test_number_that_failed = 8;
+      test_number_that_failed = 9;
       return( failure() );
    }
 
@@ -157,7 +174,7 @@ _Check_return_ bool test_CRegistry(_Out_ std::string& class_name, _Out_ int& tes
    if ( registry.GetValue( L"QFile", temp_sammy ) == false )
    {
       ReportError( registry.GetErrorCode() );
-      test_number_that_failed = 9;
+      test_number_that_failed = 10;
       return( failure() );
    }
    else
@@ -168,12 +185,12 @@ _Check_return_ bool test_CRegistry(_Out_ std::string& class_name, _Out_ int& tes
       }
       else
       {
-         test_number_that_failed = 10;
+         test_number_that_failed = 11;
          return( failure() );
       }
    }
 
-   test_number_that_failed = 10;
+   test_number_that_failed = 11;
 
    return( true );
 }
