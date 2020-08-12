@@ -205,7 +205,6 @@ _Check_return_ int _tmain( _In_ int const number_of_command_line_arguments, _In_
 //   test_CServer( TEXT( "sammy" ) );
 //   test_CServer( TEXT( "\\\\SAMMY" ) );
 //   test_CServiceControlManager();
-//   test_CXMLDocument();
 
    if (Win32FoundationClasses::wfc_does_file_exist( command_line_arguments[ 0 ] ) == false )
    {
@@ -274,7 +273,7 @@ _Check_return_ int _tmain( _In_ int const number_of_command_line_arguments, _In_
    {
       auto test_function = tests[ loop_index ];
 
-      if ( test_function( class_name, test_number_that_failed ) == FALSE )
+      if ( test_function( class_name, test_number_that_failed ) == false )
       {
          WFCTRACEVAL( TEXT( "This class failed " ), class_name.c_str() );
          WFCTRACEVAL( TEXT( "Test number " ), test_number_that_failed );

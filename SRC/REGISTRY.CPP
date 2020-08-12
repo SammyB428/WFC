@@ -1277,24 +1277,18 @@ _Check_return_ bool Win32FoundationClasses::CRegistry::SetStringArrayValue(_In_z
 {
     WFC_VALIDATE_POINTER( this );
 
-    std::size_t size_of_buffer = 0;
+    std::size_t size_of_buffer_in_bytes = 0;
 
     /*
     ** Find out how big our buffer needs to be...
     */
 
-    auto number_of_strings = string_array.size();
-
-    std::wstring temp_string;
-
-    for ( auto const index : Range(number_of_strings) )
+    for ( auto const& entry : string_array)
     {
-        temp_string.assign( string_array.at( index ) );
-
         // Thanks go to George Koukoulommatis (gemasoft@hol.gr)
         // for finding another UNICODE bug here...
 
-        size_of_buffer += ( ( temp_string.length() + 1 ) * sizeof( wchar_t ) );
+        size_of_buffer_in_bytes += ( ( entry.length() + 1 ) * sizeof( wchar_t ) );
     }
 
     /*
@@ -1304,9 +1298,9 @@ _Check_return_ bool Win32FoundationClasses::CRegistry::SetStringArrayValue(_In_z
     // Thanks go to George Koukoulommatis (gemasoft@hol.gr)
     // for finding another UNICODE bug here...
 
-    size_of_buffer += sizeof( TCHAR );
+    size_of_buffer_in_bytes += sizeof( wchar_t ); // Final null for double-null termination
 
-    auto memory_buffer = std::make_unique<uint8_t[]>(size_of_buffer);
+    auto memory_buffer = std::make_unique<uint8_t[]>(size_of_buffer_in_bytes);
 
     if ( memory_buffer.get() == nullptr )
     {
@@ -1315,42 +1309,25 @@ _Check_return_ bool Win32FoundationClasses::CRegistry::SetStringArrayValue(_In_z
         return( false );
     }
 
-    ::ZeroMemory( memory_buffer.get(), size_of_buffer );
+    ::ZeroMemory(memory_buffer.get(), size_of_buffer_in_bytes);
 
     /*
     ** OK, now add the strings to the memory buffer
     */
 
-    LPTSTR string = (LPTSTR) memory_buffer.get();
+    auto string_buffer = reinterpret_cast<wchar_t *>(memory_buffer.get());
 
-    SSIZE_T string_length = 0;
+    std::size_t string_length = 0;
 
-    for ( auto const index : Range(number_of_strings) )
+    for ( auto const& entry : string_array )
     {
-        temp_string.assign( string_array.at( index ) );
-        wcscpy( &string[ string_length ], temp_string.c_str() );
-
-        // Thanks go to George Koukoulommatis (gemasoft@hol.gr)
-        // for finding another UNICODE bug here...
-
-        string_length += ( ( temp_string.length() + 1 ) * sizeof( TCHAR ) );
+        wcscpy( &string_buffer[ string_length ], entry.c_str() );
+        string_length += ( (entry.length() + 1 ) );
     }
-
-    // Thanks go to George Koukoulommatis (gemasoft@hol.gr)
-    // for finding another UNICODE bug here...
-
-    string_length += sizeof( wchar_t );
-
-    bool return_value = true;
 
     auto type = KeyValueTypes::MultipleString; // A double NULL terminated string
 
-    if ( SetValue( name_of_value, type, memory_buffer.get(), size_of_buffer ) == false )
-    {
-        return_value = false;
-    }
-
-    return( return_value );
+    return(SetValue(name_of_value, type, memory_buffer.get(), size_of_buffer_in_bytes));
 }
 
 _Check_return_ bool Win32FoundationClasses::CRegistry::SetValue( __in_z wchar_t const * name_of_value, _In_ std::vector<uint8_t> const& bytes_to_write ) noexcept

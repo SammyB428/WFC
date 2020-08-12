@@ -87,7 +87,6 @@ void test_CNetworkConnections( __in_z LPCTSTR machine_name ) noexcept;
 void test_CNetworkFiles( __in_z LPCTSTR machine_name ) noexcept;
 void test_CNetworkShares( __in_z LPCTSTR machine_name ) noexcept;
 void test_CNetworkUsers( __in_z LPCTSTR machine_name ) noexcept;
-void test_CReedSolomonErrorCorrectionCode( void ) noexcept;
 _Check_return_ bool test_CRegistry( __out std::string& class_name, __out int& test_number_that_failed ) noexcept;
 void test_CRAS( void ) noexcept;
 void test_CSerialFile( void ) noexcept;
