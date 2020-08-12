@@ -229,6 +229,12 @@ _Check_return_ bool Win32FoundationClasses::CEventLog::CreateApplicationLog( __i
 
       log_key_name.append( application_name );
 
+      if (registry.Open(log_key_name.c_str()) == true)
+      {
+          // Key already there, we will assume it is already created
+          return(true);
+      }
+
       if ( registry.Create( log_key_name.c_str() ) == false )
       {
          m_ErrorCode = registry.GetErrorCode();
@@ -242,8 +248,7 @@ _Check_return_ bool Win32FoundationClasses::CEventLog::CreateApplicationLog( __i
       std::wstring dequoted_source(message_resource_file);
       (void)trim_quotes(dequoted_source);
 
-      //if (registry.SetValue(L"EventMessageFile", CRegistry::KeyValueTypes::UnexpandedString, (LPBYTE)dequoted_source.c_str(), (dequoted_source.length() + 1) * sizeof(wchar_t)) == false)
-      if ( registry.SetValue( L"EventMessageFile", CRegistry::KeyValueTypes::UnexpandedString, (LPBYTE)dequoted_source.c_str(), dequoted_source.length() * sizeof( wchar_t ) ) == false )
+      if (registry.SetValue(L"EventMessageFile", CRegistry::KeyValueTypes::UnexpandedString, (LPBYTE)dequoted_source.c_str(), (dequoted_source.length() + 1) * sizeof(wchar_t)) == false)
       {
          m_ErrorCode = registry.GetErrorCode();
          return( false );
