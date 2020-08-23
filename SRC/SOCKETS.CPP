@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 1995-2019, Samuel R. Blackburn
+** Copyright, 1995-2020, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -1494,7 +1494,7 @@ _Check_return_ bool Win32FoundationClasses::CSimpleSocket::SetWriteTimeout( _In_
    return( SetSocketOption( SOL_SOCKET, SO_SNDTIMEO, reinterpret_cast<char const *>(&number_of_milliseconds), sizeof( number_of_milliseconds ) ) );
 }
 
-void __stdcall Win32FoundationClasses::CSimpleSocket::StartWindowsSockets( void ) noexcept
+void __stdcall Win32FoundationClasses::CSimpleSocket::StartWindowsSockets(_In_ uint8_t const major_version, _In_ uint8_t minor_version) noexcept
 {
    m_InitializeThunk();
 
@@ -1506,8 +1506,7 @@ void __stdcall Win32FoundationClasses::CSimpleSocket::StartWindowsSockets( void 
 
    int socket_error = 0;
 
-   WORD desired_winsock_version = 0x0101; // We'd like WINSOCK v1.1 at least
-
+   WORD const desired_winsock_version = MAKEWORD(major_version, minor_version);
    BYTE major_version_required = 0;
    BYTE minor_version_required = 0;
 
@@ -1895,7 +1894,7 @@ void __stdcall Win32FoundationClasses::CSimpleSocket::TranslateErrorCode( _In_ D
 
 #if defined( TF_DISCONNECT )
 
-_Check_return_ bool Win32FoundationClasses::CSimpleSocket::Transmit( __inout Win32FoundationClasses::CFile64& file_to_send, _In_ DWORD const flags, __in_opt std::vector<uint8_t> * send_before, __in_opt std::vector<uint8_t> * send_after ) noexcept
+_Check_return_ bool Win32FoundationClasses::CSimpleSocket::Transmit( _Inout_ Win32FoundationClasses::CFile64& file_to_send, _In_ DWORD const flags, _In_opt_ std::vector<uint8_t> * send_before, _In_opt_ std::vector<uint8_t> * send_after ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER_NULL_OK( send_before );

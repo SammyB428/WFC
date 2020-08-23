@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 1995-2019, Samuel R. Blackburn
+** Copyright, 1995-2020, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -192,7 +192,7 @@ class CSimpleSocket : public CDummyFile
       static void __stdcall GetMyAddress( _Out_ std::wstring& dotted_ip_address ) noexcept;
       static void __stdcall GetMyAddress( __out_bcount(4) uint8_t * as_bytes  ) noexcept;
       static void __stdcall GetMyName( _Out_ std::wstring& machine_name ) noexcept;
-      static void __stdcall StartWindowsSockets( void ) noexcept;
+      static void __stdcall StartWindowsSockets( _In_ uint8_t const major_version = 2, _In_ uint8_t minor_version = 2 ) noexcept;
       static void __stdcall StopWindowsSockets( void ) noexcept;
       static void __stdcall TranslateErrorCode( _In_ DWORD const error_code, __out_z LPTSTR destination_string, _In_ DWORD const size_of_destination_string ) noexcept;
 

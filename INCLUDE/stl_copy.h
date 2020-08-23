@@ -275,7 +275,7 @@ inline void copy_to(_In_ std::wstring_view s, _Out_ char * ascii_buffer, _In_ st
 
     int const size_of_ascii_buffer = static_cast<int>(buffer_size);
 
-    int const number_of_bytes_written = ::WideCharToMultiByte(CP_UTF8,
+    auto const number_of_bytes_written = ::WideCharToMultiByte(CP_UTF8,
         0,
         s.data(),
         static_cast<int>(s.length()),
@@ -418,27 +418,27 @@ inline void copy_beginning_at(_Inout_ std::vector<std::wstring>& destination, _I
 inline void copy_to_clipboard(_In_ std::wstring_view the_string) noexcept
 {
 #if ! defined( WE_ARE_BUILDING_WFC_ON_UNIX )
-    if (OpenClipboard(NULL) not_eq FALSE)
+    if (::OpenClipboard(NULL) not_eq FALSE)
     {
-        EmptyClipboard();
+        ::EmptyClipboard();
 
-        auto global_memory_handle = GlobalAlloc(GHND, (the_string.length() * sizeof(wchar_t)) + 2);
+        auto global_memory_handle = ::GlobalAlloc(GHND, (the_string.length() * sizeof(wchar_t)) + 2);
 
         if (global_memory_handle not_eq NULL)
         {
-            auto output_string = static_cast<wchar_t*>(GlobalLock(global_memory_handle));
+            auto output_string = static_cast<wchar_t*>(::GlobalLock(global_memory_handle));
 
             if (output_string not_eq nullptr)
             {
                 copy_to(the_string, output_string, the_string.length() + 1);
 
-                GlobalUnlock(global_memory_handle);
+                ::GlobalUnlock(global_memory_handle);
 
-                SetClipboardData(CF_UNICODETEXT, global_memory_handle);
+                ::SetClipboardData(CF_UNICODETEXT, global_memory_handle);
             }
         }
 
-        CloseClipboard();
+        ::CloseClipboard();
     }
 #endif // WE_ARE_BUILDING_WFC_ON_UNIX
 }
