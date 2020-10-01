@@ -227,7 +227,7 @@ inline void split_view(_In_z_ wchar_t const* source, _In_ std::size_t const leng
     }
 }
 
-inline void split_view(_In_ std::wstring_view source, _In_ std::size_t const length, _In_ wchar_t const character, _Inout_ std::vector<std::wstring_view>& view_array) noexcept
+inline void split_view(_In_ std::wstring_view source, _In_ wchar_t const character, _Inout_ std::vector<std::wstring_view>& view_array) noexcept
 {
     split_view(source.data(), source.length(), character, view_array);
 }

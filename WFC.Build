@@ -4,9 +4,11 @@
     <Target Name="compile" >
         <!-- Build the library -->
         <MSBuild Projects="LIB\WFC.vcxproj" Properties="Configuration=STL Unicode Release;$(StandardCppProperties)" Condition="!Exists('$(LibDirectory)\UnicodeSTLWFC64.lib')"/>
+        <Delete Files="LIB\x64\STL Unicode Release\WFC.pch" Condition="Exists('LIB\x64\STL Unicode Release\WFC.pch')"/>
 
         <!-- Build the test harness for the library -->
         <MSBuild Projects="TEST\TEST.vcxproj" Properties="Configuration=STL Unicode Release;$(StandardCppProperties)" Condition="!Exists('Libraries\WFC\TEST\$(Platform)\STL Unicode Release\Test.exe')"/>
+        <Delete Files="TEST\$(Platform)\STL Unicode Release\TEST.pch" Condition="Exists('TEST\$(Platform)\STL Unicode Release\TEST.pch')"/>
 
         <!-- Now execute that test and fail the build if there's a problem -->
         <Exec Command="Test.exe" WorkingDirectory="TEST\$(Platform)\STL Unicode Release"/>
@@ -21,9 +23,11 @@
     <Target Name="debug" >
         <!-- Build the library -->
         <MSBuild Projects="LIB\WFC.sln" Properties="Configuration=STL Unicode Debug;$(StandardCppProperties)" Condition="!Exists('$(LibDirectory)\DebugBuildOfUnicodeSTLWFC64.lib')"/>
+        <Delete Files="LIB\x64\STL Unicode Debug\WFC.pch" Condition="Exists('LIB\x64\STL Unicode Debug\WFC.pch')"/>
 
         <!-- Build the test harness -->
         <MSBuild Projects="TEST\TEST.vcxproj" Properties="Configuration=STL Unicode Debug;$(StandardCppProperties)"/>
+        <Delete Files="TEST\$(Platform)\STL Unicode Debug\TEST.pch" Condition="Exists('TEST\$(Platform)\STL Unicode Debug\TEST.pch')"/>
 
         <!-- Execute the test harness -->
         <Exec Command="Test.exe" WorkingDirectory="TEST\$(Platform)\STL Unicode Debug"/>
