@@ -162,7 +162,8 @@ bool Win32FoundationClasses::CCryptographicProvider::CreateHash(Win32FoundationC
 
          default:
 
-            format( debug_message, L"Undocumented error %lu", m_ErrorCode );
+            debug_message.assign(WSTRING_VIEW(L"Undocumented error "));
+            debug_message.append(std::to_wstring(m_ErrorCode));
             break;
       }
 
@@ -259,7 +260,8 @@ bool Win32FoundationClasses::CCryptographicProvider::CreateKey(Win32FoundationCl
 
          default:
 
-            format( debug_message, L"Undocumented error %lu", m_ErrorCode );
+            debug_message.assign(WSTRING_VIEW(L"Undocumented error "));
+            debug_message.append(std::to_wstring(m_ErrorCode));
             break;
       }
 
@@ -375,7 +377,8 @@ bool Win32FoundationClasses::CCryptographicProvider::DeriveKey(Win32FoundationCl
 
          default:
 
-            format( debug_message, L"Undocumented error %lu", m_ErrorCode );
+            debug_message.assign(WSTRING_VIEW(L"Undocumented error "));
+            debug_message.append(std::to_wstring(m_ErrorCode));
             break;
       }
 
@@ -469,7 +472,8 @@ bool Win32FoundationClasses::CCryptographicProvider::GenerateRandomBytes(std::ve
 
          default:
 
-            format( debug_message, L"Undocumented error %lu", m_ErrorCode );
+            debug_message.assign(WSTRING_VIEW(L"Undocumented error "));
+            debug_message.append(std::to_wstring(m_ErrorCode));
             break;
       }
 
@@ -576,7 +580,8 @@ bool Win32FoundationClasses::CCryptographicProvider::GetParameter( DWORD const p
 
          default:
 
-            format( debug_message, L"Undocumented error %lu", m_ErrorCode );
+            debug_message.assign(WSTRING_VIEW(L"Undocumented error "));
+            debug_message.append(std::to_wstring(m_ErrorCode));
             break;
       }
 
@@ -652,7 +657,8 @@ bool Win32FoundationClasses::CCryptographicProvider::GetUserKey( DWORD which_use
 
          default:
 
-            format( debug_message, L"Undocumented error %lu", m_ErrorCode );
+            debug_message.assign(WSTRING_VIEW(L"Undocumented error "));
+            debug_message.append(std::to_wstring(m_ErrorCode));
             break;
       }
 
@@ -743,8 +749,9 @@ bool Win32FoundationClasses::CCryptographicProvider::ImportKey(std::vector<uint8
 
         default:
 
-            format(debug_message, L"Undocumented error %lu", m_ErrorCode);
-            break;
+           debug_message.assign(WSTRING_VIEW(L"Undocumented error "));
+           debug_message.append(std::to_wstring(m_ErrorCode));
+           break;
         }
 
         wprintf(L"%s\n", debug_message.c_str());
@@ -890,7 +897,8 @@ _Check_return_ bool Win32FoundationClasses::CCryptographicProvider::Open(__in_z_
 
             default:
 
-               format( debug_message, L"Undocumented error %lu", m_ErrorCode );
+               debug_message.assign(WSTRING_VIEW(L"Undocumented error "));
+               debug_message.append(std::to_wstring(m_ErrorCode));
                break;
          }
 
@@ -988,7 +996,8 @@ bool Win32FoundationClasses::CCryptographicProvider::SetDefault( std::wstring co
 
          default:
 
-            format( debug_message, L"Undocumented error %lu", m_ErrorCode );
+            debug_message.assign(WSTRING_VIEW(L"Undocumented error "));
+            debug_message.append(std::to_wstring(m_ErrorCode));
             break;
       }
 

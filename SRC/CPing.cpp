@@ -224,7 +224,8 @@ void Win32FoundationClasses::CPing::ConvertErrorToString(_In_ DWORD const error_
 
     default:
 
-        Win32FoundationClasses::format( meaning, L"Unknown error %lu", error_code);
+        meaning.assign(WSTRING_VIEW(L"Unknown error "));
+        meaning.append(std::to_wstring(error_code));
         break;
     }
 }

@@ -762,7 +762,9 @@ void Win32FoundationClasses::CMixer::GetErrorString(_Out_ std::wstring& error_st
 
     default:
 
-        Win32FoundationClasses::format( error_string, L"Unknown (%lu)", m_ErrorCode);
+        error_string.assign(WSTRING_VIEW(L"Unknown ("));
+        error_string.append(std::to_wstring(m_ErrorCode));
+        error_string.push_back(')');
 
 #if defined( _DEBUG )
 

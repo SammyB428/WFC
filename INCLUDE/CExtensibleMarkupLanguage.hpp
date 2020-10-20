@@ -475,7 +475,6 @@
 
         // Parsing Error Information
 
-        bool        m_ParseErrorEncountered{ false };
         CParsePoint m_ErrorElementBeganAt;
         CParsePoint m_ErrorOccuredAt;
         std::wstring m_ErrorTagName;
@@ -483,14 +482,15 @@
 
         // Data from XMLDecl
         std::wstring m_Encoding;
-        bool        m_IsStandalone{ true };
         std::wstring m_Version;
         std::wstring m_Namespace;
-        bool        m_UseNamespace{ false };
 
         wchar_t m_ParentChildSeparatorCharacter{ '.' };
 
         uint32_t m_ConversionCodePage{ 0 };
+        bool     m_ParseErrorEncountered{ false };
+        bool     m_IsStandalone{ true };
+        bool     m_UseNamespace{ false };
 
         void m_InitializeRootElement(void) noexcept;
         void m_InitializeEntities(void) noexcept;

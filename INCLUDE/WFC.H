@@ -45,9 +45,9 @@
 
 #define WIN32_FOUNDATION_CLASSES
 
-#define WFC_RELEASE_NUMBER (96)
+#define WFC_RELEASE_NUMBER (97)
 #if ! defined( WFC_SILENT )
-#pragma message( "WFC Release 96." )
+#pragma message( "WFC Release 97." )
 #endif // WFC_SILENT
 
 #define TAB_CHARACTER   (9)
@@ -775,7 +775,9 @@ inline void from_defined(_Inout_ std::wstring& s, _In_ uint64_t const value, __i
     }
     else
     {
-        format( s, L"Undefined(%" PRIu64 ")", value);
+        s.assign(WSTRING_VIEW(L"Undefined("));
+        s.append(std::to_wstring(value));
+        s.push_back(')');
     }
 }
 

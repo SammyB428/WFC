@@ -384,12 +384,14 @@ void Win32FoundationClasses::CWfcTrace::Output( __in_z LPCTSTR message, _In_ POI
 {
    if (is_flagged( Levels, m_TracingLevel ) == true and Tracing == true )
    {
-       std::wstring pointer_string;
+       std::wstring pointer_string(WSTRING_VIEW(L"{ x = "));
+       pointer_string.append(std::to_wstring(value.x));
+       pointer_string.append(WSTRING_VIEW(L" y = "));
+       pointer_string.append(std::to_wstring(value.y));
+       pointer_string.push_back(' ');
+       pointer_string.push_back('}');
 
-       Win32FoundationClasses::format( pointer_string, L"{ x = %ld y = %ld }",
-                             value.x, value.y );
-
-      Output( message, pointer_string );
+       Output( message, pointer_string );
    }
 }
 
@@ -397,10 +399,12 @@ void Win32FoundationClasses::CWfcTrace::Output( __in_z LPCTSTR message, _In_ SIZ
 {
    if (is_flagged( Levels, m_TracingLevel ) == true and Tracing == true )
    {
-       std::wstring pointer_string;
-
-      format( pointer_string, L"{ cx = %ld cy = %ld }",
-                             value.cx, value.cy );
+      std::wstring pointer_string(WSTRING_VIEW(L"{ cx = "));
+      pointer_string.append(std::to_wstring(value.cx));
+      pointer_string.append(WSTRING_VIEW(L" cy = "));
+      pointer_string.append(std::to_wstring(value.cy));
+      pointer_string.push_back(' ');
+      pointer_string.push_back('}');
 
       Output( message, pointer_string );
    }
@@ -999,9 +1003,10 @@ void Win32FoundationClasses::CWfcTrace::OutputVariant( __in_z LPCTSTR message, _
          default:
 
             {
-               std::wstring data_type_string;
+               std::wstring data_type_string(WSTRING_VIEW(L"Unknown("));
 
-               format( data_type_string, L"Unknown(%lu)", basic_type );
+               data_type_string.append(std::to_wstring(basic_type));
+               data_type_string.push_back(')');
 
                if (data_type.empty() == false)
                {
@@ -1031,9 +1036,10 @@ void Win32FoundationClasses::CWfcTrace::ReportError( _In_ DWORD const error_code
 
       Win32FoundationClasses::wfc_get_error_string( error_code, error_string );
 
-      std::wstring error_message;
+      std::wstring error_message(WSTRING_VIEW(L"ERROR "));
 
-      format( error_message, L"ERROR %lu - ", error_code );
+      error_message.append(std::to_wstring(error_code));
+      error_message.append(WSTRING_VIEW(L" - "));
       error_message.append( error_string );
 
       Output( error_message.c_str() );

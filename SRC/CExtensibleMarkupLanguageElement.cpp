@@ -311,18 +311,16 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageElement::Ad
         return( false );
     }
 
-    std::wstring const text_segment(text_segment_parameter);
-
     // Here's where we encode the default entities
 
-    if ( text_segment.find_first_of(WSTRING_VIEW(L"&\"<>'")) == std::wstring::npos )
+    if (text_segment_parameter.find_first_of(WSTRING_VIEW(L"&\"<>'")) == std::wstring::npos )
     {
         // Nothing to translate
         child_element_p->SetContents( text_segment_parameter );
     }
     else
     {
-        std::wstring encoded_entity_string( text_segment );
+        std::wstring encoded_entity_string(text_segment_parameter);
 
         Win32FoundationClasses::replace( encoded_entity_string, WSTRING_VIEW(L"&"), WSTRING_VIEW(L"&amp;"));
         Win32FoundationClasses::replace( encoded_entity_string, WSTRING_VIEW(L">"), WSTRING_VIEW(L"&gt;"));
@@ -577,7 +575,7 @@ void Win32FoundationClasses::CExtensibleMarkupLanguageElement::DestroyAttributeB
 {
     WFC_VALIDATE_POINTER( this );
 
-    std::size_t loop_index           = 0;
+    std::size_t loop_index    = 0;
     auto number_of_attributes = m_Attributes.size();
 
     while( loop_index < number_of_attributes ) // Cannot be converted to a Range loop
@@ -1177,13 +1175,13 @@ void Win32FoundationClasses::CExtensibleMarkupLanguageElement::GetNameAndInstanc
 
     // Now let's find which instance we are
 
-    int const instance_number = GetInstance();
+    auto const instance_number = GetInstance();
 
     if ( instance_number > 0 )
     {
-        std::wstring child_tag_name;
-        format( child_tag_name, L"(%lu)", static_cast<unsigned long>(instance_number) );
-        name.append( child_tag_name );
+        name.push_back('(');
+        name.append(std::to_wstring(instance_number));
+        name.push_back(')');
     }
 }
 
@@ -4461,11 +4459,7 @@ _Check_return_ Win32FoundationClasses::CExtensibleMarkupLanguageElement * Win32F
 
     if ( return_value not_eq nullptr )
     {
-        std::wstring formatted_value;
-
-        format( formatted_value, L"%lu", value );
-
-        (void) return_value->AddText( formatted_value );
+        (void) return_value->AddText( std::to_wstring(value) );
     }
 
     return( return_value );
@@ -4479,11 +4473,7 @@ _Check_return_ Win32FoundationClasses::CExtensibleMarkupLanguageElement * Win32F
 
     if ( return_value not_eq nullptr )
     {
-        std::wstring formatted_value;
-
-        format( formatted_value, L"%ld", value );
-
-        (void) return_value->AddText( formatted_value );
+        (void) return_value->AddText( std::to_wstring(value) );
     }
 
     return( return_value );
@@ -4497,11 +4487,7 @@ _Check_return_ Win32FoundationClasses::CExtensibleMarkupLanguageElement * Win32F
 
     if ( return_value not_eq nullptr )
     {
-        std::wstring formatted_value;
-
-        format( formatted_value, L"%" PRIu64, value );
-
-        (void) return_value->AddText( formatted_value );
+        (void) return_value->AddText( std::to_wstring(value) );
     }
 
     return( return_value );
@@ -4515,11 +4501,7 @@ _Check_return_ Win32FoundationClasses::CExtensibleMarkupLanguageElement * Win32F
 
     if ( return_value not_eq nullptr )
     {
-        std::wstring formatted_value;
-
-        format( formatted_value, L"%" PRId64, value );
-
-        (void) return_value->AddText( formatted_value );
+        (void) return_value->AddText( std::to_wstring(value) );
     }
 
     return( return_value );
@@ -5015,9 +4997,11 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageElement::Pa
 
                                                 if ( m_Document->GetEntities().IsEntity( sub_element_p->m_Contents.substr( location_of_ampersand, ( location_of_semicolon + 1 ) - location_of_ampersand ), rule_that_was_broken ) == false )
                                                 {
-                                                    std::wstring error_message;
+                                                    std::wstring error_message(WSTRING_VIEW(L"Bad entity reference in text section (Rule "));
 
-                                                    format( error_message, L"Bad entity reference in text section (Rule %lu).", (unsigned long) rule_that_was_broken );
+                                                    error_message.append(std::to_wstring(rule_that_was_broken));
+                                                    error_message.append(WSTRING_VIEW(L")."));
+
                                                     m_ReportParsingError( error_message );
                                                     return( false );
                                                 }

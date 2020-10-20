@@ -246,7 +246,8 @@ _Check_return_ bool Win32FoundationClasses::CCryptographicKey::Decrypt(_In_ std:
 
           default:
 
-             format(debug_message, L"Undocumented error %lu", m_ErrorCode);
+             debug_message.assign(WSTRING_VIEW(L"Undocumented error "));
+             debug_message.append(std::to_wstring(m_ErrorCode));
              break;
        }
 
@@ -509,7 +510,8 @@ _Check_return_ bool Win32FoundationClasses::CCryptographicKey::Encrypt( std::vec
 
             default:
 
-               format( debug_message, L"Undocumented error %lu", m_ErrorCode );
+               debug_message.assign(WSTRING_VIEW(L"Undocumented error "));
+               debug_message.append(std::to_wstring(m_ErrorCode));
                break;
          }
 
@@ -678,7 +680,8 @@ _Check_return_ bool Win32FoundationClasses::CCryptographicKey::Export(Win32Found
 
          default:
 
-            format( debug_message, L"Undocumented error %lu", m_ErrorCode );
+            debug_message.assign(WSTRING_VIEW(L"Undocumented error "));
+            debug_message.append(std::to_wstring(m_ErrorCode));
             break;
       }
 
@@ -777,7 +780,8 @@ _Check_return_ bool Win32FoundationClasses::CCryptographicKey::GetParameter( _In
 
          default:
 
-            format( debug_message, L"Undocumented error %lu", m_ErrorCode );
+            debug_message.assign(WSTRING_VIEW(L"Undocumented error "));
+            debug_message.append(std::to_wstring(m_ErrorCode));
             break;
       }
 
@@ -970,7 +974,8 @@ _Check_return_ bool Win32FoundationClasses::CCryptographicKey::SetParameter( _In
 
          default:
 
-            format( debug_message, L"Undocumented error %lu", m_ErrorCode );
+            debug_message.assign(WSTRING_VIEW(L"Undocumented error "));
+            debug_message.append(std::to_wstring(m_ErrorCode));
             break;
       }
 

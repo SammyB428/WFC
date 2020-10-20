@@ -1299,7 +1299,8 @@ void Win32FoundationClasses::CCommunicationProperties::ConvertBaudRateToString( 
 
       default:
 
-         format( human_readable_string, L"Unknown constant %lu", baud_rate );
+         human_readable_string.assign(WSTRING_VIEW(L"Unknown constant "));
+         human_readable_string.append(std::to_wstring(baud_rate));
          break;
    }
 }
@@ -1735,7 +1736,8 @@ void Win32FoundationClasses::CCommunicationProperties::ConvertProviderSubtypeToS
 
       default:
 
-         format( human_readable_string, L"Unknown constant %lu", type );
+         human_readable_string.assign(WSTRING_VIEW(L"Unknown constant "));
+         human_readable_string.append(std::to_wstring(type));
          break;
    }
 }

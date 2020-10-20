@@ -107,9 +107,9 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageEntities::A
 
    // Now validate the characters according to Rule 9 (REC-xml.htm#NT-EntityValue) 
 
-   std::wstring const text(text_parameter);
+   //std::wstring const text(text_parameter);
 
-   if ( text.find( '%' ) not_eq std::wstring::npos )
+   if (text_parameter.find( '%' ) not_eq std::wstring_view::npos )
    {
       return( false );
    }
@@ -118,17 +118,17 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageEntities::A
 
    std::wstring resolved_string;
 
-   if ( text.find( WSTRING_VIEW(L"&#") ) == std::wstring::npos )
+   if (text_parameter.find( WSTRING_VIEW(L"&#") ) == std::wstring::npos )
    {
       // Well, that was easy
-      resolved_string = text;
+      resolved_string.assign(text_parameter);
    }
    else
    {
-      std::wstring temp_string( text );
+      std::wstring temp_string(text_parameter);
       std::wstring number_string;
 
-      std::size_t location_of_character_reference = temp_string.find(WSTRING_VIEW(L"&#"));
+      auto location_of_character_reference = temp_string.find(WSTRING_VIEW(L"&#"));
 
       while( location_of_character_reference not_eq std::wstring::npos )
       {
@@ -243,7 +243,7 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageEntities::E
 
    enumerator = 0;
 
-   if ( m_Entities.size() > 0 )
+   if ( m_Entities.empty() == false )
    {
       return( true );
    }
