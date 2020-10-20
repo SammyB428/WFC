@@ -119,7 +119,7 @@ inline void format_number(_Inout_ std::wstring& s, _In_ uint64_t const source) n
 {
 #if defined( WE_ARE_BUILDING_WFC_ON_UNIX )
     // We are building for *nix
-    format(s, L"%" PRIu64, source);
+    s.assign(std::to_wstring(source));
 #else
     // We are building for Windows
     wchar_t number_string[64];
@@ -171,7 +171,7 @@ inline void format_number(_Inout_ std::wstring& s, _In_ int64_t const source) no
 {
 #if defined( WE_ARE_BUILDING_WFC_ON_UNIX )
     // We are building for *nix
-    format(s, L"%" PRId64, source);
+    s.assign(std::to_wstring(source));
 #else
     wchar_t number_string[64];
 

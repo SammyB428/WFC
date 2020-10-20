@@ -1056,9 +1056,9 @@ void Win32FoundationClasses::CWfcTrace::ReportSocketError( _In_ DWORD const erro
 
       CSimpleSocket::TranslateErrorCode( error_code, error_string, static_cast<DWORD>(std::size( error_string )) );
 
-      std::wstring error_message;
-
-      Win32FoundationClasses::format( error_message, L"SOCKET ERROR %lu - ", error_code );
+      std::wstring error_message(WSTRING_VIEW(L"SOCKET ERROR "));
+      error_message.append(std::to_wstring(error_code));
+      error_message.append(WSTRING_VIEW(L" - "));
       error_message.append( error_string );
 
       Output( error_message.c_str() );

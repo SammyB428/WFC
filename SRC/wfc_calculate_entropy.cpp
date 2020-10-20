@@ -423,16 +423,12 @@ _Check_return_ int64_t Win32FoundationClasses::find_byte( _In_ uint8_t const byt
 
     if ( find_byte_implementation == nullptr )
     {
-        /*
-        && 2020-10-19 - SRB - People are reporting that this still doesn't work
         if ( is_avx2_supported() == true )
         {
             // Woo hoo! We can search 32 bytes at a time
             find_byte_implementation = _find_byte_256;
         }
-        else
-        */
-        if ( is_sse41_supported() == true )
+        else if ( is_sse41_supported() == true )
         {
             // Not as rockin' as 32 bytes at a time but we can still search 16 bytes at a time
 
