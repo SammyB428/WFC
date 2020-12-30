@@ -63,41 +63,15 @@ _Check_return_ bool failure( void ) noexcept
    return( false );
 }
 
-inline void split_view(_In_z_ wchar_t const* source, _In_ std::size_t const length, _In_ wchar_t const character, _Inout_ std::vector<std::wstring_view>& string_array) noexcept
-{
-    string_array.clear();
-
-    if (source == nullptr or source[0] == 0x00 or character == 0x00)
-    {
-        return;
-    }
-
-    std::size_t beginning_index_of_string = 0;
-
-    for (auto const string_index : Range(length))
-    {
-        if (source[string_index] == character)
-        {
-            string_array.push_back(std::wstring_view(&source[beginning_index_of_string], string_index - beginning_index_of_string));
-            beginning_index_of_string = string_index + 1;
-        }
-    }
-
-    if (beginning_index_of_string < length)
-    {
-        string_array.push_back(std::wstring_view(&source[beginning_index_of_string], length - beginning_index_of_string));
-    }
-}
-
 _Check_return_ int _tmain( _In_ int const number_of_command_line_arguments, _In_reads_z_(number_of_command_line_arguments) LPCTSTR command_line_arguments[] )
 {
    WFCTRACEINIT( TEXT( "_tmain()" ) );
 
-   wchar_t const * ss = L"12,34,56,78";
+   wchar_t const * ss = L"12,34,56,78,";
 
    std::vector<std::wstring_view> views;
 
-   split_view(ss, wcslen(ss), ',', views);
+   Win32FoundationClasses::split_view(ss, wcslen(ss), ',', views);
 
    std::string s3(STRING_VIEW("   abc "));
    auto lt = Win32FoundationClasses::trim_left_view(s3);

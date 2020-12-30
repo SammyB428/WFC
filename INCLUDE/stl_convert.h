@@ -244,14 +244,14 @@ inline _Check_return_ uint64_t as_unsigned_integer(_In_ std::wstring_view s) noe
         value.erase(0, 1);
     }
 
-    uint64_t const return_value = std::stoull(value, nullptr, radix);
+    auto const return_value = std::stoull(value, nullptr, radix);
 
     return(return_value);
 }
 
 inline _Check_return_ int64_t as_hexadecimal_integer(_In_ std::wstring const& s) noexcept
 {
-    int64_t const return_value = std::stoll(s, nullptr, 16);
+    auto const return_value = std::stoll(s, nullptr, 16);
 
     return(return_value);
 }

@@ -221,7 +221,7 @@ inline void split_view(_In_z_ wchar_t const* source, _In_ std::size_t const leng
         }
     }
 
-    if (beginning_index_of_string < length)
+    if (beginning_index_of_string <= length)
     {
         view_array.push_back(std::wstring_view(&source[beginning_index_of_string], length - beginning_index_of_string));
     }
@@ -252,7 +252,7 @@ inline void split_view(_In_z_ char const* source, _In_ std::size_t const length,
         }
     }
 
-    if (beginning_index_of_string < length)
+    if (beginning_index_of_string <= length)
     {
         view_array.push_back(std::string_view(&source[beginning_index_of_string], length - beginning_index_of_string));
     }

@@ -263,7 +263,82 @@ _Check_return_ bool test_is( _Out_ std::string& class_name, _Out_ int& test_numb
        return(failure());
    }
 
-   test_number_that_failed = 27;
+   wchar_t const* ss = L"12,34,56,78,";
 
+   std::vector<std::wstring_view> views;
+
+   Win32FoundationClasses::split_view(ss, wcslen(ss), ',', views);
+
+   if (views.size() not_eq 5)
+   {
+       test_number_that_failed = 28;
+       return(failure());
+   }
+
+   if (views[4].empty() == false)
+   {
+       test_number_that_failed = 29;
+       return(failure());
+   }
+
+   if (views[0].compare(WSTRING_VIEW(L"12")) not_eq I_AM_EQUAL_TO_THAT)
+   {
+       test_number_that_failed = 30;
+       return(failure());
+   }
+
+   if (views[1].compare(WSTRING_VIEW(L"34")) not_eq I_AM_EQUAL_TO_THAT)
+   {
+       test_number_that_failed = 31;
+       return(failure());
+   }
+
+   if (views[2].compare(WSTRING_VIEW(L"56")) not_eq I_AM_EQUAL_TO_THAT)
+   {
+       test_number_that_failed = 32;
+       return(failure());
+   }
+
+   if (views[3].compare(WSTRING_VIEW(L"78")) not_eq I_AM_EQUAL_TO_THAT)
+   {
+       test_number_that_failed = 33;
+       return(failure());
+   }
+
+   ss = L"78,56,34,12";
+
+   Win32FoundationClasses::split_view(ss, wcslen(ss), ',', views);
+
+   if (views.size() not_eq 4)
+   {
+       test_number_that_failed = 34;
+       return(failure());
+   }
+
+   if (views[0].compare(WSTRING_VIEW(L"78")) not_eq I_AM_EQUAL_TO_THAT)
+   {
+       test_number_that_failed = 35;
+       return(failure());
+   }
+
+   if (views[1].compare(WSTRING_VIEW(L"56")) not_eq I_AM_EQUAL_TO_THAT)
+   {
+       test_number_that_failed = 36;
+       return(failure());
+   }
+
+   if (views[2].compare(WSTRING_VIEW(L"34")) not_eq I_AM_EQUAL_TO_THAT)
+   {
+       test_number_that_failed = 37;
+       return(failure());
+   }
+
+   if (views[3].compare(WSTRING_VIEW(L"12")) not_eq I_AM_EQUAL_TO_THAT)
+   {
+       test_number_that_failed = 38;
+       return(failure());
+   }
+
+   test_number_that_failed = 38;
    return( true );
 }
