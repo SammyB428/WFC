@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 1995-2020, Samuel R. Blackburn
+** Copyright, 1995-2021, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -45,9 +45,9 @@
 
 #define WIN32_FOUNDATION_CLASSES
 
-#define WFC_RELEASE_NUMBER (98)
+#define WFC_RELEASE_NUMBER (99)
 #if ! defined( WFC_SILENT )
-#pragma message( "WFC Release 98." )
+#pragma message( "WFC Release 99." )
 #endif // WFC_SILENT
 
 #define TAB_CHARACTER   (9)

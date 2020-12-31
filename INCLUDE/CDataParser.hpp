@@ -1930,7 +1930,7 @@ public:
     // 1998-11-21, New for Release 38
     // The following method was added by Jeff Barczewski (jb@snowflight.com)
     // He added to fix a bug in the parsing of comment sections in XML
-    inline _Check_return_ bool GetUntilAndIncluding(_Inout_ CParsePoint& parse_point, _In_ std::wstring const& termination_characters, _Inout_ std::wstring& string_to_get) const noexcept
+    inline _Check_return_ bool GetUntilAndIncluding(_Inout_ CParsePoint& parse_point, _In_ std::wstring_view termination_characters, _Inout_ std::wstring& string_to_get) const noexcept
     {
         try
         {
@@ -1952,7 +1952,7 @@ public:
 
             uint32_t character = 0;
 
-            std::size_t const termination_characters_length = termination_characters.length();
+            auto const termination_characters_length = termination_characters.length();
 
 #if defined( CSTRING_APPENDING_IS_FAST )
 
@@ -2009,7 +2009,7 @@ public:
                     // need to multiply the number of characters by the number of bytes per
                     // character to get the memcmp() to work properly.
 
-                    if (::memcmp(address_to_compare, termination_characters.c_str(), termination_characters_length * sizeof(wchar_t)) == I_AM_EQUAL_TO_THAT)
+                    if (::memcmp(address_to_compare, termination_characters.data(), termination_characters_length * sizeof(wchar_t)) == I_AM_EQUAL_TO_THAT)
                     {
 #if defined( UNICODE )
                         (void)byte_array.push_back(0);
