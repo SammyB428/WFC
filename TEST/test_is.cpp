@@ -339,6 +339,40 @@ _Check_return_ bool test_is( _Out_ std::string& class_name, _Out_ int& test_numb
        return(failure());
    }
 
-   test_number_that_failed = 38;
+   std::vector<std::string_view> ascii_views;
+
+   Win32FoundationClasses::split("A|B|C|", '|', ascii_views);
+
+   if (ascii_views.size() not_eq 4)
+   {
+       test_number_that_failed = 39;
+       return(failure());
+   }
+
+   if (ascii_views[0].compare(STRING_VIEW("A")) not_eq I_AM_EQUAL_TO_THAT)
+   {
+       test_number_that_failed = 40;
+       return(failure());
+   }
+
+   if (ascii_views[1].compare(STRING_VIEW("B")) not_eq I_AM_EQUAL_TO_THAT)
+   {
+       test_number_that_failed = 41;
+       return(failure());
+   }
+
+   if (ascii_views[2].compare(STRING_VIEW("C")) not_eq I_AM_EQUAL_TO_THAT)
+   {
+       test_number_that_failed = 42;
+       return(failure());
+   }
+
+   if (ascii_views[3].empty() == false)
+   {
+       test_number_that_failed = 43;
+       return(failure());
+   }
+
+   test_number_that_failed = 43;
    return( true );
 }
