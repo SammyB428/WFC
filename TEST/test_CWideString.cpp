@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 2000-2020, Samuel R. Blackburn
+** Copyright, 2000-2021, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -2476,6 +2476,56 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
         return(failure());
     }
 
-    test_number_that_failed = 335;
+    auto const c1 = _wcsicmp(L"gb-18030", L"GBK");
+    auto const c11 = _wcsicmp(L"gb-18030", L"");
+    auto const c12 = _wcsicmp(L"gb-18030", L"gb");
+    auto const c2 = Win32FoundationClasses::compare_no_case(WSTRING_VIEW(L"gb-18030"), WSTRING_VIEW(L"GBK"));
+    auto const c21 = Win32FoundationClasses::compare_no_case(WSTRING_VIEW(L"gb-18030"), WSTRING_VIEW(L""));
+    auto const c22 = Win32FoundationClasses::compare_no_case(WSTRING_VIEW(L"gb-18030"), WSTRING_VIEW(L"gb"));
+
+    if ((c1 < 0) not_eq (c2 < 0))
+    {
+        test_number_that_failed = 336;
+        return(failure());
+    }
+
+    if ((c11 > 0) not_eq (c21 > 0))
+    {
+        test_number_that_failed = 337;
+        return(failure());
+    }
+
+    if ((c12 > 0) not_eq (c22 > 0))
+    {
+        test_number_that_failed = 338;
+        return(failure());
+    }
+
+    auto const k1 = stricmp("gb-18030", "GBK");
+    auto const k11 = stricmp("gb-18030", "");
+    auto const k12 = stricmp("gb-18030", "gb");
+    auto const k2 = Win32FoundationClasses::compare_no_case(STRING_VIEW("gb-18030"), STRING_VIEW("GBK"));
+    auto const k21 = Win32FoundationClasses::compare_no_case(STRING_VIEW("gb-18030"), STRING_VIEW(""));
+    auto const k22 = Win32FoundationClasses::compare_no_case(STRING_VIEW("gb-18030"), STRING_VIEW("gb"));
+
+    if ((k1 < 0) not_eq (k2 < 0))
+    {
+        test_number_that_failed = 339;
+        return(failure());
+    }
+
+    if ((k11 > 0) not_eq (k21 > 0))
+    {
+        test_number_that_failed = 340;
+        return(failure());
+    }
+
+    if ((k12 > 0) not_eq (k22 > 0))
+    {
+        test_number_that_failed = 341;
+        return(failure());
+    }
+
+    test_number_that_failed = 341;
     return( true );
 }
