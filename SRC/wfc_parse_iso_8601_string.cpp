@@ -179,6 +179,12 @@ static inline _Check_return_ bool __parse_ymdhmsf( _In_ std::wstring_view time_s
 
     index++;
 
+    if (index >= time_string.length())
+    {
+        // We're at the end of the string
+        return(false);
+    }
+
     // index should be pointing here
     //       |
     //       v
@@ -240,6 +246,11 @@ static inline _Check_return_ bool __parse_ymdhmsf( _In_ std::wstring_view time_s
     }
 
     index++;
+
+    if (index >= time_string.length())
+    {
+        return(false);
+    }
 
     // index should be pointing here
     //          |
@@ -307,223 +318,248 @@ static inline _Check_return_ bool __parse_ymdhmsf( _In_ std::wstring_view time_s
         return(false);
     }
 
+    index++;
+
+    if (index >= time_string.length())
+    {
+        return(false);
+    }
+
+    // index should be pointing here
+    //             |
+    //             v
+    // 1969-07-20T22:56:15-04:00
+
+    // This test is safe because we could be sitting on a NULL
+
+    if (fast_is_digit( time_string[ index ] ) == false )
+    {
+        //WFCTRACE( TEXT( "Second digit of month field isn't a digit at all" ) );
+        return(false);
+    }
+
+    temp_string[ 0 ] = static_cast<char>(time_string[ index - 1 ]);
+    temp_string[ 1 ] = static_cast<char>(time_string[ index ]);
+
+    // We don't need to set temp_string[ 2 ] because we did that at line 158 above
+
+    (void)std::from_chars(temp_string, &temp_string[2], hours, 10);
+
+    index++;
+
+    // index should be pointing here
+    //              |
+    //              v
+    // 1969-07-20T22:56:15-04:00
+
+    if (index >= time_string.length())
+    {
+        // Odd, but not illegal
+        return( true );
+    }
+
+    if ( time_string[ index ] == L':' )
+    {
         index++;
+    }
 
-        // index should be pointing here
-        //             |
-        //             v
-        // 1969-07-20T22:56:15-04:00
+    // index should be pointing here
+    //               |
+    //               v
+    // 1969-07-20T22:56:15-04:00
 
-        // This test is safe because we could be sitting on a NULL
+    if (index >= time_string.length())
+    {
+        // Odd, but not illegal
+        return( true );
+    }
 
-        if (fast_is_digit( time_string[ index ] ) == false )
-        {
-            //WFCTRACE( TEXT( "Second digit of month field isn't a digit at all" ) );
-            return(false);
-        }
+    if (fast_is_digit( time_string[ index ] ) == false )
+    {
+        //WFCTRACE( TEXT( "First digit of time ain't no digit" ) );
+        return(false);
+    }
 
-        temp_string[ 0 ] = static_cast<char>(time_string[ index - 1 ]);
-        temp_string[ 1 ] = static_cast<char>(time_string[ index ]);
+    index++;
 
-        // We don't need to set temp_string[ 2 ] because we did that at line 158 above
+    if (index >= time_string.length())
+    {
+        // Odd, but not illegal
+        return(true);
+    }
 
-        (void)std::from_chars(temp_string, &temp_string[2], hours, 10);
+    // index should be pointing here
+    //                |
+    //                v
+    // 1969-07-20T22:56:15-04:00
 
+    if (fast_is_digit( time_string[ index ] ) == false )
+    {
+        //WFCTRACE( TEXT( "First digit of time ain't no digit" ) );
+        return(false);
+    }
+
+    temp_string[ 0 ] = static_cast<char>(time_string[ index - 1 ]);
+    temp_string[ 1 ] = static_cast<char>(time_string[ index ]);
+
+    (void)std::from_chars(temp_string, &temp_string[2], minutes, 10);
+
+    index++;
+
+    // index should be pointing here
+    //                 |
+    //                 v
+    // 1969-07-20T22:56:15-04:00
+
+    if (index >= time_string.length())
+    {
+        return( true );
+    }
+
+    if ( time_string[ index ] == L':' )
+    {
         index++;
+    }
 
-        // index should be pointing here
-        //              |
-        //              v
-        // 1969-07-20T22:56:15-04:00
+    // index should be pointing here
+    //                  |
+    //                  v
+    // 1969-07-20T22:56:15-04:00
 
-        if (index >= time_string.length())
-        {
-            // Odd, but not illegal
-            return( true );
-        }
+    if (index >= time_string.length())
+    {
+        // Odd, but not illegal
+        return( true );
+    }
 
-        if ( time_string[ index ] == L':' )
-        {
-            index++;
-        }
+    if (fast_is_digit( time_string[ index ] ) == false )
+    {
+        //WFCTRACE( TEXT( "First digit of seconds ain't no digit" ) );
+        return(false);
+    }
 
-        // index should be pointing here
-        //               |
-        //               v
-        // 1969-07-20T22:56:15-04:00
+    index++;
 
-        if (index >= time_string.length())
-        {
-            // Odd, but not illegal
-            return( true );
-        }
+    if (index >= time_string.length())
+    {
+        // Odd, but not illegal
+        return(true);
+    }
 
-        if (fast_is_digit( time_string[ index ] ) == false )
-        {
-            //WFCTRACE( TEXT( "First digit of time ain't no digit" ) );
-            return(false);
-        }
+    // index should be pointing here
+    //                   |
+    //                   v
+    // 1969-07-20T22:56:15-04:00
 
-        index++;
+    if (fast_is_digit( time_string[ index ] ) == false )
+    {
+        //WFCTRACE( TEXT( "Second digit of seconds ain't no digit" ) );
+        return(false);
+    }
 
-        // index should be pointing here
-        //                |
-        //                v
-        // 1969-07-20T22:56:15-04:00
+    temp_string[ 0 ] = static_cast<char>(time_string[ index - 1 ]);
+    temp_string[ 1 ] = static_cast<char>(time_string[ index ]);
 
-        if (fast_is_digit( time_string[ index ] ) == false )
-        {
-            //WFCTRACE( TEXT( "First digit of time ain't no digit" ) );
-            return(false);
-        }
+    (void)std::from_chars(temp_string, &temp_string[2], seconds, 10);
 
-        temp_string[ 0 ] = static_cast<char>(time_string[ index - 1 ]);
-        temp_string[ 1 ] = static_cast<char>(time_string[ index ]);
+    index++;
 
-        (void)std::from_chars(temp_string, &temp_string[2], minutes, 10);
+    // index could be pointing at a fractional second
+    //                    |
+    //                    v
+    // 2018-09-05T15:48:56.722622200Z
 
-        index++;
-
-        // index should be pointing here
-        //                 |
-        //                 v
-        // 1969-07-20T22:56:15-04:00
-
-        if (index >= time_string.length())
-        {
-            return( true );
-        }
-
-        if ( time_string[ index ] == L':' )
-        {
-            index++;
-        }
-
-        // index should be pointing here
-        //                  |
-        //                  v
-        // 1969-07-20T22:56:15-04:00
-
-        if (index >= time_string.length())
-        {
-            // Odd, but not illegal
-            return( true );
-        }
-
-        if (fast_is_digit( time_string[ index ] ) == false )
-        {
-            //WFCTRACE( TEXT( "First digit of seconds ain't no digit" ) );
-            return(false);
-        }
-
-        index++;
-
-        // index should be pointing here
-        //                   |
-        //                   v
-        // 1969-07-20T22:56:15-04:00
-
-        if (fast_is_digit( time_string[ index ] ) == false )
-        {
-            //WFCTRACE( TEXT( "Second digit of seconds ain't no digit" ) );
-            return(false);
-        }
-
-        temp_string[ 0 ] = static_cast<char>(time_string[ index - 1 ]);
-        temp_string[ 1 ] = static_cast<char>(time_string[ index ]);
-
-        (void)std::from_chars(temp_string, &temp_string[2], seconds, 10);
-
-        index++;
-
-        // index could be pointing at a fractional second
-        //                    |
-        //                    v
-        // 2018-09-05T15:48:56.722622200Z
-
+    if (index < time_string.length())
+    {
         if (time_string[index] == '.')
         {
             index++;
 
-            temp_string[0] = '.';
-            temp_string[1] = 0x00;
-            temp_string[2] = 0x00;
-            temp_string[3] = 0x00;
-            temp_string[4] = 0x00;
-            temp_string[5] = 0x00;
-            temp_string[6] = 0x00;
-            temp_string[7] = 0x00;
-            temp_string[8] = 0x00;
-            temp_string[9] = 0x00;
-            temp_string[10] = 0x00;
-
-            std::size_t temp_string_index = 1;
-
-            while(fast_is_digit(time_string[index]) == true)
+            if (index < time_string.length())
             {
-                if (temp_string_index < (std::size(temp_string) - 1))
+                temp_string[0] = '.';
+                temp_string[1] = '0';
+                temp_string[2] = 0x00;
+                temp_string[3] = 0x00;
+                temp_string[4] = 0x00;
+                temp_string[5] = 0x00;
+                temp_string[6] = 0x00;
+                temp_string[7] = 0x00;
+                temp_string[8] = 0x00;
+                temp_string[9] = 0x00;
+                temp_string[10] = 0x00;
+
+                std::size_t temp_string_index = 1;
+
+                while (index < time_string.length() and fast_is_digit(time_string[index]) == true)
                 {
-                    temp_string[temp_string_index] = static_cast<char>(time_string[index]);
-                    temp_string_index++;
+                    if (temp_string_index < (std::size(temp_string) - 1))
+                    {
+                        temp_string[temp_string_index] = static_cast<char>(time_string[index]);
+                        temp_string_index++;
+                    }
+
+                    index++;
                 }
 
-                index++;
-            }
-
 #if ! defined(WE_ARE_BUILDING_WFC_ON_UNIX)
-            (void)std::from_chars(temp_string, &temp_string[temp_string_index], fraction);
+                (void)std::from_chars(temp_string, &temp_string[temp_string_index], fraction);
 #else // WE_ARE_BUILDING_WFC_ON_UNIX
-            fraction = Win32FoundationClasses::as_double(temp_string);
+                fraction = Win32FoundationClasses::as_double(temp_string);
 #endif // WE_ARE_BUILDING_WFC_ON_UNIX
+            }
         }
+    }
 
-        temp_string[0] = 0x00;
-        temp_string[1] = 0x00;
-        temp_string[2] = 0x00;
-        temp_string[3] = 0x00;
-        temp_string[4] = 0x00;
-        temp_string[5] = 0x00;
-        temp_string[6] = 0x00;
-        temp_string[7] = 0x00;
-        temp_string[8] = 0x00;
-        temp_string[9] = 0x00;
-        temp_string[10] = 0x00;
+    temp_string[0] = 0x00;
+    temp_string[1] = 0x00;
+    temp_string[2] = 0x00;
+    temp_string[3] = 0x00;
+    temp_string[4] = 0x00;
+    temp_string[5] = 0x00;
+    temp_string[6] = 0x00;
+    temp_string[7] = 0x00;
+    temp_string[8] = 0x00;
+    temp_string[9] = 0x00;
+    temp_string[10] = 0x00;
 
-        // index should be pointing here
-        //                    |
-        //                    v
-        // 1969-07-20T22:56:15-04:00
+    // index should be pointing here
+    //                    |
+    //                    v
+    // 1969-07-20T22:56:15-04:00
 
-        if (index >= time_string.length() or
-            time_string[ index ] == L'Z' )
-        {
-            return( true );
-        }
+    if (index >= time_string.length() or
+        time_string[ index ] == L'Z' )
+    {
+        return( true );
+    }
 
-        // If we get here, we should be sitting on a Z, + or -
+    // If we get here, we should be sitting on a Z, + or -
 
-        if ( time_string[ index ] == L'Z' )
-        {
-            return( true );
-        }
+    if ( time_string[ index ] == L'Z' )
+    {
+        return( true );
+    }
 
-        if ( time_string[ index ] not_eq L'+' and
-             time_string[ index ] not_eq L'-' )
-        {
-            //WFCTRACE( TEXT( "Time zone designator ain't beginning with + or -" ) );
-            return(false);
-        }
+    if ( time_string[ index ] not_eq L'+' and
+         time_string[ index ] not_eq L'-' )
+    {
+        //WFCTRACE( TEXT( "Time zone designator ain't beginning with + or -" ) );
+        return(false);
+    }
 
-        offset_character = time_string[ index ];
+    offset_character = time_string[ index ];
 
-        index++;
+    index++;
 
+    if (index < time_string.length())
+    {
         // index should be pointing here
         //                     |
         //                     v
         // 1969-07-20T22:56:15-04:00
 
-        if (fast_is_digit( time_string[ index ] ) == false )
+        if (fast_is_digit(time_string[index]) == false)
         {
             //WFCTRACE( TEXT( "first digit of hours offset ain't a digit" ) );
             return(false);
@@ -531,30 +567,40 @@ static inline _Check_return_ bool __parse_ymdhmsf( _In_ std::wstring_view time_s
 
         index++;
 
+        if (index < time_string.length())
+        {
+            return(false);
+        }
+
         // index should be pointing here
         //                      |
         //                      v
         // 1969-07-20T22:56:15-04:00
 
-        if (fast_is_digit( time_string[ index ] ) == false )
+        if (fast_is_digit(time_string[index]) == false)
         {
             //WFCTRACE( TEXT( "second digit of hours offset ain't a digit" ) );
             return(false);
         }
 
-        temp_string[ 0 ] = static_cast<char>(time_string[ index - 1 ]);
-        temp_string[ 1 ] = static_cast<char>(time_string[ index ]);
+        temp_string[0] = static_cast<char>(time_string[index - 1]);
+        temp_string[1] = static_cast<char>(time_string[index]);
 
         (void)std::from_chars(temp_string, &temp_string[2], offset_hours, 10);
 
         index++;
+
+        if (index < time_string.length())
+        {
+            return(true);
+        }
 
         // index should be pointing here
         //                       |
         //                       v
         // 1969-07-20T22:56:15-04:00
 
-        if ( time_string[ index ] == L':' )
+        if (time_string[index] == L':')
         {
             index++;
         }
@@ -564,7 +610,7 @@ static inline _Check_return_ bool __parse_ymdhmsf( _In_ std::wstring_view time_s
         //                        v
         // 1969-07-20T22:56:15-04:00
 
-        if (fast_is_digit( time_string[ index ] ) == false )
+        if (fast_is_digit(time_string[index]) == false)
         {
             //WFCTRACE( TEXT( "First digit of minutes offset ain't a digit" ) );
             return(false);
@@ -572,21 +618,27 @@ static inline _Check_return_ bool __parse_ymdhmsf( _In_ std::wstring_view time_s
 
         index++;
 
+        if (index < time_string.length())
+        {
+            return(false);
+        }
+
         // index should be pointing here
         //                        |
         //                        v
         // 1969-07-20T22:56:15-04:00
 
-        if (fast_is_digit( time_string[ index ] ) == false )
+        if (fast_is_digit(time_string[index]) == false)
         {
             //WFCTRACE( TEXT( "Second digit of minutes offset ain't a digit" ) );
             return(false);
         }
 
-        temp_string[ 0 ] = static_cast<char>(time_string[ index - 1 ]);
-        temp_string[ 1 ] = static_cast<char>(time_string[ index ]);
+        temp_string[0] = static_cast<char>(time_string[index - 1]);
+        temp_string[1] = static_cast<char>(time_string[index]);
 
         (void)std::from_chars(temp_string, &temp_string[2], offset_minutes, 10);
+    }
 
     return( true );
 }
@@ -627,7 +679,7 @@ _Check_return_ bool Win32FoundationClasses::wfc_parse_iso_8601_string(_In_ std::
 
     double const ticks = static_cast<double>(Win32FoundationClasses::CFileTime::NumberOfFiletimeTicksInOneSecond) * fraction;
 
-    uint32_t const number_of_ticks = static_cast<uint32_t>(ticks);
+    auto const number_of_ticks = static_cast<uint32_t>(ticks);
 
     if (ticks > 0)
     {

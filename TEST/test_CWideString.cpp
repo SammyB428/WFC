@@ -2501,9 +2501,9 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
         return(failure());
     }
 
-    auto const k1 = stricmp("gb-18030", "GBK");
-    auto const k11 = stricmp("gb-18030", "");
-    auto const k12 = stricmp("gb-18030", "gb");
+    auto const k1 = _stricmp("gb-18030", "GBK");
+    auto const k11 = _stricmp("gb-18030", "");
+    auto const k12 = _stricmp("gb-18030", "gb");
     auto const k2 = Win32FoundationClasses::compare_no_case(STRING_VIEW("gb-18030"), STRING_VIEW("GBK"));
     auto const k21 = Win32FoundationClasses::compare_no_case(STRING_VIEW("gb-18030"), STRING_VIEW(""));
     auto const k22 = Win32FoundationClasses::compare_no_case(STRING_VIEW("gb-18030"), STRING_VIEW("gb"));
@@ -2526,6 +2526,32 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
         return(failure());
     }
 
-    test_number_that_failed = 341;
+    Win32FoundationClasses::wfc_parse_iso_8601_string(WSTRING_VIEW(L"2015-07-01T06:41:04"), ft);
+
+    ticks = ft.Ticks();
+
+    if (ticks not_eq 0x01d0b3c8e6c14000ULL)
+    {
+        test_number_that_failed = 342;
+        return(failure());
+    }
+
+    Win32FoundationClasses::wfc_parse_iso_8601_string(WSTRING_VIEW(L"2015-07-01T06:41:0"), ft);
+    Win32FoundationClasses::wfc_parse_iso_8601_string(WSTRING_VIEW(L"2015-07-01T06:41:"), ft);
+    Win32FoundationClasses::wfc_parse_iso_8601_string(WSTRING_VIEW(L"2015-07-01T06:41"), ft);
+    Win32FoundationClasses::wfc_parse_iso_8601_string(WSTRING_VIEW(L"2015-07-01T06:4"), ft);
+    Win32FoundationClasses::wfc_parse_iso_8601_string(WSTRING_VIEW(L"2015-07-01T06:"), ft);
+    Win32FoundationClasses::wfc_parse_iso_8601_string(WSTRING_VIEW(L"2015-07-01T06"), ft);
+    Win32FoundationClasses::wfc_parse_iso_8601_string(WSTRING_VIEW(L"2015-07-01T0"), ft);
+    Win32FoundationClasses::wfc_parse_iso_8601_string(WSTRING_VIEW(L"2015-07-01T"), ft);
+    Win32FoundationClasses::wfc_parse_iso_8601_string(WSTRING_VIEW(L"2015-07-01"), ft);
+    Win32FoundationClasses::wfc_parse_iso_8601_string(WSTRING_VIEW(L"2015-07-0"), ft);
+    Win32FoundationClasses::wfc_parse_iso_8601_string(WSTRING_VIEW(L"2015-07-"), ft);
+    Win32FoundationClasses::wfc_parse_iso_8601_string(WSTRING_VIEW(L"2015-07"), ft);
+    Win32FoundationClasses::wfc_parse_iso_8601_string(WSTRING_VIEW(L"2015-0"), ft);
+    Win32FoundationClasses::wfc_parse_iso_8601_string(WSTRING_VIEW(L"2015-"), ft);
+    Win32FoundationClasses::wfc_parse_iso_8601_string(WSTRING_VIEW(L"2015"), ft);
+
+    test_number_that_failed = 342;
     return( true );
 }
