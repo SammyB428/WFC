@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 1995-2020, Samuel R. Blackburn
+** Copyright, 1995-2021, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -567,7 +567,7 @@ static inline _Check_return_ bool __parse_ymdhmsf( _In_ std::wstring_view time_s
 
         index++;
 
-        if (index < time_string.length())
+        if (index >= time_string.length())
         {
             return(false);
         }
@@ -590,7 +590,7 @@ static inline _Check_return_ bool __parse_ymdhmsf( _In_ std::wstring_view time_s
 
         index++;
 
-        if (index < time_string.length())
+        if (index >= time_string.length())
         {
             return(true);
         }
@@ -603,6 +603,11 @@ static inline _Check_return_ bool __parse_ymdhmsf( _In_ std::wstring_view time_s
         if (time_string[index] == L':')
         {
             index++;
+        }
+
+        if (index >= time_string.length())
+        {
+            return(false);
         }
 
         // index should be pointing here
@@ -618,7 +623,7 @@ static inline _Check_return_ bool __parse_ymdhmsf( _In_ std::wstring_view time_s
 
         index++;
 
-        if (index < time_string.length())
+        if (index >= time_string.length())
         {
             return(false);
         }
