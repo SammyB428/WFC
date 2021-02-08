@@ -598,7 +598,7 @@
         void               ExecuteCallbacks(_Inout_ CExtensibleMarkupLanguageElement* element_p) const noexcept;
         _Check_return_ bool GetNextCallback(_Inout_ uint32_t& enumerator, _Out_ std::wstring& element_name, _Out_ XML_ELEMENT_CALLBACK& callback, _Out_ void*& parameter) const noexcept;
         _Check_return_ bool RemoveCallback(_In_ std::wstring_view element_name, __callback XML_ELEMENT_CALLBACK callback, _Inout_ void* callback_parameter) noexcept;
-        _Check_return_ bool ParseErrorOccurred(void) const noexcept;
+        inline constexpr _Check_return_ bool ParseErrorOccurred(void) const noexcept { return(true); };
 
         inline _Check_return_ CExtensibleMarkupLanguageDocument& operator=(_In_ CExtensibleMarkupLanguageDocument const& source) noexcept
         {

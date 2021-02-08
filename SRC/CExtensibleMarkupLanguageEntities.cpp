@@ -109,7 +109,7 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageEntities::A
 
    //std::wstring const text(text_parameter);
 
-   if (text_parameter.find( '%' ) not_eq std::wstring_view::npos )
+   if (text_parameter.find( '%' ) not_eq text_parameter.npos )
    {
       return( false );
    }
@@ -118,7 +118,7 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageEntities::A
 
    std::wstring resolved_string;
 
-   if (text_parameter.find( WSTRING_VIEW(L"&#") ) == std::wstring::npos )
+   if (text_parameter.find( WSTRING_VIEW(L"&#") ) == text_parameter.npos )
    {
       // Well, that was easy
       resolved_string.assign(text_parameter);
@@ -130,7 +130,7 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageEntities::A
 
       auto location_of_character_reference = temp_string.find(WSTRING_VIEW(L"&#"));
 
-      while( location_of_character_reference not_eq std::wstring::npos )
+      while( location_of_character_reference not_eq temp_string.npos )
       {
          resolved_string.append( temp_string.substr( 0, location_of_character_reference ) );
          temp_string.erase(0, location_of_character_reference + 2);
@@ -556,7 +556,7 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageEntities::R
 
    if (it_was_found(lower, entity, m_Entities) == true)
    {
-       std::size_t const array_index = std::distance(std::cbegin(m_Entities), lower);
+       auto const array_index = std::distance(std::cbegin(m_Entities), lower);
        text = m_Values[ array_index ];
        return( true );
    }

@@ -2536,7 +2536,24 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
         return(failure());
     }
 
-    Win32FoundationClasses::wfc_parse_iso_8601_string(WSTRING_VIEW(L"2015-07-01T06:41:0"), ft);
+    Win32FoundationClasses::wfc_parse_iso_8601_string(WSTRING_VIEW(L"2018-11-27T18:33:41-05:00"), ft);
+
+    ticks = ft.Ticks();
+
+    if (ticks not_eq 0x01D486A9A10A7880ULL)
+    {
+        test_number_that_failed = 343;
+        return(failure());
+    }
+
+    // The following test to make sure wfc_parse_iso_8601_string() doesn't blow up with a string out of bounds read
+    Win32FoundationClasses::wfc_parse_iso_8601_string(WSTRING_VIEW(L"2015-07-01T06:41:04-05:00"), ft);
+    Win32FoundationClasses::wfc_parse_iso_8601_string(WSTRING_VIEW(L"2015-07-01T06:41:04-05:0"), ft);
+    Win32FoundationClasses::wfc_parse_iso_8601_string(WSTRING_VIEW(L"2015-07-01T06:41:04-05:"), ft);
+    Win32FoundationClasses::wfc_parse_iso_8601_string(WSTRING_VIEW(L"2015-07-01T06:41:04-05"), ft);
+    Win32FoundationClasses::wfc_parse_iso_8601_string(WSTRING_VIEW(L"2015-07-01T06:41:04-0"), ft);
+    Win32FoundationClasses::wfc_parse_iso_8601_string(WSTRING_VIEW(L"2015-07-01T06:41:04-"), ft);
+    Win32FoundationClasses::wfc_parse_iso_8601_string(WSTRING_VIEW(L"2015-07-01T06:41:04"), ft);
     Win32FoundationClasses::wfc_parse_iso_8601_string(WSTRING_VIEW(L"2015-07-01T06:41:"), ft);
     Win32FoundationClasses::wfc_parse_iso_8601_string(WSTRING_VIEW(L"2015-07-01T06:41"), ft);
     Win32FoundationClasses::wfc_parse_iso_8601_string(WSTRING_VIEW(L"2015-07-01T06:4"), ft);

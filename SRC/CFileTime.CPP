@@ -133,7 +133,7 @@ _Check_return_ std::wstring Win32FoundationClasses::CFileTime::PostgreSQLTimesta
 {
     std::wstring return_value;
 
-    uint64_t const this_time = AsTicks();
+    auto const this_time = AsTicks();
     uint64_t const microsecond_remainder = ( this_time % CFileTime::NumberOfFiletimeTicksInOneSecond) / CFileTime::NumberOfFiletimeTicksInOneMicrosecond;
 
     Win32FoundationClasses::CSystemTime stime;

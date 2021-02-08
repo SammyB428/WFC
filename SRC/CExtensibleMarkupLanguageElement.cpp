@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 1995-2020, Samuel R. Blackburn
+** Copyright, 1995-2021, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -134,7 +134,7 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageElement::Ad
 
     auto location_of_character = attribute_p->Value.find( CARRIAGE_RETURN );
 
-    while( location_of_character not_eq std::wstring::npos)
+    while( location_of_character not_eq attribute_p->Value.npos)
     {
         // We found a carriage return, let's normalize it.
 
@@ -163,7 +163,7 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageElement::Ad
 
     location_of_character = attribute_p->Value.find( LINE_FEED );
 
-    while( location_of_character not_eq std::wstring::npos)
+    while( location_of_character not_eq attribute_p->Value.npos)
     {
         // We found a carriage return, let's normalize it.
 
@@ -175,7 +175,7 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageElement::Ad
 
     location_of_character = attribute_p->Value.find(TAB_CHARACTER);
 
-    while( location_of_character not_eq std::wstring::npos)
+    while( location_of_character not_eq attribute_p->Value.npos)
     {
         // We found a carriage return, let's normalize it.
 
@@ -202,7 +202,7 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageElement::Ad
         return( false );
     }
 
-    if ( attribute_p->Value.find( '<' ) not_eq std::wstring::npos)
+    if ( attribute_p->Value.find( '<' ) not_eq attribute_p->Value.npos)
     {
         std::wstring parsing_error_message(WSTRING_VIEW(L"Attribute values cannot contain a '<' (Rule 41). Offending attribute is named named \""));
 
@@ -222,15 +222,16 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageElement::Ad
 
     auto const index_of_ampersand = attribute_p->Value.find( '&' );
 
-    if ( index_of_ampersand not_eq std::wstring::npos)
+    if ( index_of_ampersand not_eq attribute_p->Value.npos)
     {
         auto const index_of_semicolon = attribute_p->Value.find( ';', index_of_ampersand + 1 );
 
-        if ( index_of_semicolon == std::wstring::npos)
+        if ( index_of_semicolon == attribute_p->Value.npos)
         {
-            std::wstring parsing_error_message;
+            std::wstring parsing_error_message(WSTRING_VIEW(L"Attribute values cannot contain a '&' (Rule 41). Offending attribute is named \""));
+            parsing_error_message.append(attribute_p->Name);
+            parsing_error_message.push_back('\"');
 
-            format( parsing_error_message, L"Attribute values cannot contain a '&' (Rule 41). Offending attribute is named named \"%s\"", attribute_p->Name );
             m_ReportParsingError( parsing_error_message );
 
             delete attribute_p;
@@ -313,7 +314,7 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageElement::Ad
 
     // Here's where we encode the default entities
 
-    if (text_segment_parameter.find_first_of(WSTRING_VIEW(L"&\"<>'")) == std::wstring::npos )
+    if (text_segment_parameter.find_first_of(WSTRING_VIEW(L"&\"<>'")) == text_segment_parameter.npos )
     {
         // Nothing to translate
         child_element_p->SetContents( text_segment_parameter );
@@ -407,7 +408,7 @@ _Check_return_ std::size_t Win32FoundationClasses::CExtensibleMarkupLanguageElem
         parent_child_separator_character = m_Document->GetParentChildSeparatorCharacter();
     }
 
-    if ( name_parameter.find( parent_child_separator_character ) == std::wstring::npos )
+    if ( name_parameter.find( parent_child_separator_character ) == name_parameter.npos )
     {
         // Count the elements at this level
 
@@ -453,8 +454,8 @@ _Check_return_ std::size_t Win32FoundationClasses::CExtensibleMarkupLanguageElem
             loop_index--;
         }
 
-        std::wstring parent_name(name_parameter.substr( 0, index_of_character ) );
-        std::wstring child_name( right(name_parameter, name_parameter.length() - ( index_of_character + 1 ) ) );
+        std::wstring parent_name( name_parameter.substr( 0, index_of_character ) );
+        std::wstring child_name( right( name_parameter, name_parameter.length() - ( index_of_character + 1 ) ) );
 
         //WFCTRACEVAL( TEXT( "parent_name is " ), parent_name );
         //WFCTRACEVAL( TEXT( "child_name is " ), child_name );
@@ -464,7 +465,7 @@ _Check_return_ std::size_t Win32FoundationClasses::CExtensibleMarkupLanguageElem
 
         index_of_character = child_name.find( '(' );
 
-        if ( index_of_character not_eq std::wstring::npos )
+        if ( index_of_character not_eq child_name.npos )
         {
             // Yup, we've got us a [
 
@@ -476,7 +477,7 @@ _Check_return_ std::size_t Win32FoundationClasses::CExtensibleMarkupLanguageElem
 
         index_of_character = child_name.find( ')' );
 
-        if ( index_of_character not_eq std::wstring::npos)
+        if ( index_of_character not_eq child_name.npos)
         {
             // Yup, we've got us a (
 
@@ -1582,7 +1583,7 @@ void Win32FoundationClasses::CExtensibleMarkupLanguageElement::m_AppendAttribute
 
             bool we_need_single_quotes = false;
 
-            if ( attribute_p->Value.find( '\"' ) == std::wstring::npos )
+            if ( attribute_p->Value.find( '\"' ) == attribute_p->Value.npos )
             {
                 m_AddCharacterToOutput( '\"', write_options, data );
             }
@@ -2045,7 +2046,7 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageElement::m_
 
     auto location_of_character = string_to_parse.find_first_of(WSTRING_VIEW(L" \t\r\n["));
 
-    if ( location_of_character == std::wstring::npos )
+    if ( location_of_character == string_to_parse.npos )
     {
         // 1999-09-01
         // Thanks go to Kim Winther Jorgensen <kwj@dia.dk> for finding
@@ -2055,7 +2056,7 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageElement::m_
 
         location_of_character = string_to_parse.find( '>' );
 
-        if ( location_of_character == std::wstring::npos )
+        if ( location_of_character == string_to_parse.npos )
         {
             m_ReportParsingError(WSTRING_VIEW(L"Illegal DOCTYPE name terminator (Rule 28)."));
             return( false );
@@ -2191,7 +2192,7 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageElement::m_
                 location_of_character = string_to_parse.find( '\'' );
             }
 
-            if ( location_of_character == std::wstring::npos )
+            if ( location_of_character == string_to_parse.npos )
             {
                 m_ReportParsingError(WSTRING_VIEW(L"Mismatched quotes (Rule 11)."));
                 return( false );
@@ -2266,7 +2267,7 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageElement::m_
                 location_of_character = string_to_parse.find( '\'' );
             }
 
-            if ( location_of_character == std::wstring::npos )
+            if ( location_of_character == string_to_parse.npos )
             {
                 m_ReportParsingError(WSTRING_VIEW(L"Mismatched quotes (Rule 11)."));
                 return( false );
@@ -2350,7 +2351,7 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageElement::m_
                 location_of_character = string_to_parse.find( '\'' );
             }
 
-            if ( location_of_character == std::wstring::npos )
+            if ( location_of_character == string_to_parse.npos )
             {
                 m_ReportParsingError(WSTRING_VIEW(L"Mismatched quotes (Rule 11)."));
                 return( false );
@@ -2711,7 +2712,7 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageElement::m_
 
     auto location_of_separator = parent_name.find( parent_child_separator_character );
 
-    if ( location_of_separator not_eq std::wstring::npos )
+    if ( location_of_separator not_eq parent_name.npos )
     {
         child_name.assign( right( parent_name, parent_name.length() - ( location_of_separator + 1 ) ) );
         //parent_name.assign( parent_name.substr( 0, location_of_separator ) );
@@ -2728,7 +2729,7 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageElement::m_
 
     auto location_of_beginning = parent_name.find( '(' );
 
-    if (location_of_beginning not_eq std::wstring::npos )
+    if (location_of_beginning not_eq parent_name.npos )
     {
         // Looks like we've got an instance number in here
 
@@ -2736,7 +2737,7 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageElement::m_
 
         // Check to make sure they didn't pass us something like "Southpark)0("
 
-        if ( location_of_ending < location_of_beginning or location_of_ending == std::wstring::npos )
+        if ( location_of_ending < location_of_beginning or location_of_ending == parent_name.npos )
         {
             //WFCTRACE( TEXT( "[] is ][ (they're backwards)" ) );
             return( false );
@@ -2805,7 +2806,7 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageElement::m_
 
     auto const value_index = legal_characters.find( m_Contents[0] );
 
-    if ( value_index == std::wstring::npos )
+    if ( value_index == legal_characters.npos )
     {
         m_ReportParsingError(WSTRING_VIEW(L"Illegal first character in processing instruction (Rule 16->5)."));
         return( false );
@@ -2848,7 +2849,7 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageElement::m_
 
     auto location_of_character = tag_data.find_first_of(WSTRING_VIEW(L" \t\r\n")); // This list of space characters is taken from section 2.3 of the XML 1.0 recommendation (REC-xml-19980210)
 
-    if ( location_of_character == std::wstring::npos )
+    if ( location_of_character == tag_data.npos )
     {
         //WFCTRACE( TEXT( "There ain't no attributes" ) );
 
@@ -2940,7 +2941,7 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageElement::m_
 
         m_Tag.clear();
 
-        if ( tag.find(WSTRING_VIEW(L"?>")) == std::wstring::npos )
+        if ( tag.find(WSTRING_VIEW(L"?>")) == tag.npos )
         {
             // If we get here, it means we hit something tricky like "<?pi some data ? > <??>"
             //WFCTRACE( TEXT( "Can't find processing instruction terminator \"?>\"" ) );
@@ -3008,7 +3009,7 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageElement::m_
             {
                 location_of_character = m_Contents.find(WSTRING_VIEW(L"-->"));
 
-                if ( location_of_character == std::wstring::npos )
+                if ( location_of_character == m_Contents.npos )
                 {
                     // If we get here, it means the comment text contains a >
 
@@ -3122,7 +3123,7 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageElement::m_
 
             auto location_of_entity = tag_data.find(WSTRING_VIEW(L"ENTITY"));
 
-            if ( location_of_entity == std::wstring::npos )
+            if ( location_of_entity == tag_data.npos )
             {
                 m_ReportParsingError(WSTRING_VIEW(L"Ill-formed ENTITY section (Rule 71)."));
                 return( false );
@@ -3154,7 +3155,7 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageElement::m_
 
                     auto const location_of_space = tag_data.find_first_of(WSTRING_VIEW(L" \t\r\n"));
 
-                    if ( location_of_space == std::wstring::npos )
+                    if ( location_of_space == tag_data.npos )
                     {
                         m_ReportParsingError(WSTRING_VIEW(L"Ill-formed ENTITY section[2] (Rule 71)."));
                         return( false );
@@ -3261,7 +3262,7 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageElement::m_
 
                         location_of_entity = tag_data.find( '"' );
 
-                        while( location_of_entity == std::wstring::npos)
+                        while( location_of_entity == tag_data.npos)
                         {
                             // This could be the result of a > existing in the entity value
 
@@ -3282,7 +3283,7 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageElement::m_
 
                         // Check for more than one double-quote...
 
-                        if ( tag_data.find( '"', location_of_entity + 1 ) not_eq std::wstring::npos )
+                        if ( tag_data.find( '"', location_of_entity + 1 ) not_eq tag_data.npos )
                         {
                             m_ReportParsingError(WSTRING_VIEW(L"ENTITY value has extra double quote (Rule 9)."));
                             return( false );
@@ -3301,7 +3302,7 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageElement::m_
 
                         location_of_entity = tag_data.find( '\'' );
 
-                        while( location_of_entity == std::wstring::npos )
+                        while( location_of_entity == tag_data.npos )
                         {
                             //WFCTRACE( TEXT( "Can't find closing single quote." ) );
 
@@ -3320,7 +3321,7 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageElement::m_
 
                         // Check for more than one double-quote...
 
-                        if ( tag_data.find( '\'', location_of_entity + 1 ) not_eq std::wstring::npos )
+                        if ( tag_data.find( '\'', location_of_entity + 1 ) not_eq tag_data.npos )
                         {
                             m_ReportParsingError(WSTRING_VIEW(L"ENTITY value has extra single quote (Rule 9)."));
                             return( false );
@@ -3339,7 +3340,7 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageElement::m_
                     auto location_of_semicolon         = tag_data.find( ';' );
                     auto location_of_illegal_character = tag_data.find( '&' );
 
-                    if ( location_of_illegal_character not_eq std::wstring::npos )
+                    if ( location_of_illegal_character not_eq tag_data.npos )
                     {
                         if ( location_of_illegal_character > location_of_semicolon )
                         {
@@ -3350,7 +3351,7 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageElement::m_
 
                     location_of_illegal_character = tag_data.find( '%' );
 
-                    if ( location_of_illegal_character not_eq std::wstring::npos )
+                    if ( location_of_illegal_character not_eq tag_data.npos )
                     {
                         if ( location_of_illegal_character > location_of_semicolon )
                         {
@@ -3484,11 +3485,12 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageElement::m_
         {
             if ( Win32FoundationClasses::is_xml_NameChar( m_Tag[ name_loop_index ] ) == false )
             {
-                std::wstring error_message;
+                std::wstring error_message(WSTRING_VIEW(L"Character "));
+                error_message.append(std::to_wstring(name_loop_index));
+                error_message.append(WSTRING_VIEW(L" of element named \""));
+                error_message.append(m_Tag);
+                error_message.append(WSTRING_VIEW(L"\" is invalid (Rule 999192)."));
 
-                format( error_message, L"Character %lu of element named \"%s\" is invalid (Rule 999192).",
-                    static_cast<unsigned long>(name_loop_index),
-                    m_Tag );
                 m_ReportParsingError( error_message );
                 return( false );
             }
@@ -3520,7 +3522,7 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageElement::m_
     {
         location_of_character = tag_data.find( '=' );
 
-        if ( location_of_character == std::wstring::npos )
+        if ( location_of_character == tag_data.npos )
         {
             if ( we_parsed_at_least_one_attribute == false )
             {
@@ -3616,7 +3618,7 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageElement::m_
 
 #endif
 
-        if ( location_of_character == std::wstring::npos )
+        if ( location_of_character == tag_data.npos )
         {
             //WFCTRACEVAL( TEXT( "Couldn't find anything at line " ), __LINE__ );
 
@@ -3736,7 +3738,7 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageElement::m_
             std::size_t offset_of_attribute_name = 0;
             auto tag_index_of_attribute_name = tag.find(temp_string, m_Tag.length());
 
-            if (tag_index_of_attribute_name == std::wstring::npos)
+            if (tag_index_of_attribute_name == tag.npos)
             {
                 offset_of_attribute_name = 0;
             }
@@ -3751,7 +3753,7 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageElement::m_
 
             auto offset_of_attribute_value = tag.find(temp_string, tag_index_of_attribute_name + 1); // + 1 to skip the equals sign
 
-            if (offset_of_attribute_value == std::wstring::npos)
+            if (offset_of_attribute_value == tag.npos)
             {
                 offset_of_attribute_value = 0;
             }
@@ -3898,7 +3900,7 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageElement::m_
         location_of_delimiter = string_to_parse.find( '\'' );
     }
 
-    if ( location_of_delimiter == std::wstring::npos )
+    if ( location_of_delimiter == string_to_parse.npos )
     {
         m_ReportParsingError(WSTRING_VIEW(L"VersionNum missing matching delimiter (Rule 24)."));
         return( false );
@@ -3915,15 +3917,17 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageElement::m_
     string_to_parse.erase(0, location_of_delimiter + 1);
     trim_left(string_to_parse);
 
-    std::wstring legal_characters(WSTRING_VIEW(L"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_.:"));
+    std::wstring_view legal_characters(WSTRING_VIEW(L"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_.:"));
 
     for ( auto const value_index : Range(value.length()) )
     {
-        if ( legal_characters.find( value.at( value_index ) ) == std::wstring::npos )
+        if ( legal_characters.find( value.at( value_index ) ) == legal_characters.npos )
         {
-            std::wstring error_message;
-
-            format( error_message, L"Character %zu (decimal %d) of the \"version\" attribute is illegal (Rule 26).", value_index, (int) value.at( value_index ) );
+            std::wstring error_message(WSTRING_VIEW(L"Character "));
+            error_message.append(std::to_wstring(value_index));
+            error_message.append(WSTRING_VIEW(L" (decimal "));
+            error_message.append(std::to_wstring(static_cast<int>(value.at(value_index))));
+            error_message.append(WSTRING_VIEW(L") of the \"version\" attribute is illegal (Rule 26). "));
 
             //WFCTRACE( error_message );
 
@@ -4016,7 +4020,7 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageElement::m_
             location_of_delimiter = string_to_parse.find( '\'');
         }
 
-        if ( location_of_delimiter == std::wstring::npos )
+        if ( location_of_delimiter == string_to_parse.npos )
         {
             m_ReportParsingError(WSTRING_VIEW(L"EncName missing matching delimiter (Rule 80)."));
             return( false );
@@ -4050,15 +4054,17 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageElement::m_
 
         if ( value.length() > 1 )
         {
-            legal_characters.assign(WSTRING_VIEW(L"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789._-"));
+            legal_characters = WSTRING_VIEW(L"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789._-");
 
             for ( auto const loop_index : Range(value.length(), StartingRangePosition(1)) )
             {
-                if ( legal_characters.find( value.at( loop_index ) ) == std::wstring::npos )
+                if ( legal_characters.find( value.at( loop_index ) ) == legal_characters.npos )
                 {
-                    std::wstring error_message;
-
-                    format( error_message, L"Character %zu is illegal in EncName of \"%s\" (Rule 81).", loop_index + 1, value );
+                    std::wstring error_message(WSTRING_VIEW(L"Character "));
+                    error_message.append(std::to_wstring(loop_index + 1));
+                    error_message.append(WSTRING_VIEW(L" is illegal in EncName of \""));
+                    error_message.append(value);
+                    error_message.append(WSTRING_VIEW(L"\" (Rule 81)."));
 
                     m_ReportParsingError(error_message);
                     return( false );
@@ -4145,7 +4151,7 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageElement::m_
             location_of_delimiter = string_to_parse.find( '\'' );
         }
 
-        if ( location_of_delimiter == std::wstring::npos )
+        if ( location_of_delimiter == string_to_parse.npos )
         {
             m_ReportParsingError(WSTRING_VIEW(L"SDDecl missing matching delimiter (Rule 32)."));
             return( false );
@@ -4214,7 +4220,7 @@ void Win32FoundationClasses::CExtensibleMarkupLanguageElement::m_ResolveEntities
         return;
     }
 
-    if ( encoded_entity_string.find( '&' ) == std::wstring::npos )
+    if ( encoded_entity_string.find( '&' ) == encoded_entity_string.npos )
     {
         // YIPPEE!! There aren't any entities to decode
         return;
@@ -4229,7 +4235,7 @@ void Win32FoundationClasses::CExtensibleMarkupLanguageElement::m_ResolveEntities
 
     auto location = temp_string.find( '&' );
 
-    while( location not_eq std::wstring::npos )
+    while( location not_eq temp_string.npos )
     {
         // We found the beginning of an entity (hopefully)
         translated_string.append( temp_string.substr( 0, location ) );
@@ -4238,7 +4244,7 @@ void Win32FoundationClasses::CExtensibleMarkupLanguageElement::m_ResolveEntities
 
         location = temp_string.find( ';' );
 
-        if ( location == std::wstring::npos )
+        if ( location == temp_string.npos )
         {
             //WFCTRACEVAL( TEXT( "Found the beginning of an entity but not the end in: " ), encoded_entity_string );
             return;
@@ -4900,9 +4906,11 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageElement::Pa
                                     //WFCTRACE( TEXT( "That means we have overlapping tags!" ) );
 
                                     // Error message added by Mats, 1998-08-17
-                                    std::wstring error_text;
-
-                                    format( error_text, L"Overlapping tags detected. Found \"%s\" but needed to find \"%s\".", tag_string, m_Tag);
+                                    std::wstring error_text(WSTRING_VIEW(L"Overlapping tags detected. Found \""));
+                                    error_text.append(tag_string);
+                                    error_text.append(WSTRING_VIEW(L"\" but needed to find \""));
+                                    error_text.append(m_Tag);
+                                    error_text.append(WSTRING_VIEW(L"\"."));
 
                                     m_ReportParsingError( error_text );
 
@@ -4981,13 +4989,13 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageElement::Pa
 
                                             auto location_of_ampersand = sub_element_p->m_Contents.find( '&' );
 
-                                            while( location_of_ampersand not_eq std::wstring::npos)
+                                            while( location_of_ampersand not_eq sub_element_p->m_Contents.npos)
                                             {
                                                 // There's an ampersand in there, now let's validate it
 
                                                 std::size_t location_of_semicolon = sub_element_p->m_Contents.find( ';', location_of_ampersand + 1 );
 
-                                                if ( location_of_semicolon == std::wstring::npos )
+                                                if ( location_of_semicolon == sub_element_p->m_Contents.npos )
                                                 {
                                                     m_ReportParsingError(WSTRING_VIEW(L"Ill-formed entity reference in text section (Rule 68)."));
                                                     return( false );
@@ -5198,7 +5206,7 @@ void Win32FoundationClasses::CExtensibleMarkupLanguageElement::WriteTo( _Inout_ 
 
         auto location_of_string = temp_string.find(WSTRING_VIEW(L"]]>"));
 
-        while( location_of_string not_eq std::wstring::npos )
+        while( location_of_string not_eq temp_string.npos )
         {
             // There's sections that need escaping
 
