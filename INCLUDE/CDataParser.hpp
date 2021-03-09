@@ -2000,7 +2000,7 @@ public:
 
 #endif // UNICODE
 
-                if (byte_array.size() >= termination_characters_length)
+                if (byte_array.size() >= (termination_characters_length * sizeof(wchar_t)))
                 {
                     auto const address = byte_array.data();
                     uint8_t const * address_to_compare = &address[byte_array.size() - (termination_characters_length * sizeof(wchar_t))];
