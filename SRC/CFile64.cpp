@@ -344,11 +344,6 @@ Win32FoundationClasses::CFile64::~CFile64()
         Close();
     }
 
-    if (m_AtomicReadHandle not_eq INVALID_HANDLE_VALUE)
-    {
-        wfc_close_handle(m_AtomicReadHandle);
-    }
-
     m_Uninitialize();
 
     m_SecurityAttributes_p = nullptr;
@@ -1123,11 +1118,6 @@ void Win32FoundationClasses::CFile64::m_Initialize( void ) noexcept
     m_SecurityAttributes_p->nLength              = sizeof( SECURITY_ATTRIBUTES );
     m_SecurityAttributes_p->lpSecurityDescriptor = m_SecurityDescriptor_p;
     m_SecurityAttributes_p->bInheritHandle       = TRUE;
-
-    if (m_AtomicReadHandle == INVALID_HANDLE_VALUE)
-    {
-        m_AtomicReadHandle = AUTO_RESET_EVENT();
-    }
 }
 
 /*
@@ -1527,7 +1517,7 @@ _Check_return_ uint32_t Win32FoundationClasses::CFile64::Read( __out_bcount( num
     return( number_of_bytes_read );
 }
 
-_Check_return_ uint32_t Win32FoundationClasses::CFile64::AtomicRead( _In_ uint64_t const file_offset, __out_bcount( number_of_bytes_to_read ) void * buffer, _In_ uint32_t const number_of_bytes_to_read ) const noexcept
+_Check_return_ uint32_t Win32FoundationClasses::CFile64::AtomicRead( _In_ HANDLE manual_reset_event_handle, _In_ uint64_t const file_offset, __out_bcount( number_of_bytes_to_read ) void * buffer, _In_ uint32_t const number_of_bytes_to_read ) const noexcept
 {
     //WFCTRACEVAL( TEXT( "Reading " ), number_of_bytes_to_read );
     WFC_VALIDATE_POINTER( this );
@@ -1548,12 +1538,10 @@ _Check_return_ uint32_t Win32FoundationClasses::CFile64::AtomicRead( _In_ uint64
     // 2021-03-23 SRB - Another bad day. Raymond Chen describes why, after 20 years, this no longer works.
     // https://devblogs.microsoft.com/oldnewthing/20121012-00/?p=6343
 
-    _ASSERTE(m_AtomicReadHandle not_eq INVALID_HANDLE_VALUE);
-
     OVERLAPPED overlapped;
 
     overlapped.Pointer      = reinterpret_cast<PVOID>(file_offset);
-    overlapped.hEvent       = m_AtomicReadHandle;
+    overlapped.hEvent       = manual_reset_event_handle;
     overlapped.Internal     = 0;
     overlapped.InternalHigh = 0;
 
@@ -1566,11 +1554,13 @@ _Check_return_ uint32_t Win32FoundationClasses::CFile64::AtomicRead( _In_ uint64
         if (last_error == ERROR_IO_PENDING)
         {
             // Wait until our IO completes
-            uint32_t const wait_result = ::WaitForSingleObject(overlapped.hEvent, 1000 * 60 * 5); // Five minutes
-
-            if (wait_result not_eq WAIT_OBJECT_0)
+            if ( ::GetOverlappedResult(m_FileHandle, &overlapped, &number_of_bytes_read, TRUE ) == FALSE )
             {
                 return(0);
+            }
+            else
+            {
+                const_cast<Win32FoundationClasses::CFile64 *>(this)->m_AtomicWaitSucceeded = true;
             }
         }
         else
@@ -1582,7 +1572,7 @@ _Check_return_ uint32_t Win32FoundationClasses::CFile64::AtomicRead( _In_ uint64
     return( number_of_bytes_read );
 }
 
-_Check_return_ uint32_t Win32FoundationClasses::CFile64::AtomicWrite(_In_ uint64_t const file_offset, __in_bcount(number_of_bytes_to_write) void const * buffer, _In_ uint32_t const number_of_bytes_to_write) const noexcept
+_Check_return_ uint32_t Win32FoundationClasses::CFile64::AtomicWrite(_In_ HANDLE manual_reset_event_handle, _In_ uint64_t const file_offset, __in_bcount(number_of_bytes_to_write) void const * buffer, _In_ uint32_t const number_of_bytes_to_write) const noexcept
 {
     WFC_VALIDATE_POINTER(this);
     WFC_VALIDATE_POINTER_NULL_OK(buffer);
@@ -1605,20 +1595,32 @@ _Check_return_ uint32_t Win32FoundationClasses::CFile64::AtomicWrite(_In_ uint64
     // Use the Union magic to set the file offset to read in a single assignment rather than convert to ULARGE_INTEGER.
 
     overlapped.Pointer = (PVOID)file_offset;
-    overlapped.hEvent = static_cast< HANDLE >(NULL);
+    overlapped.hEvent = manual_reset_event_handle;
     overlapped.Internal = 0;
     overlapped.InternalHigh = 0;
 
-    DWORD number_of_bytes_read = 0;
+    DWORD number_of_bytes_written = 0;
 
     // Unfortunately, atomic writes don't work. They reset the file pointer to the offset
     // after the last byte of the write. DOH! Halfway useful...
     uint64_t const current_file_position = GetPosition();
 
-    if (::WriteFile(m_FileHandle, buffer, (DWORD) number_of_bytes_to_write, &number_of_bytes_read, &overlapped) == FALSE)
+    if (::WriteFile(m_FileHandle, buffer, (DWORD) number_of_bytes_to_write, &number_of_bytes_written, &overlapped) == FALSE)
     {
-        //m_LastError = ::GetLastError();
-        //WFCTRACEERROR( ::GetLastError() );
+        uint32_t const last_error = ::GetLastError();
+
+        if (last_error == ERROR_IO_PENDING)
+        {
+            // Wait until our IO completes
+            if (::GetOverlappedResult(m_FileHandle, &overlapped, &number_of_bytes_written, TRUE) == FALSE)
+            {
+                return(0);
+            }
+        }
+        else
+        {
+            return(0);
+        }
     }
 
     LARGE_INTEGER return_value = { 0, 0 };
@@ -1628,7 +1630,7 @@ _Check_return_ uint32_t Win32FoundationClasses::CFile64::AtomicWrite(_In_ uint64
 
     ::SetFilePointerEx(m_FileHandle, distance_to_move, &return_value, FILE_BEGIN);
 
-    return(number_of_bytes_read);
+    return(number_of_bytes_written);
 }
 
 _Check_return_ uint32_t Win32FoundationClasses::CFile64::ReadHuge( __out_bcount( number_of_bytes_to_read ) void * buffer, _In_ uint32_t const number_of_bytes_to_read ) noexcept
@@ -1854,7 +1856,7 @@ void Win32FoundationClasses::CFile64::UnlockRange( _In_ uint64_t const position,
     }
 }
 
-_Check_return_ bool Win32FoundationClasses::CFile64::ProcessContent( _In_ std::size_t const step_size, _Inout_ Win32FoundationClasses::PROCESS_BUFFER_CALLBACK function_to_call, __inout_opt void * callback_context ) const noexcept
+_Check_return_ bool Win32FoundationClasses::CFile64::ProcessContent(_In_ HANDLE manual_reset_event_handle, _In_ std::size_t const step_size, _Inout_ Win32FoundationClasses::PROCESS_BUFFER_CALLBACK function_to_call, __inout_opt void * callback_context ) const noexcept
 {
     if ( function_to_call == nullptr )
     {
@@ -1888,7 +1890,7 @@ _Check_return_ bool Win32FoundationClasses::CFile64::ProcessContent( _In_ std::s
         }
 
         // Now read the data.
-        if ( AtomicRead( static_cast<uint64_t const>(number_of_bytes_processed), (void *) buffer, (uint32_t const) number_of_bytes_to_process_in_this_call ) not_eq number_of_bytes_to_process_in_this_call)
+        if ( AtomicRead(manual_reset_event_handle, static_cast<uint64_t const>(number_of_bytes_processed), (void *) buffer, (uint32_t const) number_of_bytes_to_process_in_this_call ) not_eq number_of_bytes_to_process_in_this_call)
         {
             _aligned_free( buffer );
             return( false );

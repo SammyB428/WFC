@@ -92,7 +92,6 @@ class CFile64
 
        HANDLE m_FileHandle{ INVALID_HANDLE_VALUE };
        HANDLE m_TemplateFile{ INVALID_HANDLE_VALUE };
-       HANDLE m_AtomicReadHandle{ INVALID_HANDLE_VALUE };
 
        std::filesystem::path m_PathName;
        std::filesystem::path m_FileName;
@@ -102,6 +101,7 @@ class CFile64
        uint32_t m_Attributes{ 0 };
 
        bool m_CloseOnDelete{ true };
+       bool m_AtomicWaitSucceeded{ false };
 
 #if ! defined( WFC_STL )
 
@@ -212,8 +212,9 @@ class CFile64
       virtual _Check_return_ bool                  LockRange(_In_ uint64_t const position, _In_ uint64_t const number_of_bytes_to_lock ) noexcept;
       virtual _Check_return_ bool                  Open(_In_ std::filesystem::path const& filename, _In_ UINT const open_flags ) noexcept;
 
-      _Check_return_ uint32_t AtomicRead(_In_ uint64_t const file_offset, __out_bcount( number_of_bytes_to_read ) void * buffer, _In_ uint32_t const number_of_bytes_to_read ) const noexcept;
-      _Check_return_ uint32_t AtomicWrite(_In_ uint64_t const file_offset, __in_bcount(number_of_bytes_to_write) void const * buffer, _In_ uint32_t const number_of_bytes_to_write) const noexcept;
+      _Check_return_ inline bool AtomicWaitSucceeded(void) const noexcept { return(m_AtomicWaitSucceeded); };
+      _Check_return_ uint32_t AtomicRead(_In_ HANDLE manual_reset_event_handle, _In_ uint64_t const file_offset, __out_bcount( number_of_bytes_to_read ) void * buffer, _In_ uint32_t const number_of_bytes_to_read ) const noexcept;
+      _Check_return_ uint32_t AtomicWrite(_In_ HANDLE manual_reset_event_handle, _In_ uint64_t const file_offset, __in_bcount(number_of_bytes_to_write) void const * buffer, _In_ uint32_t const number_of_bytes_to_write) const noexcept;
 
       virtual _Check_return_ uint32_t Read( __out_bcount( number_of_bytes_to_read ) void * buffer, _In_ uint32_t const number_of_bytes_to_read ) noexcept;
       virtual _Check_return_ uint32_t ReadHuge( __out_bcount( number_of_bytes_to_read ) void * buffer, _In_ uint32_t const number_of_bytes_to_read ) noexcept;
@@ -246,7 +247,7 @@ class CFile64
           return(m_LastError);
       }
 
-      virtual _Check_return_ bool     ProcessContent( _In_ std::size_t const step_size, __inout PROCESS_BUFFER_CALLBACK function_to_call, __inout_opt void * callback_context ) const noexcept;
+      virtual _Check_return_ bool     ProcessContent(_In_ HANDLE manual_reset_event_handle, _In_ std::size_t const step_size, __inout PROCESS_BUFFER_CALLBACK function_to_call, __inout_opt void * callback_context ) const noexcept;
       virtual void                    RegisterSafeWrite( __inout void * context, __callback SAFE_WRITE_CALLBACK callback ) noexcept;
       virtual _Check_return_ uint64_t Seek( _In_ int64_t const offset, _In_ CFile64::SeekPosition const from ) noexcept;
       virtual void                    SeekToBegin( void ) noexcept;
