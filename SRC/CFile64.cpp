@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 1995-2020, Samuel R. Blackburn
+** Copyright, 1995-2021, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -342,6 +342,11 @@ Win32FoundationClasses::CFile64::~CFile64()
     if ( m_FileHandle not_eq static_cast< HANDLE >( INVALID_HANDLE_VALUE ) and m_CloseOnDelete == true)
     {
         Close();
+    }
+
+    if (m_AtomicReadHandle not_eq INVALID_HANDLE_VALUE)
+    {
+        wfc_close_handle(m_AtomicReadHandle);
     }
 
     m_Uninitialize();
@@ -1100,24 +1105,29 @@ void Win32FoundationClasses::CFile64::m_Initialize( void ) noexcept
     }
     WFC_END_CATCH_ALL
 
-        if ( m_SecurityAttributes_p == nullptr )
-        {
-            return;
-        }
+    if ( m_SecurityAttributes_p == nullptr )
+    {
+        return;
+    }
 
-        m_SecurityDescriptor_p = Win32FoundationClasses::wfc_create_null_dacl();
+    m_SecurityDescriptor_p = Win32FoundationClasses::wfc_create_null_dacl();
 
-        if ( m_SecurityDescriptor_p == nullptr )
-        {
-            delete m_SecurityAttributes_p;
-            m_SecurityAttributes_p = nullptr;
+    if ( m_SecurityDescriptor_p == nullptr )
+    {
+        delete m_SecurityAttributes_p;
+        m_SecurityAttributes_p = nullptr;
 
-            return;
-        }
+        return;
+    }
 
-        m_SecurityAttributes_p->nLength              = sizeof( SECURITY_ATTRIBUTES );
-        m_SecurityAttributes_p->lpSecurityDescriptor = m_SecurityDescriptor_p;
-        m_SecurityAttributes_p->bInheritHandle       = TRUE;
+    m_SecurityAttributes_p->nLength              = sizeof( SECURITY_ATTRIBUTES );
+    m_SecurityAttributes_p->lpSecurityDescriptor = m_SecurityDescriptor_p;
+    m_SecurityAttributes_p->bInheritHandle       = TRUE;
+
+    if (m_AtomicReadHandle == INVALID_HANDLE_VALUE)
+    {
+        m_AtomicReadHandle = AUTO_RESET_EVENT();
+    }
 }
 
 /*
@@ -1523,13 +1533,6 @@ _Check_return_ uint32_t Win32FoundationClasses::CFile64::AtomicRead( _In_ uint64
     WFC_VALIDATE_POINTER( this );
     WFC_VALIDATE_POINTER_NULL_OK( buffer );
 
-#if defined( _DEBUG )
-    if ( number_of_bytes_to_read == 1 )
-    {
-        WFC_COVERAGE( 29 );
-    }
-#endif // _DEBUG
-
     if ( number_of_bytes_to_read < 1 )
     {
         ::SetLastError(ERROR_SUCCESS);
@@ -1542,11 +1545,15 @@ _Check_return_ uint32_t Win32FoundationClasses::CFile64::AtomicRead( _In_ uint64
         return( 0 );
     }
 
+    // 2021-03-23 SRB - Another bad day. Raymond Chen describes why, after 20 years, this no longer works.
+    // https://devblogs.microsoft.com/oldnewthing/20121012-00/?p=6343
+
+    _ASSERTE(m_AtomicReadHandle not_eq INVALID_HANDLE_VALUE);
+
     OVERLAPPED overlapped;
-    // Use the Union magic to set the file offset to read in a single assignment rather than convert to ULARGE_INTEGER.
 
     overlapped.Pointer      = reinterpret_cast<PVOID>(file_offset);
-    overlapped.hEvent       = static_cast< HANDLE >( NULL );
+    overlapped.hEvent       = m_AtomicReadHandle;
     overlapped.Internal     = 0;
     overlapped.InternalHigh = 0;
 
@@ -1554,18 +1561,23 @@ _Check_return_ uint32_t Win32FoundationClasses::CFile64::AtomicRead( _In_ uint64
 
     if ( ::ReadFile( m_FileHandle, buffer, number_of_bytes_to_read, &number_of_bytes_read, &overlapped ) == FALSE )
     {
-#if defined( _DEBUG )
-        uint32_t last_error = ::GetLastError();
+        uint32_t const last_error = ::GetLastError();
 
-        LARGE_INTEGER file_size{ 0, 0 };
+        if (last_error == ERROR_IO_PENDING)
+        {
+            // Wait until our IO completes
+            uint32_t const wait_result = ::WaitForSingleObject(overlapped.hEvent, 1000 * 60 * 5); // Five minutes
 
-        _ASSERTE(::GetFileSizeEx(m_FileHandle, &file_size) not_eq 0);
-        _ASSERTE((LONGLONG)(file_offset + number_of_bytes_to_read) <= file_size.QuadPart);
-#endif
-        //_ASSERT_EXPR(FALSE, _CRT_WIDE("ReadFile returned FALSE"));
+            if (wait_result not_eq WAIT_OBJECT_0)
+            {
+                return(0);
+            }
+        }
+        else
+        {
+            return(0);
+        }
     }
-
-    //_ASSERTE(number_of_bytes_read > 0);
 
     return( number_of_bytes_read );
 }

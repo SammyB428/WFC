@@ -92,6 +92,7 @@ class CFile64
 
        HANDLE m_FileHandle{ INVALID_HANDLE_VALUE };
        HANDLE m_TemplateFile{ INVALID_HANDLE_VALUE };
+       HANDLE m_AtomicReadHandle{ INVALID_HANDLE_VALUE };
 
        std::filesystem::path m_PathName;
        std::filesystem::path m_FileName;
