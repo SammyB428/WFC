@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 1995-2019, Samuel R. Blackburn
+** Copyright, 1995-2022, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -273,7 +273,7 @@ void Win32FoundationClasses::CServer::m_Get_102_Data( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
-   LPBYTE buffer = nullptr;
+   LPBYTE buffer{ nullptr };
 
    /*
    ** One of the children got loose in the header files again...
@@ -291,7 +291,7 @@ void Win32FoundationClasses::CServer::m_Get_102_Data( void ) noexcept
 
    if ( buffer not_eq nullptr )
    {
-      auto information_p = (SERVER_INFO_102 *) buffer;
+       auto information_p{ reinterpret_cast<SERVER_INFO_102 *>(buffer) };
 
       m_MachineName.assign( information_p->sv102_name == nullptr ? L"" : information_p->sv102_name );
       m_UserPath.assign( information_p->sv102_userpath == nullptr ? L"" : information_p->sv102_userpath );
@@ -310,7 +310,7 @@ void Win32FoundationClasses::CServer::m_Get_503_Data( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
-   LPBYTE buffer = nullptr;
+   LPBYTE buffer{ nullptr };
 
    /*
    ** One of the children got loose in the header files again...
@@ -325,7 +325,7 @@ void Win32FoundationClasses::CServer::m_Get_503_Data( void ) noexcept
 
    if ( buffer not_eq nullptr )
    {
-      auto information_p = (SERVER_INFO_503 *) buffer;
+      auto information_p{ reinterpret_cast<SERVER_INFO_503 *>(buffer) };
 
       /*
       ** Now store the info we want...
@@ -342,7 +342,7 @@ void Win32FoundationClasses::CServer::m_Get_599_Data( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
-   LPBYTE buffer = (LPBYTE) nullptr;
+   LPBYTE buffer{ nullptr };
 
    /*
    ** One of the children got loose in the header files again...
@@ -357,7 +357,7 @@ void Win32FoundationClasses::CServer::m_Get_599_Data( void ) noexcept
 
    if ( buffer not_eq nullptr )
    {
-      auto information_p = (SERVER_INFO_599 *) buffer;
+      auto information_p{ reinterpret_cast<SERVER_INFO_599 *>(buffer) };
 
       if ( information_p->sv599_domain == nullptr )
       {

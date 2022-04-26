@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 1995-2019, Samuel R. Blackburn
+** Copyright, 1995-2022, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -76,7 +76,7 @@ _Check_return_ bool Win32FoundationClasses::CNetwork::AbortShutdown( void ) noex
 {
    WFC_VALIDATE_POINTER( this );
 
-   auto token_handle = static_cast< HANDLE >( NULL );
+   auto token_handle{ static_cast<HANDLE>(NULL) };
 
    if ( ::OpenProcessToken( ::GetCurrentProcess(), TOKEN_ADJUST_PRIVILEGES bitor TOKEN_QUERY, &token_handle ) == FALSE )
    {
@@ -90,7 +90,7 @@ _Check_return_ bool Win32FoundationClasses::CNetwork::AbortShutdown( void ) noex
 
    ::ZeroMemory( &token_privileges, sizeof( token_privileges ) );
 
-   LPCSTR machine_name = nullptr;
+   LPCSTR machine_name{ nullptr };
 
    // Check to see if we've opened ourselves...
 
@@ -98,7 +98,7 @@ _Check_return_ bool Win32FoundationClasses::CNetwork::AbortShutdown( void ) noex
 
    ::ZeroMemory( this_machine_name, sizeof( this_machine_name ) );
 
-   DWORD temp_dword = 1024;
+   DWORD temp_dword{ 1024 };
 
    if ( ::GetComputerNameEx(COMPUTER_NAME_FORMAT::ComputerNameDnsHostname, this_machine_name, &temp_dword ) == FALSE )
    {
@@ -155,7 +155,7 @@ _Check_return_ bool Win32FoundationClasses::CNetwork::AbortShutdown( void ) noex
       return(false);
    }
 
-   (void) Win32FoundationClasses::wfc_close_handle( token_handle );
+   std::ignore = Win32FoundationClasses::wfc_close_handle( token_handle );
 
    if ( machine_name not_eq nullptr )
    {
@@ -241,7 +241,7 @@ _Check_return_ bool Win32FoundationClasses::CNetwork::EnumeratePorts( void ) noe
 
    // First, we call EnumPorts to find out how big our buffer needs to be...
 
-   DWORD number_of_bytes_needed = 0;
+   DWORD number_of_bytes_needed{ 0 };
 
    BYTE pseudo_buffer[10]{ 0 };
 
@@ -253,12 +253,12 @@ _Check_return_ bool Win32FoundationClasses::CNetwork::EnumeratePorts( void ) noe
 
    wcscpy_s( machine_name, std::size( machine_name ), m_WideDoubleBackslashPreceededMachineName.get() );
 
-   auto result = ::EnumPortsW( machine_name,
-                               1,
-                               pseudo_buffer,
-                               sizeof( pseudo_buffer ),
-                              &number_of_bytes_needed,
-                              &m_NumberOfPorts );
+   auto result{ ::EnumPortsW(machine_name,
+                             1,
+                             pseudo_buffer,
+                             sizeof(pseudo_buffer),
+                            &number_of_bytes_needed,
+                            &m_NumberOfPorts) };
 
    m_ErrorCode = ::GetLastError();
 
@@ -317,7 +317,7 @@ _Check_return_ bool Win32FoundationClasses::CNetwork::GetNext( _Inout_ Win32Foun
 
    if ( m_PortNumber < m_NumberOfPorts )
    {
-      auto port_p = reinterpret_cast<PORT_INFO_1 *>(m_PortBuffer.get());
+       auto port_p{ reinterpret_cast<PORT_INFO_1*>(m_PortBuffer.get()) };
 
       port.Copy( &port_p[ m_PortNumber ] );
       m_PortNumber++;
@@ -350,7 +350,7 @@ _Check_return_ bool Win32FoundationClasses::CNetwork::GetTime(_Inout_ Win32Found
 {
    WFC_VALIDATE_POINTER( this );
 
-   TIME_OF_DAY_INFO * time_of_day = nullptr;
+   TIME_OF_DAY_INFO* time_of_day{ nullptr };
 
    if ( ::NetRemoteTOD( m_WideMachineName.get(), reinterpret_cast<LPBYTE *>(&time_of_day) ) == NERR_Success )
    {
@@ -370,7 +370,7 @@ _Check_return_ bool Win32FoundationClasses::CNetwork::GetTime(__inout Win32Found
 {
    WFC_VALIDATE_POINTER( this );
 
-   TIME_OF_DAY_INFO * time_of_day = nullptr;
+   TIME_OF_DAY_INFO* time_of_day{ nullptr };
 
    if ( ::NetRemoteTOD( m_WideMachineName.get(), reinterpret_cast<LPBYTE *>(&time_of_day) ) == NERR_Success )
    {
@@ -390,7 +390,7 @@ _Check_return_ bool Win32FoundationClasses::CNetwork::IsRebootable( void ) noexc
 {
    WFC_VALIDATE_POINTER( this );
 
-   auto token_handle = static_cast< HANDLE >( NULL );
+   auto token_handle{ static_cast<HANDLE>(NULL) };
 
    if ( ::OpenProcessToken( ::GetCurrentProcess(), TOKEN_ADJUST_PRIVILEGES bitor TOKEN_QUERY, &token_handle ) == FALSE )
    {
@@ -403,7 +403,7 @@ _Check_return_ bool Win32FoundationClasses::CNetwork::IsRebootable( void ) noexc
 
    ::ZeroMemory( &token_privileges, sizeof( token_privileges ) );
 
-   LPCSTR machine_name = nullptr;
+   LPCSTR machine_name{ nullptr };
 
    // Check to see if we've opened ourselves...
 
@@ -411,7 +411,7 @@ _Check_return_ bool Win32FoundationClasses::CNetwork::IsRebootable( void ) noexc
 
    ::ZeroMemory( this_machine_name, sizeof( this_machine_name ) );
 
-   DWORD temp_dword = 1024;
+   DWORD temp_dword{ 1024 };
 
    if ( ::GetComputerNameEx(COMPUTER_NAME_FORMAT::ComputerNameDnsHostname, this_machine_name, &temp_dword ) == FALSE )
    {
@@ -501,7 +501,7 @@ void Win32FoundationClasses::CNetwork::Open( _In_ std::wstring_view machine_name
          // for finding a bug here. I was not correctly counting
          // the number of bytes needed for a buffer.
 
-         int additional_characters = 1; // For the 0x00 at the end
+         int additional_characters{ 1 }; // For the 0x00 at the end
 
          std::wstring temporary_machine_name( machine_name );
 
@@ -526,7 +526,7 @@ void Win32FoundationClasses::CNetwork::Open( _In_ std::wstring_view machine_name
 
          m_FriendlyMachineName.assign( temporary_machine_name );
 
-         std::size_t const number_of_characters_in_wide_machine_name = temporary_machine_name.length() + additional_characters + 1;
+         auto const number_of_characters_in_wide_machine_name{ temporary_machine_name.length() + additional_characters + 1 };
 
          m_WideMachineName = std::make_unique<wchar_t[]>(number_of_characters_in_wide_machine_name);
 
@@ -546,7 +546,7 @@ void Win32FoundationClasses::CNetwork::Open( _In_ std::wstring_view machine_name
          temporary_machine_name.assign(WSTRING_VIEW(L"\\\\"));
          temporary_machine_name.append( m_FriendlyMachineName );
 
-         std::size_t const number_of_characters_in_m_WideDoubleBackslashPreceededMachineName = temporary_machine_name.length() + 1;
+         auto const number_of_characters_in_m_WideDoubleBackslashPreceededMachineName{ temporary_machine_name.length() + 1 };
 
          m_WideDoubleBackslashPreceededMachineName = std::make_unique<wchar_t[]>(number_of_characters_in_m_WideDoubleBackslashPreceededMachineName);
 
@@ -567,7 +567,7 @@ void Win32FoundationClasses::CNetwork::Open( _In_ std::wstring_view machine_name
 
          wchar_t this_machine_name[MAX_COMPUTERNAME_LENGTH + 1]{ 0 };
 
-         DWORD string_size = MAX_COMPUTERNAME_LENGTH + 1;
+         DWORD string_size{ MAX_COMPUTERNAME_LENGTH + 1 };
 
          ZeroMemory( this_machine_name, sizeof( this_machine_name ) );
 
@@ -575,7 +575,7 @@ void Win32FoundationClasses::CNetwork::Open( _In_ std::wstring_view machine_name
          {
             // CRAP! The computer name is too long.
 
-            auto new_string = std::make_unique<wchar_t []>(string_size + 1);
+             auto new_string{ std::make_unique<wchar_t[]>(string_size + 1) };
 
             string_size++;
 
@@ -605,7 +605,7 @@ _Check_return_ bool Win32FoundationClasses::CNetwork::SetPrivilege( __in_z LPCTS
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( privilege_name );
 
-   auto token_handle = static_cast< HANDLE >( NULL );
+   auto token_handle{ static_cast<HANDLE>(NULL) };
 
    // We were passed a pointer, don't trust it
 
@@ -633,7 +633,7 @@ _Check_return_ bool Win32FoundationClasses::CNetwork::SetPrivilege( __in_z LPCTS
          m_ErrorCode = ::GetLastError();
          //WFCTRACE( TEXT( "Can't LookupPrivilegeValue for remote machine" ) );
          //WFCTRACEERROR( m_ErrorCode );
-         (void) Win32FoundationClasses::wfc_close_handle( token_handle );
+         std::ignore = Win32FoundationClasses::wfc_close_handle( token_handle );
          token_handle = static_cast< HANDLE >( NULL );
          return( false );
       }
@@ -642,7 +642,7 @@ _Check_return_ bool Win32FoundationClasses::CNetwork::SetPrivilege( __in_z LPCTS
       token_privileges.Privileges[ 0 ].Luid       = locally_unique_identifier;
       token_privileges.Privileges[ 0 ].Attributes = 0;
 
-      DWORD sizeof_previous_token_privileges = sizeof( previous_token_privileges );
+      DWORD sizeof_previous_token_privileges{ sizeof(previous_token_privileges) };
 
       if ( ::AdjustTokenPrivileges( token_handle,
                                     FALSE,
@@ -654,7 +654,7 @@ _Check_return_ bool Win32FoundationClasses::CNetwork::SetPrivilege( __in_z LPCTS
          m_ErrorCode = ::GetLastError();
          //WFCTRACE( TEXT( "Can't AdjustTokenPrivileges" ) );
          //WFCTRACEERROR( m_ErrorCode );
-         (void) Win32FoundationClasses::wfc_close_handle( token_handle );
+         std::ignore = Win32FoundationClasses::wfc_close_handle( token_handle );
          token_handle = static_cast< HANDLE >( NULL );
          return( false );
       }
@@ -681,14 +681,14 @@ _Check_return_ bool Win32FoundationClasses::CNetwork::SetPrivilege( __in_z LPCTS
          m_ErrorCode = ::GetLastError();
          //WFCTRACE( TEXT( "Can't AdjustTokenPrivileges for the second time" ) );
          //WFCTRACEERROR( m_ErrorCode );
-         (void) Win32FoundationClasses::wfc_close_handle( token_handle );
+         std::ignore = Win32FoundationClasses::wfc_close_handle( token_handle );
          token_handle = static_cast< HANDLE >( NULL );
          return( false );
       }
 
       // YIPPEE! We succeeded!
 
-      (void) Win32FoundationClasses::wfc_close_handle( token_handle );
+      std::ignore = Win32FoundationClasses::wfc_close_handle( token_handle );
       token_handle = static_cast< HANDLE >( NULL );
 
       return( true );
@@ -706,7 +706,7 @@ _Check_return_ bool Win32FoundationClasses::CNetwork::Shutdown( _In_ bool const 
 {
    WFC_VALIDATE_POINTER( this );
 
-   auto token_handle = static_cast< HANDLE >( NULL );
+   auto token_handle{ static_cast<HANDLE>(NULL) };
 
    if ( ::OpenProcessToken( ::GetCurrentProcess(), TOKEN_ADJUST_PRIVILEGES bitor TOKEN_QUERY, &token_handle ) == FALSE )
    {
@@ -723,7 +723,7 @@ _Check_return_ bool Win32FoundationClasses::CNetwork::Shutdown( _In_ bool const 
    // Thanks go to Karl Spaelti (karl.spaelti@qps.ch) for finding a bug
    // here. machine_name was a LPCSTR when it should have been LPCTSTR.
 
-   LPCTSTR machine_name = nullptr;
+   LPCTSTR machine_name{ nullptr };
 
    // Check to see if we've opened ourselves...
 
@@ -731,13 +731,13 @@ _Check_return_ bool Win32FoundationClasses::CNetwork::Shutdown( _In_ bool const 
 
    ::ZeroMemory( this_machine_name, sizeof( this_machine_name ) );
 
-   DWORD temp_dword = static_cast<DWORD>(std::size(this_machine_name));
+   auto temp_dword{ static_cast<DWORD>(std::size(this_machine_name)) };
 
    if ( ::GetComputerNameEx(COMPUTER_NAME_FORMAT::ComputerNameDnsHostname, this_machine_name, &temp_dword ) == FALSE )
    {
       m_ErrorCode = ::GetLastError();
       //WFCTRACEERROR( m_ErrorCode );
-      (void) Win32FoundationClasses::wfc_close_handle( token_handle );
+      std::ignore = Win32FoundationClasses::wfc_close_handle( token_handle );
       token_handle = static_cast< HANDLE >( NULL );
       return( false );
    }
@@ -765,7 +765,7 @@ _Check_return_ bool Win32FoundationClasses::CNetwork::Shutdown( _In_ bool const 
       {
          m_ErrorCode = ::GetLastError();
          //WFCTRACEERROR( m_ErrorCode );
-         (void) Win32FoundationClasses::wfc_close_handle( token_handle );
+         std::ignore = Win32FoundationClasses::wfc_close_handle( token_handle );
          token_handle = static_cast< HANDLE >( NULL );
          return( false );
       }
@@ -778,7 +778,7 @@ _Check_return_ bool Win32FoundationClasses::CNetwork::Shutdown( _In_ bool const 
       {
          m_ErrorCode = ::GetLastError();
          //WFCTRACEERROR( m_ErrorCode );
-         (void) Win32FoundationClasses::wfc_close_handle( token_handle );
+         std::ignore = Win32FoundationClasses::wfc_close_handle( token_handle );
          token_handle = static_cast< HANDLE >( NULL );
          return( false );
       }
@@ -791,7 +791,7 @@ _Check_return_ bool Win32FoundationClasses::CNetwork::Shutdown( _In_ bool const 
    {
       m_ErrorCode = ::GetLastError();
       //WFCTRACEERROR( m_ErrorCode );
-      (void) Win32FoundationClasses::wfc_close_handle( token_handle );
+      std::ignore = Win32FoundationClasses::wfc_close_handle( token_handle );
       token_handle = static_cast< HANDLE >( NULL );
       return( false );
    }
@@ -812,7 +812,7 @@ _Check_return_ bool Win32FoundationClasses::CNetwork::Shutdown( _In_ bool const 
 
    ::ZeroMemory( message_string, sizeof( message_string ) );
 
-   LPTSTR corrected_message_parameter = nullptr;
+   LPTSTR corrected_message_parameter{ nullptr };
 
    // We were passed a pointer, don't trust it
 
@@ -839,7 +839,7 @@ _Check_return_ bool Win32FoundationClasses::CNetwork::Shutdown( _In_ bool const 
          {
             m_ErrorCode = ::GetLastError();
             //WFCTRACEERROR( m_ErrorCode );
-            (void) Win32FoundationClasses::wfc_close_handle( token_handle );
+            std::ignore = Win32FoundationClasses::wfc_close_handle( token_handle );
             token_handle = static_cast< HANDLE >( NULL );
             return( false );
          }
@@ -850,20 +850,20 @@ _Check_return_ bool Win32FoundationClasses::CNetwork::Shutdown( _In_ bool const 
          {
             m_ErrorCode = ::GetLastError();
             //WFCTRACEERROR( m_ErrorCode );
-            (void) Win32FoundationClasses::wfc_close_handle( token_handle );
+            std::ignore = Win32FoundationClasses::wfc_close_handle( token_handle );
             token_handle = static_cast< HANDLE >( NULL );
             return( false );
          }
       }
 
-      (void) Win32FoundationClasses::wfc_close_handle( token_handle );
+      std::ignore = Win32FoundationClasses::wfc_close_handle( token_handle );
       token_handle = static_cast< HANDLE >( NULL );
       return( true );
    }
    WFC_CATCH_ALL
    {
       m_ErrorCode = ERROR_EXCEPTION_IN_SERVICE;
-      (void) Win32FoundationClasses::wfc_close_handle( token_handle );
+   std::ignore = Win32FoundationClasses::wfc_close_handle( token_handle );
       token_handle = static_cast< HANDLE >( NULL );
       return( false );
    }

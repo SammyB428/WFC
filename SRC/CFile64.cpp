@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 1995-2021, Samuel R. Blackburn
+** Copyright, 1995-2022, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -55,12 +55,12 @@ static char THIS_FILE[] = __FILE__;
 
 // Helper functions
 
-static inline constexpr _Check_return_ bool __is_directory_separation_character( _In_ wchar_t const character_to_test ) noexcept
+static inline constexpr [[nodiscard]] _Check_return_ bool __is_directory_separation_character( _In_ wchar_t const character_to_test ) noexcept
 {
     return( character_to_test == '\\' or character_to_test == '/' );
 }
 
-static inline constexpr _Check_return_ bool __is_wide_directory_separation_character( _In_ wchar_t const character_to_test ) noexcept
+static inline constexpr [[nodiscard]] _Check_return_ bool __is_wide_directory_separation_character( _In_ wchar_t const character_to_test ) noexcept
 {
     return( character_to_test == L'\\' or character_to_test == L'/' );
 }
@@ -91,7 +91,7 @@ static inline _Check_return_ UINT __GetFileName( _In_z_ LPCTSTR path_name_parame
     }
 
     // otherwise copy it into the buffer provided
-    (void) lstrcpyn( title_parameter, temporary_writable_pointer, maximum_number_of_characters );
+    std::ignore = lstrcpyn( title_parameter, temporary_writable_pointer, maximum_number_of_characters );
 
     return( 0 );
 }
@@ -104,13 +104,13 @@ static inline void __GetRoot( _In_z_ wchar_t const * path_name_parameter, _Inout
 
     wchar_t root_name[ _MAX_PATH ];
 
-    wchar_t * root_pointer = root_name;
+    wchar_t* root_pointer{ root_name };
 
     ZeroMemory( root_pointer, _MAX_PATH );
 
-    (void) lstrcpynW( root_pointer, path_name_parameter, _MAX_PATH );
+    std::ignore = lstrcpynW( root_pointer, path_name_parameter, _MAX_PATH );
 
-    wchar_t * temporary_pointer = nullptr;
+    wchar_t* temporary_pointer{ nullptr };
 
     for ( temporary_pointer = root_pointer; *temporary_pointer not_eq '\0'; temporary_pointer = _wcsinc( temporary_pointer ) )
     {
@@ -183,7 +183,7 @@ static inline _Check_return_ bool __FullPath( _Out_ wchar_t * lpszPathOut, _In_z
 
     if (not GetFullPathNameW( lpszFileIn, _MAX_PATH, lpszPathOut, &lpszFilePart ) )
     {
-        (void) lstrcpyn(lpszPathOut, lpszFileIn, _MAX_PATH); // take it literally
+        std::ignore = lstrcpyn(lpszPathOut, lpszFileIn, _MAX_PATH); // take it literally
         return( false );
     }
 
@@ -277,7 +277,7 @@ void Win32FoundationClasses::CFile64::CreatePathTo(_In_ std::filesystem::path co
 
             full_directory_path.append(directory);
 
-            (void) CFileDirectory::Create(full_directory_path);
+            std::ignore = CFileDirectory::Create(full_directory_path);
         }
     }
 }
@@ -332,7 +332,7 @@ Win32FoundationClasses::CFile64::CFile64(_In_ std::filesystem::path const& filen
 
     m_Initialize();
 
-    (void) Open( filename, open_flags );
+    std::ignore = Open( filename, open_flags );
 }
 
 Win32FoundationClasses::CFile64::~CFile64()
@@ -358,7 +358,7 @@ void Win32FoundationClasses::CFile64::Abort( void ) noexcept
 
     if ( m_FileHandle not_eq static_cast< HANDLE >( INVALID_HANDLE_VALUE ) )
     {
-        (void)Win32FoundationClasses::wfc_close_handle(m_FileHandle);
+        std::ignore = Win32FoundationClasses::wfc_close_handle(m_FileHandle);
         m_FileHandle = static_cast< HANDLE >( INVALID_HANDLE_VALUE );
     }
 
@@ -374,7 +374,7 @@ void Win32FoundationClasses::CFile64::Close( void ) noexcept
 
     if ( m_FileHandle not_eq static_cast< HANDLE >( INVALID_HANDLE_VALUE ) )
     {
-        (void)Win32FoundationClasses::wfc_close_handle(m_FileHandle);
+        std::ignore = Win32FoundationClasses::wfc_close_handle(m_FileHandle);
         m_FileHandle = static_cast< HANDLE >( INVALID_HANDLE_VALUE );
     }
 
@@ -1223,7 +1223,7 @@ _Check_return_ bool Win32FoundationClasses::CFile64::Open(_In_ std::filesystem::
 
         TCHAR full_path[_MAX_PATH]{ 0 };
 
-        (void) ::__FullPath( full_path, m_FileName.c_str());
+        std::ignore = ::__FullPath( full_path, m_FileName.c_str());
 
         m_PathName.assign( full_path );
 
@@ -1231,7 +1231,7 @@ _Check_return_ bool Win32FoundationClasses::CFile64::Open(_In_ std::filesystem::
 
         open_flags and_eq compl (UINT) OpenFlags::typeBinary;
 
-        DWORD access = 0;
+        DWORD access{ 0 };
 
         switch ( open_flags bitand 3 )
         {
@@ -1295,7 +1295,7 @@ _Check_return_ bool Win32FoundationClasses::CFile64::Open(_In_ std::filesystem::
             m_SecurityAttributes_p->bInheritHandle = ( ( open_flags bitand (UINT) OpenFlags::modeNoInherit ) == 0 ) ? TRUE : FALSE;
         }
 
-        DWORD creation_flags = 0;
+        DWORD creation_flags{ 0 };
 
         if ( is_flagged(open_flags, (uint64_t) OpenFlags::modeCreate) == true )
         {
@@ -1336,6 +1336,11 @@ _Check_return_ bool Win32FoundationClasses::CFile64::Open(_In_ std::filesystem::
         if ( is_flagged( open_flags, (uint64_t) OpenFlags::wfcDeleteOnClose) == true )
         {
             m_Attributes or_eq FILE_FLAG_DELETE_ON_CLOSE;
+        }
+
+        if (is_flagged(open_flags, (uint64_t)OpenFlags::osOverlapped) == true)
+        {
+            m_Attributes or_eq FILE_FLAG_OVERLAPPED;
         }
 
         m_FileHandle = ::CreateFile(m_FileName.c_str(),
@@ -1450,7 +1455,7 @@ _Check_return_ bool Win32FoundationClasses::CFile64::Read( _Inout_ std::vector<s
 
     while( Read( string_from_file ) == true )
     {
-        (void) array.push_back( string_from_file );
+        array.push_back( string_from_file );
     }
 
     return( true );
@@ -1603,7 +1608,7 @@ _Check_return_ uint32_t Win32FoundationClasses::CFile64::AtomicWrite(_In_ HANDLE
 
     // Unfortunately, atomic writes don't work. They reset the file pointer to the offset
     // after the last byte of the write. DOH! Halfway useful...
-    uint64_t const current_file_position = GetPosition();
+    auto const current_file_position = GetPosition();
 
     if (::WriteFile(m_FileHandle, buffer, (DWORD) number_of_bytes_to_write, &number_of_bytes_written, &overlapped) == FALSE)
     {
@@ -1722,7 +1727,7 @@ _Check_return_ uint64_t Win32FoundationClasses::CFile64::Seek( _In_ int64_t cons
 void Win32FoundationClasses::CFile64::SeekToBegin( void ) noexcept
 {
     WFC_VALIDATE_POINTER( this );
-    (void) Seek( (int64_t) 0, SeekPosition::begin );
+    std::ignore = Seek( (int64_t) 0, SeekPosition::begin );
 }
 
 _Check_return_ uint64_t Win32FoundationClasses::CFile64::SeekToEnd( void ) noexcept
@@ -1735,7 +1740,7 @@ _Check_return_ bool Win32FoundationClasses::CFile64::SetEndOfFile( _In_ uint64_t
 {
     WFC_VALIDATE_POINTER( this );
 
-    (void) Seek( length, SeekPosition::begin );
+    std::ignore = Seek( length, SeekPosition::begin );
 
     _ASSERTE( GetPosition() == length );
 

@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 1995-2019, Samuel R. Blackburn
+** Copyright, 1995-2022, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -92,7 +92,7 @@ void Win32FoundationClasses::CSuperRandomNumberGenerator::Dump( CDumpContext& du
 _Check_return_ DWORD Win32FoundationClasses::CSuperRandomNumberGenerator::GetInteger( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
-   double value = GetValue();
+   double value{ GetValue() };
 
    value *= static_cast< double >( 0xFFFFFFFF );
 
@@ -101,10 +101,10 @@ _Check_return_ DWORD Win32FoundationClasses::CSuperRandomNumberGenerator::GetInt
    // do a quick and dirty hash of the bytes that make 
    // up the double value
 
-   auto buffer = reinterpret_cast<BYTE const *>( &value );
+   auto buffer{ reinterpret_cast<BYTE const*>(&value) };
 
-   DWORD hash_value = static_cast< DWORD >( value );
-   DWORD temp_value = 0;
+   DWORD hash_value{ static_cast<DWORD>(value) };
+   DWORD temp_value{ 0 };
 
    for ( auto const index : Range(sizeof( value )) )
    {
@@ -120,7 +120,7 @@ _Check_return_ DWORD Win32FoundationClasses::CSuperRandomNumberGenerator::GetInt
       hash_value and_eq compl temp_value;
    }
 
-   DWORD return_value = static_cast< DWORD >( value );
+   auto return_value{ static_cast<DWORD>(value) };
 
    return_value += ( ( hash_value >> 5 ) % 256 );
 
@@ -130,10 +130,8 @@ _Check_return_ DWORD Win32FoundationClasses::CSuperRandomNumberGenerator::GetInt
 _Check_return_ double Win32FoundationClasses::CSuperRandomNumberGenerator::GetValue( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
-   double temporary_value = 0.0;
-   double return_value    = 0.0;
 
-   temporary_value = m_Seeds[ m_Index_J24 ] - m_Seeds[ m_Index_I24 ] - m_Carry;
+   auto temporary_value = m_Seeds[ m_Index_J24 ] - m_Seeds[ m_Index_I24 ] - m_Carry;
 
    if ( temporary_value < (double) 0.0 )
    {
@@ -150,7 +148,7 @@ _Check_return_ double Win32FoundationClasses::CSuperRandomNumberGenerator::GetVa
    m_Index_I24 = m_NextValue[ m_Index_I24 ];
    m_Index_J24 = m_NextValue[ m_Index_J24 ];
 
-   return_value = temporary_value;
+   auto return_value = temporary_value;
 
    if ( temporary_value < m_TwoM12 )
    {
@@ -215,10 +213,10 @@ void Win32FoundationClasses::CSuperRandomNumberGenerator::SetSeed( _In_ DWORD js
 
    m_TwoM24 = (double) 1.0;
 
-   for( auto const i : Range( 25, StartingRangePosition(1) ) )
+   for (auto const i : Range(25, StartingRangePosition(1)))
    {
-      m_TwoM24 *= (double) 0.5;
-      int const k = jseed / 53668;
+      m_TwoM24 *= (double)0.5;
+      auto const k{ jseed / 53668 };
       jseed = 40014 * ( jseed - ( k * 53668 ) ) - ( k * 12211 );
 
       m_IntegerSeeds[ i ] = jseed % TWENTY_FOUR_BIT_VALUE;

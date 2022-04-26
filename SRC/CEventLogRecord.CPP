@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 1995-2016, Samuel R. Blackburn
+** Copyright, 1995-2022, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -79,7 +79,7 @@ _Check_return_ int Win32FoundationClasses::CEventLogRecord::Compare( _In_ Win32F
 {
    WFC_VALIDATE_POINTER( this );
 
-   int return_value = I_AM_EQUAL_TO_THAT;
+   int return_value{ I_AM_EQUAL_TO_THAT };
 
    if ( RecordNumber < source.RecordNumber )
    {
@@ -155,15 +155,15 @@ void Win32FoundationClasses::CEventLogRecord::Copy( _In_ EVENTLOGRECORD  const *
 
       // Here's where things start to get a little tricky...
 
-      BYTE * byte_p = (BYTE *) source;
-      BYTE byte_to_add = 0;
+      auto byte_p{ (BYTE*)source };
+      BYTE byte_to_add{ 0 };
 
-      DWORD here  = source->UserSidOffset;
+      DWORD here{ source->UserSidOffset };
 
       for ( auto const index : Range(source->UserSidLength) )
       {
          byte_to_add = byte_p[ here ];
-         (void) UserSID.push_back( byte_to_add );
+         UserSID.push_back( byte_to_add );
          here++;
       }
 
@@ -171,7 +171,7 @@ void Win32FoundationClasses::CEventLogRecord::Copy( _In_ EVENTLOGRECORD  const *
 
       for ( auto const index : Range(source->DataLength) )
       {
-         (void) Data.push_back( byte_p[ here ] );
+         Data.push_back( byte_p[ here ] );
          here++;
       }
 
@@ -179,7 +179,7 @@ void Win32FoundationClasses::CEventLogRecord::Copy( _In_ EVENTLOGRECORD  const *
 
       // TCHAR character = 0;
 
-      TCHAR * character_pointer = (TCHAR *) &byte_p[ here ];
+      auto character_pointer{ (TCHAR*)&byte_p[here] };
 
       // Next comes the SourceName
 
@@ -231,7 +231,7 @@ void Win32FoundationClasses::CEventLogRecord::Copy( _In_ EVENTLOGRECORD  const *
             here += sizeof(wchar_t);
          }
 
-         (void) Strings.push_back( data_string );
+         Strings.push_back( data_string );
 
          // Advance to the next string
 

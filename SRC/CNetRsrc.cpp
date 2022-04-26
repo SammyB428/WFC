@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 1995-2016, Samuel R. Blackburn
+** Copyright, 1995-2022, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -69,7 +69,7 @@ Win32FoundationClasses::CNetworkResources::~CNetworkResources()
    if ( m_ResumeHandle not_eq static_cast< HANDLE >( NULL ) )
    {
       //WFCTRACE( TEXT( "Closing Enumeration Handle" ) );
-      (void) ::WNetCloseEnum( m_ResumeHandle );
+      std::ignore = ::WNetCloseEnum( m_ResumeHandle );
       m_ResumeHandle = static_cast< HANDLE >( NULL );
    }
 
@@ -92,14 +92,14 @@ _Check_return_ bool Win32FoundationClasses::CNetworkResources::Enumerate( __inou
    if ( m_ResumeHandle not_eq static_cast< HANDLE >( NULL ) )
    {
       //WFCTRACE( TEXT( "Closing Enumeration Handle" ) );
-      (void) ::WNetCloseEnum( m_ResumeHandle );
+      std::ignore = ::WNetCloseEnum( m_ResumeHandle );
       m_ResumeHandle = static_cast< HANDLE >( NULL );
    }
 
    ::ZeroMemory( &m_NetResource, sizeof( m_NetResource ) );
    m_NetResource.dwUsage = usageContainer;
 
-   NETRESOURCE *net_resource_parameter = nullptr;
+   NETRESOURCE * net_resource_parameter{ nullptr };
 
    /*
    ** Let's see what we want to enumerate
@@ -168,8 +168,8 @@ _Check_return_ bool Win32FoundationClasses::CNetworkResources::GetNext( __inout 
 {
    WFC_VALIDATE_POINTER( this );
 
-   DWORD number_of_entries = 1;
-   DWORD size_of_buffer    = sizeof( m_NetResource );
+   DWORD number_of_entries{ 1 };
+   DWORD size_of_buffer{ sizeof(m_NetResource) };
 
    m_ErrorCode = ::WNetEnumResource( m_ResumeHandle,
                                     &number_of_entries,

@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 1995-2017, Samuel R. Blackburn
+** Copyright, 1995-2022, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -60,16 +60,16 @@ _Check_return_ bool Win32FoundationClasses::wfc_delete_oldest_file( _In_z_ const
 
     std::wstring filename;
 
-    double oldest_file_time = 0.0;
-    double this_file_time   = 0.0;
-    double high_value       = static_cast< double >( 0xFFFFFFFF );
+    double oldest_file_time{ 0.0 };
+    double this_file_time{ 0.0 };
+    double high_value{ static_cast<double>(0xFFFFFFFF) };
 
     high_value++;
 
     std::wstring mask( directory_path );
 
-    if ( mask.at( mask.length() - 1 ) not_eq '\\' and
-        mask.at( mask.length() - 1 ) not_eq '/' )
+    if ( mask.back() not_eq '\\' and
+         mask.back() not_eq '/' )
     {
         mask.push_back( '/' );
     }
@@ -80,7 +80,7 @@ _Check_return_ bool Win32FoundationClasses::wfc_delete_oldest_file( _In_z_ const
 
     ZeroMemory( &find_data, sizeof( find_data ) );
 
-    auto find_file_handle = FindFirstFileW( mask.c_str(), &find_data );
+    auto find_file_handle{ ::FindFirstFileW(mask.c_str(), &find_data) };
 
     if ( find_file_handle not_eq static_cast< HANDLE >( INVALID_HANDLE_VALUE ) )
     {
@@ -89,7 +89,7 @@ _Check_return_ bool Win32FoundationClasses::wfc_delete_oldest_file( _In_z_ const
 
         filename.assign( find_data.cFileName );
 
-        while( FindNextFileW( find_file_handle, &find_data ) not_eq FALSE )
+        while( ::FindNextFileW( find_file_handle, &find_data ) not_eq FALSE )
         {
             this_file_time  = find_data.ftLastWriteTime.dwLowDateTime;
             this_file_time += static_cast< double >( static_cast< double >( find_data.ftLastWriteTime.dwHighDateTime ) * high_value );
@@ -101,7 +101,7 @@ _Check_return_ bool Win32FoundationClasses::wfc_delete_oldest_file( _In_z_ const
             }
         }
 
-        FindClose( find_file_handle );
+        ::FindClose( find_file_handle );
     }
     else
     {
@@ -123,13 +123,13 @@ _Check_return_ bool Win32FoundationClasses::wfc_delete_oldest_file( _In_z_ const
 
 _Check_return_ uint32_t Win32FoundationClasses::wfc_number_of_files_in_directory( _In_z_ wchar_t const * directory_path ) noexcept
 {
-    uint32_t number_of_files = 0;
+    uint32_t number_of_files{ 0 };
 
     std::wstring filename;
     std::wstring mask( directory_path );
 
-    if ( mask.at( mask.length() - 1 ) not_eq '\\' and
-         mask.at( mask.length() - 1 ) not_eq '/' )
+    if ( mask.back() not_eq '\\' and
+         mask.back() not_eq '/' )
     {
         mask.push_back( '/' );
     }
@@ -140,7 +140,7 @@ _Check_return_ uint32_t Win32FoundationClasses::wfc_number_of_files_in_directory
 
     ZeroMemory( &find_data, sizeof( find_data ) );
 
-    auto find_file_handle = FindFirstFileW( mask.c_str(), &find_data );
+    auto find_file_handle{ ::FindFirstFileW(mask.c_str(), &find_data) };
 
     if ( find_file_handle not_eq static_cast< HANDLE >( INVALID_HANDLE_VALUE ) )
     {
@@ -151,7 +151,7 @@ _Check_return_ uint32_t Win32FoundationClasses::wfc_number_of_files_in_directory
             number_of_files++;
         }
 
-        while( FindNextFileW( find_file_handle, &find_data ) not_eq FALSE )
+        while( ::FindNextFileW( find_file_handle, &find_data ) not_eq FALSE )
         {
             filename.assign( find_data.cFileName );
 
@@ -161,7 +161,7 @@ _Check_return_ uint32_t Win32FoundationClasses::wfc_number_of_files_in_directory
             }
         }
 
-        (void) ::FindClose( find_file_handle );
+        std::ignore = ::FindClose( find_file_handle );
     }
 
     return( number_of_files );
@@ -169,13 +169,13 @@ _Check_return_ uint32_t Win32FoundationClasses::wfc_number_of_files_in_directory
 
 _Check_return_ uint64_t Win32FoundationClasses::wfc_number_of_bytes_in_directory( _In_z_ wchar_t const * directory_path ) noexcept
 {
-    uint64_t number_of_bytes = 0;
+    uint64_t number_of_bytes{ 0 };
 
     std::wstring filename;
     std::wstring mask( directory_path );
 
-    if ( mask.at( mask.length() - 1 ) not_eq '\\' and
-         mask.at( mask.length() - 1 ) not_eq '/' )
+    if ( mask.back() not_eq '\\' and
+         mask.back() not_eq '/' )
     {
         mask.push_back( '/' );
     }
@@ -186,7 +186,7 @@ _Check_return_ uint64_t Win32FoundationClasses::wfc_number_of_bytes_in_directory
 
     ZeroMemory( &find_data, sizeof( find_data ) );
 
-    auto find_file_handle = FindFirstFileW( mask.c_str(), &find_data );
+    auto find_file_handle{ ::FindFirstFileW(mask.c_str(), &find_data) };
 
     LARGE_INTEGER large_integer;
 
@@ -202,7 +202,7 @@ _Check_return_ uint64_t Win32FoundationClasses::wfc_number_of_bytes_in_directory
             number_of_bytes += large_integer.QuadPart;
         }
 
-        while( FindNextFileW( find_file_handle, &find_data ) not_eq FALSE )
+        while( ::FindNextFileW( find_file_handle, &find_data ) not_eq FALSE )
         {
             filename.assign( find_data.cFileName );
 
@@ -215,7 +215,7 @@ _Check_return_ uint64_t Win32FoundationClasses::wfc_number_of_bytes_in_directory
             }
         }
 
-        (void) ::FindClose( find_file_handle );
+        std::ignore = ::FindClose( find_file_handle );
     }
 
     return( number_of_bytes );

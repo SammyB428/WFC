@@ -57,18 +57,18 @@ struct WFC_RANGE
     uint32_t high{ 0 };
 };
 
-static inline constexpr _Check_return_ bool __wfc_range_check( _In_ uint32_t const value_to_test, __in_ecount( number_of_ranges ) WFC_RANGE const * range, _In_ std::size_t number_of_ranges ) noexcept
+static inline constexpr [[nodiscard]] _Check_return_ bool __wfc_range_check( _In_ uint32_t const value_to_test, __in_ecount( number_of_ranges ) WFC_RANGE const * range, _In_ std::size_t number_of_ranges ) noexcept
 {
-   int32_t bottom = 0;
-   int32_t top    = static_cast<int32_t>(number_of_ranges - 1);
+    int32_t bottom{ 0 };
+    int32_t top{ static_cast<int32_t>(number_of_ranges - 1) };
 
    while( bottom <= top )
    {
-      int32_t const half = static_cast<int32_t>(number_of_ranges >> 1); // Same as dividing by two only faster
+      auto const half{ static_cast<int32_t>(number_of_ranges >> 1) }; // Same as dividing by two only faster
 
       if ( half not_eq 0 )
       {
-         int32_t const middle = static_cast<int32_t>(bottom + ( ( number_of_ranges bitand 1 ) ? half : ( half - 1 ) ));
+         auto const middle{ static_cast<int32_t>(bottom + ((number_of_ranges bitand 1) ? half : (half - 1))) };
 
          if ( value_to_test >= range[ middle ].low and
               value_to_test <= range[ middle ].high )

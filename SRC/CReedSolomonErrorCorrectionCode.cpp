@@ -167,7 +167,7 @@ _Check_return_ SSIZE_T Win32FoundationClasses::CReedSolomonErrorCorrectionCode::
 
       while( chunk_index < chunk_length ) // Cannot be converted to a Range loop
       {
-         (void) decoded_data.push_back( chunk.at( chunk_index + 1 ) );
+         decoded_data.push_back( chunk.at( chunk_index + 1 ) );
          chunk_index++;
       }
 
@@ -203,18 +203,18 @@ _Check_return_ bool Win32FoundationClasses::CReedSolomonErrorCorrectionCode::Enc
       chunk.clear();
       parity.clear();
 
-      (void) chunk.push_back( 0 ); // Place holder for packet length
+      chunk.push_back( 0 ); // Place holder for packet length
 
       for ( auto const chunk_index : Range(222) )
       {
          if ( ( chunk_index + data_index ) < data_length )
          {
-            (void) chunk.push_back( data.at( chunk_index + data_index ) );
+            chunk.push_back( data.at( chunk_index + data_index ) );
             chunk_length++;
          }
          else
          {
-            (void) chunk.push_back( 0 ); // Filler byte
+            chunk.push_back( 0 ); // Filler byte
          }
       }
 

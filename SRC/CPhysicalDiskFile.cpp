@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 1995-2019, Samuel R. Blackburn
+** Copyright, 1995-2022, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -201,7 +201,7 @@ _Check_return_ uint64_t Win32FoundationClasses::CPhysicalDiskFile::GetLength( vo
 {
    WFC_VALIDATE_POINTER( this );
 
-   ULARGE_INTEGER total_number_of_bytes;
+   ULARGE_INTEGER total_number_of_bytes{ 0, 0 };
 
    GetLength( total_number_of_bytes );
 
@@ -253,7 +253,7 @@ _Check_return_ bool Win32FoundationClasses::CPhysicalDiskFile::m_SetSectorSize( 
 
    ::ZeroMemory( &m_DiskGeometry, sizeof( m_DiskGeometry ) );
 
-   DWORD number_of_bytes_read = 0;
+   DWORD number_of_bytes_read{ 0 };
 
    if ( ::DeviceIoControl( m_FileHandle,
                            IOCTL_DISK_GET_DRIVE_GEOMETRY,
@@ -334,7 +334,7 @@ _Check_return_ bool Win32FoundationClasses::CPhysicalDiskFile::Open(_In_ std::fi
 
    WFC_TRY
    {
-      format( filename, L"\\\\.\\%c:", drive_letter.c_str()[ 0 ] );
+      Win32FoundationClasses::format( filename, L"\\\\.\\%c:", drive_letter.c_str()[ 0 ] );
 
       m_FileHandle = ::CreateFileW( filename.c_str(),
                                    GENERIC_READ bitor GENERIC_WRITE,
@@ -384,7 +384,7 @@ _Check_return_ bool Win32FoundationClasses::CPhysicalDiskFile::Open( _In_ int co
 
    std::wstring filename;
 
-   format( filename, L"\\\\.\\PhysicalDrive%d", physical_disk_number );
+   Win32FoundationClasses::format( filename, L"\\\\.\\PhysicalDrive%d", physical_disk_number );
 
    m_FileHandle = ::CreateFileW( filename.c_str(),
                                 GENERIC_READ bitor GENERIC_WRITE,
@@ -460,7 +460,7 @@ _Check_return_ bool Win32FoundationClasses::CPhysicalDiskFile::OpenRead(_In_ int
 
     std::wstring filename;
 
-    format(filename, L"\\\\.\\PhysicalDrive%d", physical_disk_number);
+    Win32FoundationClasses::format(filename, L"\\\\.\\PhysicalDrive%d", physical_disk_number);
 
     return(OpenRead(filename.c_str()));
 }
@@ -489,14 +489,14 @@ _Check_return_ UINT Win32FoundationClasses::CPhysicalDiskFile::Read( __out_bcoun
 
    WFC_TRY
    {
-      UINT number_of_bytes_to_read = count;
+      UINT number_of_bytes_to_read {count};
 
       if ( count > ( m_BufferSize - m_BufferOffset ) )
       {
          number_of_bytes_to_read = m_BufferSize - m_BufferOffset;
       }
 
-      const UINT number_of_bytes_actually_read = CFile64::Read( &m_Buffer[ m_BufferOffset ], number_of_bytes_to_read );
+      auto const number_of_bytes_actually_read{ CFile64::Read(&m_Buffer[m_BufferOffset], number_of_bytes_to_read) };
 
       ASSERT( number_of_bytes_actually_read == number_of_bytes_to_read );
 
@@ -539,8 +539,8 @@ void Win32FoundationClasses::CPhysicalDiskFile::Write( __in_bcount( count ) void
 
    // We were passed a pointer, don't trust it
 
-   UINT number_of_bytes_to_write = 0;
-   UINT number_of_bytes_written  = 0;
+   UINT number_of_bytes_to_write{ 0 };
+   UINT number_of_bytes_written{ 0 };
 
    WFC_TRY
    {

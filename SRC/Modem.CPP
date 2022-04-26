@@ -66,7 +66,7 @@ Win32FoundationClasses::CModem::~CModem()
 
    if ( IsConnected() == true )
    {
-      (void) Disconnect();
+       std::ignore = Disconnect();
    }
 
    m_Initialize();
@@ -99,7 +99,7 @@ _Check_return_ bool Win32FoundationClasses::CModem::Connect( _In_ DWORD number_o
 
    if ( WaitForString( "CONNECT", number_of_seconds_to_wait, &what_was_read ) == false )
    {
-      (void) Disconnect();
+       std::ignore = Disconnect();
       return( false );
    }
 
@@ -124,7 +124,7 @@ _Check_return_ bool Win32FoundationClasses::CModem::Disconnect( void ) noexcept
        std::string string_to_send( "+++ATH\r\n" );
 
       Write( string_to_send );
-      (void) WaitForString( "OK" );
+      std::ignore = WaitForString( "OK" );
    }
 
    m_IsConnected = false;

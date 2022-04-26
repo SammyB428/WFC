@@ -77,7 +77,7 @@ Win32FoundationClasses::CDesktop::~CDesktop()
 
    if ( m_AutomaticallyClose == true)
    {
-      (void) Close();
+       std::ignore = Close();
    }
 
    m_AutomaticallyClose = false;
@@ -91,7 +91,7 @@ void Win32FoundationClasses::CDesktop::Attach( _In_ HDESK desktop_handle ) noexc
 
    if ( m_DesktopHandle not_eq static_cast< HDESK >( NULL ) and m_AutomaticallyClose == true)
    {
-      (void) Close();
+       std::ignore = Close();
    }
 
    m_DesktopHandle      = desktop_handle;
@@ -137,7 +137,7 @@ _Check_return_ bool Win32FoundationClasses::CDesktop::Create( _In_ std::wstring_
 
    if ( m_DesktopHandle not_eq static_cast< HDESK >( NULL ) and m_AutomaticallyClose == true)
    {
-      (void) Close();
+       std::ignore = Close();
    }
 
    m_AutomaticallyClose = false;
@@ -153,7 +153,7 @@ _Check_return_ bool Win32FoundationClasses::CDesktop::Create( _In_ std::wstring_
 
       ::ZeroMemory( desktop_name, sizeof( desktop_name ) );
       
-      (void) wcsncpy_s( desktop_name, std::size( desktop_name ), name_of_desktop.data(), name_of_desktop.length() );
+      std::ignore = wcsncpy_s( desktop_name, std::size( desktop_name ), name_of_desktop.data(), name_of_desktop.length() );
 
       // CreateDesktop is not const correct
 
@@ -263,7 +263,7 @@ _Check_return_ bool Win32FoundationClasses::CDesktop::Open( _In_ std::wstring_vi
 
    if ( m_DesktopHandle not_eq static_cast< HDESK >( NULL ) and m_AutomaticallyClose == true)
    {
-      (void) Close();
+       std::ignore = Close();
    }
 
    m_AutomaticallyClose = false;
@@ -275,7 +275,7 @@ _Check_return_ bool Win32FoundationClasses::CDesktop::Open( _In_ std::wstring_vi
 
    ::ZeroMemory( desktop_name, sizeof( desktop_name ) );
       
-   (void) wcsncpy_s( desktop_name, std::size( desktop_name ), name_of_desktop.data(), name_of_desktop.length() );
+   std::ignore = wcsncpy_s( desktop_name, std::size( desktop_name ), name_of_desktop.data(), name_of_desktop.length() );
 
    // OpenDesktop() is not const correct
 
@@ -303,7 +303,7 @@ _Check_return_ bool Win32FoundationClasses::CDesktop::OpenInput( _In_ DWORD desi
 
    if ( m_DesktopHandle not_eq static_cast< HDESK >( NULL ) and m_AutomaticallyClose == true)
    {
-      (void) Close();
+       std::ignore = Close();
    }
 
    m_AutomaticallyClose = false;

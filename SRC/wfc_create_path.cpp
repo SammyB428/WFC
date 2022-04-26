@@ -85,7 +85,7 @@ static bool inline _Check_return_ does_wide_directory_exist( __in_z wchar_t cons
       return( false );
    }
 
-   (void) ::CloseHandle( directory_handle );
+   std::ignore = ::CloseHandle( directory_handle );
    return( true );
 }
 
@@ -107,7 +107,7 @@ _Check_return_ bool Win32FoundationClasses::wfc_create_path( __in_z LPCTSTR path
 
       if ( CreateDirectory( path_name, security_attributes_p ) == FALSE )
       {
-         DWORD last_error = GetLastError();
+         DWORD last_error{ ::GetLastError() };
 
          if ( last_error not_eq ERROR_PATH_NOT_FOUND and
               last_error not_eq ERROR_ALREADY_EXISTS )
@@ -122,7 +122,7 @@ _Check_return_ bool Win32FoundationClasses::wfc_create_path( __in_z LPCTSTR path
 
             std::wstring directory_path( path_name );
 
-            (void) replace( directory_path, '/', '\\' );
+            std::ignore = replace( directory_path, '/', '\\' );
 
             std::wstring this_directory;
 
@@ -228,7 +228,7 @@ _Check_return_ bool Win32FoundationClasses::wfc_create_wide_path( _In_z_ wchar_t
 
             std::wstring directory_path( path_name );
 
-            (void) replace( directory_path, '/', '\\');
+            std::ignore = replace( directory_path, '/', '\\');
 
             std::wstring this_directory;
 

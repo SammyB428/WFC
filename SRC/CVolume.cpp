@@ -101,7 +101,7 @@ _Check_return_ bool Win32FoundationClasses::CVolume::Close( void ) noexcept
 
    if ( m_Handle not_eq static_cast< HANDLE >( INVALID_HANDLE_VALUE ) )
    {
-      (void) Win32FoundationClasses::wfc_close_handle( m_Handle );
+       std::ignore = Win32FoundationClasses::wfc_close_handle( m_Handle );
    }
 
    m_Handle = static_cast< HANDLE >( INVALID_HANDLE_VALUE );
@@ -118,7 +118,7 @@ _Check_return_ bool Win32FoundationClasses::CVolume::Dismount( void ) noexcept
       return( false );
    }
 
-   DWORD number_of_bytes_returned = 0;
+   DWORD number_of_bytes_returned{ 0 };
 
    const BOOL return_value = ::DeviceIoControl( m_Handle,
                                      FSCTL_DISMOUNT_VOLUME,

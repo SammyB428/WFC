@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 1995-2015, Samuel R. Blackburn
+** Copyright, 1995-2022, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -57,10 +57,10 @@ void Win32FoundationClasses::CDataParser::GetTextStatistics( _In_ Win32Foundatio
 
    Win32FoundationClasses::CParsePoint here( parse_point );
 
-   uint32_t last_character = 0;
-   uint32_t this_character = 0;
+   uint32_t last_character{ 0 };
+   uint32_t this_character{ 0 };
 
-   int64_t this_line_length = 0;
+   int64_t this_line_length{ 0 };
 
    while( GetNextCharacter( here, this_character ) == true )
    {

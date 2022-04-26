@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 1995-2017, Samuel R. Blackburn
+** Copyright, 1995-2022, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -63,7 +63,7 @@ void Win32FoundationClasses::wfc_convert_double_null_terminated_UNICODE_string(_
 
     std::wstring string_to_add;
 
-    std::size_t number_of_bytes_in_string_including_null = 0;
+    std::size_t number_of_bytes_in_string_including_null{ 0 };
 
     // We were passed a pointer, don't trust it
 
@@ -72,18 +72,18 @@ void Win32FoundationClasses::wfc_convert_double_null_terminated_UNICODE_string(_
         while (buffer[0] not_eq 0x00)
         {
             string_to_add.assign(reinterpret_cast<wchar_t const *>(buffer));
-            (void)string_array.push_back(string_to_add);
+            string_array.push_back(string_to_add);
 
             number_of_bytes_in_string_including_null = (string_to_add.length() * sizeof(wchar_t)) + (1 * sizeof(wchar_t));
 
             buffer = (WORD const *)(((std::size_t)buffer) + number_of_bytes_in_string_including_null);
         }
     }
-        WFC_CATCH_ALL
+    WFC_CATCH_ALL
     {
         return;
     }
-        WFC_END_CATCH_ALL
+    WFC_END_CATCH_ALL
 }
 
 void Win32FoundationClasses::wfc_read_string_array(_In_ wchar_t const * const buffer, _In_ std::size_t const number_of_characters, _Inout_ std::vector<std::wstring>& string_array) noexcept
@@ -96,7 +96,7 @@ void Win32FoundationClasses::wfc_read_string_array(_In_ wchar_t const * const bu
         return;
     }
 
-    std::size_t buffer_index = 0;
+    std::size_t buffer_index{ 0 };
 
     // We were passed a pointer, don't trust it
 
@@ -107,17 +107,17 @@ void Win32FoundationClasses::wfc_read_string_array(_In_ wchar_t const * const bu
         while (buffer_index < number_of_characters)
         {
             string_to_add.assign((wchar_t const *)&buffer[ buffer_index ]);
-            (void)string_array.push_back(string_to_add);
+            string_array.push_back(string_to_add);
 
             buffer_index += string_to_add.length() + 1;
             string_to_add.clear();
         }
     }
-        WFC_CATCH_ALL
+    WFC_CATCH_ALL
     {
         return;
     }
-        WFC_END_CATCH_ALL
+    WFC_END_CATCH_ALL
 }
 
 #if 0
@@ -133,7 +133,7 @@ void Win32FoundationClasses::wfc_convert_double_null_terminated_UNICODE_string( 
 
    std::wstring string_to_add;
 
-   SIZE_T number_of_bytes_in_string_including_null = 0;
+   SIZE_T number_of_bytes_in_string_including_null{ 0 };
 
    // We were passed a pointer, don't trust it
 
@@ -141,7 +141,7 @@ void Win32FoundationClasses::wfc_convert_double_null_terminated_UNICODE_string( 
    {
       while ( buffer[ 0 ] not_eq 0x00 )
       {
-         (void) string_array.push_back( (LPCWSTR) buffer );
+         string_array.push_back( (LPCWSTR) buffer );
 
          number_of_bytes_in_string_including_null = ( lstrlenW( (LPCWSTR) buffer ) * sizeof( WCHAR ) ) + ( 1 * sizeof( WCHAR ) );
 

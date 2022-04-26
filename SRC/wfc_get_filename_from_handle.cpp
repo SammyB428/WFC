@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 1995-2016, Samuel R. Blackburn
+** Copyright, 1995-2022, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -67,7 +67,7 @@ _Check_return_ bool Win32FoundationClasses::wfc_get_filename_from_handle( _In_ H
 
     filename.clear();
 
-    HMODULE const ntdll_module_handle = GetModuleHandleW(L"ntdll.dll");
+    auto const ntdll_module_handle{ ::GetModuleHandleW(L"ntdll.dll") };
 
     if (ntdll_module_handle == NULL)
     {
@@ -95,11 +95,11 @@ _Check_return_ bool Win32FoundationClasses::wfc_get_filename_from_handle( _In_ H
     status_block.Status      = 0;
     status_block.Information = 0;
 
-    DWORD status = NtQueryInformationFile( file_handle,
+    auto status{ NtQueryInformationFile(file_handle,
         &status_block,
         &filename_structure,
-        sizeof( filename_structure ),
-        9 );
+        sizeof(filename_structure),
+        9) };
 
     if ( status == 0 )
     {
@@ -121,14 +121,14 @@ _Check_return_ bool Win32FoundationClasses::wfc_get_command_line( _Out_ std::wst
 
     ZeroMemory( path, sizeof( path ) );
 
-    if ( GetModuleFileNameW( static_cast< HMODULE >( NULL ), path, static_cast<DWORD>(std::size( path )) ) not_eq 0 )
+    if ( ::GetModuleFileNameW( static_cast< HMODULE >( NULL ), path, static_cast<DWORD>(std::size( path )) ) not_eq 0 )
     {
         full_command_line.assign( path );
         full_command_line.push_back( ' ' );
 
-        int argc = 0;
+        int argc{ 0 };
 
-        auto argv = CommandLineToArgvW( GetCommandLineW(), &argc );
+        auto argv{ ::CommandLineToArgvW(::GetCommandLineW(), &argc) };
 
         for( auto const argv_index : Range(argc, StartingRangePosition(1)) )
         {

@@ -94,17 +94,17 @@ bool Win32FoundationClasses::CCryptographicProvider::CreateHash(Win32FoundationC
 {
    WFC_VALIDATE_POINTER( this );
 
-   auto hash_handle = static_cast< HCRYPTHASH >( NULL );
+   auto hash_handle{ static_cast<HCRYPTHASH>(NULL) };
 
-   BOOL return_value = ::CryptCreateHash( m_CryptographicProvider,
+   auto return_value{ ::CryptCreateHash(m_CryptographicProvider,
                                      algorithm_that_is_going_to_use_the_hash.Identifier,
                                      key_for_hash_algorithms_that_need_it.GetHandle(),
                                      creation_flags,
-                                    &hash_handle );
+                                    &hash_handle) };
 
    if ( return_value not_eq FALSE )
    {
-      (void) hash.FromHandle( hash_handle );
+       std::ignore = hash.FromHandle( hash_handle );
    }
    else
    {
@@ -182,7 +182,7 @@ bool Win32FoundationClasses::CCryptographicProvider::CreateKey(Win32FoundationCl
 {
    WFC_VALIDATE_POINTER( this );
 
-   auto key_handle = static_cast< HCRYPTKEY >( NULL );
+   auto key_handle{ static_cast<HCRYPTKEY>(NULL) };
 
    // According to Jeff Spelman (jeffspel@microsoft.com), you
    // can put your request for the number of bits in the key
@@ -192,8 +192,8 @@ bool Win32FoundationClasses::CCryptographicProvider::CreateKey(Win32FoundationCl
    {
       // WFCTRACE( TEXT( "Specifying the number of bits in the key" ) );
 
-      WORD const low_word  = LOWORD(creation_flags);
-      WORD high_word = HIWORD(creation_flags);
+      WORD const low_word{ LOWORD(creation_flags) };
+      WORD high_word{ HIWORD(creation_flags) };
 
       if ( high_word not_eq 0 )
       {
@@ -205,14 +205,14 @@ bool Win32FoundationClasses::CCryptographicProvider::CreateKey(Win32FoundationCl
       creation_flags = MAKELONG( low_word, high_word );
    }
 
-   BOOL return_value = ::CryptGenKey( m_CryptographicProvider,
+   auto return_value{ ::CryptGenKey(m_CryptographicProvider,
                                  algorithm_that_is_going_to_use_the_key.Identifier,
                                  creation_flags,
-                                &key_handle );
+                                &key_handle) };
 
    if ( return_value not_eq FALSE )
    {
-      (void) key.FromHandle( key_handle );
+       std::ignore = key.FromHandle( key_handle );
    }
    else
    {
@@ -281,7 +281,7 @@ bool Win32FoundationClasses::CCryptographicProvider::CreateKeySet( LPCTSTR conta
 
    // We were passed pointers, don't trust them
 
-   auto temp_handle = static_cast< HCRYPTPROV >( NULL );
+   auto temp_handle{ static_cast<HCRYPTPROV>(NULL) };
 
    WFC_TRY
    {
@@ -318,13 +318,13 @@ bool Win32FoundationClasses::CCryptographicProvider::DeriveKey(Win32FoundationCl
 {
    WFC_VALIDATE_POINTER( this );
 
-   auto key_handle = static_cast< HCRYPTKEY >( NULL );
+   auto key_handle{ static_cast<HCRYPTKEY>(NULL) };
 
-   BOOL return_value = ::CryptDeriveKey( m_CryptographicProvider,
+   auto return_value{ ::CryptDeriveKey(m_CryptographicProvider,
                                     algorithm.Identifier,
                                     hash.GetHandle(),
                                     flags,
-                                    &key_handle );
+                                    &key_handle) };
 
    if ( return_value == FALSE )
    {
@@ -390,7 +390,7 @@ bool Win32FoundationClasses::CCryptographicProvider::DeriveKey(Win32FoundationCl
    }
    else
    {
-      (void) key.FromHandle( key_handle );
+       std::ignore = key.FromHandle( key_handle );
    }
 
    return( true );
@@ -435,7 +435,7 @@ bool Win32FoundationClasses::CCryptographicProvider::GenerateRandomBytes(std::ve
       array.resize( number_of_bytes_to_get );
    }
 
-   BOOL return_value = ::CryptGenRandom( m_CryptographicProvider, number_of_bytes_to_get, array.data() );
+   auto return_value{ ::CryptGenRandom(m_CryptographicProvider, number_of_bytes_to_get, array.data()) };
 
    if ( return_value == FALSE )
    {
@@ -528,7 +528,7 @@ bool Win32FoundationClasses::CCryptographicProvider::GetParameter( DWORD const p
 
    buffer.resize( 4096 );
 
-   DWORD size_of_buffer = static_cast<DWORD>(buffer.size());
+   DWORD size_of_buffer{ static_cast<DWORD>(buffer.size()) };
 
    if ( ::CryptGetProvParam( m_CryptographicProvider, parameter_to_get, buffer.data(), &size_of_buffer, flags ) == FALSE )
    {
@@ -601,15 +601,15 @@ bool Win32FoundationClasses::CCryptographicProvider::GetUserKey( DWORD which_use
 {
    WFC_VALIDATE_POINTER( this );
 
-   auto key_handle = static_cast< HCRYPTKEY >( NULL );
+   auto key_handle{ static_cast<HCRYPTKEY>(NULL) };
 
-   BOOL return_value = ::CryptGetUserKey( m_CryptographicProvider,
+   auto return_value{ ::CryptGetUserKey(m_CryptographicProvider,
                                      which_user_key_to_get,
-                                    &key_handle );
+                                    &key_handle) };
 
    if ( return_value not_eq FALSE )
    {
-      (void) key.FromHandle( key_handle );
+       std::ignore = key.FromHandle( key_handle );
    }
    else
    {
@@ -676,18 +676,18 @@ bool Win32FoundationClasses::CCryptographicProvider::ImportKey(std::vector<uint8
 
     // Start from a known state
 
-    (void)key.Destroy();
+    std::ignore = key.Destroy();
 
-    HCRYPTKEY key_handle = 0;
+    HCRYPTKEY key_handle{ 0 };
 
     // CryptImportKey is mis-typed. It isn't const correct.
 
-    BOOL return_value = ::CryptImportKey(m_CryptographicProvider,
+    BOOL return_value{ ::CryptImportKey(m_CryptographicProvider,
         exported_key_data.data(),
         (DWORD)exported_key_data.size(),
         static_cast<HCRYPTKEY>(key_format),
         flags,
-        &key_handle);
+        &key_handle) };
 
     if (return_value == FALSE)
     {
@@ -761,7 +761,7 @@ bool Win32FoundationClasses::CCryptographicProvider::ImportKey(std::vector<uint8
         return(false);
     }
 
-    (void)key.FromHandle(key_handle);
+    std::ignore = key.FromHandle(key_handle);
 
     return(true);
 }

@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 1995-2015, Samuel R. Blackburn
+** Copyright, 1995-2022, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -76,7 +76,7 @@ _Check_return_ SECURITY_DESCRIPTOR * Win32FoundationClasses::wfc_create_null_dac
    // open. To do this we, we need to create the file with a NULL DACL.
    // Please read Knowledge Base article Q106387.
 
-   auto security_descriptor_p = static_cast<SECURITY_DESCRIPTOR *>(::LocalAlloc( LPTR, SECURITY_DESCRIPTOR_MIN_LENGTH ));
+   auto security_descriptor_p{ static_cast<SECURITY_DESCRIPTOR*>(::LocalAlloc(LPTR, SECURITY_DESCRIPTOR_MIN_LENGTH)) };
 
    if ( security_descriptor_p == nullptr )
    {

@@ -140,7 +140,7 @@ static inline _Check_return_ bool __parse_ymdhmsf( _In_ std::wstring_view time_s
     temp_string[ 9 ] = 0x00;
     temp_string[ 10 ] = 0x00;
 
-    (void)std::from_chars(temp_string, &temp_string[4], year, 10);
+    std::ignore = std::from_chars(temp_string, &temp_string[4], year, 10);
 
     std::size_t index = 4;
 
@@ -201,7 +201,7 @@ static inline _Check_return_ bool __parse_ymdhmsf( _In_ std::wstring_view time_s
     temp_string[ 0 ] = static_cast<char>(time_string[ index - 1 ]);
     temp_string[ 1 ] = static_cast<char>(time_string[ index ]);
 
-    (void)std::from_chars(temp_string, &temp_string[2], month, 10);
+    std::ignore = std::from_chars(temp_string, &temp_string[2], month, 10);
 
     // Do a little idiot proofing
 
@@ -270,7 +270,7 @@ static inline _Check_return_ bool __parse_ymdhmsf( _In_ std::wstring_view time_s
 
     // We don't need to set temp_string[ 2 ] because we did that at line 158 above
 
-    (void)std::from_chars(temp_string, &temp_string[2], day, 10);
+    std::ignore = std::from_chars(temp_string, &temp_string[2], day, 10);
 
     // Do a very little bit of error checking
 
@@ -343,7 +343,7 @@ static inline _Check_return_ bool __parse_ymdhmsf( _In_ std::wstring_view time_s
 
     // We don't need to set temp_string[ 2 ] because we did that at line 158 above
 
-    (void)std::from_chars(temp_string, &temp_string[2], hours, 10);
+    std::ignore = std::from_chars(temp_string, &temp_string[2], hours, 10);
 
     index++;
 
@@ -402,7 +402,7 @@ static inline _Check_return_ bool __parse_ymdhmsf( _In_ std::wstring_view time_s
     temp_string[ 0 ] = static_cast<char>(time_string[ index - 1 ]);
     temp_string[ 1 ] = static_cast<char>(time_string[ index ]);
 
-    (void)std::from_chars(temp_string, &temp_string[2], minutes, 10);
+    std::ignore = std::from_chars(temp_string, &temp_string[2], minutes, 10);
 
     index++;
 
@@ -460,7 +460,7 @@ static inline _Check_return_ bool __parse_ymdhmsf( _In_ std::wstring_view time_s
     temp_string[ 0 ] = static_cast<char>(time_string[ index - 1 ]);
     temp_string[ 1 ] = static_cast<char>(time_string[ index ]);
 
-    (void)std::from_chars(temp_string, &temp_string[2], seconds, 10);
+    std::ignore = std::from_chars(temp_string, &temp_string[2], seconds, 10);
 
     index++;
 
@@ -503,7 +503,7 @@ static inline _Check_return_ bool __parse_ymdhmsf( _In_ std::wstring_view time_s
                 }
 
 #if ! defined(WE_ARE_BUILDING_WFC_ON_UNIX)
-                (void)std::from_chars(temp_string, &temp_string[temp_string_index], fraction);
+                std::ignore = std::from_chars(temp_string, &temp_string[temp_string_index], fraction);
 #else // WE_ARE_BUILDING_WFC_ON_UNIX
                 fraction = Win32FoundationClasses::as_double(temp_string);
 #endif // WE_ARE_BUILDING_WFC_ON_UNIX
@@ -586,7 +586,7 @@ static inline _Check_return_ bool __parse_ymdhmsf( _In_ std::wstring_view time_s
         temp_string[0] = static_cast<char>(time_string[index - 1]);
         temp_string[1] = static_cast<char>(time_string[index]);
 
-        (void)std::from_chars(temp_string, &temp_string[2], offset_hours, 10);
+        std::ignore = std::from_chars(temp_string, &temp_string[2], offset_hours, 10);
 
         index++;
 
@@ -642,7 +642,7 @@ static inline _Check_return_ bool __parse_ymdhmsf( _In_ std::wstring_view time_s
         temp_string[0] = static_cast<char>(time_string[index - 1]);
         temp_string[1] = static_cast<char>(time_string[index]);
 
-        (void)std::from_chars(temp_string, &temp_string[2], offset_minutes, 10);
+        std::ignore = std::from_chars(temp_string, &temp_string[2], offset_minutes, 10);
     }
 
     return( true );
@@ -795,12 +795,12 @@ _Check_return_ bool Win32FoundationClasses::wfc_parse_iso_8601_string(_In_ std::
     }
 
     the_time.Empty();
-    the_time.wYear = ole_time.GetYear();
-    the_time.wMonth = ole_time.GetMonth();
-    the_time.wDay = ole_time.GetDay();
-    the_time.wHour = ole_time.GetHour();
-    the_time.wMinute = ole_time.GetMinute();
-    the_time.wSecond = ole_time.GetSecond();
+    the_time.wYear = static_cast<WORD>(ole_time.GetYear());
+    the_time.wMonth = static_cast<WORD>(ole_time.GetMonth());
+    the_time.wDay = static_cast<WORD>(ole_time.GetDay());
+    the_time.wHour = static_cast<WORD>(ole_time.GetHour());
+    the_time.wMinute = static_cast<WORD>(ole_time.GetMinute());
+    the_time.wSecond = static_cast<WORD>(ole_time.GetSecond());
 
     return( true );
 }

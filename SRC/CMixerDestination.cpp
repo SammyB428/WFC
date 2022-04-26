@@ -107,7 +107,7 @@ _Check_return_ bool Win32FoundationClasses::CMixerDestination::GetSource( _In_ W
          if ( line.Component == type_of_source )
          {
             source.SetLine( line );
-            (void) source.Open( m_Mixer.GetDeviceID(), m_WhatToNotify, m_WhoToNotify, m_NotifyData );
+            std::ignore = source.Open( m_Mixer.GetDeviceID(), m_WhatToNotify, m_WhoToNotify, m_NotifyData );
             return( true );
          }
       }
@@ -120,7 +120,7 @@ _Check_return_ bool Win32FoundationClasses::CMixerDestination::IsSourceSelected(
 {
    WFC_VALIDATE_POINTER( this );
 
-   bool return_value = false;
+   bool return_value{ false };
 
    if ( m_SourceSelector.get() not_eq nullptr )
    {
@@ -142,7 +142,7 @@ _Check_return_ bool Win32FoundationClasses::CMixerDestination::Open( _In_ UINT_P
    m_WhoToNotify  = who_to_notify;
    m_NotifyData   = notify_data;
 
-   bool const return_value = CMixerControlInstance::Open( device_number, what_to_notify, who_to_notify, notify_data );
+   auto const return_value{ CMixerControlInstance::Open(device_number, what_to_notify, who_to_notify, notify_data) };
 
    if ( return_value == false )
    {
@@ -156,7 +156,7 @@ _Check_return_ bool Win32FoundationClasses::CMixerDestination::SelectSource(_In_
 {
    WFC_VALIDATE_POINTER( this );
 
-   bool return_value = false;
+   bool return_value{ false };
 
    if ( m_SourceSelector.get() not_eq nullptr )
    {
@@ -170,7 +170,7 @@ _Check_return_ bool Win32FoundationClasses::CMixerDestination::UnselectSource( _
 {
    WFC_VALIDATE_POINTER( this );
 
-   bool return_value = false;
+   bool return_value{ false };
 
    if ( m_SourceSelector.get() not_eq nullptr )
    {

@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 1995-2019, Samuel R. Blackburn
+** Copyright, 1995-2022, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -92,9 +92,7 @@ _Check_return_ bool Win32FoundationClasses::CLZFile::Copy( _In_ Win32FoundationC
 {
    WFC_VALIDATE_POINTER( this );
 
-   LONG size_of_destination_file = 0;
-
-   size_of_destination_file = ::LZCopy( source.m_LZFileHandle, m_LZFileHandle );
+   auto const size_of_destination_file{ ::LZCopy(source.m_LZFileHandle, m_LZFileHandle) };
 
    if ( size_of_destination_file < 0 )
    {
@@ -208,13 +206,11 @@ _Check_return_ UINT Win32FoundationClasses::CLZFile::Read( __out_bcount( size_of
 
    WFC_VALIDATE_POINTER( buffer );
 
-   INT number_of_bytes_read = 0;
-
    // We were passed a pointer, don't trust it
 
    WFC_TRY
    {
-      number_of_bytes_read = ::LZRead( m_LZFileHandle, static_cast<char *>(buffer), size_of_buffer );
+      auto const number_of_bytes_read {::LZRead(m_LZFileHandle, static_cast<char*>(buffer), size_of_buffer)};
 
       if ( number_of_bytes_read < 0 )
       {
@@ -244,7 +240,7 @@ _Check_return_ uint64_t Win32FoundationClasses::CLZFile::Seek(_In_ int64_t const
   ASSERT( from == Win32FoundationClasses::CFile64::SeekPosition::begin or from == Win32FoundationClasses::CFile64::SeekPosition::end or from == Win32FoundationClasses::CFile64::SeekPosition::current );
   ASSERT((int)Win32FoundationClasses::CFile64::SeekPosition::begin == FILE_BEGIN and (int)Win32FoundationClasses::CFile64::SeekPosition::end == FILE_END and (int)Win32FoundationClasses::CFile64::SeekPosition::current == FILE_CURRENT );
 
-   LONG const offset_from_beginning_of_file = ::LZSeek( m_LZFileHandle, (LONG) offset, (INT) from );
+   auto const offset_from_beginning_of_file{ ::LZSeek(m_LZFileHandle, (LONG)offset, (INT)from) };
 
    if ( offset_from_beginning_of_file < 0 )
    {

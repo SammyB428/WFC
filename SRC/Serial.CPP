@@ -198,7 +198,7 @@ void Win32FoundationClasses::CSerialFile::Close( void ) noexcept
 
    m_ClearError( __LINE__ );
 
-   (void) Purge( purgeAll );
+   std::ignore = Purge( purgeAll );
 
    ::EscapeCommFunction( m_FileHandle, CLRDTR );
 
@@ -800,7 +800,7 @@ void Win32FoundationClasses::CSerialFile::m_ClearError(_In_ int const ) noexcept
 
          if ( m_PurgeBufferOnError == true )
          {
-            (void) Purge( purgeClearInputBuffer );
+             std::ignore = Purge( purgeClearInputBuffer );
 
             // Thanks go to Fabio Angelini (fabioang@iol.it or nico.sw@ibm.net)
             // for suggesting this change
@@ -1179,7 +1179,7 @@ _Check_return_ bool Win32FoundationClasses::CSerialFile::Open( void ) noexcept
 
    // assert DTR
 
-   (void) SetDataTerminalReady( true );
+   std::ignore = SetDataTerminalReady( true );
 
    m_IsOpen = true;
 
@@ -1747,9 +1747,9 @@ _Check_return_ bool Win32FoundationClasses::CSerialFile::WaitForString( _In_ std
 
    BYTE buffer[1]{ 0 };
 
-   bool time_expired = false;
+   bool time_expired{ false };
 
-   std::size_t const length_of_string_to_wait_for = string_to_wait_for.length();
+   std::size_t const length_of_string_to_wait_for{ string_to_wait_for.length() };
 
    CTime current_time = CTime::GetCurrentTime();
 
@@ -1761,7 +1761,7 @@ _Check_return_ bool Win32FoundationClasses::CSerialFile::WaitForString( _In_ std
    {
       if ( IsDataWaiting() == true )
       {
-         (void) Read( buffer, 1 );
+          std::ignore = Read( buffer, 1 );
 
          response.push_back( buffer[ 0 ] );
 

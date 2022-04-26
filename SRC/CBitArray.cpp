@@ -123,7 +123,7 @@ void Win32FoundationClasses::CBitArray::ClearRange( _In_ std::size_t const array
 {
    WFC_VALIDATE_POINTER( this );
 
-   auto const total_number_of_bits = GetSize();
+   auto const total_number_of_bits{ GetSize() };
 
    if ( array_index >= total_number_of_bits or ( array_index + count ) > total_number_of_bits )
    {
@@ -132,11 +132,11 @@ void Win32FoundationClasses::CBitArray::ClearRange( _In_ std::size_t const array
       return;
    }
 
-   std::size_t loop_counter = 0;
-   std::size_t bit_array_index = 0;
-   std::size_t bit_location = 0;
-   SSIZE_T number_of_bits_remaining = 0;
-   uint32_t bit_number = 0;
+   std::size_t loop_counter{ 0 };
+   std::size_t bit_array_index{ 0 };
+   std::size_t bit_location{ 0 };
+   SSIZE_T number_of_bits_remaining{ 0 };
+   uint32_t bit_number{ 0 };
 
    while( loop_counter < count ) // Cannot be converted to a Range loop
    {
@@ -146,7 +146,7 @@ void Win32FoundationClasses::CBitArray::ClearRange( _In_ std::size_t const array
       if ( ( ( bit_location % SizeOfBitRepresentation() ) == 0 ) and (number_of_bits_remaining >= SizeOfBitRepresentation()) )
       {
          // We are on a boundary! We can optimize
-         (void) m_GetElementIndexOfBitLocation( bit_location, bit_array_index, bit_number );
+         std::ignore = m_GetElementIndexOfBitLocation( bit_location, bit_array_index, bit_number );
          m_Bits.at( bit_array_index ) = 0;
 
          loop_counter += SizeOfBitRepresentation();
@@ -163,7 +163,7 @@ void Win32FoundationClasses::CBitArray::SetRange( _In_ std::size_t const array_i
 {
    WFC_VALIDATE_POINTER( this );
 
-   std::size_t const total_number_of_bits = GetSize();
+   auto const total_number_of_bits{ GetSize() };
 
    if ( array_index >= total_number_of_bits or ( array_index + count ) > total_number_of_bits )
    {
@@ -172,11 +172,11 @@ void Win32FoundationClasses::CBitArray::SetRange( _In_ std::size_t const array_i
       return;
    }
 
-   std::size_t loop_counter = 0;
-   std::size_t bit_array_index = 0;
-   std::size_t bit_location = 0;
-   SSIZE_T number_of_bits_remaining = 0;
-   uint32_t bit_number = 0;
+   std::size_t loop_counter{ 0 };
+   std::size_t bit_array_index{ 0 };
+   std::size_t bit_location{ 0 };
+   SSIZE_T number_of_bits_remaining{ 0 };
+   uint32_t bit_number{ 0 };
 
    while( loop_counter < count ) // Cannot be converted to a Range loop
    {
@@ -186,7 +186,7 @@ void Win32FoundationClasses::CBitArray::SetRange( _In_ std::size_t const array_i
       if ( ( ( bit_location % SizeOfBitRepresentation() ) == 0 ) and (number_of_bits_remaining >= SizeOfBitRepresentation()) )
       {
          // We are on a boundary! We can optimize
-         (void) m_GetElementIndexOfBitLocation( bit_location, bit_array_index, bit_number );
+          std::ignore = m_GetElementIndexOfBitLocation( bit_location, bit_array_index, bit_number );
          m_Bits.at( bit_array_index ) = AN_ELEMENT_THAT_IS_ALL_ONES;
 
          loop_counter += SizeOfBitRepresentation();
@@ -203,11 +203,11 @@ void Win32FoundationClasses::CBitArray::Add( _In_ uint32_t const value, _In_ std
 {
    WFC_VALIDATE_POINTER( this );
 
-   std::size_t loop_counter = 0;
-   std::size_t bit_location = 0;
-   std::size_t index        = 0;
+   std::size_t loop_counter{ 0 };
+   std::size_t bit_location{ 0 };
+   std::size_t index{ 0 };
 
-   uint32_t bit_number = 0;
+   uint32_t bit_number{ 0 };
 
    while( loop_counter < count ) // Cannot be converted to a Range loop
    {
@@ -223,11 +223,11 @@ void Win32FoundationClasses::CBitArray::Add( _In_ uint32_t const value, _In_ std
             {
                if ( value not_eq 0 )
                {
-                  (void) m_Bits.push_back( AN_ELEMENT_THAT_IS_ALL_ONES );
+                  m_Bits.push_back( AN_ELEMENT_THAT_IS_ALL_ONES );
                }
                else
                {
-                  (void) m_Bits.push_back( 0 );
+                  m_Bits.push_back( 0 );
                }
 
                loop_counter        += SizeOfBitRepresentation();
@@ -238,7 +238,7 @@ void Win32FoundationClasses::CBitArray::Add( _In_ uint32_t const value, _In_ std
             else
             {
                // Add a zero bit (an element that is all zeroes)
-               (void) m_Bits.push_back( 0 );
+               m_Bits.push_back( 0 );
             }
          }
 
@@ -264,7 +264,7 @@ void Win32FoundationClasses::CBitArray::AddByte( _In_ uint8_t const value ) noex
 {
    WFC_VALIDATE_POINTER( this );
 
-   uint32_t dword_value = value;
+   uint32_t dword_value{ value };
 
    Add( _bittest(reinterpret_cast<LONG const *>(&dword_value), 7 ) );
    Add( _bittest(reinterpret_cast<LONG const *>(&dword_value), 6 ) );
@@ -291,9 +291,9 @@ void Win32FoundationClasses::CBitArray::AddValue( _In_ uint32_t const value, _In
       Add( 0 );
    }
 
-   uint32_t offset = number_of_bits - 1;
+   uint32_t offset{ number_of_bits - 1 };
 
-   std::size_t starting_bit_location = GetSize() - number_of_bits;
+   std::size_t starting_bit_location{ GetSize() - number_of_bits };
 
    for ( auto const index : Range(number_of_bits) )
    {
@@ -356,15 +356,15 @@ void Win32FoundationClasses::CBitArray::Complement( void ) noexcept
    // division to right shifting. Right shifting by 5 is the
    // same as dividing by 32 ( (x/32) == (x>>5) )
 
-   std::size_t index              = m_IndexOfFirstBit >> 5;
+   std::size_t index{ m_IndexOfFirstBit >> 5 };
 
 #else
 
-   std::size_t index              = m_IndexOfFirstBit / SizeOfBitRepresentation();
+   std::size_t index{ m_IndexOfFirstBit / SizeOfBitRepresentation() };
 
 #endif // AN_ELEMENT_THAT_IS_ALL_ONES
 
-   auto number_of_elements = m_Bits.size();
+   auto number_of_elements{ m_Bits.size() };
 
    // We set index to the first element that contains good bits.
    // We are skipping any elements at the beginning of m_Bits
@@ -391,19 +391,19 @@ void Win32FoundationClasses::CBitArray::Copy( _In_ std::vector<uint8_t> const& s
    WFC_VALIDATE_POINTER( this );
    RemoveAll();
 
-   std::size_t index = 0;
-   auto const number_of_bytes = source.size();
+   std::size_t index{ 0 };
+   auto const number_of_bytes{ source.size() };
 
    if ( number_of_bytes > sizeof( uint32_t ) )
    {
       // We can add things 32 bits at a time
 
-      uint32_t value_to_add = 0;
+      uint32_t value_to_add{ 0 };
 
       while( index < (int) ( number_of_bytes - sizeof( uint32_t ) ) ) // Cannot be converted to a Range loop
       {
          value_to_add = MAKELONG( MAKEWORD( source.at( index + 3 ), source.at( index + 2 ) ), MAKEWORD( source.at( index + 1 ), source.at( index ) ) );
-         (void) m_Bits.push_back( value_to_add );
+         m_Bits.push_back( value_to_add );
          m_TotalNumberOfBits += 32;
          index += sizeof( uint32_t );
       }
@@ -444,23 +444,23 @@ void Win32FoundationClasses::CBitArray::CopyTo( __inout std::vector<uint8_t>& de
 
    FreeExtra();
 
-   uint32_t bits = 0;
+   uint32_t bits{ 0 };
 
-   WORD word = 0;
+   WORD word{ 0 };
 
    // 1998-12-09 Optimization suggested by Peter Ekberg (peda@sectra.se)
 
-   auto const number_of_elements = m_Bits.size();
+   auto const number_of_elements{ m_Bits.size() };
 
    destination.resize( number_of_elements * sizeof( uint32_t ) );
 
    // Get a raw pointer. This is the fastest way to access memory
 
-   auto buffer_pointer = destination.data();
+   auto buffer_pointer{ destination.data() };
 
    WFC_VALIDATE_POINTER( buffer_pointer );
 
-   uint32_t buffer_index = 0;
+   uint32_t buffer_index{ 0 };
 
    for ( auto const index : Range(number_of_elements) )
    {
@@ -487,7 +487,7 @@ void Win32FoundationClasses::CBitArray::CopyTo( __inout std::vector<uint8_t>& de
    // We may not have needed to do such a thing. Let's see if
    // we can get rid of a couple of bytes.
 
-   std::size_t const number_of_bytes = ( GetSize() + 7 ) >> 3; // ">> 3" is the same as saying "/ 8"
+   std::size_t const number_of_bytes{ (GetSize() + 7) >> 3 }; // ">> 3" is the same as saying "/ 8"
 
    destination.resize( number_of_bytes );
 
@@ -521,12 +521,12 @@ void Win32FoundationClasses::CBitArray::Dump( CDumpContext& dump_context ) const
    std::wstring debug_string;
    std::wstring line_number_string;
 
-   std::size_t index                = 0;
-   std::size_t line_index           = 0;
-   std::size_t line_number          = 0;
-   std::size_t total_number_of_bits = GetSize();
+   std::size_t index{ 0 };
+   std::size_t line_index{ 0 };
+   std::size_t line_number{ 0 };
+   std::size_t total_number_of_bits{ GetSize() };
 
-   int digits_in_group = 0;
+   int digits_in_group{ 0 };
 
    while( index < total_number_of_bits )
    {
@@ -611,7 +611,8 @@ _Check_return_ bool Win32FoundationClasses::CBitArray::EnumerateZeroes( __inout 
 _Check_return_ bool Win32FoundationClasses::CBitArray::Find( _In_ Win32FoundationClasses::CBitArray const& value, _Inout_ std::size_t& found_at, _In_ std::size_t const starting_at ) const noexcept
 {
    WFC_VALIDATE_POINTER( this );
-   uint32_t value_to_search_for = 0;
+
+   uint32_t value_to_search_for{ 0 };
 
    if ( value.GetSize() <= SizeOfBitRepresentation() )
    {
@@ -627,18 +628,18 @@ _Check_return_ bool Win32FoundationClasses::CBitArray::Find( _In_ Win32Foundatio
 
    value_to_search_for = value.GetValue( 0, SizeOfBitRepresentation() );
 
-   bool exit_loop       = false;
-   bool value_was_found = false;
+   bool exit_loop{ false };
+   bool value_was_found{ false };
 
-   std::size_t starting_index = starting_at;
-   std::size_t found_index    = 0;
-   std::size_t loop_index     = 0;
+   auto starting_index{ starting_at };
+   std::size_t found_index{ 0 };
+   std::size_t loop_index{ 0 };
 
-   auto ending_index = GetSize();
-   auto size_of_value = value.GetSize();
+   auto ending_index{ GetSize() };
+   auto size_of_value{ value.GetSize() };
 
-   uint32_t this_bit = 0;
-   uint32_t that_bit = 0;
+   uint32_t this_bit{ 0 };
+   uint32_t that_bit{ 0 };
 
    while( exit_loop == false )
    {
@@ -716,13 +717,13 @@ _Check_return_ bool Win32FoundationClasses::CBitArray::Find( _In_ uint32_t const
       return( false );
    }
 
-   auto upper_bound = GetUpperBound();
-   std::size_t starting_at_index = starting_at;
+   auto upper_bound{ GetUpperBound() };
+   std::size_t starting_at_index{ starting_at };
 
    // Let's do a Boyer-Moore'ish kind of search
 
-   std::size_t desired_number_of_ones   = 0;
-   std::size_t desired_number_of_zeroes = 0;
+   std::size_t desired_number_of_ones{ 0 };
+   std::size_t desired_number_of_zeroes{ 0 };
 
    // Let's count the number of ones and zeroes in the pattern we're searching for
 
@@ -744,10 +745,10 @@ _Check_return_ bool Win32FoundationClasses::CBitArray::Find( _In_ uint32_t const
 
    upper_bound -= number_of_bits_in_value;
 
-   uint32_t value_to_test           = 0;
-   std::size_t number_of_bits_to_skip = 0;
-   std::size_t number_of_ones         = 0;
-   std::size_t number_of_zeroes       = 0;
+   uint32_t value_to_test{ 0 };
+   std::size_t number_of_bits_to_skip{ 0 };
+   std::size_t number_of_ones{ 0 };
+   std::size_t number_of_zeroes{ 0 };
 
    // Finally! We're ready to start searching the array
 
@@ -822,7 +823,7 @@ void Win32FoundationClasses::CBitArray::FreeExtra( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
-   std::size_t number_of_bits = m_IndexOfFirstBit;
+   auto number_of_bits{ m_IndexOfFirstBit };
 
    if ( number_of_bits >= m_TotalNumberOfBits )
    {
@@ -837,17 +838,16 @@ void Win32FoundationClasses::CBitArray::FreeExtra( void ) noexcept
       m_TotalNumberOfBits -= SizeOfBitRepresentation();
    }
 
-   uint32_t this_set_of_bits = 0;
-   uint32_t that_set_of_bits = 0;
-   uint32_t bit_number       = 0;
+   uint32_t this_set_of_bits{ 0 };
+   uint32_t that_set_of_bits{ 0 };
+   uint32_t bit_number{ 0 };
 
-   SSIZE_T index = 0;
+   SSIZE_T index{ 0 };
 
    while( number_of_bits > 0 )
    {
       this_set_of_bits = 0;
       that_set_of_bits = 0;
-      index            = 0;
       bit_number       = MostSignificantBitLocation();
 
       // Always start at the beginning of the array
@@ -858,7 +858,7 @@ void Win32FoundationClasses::CBitArray::FreeExtra( void ) noexcept
       {
          // Only kill the bit if it ain't the LSB
 
-         uint32_t bit_index = bit_number - 1;
+         uint32_t bit_index{ bit_number - 1 };
 
          while( ( bit_index + 1 ) > 0 )
          {
@@ -879,9 +879,9 @@ void Win32FoundationClasses::CBitArray::FreeExtra( void ) noexcept
          m_Bits.at( index ) = this_set_of_bits;
       }
 
-      SSIZE_T loop_index = m_Bits.size() - 1;
+      auto loop_index{ m_Bits.size() - 1 };
 
-      while( index < loop_index )
+      for( auto const index : Range(loop_index) )
       {
          this_set_of_bits = m_Bits.at( index );
          that_set_of_bits = m_Bits.at( index + 1 );
@@ -899,8 +899,6 @@ void Win32FoundationClasses::CBitArray::FreeExtra( void ) noexcept
 
          m_Bits.at( index ) = this_set_of_bits;
          m_Bits.at( index + 1 ) = that_set_of_bits;
-
-         index++;
       }
 
       number_of_bits--;
@@ -918,8 +916,8 @@ _Check_return_ bool Win32FoundationClasses::CBitArray::GetNextOne( __inout std::
    {
       // Starting at the beginning, skip all zero-filled members
 
-      SSIZE_T element_index = 0;
-      SSIZE_T const number_of_elements = (SSIZE_T) m_Bits.size();
+      SSIZE_T element_index{ 0 };
+      SSIZE_T const number_of_elements{ (SSIZE_T)m_Bits.size() };
 
       while( element_index < ( number_of_elements - 1 ) and
              m_Bits.at( element_index ) == 0 )
@@ -930,12 +928,12 @@ _Check_return_ bool Win32FoundationClasses::CBitArray::GetNextOne( __inout std::
 #if ( AN_ELEMENT_THAT_IS_ALL_ONES == 0xFFFFFFFF )
    // We can optimize the calculation to a left shift if
    // our element size is a multiple of 2 (like 32)
-      SSIZE_T bit_index = element_index << 5;
+      SSIZE_T bit_index{ element_index << 5 };
 #else
-      SSIZE_T bit_index = element_index * m_SizeOfBitRepresentation;
+      SSIZE_T bit_index{ element_index * m_SizeOfBitRepresentation };
 #endif // AN_ELEMENT_THAT_IS_ALL_ONES
 
-      SSIZE_T const number_of_bits_in_array = (SSIZE_T) GetSize();
+      SSIZE_T const number_of_bits_in_array{ (SSIZE_T)GetSize() };
 
       while( bit_index < number_of_bits_in_array and GetAt( bit_index ) == 0 )
       {
@@ -953,8 +951,8 @@ _Check_return_ bool Win32FoundationClasses::CBitArray::GetNextOne( __inout std::
 
    // We're picking up where we left off from a previous call to GetNextOne().
 
-   std::size_t bit_index = enumerator + 1; // Always start after the one we previously found
-   auto const number_of_bits_in_array = GetSize();
+   std::size_t bit_index{ enumerator + 1 }; // Always start after the one we previously found
+   auto const number_of_bits_in_array{ GetSize() };
 
    if ( bit_index >= number_of_bits_in_array )
    {
@@ -978,12 +976,12 @@ _Check_return_ bool Win32FoundationClasses::CBitArray::GetNextOne( __inout std::
    // If we are using 32 bits per element, we can optimize the
    // division to right shifting. Right shifting by 5 is the
    // same as dividing by 32 ( (x/32) == (x>>5) )
-   std::size_t element_index = bit_index / SizeOfBitRepresentation();
+   std::size_t element_index{ bit_index / SizeOfBitRepresentation() };
 #else
-   std::size_t element_index = bit_index >> 5;
+   std::size_t element_index{ bit_index >> 5 };
 #endif // AN_ELEMENT_THAT_IS_ALL_ONES
 
-   auto number_of_elements = m_Bits.size();
+   auto number_of_elements{ m_Bits.size() };
 
    while( element_index < ( number_of_elements - 1 ) and
           m_Bits.at( element_index ) == 0 )
@@ -1023,8 +1021,8 @@ _Check_return_ bool Win32FoundationClasses::CBitArray::GetNextZero( __inout std:
    {
       // Starting at the beginning, skip all zero-filled members
 
-      SSIZE_T element_index      = 0;
-      SSIZE_T const number_of_elements = (SSIZE_T) m_Bits.size();
+      SSIZE_T element_index{ 0 };
+      SSIZE_T const number_of_elements{ (SSIZE_T)m_Bits.size() };
 
       while( element_index < ( number_of_elements - 1 ) and
              m_Bits.at( element_index ) == AN_ELEMENT_THAT_IS_ALL_ONES )
@@ -1035,12 +1033,12 @@ _Check_return_ bool Win32FoundationClasses::CBitArray::GetNextZero( __inout std:
 #if ( AN_ELEMENT_THAT_IS_ALL_ONES == 0xFFFFFFFF )
    // We can optimize the calculation to a left shift if
    // our element size is a multiple of 2 (like 32)
-      std::size_t bit_index = element_index << 5;
+      std::size_t bit_index{ static_cast<std::size_t>(element_index) << 5 };
 #else
-      std::size_t bit_index = element_index * m_SizeOfBitRepresentation;
+      std::size_t bit_index{ element_index * m_SizeOfBitRepresentation };
 #endif // AN_ELEMENT_THAT_IS_ALL_ONES
 
-      auto const number_of_bits_in_array = GetSize();
+      auto const number_of_bits_in_array{ GetSize() };
 
       while( bit_index < number_of_bits_in_array and GetAt( bit_index ) == 1 )
       {
@@ -1058,8 +1056,8 @@ _Check_return_ bool Win32FoundationClasses::CBitArray::GetNextZero( __inout std:
 
    // We're picking up where we left off from a previous call to GetNextZero().
 
-   std::size_t bit_index = enumerator + 1; // Always start after the one we previously found
-   auto const number_of_bits_in_array = GetSize();
+   std::size_t bit_index{ enumerator + 1 }; // Always start after the one we previously found
+   auto const number_of_bits_in_array{ GetSize() };
 
    if ( bit_index >= number_of_bits_in_array )
    {
@@ -1083,12 +1081,12 @@ _Check_return_ bool Win32FoundationClasses::CBitArray::GetNextZero( __inout std:
    // If we are using 32 bits per element, we can optimize the
    // division to right shifting. Right shifting by 5 is the
    // same as dividing by 32 ( (x/32) == (x>>5) )
-   std::size_t element_index = bit_index >> 5;
+   std::size_t element_index{ bit_index >> 5 };
 #else
-   std::size_t element_index = bit_index / SizeOfBitRepresentation();
+   std::size_t element_index{ bit_index / SizeOfBitRepresentation() };
 #endif // AN_ELEMENT_THAT_IS_ALL_ONES
 
-   auto number_of_elements = m_Bits.size();
+   auto number_of_elements{ m_Bits.size() };
 
    while( element_index < ( number_of_elements - 1 ) and
           m_Bits.at( element_index ) == AN_ELEMENT_THAT_IS_ALL_ONES )
@@ -1124,7 +1122,7 @@ _Check_return_ std::size_t Win32FoundationClasses::CBitArray::GetNumberOfOnes( v
 {
    WFC_VALIDATE_POINTER( this );
 
-   std::size_t number_of_ones = 0;
+   std::size_t number_of_ones{ 0 };
 
    for ( auto const index : Range(GetSize()) )
    {
@@ -1158,8 +1156,8 @@ _Check_return_ uint32_t Win32FoundationClasses::CBitArray::GetValue( _In_ std::s
       return( 0 );
    }
 
-   uint32_t return_value = 0;
-   uint32_t bit_value    = 0;
+   uint32_t return_value{ 0 };
+   uint32_t bit_value{ 0 };
 
    for ( auto const index : Range(number_of_bits) )
    {
@@ -1197,12 +1195,11 @@ void Win32FoundationClasses::CBitArray::InsertAt( _In_ std::size_t const bit_loc
 
    Add( 0 );
 
-   uint32_t this_set_of_bits = 0;
-   uint32_t that_set_of_bits = 0;
+   uint32_t this_set_of_bits{ 0 };
+   uint32_t that_set_of_bits{ 0 };
+   uint32_t bit_number{ 0 };
 
-   std::size_t array_index      = 0;
-
-   uint32_t bit_number = 0;
+   std::size_t array_index{ 0 };
 
    if ( m_GetElementIndexOfBitLocation( bit_location, array_index, bit_number ) == false )
    {
@@ -1210,7 +1207,7 @@ void Win32FoundationClasses::CBitArray::InsertAt( _In_ std::size_t const bit_loc
       return;
    }
 
-   SSIZE_T loop_index = m_Bits.size() - 1;
+   auto loop_index{ m_Bits.size() - 1 };
 
    if ( loop_index >= 1 )
    {
@@ -1221,7 +1218,7 @@ void Win32FoundationClasses::CBitArray::InsertAt( _In_ std::size_t const bit_loc
 
       loop_index--;
 
-      while( loop_index > (SSIZE_T) array_index )
+      while( loop_index > array_index )
       {
          that_set_of_bits = m_Bits.at( loop_index + 1 );
          this_set_of_bits = m_Bits.at( loop_index );
@@ -1248,9 +1245,9 @@ void Win32FoundationClasses::CBitArray::InsertAt( _In_ std::size_t const bit_loc
 
       this_set_of_bits = m_Bits.at( array_index );
 
-      SSIZE_T upper_bound = m_Bits.size() - 1;
+      auto upper_bound{ m_Bits.size() - 1 };
 
-      if ( bit_number not_eq 0 and (SSIZE_T) array_index < upper_bound )
+      if ( bit_number not_eq 0 and array_index < upper_bound )
       {
          that_set_of_bits = m_Bits.at( array_index + 1 );
 
@@ -1380,12 +1377,11 @@ void Win32FoundationClasses::CBitArray::RemoveAt( _In_ std::size_t const bit_loc
       return;
    }
 
-   uint32_t this_set_of_bits = 0;
-   uint32_t that_set_of_bits = 0;
+   uint32_t this_set_of_bits{ 0 };
+   uint32_t that_set_of_bits{ 0 };
+   uint32_t bit_number{ 0 };
 
-   std::size_t index = 0;
-
-   uint32_t bit_number = 0;
+   std::size_t index{ 0 };
 
    if ( m_GetElementIndexOfBitLocation( bit_location, index, bit_number ) == false )
    {
@@ -1397,7 +1393,7 @@ void Win32FoundationClasses::CBitArray::RemoveAt( _In_ std::size_t const bit_loc
 
    if ( bit_number > 0 )
    {
-       std::size_t bit_index = bit_number - 1;
+       std::size_t bit_index{ bit_number - 1 };
 
       while( ( bit_index + 1 ) > 0 )
       {
@@ -1416,7 +1412,7 @@ void Win32FoundationClasses::CBitArray::RemoveAt( _In_ std::size_t const bit_loc
       m_Bits.at( index ) = this_set_of_bits;
    }
 
-   SSIZE_T loop_index = m_Bits.size() - 1;
+   SSIZE_T loop_index{ static_cast<SSIZE_T>(m_Bits.size()) - 1 };
 
    while( (SSIZE_T) index < loop_index )
    {
@@ -1455,7 +1451,7 @@ _Check_return_ Win32FoundationClasses::CBitArray Win32FoundationClasses::CBitArr
    }
    else
    {
-      std::size_t get_at_index = GetSize() - number_of_bits;
+      std::size_t get_at_index{ GetSize() - number_of_bits };
 
       for ( auto const index :Range(number_of_bits) )
       {
@@ -1481,7 +1477,7 @@ void Win32FoundationClasses::CBitArray::RightTrim( _In_ std::size_t const number
    // 1998-12-09 Peter Ekberg (peda@sectra.se) found a bug here. I was
    // having a bit of a rounding error (no, I couldn't resist the pun).
 
-   auto number_of_elements = GetSize();
+   auto number_of_elements{ GetSize() };
 
    number_of_elements += ( SizeOfBitRepresentation() - 1 );
    number_of_elements /= SizeOfBitRepresentation();
@@ -1512,9 +1508,9 @@ void Win32FoundationClasses::CBitArray::SetAt( _In_ std::size_t const bit_locati
       return;
    }
 
-   std::size_t index = 0;
+   std::size_t index{ 0 };
 
-   uint32_t bit_number = 0;
+   uint32_t bit_number{ 0 };
 
    if ( m_GetElementIndexOfBitLocation( bit_location, index, bit_number ) == false )
    {
@@ -1532,7 +1528,7 @@ void Win32FoundationClasses::CBitArray::SetAt( _In_ std::size_t const bit_locati
       return;
    }
 
-   uint32_t this_set_of_bits = m_Bits.at( index );
+   uint32_t this_set_of_bits{ m_Bits.at(index) };
 
    if ( value not_eq 0 )
    {
@@ -1561,7 +1557,7 @@ void Win32FoundationClasses::CBitArray::SetSize( _In_ std::size_t const number_o
    // less than m_SizeOfBitRepresentation and GetSize()
    // is zero. It would not add. DOH!
 
-   uint32_t number_of_elements = static_cast< uint32_t >( m_Bits.size() );
+   uint32_t number_of_elements{ static_cast<uint32_t>(m_Bits.size()) };
 
 #if ( AN_ELEMENT_THAT_IS_ALL_ONES == 0xFFFFFFFF )
    // We can optimize the calculation to a left shift if
@@ -1571,7 +1567,7 @@ void Win32FoundationClasses::CBitArray::SetSize( _In_ std::size_t const number_o
    if ( number_of_bits > ( number_of_elements * SizeOfBitRepresentation() ) )
 #endif // AN_ELEMENT_THAT_IS_ALL_ONES
    {
-       std::size_t number_of_elements_to_add = number_of_bits - GetSize();
+      std::size_t number_of_elements_to_add{ number_of_bits - GetSize() };
 
       // Thanks go to Anne Davidson (davidsoa@nichols.com) for finding
       // a bug here in that caused a rounding error.
@@ -1605,7 +1601,7 @@ void Win32FoundationClasses::CBitArray::SetValue(_In_ std::size_t const starting
       return;
    }
 
-   uint32_t offset = number_of_bits - 1;
+   uint32_t offset{ number_of_bits - 1 };
 
    for ( auto const index : Range(number_of_bits) )
    {

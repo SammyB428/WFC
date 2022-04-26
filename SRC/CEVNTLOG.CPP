@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 1995-2019, Samuel R. Blackburn
+** Copyright, 1995-2022, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -66,7 +66,7 @@ Win32FoundationClasses::CEventLog::CEventLog( __in_z wchar_t const * source_name
    WFC_VALIDATE_POINTER_NULL_OK( source_name );
 
    m_Initialize();
-   (void )RegisterSource( source_name );
+   std::ignore = RegisterSource( source_name );
 }
 
 Win32FoundationClasses::CEventLog::~CEventLog()
@@ -75,12 +75,12 @@ Win32FoundationClasses::CEventLog::~CEventLog()
 
    if ( m_EventSourceHandle not_eq static_cast< HANDLE >( INVALID_HANDLE_VALUE ) )
    {
-      (void) DeregisterSource();
+       std::ignore = DeregisterSource();
    }
 
    if ( m_LogHandle not_eq static_cast< HANDLE >( INVALID_HANDLE_VALUE ) )
    {
-      (void) Close();
+       std::ignore = Close();
    }
 
    m_Initialize();
@@ -115,7 +115,7 @@ _Check_return_ bool Win32FoundationClasses::CEventLog::Backup( __in_z LPCTSTR na
 
    WFC_TRY
    {
-      BOOL const return_value = ::BackupEventLog( m_LogHandle, name_of_backup_file );
+      BOOL const return_value { ::BackupEventLog(m_LogHandle, name_of_backup_file)};
 
       if ( return_value == FALSE )
       {
@@ -159,7 +159,7 @@ _Check_return_ bool Win32FoundationClasses::CEventLog::Clear( __in_z LPCTSTR nam
 
 #endif // _DEBUG
 
-      BOOL const return_value = ::ClearEventLog( m_LogHandle, name_of_backup_file );
+      BOOL const return_value { ::ClearEventLog(m_LogHandle, name_of_backup_file) };
 
       if ( return_value == FALSE )
       {
@@ -182,7 +182,7 @@ _Check_return_ bool Win32FoundationClasses::CEventLog::Close( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
-   BOOL const return_value = ::CloseEventLog( m_LogHandle );
+   BOOL const return_value{ ::CloseEventLog(m_LogHandle) };
 
    m_LogHandle = static_cast<HANDLE>(INVALID_HANDLE_VALUE);
 
@@ -246,7 +246,7 @@ _Check_return_ bool Win32FoundationClasses::CEventLog::CreateApplicationLog( __i
       // bug here. I was assuming _tcslen() == sizeof() a string. DOH!
 
       std::wstring dequoted_source(message_resource_file);
-      (void)trim_quotes(dequoted_source);
+      std::ignore = trim_quotes(dequoted_source);
 
       if (registry.SetValue(L"EventMessageFile", CRegistry::KeyValueTypes::UnexpandedString, (LPBYTE)dequoted_source.c_str(), (dequoted_source.length() + 1) * sizeof(wchar_t)) == false)
       {
@@ -273,7 +273,7 @@ _Check_return_ bool Win32FoundationClasses::CEventLog::CreateApplicationLog( __i
 
          if ( registry.GetValue( L"Sources", sources ) == true)
          {
-            bool application_was_found = false;
+             bool application_was_found{ false };
 
             for ( auto const& entry : sources )
             {
@@ -288,8 +288,8 @@ _Check_return_ bool Win32FoundationClasses::CEventLog::CreateApplicationLog( __i
             {
                // The application isn't listed as a source, we must add it
 
-               (void) sources.push_back( application_name );
-               (void) registry.SetValue( L"Sources", sources );
+               sources.push_back( application_name );
+               std::ignore = registry.SetValue( L"Sources", sources );
             }
          }
       }
@@ -508,7 +508,7 @@ _Check_return_ bool Win32FoundationClasses::CEventLog::DeleteApplicationLog(_In_
 
          if ( registry.GetValue( L"Sources", sources ) == true)
          {
-            bool application_was_found = false;
+            bool application_was_found{ false };
 
             for ( auto const index : Range(sources.size()) )
             {
@@ -522,7 +522,7 @@ _Check_return_ bool Win32FoundationClasses::CEventLog::DeleteApplicationLog(_In_
 
             if ( application_was_found == true)
             {
-               (void) registry.SetValue( L"Sources", sources );
+                std::ignore = registry.SetValue( L"Sources", sources );
             }
          }
       }
@@ -543,7 +543,7 @@ _Check_return_ bool Win32FoundationClasses::CEventLog::DeregisterSource( void ) 
 
    if ( m_EventSourceHandle not_eq static_cast< HANDLE >( INVALID_HANDLE_VALUE ) )
    {
-      BOOL const return_value = ::DeregisterEventSource( m_EventSourceHandle );
+      BOOL const return_value{ ::DeregisterEventSource(m_EventSourceHandle) };
 
       m_EventSourceHandle = static_cast<HANDLE>(INVALID_HANDLE_VALUE);
 
@@ -590,7 +590,7 @@ _Check_return_ bool Win32FoundationClasses::CEventLog::GetNextLog( __inout DWORD
 
    Win32FoundationClasses::CRegistry registry;
 
-   BOOL return_value = FALSE;
+   BOOL return_value{ FALSE };
 
    if ( ComputerName.empty() == false )
    {
@@ -608,7 +608,7 @@ _Check_return_ bool Win32FoundationClasses::CEventLog::GetNextLog( __inout DWORD
       return( false );
    }
 
-   DWORD const permissions = CRegistry::permissionEnumerateSubKeys bitor CRegistry::permissionRead;
+   DWORD const permissions{ CRegistry::permissionEnumerateSubKeys bitor CRegistry::permissionRead };
 
    return_value = registry.Open( TEXT( "SYSTEM\\CurrentControlSet\\Services\\EventLog" ), static_cast< CRegistry::CreatePermissions >( permissions ) );
 
@@ -619,7 +619,7 @@ _Check_return_ bool Win32FoundationClasses::CEventLog::GetNextLog( __inout DWORD
       return( false );
    }
 
-   DWORD key_index = 0;
+   DWORD key_index{ 0 };
 
    std::wstring class_name;
 
@@ -645,7 +645,7 @@ _Check_return_ bool Win32FoundationClasses::CEventLog::GetNumberOfRecords( _Out_
 
    number_of_records = 0; // Always start at a known state
 
-   BOOL const return_value = ::GetNumberOfEventLogRecords( m_LogHandle, &number_of_records );
+   BOOL const return_value{ ::GetNumberOfEventLogRecords(m_LogHandle, &number_of_records) };
 
    if ( return_value == FALSE )
    {
@@ -662,7 +662,7 @@ _Check_return_ DWORD Win32FoundationClasses::CEventLog::GetOldestRecordNumber( v
 {
    WFC_VALIDATE_POINTER( this );
 
-   DWORD return_value = 0;
+   DWORD return_value{ 0 };
 
    if ( ::GetOldestEventLogRecord( m_LogHandle, &return_value ) not_eq FALSE )
    {
@@ -693,7 +693,7 @@ _Check_return_ bool Win32FoundationClasses::CEventLog::NotifyChange( _In_ HANDLE
       user_log_handle = m_LogHandle;
    }
 
-   BOOL const return_value = ::NotifyChangeEventLog( user_log_handle, event_handle );
+   BOOL const return_value{ ::NotifyChangeEventLog(user_log_handle, event_handle) };
 
    if ( return_value == FALSE )
    {
@@ -744,7 +744,7 @@ _Check_return_ bool Win32FoundationClasses::CEventLog::Open( __in_z LPCTSTR log_
 
             ZeroMemory( computer_name, sizeof( computer_name ) );
 
-            DWORD size = static_cast<DWORD>(std::size( computer_name ));
+            auto size{ static_cast<DWORD>(std::size(computer_name)) };
 
             if ( ::GetComputerNameExW(COMPUTER_NAME_FORMAT::ComputerNameDnsHostname, computer_name, &size ) not_eq FALSE )
             {
@@ -807,7 +807,7 @@ _Check_return_ bool Win32FoundationClasses::CEventLog::OpenBackup( __in_z LPCTST
 
             ZeroMemory( computer_name, sizeof( computer_name ) );
 
-            DWORD size = static_cast<DWORD>(std::size( computer_name ));
+            auto size{ static_cast<DWORD>(std::size(computer_name)) };
 
             if ( ::GetComputerNameExW(COMPUTER_NAME_FORMAT::ComputerNameDnsHostname, computer_name, &size ) not_eq FALSE )
             {
@@ -864,9 +864,9 @@ _Check_return_ bool Win32FoundationClasses::CEventLog::Read( _In_ DWORD record_n
 
       BYTE temporary_buffer[ 1 ]; // a throw-away valid memory address
 
-      DWORD number_of_bytes_to_read = 0;
+      DWORD number_of_bytes_to_read{ 0 };
 
-      bool return_value = Read( record_number, temporary_buffer, number_of_bytes_to_read, how_to_read );
+      auto return_value{ Read(record_number, temporary_buffer, number_of_bytes_to_read, how_to_read) };
 
       m_ErrorCode = ::GetLastError();
 
@@ -880,7 +880,7 @@ _Check_return_ bool Win32FoundationClasses::CEventLog::Read( _In_ DWORD record_n
 
       // m_NumberOfBytesInNextRecord now contains the size our buffer should be
 
-      auto allocated_buffer = std::make_unique<uint8_t[]>(m_NumberOfBytesInNextRecord);
+      auto allocated_buffer{ std::make_unique<uint8_t[]>(m_NumberOfBytesInNextRecord) };
 
       if (allocated_buffer.get() == nullptr)
       {
@@ -930,13 +930,13 @@ _Check_return_ bool Win32FoundationClasses::CEventLog::Read( _In_ DWORD record_n
          return( false );
       }
 
-      BOOL return_value = ::ReadEventLog( m_LogHandle,
-                                          how_to_read,
-                                          record_number,
-                                          buffer,
-                                          number_of_bytes_to_read,
-                                         &m_NumberOfBytesRead,
-                                         &m_NumberOfBytesInNextRecord );
+   BOOL return_value{ ::ReadEventLog(m_LogHandle,
+                                       how_to_read,
+                                       record_number,
+                                       buffer,
+                                       number_of_bytes_to_read,
+                                      &m_NumberOfBytesRead,
+                                      &m_NumberOfBytesInNextRecord) };
 
       if ( return_value == FALSE )
       {
@@ -976,7 +976,7 @@ _Check_return_ bool Win32FoundationClasses::CEventLog::RegisterSource(_In_ std::
 
       if ( m_EventSourceHandle not_eq static_cast< HANDLE >( INVALID_HANDLE_VALUE ) )
       {
-         (void) DeregisterSource();
+          std::ignore = DeregisterSource();
       }
 
       // 2019-09-08, SRB - Somewhere along the line, Microsoft forgot how to handle
@@ -985,7 +985,7 @@ _Check_return_ bool Win32FoundationClasses::CEventLog::RegisterSource(_In_ std::
 
       std::wstring dequoted_path_name(source_name);
 
-      (void)Win32FoundationClasses::trim_quotes(dequoted_path_name);
+      std::ignore = Win32FoundationClasses::trim_quotes(dequoted_path_name);
 
       m_EventSourceHandle = ::RegisterEventSourceW( name_of_computer, dequoted_path_name.c_str());
 
@@ -1023,7 +1023,7 @@ _Check_return_ bool Win32FoundationClasses::CEventLog::Report( _In_ EventType ev
 
    uint8_t security_identifier_buffer[ 4096 ];
 
-   DWORD size_of_security_identifier_buffer = sizeof( security_identifier_buffer );
+   DWORD size_of_security_identifier_buffer{ sizeof(security_identifier_buffer) };
 
    // We were passed a pointer, don't trust it
 
@@ -1032,10 +1032,10 @@ _Check_return_ bool Win32FoundationClasses::CEventLog::Report( _In_ EventType ev
       if ( user_security_identifier == nullptr )
       {
          TCHAR user_name[ 256 ];
-         DWORD size_of_user_name  = static_cast<DWORD>(std::size( user_name ));
+         auto size_of_user_name{ static_cast<DWORD>(std::size(user_name)) };
 
          TCHAR domain_name[ 256 ];
-         DWORD size_of_domain_name = static_cast<DWORD>(std::size( domain_name ));
+         auto size_of_domain_name{ static_cast<DWORD>(std::size(domain_name)) };
 
          SID_NAME_USE type_of_security_identifier;
 
@@ -1057,7 +1057,7 @@ _Check_return_ bool Win32FoundationClasses::CEventLog::Report( _In_ EventType ev
          }
       }
 
-      BOOL return_value = FALSE;
+   BOOL return_value{ FALSE };
 
       if ( m_EventSourceHandle not_eq static_cast< HANDLE >( INVALID_HANDLE_VALUE ) )
       {
@@ -1119,11 +1119,11 @@ _Check_return_ bool Win32FoundationClasses::CEventLog::Report(_In_ std::wstring_
       {
          if ( Report( EventType::eventError, 0, message_string_resource_identifier, number_of_strings, string_array ) == false )
          {
-            (void) DeregisterSource();
+             std::ignore = DeregisterSource();
             return( false );
          }
 
-         (void) DeregisterSource();
+         std::ignore = DeregisterSource();
       }
       else
       {
@@ -1145,7 +1145,7 @@ void Win32FoundationClasses::CEventLog::ReportError(_In_z_ wchar_t const * strin
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( string_to_report );
 
-   LPCTSTR string_array[ 1 ];
+   LPCTSTR string_array[1]{ nullptr };
 
    if ( string_to_report == nullptr )
    {
@@ -1156,7 +1156,7 @@ void Win32FoundationClasses::CEventLog::ReportError(_In_z_ wchar_t const * strin
       string_array[ 0 ] = string_to_report;
    }
 
-   (void) Report( EventType::eventError, 0, messageNumberZero, 1, string_array );
+   std::ignore = Report( EventType::eventError, 0, messageNumberZero, 1, string_array );
 }
 
 void Win32FoundationClasses::CEventLog::ReportInformation(_In_z_ wchar_t const * string_to_report ) noexcept
@@ -1175,7 +1175,7 @@ void Win32FoundationClasses::CEventLog::ReportInformation(_In_z_ wchar_t const *
       string_array[ 0 ] = string_to_report;
    }
 
-   (void) Report(EventType::eventInformation, 0, messageNumberZero, 1, string_array );
+   std::ignore = Report(EventType::eventInformation, 0, messageNumberZero, 1, string_array );
 }
 
 // End of source

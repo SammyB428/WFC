@@ -254,12 +254,12 @@ void Win32FoundationClasses::wfc_get_web_page( _In_ CUniformResourceLocator cons
 
     bytes_read_in_this_chunk.resize( 256 * 1024 );
 
-    DWORD number_of_bytes_read = 0;
+    DWORD number_of_bytes_read{ 0 };
 
-    BOOL return_value = InternetReadFile( url_handle,
+    BOOL return_value{ InternetReadFile(url_handle,
         bytes_read_in_this_chunk.data(),
-        (DWORD) bytes_read_in_this_chunk.size(),
-        &number_of_bytes_read );
+        (DWORD)bytes_read_in_this_chunk.size(),
+        &number_of_bytes_read) };
 
     while( return_value not_eq FALSE and number_of_bytes_read > 0 )
     {
@@ -284,7 +284,7 @@ void Win32FoundationClasses::wfc_get_web_page( _In_ CUniformResourceLocator cons
 
     Win32FoundationClasses::wfc_get_web_page( url, bytes, options );
 
-    (void) bytes.push_back( 0 ); // zero Terminate the string
+    bytes.push_back( 0 ); // zero Terminate the string
 
     std::wstring web_page;
     
@@ -292,19 +292,19 @@ void Win32FoundationClasses::wfc_get_web_page( _In_ CUniformResourceLocator cons
 
     bytes.clear();
 
-    std::size_t location_of_end_of_line_character = 0;
-    std::size_t start_searching_at_index          = 0;
+    std::size_t location_of_end_of_line_character{ 0 };
+    std::size_t start_searching_at_index{ 0 };
 
     location_of_end_of_line_character = web_page.find( '\n' );
 
     while( location_of_end_of_line_character not_eq std::wstring::npos )
     {
-        (void) page_contents.push_back( web_page.substr( start_searching_at_index, location_of_end_of_line_character - start_searching_at_index ) );
+        page_contents.push_back( web_page.substr( start_searching_at_index, location_of_end_of_line_character - start_searching_at_index ) );
         start_searching_at_index += ( ( location_of_end_of_line_character - start_searching_at_index ) + 1 );
         location_of_end_of_line_character = web_page.find( '\n', start_searching_at_index );
     }
 
-    (void) page_contents.push_back( web_page.substr( start_searching_at_index, web_page.length() - start_searching_at_index ) );
+    page_contents.push_back( web_page.substr( start_searching_at_index, web_page.length() - start_searching_at_index ) );
 }
 
 #endif // WFC_STL

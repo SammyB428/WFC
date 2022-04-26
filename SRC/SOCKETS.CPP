@@ -145,7 +145,7 @@ Win32FoundationClasses::CSimpleSocket::CSimpleSocket() noexcept
 
             m_ReferenceCount++;
             ::ReleaseMutex( mutex_handle );
-            (void) Win32FoundationClasses::wfc_close_handle( mutex_handle );
+            std::ignore = Win32FoundationClasses::wfc_close_handle( mutex_handle );
             return;
          }
          else
@@ -155,7 +155,7 @@ Win32FoundationClasses::CSimpleSocket::CSimpleSocket() noexcept
          
          // We couldn't acquire the mutex
 
-         (void) Win32FoundationClasses::wfc_close_handle( mutex_handle );
+         std::ignore = Win32FoundationClasses::wfc_close_handle( mutex_handle );
       }
       else
       {
@@ -220,7 +220,7 @@ Win32FoundationClasses::CSimpleSocket::CSimpleSocket( _In_ SOCKET const socket_i
 
             m_ReferenceCount++;
             ::ReleaseMutex( mutex_handle );
-            (void) Win32FoundationClasses::wfc_close_handle( mutex_handle );
+            std::ignore = Win32FoundationClasses::wfc_close_handle( mutex_handle );
             SetID( socket_id );
             return;
          }
@@ -232,7 +232,7 @@ Win32FoundationClasses::CSimpleSocket::CSimpleSocket( _In_ SOCKET const socket_i
          // We couldn't acquire the mutex
 
          ::ReleaseMutex( mutex_handle );
-         (void) Win32FoundationClasses::wfc_close_handle( mutex_handle );
+         std::ignore = Win32FoundationClasses::wfc_close_handle( mutex_handle );
       }
       else
       {
@@ -286,7 +286,7 @@ Win32FoundationClasses::CSimpleSocket::~CSimpleSocket() noexcept
          }
 
          ::ReleaseMutex( mutex_handle );
-         (void) Win32FoundationClasses::wfc_close_handle( mutex_handle );
+         std::ignore = Win32FoundationClasses::wfc_close_handle( mutex_handle );
       }
       else
       {
@@ -1252,7 +1252,7 @@ void Win32FoundationClasses::CSimpleSocket::SetAddress( _In_ std::wstring_view a
             index_2++;
          }
 
-         (void) AliasList.push_back( new_string );
+         AliasList.push_back( new_string );
          index++;
       }
    }

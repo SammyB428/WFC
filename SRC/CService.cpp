@@ -100,13 +100,13 @@ Win32FoundationClasses::CService::~CService( void )
 
    if ( m_ExitEventHandle not_eq static_cast< HANDLE >( NULL ) )
    {
-      (void) Win32FoundationClasses::wfc_close_handle( m_ExitEventHandle );
+       std::ignore = Win32FoundationClasses::wfc_close_handle( m_ExitEventHandle );
       m_ExitEventHandle = static_cast< HANDLE >( NULL );
    }
 
    if ( m_ThreadHandle not_eq static_cast< HANDLE >( NULL ) )
    {
-      (void) Win32FoundationClasses::wfc_close_handle( m_ThreadHandle );
+       std::ignore = Win32FoundationClasses::wfc_close_handle( m_ThreadHandle );
       m_ThreadHandle = static_cast< HANDLE >( NULL );
    }
 
@@ -431,11 +431,9 @@ void Win32FoundationClasses::CService::LogEvent( _In_ WORD event_type, __in_z_op
 
    Win32FoundationClasses::CEventLog log( m_ServiceName );
 
-   LPCTSTR strings[ 1 ];
+   LPCTSTR strings[1]{ message_string };
 
-   strings[ 0 ] = message_string;
-
-   (void) log.Report( (Win32FoundationClasses::CEventLog::EventType) event_type, 0, 0, 1, (LPCTSTR *) strings );
+   std::ignore = log.Report( (Win32FoundationClasses::CEventLog::EventType) event_type, 0, 0, 1, (LPCTSTR *) strings );
 }
 
 // I shouldn't have to put this here but WINUSER.H wasn't doing it right...
@@ -576,7 +574,7 @@ void Win32FoundationClasses::CService::ParseCommandLineParameters( _In_ DWORD co
 
    for ( auto const argument_number : Range(number_of_command_line_arguments) )
    {
-      (void) CommandLineParameters.push_back( command_line_arguments[ argument_number ] );
+      CommandLineParameters.push_back( command_line_arguments[ argument_number ] );
    }
 
    // default implementation
@@ -680,17 +678,17 @@ void CALLBACK Win32FoundationClasses::CService::ServiceControlManagerHandler( _I
    {
       case SERVICE_CONTROL_STOP:
 
-         (void) m_StaticService_p->SendStatusToServiceControlManager( SERVICE_STOP_PENDING, NO_ERROR, 1, m_StaticService_p->m_WaitHint );
+         std::ignore = m_StaticService_p->SendStatusToServiceControlManager( SERVICE_STOP_PENDING, NO_ERROR, 1, m_StaticService_p->m_WaitHint );
 
          ::EnterCriticalSection( &g_ServiceCriticalSection );
          m_StaticService_p->m_Running      = false;
          m_StaticService_p->m_CurrentState = SERVICE_STOPPED;
          ::LeaveCriticalSection( &g_ServiceCriticalSection );
 
-         (void)m_StaticService_p->SendStatusToServiceControlManager(SERVICE_STOP_PENDING, NO_ERROR, 2, m_StaticService_p->m_WaitHint);
+         std::ignore = m_StaticService_p->SendStatusToServiceControlManager(SERVICE_STOP_PENDING, NO_ERROR, 2, m_StaticService_p->m_WaitHint);
 
          m_StaticService_p->OnStop();
-         (void)m_StaticService_p->SendStatusToServiceControlManager(SERVICE_STOPPED, NO_ERROR, 1, m_StaticService_p->m_WaitHint);
+         std::ignore = m_StaticService_p->SendStatusToServiceControlManager(SERVICE_STOPPED, NO_ERROR, 1, m_StaticService_p->m_WaitHint);
          m_StaticService_p->Exit();
 
          return;
@@ -747,14 +745,14 @@ void CALLBACK Win32FoundationClasses::CService::ServiceControlManagerHandler( _I
 
       case SERVICE_CONTROL_SHUTDOWN:
 
-         (void) m_StaticService_p->SendStatusToServiceControlManager( SERVICE_STOP_PENDING, NO_ERROR, 1, m_StaticService_p->m_WaitHint );
+         std::ignore = m_StaticService_p->SendStatusToServiceControlManager( SERVICE_STOP_PENDING, NO_ERROR, 1, m_StaticService_p->m_WaitHint );
 
          ::EnterCriticalSection( &g_ServiceCriticalSection );
          m_StaticService_p->m_Running      = false;
          m_StaticService_p->m_CurrentState = SERVICE_STOP_PENDING;
          ::LeaveCriticalSection( &g_ServiceCriticalSection );
 
-         (void)m_StaticService_p->SendStatusToServiceControlManager(SERVICE_STOP_PENDING, NO_ERROR, 2, m_StaticService_p->m_WaitHint);
+         std::ignore = m_StaticService_p->SendStatusToServiceControlManager(SERVICE_STOP_PENDING, NO_ERROR, 2, m_StaticService_p->m_WaitHint);
          m_StaticService_p->OnShutdown();
 
          ::EnterCriticalSection(&g_ServiceCriticalSection);
@@ -762,7 +760,7 @@ void CALLBACK Win32FoundationClasses::CService::ServiceControlManagerHandler( _I
          m_StaticService_p->m_CurrentState = SERVICE_STOPPED;
          ::LeaveCriticalSection(&g_ServiceCriticalSection);
 
-         (void)m_StaticService_p->SendStatusToServiceControlManager(SERVICE_STOPPED, NO_ERROR, 1, m_StaticService_p->m_WaitHint);
+         std::ignore = m_StaticService_p->SendStatusToServiceControlManager(SERVICE_STOPPED, NO_ERROR, 1, m_StaticService_p->m_WaitHint);
          m_StaticService_p->Exit();
 
          return;
@@ -774,14 +772,14 @@ void CALLBACK Win32FoundationClasses::CService::ServiceControlManagerHandler( _I
          break;
    }
 
-   (void) m_StaticService_p->SendStatusToServiceControlManager( m_StaticService_p->m_CurrentState );
+   std::ignore = m_StaticService_p->SendStatusToServiceControlManager( m_StaticService_p->m_CurrentState );
 }
 
 void CALLBACK Win32FoundationClasses::CService::ServiceMain( _In_ DWORD const number_of_command_line_arguments, _In_reads_z_( number_of_command_line_arguments ) LPCTSTR command_line_arguments[] )
 {
    // entry point for service called by SCM when service is started
 
-   auto thread_handle = static_cast< HANDLE >( NULL );
+   auto thread_handle{ static_cast<HANDLE>(NULL) };
 
    WFC_VALIDATE_POINTER( m_StaticService_p );
 
@@ -881,7 +879,7 @@ EXIT_GOTO:
 
          if ( m_StaticService_p->m_ServiceStatusHandle not_eq 0 )
          {
-            (void) m_StaticService_p->SendStatusToServiceControlManager( SERVICE_STOPPED, m_StaticService_p->m_ErrorCode );
+             std::ignore = m_StaticService_p->SendStatusToServiceControlManager( SERVICE_STOPPED, m_StaticService_p->m_ErrorCode );
          }
       }
    }

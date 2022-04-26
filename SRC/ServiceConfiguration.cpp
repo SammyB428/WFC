@@ -520,11 +520,11 @@ void Win32FoundationClasses::CServiceConfigurationW::Copy( _In_ QUERY_SERVICE_CO
 
       if ( source.lpDependencies not_eq nullptr )
       {
-         wchar_t *temp_pointer = (wchar_t *) source.lpDependencies;
+         auto temp_pointer{ (wchar_t*)source.lpDependencies };
 
          while ( temp_pointer[ 0 ] not_eq 0x00 )
          {
-            (void) m_Dependencies.push_back( temp_pointer );
+            m_Dependencies.push_back( temp_pointer );
             temp_pointer += wcslen( (LPCWSTR) temp_pointer ) + 1;
          }
       }

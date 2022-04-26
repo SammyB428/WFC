@@ -72,7 +72,7 @@ void Win32FoundationClasses::CServiceControlManager::Close( void ) noexcept
 
     // We don't want to close while the database is locked
 
-    (void) UnlockDatabase();
+    std::ignore = UnlockDatabase();
 
     if ( m_ManagerHandle not_eq static_cast< SC_HANDLE >( NULL ) )
     {
@@ -825,7 +825,7 @@ _Check_return_ bool Win32FoundationClasses::CServiceControlManager::LockDatabase
     if ( m_DatabaseLockHandle not_eq static_cast< SC_LOCK >( NULL ) )
     {
         // The database is already locked, unlock it
-        (void) UnlockDatabase();
+        std::ignore = UnlockDatabase();
     }
 
     m_DatabaseLockHandle = ::LockServiceDatabase( m_ManagerHandle );
@@ -993,7 +993,7 @@ _Check_return_ bool Win32FoundationClasses::CServiceControlManager::Remove( __in
             return( false );
         }
 
-        auto service_handle = ::OpenServiceW( m_ManagerHandle, service_name, SERVICE_ALL_ACCESS );
+        auto service_handle{ ::OpenServiceW(m_ManagerHandle, service_name, SERVICE_ALL_ACCESS) };
 
         if ( service_handle == static_cast< SC_HANDLE >( NULL ) )
         {
@@ -1010,7 +1010,7 @@ _Check_return_ bool Win32FoundationClasses::CServiceControlManager::Remove( __in
             TCHAR user_name[ 2048 ];
             TCHAR temp_string[ 2100 ];
 
-            DWORD size_of_user_name = static_cast<DWORD>(std::size( user_name ));
+            DWORD size_of_user_name{ static_cast<DWORD>(std::size(user_name)) };
 
             ::ZeroMemory( user_name,   sizeof( user_name   ) );
             ::ZeroMemory( temp_string, sizeof( temp_string ) );
@@ -1024,7 +1024,7 @@ _Check_return_ bool Win32FoundationClasses::CServiceControlManager::Remove( __in
             event_log.ReportInformation( temp_string );
         }
 
-        BOOL return_value = ::DeleteService( service_handle );
+        BOOL return_value{ ::DeleteService(service_handle) };
 
         if ( return_value == FALSE )
         {
@@ -1066,7 +1066,7 @@ _Check_return_ bool Win32FoundationClasses::CServiceControlManager::Remove( __in
 
         // We no longer need the service handle...
 
-        ::CloseServiceHandle( service_handle );
+        std::ignore = ::CloseServiceHandle( service_handle );
         service_handle = static_cast< SC_HANDLE >( NULL );
 
         /*
@@ -1075,7 +1075,7 @@ _Check_return_ bool Win32FoundationClasses::CServiceControlManager::Remove( __in
 
         CEventLog event_log;
 
-        (void) event_log.DeleteApplicationLog( service_name );
+        std::ignore = event_log.DeleteApplicationLog( service_name );
 
         return( true );
     }
@@ -1200,7 +1200,7 @@ _Check_return_ bool Win32FoundationClasses::CServiceControlManager::SetConfigura
                 return_value = true;
             }
 
-            (void) UnlockDatabase();
+            std::ignore = UnlockDatabase();
 
             ::CloseServiceHandle( service_handle );
             return( return_value );
@@ -1486,16 +1486,16 @@ _Check_return_ bool Win32FoundationClasses::CServiceControlManager::WaitForStop(
         if (m_ErrorCode not_eq ERROR_SUCCESS)
         {
             ::CloseServiceHandle(service_handle);
-            (void)wfc_close_handle(event_handle);
+            std::ignore = Win32FoundationClasses::wfc_close_handle(event_handle);
             return(false);
         }
         else
         {
-            wfc_get_error_string(m_ErrorCode, m_ErrorMessage);
+            Win32FoundationClasses::wfc_get_error_string(m_ErrorCode, m_ErrorMessage);
         }
 
         WaitForSingleObjectEx(event_handle, INFINITE, TRUE);
-        (void)Win32FoundationClasses::wfc_close_handle(event_handle);
+        std::ignore = Win32FoundationClasses::wfc_close_handle(event_handle);
         ::CloseServiceHandle(service_handle);
         return(true);
     }

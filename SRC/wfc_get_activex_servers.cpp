@@ -86,7 +86,7 @@ _Check_return_ bool Win32FoundationClasses::wfc_get_activex_servers( _Out_ std::
 
    std::wstring temp_string;
 
-   std::size_t location_of_semicolon = server_name.find( ';' );
+   auto location_of_semicolon{ server_name.find(';') };
 
    while( location_of_semicolon not_eq std::wstring::npos )
    {
@@ -101,7 +101,7 @@ _Check_return_ bool Win32FoundationClasses::wfc_get_activex_servers( _Out_ std::
 
       if ( temp_string.empty() == false )
       {
-         (void) server_list.push_back( temp_string );
+         server_list.push_back( temp_string );
       }
 
       server_name.erase(0, location_of_semicolon + 1);
@@ -119,7 +119,7 @@ _Check_return_ bool Win32FoundationClasses::wfc_get_activex_servers( _Out_ std::
 
    if ( server_name.empty() == false )
    {
-      (void) server_list.push_back( server_name );
+      server_list.push_back( server_name );
    }
 
    return( true );

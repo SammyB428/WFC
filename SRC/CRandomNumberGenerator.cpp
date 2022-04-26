@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 1995-2016, Samuel R. Blackburn
+** Copyright, 1995-2022, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -130,17 +130,15 @@ void Win32FoundationClasses::CRandomNumberGenerator::InitializeSeed( void ) noex
 
    // We need to seed our algorithm with something random from the operating system
 
-   WORD high_word = 0;
-   WORD low_word  = 0;
+   // GetTickCount64() returns the number of milliseconds the machine has been turned on
 
-   // GetTickCount() returns the number of milliseconds the machine has been turned on
+   WORD high_word{ LOWORD(::GetTickCount64()) };
+   WORD low_word{ 0 };
 
-   high_word = LOWORD( ::GetTickCount64() );
-
-   DWORD number_of_sectors_per_cluster = 0;
-   DWORD number_of_bytes_per_sector    = 0;
-   DWORD number_of_free_clusters       = 0;
-   DWORD total_number_of_clusters      = 0;
+   DWORD number_of_sectors_per_cluster{ 0 };
+   DWORD number_of_bytes_per_sector{ 0 };
+   DWORD number_of_free_clusters{ 0 };
+   DWORD total_number_of_clusters{ 0 };
 
    // Different folks have different amounts of free space on their hard drives
 
@@ -157,7 +155,7 @@ void Win32FoundationClasses::CRandomNumberGenerator::InitializeSeed( void ) noex
       // Anther call to GetTickCount() should do the trick because the
       // GetDiskFreeSpace() will take a varying amount of time.
 
-      low_word xor_eq ( (WORD) ::GetTickCount64() );
+      low_word xor_eq ( static_cast<WORD>( ::GetTickCount64() ) );
    }
    else
    {
@@ -172,11 +170,8 @@ void Win32FoundationClasses::CRandomNumberGenerator::InitializeSeed( void ) noex
 
       // The most random part of the system time is the milliseconds then seconds
 
-      BYTE high_byte = 0;
-      BYTE low_byte  = 0;
-
-      high_byte = LOBYTE( system_time.wMilliseconds );
-      low_byte  = (BYTE) ( ( system_time.wMilliseconds >> 8 ) + system_time.wSecond );
+      BYTE high_byte{ LOBYTE(system_time.wMilliseconds) };
+      BYTE low_byte{ static_cast<BYTE>((system_time.wMilliseconds >> 8) + system_time.wSecond) };
 
       low_word = MAKEWORD( low_byte, high_byte );
    }
@@ -191,7 +186,7 @@ _Check_return_ DWORD Win32FoundationClasses::CRandomNumberGenerator::GetInteger(
 {
    WFC_VALIDATE_POINTER( this );
 
-   double value = GetFloat();
+   double value{ GetFloat() };
 
    value *= static_cast< double >( 0xFFFFFFFF );
 
@@ -200,10 +195,10 @@ _Check_return_ DWORD Win32FoundationClasses::CRandomNumberGenerator::GetInteger(
    // do a quick and dirty hash of the bytes that make 
    // up the double value
 
-   auto buffer = reinterpret_cast<BYTE const *>( &value );
+   auto buffer{ reinterpret_cast<BYTE const*>(&value) };
 
-   DWORD hash_value = static_cast< DWORD >( value );
-   DWORD temp_value = 0;
+   DWORD hash_value{ static_cast<DWORD>(value) };
+   DWORD temp_value{ 0 };
 
    for ( auto const index : Range(sizeof( value )) )
    {
@@ -219,7 +214,7 @@ _Check_return_ DWORD Win32FoundationClasses::CRandomNumberGenerator::GetInteger(
       hash_value and_eq compl temp_value;
    }
 
-   DWORD return_value = static_cast< DWORD >( value );
+   DWORD return_value{ static_cast<DWORD>(value) };
 
    return_value += ( ( hash_value >> 5 ) % 256 );
 
@@ -230,9 +225,7 @@ _Check_return_ double Win32FoundationClasses::CRandomNumberGenerator::GetFloat( 
 {
    WFC_VALIDATE_POINTER( this );
 
-   double return_value = 0.0;
-
-   return_value = m_Array[ m_Index_1 ] - m_Array[ m_Index_2 ];
+   double return_value{ m_Array[m_Index_1] - m_Array[m_Index_2] };
 
    if ( return_value < 0.0 )
    {
@@ -276,8 +269,8 @@ void Win32FoundationClasses::CRandomNumberGenerator::SetSeed( _In_ DWORD new_see
 {
    WFC_VALIDATE_POINTER( this );
 
-   WORD seed_1 = LOWORD( new_seed );
-   WORD seed_2 = HIWORD( new_seed );
+   WORD seed_1{ LOWORD(new_seed) };
+   WORD seed_2{ HIWORD(new_seed) };
 
    while( seed_1 > 31328 ) // Cannot be converted to a Range loop
    {
@@ -289,19 +282,19 @@ void Win32FoundationClasses::CRandomNumberGenerator::SetSeed( _In_ DWORD new_see
       seed_2 %= 30082;
    }
 
-   int i = static_cast< int >( ::fmod( seed_1 / 177.0, 177.0 ) + 2 );
-   int j = static_cast< int >( ::fmod( seed_1        , 177.0 ) + 2 );
-   int k = static_cast< int >( ::fmod( seed_2 / 169.0, 178.0 ) + 1 );
-   int l = static_cast< int >( ::fmod( seed_2        , 169.0 )     );
+   int i{ static_cast<int>(::fmod(seed_1 / 177.0, 177.0) + 2) };
+   int j{ static_cast<int>(::fmod(seed_1        , 177.0) + 2) };
+   int k{ static_cast<int>(::fmod(seed_2 / 169.0, 178.0) + 1) };
+   int l{ static_cast<int>(::fmod(seed_2        , 169.0)) };
 
    for( auto const outer_loop_index : Range(97) )
    {
-      double seed = 0.0;
-      double t    = 0.5;
+      double seed{ 0.0 };
+      double t{ 0.5 };
 
       for( auto const inner_loop_index : Range(24) )
       {
-         double m = static_cast< int >( ::fmod( ::fmod( i * j, 179.0 ) * k , 179.0 ) );
+         double const m{ ::fmod(::fmod(i * j, 179.0) * k , 179.0) };
          i = j;
          j = k;
          k = static_cast< int >( m );
@@ -330,9 +323,9 @@ Win32FoundationClasses::CRandomNumberGenerator::operator char() noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
-   DWORD random_value = GetInteger();
+   DWORD const random_value{ GetInteger() };
 
-   char return_value = static_cast< char >( random_value >> 9 );
+   char const return_value{ static_cast<char>(random_value >> 9) };
 
    return( return_value );
 }
@@ -341,9 +334,9 @@ Win32FoundationClasses::CRandomNumberGenerator::operator unsigned char() noexcep
 {
    WFC_VALIDATE_POINTER( this );
 
-   DWORD random_value = GetInteger();
+   DWORD const random_value{ GetInteger() };
    
-   unsigned char return_value = static_cast< unsigned char >( random_value >> 17 );
+   unsigned char const return_value{ static_cast<unsigned char>(random_value >> 17) };
 
    return( return_value );
 }

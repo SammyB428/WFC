@@ -63,8 +63,8 @@ _Check_return_ bool Win32FoundationClasses::CUUCoding::OutputFilename(_In_ std::
 {
     filename.clear();
 
-    std::size_t index = 0;
-    auto const number_of_bytes_to_decode = source.size();
+    std::size_t index{ 0 };
+    auto const number_of_bytes_to_decode{ source.size() };
 
     // Since we're decoding, we are most likely in a performance-minded
     // part of an application, let's go for a speedy method for accessing
@@ -301,7 +301,7 @@ _Check_return_ bool Win32FoundationClasses::CUUCoding::Decode(_In_ std::vector<u
             if (line_index <= number_of_characters_in_this_line)
             {
                 byte_to_add = static_cast<uint8_t>((character_3 << 6) bitor (character_4));
-                (void)destination.push_back(byte_to_add);
+                destination.push_back(byte_to_add);
             }
         }
     }
@@ -315,21 +315,21 @@ _Check_return_ bool Win32FoundationClasses::CUUCoding::Decode( _In_ std::wstring
 
     // Start with an empty destination
 
-    bool return_value = false;
+    bool return_value{ false };
 
-    std::size_t const number_of_bytes_to_decode = source.length();
+    std::size_t const number_of_bytes_to_decode{ source.length() };
 
     // Since we're decoding, we are most likely in a performance-minded
     // part of an application, let's go for a speedy method for accessing
     // the source data.
 
-    auto input_buffer = source.c_str();
+    auto input_buffer{ source.c_str() };
 
     std::vector<uint8_t> bytes_to_decode;
 
     bytes_to_decode.resize( number_of_bytes_to_decode );
 
-    auto buffer = bytes_to_decode.data();
+    auto buffer{ bytes_to_decode.data() };
 
     WFC_TRY
     {
@@ -358,7 +358,7 @@ _Check_return_ bool Win32FoundationClasses::CUUCoding::Encode( _In_ std::vector<
 
     // Output bytes 45 at a time
 
-    auto const number_of_bytes_to_encode = source.size();
+    auto const number_of_bytes_to_encode{ source.size() };
 
     std::size_t index      = 0;
     std::size_t line_index = 0;

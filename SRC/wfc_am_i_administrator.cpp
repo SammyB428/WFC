@@ -90,7 +90,7 @@ _Check_return_ bool Win32FoundationClasses::wfc_am_i_administrator( void ) noexc
                                  &buffer_size );
 
    // use wfc_close_handle instead of CloseHandle when you don't want exceptions thrown
-   (void) Win32FoundationClasses::wfc_close_handle( access_token_handle );
+   std::ignore = Win32FoundationClasses::wfc_close_handle( access_token_handle );
    access_token_handle = static_cast< HANDLE >( NULL );
 
    if ( success == FALSE )
@@ -98,9 +98,9 @@ _Check_return_ bool Win32FoundationClasses::wfc_am_i_administrator( void ) noexc
       return( false );
    }
 
-   SID_IDENTIFIER_AUTHORITY nt_authority_sid = SECURITY_NT_AUTHORITY;
+   SID_IDENTIFIER_AUTHORITY nt_authority_sid{ SECURITY_NT_AUTHORITY };
 
-   PSID administrators_sid_p = nullptr;
+   PSID administrators_sid_p{ nullptr };
 
    if ( AllocateAndInitializeSid( &nt_authority_sid,
                                    2,

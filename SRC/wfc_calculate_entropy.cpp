@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 1995-2020, Samuel R. Blackburn
+** Copyright, 1995-2022, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -57,7 +57,7 @@ _Check_return_ double Win32FoundationClasses::wfc_calculate_entropy( __in_ecount
 {
    WFC_VALIDATE_POINTER( counts );
 
-   if ( counts           == nullptr or
+   if ( counts == nullptr or
         number_of_counts < 2 )
    {
       //WFCTRACE( TEXT( "Nothing to do." ) );
@@ -215,7 +215,7 @@ _Check_return_ int64_t _find_byte_using_nothing_but_C(_In_ uint8_t const byte_va
 
 _Check_return_ bool Win32FoundationClasses::wfcGenRandom( _Out_writes_bytes_(RandomBufferLength) PVOID RandomBuffer, _In_ ULONG const RandomBufferLength ) noexcept
 {
-   static CRandomNumberGenerator2 * static_rng = nullptr;
+   static CRandomNumberGenerator2 * static_rng{ nullptr };
 
    if ( RandomBuffer == nullptr or RandomBufferLength < 1 )
    {
@@ -230,7 +230,7 @@ _Check_return_ bool Win32FoundationClasses::wfcGenRandom( _Out_writes_bytes_(Ran
                // By immediately setting the static pointer to null, the other thread will create a new one
                // and use it while we destruct the old one. If this sitution happens, you've got other problems
                // to worry about...
-               auto temp_rng = static_rng;
+               auto temp_rng{ static_rng };
                static_rng = nullptr;
                delete temp_rng;
            }
@@ -334,12 +334,12 @@ SEARCH_LAST_BLOCK:
 // This version works
 _Check_return_ static int64_t _find_byte_256( _In_ uint8_t const byte_value, _In_reads_bytes_( buffer_size ) uint8_t const * buffer, _In_ int64_t const buffer_size ) noexcept
 {
-    __declspec(align(32)) __m256i const byte_to_find = _mm256_set1_epi8( byte_value ); // AVX2
-    __declspec(align(32)) __m256i const zero = _mm256_setzero_si256(); // AVX2
+    __declspec(align(32)) __m256i const byte_to_find{ _mm256_set1_epi8(byte_value) }; // AVX2
+    __declspec(align(32)) __m256i const zero{ _mm256_setzero_si256() }; // AVX2
 
-    int64_t const last_buffer_index = buffer_size - 31;
+    int64_t const last_buffer_index{ buffer_size - 31 };
 
-    int64_t buffer_index = 0;
+    int64_t buffer_index{ 0 };
 
     while( buffer_index < last_buffer_index and
         _mm256_testc_si256( zero, _mm256_cmpeq_epi8( byte_to_find, _mm256_loadu_si256((__m256i const *) &buffer[ buffer_index ]))) not_eq 0 ) // _mm256_testc_si256 - AVX2
@@ -362,12 +362,12 @@ _Check_return_ static int64_t _find_byte_256( _In_ uint8_t const byte_value, _In
 
 _Check_return_ int64_t _find_byte_SSE41(_In_ uint8_t const byte_value, _In_reads_bytes_(buffer_size) uint8_t const * buffer, _In_ int64_t const buffer_size) noexcept
 {
-    __declspec(align(16)) __m128i const byte_to_find = _mm_set1_epi8(byte_value); // SSE2
-    __declspec(align(16)) __m128i const zero = _mm_setzero_si128(); // SSE2
+    __declspec(align(16)) __m128i const byte_to_find{ _mm_set1_epi8(byte_value) }; // SSE2
+    __declspec(align(16)) __m128i const zero{ _mm_setzero_si128() }; // SSE2
 
-    int64_t const last_buffer_index = buffer_size - 15;
+    int64_t const last_buffer_index{ buffer_size - 15 };
 
-    int64_t buffer_index = 0;
+    int64_t buffer_index{ 0 };
 
     if (buffer_size > 15)
     {
@@ -419,7 +419,7 @@ SEARCH_LAST_BLOCK:
 
 _Check_return_ int64_t Win32FoundationClasses::find_byte( _In_ uint8_t const byte_value, _In_reads_bytes_( buffer_size ) uint8_t const * __restrict buffer, _In_ int64_t const buffer_size ) noexcept
 {
-    static FIND_BYTE_FUNCTION find_byte_implementation = nullptr;
+    static FIND_BYTE_FUNCTION find_byte_implementation{ nullptr };
 
     if ( find_byte_implementation == nullptr )
     {
@@ -451,9 +451,9 @@ _Check_return_ bool Win32FoundationClasses::wfc_process_buffer(_In_ uint8_t cons
         return(false);
     }
 
-    int64_t const number_of_bytes_to_process = number_of_bytes_in_buffer;
-    int64_t number_of_bytes_processed = 0;
-    int64_t number_of_bytes_to_process_in_this_call = 0;
+    auto const number_of_bytes_to_process{ number_of_bytes_in_buffer };
+    std::size_t number_of_bytes_processed{ 0 };
+    std::size_t number_of_bytes_to_process_in_this_call{ 0 };
 
     while (number_of_bytes_processed < number_of_bytes_to_process)
     {
@@ -465,7 +465,7 @@ _Check_return_ bool Win32FoundationClasses::wfc_process_buffer(_In_ uint8_t cons
             return(true);
         }
 
-        if (number_of_bytes_to_process_in_this_call > (int64_t) step_size)
+        if (number_of_bytes_to_process_in_this_call > step_size)
         {
             number_of_bytes_to_process_in_this_call = step_size;
         }

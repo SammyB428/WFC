@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 1995-2016, Samuel R. Blackburn
+** Copyright, 1995-2022, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -84,7 +84,7 @@ void Win32FoundationClasses::CMixerWaveIn::Copy( _In_ Win32FoundationClasses::CM
    }
 
    m_RecordingGain.Copy( source.m_RecordingGain );
-   (void) Open( source.m_Mixer.GetDeviceID(), source.m_WhatToNotify, source.m_WhoToNotify, source.m_NotifyData );
+   std::ignore = Open( source.m_Mixer.GetDeviceID(), source.m_WhatToNotify, source.m_WhoToNotify, source.m_NotifyData );
 }
 
 #if defined( _DEBUG ) && ! defined( WFC_NO_DUMPING )
@@ -116,7 +116,7 @@ _Check_return_ DWORD Win32FoundationClasses::CMixerWaveIn::GetLeftChannelRecordi
 {
    WFC_VALIDATE_POINTER( this );
 
-   auto const gain = m_RecordingGain.GetLeftChannelVolume();
+   auto const gain{ m_RecordingGain.GetLeftChannelVolume() };
 
    return( gain );
 }
@@ -125,7 +125,7 @@ _Check_return_ DWORD Win32FoundationClasses::CMixerWaveIn::GetRecordingGain( voi
 {
    WFC_VALIDATE_POINTER( this );
 
-   auto const gain = m_RecordingGain.GetVolume();
+   auto const gain{ m_RecordingGain.GetVolume() };
 
    return( gain );
 }
@@ -134,7 +134,7 @@ _Check_return_ DWORD Win32FoundationClasses::CMixerWaveIn::GetRightChannelRecord
 {
    WFC_VALIDATE_POINTER( this );
 
-   auto const gain = m_RecordingGain.GetRightChannelVolume();
+   auto const gain{ m_RecordingGain.GetRightChannelVolume() };
 
    return( gain );
 }
@@ -147,7 +147,7 @@ _Check_return_ bool Win32FoundationClasses::CMixerWaveIn::Open( _In_ UINT_PTR de
    m_WhoToNotify  = who_to_notify;
    m_NotifyData   = notify_data;
 
-   bool return_value = Win32FoundationClasses::CMixerDestination::Open( device_number, what_to_notify, who_to_notify, notify_data );
+   auto return_value{ Win32FoundationClasses::CMixerDestination::Open(device_number, what_to_notify, who_to_notify, notify_data) };
 
    if ( return_value == false )
    {
@@ -172,7 +172,7 @@ _Check_return_ bool Win32FoundationClasses::CMixerWaveIn::Open( _In_ UINT_PTR de
       return( false );
    }
 
-   bool control_was_found = false;
+   bool control_was_found{ false };
 
    for ( auto const& entry : array )
    {
@@ -182,7 +182,7 @@ _Check_return_ bool Win32FoundationClasses::CMixerWaveIn::Open( _In_ UINT_PTR de
 
          if ( m_SourceSelector.get() not_eq nullptr )
          {
-            (void) m_SourceSelector->Open( device_number, what_to_notify, who_to_notify, notify_data );
+            std::ignore = m_SourceSelector->Open( device_number, what_to_notify, who_to_notify, notify_data );
          }
       }
 
@@ -192,7 +192,7 @@ _Check_return_ bool Win32FoundationClasses::CMixerWaveIn::Open( _In_ UINT_PTR de
          {
             m_RecordingGain.SetLine( m_MixerLine );
             m_RecordingGain.SetControl( entry );
-            (void) m_RecordingGain.Open( device_number, what_to_notify, who_to_notify, notify_data );
+            std::ignore = m_RecordingGain.Open( device_number, what_to_notify, who_to_notify, notify_data );
             control_was_found = true;
          }
       }
@@ -211,7 +211,7 @@ _Check_return_ bool Win32FoundationClasses::CMixerWaveIn::SetLeftChannelRecordin
 {
    WFC_VALIDATE_POINTER( this );
 
-   bool const return_value = m_RecordingGain.SetLeftChannelVolume( desired_level );
+   auto const return_value{ m_RecordingGain.SetLeftChannelVolume(desired_level) };
 
    return( return_value );
 }
@@ -220,7 +220,7 @@ _Check_return_ bool Win32FoundationClasses::CMixerWaveIn::SetRecordingGain( _In_
 {
    WFC_VALIDATE_POINTER( this );
 
-   bool const return_value = m_RecordingGain.SetVolume( desired_level );
+   auto const return_value{ m_RecordingGain.SetVolume(desired_level) };
 
    return( return_value );
 }
@@ -229,7 +229,7 @@ _Check_return_ bool Win32FoundationClasses::CMixerWaveIn::SetRightChannelRecordi
 {
    WFC_VALIDATE_POINTER( this );
 
-   bool const return_value = m_RecordingGain.SetRightChannelVolume( desired_level );
+   auto const return_value{ m_RecordingGain.SetRightChannelVolume(desired_level) };
 
    return( return_value );
 }

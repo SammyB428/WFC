@@ -156,9 +156,9 @@ struct BASE_BOARD_INFORMATION
 
 inline static _Check_return_ DEVICE_MANAGEMENT_INFORMATION_HEADER const * __get_smbios_info( _In_ uint8_t const desired_type, _In_reads_bytes_( buffer_size ) uint8_t const * buffer, _In_ std::size_t const buffer_size ) noexcept
 {
-    int buffer_index = 0;
+    int buffer_index{ 0 };
 
-    auto header = reinterpret_cast<DEVICE_MANAGEMENT_INFORMATION_HEADER const *>(buffer);
+    auto header{ reinterpret_cast<DEVICE_MANAGEMENT_INFORMATION_HEADER const*>(buffer) };
 
     while( buffer_index < buffer_size ) // Cannot be converted to a Range loop
     {
@@ -191,9 +191,9 @@ static inline void __read_string( _In_ uint8_t const * buffer, _In_ int const de
         return;
     }
 
-    int current_string_number = 1;
-    int string_index = 0;
-    int buffer_index = 0;
+    int current_string_number{ 1 };
+    int string_index{ 0 };
+    int buffer_index{ 0 };
 
     while( current_string_number <= desired_string_number )
     {
@@ -220,30 +220,30 @@ void Win32FoundationClasses::wfc_get_bios_uuid( _Out_ GUID& uuid ) noexcept
 
     ZeroMemory( &uuid, sizeof( uuid ) );
 
-    uint32_t const buffer_size = ::GetSystemFirmwareTable( 'RSMB', 0, nullptr, 0 );
+    uint32_t const buffer_size{ ::GetSystemFirmwareTable('RSMB', 0, nullptr, 0) };
 
     if ( buffer_size == 0 )
     {
         return;
     }
 
-    auto buffer = _aligned_malloc( buffer_size, 4096 );
+    auto buffer{ _aligned_malloc(buffer_size, 4096) };
 
     if ( buffer == nullptr )
     {
         return;
     }
 
-    (void) ::GetSystemFirmwareTable( 'RSMB', 0, buffer, buffer_size );
+    std::ignore = ::GetSystemFirmwareTable( 'RSMB', 0, buffer, buffer_size );
 
-    auto data = reinterpret_cast<RAW_SYSTEM_MANAGEMENT_BIOS_DATA *>(buffer);
+    auto data{ reinterpret_cast<RAW_SYSTEM_MANAGEMENT_BIOS_DATA*>(buffer) };
 
-    auto header = reinterpret_cast<SM_SYSTEM_INFORMATION const *>(__get_smbios_info( SYSTEM_MANAGEMENT_SYSTEM_INFORMATION, &data->SMBIOSTableData[ 0 ], data->Length ));
+    auto header{ reinterpret_cast<SM_SYSTEM_INFORMATION const*>(__get_smbios_info(SYSTEM_MANAGEMENT_SYSTEM_INFORMATION, &data->SMBIOSTableData[0], data->Length)) };
 
     if ( header not_eq nullptr )
     {
         // Woo hoo! We found our structure, now read the string from that buffer.
-        (void) memcpy_s( &uuid, sizeof(uuid), &header->uuid, sizeof( uuid ) );
+        std::ignore = memcpy_s( &uuid, sizeof(uuid), &header->uuid, sizeof( uuid ) );
     }
 
     _aligned_free( buffer );
@@ -254,25 +254,25 @@ void Win32FoundationClasses::wfc_get_bios_serial_number( _Out_ std::wstring& ser
 {
     serial_number.clear();
 
-    uint32_t const buffer_size = ::GetSystemFirmwareTable( 'RSMB', 0, nullptr, 0 );
+    uint32_t const buffer_size{ ::GetSystemFirmwareTable('RSMB', 0, nullptr, 0) };
 
     if ( buffer_size == 0 )
     {
         return;
     }
 
-    auto buffer = _aligned_malloc( buffer_size, 4096 );
+    auto buffer{ _aligned_malloc(buffer_size, 4096) };
 
     if ( buffer == nullptr )
     {
         return;
     }
 
-    (void) ::GetSystemFirmwareTable( 'RSMB', 0, buffer, buffer_size );
+    std::ignore = ::GetSystemFirmwareTable( 'RSMB', 0, buffer, buffer_size );
 
-    auto data = reinterpret_cast<RAW_SYSTEM_MANAGEMENT_BIOS_DATA *>(buffer);
+    auto data{ reinterpret_cast<RAW_SYSTEM_MANAGEMENT_BIOS_DATA*>(buffer) };
 
-    auto header = reinterpret_cast<SM_SYSTEM_INFORMATION const *>(__get_smbios_info( SYSTEM_MANAGEMENT_SYSTEM_INFORMATION, &data->SMBIOSTableData[ 0 ], data->Length ));
+    auto header{ reinterpret_cast<SM_SYSTEM_INFORMATION const*>(__get_smbios_info(SYSTEM_MANAGEMENT_SYSTEM_INFORMATION, &data->SMBIOSTableData[0], data->Length)) };
 
     if ( header not_eq nullptr )
     {

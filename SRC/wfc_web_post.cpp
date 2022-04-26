@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 1995-2020, Samuel R. Blackburn
+** Copyright, 1995-2022, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -62,11 +62,11 @@ static char THIS_FILE[] = __FILE__;
 static inline void append_buffer( __in_bcount( number_of_bytes ) uint8_t const * buffer_parameter, _In_ std::size_t const number_of_bytes, __inout std::vector<uint8_t>& bytes ) noexcept
 {
    WFC_VALIDATE_POINTER( buffer_parameter );
-   auto const current_length = bytes.size();
+   auto const current_length{ bytes.size() };
 
    bytes.resize( current_length + number_of_bytes );
 
-   auto buffer = bytes.data();
+   auto buffer{ bytes.data() };
 
    CopyMemory( &buffer[ current_length ], buffer_parameter, number_of_bytes );
 }
@@ -74,7 +74,7 @@ static inline void append_buffer( __in_bcount( number_of_bytes ) uint8_t const *
 static inline void append_string( __in_z char const * string_p, __inout std::vector<uint8_t>& bytes ) noexcept
 {
    WFC_VALIDATE_POINTER( string_p );
-   std::size_t const string_length = strlen( string_p );
+   std::size_t const string_length{ strlen(string_p) };
 
    append_buffer( reinterpret_cast<uint8_t const *>(string_p), string_length, bytes );
 }
@@ -122,12 +122,12 @@ static inline void append_item( _In_ Win32FoundationClasses::WFC_WEB_POST_DATA *
          Win32FoundationClasses::CFile64 file( item->file.file_handle );
 
          // Unlike the children at Microsoft that wrote ISAPI, WFC uses 64-bit file offsets
-         (void) file.Seek( (int64_t) item->file.file_offset.QuadPart, Win32FoundationClasses::CFile64::SeekPosition::begin );
+         std::ignore = file.Seek( (int64_t) item->file.file_offset.QuadPart, Win32FoundationClasses::CFile64::SeekPosition::begin );
 
          std::vector<uint8_t> bytes_read;
 
          _ASSERTE( item->file.number_of_bytes.QuadPart <= 0xFFFFFFFF );
-         (void) file.Read( bytes_read, item->file.number_of_bytes.LowPart );
+         std::ignore = file.Read( bytes_read, item->file.number_of_bytes.LowPart );
 
          bytes.insert(std::end(bytes), std::cbegin(bytes_read), std::cend(bytes_read));
          bytes_read.clear();
@@ -148,17 +148,17 @@ _Check_return_ bool Win32FoundationClasses::wfc_web_post( _In_ std::wstring_view
       return( false );
    }
 
-   char const * boundary_string = "----4225101SRBLLBWFCISFREEFORYOUANDME";
+   char const * boundary_string{ "----4225101SRBLLBWFCISFREEFORYOUANDME" };
 
    std::vector<uint8_t> bytes_to_send;
 
-   int number_of_parameters = 0;
+   int number_of_parameters{ 0 };
 
    WFC_TRY
    {
       while( data[ number_of_parameters ] not_eq nullptr )
       {
-          auto data_p = data[ number_of_parameters ];
+         auto data_p{ data[number_of_parameters] };
 
          append_item( data_p, boundary_string, bytes_to_send );
 
@@ -168,16 +168,16 @@ _Check_return_ bool Win32FoundationClasses::wfc_web_post( _In_ std::wstring_view
       append_string( boundary_string, bytes_to_send );
       append_string( "--\r\n", bytes_to_send );
 
-      DWORD const internet_open_access_type  = INTERNET_OPEN_TYPE_PRECONFIG;
-      LPCTSTR internet_open_proxy        = nullptr;
-      LPCTSTR internet_open_proxy_bypass = nullptr;
-      DWORD const internet_open_flags        = 0;
+      DWORD const internet_open_access_type{ INTERNET_OPEN_TYPE_PRECONFIG };
+      LPCTSTR internet_open_proxy{ nullptr };
+      LPCTSTR internet_open_proxy_bypass{ nullptr };
+      DWORD const internet_open_flags{ 0 };
 
-      auto internet_handle =  ::InternetOpenW( L"Mozilla/4.0 (compatible; Win32 Foundation Classes; http://www.samblackburn.com)",
+      auto internet_handle{ ::InternetOpenW(L"Mozilla/4.0 (compatible; Win32 Foundation Classes; http://www.samblackburn.com)",
                                       internet_open_access_type,
                                       internet_open_proxy,
                                       internet_open_proxy_bypass,
-                                      internet_open_flags );
+                                      internet_open_flags) };
 
       if ( internet_handle == static_cast< HINTERNET >( NULL ) )
       {
@@ -186,24 +186,23 @@ _Check_return_ bool Win32FoundationClasses::wfc_web_post( _In_ std::wstring_view
          return( false );
       }
 
-      INTERNET_PORT const internet_connect_port      = INTERNET_DEFAULT_HTTP_PORT;
-      LPCTSTR       internet_connect_user_name = nullptr;
-      LPCTSTR       internet_connect_password  = nullptr;
-      DWORD const internet_connect_service   = INTERNET_SERVICE_HTTP;
-      DWORD const internet_connect_flags     = INTERNET_FLAG_RELOAD bitor
-                                                 INTERNET_FLAG_NO_CACHE_WRITE;
-      DWORD const internet_connect_context   = 0;
+      INTERNET_PORT const internet_connect_port{ INTERNET_DEFAULT_HTTP_PORT };
+      LPCTSTR       internet_connect_user_name{ nullptr };
+      LPCTSTR       internet_connect_password{ nullptr };
+      DWORD const internet_connect_service{ INTERNET_SERVICE_HTTP };
+      DWORD const internet_connect_flags{ INTERNET_FLAG_RELOAD bitor INTERNET_FLAG_NO_CACHE_WRITE };
+      DWORD const internet_connect_context{ 0 };
 
       CUniformResourceLocator uniform_resource_locator( url );
 
-      auto internet_connection_handle = ::InternetConnectW( internet_handle,
+      auto internet_connection_handle{ ::InternetConnectW(internet_handle,
                                                     uniform_resource_locator.MachineName.c_str(),
                                                     internet_connect_port,
                                                     internet_connect_user_name,
                                                     internet_connect_password,
                                                     internet_connect_service,
                                                     internet_connect_flags,
-                                                    internet_connect_context );
+                                                    internet_connect_context) };
 
       if ( internet_connection_handle == static_cast< HINTERNET >( NULL ) )
       {
@@ -216,22 +215,22 @@ _Check_return_ bool Win32FoundationClasses::wfc_web_post( _In_ std::wstring_view
          return( false );
       }
 
-      LPCTSTR   http_open_request_verb         = TEXT( "POST" );
-      LPCTSTR   http_open_request_object_name  = uniform_resource_locator.PathName.c_str();
-      LPCTSTR   http_open_request_version      = nullptr;
-      LPCTSTR   http_open_request_referer      = nullptr;
-      LPCTSTR * http_open_request_accept_types = nullptr;
-      DWORD const http_open_request_flags        = INTERNET_FLAG_NO_CACHE_WRITE;
-      DWORD_PTR const http_open_request_context      = 0;
+      LPCTSTR   http_open_request_verb{ TEXT("POST") };
+      LPCTSTR   http_open_request_object_name{ uniform_resource_locator.PathName.c_str() };
+      LPCTSTR   http_open_request_version{ nullptr };
+      LPCTSTR   http_open_request_referer{ nullptr };
+      LPCTSTR* http_open_request_accept_types{ nullptr };
+      DWORD const http_open_request_flags{ INTERNET_FLAG_NO_CACHE_WRITE };
+      DWORD_PTR const http_open_request_context{ 0 };
 
-      auto http_request_handle = HttpOpenRequest( internet_connection_handle,
+      auto http_request_handle{ HttpOpenRequest(internet_connection_handle,
                                              http_open_request_verb,
                                              http_open_request_object_name,
                                              http_open_request_version,
                                              http_open_request_referer,
                                              http_open_request_accept_types,
                                              http_open_request_flags,
-                                             http_open_request_context );
+                                             http_open_request_context) };
 
       if ( http_request_handle == static_cast< HINTERNET >( NULL ) )
       {
@@ -255,7 +254,7 @@ _Check_return_ bool Win32FoundationClasses::wfc_web_post( _In_ std::wstring_view
       strcat_s( temp_string, std::size( temp_string ), boundary_string );
       strcat_s( temp_string, std::size( temp_string ), "\r\n" );
 
-      DWORD const http_add_request_headers_modifiers = HTTP_ADDREQ_FLAG_REPLACE bitor HTTP_ADDREQ_FLAG_ADD;
+      DWORD const http_add_request_headers_modifiers{ HTTP_ADDREQ_FLAG_REPLACE bitor HTTP_ADDREQ_FLAG_ADD };
 
       if ( HttpAddRequestHeadersA( http_request_handle,
                                    temp_string,
@@ -292,9 +291,9 @@ _Check_return_ bool Win32FoundationClasses::wfc_web_post( _In_ std::wstring_view
       http_send_request_ex_input_buffers.dwOffsetLow     = 0;
       http_send_request_ex_input_buffers.dwOffsetHigh    = 0;
 
-      INTERNET_BUFFERS * http_send_request_ex_output_buffers = nullptr;
-      DWORD const        http_send_request_ex_flags          = 0;
-      DWORD const        http_send_request_ex_context        = 0;
+      INTERNET_BUFFERS* http_send_request_ex_output_buffers{ nullptr };
+      DWORD const        http_send_request_ex_flags{ 0 };
+      DWORD const        http_send_request_ex_context{ 0 };
 
       if ( HttpSendRequestEx( http_request_handle,
                              &http_send_request_ex_input_buffers,
@@ -319,7 +318,7 @@ _Check_return_ bool Win32FoundationClasses::wfc_web_post( _In_ std::wstring_view
 
       // Now send the guts of the data
 
-      DWORD number_of_bytes_sent = 0;
+      DWORD number_of_bytes_sent{ 0 };
 
       InternetWriteFile( http_request_handle,
                          bytes_to_send.data(),
@@ -328,9 +327,9 @@ _Check_return_ bool Win32FoundationClasses::wfc_web_post( _In_ std::wstring_view
 
       ASSERT( number_of_bytes_sent == bytes_to_send.size() );
 
-      INTERNET_BUFFERS * http_end_request_output_buffers = nullptr;
-      DWORD const        http_end_request_flags          = 0;
-      DWORD const        http_end_request_context        = 0;
+      INTERNET_BUFFERS* http_end_request_output_buffers{ nullptr };
+      DWORD const        http_end_request_flags{ 0 };
+      DWORD const        http_end_request_context{ 0 };
 
       if ( HttpEndRequest( http_request_handle,
                            http_end_request_output_buffers,
@@ -356,9 +355,9 @@ _Check_return_ bool Win32FoundationClasses::wfc_web_post( _In_ std::wstring_view
 
       number_of_bytes_sent = 0;
 
-      constexpr std::size_t const response_buffer_size = ( 64 * 1024 ) + 1;
+      constexpr std::size_t const response_buffer_size{ (64 * 1024) + 1 };
 
-      auto response_buffer  = std::make_unique<uint8_t[]>(response_buffer_size);
+      auto response_buffer{ std::make_unique<uint8_t[]>(response_buffer_size) };
 
       if ( response_buffer.get() not_eq nullptr )
       {

@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 1995-2019, Samuel R. Blackburn
+** Copyright, 1995-2022, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -85,7 +85,7 @@ void Win32FoundationClasses::wfc_get_program_data_directory(_Out_ std::wstring& 
 {
     application_data_directory.clear();
 
-    PWSTR directory_name = nullptr;
+    PWSTR directory_name{ nullptr };
 
     if (SUCCEEDED(::SHGetKnownFolderPath(FOLDERID_ProgramData, 0, nullptr, &directory_name)))
     {
@@ -101,7 +101,7 @@ void Win32FoundationClasses::wfc_get_program_data_directory(_Out_ std::wstring& 
             return;
         }
 
-        if (ends_with(application_data_directory, '\\' ) == false)
+        if (application_data_directory.back() not_eq '\\' )
         {
             application_data_directory.push_back(L'\\');
         }

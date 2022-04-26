@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 1995-2019, Samuel R. Blackburn
+** Copyright, 1995-2022, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -62,7 +62,7 @@ void Win32FoundationClasses::CMixerControlInstance::Copy( _In_ Win32FoundationCl
       return;
    }
 
-   (void) m_Mixer.Open( source.m_Mixer.GetDeviceID(), source.m_WhatToNotify, source.m_WhoToNotify, source.m_NotifyData );
+   std::ignore = m_Mixer.Open( source.m_Mixer.GetDeviceID(), source.m_WhatToNotify, source.m_WhoToNotify, source.m_NotifyData );
    m_MixerLine.Copy( source.m_MixerLine );
    m_MixerControl.Copy( source.m_MixerControl );
 }
@@ -100,7 +100,7 @@ _Check_return_ bool Win32FoundationClasses::CMixerControlInstance::Open( _In_ UI
    m_WhoToNotify  = who_to_notify;
    m_NotifyData   = notify_data;
 
-   bool const return_value = m_Mixer.Open( device_number, what_to_notify, who_to_notify, notify_data );
+   auto const return_value{ m_Mixer.Open(device_number, what_to_notify, who_to_notify, notify_data) };
 
    if ( return_value == false )
    {

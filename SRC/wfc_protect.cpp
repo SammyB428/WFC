@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 1995-2019, Samuel R. Blackburn
+** Copyright, 1995-2022, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -58,16 +58,16 @@ _Check_return_ bool Win32FoundationClasses::wfc_protect_data( __in_bcount( numbe
       return( true );
    }
 
-   DATA_BLOB plaintext  = { (DWORD) number_of_bytes_in_plaintext, (BYTE *) plaintext_buffer };
-   DATA_BLOB ciphertext = { 0, nullptr };
+   DATA_BLOB plaintext  { (DWORD) number_of_bytes_in_plaintext, (BYTE *) plaintext_buffer };
+   DATA_BLOB ciphertext { 0, nullptr };
 
-   BOOL return_value = ::CryptProtectData( &plaintext,
-                                            nullptr, // data description
-                                            nullptr, // salt
-                                            nullptr, // reserved
-                                            nullptr, // prompt
-                                            CRYPTPROTECT_UI_FORBIDDEN,
-                                           &ciphertext );
+   auto const return_value{ ::CryptProtectData(&plaintext,
+                                                nullptr, // data description
+                                                nullptr, // salt
+                                                nullptr, // reserved
+                                                nullptr, // prompt
+                                                CRYPTPROTECT_UI_FORBIDDEN,
+                                               &ciphertext) };
 
    if ( return_value == CRYPT_FAILED )
    {
@@ -83,13 +83,13 @@ _Check_return_ bool Win32FoundationClasses::wfc_protect_data( __in_bcount( numbe
       else
       {
          *address_of_number_of_cipher_bytes = ciphertext.cbData;
-          LocalFree( ciphertext.pbData );
+          std::ignore = ::LocalFree( ciphertext.pbData );
           return( false );
       }
    }
 
    *address_of_number_of_cipher_bytes = ciphertext.cbData;
-   LocalFree( ciphertext.pbData );
+   std::ignore = ::LocalFree( ciphertext.pbData );
    return( true );
 }
 
@@ -105,16 +105,16 @@ _Check_return_ bool Win32FoundationClasses::wfc_unprotect_data( __in_bcount( num
       return( true );
    }
 
-   DATA_BLOB ciphertext = { (DWORD) number_of_bytes_in_ciphertext, (BYTE *) ciphertext_buffer };
-   DATA_BLOB plaintext  = { 0, nullptr };
+   DATA_BLOB ciphertext { (DWORD) number_of_bytes_in_ciphertext, (BYTE *) ciphertext_buffer };
+   DATA_BLOB plaintext  { 0, nullptr };
 
-   BOOL return_value = ::CryptUnprotectData( &ciphertext,
-                                              nullptr, // data description
-                                              nullptr, // salt
-                                              nullptr, // reserved
-                                              nullptr, // prompt
-                                              CRYPTPROTECT_UI_FORBIDDEN,
-                                             &plaintext );
+   auto const return_value{ ::CryptUnprotectData(&ciphertext,
+                                                  nullptr, // data description
+                                                  nullptr, // salt
+                                                  nullptr, // reserved
+                                                  nullptr, // prompt
+                                                  CRYPTPROTECT_UI_FORBIDDEN,
+                                                 &plaintext) };
 
    if ( return_value == CRYPT_FAILED )
    {
@@ -130,13 +130,13 @@ _Check_return_ bool Win32FoundationClasses::wfc_unprotect_data( __in_bcount( num
       else
       {
          *address_of_number_of_plain_bytes = plaintext.cbData;
-          LocalFree( plaintext.pbData );
+          std::ignore = ::LocalFree( plaintext.pbData );
           return( false );
       }
    }
 
    *address_of_number_of_plain_bytes = plaintext.cbData;
-   LocalFree( plaintext.pbData );
+   std::ignore = ::LocalFree( plaintext.pbData );
 
    return( true );
 }

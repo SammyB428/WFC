@@ -513,7 +513,7 @@ _Check_return_ bool Win32FoundationClasses::CNetworkUsers::CreateComputerAccount
       ** domain controller for the target domain.
       */
 
-      BYTE * buffer_p = nullptr;
+      BYTE * buffer_p{ nullptr };
 
       if ( ::NetGetDCName( nullptr, nullptr, &buffer_p ) not_eq NERR_Success )
       {
@@ -541,12 +541,12 @@ _Check_return_ bool Win32FoundationClasses::CNetworkUsers::CreateComputerAccount
 
       // We no longer need the buffer
 
-      (void) ::NetApiBufferFree( buffer_p );
+      std::ignore = ::NetApiBufferFree( buffer_p );
       buffer_p = nullptr;
 
       CNetworkUsers user_to_add( primary_domain_controller.c_str() );
 
-      (void) user_to_add.SetPrivilege( SE_MACHINE_ACCOUNT_NAME, true );
+      std::ignore = user_to_add.SetPrivilege( SE_MACHINE_ACCOUNT_NAME, true );
       
       if ( user_to_add.Add( information ) == false )
       {
@@ -615,7 +615,7 @@ _Check_return_ bool Win32FoundationClasses::CNetworkUsers::Enumerate( void ) noe
 
    if ( m_3InformationBuffer not_eq nullptr )
    {
-      (void) ::NetApiBufferFree( m_3InformationBuffer );
+      std::ignore = ::NetApiBufferFree( m_3InformationBuffer );
       m_3InformationBuffer = nullptr;
    }
 

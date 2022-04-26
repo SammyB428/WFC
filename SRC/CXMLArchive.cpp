@@ -221,7 +221,7 @@ _Check_return_ Win32FoundationClasses::CExtensibleMarkupLanguageElement * Win32F
       // Always start from a known state
       value.clear();
 
-      auto sub_element_p = m_Element_p->GetChild( tag );
+      auto sub_element_p{ m_Element_p->GetChild(tag) };
 
       if ( sub_element_p not_eq nullptr )
       {
@@ -231,7 +231,7 @@ _Check_return_ Win32FoundationClasses::CExtensibleMarkupLanguageElement * Win32F
          
          sub_element_p->GetText( contents );
 
-         (void) coder.Decode( contents, value );
+         std::ignore = coder.Decode( contents, value );
       }
 
       return( sub_element_p );
@@ -261,20 +261,20 @@ _Check_return_ Win32FoundationClasses::CExtensibleMarkupLanguageElement * Win32F
    {
       std::wstring data;
 
-      auto sub_element_p = m_Element_p->GetChild( tag );
+      auto sub_element_p{ m_Element_p->GetChild(tag) };
 
       if ( sub_element_p not_eq nullptr )
       {
          // Cool! We have the top level element. Now we
          // need to cycle through the sub-elements.
 
-         DWORD index = 0;
+         DWORD index{ 0 };
 
-         bool exit_loop = false;
+         bool exit_loop{ false };
 
          while( exit_loop == false )
          {
-             auto entry_p = sub_element_p->GetChild( WSTRING_VIEW(L"ENTRY"), index );
+            auto entry_p{ sub_element_p->GetChild(WSTRING_VIEW(L"ENTRY"), index) };
 
             if ( entry_p == nullptr )
             {
@@ -317,7 +317,7 @@ _Check_return_ Win32FoundationClasses::CExtensibleMarkupLanguageElement * Win32F
 
    WFC_TRY
    {
-      auto sub_element_p = m_Element_p->GetChild( tag );
+      auto sub_element_p { m_Element_p->GetChild(tag)};
 
       if ( sub_element_p not_eq nullptr )
       {
@@ -350,20 +350,20 @@ _Check_return_ Win32FoundationClasses::CExtensibleMarkupLanguageElement * Win32F
    {
       std::wstring data;
 
-      auto sub_element_p = m_Element_p->GetChild( tag );
+      auto sub_element_p{ m_Element_p->GetChild(tag) };
 
       if ( sub_element_p not_eq nullptr )
       {
          // Cool! We have the top level element. Now we
          // need to cycle through the sub-elements.
 
-         DWORD index = 0;
+          DWORD index{ 0 };
 
-         bool exit_loop = false;
+         bool exit_loop{ false };
 
          while( exit_loop == false )
          {
-            auto entry_p = sub_element_p->GetChild( WSTRING_VIEW(L"ENTRY"), index );
+             auto entry_p{ sub_element_p->GetChild(WSTRING_VIEW(L"ENTRY"), index) };
 
             if ( entry_p == nullptr )
             {
@@ -374,7 +374,7 @@ _Check_return_ Win32FoundationClasses::CExtensibleMarkupLanguageElement * Win32F
             {
                entry_p->GetText( data );
 
-               (void) value.push_back( data );
+               value.push_back( data );
 
                index++;
             }
@@ -555,7 +555,7 @@ _Check_return_ Win32FoundationClasses::CExtensibleMarkupLanguageElement * Win32F
 
          sub_element_p->GetText( string_value );
 
-         (void)Win32FoundationClasses::wfc_parse_iso_8601_string( string_value, value );
+         std::ignore = Win32FoundationClasses::wfc_parse_iso_8601_string( string_value, value );
       }
 
       return( sub_element_p );
@@ -654,7 +654,7 @@ _Check_return_ Win32FoundationClasses::CExtensibleMarkupLanguageElement * Win32F
 
    WFC_TRY
    {
-      auto sub_element_p = m_Element_p->GetChild( tag );
+      auto sub_element_p { m_Element_p->GetChild(tag)};
 
       if ( sub_element_p not_eq nullptr )
       {
@@ -662,7 +662,7 @@ _Check_return_ Win32FoundationClasses::CExtensibleMarkupLanguageElement * Win32F
 
          sub_element_p->GetText( string_value );
 
-         (void) wfc_parse_iso_8601_string( string_value, value );
+         std::ignore = wfc_parse_iso_8601_string( string_value, value );
       }
 
       return( sub_element_p );
@@ -689,7 +689,7 @@ _Check_return_ Win32FoundationClasses::CExtensibleMarkupLanguageElement * Win32F
 
    WFC_TRY
    {
-      auto sub_element_p = m_Element_p->GetChild( tag );
+      auto sub_element_p { m_Element_p->GetChild(tag)};
 
       if ( sub_element_p not_eq nullptr )
       {
@@ -697,7 +697,7 @@ _Check_return_ Win32FoundationClasses::CExtensibleMarkupLanguageElement * Win32F
 
          sub_element_p->GetText( string_value );
 
-         (void)Win32FoundationClasses::wfc_parse_iso_8601_string( string_value, value );
+         std::ignore = Win32FoundationClasses::wfc_parse_iso_8601_string( string_value, value );
       }
 
       return( sub_element_p );
@@ -811,7 +811,7 @@ _Check_return_ Win32FoundationClasses::CExtensibleMarkupLanguageElement * Win32F
 
    WFC_TRY
    {
-      auto sub_element_p = Win32FoundationClasses::CExtensibleMarkupLanguageElement::NewElement( m_Element_p );
+      auto sub_element_p { Win32FoundationClasses::CExtensibleMarkupLanguageElement::NewElement(m_Element_p)};
 
       if ( sub_element_p not_eq nullptr )
       {
@@ -821,16 +821,16 @@ _Check_return_ Win32FoundationClasses::CExtensibleMarkupLanguageElement * Win32F
 
          if ( value == FALSE )
          {
-            (void) sub_element_p->AddText(WSTRING_VIEW(L"0"));
+             std::ignore = sub_element_p->AddText(WSTRING_VIEW(L"0"));
          }
          else
          {
-            (void) sub_element_p->AddText(WSTRING_VIEW(L"1"));
+             std::ignore = sub_element_p->AddText(WSTRING_VIEW(L"1"));
          }
 
          if ( m_AddNewLineAfterEachElement == true )
          {
-            (void) m_Element_p->AddText(WSTRING_VIEW(L"\n"));
+             std::ignore = m_Element_p->AddText(WSTRING_VIEW(L"\n"));
          }
       }
 
@@ -857,7 +857,7 @@ _Check_return_ Win32FoundationClasses::CExtensibleMarkupLanguageElement * Win32F
 
    WFC_TRY
    {
-      auto sub_element_p = Win32FoundationClasses::CExtensibleMarkupLanguageElement::NewElement( m_Element_p );
+      auto sub_element_p { Win32FoundationClasses::CExtensibleMarkupLanguageElement::NewElement(m_Element_p)};
 
       if ( sub_element_p not_eq nullptr )
       {
@@ -865,14 +865,14 @@ _Check_return_ Win32FoundationClasses::CExtensibleMarkupLanguageElement * Win32F
 
          Win32FoundationClasses::CBase64Coding encoder;
 
-         (void) encoder.Encode( value, contents );
+         std::ignore = encoder.Encode( value, contents );
 
          sub_element_p->SetTag( tag );
-         (void) sub_element_p->AddText( contents );
+         std::ignore = sub_element_p->AddText( contents );
 
          if ( m_AddNewLineAfterEachElement == true )
          {
-             (void)m_Element_p->AddText(WSTRING_VIEW(L"\n"));
+             std::ignore = m_Element_p->AddText(WSTRING_VIEW(L"\n"));
          }
       }
 
@@ -897,7 +897,7 @@ _Check_return_ Win32FoundationClasses::CExtensibleMarkupLanguageElement * Win32F
 
    WFC_TRY
    {
-      auto sub_element_p = Win32FoundationClasses::CExtensibleMarkupLanguageElement::NewElement( m_Element_p );
+      auto sub_element_p {Win32FoundationClasses::CExtensibleMarkupLanguageElement::NewElement(m_Element_p)};
 
       if ( sub_element_p not_eq nullptr )
       {
@@ -905,7 +905,7 @@ _Check_return_ Win32FoundationClasses::CExtensibleMarkupLanguageElement * Win32F
 
          if ( m_AddNewLineAfterEachElement == true )
          {
-             (void)m_Element_p->AddText(WSTRING_VIEW(L"\n"));
+             std::ignore = m_Element_p->AddText(WSTRING_VIEW(L"\n"));
          }
 
          Win32FoundationClasses::CXMLArchive entry_archiver;
@@ -916,7 +916,7 @@ _Check_return_ Win32FoundationClasses::CExtensibleMarkupLanguageElement * Win32F
 
          for ( auto const array_index : Range(value.size()))
          {
-            (void) entry_archiver.Write( WSTRING_VIEW(L"ENTRY"), value.at( array_index ) );
+             std::ignore = entry_archiver.Write( WSTRING_VIEW(L"ENTRY"), value.at( array_index ) );
          }
       }
 
@@ -950,7 +950,7 @@ _Check_return_ Win32FoundationClasses::CExtensibleMarkupLanguageElement * Win32F
       // one location. This way, we get a better chance of tracking down the
       // offending leaker.
 
-      auto sub_element_p = Win32FoundationClasses::CExtensibleMarkupLanguageElement::NewElement( m_Element_p );
+      auto sub_element_p { Win32FoundationClasses::CExtensibleMarkupLanguageElement::NewElement(m_Element_p)};
 
       if ( sub_element_p not_eq nullptr )
       {
@@ -969,11 +969,11 @@ _Check_return_ Win32FoundationClasses::CExtensibleMarkupLanguageElement * Win32F
          contents.append( m_TimeZone );
 
          sub_element_p->SetTag( tag );
-         (void) sub_element_p->AddText( contents );
+         std::ignore = sub_element_p->AddText( contents );
 
          if ( m_AddNewLineAfterEachElement == true )
          {
-             (void)m_Element_p->AddText(WSTRING_VIEW(L"\n"));
+             std::ignore = m_Element_p->AddText(WSTRING_VIEW(L"\n"));
          }
       }
 
@@ -1113,16 +1113,16 @@ _Check_return_ Win32FoundationClasses::CExtensibleMarkupLanguageElement * Win32F
 
    WFC_TRY
    {
-      auto sub_element_p = CExtensibleMarkupLanguageElement::NewElement( m_Element_p );
+      auto sub_element_p { CExtensibleMarkupLanguageElement::NewElement(m_Element_p)};
 
       if ( sub_element_p not_eq nullptr )
       {
          sub_element_p->SetTag( tag );
-         (void) sub_element_p->AddText( value );
+         std::ignore = sub_element_p->AddText( value );
 
          if ( m_AddNewLineAfterEachElement == true )
          {
-            (void) m_Element_p->AddText(WSTRING_VIEW(L"\n"));
+             std::ignore = m_Element_p->AddText(WSTRING_VIEW(L"\n"));
          }
       }
 
@@ -1147,7 +1147,7 @@ _Check_return_ Win32FoundationClasses::CExtensibleMarkupLanguageElement * Win32F
 
    WFC_TRY
    {
-      auto sub_element_p = Win32FoundationClasses::CExtensibleMarkupLanguageElement::NewElement( m_Element_p );
+      auto sub_element_p { Win32FoundationClasses::CExtensibleMarkupLanguageElement::NewElement(m_Element_p)};
 
       if ( sub_element_p not_eq nullptr )
       {
@@ -1155,18 +1155,17 @@ _Check_return_ Win32FoundationClasses::CExtensibleMarkupLanguageElement * Win32F
 
          if ( m_AddNewLineAfterEachElement == true )
          {
-             (void)m_Element_p->AddText(WSTRING_VIEW(L"\n"));
+             std::ignore = m_Element_p->AddText(WSTRING_VIEW(L"\n"));
          }
 
          CXMLArchive entry_archiver;
 
          entry_archiver.SetAddNewLineAfterEachElement( m_AddNewLineAfterEachElement );
-
          entry_archiver.WriteTo( sub_element_p );
 
          for ( auto const array_index : Range(value.size()) )
          {
-            (void) entry_archiver.Write(WSTRING_VIEW(L"ENTRY"), value.at( array_index ) );
+             std::ignore = entry_archiver.Write(WSTRING_VIEW(L"ENTRY"), value.at( array_index ) );
          }
       }
 
@@ -1200,7 +1199,7 @@ _Check_return_ Win32FoundationClasses::CExtensibleMarkupLanguageElement * Win32F
       // one location. This way, we get a better chance of tracking down the
       // offending leaker.
 
-      auto sub_element_p = Win32FoundationClasses::CExtensibleMarkupLanguageElement::NewElement( m_Element_p );
+      auto sub_element_p { Win32FoundationClasses::CExtensibleMarkupLanguageElement::NewElement(m_Element_p)};
 
       if ( sub_element_p not_eq nullptr )
       {
@@ -1215,11 +1214,11 @@ _Check_return_ Win32FoundationClasses::CExtensibleMarkupLanguageElement * Win32F
          std::wstring contents( the_time.Format( L"%Y-%m-%dT%H:%M:%SZ") );
 
          sub_element_p->SetTag( tag );
-         (void) sub_element_p->AddText( contents );
+         std::ignore = sub_element_p->AddText( contents );
 
          if ( m_AddNewLineAfterEachElement == true )
          {
-            (void) m_Element_p->AddText(WSTRING_VIEW(L"\n"));
+             std::ignore = m_Element_p->AddText(WSTRING_VIEW(L"\n"));
          }
       }
 
@@ -1253,7 +1252,7 @@ _Check_return_ Win32FoundationClasses::CExtensibleMarkupLanguageElement * Win32F
       // one location. This way, we get a better chance of tracking down the
       // offending leaker.
 
-      auto sub_element_p = CExtensibleMarkupLanguageElement::NewElement( m_Element_p );
+      auto sub_element_p { CExtensibleMarkupLanguageElement::NewElement(m_Element_p)};
 
       if ( sub_element_p not_eq nullptr )
       {
@@ -1277,11 +1276,11 @@ _Check_return_ Win32FoundationClasses::CExtensibleMarkupLanguageElement * Win32F
          }
 
          sub_element_p->SetTag( tag );
-         (void) sub_element_p->AddText( contents );
+         std::ignore = sub_element_p->AddText( contents );
 
          if ( m_AddNewLineAfterEachElement == true )
          {
-            (void) m_Element_p->AddText(WSTRING_VIEW(L"\n"));
+             std::ignore = m_Element_p->AddText(WSTRING_VIEW(L"\n"));
          }
       }
 
@@ -1315,7 +1314,7 @@ _Check_return_ Win32FoundationClasses::CExtensibleMarkupLanguageElement * Win32F
       // one location. This way, we get a better chance of tracking down the
       // offending leaker.
 
-      auto sub_element_p = Win32FoundationClasses::CExtensibleMarkupLanguageElement::NewElement( m_Element_p );
+      auto sub_element_p {Win32FoundationClasses::CExtensibleMarkupLanguageElement::NewElement(m_Element_p)};
 
       if ( sub_element_p not_eq nullptr )
       {
@@ -1324,11 +1323,11 @@ _Check_return_ Win32FoundationClasses::CExtensibleMarkupLanguageElement * Win32F
          std::wstring const contents(std::to_wstring(value.GetTotalSeconds()));
 
          sub_element_p->SetTag( tag );
-         (void) sub_element_p->AddText( contents );
+         std::ignore = sub_element_p->AddText( contents );
 
          if ( m_AddNewLineAfterEachElement == true )
          {
-             (void)m_Element_p->AddText(WSTRING_VIEW(L"\n"));
+             std::ignore = m_Element_p->AddText(WSTRING_VIEW(L"\n"));
          }
       }
 
@@ -1362,7 +1361,7 @@ _Check_return_ Win32FoundationClasses::CExtensibleMarkupLanguageElement * Win32F
       // one location. This way, we get a better chance of tracking down the
       // offending leaker.
 
-      auto sub_element_p = Win32FoundationClasses::CExtensibleMarkupLanguageElement::NewElement( m_Element_p );
+      auto sub_element_p { Win32FoundationClasses::CExtensibleMarkupLanguageElement::NewElement(m_Element_p)};
 
       if ( sub_element_p not_eq nullptr )
       {
@@ -1374,7 +1373,7 @@ _Check_return_ Win32FoundationClasses::CExtensibleMarkupLanguageElement * Win32F
 
          // We'll be friendly here and strip off trailing zeroes
 
-         bool exit_loop = false;
+         bool exit_loop{ false };
 
          while( exit_loop == false )
          {
@@ -1401,11 +1400,11 @@ _Check_return_ Win32FoundationClasses::CExtensibleMarkupLanguageElement * Win32F
          }
 
          sub_element_p->SetTag( tag );
-         (void) sub_element_p->AddText( contents );
+         std::ignore = sub_element_p->AddText( contents );
 
          if ( m_AddNewLineAfterEachElement == true )
          {
-             (void)m_Element_p->AddText(WSTRING_VIEW(L"\n"));
+             std::ignore = m_Element_p->AddText(WSTRING_VIEW(L"\n"));
          }
       }
 
@@ -1439,7 +1438,7 @@ _Check_return_ Win32FoundationClasses::CExtensibleMarkupLanguageElement * Win32F
       // one location. This way, we get a better chance of tracking down the
       // offending leaker.
 
-      auto sub_element_p = Win32FoundationClasses::CExtensibleMarkupLanguageElement::NewElement( m_Element_p );
+      auto sub_element_p { Win32FoundationClasses::CExtensibleMarkupLanguageElement::NewElement(m_Element_p)};
 
       if ( sub_element_p not_eq nullptr )
       {
@@ -1448,11 +1447,11 @@ _Check_return_ Win32FoundationClasses::CExtensibleMarkupLanguageElement * Win32F
          std::wstring const contents(std::to_wstring(value));
 
          sub_element_p->SetTag( tag );
-         (void) sub_element_p->AddText( contents );
+         std::ignore = sub_element_p->AddText( contents );
 
          if ( m_AddNewLineAfterEachElement == true )
          {
-             (void)m_Element_p->AddText(WSTRING_VIEW(L"\n"));
+             std::ignore = m_Element_p->AddText(WSTRING_VIEW(L"\n"));
          }
       }
 
@@ -1485,7 +1484,7 @@ _Check_return_ Win32FoundationClasses::CExtensibleMarkupLanguageElement * Win32F
       // one location. This way, we get a better chance of tracking down the
       // offending leaker.
 
-      auto sub_element_p = Win32FoundationClasses::CExtensibleMarkupLanguageElement::NewElement( m_Element_p );
+      auto sub_element_p { Win32FoundationClasses::CExtensibleMarkupLanguageElement::NewElement(m_Element_p)};
 
       if ( sub_element_p not_eq nullptr )
       {
@@ -1494,11 +1493,11 @@ _Check_return_ Win32FoundationClasses::CExtensibleMarkupLanguageElement * Win32F
          std::wstring const contents(std::to_wstring(value));
 
          sub_element_p->SetTag( tag );
-         (void) sub_element_p->AddText( contents );
+         std::ignore = sub_element_p->AddText( contents );
 
          if ( m_AddNewLineAfterEachElement == true )
          {
-             (void)m_Element_p->AddText(WSTRING_VIEW(L"\n"));
+             std::ignore = m_Element_p->AddText(WSTRING_VIEW(L"\n"));
          }
       }
 
@@ -1532,7 +1531,7 @@ _Check_return_ Win32FoundationClasses::CExtensibleMarkupLanguageElement * Win32F
       // one location. This way, we get a better chance of tracking down the
       // offending leaker.
 
-      auto sub_element_p = Win32FoundationClasses::CExtensibleMarkupLanguageElement::NewElement( m_Element_p );
+      auto sub_element_p { Win32FoundationClasses::CExtensibleMarkupLanguageElement::NewElement(m_Element_p)};
 
       if ( sub_element_p not_eq nullptr )
       {
@@ -1541,11 +1540,11 @@ _Check_return_ Win32FoundationClasses::CExtensibleMarkupLanguageElement * Win32F
          std::wstring const contents(std::to_wstring(value));
 
          sub_element_p->SetTag( tag );
-         (void) sub_element_p->AddText( contents );
+         std::ignore = sub_element_p->AddText( contents );
 
          if ( m_AddNewLineAfterEachElement == true )
          {
-             (void)m_Element_p->AddText(WSTRING_VIEW(L"\n"));
+             std::ignore = m_Element_p->AddText(WSTRING_VIEW(L"\n"));
          }
       }
 

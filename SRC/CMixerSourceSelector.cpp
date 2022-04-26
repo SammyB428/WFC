@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 1995-2019, Samuel R. Blackburn
+** Copyright, 1995-2022, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -73,7 +73,7 @@ void Win32FoundationClasses::CMixerSourceSelector::Copy( _In_ Win32FoundationCla
       m_MixerControl.Empty();
    }
 
-   (void) Open( source.m_Mixer.GetDeviceID(), source.m_WhatToNotify, source.m_WhoToNotify, source.m_NotifyData );
+   std::ignore = Open( source.m_Mixer.GetDeviceID(), source.m_WhatToNotify, source.m_WhoToNotify, source.m_NotifyData );
 }
 
 #if defined( _DEBUG ) && ! defined( WFC_NO_DUMPING )
@@ -97,7 +97,7 @@ _Check_return_ bool Win32FoundationClasses::CMixerSourceSelector::IsSelected( _I
 {
    WFC_VALIDATE_POINTER( this );
 
-   bool return_value = m_GetSettings();
+   auto return_value{ m_GetSettings() };
 
    for ( auto const& entry : m_Settings )
    {
@@ -116,7 +116,7 @@ _Check_return_ bool Win32FoundationClasses::CMixerSourceSelector::m_GetSettings(
 
    std::vector<Win32FoundationClasses::CMixerControlDetailsData> array;
 
-   bool return_value = m_Mixer.GetControlDetails( m_MixerLine, m_MixerControl, array );
+   auto return_value{ m_Mixer.GetControlDetails(m_MixerLine, m_MixerControl, array) };
 
    if ( return_value == true)
    {
@@ -136,7 +136,7 @@ _Check_return_ bool Win32FoundationClasses::CMixerSourceSelector::m_SetSettings(
 {
    WFC_VALIDATE_POINTER( this );
 
-   bool const return_value = m_Mixer.SetControlDetails( m_MixerLine, m_MixerControl, m_Settings );
+   auto const return_value{ m_Mixer.SetControlDetails(m_MixerLine, m_MixerControl, m_Settings) };
 
    return( return_value );
 }
@@ -149,7 +149,7 @@ _Check_return_ bool Win32FoundationClasses::CMixerSourceSelector::Open( _In_ UIN
    m_WhoToNotify  = who_to_notify;
    m_NotifyData   = notify_data;
 
-   bool return_value = CMixerControlInstance::Open( device_number, what_to_notify, who_to_notify, notify_data );
+   auto return_value{ CMixerControlInstance::Open(device_number, what_to_notify, who_to_notify, notify_data) };
 
    if ( return_value == false )
    {
@@ -174,9 +174,9 @@ _Check_return_ bool Win32FoundationClasses::CMixerSourceSelector::Select( _In_ D
 {
    WFC_VALIDATE_POINTER( this );
 
-   bool return_value = m_GetSettings();
+   auto return_value{ m_GetSettings() };
 
-   bool source_was_found = false;
+   bool source_was_found{ false };
 
    for ( auto& entry : m_Settings )
    {
@@ -203,7 +203,7 @@ _Check_return_ bool Win32FoundationClasses::CMixerSourceSelector::Unselect( _In_
 {
    WFC_VALIDATE_POINTER( this );
 
-   bool return_value = Select( source, false );
+   auto const return_value{ Select(source, false) };
 
    return( return_value );
 }

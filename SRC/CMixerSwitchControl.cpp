@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 1995-2019, Samuel R. Blackburn
+** Copyright, 1995-2022, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -56,7 +56,7 @@ static char THIS_FILE[] = __FILE__;
 Win32FoundationClasses::CMixerSwitchControl::CMixerSwitchControl()
 {
    WFC_VALIDATE_POINTER( this );
-   (void) m_Array.push_back( m_Switch );
+   m_Array.push_back( m_Switch );
 }
 
 Win32FoundationClasses::CMixerSwitchControl::CMixerSwitchControl( _In_ Win32FoundationClasses::CMixerSwitchControl const& source )
@@ -84,7 +84,7 @@ void Win32FoundationClasses::CMixerSwitchControl::Copy( _In_ Win32FoundationClas
       return;
    }
 
-   (void) Open( source.m_Mixer.GetDeviceID(), source.m_WhatToNotify, source.m_WhoToNotify, source.m_NotifyData );
+   std::ignore = Open( source.m_Mixer.GetDeviceID(), source.m_WhatToNotify, source.m_WhoToNotify, source.m_NotifyData );
    m_Array.clear();
    m_Array.push_back(m_Switch);
 }
@@ -104,7 +104,7 @@ _Check_return_ bool Win32FoundationClasses::CMixerSwitchControl::GetState( void 
 {
    WFC_VALIDATE_POINTER( this );
 
-   bool const return_value = m_GetAll();
+   auto const return_value{ m_GetAll() };
 
    if ( return_value == true )
    {
@@ -120,7 +120,7 @@ _Check_return_ bool Win32FoundationClasses::CMixerSwitchControl::m_GetAll( void 
 
    std::vector<CMixerControlDetailsData> array;
 
-   bool const return_value = m_Mixer.GetControlDetails( m_MixerLine, m_MixerControl, array );
+   auto const return_value{ m_Mixer.GetControlDetails(m_MixerLine, m_MixerControl, array) };
 
    if ( return_value == false )
    {
@@ -145,11 +145,11 @@ _Check_return_ bool Win32FoundationClasses::CMixerSwitchControl::SetState( _In_ 
 
    m_Switch.Parameter1 = turn_on;
 
-   bool return_value = m_Mixer.SetControlDetails( m_MixerLine, m_MixerControl, m_Array );
+   auto return_value{ m_Mixer.SetControlDetails(m_MixerLine, m_MixerControl, m_Array) };
 
    if ( return_value == true )
    {
-      (void) m_GetAll();
+       std::ignore = m_GetAll();
    }
 
    return( return_value );
@@ -159,7 +159,7 @@ _Check_return_ bool Win32FoundationClasses::CMixerSwitchControl::TurnOff( void )
 {
    WFC_VALIDATE_POINTER( this );
 
-   bool const return_value = SetState( false );
+   auto const return_value{ SetState(false) };
 
    return( return_value );
 }
@@ -168,7 +168,7 @@ _Check_return_ bool Win32FoundationClasses::CMixerSwitchControl::TurnOn( void ) 
 {
    WFC_VALIDATE_POINTER( this );
 
-   bool const return_value = SetState( true );
+   auto const return_value{ SetState(true) };
 
    return( return_value );
 }

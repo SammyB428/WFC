@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 1995-2015, Samuel R. Blackburn
+** Copyright, 1995-2022, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -62,7 +62,7 @@ void Win32FoundationClasses::wfc_append_text_to_edit_control( _In_ HWND edit_con
 
    WFC_TRY
    {
-      int index = GetWindowTextLength( edit_control_handle );
+      auto index { GetWindowTextLength(edit_control_handle)};
 
       SetFocus( edit_control_handle ); // Do I need this?
       SendMessage( edit_control_handle, EM_SETSEL, (WPARAM) index, (LPARAM) index );

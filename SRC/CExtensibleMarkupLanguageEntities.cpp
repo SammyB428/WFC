@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 1995-2019, Samuel R. Blackburn
+** Copyright, 1995-2022, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -128,7 +128,7 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageEntities::A
       std::wstring temp_string(text_parameter);
       std::wstring number_string;
 
-      auto location_of_character_reference = temp_string.find(WSTRING_VIEW(L"&#"));
+      auto location_of_character_reference{ temp_string.find(WSTRING_VIEW(L"&#")) };
 
       while( location_of_character_reference not_eq temp_string.npos )
       {
@@ -138,7 +138,7 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageEntities::A
 
          // See if we are decimal or hexadecimal . . .
 
-         bool is_hexadecimal_character_reference = false;
+         bool is_hexadecimal_character_reference{ false };
 
          if ( temp_string.empty() == false and temp_string.at( 0 ) == 'x' )
          {
@@ -178,7 +178,7 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageEntities::A
 
          temp_string.erase(0, 1);
 
-         uint32_t character_to_add_to_string = 0;
+         uint32_t character_to_add_to_string{ 0 };
 
          if ( is_hexadecimal_character_reference == true)
          {
@@ -206,12 +206,12 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageEntities::A
 
    if (m_Entities.empty() == true)
    {
-       (void)m_Entities.push_back(std::wstring(entity));
-       (void)m_Values.push_back(resolved_string);
+       m_Entities.push_back(std::wstring(entity));
+       m_Values.push_back(resolved_string);
        return(true);
    }
 
-   auto const index = add_to_unique_sorted_vector(entity, m_Entities);
+   auto const index{ add_to_unique_sorted_vector(entity, m_Entities) };
 
    if (index >= (SSIZE_T) m_Values.size())
    {
@@ -445,11 +445,11 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageEntities::R
          return( false );
       }
 
-      wchar_t number_string[ 12 ] = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }; // insanely large buffer
+      wchar_t number_string[ 12 ]{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }; // insanely large buffer
 
-      std::size_t number_index = 0;
+      std::size_t number_index{ 0 };
 
-      long translated_character = 0;
+      long translated_character{ 0 };
 
       if ( entity[ 2 ] == 'x' )
       {
@@ -491,7 +491,7 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageEntities::R
 
          // number_string now contains the hex number of the character
 
-         wchar_t * stopped_at_address = nullptr;
+         wchar_t* stopped_at_address{ nullptr };
 
          translated_character = wcstol( number_string, &stopped_at_address, 16 );
 
@@ -552,11 +552,11 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageEntities::R
        return(false);
    }
 
-   auto lower = std::lower_bound(std::cbegin(m_Entities), std::cend(m_Entities), entity);
+   auto lower{ std::lower_bound(std::cbegin(m_Entities), std::cend(m_Entities), entity) };
 
    if (it_was_found(lower, entity, m_Entities) == true)
    {
-       auto const array_index = std::distance(std::cbegin(m_Entities), lower);
+       auto const array_index{ std::distance(std::cbegin(m_Entities), lower) };
        text = m_Values[ array_index ];
        return( true );
    }

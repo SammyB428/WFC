@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 1995-2014, Samuel R. Blackburn
+** Copyright, 1995-2022, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -53,7 +53,7 @@ static char THIS_FILE[] = __FILE__;
 
 void Win32FoundationClasses::wfc_start_screen_saver( void ) noexcept
 {
-   SendMessage( GetDesktopWindow(), WM_SYSCOMMAND, SC_SCREENSAVE, 0L );
+   ::SendMessage( GetDesktopWindow(), WM_SYSCOMMAND, SC_SCREENSAVE, 0L );
 }
 
 // End of source

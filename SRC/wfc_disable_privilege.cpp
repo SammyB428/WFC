@@ -55,7 +55,7 @@ _Check_return_ bool Win32FoundationClasses::wfc_disable_privilege( __in_z LPCTST
 {
    WFC_TRY
    {
-      auto token_handle = static_cast< HANDLE >( NULL );
+      auto token_handle { static_cast<HANDLE>(NULL)};
 
       if ( ::OpenProcessToken( GetCurrentProcess(), TOKEN_ADJUST_PRIVILEGES bitor TOKEN_QUERY, &token_handle ) == FALSE )
       {
@@ -72,7 +72,7 @@ _Check_return_ bool Win32FoundationClasses::wfc_disable_privilege( __in_z LPCTST
       {
          //WFCTRACEERROR( GetLastError() );
          //WFCTRACEVAL( TEXT( "Can't LookupPrivilegeValue for " ), privilege_name );
-         (void) Win32FoundationClasses::wfc_close_handle( token_handle );
+         std::ignore = Win32FoundationClasses::wfc_close_handle( token_handle );
          return( false );
       }
 
@@ -83,11 +83,11 @@ _Check_return_ bool Win32FoundationClasses::wfc_disable_privilege( __in_z LPCTST
       {
          //WFCTRACEERROR( GetLastError() );
          //WFCTRACE( TEXT( "Can't AdjustTokenPrivileges" ) );
-         (void) Win32FoundationClasses::wfc_close_handle( token_handle );
+         std::ignore = Win32FoundationClasses::wfc_close_handle( token_handle );
          return( false );
       }
 
-      (void) Win32FoundationClasses::wfc_close_handle( token_handle );
+      std::ignore = Win32FoundationClasses::wfc_close_handle( token_handle );
 
       return( true );
    }

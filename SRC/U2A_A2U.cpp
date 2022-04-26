@@ -70,7 +70,7 @@ void Win32FoundationClasses::ASCII_to_UNICODE(_In_ std::string_view ansi_string,
 
     WFC_TRY
     {
-       SIZE_T loop_index = 0;
+       SIZE_T loop_index { 0};
 
        while (loop_index < ansi_string.length() and ansi_string[loop_index] not_eq 0x00)
        {

@@ -87,7 +87,7 @@ _Check_return_ bool Win32FoundationClasses::wfc_kill_most_recently_used_document
       name_of_value_to_delete.push_back( list.at( loop_index ) );
       //WFCTRACEVAL( TEXT( "Would delete " ), name_of_value_to_delete );
 
-      (void) registry.GetBinaryValue( name_of_value_to_delete.c_str(), unicode_string );
+      std::ignore = registry.GetBinaryValue( name_of_value_to_delete.c_str(), unicode_string );
 
       if ( registry.DeleteValue( name_of_value_to_delete.c_str() ) == false )
       {

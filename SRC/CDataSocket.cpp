@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 1995-2019, Samuel R. Blackburn
+** Copyright, 1995-2022, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -98,14 +98,14 @@ _Check_return_ uint32_t Win32FoundationClasses::CDataSocket::Read(__out_bcount(s
 
    WFC_TRY
    {
-      BYTE * temporary_buffer = (BYTE *) buffer;
+      auto temporary_buffer {(BYTE*)buffer};
 
-      bool exit_loop = false;
+      bool exit_loop{ false };
 
-      UINT return_value = 0;
+      UINT return_value{ 0 };
 
-      int number_of_bytes_read    = 0;
-      int number_of_bytes_to_read = size_of_buffer;
+      int number_of_bytes_read{ 0 };
+      int number_of_bytes_to_read{ static_cast<int>(size_of_buffer) };
 
       while( exit_loop == false )
       {

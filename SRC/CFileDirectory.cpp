@@ -78,10 +78,10 @@ _Check_return_ bool Win32FoundationClasses::CFileDirectory::Open(_In_ std::wstri
 
     if (m_Name.empty() == false)
     {
-        if (ends_with( m_Name, '/') == false and
-            ends_with( m_Name, '\\') == false )
+        if (m_Name.back() not_eq '/' and
+            m_Name.back() not_eq '\\' )
         {
-            m_Name.push_back('/');
+            m_Name.push_back('\\');
         }
 
         return(true);
@@ -103,7 +103,7 @@ _Check_return_ bool Win32FoundationClasses::CFileDirectory::Read(_Out_ std::vect
     std::wstring name_and_wildcard(m_Name);
     name_and_wildcard.append(m_Wildcard);
 
-    auto file_find_handle = ::FindFirstFileW(name_and_wildcard.c_str(), &find_data);
+    auto file_find_handle{ ::FindFirstFileW(name_and_wildcard.c_str(), &find_data) };
 
     if (file_find_handle not_eq static_cast<HANDLE>(INVALID_HANDLE_VALUE))
     {
@@ -118,7 +118,7 @@ _Check_return_ bool Win32FoundationClasses::CFileDirectory::Read(_Out_ std::vect
             complete_filename.assign(m_Name);
             complete_filename.append(find_data.cFileName);
 
-            (void)filenames.push_back(complete_filename);
+            filenames.push_back(complete_filename);
         }
 
         while (::FindNextFileW(file_find_handle, &find_data) not_eq FALSE)
@@ -132,7 +132,7 @@ _Check_return_ bool Win32FoundationClasses::CFileDirectory::Read(_Out_ std::vect
                 complete_filename.assign(m_Name);
                 complete_filename.append(find_data.cFileName);
 
-                (void)filenames.push_back(complete_filename);
+                filenames.push_back(complete_filename);
             }
         }
 
@@ -161,7 +161,7 @@ _Check_return_ bool Win32FoundationClasses::CFileDirectory::Read(__callback Win3
     std::wstring filename_and_wildcard(m_Name);
     filename_and_wildcard.append(m_Wildcard);
 
-    auto file_find_handle = ::FindFirstFileW(filename_and_wildcard.c_str(), &find_data);
+    auto file_find_handle{ ::FindFirstFileW(filename_and_wildcard.c_str(), &find_data) };
 
     // The user passed us a couple of pointers, don't trust them
 
@@ -264,7 +264,7 @@ _Check_return_ bool Win32FoundationClasses::CFileDirectory::Read(__callback Win3
     }
     WFC_END_CATCH_ALL
 
-        return(false);
+    return(false);
 }
 
 struct RECURSIVE_DIRECTORY_READ_PARAMETERS
@@ -279,7 +279,7 @@ struct RECURSIVE_DIRECTORY_READ_PARAMETERS
 
 static void __read_recursively(_In_ std::wstring const& directory_name, _In_ std::wstring const& wildcard, _Out_ std::vector<std::wstring>& filenames) noexcept
 {
-    auto parameters_p = std::make_unique<RECURSIVE_DIRECTORY_READ_PARAMETERS>();
+    auto parameters_p{ std::make_unique<RECURSIVE_DIRECTORY_READ_PARAMETERS>() };
 
     if (parameters_p == nullptr)
     {
@@ -295,10 +295,10 @@ static void __read_recursively(_In_ std::wstring const& directory_name, _In_ std
         return;
     }
 
-    if (Win32FoundationClasses::ends_with( parameters_p->directory_to_open, '/' ) == false and
-        Win32FoundationClasses::ends_with( parameters_p->directory_to_open, '\\') == false )
+    if (parameters_p->directory_to_open.back() not_eq '/' and
+        parameters_p->directory_to_open.back() not_eq '\\' )
     {
-        parameters_p->directory_to_open.push_back('/');
+        parameters_p->directory_to_open.push_back('\\');
     }
 
     parameters_p->directory_name_ending_in_a_slash.assign(parameters_p->directory_to_open);
@@ -328,7 +328,7 @@ static void __read_recursively(_In_ std::wstring const& directory_name, _In_ std
             parameters_p->complete_filename.assign(parameters_p->directory_name_ending_in_a_slash);
             parameters_p->complete_filename.append(parameters_p->find_data.cFileName);
 
-            (void)filenames.push_back(parameters_p->complete_filename);
+            filenames.push_back(parameters_p->complete_filename);
         }
 
         while (FindNextFile(parameters_p->find_file_handle, &parameters_p->find_data) not_eq FALSE)
@@ -353,7 +353,7 @@ static void __read_recursively(_In_ std::wstring const& directory_name, _In_ std
                 parameters_p->complete_filename.assign(parameters_p->directory_name_ending_in_a_slash);
                 parameters_p->complete_filename.append(parameters_p->find_data.cFileName);
 
-                (void)filenames.push_back(parameters_p->complete_filename);
+                filenames.push_back(parameters_p->complete_filename);
             }
         }
 
@@ -379,7 +379,7 @@ struct WIDE_RECURSIVE_DIRECTORY_READ_PARAMETERS
 
 void __wide_read_recursively(_In_ std::wstring const& directory_name, _In_ std::wstring const& wildcard, _Out_ std::vector<std::wstring>& filenames)
 {
-    auto parameters_p = std::make_unique<WIDE_RECURSIVE_DIRECTORY_READ_PARAMETERS>();
+    auto parameters_p{ std::make_unique<WIDE_RECURSIVE_DIRECTORY_READ_PARAMETERS>() };
 
     ZeroMemory(&parameters_p->find_data, sizeof(parameters_p->find_data));
 
@@ -390,24 +390,22 @@ void __wide_read_recursively(_In_ std::wstring const& directory_name, _In_ std::
         return;
     }
 
-    if (Win32FoundationClasses::ends_with(parameters_p->directory_to_open, '/') == false and
-        Win32FoundationClasses::ends_with(parameters_p->directory_to_open, '\\' ) == false )
+    if (parameters_p->directory_to_open.back() not_eq '/' and
+        parameters_p->directory_to_open.back() not_eq '\\' )
     {
-        parameters_p->directory_to_open.push_back('/');
+        parameters_p->directory_to_open.push_back('\\');
     }
 
     parameters_p->directory_name_ending_in_a_slash.assign(parameters_p->directory_to_open);
-
     parameters_p->directory_to_open.append(wildcard);
-
-    parameters_p->find_file_handle = FindFirstFileW(parameters_p->directory_to_open.c_str(), &parameters_p->find_data);
+    parameters_p->find_file_handle = ::FindFirstFileW(parameters_p->directory_to_open.c_str(), &parameters_p->find_data);
 
     if (parameters_p->find_file_handle not_eq static_cast<HANDLE>(INVALID_HANDLE_VALUE))
     {
         if (is_flagged(parameters_p->find_data.dwFileAttributes, FILE_ATTRIBUTE_DIRECTORY) == true)
         {
-            if (wcscmp(parameters_p->find_data.cFileName, L".") == I_AM_EQUAL_TO_THAT or
-                wcscmp(parameters_p->find_data.cFileName, L"..") == I_AM_EQUAL_TO_THAT)
+            if (::wcscmp(parameters_p->find_data.cFileName, L".") == I_AM_EQUAL_TO_THAT or
+                ::wcscmp(parameters_p->find_data.cFileName, L"..") == I_AM_EQUAL_TO_THAT)
             {
                 // Do nothing, to do something would cause infinite recursion and that is a bad thing
             }
@@ -424,10 +422,10 @@ void __wide_read_recursively(_In_ std::wstring const& directory_name, _In_ std::
             parameters_p->complete_filename.assign(parameters_p->directory_name_ending_in_a_slash);
             parameters_p->complete_filename.append(parameters_p->find_data.cFileName);
 
-            (void)filenames.push_back(parameters_p->complete_filename);
+            filenames.push_back(parameters_p->complete_filename);
         }
 
-        while (FindNextFileW(parameters_p->find_file_handle, &parameters_p->find_data) not_eq FALSE)
+        while (::FindNextFileW(parameters_p->find_file_handle, &parameters_p->find_data) not_eq FALSE)
         {
             if (is_flagged(parameters_p->find_data.dwFileAttributes, FILE_ATTRIBUTE_DIRECTORY) == true)
             {
@@ -449,7 +447,7 @@ void __wide_read_recursively(_In_ std::wstring const& directory_name, _In_ std::
                 parameters_p->complete_filename.assign(parameters_p->directory_name_ending_in_a_slash);
                 parameters_p->complete_filename.append(parameters_p->find_data.cFileName);
 
-                (void)filenames.push_back(parameters_p->complete_filename);
+                filenames.push_back(parameters_p->complete_filename);
             }
         }
 
@@ -467,7 +465,7 @@ static _Check_return_ bool __wide_read_recursively(_In_ std::wstring const& dire
 {
     WFC_VALIDATE_POINTER(action_to_take);
 
-    auto parameters_p = std::make_unique<WIDE_RECURSIVE_DIRECTORY_READ_PARAMETERS>();
+    auto parameters_p{ std::make_unique<WIDE_RECURSIVE_DIRECTORY_READ_PARAMETERS>() };
 
     ZeroMemory(&parameters_p->find_data, sizeof(parameters_p->find_data));
 
@@ -478,23 +476,22 @@ static _Check_return_ bool __wide_read_recursively(_In_ std::wstring const& dire
         return(false);
     }
 
-    if (Win32FoundationClasses::ends_with( parameters_p->directory_to_open, '/' ) == false and
-        Win32FoundationClasses::ends_with( parameters_p->directory_to_open, '\\') == false )
+    if (parameters_p->directory_to_open.back() not_eq '/' and
+        parameters_p->directory_to_open.back() not_eq '\\' )
     {
-        parameters_p->directory_to_open.push_back('/');
+        parameters_p->directory_to_open.push_back('\\');
     }
 
     parameters_p->directory_name_ending_in_a_slash.assign(parameters_p->directory_to_open);
     parameters_p->directory_to_open.append(wildcard);
-
     parameters_p->find_file_handle = ::FindFirstFileW(parameters_p->directory_to_open.c_str(), &parameters_p->find_data);
 
     if (parameters_p->find_file_handle not_eq static_cast<HANDLE>(INVALID_HANDLE_VALUE))
     {
         if (is_flagged(parameters_p->find_data.dwFileAttributes, FILE_ATTRIBUTE_DIRECTORY) == true)
         {
-            if (wcscmp(parameters_p->find_data.cFileName, L".") == I_AM_EQUAL_TO_THAT or
-                wcscmp(parameters_p->find_data.cFileName, L"..") == I_AM_EQUAL_TO_THAT)
+            if (::wcscmp(parameters_p->find_data.cFileName, L".") == I_AM_EQUAL_TO_THAT or
+                ::wcscmp(parameters_p->find_data.cFileName, L"..") == I_AM_EQUAL_TO_THAT)
             {
                 // Do nothing, to do something would cause infinite recursion and that is a bad thing
             }
@@ -625,7 +622,7 @@ static _Check_return_ bool __wide_read_recursively(_In_ std::wstring const& dire
                        return(false);
                     }
                 }
-                    WFC_CATCH_ALL
+                WFC_CATCH_ALL
                 {
                 }
                 WFC_END_CATCH_ALL
@@ -656,7 +653,7 @@ _Check_return_ bool Win32FoundationClasses::CFileDirectory::ReadRecursively(__ca
     std::wstring filename_and_wildcard(m_Name);
     filename_and_wildcard.append(m_Wildcard);
 
-    auto file_find_handle = ::FindFirstFileW(filename_and_wildcard.c_str(), &find_data);
+    auto file_find_handle{ ::FindFirstFileW(filename_and_wildcard.c_str(), &find_data) };
 
     if (file_find_handle not_eq static_cast<HANDLE>(INVALID_HANDLE_VALUE))
     {
@@ -724,7 +721,7 @@ _Check_return_ bool Win32FoundationClasses::CFileDirectory::ReadRecursively(__ca
                    return(true);
                 }
             }
-                WFC_CATCH_ALL
+            WFC_CATCH_ALL
             {
             }
             WFC_END_CATCH_ALL
@@ -826,7 +823,7 @@ _Check_return_ bool Win32FoundationClasses::CFileDirectory::ReadRecursively(_Out
     std::wstring filename_and_wildcard(m_Name);
     filename_and_wildcard.append(m_Wildcard);
 
-    auto file_find_handle = ::FindFirstFileW(filename_and_wildcard.c_str(), &find_data);
+    auto file_find_handle{ ::FindFirstFileW(filename_and_wildcard.c_str(), &find_data) };
 
     if (file_find_handle not_eq static_cast<HANDLE>(INVALID_HANDLE_VALUE))
     {
@@ -853,7 +850,7 @@ _Check_return_ bool Win32FoundationClasses::CFileDirectory::ReadRecursively(_Out
             complete_filename.assign(m_Name);
             complete_filename.append(find_data.cFileName);
 
-            (void)filenames.push_back(complete_filename);
+            filenames.push_back(complete_filename);
         }
 
         while (::FindNextFileW(file_find_handle, &find_data) not_eq FALSE)
@@ -878,7 +875,7 @@ _Check_return_ bool Win32FoundationClasses::CFileDirectory::ReadRecursively(_Out
                 complete_filename.assign(m_Name);
                 complete_filename.append(find_data.cFileName);
 
-                (void)filenames.push_back(complete_filename);
+                filenames.push_back(complete_filename);
             }
         }
 
@@ -927,7 +924,7 @@ struct SUM_COUNT
 
 static _Check_return_ bool sum_action(_In_ void * parameter, _In_ wchar_t const * const filename, _In_ WIN32_FIND_DATA const * data_p) noexcept
 {
-    SUM_COUNT * sum_count = static_cast<SUM_COUNT *>(parameter);
+    auto sum_count{ static_cast<SUM_COUNT*>(parameter) };
 
     sum_count->number_of_files++;
 
@@ -950,7 +947,7 @@ void Win32FoundationClasses::CFileDirectory::GetStatistics(_Out_ uint64_t& numbe
     sum_count.number_of_files = 0;
     sum_count.sum_of_file_sizes = 0;
 
-    (void)ReadRecursively(sum_action, &sum_count);
+    std::ignore = ReadRecursively(sum_action, &sum_count);
 
     number_of_files = sum_count.number_of_files;
     sum = sum_count.sum_of_file_sizes;
@@ -960,7 +957,7 @@ static _Check_return_ bool __delete_file_action(_Inout_ void * parameter, _In_z_
 {
     if (is_flagged( data_p->dwFileAttributes, FILE_ATTRIBUTE_DIRECTORY) == true)
     {
-        (void)Win32FoundationClasses::CFileDirectory::RecursivelyDestroy(filename);
+        std::ignore = Win32FoundationClasses::CFileDirectory::RecursivelyDestroy(filename);
     }
     else
     {
@@ -982,12 +979,12 @@ _Check_return_ bool Win32FoundationClasses::CFileDirectory::RecursivelyDestroy(_
     if (dir.Open(folder_name) == true)
     {
         dir.SetIncludeDirectoriesInCallback(true);
-        dir.SetWildcard(L"*.*");
-        (void) dir.ReadRecursively(__delete_file_action, nullptr);
+        dir.SetWildcard(WSTRING_VIEW(L"*.*"));
+        std::ignore = dir.ReadRecursively(__delete_file_action, nullptr);
         dir.Close();
     }
 
-    (void)Win32FoundationClasses::CFileDirectory::Destroy(folder_name);
+    std::ignore = Win32FoundationClasses::CFileDirectory::Destroy(folder_name);
 
     return(true);
 }

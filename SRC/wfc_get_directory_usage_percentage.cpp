@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 1995-2014, Samuel R. Blackburn
+** Copyright, 1995-2022, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -53,16 +53,16 @@ static char THIS_FILE[] = __FILE__;
 
 _Check_return_ uint32_t Win32FoundationClasses::wfc_get_directory_usage_percentage( _In_ std::wstring const& directory_path ) noexcept
 {
-   double number_of_bytes_free_on_drive     = 0.0;
-   double number_of_bytes_used_in_directory = 0.0;
-   double high_value                        = static_cast< double >( 0xFFFFFFFF );
+   double number_of_bytes_free_on_drive{ 0.0 };
+   double number_of_bytes_used_in_directory{ 0.0 };
+   double high_value{ static_cast<double>(0xFFFFFFFF) };
 
    high_value++;
 
    std::wstring mask( directory_path );
 
-   if ( mask.at( mask.length() - 1 ) not_eq '\\' and
-        mask.at( mask.length() - 1 ) not_eq '/' )
+   if ( mask.back() not_eq '\\' and
+        mask.back() not_eq '/' )
    {
       mask.push_back( '/' );
    }
@@ -73,7 +73,7 @@ _Check_return_ uint32_t Win32FoundationClasses::wfc_get_directory_usage_percenta
 
    ZeroMemory( &find_data, sizeof( find_data ) );
 
-   auto find_file_handle = FindFirstFileW( mask.c_str(), &find_data );
+   auto find_file_handle{ ::FindFirstFileW(mask.c_str(), &find_data) };
 
    if ( find_file_handle not_eq static_cast< HANDLE >( INVALID_HANDLE_VALUE ) )
    {
@@ -84,7 +84,7 @@ _Check_return_ uint32_t Win32FoundationClasses::wfc_get_directory_usage_percenta
          number_of_bytes_used_in_directory += static_cast< double >( static_cast< double >( find_data.nFileSizeHigh ) * high_value );
       }
 
-      while( FindNextFileW( find_file_handle, &find_data ) not_eq FALSE )
+      while( ::FindNextFileW( find_file_handle, &find_data ) not_eq FALSE )
       {
          number_of_bytes_used_in_directory += find_data.nFileSizeLow;
 
@@ -94,7 +94,7 @@ _Check_return_ uint32_t Win32FoundationClasses::wfc_get_directory_usage_percenta
          }
       }
 
-      FindClose( find_file_handle );
+      std::ignore = ::FindClose( find_file_handle );
    }
    else
    {
@@ -108,10 +108,10 @@ _Check_return_ uint32_t Win32FoundationClasses::wfc_get_directory_usage_percenta
    ULARGE_INTEGER number_of_free_bytes_on_disk{ 0, 0 };
    ULARGE_INTEGER total_number_of_bytes_on_disk{ 0, 0 };
 
-   if ( GetDiskFreeSpaceExW( mask.c_str(),
-                           &number_of_free_bytes_on_disk,
-                           &total_number_of_bytes_on_disk,
-                            nullptr ) == FALSE )
+   if ( ::GetDiskFreeSpaceExW( mask.c_str(),
+                              &number_of_free_bytes_on_disk,
+                              &total_number_of_bytes_on_disk,
+                               nullptr ) == FALSE )
    {
       //WFCTRACE( TEXT( "Failure!" ) );
       //WFCTRACEERROR( GetLastError() );
@@ -121,9 +121,7 @@ _Check_return_ uint32_t Win32FoundationClasses::wfc_get_directory_usage_percenta
    number_of_bytes_free_on_drive  = number_of_free_bytes_on_disk.LowPart;
    number_of_bytes_free_on_drive += static_cast< double >( static_cast< double >( number_of_free_bytes_on_disk.HighPart ) * high_value );
 
-   double percentage = 0.0;
-
-   percentage = number_of_bytes_used_in_directory / number_of_bytes_free_on_drive;
+   double percentage{ number_of_bytes_used_in_directory / number_of_bytes_free_on_drive };
    percentage *= 100.0;
 
    return( static_cast< uint32_t >( percentage ) );

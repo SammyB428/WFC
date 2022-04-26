@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 1995-2015, Samuel R. Blackburn
+** Copyright, 1995-2022, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -57,9 +57,10 @@ void Win32FoundationClasses::wfc_debug_error_code( _In_ DWORD const error_code )
 
     Win32FoundationClasses::wfc_get_error_string( error_code, error_string );
 
-    std::wstring error_message;
+    std::wstring error_message(WSTRING_VIEW(L"ERROR "));
 
-    format( error_message, L"ERROR %lu - ", error_code );
+    error_message.append(std::to_wstring(error_code));
+    error_message.append(WSTRING_VIEW(L" - "));
     error_message.append( error_string );
     error_message.append(WSTRING_VIEW(L"\n"));
 
@@ -68,7 +69,7 @@ void Win32FoundationClasses::wfc_debug_error_code( _In_ DWORD const error_code )
 
 _Check_return_ bool Win32FoundationClasses::wfc_undocumented_get_system_process_list( __out_bcount( size_of_buffer ) BYTE * buffer, _In_ DWORD const size_of_buffer ) noexcept
 {
-    HMODULE const ntdll_module_handle = GetModuleHandle(TEXT("ntdll.dll"));
+    HMODULE const ntdll_module_handle{ GetModuleHandle(TEXT("ntdll.dll")) };
 
     if (ntdll_module_handle == NULL)
     {
@@ -102,11 +103,11 @@ _Check_return_ bool Win32FoundationClasses::wfc_get_process_command_line(_In_ HA
 
     command_line.clear();
 
-    auto process_handle = ::OpenProcess(PROCESS_QUERY_INFORMATION bitor PROCESS_VM_READ, FALSE, PtrToInt(process_id));
+    auto process_handle{ ::OpenProcess(PROCESS_QUERY_INFORMATION bitor PROCESS_VM_READ, FALSE, PtrToInt(process_id)) };
 
     if (is_bad_handle(process_handle) == true)
     {
-        DWORD const error_code = GetLastError();
+        auto const error_code{ GetLastError() };
         wfc_debug_error_code(error_code);
         return(false);
     }
@@ -115,9 +116,9 @@ _Check_return_ bool Win32FoundationClasses::wfc_get_process_command_line(_In_ HA
 
     ZeroMemory(&pbi, sizeof(pbi));
 
-    ULONG number_of_bytes_written = 0;
+    ULONG number_of_bytes_written{ 0 };
 
-    HMODULE const ntdll_module_handle = GetModuleHandle(TEXT("ntdll.dll"));
+    HMODULE const ntdll_module_handle{ GetModuleHandle(TEXT("ntdll.dll")) };
 
     if (ntdll_module_handle == NULL)
     {
@@ -131,14 +132,14 @@ _Check_return_ bool Win32FoundationClasses::wfc_get_process_command_line(_In_ HA
         GetProcAddress(ntdll_module_handle, "NtQueryInformationProcess");
 #pragma warning(default:4191)
 
-    NTSTATUS const return_status = Nt_QueryInformationProcess(process_handle, ProcessBasicInformation, &pbi, sizeof(pbi), &number_of_bytes_written);
+    auto const return_status{ static_cast<NTSTATUS>(Nt_QueryInformationProcess(process_handle, ProcessBasicInformation, &pbi, sizeof(pbi), &number_of_bytes_written)) };
 
     _ASSERTE(return_status == ERROR_SUCCESS);
 
     if (return_status not_eq ERROR_SUCCESS)
     {
-        DWORD const error_code = GetLastError();
-        wfc_debug_error_code(error_code);
+        auto const error_code{ GetLastError() };
+        Win32FoundationClasses::wfc_debug_error_code(error_code);
         return(false);
     }
 
@@ -147,13 +148,13 @@ _Check_return_ bool Win32FoundationClasses::wfc_get_process_command_line(_In_ HA
 
     ZeroMemory(&process_environment_block, sizeof(process_environment_block));
 
-    SIZE_T number_of_bytes_read = 0;
+    SIZE_T number_of_bytes_read{ 0 };
 
     if (::ReadProcessMemory(process_handle, pbi.PebBaseAddress, &process_environment_block, sizeof(process_environment_block), &number_of_bytes_read) == FALSE)
     {
-        DWORD const error_code = GetLastError();
-        wfc_debug_error_code(error_code);
-        (void)wfc_close_handle(process_handle);
+        auto const error_code{ GetLastError() };
+        Win32FoundationClasses::wfc_debug_error_code(error_code);
+        std::ignore = Win32FoundationClasses::wfc_close_handle(process_handle);
         return(false);
     }
 
@@ -163,22 +164,22 @@ _Check_return_ bool Win32FoundationClasses::wfc_get_process_command_line(_In_ HA
 
     if (::ReadProcessMemory(process_handle, (LPVOID)process_environment_block.ProcessParameters, &process_parameters, sizeof(process_parameters), &number_of_bytes_read) == FALSE)
     {
-        DWORD const error_code = GetLastError();
-        wfc_debug_error_code(error_code);
-        (void)wfc_close_handle(process_handle);
+        auto const error_code{ GetLastError() };
+        Win32FoundationClasses::wfc_debug_error_code(error_code);
+        std::ignore = Win32FoundationClasses::wfc_close_handle(process_handle);
         return(false);
     }
 
-    DWORD number_of_characters = 32769;
-    DWORD number_of_bytes_in_command_line_string = number_of_characters * sizeof(wchar_t);
+    DWORD number_of_characters{ 32769 };
+    DWORD number_of_bytes_in_command_line_string{ number_of_characters * sizeof(wchar_t) };
 
-    auto wide_command_line_string = static_cast<wchar_t *>(_aligned_malloc(number_of_bytes_in_command_line_string, 4096)); // Need aligned memory
+    auto wide_command_line_string{ static_cast<wchar_t*>(_aligned_malloc(number_of_bytes_in_command_line_string, 4096)) }; // Need aligned memory
 
     WFC_VALIDATE_POINTER(wide_command_line_string);
 
     if (wide_command_line_string == nullptr)
     {
-        (void)wfc_close_handle(process_handle);
+        std::ignore = Win32FoundationClasses::wfc_close_handle(process_handle);
         return(false);
     }
 
@@ -189,14 +190,14 @@ _Check_return_ bool Win32FoundationClasses::wfc_get_process_command_line(_In_ HA
         std::min((DWORD)process_parameters.CommandLine.Length, (number_of_bytes_in_command_line_string - 2)),
         &number_of_bytes_read) == FALSE)
     {
-        DWORD const error_code = GetLastError();
-        wfc_debug_error_code(error_code);
-        (void)wfc_close_handle(process_handle);
+        auto const error_code{ GetLastError() };
+        Win32FoundationClasses::wfc_debug_error_code(error_code);
+        std::ignore = Win32FoundationClasses::wfc_close_handle(process_handle);
         _aligned_free(wide_command_line_string);
         return(false);
     }
 
-    (void)wfc_close_handle(process_handle);
+    std::ignore = Win32FoundationClasses::wfc_close_handle(process_handle);
 
     command_line.assign(wide_command_line_string);
 
@@ -207,7 +208,7 @@ _Check_return_ bool Win32FoundationClasses::wfc_get_process_command_line(_In_ HA
 void Win32FoundationClasses::wfc_calculate_lanman_hash(_In_ std::string_view ascii_string, __out_bcount(16) uint8_t * hash_value) noexcept
 {
     // This function has no associated import library. You must use the LoadLibrary and GetProcAddress functions to dynamically link to Ntdll.dll.
-    static HMODULE advapi32_module_handle = NULL;
+    static HMODULE advapi32_module_handle{ NULL };
 
     ZeroMemory(hash_value, 16);
 
@@ -245,15 +246,15 @@ void Win32FoundationClasses::wfc_calculate_lanman_hash(_In_ std::string_view asc
     {
         char empty_string[1]{ 0 };
         // Empty hash
-        NTSTATUS const return_status = SystemFunction006(empty_string, hash_value);
+        auto const return_status{ SystemFunction006(empty_string, hash_value) };
         _ASSERTE(return_status == ERROR_SUCCESS);
     }
 
     // To duplicate the behavior LanMan hashing, we need to convert the string to upper case
 
-    std::size_t const upper_case_string_size = ascii_string.length() + 1;
+    std::size_t const upper_case_string_size{ ascii_string.length() + 1 };
 
-    auto upper_case_string = std::make_unique<char []>(upper_case_string_size);
+    auto upper_case_string{ std::make_unique<char[]>(upper_case_string_size) };
 
     if (upper_case_string.get() == nullptr)
     {
@@ -266,14 +267,14 @@ void Win32FoundationClasses::wfc_calculate_lanman_hash(_In_ std::string_view asc
         upper_case_string[string_index + 1] = 0x00;
     }
 
-    NTSTATUS const return_status = SystemFunction006(upper_case_string.get(), hash_value);
+    auto const return_status{ SystemFunction006(upper_case_string.get(), hash_value) };
     _ASSERTE(return_status == ERROR_SUCCESS);
 }
 
 void Win32FoundationClasses::wfc_calculate_nt_hash(_In_ std::wstring_view unicode_string, __out_bcount(16) uint8_t * hash_value) noexcept
 {
     // This function has no associated import library. You must use the LoadLibrary and GetProcAddress functions to dynamically link to Ntdll.dll.
-    static HMODULE advapi32_module_handle = NULL;
+    static HMODULE advapi32_module_handle{ NULL };
 
     ZeroMemory(hash_value, 16);
 

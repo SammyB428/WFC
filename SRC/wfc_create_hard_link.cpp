@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 1995-2016, Samuel R. Blackburn
+** Copyright, 1995-2022, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -84,13 +84,13 @@ _Check_return_ bool Win32FoundationClasses::wfc_create_hard_link( __in_z LPCTSTR
          //WFCTRACE( TEXT( "Can't enable the restore privilege." ) );
       }
 
-      HANDLE existing_file_handle = CreateFile( existing_filename,
+      auto const existing_file_handle{ CreateFile(existing_filename,
                                          FILE_WRITE_ATTRIBUTES,
                                          FILE_SHARE_READ bitor FILE_SHARE_WRITE bitor FILE_SHARE_DELETE,
                                          sa,
                                          OPEN_EXISTING,
                                          0,
-                                         static_cast< HANDLE >( NULL ) );
+                                         static_cast<HANDLE>(NULL)) };
 
       if ( existing_file_handle == static_cast< HANDLE >( INVALID_HANDLE_VALUE ) )
       {
@@ -112,23 +112,21 @@ _Check_return_ bool Win32FoundationClasses::wfc_create_hard_link( __in_z LPCTSTR
       _tcscpy_s( unicode_new_filename, std::size( unicode_new_filename ), new_filename );
 #endif
 
-      DWORD link_file_path_length = 0;
+      LPWSTR unicode_filename_portion{ nullptr };
 
-      LPWSTR unicode_filename_portion = nullptr;
-
-      link_file_path_length = GetFullPathNameW( unicode_new_filename, MAX_PATH, link_file_path, &unicode_filename_portion );
+      auto link_file_path_length{ GetFullPathNameW(unicode_new_filename, MAX_PATH, link_file_path, &unicode_filename_portion) };
 
       if ( link_file_path_length == 0 )
       {
          //WFCTRACEERROR( GetLastError() );
 
-         (void) Win32FoundationClasses::wfc_close_handle( existing_file_handle );
+         std::ignore = Win32FoundationClasses::wfc_close_handle( existing_file_handle );
          return( false );
       }
 
-      DWORD number_of_bytes_in_path = ( link_file_path_length + 1 ) * sizeof( WCHAR );
+      DWORD number_of_bytes_in_path{ (link_file_path_length + 1) * sizeof(WCHAR) };
 
-      LPVOID context = nullptr;
+      LPVOID context{ nullptr };
 
       WIN32_STREAM_ID stream;
 
@@ -139,10 +137,10 @@ _Check_return_ bool Win32FoundationClasses::wfc_create_hard_link( __in_z LPCTSTR
       stream.dwStreamNameSize   = 0;
       stream.Size.QuadPart      = number_of_bytes_in_path;
 
-      DWORD stream_header_size      = (DWORD) ( (LPBYTE) &stream.cStreamName - (LPBYTE) &stream + stream.dwStreamNameSize );
-      DWORD number_of_bytes_written = 0;
+      DWORD stream_header_size{ (DWORD)((LPBYTE)&stream.cStreamName - (LPBYTE)&stream + stream.dwStreamNameSize) };
+      DWORD number_of_bytes_written{ 0 };
 
-      if ( BackupWrite( existing_file_handle,
+      if ( ::BackupWrite( existing_file_handle,
               (LPBYTE) &stream,
                         stream_header_size,
                        &number_of_bytes_written,
@@ -152,14 +150,14 @@ _Check_return_ bool Win32FoundationClasses::wfc_create_hard_link( __in_z LPCTSTR
       {
          //WFCTRACEERROR( GetLastError() );
 
-         (void) Win32FoundationClasses::wfc_close_handle( existing_file_handle );
+         std::ignore = Win32FoundationClasses::wfc_close_handle( existing_file_handle );
          return( false );
       }
 
       ASSERT( number_of_bytes_written == stream_header_size );
       number_of_bytes_written = 0;
 
-      if ( BackupWrite( existing_file_handle,
+      if ( ::BackupWrite( existing_file_handle,
                (LPBYTE) link_file_path,
                         number_of_bytes_in_path,
                        &number_of_bytes_written,
@@ -170,14 +168,14 @@ _Check_return_ bool Win32FoundationClasses::wfc_create_hard_link( __in_z LPCTSTR
          //WFCTRACEERROR( GetLastError() );
          //WFCTRACEVAL( TEXT( "At line number " ), __LINE__ );
 
-         (void) Win32FoundationClasses::wfc_close_handle( existing_file_handle );
+         std::ignore = Win32FoundationClasses::wfc_close_handle( existing_file_handle );
          return( false );
       }
 
       ASSERT( number_of_bytes_written == number_of_bytes_in_path );
       number_of_bytes_written = 0;
 
-      if ( BackupWrite( existing_file_handle,
+      if ( ::BackupWrite( existing_file_handle,
                         nullptr,
                         0,
                        &number_of_bytes_written,
@@ -188,11 +186,11 @@ _Check_return_ bool Win32FoundationClasses::wfc_create_hard_link( __in_z LPCTSTR
          //WFCTRACEERROR( GetLastError() );
          //WFCTRACEVAL( TEXT( "At line number " ), __LINE__ );
 
-         (void) Win32FoundationClasses::wfc_close_handle( existing_file_handle );
+         std::ignore = Win32FoundationClasses::wfc_close_handle( existing_file_handle );
          return( false );
       }
 
-      (void) Win32FoundationClasses::wfc_close_handle( existing_file_handle );
+      std::ignore = Win32FoundationClasses::wfc_close_handle( existing_file_handle );
       return( true );
    }
    WFC_CATCH_ALL

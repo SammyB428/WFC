@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 1995-2020, Samuel R. Blackburn
+** Copyright, 1995-2022, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -95,14 +95,14 @@ _Check_return_ std::wstring Win32FoundationClasses::CFileTime::SQLTimestamp(void
 
 void Win32FoundationClasses::CFileTime::ISO8601(_Out_ std::wstring& return_value) const noexcept
 {
-    uint64_t const this_time = AsTicks();
-    uint64_t const microsecond_remainder = (this_time % CFileTime::NumberOfFiletimeTicksInOneSecond) / CFileTime::NumberOfFiletimeTicksInOneMicrosecond;
+    auto const this_time{ AsTicks() };
+    uint64_t const microsecond_remainder{ (this_time % CFileTime::NumberOfFiletimeTicksInOneSecond) / CFileTime::NumberOfFiletimeTicksInOneMicrosecond };
 
     Win32FoundationClasses::CSystemTime stime(this);
 
     if (microsecond_remainder > 0)
     {
-        double fractional_part = (double)((double)microsecond_remainder / (double)CFileTime::NumberOfMicrosecondsInOneSecond); // One million microseconds in one second
+        auto fractional_part{ (double)((double)microsecond_remainder / (double)CFileTime::NumberOfMicrosecondsInOneSecond) }; // One million microseconds in one second
 
         fractional_part += (double)stime.wSecond;
 
@@ -133,8 +133,8 @@ _Check_return_ std::wstring Win32FoundationClasses::CFileTime::PostgreSQLTimesta
 {
     std::wstring return_value;
 
-    auto const this_time = AsTicks();
-    uint64_t const microsecond_remainder = ( this_time % CFileTime::NumberOfFiletimeTicksInOneSecond) / CFileTime::NumberOfFiletimeTicksInOneMicrosecond;
+    auto const this_time{ AsTicks() };
+    uint64_t const microsecond_remainder{ (this_time % CFileTime::NumberOfFiletimeTicksInOneSecond) / CFileTime::NumberOfFiletimeTicksInOneMicrosecond };
 
     Win32FoundationClasses::CSystemTime stime;
 
@@ -142,7 +142,7 @@ _Check_return_ std::wstring Win32FoundationClasses::CFileTime::PostgreSQLTimesta
 
     if ( microsecond_remainder > 0 )
     {
-        double fractional_part = (double)( (double) microsecond_remainder / (double)CFileTime::NumberOfMicrosecondsInOneSecond); // One million microseconds in one second
+        auto fractional_part{ (double)((double)microsecond_remainder / (double)CFileTime::NumberOfMicrosecondsInOneSecond) }; // One million microseconds in one second
 
         fractional_part += (double) stime.wSecond;
 

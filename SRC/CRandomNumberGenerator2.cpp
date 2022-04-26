@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 1995-2017, Samuel R. Blackburn
+** Copyright, 1995-2022, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -115,12 +115,13 @@ _Check_return_ uint32_t Win32FoundationClasses::CRandomNumberGenerator2::m_LoadM
 {
    WFC_VALIDATE_POINTER( this );
 
-    uint32_t *p0 = m_State;
-    uint32_t *p2 = m_State + 2;
-    uint32_t *pM = m_State + M;
-    uint32_t s0 = 0;
-    uint32_t s1 = 0;
-    int    j = 0;
+   uint32_t* p0{ m_State };
+   uint32_t* p2{ m_State + 2 };
+   uint32_t* pM{ m_State + M };
+   uint32_t s0{ 0 };
+   uint32_t s1{ 0 };
+
+   int    j{ 0 };
 
     if ( m_Left < (-1) )
     {
@@ -185,11 +186,11 @@ _Check_return_ bool Win32FoundationClasses::CRandomNumberGenerator2::Fill( __out
       return( false );
    }
 
-   std::size_t const number_of_dwords_in_buffer = number_of_bytes / sizeof(uint32_t);
+   std::size_t const number_of_dwords_in_buffer{ number_of_bytes / sizeof(uint32_t) };
 
-   auto dwords = reinterpret_cast<uint32_t *>(buffer);
+   auto dwords{ reinterpret_cast<uint32_t*>(buffer) };
 
-   std::size_t array_index = 0;
+   std::size_t array_index{ 0 };
 
    while( array_index < number_of_dwords_in_buffer ) // Cannot be converted to a Range loop
    {
@@ -220,22 +221,22 @@ void Win32FoundationClasses::CRandomNumberGenerator2::InitializeSeed( void ) noe
 
    // We need to seed our algorithm with something random from the operating system
 
-   uint16_t low_word = 0;
+   uint16_t low_word{ 0 };
 
    // GetTickCount() returns the number of milliseconds the machine has been turned on
 
-   uint16_t high_word = LOWORD( ::GetTickCount64() );
+   uint16_t high_word{ static_cast<uint16_t>(LOWORD(::GetTickCount64())) };
 
-   uint32_t number_of_sectors_per_cluster = 0;
-   uint32_t number_of_bytes_per_sector    = 0;
-   uint32_t number_of_free_clusters       = 0;
-   uint32_t total_number_of_clusters      = 0;
+   uint32_t number_of_sectors_per_cluster{ 0 };
+   uint32_t number_of_bytes_per_sector{ 0 };
+   uint32_t number_of_free_clusters{ 0 };
+   uint32_t total_number_of_clusters{ 0 };
 
    FILETIME a = { 0, 0 };
    FILETIME b = { 0, 0 };
    FILETIME c = { 0, 0 };
 
-   uint32_t totaler = ::GetCurrentProcessId();
+   uint32_t totaler{ ::GetCurrentProcessId() };
 
    totaler <<= 3;
 
@@ -286,8 +287,8 @@ void Win32FoundationClasses::CRandomNumberGenerator2::InitializeSeed( void ) noe
 
       // The most random part of the system time is the milliseconds then seconds
 
-      BYTE high_byte = 0;
-      BYTE low_byte  = 0;
+      BYTE high_byte{ 0 };
+      BYTE low_byte{ 0 };
 
       high_byte = LOBYTE( system_time.wMilliseconds );
       low_byte  = (BYTE) ( ( system_time.wMilliseconds >> 8 ) + system_time.wSecond );
@@ -298,7 +299,7 @@ void Win32FoundationClasses::CRandomNumberGenerator2::InitializeSeed( void ) noe
    // 2000-05-26
    // Added GetCurrentThreadId() so two threads won't initialize to the same seed
 
-   uint32_t value_1 = ( MAKELONG( low_word, high_word ) xor ( ::GetCurrentThreadId() << 11 ) );
+   uint32_t value_1{ (MAKELONG(low_word, high_word) xor (::GetCurrentThreadId() << 11)) };
 
    value_1 += totaler;
 
@@ -329,7 +330,7 @@ _Check_return_ uint32_t Win32FoundationClasses::CRandomNumberGenerator2::GetInte
 {
    WFC_VALIDATE_POINTER( this );
 
-   uint32_t return_value = 0;
+   uint32_t return_value{ 0 };
 
    if ( --m_Left < 0 )
    {
@@ -357,7 +358,7 @@ _Check_return_ double Win32FoundationClasses::CRandomNumberGenerator2::GetFloat(
 
    x.return_value = GetInteger();
 
-   uint32_t temp_integer = GetInteger();
+   uint32_t temp_integer{ GetInteger() };
 
    // This works for Intel-Endian machines
    x.bytes[ 0 ] xor_eq HIBYTE( HIWORD( temp_integer ) );
@@ -422,9 +423,9 @@ void Win32FoundationClasses::CRandomNumberGenerator2::SetSeed( _In_ uint32_t con
     // so-- that's why the only change I made is to restrict to odd seeds.
     //
 
-    uint32_t x = (new_seed bitor 1) bitand 0xFFFFFFFF;
-    uint32_t *s = m_State;
-    int    j = 0;
+   uint32_t x{ (new_seed bitor 1) bitand 0xFFFFFFFF };
+   uint32_t* s{ m_State };
+   int    j{ 0 };
 
     for(m_Left=0, *s++=x, j=N; --j;
         *s++ = (x*=69069U) bitand 0xFFFFFFFF);
@@ -434,9 +435,9 @@ Win32FoundationClasses::CRandomNumberGenerator2::operator char() noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
-   uint32_t random_value = GetInteger();
+   uint32_t random_value{ GetInteger() };
 
-   char return_value = static_cast< char >( random_value >> 9 );
+   char return_value{ static_cast<char>(random_value >> 9) };
 
    return( return_value );
 }
@@ -445,9 +446,9 @@ Win32FoundationClasses::CRandomNumberGenerator2::operator unsigned char() noexce
 {
    WFC_VALIDATE_POINTER( this );
 
-   uint32_t random_value = GetInteger();
+   uint32_t random_value{ GetInteger() };
    
-   unsigned char return_value = static_cast< unsigned char >( random_value >> 17 );
+   unsigned char return_value{ static_cast<unsigned char>(random_value >> 17) };
 
    return( return_value );
 }
@@ -502,8 +503,8 @@ Win32FoundationClasses::CRandomNumberGenerator2::operator double() noexcept
 
 _Check_return_ double Win32FoundationClasses::CRandomNumberGenerator2::Double(_In_ double const min_value, _In_ double const max_value) noexcept
 {
-    double minimum_value = min_value;
-    double maximum_value = max_value;
+    double minimum_value{ min_value };
+    double maximum_value{ max_value };
 
     if (min_value == max_value)
     {
@@ -516,14 +517,14 @@ _Check_return_ double Win32FoundationClasses::CRandomNumberGenerator2::Double(_I
         maximum_value = min_value;
     }
 
-    double const number_of_values = std::fabs( maximum_value - minimum_value);
+    double const number_of_values{ std::fabs(maximum_value - minimum_value) };
 
     // Now randomly choose a value below number_of_values
 
-    double return_value = fabs( GetFloat() );
+    double return_value{ std::fabs(GetFloat()) };
 
-    double integer_part = 0.0;
-    double const fraction_part = modf(return_value, &integer_part);
+    double integer_part{ 0.0 };
+    double const fraction_part{ std::modf(return_value, &integer_part) };
 
     return_value = number_of_values * fraction_part;
     return_value += minimum_value;
@@ -533,8 +534,8 @@ _Check_return_ double Win32FoundationClasses::CRandomNumberGenerator2::Double(_I
 
 _Check_return_ uint32_t Win32FoundationClasses::CRandomNumberGenerator2::Uint32( _In_ uint32_t const min_value, _In_ uint32_t const max_value ) noexcept
 {
-    uint32_t minimum_value = min_value;
-    uint32_t maximum_value = max_value;
+    uint32_t minimum_value{ min_value };
+    uint32_t maximum_value{ max_value };
 
     if ( min_value == max_value )
     {
@@ -547,17 +548,17 @@ _Check_return_ uint32_t Win32FoundationClasses::CRandomNumberGenerator2::Uint32(
         maximum_value = min_value;
     }
 
-    uint32_t const number_of_values = (maximum_value - minimum_value) + 1;
+    uint32_t const number_of_values{ (maximum_value - minimum_value) + 1 };
 
-    uint32_t const return_value = ( GetInteger() % number_of_values ) + minimum_value;
+    uint32_t const return_value{ (GetInteger() % number_of_values) + minimum_value };
 
     return( return_value );
 }
 
 _Check_return_ uint64_t Win32FoundationClasses::CRandomNumberGenerator2::Uint64( _In_ uint64_t const min_value, _In_ uint64_t const max_value ) noexcept
 {
-    uint64_t minimum_value = min_value;
-    uint64_t maximum_value = max_value;
+    uint64_t minimum_value{ min_value };
+    uint64_t maximum_value{ max_value };
 
     if ( min_value == max_value )
     {
@@ -570,9 +571,9 @@ _Check_return_ uint64_t Win32FoundationClasses::CRandomNumberGenerator2::Uint64(
         maximum_value = min_value;
     }
 
-    uint64_t const number_of_values = (maximum_value - minimum_value) + 1;
+    uint64_t const number_of_values{ (maximum_value - minimum_value) + 1 };
 
-    uint64_t const return_value = ( Integer64() % number_of_values ) + minimum_value;
+    uint64_t const return_value{ (Integer64() % number_of_values) + minimum_value };
 
     return( return_value );
 }
@@ -587,7 +588,7 @@ _Check_return_ uint64_t Win32FoundationClasses::CRandomNumberGenerator2::Uint64(
         return(Integer64());
     }
 
-    std::size_t const value_index = Integer64() % number_of_values;
+    std::size_t const value_index{ Integer64() % number_of_values };
 
     return(Uint64(values[value_index].low, values[value_index].high));
 }
@@ -605,7 +606,7 @@ _Check_return_ bool Win32FoundationClasses::CRandomNumberGenerator2::IsTrue( _In
     }
 
 #undef max
-    double const number_of_true_values = ( (double) ( (double) percentage / (double) 100.0 ) * (double)std::numeric_limits<std::uint32_t>::max());
+    double const number_of_true_values{ ((double)((double)percentage / (double)100.0) * (double)std::numeric_limits<std::uint32_t>::max()) };
 
     if ( static_cast<uint32_t>(GetInteger()) <= static_cast<uint32_t>(number_of_true_values) )
     {
@@ -636,11 +637,11 @@ void Win32FoundationClasses::CRandomNumberGenerator2::Fill( _In_ FILETIME const&
 
 void Win32FoundationClasses::CRandomNumberGenerator2::Fill( _In_ uint32_t const min_length, _In_ uint32_t const max_length, _Out_ std::wstring& destination ) noexcept
 {
-    uint32_t const length = Uint32( min_length, max_length );
+    uint32_t const length{ Uint32(min_length, max_length) };
 
     destination.resize( length );
 
-    auto alphabet = WSTRING_VIEW(L" abcdefghijklmnopqrstuvwxyz 01234567890 .! ABCDEFGHIJKLMNOPQRSTUVWXYZ");
+    auto alphabet{ WSTRING_VIEW(L" abcdefghijklmnopqrstuvwxyz 01234567890 .! ABCDEFGHIJKLMNOPQRSTUVWXYZ") };
 
     for ( auto const loop_index : Range(length) )
     {
@@ -650,15 +651,15 @@ void Win32FoundationClasses::CRandomNumberGenerator2::Fill( _In_ uint32_t const 
 
 void Win32FoundationClasses::CRandomNumberGenerator2::Fill( _In_ uint32_t const seed, _Out_ std::wstring& destination ) noexcept // static
 {
-    uint32_t const length = ( seed / 131282527 ) + 3;
+    uint32_t const length{ (seed / 131282527) + 3 };
 
     destination.resize( length );
 
-    auto alphabet = WSTRING_VIEW(L" abcdefghijklmnopqrstuvwxyz 01234567890 .! ABCDEFGHIJKLMNOPQRSTUVWXYZ");
+    auto alphabet{ WSTRING_VIEW(L" abcdefghijklmnopqrstuvwxyz 01234567890 .! ABCDEFGHIJKLMNOPQRSTUVWXYZ") };
 
-    uint32_t loop_index = 0;
+    uint32_t loop_index{ 0 };
 
-    uint32_t new_seed = seed;
+    uint32_t new_seed{ seed };
 
     while( loop_index < length ) // Can't be converted to range loop
     {

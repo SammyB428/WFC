@@ -620,7 +620,7 @@ _Check_return_ bool Win32FoundationClasses::CNetWorkstation::GetCurrentUser( __i
 {
    WFC_VALIDATE_POINTER( this );
 
-   WKSTA_USER_INFO_1 * buffer = nullptr;
+   WKSTA_USER_INFO_1 * buffer{ nullptr };
 
    m_ErrorCode = ::NetWkstaUserGetInfo( nullptr, 1, (LPBYTE *) &buffer );
 
@@ -632,7 +632,7 @@ _Check_return_ bool Win32FoundationClasses::CNetWorkstation::GetCurrentUser( __i
 
    information.Copy( buffer );
 
-   (void) ::NetApiBufferFree( buffer );
+   std::ignore = ::NetApiBufferFree( buffer );
 
    return( true );
 }

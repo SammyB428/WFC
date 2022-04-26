@@ -149,7 +149,7 @@ _Check_return_ bool Win32FoundationClasses::CDataFile::AddData( _In_ uint32_t co
 {
    WFC_VALIDATE_POINTER( this );
 
-   (void) SeekToEnd();
+   std::ignore = SeekToEnd();
 
    // Write the identifier
 

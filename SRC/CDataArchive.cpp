@@ -139,7 +139,7 @@ void Win32FoundationClasses::CDataArchive::Read(_Out_ std::vector<uint8_t>& arra
 
     WFC_TRY
     {
-       uint32_t number_of_array_entries = 0;
+       uint32_t number_of_array_entries{ 0 };
 
        Read(number_of_array_entries);
 
@@ -184,7 +184,7 @@ void Win32FoundationClasses::CDataArchive::Read(_Out_ std::vector<uint32_t>& arr
 
     WFC_TRY
     {
-       uint32_t number_of_array_entries = 0;
+       uint32_t number_of_array_entries{0};
 
        Read(number_of_array_entries);
 
@@ -225,7 +225,7 @@ void Win32FoundationClasses::CDataArchive::Read(_Out_ char& value) noexcept
 
     WFC_VALIDATE_POINTER(m_ReadFromDataChunk_p);
 
-    uint8_t character = 0;
+    uint8_t character{ 0 };
 
     Read(character);
 
@@ -250,7 +250,7 @@ void Win32FoundationClasses::CDataArchive::Read(_Out_ std::vector<std::wstring>&
 
     WFC_TRY
     {
-       uint32_t number_of_array_entries = 0;
+       uint32_t number_of_array_entries{ 0 };
 
        Read(number_of_array_entries);
 
@@ -260,7 +260,7 @@ void Win32FoundationClasses::CDataArchive::Read(_Out_ std::vector<std::wstring>&
        {
           Read(string);
 
-          (void) array.push_back(string);
+          array.push_back(string);
           string.clear();
        }
     }
@@ -287,7 +287,7 @@ void Win32FoundationClasses::CDataArchive::Read(_Out_ std::wstring& value) noexc
 
     WFC_TRY
     {
-        wchar_t character = 0;
+        wchar_t character {0};
 
         Read(character);
 
@@ -579,7 +579,7 @@ void Win32FoundationClasses::CDataArchive::Write( _In_ uint8_t const value) noex
 
     WFC_TRY
     {
-        (void) m_WriteToDataChunk_p->Data.push_back(value);
+        m_WriteToDataChunk_p->Data.push_back(value);
     }
         WFC_CATCH_ALL
     {
@@ -598,7 +598,7 @@ void Win32FoundationClasses::CDataArchive::Write(_In_ char const value) noexcept
         return;
     }
 
-    uint8_t byte = (uint8_t)value;
+    uint8_t byte{ (uint8_t)value };
 
     Write(byte);
 }
@@ -667,7 +667,7 @@ void Win32FoundationClasses::CDataArchive::Write(_In_ std::wstring const& value)
 
     // zero terminate
 
-    wchar_t character = 0;
+    wchar_t character{ 0 };
 
     Write(character);
 }
@@ -724,11 +724,11 @@ void Win32FoundationClasses::CDataArchive::Write(_In_ double const value) noexce
 
     WFC_TRY
     {
-       auto buffer = reinterpret_cast<uint8_t const *>(&value);
+       auto buffer { reinterpret_cast<uint8_t const*>(&value)};
 
        for ( const auto index : Range(sizeof(value)) )
        {
-          (void) m_WriteToDataChunk_p->Data.push_back(buffer[index]);
+          m_WriteToDataChunk_p->Data.push_back(buffer[index]);
        }
     }
         WFC_CATCH_ALL
@@ -754,11 +754,11 @@ void Win32FoundationClasses::CDataArchive::Write(_In_ uint32_t const value) noex
 
     WFC_TRY
     {
-       auto buffer = reinterpret_cast<uint8_t const *>(&value);
+       auto buffer { reinterpret_cast<uint8_t const*>(&value)};
 
        for (auto const index : Range(sizeof(value)))
        {
-          (void) m_WriteToDataChunk_p->Data.push_back(buffer[index]);
+          m_WriteToDataChunk_p->Data.push_back(buffer[index]);
        }
     }
         WFC_CATCH_ALL
@@ -784,11 +784,11 @@ void Win32FoundationClasses::CDataArchive::Write(_In_ wchar_t const value) noexc
 
     WFC_TRY
     {
-       auto buffer = reinterpret_cast<uint8_t const *>(&value);
+       auto buffer { reinterpret_cast<uint8_t const*>(&value)};
 
        for ( auto const index : Range(sizeof(value)) )
        {
-          (void) m_WriteToDataChunk_p->Data.push_back(buffer[index]);
+          m_WriteToDataChunk_p->Data.push_back(buffer[index]);
        }
     }
         WFC_CATCH_ALL
@@ -814,11 +814,11 @@ void Win32FoundationClasses::CDataArchive::Write(_In_ float const value) noexcep
 
     WFC_TRY
     {
-       auto buffer = reinterpret_cast<uint8_t const *>(&value);
+       auto buffer { reinterpret_cast<uint8_t const*>(&value)};
 
        for ( auto const index : Range(sizeof(value)) )
        {
-          (void) m_WriteToDataChunk_p->Data.push_back(buffer[index]);
+          m_WriteToDataChunk_p->Data.push_back(buffer[index]);
        }
     }
         WFC_CATCH_ALL
@@ -844,11 +844,11 @@ void Win32FoundationClasses::CDataArchive::Write(_In_ int32_t const value) noexc
 
     WFC_TRY
     {
-       auto buffer = reinterpret_cast<uint8_t const *>(&value);
+       auto buffer { reinterpret_cast<uint8_t const*>(&value)};
 
        for (auto const index : Range(sizeof(value)))
        {
-          (void) m_WriteToDataChunk_p->Data.push_back(buffer[index]);
+          m_WriteToDataChunk_p->Data.push_back(buffer[index]);
        }
     }
         WFC_CATCH_ALL
@@ -874,11 +874,11 @@ void Win32FoundationClasses::CDataArchive::Write(_In_ uint64_t const value) noex
 
     WFC_TRY
     {
-       auto buffer = reinterpret_cast<uint8_t const *>(&value);
+       auto buffer { reinterpret_cast<uint8_t const*>(&value)};
 
        for (auto const index : Range(sizeof(value)))
        {
-          (void) m_WriteToDataChunk_p->Data.push_back(buffer[index]);
+          m_WriteToDataChunk_p->Data.push_back(buffer[index]);
        }
     }
         WFC_CATCH_ALL
@@ -904,11 +904,11 @@ void Win32FoundationClasses::CDataArchive::Write(_In_ uint16_t const value) noex
 
     WFC_TRY
     {
-       auto buffer = reinterpret_cast<uint8_t const *>(&value);
+       auto buffer { reinterpret_cast<uint8_t const*>(&value)};
 
        for (auto const index : Range(sizeof(value)))
        {
-          (void) m_WriteToDataChunk_p->Data.push_back(buffer[index]);
+          m_WriteToDataChunk_p->Data.push_back(buffer[index]);
        }
     }
         WFC_CATCH_ALL

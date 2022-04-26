@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 1995-2016, Samuel R. Blackburn
+** Copyright, 1995-2022, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -53,7 +53,7 @@ static char THIS_FILE[] = __FILE__;
 
 _Check_return_ bool Win32FoundationClasses::wfc_enable_all_privileges( void ) noexcept
 {
-   static constexpr LPCTSTR static_PrivilegeNames[] =
+   static constexpr LPCTSTR static_PrivilegeNames[]
    {
       SE_INTERACTIVE_LOGON_NAME,
       SE_NETWORK_LOGON_NAME,
@@ -108,7 +108,7 @@ _Check_return_ bool Win32FoundationClasses::wfc_enable_all_privileges( void ) no
       SE_DEVELOPMENT_MODE_NETWORK_CAPABILITY,
    };
 
-   bool return_value = true;
+   bool return_value{ true };
 
    for ( auto const loop_index : Range( std::size( static_PrivilegeNames ) ) )
    {

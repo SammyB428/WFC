@@ -58,16 +58,16 @@ static _Check_return_ LONG _recursively_delete_all_sub_keys( _In_ HKEY key_handl
 {
     WFC_VALIDATE_POINTER( key_name );
 
-    auto child_key_handle = static_cast< HKEY >( NULL );
+    auto child_key_handle{ static_cast<HKEY>(NULL) };
 
-    LONG return_value = RegOpenKeyEx( key_handle, key_name, 0, KEY_ALL_ACCESS, &child_key_handle );
+    auto return_value{ RegOpenKeyEx(key_handle, key_name, 0, KEY_ALL_ACCESS, &child_key_handle) };
 
     if ( return_value not_eq ERROR_SUCCESS )
     {
         return( return_value );
     }
 
-    auto temporary_key_name = std::make_unique<wchar_t[]>(MAX_PATH);
+    auto temporary_key_name{ std::make_unique<wchar_t[]>(MAX_PATH) };
 
     if ( temporary_key_name.get() == nullptr )
     {
@@ -78,14 +78,14 @@ static _Check_return_ LONG _recursively_delete_all_sub_keys( _In_ HKEY key_handl
 
     while( return_value == ERROR_SUCCESS )
     {
-        (void) _recursively_delete_all_sub_keys( child_key_handle, temporary_key_name.get() );
+        std::ignore = _recursively_delete_all_sub_keys( child_key_handle, temporary_key_name.get() );
 
         return_value = RegEnumKeyW( child_key_handle, 0, temporary_key_name.get(), MAX_PATH );
     }
 
-    RegCloseKey( child_key_handle );
+    ::RegCloseKey( child_key_handle );
 
-    return_value = RegDeleteKeyW( key_handle, key_name );
+    return_value = ::RegDeleteKeyW( key_handle, key_name );
 
     return( return_value );
 }
@@ -102,7 +102,7 @@ Win32FoundationClasses::CRegistry::~CRegistry()
 
     if ( m_RegistryHandle not_eq static_cast< HKEY >( NULL ) )
     {
-        (void) Close();
+        std::ignore = Close();
     }
 
     m_Initialize();
@@ -219,7 +219,7 @@ _Check_return_ bool Win32FoundationClasses::CRegistry::Connect( _In_ HKEY key_to
             if ( name_of_computer == nullptr )
             {
                 wchar_t computer_name[MAX_PATH]{ 0 };
-                DWORD size = MAX_PATH;
+                DWORD size{ std::size(computer_name) };
 
                 if ( ::GetComputerNameEx(COMPUTER_NAME_FORMAT::ComputerNameDnsHostname, computer_name, &size ) == FALSE )
                 {
@@ -313,8 +313,6 @@ _Check_return_ bool Win32FoundationClasses::CRegistry::Create( __in_z wchar_t co
 
     WFC_TRY
     {
-        DWORD disposition = 0;
-
         if ( name_of_class == nullptr )
         {
             name_of_class = L""; // Paul Ostrowski [postrowski@xantel.com]
@@ -325,6 +323,8 @@ _Check_return_ bool Win32FoundationClasses::CRegistry::Create( __in_z wchar_t co
             ::RegCloseKey( m_KeyHandle );
             m_KeyHandle = static_cast< HKEY >( NULL );
         }
+
+        DWORD disposition{ 0 };
 
         m_ErrorCode = ::RegCreateKeyExW( m_RegistryHandle,
             name_of_subkey,
@@ -392,7 +392,7 @@ _Check_return_ bool Win32FoundationClasses::CRegistry::DeleteKey( __in_z wchar_t
         }
         else
         {
-            std::size_t last_back_slash_location = full_key_name.length() - 1;
+            std::size_t last_back_slash_location{ full_key_name.length() - 1 };
 
             /*
             ** We know this loop will succeed because a back slash was found in the above if statement
@@ -403,10 +403,10 @@ _Check_return_ bool Win32FoundationClasses::CRegistry::DeleteKey( __in_z wchar_t
                 last_back_slash_location--;
             }
 
-            std::wstring currently_opened_key_name = m_KeyName;
+            std::wstring currently_opened_key_name{ m_KeyName };
 
-            std::wstring parent_key_name = full_key_name.substr( 0, last_back_slash_location );
-            std::wstring child_key_name  = right( full_key_name, ( full_key_name.length() - last_back_slash_location ) - 1 );
+            std::wstring parent_key_name{ full_key_name.substr(0, last_back_slash_location) };
+            std::wstring child_key_name{ right(full_key_name, (full_key_name.length() - last_back_slash_location) - 1) };
 
             /*
             ** Now we open the parent key and delete the child
@@ -511,8 +511,8 @@ _Check_return_ bool Win32FoundationClasses::CRegistry::EnumerateKeys( _In_ DWORD
     wchar_t subkey_name_string[ 2048 ];
     wchar_t class_name_string[ 2048 ];
 
-    DWORD size_of_subkey_name_string = static_cast<DWORD>(std::size( subkey_name_string ) - 1);
-    DWORD size_of_class_name_string  = static_cast<DWORD>(std::size( class_name_string  ) - 1);
+    DWORD size_of_subkey_name_string{ static_cast<DWORD>(std::size(subkey_name_string) - 1) };
+    DWORD size_of_class_name_string{ static_cast<DWORD>(std::size(class_name_string) - 1) };
 
     ::ZeroMemory( subkey_name_string, sizeof( subkey_name_string ) );
     ::ZeroMemory( class_name_string,  sizeof( class_name_string  ) );
@@ -555,13 +555,13 @@ _Check_return_ bool Win32FoundationClasses::CRegistry::EnumerateValues( _In_ DWO
     type_code = KeyValueTypes::None;
     name_of_value.clear();
 
-    DWORD temp_type_code = static_cast<DWORD>(type_code);
+    auto temp_type_code{ static_cast<DWORD>(type_code) };
 
     wchar_t temp_name[ 2048 ];
 
     ::ZeroMemory( temp_name, sizeof( temp_name ) );
 
-    DWORD temp_name_size = static_cast<DWORD>(std::size( temp_name ));
+    auto temp_name_size{ static_cast<DWORD>(std::size(temp_name)) };
 
     // We were passed a pointer, do not trust it
 
@@ -626,13 +626,13 @@ _Check_return_ bool Win32FoundationClasses::CRegistry::GetBinaryValue( __in_z wc
 
     return_array.clear();
 
-    (void) QueryInfo();
+    std::ignore = QueryInfo();
 
-    std::size_t size_of_buffer = m_LongestValueDataLength;
+    std::size_t size_of_buffer{ m_LongestValueDataLength };
 
     auto allocated_buffer = std::make_unique<uint8_t[]>(size_of_buffer);
 
-    auto memory_buffer = allocated_buffer.get();
+    auto memory_buffer{ allocated_buffer.get() };
 
     if ( memory_buffer == nullptr )
     {
@@ -641,9 +641,9 @@ _Check_return_ bool Win32FoundationClasses::CRegistry::GetBinaryValue( __in_z wc
         return( false );
     }
 
-    bool return_value = true;
+    bool return_value{ true };
 
-    auto type = KeyValueTypes::Binary;
+    auto type{ KeyValueTypes::Binary };
 
     if ( QueryValue( name_of_value, type, memory_buffer, size_of_buffer ) == true )
     {
@@ -684,9 +684,9 @@ _Check_return_ bool Win32FoundationClasses::CRegistry::GetDoubleWordValue( _In_z
 {
     WFC_VALIDATE_POINTER( this );
 
-    std::size_t size_of_buffer = sizeof( DWORD );
+    std::size_t size_of_buffer{ sizeof(DWORD) };
 
-    auto type = KeyValueTypes::DoubleWord;
+    auto type{ KeyValueTypes::DoubleWord };
 
     return( QueryValue( name_of_value, type, reinterpret_cast<uint8_t *>(&return_value), size_of_buffer ) );
 }
@@ -748,11 +748,11 @@ _Check_return_ bool Win32FoundationClasses::CRegistry::GetStringValue(_In_z_ wch
     WFC_VALIDATE_POINTER(this);
 
     wchar_t temp_string[2048];
-    std::size_t size_of_buffer = std::size(temp_string);
+    std::size_t size_of_buffer{ std::size(temp_string) };
 
     ::ZeroMemory(temp_string, sizeof(temp_string));
 
-    auto type = KeyValueTypes::String;
+    auto type{ KeyValueTypes::String };
 
     if (QueryValue(name_of_value, type, reinterpret_cast<uint8_t *>(temp_string), size_of_buffer) == true)
     {
@@ -778,11 +778,11 @@ _Check_return_ bool Win32FoundationClasses::CRegistry::GetStringArrayValue(_In_z
     // will screw you here. So, we must make sure our information
     // is correct before we attempt to *use* the data.
 
-    (void)QueryInfo();
+    std::ignore = QueryInfo();
 
-    std::size_t size_of_buffer = m_LongestValueDataLength;
+    std::size_t size_of_buffer{ m_LongestValueDataLength };
 
-    auto memory_buffer = std::make_unique<uint8_t[]>(size_of_buffer);
+    auto memory_buffer{ std::make_unique<uint8_t[]>(size_of_buffer) };
 
     if (memory_buffer.get() == nullptr)
     {
@@ -791,9 +791,9 @@ _Check_return_ bool Win32FoundationClasses::CRegistry::GetStringArrayValue(_In_z
         return(false);
     }
 
-    bool return_value = true;
+    bool return_value{ true };
 
-    auto type = KeyValueTypes::MultipleString; // A double NULL terminated string
+    auto type{ KeyValueTypes::MultipleString }; // A double NULL terminated string
 
     if (QueryValue(name_of_value, type, memory_buffer.get(), size_of_buffer) == true)
     {
@@ -801,13 +801,13 @@ _Check_return_ bool Win32FoundationClasses::CRegistry::GetStringArrayValue(_In_z
         ** We've got data so give it back to the caller
         */
 
-        auto strings = reinterpret_cast<LPTSTR>(memory_buffer.get());
+        auto strings{ reinterpret_cast<LPTSTR>(memory_buffer.get()) };
 
         return_array.clear();
 
         while (strings[0] not_eq 0x00)
         {
-            (void)return_array.push_back(reinterpret_cast<wchar_t const *>(strings));
+            return_array.push_back(reinterpret_cast<wchar_t const *>(strings));
             strings += (_tcslen(reinterpret_cast<wchar_t const *>(strings)) + 1); // Paul Ostrowski [postrowski@xantel.com]
         }
 
@@ -919,7 +919,7 @@ _Check_return_ bool Win32FoundationClasses::CRegistry::Open( __in_z wchar_t cons
     {
         if ( m_KeyHandle not_eq static_cast< HKEY >( NULL ) )
         {
-            (void) ::RegCloseKey( m_KeyHandle );
+            std::ignore = ::RegCloseKey( m_KeyHandle );
             m_KeyHandle = static_cast< HKEY >( NULL );
         }
 
@@ -927,7 +927,7 @@ _Check_return_ bool Win32FoundationClasses::CRegistry::Open( __in_z wchar_t cons
 
         if ( m_ErrorCode == ERROR_SUCCESS )
         {
-            (void) QueryInfo();
+            std::ignore = QueryInfo();
             m_KeyName.assign( name_of_subkey_to_open );
 
             return( true );
@@ -954,7 +954,7 @@ _Check_return_ bool Win32FoundationClasses::CRegistry::QueryInfo( void ) noexcep
 
     ::ZeroMemory( class_name, sizeof( class_name ) );
 
-    DWORD size_of_class_name = static_cast<DWORD>(std::size( class_name ) - 1);
+    auto size_of_class_name{ static_cast<DWORD>(std::size(class_name) - 1) };
 
     m_ErrorCode = ::RegQueryInfoKeyW( m_KeyHandle,
         class_name,
@@ -997,8 +997,8 @@ _Check_return_ bool Win32FoundationClasses::CRegistry::QueryValue( __in_z wchar_
 
     WFC_TRY
     {
-        DWORD temp_data_type         = static_cast<DWORD>(value_type);
-        DWORD the_size_of_the_buffer = static_cast<DWORD>(size_of_buffer);
+        auto temp_data_type{ static_cast<DWORD>(value_type)};
+        auto the_size_of_the_buffer{ static_cast<DWORD>(size_of_buffer) };
 
         m_ErrorCode = ::RegQueryValueEx( m_KeyHandle,
             (LPTSTR) name_of_value,
@@ -1036,8 +1036,8 @@ _Check_return_ bool Win32FoundationClasses::CRegistry::Replace( __in_z wchar_t c
     WFC_VALIDATE_POINTER( name_of_backup_file );
 
     if ( name_of_subkey             == nullptr or
-        name_of_file_with_new_data == nullptr or
-        name_of_backup_file        == nullptr )
+         name_of_file_with_new_data == nullptr or
+         name_of_backup_file        == nullptr )
     {
         m_ErrorCode = ERROR_INVALID_PARAMETER;
         return( false );
@@ -1098,7 +1098,7 @@ _Check_return_ bool Win32FoundationClasses::CRegistry::Restore( __in_z wchar_t c
             //WFCTRACEERROR( m_ErrorCode );
 
             // Maybe we need to get permission...
-            HANDLE token_handle = static_cast< HANDLE >( NULL );
+            auto token_handle{ static_cast<HANDLE>(NULL) };
 
             if ( ::OpenProcessToken( ::GetCurrentProcess(), TOKEN_ADJUST_PRIVILEGES bitor TOKEN_QUERY, &token_handle ) == FALSE )
             {
@@ -1115,7 +1115,7 @@ _Check_return_ bool Win32FoundationClasses::CRegistry::Restore( __in_z wchar_t c
             {
                 m_ErrorCode = ::GetLastError();
                 //WFCTRACEERROR( m_ErrorCode );
-                (void) Win32FoundationClasses::wfc_close_handle( token_handle );
+                std::ignore = Win32FoundationClasses::wfc_close_handle( token_handle );
                 token_handle = static_cast< HANDLE >( NULL );
                 return( false );
             }
@@ -1127,7 +1127,7 @@ _Check_return_ bool Win32FoundationClasses::CRegistry::Restore( __in_z wchar_t c
             {
                 m_ErrorCode = ::GetLastError();
                 //WFCTRACEERROR( m_ErrorCode );
-                (void) Win32FoundationClasses::wfc_close_handle( token_handle );
+                std::ignore = Win32FoundationClasses::wfc_close_handle( token_handle );
                 token_handle = static_cast< HANDLE >( NULL );
                 return( false );
             }
@@ -1140,7 +1140,7 @@ _Check_return_ bool Win32FoundationClasses::CRegistry::Restore( __in_z wchar_t c
 
             // Regardless of the turnout, we're through with the token handle
 
-            (void) Win32FoundationClasses::wfc_close_handle( token_handle );
+            std::ignore = Win32FoundationClasses::wfc_close_handle( token_handle );
             token_handle = static_cast< HANDLE >( NULL );
 
             if ( m_ErrorCode not_eq ERROR_SUCCESS )
@@ -1201,9 +1201,9 @@ _Check_return_ bool Win32FoundationClasses::CRegistry::SetBinaryValue( __in_z wc
 {
     WFC_VALIDATE_POINTER( this );
 
-    DWORD size_of_buffer = (DWORD) bytes_to_write.size();
+    DWORD size_of_buffer{ (DWORD)bytes_to_write.size() };
 
-    auto memory_buffer = std::make_unique<uint8_t[]>(size_of_buffer);
+    auto memory_buffer{ std::make_unique<uint8_t[]>(size_of_buffer) };
 
     if ( memory_buffer.get() == nullptr )
     {
@@ -1217,7 +1217,7 @@ _Check_return_ bool Win32FoundationClasses::CRegistry::SetBinaryValue( __in_z wc
         memory_buffer[ index ] = bytes_to_write.at( index );
     }
 
-    bool const return_value = SetValue( name_of_value, KeyValueTypes::Binary, memory_buffer.get(), size_of_buffer );
+    bool const return_value{ SetValue(name_of_value, KeyValueTypes::Binary, memory_buffer.get(), size_of_buffer) };
 
     return( return_value );
 }
@@ -1277,7 +1277,7 @@ _Check_return_ bool Win32FoundationClasses::CRegistry::SetStringArrayValue(_In_z
 {
     WFC_VALIDATE_POINTER( this );
 
-    std::size_t size_of_buffer_in_bytes = 0;
+    std::size_t size_of_buffer_in_bytes{ 0 };
 
     /*
     ** Find out how big our buffer needs to be...
@@ -1300,7 +1300,7 @@ _Check_return_ bool Win32FoundationClasses::CRegistry::SetStringArrayValue(_In_z
 
     size_of_buffer_in_bytes += sizeof( wchar_t ); // Final null for double-null termination
 
-    auto memory_buffer = std::make_unique<uint8_t[]>(size_of_buffer_in_bytes);
+    auto memory_buffer{ std::make_unique<uint8_t[]>(size_of_buffer_in_bytes) };
 
     if ( memory_buffer.get() == nullptr )
     {
@@ -1315,9 +1315,9 @@ _Check_return_ bool Win32FoundationClasses::CRegistry::SetStringArrayValue(_In_z
     ** OK, now add the strings to the memory buffer
     */
 
-    auto string_buffer = reinterpret_cast<wchar_t *>(memory_buffer.get());
+    auto string_buffer{ reinterpret_cast<wchar_t*>(memory_buffer.get()) };
 
-    std::size_t string_length = 0;
+    std::size_t string_length{ 0 };
 
     for ( auto const& entry : string_array )
     {
@@ -1325,7 +1325,7 @@ _Check_return_ bool Win32FoundationClasses::CRegistry::SetStringArrayValue(_In_z
         string_length += ( (entry.length() + 1 ) );
     }
 
-    auto type = KeyValueTypes::MultipleString; // A double NULL terminated string
+    auto type{ KeyValueTypes::MultipleString }; // A double NULL terminated string
 
     return(SetValue(name_of_value, type, memory_buffer.get(), size_of_buffer_in_bytes));
 }

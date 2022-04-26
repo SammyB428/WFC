@@ -392,7 +392,7 @@ void Win32FoundationClasses::CPing::SetText(__in_bcount(number_of_bytes) uint8_t
 
         if (m_Text not_eq nullptr)
         {
-            (void) memcpy_s(m_Text, number_of_bytes, bytes, number_of_bytes);
+            std::ignore = memcpy_s(m_Text, number_of_bytes, bytes, number_of_bytes);
             m_NumberOfTextBytes = number_of_bytes;
         }
     }

@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 1995-2016, Samuel R. Blackburn
+** Copyright, 1995-2022, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -137,7 +137,7 @@ _Check_return_ bool Win32FoundationClasses::CMixerCapabilities::Get( _In_ UINT c
 
    ::ZeroMemory( &mixer_capabilities, sizeof( mixer_capabilities ) );
 
-   const MMRESULT result = ::mixerGetDevCaps( device_number, &mixer_capabilities, sizeof( mixer_capabilities ) );
+   auto const result{ ::mixerGetDevCaps(device_number, &mixer_capabilities, sizeof(mixer_capabilities)) };
 
    if ( result not_eq MMSYSERR_NOERROR )
    {

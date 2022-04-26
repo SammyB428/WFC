@@ -106,7 +106,7 @@ _Check_return_ bool Win32FoundationClasses::CMicrosoftTape::Open( _In_ UINT cons
 
    if ( CTape::Open( tape_drive_number_starting_at_zero ) == true )
    {
-      (void) ReadHeader();
+       std::ignore = ReadHeader();
       return( true );
    }
    else

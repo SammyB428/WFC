@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 1995-2021, Samuel R. Blackburn
+** Copyright, 1995-2022, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -98,10 +98,10 @@ _Check_return_ bool Win32FoundationClasses::wfc_get_day_of_week( _In_ int year_w
       month += 12;
    }
 
-   double term_1 = static_cast< double >( month + 1 ) * 3.0;
+   auto term_1{ static_cast<double>(month + 1) * 3.0 };
    term_1 /= 5.0;
 
-   uint32_t temporary_day_of_week  = ( day + ( month * 2 ) + static_cast< int >( term_1 ) + year_with_century + ( year_with_century / 4 ) );
+   auto temporary_day_of_week{ static_cast<uint32_t>((day + (month * 2) + static_cast<int>(term_1) + year_with_century + (year_with_century / 4))) };
    temporary_day_of_week -= ( year_with_century / 100 );
    temporary_day_of_week += ( year_with_century / 400 );
    temporary_day_of_week++;

@@ -61,7 +61,7 @@ static char THIS_FILE[] = __FILE__;
 // were dropped from September 1752. What are they teaching in schools
 // these days?? This method uses Zeller's Conguruence.
 
-static inline constexpr _Check_return_ uint16_t __get_day_of_week( _In_ int year, _In_ int month, _In_ int const day ) noexcept
+static inline constexpr [[nodiscard]] _Check_return_ uint16_t __get_day_of_week( _In_ int year, _In_ int month, _In_ int const day ) noexcept
 {
    if ( month <= 2 )
    {
@@ -69,9 +69,9 @@ static inline constexpr _Check_return_ uint16_t __get_day_of_week( _In_ int year
       month += 12;
    }
 
-   uint32_t day_of_week = 0;
+   uint32_t day_of_week{ 0 };
 
-   double term_1 = 0.0;
+   double term_1{ 0.0 };
 
    term_1 = static_cast< double >( month + 1 ) * 3.0;
    term_1 /= 5.0;
@@ -420,7 +420,7 @@ _Check_return_ bool Win32FoundationClasses::CSystemTime::Set( void ) const noexc
       // Maybe we need to get permission...
       HANDLE token_handle = static_cast< HANDLE >( NULL );
 
-      DWORD error_code = 0;
+      DWORD error_code{ 0 };
 
       if ( ::OpenProcessToken( ::GetCurrentProcess(), TOKEN_ADJUST_PRIVILEGES bitor TOKEN_QUERY, &token_handle ) == FALSE )
       {
@@ -437,7 +437,7 @@ _Check_return_ bool Win32FoundationClasses::CSystemTime::Set( void ) const noexc
       {
          error_code = ::GetLastError();
          //WFCTRACEERROR( error_code );
-         (void) Win32FoundationClasses::wfc_close_handle( token_handle );
+         std::ignore = Win32FoundationClasses::wfc_close_handle( token_handle );
          token_handle = static_cast< HANDLE >( NULL );
          return( false );
       }
@@ -449,7 +449,7 @@ _Check_return_ bool Win32FoundationClasses::CSystemTime::Set( void ) const noexc
       {
          error_code = ::GetLastError();
          //WFCTRACEERROR( error_code );
-         (void) Win32FoundationClasses::wfc_close_handle( token_handle );
+         std::ignore = Win32FoundationClasses::wfc_close_handle( token_handle );
          token_handle = static_cast< HANDLE >( NULL );
          return( false );
       }
@@ -460,12 +460,12 @@ _Check_return_ bool Win32FoundationClasses::CSystemTime::Set( void ) const noexc
       {
          error_code = ::GetLastError();
          //WFCTRACEERROR( error_code );
-         (void) Win32FoundationClasses::wfc_close_handle( token_handle );
+         std::ignore = Win32FoundationClasses::wfc_close_handle( token_handle );
          token_handle = static_cast< HANDLE >( NULL );
          return( false );
       }
 
-      (void) Win32FoundationClasses::wfc_close_handle( token_handle );
+      std::ignore = Win32FoundationClasses::wfc_close_handle( token_handle );
       token_handle = static_cast< HANDLE >( NULL );
       return( true );
    }

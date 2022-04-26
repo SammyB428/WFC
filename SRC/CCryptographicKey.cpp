@@ -67,12 +67,12 @@ static inline _Check_return_ bool wfc_trim_decrypted_data( __inout std::vector<u
       return( false );
    }
 
-   uint8_t const byte_1 = decrypted_data.at( 0 );
-   uint8_t const byte_2 = decrypted_data.at( 1 );
-   uint8_t const byte_3 = decrypted_data.at( 2 );
-   uint8_t const byte_4 = decrypted_data.at( 3 );
+   uint8_t const byte_1{ decrypted_data.at(0) };
+   uint8_t const byte_2{ decrypted_data.at(1) };
+   uint8_t const byte_3{ decrypted_data.at(2) };
+   uint8_t const byte_4{ decrypted_data.at(3) };
 
-   std::size_t size_of_plaintext = Win32FoundationClasses::MAKE_DATA_LENGTH( byte_1, byte_2, byte_3, byte_4 );
+   std::size_t size_of_plaintext{ Win32FoundationClasses::MAKE_DATA_LENGTH(byte_1, byte_2, byte_3, byte_4) };
 
    decrypted_data.erase(std::begin(decrypted_data), std::begin(decrypted_data) + 4);
 
@@ -114,7 +114,7 @@ Win32FoundationClasses::CCryptographicKey::CCryptographicKey( _In_ HCRYPTKEY sou
    m_Key                  = static_cast< HCRYPTKEY >( NULL );
    m_AutomaticallyDestroy = false;
 
-   (void) FromHandle( source_handle, automatically_destroy );
+   std::ignore = FromHandle( source_handle, automatically_destroy );
 }
 
 Win32FoundationClasses::CCryptographicKey::~CCryptographicKey()
@@ -123,7 +123,7 @@ Win32FoundationClasses::CCryptographicKey::~CCryptographicKey()
 
    if ( m_AutomaticallyDestroy == true)
    {
-      (void) Destroy();
+       std::ignore = Destroy();
    }
 }
 
@@ -167,14 +167,14 @@ _Check_return_ bool Win32FoundationClasses::CCryptographicKey::Decrypt(_In_ std:
 
     _ASSERTE(decrypted_data.size() <= 0xFFFFFFFF); // To detect 32-bit overruns...
 
-    DWORD data_length = (DWORD)decrypted_data.size();
+    auto data_length{ (DWORD)decrypted_data.size() };
 
-    BOOL return_value = ::CryptDecrypt(m_Key,
+    auto return_value{ ::CryptDecrypt(m_Key,
                                    hash_handle,
                                    this_is_the_last_chunk_of_data_to_be_decrypted,
                                    flags,
                                    decrypted_data.data(),
-                                  &data_length);
+                                  &data_length) };
 
     if (return_value == FALSE)
     {
@@ -290,7 +290,7 @@ _Check_return_ bool Win32FoundationClasses::CCryptographicKey::Decrypt(_In_ std:
 
                if (use_wfc_trim == true)
                {
-                  (void)wfc_trim_decrypted_data(decrypted_data);
+                   std::ignore = wfc_trim_decrypted_data(decrypted_data);
                }
             }
 
@@ -305,7 +305,7 @@ _Check_return_ bool Win32FoundationClasses::CCryptographicKey::Decrypt(_In_ std:
 
         if (use_wfc_trim == true)
         {
-           (void)wfc_trim_decrypted_data(decrypted_data);
+            std::ignore = wfc_trim_decrypted_data(decrypted_data);
         }
      }
     }
@@ -395,23 +395,23 @@ _Check_return_ bool Win32FoundationClasses::CCryptographicKey::Encrypt( std::vec
 
       _ASSERTE( encrypted_data.size() <= 0xFFFFFFFF );
 
-      DWORD number_of_bytes_to_encrypt = static_cast<DWORD>(encrypted_data.size());
+      auto number_of_bytes_to_encrypt{ static_cast<DWORD>(encrypted_data.size()) };
 
       if ( encode_size == true )
       {
          // Now, to correct for the design flaw, add the number of bytes
          // Write the length
 
-         uint8_t const byte_1 = static_cast<uint8_t>(number_of_bytes_to_encrypt bitand 0xFF);
+         uint8_t const byte_1{ static_cast<uint8_t>(number_of_bytes_to_encrypt bitand 0xFF) };
          number_of_bytes_to_encrypt >>= 8;
 
-         uint8_t const byte_2 = static_cast<uint8_t>(number_of_bytes_to_encrypt bitand 0xFF);
+         uint8_t const byte_2{ static_cast<uint8_t>(number_of_bytes_to_encrypt bitand 0xFF) };
          number_of_bytes_to_encrypt >>= 8;
 
-         uint8_t const byte_3 = static_cast<uint8_t>(number_of_bytes_to_encrypt bitand 0xFF);
+         uint8_t const byte_3{ static_cast<uint8_t>(number_of_bytes_to_encrypt bitand 0xFF) };
          number_of_bytes_to_encrypt >>= 8;
 
-         uint8_t const byte_4 = static_cast<uint8_t>(number_of_bytes_to_encrypt bitand 0xFF);
+         uint8_t const byte_4{ static_cast<uint8_t>(number_of_bytes_to_encrypt bitand 0xFF) };
 
          // Make room for the length
 
@@ -425,15 +425,15 @@ _Check_return_ bool Win32FoundationClasses::CCryptographicKey::Encrypt( std::vec
          number_of_bytes_to_encrypt = (DWORD) encrypted_data.size();
       }
       
-      DWORD required_buffer_size = number_of_bytes_to_encrypt;
+      DWORD required_buffer_size{ number_of_bytes_to_encrypt };
 
-      BOOL return_value = ::CryptEncrypt( m_Key,
+      auto return_value{ ::CryptEncrypt(m_Key,
                                      hash_handle,
                                      this_is_the_last_chunk_of_data_to_be_encrypted,
                                      flags,
                                      encrypted_data.data(),
                                     &required_buffer_size,
-                                     number_of_bytes_to_encrypt );
+                                     number_of_bytes_to_encrypt) };
 
       if ( return_value == FALSE )
       {
@@ -580,9 +580,9 @@ _Check_return_ bool Win32FoundationClasses::CCryptographicKey::Export(Win32Found
 {
    WFC_VALIDATE_POINTER( this );
 
-   DWORD number_of_bytes_in_exported_key = 0;
+   DWORD number_of_bytes_in_exported_key{ 0 };
 
-   HCRYPTKEY their_key = key_for_whoever_we_are_exporting_to.m_Key;
+   auto their_key{ key_for_whoever_we_are_exporting_to.m_Key };
 
    if ( format_of_exported_key == KeyFormat::PublicKey )
    {
@@ -707,7 +707,7 @@ _Check_return_ bool Win32FoundationClasses::CCryptographicKey::FromHandle( _In_ 
    {
       if ( m_AutomaticallyDestroy == true)
       {
-         (void) Destroy();
+          std::ignore = Destroy();
       }
    }
 
@@ -806,7 +806,7 @@ _Check_return_ bool Win32FoundationClasses::CCryptographicKey::GetBlockLength(_O
 {
    WFC_VALIDATE_POINTER( this );
 
-   DWORD buffer_length = sizeof( block_length );
+   DWORD buffer_length{ sizeof(block_length) };
 
    return( GetParameter( Parameter::BlockLengthInBytes, (BYTE *) &block_length, buffer_length ) );
 }
@@ -815,7 +815,7 @@ _Check_return_ bool Win32FoundationClasses::CCryptographicKey::GetCipherMode(_Ou
 {
    WFC_VALIDATE_POINTER( this );
 
-   DWORD buffer_length = sizeof( cipher_mode );
+   DWORD buffer_length{ sizeof(cipher_mode) };
 
    return( GetParameter( Parameter::CipherMode, (BYTE *) &cipher_mode, buffer_length ) );
 }
@@ -842,7 +842,7 @@ _Check_return_ bool Win32FoundationClasses::CCryptographicKey::GetNumberOfBitsPr
 {
    WFC_VALIDATE_POINTER( this );
 
-   DWORD buffer_length = sizeof( number_of_bits );
+   DWORD buffer_length{ sizeof(number_of_bits) };
 
    return( GetParameter( Parameter::NumberOfBitsProcessedPerCycle, (BYTE *) &number_of_bits, buffer_length ) );
 }
@@ -851,7 +851,7 @@ _Check_return_ bool Win32FoundationClasses::CCryptographicKey::GetPaddingMode(_O
 {
    WFC_VALIDATE_POINTER( this );
 
-   DWORD buffer_length = sizeof( padding_mode );
+   DWORD buffer_length{ sizeof(padding_mode) };
 
    return( GetParameter( Parameter::PaddingMode, (BYTE *) &padding_mode, buffer_length ) );
 }
@@ -860,7 +860,7 @@ _Check_return_ bool Win32FoundationClasses::CCryptographicKey::GetPermissions(_O
 {
    WFC_VALIDATE_POINTER( this );
 
-   DWORD buffer_length = sizeof( permissions );
+   DWORD buffer_length{ sizeof(permissions) };
 
    return( GetParameter( Parameter::Permissions, (BYTE *) &permissions, buffer_length ) );
 }
@@ -871,9 +871,9 @@ _Check_return_ bool Win32FoundationClasses::CCryptographicKey::GetSalt( _Out_ st
 
    salt.resize( 65536 ); // A Massive grain of salt
 
-   DWORD buffer_length = (DWORD) salt.size();
+   DWORD buffer_length{ (DWORD)salt.size() };
 
-   bool const return_value = GetParameter( Parameter::Salt, salt.data(), buffer_length );
+   bool const return_value{ GetParameter(Parameter::Salt, salt.data(), buffer_length) };
 
    if ( return_value == true)
    {

@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 1995-2019, Samuel R. Blackburn
+** Copyright, 1995-2022, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -58,7 +58,7 @@ _Check_return_ bool Win32FoundationClasses::wfc_is_dotted_ip_address( _In_ std::
     std::wstring c;
     std::wstring d;
 
-    int string_index = 0;
+    int string_index{ 0 };
 
     for( auto const ip_address_index : Range(ip_address.length()))
     {
@@ -169,7 +169,7 @@ _Check_return_ bool Win32FoundationClasses::wfc_is_dotted_ip_address(_In_ std::u
     std::wstring c;
     std::wstring d;
 
-    int string_index = 0;
+    int string_index{ 0 };
 
     for (auto const ip_address_index : Range(ip_address.length()))
     {
@@ -280,7 +280,7 @@ _Check_return_ bool Win32FoundationClasses::wfc_is_dotted_ip_address( _In_ std::
     std::wstring c;
     std::wstring d;
 
-    int string_index = 0;
+    int string_index{ 0 };
 
     for ( auto const ip_address_index : Range(ip_address.length()))
     {
@@ -761,9 +761,9 @@ _Check_return_ bool Win32FoundationClasses::wfc_is_wide_octal( __in_bcount( numb
         return( false );
     }
 
-    auto wide_string = reinterpret_cast<wchar_t const *>(buffer);
+    auto wide_string{ reinterpret_cast<wchar_t const*>(buffer) };
 
-    int buffer_size = (int) ( number_of_bytes / sizeof( wchar_t ) );
+    auto buffer_size{ (int)(number_of_bytes / sizeof(wchar_t)) };
 
     for ( auto const buffer_index : Range(buffer_size) )
     {
@@ -783,7 +783,7 @@ _Check_return_ bool Win32FoundationClasses::wfc_is_octal_then_NULLs( __in_bcount
         return( false );
     }
 
-    int parser_state = 0;
+    int parser_state{ 0 };
 
     for ( auto const buffer_index : Range(number_of_bytes) )
     {
@@ -855,11 +855,11 @@ _Check_return_ bool Win32FoundationClasses::wfc_is_wide_octal_then_NULLs( __in_b
         return( false );
     }
 
-    auto wide_string = reinterpret_cast<wchar_t const *>(buffer);
+    auto wide_string{ reinterpret_cast<wchar_t const*>(buffer) };
 
-    int const buffer_size = (int) (number_of_bytes / sizeof( wchar_t ));
+    auto buffer_size{ (int)(number_of_bytes / sizeof(wchar_t)) };
 
-    int parser_state = 0;
+    int parser_state{ 0 };
 
     for ( auto const buffer_index : Range(buffer_size) )
     {
@@ -949,9 +949,9 @@ _Check_return_ bool Win32FoundationClasses::wfc_is_wide_hexadecimal( __in_bcount
         return( false );
     }
 
-    auto wide_string = reinterpret_cast<wchar_t const *>(buffer);
+    auto wide_string{ reinterpret_cast<wchar_t const*>(buffer) };
 
-    int buffer_size = (int) (number_of_bytes / sizeof( wchar_t ));
+    auto buffer_size{ (int)(number_of_bytes / sizeof(wchar_t)) };
 
     for ( auto const buffer_index : Range(buffer_size) )
     {
@@ -971,7 +971,7 @@ _Check_return_ bool Win32FoundationClasses::wfc_is_hexadecimal_then_NULLs( __in_
         return( false );
     }
 
-    int parser_state = 0;
+    int parser_state{ 0 };
 
     for ( auto const buffer_index : Range(number_of_bytes) )
     {
@@ -1043,11 +1043,11 @@ _Check_return_ bool Win32FoundationClasses::wfc_is_wide_hexadecimal_then_NULLs( 
         return( false );
     }
 
-    auto wide_string = reinterpret_cast<wchar_t const *>(buffer);
+    auto wide_string{ reinterpret_cast<wchar_t const*>(buffer) };
 
-    int buffer_size = (int) (number_of_bytes / sizeof( wchar_t ));
+    auto buffer_size{ (int)(number_of_bytes / sizeof(wchar_t)) };
 
-    int parser_state = 0;
+    int parser_state{ 0 };
 
     for ( auto const buffer_index : Range(buffer_size) )
     {
@@ -1137,9 +1137,9 @@ _Check_return_ bool Win32FoundationClasses::wfc_is_wide_decimal( __in_bcount( nu
         return( false );
     }
 
-    auto wide_string = reinterpret_cast<wchar_t const *>(buffer);
+    auto wide_string{ reinterpret_cast<wchar_t const*>(buffer) };
 
-    int buffer_size = (int) (number_of_bytes / sizeof( wchar_t ));
+    auto buffer_size{ (int)(number_of_bytes / sizeof(wchar_t)) };
 
     for ( auto const buffer_index : Range(buffer_size) )
     {
@@ -1159,7 +1159,7 @@ _Check_return_ bool Win32FoundationClasses::wfc_is_decimal_then_NULLs( __in_bcou
         return( false );
     }
 
-    int parser_state = 0;
+    int parser_state{ 0 };
 
     for ( auto const buffer_index : Range(number_of_bytes) )
     {
@@ -1231,11 +1231,11 @@ _Check_return_ bool Win32FoundationClasses::wfc_is_wide_decimal_then_NULLs( __in
         return( false );
     }
 
-    auto wide_string = reinterpret_cast<wchar_t const *>(buffer);
+    auto wide_string{ reinterpret_cast<wchar_t const*>(buffer) };
 
-    int buffer_size = (int) (number_of_bytes / sizeof( wchar_t ));
+    auto buffer_size{ (int)(number_of_bytes / sizeof(wchar_t)) };
 
-    int parser_state = 0;
+    int parser_state{ 0 };
 
     for ( auto const buffer_index : Range(buffer_size) )
     {

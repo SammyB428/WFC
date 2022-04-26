@@ -64,7 +64,7 @@ Win32FoundationClasses::CServiceApplication::CServiceApplication(_In_ int const 
     WFC_VALIDATE_POINTER(this);
     WFC_VALIDATE_POINTER(worker_thread);
 
-    (void)m_Main(number_of_command_line_arguments,
+    std::ignore = m_Main(number_of_command_line_arguments,
         command_line_arguments,
         service_name,
         friendly_service_name,
@@ -96,7 +96,7 @@ _Check_return_ int Win32FoundationClasses::CServiceApplication::m_Main(_In_ int 
     {
         CService service(worker_thread);
 
-        (void)service.Initialize(service_name);
+        std::ignore = service.Initialize(service_name);
 
         return(EXIT_SUCCESS);
     }
@@ -140,7 +140,7 @@ _Check_return_ int Win32FoundationClasses::CServiceApplication::m_Main(_In_ int 
                 {
                    set_defaults();
                 }
-                    WFC_CATCH_ALL
+                WFC_CATCH_ALL
                 {
                 }
                 WFC_END_CATCH_ALL

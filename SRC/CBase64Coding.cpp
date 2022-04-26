@@ -51,12 +51,12 @@ static char THIS_FILE[] = __FILE__;
 #define new DEBUG_NEW
 #endif // _DEBUG
 
-static inline constexpr _Check_return_ uint8_t __get_character( _In_reads_( size_of_buffer ) uint8_t const * buffer, __in_ecount( 256 ) uint8_t const * decoder_table, _Inout_ std::size_t& index, _In_ std::size_t const size_of_buffer ) noexcept
+static inline constexpr [[nodiscard]] _Check_return_ uint8_t __get_character( _In_reads_( size_of_buffer ) uint8_t const * buffer, __in_ecount( 256 ) uint8_t const * decoder_table, _Inout_ std::size_t& index, _In_ std::size_t const size_of_buffer ) noexcept
 {
    WFC_VALIDATE_POINTER( buffer );
    WFC_VALIDATE_POINTER( decoder_table );
 
-   uint8_t return_value = 0;
+   uint8_t return_value{ 0 };
 
    do
    {
@@ -74,12 +74,12 @@ static inline constexpr _Check_return_ uint8_t __get_character( _In_reads_( size
    return( return_value );
 }
 
-static inline constexpr _Check_return_ uint8_t __get_character( __in_ecount( size_of_buffer ) wchar_t const * buffer, __in_ecount( 256 ) uint8_t const * decoder_table, _Inout_ std::size_t& index, _In_ std::size_t const size_of_buffer ) noexcept
+static inline constexpr [[nodiscard]] _Check_return_ uint8_t __get_character( __in_ecount( size_of_buffer ) wchar_t const * buffer, __in_ecount( 256 ) uint8_t const * decoder_table, _Inout_ std::size_t& index, _In_ std::size_t const size_of_buffer ) noexcept
 {
    WFC_VALIDATE_POINTER( buffer );
    WFC_VALIDATE_POINTER( decoder_table );
 
-   uint8_t return_value = 0;
+   uint8_t return_value{ 0 };
 
    do
    {
@@ -200,20 +200,20 @@ _Check_return_ std::size_t Win32FoundationClasses::CBase64Coding::Decode(_In_rea
         return(0);
     }
 
-    bool return_value = false;
+    bool return_value{ false };
 
-    uint8_t byte_to_add = 0;
-    uint8_t character_1 = 0;
-    uint8_t character_2 = 0;
-    uint8_t character_3 = 0;
-    uint8_t character_4 = 0;
+    uint8_t byte_to_add{ 0 };
+    uint8_t character_1{ 0 };
+    uint8_t character_2{ 0 };
+    uint8_t character_3{ 0 };
+    uint8_t character_4{ 0 };
 
-    auto const required_destination_size = DecodeReserveSize(number_of_bytes);
+    auto const required_destination_size{ DecodeReserveSize(number_of_bytes) };
 
     _ASSERTE(required_destination_size <= destination_size);
 
-    std::size_t index = 0;
-    std::size_t add_index = 0;
+    std::size_t index{ 0 };
+    std::size_t add_index{ 0 };
 
     // Since we're decoding, we are most likely in a performance-minded
     // part of an application, let's go for a speedy method for accessing
@@ -346,19 +346,19 @@ _Check_return_ bool Win32FoundationClasses::CBase64Coding::Decode(_In_reads_byte
         return(true);
     }
 
-    bool return_value = false;
+    bool return_value{ false };
 
-    uint8_t byte_to_add = 0;
-    uint8_t character_1 = 0;
-    uint8_t character_2 = 0;
-    uint8_t character_3 = 0;
-    uint8_t character_4 = 0;
+    uint8_t byte_to_add{ 0 };
+    uint8_t character_1{ 0 };
+    uint8_t character_2{ 0 };
+    uint8_t character_3{ 0 };
+    uint8_t character_4{ 0 };
 
-    std::size_t index = 0;
+    std::size_t index{ 0 };
 
     destination.resize(DecodeReserveSize(number_of_bytes));
 
-    uint32_t add_index = 0;
+    uint32_t add_index{ 0 };
 
     // Since we're decoding, we are most likely in a performance-minded
     // part of an application, let's go for a speedy method for accessing
@@ -498,25 +498,25 @@ _Check_return_ bool Win32FoundationClasses::CBase64Coding::Decode(_In_ std::wstr
 {
    WFC_VALIDATE_POINTER( this );
 
-   bool return_value = false;
+   bool return_value{ false };
 
-   uint8_t byte_to_add = 0;
-   uint8_t character_1 = 0;
-   uint8_t character_2 = 0;
-   uint8_t character_3 = 0;
-   uint8_t character_4 = 0;
+   uint8_t byte_to_add{ 0 };
+   uint8_t character_1{ 0 };
+   uint8_t character_2{ 0 };
+   uint8_t character_3{ 0 };
+   uint8_t character_4{ 0 };
 
-   std::size_t index = 0;
+   std::size_t index{ 0 };
 
    destination.resize(DecodeReserveSize(source.length()) );
 
-   uint32_t add_index = 0;
+   uint32_t add_index{ 0 };
 
    // Since we're decoding, we are most likely in a performance-minded
    // part of an application, let's go for a speedy method for accessing
    // the source data.
 
-   wchar_t const * input_buffer = source.data();
+   auto input_buffer{ source.data() };
 
    WFC_VALIDATE_POINTER( input_buffer );
 
@@ -649,7 +649,7 @@ _Check_return_ bool Win32FoundationClasses::CBase64Coding::Encode( _In_ std::vec
 {
    WFC_VALIDATE_POINTER( this );
 
-   auto const number_of_bytes_to_encode = source.size();
+   auto const number_of_bytes_to_encode{ source.size() };
 
    if ( number_of_bytes_to_encode == 0 )
    {
@@ -660,21 +660,21 @@ _Check_return_ bool Win32FoundationClasses::CBase64Coding::Encode( _In_ std::vec
    // We don't want to make this static so we can reduce our
    // footprint in the library
 
-   char const alphabet[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+   char const alphabet[]{ "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/" };
 
-   std::size_t source_index = 0;
+   std::size_t source_index{ 0 };
 
-   uint8_t byte_to_add = 0;
-   uint8_t byte_1      = 0;
-   uint8_t byte_2      = 0;
-   uint8_t byte_3      = 0;
+   uint8_t byte_to_add{ 0 };
+   uint8_t byte_1{ 0 };
+   uint8_t byte_2{ 0 };
+   uint8_t byte_3{ 0 };
 
-   auto input_buffer = source.data();
+   auto input_buffer{ source.data() };
 
    WFC_VALIDATE_POINTER( input_buffer );
 
    destination.resize(EncodeReserveSize(number_of_bytes_to_encode));
-   std::size_t add_index = 0;
+   std::size_t add_index{ 0 };
 
    while( source_index < number_of_bytes_to_encode )
    {
@@ -808,20 +808,20 @@ _Check_return_ bool Win32FoundationClasses::CBase64Coding::Encode(__in_bcount(nu
         return(true);
     }
 
-    char const alphabet[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+    char const alphabet[]{ "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/" };
 
-    std::size_t loop_index = 0;
-    std::size_t number_of_space_characters_added = 0;
+    std::size_t loop_index{ 0 };
+    std::size_t number_of_space_characters_added{ 0 };
 
-    uint8_t byte_to_add = 0;
-    uint8_t byte_1 = 0;
-    uint8_t byte_2 = 0;
-    uint8_t byte_3 = 0;
+    uint8_t byte_to_add{ 0 };
+    uint8_t byte_1{ 0 };
+    uint8_t byte_2{ 0 };
+    uint8_t byte_3{ 0 };
 
     destination_string.resize(EncodeReserveSize(number_of_bytes_to_encode));
 
-    uint32_t character_index_in_this_line = 0;
-    uint32_t number_of_bytes_encoded = 0;
+    uint32_t character_index_in_this_line{ 0 };
+    uint32_t number_of_bytes_encoded{ 0 };
 
     while (loop_index < number_of_bytes_to_encode)
     {
@@ -1006,7 +1006,7 @@ _Check_return_ bool Win32FoundationClasses::CBase64Coding::Encode(__in_bcount(nu
 // Perform a single 3 to 4 conversion
 static inline void __encode(_In_ uint8_t const * input_buffer, _In_ std::size_t const number_of_bytes, _Out_ uint8_t * output_buffer) noexcept
 {
-    char const alphabet[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+    char const alphabet[]{ "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/" };
 
     if (number_of_bytes > 2)
     {
@@ -1044,11 +1044,11 @@ _Check_return_ bool Win32FoundationClasses::CBase64Coding::Encode(_Inout_ HANDLE
 {
     WFC_VALIDATE_POINTER(this);
 
-    DWORD ignored = 0;
+    DWORD ignored{ 0 };
 
     if (number_of_bytes_to_encode < 1 )
     {
-        uint8_t end_of_buffer[6] = { '=', '=', '=', '=', CARRIAGE_RETURN, LINE_FEED };
+        uint8_t end_of_buffer[6]{ '=', '=', '=', '=', CARRIAGE_RETURN, LINE_FEED };
 
         if (::WriteFile(output_file_handle, end_of_buffer, sizeof(end_of_buffer), &ignored, nullptr) == FALSE)
         {
@@ -1062,21 +1062,21 @@ _Check_return_ bool Win32FoundationClasses::CBase64Coding::Encode(_Inout_ HANDLE
     uint8_t input_buffer[54]{ 0 };
     uint8_t output_buffer[74]{ 0 };
 
-    std::size_t number_of_bytes_remaining = number_of_bytes_to_encode;
+    std::size_t number_of_bytes_remaining{ number_of_bytes_to_encode };
 
     while (number_of_bytes_remaining > 0)
     {
-        std::size_t const number_of_bytes_to_read = std::min(sizeof(input_buffer), number_of_bytes_remaining);
+        std::size_t const number_of_bytes_to_read{ std::min(sizeof(input_buffer), number_of_bytes_remaining) };
 
         if (::ReadFile(input_file_handle, input_buffer, static_cast<DWORD>(number_of_bytes_to_read), &ignored, nullptr) not_eq 0)
         {
             // Now encode this buffer...
-            std::size_t output_buffer_index = 0;
-            std::size_t input_buffer_index = 0;
+            std::size_t output_buffer_index{ 0 };
+            std::size_t input_buffer_index{ 0 };
 
             while (input_buffer_index < number_of_bytes_to_read)
             {
-                std::size_t const number_of_bytes_in_this_block = std::min(static_cast<std::size_t>(3), number_of_bytes_to_read - input_buffer_index);
+                std::size_t const number_of_bytes_in_this_block{ std::min(static_cast<std::size_t>(3), number_of_bytes_to_read - input_buffer_index) };
 
                 if (number_of_bytes_in_this_block == 0)
                 {

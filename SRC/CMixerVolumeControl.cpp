@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 1995-2016, Samuel R. Blackburn
+** Copyright, 1995-2022, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -56,8 +56,8 @@ static char THIS_FILE[] = __FILE__;
 Win32FoundationClasses::CMixerVolumeControl::CMixerVolumeControl() noexcept
 {
    WFC_VALIDATE_POINTER( this );
-   (void) m_Channels.push_back( m_LeftChannel );
-   (void) m_Channels.push_back( m_RightChannel );
+   m_Channels.push_back( m_LeftChannel );
+   m_Channels.push_back( m_RightChannel );
 }
 
 Win32FoundationClasses::CMixerVolumeControl::CMixerVolumeControl( _In_ Win32FoundationClasses::CMixerVolumeControl const& source ) noexcept
@@ -86,7 +86,7 @@ void Win32FoundationClasses::CMixerVolumeControl::Copy( _In_ Win32FoundationClas
       return;
    }
 
-   (void) Open( source.m_Mixer.GetDeviceID(), source.m_WhatToNotify, source.m_WhoToNotify, source.m_NotifyData );
+   std::ignore = Open( source.m_Mixer.GetDeviceID(), source.m_WhatToNotify, source.m_WhoToNotify, source.m_NotifyData );
 
    m_Channels.clear();
    m_Channels.push_back(m_LeftChannel);
@@ -126,7 +126,7 @@ _Check_return_ DWORD Win32FoundationClasses::CMixerVolumeControl::GetLeftChannel
 {
    WFC_VALIDATE_POINTER( this );
 
-   DWORD gain = 0;
+   DWORD gain{ 0 };
 
    if ( m_GetAll() == true )
    {
@@ -140,7 +140,7 @@ _Check_return_ DWORD Win32FoundationClasses::CMixerVolumeControl::GetVolume( voi
 {
    WFC_VALIDATE_POINTER( this );
 
-   DWORD gain = 0;
+   DWORD gain{ 0 };
 
    if ( m_GetAll() == true )
    {
@@ -154,7 +154,7 @@ _Check_return_ DWORD Win32FoundationClasses::CMixerVolumeControl::GetRightChanne
 {
    WFC_VALIDATE_POINTER( this );
 
-   DWORD gain = 0;
+   DWORD gain{ 0 };
 
    if ( m_GetAll() == true )
    {
@@ -170,7 +170,7 @@ _Check_return_ bool Win32FoundationClasses::CMixerVolumeControl::m_GetAll( void 
 
    std::vector<CMixerControlDetailsData> array;
 
-   bool const return_value = m_Mixer.GetControlDetails( m_MixerLine, m_MixerControl, array );
+   auto const return_value{ m_Mixer.GetControlDetails(m_MixerLine, m_MixerControl, array) };
 
    if ( return_value == false )
    {
@@ -204,7 +204,7 @@ _Check_return_ bool Win32FoundationClasses::CMixerVolumeControl::SetLeftChannelV
 {
    WFC_VALIDATE_POINTER( this );
 
-   DWORD new_level = desired_level;
+   DWORD new_level{ desired_level };
 
    if ( new_level < m_MixerControl.Minimum )
    {
@@ -216,15 +216,15 @@ _Check_return_ bool Win32FoundationClasses::CMixerVolumeControl::SetLeftChannelV
       new_level = m_MixerControl.Maximum;
    }
 
-   (void) m_GetAll();
+   std::ignore = m_GetAll();
 
    m_LeftChannel.Parameter1 = new_level;
 
-   bool const return_value = m_Mixer.SetControlDetails( m_MixerLine, m_MixerControl, m_Channels );
+   auto const return_value{ m_Mixer.SetControlDetails(m_MixerLine, m_MixerControl, m_Channels) };
 
    if ( return_value == true )
    {
-      (void) m_GetAll();
+      std::ignore = m_GetAll();
    }
 
    return( return_value );
@@ -234,7 +234,7 @@ _Check_return_ bool Win32FoundationClasses::CMixerVolumeControl::SetVolume( _In_
 {
    WFC_VALIDATE_POINTER( this );
 
-   DWORD new_level = desired_level;
+   DWORD new_level{ desired_level };
 
    if ( new_level < m_MixerControl.Minimum )
    {
@@ -249,11 +249,11 @@ _Check_return_ bool Win32FoundationClasses::CMixerVolumeControl::SetVolume( _In_
    m_LeftChannel.Parameter1  = new_level;
    m_RightChannel.Parameter1 = new_level;
 
-   bool const return_value = m_Mixer.SetControlDetails( m_MixerLine, m_MixerControl, m_Channels );
+   auto const return_value{ m_Mixer.SetControlDetails(m_MixerLine, m_MixerControl, m_Channels) };
 
    if ( return_value == true )
    {
-      (void) m_GetAll();
+      std::ignore = m_GetAll();
    }
 
    return( return_value );
@@ -263,7 +263,7 @@ _Check_return_ bool Win32FoundationClasses::CMixerVolumeControl::SetRightChannel
 {
    WFC_VALIDATE_POINTER( this );
 
-   DWORD new_level = desired_level;
+   DWORD new_level{ desired_level };
 
    if ( new_level < m_MixerControl.Minimum )
    {
@@ -275,7 +275,7 @@ _Check_return_ bool Win32FoundationClasses::CMixerVolumeControl::SetRightChannel
       new_level = m_MixerControl.Maximum;
    }
 
-   (void) m_GetAll();
+   std::ignore = m_GetAll();
 
    m_RightChannel.Parameter1 = new_level;
 
@@ -283,7 +283,7 @@ _Check_return_ bool Win32FoundationClasses::CMixerVolumeControl::SetRightChannel
 
    if ( return_value == true)
    {
-      (void) m_GetAll();
+      std::ignore = m_GetAll();
    }
 
    return( return_value );

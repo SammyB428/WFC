@@ -926,8 +926,8 @@ void Win32FoundationClasses::CTape::Close( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
-   (void) Unlock();
-   (void) GetStatus();
+   std::ignore = Unlock();
+   std::ignore = GetStatus();
 
    if ( m_FileHandle not_eq static_cast< HANDLE >( NULL ) )
    {
@@ -1099,9 +1099,9 @@ _Check_return_ bool Win32FoundationClasses::CTape::Open( _In_ UINT const tape_dr
 
    m_TapeDriveNumberStartingAtZero = tape_drive_number_starting_at_zero;
 
-   (void) GetStatus();
-   (void) Lock(); // This will fail, but is doesn't matter...
-   (void) GetStatus();
+   std::ignore = GetStatus();
+   std::ignore = Lock(); // This will fail, but is doesn't matter...
+   std::ignore = GetStatus();
 
    return( true );
 }

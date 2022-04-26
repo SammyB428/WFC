@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 1995-2015, Samuel R. Blackburn
+** Copyright, 1995-2022, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -1610,6 +1610,195 @@ void Win32FoundationClasses::Convert_NERR_Code_to_String( _In_ DWORD const error
          error_message.assign(WSTRING_VIEW(L"The specified computer account could not be found." ) );
          return;
 
+      case (NERR_BASE + 598):
+
+          // NERR_PersonalSku
+
+          error_message.assign(WSTRING_VIEW(L"This version of Windows cannot be joined to a domain."));
+          return;
+
+      case (NERR_BASE + 599):
+
+          // NERR_SetupCheckDNSConfig
+
+          error_message.assign(WSTRING_VIEW(L"An attempt to resolve the DNS name of a domain controller in the domain being joined has failed. Please verify this client is configured to reach a DNS server that can resolve DNS names in the target domain."));
+          return;
+
+      case (NERR_BASE + 600):
+
+          // NERR_AlreadyCloudDomainJoined
+
+          error_message.assign(WSTRING_VIEW(L"This device is joined to Azure AD. To join an Active Directory domain, you must first go to settings and choose to disconnect your device from your work or school."));
+          return;
+
+      case (NERR_BASE + 601):
+
+          // NERR_PasswordMustChange
+
+          error_message.assign(WSTRING_VIEW(L"Password must change at next logon."));
+          return;
+
+      case (NERR_BASE + 602):
+
+          // NERR_AccountLockedOut
+
+          error_message.assign(WSTRING_VIEW(L"Account is locked out."));
+          return;
+
+      case (NERR_BASE + 603):
+
+          // NERR_PasswordTooLong
+
+          error_message.assign(WSTRING_VIEW(L"Password is too long."));
+          return;
+
+      case (NERR_BASE + 604):
+
+          // NERR_PasswordNotComplexEnough
+
+          error_message.assign(WSTRING_VIEW(L"Password doesn't meet the complexity policy."));
+          return;
+
+      case (NERR_BASE + 605):
+
+          // NERR_PasswordFilterError
+
+          error_message.assign(WSTRING_VIEW(L"Password doesn't meet the requirements of the filter dll's."));
+          return;
+
+      case (NERR_BASE + 609):
+
+          // NERR_NoOfflineJoinInfo
+
+          error_message.assign(WSTRING_VIEW(L"Offline join completion information was not found."));
+          return;
+
+      case (NERR_BASE + 610):
+
+          // NERR_BadOfflineJoinInfo
+
+          error_message.assign(WSTRING_VIEW(L"The offline join completion information was bad."));
+          return;
+
+      case (NERR_BASE + 611):
+
+          // NERR_CantCreateJoinInfo
+
+          error_message.assign(WSTRING_VIEW(L"Unable to create offline join information. Please ensure you have access to the specified path location and permissions to modify its contents. Running as an elevated administrator may be required."));
+          return;
+
+      case (NERR_BASE + 612):
+
+          // NERR_BadDomainJoinInfo
+
+          error_message.assign(WSTRING_VIEW(L"The domain join info being saved was incomplete or bad."));
+          return;
+
+      case (NERR_BASE + 613):
+
+          // NERR_JoinPerformedMustRestart
+
+          error_message.assign(WSTRING_VIEW(L"Offline join operation successfully completed but a restart is needed."));
+          return;
+
+      case (NERR_BASE + 614):
+
+          // NERR_NoJoinPending
+
+          error_message.assign(WSTRING_VIEW(L"There was no offline join operation pending."));
+          return;
+
+      case (NERR_BASE + 615):
+
+          // NERR_ValuesNotSet
+
+          error_message.assign(WSTRING_VIEW(L"Unable to set one or more requested machine or domain name values on the local computer."));
+          return;
+
+      case (NERR_BASE + 616):
+
+          // NERR_CantVerifyHostname
+
+          error_message.assign(WSTRING_VIEW(L"Could not verify the current machine's hostname against the saved value in the join completion information."));
+          return;
+
+      case (NERR_BASE + 617):
+
+          // NERR_CantLoadOfflineHive
+
+          error_message.assign(WSTRING_VIEW(L"Unable to load the specified offline registry hive. Please ensure you have access to the specified path location and permissions to modify its contents. Running as an elevated administrator may be required."));
+          return;
+
+      case (NERR_BASE + 618):
+
+          // NERR_ConnectionInsecure
+
+          error_message.assign(WSTRING_VIEW(L"The minimum session security requirements for this operation were not met."));
+          return;
+
+      case (NERR_BASE + 619):
+
+          // NERR_ProvisioningBlobUnsupported
+
+          error_message.assign(WSTRING_VIEW(L"Computer account provisioning blob version is not supported."));
+          return;
+
+      case (NERR_BASE + 620):
+
+          // NERR_DS8DCRequired
+
+          error_message.assign(WSTRING_VIEW(L"The specified domain controller does not meet the version requirement for this operation. Please select a domain controller capable of issuing claims."));
+          return;
+
+      case (NERR_BASE + 621):
+
+          // NERR_LDAPCapableDCRequired
+
+          error_message.assign(WSTRING_VIEW(L"This operation requires a domain controller which supports LDAP. Please select an LDAP-capable domain controller."));
+          return;
+
+      case (NERR_BASE + 622):
+
+          // NERR_DS8DCNotFound
+
+          error_message.assign(WSTRING_VIEW(L"A domain controller which meets the version requirement for this operation could not be located. Please ensure that a domain controller capable of issuing claims is available."));
+          return;
+
+      case (NERR_BASE + 623):
+
+          // NERR_TargetVersionUnsupported
+
+          error_message.assign(WSTRING_VIEW(L"The Windows version of the specified image does not support provisioning."));
+          return;
+
+      case (NERR_BASE + 624):
+
+          // NERR_InvalidMachineNameForJoin
+
+          error_message.assign(WSTRING_VIEW(L"The machine name is blocked from joining the domain."));
+          return;
+
+      case (NERR_BASE + 625):
+
+          // NERR_DS9DCNotFound
+
+          error_message.assign(WSTRING_VIEW(L"The domain controller does not meet the version requirement for this operation."));
+          return;
+
+      case (NERR_BASE + 626):
+
+          // NERR_PlainTextSecretsRequired
+
+          error_message.assign(WSTRING_VIEW(L"The local machine does not allow querying of LSA secrets in plain-text."));
+          return;
+
+      case (NERR_BASE + 627):
+
+          // NERR_CannotUnjoinAadDomain
+
+          error_message.assign(WSTRING_VIEW(L"Unable to leave the Azure AD domain that this machine is joined to. Check the event log for detailed error information."));
+          return;
+
       default:
 
          if ( error_code < NERR_BASE )
@@ -1618,7 +1807,7 @@ void Win32FoundationClasses::Convert_NERR_Code_to_String( _In_ DWORD const error
             ** This ain't a LanMan error code, let's see if it'll Format...
             */
 
-            LPVOID message_buffer = (LPVOID) nullptr;
+            LPVOID message_buffer{ nullptr };
 
             FormatMessage( FORMAT_MESSAGE_ALLOCATE_BUFFER bitor FORMAT_MESSAGE_FROM_SYSTEM,
                            nullptr,

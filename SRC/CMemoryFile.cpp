@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 1995-2019, Samuel R. Blackburn
+** Copyright, 1995-2022, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -211,7 +211,7 @@ _Check_return_ bool Win32FoundationClasses::CMemoryFile::FromHandle( _In_ HANDLE
 {
     WFC_VALIDATE_POINTER( this );
 
-    bool const return_value = m_MapTheFile( file_handle, open_flags, beginning_at_offset, number_of_bytes_to_map, desired_address );
+    auto const return_value{ m_MapTheFile(file_handle, open_flags, beginning_at_offset, number_of_bytes_to_map, desired_address) };
 
     return( return_value );
 }
@@ -227,7 +227,7 @@ _Check_return_ bool Win32FoundationClasses::CMemoryFile::GetInformation( _Inout_
 {
     WFC_VALIDATE_POINTER( this );
 
-    (void) memcpy_s( &information, sizeof(information), &m_FileInformation, sizeof(m_FileInformation) );
+    std::ignore = memcpy_s( &information, sizeof(information), &m_FileInformation, sizeof(m_FileInformation) );
 
     return( true );
 }
@@ -240,8 +240,8 @@ void Win32FoundationClasses::CMemoryFile::m_Initialize( void ) noexcept
     ASSERT( m_SecurityDescriptor_p == nullptr );
     ASSERT( m_MapHandle            == static_cast< HANDLE >( INVALID_HANDLE_VALUE ) );
 
-    m_Attributes    = FILE_ATTRIBUTE_NORMAL;
-    m_TemplateFile  = static_cast<HANDLE>( NULL );
+    m_Attributes   = FILE_ATTRIBUTE_NORMAL;
+    m_TemplateFile = static_cast<HANDLE>( NULL );
 
     WFC_TRY
     {
@@ -344,7 +344,7 @@ _Check_return_ void * Win32FoundationClasses::CMemoryFile::Map( _In_ uint64_t co
     m_Length   = m_MapLengthParameter;
     Size       = m_MapLengthParameter;
 
-    char * temp_pointer = (char *) m_MappedPointer;
+    auto temp_pointer = (char *) m_MappedPointer;
 
     m_Pointer = &temp_pointer[ m_MappedLength - m_MapLengthParameter ];
 
@@ -392,7 +392,7 @@ _Check_return_ bool Win32FoundationClasses::CMemoryFile::m_MapTheFile( _In_ HAND
     m_Protections = PAGE_READONLY;
     m_Access = FILE_MAP_READ;
 
-    UINT const just_flags = open_flags bitand 0x0F;
+    UINT const just_flags{ open_flags bitand 0x0F };
 
     if ( just_flags == (UINT) CFile64::OpenFlags::modeRead )
     {
@@ -422,7 +422,7 @@ _Check_return_ bool Win32FoundationClasses::CMemoryFile::m_MapTheFile( _In_ HAND
 
     m_FileLength = file_length.QuadPart;
 
-    std::size_t number_of_bytes_to_map = number_of_bytes_to_map_parameter;
+    std::size_t number_of_bytes_to_map{ number_of_bytes_to_map_parameter };
 
     if ( beginning_at_offset > 0 )
     {
@@ -468,7 +468,7 @@ _Check_return_ bool Win32FoundationClasses::CMemoryFile::m_MapTheFile( _In_ HAND
         return( false );
     }
 
-    (void) Map( beginning_at_offset, number_of_bytes_to_map );
+    std::ignore = Map( beginning_at_offset, number_of_bytes_to_map );
 
     return( true );
 }
@@ -620,7 +620,7 @@ void Win32FoundationClasses::CSharedMemory::Close(void) noexcept
 
     if (Win32FoundationClasses::is_bad_handle( m_Handle ) == false )
     {
-        (void) wfc_close_handle( m_Handle );
+        std::ignore = Win32FoundationClasses::wfc_close_handle( m_Handle );
         m_Handle = INVALID_HANDLE_VALUE;
     }
 
@@ -629,7 +629,7 @@ void Win32FoundationClasses::CSharedMemory::Close(void) noexcept
 
 static _Check_return_ bool CreateDACL(_Inout_ SECURITY_ATTRIBUTES *sa) noexcept
 {
-    wchar_t const *sdd = L"D:"
+    auto sdd = L"D:"
         L"(D;OICI;GA;;;BG)" //Deny guests
         L"(D;OICI;GA;;;AN)" //Deny anonymous
         L"(A;OICI;GRGWGX;;;AU)" //Allow read, write and execute for Users
@@ -640,7 +640,7 @@ static _Check_return_ bool CreateDACL(_Inout_ SECURITY_ATTRIBUTES *sa) noexcept
 
 static _Check_return_ bool CreateLowIntegritySACL( _Inout_ SECURITY_ATTRIBUTES *sa ) noexcept
 {
-    wchar_t const * sdd = L"S:(ML;;NW;;;LW)";
+    auto sdd = L"S:(ML;;NW;;;LW)";
 
     return ConvertStringSecurityDescriptorToSecurityDescriptor(sdd, SDDL_REVISION_1, &sa->lpSecurityDescriptor, nullptr) == TRUE;
 }
@@ -663,7 +663,7 @@ _Check_return_ bool Win32FoundationClasses::CSharedMemory::Create(_In_ std::wstr
     //security_access_created = CreateDACL( &security_attributes );
     //security_access_created = CreateLowIntegritySACL( &security_attributes );
 
-    bool const return_value = Create( name, number_of_bytes, &security_attributes );
+    auto const return_value = Create( name, number_of_bytes, &security_attributes );
 
     Win32FoundationClasses::wfc_destroy_null_dacl( security_attributes.lpSecurityDescriptor );
 
@@ -708,7 +708,7 @@ _Check_return_ bool Win32FoundationClasses::CSharedMemory::Create(_In_ std::wstr
         m_LastError = ::GetLastError();
         //WFCTRACEERROR( m_LastError );
         //WFCTRACEVAL( TEXT( "Can't MapViewOfFile to " ), Name );
-        (void) wfc_close_handle( m_Handle );
+        std::ignore = Win32FoundationClasses::wfc_close_handle( m_Handle );
         m_Handle = INVALID_HANDLE_VALUE;
         Name.clear();
         return( false );
@@ -751,7 +751,7 @@ _Check_return_ bool Win32FoundationClasses::CSharedMemory::Open(_In_ std::wstrin
         m_LastError = ::GetLastError();
         //WFCTRACEERROR( m_LastError );
         //WFCTRACEVAL( TEXT( "Can't MapViewOfFile to " ), Name );
-        (void) wfc_close_handle( m_Handle );
+        std::ignore = Win32FoundationClasses::wfc_close_handle( m_Handle );
         m_Handle = INVALID_HANDLE_VALUE;
         Name.clear();
         return( false );

@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 1995-2015, Samuel R. Blackburn
+** Copyright, 1995-2022, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -58,24 +58,24 @@ void Win32FoundationClasses::wfc_append_string_to_byte_array( _In_ std::wstring 
 
 void Win32FoundationClasses::wfc_append_ascii_string_to_byte_array( __in_z char const * string_to_append, __inout std::vector<uint8_t>& bytes ) noexcept
 {
-   auto const string_length = strlen( string_to_append );
-   auto const original_array_size = bytes.size();
+   auto const string_length{ strlen(string_to_append) };
+   auto const original_array_size{ bytes.size() };
 
    bytes.resize( string_length + original_array_size );
 
-   auto buffer = bytes.data();
+   auto buffer{ bytes.data() };
 
    CopyMemory( &buffer[ original_array_size ], string_to_append, string_length );
 }
 
 void Win32FoundationClasses::wfc_append_unicode_string_to_byte_array( __in_z wchar_t const * string_to_append, __inout std::vector<uint8_t>& bytes ) noexcept
 {
-   auto const string_length = wcslen( string_to_append ) * sizeof( wchar_t );
-   auto const original_array_size = bytes.size();
+   auto const string_length{ std::char_traits<wchar_t>::length(string_to_append) * sizeof(wchar_t) };
+   auto const original_array_size{ bytes.size() };
 
    bytes.resize( string_length + original_array_size );
 
-   uint8_t * buffer = bytes.data();
+   auto buffer{ bytes.data() };
 
    CopyMemory( &buffer[ original_array_size ], string_to_append, string_length );
 }

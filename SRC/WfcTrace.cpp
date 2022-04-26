@@ -53,7 +53,7 @@ static char THIS_FILE[] = __FILE__;
 
 int  Win32FoundationClasses::CWfcTrace::Indent  = 0;
 bool Win32FoundationClasses::CWfcTrace::Tracing = true;
-std::size_t Win32FoundationClasses::CWfcTrace::Levels = 1;
+LONG Win32FoundationClasses::CWfcTrace::Levels = 1;
 
 Win32FoundationClasses::CWfcTrace::CWfcTrace( __in_z LPCTSTR function_name, _In_ std::size_t const tracing_level ) noexcept
 {
@@ -1095,6 +1095,8 @@ void Win32FoundationClasses::CWfcTrace::TraceLevelOn( _In_ std::size_t const lev
       _bittestandset( reinterpret_cast<LONG *>(&Levels), 31 );
       return;
    }
+
+   static_assert(sizeof(LONG) == sizeof(Levels), "The size of LONG is not the same as the size of Levels");
 
    _bittestandset( reinterpret_cast<LONG *>(&Levels), level );
 }

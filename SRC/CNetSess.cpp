@@ -166,7 +166,7 @@ void Win32FoundationClasses::CNetworkSessions::m_Get_0_Data( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
-   LPBYTE buffer = nullptr;
+   LPBYTE buffer{ nullptr };
 
    /*
    ** One of the children got loose in the header files again...
@@ -175,7 +175,7 @@ void Win32FoundationClasses::CNetworkSessions::m_Get_0_Data( void ) noexcept
    ** a machine name... Go Figure...
    */
 
-   (void) ::NetSessionGetInfo( (LMSTR) m_WideMachineName.get(), nullptr, nullptr, 0, &buffer );
+   std::ignore = ::NetSessionGetInfo( (LMSTR) m_WideMachineName.get(), nullptr, nullptr, 0, &buffer );
 
    if ( buffer not_eq nullptr )
    {

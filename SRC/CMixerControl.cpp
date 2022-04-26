@@ -672,7 +672,7 @@ _Check_return_ bool Win32FoundationClasses::CMixerControl::IsDisabled( void ) co
 {
    WFC_VALIDATE_POINTER( this );
 
-   DWORD const status = ( StatusFlags bitand static_cast<uint32_t>(CMixerControl::StatusFlags::Disabled) );
+   DWORD const status{ (StatusFlags bitand static_cast<uint32_t>(CMixerControl::StatusFlags::Disabled)) };
 
    if ( status not_eq 0 )
    {

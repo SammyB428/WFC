@@ -245,7 +245,7 @@ void Win32FoundationClasses::CNetworkUserInformation::Copy( _In_ USER_INFO_2 con
    
       for ( auto const index : Range(21) )
       {
-         (void) LogonHours.push_back( source->usri2_logon_hours[ index ] );
+         LogonHours.push_back( source->usri2_logon_hours[ index ] );
       }
    }
    WFC_CATCH_ALL
@@ -303,7 +303,7 @@ void Win32FoundationClasses::CNetworkUserInformation::Copy( _In_ USER_INFO_3 con
 
       for ( auto const index : Range(21) )
       {
-         (void) LogonHours.push_back( source->usri3_logon_hours[ index ] );
+         LogonHours.push_back( source->usri3_logon_hours[ index ] );
       }
    }
    WFC_CATCH_ALL
@@ -380,7 +380,7 @@ void Win32FoundationClasses::CNetworkUserInformation::Copy( _In_ USER_INFO_11 co
    
       for ( auto const index : Range(21) )
       {
-         (void) LogonHours.push_back( source->usri11_logon_hours[ index ] );
+         LogonHours.push_back( source->usri11_logon_hours[ index ] );
       }
    }
    WFC_CATCH_ALL
@@ -438,7 +438,7 @@ void Win32FoundationClasses::CNetworkUserInformation::Copy( _In_ USER_INFO_21 co
    {
       for ( auto const index : Range(ENCRYPTED_PWLEN) )
       {
-         (void) EncryptedPassword.push_back( source->usri21_password[ index ] );
+         EncryptedPassword.push_back( source->usri21_password[ index ] );
       }
    }
    WFC_CATCH_ALL
@@ -490,12 +490,12 @@ void Win32FoundationClasses::CNetworkUserInformation::Copy( _In_ USER_INFO_22 co
  
       for ( auto const index : Range(ENCRYPTED_PWLEN) )
       {
-         (void) EncryptedPassword.push_back( source->usri22_password[ index ] );
+         EncryptedPassword.push_back( source->usri22_password[ index ] );
       }
    
       for ( auto const index : Range(21) )
       {
-         (void) LogonHours.push_back( source->usri22_logon_hours[ index ] );
+         LogonHours.push_back( source->usri22_logon_hours[ index ] );
       }
    }
    WFC_CATCH_ALL
@@ -930,7 +930,7 @@ void Win32FoundationClasses::CNetworkUserInformation::SetAddDefaults( void ) noe
 
    for ( auto const index : Range(21) )
    {
-      (void) LogonHours.push_back( 0xFF );
+      LogonHours.push_back( 0xFF );
    }
 }
 

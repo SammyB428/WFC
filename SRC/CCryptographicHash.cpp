@@ -74,7 +74,7 @@ Win32FoundationClasses::CCryptographicHash::CCryptographicHash( _In_ HCRYPTHASH 
    m_Hash = static_cast< HCRYPTHASH >( NULL );
    m_AutomaticallyDestroy = automatically_destroy;
 
-   (void) FromHandle( source_handle, automatically_destroy );
+   std::ignore = FromHandle( source_handle, automatically_destroy );
 }
 
 Win32FoundationClasses::CCryptographicHash::~CCryptographicHash()
@@ -83,7 +83,7 @@ Win32FoundationClasses::CCryptographicHash::~CCryptographicHash()
 
    if ( m_AutomaticallyDestroy == true)
    {
-      (void) Destroy();
+       std::ignore = Destroy();
    }
 }
 
@@ -93,7 +93,7 @@ _Check_return_ bool Win32FoundationClasses::CCryptographicHash::Destroy( void ) 
 {
    WFC_VALIDATE_POINTER( this );
 
-   BOOL return_value = ::CryptDestroyHash( m_Hash );
+   BOOL return_value{ ::CryptDestroyHash(m_Hash) };
 
    if ( return_value == FALSE )
    {
@@ -121,7 +121,7 @@ _Check_return_ bool Win32FoundationClasses::CCryptographicHash::FromHandle( _In_
    {
       if ( m_AutomaticallyDestroy == true)
       {
-         (void) Destroy();
+          std::ignore = Destroy();
       }
    }
 
@@ -135,7 +135,7 @@ _Check_return_ bool Win32FoundationClasses::CCryptographicHash::GetAlgorithmIden
 {
    WFC_VALIDATE_POINTER( this );
 
-   uint32_t buffer_length = sizeof( identifier );
+   uint32_t buffer_length{ sizeof(identifier) };
 
    return( GetParameter( parameterAlgorithmIdentifier, (BYTE *) &identifier, buffer_length ) );
 }
@@ -150,7 +150,7 @@ _Check_return_ bool Win32FoundationClasses::CCryptographicHash::GetLength( _Out_
 {
    WFC_VALIDATE_POINTER( this );
 
-   uint32_t buffer_length = sizeof( length );
+   uint32_t buffer_length{ sizeof(length) };
 
    return( GetParameter( parameterLength, (BYTE *) &length, buffer_length ) );
 }
@@ -161,9 +161,9 @@ _Check_return_ bool Win32FoundationClasses::CCryptographicHash::GetValue(_Out_ s
 
     value.resize(1024); // A Massive value
 
-    uint32_t buffer_length = static_cast<uint32_t>(value.size());
+    auto buffer_length{ static_cast<uint32_t>(value.size()) };
 
-    bool const return_value = GetParameter(parameterValue, value.data(), buffer_length);
+    auto const return_value{ GetParameter(parameterValue, value.data(), buffer_length) };
 
     if (return_value == true)
     {
@@ -178,9 +178,9 @@ _Check_return_ bool Win32FoundationClasses::CCryptographicHash::GetParameter( _I
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( buffer );
 
-   DWORD buffer_length_parameter = buffer_length;
+   DWORD buffer_length_parameter{ buffer_length };
 
-   BOOL return_value = ::CryptGetHashParam( m_Hash, parameter_to_get, buffer, &buffer_length_parameter, flags );
+   auto return_value{ ::CryptGetHashParam(m_Hash, parameter_to_get, buffer, &buffer_length_parameter, flags) };
 
    if ( return_value == FALSE )
    {
@@ -213,7 +213,7 @@ _Check_return_ bool Win32FoundationClasses::CCryptographicHash::Hash( __in_bcoun
    // BYTE const * but it isn't. That means we cannot make our
    // data_to_compute_hash_on const correct.
 
-   BOOL return_value = ::CryptHashData( m_Hash, buffer, buffer_size, flags );
+   auto return_value{ ::CryptHashData(m_Hash, buffer, buffer_size, flags) };
 
    if ( return_value == FALSE )
    {
@@ -241,7 +241,7 @@ _Check_return_ bool Win32FoundationClasses::CCryptographicHash::Hash( _In_ Win32
 {
    WFC_VALIDATE_POINTER( this );
 
-   BOOL return_value = ::CryptHashSessionKey( m_Hash, key_to_hash.GetHandle(), flags );
+   auto return_value{ ::CryptHashSessionKey(m_Hash, key_to_hash.GetHandle(), flags) };
 
    if ( return_value == FALSE )
    {
@@ -266,7 +266,7 @@ _Check_return_ bool Win32FoundationClasses::CCryptographicHash::SetParameter( _I
    // CryptoAPI promises not to modify it. However, the parameter is not
    // typed as const. This means they screwed up the prototype.
 
-   BOOL return_value = ::CryptSetHashParam( m_Hash, parameter_to_set, buffer, flags );
+   auto return_value{ ::CryptSetHashParam(m_Hash, parameter_to_set, buffer, flags) };
 
    if ( return_value == FALSE )
    {
@@ -294,16 +294,16 @@ _Check_return_ bool Win32FoundationClasses::CCryptographicHash::Sign( _In_ DWORD
 
    signed_hash.clear();
 
-   DWORD number_of_bytes_in_signature = 0;
+   DWORD number_of_bytes_in_signature{ 0 };
 
    // Find out how many bytes we need for the signed hash
 
-   BOOL return_value = ::CryptSignHashW( m_Hash,
+   auto return_value{ ::CryptSignHashW(m_Hash,
                                    which_key_to_sign_with,
                                    password.c_str(),
                                    flags,
                                    nullptr,
-                                  &number_of_bytes_in_signature );
+                                  &number_of_bytes_in_signature) };
 
    if ( return_value == FALSE )
    {
@@ -341,12 +341,12 @@ _Check_return_ bool Win32FoundationClasses::CCryptographicHash::VerifySignature(
 
    _ASSERTE( signature_to_be_verified.size() <= 0xFFFFFFFF ); // To detect 32-bit overrun...
 
-   BOOL return_value = ::CryptVerifySignatureW( m_Hash,
+   auto return_value{ ::CryptVerifySignatureW(m_Hash,
                                           signature_to_be_verified.data(),
-                                  (DWORD) signature_to_be_verified.size(),
+                                  (DWORD)signature_to_be_verified.size(),
                                           public_key_to_verify_with.GetHandle(),
                                           password.c_str(),
-                                          flags );
+                                          flags) };
 
    if ( return_value == FALSE )
    {
@@ -357,7 +357,7 @@ _Check_return_ bool Win32FoundationClasses::CCryptographicHash::VerifySignature(
 
    // Call succeeded, we must now destroy our hash
 
-   (void) Destroy();
+   std::ignore = Destroy();
 
    return( true );
 }

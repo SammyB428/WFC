@@ -316,7 +316,7 @@ void Win32FoundationClasses::CDataMemory::Write( __in_bcount( number_of_bytes_to
 
    WFC_TRY
    {
-      auto byte_buffer = reinterpret_cast<uint8_t const *>( buffer );
+      auto byte_buffer { reinterpret_cast<uint8_t const*>(buffer)};
 
       for( auto const index : Range(number_of_bytes_to_write) )
       {
@@ -325,7 +325,7 @@ void Win32FoundationClasses::CDataMemory::Write( __in_bcount( number_of_bytes_to
          // to occur. DOH!
          // 1998-08-09
 
-         (void) m_Data.push_back( byte_buffer[index] );
+         m_Data.push_back( byte_buffer[index] );
       }
    }
    WFC_CATCH_ALL

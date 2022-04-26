@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 1995-2020, Samuel R. Blackburn
+** Copyright, 1995-2022, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -167,9 +167,7 @@ _Check_return_ bool Win32FoundationClasses::CMixer::GetAllControls(_In_ Win32Fou
 
     line_controls.cbStruct = sizeof(line_controls);
 
-    DWORD size_of_buffer = 0;
-
-    size_of_buffer = line.NumberOfControls * sizeof(MIXERCONTROL);
+    DWORD size_of_buffer{ line.NumberOfControls * sizeof(MIXERCONTROL) };
 
     std::vector<MIXERCONTROL> control_array;
     
@@ -189,9 +187,9 @@ _Check_return_ bool Win32FoundationClasses::CMixer::GetAllControls(_In_ Win32Fou
     line_controls.cbmxctrl = sizeof(MIXERCONTROL);
     line_controls.pamxctrl = control_array.data();
 
-    DWORD flags = static_cast<DWORD>(Notifiers::notifyMixerNumber) bitor MIXER_GETLINECONTROLSF_ALL;
+    auto flags{ static_cast<DWORD>(Notifiers::notifyMixerNumber) bitor MIXER_GETLINECONTROLSF_ALL };
 
-    bool return_value = true;
+    bool return_value{ true };
 
     m_ErrorCode = ::mixerGetLineControls((HMIXEROBJ)m_DeviceID, &line_controls, flags);
 
@@ -223,7 +221,7 @@ _Check_return_ bool Win32FoundationClasses::CMixer::GetByComponent(_In_ Win32Fou
     mixer_line.cbStruct = sizeof(mixer_line);
     mixer_line.dwComponentType = static_cast<uint32_t>(component);
 
-    DWORD const flags = static_cast<DWORD>(Notifiers::notifyMixerNumber) bitor MIXER_GETLINEINFOF_COMPONENTTYPE;
+    auto const flags{ static_cast<DWORD>(Notifiers::notifyMixerNumber) bitor MIXER_GETLINEINFOF_COMPONENTTYPE };
 
     m_ErrorCode = ::mixerGetLineInfo((HMIXEROBJ)m_DeviceID, &mixer_line, flags);
 
@@ -249,7 +247,7 @@ _Check_return_ bool Win32FoundationClasses::CMixer::GetByDestination(_In_ DWORD 
     mixer_line.cbStruct = sizeof(mixer_line);
     mixer_line.dwDestination = destination;
 
-    DWORD flags = static_cast<DWORD>(Notifiers::notifyMixerNumber) bitor MIXER_GETLINEINFOF_DESTINATION;
+    auto flags{ static_cast<DWORD>(Notifiers::notifyMixerNumber) bitor MIXER_GETLINEINFOF_DESTINATION };
 
     m_ErrorCode = ::mixerGetLineInfo((HMIXEROBJ)m_DeviceID, &mixer_line, flags);
 
@@ -275,7 +273,7 @@ _Check_return_ bool Win32FoundationClasses::CMixer::GetByID(_In_ DWORD const id,
     mixer_line.cbStruct = sizeof(mixer_line);
     mixer_line.dwLineID = id;
 
-    DWORD flags = static_cast<DWORD>(Notifiers::notifyMixerNumber) bitor MIXER_GETLINEINFOF_LINEID;
+    auto flags{ static_cast<DWORD>(Notifiers::notifyMixerNumber) bitor MIXER_GETLINEINFOF_LINEID };
 
     m_ErrorCode = ::mixerGetLineInfo((HMIXEROBJ)m_DeviceID, &mixer_line, flags);
 
@@ -302,7 +300,7 @@ _Check_return_ bool Win32FoundationClasses::CMixer::GetByConnection( _In_ DWORD 
     mixer_line.dwDestination = destination;
     mixer_line.dwSource = source;
 
-    DWORD flags = static_cast<DWORD>(Notifiers::notifyMixerNumber) bitor MIXER_GETLINEINFOF_SOURCE;
+    auto flags{ static_cast<DWORD>(Notifiers::notifyMixerNumber) bitor MIXER_GETLINEINFOF_SOURCE };
 
     m_ErrorCode = ::mixerGetLineInfo((HMIXEROBJ)m_DeviceID, &mixer_line, flags);
 
@@ -327,9 +325,9 @@ _Check_return_ bool Win32FoundationClasses::CMixer::GetControlDetails(_In_ Win32
 
     ::ZeroMemory(&control_details, sizeof(control_details));
 
-    auto type_of_details = control.GetUnits();
+    auto type_of_details{ control.GetUnits() };
 
-    DWORD size_of_element = 0;
+    DWORD size_of_element{ 0 };
 
     if (type_of_details == CMixerControl::Units::Boolean)
     {
@@ -351,8 +349,8 @@ _Check_return_ bool Win32FoundationClasses::CMixer::GetControlDetails(_In_ Win32
         return(false);
     }
 
-    DWORD number_of_items_per_channel = 0;
-    DWORD number_of_channels = line.NumberOfChannels;
+    DWORD number_of_items_per_channel{ 0 };
+    DWORD number_of_channels{ line.NumberOfChannels };
 
     if (control.IsUniform())
     {
@@ -374,13 +372,13 @@ _Check_return_ bool Win32FoundationClasses::CMixer::GetControlDetails(_In_ Win32
         number_of_items_per_channel = control.NumberOfItemsPerChannel;
     }
 
-    DWORD number_of_elements = 0;
+    DWORD number_of_elements{ 0 };
 
     number_of_elements = number_of_channels * ((number_of_items_per_channel == 0) ? 1 : number_of_items_per_channel);
 
-    DWORD buffer_size = number_of_elements * size_of_element;
+    DWORD buffer_size{ number_of_elements * size_of_element };
 
-    auto memory_buffer = std::make_unique<uint8_t[]>(buffer_size);
+    auto memory_buffer{ std::make_unique<uint8_t[]>(buffer_size) };
 
     ASSERT(memory_buffer.get() not_eq nullptr);
 
@@ -399,7 +397,7 @@ _Check_return_ bool Win32FoundationClasses::CMixer::GetControlDetails(_In_ Win32
     control_details.cbDetails = size_of_element;
     control_details.paDetails = memory_buffer.get();
 
-    DWORD flags = 0;
+    DWORD flags{ 0 };
 
     flags = MIXER_GETCONTROLDETAILSF_VALUE;
 
@@ -411,7 +409,7 @@ _Check_return_ bool Win32FoundationClasses::CMixer::GetControlDetails(_In_ Win32
 
     m_ErrorCode = ::mixerGetControlDetails((HMIXEROBJ)m_Handle, &control_details, flags);
 
-    bool return_value = false;
+    bool return_value{ false };
 
     if (m_ErrorCode not_eq MMSYSERR_NOERROR)
     {
@@ -427,21 +425,21 @@ _Check_return_ bool Win32FoundationClasses::CMixer::GetControlDetails(_In_ Win32
 
             if (type_of_details == CMixerControl::Units::Boolean)
             {
-                auto boolean_array = reinterpret_cast<MIXERCONTROLDETAILS_BOOLEAN *>(memory_buffer.get());
+                auto boolean_array{ reinterpret_cast<MIXERCONTROLDETAILS_BOOLEAN*>(memory_buffer.get()) };
 
                 entry.Copy(boolean_array[index]);
             }
             else if (type_of_details == CMixerControl::Units::Signed or
-                    type_of_details == CMixerControl::Units::Decibels)
+                     type_of_details == CMixerControl::Units::Decibels)
             {
-               auto signed_array = reinterpret_cast<MIXERCONTROLDETAILS_SIGNED *>(memory_buffer.get());
+                auto signed_array{ reinterpret_cast<MIXERCONTROLDETAILS_SIGNED*>(memory_buffer.get()) };
 
                entry.Copy(signed_array[index]);
             }
             else if (type_of_details == CMixerControl::Units::Unsigned or
-                    type_of_details == CMixerControl::Units::Percent)
+                     type_of_details == CMixerControl::Units::Percent)
             {
-                auto unsigned_array = reinterpret_cast<MIXERCONTROLDETAILS_UNSIGNED *>(memory_buffer.get());
+                auto unsigned_array{ reinterpret_cast<MIXERCONTROLDETAILS_UNSIGNED*>(memory_buffer.get()) };
 
                 entry.Copy(unsigned_array[index]);
             }
@@ -476,11 +474,11 @@ _Check_return_ bool Win32FoundationClasses::CMixer::GetControlListText(_In_ Win3
 
     ::ZeroMemory(&control_details, sizeof(control_details));
 
-    DWORD size_of_element = 0;
+    DWORD size_of_element{ 0 };
 
     size_of_element = sizeof(MIXERCONTROLDETAILS_LISTTEXT);
 
-    DWORD number_of_items_per_channel = 0;
+    DWORD number_of_items_per_channel{ 0 };
 
     if (control.IsUniform() == true)
     {
@@ -496,8 +494,8 @@ _Check_return_ bool Win32FoundationClasses::CMixer::GetControlListText(_In_ Win3
         number_of_items_per_channel = control.NumberOfItemsPerChannel;
     }
 
-    DWORD number_of_elements = 0;
-    DWORD number_of_channels = line.NumberOfChannels;
+    DWORD number_of_elements{ 0 };
+    DWORD number_of_channels{ line.NumberOfChannels };
 
     // This may be right for Lists but wrong with others...
 
@@ -508,7 +506,7 @@ _Check_return_ bool Win32FoundationClasses::CMixer::GetControlListText(_In_ Win3
 
     number_of_elements = number_of_channels * number_of_items_per_channel;
 
-    auto details_array = std::make_unique<MIXERCONTROLDETAILS_LISTTEXT[]>(number_of_elements);
+    auto details_array{ std::make_unique<MIXERCONTROLDETAILS_LISTTEXT[]>(number_of_elements) };
 
     control_details.cbStruct = sizeof(control_details);
     control_details.dwControlID = control.ID;
@@ -517,7 +515,7 @@ _Check_return_ bool Win32FoundationClasses::CMixer::GetControlListText(_In_ Win3
     control_details.cbDetails = size_of_element;
     control_details.paDetails = details_array.get();
 
-    DWORD flags = static_cast<DWORD>(Notifiers::notifyMixerNumber) bitor MIXER_GETCONTROLDETAILSF_LISTTEXT;
+    auto flags{ static_cast<DWORD>(Notifiers::notifyMixerNumber) bitor MIXER_GETCONTROLDETAILSF_LISTTEXT };
 
 #if defined( _WFC_DEBUG_MIXER_GET_CONTROL_DETAILS )
 
@@ -527,7 +525,7 @@ _Check_return_ bool Win32FoundationClasses::CMixer::GetControlListText(_In_ Win3
 
     m_ErrorCode = ::mixerGetControlDetails((HMIXEROBJ)m_DeviceID, &control_details, flags);
 
-    bool return_value = false;
+    bool return_value{ false };
 
     if (m_ErrorCode not_eq MMSYSERR_NOERROR)
     {
@@ -813,9 +811,9 @@ _Check_return_ bool Win32FoundationClasses::CMixer::SetControlDetails(_In_ Win32
 {
     WFC_VALIDATE_POINTER(this);
 
-    auto const type_of_details = control.GetUnits();
+    auto const type_of_details{ control.GetUnits() };
 
-    DWORD size_of_element = 0;
+    DWORD size_of_element{ 0 };
 
     if (type_of_details == CMixerControl::Units::Boolean)
     {
@@ -837,8 +835,8 @@ _Check_return_ bool Win32FoundationClasses::CMixer::SetControlDetails(_In_ Win32
         return(false);
     }
 
-    DWORD number_of_items_per_channel = 0;
-    DWORD number_of_channels = line.NumberOfChannels;
+    DWORD number_of_items_per_channel{ 0 };
+    DWORD number_of_channels{ line.NumberOfChannels };
 
     if (control.IsUniform())
     {
@@ -864,29 +862,29 @@ _Check_return_ bool Win32FoundationClasses::CMixer::SetControlDetails(_In_ Win32
 
     //WFCTRACEVAL( TEXT( "Number of elements is " ), (DWORD) number_of_elements );
 
-    std::size_t const buffer_size = number_of_elements * size_of_element;
+    std::size_t const buffer_size{ number_of_elements * size_of_element };
 
-    auto memory_buffer = std::make_unique<uint8_t[]>(buffer_size);
+    auto memory_buffer{ std::make_unique<uint8_t[]>(buffer_size) };
 
     for ( auto const loop_index : Range(settings_array.size()))
     {
         if (type_of_details == CMixerControl::Units::Boolean)
         {
-            auto array = reinterpret_cast<MIXERCONTROLDETAILS_BOOLEAN *>(memory_buffer.get());
+            auto array{ reinterpret_cast<MIXERCONTROLDETAILS_BOOLEAN*>(memory_buffer.get()) };
 
             array[loop_index].fValue = ((settings_array.at(loop_index).Parameter1 == 0) ? FALSE : TRUE);
         }
         else if (type_of_details == CMixerControl::Units::Signed or
-                type_of_details == CMixerControl::Units::Decibels)
+                 type_of_details == CMixerControl::Units::Decibels)
         {
-            auto array = reinterpret_cast<MIXERCONTROLDETAILS_SIGNED *>(memory_buffer.get());
+            auto array{ reinterpret_cast<MIXERCONTROLDETAILS_SIGNED*>(memory_buffer.get()) };
 
             array[loop_index].lValue = settings_array.at(loop_index).Parameter1;
         }
         else if (type_of_details == CMixerControl::Units::Unsigned or
-                type_of_details == CMixerControl::Units::Percent)
+                 type_of_details == CMixerControl::Units::Percent)
         {
-            auto array = reinterpret_cast<MIXERCONTROLDETAILS_UNSIGNED *>(memory_buffer.get());
+            auto array{ reinterpret_cast<MIXERCONTROLDETAILS_UNSIGNED*>(memory_buffer.get()) };
 
             array[loop_index].dwValue = settings_array.at(loop_index).Parameter1;
         }
@@ -909,9 +907,7 @@ _Check_return_ bool Win32FoundationClasses::CMixer::SetControlDetails(_In_ Win32
     control_details.cbDetails = size_of_element;
     control_details.paDetails = memory_buffer.get();
 
-    DWORD flags = 0;
-
-    flags = MIXER_GETCONTROLDETAILSF_VALUE;
+    DWORD flags{ MIXER_GETCONTROLDETAILSF_VALUE };
 
 #if defined( _WFC_DEBUG_MIXER_SET_CONTROL_DETAILS )
 
@@ -921,7 +917,7 @@ _Check_return_ bool Win32FoundationClasses::CMixer::SetControlDetails(_In_ Win32
 
     m_ErrorCode = ::mixerSetControlDetails((HMIXEROBJ)m_Handle, &control_details, flags);
 
-    bool return_value = false;
+    bool return_value{ false };
 
     if (m_ErrorCode not_eq MMSYSERR_NOERROR)
     {

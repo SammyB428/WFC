@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 1995-2014, Samuel R. Blackburn
+** Copyright, 1995-2022, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -86,7 +86,7 @@ static inline _Check_return_ Win32FoundationClasses::WFC_THREAD_INFORMATION_BLOC
 
 void Win32FoundationClasses::wfc_get_thread_name( _Out_ std::wstring& thread_name ) noexcept
 {
-   auto thread_information_block_p = get_thread_information_block();
+   auto thread_information_block_p{ get_thread_information_block() };
 
    WFC_TRY
    {

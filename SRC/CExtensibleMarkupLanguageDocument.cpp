@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 1995-2021, Samuel R. Blackburn
+** Copyright, 1995-2022, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -274,7 +274,7 @@ void Win32FoundationClasses::CExtensibleMarkupLanguageDocument::Append( _In_ Win
       return;
    }
 
-   std::size_t enumerator = 0;
+   std::size_t enumerator{ 0 };
 
    if ( source.m_XML->EnumerateChildren( enumerator ) == true )
    {
@@ -284,7 +284,7 @@ void Win32FoundationClasses::CExtensibleMarkupLanguageDocument::Append( _In_ Win
        {
          if ( element_to_copy_p not_eq nullptr )
          {
-            auto element_to_add_p = Win32FoundationClasses::CExtensibleMarkupLanguageElement::NewElement( m_XML );
+             auto element_to_add_p{ Win32FoundationClasses::CExtensibleMarkupLanguageElement::NewElement(m_XML) };
 
             if ( element_to_add_p == nullptr )
             {
@@ -333,7 +333,7 @@ void Win32FoundationClasses::CExtensibleMarkupLanguageDocument::CopyCallbacks( _
    {
        // 2000-10-18
        // Thanks go to Larry Bredehoeft (L.Bredehoeft@imandi.com) for finding a bug here
-      (void )AddCallback( entry.name, entry.callback, entry.parameter );
+      std::ignore = AddCallback( entry.name, entry.callback, entry.parameter );
    }
 }
 
@@ -345,7 +345,7 @@ struct CONTAINS_ELEMENT_NAME
 
 static void find_element_name( void * parameter, Win32FoundationClasses::CExtensibleMarkupLanguageElement * element_p ) noexcept
 {
-    auto context = static_cast<CONTAINS_ELEMENT_NAME *>( parameter );
+    auto context{ static_cast<CONTAINS_ELEMENT_NAME*>(parameter) };
 
     if ( context->found == false )
     {
@@ -367,7 +367,7 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageDocument::C
 
    if ( m_XML not_eq nullptr )
    {
-      (void) m_XML->ForAny( name, find_element_name, &context );
+      std::ignore = m_XML->ForAny( name, find_element_name, &context );
 
       return( context.found );
    }
@@ -799,11 +799,11 @@ void Win32FoundationClasses::CExtensibleMarkupLanguageDocument::m_InitializeEnti
    }
 
    // Add the internal entities listed in section 4.6 of REC-xml-19980210
-   (void) m_Entities.Add(WSTRING_VIEW(L"&amp;"), WSTRING_VIEW(L"&") );
-   (void) m_Entities.Add(WSTRING_VIEW(L"&apos;"), WSTRING_VIEW(L"'") );
-   (void) m_Entities.Add(WSTRING_VIEW(L"&gt;"), WSTRING_VIEW(L">") );
-   (void) m_Entities.Add(WSTRING_VIEW(L"&lt;"), WSTRING_VIEW(L"<") );
-   (void) m_Entities.Add(WSTRING_VIEW(L"&quot;"), WSTRING_VIEW(L"\"") );
+   std::ignore = m_Entities.Add(WSTRING_VIEW(L"&amp;"), WSTRING_VIEW(L"&") );
+   std::ignore = m_Entities.Add(WSTRING_VIEW(L"&apos;"), WSTRING_VIEW(L"'") );
+   std::ignore = m_Entities.Add(WSTRING_VIEW(L"&gt;"), WSTRING_VIEW(L">") );
+   std::ignore = m_Entities.Add(WSTRING_VIEW(L"&lt;"), WSTRING_VIEW(L"<") );
+   std::ignore = m_Entities.Add(WSTRING_VIEW(L"&quot;"), WSTRING_VIEW(L"\"") );
 }
 
 void Win32FoundationClasses::CExtensibleMarkupLanguageDocument::m_InitializeRootElement( void ) noexcept
@@ -828,10 +828,10 @@ void Win32FoundationClasses::CExtensibleMarkupLanguageDocument::m_RemoveAllCallb
 
 static inline _Check_return_ bool __is_leading_spaces( _Inout_ Win32FoundationClasses::CDataParser& source ) noexcept
 {
-   auto const byte_1 = source.GetAt( 0 );
-   auto const byte_2 = source.GetAt( 1 );
-   auto const byte_3 = source.GetAt( 2 );
-   auto const byte_4 = source.GetAt( 3 );
+    auto const byte_1{ source.GetAt(0) };
+    auto const byte_2{ source.GetAt(1) };
+    auto const byte_3{ source.GetAt(2) };
+    auto const byte_4{ source.GetAt(3) };
 
    if (Win32FoundationClasses::is_xml_white_space( byte_1 ) == true)
    {
@@ -841,7 +841,7 @@ static inline _Check_return_ bool __is_leading_spaces( _Inout_ Win32FoundationCl
       if ( byte_2 not_eq 0 )
       {
          // ASCII
-         (void) source.SetTextToASCII( true );
+          std::ignore = source.SetTextToASCII( true );
          return( true );
       }
 
@@ -853,15 +853,15 @@ static inline _Check_return_ bool __is_leading_spaces( _Inout_ Win32FoundationCl
 
          if ( byte_4 == 0 )
          {
-            (void) source.SetTextToUCS4( true );
-            (void) source.SetUCS4Order( 4321 );
+             std::ignore = source.SetTextToUCS4( true );
+             std::ignore = source.SetUCS4Order( 4321 );
             return( true );
          }
       }
       else if ( byte_4 == 0 )
       {
-         (void) source.SetTextToASCII( false );
-         (void) source.SetTextToBigEndian( true );
+         std::ignore = source.SetTextToASCII( false );
+         std::ignore = source.SetTextToBigEndian( true );
          return( true );
       }
    }
@@ -884,8 +884,8 @@ static inline _Check_return_ bool __is_leading_spaces( _Inout_ Win32FoundationCl
       {
          if ( byte_4 == 0 )
          {
-            (void) source.SetTextToUCS4( true );
-            (void) source.SetUCS4Order( 3412 );
+             std::ignore = source.SetTextToUCS4( true );
+             std::ignore = source.SetUCS4Order( 3412 );
             return( true );
          }
          else
@@ -897,8 +897,8 @@ static inline _Check_return_ bool __is_leading_spaces( _Inout_ Win32FoundationCl
       {
          if ( byte_4 == 0 )
          {
-            (void) source.SetTextToASCII( false );
-            (void) source.SetTextToBigEndian( true );
+             std::ignore = source.SetTextToASCII( false );
+             std::ignore = source.SetTextToBigEndian( true );
             return( true );
          }
          else
@@ -914,8 +914,8 @@ static inline _Check_return_ bool __is_leading_spaces( _Inout_ Win32FoundationCl
    {
       if (Win32FoundationClasses::is_xml_white_space( byte_4 ) == true)
       {
-         (void) source.SetTextToUCS4( true );
-         (void) source.SetUCS4Order( 1234 );
+          std::ignore = source.SetTextToUCS4( true );
+          std::ignore = source.SetUCS4Order( 1234 );
          return( true );
       }
 
@@ -927,8 +927,8 @@ static inline _Check_return_ bool __is_leading_spaces( _Inout_ Win32FoundationCl
       {
          if ( byte_4 == 0 )
          {
-            (void) source.SetTextToUCS4( true );
-            (void) source.SetUCS4Order( 2143 );
+             std::ignore = source.SetTextToUCS4( true );
+             std::ignore = source.SetUCS4Order( 2143 );
             return( true );
          }
       }
@@ -988,8 +988,8 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageDocument::P
             // We found the 0xFEFF tag.
             // That means it is UTF-16 Big Endian
 
-            (void) source.SetTextToASCII( false );
-            (void) source.SetTextToBigEndian( true );
+             std::ignore = source.SetTextToASCII( false );
+             std::ignore = source.SetTextToBigEndian( true );
          }
          else
          {
@@ -1008,8 +1008,8 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageDocument::P
             // We found the 0xFFFE tag.
             // That means it is UTF-16 Little Endian
 
-            (void) source.SetTextToASCII( false );
-            (void) source.SetTextToBigEndian( false );
+             std::ignore = source.SetTextToASCII( false );
+             std::ignore = source.SetTextToBigEndian( false );
          }
          else
          {
@@ -1026,7 +1026,7 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageDocument::P
                 source.GetAt( 2 ) == 0xBF )
       {
          // UTF-8 encoding
-         (void) source.SetTextToASCII( true );
+          std::ignore = source.SetTextToASCII( true );
          // Skip the first three characters
          parse_point.SetIndex( 3 );
       }
@@ -1034,22 +1034,22 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageDocument::P
       {
          // Now it gets a little more interesting
 
-         auto byte_1 = source.GetAt( 0 );
-         auto byte_2 = source.GetAt( 1 );
-         auto byte_3 = source.GetAt( 2 );
-         auto byte_4 = source.GetAt( 3 );
+         auto byte_1{ source.GetAt(0) };
+         auto byte_2{ source.GetAt(1) };
+         auto byte_3{ source.GetAt(2) };
+         auto byte_4{ source.GetAt(3) };
 
          if ( byte_1 == 0x3C and byte_2 == 0x3F )
          {
             // Plain old ASCII
-            (void) source.SetTextToASCII( true );
+            std::ignore = source.SetTextToASCII( true );
          }
          else if ( byte_1 == 0x00 and Win32FoundationClasses::wfc_is_ascii( byte_2 ) == true and
                    byte_3 == 0x00 and Win32FoundationClasses::wfc_is_ascii( byte_4 ) == true )
          {
             // UTF-16, Big Endian
-            (void) source.SetTextToASCII( false );
-            (void) source.SetTextToBigEndian( true );
+            std::ignore = source.SetTextToASCII( false );
+            std::ignore = source.SetTextToBigEndian( true );
 
             // Don't autoincrement parse_point
          }
@@ -1057,8 +1057,8 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageDocument::P
                   Win32FoundationClasses::wfc_is_ascii( byte_3 ) == true and byte_4 == 0x00 )
          {
             // UTF-16, Little Endian
-            (void) source.SetTextToASCII( false );
-            (void) source.SetTextToBigEndian( false );
+            std::ignore = source.SetTextToASCII( false );
+            std::ignore = source.SetTextToBigEndian( false );
 
             // Don't autoincrement parse_point
          }
@@ -1068,8 +1068,8 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageDocument::P
                    Win32FoundationClasses::wfc_is_ascii( byte_4 ) == true )
          {
             // UCS-4 Big Endian
-            (void) source.SetTextToUCS4( true );
-            (void) source.SetUCS4Order( 1234 );
+            std::ignore = source.SetTextToUCS4( true );
+            std::ignore = source.SetUCS4Order( 1234 );
          }
          else if (Win32FoundationClasses::wfc_is_ascii( byte_1 ) == true and
                    byte_2 == 0x00 and
@@ -1077,8 +1077,8 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageDocument::P
                    byte_4 == 0x00 )
          {
             // UCS-4 Little Endian
-            (void) source.SetTextToUCS4( true );
-            (void) source.SetUCS4Order( 4321 );
+            std::ignore =  source.SetTextToUCS4( true );
+            std::ignore = source.SetUCS4Order( 4321 );
          }
          else if ( byte_1 == 0x00 and
                    byte_2 == 0x00 and
@@ -1086,8 +1086,8 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageDocument::P
                    byte_4 == 0x00 )
          {
             // UCS-4 Unusual
-            (void) source.SetTextToUCS4( true );
-            (void) source.SetUCS4Order( 2143 );
+            std::ignore = source.SetTextToUCS4( true );
+            std::ignore = source.SetUCS4Order( 2143 );
          }
          else if ( byte_1 == 0x00 and
                    Win32FoundationClasses::wfc_is_ascii( byte_2 ) == true and
@@ -1095,13 +1095,13 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageDocument::P
                    byte_4 == 0x00 )
          {
             // UCS-4 Unusual
-            (void) source.SetTextToUCS4( true );
-            (void) source.SetUCS4Order( 3412 );
+            std::ignore = source.SetTextToUCS4( true );
+            std::ignore = source.SetUCS4Order( 3412 );
          }
          else if ( wfc_is_ascii( byte_1 ) == true )
          {
             // We'll just default to ASCII
-            (void) source.SetTextToASCII( true );
+            std::ignore = source.SetTextToASCII( true );
          }
          else
          {
@@ -1120,7 +1120,7 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageDocument::P
    // Now skip leading spaces until we get to a less-than sign.
    // This according to Rule 1->27->3
 
-   auto character_to_test = source.PeekCharacter( parse_point, 0 );
+   auto character_to_test{ source.PeekCharacter(parse_point, 0) };
 
    while( Win32FoundationClasses::is_xml_white_space( character_to_test ) == true )
    {
@@ -1138,8 +1138,8 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageDocument::P
 
    // See if the first 5 chracters are <?xml
 
-   bool xml_declaration_found         = false;
-   bool xml_declaration_is_mixed_case = false;
+   bool xml_declaration_found{ false };
+   bool xml_declaration_is_mixed_case{ false };
 
    if (   source.PeekCharacter( parse_point, 0 ) == '<' and
           source.PeekCharacter( parse_point, 1 ) == '?' and
@@ -1205,8 +1205,8 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageDocument::P
          if ( m_XML not_eq nullptr )
          {
             m_XML->SetContents(WSTRING_VIEW(L"xml version=\"1.0\" standalone=\"yes\""));
-            (void) m_XML->AddAttribute(WSTRING_VIEW(L"version"), WSTRING_VIEW(L"1.0") );
-            (void) m_XML->AddAttribute(WSTRING_VIEW(L"standalone"), WSTRING_VIEW(L"yes") );
+            std::ignore = m_XML->AddAttribute(WSTRING_VIEW(L"version"), WSTRING_VIEW(L"1.0") );
+            std::ignore = m_XML->AddAttribute(WSTRING_VIEW(L"standalone"), WSTRING_VIEW(L"yes") );
             SetVersion(WSTRING_VIEW(L"1.0"));
             SetStandalone( true );
          }
@@ -1218,10 +1218,10 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageDocument::P
 
          while( beginning_of_tag.GetIndex() < source.GetSize() )
          {
-            auto const character = source.PeekCharacter( beginning_of_tag, 0 );
+             auto const character{ source.PeekCharacter(beginning_of_tag, 0) };
 
-            auto child_element_p = (character not_eq '<' ) ? CExtensibleMarkupLanguageElement::NewElement(m_XML, CExtensibleMarkupLanguageElement::ElementType::TextSegment, this)
-                                                           : CExtensibleMarkupLanguageElement::NewElement(m_XML, CExtensibleMarkupLanguageElement::ElementType::Element, this);
+             auto child_element_p{ (character not_eq '<') ? CExtensibleMarkupLanguageElement::NewElement(m_XML, CExtensibleMarkupLanguageElement::ElementType::TextSegment, this)
+                                                          : CExtensibleMarkupLanguageElement::NewElement(m_XML, CExtensibleMarkupLanguageElement::ElementType::Element, this) };
 
             if ( child_element_p == nullptr )
             {
@@ -1293,8 +1293,8 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageDocument::P
 
       m_XML->DestroyAttributes();
       m_XML->SetContents(WSTRING_VIEW(L"xml version=\"1.0\" standalone=\"yes\""));
-      (void) m_XML->AddAttribute(WSTRING_VIEW(L"version"), WSTRING_VIEW(L"1.0"));
-      (void) m_XML->AddAttribute(WSTRING_VIEW(L"standalone"), WSTRING_VIEW(L"yes"));
+      std::ignore = m_XML->AddAttribute(WSTRING_VIEW(L"version"), WSTRING_VIEW(L"1.0"));
+      std::ignore = m_XML->AddAttribute(WSTRING_VIEW(L"standalone"), WSTRING_VIEW(L"yes"));
 
       return( false );
    }
@@ -1303,13 +1303,13 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageDocument::P
 
    if (is_flagged( m_ParseOptions, WFC_XML_DISALLOW_MULTIPLE_ELEMENTS ) == true )
    {
-      std::size_t element_enumerator = 0;
+       std::size_t element_enumerator{ 0 };
 
       if ( m_XML->EnumerateChildren( element_enumerator ) == true )
       {
-         CExtensibleMarkupLanguageElement * child_p = nullptr;
+         CExtensibleMarkupLanguageElement * child_p{ nullptr };
 
-         uint32_t element_count = 0;
+         uint32_t element_count{ 0 };
 
          while( m_XML->GetNextChild( element_enumerator, child_p ) == true )
          {
@@ -1338,13 +1338,13 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageDocument::P
 
    if (is_flagged( m_ParseOptions, WFC_XML_FORCE_AT_LEAST_ONE_ELEMENT_MUST_BE_PRESENT ) == true)
    {
-      std::size_t element_enumerator = 0;
+      std::size_t element_enumerator{ 0 };
 
       if ( m_XML->EnumerateChildren( element_enumerator ) == true)
       {
-         CExtensibleMarkupLanguageElement * child_p = nullptr;
+         CExtensibleMarkupLanguageElement * child_p{ nullptr };
 
-         bool there_aint_one = true;
+         bool there_aint_one{ true };
 
          while( m_XML->GetNextChild( element_enumerator, child_p ) == true and there_aint_one == true )
          {
@@ -1385,8 +1385,8 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageDocument::R
 
    // Now go find this entry (to make sure we don't call it twice)
 
-   std::size_t loop_index = 0;
-   auto number_of_entries = m_Callbacks.size();
+   std::size_t loop_index{ 0 };
+   auto number_of_entries{ m_Callbacks.size() };
 
    while( loop_index < number_of_entries ) // Cannot be converted to a Range loop
    {
@@ -1481,7 +1481,7 @@ void Win32FoundationClasses::CExtensibleMarkupLanguageDocument::SetParsingErrorI
 _Check_return_ uint32_t Win32FoundationClasses::CExtensibleMarkupLanguageDocument::SetWriteOptions( _In_ uint32_t const new_options ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
-   auto return_value = m_WriteOptions;
+   auto return_value{ m_WriteOptions };
 
    m_WriteOptions = new_options;
 
@@ -1598,7 +1598,7 @@ void Win32FoundationClasses::CExtensibleMarkupLanguageDocument::WriteTo( _Out_ s
       // The user doesn't want to write the XML declaration. Just write
       // the children.
 
-      std::size_t enumerator = 0;
+      std::size_t enumerator{ 0 };
 
       if ( m_XML->EnumerateChildren( enumerator ) == true )
       {
@@ -1626,13 +1626,13 @@ void Win32FoundationClasses::CExtensibleMarkupLanguageDocument::WriteTo( _Out_ s
          if (is_flagged(m_WriteOptions, WFC_XML_WRITE_AS_BIG_ENDIAN) == true)
          {
             // Write UTF-16 Big Endian as specified in Appendix F
-            (void) destination.push_back( 0xFE );
-            (void) destination.push_back( 0xFF );
+            destination.push_back( 0xFE );
+            destination.push_back( 0xFF );
          }
          else
          {
-            (void) destination.push_back( 0xFF );
-            (void) destination.push_back( 0xFE );
+            destination.push_back( 0xFF );
+            destination.push_back( 0xFE );
          }
       }
 

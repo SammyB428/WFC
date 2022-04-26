@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 1995-2017, Samuel R. Blackburn
+** Copyright, 1995-2022, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -55,7 +55,7 @@ void Win32FoundationClasses::wfc_free_unicode_conversion_context( _Inout_ VOID *
 {
    WFC_VALIDATE_POINTER( unicode_conversion_context );
 
-   auto IMultilanguage2_interface_p = reinterpret_cast<IMultiLanguage2 *>(unicode_conversion_context);
+   auto IMultilanguage2_interface_p{ reinterpret_cast<IMultiLanguage2*>(unicode_conversion_context) };
 
    if ( IMultilanguage2_interface_p not_eq nullptr )
    {
@@ -67,22 +67,22 @@ _Check_return_ VOID * Win32FoundationClasses::wfc_get_unicode_conversion_context
 {
    if ( is_com_already_started_in_this_thread == false )
    {
-      (void) WFC_INITIALIZE_SINGLE_THREADED_COM_NO_DDE();
+       std::ignore = WFC_INITIALIZE_SINGLE_THREADED_COM_NO_DDE();
    }
 
-   GUID const mlang_class_id               = { 0x275C23E2, 0x3747, 0x11D0, 0x9F, 0xEA, 0x00, 0xAA, 0x00, 0x3F, 0x86, 0x46 };
-   GUID const imultilanguage2_interface_id = { 0xDCCFC164, 0x2B38, 0x11D2, 0xB7, 0xEC, 0x00, 0xC0, 0x4F, 0x8F, 0x5D, 0x9A };
+   GUID const mlang_class_id               { 0x275C23E2, 0x3747, 0x11D0, 0x9F, 0xEA, 0x00, 0xAA, 0x00, 0x3F, 0x86, 0x46 };
+   GUID const imultilanguage2_interface_id { 0xDCCFC164, 0x2B38, 0x11D2, 0xB7, 0xEC, 0x00, 0xC0, 0x4F, 0x8F, 0x5D, 0x9A };
 
    //WFCTRACEVAL( TEXT( "mlang_class_id is " ), mlang_class_id );
    //WFCTRACEVAL( TEXT( "imultilanguage2_interface_id is " ), imultilanguage2_interface_id );
 
-   VOID * return_value = nullptr;
+   VOID * return_value{ nullptr };
 
-   auto const result_code = ::CoCreateInstance( mlang_class_id,
-                                   nullptr,
-                                   CLSCTX_INPROC_SERVER bitor CLSCTX_LOCAL_SERVER,
-                                   imultilanguage2_interface_id,
-                                  &return_value );
+   auto const result_code{ ::CoCreateInstance(mlang_class_id,
+                                              nullptr,
+                                              CLSCTX_INPROC_SERVER bitor CLSCTX_LOCAL_SERVER,
+                                              imultilanguage2_interface_id,
+                                             &return_value) };
 
    return( return_value );
 }
@@ -103,26 +103,26 @@ static inline _Check_return_ bool __detect_code_page(_In_ IMultiLanguage2 * inte
           return(false);
       }
 
-      DWORD const number_of_encodings = 100;
+      DWORD const number_of_encodings{ 100 };
 
-      auto encodings = std::make_unique<DetectEncodingInfo[]>(number_of_encodings);
+      auto encodings{ std::make_unique<DetectEncodingInfo[]>(number_of_encodings) };
 
       if ( encodings.get() == nullptr )
       {
          return( false );
       }
 
-      auto buffer_to_scan = reinterpret_cast<char *>(const_cast<BYTE *>(bytes));
+      auto buffer_to_scan{ reinterpret_cast<char*>(const_cast<BYTE*>(bytes)) };
 
       std::unique_ptr<uint8_t[]> new_buffer;
 
-      INT number_of_bytes = static_cast<INT>(number_of_bytes_in_buffer);
+      auto number_of_bytes{ static_cast<INT>(number_of_bytes_in_buffer) };
 
       if (number_of_bytes < MINIMUM_CODE_PAGE_DETECTION_BUFFER_SIZE)
       {
-          int const number_of_copies = (MINIMUM_CODE_PAGE_DETECTION_BUFFER_SIZE / number_of_bytes) + 1;
+          int const number_of_copies{ (MINIMUM_CODE_PAGE_DETECTION_BUFFER_SIZE / number_of_bytes) + 1 };
 
-          int const new_buffer_size = static_cast<int>((number_of_copies * static_cast<int>(number_of_bytes_in_buffer)) + number_of_copies);
+          auto const new_buffer_size{ static_cast<int>((number_of_copies * static_cast<int>(number_of_bytes_in_buffer)) + number_of_copies) };
 
           new_buffer = std::make_unique<uint8_t []>(new_buffer_size);
 
@@ -133,7 +133,7 @@ static inline _Check_return_ bool __detect_code_page(_In_ IMultiLanguage2 * inte
               return(false);
           }
 
-          int buffer_write_index = 0;
+          int buffer_write_index{ 0 };
 
           while (buffer_write_index < new_buffer_size)
           {
@@ -149,20 +149,20 @@ static inline _Check_return_ bool __detect_code_page(_In_ IMultiLanguage2 * inte
           number_of_bytes = new_buffer_size;
       }
 
-      bool return_value = false;
+      bool return_value{ false };
 
-      INT array_size = number_of_encodings;
+      INT array_size{ number_of_encodings };
 
       ZeroMemory( encodings.get(), sizeof( DetectEncodingInfo ) * number_of_encodings );
 
-      HRESULT ole_result = interface_pointer->DetectInputCodepage( encoding_hints,
-                                                                   RETURN_ALL_POSSIBLE_ENCODINGS,
-                                                                   buffer_to_scan,
-                                                                  &number_of_bytes,
-                                                                   encodings.get(),
-                                                                  &array_size );
+      auto const ole_result{ interface_pointer->DetectInputCodepage(encoding_hints,
+                                                                    RETURN_ALL_POSSIBLE_ENCODINGS,
+                                                                    buffer_to_scan,
+                                                                   &number_of_bytes,
+                                                                    encodings.get(),
+                                                                   &array_size) };
 
-      DWORD const error_code = ::GetLastError();
+      auto const error_code{ ::GetLastError() };
 
       if ( ole_result not_eq S_OK )
       {
@@ -178,7 +178,7 @@ static inline _Check_return_ bool __detect_code_page(_In_ IMultiLanguage2 * inte
 
       if ( array_size > 0 )
       {
-         INT last_confidence = encodings[ 0 ].nConfidence;
+         INT last_confidence{ encodings[0].nConfidence };
 
          detected_code_page = encodings[ 0 ].nCodePage;
 
@@ -229,9 +229,9 @@ _Check_return_ bool Win32FoundationClasses::wfc_detect_code_page( _Inout_ VOID *
        return(false);
    }
 
-   auto IMultilanguage2InterfacePointer = reinterpret_cast<IMultiLanguage2 *>(unicode_conversion_context);
+   auto IMultilanguage2InterfacePointer{ reinterpret_cast<IMultiLanguage2*>(unicode_conversion_context) };
 
-   DWORD other_code_page = 0;
+   DWORD other_code_page{ 0 };
 
    WFC_TRY
    {
@@ -285,7 +285,7 @@ _Check_return_ bool Win32FoundationClasses::wfc_convert_to_unicode( _Inout_ VOID
        *real_code_page_p = 0;
    }
 
-   auto IMultilanguage2InterfacePointer = reinterpret_cast<IMultiLanguage2 *>(unicode_conversion_context);
+   auto IMultilanguage2InterfacePointer{ reinterpret_cast<IMultiLanguage2*>(unicode_conversion_context) };
 
    // We were passed a pointer, don't trust it
 
@@ -293,12 +293,12 @@ _Check_return_ bool Win32FoundationClasses::wfc_convert_to_unicode( _Inout_ VOID
    {
       ZeroMemory( unicode_string, number_of_wide_characters * sizeof( wchar_t ) );
 
-      HRESULT result_code = 0;
+      HRESULT result_code{ 0 };
 
-      DWORD mode = 0;
+      DWORD mode{ 0 };
 
-      UINT source_size                      = static_cast<UINT>(number_of_bytes_in_buffer);
-      UINT destination_number_of_characters = 0;
+      UINT source_size{ static_cast<UINT>(number_of_bytes_in_buffer) };
+      UINT destination_number_of_characters{ 0 };
 
       if ( IMultilanguage2InterfacePointer == nullptr )
       {
@@ -331,7 +331,7 @@ _Check_return_ bool Win32FoundationClasses::wfc_convert_to_unicode( _Inout_ VOID
          return( true );
       }
 
-      DWORD other_code_page = 0;
+      DWORD other_code_page{ 0 };
 
       if ( __detect_code_page( IMultilanguage2InterfacePointer,
                                bytes,

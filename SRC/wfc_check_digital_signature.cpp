@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 1995-2016, Samuel R. Blackburn
+** Copyright, 1995-2022, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -48,13 +48,13 @@ static char THIS_FILE[] = __FILE__;
 
 static void _to_hex( __in_bcount( number_of_bytes ) uint8_t const * buffer, _In_ std::size_t const number_of_bytes, __out_ecount_z( number_of_characters ) wchar_t * destination_string, _In_ std::size_t const number_of_characters ) noexcept
 {
-    static constexpr wchar_t const * static_hex_digits = L"0123456789abcdef";
+    static constexpr wchar_t const* static_hex_digits{ L"0123456789abcdef" };
 
     destination_string[ 0 ] = 0x00;
 
-    std::size_t string_index = 0;
+    std::size_t string_index{ 0 };
 
-    uint8_t value = 0;
+    uint8_t value{ 0 };
 
     for ( auto const buffer_index : Range(number_of_bytes) )
     {
@@ -78,12 +78,14 @@ static void _to_hex( __in_bcount( number_of_bytes ) uint8_t const * buffer, _In_
 
 _Check_return_ bool Win32FoundationClasses::wfc_check_digital_signature( __in_z LPCTSTR filename ) noexcept
 {
+    WFC_VALIDATE_POINTER(filename);
+
     if ( filename == nullptr or filename[ 0 ] == 0x0 )
     {
        return( false );
     }
 
-    auto context = static_cast<HCATADMIN>( NULL );
+    auto context{ static_cast<HCATADMIN>(NULL) };
 
     if ( ::CryptCATAdminAcquireContext( &context, nullptr, 0 ) == FALSE )
     {
@@ -101,7 +103,7 @@ _Check_return_ bool Win32FoundationClasses::wfc_check_digital_signature( __in_z 
         return( false );
     }
 
-    DWORD number_of_bytes_in_hash = 0;
+    DWORD number_of_bytes_in_hash{ 0 };
 
     if ( ::CryptCATAdminCalcHashFromFileHandle( file_to_check.GetHandle(), &number_of_bytes_in_hash, nullptr, 0 ) == FALSE )
     {
@@ -118,7 +120,7 @@ _Check_return_ bool Win32FoundationClasses::wfc_check_digital_signature( __in_z 
         return( false );
     }
 
-    auto hash_buffer = static_cast<uint8_t *>(_alloca( number_of_bytes_in_hash ));
+    auto hash_buffer{ static_cast<uint8_t*>(_alloca(number_of_bytes_in_hash)) };
 
     ZeroMemory( hash_buffer, number_of_bytes_in_hash );
 
@@ -131,7 +133,7 @@ _Check_return_ bool Win32FoundationClasses::wfc_check_digital_signature( __in_z 
         return( false );
     }
 
-    auto hash_string = static_cast<wchar_t *>(_alloca( ( ( number_of_bytes_in_hash + 1 ) * 2 ) * 2 ));
+    auto hash_string{ static_cast<wchar_t*>(_alloca(((number_of_bytes_in_hash + 1) * 2) * 2)) };
 
     _to_hex( hash_buffer, number_of_bytes_in_hash, hash_string, number_of_bytes_in_hash * 2 );
 
@@ -141,7 +143,7 @@ _Check_return_ bool Win32FoundationClasses::wfc_check_digital_signature( __in_z 
     catalog_information.cbStruct = sizeof( catalog_information );
 
     //Get catalog for our context.
-    auto catalog_context = ::CryptCATAdminEnumCatalogFromHash( context, hash_buffer, number_of_bytes_in_hash, 0, nullptr );
+    auto catalog_context{ ::CryptCATAdminEnumCatalogFromHash(context, hash_buffer, number_of_bytes_in_hash, 0, nullptr) };
 
     if ( catalog_context not_eq static_cast< HCATINFO >( NULL ) )
     {
@@ -213,14 +215,14 @@ _Check_return_ bool Win32FoundationClasses::wfc_check_digital_signature( __in_z 
 
     GUID action_id = WINTRUST_ACTION_GENERIC_VERIFY_V2;
 
-    LONG return_value = ::WinVerifyTrust( 0, &action_id, &trust_data );
+    auto return_value{ ::WinVerifyTrust(0, &action_id, &trust_data) };
 
     if ( return_value == TRUST_E_NOSIGNATURE )
     {
         //WFCTRACE( TEXT( "No signature in file" ) );
     }
 
-    BOOLEAN return_flag = SUCCEEDED( return_value );
+    BOOLEAN return_flag{ SUCCEEDED(return_value) };
 
     if ( catalog_context not_eq static_cast< HCATINFO >( NULL ) )
     {
@@ -243,25 +245,25 @@ void Win32FoundationClasses::wfc_get_version(_In_ std::filesystem::path const& f
    build = 0;
    revision = 0;
 
-   DWORD handle = 0;
+   DWORD handle{ 0 };
 
-   uint32_t const number_of_bytes_to_allocate = GetFileVersionInfoSizeW( file_name.native().c_str(), &handle );
+   uint32_t const number_of_bytes_to_allocate{ GetFileVersionInfoSizeW(file_name.native().c_str(), &handle) };
 
    if ( number_of_bytes_to_allocate > 0 )
    {
-      auto byte_buffer = std::make_unique<uint8_t []>(number_of_bytes_to_allocate);
+       auto byte_buffer{ std::make_unique<uint8_t[]>(number_of_bytes_to_allocate) };
 
       if ( byte_buffer.get() not_eq nullptr )
       {
-         uint8_t * pointer = nullptr;
+         uint8_t * pointer{ nullptr };
 
-         UINT number_of_bytes_at_pointer = 0;
+         UINT number_of_bytes_at_pointer{ 0 };
 
          if ( ::GetFileVersionInfoW( file_name.native().c_str(), 0, number_of_bytes_to_allocate, byte_buffer.get() ) not_eq 0 )
          {
             if ( VerQueryValueW( byte_buffer.get(), L"\\", reinterpret_cast<LPVOID *>(&pointer), &number_of_bytes_at_pointer ) not_eq 0 )
             {
-               auto version_information = reinterpret_cast<VS_FIXEDFILEINFO *>(pointer);
+               auto version_information{ reinterpret_cast<VS_FIXEDFILEINFO*>(pointer) };
 
                if ( version_information->dwSignature == VS_FFI_SIGNATURE )
                {
@@ -295,10 +297,10 @@ void Win32FoundationClasses::wfc_get_my_version( _Out_ uint16_t& major, _Out_ ui
 
 void Win32FoundationClasses::wfc_get_my_version(_Inout_ std::wstring& version) noexcept
 {
-    uint16_t major = 0;
-    uint16_t minor = 0;
-    uint16_t build = 0;
-    uint16_t revision = 0;
+    uint16_t major{ 0 };
+    uint16_t minor{ 0 };
+    uint16_t build{ 0 };
+    uint16_t revision{ 0 };
 
     wfc_get_my_version(major, minor, build, revision);
 
@@ -307,17 +309,17 @@ void Win32FoundationClasses::wfc_get_my_version(_Inout_ std::wstring& version) n
 
 _Check_return_ uint64_t Win32FoundationClasses::wfc_get_my_packed_version( void ) noexcept
 {
-   uint16_t major = 0;
-   uint16_t minor = 0;
-   uint16_t build = 0;
-   uint16_t revision = 0;
+   uint16_t major{ 0 };
+   uint16_t minor{ 0 };
+   uint16_t patch{ 0 };
+   uint16_t build{ 0 };
 
-   Win32FoundationClasses::wfc_get_my_version( major, minor, build, revision );
+   Win32FoundationClasses::wfc_get_my_version( major, minor, patch, build );
 
    ULARGE_INTEGER ft;
 
    ft.HighPart = (DWORD) ( major << 16 ) + (DWORD) minor;
-   ft.LowPart = (DWORD) ( build << 16 ) + (DWORD) revision;
+   ft.LowPart = (DWORD) ( patch << 16 ) + (DWORD) build;
 
    return( ft.QuadPart );
 }

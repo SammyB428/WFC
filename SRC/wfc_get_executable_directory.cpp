@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 1995-2015, Samuel R. Blackburn
+** Copyright, 1995-2022, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -77,9 +77,9 @@ void Win32FoundationClasses::wfc_get_dll_directory(_Out_ std::wstring& directory
 
     ZeroMemory(path, sizeof(path));
 
-    HMODULE module_handle = NULL;
+    HMODULE module_handle{ NULL };
 
-    if (not GetModuleHandleExW(GET_MODULE_HANDLE_EX_FLAG_FROM_ADDRESS bitor
+    if (not ::GetModuleHandleExW(GET_MODULE_HANDLE_EX_FLAG_FROM_ADDRESS bitor
         GET_MODULE_HANDLE_EX_FLAG_UNCHANGED_REFCOUNT,
         (LPCWSTR)&Win32FoundationClasses::wfc_am_i_administrator,
         &module_handle))
@@ -88,7 +88,7 @@ void Win32FoundationClasses::wfc_get_dll_directory(_Out_ std::wstring& directory
         return;
     }
 
-    if (GetModuleFileNameW(module_handle, path, static_cast<DWORD>(std::size(path))) not_eq 0)
+    if (::GetModuleFileNameW(module_handle, path, static_cast<DWORD>(std::size(path))) not_eq 0)
     {
         *(wcsrchr(path, L'\\') + 1) = 0x00;
 

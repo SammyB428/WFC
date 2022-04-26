@@ -79,7 +79,7 @@ _Check_return_ bool Win32FoundationClasses::CPasswordChangeFilter::AddFilter( _I
 
    std::vector<std::wstring> current_filters;
 
-   (void)GetCurrentFilters( current_filters );
+   std::ignore = GetCurrentFilters( current_filters );
 
    for ( auto const& entry : current_filters )
    {
@@ -90,7 +90,7 @@ _Check_return_ bool Win32FoundationClasses::CPasswordChangeFilter::AddFilter( _I
       }
    }
 
-   (void) current_filters.push_back( dll_name );
+   current_filters.push_back( dll_name );
 
    if ( registry.SetStringArrayValue( L"Notification Packages", current_filters ) == false )
    {
@@ -163,10 +163,10 @@ _Check_return_ bool Win32FoundationClasses::CPasswordChangeFilter::RemoveFilter(
 
    std::vector<std::wstring> current_filters;
 
-   (void)GetCurrentFilters( current_filters );
+   std::ignore = GetCurrentFilters( current_filters );
 
-   std::size_t index = 0;
-   auto number_of_filters = current_filters.size();
+   std::size_t index{ 0 };
+   auto number_of_filters{ current_filters.size() };
 
    std::wstring filter_name;
 
@@ -186,7 +186,7 @@ _Check_return_ bool Win32FoundationClasses::CPasswordChangeFilter::RemoveFilter(
       }
    }
 
-   (void) current_filters.push_back( dll_name );
+   current_filters.push_back( dll_name );
 
    if ( registry.SetStringArrayValue( L"Notification Packages", current_filters ) == false )
    {

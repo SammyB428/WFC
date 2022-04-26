@@ -169,7 +169,7 @@ void Win32FoundationClasses::CNamedPipe::Close( void ) noexcept
 
    if ( m_PipeHandle not_eq static_cast< HANDLE >( INVALID_HANDLE_VALUE ) )
    {
-      (void) Win32FoundationClasses::wfc_close_handle( m_PipeHandle );
+       std::ignore = Win32FoundationClasses::wfc_close_handle( m_PipeHandle );
       m_PipeHandle = static_cast< HANDLE >( INVALID_HANDLE_VALUE );
    }
 }
@@ -181,7 +181,7 @@ _Check_return_ bool Win32FoundationClasses::CNamedPipe::Connect(__inout_opt LPOV
 
    // overlapped_p can be nullptr
 
-   BOOL const return_value = ::ConnectNamedPipe( m_PipeHandle, overlapped_p );
+   auto const return_value{ ::ConnectNamedPipe(m_PipeHandle, overlapped_p) };
 
    if ( return_value == FALSE )
    {

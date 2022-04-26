@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 1995-2019, Samuel R. Blackburn
+** Copyright, 1995-2022, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -66,7 +66,7 @@ void Win32FoundationClasses::CMixerSpeakers::Copy( _In_ Win32FoundationClasses::
 
    m_Volume.Copy( source.m_Volume );
    m_Mute.Copy( source.m_Mute );
-   (void) Open( source.m_Mixer.GetDeviceID(), source.m_WhatToNotify, source.m_WhoToNotify, source.m_NotifyData );
+   std::ignore = Open( source.m_Mixer.GetDeviceID(), source.m_WhatToNotify, source.m_WhoToNotify, source.m_NotifyData );
 }
 
 #if defined( _DEBUG ) && ! defined( WFC_NO_DUMPING )
@@ -104,7 +104,7 @@ _Check_return_ DWORD Win32FoundationClasses::CMixerSpeakers::GetLeftChannelVolum
 {
    WFC_VALIDATE_POINTER( this );
 
-   auto const volume = m_Volume.GetLeftChannelVolume();
+   auto const volume{ m_Volume.GetLeftChannelVolume() };
 
    return( volume );
 }
@@ -113,7 +113,7 @@ _Check_return_ DWORD Win32FoundationClasses::CMixerSpeakers::GetVolume( void ) n
 {
    WFC_VALIDATE_POINTER( this );
 
-   auto const volume = m_Volume.GetVolume();
+   auto const volume{ m_Volume.GetVolume() };
 
    return( volume );
 }
@@ -122,7 +122,7 @@ _Check_return_ DWORD Win32FoundationClasses::CMixerSpeakers::GetRightChannelVolu
 {
    WFC_VALIDATE_POINTER( this );
 
-   auto const volume = m_Volume.GetRightChannelVolume();
+   auto const volume{ m_Volume.GetRightChannelVolume() };
 
    return( volume );
 }
@@ -143,7 +143,7 @@ _Check_return_ bool Win32FoundationClasses::CMixerSpeakers::Mute( _In_ bool cons
 {
    WFC_VALIDATE_POINTER( this );
 
-   bool const return_value = m_Mute.SetState( mute_on );
+   auto const return_value{ m_Mute.SetState(mute_on) };
 
    return( return_value );
 }
@@ -156,7 +156,7 @@ _Check_return_ bool Win32FoundationClasses::CMixerSpeakers::Open( _In_ UINT_PTR 
    m_WhoToNotify  = who_to_notify;
    m_NotifyData   = notify_data;
 
-   bool return_value = Win32FoundationClasses::CMixerDestination::Open( device_number, what_to_notify, who_to_notify, notify_data );
+   auto return_value{ Win32FoundationClasses::CMixerDestination::Open(device_number, what_to_notify, who_to_notify, notify_data) };
 
    if ( return_value == false )
    {
@@ -181,8 +181,8 @@ _Check_return_ bool Win32FoundationClasses::CMixerSpeakers::Open( _In_ UINT_PTR 
       return( false );
    }
 
-   bool volume_control_was_found = false;
-   bool mute_control_was_found   = false;
+   bool volume_control_was_found{ false };
+   bool mute_control_was_found{ false };
  
    for ( auto const& entry : array )
    {
@@ -192,7 +192,7 @@ _Check_return_ bool Win32FoundationClasses::CMixerSpeakers::Open( _In_ UINT_PTR 
 
          if ( m_SourceSelector.get() not_eq nullptr )
          {
-            (void) m_SourceSelector->Open( device_number, what_to_notify, who_to_notify, notify_data );
+             std::ignore = m_SourceSelector->Open( device_number, what_to_notify, who_to_notify, notify_data );
          }
       }
 
@@ -202,7 +202,7 @@ _Check_return_ bool Win32FoundationClasses::CMixerSpeakers::Open( _In_ UINT_PTR 
          {
             m_Volume.SetLine( m_MixerLine );
             m_Volume.SetControl( entry );
-            (void) m_Volume.Open( device_number, what_to_notify, who_to_notify, notify_data );
+            std::ignore = m_Volume.Open( device_number, what_to_notify, who_to_notify, notify_data );
             volume_control_was_found = true;
          }
          else
@@ -217,7 +217,7 @@ _Check_return_ bool Win32FoundationClasses::CMixerSpeakers::Open( _In_ UINT_PTR 
          {
             m_Mute.SetLine( m_MixerLine );
             m_Mute.SetControl( entry );
-            (void) m_Mute.Open( device_number, what_to_notify, who_to_notify, notify_data );
+            std::ignore = m_Mute.Open( device_number, what_to_notify, who_to_notify, notify_data );
             mute_control_was_found = true;
          }
          else
@@ -246,7 +246,7 @@ _Check_return_ bool Win32FoundationClasses::CMixerSpeakers::SetLeftChannelVolume
 {
    WFC_VALIDATE_POINTER( this );
 
-   bool const return_value = m_Volume.SetLeftChannelVolume( desired_level );
+   bool const return_value{ m_Volume.SetLeftChannelVolume(desired_level) };
 
    return( return_value );
 }
@@ -255,7 +255,7 @@ _Check_return_ bool Win32FoundationClasses::CMixerSpeakers::SetVolume( _In_ DWOR
 {
    WFC_VALIDATE_POINTER( this );
 
-   bool const return_value = m_Volume.SetVolume( desired_level );
+   auto const return_value = m_Volume.SetVolume( desired_level );
 
    return( return_value );
 }
@@ -264,7 +264,7 @@ _Check_return_ bool Win32FoundationClasses::CMixerSpeakers::SetRightChannelVolum
 {
    WFC_VALIDATE_POINTER( this );
 
-   bool const return_value = m_Volume.SetRightChannelVolume( desired_level );
+   auto const return_value{ m_Volume.SetRightChannelVolume(desired_level) };
 
    return( return_value );
 }
@@ -273,7 +273,7 @@ _Check_return_ bool Win32FoundationClasses::CMixerSpeakers::UnMute( void ) noexc
 {
    WFC_VALIDATE_POINTER( this );
 
-   bool const return_value = m_Mute.TurnOff();
+   auto const return_value{ m_Mute.TurnOff() };
 
    return( return_value );
 }

@@ -55,7 +55,7 @@ void Win32FoundationClasses::wfc_get_error_string( _In_ DWORD const error_code, 
 {
    error_string.clear();
 
-   LPVOID message_buffer = nullptr;
+   LPVOID message_buffer{ nullptr };
 
    ::FormatMessageW( FORMAT_MESSAGE_ALLOCATE_BUFFER bitor
                     FORMAT_MESSAGE_FROM_SYSTEM bitor
@@ -67,10 +67,14 @@ void Win32FoundationClasses::wfc_get_error_string( _In_ DWORD const error_code, 
                     0,
                     nullptr );
 
-   error_string.assign( static_cast<wchar_t const *>(message_buffer) );
+   if (message_buffer not_eq nullptr)
+   {
 
-   ::LocalFree( message_buffer );
-   message_buffer = nullptr;
+       error_string.assign(static_cast<wchar_t const*>(message_buffer));
+
+       ::LocalFree(message_buffer);
+       message_buffer = nullptr;
+   }
 
    trim_right( error_string );
 

@@ -54,7 +54,7 @@ static char THIS_FILE[] = __FILE__;
 static DWORD WINAPI com_sucks_message_pump_thread(VOID * parameter) noexcept
 {
     // Use Mutlithreaded apartment model, not that it matters much...
-    (void)CoInitializeEx(nullptr, COINIT_MULTITHREADED);
+    std::ignore = CoInitializeEx(nullptr, COINIT_MULTITHREADED);
 
     VARIANT string_variant;
     VARIANT integer_variant;
@@ -62,10 +62,10 @@ static DWORD WINAPI com_sucks_message_pump_thread(VOID * parameter) noexcept
     VariantInit(&string_variant);
     VariantInit(&integer_variant);
 
-    BSTR string_value = SysAllocString(L"COM Sucks!");
+    auto string_value{ SysAllocString(L"COM Sucks!") };
 
     // This conversion will lockup COM in NT4 and below
-    (void)VariantChangeType(&integer_variant, &string_variant, 0, VT_I2);
+    std::ignore = VariantChangeType(&integer_variant, &string_variant, 0, VT_I2);
 
     SetEvent(reinterpret_cast<HANDLE>(parameter));
 
@@ -88,27 +88,27 @@ static DWORD WINAPI com_sucks_message_pump_thread(VOID * parameter) noexcept
 
 Win32FoundationClasses::CCOMSucks::CCOMSucks() noexcept
 {
-    DWORD thread_id = 0;
+    DWORD thread_id{ 0 };
 
-    auto const event_handle = MANUAL_RESET_EVENT();
+    auto const event_handle{ MANUAL_RESET_EVENT() };
 
     if (event_handle not_eq NULL)
     {
-        auto const thread_handle = ::CreateThread(nullptr,
+        auto const thread_handle{ ::CreateThread(nullptr,
             0,
             com_sucks_message_pump_thread,
             reinterpret_cast<LPVOID>(event_handle),
             0,
-            &thread_id);
+            &thread_id) };
 
         if (thread_handle not_eq NULL)
         {
             ::WaitForSingleObject(event_handle, 5000);
-            (void)Win32FoundationClasses::wfc_close_handle(thread_handle);
+            std::ignore = Win32FoundationClasses::wfc_close_handle(thread_handle);
         }
     }
 
-    (void)Win32FoundationClasses::wfc_close_handle(event_handle);
+    std::ignore = Win32FoundationClasses::wfc_close_handle(event_handle);
 }
 
 // End of source

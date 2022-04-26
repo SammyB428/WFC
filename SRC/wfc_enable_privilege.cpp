@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 1995-2014, Samuel R. Blackburn
+** Copyright, 1995-2022, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -55,7 +55,7 @@ _Check_return_ bool Win32FoundationClasses::wfc_enable_privilege( __in_z LPCTSTR
 {
    WFC_TRY
    {
-      auto token_handle = static_cast< HANDLE >( NULL );
+      auto token_handle { static_cast<HANDLE>(NULL)};
 
       if ( OpenProcessToken( GetCurrentProcess(), TOKEN_ADJUST_PRIVILEGES bitor TOKEN_QUERY, &token_handle ) == FALSE )
       {
@@ -72,7 +72,7 @@ _Check_return_ bool Win32FoundationClasses::wfc_enable_privilege( __in_z LPCTSTR
       {
          //WFCTRACEERROR( GetLastError() );
          //WFCTRACEVAL( TEXT( "Can't LookupPrivilegeValue for " ), privilege_name );
-         (void) Win32FoundationClasses::wfc_close_handle( token_handle );
+         std::ignore = Win32FoundationClasses::wfc_close_handle( token_handle );
          return( false );
       }
 
@@ -83,11 +83,11 @@ _Check_return_ bool Win32FoundationClasses::wfc_enable_privilege( __in_z LPCTSTR
       {
          //WFCTRACEERROR( GetLastError() );
          //WFCTRACE( TEXT( "Can't AdjustTokenPrivileges" ) );
-         (void) Win32FoundationClasses::wfc_close_handle( token_handle );
+         std::ignore = Win32FoundationClasses::wfc_close_handle( token_handle );
          return( false );
       }
 
-      (void) Win32FoundationClasses::wfc_close_handle( token_handle );
+      std::ignore = Win32FoundationClasses::wfc_close_handle( token_handle );
 
       return( true );
    }

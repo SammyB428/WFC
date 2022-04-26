@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 1995-2016, Samuel R. Blackburn
+** Copyright, 1995-2022, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -83,7 +83,7 @@ _Check_return_ bool Win32FoundationClasses::CMixerSource::GetControl( _Out_ Win3
 {
    WFC_VALIDATE_POINTER( this );
 
-   bool return_value = false;
+   bool return_value{ false };
 
    std::vector<CMixerControl> controls_array;
 
@@ -96,7 +96,7 @@ _Check_return_ bool Win32FoundationClasses::CMixerSource::GetControl( _Out_ Win3
             return_value = true;
             control.SetLine( m_MixerLine );
             control.SetControl(entry);
-            (void) control.Open( m_Mixer.GetDeviceID(), m_WhatToNotify, m_WhoToNotify, m_NotifyData );
+            std::ignore = control.Open( m_Mixer.GetDeviceID(), m_WhatToNotify, m_WhoToNotify, m_NotifyData );
          }
       }
    }
@@ -120,7 +120,7 @@ _Check_return_ bool Win32FoundationClasses::CMixerSource::Open( _In_ UINT_PTR de
    m_WhoToNotify  = who_to_notify;
    m_NotifyData   = notify_data;
 
-   bool const return_value = CMixerControlInstance::Open( device_number, what_to_notify, who_to_notify, notify_data );
+   auto const return_value{ CMixerControlInstance::Open(device_number, what_to_notify, who_to_notify, notify_data) };
 
    if ( return_value == false )
    {
