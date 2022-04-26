@@ -62,14 +62,14 @@ _Check_return_ bool test_CBase64Coding( _Out_ std::string& class_name, _Out_ int
     std::vector<uint8_t> encoded_bytes;
     std::vector<uint8_t> decoded_bytes;
 
-    (void) bytes_to_encode.push_back( '1' );
-    (void) bytes_to_encode.push_back( '1' );
-    (void) bytes_to_encode.push_back( '1' );
-    (void) bytes_to_encode.push_back( '0' );
+    bytes_to_encode.push_back( '1' );
+    bytes_to_encode.push_back( '1' );
+    bytes_to_encode.push_back( '1' );
+    bytes_to_encode.push_back( '0' );
 
     std::wstring encoded_string;
 
-    (void) coder.Encode( bytes_to_encode, encoded_string );
+    std::ignore = coder.Encode( bytes_to_encode, encoded_string );
 
     if ( encoded_string.compare(WSTRING_VIEW(L"MTExMA==")) not_eq I_AM_EQUAL_TO_THAT)
     {
@@ -88,9 +88,9 @@ _Check_return_ bool test_CBase64Coding( _Out_ std::string& class_name, _Out_ int
     for ( auto const string_index : Range(data_string.length()))
     {
 #if defined( WFC_STL )
-        (void) data.push_back( (uint8_t) data_string[ string_index ] );
+        data.push_back( (uint8_t) data_string[ string_index ] );
 #else
-        (void) data.push_back( (uint8_t) data_string.GetAt( string_index ) );
+        data.push_back( (uint8_t) data_string.GetAt( string_index ) );
 #endif
     }
 
@@ -119,14 +119,14 @@ _Check_return_ bool test_CBase64Coding( _Out_ std::string& class_name, _Out_ int
 
         for( auto const loop_index : Range(test_index) )
         {
-            (void) bytes_to_encode.push_back( static_cast< uint8_t >( random.GetInteger() ) );
+            bytes_to_encode.push_back( static_cast< uint8_t >( random.GetInteger() ) );
         }
 
         // Encode the test data
-        (void) coder.Encode( bytes_to_encode, encoded_bytes );
+        std::ignore = coder.Encode( bytes_to_encode, encoded_bytes );
 
         // Decode the test data
-        (void) coder.Decode( encoded_bytes, decoded_bytes );
+        std::ignore = coder.Decode( encoded_bytes, decoded_bytes );
 
         // See if what was decoded matches the test data (what was encoded)
 
@@ -158,14 +158,14 @@ _Check_return_ bool test_CBase64Coding( _Out_ std::string& class_name, _Out_ int
 
         for ( auto const loop_index : Range(test_index) )
         {
-            (void) bytes_to_encode.push_back( static_cast< uint8_t >( random.GetInteger() ) );
+            bytes_to_encode.push_back( static_cast< uint8_t >( random.GetInteger() ) );
         }
 
         // Encode the test data
-        (void) coder.Encode( bytes_to_encode, encoded_bytes );
+        std::ignore = coder.Encode( bytes_to_encode, encoded_bytes );
 
         // Decode the test data
-        (void) coder.Decode( encoded_bytes, decoded_bytes );
+        std::ignore = coder.Decode( encoded_bytes, decoded_bytes );
 
         // See if what was decoded matches the test data (what was encoded)
 
@@ -257,14 +257,14 @@ _Check_return_ bool test_CBase64Coding( _Out_ std::string& class_name, _Out_ int
 
     for ( auto const loop_index : Range(75) )
     {
-        (void)bytes_to_encode.push_back(static_cast<uint8_t>(random.GetInteger()));
+        bytes_to_encode.push_back(static_cast<uint8_t>(random.GetInteger()));
     }
 
     std::string encoded_buffer;
 
     coder.Encode(bytes_to_encode.data(), bytes_to_encode.size(), encoded_buffer);
 
-    std::size_t number_of_bytes_to_allocate = Win32FoundationClasses::CBase64Coding::DecodeReserveSize(encoded_buffer.size());
+    auto number_of_bytes_to_allocate{ Win32FoundationClasses::CBase64Coding::DecodeReserveSize(encoded_buffer.size()) };
     auto decoded_buffer = std::make_unique<uint8_t[]>(number_of_bytes_to_allocate);
 
     ZeroMemory(decoded_buffer.get(), number_of_bytes_to_allocate);
@@ -283,7 +283,7 @@ _Check_return_ bool test_CBase64Coding( _Out_ std::string& class_name, _Out_ int
 
     for ( auto const loop_index : Range(76) )
     {
-        (void)bytes_to_encode.push_back(static_cast<uint8_t>(random.GetInteger()));
+        bytes_to_encode.push_back(static_cast<uint8_t>(random.GetInteger()));
     }
 
     coder.Encode(bytes_to_encode.data(), bytes_to_encode.size(), encoded_buffer);
@@ -306,7 +306,7 @@ _Check_return_ bool test_CBase64Coding( _Out_ std::string& class_name, _Out_ int
 
     for ( auto const loop_index : Range(77) )
     {
-        (void)bytes_to_encode.push_back(static_cast<uint8_t>(random.GetInteger()));
+        bytes_to_encode.push_back(static_cast<uint8_t>(random.GetInteger()));
     }
 
     coder.Encode(bytes_to_encode.data(), bytes_to_encode.size(), encoded_buffer);
@@ -330,10 +330,10 @@ _Check_return_ bool test_CBase64Coding( _Out_ std::string& class_name, _Out_ int
 
     for ( auto const loop_index : Range(78) )
     {
-        (void)bytes_to_encode.push_back(static_cast<uint8_t>(random.GetInteger()));
+        bytes_to_encode.push_back(static_cast<uint8_t>(random.GetInteger()));
     }
 
-    coder.Encode(bytes_to_encode.data(), bytes_to_encode.size(), encoded_buffer);
+    std::ignore = coder.Encode(bytes_to_encode.data(), bytes_to_encode.size(), encoded_buffer);
 
     number_of_bytes_to_allocate = Win32FoundationClasses::CBase64Coding::DecodeReserveSize(encoded_buffer.size());
     decoded_buffer = std::make_unique<uint8_t[]>(number_of_bytes_to_allocate);

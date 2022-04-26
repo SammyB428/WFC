@@ -70,10 +70,10 @@ void queue_integrity_add_thread( void * p ) noexcept
    workspace_p->checksum             = 0;
    workspace_p->thread_exitted       = false;
 
-   auto queue_p = workspace_p->queue_p;
+   auto queue_p{ workspace_p->queue_p };
 
-   uint32_t item           = 0;
-   uint32_t checksum_index = 0;
+   uint32_t item{ 0 };
+   uint32_t checksum_index{ 0 };
 
    Win32FoundationClasses::CRandomNumberGenerator2 random;
 
@@ -81,7 +81,7 @@ void queue_integrity_add_thread( void * p ) noexcept
    {
       item = random.GetInteger();
 
-      (void) queue_p->Add( item );
+      std::ignore = queue_p->Add( item );
 
       workspace_p->number_of_operations++;
 
@@ -106,7 +106,7 @@ void queue_integrity_add_thread( void * p ) noexcept
 
 void queue_integrity_get_thread( void * p ) noexcept
 {
-   auto workspace_p = static_cast<QUEUE_INTEGRITY_WORKSPACE *>(p);
+    auto workspace_p{ static_cast<QUEUE_INTEGRITY_WORKSPACE*>(p) };
 
    if ( workspace_p == NULL )
    {
@@ -117,11 +117,11 @@ void queue_integrity_get_thread( void * p ) noexcept
    workspace_p->checksum             = 0;
    workspace_p->thread_exitted       = false;
 
-   auto queue_p = workspace_p->queue_p;
+   auto queue_p{ workspace_p->queue_p };
 
-   uint32_t checksum_index = 0;
+   uint32_t checksum_index{ 0 };
 
-   SIZE_T item = 0;
+   SIZE_T item{ 0 };
 
    for( auto const loop_index : Range(workspace_p->number_of_loops) )
    {
@@ -192,8 +192,8 @@ _Check_return_ bool CQueue_integrity_test( _Out_ std::string& class_name, _Out_ 
       return( TRUE );
    }
 
-   HANDLE get_thread_handle = (HANDLE) _beginthread( queue_integrity_get_thread, DEFAULT_THREAD_STACK_SIZE, &get_workspace );
-   HANDLE add_thread_handle = (HANDLE) _beginthread( queue_integrity_add_thread, DEFAULT_THREAD_STACK_SIZE, &add_workspace );
+   auto get_thread_handle{ (HANDLE)_beginthread(queue_integrity_get_thread, DEFAULT_THREAD_STACK_SIZE, &get_workspace) };
+   auto add_thread_handle{ (HANDLE)_beginthread(queue_integrity_add_thread, DEFAULT_THREAD_STACK_SIZE, &add_workspace) };
 
    // If we have more than one CPU, set the thread affinity masks for
    // the threads so they will stick to different CPUs and therefore

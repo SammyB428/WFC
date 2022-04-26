@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 2000-2016, Samuel R. Blackburn
+** Copyright, 2000-2012, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -58,7 +58,7 @@ __checkReturn bool test_wfc_protect( __out std::string& class_name, __out int& t
 
    strcpy_s( plaintext, sizeof( plaintext ), "WFC is actually useful." );
 
-   std::size_t size_of_ciphertext_buffer = 0;
+   std::size_t size_of_ciphertext_buffer{ 0 };
 
    if (Win32FoundationClasses::wfc_protect_data( reinterpret_cast<uint8_t const *>(plaintext), strlen( plaintext ) + 1, nullptr, &size_of_ciphertext_buffer ) == false )
    {
@@ -66,7 +66,7 @@ __checkReturn bool test_wfc_protect( __out std::string& class_name, __out int& t
       return( failure() );
    }
 
-   auto ciphertext = std::make_unique<uint8_t[]>(size_of_ciphertext_buffer );
+   auto ciphertext{ std::make_unique<uint8_t[]>(size_of_ciphertext_buffer) };
 
    if (Win32FoundationClasses::wfc_protect_data( reinterpret_cast<uint8_t const *>(plaintext), strlen( plaintext ) + 1, ciphertext.get(), &size_of_ciphertext_buffer ) == false )
    {
@@ -74,7 +74,7 @@ __checkReturn bool test_wfc_protect( __out std::string& class_name, __out int& t
       return( failure() );
    }
 
-   std::size_t size_of_decrypted = 0;
+   std::size_t size_of_decrypted{ 0 };
 
    if (Win32FoundationClasses::wfc_unprotect_data( ciphertext.get(), size_of_ciphertext_buffer, nullptr, &size_of_decrypted ) == FALSE )
    {
@@ -82,7 +82,7 @@ __checkReturn bool test_wfc_protect( __out std::string& class_name, __out int& t
       return( failure() );
    }
 
-   auto decrypted = std::make_unique<uint8_t[]>( size_of_decrypted );
+   auto decrypted{ std::make_unique<uint8_t[]>(size_of_decrypted) };
 
    if (Win32FoundationClasses::wfc_unprotect_data( ciphertext.get(), size_of_ciphertext_buffer, decrypted.get(), &size_of_decrypted ) == FALSE )
    {
@@ -100,7 +100,7 @@ __checkReturn bool test_wfc_protect( __out std::string& class_name, __out int& t
 
    ZeroMemory( filename, sizeof( filename ) );
 
-   (void) GetWindowsDirectory( filename, MAX_PATH );
+   std::ignore = GetWindowsDirectory( filename, MAX_PATH );
 
    _tcscat_s( filename, std::size( filename ), TEXT( "\\Notepad.exe" ) );
 

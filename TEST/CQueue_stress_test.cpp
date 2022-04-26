@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 2000-2016, Samuel R. Blackburn
+** Copyright, 2000-2022, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -57,7 +57,7 @@
 
 void queue_add_thread( void * p )
 {
-   auto workspace_p = static_cast<QUEUE_WORKSPACE *>(p);
+   auto workspace_p{ static_cast<QUEUE_WORKSPACE*>(p) };
 
    if ( workspace_p == nullptr)
    {
@@ -66,10 +66,10 @@ void queue_add_thread( void * p )
 
    workspace_p->number_of_operations = 0;
 
-   auto queue_p = workspace_p->queue_p;
+   auto queue_p{ workspace_p->queue_p };
 
 #pragma warning( disable : 4312 )
-   void * item = (void *) 0xFFFFFFFF;
+   void * item{ (void*)0xFFFFFFFF };
 
    while( workspace_p->exit_thread == false )
    {
@@ -82,7 +82,7 @@ void queue_add_thread( void * p )
 
 void queue_get_thread( void * p )
 {
-   auto workspace_p = static_cast<QUEUE_WORKSPACE *>(p);
+   auto workspace_p{ static_cast<QUEUE_WORKSPACE*>(p) };
 
    if ( workspace_p == nullptr )
    {
@@ -91,9 +91,9 @@ void queue_get_thread( void * p )
 
    workspace_p->number_of_operations = 0;
 
-   auto queue_p = workspace_p->queue_p;
+   auto queue_p{ workspace_p->queue_p };
 
-   void * item = nullptr;
+   void * item{ nullptr };
 
    while( workspace_p->exit_thread == false )
    {
@@ -121,13 +121,13 @@ _Check_return_ bool CQueue_stress_test( _Out_ std::string& class_name, _Out_ int
    get_workspace.exit_thread = false;
    add_workspace.exit_thread = false;
 
-   uint32_t start_time = (uint32_t) time(nullptr);
+   uint32_t start_time{ (uint32_t)time(nullptr) };
 
    SYSTEM_INFO system_information;
 
    ZeroMemory( &system_information, sizeof( system_information ) );
 
-   GetSystemInfo( &system_information );
+   ::GetSystemInfo( &system_information );
 
    if ( system_information.dwNumberOfProcessors < 2 )
    {
@@ -139,29 +139,29 @@ _Check_return_ bool CQueue_stress_test( _Out_ std::string& class_name, _Out_ int
    
    _tprintf( TEXT( "You have %d CPUs\n" ), system_information.dwNumberOfProcessors );
 
-   HANDLE get_thread_handle = (HANDLE) _beginthread( queue_get_thread, DEFAULT_THREAD_STACK_SIZE, &get_workspace );
-   HANDLE add_thread_handle = (HANDLE) _beginthread( queue_add_thread, DEFAULT_THREAD_STACK_SIZE, &add_workspace );
+   HANDLE get_thread_handle{ (HANDLE)_beginthread(queue_get_thread, DEFAULT_THREAD_STACK_SIZE, &get_workspace) };
+   HANDLE add_thread_handle{ (HANDLE)_beginthread(queue_add_thread, DEFAULT_THREAD_STACK_SIZE, &add_workspace) };
 
    // If we have more than one CPU, set the thread affinity masks for
    // the threads so they will stick to different CPUs and therefore
    // execute faster.
 
-   SetThreadIdealProcessor( get_thread_handle, 0 );
+   ::SetThreadIdealProcessor( get_thread_handle, 0 );
 
    if ( system_information.dwNumberOfProcessors > 2 )
    {
       // More than two CPU's which means hyperthreading is probably
       // enabled. Select CPU #2 so we will execute on two different chips.
-      SetThreadIdealProcessor( add_thread_handle, 2 );
+      ::SetThreadIdealProcessor( add_thread_handle, 2 );
    }
    else
    {
       // Only two CPUs in this box, use both
-      SetThreadIdealProcessor( add_thread_handle, 1 );
+      ::SetThreadIdealProcessor( add_thread_handle, 1 );
    }
 
-   HANDLE add_thread_handles[ 1 ] = { INVALID_HANDLE_VALUE };
-   HANDLE get_thread_handles[ 4 ] = { INVALID_HANDLE_VALUE, INVALID_HANDLE_VALUE, INVALID_HANDLE_VALUE, INVALID_HANDLE_VALUE };
+   HANDLE add_thread_handles[ 1 ] { INVALID_HANDLE_VALUE };
+   HANDLE get_thread_handles[ 4 ] { INVALID_HANDLE_VALUE, INVALID_HANDLE_VALUE, INVALID_HANDLE_VALUE, INVALID_HANDLE_VALUE };
 
    if ( system_information.dwNumberOfProcessors > 17 )
    {
@@ -182,8 +182,8 @@ _Check_return_ bool CQueue_stress_test( _Out_ std::string& class_name, _Out_ int
    add_workspace.exit_thread = true;
    get_workspace.exit_thread = true;
 
-   DWORD end_time = (DWORD) time(nullptr);
-   DWORD number_of_seconds_we_ran = end_time - start_time;
+   DWORD end_time{ (DWORD)time(nullptr) };
+   DWORD number_of_seconds_we_ran{ end_time - start_time };
 
    // Now print the results
 

@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 2000-2020, Samuel R. Blackburn
+** Copyright, 2000-2022, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -62,7 +62,7 @@ _Check_return_ bool test_CXMLDocument(_Out_ std::string& class_name, _Out_ int& 
 
     std::vector<uint8_t> bytes;
 
-    (void)xml.SetWriteOptions(WFC_XML_WRITE_AS_UNICODE bitor WFC_XML_WRITE_AS_BIG_ENDIAN);
+    std::ignore = xml.SetWriteOptions(WFC_XML_WRITE_AS_UNICODE bitor WFC_XML_WRITE_AS_BIG_ENDIAN);
 
     xml.WriteTo(bytes);
 
@@ -117,7 +117,7 @@ _Check_return_ bool test_CXMLDocument(_Out_ std::string& class_name, _Out_ int& 
 
     // UNICODE, little endian
 
-    (void)xml.SetWriteOptions(WFC_XML_WRITE_AS_UNICODE);
+    std::ignore = xml.SetWriteOptions(WFC_XML_WRITE_AS_UNICODE);
 
     xml.WriteTo(bytes);
 
@@ -172,7 +172,7 @@ _Check_return_ bool test_CXMLDocument(_Out_ std::string& class_name, _Out_ int& 
 
     // UCS4, Big Endian
 
-    (void)xml.SetWriteOptions(WFC_XML_WRITE_AS_UCS4 bitor WFC_XML_WRITE_AS_BIG_ENDIAN);
+    std::ignore = xml.SetWriteOptions(WFC_XML_WRITE_AS_UCS4 bitor WFC_XML_WRITE_AS_BIG_ENDIAN);
 
     xml.WriteTo(bytes);
 
@@ -212,7 +212,7 @@ _Check_return_ bool test_CXMLDocument(_Out_ std::string& class_name, _Out_ int& 
 
     // UCS4, Little Endian
 
-    (void)xml.SetWriteOptions(WFC_XML_WRITE_AS_UCS4);
+    std::ignore = xml.SetWriteOptions(WFC_XML_WRITE_AS_UCS4);
 
     xml.WriteTo(bytes);
 
@@ -256,7 +256,7 @@ _Check_return_ bool test_CXMLDocument(_Out_ std::string& class_name, _Out_ int& 
 
     // UCS4, Unusal 2143
 
-    (void)xml.SetWriteOptions(WFC_XML_WRITE_AS_UCS4_UNUSUAL_2143);
+    std::ignore = xml.SetWriteOptions(WFC_XML_WRITE_AS_UCS4_UNUSUAL_2143);
 
     xml.WriteTo(bytes);
 
@@ -300,7 +300,7 @@ _Check_return_ bool test_CXMLDocument(_Out_ std::string& class_name, _Out_ int& 
 
     // UCS4, Unusal 3412
 
-    (void)xml.SetWriteOptions(WFC_XML_WRITE_AS_UCS4_UNUSUAL_3412);
+    std::ignore = xml.SetWriteOptions(WFC_XML_WRITE_AS_UCS4_UNUSUAL_3412);
 
     xml.WriteTo(bytes);
 
@@ -344,11 +344,11 @@ _Check_return_ bool test_CXMLDocument(_Out_ std::string& class_name, _Out_ int& 
 
     Win32FoundationClasses::CDataParser parser;
 
-    (void)parser.Initialize(&bytes);
+    std::ignore = parser.Initialize(&bytes);
 
-    uint32_t parse_options = xml.GetParseOptions();
+    auto parse_options{ xml.GetParseOptions() };
 
-    (void)xml.SetParseOptions(parse_options bitor WFC_XML_ALLOW_AMPERSANDS_IN_ELEMENTS);
+    std::ignore = xml.SetParseOptions(parse_options bitor WFC_XML_ALLOW_AMPERSANDS_IN_ELEMENTS);
 
     //    if ( xml.Parse( parser ) not_eq true )
       // {
@@ -360,8 +360,8 @@ _Check_return_ bool test_CXMLDocument(_Out_ std::string& class_name, _Out_ int& 
     std::vector<uint8_t> output;
 
     xml.WriteTo(output);
-    (void)output.push_back(0);
-    (void)output.push_back(0); // NULL terminate the string
+    output.push_back(0);
+    output.push_back(0); // NULL terminate the string
 
     Win32FoundationClasses::CString test_string_2;
 
@@ -369,12 +369,12 @@ _Check_return_ bool test_CXMLDocument(_Out_ std::string& class_name, _Out_ int& 
 
     //WFCTRACEVAL( TEXT( "Value is " ), test_string_2 );
 
-    char const* part_1 = "<?xml version=\"1.0\"  encoding=\"utf-8\" standalone=\"yes\"?><mhmd>\0";
-    char const* part_2 = "</mhmd>\0";
+    char const * part_1{ "<?xml version=\"1.0\"  encoding=\"utf-8\" standalone=\"yes\"?><mhmd>\0" };
+    char const * part_2{ "</mhmd>\0" };
 
     output.clear();
 
-    int part_index = 0;
+    int part_index{ 0 };
 
     while (part_1[part_index] not_eq 0x00)
     {
@@ -382,7 +382,7 @@ _Check_return_ bool test_CXMLDocument(_Out_ std::string& class_name, _Out_ int& 
         part_index++;
     }
 
-    static constexpr uint8_t const mhmd[8] = {
+    static constexpr uint8_t const mhmd[8]{
         0xD9, 0x85, 0xD8, 0xAD, 0xD9, 0x85, 0xD8, 0xAF
     };
 
@@ -399,9 +399,8 @@ _Check_return_ bool test_CXMLDocument(_Out_ std::string& class_name, _Out_ int& 
         part_index++;
     }
 
-    (void)parser.Initialize(output.data(), output.size());
-
-    parser.SetTextToASCII(true);
+    std::ignore = parser.Initialize(output.data(), output.size());
+    std::ignore = parser.SetTextToASCII(true);
 
     xml.Empty();
 
@@ -418,7 +417,7 @@ _Check_return_ bool test_CXMLDocument(_Out_ std::string& class_name, _Out_ int& 
         return(failure());
     }
 
-    auto root = xml.GetRootElement();
+    auto root{ xml.GetRootElement() };
 
     if (root == nullptr)
     {
@@ -428,7 +427,7 @@ _Check_return_ bool test_CXMLDocument(_Out_ std::string& class_name, _Out_ int& 
         return(failure());
     }
 
-    auto mhmd_element = root->GetChild(WSTRING_VIEW(L"mhmd"));
+    auto mhmd_element{ root->GetChild(WSTRING_VIEW(L"mhmd")) };
 
     if (mhmd_element == nullptr)
     {
@@ -480,7 +479,6 @@ _Check_return_ bool test_CXMLDocument(_Out_ std::string& class_name, _Out_ int& 
     std::wstring sam(WSTRING_VIEW(L"Sam"));
 
     bytes.clear();
-
     bytes.push_back(1);
 
     Win32FoundationClasses::append_to_bytes(sam, bytes);
@@ -554,9 +552,8 @@ _Check_return_ bool test_CXMLDocument(_Out_ std::string& class_name, _Out_ int& 
     test_text.assign(STRING_VIEW("<?xml version=\"1.0\" standalone=\"yes\"?>\n"));
     test_text.append(STRING_VIEW("<root><prop>Hello</prop> <prop>World</prop></root>"));
 
-    (void)parser.Initialize(reinterpret_cast<uint8_t const*>(test_text.data()), test_text.length());
-
-    parser.SetTextToASCII();
+    std::ignore = parser.Initialize(reinterpret_cast<uint8_t const*>(test_text.data()), test_text.length());
+    std::ignore = parser.SetTextToASCII();
 
     if (xml.Parse(parser) == false)
     {
@@ -583,9 +580,8 @@ _Check_return_ bool test_CXMLDocument(_Out_ std::string& class_name, _Out_ int& 
     test_text.assign(STRING_VIEW("<?xml version=\"1.0\" standalone=\"yes\"?>\n"));
     test_text.append(STRING_VIEW("<entity v=\"&#x645;&#x62D;&#x645;&#x62F;\"/>"));
 
-    (void)parser.Initialize(reinterpret_cast<uint8_t const*>(test_text.data()), test_text.length());
-
-    parser.SetTextToASCII();
+    std::ignore = parser.Initialize(reinterpret_cast<uint8_t const*>(test_text.data()), test_text.length());
+    std::ignore = parser.SetTextToASCII();
 
     xml.Empty();
 
@@ -605,7 +601,7 @@ _Check_return_ bool test_CXMLDocument(_Out_ std::string& class_name, _Out_ int& 
 
     std::wstring value;
 
-    (void)mhmd_element->GetAttributeByName(WSTRING_VIEW(L"v"), value);
+    std::ignore = mhmd_element->GetAttributeByName(WSTRING_VIEW(L"v"), value);
 
     if (value.length() not_eq 4)
     {

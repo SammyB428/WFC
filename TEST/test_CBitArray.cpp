@@ -568,10 +568,10 @@ __checkReturn bool test_CBitArray( __out std::string& class_name, __out int& tes
 
     bytes.clear();
 
-    (void) bytes.push_back(   1 );
-    (void) bytes.push_back(  64 );
-    (void) bytes.push_back( 128 );
-    (void) bytes.push_back( 255 );
+    bytes.push_back(   1 );
+    bytes.push_back(  64 );
+    bytes.push_back( 128 );
+    bytes.push_back( 255 );
 
     Win32FoundationClasses::CBitArray bits4( bytes );
 
@@ -697,11 +697,11 @@ __checkReturn bool test_CBitArray( __out std::string& class_name, __out int& tes
 
     bytes.clear();
 
-    (void) bytes.push_back(   1 );
-    (void) bytes.push_back(  16 );
-    (void) bytes.push_back(  63 );
-    (void) bytes.push_back( 127 );
-    (void) bytes.push_back( 255 );
+    bytes.push_back(   1 );
+    bytes.push_back(  16 );
+    bytes.push_back(  63 );
+    bytes.push_back( 127 );
+    bytes.push_back( 255 );
 
     bits.Copy( bytes );
 
@@ -745,11 +745,11 @@ __checkReturn bool test_CBitArray( __out std::string& class_name, __out int& tes
 
     Win32FoundationClasses::CRandomNumberGenerator2 random;
 
-    int number_of_array_entries = ( random.GetInteger() % 100 ) + 25;
+    int number_of_array_entries{ (random.GetInteger() % 100) + 25 };
 
     for ( auto const array_index : Range(number_of_array_entries) )
     {
-        (void) dword_array.push_back( random.GetInteger() );
+        dword_array.push_back( random.GetInteger() );
     }
 
     bits.RemoveAll();

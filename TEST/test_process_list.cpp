@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 2000-2015, Samuel R. Blackburn
+** Copyright, 2000-2022, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -227,7 +227,7 @@ void print_system_information( _In_ const ::SYSTEM_PROCESS_INFORMATION * informa
    if (Win32FoundationClasses::wfc_get_process_command_line( information_p->UniqueProcessId, command_line ) == true )
    {
 #if defined( _DEBUG )
-      wprintf( L"Command line: %s\n", command_line.c_str() );
+      //wprintf( L"Command line: %s\n", command_line.c_str() );
 #endif
    }
 
@@ -249,7 +249,7 @@ static void print_process_list( BYTE * data_buffer ) noexcept
 {
    try
    {
-      auto information_p = reinterpret_cast<::SYSTEM_PROCESS_INFORMATION const *>(data_buffer);
+      auto information_p{ reinterpret_cast<::SYSTEM_PROCESS_INFORMATION const*>(data_buffer) };
 
       while( information_p not_eq nullptr )
       {
@@ -269,9 +269,9 @@ __checkReturn bool test_process_list( __out std::string& class_name, __out int& 
     // The first thing we need to do is get a buffer large
     // enough to hold the raw data. I like overkill so I choose
 
-    DWORD const buffer_size = 4 * ONE_MEGABYTE;
+    DWORD const buffer_size{ 4 * ONE_MEGABYTE };
 
-    std::unique_ptr<uint8_t[]> allocated_buffer = std::make_unique<uint8_t[]>(buffer_size);
+    auto allocated_buffer{ std::make_unique<uint8_t[]>(buffer_size) };
 
     if (allocated_buffer.get() == nullptr )
     {

@@ -423,14 +423,14 @@ _Check_return_ bool test_CDataParser( _Out_ std::string& class_name, _Out_ int& 
 
     // ASCII Test
 
-    (void) bytes.push_back( 'A' );
-    (void) bytes.push_back( 'B' );
-    (void) bytes.push_back( 'C' );
-    (void) bytes.push_back( 'D' );
-    (void) bytes.push_back( 'E' );
-    (void) bytes.push_back( 'F' );
+    bytes.push_back( 'A' );
+    bytes.push_back( 'B' );
+    bytes.push_back( 'C' );
+    bytes.push_back( 'D' );
+    bytes.push_back( 'E' );
+    bytes.push_back( 'F' );
 
-    (void) parser.Initialize( &bytes );
+    std::ignore = parser.Initialize( &bytes );
 
     if ( parser.GetSize() not_eq 6 )
     {
@@ -469,25 +469,25 @@ _Check_return_ bool test_CDataParser( _Out_ std::string& class_name, _Out_ int& 
 
     bytes.clear();
 
-    (void) bytes.push_back( 'A' ); // little end
-    (void) bytes.push_back(  0  ); // big end
+    bytes.push_back( 'A' ); // little end
+    bytes.push_back(  0  ); // big end
 
-    (void) bytes.push_back( 'B' );
-    (void) bytes.push_back(  0  );
+    bytes.push_back( 'B' );
+    bytes.push_back(  0  );
 
-    (void) bytes.push_back( 'C' );
-    (void) bytes.push_back(  0  );
+    bytes.push_back( 'C' );
+    bytes.push_back(  0  );
 
-    (void) bytes.push_back( 'D' );
-    (void) bytes.push_back(  0  );
+    bytes.push_back( 'D' );
+    bytes.push_back(  0  );
 
-    (void) bytes.push_back( 'E' );
-    (void) bytes.push_back(  0  );
+    bytes.push_back( 'E' );
+    bytes.push_back(  0  );
 
-    (void) bytes.push_back( 'F' );
-    (void) bytes.push_back(  0  );
+    bytes.push_back( 'F' );
+    bytes.push_back(  0  );
 
-    (void) parser.Initialize( &bytes );
+    std::ignore = parser.Initialize( &bytes );
 
     if ( parser.GetSize() not_eq 12 )
     {
@@ -501,8 +501,8 @@ _Check_return_ bool test_CDataParser( _Out_ std::string& class_name, _Out_ int& 
         return( failure() );
     }
 
-    (void) parser.SetTextToASCII( false );
-    (void) parser.SetTextToBigEndian(false);
+    std::ignore = parser.SetTextToASCII( false );
+    std::ignore = parser.SetTextToBigEndian(false);
 
     if ( test_class( parser, test_number_that_failed ) == false )
     {
@@ -528,25 +528,25 @@ _Check_return_ bool test_CDataParser( _Out_ std::string& class_name, _Out_ int& 
 
     bytes.clear();
 
-    (void) bytes.push_back(  0  ); // big end
-    (void) bytes.push_back( 'A' ); // little end
+    bytes.push_back(  0  ); // big end
+    bytes.push_back( 'A' ); // little end
 
-    (void) bytes.push_back(  0  );
-    (void) bytes.push_back( 'B' );
+    bytes.push_back(  0  );
+    bytes.push_back( 'B' );
 
-    (void) bytes.push_back(  0  );
-    (void) bytes.push_back( 'C' );
+    bytes.push_back(  0  );
+    bytes.push_back( 'C' );
 
-    (void) bytes.push_back(  0  );
-    (void) bytes.push_back( 'D' );
+    bytes.push_back(  0  );
+    bytes.push_back( 'D' );
 
-    (void) bytes.push_back(  0  );
-    (void) bytes.push_back( 'E' );
+    bytes.push_back(  0  );
+    bytes.push_back( 'E' );
 
-    (void) bytes.push_back(  0  );
-    (void) bytes.push_back( 'F' );
+    bytes.push_back(  0  );
+    bytes.push_back( 'F' );
 
-    (void) parser.Initialize( &bytes );
+    std::ignore = parser.Initialize( &bytes );
 
     if ( parser.GetSize() not_eq 12 )
     {
@@ -560,8 +560,8 @@ _Check_return_ bool test_CDataParser( _Out_ std::string& class_name, _Out_ int& 
         return( failure() );
     }
 
-    (void) parser.SetTextToASCII( false );
-    (void) parser.SetTextToBigEndian( true );
+    std::ignore = parser.SetTextToASCII( false );
+    std::ignore = parser.SetTextToBigEndian( true );
 
     if ( test_class( parser, test_number_that_failed ) == false )
     {
@@ -587,37 +587,37 @@ _Check_return_ bool test_CDataParser( _Out_ std::string& class_name, _Out_ int& 
 
     bytes.clear();
 
-    (void) bytes.push_back(  0  ); // 1
-    (void) bytes.push_back(  0  ); // 2
-    (void) bytes.push_back(  0  ); // 3
-    (void) bytes.push_back( 'A' ); // 4
+    bytes.push_back(  0  ); // 1
+    bytes.push_back(  0  ); // 2
+    bytes.push_back(  0  ); // 3
+    bytes.push_back( 'A' ); // 4
 
-    (void) bytes.push_back(  0  );
-    (void) bytes.push_back(  0  );
-    (void) bytes.push_back(  0  );
-    (void) bytes.push_back( 'B' );
+    bytes.push_back(  0  );
+    bytes.push_back(  0  );
+    bytes.push_back(  0  );
+    bytes.push_back( 'B' );
 
-    (void) bytes.push_back(  0  );
-    (void) bytes.push_back(  0  );
-    (void) bytes.push_back(  0  );
-    (void) bytes.push_back( 'C' );
+    bytes.push_back(  0  );
+    bytes.push_back(  0  );
+    bytes.push_back(  0  );
+    bytes.push_back( 'C' );
 
-    (void) bytes.push_back(  0  );
-    (void) bytes.push_back(  0  );
-    (void) bytes.push_back(  0  );
-    (void) bytes.push_back( 'D' );
+    bytes.push_back(  0  );
+    bytes.push_back(  0  );
+    bytes.push_back(  0  );
+    bytes.push_back( 'D' );
 
-    (void) bytes.push_back(  0  );
-    (void) bytes.push_back(  0  );
-    (void) bytes.push_back(  0  );
-    (void) bytes.push_back( 'E' );
+    bytes.push_back(  0  );
+    bytes.push_back(  0  );
+    bytes.push_back(  0  );
+    bytes.push_back( 'E' );
 
-    (void) bytes.push_back(  0  );
-    (void) bytes.push_back(  0  );
-    (void) bytes.push_back(  0  );
-    (void) bytes.push_back( 'F' );
+    bytes.push_back(  0  );
+    bytes.push_back(  0  );
+    bytes.push_back(  0  );
+    bytes.push_back( 'F' );
 
-    (void) parser.Initialize( &bytes );
+    std::ignore = parser.Initialize( &bytes );
 
     if ( parser.GetSize() not_eq 24 )
     {
@@ -631,8 +631,8 @@ _Check_return_ bool test_CDataParser( _Out_ std::string& class_name, _Out_ int& 
         return( failure() );
     }
 
-    (void) parser.SetTextToUCS4( true );
-    (void) parser.SetUCS4Order( 1234 );
+    std::ignore = parser.SetTextToUCS4( true );
+    std::ignore = parser.SetUCS4Order( 1234 );
 
     if ( test_class( parser, test_number_that_failed ) == false )
     {
@@ -658,37 +658,37 @@ _Check_return_ bool test_CDataParser( _Out_ std::string& class_name, _Out_ int& 
 
     bytes.clear();
 
-    (void) bytes.push_back(  0  ); // 2
-    (void) bytes.push_back(  0  ); // 1
-    (void) bytes.push_back( 'A' ); // 4
-    (void) bytes.push_back(  0  ); // 3
+    bytes.push_back(  0  ); // 2
+    bytes.push_back(  0  ); // 1
+    bytes.push_back( 'A' ); // 4
+    bytes.push_back(  0  ); // 3
 
-    (void) bytes.push_back(  0  );
-    (void) bytes.push_back(  0  );
-    (void) bytes.push_back( 'B' );
-    (void) bytes.push_back(  0  );
+    bytes.push_back(  0  );
+    bytes.push_back(  0  );
+    bytes.push_back( 'B' );
+    bytes.push_back(  0  );
 
-    (void) bytes.push_back(  0  );
-    (void) bytes.push_back(  0  );
-    (void) bytes.push_back( 'C' );
-    (void) bytes.push_back(  0  );
+    bytes.push_back(  0  );
+    bytes.push_back(  0  );
+    bytes.push_back( 'C' );
+    bytes.push_back(  0  );
 
-    (void) bytes.push_back(  0  );
-    (void) bytes.push_back(  0  );
-    (void) bytes.push_back( 'D' );
-    (void) bytes.push_back(  0  );
+    bytes.push_back(  0  );
+    bytes.push_back(  0  );
+    bytes.push_back( 'D' );
+    bytes.push_back(  0  );
 
-    (void) bytes.push_back(  0  );
-    (void) bytes.push_back(  0  );
-    (void) bytes.push_back( 'E' );
-    (void) bytes.push_back(  0  );
+    bytes.push_back(  0  );
+    bytes.push_back(  0  );
+    bytes.push_back( 'E' );
+    bytes.push_back(  0  );
 
-    (void) bytes.push_back(  0  );
-    (void) bytes.push_back(  0  );
-    (void) bytes.push_back( 'F' );
-    (void) bytes.push_back(  0  );
+    bytes.push_back(  0  );
+    bytes.push_back(  0  );
+    bytes.push_back( 'F' );
+    bytes.push_back(  0  );
 
-    (void) parser.Initialize( &bytes );
+    std::ignore = parser.Initialize( &bytes );
 
     if ( parser.GetSize() not_eq 24 )
     {
@@ -702,8 +702,8 @@ _Check_return_ bool test_CDataParser( _Out_ std::string& class_name, _Out_ int& 
         return( failure() );
     }
 
-    (void) parser.SetTextToUCS4( true );
-    (void) parser.SetUCS4Order( 2143 );
+    std::ignore = parser.SetTextToUCS4( true );
+    std::ignore = parser.SetUCS4Order( 2143 );
 
     if ( test_class( parser, test_number_that_failed ) == false )
     {
@@ -729,37 +729,37 @@ _Check_return_ bool test_CDataParser( _Out_ std::string& class_name, _Out_ int& 
 
     bytes.clear();
 
-    (void) bytes.push_back(  0  ); // 3
-    (void) bytes.push_back( 'A' ); // 4
-    (void) bytes.push_back(  0  ); // 1
-    (void) bytes.push_back(  0  ); // 2
+    bytes.push_back(  0  ); // 3
+    bytes.push_back( 'A' ); // 4
+    bytes.push_back(  0  ); // 1
+    bytes.push_back(  0  ); // 2
 
-    (void) bytes.push_back(  0  );
-    (void) bytes.push_back( 'B' );
-    (void) bytes.push_back(  0  );
-    (void) bytes.push_back(  0  );
+    bytes.push_back(  0  );
+    bytes.push_back( 'B' );
+    bytes.push_back(  0  );
+    bytes.push_back(  0  );
 
-    (void) bytes.push_back(  0  );
-    (void) bytes.push_back( 'C' );
-    (void) bytes.push_back(  0  );
-    (void) bytes.push_back(  0  );
+    bytes.push_back(  0  );
+    bytes.push_back( 'C' );
+    bytes.push_back(  0  );
+    bytes.push_back(  0  );
 
-    (void) bytes.push_back(  0  );
-    (void) bytes.push_back( 'D' );
-    (void) bytes.push_back(  0  );
-    (void) bytes.push_back(  0  );
+    bytes.push_back(  0  );
+    bytes.push_back( 'D' );
+    bytes.push_back(  0  );
+    bytes.push_back(  0  );
 
-    (void) bytes.push_back(  0  );
-    (void) bytes.push_back( 'E' );
-    (void) bytes.push_back(  0  );
-    (void) bytes.push_back(  0  );
+    bytes.push_back(  0  );
+    bytes.push_back( 'E' );
+    bytes.push_back(  0  );
+    bytes.push_back(  0  );
 
-    (void) bytes.push_back(  0  );
-    (void) bytes.push_back( 'F' );
-    (void) bytes.push_back(  0  );
-    (void) bytes.push_back(  0  );
+    bytes.push_back(  0  );
+    bytes.push_back( 'F' );
+    bytes.push_back(  0  );
+    bytes.push_back(  0  );
 
-    (void) parser.Initialize( &bytes );
+    std::ignore = parser.Initialize( &bytes );
 
     if ( parser.GetSize() not_eq 24 )
     {
@@ -773,8 +773,8 @@ _Check_return_ bool test_CDataParser( _Out_ std::string& class_name, _Out_ int& 
         return( failure() );
     }
 
-    (void) parser.SetTextToUCS4( true );
-    (void) parser.SetUCS4Order( 3412 );
+    std::ignore = parser.SetTextToUCS4( true );
+    std::ignore = parser.SetUCS4Order( 3412 );
 
     if ( test_class( parser, test_number_that_failed ) == false )
     {
@@ -800,37 +800,37 @@ _Check_return_ bool test_CDataParser( _Out_ std::string& class_name, _Out_ int& 
 
     bytes.clear();
 
-    (void) bytes.push_back( 'A' ); // 4
-    (void) bytes.push_back(  0  ); // 3
-    (void) bytes.push_back(  0  ); // 2
-    (void) bytes.push_back(  0  ); // 1
+    bytes.push_back( 'A' ); // 4
+    bytes.push_back(  0  ); // 3
+    bytes.push_back(  0  ); // 2
+    bytes.push_back(  0  ); // 1
 
-    (void) bytes.push_back( 'B' );
-    (void) bytes.push_back(  0  );
-    (void) bytes.push_back(  0  );
-    (void) bytes.push_back(  0  );
+    bytes.push_back( 'B' );
+    bytes.push_back(  0  );
+    bytes.push_back(  0  );
+    bytes.push_back(  0  );
 
-    (void) bytes.push_back( 'C' );
-    (void) bytes.push_back(  0  );
-    (void) bytes.push_back(  0  );
-    (void) bytes.push_back(  0  );
+    bytes.push_back( 'C' );
+    bytes.push_back(  0  );
+    bytes.push_back(  0  );
+    bytes.push_back(  0  );
 
-    (void) bytes.push_back( 'D' );
-    (void) bytes.push_back(  0  );
-    (void) bytes.push_back(  0  );
-    (void) bytes.push_back(  0  );
+    bytes.push_back( 'D' );
+    bytes.push_back(  0  );
+    bytes.push_back(  0  );
+    bytes.push_back(  0  );
 
-    (void) bytes.push_back( 'E' );
-    (void) bytes.push_back(  0  );
-    (void) bytes.push_back(  0  );
-    (void) bytes.push_back(  0  );
+    bytes.push_back( 'E' );
+    bytes.push_back(  0  );
+    bytes.push_back(  0  );
+    bytes.push_back(  0  );
 
-    (void) bytes.push_back( 'F' );
-    (void) bytes.push_back(  0  );
-    (void) bytes.push_back(  0  );
-    (void) bytes.push_back(  0  );
+    bytes.push_back( 'F' );
+    bytes.push_back(  0  );
+    bytes.push_back(  0  );
+    bytes.push_back(  0  );
 
-    (void) parser.Initialize( &bytes );
+    std::ignore = parser.Initialize( &bytes );
 
     if ( parser.GetSize() not_eq 24 )
     {
@@ -844,8 +844,8 @@ _Check_return_ bool test_CDataParser( _Out_ std::string& class_name, _Out_ int& 
         return( failure() );
     }
 
-    (void) parser.SetTextToUCS4( true );
-    (void) parser.SetUCS4Order( 4321 );
+    std::ignore = parser.SetTextToUCS4( true );
+    std::ignore = parser.SetUCS4Order( 4321 );
 
     if ( test_class( parser, test_number_that_failed ) == false )
     {
@@ -885,13 +885,13 @@ _Check_return_ bool test_CDataParser( _Out_ std::string& class_name, _Out_ int& 
 
     std::vector<uint8_t> bytes_to_find;
 
-    (void) bytes_to_find.push_back( 'A' );
-    (void) bytes_to_find.push_back( 'B' );
+    bytes_to_find.push_back( 'A' );
+    bytes_to_find.push_back( 'B' );
 
     Win32FoundationClasses::CParsePoint found_at;
     Win32FoundationClasses::CParsePoint here;
 
-    (void) parser.SetTextToASCII( true );
+    std::ignore = parser.SetTextToASCII( true );
 
     if ( parser.Find( here, bytes_to_find, found_at ) == false )
     {
@@ -907,9 +907,9 @@ _Check_return_ bool test_CDataParser( _Out_ std::string& class_name, _Out_ int& 
 
     bytes_to_find.clear();
 
-    (void) bytes_to_find.push_back( 'C' );
-    (void) bytes_to_find.push_back( 'D' );
-    (void) bytes_to_find.push_back( 'E' );
+    bytes_to_find.push_back( 'C' );
+    bytes_to_find.push_back( 'D' );
+    bytes_to_find.push_back( 'E' );
 
     if ( parser.Find( here, bytes_to_find, found_at ) == false )
     {
@@ -925,8 +925,8 @@ _Check_return_ bool test_CDataParser( _Out_ std::string& class_name, _Out_ int& 
 
     bytes_to_find.clear();
 
-    (void) bytes_to_find.push_back( 'C' );
-    (void) bytes_to_find.push_back( 'E' );
+    bytes_to_find.push_back( 'C' );
+    bytes_to_find.push_back( 'E' );
 
     if ( parser.Find( here, bytes_to_find, found_at ) not_eq false )
     {
@@ -936,9 +936,9 @@ _Check_return_ bool test_CDataParser( _Out_ std::string& class_name, _Out_ int& 
 
     bytes_to_find.clear();
 
-    (void) bytes_to_find.push_back( 'C' );
-    (void) bytes_to_find.push_back( 'd' );
-    (void) bytes_to_find.push_back( 'E' );
+    bytes_to_find.push_back( 'C' );
+    bytes_to_find.push_back( 'd' );
+    bytes_to_find.push_back( 'E' );
 
     found_at.Empty();
 

@@ -60,7 +60,7 @@ __checkReturn bool test_CUUCoding( __out std::string& class_name, __out int& tes
 
     for ( auto const index : Range(1024) )
     {
-        (void) bytes_to_encode.push_back( static_cast< uint8_t >( index ) );
+        bytes_to_encode.push_back( static_cast< uint8_t >( index ) );
     }
 
     std::vector<uint8_t> encoded_bytes;

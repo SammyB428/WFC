@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 2000-2021, Samuel R. Blackburn
+** Copyright, 2000-2022, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -52,7 +52,7 @@ static char THIS_FILE[] = __FILE__;
 
 _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& test_number_that_failed ) noexcept
 {
-    class_name.assign(STRING_VIEW("string helpers"));
+    class_name.assign(STRING_VIEW("test_CWideString (string helpers)"));
 
     std::wstring string_1;
 
@@ -244,11 +244,9 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     string_2.assign(WSTRING_VIEW(L"WXYZ"));
 
-    SSIZE_T found_at_index = 0;
-
     string_1.assign(WSTRING_VIEW(L"WXYZ"));
 
-    found_at_index = string_1.find( 'Z' );
+    auto found_at_index{ string_1.find('Z') };
 
     if ( found_at_index not_eq 3 )
     {
@@ -697,9 +695,9 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
         return( failure() );
     }
 
-    long number_of_characters_to_test = INTERNAL_STRING_BUFFER_SIZE * 2;
+    long number_of_characters_to_test{ INTERNAL_STRING_BUFFER_SIZE * 2 };
 
-    std::size_t previous_length = 0;
+    std::size_t previous_length{ 0 };
 
     for ( auto const loop_index : Range(number_of_characters_to_test) )
     {
@@ -1273,11 +1271,11 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
         return( failure() );
     }
 
-    int64_t integer_value = 0;
+    int64_t integer_value{ 0 };
 
     string_5.assign(WSTRING_VIEW(L" 16 "));
 
-    int64_t test_value = Win32FoundationClasses::as_integer(string_5);
+    int64_t test_value{ Win32FoundationClasses::as_integer(string_5) };
 
     if ( test_value not_eq 16 )
     {
@@ -1367,7 +1365,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
         return( failure() );
     }
 
-    static constexpr Win32FoundationClasses::DEFINED_WIDE_STRING defines[] =
+    static constexpr Win32FoundationClasses::DEFINED_WIDE_STRING defines[]
     {
         { 1, L"1" },
         { 2, L"2" },
@@ -1418,7 +1416,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
         return( failure() );
     }
 
-    static constexpr wchar_t const * flags[] =
+    static constexpr wchar_t const * flags[]
     {
         L"0",
         nullptr,
@@ -1483,7 +1481,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
         return( failure() );
     }
 
-    uint64_t test_flags = 1;
+    uint64_t test_flags{ 1 };
 
     test_flags <<= 32;
 
@@ -1497,7 +1495,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     string_5.assign(WSTRING_VIEW(L"'\"'\"5\"'\"'"));
 
-    (void)Win32FoundationClasses::trim_quotes( string_5 );
+    std::ignore = Win32FoundationClasses::trim_quotes( string_5 );
 
     if ( string_5.compare(WSTRING_VIEW(L"\"'\"5\"'\"")) not_eq I_AM_EQUAL_TO_THAT )
     {
@@ -1514,9 +1512,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
     }
 
     string_5.assign(WSTRING_VIEW(L" 1 2 3 4 5 a b c z Y"));
-
     string_5.assign(WSTRING_VIEW(L"ABC123"));
-
     string_4.assign(Win32FoundationClasses::skip_first( string_5, 3 ) );
 
     if ( string_4.compare(WSTRING_VIEW(L"123")) not_eq I_AM_EQUAL_TO_THAT )
@@ -1568,7 +1564,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     Win32FoundationClasses::copy_to( string_5, output_string, std::size( output_string ) );
 
-    if ( wcslen( output_string ) not_eq 6 )
+    if (std::char_traits<wchar_t>::length( output_string ) not_eq 6 )
     {
         test_number_that_failed = 223;
         return( failure() );
@@ -1590,9 +1586,9 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     std::vector<std::wstring> string_array;
 
-    (void) string_array.push_back(L"1a1");
-    (void) string_array.push_back(L"2b2");
-    (void) string_array.push_back(L"1a1");
+    string_array.push_back(L"1a1");
+    string_array.push_back(L"2b2");
+    string_array.push_back(L"1a1");
 
     if ( string_array.size() not_eq 3 )
     {
@@ -1738,7 +1734,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     string_1.assign(WSTRING_VIEW(L"3.14"));
 
-    double const test_double = Win32FoundationClasses::as_double( string_1 );
+    auto const test_double{ Win32FoundationClasses::as_double(string_1) };
 
     if ( test_double < 3.14 or test_double > 3.141 )
     {
@@ -1824,7 +1820,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     std::vector<std::wstring> sorted;
 
-    auto where_it_was_inserted = Win32FoundationClasses::add_to_unique_sorted_vector(WSTRING_VIEW(L"&amp;"), sorted);
+    auto where_it_was_inserted{ Win32FoundationClasses::add_to_unique_sorted_vector(WSTRING_VIEW(L"&amp;"), sorted) };
 
     if (sorted.size() not_eq 1)
     {
@@ -2078,11 +2074,11 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     Win32FoundationClasses::CFileTime ft;
 
-    Win32FoundationClasses::wfc_parse_iso_8601_string(WSTRING_VIEW(L"2014-05-10T19:21:18-0400"), ft);
+    std::ignore = Win32FoundationClasses::wfc_parse_iso_8601_string(WSTRING_VIEW(L"2014-05-10T19:21:18-0400"), ft);
     //{ 0x01D4452FF46E276E, STRING_VIEW("2018-09-05T15:48:56.722622200Z") }, // Real World - Timestamps in EVTX records
-    Win32FoundationClasses::wfc_parse_iso_8601_string(WSTRING_VIEW(L"2018-09-05T15:48:56.722622200Z"), ft);
+    std::ignore = Win32FoundationClasses::wfc_parse_iso_8601_string(WSTRING_VIEW(L"2018-09-05T15:48:56.722622200Z"), ft);
 
-    auto ticks = ft.Ticks();
+    auto ticks{ ft.Ticks() };
 
     if (ticks not_eq 0x01D4452FF46E276EULL)
     {
@@ -2230,7 +2226,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     sorted2.clear();
 
-    Win32FoundationClasses::add_to_unique_sorted_vector_ignore_case(STRING_VIEW("keyID"), sorted2);
+    std::ignore = Win32FoundationClasses::add_to_unique_sorted_vector_ignore_case(STRING_VIEW("keyID"), sorted2);
 
     if (sorted2.size() not_eq 1)
     {
@@ -2244,7 +2240,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
         return(failure());
     }
 
-    Win32FoundationClasses::add_to_unique_sorted_vector_ignore_case(STRING_VIEW("locationKey"), sorted2);
+    std::ignore = Win32FoundationClasses::add_to_unique_sorted_vector_ignore_case(STRING_VIEW("locationKey"), sorted2);
 
     if (sorted2.size() not_eq 2)
     {
@@ -2259,7 +2255,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
         return(failure());
     }
 
-    Win32FoundationClasses::add_to_unique_sorted_vector_ignore_case(STRING_VIEW("typeName"), sorted2);
+    std::ignore = Win32FoundationClasses::add_to_unique_sorted_vector_ignore_case(STRING_VIEW("typeName"), sorted2);
 
     if (sorted2.size() not_eq 3)
     {
@@ -2275,7 +2271,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
         return(failure());
     }
 
-    Win32FoundationClasses::add_to_unique_sorted_vector_ignore_case(STRING_VIEW("uuid"), sorted2);
+    std::ignore = Win32FoundationClasses::add_to_unique_sorted_vector_ignore_case(STRING_VIEW("uuid"), sorted2);
 
     if (sorted2.size() not_eq 4)
     {
@@ -2292,7 +2288,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
         return(failure());
     }
 
-    Win32FoundationClasses::add_to_unique_sorted_vector_ignore_case(STRING_VIEW("createdAt"), sorted2);
+    std::ignore = Win32FoundationClasses::add_to_unique_sorted_vector_ignore_case(STRING_VIEW("createdAt"), sorted2);
 
     if (sorted2.size() not_eq 5)
     {
@@ -2310,7 +2306,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
         return(failure());
     }
 
-    Win32FoundationClasses::add_to_unique_sorted_vector_ignore_case(STRING_VIEW("securityLevel"), sorted2);
+    std::ignore = Win32FoundationClasses::add_to_unique_sorted_vector_ignore_case(STRING_VIEW("securityLevel"), sorted2);
 
     if (sorted2.size() not_eq 6)
     {
@@ -2329,7 +2325,7 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
         return(failure());
     }
 
-    Win32FoundationClasses::add_to_unique_sorted_vector_ignore_case(STRING_VIEW("autosubmit"), sorted2);
+    std::ignore = Win32FoundationClasses::add_to_unique_sorted_vector_ignore_case(STRING_VIEW("autosubmit"), sorted2);
 
     if (sorted2.size() not_eq 7)
     {
@@ -2349,9 +2345,9 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
         return(failure());
     }
 
-    auto needle = STRING_VIEW("uuid");
+    auto needle{ STRING_VIEW("uuid") };
 
-    auto lower = std::lower_bound(std::cbegin(sorted2), std::cend(sorted2), needle, Win32FoundationClasses::compare_strings_ignoring_case);
+    auto lower{ std::lower_bound(std::cbegin(sorted2), std::cend(sorted2), needle, Win32FoundationClasses::compare_strings_ignoring_case) };
 
     if (Win32FoundationClasses::it_was_found_ignoring_case(lower, needle, sorted2) == false)
     {
@@ -2431,10 +2427,10 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
 
     sorted2.clear();
 
-    (void)Win32FoundationClasses::add_to_unique_sorted_vector(STRING_VIEW("ccc"), sorted2);
-    (void)Win32FoundationClasses::add_to_unique_sorted_vector(STRING_VIEW("bbb"), sorted2);
-    (void)Win32FoundationClasses::add_to_unique_sorted_vector(STRING_VIEW("aaa"), sorted2);
-    (void)Win32FoundationClasses::add_to_unique_sorted_vector(STRING_VIEW("zzz"), sorted2);
+    std::ignore = Win32FoundationClasses::add_to_unique_sorted_vector(STRING_VIEW("ccc"), sorted2);
+    std::ignore = Win32FoundationClasses::add_to_unique_sorted_vector(STRING_VIEW("bbb"), sorted2);
+    std::ignore = Win32FoundationClasses::add_to_unique_sorted_vector(STRING_VIEW("aaa"), sorted2);
+    std::ignore = Win32FoundationClasses::add_to_unique_sorted_vector(STRING_VIEW("zzz"), sorted2);
 
     needle = STRING_VIEW("aaa");
 
@@ -2476,12 +2472,12 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
         return(failure());
     }
 
-    auto const c1 = _wcsicmp(L"gb-18030", L"GBK");
-    auto const c11 = _wcsicmp(L"gb-18030", L"");
-    auto const c12 = _wcsicmp(L"gb-18030", L"gb");
-    auto const c2 = Win32FoundationClasses::compare_no_case(WSTRING_VIEW(L"gb-18030"), WSTRING_VIEW(L"GBK"));
-    auto const c21 = Win32FoundationClasses::compare_no_case(WSTRING_VIEW(L"gb-18030"), WSTRING_VIEW(L""));
-    auto const c22 = Win32FoundationClasses::compare_no_case(WSTRING_VIEW(L"gb-18030"), WSTRING_VIEW(L"gb"));
+    auto const c1{ _wcsicmp(L"gb-18030", L"GBK") };
+    auto const c11{ _wcsicmp(L"gb-18030", L"") };
+    auto const c12{ _wcsicmp(L"gb-18030", L"gb") };
+    auto const c2{ Win32FoundationClasses::compare_no_case(WSTRING_VIEW(L"gb-18030"), WSTRING_VIEW(L"GBK")) };
+    auto const c21{ Win32FoundationClasses::compare_no_case(WSTRING_VIEW(L"gb-18030"), WSTRING_VIEW(L"")) };
+    auto const c22{ Win32FoundationClasses::compare_no_case(WSTRING_VIEW(L"gb-18030"), WSTRING_VIEW(L"gb")) };
 
     if ((c1 < 0) not_eq (c2 < 0))
     {
@@ -2501,12 +2497,12 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
         return(failure());
     }
 
-    auto const k1 = _stricmp("gb-18030", "GBK");
-    auto const k11 = _stricmp("gb-18030", "");
-    auto const k12 = _stricmp("gb-18030", "gb");
-    auto const k2 = Win32FoundationClasses::compare_no_case(STRING_VIEW("gb-18030"), STRING_VIEW("GBK"));
-    auto const k21 = Win32FoundationClasses::compare_no_case(STRING_VIEW("gb-18030"), STRING_VIEW(""));
-    auto const k22 = Win32FoundationClasses::compare_no_case(STRING_VIEW("gb-18030"), STRING_VIEW("gb"));
+    auto const k1{ _stricmp("gb-18030", "GBK") };
+    auto const k11{ _stricmp("gb-18030", "") };
+    auto const k12{ _stricmp("gb-18030", "gb") };
+    auto const k2{ Win32FoundationClasses::compare_no_case(STRING_VIEW("gb-18030"), STRING_VIEW("GBK")) };
+    auto const k21{ Win32FoundationClasses::compare_no_case(STRING_VIEW("gb-18030"), STRING_VIEW("")) };
+    auto const k22{ Win32FoundationClasses::compare_no_case(STRING_VIEW("gb-18030"), STRING_VIEW("gb")) };
 
     if ((k1 < 0) not_eq (k2 < 0))
     {
@@ -2547,27 +2543,31 @@ _Check_return_ bool test_CWideString( _Out_ std::string& class_name, _Out_ int& 
     }
 
     // The following test to make sure wfc_parse_iso_8601_string() doesn't blow up with a string out of bounds read
-    Win32FoundationClasses::wfc_parse_iso_8601_string(WSTRING_VIEW(L"2015-07-01T06:41:04-05:00"), ft);
-    Win32FoundationClasses::wfc_parse_iso_8601_string(WSTRING_VIEW(L"2015-07-01T06:41:04-05:0"), ft);
-    Win32FoundationClasses::wfc_parse_iso_8601_string(WSTRING_VIEW(L"2015-07-01T06:41:04-05:"), ft);
-    Win32FoundationClasses::wfc_parse_iso_8601_string(WSTRING_VIEW(L"2015-07-01T06:41:04-05"), ft);
-    Win32FoundationClasses::wfc_parse_iso_8601_string(WSTRING_VIEW(L"2015-07-01T06:41:04-0"), ft);
-    Win32FoundationClasses::wfc_parse_iso_8601_string(WSTRING_VIEW(L"2015-07-01T06:41:04-"), ft);
-    Win32FoundationClasses::wfc_parse_iso_8601_string(WSTRING_VIEW(L"2015-07-01T06:41:04"), ft);
-    Win32FoundationClasses::wfc_parse_iso_8601_string(WSTRING_VIEW(L"2015-07-01T06:41:"), ft);
-    Win32FoundationClasses::wfc_parse_iso_8601_string(WSTRING_VIEW(L"2015-07-01T06:41"), ft);
-    Win32FoundationClasses::wfc_parse_iso_8601_string(WSTRING_VIEW(L"2015-07-01T06:4"), ft);
-    Win32FoundationClasses::wfc_parse_iso_8601_string(WSTRING_VIEW(L"2015-07-01T06:"), ft);
-    Win32FoundationClasses::wfc_parse_iso_8601_string(WSTRING_VIEW(L"2015-07-01T06"), ft);
-    Win32FoundationClasses::wfc_parse_iso_8601_string(WSTRING_VIEW(L"2015-07-01T0"), ft);
-    Win32FoundationClasses::wfc_parse_iso_8601_string(WSTRING_VIEW(L"2015-07-01T"), ft);
-    Win32FoundationClasses::wfc_parse_iso_8601_string(WSTRING_VIEW(L"2015-07-01"), ft);
-    Win32FoundationClasses::wfc_parse_iso_8601_string(WSTRING_VIEW(L"2015-07-0"), ft);
-    Win32FoundationClasses::wfc_parse_iso_8601_string(WSTRING_VIEW(L"2015-07-"), ft);
-    Win32FoundationClasses::wfc_parse_iso_8601_string(WSTRING_VIEW(L"2015-07"), ft);
-    Win32FoundationClasses::wfc_parse_iso_8601_string(WSTRING_VIEW(L"2015-0"), ft);
-    Win32FoundationClasses::wfc_parse_iso_8601_string(WSTRING_VIEW(L"2015-"), ft);
-    Win32FoundationClasses::wfc_parse_iso_8601_string(WSTRING_VIEW(L"2015"), ft);
+    std::ignore = Win32FoundationClasses::wfc_parse_iso_8601_string(WSTRING_VIEW(L"2015-07-01T06:41:04-05:00"), ft);
+    std::ignore = Win32FoundationClasses::wfc_parse_iso_8601_string(WSTRING_VIEW(L"2015-07-01T06:41:04-05:0"), ft);
+    std::ignore = Win32FoundationClasses::wfc_parse_iso_8601_string(WSTRING_VIEW(L"2015-07-01T06:41:04-05:"), ft);
+    std::ignore = Win32FoundationClasses::wfc_parse_iso_8601_string(WSTRING_VIEW(L"2015-07-01T06:41:04-05"), ft);
+    std::ignore = Win32FoundationClasses::wfc_parse_iso_8601_string(WSTRING_VIEW(L"2015-07-01T06:41:04-0"), ft);
+    std::ignore = Win32FoundationClasses::wfc_parse_iso_8601_string(WSTRING_VIEW(L"2015-07-01T06:41:04-"), ft);
+    std::ignore = Win32FoundationClasses::wfc_parse_iso_8601_string(WSTRING_VIEW(L"2015-07-01T06:41:04"), ft);
+    std::ignore = Win32FoundationClasses::wfc_parse_iso_8601_string(WSTRING_VIEW(L"2015-07-01T06:41:"), ft);
+    std::ignore = Win32FoundationClasses::wfc_parse_iso_8601_string(WSTRING_VIEW(L"2015-07-01T06:41"), ft);
+    std::ignore = Win32FoundationClasses::wfc_parse_iso_8601_string(WSTRING_VIEW(L"2015-07-01T06:4"), ft);
+    std::ignore = Win32FoundationClasses::wfc_parse_iso_8601_string(WSTRING_VIEW(L"2015-07-01T06:"), ft);
+    std::ignore = Win32FoundationClasses::wfc_parse_iso_8601_string(WSTRING_VIEW(L"2015-07-01T06"), ft);
+    std::ignore = Win32FoundationClasses::wfc_parse_iso_8601_string(WSTRING_VIEW(L"2015-07-01T0"), ft);
+    std::ignore = Win32FoundationClasses::wfc_parse_iso_8601_string(WSTRING_VIEW(L"2015-07-01T"), ft);
+    std::ignore = Win32FoundationClasses::wfc_parse_iso_8601_string(WSTRING_VIEW(L"2015-07-01"), ft);
+    std::ignore = Win32FoundationClasses::wfc_parse_iso_8601_string(WSTRING_VIEW(L"2015-07-0"), ft);
+    std::ignore = Win32FoundationClasses::wfc_parse_iso_8601_string(WSTRING_VIEW(L"2015-07-"), ft);
+    std::ignore = Win32FoundationClasses::wfc_parse_iso_8601_string(WSTRING_VIEW(L"2015-07"), ft);
+    std::ignore = Win32FoundationClasses::wfc_parse_iso_8601_string(WSTRING_VIEW(L"2015-0"), ft);
+    std::ignore = Win32FoundationClasses::wfc_parse_iso_8601_string(WSTRING_VIEW(L"2015-"), ft);
+    std::ignore = Win32FoundationClasses::wfc_parse_iso_8601_string(WSTRING_VIEW(L"2015"), ft);
+    std::ignore = Win32FoundationClasses::wfc_parse_iso_8601_string(WSTRING_VIEW(L"201"), ft);
+    std::ignore = Win32FoundationClasses::wfc_parse_iso_8601_string(WSTRING_VIEW(L"20"), ft);
+    std::ignore = Win32FoundationClasses::wfc_parse_iso_8601_string(WSTRING_VIEW(L"2"), ft);
+    std::ignore = Win32FoundationClasses::wfc_parse_iso_8601_string(WSTRING_VIEW(L""), ft);
 
     test_number_that_failed = 342;
     return( true );

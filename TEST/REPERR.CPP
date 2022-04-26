@@ -52,17 +52,15 @@ static char THIS_FILE[] = __FILE__;
 
 void ReportError( __in DWORD const error_code ) noexcept
 {
-   LPVOID lpMessageBuffer = nullptr;
+   LPVOID lpMessageBuffer{ nullptr };
 
-   FormatMessage(
-  FORMAT_MESSAGE_ALLOCATE_BUFFER bitor
-  FORMAT_MESSAGE_FROM_SYSTEM,
-  NULL,
-  error_code,
-  MAKELANGID(LANG_ENGLISH, SUBLANG_ENGLISH_US),
-  (LPTSTR) &lpMessageBuffer,
-  0,
-  NULL );
+   FormatMessage( FORMAT_MESSAGE_ALLOCATE_BUFFER bitor FORMAT_MESSAGE_FROM_SYSTEM,
+                  NULL,
+                  error_code,
+                  MAKELANGID(LANG_ENGLISH, SUBLANG_ENGLISH_US),
+        (LPTSTR) &lpMessageBuffer,
+                  0,
+                  NULL );
 
    OutputDebugString( (LPCTSTR) lpMessageBuffer );
    OutputDebugString( TEXT( "\n" ) );

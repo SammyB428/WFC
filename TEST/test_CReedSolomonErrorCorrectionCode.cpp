@@ -60,7 +60,7 @@ _Check_return_ bool test_CReedSolomonErrorCorrectionCode( __out std::string& cla
 
     Win32FoundationClasses::CRandomNumberGenerator2 random_number; // 1853265048
 
-    int test_set_size = 4096;
+    int test_set_size{ 4096 };
 
     std::vector<uint8_t> data;
 
@@ -68,7 +68,7 @@ _Check_return_ bool test_CReedSolomonErrorCorrectionCode( __out std::string& cla
 
     for ( auto const loop_index : Range(test_set_size) )
     {
-        (void) data.push_back( static_cast< BYTE >( random_number.GetInteger() ) );
+        data.push_back( static_cast< BYTE >( random_number.GetInteger() ) );
     }
 
     std::vector<uint8_t> encoded_data;
@@ -86,11 +86,11 @@ _Check_return_ bool test_CReedSolomonErrorCorrectionCode( __out std::string& cla
 
     std::size_t number_of_errors_to_introduce = encoded_data.size();
 
-    int error_number                  = 0;
-    int bit_number_to_smash           = 0;
-    int number_of_errors_introduced   = 0;
+    int error_number{ 0 };
+    int bit_number_to_smash{ 0 };
+    int number_of_errors_introduced{ 0 };
 
-    DWORD value = 0;
+    DWORD value{ 0 };
 
     while( error_number < number_of_errors_to_introduce ) // Cannot be converted to a Range loop
     {

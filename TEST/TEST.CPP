@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 2000-2020, Samuel R. Blackburn
+** Copyright, 2000-2022, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -67,35 +67,39 @@ _Check_return_ int _tmain( _In_ int const number_of_command_line_arguments, _In_
 {
    WFCTRACEINIT( TEXT( "_tmain()" ) );
 
-   wchar_t const * ss = L"12,34,56,78,";
+   std::wstring errrrr;
+
+   Win32FoundationClasses::wfc_get_error_string(12007, errrrr);
+
+   wchar_t const* ss{ L"12,34,56,78," };
 
    std::vector<std::wstring_view> views;
 
-   Win32FoundationClasses::split_view(ss, wcslen(ss), ',', views);
+   Win32FoundationClasses::split_view(ss, std::char_traits<wchar_t>::length(ss), ',', views);
 
    std::string s3(STRING_VIEW("   abc "));
-   auto lt = Win32FoundationClasses::trim_left_view(s3);
-   auto rt = Win32FoundationClasses::trim_right_view(lt);
-   auto tt = Win32FoundationClasses::trim_view(s3);
-   auto t3 = Win32FoundationClasses::trim_view(STRING_VIEW("      "));
+   auto lt{ Win32FoundationClasses::trim_left_view(s3) };
+   auto rt{ Win32FoundationClasses::trim_right_view(lt) };
+   auto tt{ Win32FoundationClasses::trim_view(s3) };
+   auto t3{ Win32FoundationClasses::trim_view(STRING_VIEW("      ")) };
 
    std::wstring s4(WSTRING_VIEW(L"   xyz "));
-   auto wlt = Win32FoundationClasses::trim_left_view(s4);
-   auto wrt = Win32FoundationClasses::trim_right_view(wlt);
-   auto wtt = Win32FoundationClasses::trim_view(s4);
-   auto wt3 = Win32FoundationClasses::trim_view(WSTRING_VIEW(L"      "));
+   auto wlt{ Win32FoundationClasses::trim_left_view(s4) };
+   auto wrt{ Win32FoundationClasses::trim_right_view(wlt) };
+   auto wtt{ Win32FoundationClasses::trim_view(s4) };
+   auto wt3{ Win32FoundationClasses::trim_view(WSTRING_VIEW(L"      ")) };
 
    WFC_INITIALIZE_SINGLE_THREADED_COM();
 
-   IMultiLanguage2 * i = nullptr;
+   IMultiLanguage2 * i{ nullptr };
 
-   GUID const mlang_class_id = { 0x275c23e2, 0x3747, 0x11d0, 0x9f, 0xea, 0x00, 0xaa, 0x00, 0x3f, 0x86, 0x46 };
-   GUID const interface_id   = { 0xdccfc164, 0x2b38, 0x11d2, 0xb7, 0xec, 0x00, 0xc0, 0x4f, 0x8f, 0x5d, 0x9a };
+   GUID const mlang_class_id{ 0x275c23e2, 0x3747, 0x11d0, 0x9f, 0xea, 0x00, 0xaa, 0x00, 0x3f, 0x86, 0x46 };
+   GUID const interface_id{ 0xdccfc164, 0x2b38, 0x11d2, 0xb7, 0xec, 0x00, 0xc0, 0x4f, 0x8f, 0x5d, 0x9a };
 
-   auto result = CoCreateInstance( mlang_class_id, NULL,
+   auto result{ ::CoCreateInstance(mlang_class_id, NULL,
       CLSCTX_INPROC_SERVER bitor CLSCTX_LOCAL_SERVER,
       interface_id,
-      (LPVOID *) &i );
+      (LPVOID*)&i) };
 
    // You can view the thread name by putting "(char*)((DW(@TIB)+0x14))"
    // as a variable in the debugger's watch window
@@ -107,9 +111,9 @@ _Check_return_ int _tmain( _In_ int const number_of_command_line_arguments, _In_
 
    WFCTRACE( operating_system_version_string.c_str() );
 
-   bool saw_zero = false;
-   bool saw_one = false;
-   bool saw_two = false;
+   bool saw_zero{ false };
+   bool saw_one{ false };
+   bool saw_two{ false };
 
    for (auto const index : Range(3))
    {
@@ -193,7 +197,7 @@ _Check_return_ int _tmain( _In_ int const number_of_command_line_arguments, _In_
    // before CBase64Coding (higher in the list). This way, if
    // CBase64Coding fails, you know it is not a problem with
 
-   constexpr TEST_FUNCTION const tests[] =
+   constexpr TEST_FUNCTION const tests[]
    {
       test_find,
       test_is,
@@ -235,17 +239,17 @@ _Check_return_ int _tmain( _In_ int const number_of_command_line_arguments, _In_
    }
 #endif
 
-   int test_number_that_failed = 0;
+   int test_number_that_failed{ 0 };
 
    std::string class_name;
 
-   int total_number_of_tests = 0;
+   int total_number_of_tests{ 0 };
 
    std::wstring number_of_tests_string;
 
    for ( auto const loop_index : Range( std::size( tests ) ) )
    {
-      auto test_function = tests[ loop_index ];
+      auto test_function{ tests[loop_index] };
 
       if ( test_function( class_name, test_number_that_failed ) == false )
       {
@@ -280,7 +284,7 @@ _Check_return_ int _tmain( _In_ int const number_of_command_line_arguments, _In_
    Win32FoundationClasses::format_number( number_of_classes, std::size( tests ) );
    Win32FoundationClasses::format_number( number_of_tests_string, static_cast<int64_t>(total_number_of_tests) );
 
-   wprintf( L"All %s classes PASSED %s tests!\n", number_of_classes.c_str(), number_of_tests_string.c_str() );
+   wprintf( L"All %s classes PASSED %s tests.\n", number_of_classes.c_str(), number_of_tests_string.c_str() );
    return( EXIT_SUCCESS );
 }
 

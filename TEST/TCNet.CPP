@@ -101,7 +101,7 @@ _Check_return_ bool test_CNetWorkstation( _Out_ std::string& class_name, _Out_ i
       WCHAR wide_machine_name[ 256 ];
       WCHAR wide_domain_name[ 256 ];
 
-      LPSTR buffer = NULL;
+      LPSTR buffer{ NULL };
 
       ZeroMemory( wide_machine_name, sizeof( wide_machine_name ) );
       ZeroMemory( wide_domain_name,  sizeof( wide_domain_name  ) );
@@ -149,7 +149,7 @@ _Check_return_ bool test_CNetWorkstation( _Out_ std::string& class_name, _Out_ i
    }
    else
    {
-      DWORD error_code = workstation.GetErrorCode();
+      auto const error_code{ workstation.GetErrorCode() };
 
       std::wstring error_message;
 

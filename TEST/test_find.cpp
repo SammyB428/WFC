@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 2000-2019, Samuel R. Blackburn
+** Copyright, 2000-2022, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -52,9 +52,9 @@ static char THIS_FILE[] = __FILE__;
 
 static _Check_return_ std::size_t fill_buffer_with_test_pattern(_Inout_ uint8_t * buffer, _In_ std::size_t const buffer_size, _In_ uint8_t const needle, _In_ std::size_t const test_number) noexcept
 {
-    std::size_t number_of_bytes_written = 0;
+    std::size_t number_of_bytes_written{ 0 };
 
-    std::size_t const frequency = test_number + 1;
+    std::size_t const frequency{ test_number + 1 };
 
     for ( auto const buffer_index : Range(buffer_size))
     {
@@ -70,7 +70,7 @@ static _Check_return_ std::size_t fill_buffer_with_test_pattern(_Inout_ uint8_t 
 
 static _Check_return_ std::size_t prepare_buffer(_Inout_ uint8_t * buffer, _In_ std::size_t const buffer_size) noexcept
 {
-    static constexpr uint8_t const _pattern[] =
+    static constexpr uint8_t const _pattern[]
     {//  0     1    2    3    4    5    6    7    8    9   10   11   12   13   14   15   16   17   18   19   20   21   22   23   24   25   26   27   28   29   30   31 
 /*  0 */ HAY, HAY, HAY, HAY, HAY, HAY, HAY, HAY, HAY, HAY, HAY, HAY, HAY, HAY, HAY, HAY, HAY, HAY, HAY, HAY, HAY, HAY, HAY, HAY, HAY, HAY, HAY, HAY, HAY, HAY, HAY, HAY,
        //  0     1    2    3    4    5    6    7    8    9    10   11   12   13   14   15   16   17   18   19   20   21   22   23   24   25   26   27   28   29   30   31 
@@ -120,7 +120,7 @@ static _Check_return_ std::size_t prepare_buffer(_Inout_ uint8_t * buffer, _In_ 
 
     static constexpr std::size_t const number_of_needles = 32 + 32 + 2 + 4;
 
-    std::size_t return_value = 0;
+    std::size_t return_value{ 0 };
 
     memset(buffer, HAY, buffer_size);
 
@@ -131,11 +131,11 @@ static _Check_return_ std::size_t prepare_buffer(_Inout_ uint8_t * buffer, _In_ 
         return(0);
     }
 
-    std::size_t buffer_index = 0;
-    std::size_t chunk_index = 0;
-    std::size_t number_of_bytes_remaining = 0;
+    std::size_t buffer_index{ 0 };
+    std::size_t chunk_index{ 0 };
+    std::size_t number_of_bytes_remaining{ 0 };
 
-    std::size_t end_of_buffer = buffer_size;
+    std::size_t end_of_buffer{ buffer_size };
 
     if ((buffer_size % sizeof(_pattern)) not_eq 0)
     {
@@ -158,17 +158,15 @@ static _Check_return_ std::size_t prepare_buffer(_Inout_ uint8_t * buffer, _In_ 
 
 static _Check_return_ std::size_t search_buffer(_Inout_ uint8_t * buffer, _In_ std::size_t const buffer_size, _In_ uint8_t const value ) noexcept
 {
-    std::size_t number_of_times_found = 0;
-
-    std::size_t buffer_index = 0;
-
-    std::size_t number_of_bytes_remaining = buffer_size;
+    std::size_t number_of_times_found{ 0 };
+    std::size_t buffer_index{ 0 };
+    std::size_t number_of_bytes_remaining{ buffer_size };
 
     uint8_t needle[1];
 
     needle[0] = value;
 
-    int64_t found_at = Win32FoundationClasses::find_in_memory(&buffer[buffer_index], number_of_bytes_remaining, needle, sizeof(needle));
+    auto found_at{ Win32FoundationClasses::find_in_memory(&buffer[buffer_index], number_of_bytes_remaining, needle, sizeof(needle)) };
 
     while (found_at not_eq BYTES_NOT_FOUND)
     {
@@ -187,7 +185,7 @@ static _Check_return_ std::size_t search_buffer(_Inout_ uint8_t * buffer, _In_ s
 
 __checkReturn bool execute_test(_In_ uint8_t const * buffer, _In_ int64_t const should_be_found_at) noexcept
 {
-    auto const found_at = Win32FoundationClasses::find_byte(NEEDLE, buffer, 32);
+    auto const found_at{ Win32FoundationClasses::find_byte(NEEDLE, buffer, 32) };
 
     if (found_at not_eq should_be_found_at)
     {
@@ -202,7 +200,7 @@ __checkReturn bool execute_test(_In_ uint8_t const * buffer, _In_ int64_t const 
             printf("The byte at offset %" PRId64 " is %02X (not NEEDLE). The test buffer is flawed\n", should_be_found_at, (int)buffer[should_be_found_at]);
         }
 
-        int loop_index = 0;
+        int loop_index{ 0 };
 
         while (loop_index < 32)
         {
@@ -250,7 +248,7 @@ __checkReturn bool test_find(__out std::string& class_name, __out int& test_numb
         test_buffer[loop_index - 1] = 'A';
     }
 
-    auto buffer = reinterpret_cast<uint8_t *>(_aligned_malloc(TEST_FIND_BUFFER_SIZE, 4096));
+    auto buffer{ reinterpret_cast<uint8_t*>(_aligned_malloc(TEST_FIND_BUFFER_SIZE, 4096)) };
 
     memset(buffer, 0xFF, TEST_FIND_BUFFER_SIZE);
 
@@ -454,10 +452,10 @@ __checkReturn bool test_find(__out std::string& class_name, __out int& test_numb
         return(failure());
     }
 
-    std::size_t offset = 0;
+    std::size_t offset{ 0 };
 
-    std::size_t const number_of_tests = prepare_buffer(buffer, TEST_FIND_BUFFER_SIZE);
-    std::size_t const number_of_times_found = search_buffer(buffer, TEST_FIND_BUFFER_SIZE, NEEDLE);
+    auto const number_of_tests{ prepare_buffer(buffer, TEST_FIND_BUFFER_SIZE) };
+    auto const number_of_times_found{ search_buffer(buffer, TEST_FIND_BUFFER_SIZE, NEEDLE) };
 
 #if 0
     // Now gather some timings from the different search methods.
@@ -535,7 +533,7 @@ __checkReturn bool test_find(__out std::string& class_name, __out int& test_numb
 
     std::vector<uint64_t> results;
 
-    constexpr uint8_t const sam_needle[4] = { 'S', 'a', 'm', 'B' };
+    constexpr uint8_t const sam_needle[4]{ 'S', 'a', 'm', 'B' };
 
     Win32FoundationClasses::find_all_in_memory(buffer, TEST_FIND_BUFFER_SIZE, sam_needle, sizeof(sam_needle), results);
 

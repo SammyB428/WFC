@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 2000-2016, Samuel R. Blackburn
+** Copyright, 2000-2022, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -50,20 +50,20 @@ _Check_return_ bool test_is( _Out_ std::string& class_name, _Out_ int& test_numb
 {
    class_name.assign(STRING_VIEW("test_is"));
 
-   auto good_plain_ascii_guid = STRING_VIEW("0AEE2A9F-BCBB-11d0-8C72-00C04FC2B085");
-   auto good_plain_wide_guid  = WSTRING_VIEW(L"0aee2A9F-BCBB-11d0-8C72-00C04FC2B085");
-   auto good_curly_ascii_guid = STRING_VIEW("{0AEE2A9F-BCBB-11d0-8C72-00C04FC2B085}");
-   auto good_curly_wide_guid  = WSTRING_VIEW(L"{0aee2A9F-BCBB-11d0-8C72-00C04FC2B085}");
+   auto good_plain_ascii_guid {    STRING_VIEW("0AEE2A9F-BCBB-11d0-8C72-00C04FC2B085")};
+   auto good_plain_wide_guid  {  WSTRING_VIEW(L"0aee2A9F-BCBB-11d0-8C72-00C04FC2B085")};
+   auto good_curly_ascii_guid {   STRING_VIEW("{0AEE2A9F-BCBB-11d0-8C72-00C04FC2B085}")};
+   auto good_curly_wide_guid  { WSTRING_VIEW(L"{0aee2A9F-BCBB-11d0-8C72-00C04FC2B085}")};
 
-   auto bad1_plain_ascii_guid = STRING_VIEW("0AEE2A9F-BCBB-11d0-8C72 00C04FC2B085");
-   auto bad1_plain_wide_guid  = WSTRING_VIEW(L"0aee2A9F-BCBB-11d0-8C72 00C04FC2B085");
-   auto bad1_curly_ascii_guid = STRING_VIEW("{0AEE2A9F-BCBB-11d0-8C72 00C04FC2B085}");
-   auto bad1_curly_wide_guid  = WSTRING_VIEW(L"{0aee2A9F-BCBB-11d0-8C72 00C04FC2B085}");
+   auto bad1_plain_ascii_guid {    STRING_VIEW("0AEE2A9F-BCBB-11d0-8C72 00C04FC2B085")};
+   auto bad1_plain_wide_guid  {  WSTRING_VIEW(L"0aee2A9F-BCBB-11d0-8C72 00C04FC2B085")};
+   auto bad1_curly_ascii_guid {   STRING_VIEW("{0AEE2A9F-BCBB-11d0-8C72 00C04FC2B085}")};
+   auto bad1_curly_wide_guid  { WSTRING_VIEW(L"{0aee2A9F-BCBB-11d0-8C72 00C04FC2B085}")};
 
-   auto bad2_plain_ascii_guid = STRING_VIEW("0AEE2A9F-BCBB-11d0-8C72-00C04FC2B08O");
-   auto bad2_plain_wide_guid  = WSTRING_VIEW(L"0aee2A9F-BCBB-11d0-8C72-00C04FC2B08O");
-   auto bad2_curly_ascii_guid = STRING_VIEW("{0AEE2A9F-BCBB-11d0-8C72-00C04FC2B08O}");
-   auto bad2_curly_wide_guid  = WSTRING_VIEW(L"{0aee2A9F-BCBB-11d0-8C72-00C04FC2B08O}");
+   auto bad2_plain_ascii_guid {    STRING_VIEW("0AEE2A9F-BCBB-11d0-8C72-00C04FC2B08O")};
+   auto bad2_plain_wide_guid  {  WSTRING_VIEW(L"0aee2A9F-BCBB-11d0-8C72-00C04FC2B08O")};
+   auto bad2_curly_ascii_guid {   STRING_VIEW("{0AEE2A9F-BCBB-11d0-8C72-00C04FC2B08O}")};
+   auto bad2_curly_wide_guid  { WSTRING_VIEW(L"{0aee2A9F-BCBB-11d0-8C72-00C04FC2B08O}")};
 
    if (Win32FoundationClasses::wfc_is_guid( good_plain_ascii_guid ) == false )
    {
@@ -163,14 +163,14 @@ _Check_return_ bool test_is( _Out_ std::string& class_name, _Out_ int& test_numb
        return( failure() );
    }
 
-   if (Win32FoundationClasses::is_bad_handle( (HANDLE) NULL ) == false )
+   if (Win32FoundationClasses::is_bad_handle( static_cast<HANDLE>(NULL) ) == false )
    {
        class_name.assign(STRING_VIEW("NULL is not a valid handle"));
        test_number_that_failed = 15;
        return( failure() );
    }
 
-   if (Win32FoundationClasses::is_bad_handle( (HANDLE) INVALID_HANDLE_VALUE ) == false )
+   if (Win32FoundationClasses::is_bad_handle( static_cast<HANDLE>(INVALID_HANDLE_VALUE) ) == false )
    {
        class_name.assign(STRING_VIEW("INVALID_HANDLE_VALUE is not a valid handle"));
        test_number_that_failed = 16;
@@ -263,11 +263,11 @@ _Check_return_ bool test_is( _Out_ std::string& class_name, _Out_ int& test_numb
        return(failure());
    }
 
-   wchar_t const* ss = L"12,34,56,78,";
+   auto ss{ L"12,34,56,78," };
 
    std::vector<std::wstring_view> views;
 
-   Win32FoundationClasses::split_view(ss, wcslen(ss), ',', views);
+   Win32FoundationClasses::split_view(ss, std::char_traits<wchar_t>::length(ss), ',', views);
 
    if (views.size() not_eq 5)
    {
@@ -307,7 +307,7 @@ _Check_return_ bool test_is( _Out_ std::string& class_name, _Out_ int& test_numb
 
    ss = L"78,56,34,12";
 
-   Win32FoundationClasses::split_view(ss, wcslen(ss), ',', views);
+   Win32FoundationClasses::split_view(ss, std::char_traits<wchar_t>::length(ss), ',', views);
 
    if (views.size() not_eq 4)
    {

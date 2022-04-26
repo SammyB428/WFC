@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 2000-2016, Samuel R. Blackburn
+** Copyright, 2000-2022, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -83,7 +83,7 @@ _Check_return_ bool test_CNetResource( _Out_ std::string& class_name, _Out_ int&
          print_resource( information );
       }
 
-      DWORD error_code = net_resource.GetErrorCode();
+      auto error_code{ net_resource.GetErrorCode() };
 
       std::wstring error_message;
 
@@ -93,7 +93,7 @@ _Check_return_ bool test_CNetResource( _Out_ std::string& class_name, _Out_ int&
    }
    else
    {
-      DWORD error_code = net_resource.GetErrorCode();
+       auto error_code{ net_resource.GetErrorCode() };
 
       std::wstring error_message;
 

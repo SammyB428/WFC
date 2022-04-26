@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 2000-2016, Samuel R. Blackburn
+** Copyright, 2000-2022, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -56,9 +56,9 @@ __checkReturn bool test_CJulianDate( __out std::string& class_name, __out int& t
 
    Win32FoundationClasses::CJulianDate date;
 
-   (void) date.Set( 2003, 11, 24 );
+   std::ignore = date.Set( 2003, 11, 24 );
 
-   double const julian_date = date.Get();
+   auto const julian_date{ date.Get() };
 
    if (julian_date not_eq (double) 2452967.5)
    {
@@ -66,9 +66,7 @@ __checkReturn bool test_CJulianDate( __out std::string& class_name, __out int& t
        return(failure());
    }
 
-   int day_of_week = 0;
-
-   day_of_week = date.GetDayOfWeek();
+   auto const day_of_week{ date.GetDayOfWeek() };
 
    // 0 - Sunday
    // 1 - Monday
