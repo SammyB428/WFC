@@ -127,14 +127,14 @@ class CFileTime : public _FILETIME
        // The number of FILETIME ticks in one year
        static constexpr uint64_t const NumberOfFiletimeTicksInOneYear                  = 315360000000000LL;
 
-       static inline constexpr _Check_return_ int64_t ConvertHoursMinutesToSeconds( _In_ int const hours, _In_ int const minutes ) noexcept
+       static inline constexpr [[nodiscard]] _Check_return_ int64_t ConvertHoursMinutesToSeconds( _In_ int const hours, _In_ int const minutes ) noexcept
        {
           int64_t const return_value = ( static_cast<int64_t>(hours) * 3600 ) + ( static_cast<int64_t>(minutes) * 60 );
 
           return( return_value );
        }
 
-       static inline constexpr _Check_return_ int64_t ConvertHoursMinutesToTicks(_In_ int const hours, _In_ int const minutes ) noexcept
+       static inline constexpr [[nodiscard]] _Check_return_ int64_t ConvertHoursMinutesToTicks(_In_ int const hours, _In_ int const minutes ) noexcept
        {
           int64_t return_value = ConvertHoursMinutesToSeconds( hours, minutes );
 
@@ -262,7 +262,7 @@ class CFileTime : public _FILETIME
 
       inline constexpr void AddSeconds( _In_ double const number_of_seconds ) noexcept
       {
-         int64_t const number_of_ticks = static_cast<int64_t>( static_cast<double>(CFileTime::NumberOfFiletimeTicksInOneSecond) * number_of_seconds );
+         auto const number_of_ticks{ static_cast<int64_t>(static_cast<double>(CFileTime::NumberOfFiletimeTicksInOneSecond) * number_of_seconds) };
 
          int64_t ll = static_cast<int64_t>( static_cast<int64_t>(dwHighDateTime) << 32 );
 
@@ -273,7 +273,7 @@ class CFileTime : public _FILETIME
          dwHighDateTime = ll >> 32;
       }
 
-      inline constexpr _Check_return_ bool IsAfter(_In_ FILETIME const& that ) const noexcept
+      inline constexpr [[nodiscard]] _Check_return_ bool IsAfter(_In_ FILETIME const& that ) const noexcept
       {
          if ( dwHighDateTime > that.dwHighDateTime )
          {
@@ -291,7 +291,7 @@ class CFileTime : public _FILETIME
          return( false );
       }
 
-      inline constexpr _Check_return_ bool IsBefore(_In_ FILETIME const& that ) const noexcept
+      inline constexpr [[nodiscard]] _Check_return_ bool IsBefore(_In_ FILETIME const& that ) const noexcept
       {
          if ( dwHighDateTime < that.dwHighDateTime )
          {
@@ -309,7 +309,7 @@ class CFileTime : public _FILETIME
          return( false );
       }
 
-      inline constexpr _Check_return_ long Compare(_In_ CFileTime const& that ) const noexcept
+      inline constexpr [[nodiscard]] _Check_return_ long Compare(_In_ CFileTime const& that ) const noexcept
       {
          // David LeBlanc (whisper@accessone.com) had problems with VC4.2
          // not compiling dynamic_cast's correctly. That is why the old-style
@@ -767,7 +767,7 @@ class CFileTime : public _FILETIME
          dwHighDateTime = 0;
       }
 
-      inline constexpr _Check_return_ bool IsEmpty( void ) const noexcept
+      inline constexpr [[nodiscard]] _Check_return_ bool IsEmpty( void ) const noexcept
       {
          return( ( dwHighDateTime == 0 and dwLowDateTime == 0 ) ? true : false );
       }
@@ -794,14 +794,14 @@ class CFileTime : public _FILETIME
       void ISO8601(_Out_ std::wstring& destination) const noexcept;
 
       // This gives you the FILETIME ticks as a sixty-four bit integer.
-      inline constexpr _Check_return_ int64_t Ticks( void ) const noexcept
+      inline constexpr [[nodiscard]] _Check_return_ int64_t Ticks( void ) const noexcept
       {
          LARGE_INTEGER const return_value{ dwLowDateTime, static_cast<int32_t>(dwHighDateTime) };
 
          return( return_value.QuadPart );
       }
 
-      inline constexpr _Check_return_ uint64_t AsTicks(void) const noexcept
+      inline constexpr [[nodiscard]] _Check_return_ uint64_t AsTicks(void) const noexcept
       {
           ULARGE_INTEGER const ul{ dwLowDateTime, dwHighDateTime };
 
@@ -817,22 +817,22 @@ class CFileTime : public _FILETIME
         return( Compare( source ) == I_AM_EQUAL_TO_THAT ? true : false);
       }
 
-      inline constexpr _Check_return_ bool operator != (_In_ CFileTime const& source ) const noexcept
+      inline constexpr [[nodiscard]] _Check_return_ bool operator != (_In_ CFileTime const& source ) const noexcept
       {
         return( Compare( source ) == I_AM_EQUAL_TO_THAT ? false : true);
       }
 
-      inline constexpr _Check_return_ bool operator < (_In_ CFileTime const& source ) const noexcept
+      inline constexpr [[nodiscard]] _Check_return_ bool operator < (_In_ CFileTime const& source ) const noexcept
       {
          return( Compare( source ) < I_AM_EQUAL_TO_THAT ? true : false);
       }
 
-      inline constexpr _Check_return_ bool operator > (_In_ CFileTime const& source ) const noexcept
+      inline constexpr [[nodiscard]] _Check_return_ bool operator > (_In_ CFileTime const& source ) const noexcept
       {
          return( Compare( source ) > I_AM_EQUAL_TO_THAT ? true : false );
       }
 
-      inline constexpr _Check_return_ CFileTime& operator = (_In_ CFileTime const& source ) noexcept
+      inline constexpr [[nodiscard]] _Check_return_ CFileTime& operator = (_In_ CFileTime const& source ) noexcept
       {
          Copy( source );
          return( *this );
@@ -850,7 +850,7 @@ class CFileTime : public _FILETIME
          return( *this );
       }
 
-      inline constexpr _Check_return_ CFileTime& operator = (_In_ ULARGE_INTEGER const& source ) noexcept
+      inline constexpr [[nodiscard]] _Check_return_ CFileTime& operator = (_In_ ULARGE_INTEGER const& source ) noexcept
       {
          Copy( source );
          return( *this );

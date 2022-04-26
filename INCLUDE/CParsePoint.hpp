@@ -65,13 +65,13 @@ class CParsePoint
          Copy( source );
       };
 
-      inline constexpr _Check_return_ CParsePoint& operator=( _In_ CParsePoint const& source ) noexcept
+      inline constexpr [[nodiscard]] _Check_return_ CParsePoint& operator=( _In_ CParsePoint const& source ) noexcept
       {
          Copy( source );
          return( *this );
       };
 
-      inline constexpr _Check_return_ std::size_t Distance( _In_ CParsePoint const& source ) const noexcept
+      inline constexpr [[nodiscard]] _Check_return_ std::size_t Distance( _In_ CParsePoint const& source ) const noexcept
       {
          if ( m_ByteIndex > source.m_ByteIndex )
          {
@@ -107,17 +107,17 @@ class CParsePoint
           }
       }
 
-      inline constexpr _Check_return_ uint64_t GetIndex( void ) const noexcept
+      inline constexpr [[nodiscard]] _Check_return_ uint64_t GetIndex( void ) const noexcept
       {
          return( m_ByteIndex );
       };
 
-      inline constexpr _Check_return_ uint64_t GetLineIndex( void ) const noexcept
+      inline constexpr [[nodiscard]] _Check_return_ uint64_t GetLineIndex( void ) const noexcept
       {
          return( m_LineIndex );
       };
 
-      inline constexpr _Check_return_ uint64_t GetLineNumber( void ) const noexcept
+      inline constexpr [[nodiscard]] _Check_return_ uint64_t GetLineNumber( void ) const noexcept
       {
          return( m_LineNumber );
       };

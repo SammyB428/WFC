@@ -60,10 +60,17 @@ class CJulianDate // Don't use this, I'm not finished with it yet
       ** Methods
       */
 
-      inline  constexpr void   Copy(_In_ CJulianDate const& source ) noexcept { m_JulianDays = source.m_JulianDays; }; // Don't use this
-      inline  constexpr _Check_return_ double Get( void ) const noexcept { return( m_JulianDays ); }; // Don't use this
-      _Check_return_ int    GetDayOfWeek( void ) const noexcept; // Don't use this
-      _Check_return_ bool   Set(_In_ int const year, _In_ int const month, _In_ int const day, _In_ int const hours = 0, _In_ int const minutes = 0, _In_ int const seconds = 0 ) noexcept; // Don't use this
+      inline constexpr void   Copy(_In_ CJulianDate const& source ) noexcept { m_JulianDays = source.m_JulianDays; }; // Don't use this
+      inline constexpr [[nodiscard]] _Check_return_ double Get( void ) const noexcept { return( m_JulianDays ); }; // Don't use this
+      inline constexpr [[nodiscard]] _Check_return_ int GetDayOfWeek(void) const noexcept // Don't use this
+      {
+          auto const julian_day = (long)(m_JulianDays + 0.5);
+
+          auto const day_of_week = ((julian_day % 7L) + 1);
+
+          return(static_cast<int>((day_of_week == 7) ? 0 : day_of_week));
+      }
+          _Check_return_ bool   Set(_In_ int const year, _In_ int const month, _In_ int const day, _In_ int const hours = 0, _In_ int const minutes = 0, _In_ int const seconds = 0 ) noexcept; // Don't use this
 
       /*
       ** Operators

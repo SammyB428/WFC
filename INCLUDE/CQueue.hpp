@@ -96,7 +96,7 @@ public:
     inline _Check_return_ bool  TryGet(_Out_ std::size_t& item) noexcept { return(TryGet(reinterpret_cast<void *&>(item))); };
     inline _Check_return_ bool  TryGet(_Out_ void * & item) noexcept;
     inline _Check_return_ std::size_t GetLength(void) const noexcept;
-    inline constexpr _Check_return_ std::size_t GetMaximumLength(void) const noexcept { return(m_Size); };
+    inline constexpr [[nodiscard]] _Check_return_ std::size_t GetMaximumLength(void) const noexcept { return(m_Size); };
 
 #if defined( _DEBUG ) && ! defined( WFC_NO_DUMPING )
 

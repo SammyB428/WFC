@@ -104,7 +104,7 @@ class CServiceControlManager
        CServiceControlManager(_In_ CServiceControlManager const&) = delete;
        CServiceControlManager& operator=(_In_ CServiceControlManager const&) = delete;
 
-       static inline constexpr uint32_t const QueryStatusPermissions(void) noexcept
+       static inline constexpr [[nodiscard]] _Check_return_ uint32_t const QueryStatusPermissions(void) noexcept
        {
            return(READ_CONTROL bitor SC_MANAGER_CONNECT bitor SC_MANAGER_ENUMERATE_SERVICE);
        }
@@ -119,7 +119,7 @@ class CServiceControlManager
       _Check_return_ bool  GetConfiguration(_In_z_ wchar_t const * service_name, _Out_ CServiceConfiguration& configuration ) noexcept;
       _Check_return_ bool  GetDependencies(_In_z_ wchar_t const * service_name, _Out_ std::vector<std::wstring>& dependencies ) noexcept;
       _Check_return_ bool  GetDisplayName(_In_z_ wchar_t const * real_name, _Out_ std::wstring& friendly_name ) noexcept;
-      inline constexpr _Check_return_ uint32_t GetErrorCode(void) const noexcept { return(m_ErrorCode); }
+      inline constexpr [[nodiscard]] _Check_return_ uint32_t GetErrorCode(void) const noexcept { return(m_ErrorCode); }
       inline void GetErrorMessage(__inout std::wstring& error_message) const noexcept { error_message.assign(m_ErrorMessage); }
       _Check_return_ SC_HANDLE GetHandle( void ) const noexcept;
       _Check_return_ bool  GetKeyName(_In_z_ wchar_t const * friendly_name, _Out_ std::wstring& real_name ) noexcept;

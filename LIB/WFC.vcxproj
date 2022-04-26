@@ -697,8 +697,12 @@
     <ClInclude Include="..\INCLUDE\stl_make.h" />
     <ClInclude Include="..\INCLUDE\stl_safe.h" />
     <ClInclude Include="..\INCLUDE\stl_split_join.h" />
+    <ClInclude Include="..\INCLUDE\stl_split_join_char16.h" />
+    <ClInclude Include="..\INCLUDE\stl_split_join_wchar.h" />
     <ClInclude Include="..\INCLUDE\stl_string_helpers.h" />
     <ClInclude Include="..\INCLUDE\stl_trim.h" />
+    <ClInclude Include="..\INCLUDE\stl_trim_char16.h" />
+    <ClInclude Include="..\INCLUDE\stl_trim_wchar.h" />
     <ClInclude Include="..\INCLUDE\stl_unique.h" />
     <ClInclude Include="..\INCLUDE\stl_with.h" />
     <ClInclude Include="..\INCLUDE\Structs.hpp" />

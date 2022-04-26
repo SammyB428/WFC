@@ -142,6 +142,7 @@ class CFile64
          osRandomAccess   = 0x40000,
          osSequentialScan = 0x80000,
          wfcDeleteOnClose = 0x100000,
+         osOverlapped     = 0x200000,
       };
 
       enum class Attribute : uint32_t
@@ -172,7 +173,7 @@ class CFile64
 
       static _Check_return_ bool Exists( _In_ std::filesystem::path const& file_name ) noexcept
       {
-          auto const attributes = ::GetFileAttributesW( file_name.c_str() );
+          auto const attributes{ ::GetFileAttributesW(file_name.c_str()) };
 
           return( attributes == INVALID_FILE_ATTRIBUTES ? false : true );
       }
@@ -181,7 +182,7 @@ class CFile64
 
       static _Check_return_ bool IsDirectory(_In_ std::filesystem::path const& file_name ) noexcept
       {
-          auto const attributes = ::GetFileAttributesW( file_name.c_str() );
+          auto const attributes{ ::GetFileAttributesW(file_name.c_str()) };
 
           if ( attributes == INVALID_FILE_ATTRIBUTES )
           {
@@ -212,7 +213,7 @@ class CFile64
       virtual _Check_return_ bool                  LockRange(_In_ uint64_t const position, _In_ uint64_t const number_of_bytes_to_lock ) noexcept;
       virtual _Check_return_ bool                  Open(_In_ std::filesystem::path const& filename, _In_ UINT const open_flags ) noexcept;
 
-      _Check_return_ inline bool AtomicWaitSucceeded(void) const noexcept { return(m_AtomicWaitSucceeded); };
+      inline constexpr [[nodiscard]] _Check_return_ bool AtomicWaitSucceeded(void) const noexcept { return(m_AtomicWaitSucceeded); };
       _Check_return_ uint32_t AtomicRead(_In_ HANDLE manual_reset_event_handle, _In_ uint64_t const file_offset, __out_bcount( number_of_bytes_to_read ) void * buffer, _In_ uint32_t const number_of_bytes_to_read ) const noexcept;
       _Check_return_ uint32_t AtomicWrite(_In_ HANDLE manual_reset_event_handle, _In_ uint64_t const file_offset, __in_bcount(number_of_bytes_to_write) void const * buffer, _In_ uint32_t const number_of_bytes_to_write) const noexcept;
 
@@ -234,7 +235,7 @@ class CFile64
          {
             CDataParser parser;
 
-            (void) parser.Initialize(&bytes);
+            std::ignore = parser.Initialize(&bytes);
 
             return( xml.Parse( parser ) );
          }
@@ -242,7 +243,7 @@ class CFile64
          return( false );
       }
 
-      inline constexpr _Check_return_ DWORD LastError(void) const noexcept
+      inline constexpr [[nodiscard]] _Check_return_ DWORD LastError(void) const noexcept
       {
           return(m_LastError);
       }
@@ -299,25 +300,25 @@ class CFile64
 // Now some popular file open modes...
 
 // Open the file for reading, deny none, allow deleting
-inline constexpr _Check_return_ UINT read_file_open_mode(void) noexcept
+inline constexpr [[nodiscard]] _Check_return_ UINT read_file_open_mode(void) noexcept
 {
     return(static_cast<UINT>(static_cast<UINT>(CFile64::OpenFlags::modeRead) bitor static_cast<UINT>(CFile64::OpenFlags::shareDenyNone) bitor static_cast<UINT>(CFile64::OpenFlags::shareAllowDelete)));
 }
 
 // Create the file for writing, deny writes, allow deleting
-inline constexpr _Check_return_ UINT create_for_writing(void) noexcept
+inline constexpr [[nodiscard]] _Check_return_ UINT create_for_writing(void) noexcept
 {
     return(static_cast<UINT>(static_cast<UINT>(CFile64::OpenFlags::modeCreate) bitor static_cast<UINT>(CFile64::OpenFlags::modeWrite) bitor static_cast<UINT>(CFile64::OpenFlags::shareAllowDelete) bitor static_cast<UINT>(CFile64::OpenFlags::shareDenyWrite)));
 }
 
 // Open the file for reading, deny none and delete on close
-inline constexpr _Check_return_ UINT read_delete_on_close(void) noexcept
+inline constexpr [[nodiscard]] _Check_return_ UINT read_delete_on_close(void) noexcept
 {
     return(read_file_open_mode() bitor static_cast<UINT>(CFile64::OpenFlags::wfcDeleteOnClose));
 }
 
 // Create a readwrite file that will be deleted when it is closed
-inline constexpr _Check_return_ UINT create_temporary_delete_on_close(void) noexcept
+inline constexpr [[nodiscard]] _Check_return_ UINT create_temporary_delete_on_close(void) noexcept
 {
     return(static_cast<UINT>(static_cast<UINT>(CFile64::OpenFlags::modeCreate) bitor static_cast<UINT>(CFile64::OpenFlags::modeReadWrite) bitor static_cast<UINT>(CFile64::OpenFlags::wfcDeleteOnClose) bitor static_cast<UINT>(CFile64::OpenFlags::shareDenyNone) bitor static_cast<UINT>(CFile64::OpenFlags::shareAllowDelete)));
 }

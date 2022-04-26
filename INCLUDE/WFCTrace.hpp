@@ -96,9 +96,9 @@ class CWfcTrace
 
    public:
 
-      static int   Indent;
-      static std::size_t Levels;
-      static bool  Tracing;
+      static int  Indent;
+      static LONG Levels;
+      static bool Tracing;
 
       CWfcTrace() = delete;
       CWfcTrace(CWfcTrace const&) = delete;

@@ -56,7 +56,7 @@ class CBitArray
       std::size_t m_TotalNumberOfBits{ 0 };
       std::size_t m_IndexOfFirstBit{ 0 };
 
-      inline constexpr _Check_return_ bool m_GetElementIndexOfBitLocation(_In_ std::size_t const bit_location, _Out_ std::size_t& index, _Out_ uint32_t& bit_number) const noexcept
+      inline constexpr [[nodiscard]] _Check_return_ bool m_GetElementIndexOfBitLocation(_In_ std::size_t const bit_location, _Out_ std::size_t& index, _Out_ uint32_t& bit_number) const noexcept
       {
           // 1998-12-05
           // New calculation provided by Peter Ekberg (peda@sectra.se) to get rid of floating point calculations
@@ -87,8 +87,8 @@ class CBitArray
       CBitArray(_In_ CBitArray const& source ) noexcept;
       explicit CBitArray(_In_ std::vector<uint8_t> const& source ) noexcept;
 
-      static inline constexpr int SizeOfBitRepresentation(void) noexcept { return(32); }
-      static inline constexpr int MostSignificantBitLocation(void) noexcept { return(31); }
+      static inline constexpr [[nodiscard]] _Check_return_ int SizeOfBitRepresentation(void) noexcept { return(32); }
+      static inline constexpr [[nodiscard]] _Check_return_ int MostSignificantBitLocation(void) noexcept { return(31); }
 
       // Methods
 
@@ -111,7 +111,7 @@ class CBitArray
       
       inline _Check_return_ uint32_t GetAt( _In_ std::size_t const bit_location ) const noexcept
       {
-         std::size_t const size = GetSize();
+         std::size_t const size{ GetSize() };
 
          ASSERT( bit_location < size );
 
@@ -120,9 +120,9 @@ class CBitArray
             return( 0 );
          }
 
-         std::size_t array_index = 0;
+         std::size_t array_index{ 0 };
 
-         uint32_t bit_number = 0;
+         uint32_t bit_number{ 0 };
 
          if ( m_GetElementIndexOfBitLocation( bit_location, array_index, bit_number ) == false )
          {
@@ -130,7 +130,7 @@ class CBitArray
             return( 0 );
          }
 
-         uint32_t const temp_bits = m_Bits.at( array_index ); // Safe to NOT check out of bounds because m_Bits.GetAt does that (code review)
+         auto const temp_bits{ m_Bits.at(array_index) }; // Safe to NOT check out of bounds because m_Bits.GetAt does that (code review)
 
          if ( _bittest( reinterpret_cast<LONG const *>(&temp_bits), bit_number ) == 1 )
          {
@@ -144,8 +144,8 @@ class CBitArray
       _Check_return_ bool      GetNextZero( __inout std::size_t& enumerator ) const noexcept;
       _Check_return_ std::size_t GetNumberOfOnes( void ) const noexcept;
       _Check_return_ std::size_t GetNumberOfZeroes( void ) const noexcept;
-      inline constexpr _Check_return_ std::size_t GetSize(void) const noexcept { return(m_TotalNumberOfBits - m_IndexOfFirstBit); }
-      inline constexpr _Check_return_ std::size_t GetUpperBound(void) const noexcept
+      inline constexpr [[nodiscard]] _Check_return_ std::size_t GetSize(void) const noexcept { return(m_TotalNumberOfBits - m_IndexOfFirstBit); }
+      inline constexpr [[nodiscard]] _Check_return_ std::size_t GetUpperBound(void) const noexcept
       {
           if (GetSize() > 0)
           {

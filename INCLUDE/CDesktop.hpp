@@ -95,9 +95,9 @@ class CDesktop
                                   _In_ DWORD    desired_access = DESKTOP_CREATEWINDOW,
                      __in_opt LPSECURITY_ATTRIBUTES security_attributes_p = nullptr, 
                                   _In_ DWORD    flags = 0 ) noexcept;
-      inline constexpr _Check_return_ bool  GetAutomaticallyClose(void) const noexcept { return(m_AutomaticallyClose); }
-      inline constexpr _Check_return_ DWORD GetErrorCode(void) const noexcept { return(m_ErrorCode); };
-      inline constexpr _Check_return_ HDESK GetHandle(void) const noexcept { return(m_DesktopHandle); }
+      inline constexpr [[nodiscard]] _Check_return_ bool  GetAutomaticallyClose(void) const noexcept { return(m_AutomaticallyClose); }
+      inline constexpr [[nodiscard]] _Check_return_ DWORD GetErrorCode(void) const noexcept { return(m_ErrorCode); };
+      inline constexpr [[nodiscard]] _Check_return_ HDESK GetHandle(void) const noexcept { return(m_DesktopHandle); }
       virtual void  GetThread( _In_ DWORD thread_id = 0 ) noexcept;
       virtual _Check_return_ bool  GetWindows( _Out_ std::vector<HWND>& window_handles ) noexcept; // EnumDesktopWindows
       virtual _Check_return_ bool  Open( _In_ std::wstring_view desktop_name, _In_ DWORD desired_access = DESKTOP_CREATEWINDOW, _In_ DWORD flags = 0, _In_ bool inherit = false ) noexcept;

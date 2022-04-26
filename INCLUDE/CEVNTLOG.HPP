@@ -106,8 +106,8 @@ class CEventLog
       virtual _Check_return_ bool  DeleteApplicationLog(_In_ std::wstring_view application_name ) noexcept;
       virtual _Check_return_ bool  DeregisterSource( void ) noexcept;
       virtual _Check_return_ bool  EnumerateLogs( _Out_ DWORD& enumerator ) const noexcept;
-      inline constexpr _Check_return_ DWORD GetErrorCode(void) const noexcept { return(m_ErrorCode); }
-      inline constexpr _Check_return_ HANDLE GetHandle(void) const noexcept { return(m_LogHandle); }
+      inline constexpr [[nodiscard]] _Check_return_ DWORD GetErrorCode(void) const noexcept { return(m_ErrorCode); }
+      inline constexpr [[nodiscard]] _Check_return_ HANDLE GetHandle(void) const noexcept { return(m_LogHandle); }
       virtual _Check_return_ bool  GetNextLog( __inout DWORD& enumerator, _Out_ std::wstring& log_name ) noexcept;
       virtual _Check_return_ bool  GetNumberOfRecords( _Out_ DWORD& number_of_records ) noexcept;
       virtual _Check_return_ DWORD GetOldestRecordNumber( void ) noexcept;

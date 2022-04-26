@@ -57,7 +57,7 @@
     _Check_return_ bool is_xml_NameChar(_In_ uint32_t const character_to_test) noexcept;
     _Check_return_ bool is_xml_PubidChar(_In_ uint32_t const character_to_test) noexcept;
 
-    inline constexpr _Check_return_ bool is_xml_white_space(_In_ uint32_t const character_to_test) noexcept
+    inline constexpr [[nodiscard]] _Check_return_ bool is_xml_white_space(_In_ uint32_t const character_to_test) noexcept
     {
         // Test according to Rule 3
 
@@ -334,28 +334,28 @@
         _Check_return_ CExtensibleMarkupLanguageElement* GetAnyChild(_In_ std::wstring_view name) const noexcept;
         _Check_return_ bool ForAny(_In_ std::wstring_view name, __callback XML_ELEMENT_CALLBACK callback, _Inout_ void* callback_context) const noexcept;
         _Check_return_ bool ForEach(_In_ std::wstring_view name, __callback XML_ELEMENT_CALLBACK callback, _Inout_ void* callback_context) const noexcept;
-        inline constexpr _Check_return_ bool GetAbortParsing(void) const noexcept { return(m_AbortParsing); };
+        inline constexpr [[nodiscard]] _Check_return_ bool GetAbortParsing(void) const noexcept { return(m_AbortParsing); };
         inline constexpr void GetBeginning(_Inout_ CParsePoint& parse_point) const noexcept { parse_point.Copy(m_Beginning); };
         _Check_return_ CExtensibleMarkupLanguageElement* GetChild(_In_ std::wstring_view tag_name) const noexcept;
         _Check_return_ CExtensibleMarkupLanguageElement* GetChild(_In_ std::wstring_view tag_name, _In_ std::size_t const instance) const noexcept;
         _Check_return_ CExtensibleMarkupLanguageElement* GetChild(_In_ std::size_t const index) const noexcept;
         _Check_return_ bool GetChildText(_In_ std::wstring_view tag_name, _Inout_ std::wstring& child_text, _Inout_ CParsePoint& beginning) const noexcept;
-        inline constexpr _Check_return_ CExtensibleMarkupLanguageDocument* GetDocument(void) const noexcept { return(m_Document); };
+        inline constexpr [[nodiscard]] _Check_return_ CExtensibleMarkupLanguageDocument* GetDocument(void) const noexcept { return(m_Document); };
         inline constexpr void GetEnding(_Inout_ CParsePoint& parse_point) const noexcept { parse_point.Copy(m_Ending); };
         void  GetFullyQualifiedName(_Inout_ std::wstring& name) const noexcept;
         inline void  GetContents(_Inout_ std::wstring& contents) const noexcept { contents = m_Contents; };
         _Check_return_ CExtensibleMarkupLanguageElement* GetElementAfterMe(void) const noexcept;
         _Check_return_ int GetInstance(void) const noexcept;
         void  GetNameAndInstance(_Out_ std::wstring& name) const noexcept;
-        inline constexpr _Check_return_ CExtensibleMarkupLanguageElement* GetParent(void) const noexcept { return(m_Parent); };
+        inline constexpr [[nodiscard]] _Check_return_ CExtensibleMarkupLanguageElement* GetParent(void) const noexcept { return(m_Parent); };
         _Check_return_ CExtensibleMarkupLanguageElement* GetParent(_In_ std::wstring_view name) const noexcept;
         inline void GetTag(_Inout_ std::wstring& tag) const noexcept { tag.assign(m_Tag); };
         inline std::wstring const& Tag(void) const noexcept { return(m_Tag); }
         void  GetText(_Out_ std::wstring& text) const noexcept;
         _Check_return_ uint32_t GetTotalNumberOfChildren(void) const noexcept;
-        inline constexpr _Check_return_ ElementType GetType(void) const noexcept { return(m_Type); };
-        inline constexpr _Check_return_ bool IsAllWhiteSpace(void) const noexcept { return(m_IsAllWhiteSpace); };
-        inline constexpr _Check_return_ bool IsRoot(void) const noexcept { return((m_Parent == nullptr) ? true : false); }
+        inline constexpr [[nodiscard]] _Check_return_ ElementType GetType(void) const noexcept { return(m_Type); };
+        inline constexpr [[nodiscard]] _Check_return_ bool IsAllWhiteSpace(void) const noexcept { return(m_IsAllWhiteSpace); };
+        inline constexpr [[nodiscard]] _Check_return_ bool IsRoot(void) const noexcept { return((m_Parent == nullptr) ? true : false); }
         _Check_return_ bool  Parse(_In_ CParsePoint const& beginning, _In_ CDataParser const& parser) noexcept;
         inline constexpr void SetAbortParsing(_In_ bool const abort_parsing = true) noexcept { m_AbortParsing = abort_parsing; };
         inline void SetContents(_In_ std::wstring_view contents) noexcept { m_Contents.assign(contents); };
@@ -515,18 +515,18 @@
         void  GetAutomaticIndentation(_Out_ bool& automatically_indent, _Out_ uint32_t& level, _Out_ uint32_t& indent_by) const noexcept;
         inline  constexpr _Check_return_ uint32_t GetConversionCodePage(void) const noexcept { return(m_ConversionCodePage); }
         void  GetEncoding(_Out_ std::wstring& encoding) const noexcept;
-        inline constexpr _Check_return_ CExtensibleMarkupLanguageEntities const& GetEntities(void) const noexcept { return(m_Entities); }
-        inline constexpr _Check_return_ bool GetIgnoreWhiteSpace(void) const noexcept { return(m_IgnoreWhiteSpace); }
+        inline constexpr [[nodiscard]] _Check_return_ CExtensibleMarkupLanguageEntities const& GetEntities(void) const noexcept { return(m_Entities); }
+        inline constexpr [[nodiscard]] _Check_return_ bool GetIgnoreWhiteSpace(void) const noexcept { return(m_IgnoreWhiteSpace); }
         void  GetNamespace(_Out_ std::wstring& name_space) const noexcept;
         _Check_return_ std::size_t GetNumberOfElements(void) const noexcept;
-        inline constexpr _Check_return_ wchar_t GetParentChildSeparatorCharacter(void) const noexcept { return(m_ParentChildSeparatorCharacter); }
-        inline constexpr _Check_return_ uint32_t GetParseOptions(void) const noexcept { return(m_ParseOptions); }
+        inline constexpr [[nodiscard]] _Check_return_ wchar_t GetParentChildSeparatorCharacter(void) const noexcept { return(m_ParentChildSeparatorCharacter); }
+        inline constexpr [[nodiscard]] _Check_return_ uint32_t GetParseOptions(void) const noexcept { return(m_ParseOptions); }
         void  GetParsingErrorInformation(_Out_ std::wstring& tag_name, _Out_ CParsePoint& beginning, _Out_ CParsePoint& error_location, _Out_opt_ std::wstring* error_message = static_cast<std::wstring*>(nullptr)) const noexcept;
         void  GetParsingErrorInformation(_Out_ std::wstring& message) const noexcept;
-        inline constexpr _Check_return_ CExtensibleMarkupLanguageElement* GetRootElement(void) const noexcept { return(m_XML); }
+        inline constexpr [[nodiscard]] _Check_return_ CExtensibleMarkupLanguageElement* GetRootElement(void) const noexcept { return(m_XML); }
         inline void GetVersion(_Out_ std::wstring& version) const noexcept { version.assign(m_Version); };
-        inline constexpr _Check_return_ uint32_t GetWriteOptions(void) const noexcept { return(m_WriteOptions); }
-        inline constexpr _Check_return_ bool IsStandalone(void) const noexcept { return(m_IsStandalone); }
+        inline constexpr [[nodiscard]] _Check_return_ uint32_t GetWriteOptions(void) const noexcept { return(m_WriteOptions); }
+        inline constexpr [[nodiscard]] _Check_return_ bool IsStandalone(void) const noexcept { return(m_IsStandalone); }
         _Check_return_ bool Parse(_Inout_ CDataParser& source) noexcept;
         _Check_return_ bool ResolveEntity(_In_ std::wstring_view entity, _Out_ std::wstring& resolved_to) const noexcept;
         inline constexpr void SetAutomaticIndentation(_In_ bool const automatically_indent = true, _In_ uint32_t const indentation_level = 0, _In_ uint32_t const indent_by = 2) noexcept
@@ -537,14 +537,14 @@
         }
         void  SetConversionCodePage(_In_ uint32_t const new_page) noexcept;
         void  SetEncoding(_In_ std::wstring_view encoding) noexcept;
-        inline constexpr _Check_return_ bool SetIgnoreWhiteSpace(_In_ bool const ignore_whitespace) noexcept
+        inline constexpr [[nodiscard]] _Check_return_ bool SetIgnoreWhiteSpace(_In_ bool const ignore_whitespace) noexcept
         {
             bool const return_value = m_IgnoreWhiteSpace;
             m_IgnoreWhiteSpace = ignore_whitespace;
             return(return_value);
         }
         void SetNamespace(_In_ std::wstring_view name_space) noexcept;
-        inline constexpr _Check_return_ bool SetParentChildSeparatorCharacter(_In_ wchar_t const separator) noexcept
+        inline constexpr [[nodiscard]] _Check_return_ bool SetParentChildSeparatorCharacter(_In_ wchar_t const separator) noexcept
         {
             if (separator == 0x00)
             {
@@ -554,7 +554,7 @@
             m_ParentChildSeparatorCharacter = separator;
         }
 
-        inline constexpr _Check_return_ uint32_t SetParseOptions(_In_ uint32_t const new_options) noexcept
+        inline constexpr [[nodiscard]] _Check_return_ uint32_t SetParseOptions(_In_ uint32_t const new_options) noexcept
         {
             uint32_t const return_value = m_ParseOptions;
 
@@ -568,13 +568,13 @@
 
         inline constexpr void SetStrictParsing(void) noexcept
         {
-            uint32_t options = WFC_XML_FAIL_ON_ILL_FORMED_ENTITIES;
+            uint32_t options{ WFC_XML_FAIL_ON_ILL_FORMED_ENTITIES };
 
             options or_eq WFC_XML_DISALLOW_MULTIPLE_ELEMENTS;
             options or_eq WFC_XML_FORCE_AT_LEAST_ONE_ELEMENT_MUST_BE_PRESENT;
             options or_eq WFC_XML_CHECK_ENTITIES_FOR_ILLEGAL_CHARACTERS;
 
-            (void)SetParseOptions(options);
+            std::ignore = SetParseOptions(options);
         }
 
         inline void SetVersion(_In_ std::wstring_view version_string) noexcept { m_Version.assign(version_string); }
@@ -588,7 +588,7 @@
             }
         }
 
-        _Check_return_ inline bool UseNamespace(void) const noexcept { return(m_UseNamespace); };
+        inline constexpr [[nodiscard]] _Check_return_ bool UseNamespace(void) const noexcept { return(m_UseNamespace); };
         void  WriteTo(_Out_ std::vector<uint8_t>& destination) const noexcept;
 
         // Add callback methods here...
@@ -598,7 +598,7 @@
         void               ExecuteCallbacks(_Inout_ CExtensibleMarkupLanguageElement* element_p) const noexcept;
         _Check_return_ bool GetNextCallback(_Inout_ uint32_t& enumerator, _Out_ std::wstring& element_name, _Out_ XML_ELEMENT_CALLBACK& callback, _Out_ void*& parameter) const noexcept;
         _Check_return_ bool RemoveCallback(_In_ std::wstring_view element_name, __callback XML_ELEMENT_CALLBACK callback, _Inout_ void* callback_parameter) noexcept;
-        inline constexpr _Check_return_ bool ParseErrorOccurred(void) const noexcept { return(true); };
+        inline constexpr [[nodiscard]] _Check_return_ bool ParseErrorOccurred(void) const noexcept { return(true); };
 
         inline _Check_return_ CExtensibleMarkupLanguageDocument& operator=(_In_ CExtensibleMarkupLanguageDocument const& source) noexcept
         {

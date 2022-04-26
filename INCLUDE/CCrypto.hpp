@@ -57,14 +57,14 @@ class CCryptography
 {
    protected:
 
-       DWORD m_ErrorCode{ 0 };
+      DWORD m_ErrorCode{ 0 };
 
    public:
 
       CCryptography() noexcept;
       virtual ~CCryptography();
 
-      inline constexpr _Check_return_ DWORD GetErrorCode(void) const noexcept { return(m_ErrorCode); }
+      inline constexpr [[nodiscard]] _Check_return_ DWORD GetErrorCode(void) const noexcept { return(m_ErrorCode); }
 };
 
 // Need forward declaration because of Catch-22...
@@ -89,12 +89,12 @@ class CCryptographicHash : public CCryptography
       CCryptographicHash( _In_ HCRYPTHASH source_handle, _In_ bool automatically_destroy = true ) noexcept;
       virtual ~CCryptographicHash();
 
-      static constexpr DWORD const MD2  = CALG_MD2;
-      static constexpr DWORD const MD4  = CALG_MD4;
-      static constexpr DWORD const MD5  = CALG_MD5;
-      static constexpr DWORD const SHAS = CALG_SHA;
-      static constexpr DWORD const SHA1 = CALG_SHA1;
-      static constexpr DWORD const MAC  = CALG_MAC;
+      static constexpr DWORD const MD2{ CALG_MD2 };
+      static constexpr DWORD const MD4{ CALG_MD4 };
+      static constexpr DWORD const MD5{ CALG_MD5 };
+      static constexpr DWORD const SHAS{ CALG_SHA };
+      static constexpr DWORD const SHA1{ CALG_SHA1 };
+      static constexpr DWORD const MAC{ CALG_MAC };
 
       // Properties
 

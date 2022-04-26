@@ -68,19 +68,19 @@ class CBase64Coding
 
       CBase64Coding() noexcept;
 
-      static inline constexpr _Check_return_ std::size_t DecodeReserveSize(_In_ std::size_t const number_of_encoded_bytes) noexcept
+      static inline constexpr [[nodiscard]] _Check_return_ std::size_t DecodeReserveSize(_In_ std::size_t const number_of_encoded_bytes) noexcept
       {
           return(static_cast<std::size_t>(static_cast<double>(number_of_encoded_bytes) * static_cast<double>(0.75)) + 1);
       }
 
-      static inline constexpr _Check_return_ std::size_t EncodeReserveSize(_In_ std::size_t const number_of_bytes_to_encode) noexcept
+      static inline constexpr [[nodiscard]] _Check_return_ std::size_t EncodeReserveSize(_In_ std::size_t const number_of_bytes_to_encode) noexcept
       {
-          std::size_t return_value = static_cast<std::size_t>(static_cast<double>(number_of_bytes_to_encode) / static_cast<double>(0.75)) + 1;
+          auto return_value{ static_cast<std::size_t>(static_cast<double>(number_of_bytes_to_encode) / static_cast<double>(0.75)) + 1 };
 
           return_value += ((number_of_bytes_to_encode % 3) + 1);
 
           // Now add in the CR/LF pairs, each line is truncated at 72 characters
-          std::size_t const number_of_lines_of_output = (return_value / BASE64_NUMBER_OF_CHARACTERS_PER_LINE) + 1;
+          std::size_t const number_of_lines_of_output{ (return_value / BASE64_NUMBER_OF_CHARACTERS_PER_LINE) + 1 };
 
           return_value += (number_of_lines_of_output * 2); // For the carriage return and line feed after each line
 

@@ -565,7 +565,7 @@ namespace Win32FoundationClasses
 
                 if ( number_of_characters == (-1) )
                 {
-                    number_of_characters_to_copy = wcslen( string_p );
+                    number_of_characters_to_copy = std::char_traits<wchar_t>::length( string_p );
                 }
                 else
                 {
@@ -923,10 +923,10 @@ namespace Win32FoundationClasses
                 return;
             }
 
-            size_t last_character_index = m_String.length() - 1;
-            size_t loop_index           = 0;
+            size_t last_character_index{ m_String.length() - 1 };
+            size_t loop_index{ 0 };
 
-            TCHAR character_to_move = 0;
+            TCHAR character_to_move{ 0 };
 
             while( loop_index < last_character_index )
             {
@@ -1260,7 +1260,7 @@ namespace Win32FoundationClasses
 
 #if defined( _UNICODE ) || defined( OLE2ANSI )
 
-            (void) ::SysReAllocStringLen( b_string_p, m_String.c_str(),(UINT)  m_String.length() );
+            std::ignore = ::SysReAllocStringLen( b_string_p, m_String.c_str(),(UINT)  m_String.length() );
 
 #else
 
@@ -1428,7 +1428,7 @@ namespace Win32FoundationClasses
                 return;
             }
 
-            while( character == m_String.at( m_String.length() - 1 ) )
+            while( character == m_String.back() )
             {
                 m_String.erase( m_String.length() - 1, 1 );
 

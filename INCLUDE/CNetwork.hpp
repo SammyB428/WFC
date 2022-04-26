@@ -103,7 +103,7 @@ class CNetwork
       virtual _Check_return_ bool AbortShutdown( void ) noexcept;
       virtual void    Close( void ) noexcept;
       virtual _Check_return_ bool  EnumeratePorts( void ) noexcept;
-      inline constexpr _Check_return_ DWORD GetErrorCode(void) const noexcept { return(m_ErrorCode); };
+      inline constexpr [[nodiscard]] _Check_return_ DWORD GetErrorCode(void) const noexcept { return(m_ErrorCode); };
       virtual _Check_return_ LPCWSTR GetMachineName( void ) const noexcept;
       virtual void    GetFriendlyMachineName( _Out_ std::wstring& name ) const noexcept;
       virtual _Check_return_ bool GetNext( _Inout_ CPortInformation& port ) noexcept;

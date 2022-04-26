@@ -417,8 +417,8 @@ void CConstellation::Draw( CDC& device_context )
 
    CBrush brush( m_FillColor );
 
-   DWORD width  = GetWidth();
-   DWORD height = GetHeight();
+   DWORD width{ GetWidth() };
+   DWORD height{ GetHeight() };
 
    BOOL result = bitmap.CreateCompatibleBitmap( &device_context, (int) width, (int) height );
 
@@ -578,10 +578,10 @@ void CConstellation::PrepareData( void )
       valid_height = 1;
    }
 
-   double x_ratio = (double) m_Width  / (double) valid_width;
-   double y_ratio = (double) m_Height / (double) valid_height;
+   double x_ratio{ (double)m_Width / (double)valid_width };
+   double y_ratio{ (double)m_Height / (double)valid_height };
 
-   int origin_y = (int) ( (double) m_Data_p->MaximumHeightValue * y_ratio );
+   int origin_y{ (int)((double)m_Data_p->MaximumHeightValue * y_ratio) };
 
    for ( DWORD index = 0; index < m_NumberOfPoints; index++ )
    {

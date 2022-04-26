@@ -201,7 +201,7 @@ class CSystemTime : public _SYSTEMTIME
          wMilliseconds = 0;
       }
 
-      inline constexpr _Check_return_ bool IsEmpty(void) const noexcept
+      inline constexpr [[nodiscard]] _Check_return_ bool IsEmpty(void) const noexcept
       {
           if (wYear not_eq 0 or
               wMonth not_eq 0 or
@@ -217,7 +217,7 @@ class CSystemTime : public _SYSTEMTIME
           return(true);
       }
 
-      inline constexpr _Check_return_ int Compare(_In_ CSystemTime const& source) const noexcept
+      inline constexpr [[nodiscard]] _Check_return_ int Compare(_In_ CSystemTime const& source) const noexcept
       {
           if (wYear < source.wYear)
           {

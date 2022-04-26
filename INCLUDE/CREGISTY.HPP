@@ -202,11 +202,11 @@ class CRegistry
       virtual void GetTheClassName( _Out_ std::wstring& class_name ) const noexcept;
       virtual void GetComputerName( _Out_ std::wstring& computer_name ) const noexcept;
       virtual _Check_return_ bool GetDoubleWordValue( __in_z wchar_t const * name_of_value, _Out_ DWORD& return_value ) noexcept;
-      inline constexpr _Check_return_ DWORD GetErrorCode(void) const noexcept { return(m_ErrorCode); };
-      inline constexpr _Check_return_ HKEY GetHandle( void ) const noexcept { return( m_KeyHandle ); }
+      inline constexpr [[nodiscard]] _Check_return_ DWORD GetErrorCode(void) const noexcept { return(m_ErrorCode); };
+      inline constexpr [[nodiscard]] _Check_return_ HKEY GetHandle( void ) const noexcept { return( m_KeyHandle ); }
       virtual void GetKeyName( _Out_ std::wstring& key_name ) const noexcept;
-      inline constexpr _Check_return_ DWORD GetNumberOfSubkeys(void) const noexcept { return(m_NumberOfSubkeys); }
-      inline constexpr _Check_return_ DWORD GetNumberOfValues(void) const noexcept { return(m_NumberOfValues); }
+      inline constexpr [[nodiscard]] _Check_return_ DWORD GetNumberOfSubkeys(void) const noexcept { return(m_NumberOfSubkeys); }
+      inline constexpr [[nodiscard]] _Check_return_ DWORD GetNumberOfValues(void) const noexcept { return(m_NumberOfValues); }
       virtual void GetRegistryName( _Out_ std::wstring& registry_name ) const noexcept;
       virtual _Check_return_ bool GetSecurity( _In_ SECURITY_INFORMATION const what_you_want_to_know,
                                 __out_bcount_part( size_of_data_buffer, size_of_data_buffer ) PSECURITY_DESCRIPTOR data_buffer,

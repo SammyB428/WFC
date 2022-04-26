@@ -45,7 +45,7 @@
 
 #define DATA_CHUNK_CLASS_HEADER
 
-inline constexpr _Check_return_ uint32_t MAKE_DATA_ID(uint8_t const byte_1, uint8_t const byte_2, uint8_t const byte_3, uint8_t const byte_4) noexcept
+inline constexpr [[nodiscard]] _Check_return_ uint32_t MAKE_DATA_ID(uint8_t const byte_1, uint8_t const byte_2, uint8_t const byte_3, uint8_t const byte_4) noexcept
 {
     return((uint32_t)(byte_1) bitor ((uint32_t)(byte_2) << 8) bitor ((uint32_t)(byte_3) << 16) bitor ((uint32_t)(byte_4) << 24));
 }

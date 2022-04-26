@@ -103,7 +103,7 @@ public:
 
     // Methods
 
-    inline constexpr _Check_return_ uint32_t GetErrorCode( void ) const noexcept
+    inline constexpr [[nodiscard]] _Check_return_ uint32_t GetErrorCode( void ) const noexcept
     {
         return( m_LastError );
     }
@@ -196,22 +196,22 @@ public:
         m_Buffer = nullptr;
     }
 
-    inline constexpr _Check_return_ uint8_t * GetPointer( void ) const noexcept
+    inline constexpr [[nodiscard]] _Check_return_ uint8_t * GetPointer( void ) const noexcept
     {
         return( m_Buffer );
     }
 
-    inline constexpr _Check_return_ std::size_t GetSize( void ) const noexcept
+    inline constexpr [[nodiscard]] _Check_return_ std::size_t GetSize( void ) const noexcept
     {
         return( m_Size );
     }
 
-    inline constexpr _Check_return_ uint32_t GetErrorCode( void ) const noexcept
+    inline constexpr [[nodiscard]] _Check_return_ uint32_t GetErrorCode( void ) const noexcept
     {
         return( m_LastError );
     }
 
-    inline constexpr _Check_return_ HANDLE GetHandle( void ) const noexcept
+    inline constexpr [[nodiscard]] _Check_return_ HANDLE GetHandle( void ) const noexcept
     {
         return( m_Handle );
     }

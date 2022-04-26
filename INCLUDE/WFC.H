@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 1995-2021, Samuel R. Blackburn
+** Copyright, 1995-2022, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -45,9 +45,9 @@
 
 #define WIN32_FOUNDATION_CLASSES
 
-#define WFC_RELEASE_NUMBER (105)
+#define WFC_RELEASE_NUMBER (106)
 #if ! defined( WFC_SILENT )
-#pragma message( "WFC Release 105." )
+#pragma message( "WFC Release 106." )
 #endif // WFC_SILENT
 
 #define TAB_CHARACTER   (9)
@@ -240,7 +240,7 @@
 #include <winternl.h>
 #define _NTDEF_
 
-inline constexpr _Check_return_ bool fast_is_digit(_In_ int const character) noexcept
+inline constexpr [[nodiscard]] _Check_return_ bool fast_is_digit(_In_ int const character) noexcept
 {
     return(static_cast<unsigned>(character - '0') < 10);
 }
@@ -288,7 +288,7 @@ public:
 
     StartingRangePosition() = delete;
     inline constexpr explicit StartingRangePosition(_In_ std::size_t const position) noexcept : m_Index(position) {}
-    inline constexpr std::size_t Get(void) const noexcept { return m_Index; }
+    inline constexpr [[nodiscard]] _Check_return_ std::size_t Get(void) const noexcept { return m_Index; }
 };
 
 class Range
@@ -462,7 +462,7 @@ extern "C" {
 #include <commdlg.h> // For GetFileTitle() in CFile64
 #include <wininet.h> // For InternetOpenUrl() etc
 
-inline constexpr _Check_return_ bool is_flagged(_In_ uint64_t const _x, _In_ uint64_t const _y) noexcept
+inline constexpr [[nodiscard]] _Check_return_ bool is_flagged(_In_ uint64_t const _x, _In_ uint64_t const _y) noexcept
 {
     return(((_x bitand _y) == _y) ? true : false);
 }
@@ -667,14 +667,14 @@ void wfc_append_text_to_edit_control( _In_ HWND edit_control_handle, _In_z_ LPCT
 #define bit_test( arg, posn ) BITBOOL((arg) bitand (ONE_BIT << (posn)))
 #endif
 
-constexpr int EAX = (0);
-constexpr int EBX = (1);
-constexpr int ECX = (2);
-constexpr int EDX = (3);
+constexpr int EAX = 0;
+constexpr int EBX = 1;
+constexpr int ECX = 2;
+constexpr int EDX = 3;
 
  inline _Check_return_ bool is_proccessor_feature_supported( _In_ int const information_type, _In_ int const which_register, _In_ int const which_bit ) noexcept
 {
-    int registers[ 4 ] = { 0, 0, 0, 0 }; // output: eax, ebx, ecx, edx
+    int registers[ 4 ]{ 0, 0, 0, 0 }; // output: eax, ebx, ecx, edx
 
     __cpuid( registers, information_type );
 
@@ -705,13 +705,13 @@ inline _Check_return_ bool is_avx_supported( void ) noexcept
 {
     // http://insufficientlycomplicated.wordpress.com/2011/11/07/detecting-intel-advanced-vector-extensions-avx-in-visual-studio/
 
-    bool const os_uses_XSAVE_XRSTORE = is_proccessor_feature_supported( 1, ECX, 27 );
-    bool const cpu_supports_AVX = is_proccessor_feature_supported( 1, ECX, 28 );
+    bool const os_uses_XSAVE_XRSTORE{ is_proccessor_feature_supported(1, ECX, 27) };
+    bool const cpu_supports_AVX{ is_proccessor_feature_supported(1, ECX, 28) };
 
     if ( os_uses_XSAVE_XRSTORE == true and cpu_supports_AVX == true )
     {
         // Check to see if the OS will save the YMM registers 
-        auto const xcr_feature_mask = _xgetbv( _XCR_XFEATURE_ENABLED_MASK );
+        auto const xcr_feature_mask{ _xgetbv(_XCR_XFEATURE_ENABLED_MASK) };
 
         if (is_flagged( xcr_feature_mask, 6 ) == true )
         {
@@ -732,7 +732,7 @@ inline _Check_return_ bool is_sse2_supported( void ) noexcept
     return( ::IsProcessorFeaturePresent( PF_XMMI64_INSTRUCTIONS_AVAILABLE ) not_eq 0 ? true : false );
 }
 
-inline constexpr _Check_return_ bool is_bad_handle( _In_opt_ HANDLE const handle_value ) noexcept
+inline constexpr [[nodiscard]] _Check_return_ bool is_bad_handle( _In_opt_ HANDLE const handle_value ) noexcept
 {
    if ( handle_value == static_cast<HANDLE>( NULL ) or handle_value == INVALID_HANDLE_VALUE )
    {
@@ -753,7 +753,7 @@ static inline _Check_return_ wchar_t const * DefinedStringConstant(_In_ uint64_t
 
     DEFINED_WIDE_STRING const value_to_find{ value, nullptr };
 
-    auto entry = reinterpret_cast<DEFINED_WIDE_STRING const *>(std::bsearch(&value_to_find, definitions, number_of_definitions, sizeof(DEFINED_WIDE_STRING), compare_defines));
+    auto entry{ reinterpret_cast<DEFINED_WIDE_STRING const*>(std::bsearch(&value_to_find, definitions, number_of_definitions, sizeof(DEFINED_WIDE_STRING), compare_defines)) };
 
     if (entry == nullptr)
     {
@@ -767,7 +767,7 @@ inline void from_defined(_Inout_ std::wstring& s, _In_ uint64_t const value, __i
 {
     s.resize(0);
 
-    auto defined_string = DefinedStringConstant(value, definitions, number_of_definitions);
+    auto defined_string{ DefinedStringConstant(value, definitions, number_of_definitions) };
 
     if (defined_string not_eq nullptr and defined_string[0] not_eq 0x00)
     {
@@ -788,7 +788,7 @@ inline void from_defined(_Inout_ std::wstring& s, _In_ uint64_t const value, __i
 #include "CFile.hpp"
 #endif // WFC_STL
 
-inline constexpr _Check_return_ bool wfc_is_ascii( uint8_t const byte_value ) noexcept
+inline constexpr [[nodiscard]] _Check_return_ bool wfc_is_ascii( uint8_t const byte_value ) noexcept
 {
     if ( byte_value == CARRIAGE_RETURN or
          byte_value == LINE_FEED or
@@ -805,7 +805,7 @@ inline constexpr _Check_return_ bool wfc_is_ascii( uint8_t const byte_value ) no
     return( false );
 }
 
-inline constexpr _Check_return_ uint64_t round_down_to_a_multiple_of(_In_ uint64_t const value, _In_ uint64_t const multiple) noexcept
+inline constexpr [[nodiscard]] _Check_return_ uint64_t round_down_to_a_multiple_of(_In_ uint64_t const value, _In_ uint64_t const multiple) noexcept
 {
     if (value < multiple or multiple == 0)
     {
@@ -1067,7 +1067,7 @@ inline constexpr _Check_return_ uint64_t round_down_to_a_multiple_of(_In_ uint64
 
 // C Helper functions...
 
-inline constexpr _Check_return_ uint8_t hex_val( _In_ wchar_t const character ) noexcept
+inline constexpr [[nodiscard]] _Check_return_ uint8_t hex_val( _In_ wchar_t const character ) noexcept
 {
     if ( character >= '0' and character <= '9' )
     {
@@ -1119,7 +1119,7 @@ void wfc_append_unicode_string_to_byte_array( _In_z_ wchar_t const * string_to_a
 #define WFC_DEFAULT_WEB_PAGE_OPTIONS (INTERNET_FLAG_RELOAD bitor INTERNET_FLAG_TRANSFER_ASCII bitor INTERNET_FLAG_NO_CACHE_WRITE bitor INTERNET_FLAG_IGNORE_CERT_CN_INVALID bitor INTERNET_FLAG_IGNORE_CERT_DATE_INVALID)
 #endif // WFC_DEFAULT_WEB_PAGE_OPTIONS
 
-inline constexpr _Check_return_ double wfc_get_percentage( _In_ double const sample, _In_ double const total_samples ) noexcept
+inline constexpr [[nodiscard]] _Check_return_ double wfc_get_percentage( _In_ double const sample, _In_ double const total_samples ) noexcept
 {
    if ( total_samples == (double) 0.0 )
    {

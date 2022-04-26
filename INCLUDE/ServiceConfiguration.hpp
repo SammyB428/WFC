@@ -115,7 +115,7 @@ class CServiceConfigurationW
       explicit CServiceConfigurationW( _In_ _QUERY_SERVICE_CONFIGW const * source ) noexcept;
       explicit CServiceConfigurationW( _In_ CServiceConfigurationW const&  source ) noexcept;
       explicit CServiceConfigurationW( _In_ CServiceConfigurationW const * source ) noexcept;
-      virtual ~CServiceConfigurationW();
+      virtual ~CServiceConfigurationW() = default;
 
       virtual void  Copy( _In_ _QUERY_SERVICE_CONFIGW const&  source ) noexcept;
       virtual void  Copy( _In_ _QUERY_SERVICE_CONFIGW const * source ) noexcept;
@@ -124,13 +124,13 @@ class CServiceConfigurationW
       virtual void  Empty( void ) noexcept;
       virtual void  GetDependencies( _Out_ std::vector<std::wstring>& dependencies ) const noexcept;
       virtual void  GetDisplayName( _Out_ std::wstring& display_name ) const noexcept;
-      inline constexpr _Check_return_ DWORD GetErrorControl(void) const noexcept { return(m_ErrorControl); }
+      inline constexpr [[nodiscard]] _Check_return_ DWORD GetErrorControl(void) const noexcept { return(m_ErrorControl); }
       virtual void  GetLoadOrderGroup( _Out_ std::wstring& load_order_group ) const noexcept;
       virtual void  GetNameOfExecutableFile( _Out_ std::wstring& name_of_executable ) const noexcept;
       virtual void  GetStartName( _Out_ std::wstring& start_name ) const noexcept;
-      inline constexpr _Check_return_ DWORD GetTag(void) const noexcept { return(m_Tag); }
-      inline constexpr _Check_return_ DWORD GetTypeOfService(void) const noexcept { return(m_TypeOfService); }
-      inline constexpr _Check_return_ DWORD GetWhenToStart(void) const noexcept { return(m_WhenToStart); }
+      inline constexpr [[nodiscard]] _Check_return_ DWORD GetTag(void) const noexcept { return(m_Tag); }
+      inline constexpr [[nodiscard]] _Check_return_ DWORD GetTypeOfService(void) const noexcept { return(m_TypeOfService); }
+      inline constexpr [[nodiscard]] _Check_return_ DWORD GetWhenToStart(void) const noexcept { return(m_WhenToStart); }
 
       virtual _Check_return_ CServiceConfigurationW& operator=( _In_ CServiceConfigurationW const& source ) noexcept;
       virtual _Check_return_ CServiceConfigurationW& operator=( _In_ _QUERY_SERVICE_CONFIGW const& source ) noexcept;
