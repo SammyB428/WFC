@@ -224,7 +224,7 @@ void CDatabaseParameters::GetConnectionString( CString& return_value ) const
       return_value += TEXT( ";" );
    }
 
-   DWORD user_id_length = temporary_string.GetLength();
+   DWORD user_id_length{ temporary_string.GetLength() };
 
    GetPassword( temporary_string );
 

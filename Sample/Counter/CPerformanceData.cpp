@@ -167,22 +167,20 @@ void CPerformanceData::m_InitializeObjects( void )
       return;
    }
 
-   PPERF_OBJECT_TYPE object_p = (PPERF_OBJECT_TYPE) NULL;
-
    m_PerformanceObjects.RemoveAll();
 
    // Add the first object to the array...
 
-   object_p = (PPERF_OBJECT_TYPE) ( ( reinterpret_cast<BYTE *>( m_DataBlock_p ) ) + m_DataBlock_p->HeaderLength );
+   auto object_p{ (PPERF_OBJECT_TYPE)((reinterpret_cast<BYTE*>(m_DataBlock_p)) + m_DataBlock_p->HeaderLength) };
 
    m_PerformanceObjects.Add( reinterpret_cast<VOID *>( object_p ) );
 
-   int index = 1; // Start at one because we've already added the first element
-   int number_of_objects = m_DataBlock_p->NumObjectTypes;
+   int index{ 1 }; // Start at one because we've already added the first element
+   int number_of_objects{ m_DataBlock_p->NumObjectTypes };
 
    TRACE( TEXT( "m_DataBlock_p->NumObjectTypes == %d\n" ), m_DataBlock_p->NumObjectTypes );
 
-   PPERF_OBJECT_TYPE pointer_to_add = (PPERF_OBJECT_TYPE) NULL;
+   PPERF_OBJECT_TYPE pointer_to_add{ nullptr };
 
    while( index < number_of_objects )
    {

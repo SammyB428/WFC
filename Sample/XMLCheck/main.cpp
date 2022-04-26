@@ -40,6 +40,8 @@
 ** $Modtime: 3/23/98 7:09p $
 */
 
+/* SPDX-License-Identifier: BSD-2-Clause */
+
 #include "XMLCheck.h"
 #pragma hdrstop
 
@@ -59,8 +61,6 @@ int _tmain( int number_of_command_line_arguments, LPCTSTR command_line_arguments
       _tprintf( TEXT( "Usage: xml_file [xml_file [xml_file [...]]]\n" ) );
       return( EXIT_SUCCESS );
    }
-
-   HANDLE find_file_handle = (HANDLE) NULL;
 
    WIN32_FIND_DATAW find_data;
 
@@ -98,9 +98,9 @@ int _tmain( int number_of_command_line_arguments, LPCTSTR command_line_arguments
        {
            ZeroMemory(&find_data, sizeof(find_data));
 
-           find_file_handle = FindFirstFileW(command_line_arguments[index], &find_data);
+           auto const find_file_handle{ ::FindFirstFileW(command_line_arguments[index], &find_data) };
 
-           if (find_file_handle != INVALID_HANDLE_VALUE)
+           if (find_file_handle not_eq INVALID_HANDLE_VALUE)
            {
                std::filesystem::path full_path(command_line_arguments[index]);
 
@@ -108,12 +108,12 @@ int _tmain( int number_of_command_line_arguments, LPCTSTR command_line_arguments
 
                check_xml_file(full_path.c_str());
 
-               while (FindNextFile(find_file_handle, &find_data) != FALSE)
+               while (::FindNextFile(find_file_handle, &find_data) != FALSE)
                {
                    check_xml_file(find_data.cFileName);
                }
 
-               FindClose(find_file_handle);
+               ::FindClose(find_file_handle);
            }
        }
    }

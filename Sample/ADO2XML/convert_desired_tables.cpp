@@ -84,7 +84,7 @@ void convert_desired_tables( const CExtensibleMarkupLanguageElement * settings, 
 
    if ( table_names.GetSize() > 0 )
    {
-      SIZE_T loop_index = 0;
+      SIZE_T loop_index{ 0 };
 
       CString table_name;
       CString where_clause; // Get this from the XML configuration data
