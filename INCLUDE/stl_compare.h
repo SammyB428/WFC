@@ -15,18 +15,18 @@ inline _Check_return_ constexpr wchar_t __upper_case_character(_In_ std::wstring
         return(0);
     }
 
-    return(std::toupper(s1.at(index)));
+    return(static_cast<wchar_t>(std::toupper(s1.at(index))));
 }
 
 inline _Check_return_ int compare_no_case(_In_ std::wstring_view s1, _In_ std::wstring_view s2) noexcept
 {
-    std::size_t index = 0;
-    std::size_t const max_index = std::max(s1.length(), s2.length());
+    std::size_t index{ 0 };
+    auto const max_index{ std::max(s1.length(), s2.length()) };
 
     while (index < max_index)
     {
-        auto const s1_character = __upper_case_character(s1, index);
-        auto const s2_character = __upper_case_character(s2, index);
+        auto const s1_character{ __upper_case_character(s1, index) };
+        auto const s2_character{ __upper_case_character(s2, index) };
 
         if (s1_character < s2_character)
         {
@@ -49,7 +49,7 @@ inline _Check_return_ int compare_no_case(_In_ std::wstring const& s, _In_opt_z_
 
     if (string_p not_eq nullptr)
     {
-        return(compare_no_case(s, std::wstring_view(string_p, ::wcslen(string_p))));
+        return(compare_no_case(s, std::wstring_view(string_p, std::char_traits<wchar_t>::length(string_p))));
     }
     else
     {
@@ -65,7 +65,7 @@ inline _Check_return_ constexpr wchar_t __upper_case_character(_In_ std::string_
         return(0);
     }
 
-    return(std::toupper(s1.at(index)));
+    return(static_cast<wchar_t>(std::toupper(s1.at(index))));
 }
 
 inline _Check_return_ int compare_no_case(_In_ std::string_view s1, _In_ std::string_view s2) noexcept

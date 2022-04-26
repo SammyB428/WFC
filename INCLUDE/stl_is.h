@@ -4,7 +4,7 @@
 
 #define STL_IS_HEADER_FILE
 
-inline constexpr _Check_return_ bool is_space_character(_In_ wchar_t const character) noexcept
+inline constexpr [[nodiscard]] _Check_return_ bool is_space_character(_In_ wchar_t const character) noexcept
 {
     if (character == 0x20 or
         character == 0x0D or
@@ -19,7 +19,7 @@ inline constexpr _Check_return_ bool is_space_character(_In_ wchar_t const chara
     return(false);
 }
 
-inline constexpr _Check_return_ bool is_this_character_ascii(_In_ wchar_t const character) noexcept
+inline constexpr [[nodiscard]] _Check_return_ bool is_this_character_ascii(_In_ wchar_t const character) noexcept
 {
     if (character == 13 or
         character == 10 or
@@ -36,7 +36,7 @@ inline constexpr _Check_return_ bool is_this_character_ascii(_In_ wchar_t const 
     return(false);
 }
 
-inline constexpr _Check_return_ bool is_all_ascii(_In_ std::wstring_view the_string) noexcept
+inline constexpr [[nodiscard]] _Check_return_ bool is_all_ascii(_In_ std::wstring_view the_string) noexcept
 {
     for (auto const& character : the_string)
     {
@@ -49,7 +49,7 @@ inline constexpr _Check_return_ bool is_all_ascii(_In_ std::wstring_view the_str
     return(true);
 }
 
-inline constexpr _Check_return_ bool is_all_ascii(_In_ std::string_view the_string) noexcept
+inline constexpr [[nodiscard]] _Check_return_ bool is_all_ascii(_In_ std::string_view the_string) noexcept
 {
     for (auto const character : the_string)
     {
@@ -75,9 +75,9 @@ inline _Check_return_ bool is_all_ascii(_In_ std::vector<uint8_t> const& the_str
     return(true);
 }
 
-inline constexpr _Check_return_ std::size_t number_of_decimal_digits(_In_ std::wstring_view s) noexcept
+inline constexpr [[nodiscard]] _Check_return_ std::size_t number_of_decimal_digits(_In_ std::wstring_view s) noexcept
 {
-    std::size_t return_value = 0;
+    std::size_t return_value{ 0 };
 
     for (auto const this_character : s)
     {
@@ -90,9 +90,9 @@ inline constexpr _Check_return_ std::size_t number_of_decimal_digits(_In_ std::w
     return(return_value);
 }
 
-inline constexpr _Check_return_ std::size_t number_of_decimal_digits(_In_ std::string_view s) noexcept
+inline constexpr [[nodiscard]] _Check_return_ std::size_t number_of_decimal_digits(_In_ std::string_view s) noexcept
 {
-    std::size_t return_value = 0;
+    std::size_t return_value{ 0 };
 
     for (auto const this_character : s)
     {
@@ -105,9 +105,9 @@ inline constexpr _Check_return_ std::size_t number_of_decimal_digits(_In_ std::s
     return(return_value);
 }
 
-inline constexpr _Check_return_ std::size_t number_of_hex_digits(_In_ std::wstring_view s) noexcept
+inline constexpr [[nodiscard]] _Check_return_ std::size_t number_of_hex_digits(_In_ std::wstring_view s) noexcept
 {
-    std::size_t return_value = 0;
+    std::size_t return_value{ 0 };
 
     for (auto const this_character : s)
     {
@@ -120,9 +120,9 @@ inline constexpr _Check_return_ std::size_t number_of_hex_digits(_In_ std::wstri
     return(return_value);
 }
 
-inline constexpr _Check_return_ std::size_t number_of_lower_case_letters_AZ(_In_ std::wstring_view s) noexcept
+inline constexpr [[nodiscard]] _Check_return_ std::size_t number_of_lower_case_letters_AZ(_In_ std::wstring_view s) noexcept
 {
-    std::size_t return_value = 0;
+    std::size_t return_value{ 0 };
 
     for (auto const this_character : s)
     {
@@ -135,9 +135,9 @@ inline constexpr _Check_return_ std::size_t number_of_lower_case_letters_AZ(_In_
     return(return_value);
 }
 
-inline constexpr _Check_return_ std::size_t number_of_upper_case_letters_AZ(_In_ std::wstring_view s) noexcept
+inline constexpr [[nodiscard]] _Check_return_ std::size_t number_of_upper_case_letters_AZ(_In_ std::wstring_view s) noexcept
 {
-    std::size_t return_value = 0;
+    std::size_t return_value{ 0 };
 
     for (auto const this_character : s)
     {
@@ -160,9 +160,9 @@ inline _Check_return_ bool is_all_decimal_digits(_In_ std::string_view s) noexce
     return((number_of_decimal_digits(s) == s.length()) ? true : false);
 }
 
-inline constexpr _Check_return_ std::size_t number_of(_In_ std::wstring_view s, _In_ wchar_t const character) noexcept
+inline constexpr [[nodiscard]] _Check_return_ std::size_t number_of(_In_ std::wstring_view s, _In_ wchar_t const character) noexcept
 {
-    std::size_t return_value = 0;
+    std::size_t return_value{ 0 };
 
     for (auto const this_character : s)
     {
@@ -175,7 +175,7 @@ inline constexpr _Check_return_ std::size_t number_of(_In_ std::wstring_view s, 
     return(return_value);
 }
 
-inline constexpr _Check_return_ bool is_all_hex_digits(_In_ std::wstring_view s) noexcept
+inline constexpr [[nodiscard]] _Check_return_ bool is_all_hex_digits(_In_ std::wstring_view s) noexcept
 {
     for (wchar_t const character : s)
     {
@@ -201,14 +201,14 @@ inline _Check_return_ bool is_all_space(_In_ std::wstring_view s) noexcept
     return(true);
 }
 
-inline constexpr _Check_return_ bool is_space(_In_ std::wstring_view s, _In_ std::size_t const character_index) noexcept
+inline constexpr [[nodiscard]] _Check_return_ bool is_space(_In_ std::wstring_view s, _In_ std::size_t const character_index) noexcept
 {
     if (s.empty() == true or character_index >= s.length())
     {
         return(false);
     }
 
-    wchar_t const character_to_test = get_at(s, character_index);
+    auto const character_to_test{ get_at(s, character_index) };
 
     if (character_to_test == 0x20 or
         character_to_test == TAB_CHARACTER or

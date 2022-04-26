@@ -17,7 +17,7 @@ inline _Check_return_ double as_double(_In_ std::string_view buffer) noexcept
 #if ! defined( WE_ARE_BUILDING_WFC_ON_UNIX )
     double return_value = 0.0;
 
-    (void)std::from_chars(buffer.data(), buffer.data() + buffer.length(), return_value);
+    std::ignore = std::from_chars(buffer.data(), buffer.data() + buffer.length(), return_value);
 
     return(return_value);
 #else // WE_ARE_BUILDING_WFC_ON_UNIX
@@ -35,7 +35,7 @@ inline _Check_return_ double as_double(_In_ std::wstring_view s) noexcept
 
     // See if we can optimize for small strings
 
-    auto const string_length = s.length();
+    auto const string_length{ s.length() };
 
     if (string_length < 26)
     {
@@ -65,18 +65,18 @@ inline _Check_return_ double as_double(_In_ std::wstring_view s) noexcept
 
 inline _Check_return_ int64_t ascii_string_to_integer(_In_ std::string_view ascii_string, _In_ int radix = 10 ) noexcept
 {
-    int64_t return_value = 0;
+    int64_t return_value{ 0 };
 
-    (void) std::from_chars(ascii_string.data(), ascii_string.data() + ascii_string.length(), return_value, radix);
+    std::ignore = std::from_chars(ascii_string.data(), ascii_string.data() + ascii_string.length(), return_value, radix);
 
     return(return_value);
 }
 
 inline _Check_return_ uint64_t ascii_string_to_unsigned_integer(_In_ std::string_view ascii_string, _In_ int radix = 10) noexcept
 {
-    uint64_t return_value = 0;
+    uint64_t return_value{ 0 };
 
-    (void)std::from_chars(ascii_string.data(), ascii_string.data() + ascii_string.length(), return_value, radix);
+    std::ignore = std::from_chars(ascii_string.data(), ascii_string.data() + ascii_string.length(), return_value, radix);
 
     return(return_value);
 }
@@ -88,9 +88,9 @@ inline _Check_return_ int64_t as_integer(_In_ std::string_view buffer) noexcept
         return(0);
     }
 
-    int radix = 10;
+    int radix{ 10 };
 
-    std::size_t offset_of_first_digit = 0;
+    std::size_t offset_of_first_digit{ 0 };
 
     while (is_space_character(buffer[offset_of_first_digit]) == true)
     {
@@ -127,9 +127,9 @@ inline _Check_return_ uint64_t as_unsigned_integer(_In_ std::string_view buffer)
         return(0);
     }
 
-    int radix = 10;
+    int radix{ 10 };
 
-    std::size_t offset_of_first_digit = 0;
+    std::size_t offset_of_first_digit{ 0 };
 
     while (is_space_character(buffer[offset_of_first_digit]) == true)
     {
@@ -168,7 +168,7 @@ inline _Check_return_ int64_t as_integer(_In_ std::wstring_view s) noexcept
 
     // See if we can optimize for small strings
 
-    auto const string_length = s.length();
+    auto const string_length{ s.length() };
 
     if (string_length < 26)
     {

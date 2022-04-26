@@ -92,7 +92,7 @@ inline void replace(_Inout_ std::wstring& s, _In_ std::wstring_view what_to_repl
         translated_string.append(s.substr(0, location));
         translated_string.append(replace_it_with);
 
-        (void) s.erase(0, location + what_to_replace.length());
+        std::ignore = s.erase(0, location + what_to_replace.length());
 
         location = s.find(what_to_replace);
     }
@@ -114,7 +114,7 @@ inline void replace(_Inout_ std::string& s, _In_ std::string_view what_to_replac
         translated_string.append(s.substr(0, location));
         translated_string.append(replace_it_with);
 
-        (void) s.erase(0, location + what_to_replace.length());
+        std::ignore = s.erase(0, location + what_to_replace.length());
 
         location = s.find(what_to_replace);
     }

@@ -140,7 +140,7 @@ inline _Check_return_ bool starts_with(_In_ std::wstring_view s, std::wstring_vi
 
 inline _Check_return_ bool starts_with(_In_ std::wstring const& s, _In_z_ wchar_t const* beginning) noexcept
 {
-    return(starts_with(s, std::wstring_view(beginning, wcslen(beginning))));
+    return(starts_with(s, std::wstring_view(beginning, std::char_traits<wchar_t>::length(beginning))));
 }
 
 inline _Check_return_ bool starts_with_no_case(_In_ std::wstring const& s, _In_ std::wstring_view beginning) noexcept
@@ -191,7 +191,7 @@ inline _Check_return_ bool starts_with_no_case(_In_ std::string const& s, _In_ s
 
 inline _Check_return_ bool starts_with_no_case(_In_ std::wstring const& s, _In_z_ wchar_t const* beginning) noexcept
 {
-    return(starts_with_no_case(s, std::wstring_view(beginning, wcslen(beginning))));
+    return(starts_with_no_case(s, std::wstring_view(beginning, std::char_traits<wchar_t>::length(beginning))));
 }
 
 inline _Check_return_ bool starts_with_no_case(_In_ std::string const& s, _In_z_ char const* beginning) noexcept

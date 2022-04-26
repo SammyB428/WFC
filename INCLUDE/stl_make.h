@@ -39,14 +39,12 @@ inline void make_reverse(_Inout_ std::wstring& value) noexcept
         return;
     }
 
-    std::size_t last_character_index = value.length() - 1;
-    std::size_t loop_index = 0;
+    std::size_t last_character_index{ value.length() - 1 };
+    std::size_t loop_index{ 0 };
 
     while (loop_index < last_character_index)
     {
-        wchar_t const character_to_move = value.at(loop_index);
-        value.at(loop_index) = value.at(last_character_index);
-        value.at(last_character_index) = character_to_move;
+        std::swap(value.at(loop_index), value.at(last_character_index));
         loop_index++;
         last_character_index--;
     }

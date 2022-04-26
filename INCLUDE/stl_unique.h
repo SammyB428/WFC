@@ -21,8 +21,8 @@ inline _Check_return_ bool it_was_found(_In_ std::vector<std::wstring>::const_it
 
 inline _Check_return_ SSIZE_T add_to_unique_sorted_vector(_In_ std::wstring_view value_to_add, _Inout_ std::vector<std::wstring>& values) noexcept
 {
-    auto const lower = std::lower_bound(std::cbegin(values), std::cend(values), value_to_add);
-    auto const return_value = std::distance(std::cbegin(values), lower);
+    auto const lower{ std::lower_bound(std::cbegin(values), std::cend(values), value_to_add) };
+    auto const return_value{ std::distance(std::cbegin(values), lower) };
 
     if (lower == std::cend(values))
     {
@@ -31,6 +31,23 @@ inline _Check_return_ SSIZE_T add_to_unique_sorted_vector(_In_ std::wstring_view
     else if (value_to_add < *lower)
     {
         values.insert(lower, std::wstring(value_to_add));
+    }
+
+    return(return_value);
+}
+
+inline _Check_return_ SSIZE_T add_to_unique_sorted_vector(_In_ std::u16string_view value_to_add, _Inout_ std::vector<std::u16string>& values) noexcept
+{
+    auto const lower{ std::lower_bound(std::cbegin(values), std::cend(values), value_to_add) };
+    auto const return_value{ std::distance(std::cbegin(values), lower) };
+
+    if (lower == std::cend(values))
+    {
+        values.push_back(std::u16string(value_to_add));
+    }
+    else if (value_to_add < *lower)
+    {
+        values.insert(lower, std::u16string(value_to_add));
     }
 
     return(return_value);
@@ -53,8 +70,8 @@ inline _Check_return_ bool it_was_found(_In_ std::vector<std::string>::const_ite
 
 inline _Check_return_ SSIZE_T add_to_unique_sorted_vector(_In_ std::string_view value_to_add, _Inout_ std::vector<std::string>& values) noexcept
 {
-    auto const lower = std::lower_bound(std::cbegin(values), std::cend(values), value_to_add);
-    auto const return_value = std::distance(std::cbegin(values), lower);
+    auto const lower{ std::lower_bound(std::cbegin(values), std::cend(values), value_to_add) };
+    auto const return_value{ std::distance(std::cbegin(values), lower) };
 
     if (lower == std::cend(values))
     {
@@ -241,7 +258,7 @@ inline void add_unique(_Inout_ std::vector<std::wstring>& destination, _In_ std:
 {
     for (auto const& new_string : source)
     {
-        (void)add_unique(destination, new_string);
+        std::ignore = add_unique(destination, new_string);
     }
 }
 
