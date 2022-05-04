@@ -346,7 +346,7 @@ _Check_return_ bool Win32FoundationClasses::CBase64Coding::Decode(_In_reads_byte
         return(true);
     }
 
-    bool return_value{ false };
+    bool return_value{ true };
 
     uint8_t byte_to_add{ 0 };
     uint8_t character_1{ 0 };
