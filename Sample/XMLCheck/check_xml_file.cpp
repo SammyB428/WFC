@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright (c) 1998-2003, 2013, Samuel R. Blackburn
+** Copyright (c) 1998-2022, 2013, Samuel R. Blackburn
 ** All rights reserved.
 **
 ** "You can get credit for something or get it done, but not both."
@@ -40,6 +40,8 @@
 ** $Modtime: 3/23/98 7:09p $
 */
 
+/* SPDX-License-Identifier: BSD-2-Clause */
+
 #include "XMLCheck.h"
 #pragma hdrstop
 
@@ -57,15 +59,15 @@ void check_xml_file( wchar_t const * filename ) noexcept
 
    Win32FoundationClasses::CExtensibleMarkupLanguageDocument document;
 
-   auto parsing_options = document.GetParseOptions();
+   auto parsing_options{ document.GetParseOptions() };
 
-   parsing_options |= WFC_XML_ALLOW_REPLACEMENT_OF_DEFAULT_ENTITIES;
+   parsing_options or_eq WFC_XML_ALLOW_REPLACEMENT_OF_DEFAULT_ENTITIES;
 
-   document.SetParseOptions( parsing_options );
+   std::ignore = document.SetParseOptions( parsing_options );
 
    Win32FoundationClasses::CFile64 file;
 
-   if ( file.Open( filename, read_open_mode()) == FALSE )
+   if ( file.Open( filename, read_open_mode()) == false )
    {
       WFCTRACEVAL( TEXT( "Can't open " ), filename );
       WFCTRACEERROR( GetLastError() );
@@ -77,27 +79,31 @@ void check_xml_file( wchar_t const * filename ) noexcept
 
    bytes.resize( file.GetLength() );
 
-   file.Read( bytes.data(), (uint32_t) bytes.size() );
+   if (file.Read(bytes.data(), (uint32_t)bytes.size()) not_eq bytes.size())
+   {
+       _tprintf(TEXT("Can't read bytes\n"));
+       return;
+   }
+
    file.Close();
 
    Win32FoundationClasses::CDataParser parser;
 
-   parser.Initialize( &bytes, false );
+   std::ignore = parser.Initialize( &bytes, false );
 
    Win32FoundationClasses::CSystemTime begin_parsing;
    Win32FoundationClasses::CSystemTime end_parsing;
 
-   uint64_t start_tick_count = 0;
-   uint64_t end_tick_count   = 0;
+   uint64_t end_tick_count{ 0 };
 
-   BOOL should_parse_fail = FALSE;
+   BOOL should_parse_fail{ FALSE };
 
    begin_parsing.GetUTC();
-   start_tick_count = GetTickCount64();
+   auto const start_tick_count{ ::GetTickCount64() };
 
    WFCTRACELEVELON( 31 );
 
-   if ( document.Parse( parser ) != FALSE )
+   if ( document.Parse( parser ) == true )
    {
       // We parsed OK
 
@@ -131,14 +137,14 @@ void check_xml_file( wchar_t const * filename ) noexcept
       {
          // Less than a second!
 
-         uint64_t const number_of_milliseconds = end_tick_count - start_tick_count;
+         auto const number_of_milliseconds{ end_tick_count - start_tick_count };
 
          //WFCTRACEVAL( TEXT( "Parse time in Milliseconds is " ), number_of_milliseconds );
          _tprintf( TEXT( "It took %" PRIu64 " milliseconds to parse.\n\n" ), number_of_milliseconds );
       }
       else
       {
-          uint64_t const number_of_milliseconds = end_tick_count - start_tick_count;
+          auto const number_of_milliseconds = end_tick_count - start_tick_count;
          //WFCTRACEVAL( TEXT( "Parse time in seconds is " ), time_span.GetTotalSeconds() );
          _tprintf( TEXT( "It took %" PRIu32 " seconds (%" PRIu64 " milliseconds) to parse %zu elements (%zu bytes).\n\n" ),
                   (uint32_t) time_span.GetTotalSeconds(),

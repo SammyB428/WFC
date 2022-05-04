@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright (c) 1998-2003, 2019, Samuel R. Blackburn
+** Copyright (c) 1998-2022, 2019, Samuel R. Blackburn
 ** All rights reserved.
 **
 ** "You can get credit for something or get it done, but not both."
@@ -62,8 +62,6 @@ int _tmain( int number_of_command_line_arguments, LPCTSTR command_line_arguments
       return( EXIT_SUCCESS );
    }
 
-   WIN32_FIND_DATAW find_data;
-
    std::error_code filesystem_error_code;
 
    for( auto const index : Range(number_of_command_line_arguments, StartingRangePosition(1)) )
@@ -96,6 +94,8 @@ int _tmain( int number_of_command_line_arguments, LPCTSTR command_line_arguments
        }
        else
        {
+           WIN32_FIND_DATAW find_data;
+
            ZeroMemory(&find_data, sizeof(find_data));
 
            auto const find_file_handle{ ::FindFirstFileW(command_line_arguments[index], &find_data) };
