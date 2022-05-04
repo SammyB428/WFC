@@ -65,7 +65,7 @@ __checkReturn bool test_CServiceControlManager( __out std::string& class_name, _
       return( failure() );
    }
 
-   std::size_t number_of_services = 0;
+   std::size_t number_of_services{ 0 };
 
    if ( manager.EnumerateStatus( SERVICE_STATE_ALL, SERVICE_TYPE_ALL ) == true )
    {

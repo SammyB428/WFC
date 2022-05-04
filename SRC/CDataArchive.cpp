@@ -321,7 +321,7 @@ void Win32FoundationClasses::CDataArchive::Read(_Out_ std::vector<uint16_t>& arr
 
     WFC_TRY
     {
-       uint32_t number_of_array_entries = 0;
+       uint32_t number_of_array_entries { 0};
 
        Read(number_of_array_entries);
 
@@ -619,7 +619,7 @@ void Win32FoundationClasses::CDataArchive::Write(_In_ std::vector<uint8_t> const
 
     WFC_TRY
     {
-       uint32_t number_of_array_entries = (uint32_t)array.size();
+       uint32_t number_of_array_entries{ (uint32_t)array.size()};
 
        Write(number_of_array_entries);
 

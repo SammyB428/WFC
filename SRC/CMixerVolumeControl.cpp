@@ -180,7 +180,7 @@ _Check_return_ bool Win32FoundationClasses::CMixerVolumeControl::m_GetAll( void 
 
    if (array.empty() == false)
    {
-       m_LeftChannel.Copy(array.at(0));
+       m_LeftChannel.Copy(array.front());
    }
 
    if (array.size() > 1)

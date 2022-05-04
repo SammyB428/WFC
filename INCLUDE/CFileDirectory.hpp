@@ -136,7 +136,7 @@ class CFileDirectory
               return( false );
           }
 
-          auto const attributes = ::GetFileAttributesW( file_name );
+          auto const attributes{ ::GetFileAttributesW(file_name) };
 
           if ( attributes not_eq INVALID_FILE_ATTRIBUTES )
           {

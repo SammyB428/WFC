@@ -52,17 +52,17 @@ static char THIS_FILE[] = __FILE__;
 
 static _Check_return_ bool count_ones_and_zeroes( _In_ uint32_t const number_of_dwords_to_test ) noexcept
 {
-    uint32_t number_of_ones                     = 0;
-    uint32_t number_of_zeroes                   = 0;
-    uint32_t length_of_longest_series_of_ones   = 0;
-    uint32_t length_of_longest_series_of_zeroes = 0;
-    uint32_t number_of_consecutive_ones         = 0;
-    uint32_t number_of_consecutive_zeroes       = 0;
-    uint32_t last_bit                           = 0;
-    uint32_t random_value                       = 0;
-    uint32_t bit                                = 0;
-    uint32_t maximum_number_of_ones             = 0;
-    uint32_t minimum_number_of_ones             = 0xFFFFFFFF;
+    uint32_t number_of_ones{ 0 };
+    uint32_t number_of_zeroes{ 0 };
+    uint32_t length_of_longest_series_of_ones{ 0 };
+    uint32_t length_of_longest_series_of_zeroes{ 0 };
+    uint32_t number_of_consecutive_ones{ 0 };
+    uint32_t number_of_consecutive_zeroes{ 0 };
+    uint32_t last_bit{ 0 };
+    uint32_t random_value{ 0 };
+    uint32_t bit{ 0 };
+    uint32_t maximum_number_of_ones{ 0 };
+    uint32_t minimum_number_of_ones{ 0xFFFFFFFF };
 
     uint32_t one_bits[ 32 ]; // Count the one-bits in the locations
 
@@ -280,21 +280,21 @@ _Check_return_ bool test_CRandomNumberGenerator( _Out_ std::string& class_name, 
    // Don't let the generator produce truely random values.
    generator.Disable(true);
 
-   DWORD const seed = ::GetTickCount();
+   auto const seed{ ::GetTickCount() };
 
    generator.SetSeed(seed);
 
-   std::size_t loop_index = 0;
-   std::size_t const number_of_tests = 1000033;
+   std::size_t loop_index{ 0 };
+   std::size_t const number_of_tests{ 1000033 };
 
-   uint32_t test_integer = 0;
-   double test_double = 0.0;
+   uint32_t test_integer{ 0 };
+   double test_double{ 0.0 };
 
-   uint32_t const minimum_integer = 137;
-   uint32_t const maximum_integer = 2115485863;
+   static constexpr uint32_t const minimum_integer{ 137 };
+   static constexpr uint32_t const maximum_integer{ 2115485863 };
    
-   double const minimum_double = 1.33;
-   double const maximum_double = 2115485863.19630502;
+   static constexpr double const minimum_double{ 1.33 };
+   static constexpr double const maximum_double{ 2115485863.19630502 };
 
    while (loop_index < number_of_tests)
    {

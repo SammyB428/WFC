@@ -50,39 +50,32 @@ static char THIS_FILE[] = __FILE__;
 #define new DEBUG_NEW
 #endif // _DEBUG
 
-void test_CServer( _In_z_ LPCTSTR machine_name ) noexcept
+void test_CServer(_In_z_ LPCTSTR machine_name) noexcept
 {
-   WFCTRACEINIT( TEXT( "test_CServer()" ) );
+    WFCTRACEINIT(TEXT("test_CServer()"));
 
-   Win32FoundationClasses::CServer server;
+    Win32FoundationClasses::CServer server;
 
-   server.Open( machine_name );
+    server.Open(machine_name);
 
-   std::wstring name;
-   std::wstring comment;
-   std::wstring path;
-   std::wstring os;
-   std::wstring domain;
+    std::wstring name;
+    std::wstring comment;
+    std::wstring path;
+    std::wstring os;
+    std::wstring domain;
 
-   DWORD major_version   = 0;
-   DWORD minor_version   = 0;
-   DWORD type            = 0;
-   DWORD users           = 0;
-   DWORD number_of_users = 0;
-   DWORD number_of_opens = 0;
+    server.GetUserPath(path);
+    server.GetName(name);
+    server.GetComment(comment);
+    server.GetPlatformName(os);
+    server.GetDomain(domain);
 
-   server.GetUserPath( path );
-   server.GetName( name );
-   server.GetComment( comment );
-   server.GetPlatformName( os );
-   server.GetDomain( domain );
-
-   major_version   = server.GetMajorVersion();
-   minor_version   = server.GetMinorVersion();
-   type            = server.GetType();
-   users           = server.GetUsers();
-   number_of_users = server.GetNumberOfUsers();
-   number_of_opens = server.GetNumberOfOpens();
+    auto const major_version{ server.GetMajorVersion() };
+    auto const minor_version{ server.GetMinorVersion() };
+    auto const type{ server.GetType() };
+    auto const users{ server.GetUsers() };
+    auto const number_of_users{ server.GetNumberOfUsers() };
+    auto const number_of_opens{ server.GetNumberOfOpens() };
 
    _tprintf( TEXT( "Server Name:      \"%s\"\n" ), name.c_str()    );
    _tprintf( TEXT( "Server Domain:    \"%s\"\n" ), domain.c_str()  );

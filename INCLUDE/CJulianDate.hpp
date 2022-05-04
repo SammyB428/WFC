@@ -64,9 +64,8 @@ class CJulianDate // Don't use this, I'm not finished with it yet
       inline constexpr [[nodiscard]] _Check_return_ double Get( void ) const noexcept { return( m_JulianDays ); }; // Don't use this
       inline constexpr [[nodiscard]] _Check_return_ int GetDayOfWeek(void) const noexcept // Don't use this
       {
-          auto const julian_day = (long)(m_JulianDays + 0.5);
-
-          auto const day_of_week = ((julian_day % 7L) + 1);
+          auto const julian_day{ (long)(m_JulianDays + 0.5) };
+          auto const day_of_week{ ((julian_day % 7L) + 1) };
 
           return(static_cast<int>((day_of_week == 7) ? 0 : day_of_week));
       }
@@ -76,7 +75,7 @@ class CJulianDate // Don't use this, I'm not finished with it yet
       ** Operators
       */
 
-      inline constexpr CJulianDate& operator=( _In_  CJulianDate const& source ) noexcept { m_JulianDays = source.m_JulianDays; return( *this ); };
+      inline constexpr CJulianDate& operator=( _In_ CJulianDate const& source ) noexcept { m_JulianDays = source.m_JulianDays; return( *this ); };
 
 #if defined( _DEBUG ) && ! defined( WFC_NO_DUMPING )
       void Dump( CDumpContext& dump_context ) const;

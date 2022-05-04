@@ -132,7 +132,7 @@ inline _Check_return_ const ::SYSTEM_PROCESS_INFORMATION * GetNext( _In_ ::SYSTE
         return( nullptr );
     }
 
-    auto return_value = reinterpret_cast<::SYSTEM_PROCESS_INFORMATION const *> ( reinterpret_cast<uint64_t const>(information_p) + static_cast<uint64_t>(information_p->NextEntryOffset) );
+    auto return_value{ reinterpret_cast<::SYSTEM_PROCESS_INFORMATION const*> (reinterpret_cast<uint64_t const>(information_p) + static_cast<uint64_t>(information_p->NextEntryOffset)) };
 
     return( return_value );
 }

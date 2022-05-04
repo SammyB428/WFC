@@ -117,7 +117,7 @@ void test_CNetworkShares( __in_z LPCTSTR machine_name ) noexcept
    }
    else
    {
-      DWORD error_code = shares.GetErrorCode();
+      auto error_code{ shares.GetErrorCode() };
 
       std::wstring error_message;
 

@@ -202,8 +202,8 @@ inline _Check_return_ int compare_no_case(_In_ uint8_t const* s1, _In_ uint8_t c
 
     while (index < count)
     {
-        auto const s1_character = std::toupper(s1[index]);
-        auto const s2_character = std::toupper(s2[index]);
+        auto const s1_character{ std::toupper(s1[index]) };
+        auto const s2_character{ std::toupper(s2[index]) };
 
         if (s1_character < s2_character)
         {
@@ -795,9 +795,9 @@ public:
 
             found_at.Copy( parse_point );
 
-            auto const pattern_length = bytes_to_find.size();
+            auto const pattern_length{ bytes_to_find.size() };
 
-            auto pattern_buffer = bytes_to_find.data();
+            auto pattern_buffer{ bytes_to_find.data() };
 
             while( ( found_at.GetIndex() + pattern_length ) <= m_NumberOfBytes )
             {

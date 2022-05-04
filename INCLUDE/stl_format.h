@@ -33,11 +33,11 @@ template <typename ... Args>
 void format(_Inout_ std::string& result, _In_z_ _Printf_format_string_ char const* format_string, Args const& ... args) noexcept
 {
 #if defined(WE_ARE_BUILDING_WFC_ON_UNIX)
-    int const number_of_characters_to_allocate = snprintf(nullptr, 0, format_string, PrintfArgument(args) ...);
+    int const number_of_characters_to_allocate{ snprintf(nullptr, 0, format_string, PrintfArgument(args) ...) };
 #else
 #pragma warning( push )
 #pragma warning( disable : 4996 )
-    int const number_of_characters_to_allocate = _snprintf(nullptr, 0, format_string, PrintfArgument(args) ...);
+    int const number_of_characters_to_allocate{ _snprintf(nullptr, 0, format_string, PrintfArgument(args) ...) };
 #pragma warning( pop )
 #endif
 
@@ -50,9 +50,9 @@ void format(_Inout_ std::string& result, _In_z_ _Printf_format_string_ char cons
     result.resize(number_of_characters_to_allocate + 1);
 
 #if defined(WE_ARE_BUILDING_WFC_ON_UNIX)
-    int const number_of_characters_written = snprintf(&result[0], number_of_characters_to_allocate + 1, format_string, PrintfArgument(args) ...);
+    int const number_of_characters_written{ snprintf(&result[0], number_of_characters_to_allocate + 1, format_string, PrintfArgument(args) ...) };
 #else
-    int const number_of_characters_written = _snprintf_s(&result[0], number_of_characters_to_allocate + 1, _TRUNCATE, format_string, PrintfArgument(args) ...);
+    int const number_of_characters_written { _snprintf_s(&result[0], number_of_characters_to_allocate + 1, _TRUNCATE, format_string, PrintfArgument(args) ...)};
 #endif
 
     if (number_of_characters_written >= 0)
@@ -68,7 +68,7 @@ void format(_Inout_ std::wstring& result, _In_z_ _Printf_format_string_ wchar_t 
 #if ! defined(WE_ARE_BUILDING_WFC_ON_UNIX)
 #pragma warning( push )
 #pragma warning( disable : 4996 )
-    int const number_of_characters_to_allocate = _snwprintf(nullptr, 0, format_string, PrintfArgument(args) ...);
+    int const number_of_characters_to_allocate{ _snwprintf(nullptr, 0, format_string, PrintfArgument(args) ...) };
 #pragma warning( pop )
     if (number_of_characters_to_allocate < 1)
     {
@@ -78,7 +78,7 @@ void format(_Inout_ std::wstring& result, _In_z_ _Printf_format_string_ wchar_t 
 
     result.resize(static_cast<std::size_t>(number_of_characters_to_allocate) + 1);
 
-    std::size_t const number_of_characters_written = _snwprintf_s(&result[0], static_cast<std::size_t>(number_of_characters_to_allocate) + 1, _TRUNCATE, format_string, PrintfArgument(args) ...);
+    auto const number_of_characters_written{ _snwprintf_s(&result[0], static_cast<std::size_t>(number_of_characters_to_allocate) + 1, _TRUNCATE, format_string, PrintfArgument(args) ...) };
 
     if (number_of_characters_written >= 0)
     {
@@ -93,7 +93,7 @@ void format(_Inout_ std::wstring& result, _In_z_ _Printf_format_string_ wchar_t 
 
     std::string ascii_format_string;
 
-    std::size_t string_index = 0;
+    std::size_t string_index{ 0 };
 
     while (format_string[string_index] not_eq 0x00)
     {
@@ -279,37 +279,37 @@ inline void friendly_byte_count(_Inout_ std::wstring& s, _In_ uint64_t const byt
     }
     else if (byte_count < ONE_MEGABYTE)
     {
-        double const units = (double)((double)byte_count / (double)ONE_KILOBYTE);
+        double const units{ (double)((double)byte_count / (double)ONE_KILOBYTE) };
 
         format(s, L"%.02lfKB", units);
     }
     else if (byte_count < ONE_GIGABYTE)
     {
-        double const units = (double)((double)byte_count / (double)ONE_MEGABYTE);
+        double const units{ (double)((double)byte_count / (double)ONE_MEGABYTE) };
 
         format(s, L"%.02lfMB", units);
     }
     else if (byte_count < ONE_TERABYTE)
     {
-        double const units = (double)((double)byte_count / (double)ONE_GIGABYTE);
+        double const units{ (double)((double)byte_count / (double)ONE_GIGABYTE) };
 
         format(s, L"%.02lfGB", units);
     }
     else if (byte_count < ONE_PETABYTE)
     {
-        double const units = (double)((double)byte_count / (double)ONE_TERABYTE);
+        double const units{ (double)((double)byte_count / (double)ONE_TERABYTE) };
 
         format(s, L"%.02lfTB", units);
     }
     else if (byte_count < ONE_EXABYTE)
     {
-        double const units = (double)((double)byte_count / (double)ONE_PETABYTE);
+        double const units{ (double)((double)byte_count / (double)ONE_PETABYTE) };
 
         format(s, L"%.02lfPB", units);
     }
     else
     {
-        double const units = (double)((double)byte_count / (double)ONE_EXABYTE);
+        double const units{ (double)((double)byte_count / (double)ONE_EXABYTE) };
 
         format(s, L"%.02lfEB", units);
     }

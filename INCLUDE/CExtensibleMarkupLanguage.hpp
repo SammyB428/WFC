@@ -539,7 +539,7 @@
         void  SetEncoding(_In_ std::wstring_view encoding) noexcept;
         inline constexpr [[nodiscard]] _Check_return_ bool SetIgnoreWhiteSpace(_In_ bool const ignore_whitespace) noexcept
         {
-            bool const return_value = m_IgnoreWhiteSpace;
+            bool const return_value{ m_IgnoreWhiteSpace };
             m_IgnoreWhiteSpace = ignore_whitespace;
             return(return_value);
         }
@@ -556,7 +556,7 @@
 
         inline constexpr [[nodiscard]] _Check_return_ uint32_t SetParseOptions(_In_ uint32_t const new_options) noexcept
         {
-            uint32_t const return_value = m_ParseOptions;
+            uint32_t const return_value{ m_ParseOptions };
 
             m_ParseOptions = new_options;
 

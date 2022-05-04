@@ -84,7 +84,7 @@ void test_CNetSession( LPCTSTR machine_name ) noexcept
    }
    else
    {
-      DWORD error_code = session.GetErrorCode();
+      auto const error_code{ session.GetErrorCode() };
 
       std::wstring error_message;
 

@@ -129,7 +129,7 @@ inline void join(_In_ std::vector<std::string> const& s, _In_ std::string_view f
 {
     result.clear();
 
-    auto const number_of_elements = s.size();
+    auto const number_of_elements{ s.size() };
 
     if (number_of_elements == 0)
     {
@@ -138,11 +138,11 @@ inline void join(_In_ std::vector<std::string> const& s, _In_ std::string_view f
 
     if (number_of_elements == 1)
     {
-        result.assign(s.at(0));
+        result.assign(s.front());
         return;
     }
 
-    std::size_t array_index = 0;
+    std::size_t array_index{ 0 };
 
     while (array_index < (number_of_elements - 1))
     {

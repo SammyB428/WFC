@@ -430,8 +430,8 @@ a program (as opposed to display it to a user).
 
    <B>wfc_get_web_page</B>( url, weather_report );
 
-   int index = 0;
-   int number_of_lines_in_report = weather_report.GetSize();
+   int index{ 0 };
+   int number_of_lines_in_report{ weather_report.GetSize() };
 
    while( index &lt; number_of_lines_in_report )
    {

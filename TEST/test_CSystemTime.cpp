@@ -168,7 +168,7 @@ _Check_return_ bool test_CSystemTime( __out std::string& class_name, __out int& 
       return( failure() );
    }
 
-   uint64_t const ticks = 129748979200327745I64;
+   uint64_t const ticks{ 129748979200327745I64 };
 
    Win32FoundationClasses::CFileTime ft;
  
@@ -192,9 +192,9 @@ _Check_return_ bool test_CSystemTime( __out std::string& class_name, __out int& 
    c_time.tm_hour = 9;
    c_time.tm_min = 50;
 
-   static constexpr time_t const correct_answer = 1422870600; // from http://www.onlineconversion.com/unix_time.htm 
+   static constexpr time_t const correct_answer{ 1422870600 }; // from http://www.onlineconversion.com/unix_time.htm 
 
-   time_t const time_value = _mkgmtime( &c_time );
+   time_t const time_value{ _mkgmtime(&c_time) };
 
    _ASSERTE( time_value == correct_answer );
 

@@ -474,7 +474,7 @@ __checkReturn bool test_CBitArray( __out std::string& class_name, __out int& tes
     }
 
     //   virtual void      AddValue( DWORD value_to_add, DWORD number_of_bits_in_value );
-    DWORD added_value = 0x55;
+    DWORD added_value{ 0x55 };
 
     bits.AddValue( added_value, 8 );
 
@@ -490,7 +490,7 @@ __checkReturn bool test_CBitArray( __out std::string& class_name, __out int& tes
     // primes. A list of primes can be found at
     // http://www.utm.edu/research/primes/index.html
 
-    int number_of_bits_to_insert = 10007;
+    int number_of_bits_to_insert{ 10007 };
 
     for ( auto const array_index : Range(number_of_bits_to_insert) )
     {
@@ -503,7 +503,7 @@ __checkReturn bool test_CBitArray( __out std::string& class_name, __out int& tes
         return( failure() );
     }
 
-    uint32_t value_to_check = bits.GetValue( bits.GetSize() - 8, 8 );
+    auto value_to_check{ bits.GetValue(bits.GetSize() - 8, 8) };
 
     if ( added_value not_eq value_to_check )
     {
@@ -607,7 +607,7 @@ __checkReturn bool test_CBitArray( __out std::string& class_name, __out int& tes
 
     //   virtual void      Append( const CBitArray& source );
 
-    auto const number_of_bits = bits.GetSize();
+    auto const number_of_bits{ bits.GetSize() };
 
     bits.Append( bits4 );
 
@@ -798,7 +798,7 @@ __checkReturn bool test_CBitArray( __out std::string& class_name, __out int& tes
         bits.AddByte( 0x55 ); // Bit pattern of 01010101
     }
 
-    std::size_t enumerator = 0;
+    std::size_t enumerator{ 0 };
 
     if ( bits.EnumerateOnes( enumerator ) == false )
     {
@@ -939,7 +939,7 @@ __checkReturn bool test_CBitArray( __out std::string& class_name, __out int& tes
         bits2.AddByte( 0xAA ); // Bit pattern of 10101010
     }
 
-    std::size_t found_at = 0;
+    std::size_t found_at{ 0 };
 
     if ( bits.Find( bits2, found_at ) not_eq true )
     {
@@ -953,7 +953,7 @@ __checkReturn bool test_CBitArray( __out std::string& class_name, __out int& tes
         return( failure() );
     }
 
-    std::size_t old_found_at = found_at;
+    std::size_t old_found_at{ found_at };
 
     if ( bits.Find( bits2, found_at, found_at ) not_eq true )
     {
@@ -1081,7 +1081,7 @@ __checkReturn bool test_CBitArray( __out std::string& class_name, __out int& tes
 
     bits2.Copy( bits.Mid( 1, 32 ) );
 
-    DWORD value = bits2.GetValue( 0, 32 );
+    auto value{ bits2.GetValue(0, 32) };
 
     if ( value not_eq 0x12345678 )
     {

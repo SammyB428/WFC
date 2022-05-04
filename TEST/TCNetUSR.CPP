@@ -109,7 +109,7 @@ void test_CNetworkUsers( __in_z LPCTSTR machine_name ) noexcept
    }
    else
    {
-      DWORD error_code = users.GetErrorCode();
+      auto error_code{ users.GetErrorCode() };
 
       std::wstring error_message;
 

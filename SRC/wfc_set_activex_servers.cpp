@@ -142,7 +142,7 @@ downloaded from.
       return( false );
    }
 
-   int loop_index = 0;
+   int loop_index{ 0 };
 
    std::wstring server_name;
 

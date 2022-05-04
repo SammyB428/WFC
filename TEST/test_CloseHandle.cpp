@@ -52,14 +52,14 @@ static char THIS_FILE[] = __FILE__;
 
 void test_CloseHandle( void ) noexcept
 {
-   uint64_t invalid_handle_value = 1;
+   uint64_t invalid_handle_value{ 1 };
 
    while( invalid_handle_value < 0xFFFF )
    {
       // Handles are always a multiple of 4
       if ( ( invalid_handle_value % 4 ) not_eq 0 )
       {
-         CloseHandle( (HANDLE) invalid_handle_value );
+         ::CloseHandle( (HANDLE) invalid_handle_value );
       }
 
       invalid_handle_value++;

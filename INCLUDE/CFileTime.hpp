@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 1995-2020, Samuel R. Blackburn
+** Copyright, 1995-2022, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -64,79 +64,79 @@ class CFileTime : public _FILETIME
 {
     public:
 
-       static constexpr uint64_t const DecThirty1899 = 94353120000000000ULL;
+       static constexpr uint64_t const DecThirty1899{ 94353120000000000ULL };
 
        // The number of FILETIME ticks since Jan 1, 2001
-       static constexpr uint64_t const JanFirst2001                                    = 126227808000000000ULL;
+       static constexpr uint64_t const JanFirst2001{ 126227808000000000ULL };
 
        // The number of FILETIME ticks since Jan 1, 1970
-       static constexpr uint64_t const JanFirst1970                                    = 116444736000000000ULL;
+       static constexpr uint64_t const JanFirst1970{ 116444736000000000ULL };
 
        // The number of FILETIME ticks between Jan 1, 1 and Jan 1, 1601
-       static constexpr uint64_t const TicksBetween0001And1601                         = 504911232000000000LL;
+       static constexpr uint64_t const TicksBetween0001And1601{ 504911232000000000LL };
 
        // The number of FILETIME ticks in one microsecond
-       static constexpr uint64_t const OneMicrosecond                                  = 10;
+       static constexpr uint64_t const OneMicrosecond{ 10 };
 
        // The number of FILETIME ticks in one millisecond
-       static constexpr uint64_t const NumberOfTicksPerMillisecond                     = 10000;
+       static constexpr uint64_t const NumberOfTicksPerMillisecond{ 10000 };
 
        // The number of milliseconds between Windows (1601) and Unix (1970) epochs
-       static constexpr uint64_t const NumberOfMillisecondsBetweenWindowsAndUnixEpochs = 11644473600000LL;
+       static constexpr uint64_t const NumberOfMillisecondsBetweenWindowsAndUnixEpochs{ 11644473600000LL };
 
        // The number of milliseconds in one minute
-       static constexpr uint64_t const NumberOfMillisecondsInOneMinute                 = 60000LL;
+       static constexpr uint64_t const NumberOfMillisecondsInOneMinute{ 60000LL };
 
        // The number of milliseconds in one hour
-       static constexpr uint64_t const NumberOfMillisecondsInOneHour                   = 3600000LL;
+       static constexpr uint64_t const NumberOfMillisecondsInOneHour{ 3600000LL };
 
        // The number of milliseconds in one day
-       static constexpr uint64_t const NumberOfMillisecondsInOneDay                    = 86400000LL;
+       static constexpr uint64_t const NumberOfMillisecondsInOneDay{ 86400000LL };
 
        // The number of milliseconds in one week
-       static constexpr uint64_t const NumberOfMillisecondsInOneWeek                   = 604800000LL;
+       static constexpr uint64_t const NumberOfMillisecondsInOneWeek{ 604800000LL };
 
        // The number of nanoseconds in one microsecond
-       static constexpr uint64_t const NumberOfNanosecondsInOneMicrosecond             = 1000LL;
+       static constexpr uint64_t const NumberOfNanosecondsInOneMicrosecond{ 1000LL };
 
        // The number of nanoseconds in one FILETIME tick
-       static constexpr uint64_t const NumberOfNanosecondsInOneFiletimeTick            = 100LL;
+       static constexpr uint64_t const NumberOfNanosecondsInOneFiletimeTick{ 100LL };
 
        // The number of microseconds in one millisecond
-       static constexpr uint64_t const NumberOfMicrosecondsInOneMillisecond            = 1000;
-       static constexpr uint64_t const NumberOfMicrosecondsInOneSecond                 = 1000000;
+       static constexpr uint64_t const NumberOfMicrosecondsInOneMillisecond{ 1000 };
+       static constexpr uint64_t const NumberOfMicrosecondsInOneSecond{ 1000000 };
 
        // The number of FILETIME ticks in one microsecond
-       static constexpr uint64_t const NumberOfFiletimeTicksInOneMicrosecond           = 10;
+       static constexpr uint64_t const NumberOfFiletimeTicksInOneMicrosecond{ 10 };
 
        // The number of FILETIME ticks in one millisecond
-       static constexpr uint64_t const NumberOfFiletimeTicksInOneMillisecond           = 10000;
+       static constexpr uint64_t const NumberOfFiletimeTicksInOneMillisecond{ 10000 };
 
        // The number of FILETIME ticks in one second
-       static constexpr uint64_t const NumberOfFiletimeTicksInOneSecond                = 10000000;
+       static constexpr uint64_t const NumberOfFiletimeTicksInOneSecond{ 10000000 };
 
        // The number of FILETIME ticks in one minute
-       static constexpr uint64_t const NumberOfFiletimeTicksInOneMinute                = 600000000;
+       static constexpr uint64_t const NumberOfFiletimeTicksInOneMinute{ 600000000 };
 
        // The number of FILETIME ticks in one hour
-       static constexpr uint64_t const NumberOfFiletimeTicksInOneHour                  = 36000000000LL;
+       static constexpr uint64_t const NumberOfFiletimeTicksInOneHour{ 36000000000LL };
 
        // The number of FILETIME ticks in one day
-       static constexpr uint64_t const NumberOfFiletimeTicksInOneDay                   = 864000000000LL;
+       static constexpr uint64_t const NumberOfFiletimeTicksInOneDay{ 864000000000LL };
 
        // The number of FILETIME ticks in one year
-       static constexpr uint64_t const NumberOfFiletimeTicksInOneYear                  = 315360000000000LL;
+       static constexpr uint64_t const NumberOfFiletimeTicksInOneYear{ 315360000000000LL };
 
        static inline constexpr [[nodiscard]] _Check_return_ int64_t ConvertHoursMinutesToSeconds( _In_ int const hours, _In_ int const minutes ) noexcept
        {
-          int64_t const return_value = ( static_cast<int64_t>(hours) * 3600 ) + ( static_cast<int64_t>(minutes) * 60 );
+          int64_t const return_value{ (static_cast<int64_t>(hours) * 3600) + (static_cast<int64_t>(minutes) * 60) };
 
           return( return_value );
        }
 
        static inline constexpr [[nodiscard]] _Check_return_ int64_t ConvertHoursMinutesToTicks(_In_ int const hours, _In_ int const minutes ) noexcept
        {
-          int64_t return_value = ConvertHoursMinutesToSeconds( hours, minutes );
+          auto return_value{ ConvertHoursMinutesToSeconds(hours, minutes) };
 
           return_value *= CFileTime::NumberOfFiletimeTicksInOneSecond;
 
@@ -147,7 +147,7 @@ class CFileTime : public _FILETIME
        {
            FILETIME file_time{ 0, 0 };
 
-           GetSystemTimePreciseAsFileTime( &file_time );
+           ::GetSystemTimePreciseAsFileTime( &file_time );
 
            ULARGE_INTEGER li;
 
@@ -250,7 +250,7 @@ class CFileTime : public _FILETIME
 #if ! defined(WE_ARE_BUILDING_WFC_ON_UNIX)
       inline void ToLocalTime( void ) noexcept
       {
-         FILETIME local_time = { 0, 0 };
+         FILETIME local_time{ 0, 0 };
 
          if ( ::FileTimeToLocalFileTime( this, &local_time ) not_eq FALSE )
          {
@@ -264,7 +264,7 @@ class CFileTime : public _FILETIME
       {
          auto const number_of_ticks{ static_cast<int64_t>(static_cast<double>(CFileTime::NumberOfFiletimeTicksInOneSecond) * number_of_seconds) };
 
-         int64_t ll = static_cast<int64_t>( static_cast<int64_t>(dwHighDateTime) << 32 );
+         auto ll{ static_cast<int64_t>(static_cast<int64_t>(dwHighDateTime) << 32) };
 
          ll += dwLowDateTime;
          ll += number_of_ticks;
@@ -456,7 +456,7 @@ class CFileTime : public _FILETIME
 
       inline constexpr void CopyTicks(_In_ int64_t const ticks ) noexcept
       {
-          ULARGE_INTEGER li{ { 0, 0 } };
+         ULARGE_INTEGER li{ { 0, 0 } };
 
          li.QuadPart = static_cast<uint64_t>(ticks);
          dwLowDateTime  = li.u.LowPart;
@@ -499,7 +499,7 @@ class CFileTime : public _FILETIME
 
       inline void Copy( _In_ DBTIMESTAMP const& source ) noexcept
       {
-          SYSTEMTIME system_time{0, 0, 0, 0, 0, 0, 0, 0};
+         SYSTEMTIME system_time{0, 0, 0, 0, 0, 0, 0, 0};
 
          system_time.wYear   = source.year;
          system_time.wMonth  = source.month;
@@ -521,7 +521,7 @@ class CFileTime : public _FILETIME
 
          // Filetime is in 100-nanosecond increments so we have to convert
 
-         uint32_t const hundred_nanosecond_increments = source.fraction / 100;
+         uint32_t const hundred_nanosecond_increments{ source.fraction / 100 };
 
          ULARGE_INTEGER large_integer{ file_time.dwLowDateTime, file_time.dwHighDateTime };
 
@@ -533,7 +533,7 @@ class CFileTime : public _FILETIME
 
       inline constexpr void CopyUnixTime( _In_ time_t const unix_time ) noexcept
       {
-         int64_t const ll = Int32x32To64(unix_time, CFileTime::NumberOfFiletimeTicksInOneSecond) + CFileTime::JanFirst1970;
+         auto const ll{ Int32x32To64(unix_time, CFileTime::NumberOfFiletimeTicksInOneSecond) + CFileTime::JanFirst1970 };
          dwLowDateTime = static_cast<uint32_t>(ll);
          dwHighDateTime = ll >> 32;
       }
@@ -568,9 +568,9 @@ class CFileTime : public _FILETIME
       {
          CTimeEx the_time( year, month, day, hour, minute, 0 );
 
-         int64_t ll = Int32x32To64( static_cast<time_t>(the_time), CFileTime::NumberOfFiletimeTicksInOneSecond) + CFileTime::JanFirst1970;
+         auto ll{ Int32x32To64(static_cast<time_t>(the_time), CFileTime::NumberOfFiletimeTicksInOneSecond) + CFileTime::JanFirst1970 };
 
-         int64_t const number_of_ticks = static_cast<int64_t>( static_cast<double>(CFileTime::NumberOfFiletimeTicksInOneSecond) * seconds );
+         auto const number_of_ticks{ static_cast<int64_t>(static_cast<double>(CFileTime::NumberOfFiletimeTicksInOneSecond) * seconds) };
 
          ll += number_of_ticks;
 
@@ -631,7 +631,7 @@ class CFileTime : public _FILETIME
 
       inline constexpr void CopyPRTime(_In_ uint64_t const pr_time ) noexcept
       {
-          uint64_t integer = pr_time * NumberOfFiletimeTicksInOneMicrosecond;
+          uint64_t integer{ pr_time * NumberOfFiletimeTicksInOneMicrosecond };
 
           integer += JanFirst1970;
 
@@ -729,7 +729,7 @@ class CFileTime : public _FILETIME
          // the children at Microsoft from harming us, we will copy
          // our FILETIME to an expendable one.
 
-          FILETIME file_time{ 0, 0 };
+         FILETIME file_time{ 0, 0 };
 
          file_time.dwHighDateTime = dwHighDateTime;
          file_time.dwLowDateTime  = dwLowDateTime;
@@ -870,14 +870,14 @@ class CFileTime : public _FILETIME
 
       inline constexpr operator LARGE_INTEGER() const noexcept
       {
-          LARGE_INTEGER return_value{ dwLowDateTime, static_cast<int32_t>(dwHighDateTime) };
+         LARGE_INTEGER return_value{ dwLowDateTime, static_cast<int32_t>(dwHighDateTime) };
 
          return( return_value );
       }
 
       inline constexpr operator ULARGE_INTEGER() const noexcept
       {
-          ULARGE_INTEGER return_value{ dwLowDateTime, dwHighDateTime };
+         ULARGE_INTEGER return_value{ dwLowDateTime, dwHighDateTime };
 
          return( return_value );
       }

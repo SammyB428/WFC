@@ -75,7 +75,7 @@ void test_CNetworkConnections( __in_z LPCTSTR machine_name ) noexcept
    }
    else
    {
-      DWORD error_code = connections.GetErrorCode();
+      auto error_code{ connections.GetErrorCode() };
 
       std::wstring error_message;
 

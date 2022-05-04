@@ -131,7 +131,7 @@ _Check_return_ bool Win32FoundationClasses::CMixerSwitchControl::m_GetAll( void 
    if (array.empty() == false)
    {
        // Left channel
-       m_Switch.Copy(array.at(0));
+       m_Switch.Copy(array.front());
    }
 
    return( return_value );

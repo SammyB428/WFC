@@ -63,19 +63,19 @@ struct atomic_thread_parameters
 
 static void atomic_read_thread(void* p) noexcept
 {
-    std::size_t const buffer_size = (10 * 1024 * 1024) + 1037;
-    auto buffer = std::make_unique<uint8_t[]>(buffer_size);
+    static constexpr std::size_t const buffer_size{ (10 * 1024 * 1024) + 1037 };
+    auto buffer{ std::make_unique<uint8_t[]>(buffer_size) };
 
-    auto event_handle = MANUAL_RESET_EVENT();
+    auto event_handle{ MANUAL_RESET_EVENT() };
 
-    auto parameters = static_cast<atomic_thread_parameters *>(p);
+    auto parameters{ static_cast<atomic_thread_parameters*>(p) };
 
     //std::mt19937 random(::GetCurrentThreadId());
 
-    std::size_t const increment = ::GetCurrentThreadId() + 329787;
+    std::size_t const increment{ ::GetCurrentThreadId() + 329787 };
 
-    std::size_t offset = increment;
-    auto const file_size = parameters->file->GetLength() - buffer_size;
+    std::size_t offset{ increment };
+    auto const file_size{ parameters->file->GetLength() - buffer_size };
 
     //std::uniform_int_distribution<uint32_t> range_of_sizes(1, sizeof(buffer));
     //std::uniform_int_distribution<uint64_t> range_of_offsets(0, parameters->file->GetLength() - range_of_sizes.max());
@@ -127,7 +127,7 @@ _Check_return_ bool test_CFile64(_Out_ std::string& class_name, _Out_ int& test_
 
     Win32FoundationClasses::CRandomNumberGenerator2 random_number_generator;
 
-    bool file_exists = true;
+    bool file_exists{ true };
 
     while (file_exists not_eq false)
     {
@@ -145,7 +145,7 @@ _Check_return_ bool test_CFile64(_Out_ std::string& class_name, _Out_ int& test_
     // If we get here, it means the filename generated above is a good one. No file
     // exists of that name.
 
-    auto buffer = std::make_unique<uint8_t[]>(ONE_MEGABYTE);
+    auto buffer{ std::make_unique<uint8_t[]>(ONE_MEGABYTE) };
 
     if (buffer.get() == nullptr)
     {
@@ -203,7 +203,7 @@ _Check_return_ bool test_CFile64(_Out_ std::string& class_name, _Out_ int& test_
         return(failure());
     }
 
-    ULONGLONG const position = file.Seek(-ONE_MEGABYTE, Win32FoundationClasses::CFile64::SeekPosition::end);
+    auto const position{ file.Seek(-ONE_MEGABYTE, Win32FoundationClasses::CFile64::SeekPosition::end) };
 
     if (position not_eq 0)
     {
@@ -320,22 +320,22 @@ _Check_return_ bool test_CFile64(_Out_ std::string& class_name, _Out_ int& test_
 
         if ((loop_index % 4) == 0)
         {
-            BYTE end_of_line[2] = { CARRIAGE_RETURN, LINE_FEED };
+            BYTE end_of_line[2]{ CARRIAGE_RETURN, LINE_FEED };
             file.Write(end_of_line, 2);
         }
         else if ((loop_index % 4) == 1)
         {
-            BYTE end_of_line[1] = { CARRIAGE_RETURN };
+            BYTE end_of_line[1]{ CARRIAGE_RETURN };
             file.Write(end_of_line, 1);
         }
         else if ((loop_index % 4) == 2)
         {
-            BYTE end_of_line[1] = { LINE_FEED };
+            BYTE end_of_line[1]{ LINE_FEED };
             file.Write(end_of_line, 1);
         }
         else
         {
-            BYTE end_of_line[1] = { 0 };
+            BYTE end_of_line[1]{ 0 };
             file.Write(end_of_line, 1);
         }
     }
@@ -435,7 +435,7 @@ _Check_return_ bool test_CFile64(_Out_ std::string& class_name, _Out_ int& test_
             _beginthread(atomic_read_thread, DEFAULT_THREAD_STACK_SIZE, &entry);
         }
 
-        bool all_done = false;
+        bool all_done{ false };
 
         while (all_done == false)
         {

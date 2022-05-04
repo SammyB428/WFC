@@ -80,7 +80,7 @@ void test_CNetwork( LPCTSTR machine_name ) noexcept
    }
    else
    {
-      DWORD error_code = machine.GetErrorCode();
+      auto const error_code{ machine.GetErrorCode() };
       ReportError( error_code );
       _tprintf( TEXT( "Can't EnumeratePorts, reason code %lu\n" ), error_code );
    }

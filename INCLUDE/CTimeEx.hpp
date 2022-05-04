@@ -183,7 +183,7 @@ class CTimeEx
       
       inline constexpr void Copy(_In_ FILETIME const& source) noexcept
       {
-          int64_t ll = source.dwHighDateTime;
+          int64_t ll{ source.dwHighDateTime };
 
           ll <<= 32;
           ll += source.dwLowDateTime;

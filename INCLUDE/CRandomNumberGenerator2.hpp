@@ -104,7 +104,7 @@ class CRandomNumberGenerator2
       _Check_return_ uint64_t OneOf( __in_ecount( number_of_values ) uint64_t const * values, _In_ std::size_t number_of_values ) noexcept;
       _Check_return_ uint64_t Integer64( void ) noexcept
       {
-          uint64_t const high = ( (uint64_t) GetInteger() << 32 );
+          uint64_t const high{ ((uint64_t)GetInteger() << 32) };
           return( (uint64_t) ( high + GetInteger() ) );
       }
 

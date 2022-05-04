@@ -71,8 +71,8 @@ class CReedSolomonErrorCorrectionCode
 {
    protected:
 
-      static constexpr int const m_NumberOfBitsPerSymbol = 8; // 8 bits per symbol
-      static constexpr int const m_BlockSize = 255; // 255
+      static constexpr int const m_NumberOfBitsPerSymbol{ 8 }; // 8 bits per symbol
+      static constexpr int const m_BlockSize{ 255 }; // 255
 
       int m_NumberOfSymbolsPerBlock{ 0 };
       std::unique_ptr<int[]> m_Alpha_to; // array of integers of size (m_BlockSize + 1) elements

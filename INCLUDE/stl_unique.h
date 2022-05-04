@@ -107,8 +107,8 @@ inline _Check_return_ bool it_was_found_ignoring_case(_In_ std::vector<std::stri
 
 inline _Check_return_ SSIZE_T add_to_unique_sorted_vector_ignore_case(_In_ std::string_view value_to_add, _Inout_ std::vector<std::string>& values) noexcept
 {
-    auto const lower = std::lower_bound(std::cbegin(values), std::cend(values), value_to_add, compare_strings_ignoring_case);
-    auto const return_value = std::distance(std::cbegin(values), lower);
+    auto const lower{ std::lower_bound(std::cbegin(values), std::cend(values), value_to_add, compare_strings_ignoring_case) };
+    auto const return_value{ std::distance(std::cbegin(values), lower) };
 
     if (lower == std::cend(values))
     {
@@ -144,8 +144,8 @@ inline _Check_return_ bool it_was_found_ignoring_case(_In_ std::vector<std::wstr
 
 inline _Check_return_ SSIZE_T add_to_unique_sorted_vector_ignore_case(_In_ std::wstring_view value_to_add, _Inout_ std::vector<std::wstring>& values) noexcept
 {
-    auto const lower = std::lower_bound(std::cbegin(values), std::cend(values), value_to_add, compare_wide_strings_ignoring_case);
-    auto const return_value = std::distance(std::cbegin(values), lower);
+    auto const lower{ std::lower_bound(std::cbegin(values), std::cend(values), value_to_add, compare_wide_strings_ignoring_case) };
+    auto const return_value{ std::distance(std::cbegin(values), lower) };
 
     if (lower == std::cend(values))
     {
@@ -166,7 +166,7 @@ inline _Check_return_ bool contains_no_case_sorted(_In_ std::vector<std::string>
         return(false);
     }
 
-    auto const lower = std::lower_bound(std::cbegin(s), std::cend(s), the_string, compare_strings_ignoring_case);
+    auto const lower{ std::lower_bound(std::cbegin(s), std::cend(s), the_string, compare_strings_ignoring_case) };
 
     return (it_was_found_ignoring_case(lower, the_string, s));
 }

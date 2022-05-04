@@ -55,9 +55,7 @@ void Win32FoundationClasses::CDataChunk::GetIdentifier( _In_ uint32_t const id, 
 {
    string.clear();
 
-   wchar_t character = 0;
-
-   character = static_cast<wchar_t>( id bitand 0xFF );
+   auto character{ static_cast<wchar_t>(id bitand 0xFF) };
 
    if ( character == 0 )
    {
@@ -216,9 +214,9 @@ _Check_return_ bool Win32FoundationClasses::CDataFile::GetData( _Out_ uint32_t& 
 
    identifier = 0;
 
-   uint8_t bytes[9] = { 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+   uint8_t bytes[9]{ 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 
-   UINT number_of_bytes_read = 0;
+   UINT number_of_bytes_read{ 0 };
 
    WFC_TRY
    {

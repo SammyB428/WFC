@@ -15,7 +15,7 @@ inline _Check_return_ double as_double(_In_ std::string_view buffer) noexcept
     }
 
 #if ! defined( WE_ARE_BUILDING_WFC_ON_UNIX )
-    double return_value = 0.0;
+    double return_value{ 0.0 };
 
     std::ignore = std::from_chars(buffer.data(), buffer.data() + buffer.length(), return_value);
 
@@ -182,7 +182,7 @@ inline _Check_return_ int64_t as_integer(_In_ std::wstring_view s) noexcept
         return(as_integer(std::string_view(ascii_string, string_length)));
     }
 
-    int radix = 10;
+    int radix{ 10 };
 
     std::wstring value(s);
 
@@ -199,7 +199,7 @@ inline _Check_return_ int64_t as_integer(_In_ std::wstring_view s) noexcept
         value.erase(0, 1);
     }
 
-    int64_t const return_value = std::stoll(value, nullptr, radix);
+    int64_t const return_value{ std::stoll(value, nullptr, radix) };
 
     return(return_value);
 }
@@ -213,7 +213,7 @@ inline _Check_return_ uint64_t as_unsigned_integer(_In_ std::wstring_view s) noe
 
     // See if we can optimize for small strings
 
-    auto const string_length = s.length();
+    auto const string_length{ s.length() };
 
     if (string_length < 26)
     {
@@ -227,7 +227,7 @@ inline _Check_return_ uint64_t as_unsigned_integer(_In_ std::wstring_view s) noe
         return(as_unsigned_integer(std::string_view(ascii_string, string_length)));
     }
 
-    int radix = 10;
+    int radix{ 10 };
 
     std::wstring value(s);
 
@@ -244,14 +244,14 @@ inline _Check_return_ uint64_t as_unsigned_integer(_In_ std::wstring_view s) noe
         value.erase(0, 1);
     }
 
-    auto const return_value = std::stoull(value, nullptr, radix);
+    auto const return_value{ std::stoull(value, nullptr, radix) };
 
     return(return_value);
 }
 
 inline _Check_return_ int64_t as_hexadecimal_integer(_In_ std::wstring const& s) noexcept
 {
-    auto const return_value = std::stoll(s, nullptr, 16);
+    auto const return_value{ std::stoll(s, nullptr, 16) };
 
     return(return_value);
 }
@@ -268,7 +268,7 @@ inline _Check_return_ wchar_t const * from_defined_constant(_In_ uint64_t const 
     value_to_find.Constant = value;
     value_to_find.StringValue = nullptr;
 
-    auto entry = static_cast<Win32FoundationClasses::DEFINED_WIDE_STRING const *>(std::bsearch(&value_to_find, definitions, number_of_definitions, sizeof(Win32FoundationClasses::DEFINED_WIDE_STRING), compare_defines));
+    auto entry{ static_cast<Win32FoundationClasses::DEFINED_WIDE_STRING const*>(std::bsearch(&value_to_find, definitions, number_of_definitions, sizeof(Win32FoundationClasses::DEFINED_WIDE_STRING), compare_defines)) };
 
     if (entry == nullptr)
     {

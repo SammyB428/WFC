@@ -248,12 +248,12 @@ namespace Win32FoundationClasses
 
 #else
 
-            int length = ::MultiByteToWideChar( code_page,
+            int length{ ::MultiByteToWideChar(code_page,
                 0,
                 m_String.c_str(),
-                (int) m_String.length(),
+                (int)m_String.length(),
                 nullptr,
-                0 );
+                0) };
 
             BSTR return_value = ::SysAllocStringLen( nullptr, length );
 
@@ -293,7 +293,7 @@ namespace Win32FoundationClasses
 
             WFC_TRY
             {
-                size_t loop_index = 0;
+                size_t loop_index { 0};
 
                 TCHAR temp_string[ 2 ];
 
@@ -413,10 +413,10 @@ namespace Win32FoundationClasses
 
                 if ( number_of_characters < 0 ) // used to be -1 but that opened us up to errors
                 {
-                    size_t loop_index   = beginning_at;
-                    size_t string_index = 0;
+                    size_t loop_index{ beginning_at };
+                    size_t string_index{ 0 };
 
-                    size_t string_size = strlen( ascii_string_p );
+                    auto string_size{ strlen(ascii_string_p) };
 
                     if ( loop_index >= strlen( ascii_string_p ) )
                     {
@@ -440,8 +440,8 @@ namespace Win32FoundationClasses
                 {
                     // Only append a finite number of characters...
 
-                    std::size_t loop_index   = 0;
-                    std::size_t string_index = 0;
+                    std::size_t loop_index{ 0 };
+                    std::size_t string_index{ 0 };
 
                     if ( beginning_at > 0 )
                     {
@@ -452,16 +452,16 @@ namespace Win32FoundationClasses
                         }
                     }
 
-                    SSIZE_T true_number_of_characters_to_copy = strlen( ascii_string_p ) - beginning_at;
+                    auto true_number_of_characters_to_copy{ strlen(ascii_string_p) - beginning_at };
 
-                    if ( true_number_of_characters_to_copy > number_of_characters )
+                    if ( static_cast<SSIZE_T>(true_number_of_characters_to_copy) > number_of_characters )
                     {
                         true_number_of_characters_to_copy = number_of_characters;
                     }
 
                     m_String.resize( true_number_of_characters_to_copy );
 
-                    while( (SSIZE_T) loop_index < true_number_of_characters_to_copy )
+                    while( loop_index < true_number_of_characters_to_copy )
                     {
                         m_String.at( string_index ) = ascii_string_p[ beginning_at + loop_index ];
                         loop_index++;
@@ -495,7 +495,7 @@ namespace Win32FoundationClasses
                 {
                     // Only append a finite number of characters...
 
-                    SSIZE_T loop_index = 0;
+                    SSIZE_T loop_index{ 0 };
 
                     while( loop_index < number_of_characters )
                     {
@@ -536,7 +536,7 @@ namespace Win32FoundationClasses
                 {
                     // Only append a finite number of characters...
 
-                    std::size_t loop_index = 0;
+                    std::size_t loop_index{ 0 };
 
                     while( (SSIZE_T) loop_index < number_of_characters )
                     {
@@ -561,7 +561,7 @@ namespace Win32FoundationClasses
                     return;
                 }
 
-                std::size_t number_of_characters_to_copy = 0;
+                std::size_t number_of_characters_to_copy{ 0 };
 
                 if ( number_of_characters == (-1) )
                 {
@@ -620,7 +620,7 @@ namespace Win32FoundationClasses
                 return( (int) m_String.length() );
             }
 
-            int const number_of_characters_remaining = (int)( (int) m_String.length() - index );
+            int const number_of_characters_remaining{ (int)((int)m_String.length() - index) };
 
             if ( number_of_characters_to_delete > number_of_characters_remaining )
             {
@@ -661,7 +661,7 @@ namespace Win32FoundationClasses
             // STL's find is whacko. Put some sense back into it.
             // This is a hack until I can decipher what STL is attempting to do
 
-            SSIZE_T found_at = Mid( start_index ).Find( character );
+            SSIZE_T found_at{ Mid(start_index).Find(character) };
 
             if ( found_at >= 0 )
             {
@@ -782,11 +782,11 @@ namespace Win32FoundationClasses
         {
             wchar_t temp_string[ 4096 ];
 
-            DWORD number_of_characters = ::GetEnvironmentVariableW( variable_name, temp_string, (DWORD) ( std::size( temp_string ) - 1 ) );
+            auto number_of_characters{ ::GetEnvironmentVariableW(variable_name, temp_string, (DWORD)(std::size(temp_string) - 1)) };
 
             if ( number_of_characters > (std::size( temp_string ) - 1 ) )
             {
-                auto buffer = std::make_unique<wchar_t[]>(static_cast<std::size_t>(number_of_characters * 2));
+                auto buffer{ std::make_unique<wchar_t[]>(static_cast<std::size_t>(number_of_characters * 2)) };
 
                 number_of_characters = ::GetEnvironmentVariableW( variable_name, buffer.get(), (DWORD) ( ( number_of_characters * 2 ) - 1 ) );
 
@@ -818,7 +818,7 @@ namespace Win32FoundationClasses
         {
             WFC_VALIDATE_POINTER( this );
 
-            int const string_length = (int) m_String.length();
+            int const string_length{ (int)m_String.length() };
 
             if ( string_index >= string_length )
             {
@@ -844,7 +844,7 @@ namespace Win32FoundationClasses
 
             if ( string_to_insert not_eq nullptr )
             {
-                int const string_length = (int) m_String.length();
+                int const string_length{ (int)m_String.length() };
 
                 if ( string_index >= string_length )
                 {
@@ -1046,9 +1046,9 @@ namespace Win32FoundationClasses
 
             CString new_string;
 
-            size_t loop_index = 0;
+            size_t loop_index{ 0 };
 
-            TCHAR character_to_test = 0;
+            TCHAR character_to_test{ 0 };
 
             while( loop_index < string_length )
             {
@@ -1073,9 +1073,9 @@ namespace Win32FoundationClasses
         {
             WFC_VALIDATE_POINTER( this );
 
-            size_t number_of_replacements = 0;
-            size_t string_index           = 0;
-            const size_t string_length = m_String.length();
+            size_t number_of_replacements{ 0 };
+            size_t string_index{ 0 };
+            size_t const string_length{ m_String.length() };
 
             while( string_index < string_length )
             {
@@ -1097,11 +1097,11 @@ namespace Win32FoundationClasses
             WFC_VALIDATE_POINTER( old_string );
             WFC_VALIDATE_POINTER_NULL_OK( replacement_string );
 
-            std::size_t number_of_replacements = 0;
+            std::size_t number_of_replacements{ 0 };
 
             WFC_TRY
             {
-                std::size_t const old_string_length = _tcslen( old_string );
+                auto const old_string_length { _tcslen(old_string) };
 
                 if ( old_string_length == 0 )
                 {
@@ -1110,7 +1110,7 @@ namespace Win32FoundationClasses
 
                 CString new_string;
 
-                SSIZE_T found_at = 0;
+                SSIZE_T found_at{ 0 };
 
                 found_at = Find( old_string );
 
@@ -1168,7 +1168,7 @@ namespace Win32FoundationClasses
 
             CString our_ending = Right( ending_length );
 
-            int const comparison_result = our_ending.Compare( ending );
+            int const comparison_result{ our_ending.Compare(ending) };
 
             if ( comparison_result == I_AM_EQUAL_TO_THAT )
             {
@@ -1194,7 +1194,7 @@ namespace Win32FoundationClasses
 
             CString our_ending = Right( ending_length );
 
-            int const comparison_result = our_ending.CompareNoCase( ending );
+            int const comparison_result{ our_ending.CompareNoCase(ending) };
 
             if ( comparison_result == I_AM_EQUAL_TO_THAT )
             {
@@ -1264,12 +1264,12 @@ namespace Win32FoundationClasses
 
 #else
 
-            int length = ::MultiByteToWideChar( code_page,
+            int length{ ::MultiByteToWideChar(code_page,
                 0,
                 m_String.c_str(),
-                (int) m_String.length(),
+                (int)m_String.length(),
                 nullptr,
-                0 );
+                0) };
 
             ::SysReAllocStringLen( b_string_p, nullptr, length );
 
@@ -1321,7 +1321,7 @@ namespace Win32FoundationClasses
         {
             CString our_beginning = Left( _tcslen( beginning ) );
 
-            int const comparison_result = our_beginning.Compare( beginning );
+            int const comparison_result{ our_beginning.Compare(beginning) };
 
             if ( comparison_result == I_AM_EQUAL_TO_THAT )
             {
@@ -1335,7 +1335,7 @@ namespace Win32FoundationClasses
         {
             CString our_beginning = Left( _tcslen( beginning ) );
 
-            int const comparison_result = our_beginning.CompareNoCase( beginning );
+            int const comparison_result{ our_beginning.CompareNoCase(beginning) };
 
             if ( comparison_result == I_AM_EQUAL_TO_THAT )
             {
@@ -1349,11 +1349,11 @@ namespace Win32FoundationClasses
         {
             WFC_VALIDATE_POINTER( this );
 
-            std::size_t const string_length = m_String.length();
+            auto const string_length{ m_String.length() };
 
             if ( string_length > 0 )
             {
-                std::size_t number_of_elements_to_erase = 0;
+                std::size_t number_of_elements_to_erase{ 0 };
 
                 while( number_of_elements_to_erase < string_length and
                     _istspace( m_String.at( number_of_elements_to_erase ) ) )
@@ -1376,11 +1376,11 @@ namespace Win32FoundationClasses
         {
             WFC_VALIDATE_POINTER( this );
 
-            std::size_t const string_length = m_String.length();
+            auto const string_length{ m_String.length() };
 
             if ( string_length > 0 )
             {
-                std::size_t number_of_elements_to_erase = 0;
+                std::size_t number_of_elements_to_erase{ 0 };
 
                 while( number_of_elements_to_erase < string_length and
                     character == m_String.at( number_of_elements_to_erase ) )
@@ -1634,10 +1634,10 @@ namespace Win32FoundationClasses
             return( BYTES_NOT_FOUND );
         }
 
-        uint8_t const first_byte = pattern[ 0 ];
+        uint8_t const first_byte{ pattern[0] };
 
-        int64_t buffer_index = 0;
-        int64_t found_at = 0;
+        int64_t buffer_index{ 0 };
+        int64_t found_at{ 0 };
 
         while( buffer_index < buffer_size )
         {
@@ -1655,7 +1655,7 @@ namespace Win32FoundationClasses
                 return( buffer_index );
             }
 
-            int64_t pattern_index = 1;
+            int64_t pattern_index{ 1 };
 
             while( pattern_index < pattern_size )
             {
@@ -1689,9 +1689,9 @@ namespace Win32FoundationClasses
     {
         results.clear();
 
-        int64_t found_at_offset = 0;
-        int64_t buffer_index = 0;
-        int64_t number_of_bytes_remaining_in_buffer = buffer_size;
+        int64_t found_at_offset{ 0 };
+        int64_t buffer_index{ 0 };
+        int64_t number_of_bytes_remaining_in_buffer{ buffer_size };
 
         while (number_of_bytes_remaining_in_buffer >= pattern_size)
         {
@@ -1715,18 +1715,18 @@ namespace Win32FoundationClasses
 
     inline _Check_return_ bool is_all_space( _In_ std::vector<uint8_t> const& s ) noexcept
     {
-        auto const number_of_characters = s.size();
+        auto const number_of_characters{ s.size() };
 
         if (number_of_characters == 0)
         {
             return(false);
         }
 
-        auto buffer = s.data();
+        auto buffer{ s.data() };
 
-        std::size_t here = 0;
+        std::size_t here{ 0 };
 
-        char character_to_test = 0;
+        char character_to_test{ 0 };
 
         while (here < number_of_characters)
         {

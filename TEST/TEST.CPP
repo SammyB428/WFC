@@ -231,7 +231,7 @@ _Check_return_ int _tmain( _In_ int const number_of_command_line_arguments, _In_
 
    if ( get_random not_eq NULL )
    {
-      DWORD new_random_value = GetTickCount();
+       DWORD new_random_value{ GetTickCount() };
 
       get_random( &new_random_value );
 

@@ -663,18 +663,18 @@ _Check_return_ bool Win32FoundationClasses::wfc_parse_iso_8601_string(_In_ std::
 
     // Now to pick up any fractional seconds...
 
-    int year = 0;
-    int month = 0;
-    int day = 0;
-    int hours = 0;
-    int minutes = 0;
-    int seconds = 0;
-    double fraction = 0;
+    int year{ 0 };
+    int month{ 0 };
+    int day{ 0 };
+    int hours{ 0 };
+    int minutes{ 0 };
+    int seconds{ 0 };
+    double fraction{ 0.0 };
 
-    wchar_t offset_character = 0;
+    wchar_t offset_character{ 0 };
 
-    int offset_hours = 0;
-    int offset_minutes = 0;
+    int offset_hours{ 0 };
+    int offset_minutes{ 0 };
 
     if (__parse_ymdhmsf(time_string, year, month, day, hours, minutes, seconds, offset_character, offset_hours, offset_minutes, fraction) == false)
     {
@@ -682,9 +682,9 @@ _Check_return_ bool Win32FoundationClasses::wfc_parse_iso_8601_string(_In_ std::
         return(true);
     }
 
-    double const ticks = static_cast<double>(Win32FoundationClasses::CFileTime::NumberOfFiletimeTicksInOneSecond) * fraction;
+    double const ticks{ static_cast<double>(Win32FoundationClasses::CFileTime::NumberOfFiletimeTicksInOneSecond) * fraction };
 
-    auto const number_of_ticks = static_cast<uint32_t>(ticks);
+    auto const number_of_ticks{ static_cast<uint32_t>(ticks) };
 
     if (ticks > 0)
     {
@@ -759,18 +759,18 @@ _Check_return_ bool Win32FoundationClasses::wfc_parse_iso_8601_string(_In_ std::
         return( false );
     }
 
-    int year    = 0;
-    int month   = 0;
-    int day     = 0;
-    int hours   = 0;
-    int minutes = 0;
-    int seconds = 0;
-    double fraction = 0;
+    int year{ 0 };
+    int month{ 0 };
+    int day{ 0 };
+    int hours{ 0 };
+    int minutes{ 0 };
+    int seconds{ 0 };
+    double fraction{ 0.0 };
 
-    wchar_t offset_character = 0;
+    wchar_t offset_character{ 0 };
 
-    int offset_hours   = 0;
-    int offset_minutes = 0;
+    int offset_hours{ 0 };
+    int offset_minutes{ 0 };
 
     if ( __parse_ymdhmsf( time_string, year, month, day, hours, minutes, seconds, offset_character, offset_hours, offset_minutes, fraction ) == false )
     {
@@ -778,7 +778,7 @@ _Check_return_ bool Win32FoundationClasses::wfc_parse_iso_8601_string(_In_ std::
         return( false );
     }
 
-    auto ole_time = Win32FoundationClasses::CTimeEx( year, month, day, hours, minutes, seconds );
+    auto ole_time{ Win32FoundationClasses::CTimeEx(year, month, day, hours, minutes, seconds) };
 
     if ( offset_character not_eq L'Z' )
     {
@@ -819,18 +819,18 @@ _Check_return_ bool Win32FoundationClasses::wfc_parse_iso_8601_string(_In_ std::
         return( false );
     }
 
-    int year    = 0;
-    int month   = 0;
-    int day     = 0;
-    int hours   = 0;
-    int minutes = 0;
-    int seconds = 0;
-    double fraction = 0;
+    int year{ 0 };
+    int month{ 0 };
+    int day{ 0 };
+    int hours{ 0 };
+    int minutes{ 0 };
+    int seconds{ 0 };
+    double fraction{ 0.0 };
 
-    wchar_t offset_character = 0;
+    wchar_t offset_character{ 0 };
 
-    int offset_hours   = 0;
-    int offset_minutes = 0;
+    int offset_hours{ 0 };
+    int offset_minutes{ 0 };
 
     if ( __parse_ymdhmsf( time_string, year, month, day, hours, minutes, seconds, offset_character, offset_hours, offset_minutes, fraction) == false )
     {
@@ -873,7 +873,7 @@ _Check_return_ bool Win32FoundationClasses::wfc_parse_xml( _In_ std::wstring_vie
         return( false );
     }
 
-    auto pointer = static_cast<uint8_t const *>(memory_mapped_file.GetPointer());
+    auto pointer{ static_cast<uint8_t const*>(memory_mapped_file.GetPointer()) };
 
     Win32FoundationClasses::CDataParser parser;
 
@@ -930,14 +930,14 @@ _Check_return_ bool Win32FoundationClasses::wfc_parse_hex_string(_In_ std::wstri
         return(false);
     }
 
-    auto const required_buffer_size = hex_string.length() / 2;
+    auto const required_buffer_size{ hex_string.length() / 2 };
 
     if (required_buffer_size > buffer_size)
     {
         return(false);
     }
 
-    std::size_t string_index = 0;
+    std::size_t string_index{ 0 };
 
     for ( auto const buffer_index : Range(required_buffer_size) )
     {
@@ -964,7 +964,7 @@ _Check_return_ bool Win32FoundationClasses::wfc_parse_hex_string(_In_ std::strin
         return(false);
     }
 
-    auto const required_buffer_size = hex_string.length() / 2;
+    auto const required_buffer_size{ hex_string.length() / 2 };
 
     if (required_buffer_size > buffer_size)
     {

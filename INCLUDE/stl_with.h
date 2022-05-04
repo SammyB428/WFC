@@ -8,14 +8,14 @@
 
 inline _Check_return_ bool ends_with(_In_ std::wstring_view s, _In_ wchar_t const ending) noexcept
 {
-    auto const string_length = s.length();
+    auto const string_length{ s.length() };
 
     if (string_length < 1)
     {
         return(false);
     }
 
-    auto const character = s.at(string_length - 1);
+    auto const character{ s.at(string_length - 1) };
 
     return((ending == character) ? true : false);
 }
@@ -34,7 +34,7 @@ inline _Check_return_ bool ends_with(_In_ std::wstring_view s, _In_ std::wstring
 
     auto const our_ending(s.substr(s.length() - ending.length()));
 
-    auto const comparison_result = our_ending.compare(ending);
+    auto const comparison_result{ our_ending.compare(ending) };
 
     if (comparison_result == I_AM_EQUAL_TO_THAT)
     {
@@ -58,7 +58,7 @@ inline _Check_return_ bool ends_with_no_case(_In_ std::wstring_view s, _In_ std:
 
     auto const our_ending(s.substr(s.length() -ending.length()));
 
-    auto const comparison_result = compare_no_case(our_ending, ending);
+    auto const comparison_result{ compare_no_case(our_ending, ending) };
 
     if (comparison_result == I_AM_EQUAL_TO_THAT)
     {
@@ -75,7 +75,7 @@ inline _Check_return_ bool starts_with(_In_ std::string_view s, _In_ char const 
         return(false);
     }
 
-    auto character = s.at(0);
+    auto character{ s.front() };
 
     return((beginning == character) ? true : false);
 }
@@ -115,7 +115,7 @@ inline _Check_return_ bool starts_with(_In_ std::wstring_view s, _In_ wchar_t co
         return(false);
     }
 
-    auto character = s.at(0);
+    auto character{ s.front() };
 
     return((beginning == character) ? true : false);
 }
@@ -150,12 +150,12 @@ inline _Check_return_ bool starts_with_no_case(_In_ std::wstring const& s, _In_ 
         return(false);
     }
 
-    auto our_string = s.c_str();
+    auto our_string{ s.c_str() };
 
     for (auto const loop_index : Range(beginning.length()))
     {
-        auto const this_character = wfc_to_upper(our_string[loop_index]);
-        auto const that_character = wfc_to_upper(beginning[loop_index]);
+        auto const this_character{ wfc_to_upper(our_string[loop_index]) };
+        auto const that_character{ wfc_to_upper(beginning[loop_index]) };
 
         if (this_character not_eq that_character)
         {
@@ -173,12 +173,12 @@ inline _Check_return_ bool starts_with_no_case(_In_ std::string const& s, _In_ s
         return(false);
     }
 
-    auto our_string = s.c_str();
+    auto our_string{ s.c_str() };
 
     for (auto const loop_index : Range(beginning.length()))
     {
-        auto const this_character = wfc_to_upper(our_string[loop_index]);
-        auto const that_character = wfc_to_upper(beginning[loop_index]);
+        auto const this_character{ wfc_to_upper(our_string[loop_index]) };
+        auto const that_character{ wfc_to_upper(beginning[loop_index]) };
 
         if (this_character not_eq that_character)
         {

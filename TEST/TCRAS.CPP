@@ -278,9 +278,6 @@ void test_CRAS( void )
 
    if ( ras.GetConnections( strings ) not_eq FALSE )
    {
-      DWORD index = 0;
-      DWORD number_of_entries = strings.GetSize();
-
       WFCTRACE( TEXT( "\nCurrent Connections:" ) );
 
       for ( auto const index : Range(strings.GetSize()))

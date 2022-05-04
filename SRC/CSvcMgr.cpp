@@ -706,7 +706,7 @@ _Check_return_ bool Win32FoundationClasses::CServiceControlManager::Install( __i
 
             if ( event_log not_eq nullptr )
             {
-                LPVOID message_buffer = nullptr;
+                LPVOID message_buffer{ nullptr };
 
                 ::FormatMessage( FORMAT_MESSAGE_ALLOCATE_BUFFER bitor FORMAT_MESSAGE_FROM_SYSTEM,
                     nullptr,
@@ -1036,7 +1036,7 @@ _Check_return_ bool Win32FoundationClasses::CServiceControlManager::Remove( __in
             ** We couldn't delete the service, let's record why...
             */
 
-            LPVOID message_buffer = (LPVOID) nullptr;
+            LPVOID message_buffer{ nullptr };
 
             ::FormatMessage( FORMAT_MESSAGE_ALLOCATE_BUFFER bitor FORMAT_MESSAGE_FROM_SYSTEM,
                 nullptr,
@@ -2264,7 +2264,7 @@ DWORD default_sleep_time = 60;
 
 if ( registry.SetValue( TEXT( &quot;NumberOfSecondsBetweenChecks&quot; ), default_sleep_time ) == FALSE )
 {
-LPVOID message_buffer = (LPVOID) nullptr;
+LPVOID message_buffer{ nullptr };
 
 ::FormatMessage( FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM,
 nullptr,
@@ -2299,7 +2299,7 @@ strings.Add( TEXT( &quot;&quot; ) );
 
 if ( registry.SetValue( TEXT( &quot;Services&quot; ), strings ) == FALSE )
 {
-LPVOID message_buffer = (LPVOID) nullptr;
+LPVOID message_buffer{ nullptr };
 
 ::FormatMessage( FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM,
 nullptr,
@@ -2326,7 +2326,7 @@ if ( message_buffer not_eq nullptr )
 }
 else
 {
-LPVOID message_buffer = (LPVOID) nullptr;
+LPVOID message_buffer{ nullptr };
 
 ::FormatMessage( FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM,
 nullptr,
@@ -2353,7 +2353,7 @@ if ( message_buffer not_eq nullptr )
 }
 else
 {
-LPVOID message_buffer = (LPVOID) nullptr;
+LPVOID message_buffer{ nullptr };
 
 ::FormatMessage( FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM,
 nullptr,

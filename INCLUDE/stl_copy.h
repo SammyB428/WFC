@@ -299,7 +299,7 @@ inline void copy_to(_In_ std::wstring_view s, _Out_ char * ascii_buffer, _In_ st
     ascii_buffer[number_of_bytes_written] = 0x00;
 #else // WE_ARE_BUILDING_WFC_ON_UNIX
     // Unix version
-    std::string const narrow_string = to_utf8(std::wstring(s));
+    std::string const narrow_string{ to_utf8(std::wstring(s)) };
 
     strncpy(ascii_buffer, narrow_string.c_str(), std::min(narrow_string.length(), buffer_size - 1));
 #endif // WE_ARE_BUILDING_WFC_ON_UNIX

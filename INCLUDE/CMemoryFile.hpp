@@ -171,13 +171,13 @@ public:
 
     static inline _Check_return_ bool CreateServiceDACL( _Inout_ SECURITY_ATTRIBUTES * sa) noexcept
     {
-        static constexpr wchar_t const *sdd = L"D:"
+        static constexpr wchar_t const* sdd{ L"D:"
             L"(D;OICI;GA;;;BG)" //Deny guests
             L"(D;OICI;GA;;;AN)" //Deny anonymous
             L"(A;OICI;GRGWGX;;;AU)" //Allow read, write and execute for Users
             L"(A;OICI;GRGWGX;;;IU)" //Allow read, write and execute for Interactive Users
             L"(A;OICI;GA;;;BA)" //Allow all for Administrators
-            L"S:(ML;;NW;;;LW)"; // Low integrity SACL
+            L"S:(ML;;NW;;;LW)" }; // Low integrity SACL
 
         return( ConvertStringSecurityDescriptorToSecurityDescriptorW(sdd, SDDL_REVISION_1, &sa->lpSecurityDescriptor, nullptr) == TRUE );
     }

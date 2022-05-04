@@ -82,7 +82,7 @@ _Check_return_ bool test_CNetWorkstation( _Out_ std::string& class_name, _Out_ i
 #if 0
    else
    {
-      DWORD error_code = workstation.GetErrorCode();
+      auto error_code{ workstation.GetErrorCode() };
 
       std::wstring error_message;
 
@@ -125,7 +125,7 @@ _Check_return_ bool test_CNetWorkstation( _Out_ std::string& class_name, _Out_ i
 #if 0
    else
    {
-      DWORD error_code = workstation.GetErrorCode();
+      auto error_code{ workstation.GetErrorCode() };
 
       std::wstring error_message;
 
@@ -186,7 +186,7 @@ _Check_return_ bool test_CNetWorkstation( _Out_ std::string& class_name, _Out_ i
 #if 0
    else
    {
-      DWORD error_code = workstation.GetErrorCode();
+      auto error_code{ workstation.GetErrorCode() };
 
       std::wstring error_message;
 

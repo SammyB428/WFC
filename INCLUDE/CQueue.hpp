@@ -185,7 +185,7 @@ inline _Check_return_ bool CQueue::Add(_In_ void * item) noexcept
 
     // Make sure m_AddIndex is never invalid
 
-    std::size_t const new_add_index = ((m_AddIndex + 1) >= m_Size) ? 0 : m_AddIndex + 1;
+    std::size_t const new_add_index{ ((m_AddIndex + 1) >= m_Size) ? 0 : m_AddIndex + 1 };
 
     if (new_add_index == m_GetIndex)
     {
@@ -241,7 +241,7 @@ inline _Check_return_ bool CQueue::TryGet(_Out_ void * & item) noexcept
                 if (m_GetIndex == m_AddIndex)
                 {
                     // See if we can just shrink it... It is safe to use HeapReAlloc() because the queue is empty
-                    auto return_value = ::HeapReAlloc(m_Heap, HEAP_NO_SERIALIZE, m_Items, WFC_QUEUE_DEFAULT_NUMBER_OF_ITEMS * sizeof(void *));
+                    auto return_value{ ::HeapReAlloc(m_Heap, HEAP_NO_SERIALIZE, m_Items, WFC_QUEUE_DEFAULT_NUMBER_OF_ITEMS * sizeof(void*)) };
 
                     if (return_value not_eq nullptr)
                     {
@@ -314,7 +314,7 @@ inline _Check_return_ bool CQueue::Get(_Out_ void * & item) noexcept
                 if (m_GetIndex == m_AddIndex)
                 {
                     // See if we can just shrink it... It is safe to use HeapReAlloc() because the queue is empty
-                    auto return_value = ::HeapReAlloc(m_Heap, HEAP_NO_SERIALIZE, m_Items, WFC_QUEUE_DEFAULT_NUMBER_OF_ITEMS * sizeof(void *));
+                    auto return_value{ ::HeapReAlloc(m_Heap, HEAP_NO_SERIALIZE, m_Items, WFC_QUEUE_DEFAULT_NUMBER_OF_ITEMS * sizeof(void*)) };
 
                     if (return_value not_eq nullptr)
                     {
@@ -367,7 +367,7 @@ inline _Check_return_ std::size_t CQueue::GetLength(void) const noexcept
     // This is a very expensive process!
     // No one can call Add() or Get() while we're computing this
 
-    std::size_t number_of_items_in_the_queue = 0;
+    std::size_t number_of_items_in_the_queue{ 0 };
 
     ::EnterCriticalSection(const_cast<CRITICAL_SECTION *>(&m_AddCriticalSection));
     ::EnterCriticalSection(const_cast<CRITICAL_SECTION *>(&m_GetCriticalSection));
@@ -393,14 +393,14 @@ inline void CQueue::m_GrowBy(_In_ std::size_t number_of_new_items) noexcept
         number_of_new_items = CQUEUE_MAX_GROW_SIZE;
     }
 
-    std::size_t const new_size = m_Size + number_of_new_items;
+    std::size_t const new_size{ m_Size + number_of_new_items };
 
     // 2000-05-16
     // Thanks go to Royce Mitchell III (royce3@aim-controls.com) for finding
     // a HUGE bug here. I was using HeapReAlloc as a short cut but my logic
     // was flawed. In certain circumstances, queue items were being dropped.
 
-    auto new_array = (void **) ::HeapAlloc(m_Heap, HEAP_NO_SERIALIZE bitor HEAP_CREATE_ALIGN_16, new_size * sizeof(void *));
+    auto new_array{ (void**) ::HeapAlloc(m_Heap, HEAP_NO_SERIALIZE bitor HEAP_CREATE_ALIGN_16, new_size * sizeof(void*)) };
 
     if (new_array not_eq nullptr)
     {
@@ -415,7 +415,7 @@ inline void CQueue::m_GrowBy(_In_ std::size_t number_of_new_items) noexcept
         m_AddIndex = m_Size;
         m_GetIndex = 0;
         m_Size = new_size;
-        void** pointer_to_free = m_Items;
+        void** pointer_to_free{ m_Items };
         m_Items = new_array;
 
         ::HeapFree(m_Heap, HEAP_NO_SERIALIZE, pointer_to_free);

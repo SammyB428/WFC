@@ -46,7 +46,7 @@ inline _Check_return_ std::size_t insert(_Inout_ std::wstring& s, _In_ std::size
 
 inline _Check_return_ std::size_t replace(_Inout_ std::wstring& s, _In_ wchar_t const old_character, _In_ wchar_t const new_character) noexcept
 {
-    std::size_t number_of_replacements = 0;
+    std::size_t number_of_replacements{ 0 };
 
     for (auto const string_index : Range(s.length()))
     {
@@ -67,7 +67,7 @@ inline _Check_return_ int delete_characters(_Inout_ std::wstring& s, _In_ int co
         return(static_cast<int>(s.length()));
     }
 
-    int const number_of_characters_remaining = static_cast<int>(static_cast<int>(s.length()) - index);
+    auto const number_of_characters_remaining{ static_cast<int>(static_cast<int>(s.length()) - index) };
 
     if (number_of_characters_to_delete > number_of_characters_remaining)
     {
@@ -83,7 +83,7 @@ inline void replace(_Inout_ std::wstring& s, _In_ std::wstring_view what_to_repl
 {
     std::wstring translated_string;
 
-    auto location = s.find(what_to_replace);
+    auto location{ s.find(what_to_replace) };
 
     while (location not_eq std::wstring::npos)
     {
@@ -105,7 +105,7 @@ inline void replace(_Inout_ std::string& s, _In_ std::string_view what_to_replac
 {
     std::string translated_string;
 
-    auto location = s.find(what_to_replace);
+    auto location{ s.find(what_to_replace) };
 
     while (location not_eq std::string::npos)
     {
@@ -140,7 +140,7 @@ inline void remove_no_case(std::vector<std::wstring>& s, _In_ std::wstring_view 
         return;
     }
 
-    std::size_t loop_index = 0;
+    std::size_t loop_index{ 0 };
 
     while (loop_index < s.size())
     {

@@ -151,16 +151,16 @@ class CSystemTime : public _SYSTEMTIME
 
          CTimeEx const now( system_time.wYear, system_time.wMonth, system_time.wDay, system_time.wHour, system_time.wMinute, system_time.wSecond );
 
-         auto const day_of_week = now.GetDayOfWeek(); // 1 == Sunday, 2  == Monday
+         auto const day_of_week{ now.GetDayOfWeek() }; // 1 == Sunday, 2  == Monday
 
-         int days_from_monday = day_of_week - 2;
+         int days_from_monday{ day_of_week - 2 };
 
          if ( days_from_monday < 0 )
          {
             days_from_monday += 7;
          }
 
-         uint32_t const return_value = (days_from_monday * NUMBER_OF_MINUTES_IN_ONE_DAY) + (system_time.wHour * 60) + system_time.wMinute;
+         auto const return_value{ static_cast<uint32_t>((days_from_monday * NUMBER_OF_MINUTES_IN_ONE_DAY) + (system_time.wHour * 60) + system_time.wMinute) };
 
          return( return_value );
       }
@@ -173,16 +173,16 @@ class CSystemTime : public _SYSTEMTIME
 
          CTimeEx const now( system_time.wYear, system_time.wMonth, system_time.wDay, system_time.wHour, system_time.wMinute, system_time.wSecond );
 
-         auto const day_of_week = now.GetDayOfWeek(); // 1 == Sunday, 2  == Monday
+         auto const day_of_week{ now.GetDayOfWeek() }; // 1 == Sunday, 2  == Monday
 
-         int days_from_monday = day_of_week - 2;
+         int days_from_monday{ day_of_week - 2 };
 
          if ( days_from_monday < 0 )
          {
             days_from_monday += 7;
          }
 
-         uint32_t const return_value = (days_from_monday * NUMBER_OF_MINUTES_IN_ONE_DAY) + (system_time.wHour * 60) + system_time.wMinute;
+         auto const return_value{ static_cast<uint32_t>((days_from_monday * NUMBER_OF_MINUTES_IN_ONE_DAY) + (system_time.wHour * 60) + system_time.wMinute) };
 
          return( return_value );
       }
@@ -393,7 +393,7 @@ class CSystemTime : public _SYSTEMTIME
 #endif
       inline _Check_return_ int64_t Ticks( void ) const noexcept
       {
-          FILETIME ft = { 0, 0 };
+          FILETIME ft{ 0, 0 };
 
           if (::SystemTimeToFileTime(this, &ft) == FALSE)
           {

@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 2000-2020, Samuel R. Blackburn
+** Copyright, 2000-2022, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -99,11 +99,11 @@ _Check_return_ bool test_CBase64Coding( _Out_ std::string& class_name, _Out_ int
     Win32FoundationClasses::CBase64Coding string_coder;
 
     // This should throw an exception
-    (void) string_coder.Encode( data, test_encoded_data );
+    std::ignore = string_coder.Encode( data, test_encoded_data );
 
     Win32FoundationClasses::CRandomNumberGenerator2 random;
 
-    int number_of_tests = 72 * 5; // 72 characters per line
+    int number_of_tests{ 72 * 5 }; // 72 characters per line
 
     test_number_that_failed = 3;
 
@@ -185,7 +185,7 @@ _Check_return_ bool test_CBase64Coding( _Out_ std::string& class_name, _Out_ int
         test_number_that_failed++;
     }
 
-    uint8_t bytes[6] = { 0x55, 0xAA, 0x55, 0xAA, 0x55, 0xAA };
+    uint8_t bytes[6]{ 0x55, 0xAA, 0x55, 0xAA, 0x55, 0xAA };
 
     if (Win32FoundationClasses::wfc_parse_hex_string(STRING_VIEW("0001FFfE"), bytes, sizeof(bytes)) == false)
     {
@@ -231,9 +231,9 @@ _Check_return_ bool test_CBase64Coding( _Out_ std::string& class_name, _Out_ int
 
     if (input_file.Open(WSTRING_VIEW(L"C:\\Temp\\Test.b64"), Win32FoundationClasses::read_file_open_mode()) == true)
     {
-        std::size_t const buffer_size = input_file.GetLength();
+        auto const buffer_size{ input_file.GetLength() };
 
-        std::unique_ptr<uint8_t[]> allocated_buffer = std::make_unique<uint8_t[]>(buffer_size);
+        auto allocated_buffer{ std::make_unique<uint8_t[]>(buffer_size) };
 
         if (input_file.Read(allocated_buffer.get(), static_cast<uint32_t>(buffer_size)) == buffer_size)
         {
@@ -243,7 +243,7 @@ _Check_return_ bool test_CBase64Coding( _Out_ std::string& class_name, _Out_ int
 
             if (coder.Decode(allocated_buffer.get(), buffer_size, decoded_bytes) == false)
             {
-                uint8_t const * data_buffer = decoded_bytes.data();
+                uint8_t const* data_buffer{ decoded_bytes.data() };
                 //_ASSERTE(FALSE);
             }
         }
@@ -262,14 +262,14 @@ _Check_return_ bool test_CBase64Coding( _Out_ std::string& class_name, _Out_ int
 
     std::string encoded_buffer;
 
-    coder.Encode(bytes_to_encode.data(), bytes_to_encode.size(), encoded_buffer);
+    std::ignore = coder.Encode(bytes_to_encode.data(), bytes_to_encode.size(), encoded_buffer);
 
     auto number_of_bytes_to_allocate{ Win32FoundationClasses::CBase64Coding::DecodeReserveSize(encoded_buffer.size()) };
-    auto decoded_buffer = std::make_unique<uint8_t[]>(number_of_bytes_to_allocate);
+    auto decoded_buffer{ std::make_unique<uint8_t[]>(number_of_bytes_to_allocate) };
 
     ZeroMemory(decoded_buffer.get(), number_of_bytes_to_allocate);
 
-    std::size_t number_of_bytes_decoded = coder.Decode(reinterpret_cast<uint8_t const *>(encoded_buffer.data()), encoded_buffer.size(), decoded_buffer.get(), number_of_bytes_to_allocate);
+    auto number_of_bytes_decoded{ coder.Decode(reinterpret_cast<uint8_t const*>(encoded_buffer.data()), encoded_buffer.size(), decoded_buffer.get(), number_of_bytes_to_allocate) };
 
     if (memcmp(bytes_to_encode.data(), decoded_buffer.get(), bytes_to_encode.size()) not_eq I_AM_EQUAL_TO_THAT)
     {
@@ -286,7 +286,7 @@ _Check_return_ bool test_CBase64Coding( _Out_ std::string& class_name, _Out_ int
         bytes_to_encode.push_back(static_cast<uint8_t>(random.GetInteger()));
     }
 
-    coder.Encode(bytes_to_encode.data(), bytes_to_encode.size(), encoded_buffer);
+    std::ignore = coder.Encode(bytes_to_encode.data(), bytes_to_encode.size(), encoded_buffer);
 
     number_of_bytes_to_allocate = Win32FoundationClasses::CBase64Coding::DecodeReserveSize(encoded_buffer.size());
     decoded_buffer = std::make_unique<uint8_t[]>(number_of_bytes_to_allocate);

@@ -75,7 +75,7 @@ void test_CNetworkFiles( __in_z LPCTSTR machine_name ) noexcept
    }
    else
    {
-      DWORD error_code = network_files.GetErrorCode();
+      auto error_code{ network_files.GetErrorCode() };
 
       std::wstring error_message;
 

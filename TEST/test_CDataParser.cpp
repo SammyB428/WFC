@@ -86,7 +86,7 @@ static _Check_return_ bool test_class(_Inout_ Win32FoundationClasses::CDataParse
         }
     }
 
-    uint32_t character = 0;
+    uint32_t character{ 0 };
 
     if ( parser.PeekAtCharacter( parse_point, character, 0 ) == false )
     {
@@ -264,7 +264,7 @@ static _Check_return_ bool test_class(_Inout_ Win32FoundationClasses::CDataParse
         else
         {
             // Text is UCS4 but not a valid order!
-            DWORD ucs_order = parser.GetUCS4Order();
+            auto ucs_order{ parser.GetUCS4Order() };
             test_number_that_failed = 13;
             return( failure() );
         }
@@ -1029,7 +1029,7 @@ _Check_return_ bool test_CDataParser( _Out_ std::string& class_name, _Out_ int& 
         return( failure() );
     }
 
-    uint8_t our_bytes[ 2 ] = { 0x00, 0x00 };
+    uint8_t our_bytes[ 2 ]{ 0x00, 0x00 };
 
     here.SetIndex( 1 );
 
@@ -1143,12 +1143,12 @@ _Check_return_ bool test_CDataParser( _Out_ std::string& class_name, _Out_ int& 
     hex_buffer[ 3 ] = '4';
     hex_buffer[ 4 ] = '5';
 
-    parser.Initialize( hex_buffer, sizeof(hex_buffer) );
+    std::ignore = parser.Initialize( hex_buffer, sizeof(hex_buffer) );
 
     here.Empty();
     here.SetIndex( 1 );
 
-    uint64_t test_value = parser.ReadHexadecimalInteger( here, 2 );
+    auto test_value{ parser.ReadHexadecimalInteger(here, 2) };
 
     if ( test_value not_eq 0x23 )
     {
@@ -1185,12 +1185,12 @@ _Check_return_ bool test_CDataParser( _Out_ std::string& class_name, _Out_ int& 
     hex_buffer[8] = 'h';
     hex_buffer[9] = 'i';
 
-    parser.Initialize(hex_buffer, sizeof(hex_buffer));
+    std::ignore = parser.Initialize(hex_buffer, sizeof(hex_buffer));
 
     here.Empty();
     found_at.Empty();
 
-    constexpr uint8_t const needle[2] = { 'h', 'i' };
+    constexpr uint8_t const needle[2]{ 'h', 'i' };
 
     if (parser.Find(here, needle, sizeof(needle), found_at) == false)
     {

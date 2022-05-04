@@ -310,11 +310,11 @@ void Win32FoundationClasses::wfc_calculate_nt_hash(_In_ std::wstring_view unicod
 
     UNICODE_STRING u;
 
-    u.Length = (USHORT) unicode_string.length() * sizeof(wchar_t);
+    u.Length = static_cast<USHORT>(unicode_string.length() * sizeof(wchar_t));
     u.MaximumLength = u.Length;
-    u.Buffer = (PWSTR) unicode_string.data();
+    u.Buffer = (PWSTR)unicode_string.data();
 
-    NTSTATUS const return_status = SystemFunction007(&u, hash_value);
+    NTSTATUS const return_status{ static_cast<NTSTATUS>(SystemFunction007(&u, hash_value)) };
 }
 
 // End of source
