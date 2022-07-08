@@ -46,7 +46,7 @@
 
 #if defined( _DEBUG ) && defined( _INC_CRTDBG )
 #undef THIS_FILE
-static char THIS_FILE[] = __FILE__;
+static auto const THIS_FILE{ __FILE__ };
 #define new DEBUG_NEW
 #endif // _DEBUG
 
@@ -84,7 +84,7 @@ _Check_return_ bool test_CReedSolomonErrorCorrectionCode( __out std::string& cla
     // Here's our sloppy communications path. It adds errors to the data
     // Reed-Solomon is able to withstand one-bit-per-symbol errors.
 
-    std::size_t number_of_errors_to_introduce = encoded_data.size();
+    auto number_of_errors_to_introduce{ encoded_data.size() };
 
     int error_number{ 0 };
     int bit_number_to_smash{ 0 };
@@ -123,7 +123,7 @@ _Check_return_ bool test_CReedSolomonErrorCorrectionCode( __out std::string& cla
 
     std::vector<uint8_t> decoded_data;
 
-    SSIZE_T number_of_errors_corrected = receiver.Decode( encoded_data, decoded_data );
+    auto number_of_errors_corrected{ receiver.Decode(encoded_data, decoded_data) };
 
     if ( number_of_errors_corrected not_eq (-1) )
     {

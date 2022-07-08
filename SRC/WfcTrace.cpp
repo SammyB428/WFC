@@ -47,13 +47,13 @@
 
 #if defined( _DEBUG ) && defined( _INC_CRTDBG )
 #undef THIS_FILE
-static char THIS_FILE[] = __FILE__;
+static auto const THIS_FILE{ __FILE__ };
 #define new DEBUG_NEW
 #endif // _DEBUG
 
-int  Win32FoundationClasses::CWfcTrace::Indent  = 0;
-bool Win32FoundationClasses::CWfcTrace::Tracing = true;
-LONG Win32FoundationClasses::CWfcTrace::Levels = 1;
+int  Win32FoundationClasses::CWfcTrace::Indent{ 0 };
+bool Win32FoundationClasses::CWfcTrace::Tracing{ true };
+LONG Win32FoundationClasses::CWfcTrace::Levels{ 1 };
 
 Win32FoundationClasses::CWfcTrace::CWfcTrace( __in_z LPCTSTR function_name, _In_ std::size_t const tracing_level ) noexcept
 {
@@ -237,14 +237,14 @@ void Win32FoundationClasses::CWfcTrace::Output( __in_z LPCTSTR message, _In_ dou
 {
    if (is_flagged( Levels, m_TracingLevel ) == true and Tracing == true )
    {
-      int decimal = 0;
-      int sign    = 0;
+      int decimal{ 0 };
+      int sign{ 0 };
 
       char ascii_string[ 128 ];
 
 	  ZeroMemory( ascii_string, sizeof( ascii_string ) );
 
-      LPCTSTR string_p = nullptr;
+      LPCTSTR string_p{ nullptr };
 
       _fcvt_s( ascii_string, std::size( ascii_string ), a_double, 7, &decimal, &sign );
 
@@ -279,7 +279,7 @@ void Win32FoundationClasses::CWfcTrace::Output( __in_z LPCTSTR message, _In_ dou
       {
          string.push_back( '.' );
 
-         int index = 0;
+         int index{ 0 };
 
          while( index > decimal ) // Cannot be converted to a Range loop
          {
@@ -296,7 +296,7 @@ void Win32FoundationClasses::CWfcTrace::Output( __in_z LPCTSTR message, _In_ dou
       }
       else
       {
-         int index = 0;
+         int index{ 0 };
 
          while( index < decimal )
          {
@@ -492,7 +492,7 @@ void Win32FoundationClasses::CWfcTrace::OutputBinary( __in_z LPCTSTR message, _I
 {
    if (is_flagged( Levels, m_TracingLevel ) == true and Tracing == true )
    {
-      int index = 31;
+      int index{ 31 };
 
       std::wstring bit_string;
 
@@ -537,7 +537,7 @@ void Win32FoundationClasses::CWfcTrace::OutputVariant( __in_z LPCTSTR message, _
    {
       std::wstring data_type;
 
-      DWORD vt = V_VT( value );
+      DWORD vt{ V_VT(value) };
 
       // Types taken from WTYPES.H -- VARENUM data type
 
@@ -576,7 +576,7 @@ void Win32FoundationClasses::CWfcTrace::OutputVariant( __in_z LPCTSTR message, _
          data_type.append(WSTRING_VIEW(L"VT_RESERVED" ) );
       }
 
-      DWORD basic_type = vt bitand VT_TYPEMASK;
+      DWORD basic_type{ vt bitand VT_TYPEMASK };
 
       switch( basic_type )
       {

@@ -49,17 +49,17 @@
 
 #if defined( _DEBUG ) && defined( _INC_CRTDBG )
 #undef THIS_FILE
-static char THIS_FILE[] = __FILE__;
+static auto const THIS_FILE{ __FILE__ };
 #define new DEBUG_NEW
 #endif // _DEBUG
 
     // MFC Version
 
-    void Win32FoundationClasses::wfc_get_web_page( _In_ CUniformResourceLocator const& url, _Out_ std::vector<std::wstring>& page_contents, _In_ DWORD const options )
+void Win32FoundationClasses::wfc_get_web_page( _In_ CUniformResourceLocator const& url, _Out_ std::vector<std::wstring>& page_contents, _In_ DWORD const options )
 {
-    CInternetSession * internet_session_p = nullptr;
+    CInternetSession * internet_session_p{ nullptr };
 
-    CHttpFile * source_file_p = nullptr;
+    CHttpFile * source_file_p{ nullptr };
 
     try
     {
@@ -128,7 +128,7 @@ static char THIS_FILE[] = __FILE__;
 
             source_file_p->SetReadBufferSize( 65535 * 4 );
 
-            int index = 0;
+            int index{ 0 };
 
             while( source_file_p->ReadString( temp_string ) not_eq FALSE )
             {
@@ -219,11 +219,11 @@ void Win32FoundationClasses::wfc_get_web_page( _In_ CUniformResourceLocator cons
 
     //WFCTRACEVAL( TEXT( "Unique ID is " ), temp_string );
 
-    auto internet_handle = InternetOpen( TEXT( "Mozilla/4.0 (compatible; Win32 Foundation Classes; http://www.samblackburn.com)" ),
+    auto internet_handle{ InternetOpen(TEXT("Mozilla/4.0 (compatible; Win32 Foundation Classes; http://www.samblackburn.com)"),
         INTERNET_OPEN_TYPE_PRECONFIG,
         nullptr,
         nullptr,
-        0 );
+        0) };
 
     if ( internet_handle == static_cast< HINTERNET >( NULL ) )
     {
@@ -232,12 +232,12 @@ void Win32FoundationClasses::wfc_get_web_page( _In_ CUniformResourceLocator cons
         return;
     }
 
-    auto url_handle = InternetOpenUrl( internet_handle,
+    auto url_handle{ InternetOpenUrl(internet_handle,
         url,
         nullptr,
         0,
         options,
-        1 );
+        1) };
 
     if ( url_handle == static_cast< HINTERNET >( NULL ) )
     {
@@ -292,12 +292,11 @@ void Win32FoundationClasses::wfc_get_web_page( _In_ CUniformResourceLocator cons
 
     bytes.clear();
 
-    std::size_t location_of_end_of_line_character{ 0 };
     std::size_t start_searching_at_index{ 0 };
 
-    location_of_end_of_line_character = web_page.find( '\n' );
+    auto location_of_end_of_line_character{ web_page.find('\n') };
 
-    while( location_of_end_of_line_character not_eq std::wstring::npos )
+    while( location_of_end_of_line_character not_eq web_page.npos )
     {
         page_contents.push_back( web_page.substr( start_searching_at_index, location_of_end_of_line_character - start_searching_at_index ) );
         start_searching_at_index += ( ( location_of_end_of_line_character - start_searching_at_index ) + 1 );
@@ -378,8 +377,8 @@ std::vector&lt;std::wstring&gt; weather_report;
 
 <B>wfc_get_web_page</B>( url, weather_report );
 
-int index = 0;
-int number_of_lines_in_report = weather_report.GetSize();
+int index { 0};
+int number_of_lines_in_report { weather_report.GetSize() };
 
 while( index &lt; number_of_lines_in_report )
 {

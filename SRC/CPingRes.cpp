@@ -47,7 +47,7 @@
 
 #if defined( _DEBUG ) && defined( _INC_CRTDBG )
 #undef THIS_FILE
-static char THIS_FILE[] = __FILE__;
+static auto const THIS_FILE{ __FILE__ };
 #endif // _DEBUG
 
 #if defined( _DEBUG ) && defined( _INC_CRTDBG )
@@ -272,7 +272,7 @@ int _tmain( int number_of_command_line_arguments, LPCTSTR command_line_arguments
 
    <A HREF="CPing.htm">CPing</A> ping;
 
-   DWORD return_value = 0;
+   DWORD return_value { 0 };
 
    <B>CPingResults</B> results;
 
@@ -280,7 +280,7 @@ int _tmain( int number_of_command_line_arguments, LPCTSTR command_line_arguments
 
    if ( return_value == 0 )
    {
-      DWORD error_code = ping.GetErrorCode();
+      DWORD error_code { ping.GetErrorCode() };
 
       std::wstring error_message;
 

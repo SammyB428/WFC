@@ -48,7 +48,7 @@
 #if defined( _DEBUG ) && defined( _INC_CRTDBG )
 #define new DEBUG_NEW
 #undef THIS_FILE
-static char THIS_FILE[] = __FILE__;
+static auto const THIS_FILE{ __FILE__ };
 #endif // _DEBUG
 
 // Construction
@@ -279,7 +279,7 @@ _Check_return_ bool Win32FoundationClasses::CMixerVolumeControl::SetRightChannel
 
    m_RightChannel.Parameter1 = new_level;
 
-   bool const return_value = m_Mixer.SetControlDetails( m_MixerLine, m_MixerControl, m_Channels );
+   auto const return_value{ m_Mixer.SetControlDetails(m_MixerLine, m_MixerControl, m_Channels) };
 
    if ( return_value == true)
    {

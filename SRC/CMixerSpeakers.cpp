@@ -48,7 +48,7 @@
 #if defined( _DEBUG ) && defined( _INC_CRTDBG )
 #define new DEBUG_NEW
 #undef THIS_FILE
-static char THIS_FILE[] = __FILE__;
+static auto const THIS_FILE{ __FILE__ };
 #endif // _DEBUG
 
 // Methods
@@ -255,7 +255,7 @@ _Check_return_ bool Win32FoundationClasses::CMixerSpeakers::SetVolume( _In_ DWOR
 {
    WFC_VALIDATE_POINTER( this );
 
-   auto const return_value = m_Volume.SetVolume( desired_level );
+   auto const return_value{ m_Volume.SetVolume(desired_level) };
 
    return( return_value );
 }

@@ -47,7 +47,7 @@
 
 #if defined( _DEBUG ) && defined( _INC_CRTDBG )
 #undef THIS_FILE
-static char THIS_FILE[] = __FILE__;
+static auto const THIS_FILE{ __FILE__ };
 #define new DEBUG_NEW
 #endif // _DEBUG
 
@@ -61,20 +61,20 @@ static inline void _append_time_zone_offset( _Inout_ std::wstring& time_string )
 
    ZeroMemory( &time_zone_information, sizeof( time_zone_information ) );
 
-   DWORD zone_identifier = ::GetTimeZoneInformation( &time_zone_information );
+   auto zone_identifier{ ::GetTimeZoneInformation(&time_zone_information) };
 
    if ( zone_identifier == 0xFFFFFFFF )
    {
       return;
    }
 
-   int offset_hours   = time_zone_information.Bias / 60;
-   int offset_minutes = time_zone_information.Bias % 60;
+   int offset_hours{ time_zone_information.Bias / 60 };
+   int offset_minutes{ time_zone_information.Bias % 60 };
 
    offset_hours   *= (-1);
    offset_minutes *= (-1);
 
-   TCHAR offset_character = TEXT( '+' );
+   TCHAR offset_character{ TEXT('+') };
 
    if ( offset_hours < 0 or offset_minutes < 0 )
    {
@@ -176,11 +176,11 @@ _Check_return_ Win32FoundationClasses::CExtensibleMarkupLanguageElement * Win32F
 
    WFC_TRY
    {
-      uint32_t boolean_value = 0;
+      uint32_t boolean_value{ 0 };
 
       // We save them as a DWORD
 
-      auto sub_element_p = Read( tag, boolean_value );
+      auto sub_element_p{ Read(tag, boolean_value) };
 
       if ( sub_element_p not_eq nullptr )
       {
@@ -407,7 +407,7 @@ _Check_return_ Win32FoundationClasses::CExtensibleMarkupLanguageElement * Win32F
 
    WFC_TRY
    {
-      auto sub_element_p = m_Element_p->GetChild( tag );
+      auto sub_element_p { m_Element_p->GetChild(tag)};
 
       if ( sub_element_p not_eq nullptr )
       {
@@ -442,7 +442,7 @@ _Check_return_ Win32FoundationClasses::CExtensibleMarkupLanguageElement * Win32F
 
    WFC_TRY
    {
-      auto sub_element_p = m_Element_p->GetChild( tag );
+      auto sub_element_p { m_Element_p->GetChild(tag)};
 
       if ( sub_element_p not_eq nullptr )
       {
@@ -477,7 +477,7 @@ _Check_return_ Win32FoundationClasses::CExtensibleMarkupLanguageElement * Win32F
 
    WFC_TRY
    {
-      auto sub_element_p = m_Element_p->GetChild( tag );
+      auto sub_element_p { m_Element_p->GetChild(tag)};
 
       if ( sub_element_p not_eq nullptr )
       {
@@ -512,7 +512,7 @@ _Check_return_ Win32FoundationClasses::CExtensibleMarkupLanguageElement * Win32F
 
    WFC_TRY
    {
-      auto sub_element_p = m_Element_p->GetChild( tag );
+      auto sub_element_p { m_Element_p->GetChild(tag)};
 
       if ( sub_element_p not_eq nullptr )
       {
@@ -547,7 +547,7 @@ _Check_return_ Win32FoundationClasses::CExtensibleMarkupLanguageElement * Win32F
 
    WFC_TRY
    {
-      auto sub_element_p = m_Element_p->GetChild( tag );
+      auto sub_element_p { m_Element_p->GetChild(tag)};
 
       if ( sub_element_p not_eq nullptr )
       {
@@ -583,7 +583,7 @@ _Check_return_ Win32FoundationClasses::CExtensibleMarkupLanguageElement * Win32F
 
    WFC_TRY
    {
-      auto sub_element_p = m_Element_p->GetChild( tag );
+      auto sub_element_p { m_Element_p->GetChild(tag)};
 
       if ( sub_element_p not_eq nullptr )
       {
@@ -617,7 +617,7 @@ _Check_return_ Win32FoundationClasses::CExtensibleMarkupLanguageElement * Win32F
 
    WFC_TRY
    {
-      auto sub_element_p = m_Element_p->GetChild( tag );
+      auto sub_element_p { m_Element_p->GetChild(tag)};
 
       if ( sub_element_p not_eq nullptr )
       {
@@ -724,7 +724,7 @@ _Check_return_ Win32FoundationClasses::CExtensibleMarkupLanguageElement * Win32F
 
    WFC_TRY
    {
-      auto sub_element_p = m_Element_p->GetChild( tag );
+      auto sub_element_p { m_Element_p->GetChild(tag)};
 
       if ( sub_element_p not_eq nullptr )
       {
@@ -774,7 +774,7 @@ _Check_return_ bool Win32FoundationClasses::CXMLArchive::SerializeObject(_In_ st
       return( false );
    }
 
-   bool return_value = false;
+   bool return_value{ false };
 
    // We were passed pointers, don't trust them
 
@@ -1008,7 +1008,7 @@ _Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Write(_In_ std::w
       // one location. This way, we get a better chance of tracking down the
       // offending leaker.
 
-      auto sub_element_p = CExtensibleMarkupLanguageElement::NewElement( m_Element_p );
+      auto sub_element_p { CExtensibleMarkupLanguageElement::NewElement(m_Element_p) };
 
       if ( sub_element_p not_eq nullptr )
       {
@@ -1071,7 +1071,7 @@ _Check_return_ CExtensibleMarkupLanguageElement * CXMLArchive::Write(_In_ std::w
       // one location. This way, we get a better chance of tracking down the
       // offending leaker.
 
-      auto sub_element_p = CExtensibleMarkupLanguageElement::NewElement( m_Element_p );
+      auto sub_element_p { CExtensibleMarkupLanguageElement::NewElement(m_Element_p)};
 
       if ( sub_element_p not_eq nullptr )
       {

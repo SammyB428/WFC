@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 1995-2020, Samuel R. Blackburn
+** Copyright, 1995-2022, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -47,7 +47,7 @@
 
 #if defined( _DEBUG ) && defined( _INC_CRTDBG )
 #undef THIS_FILE
-static char THIS_FILE[] = __FILE__;
+static auto const THIS_FILE{ __FILE__ };
 #endif // _DEBUG
 
 #if defined( _DEBUG ) && defined( _INC_CRTDBG )
@@ -138,9 +138,9 @@ void Win32FoundationClasses::CUniformResourceLocator::Copy(_In_ std::wstring_vie
    {
       std::wstring temp_string(source);
 
-      std::size_t location = temp_string.find( ':' );
+      auto location{ temp_string.find(':') };
 
-      if ( location == std::wstring::npos )
+      if ( location == temp_string.npos )
       {
          return;
       }
@@ -156,7 +156,7 @@ void Win32FoundationClasses::CUniformResourceLocator::Copy(_In_ std::wstring_vie
 
       location = temp_string.find( '/' );
 
-      if ( location == std::wstring::npos )
+      if ( location == temp_string.npos )
       {
          MachineName.assign( temp_string );
       }
@@ -172,7 +172,7 @@ void Win32FoundationClasses::CUniformResourceLocator::Copy(_In_ std::wstring_vie
 
       location = MachineName.find( ':' );
 
-      if ( location not_eq std::wstring::npos )
+      if ( location not_eq MachineName.npos )
       {
          PortName.assign( right( MachineName, ( MachineName.length() - location ) - 1 ) );
          MachineName.assign( MachineName.substr( 0, location ) );

@@ -46,7 +46,7 @@
 
 #if defined( _DEBUG ) && defined( _INC_CRTDBG )
 #undef THIS_FILE
-static char THIS_FILE[] = __FILE__;
+static auto const THIS_FILE{ __FILE__ };
 #define new DEBUG_NEW
 #endif // _DEBUG
 
@@ -140,7 +140,7 @@ _Check_return_ bool test_CSystemTime( __out std::string& class_name, __out int& 
    time_2.wMonth = 3;
    time_2.wDay   = 24;
 
-   uint32_t minutes_since_monday = time_2.NumberOfMinutesSinceMonday();
+   auto minutes_since_monday{ time_2.NumberOfMinutesSinceMonday() };
 
    if ( minutes_since_monday not_eq 0 )
    {
@@ -174,7 +174,7 @@ _Check_return_ bool test_CSystemTime( __out std::string& class_name, __out int& 
  
    ft.CopyTicks( ticks );
 
-   std::wstring postgresql_timestamp = ft.PostgreSQLTimestamp();
+   auto postgresql_timestamp{ ft.PostgreSQLTimestamp() };
 
    if ( postgresql_timestamp.compare(WSTRING_VIEW(L"2012-02-28 10:18:40.032774")) not_eq I_AM_EQUAL_TO_THAT )
    {

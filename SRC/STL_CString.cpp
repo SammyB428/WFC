@@ -58,7 +58,7 @@
 
 #if defined( _DEBUG ) && defined( _INC_CRTDBG )
 #undef THIS_FILE
-static char THIS_FILE[] = __FILE__;
+static auto const THIS_FILE{ __FILE__ };
 #define new DEBUG_NEW
 #endif // _DEBUG
 
@@ -71,11 +71,11 @@ void Win32FoundationClasses::CString::m_Format( __in_z __format_string LPCTSTR f
    {
       va_list saved_argument_list;
 
-      long buffer_size = (long) ( _tcslen( format_string ) * 2 );
+      long buffer_size{ (long)(_tcslen(format_string) * 2) };
 
       Win32FoundationClasses::CString format_object( format_string );
 
-      SSIZE_T string_index = 0;
+      SSIZE_T string_index{ 0 };
 
       while( ( string_index = format_object.Find( TEXT( '%' ), string_index ) ) not_eq CHARACTER_NOT_FOUND )
       {
@@ -84,19 +84,19 @@ void Win32FoundationClasses::CString::m_Format( __in_z __format_string LPCTSTR f
          buffer_size += 128;
       }
 
-      TCHAR * buffer_to_write_to = nullptr;
+      TCHAR * buffer_to_write_to{ nullptr };
       
       WFC_TRY
       {
          buffer_to_write_to = (TCHAR *) malloc( ( buffer_size + 1 ) * sizeof( TCHAR ) );
 
-          if ( buffer_to_write_to == nullptr )
-          {
+         if ( buffer_to_write_to == nullptr )
+         {
             va_end( saved_argument_list );
             return;
-          }
+         }
 
-         bool exit_loop = false;
+         bool exit_loop{ false };
 
          while( exit_loop == false )
          {

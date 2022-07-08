@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 2000-2020, Samuel R. Blackburn
+** Copyright, 2000-2022, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -46,7 +46,7 @@
 
 #if defined( _DEBUG ) && defined( _INC_CRTDBG )
 #undef THIS_FILE
-static char THIS_FILE[] = __FILE__;
+static auto const THIS_FILE{ __FILE__ };
 #define new DEBUG_NEW
 #endif // _DEBUG
 
@@ -61,17 +61,17 @@ void test_CLZFile( _In_ std::wstring_view lz_file_name ) noexcept
 
     std::wstring expanded_name;
 
-    (void) lz_file.GetExpandedName( lz_file_name, expanded_name );
+    std::ignore = lz_file.GetExpandedName( lz_file_name, expanded_name );
 
     wprintf( L"LZ File \"%.*s\" expanded name is \"%s\"\n", static_cast<int>(lz_file_name.length()), lz_file_name.data(), expanded_name.c_str() );
 
-    if ( lz_file.Open( lz_file_name ) not_eq FALSE )
+    if ( lz_file.Open( lz_file_name ) not_eq false )
     {
         Win32FoundationClasses::CLZFile output_file;
 
-        if ( output_file.Open(WSTRING_VIEW(L"d:\\temp\\winhlp32.exe"), OF_CREATE ) not_eq FALSE )
+        if ( output_file.Open(WSTRING_VIEW(L"d:\\temp\\winhlp32.exe"), OF_CREATE ) not_eq false )
         {
-            if ( output_file.Copy( lz_file ) not_eq FALSE )
+            if ( output_file.Copy( lz_file ) not_eq false )
             {
                 _tprintf( TEXT( "Successfully copied\n" ) );
             }

@@ -56,7 +56,7 @@
 
 #if defined( _DEBUG ) && defined( _INC_CRTDBG )
 #undef THIS_FILE
-static char THIS_FILE[] = __FILE__;
+static auto const THIS_FILE{ __FILE__ };
 #define new DEBUG_NEW
 #endif // _DEBUG
 
@@ -94,7 +94,7 @@ BOOL CRemoteAccessServiceAdministration::ClearPortStatistics( std::wstring const
 
          TCHAR this_machine_name[ MAX_COMPUTERNAME_LENGTH + 1 ];
 
-         DWORD machine_name_length = MAX_COMPUTERNAME_LENGTH + 1;
+         DWORD machine_name_length{ MAX_COMPUTERNAME_LENGTH + 1 };
    
          ::ZeroMemory( this_machine_name, sizeof( this_machine_name ) );
 
@@ -154,7 +154,7 @@ BOOL CRemoteAccessServiceAdministration::DisconnectPort( std::wstring const& por
 
          TCHAR this_machine_name[ MAX_COMPUTERNAME_LENGTH + 1 ];
 
-         DWORD machine_name_length = MAX_COMPUTERNAME_LENGTH + 1;
+         DWORD machine_name_length{ MAX_COMPUTERNAME_LENGTH + 1 };
 
          ::ZeroMemory( this_machine_name, sizeof( this_machine_name ) );
 
@@ -225,7 +225,7 @@ BOOL CRemoteAccessServiceAdministration::EnumeratePorts( LPCTSTR server_name )
 
          TCHAR this_machine_name[ MAX_COMPUTERNAME_LENGTH + 1 ];
 
-         DWORD machine_name_length = MAX_COMPUTERNAME_LENGTH + 1;
+         DWORD machine_name_length{ MAX_COMPUTERNAME_LENGTH + 1 };
 
          ::ZeroMemory( this_machine_name, sizeof( this_machine_name ) );
 
@@ -245,13 +245,11 @@ BOOL CRemoteAccessServiceAdministration::EnumeratePorts( LPCTSTR server_name )
       ::wcsncpy_s( wide_machine_name, std::size( wide_machine_name ), L"\\\\", _TRUNCATE );
       ::wcscat_s( wide_machine_name, std::size( wide_machine_name ), (LPCWSTR) network_server_name );
 
-      DWORD return_value = 0;
-
 #if defined( _DEBUG )      
       WFCTRACEVAL( TEXT( "Network server name is " ), wide_machine_name);
 #endif // _DEBUG
 
-      return_value = ::RasAdminPortEnum( (LPCWSTR) wide_machine_name, &m_PortArray, &m_TotalNumberOfEntries );
+      auto return_value{ ::RasAdminPortEnum((LPCWSTR)wide_machine_name, &m_PortArray, &m_TotalNumberOfEntries) };
 
       if ( return_value not_eq ERROR_SUCCESS )
       {
@@ -290,9 +288,7 @@ void CRemoteAccessServiceAdministration::GetErrorString( const UINT error_code, 
    // In the July 2002 Platform SDK, Microsoft got rid of the RasAdminGetErrorString() API
    Win32FoundationClasses::wfc_get_error_string( error_code, error_string );
 #else
-   DWORD return_value = 0;
-
-   return_value = ::RasAdminGetErrorString( error_code, temp_string, 511 );
+   auto return_value{ ::RasAdminGetErrorString(error_code, temp_string, 511) };
 
    if ( return_value == ERROR_SUCCESS )
    {
@@ -356,7 +352,7 @@ BOOL CRemoteAccessServiceAdministration::GetUserAccountServer(std::wstring& user
 
       ::ZeroMemory( primary_domain_controller_name, sizeof( primary_domain_controller_name ) );
 
-      DWORD return_value = 0;
+      DWORD return_value{ 0 };
 
       if ( ras_server_domain_name not_eq nullptr and ras_server_name not_eq nullptr )
       {

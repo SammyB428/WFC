@@ -47,7 +47,7 @@
 
 #if defined( _DEBUG ) && defined( _INC_CRTDBG )
 #undef THIS_FILE
-static char THIS_FILE[] = __FILE__;
+static auto const THIS_FILE{ __FILE__ };
 #define new DEBUG_NEW
 #endif // _DEBUG
 
@@ -105,7 +105,7 @@ This function appends a string to an edit control.
 {
    <A HREF="WfcTrace.htm">WFCTRACEINIT</A>( TEXT( &quot;add_time()&quot; ) );
 
-   CTime the_time = CTime::GetCurrentTime();
+   CTime the_time { CTime::GetCurrentTime()};
 
    std::wstring time_string;
 

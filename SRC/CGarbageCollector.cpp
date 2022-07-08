@@ -47,7 +47,7 @@
 
 #if defined( _DEBUG ) && defined( _INC_CRTDBG )
 #undef THIS_FILE
-static char THIS_FILE[] = __FILE__;
+static auto const THIS_FILE{ __FILE__ };
 #define new DEBUG_NEW
 #endif // _DEBUG
 
@@ -243,7 +243,7 @@ void worker_thread( void * parameter )
 {
    <A HREF="WfcTrace.htm">WFCTRACEINIT</A>( TEXT( &quot;worker_thread()&quot; ) );
 
-   CThreadData * thread_data = (CThreadData *) parameter;
+   CThreadData * thread_data { (CThreadData *) parameter };
 
    // Make sure the thread data is around until we call Release
    thread_data-&gt;AddReference();
@@ -259,7 +259,7 @@ void start_thread( void )
 {
    <A HREF="WfcTrace.htm">WFCTRACEINIT</A>( TEXT( &quot;start_thread()&quot; ) );
 
-   CThreadData * data_p = nullptr;
+   CThreadData * data_p { nullptr };
    
    WFC_TRY
    {

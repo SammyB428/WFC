@@ -47,7 +47,7 @@
 
 #if defined( _DEBUG ) && defined( _INC_CRTDBG )
 #undef THIS_FILE
-static char THIS_FILE[] = __FILE__;
+static auto const THIS_FILE{ __FILE__ };
 #define new DEBUG_NEW
 #endif // _DEBUG
 
@@ -189,7 +189,7 @@ int _tmain( int number_of_command_line_arguments, LPCTSTR command_line_arguments
 
    ZeroMemory( dos_device_names, sizeof( dos_device_names ) );
 
-   DWORD return_value = 0;
+   DWORD return_value { 0 };
 
    return_value = QueryDosDeviceW( nullptr, dos_device_names, std::size( dos_device_names ) );
 
@@ -197,8 +197,8 @@ int _tmain( int number_of_command_line_arguments, LPCTSTR command_line_arguments
 
    <B>wfc_convert_double_null_terminated_UNICODE_string</B>( reinterpret_cast&lt; const BYTE * &gt;( dos_device_names ), names );
 
-   int loop_index         = 0;
-   int number_of_elements = names.GetSize();
+   int loop_index         { 0 };
+   int number_of_elements { names.GetSize() };
 
    while( loop_index < number_of_elements )
    {

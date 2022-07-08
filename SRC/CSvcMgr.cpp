@@ -47,7 +47,7 @@
 
 #if defined( _DEBUG ) && defined( _INC_CRTDBG )
 #undef THIS_FILE
-static char THIS_FILE[] = __FILE__;
+static auto const THIS_FILE{ __FILE__ };
 #define new DEBUG_NEW
 #endif // _DEBUG
 
@@ -110,7 +110,7 @@ _Check_return_ bool Win32FoundationClasses::CServiceControlManager::Continue( _I
 
     WFC_TRY
     {
-        auto service_handle = ::OpenServiceW( m_ManagerHandle, service_name, SERVICE_PAUSE_CONTINUE );
+        auto service_handle { ::OpenServiceW(m_ManagerHandle, service_name, SERVICE_PAUSE_CONTINUE)};
 
         if ( service_handle == static_cast< SC_HANDLE >( NULL ) )
         {
@@ -122,7 +122,7 @@ _Check_return_ bool Win32FoundationClasses::CServiceControlManager::Continue( _I
 
         SERVICE_STATUS service_status{ 0, 0, 0, 0, 0, 0, 0 };
 
-        auto return_value = ::ControlService( service_handle, SERVICE_CONTROL_CONTINUE, &service_status );
+        auto return_value{ ::ControlService(service_handle, SERVICE_CONTROL_CONTINUE, &service_status) };
 
         if ( return_value == FALSE )
         {
@@ -158,7 +158,7 @@ _Check_return_ bool Win32FoundationClasses::CServiceControlManager::EnableIntera
 {
     WFC_VALIDATE_POINTER( this );
 
-    bool return_value = true;
+    bool return_value{ true };
 
     CRegistry registry;
 
@@ -187,7 +187,7 @@ _Check_return_ bool Win32FoundationClasses::CServiceControlManager::EnableIntera
         return( false );
     }
 
-    DWORD no_interactive_services = 0;
+    DWORD no_interactive_services{ 0 };
 
     if ( enable_interactive_services == true )
     {
@@ -241,9 +241,9 @@ _Check_return_ bool Win32FoundationClasses::CServiceControlManager::EnumerateSta
         }
     }
 
-    DWORD number_of_bytes_needed      = 0;
-    DWORD number_of_services_returned = 0;
-    DWORD resume_handle               = 0;
+    DWORD number_of_bytes_needed{ 0 };
+    DWORD number_of_services_returned{ 0 };
+    DWORD resume_handle{ 0 };
 
     if ( ::EnumServicesStatus( m_ManagerHandle,
         type,
@@ -347,7 +347,7 @@ _Check_return_ bool Win32FoundationClasses::CServiceControlManager::GetConfigura
 
         configuration.Empty();
 
-        auto service_handle = ::OpenServiceW( m_ManagerHandle, service_name, SERVICE_QUERY_CONFIG );
+        auto service_handle{ ::OpenServiceW(m_ManagerHandle, service_name, SERVICE_QUERY_CONFIG) };
 
         if ( service_handle == static_cast< SC_HANDLE >( NULL ) )
         {
@@ -357,14 +357,14 @@ _Check_return_ bool Win32FoundationClasses::CServiceControlManager::GetConfigura
             return( false );
         }
 
-        auto buffer = std::make_unique<uint8_t[]>(4000);
+        auto buffer{ std::make_unique<uint8_t[]>(4000) };
 
-        DWORD number_of_bytes_needed = 0;
+        DWORD number_of_bytes_needed{ 0 };
 
-        auto return_value = ::QueryServiceConfig( service_handle, 
-                reinterpret_cast<QUERY_SERVICE_CONFIG *>(buffer.get()),
+        auto return_value{ ::QueryServiceConfig(service_handle,
+                reinterpret_cast<QUERY_SERVICE_CONFIG*>(buffer.get()),
                 4000,
-                &number_of_bytes_needed );
+                &number_of_bytes_needed) };
 
         if ( return_value == FALSE )
         {
@@ -386,7 +386,7 @@ _Check_return_ bool Win32FoundationClasses::CServiceControlManager::GetConfigura
         else
         {
             return_value = TRUE;
-            auto service_configuration_p = reinterpret_cast<QUERY_SERVICE_CONFIG const *>(buffer.get());
+            auto service_configuration_p{ reinterpret_cast<QUERY_SERVICE_CONFIG const*>(buffer.get()) };
             configuration.Copy( service_configuration_p );
         }
 
@@ -414,7 +414,7 @@ _Check_return_ bool Win32FoundationClasses::CServiceControlManager::GetDependenc
 
     WFC_TRY
     {
-        auto service_handle = ::OpenServiceW( m_ManagerHandle, service_name, SERVICE_ENUMERATE_DEPENDENTS );
+        auto service_handle { ::OpenServiceW(m_ManagerHandle, service_name, SERVICE_ENUMERATE_DEPENDENTS)};
 
         if ( service_handle == static_cast< SC_HANDLE >( NULL ) )
         {
@@ -424,22 +424,22 @@ _Check_return_ bool Win32FoundationClasses::CServiceControlManager::GetDependenc
             return( false );
         }
 
-        DWORD number_of_services_returned = 0;
-        DWORD number_of_bytes_needed      = 0;
-        DWORD buffer_size                 = 0;
+        DWORD number_of_services_returned{ 0 };
+        DWORD number_of_bytes_needed{ 0 };
+        DWORD buffer_size{ 0 };
 
-        auto status_array = std::make_unique<ENUM_SERVICE_STATUS[]>(512); // an insane amount
+        auto status_array{ std::make_unique<ENUM_SERVICE_STATUS[]>(512) }; // an insane amount
 
         buffer_size = 512 * sizeof( ENUM_SERVICE_STATUS );
 
         ZeroMemory( status_array.get(), buffer_size );
 
-        auto return_value = ::EnumDependentServices( service_handle,
+        auto return_value{ ::EnumDependentServices(service_handle,
                 SERVICE_STATE_ALL, // Both running and stopped services
                 status_array.get(),
                 buffer_size,
                 &number_of_bytes_needed,
-                &number_of_services_returned );
+                &number_of_services_returned) };
 
         if ( return_value not_eq FALSE )
         {
@@ -473,14 +473,14 @@ _Check_return_ bool Win32FoundationClasses::CServiceControlManager::GetDisplayNa
 
     WFC_TRY
     {
-        DWORD buffer_size = 8192; // insanely large buffer
+        DWORD buffer_size { 8192}; // insanely large buffer
 
-    auto display_string = std::make_unique<wchar_t[]>(buffer_size);
+        auto display_string{ std::make_unique<wchar_t[]>(buffer_size) };
 
-        auto return_value = ::GetServiceDisplayName( m_ManagerHandle,
+        auto return_value{ ::GetServiceDisplayName(m_ManagerHandle,
                 key_name,
                 display_string.get(),
-                &buffer_size );
+                &buffer_size) };
 
             if ( return_value not_eq FALSE )
             {
@@ -526,14 +526,14 @@ _Check_return_ bool Win32FoundationClasses::CServiceControlManager::GetKeyName( 
     {
         key_name.clear();
 
-        DWORD buffer_size = 8192; // insanely large buffer
+        DWORD buffer_size{ 8192 }; // insanely large buffer
 
-        auto key_string = std::make_unique<wchar_t[]>(buffer_size);
+        auto key_string{ std::make_unique<wchar_t[]>(buffer_size) };
 
-        BOOL return_value = ::GetServiceKeyNameW( m_ManagerHandle,
+        auto return_value{ ::GetServiceKeyNameW(m_ManagerHandle,
                 display_name,
                 key_string.get(),
-                &buffer_size );
+                &buffer_size) };
 
         if ( return_value not_eq FALSE )
         {
@@ -570,7 +570,7 @@ _Check_return_ bool Win32FoundationClasses::CServiceControlManager::GetNext( _Ou
 
     if ( m_CurrentEntryNumber < m_NumberOfEntries )
     {
-        auto status_array = reinterpret_cast<ENUM_SERVICE_STATUS *>(m_Buffer.get());
+        auto status_array{ reinterpret_cast<ENUM_SERVICE_STATUS*>(m_Buffer.get()) };
         status.Copy( &status_array[ m_CurrentEntryNumber ] );
         m_CurrentEntryNumber++;
         return( true );
@@ -627,7 +627,7 @@ _Check_return_ bool Win32FoundationClasses::CServiceControlManager::Install( __i
             return( false );
         }
 
-        if ( normalized_executable_name.find(' ') not_eq std::wstring::npos )
+        if ( normalized_executable_name.find(' ') not_eq normalized_executable_name.npos )
         {
             // The name contains a space. We must make sure the name is in quotes
 
@@ -654,17 +654,17 @@ _Check_return_ bool Win32FoundationClasses::CServiceControlManager::Install( __i
             return( false );
         }
 
-        DWORD const supported_types = EVENTLOG_ERROR_TYPE bitor
+        DWORD const supported_types{ EVENTLOG_ERROR_TYPE bitor
             EVENTLOG_WARNING_TYPE bitor
             EVENTLOG_INFORMATION_TYPE bitor
             EVENTLOG_AUDIT_SUCCESS bitor
-            EVENTLOG_AUDIT_FAILURE;
+            EVENTLOG_AUDIT_FAILURE };
 
         // Thanks go to Patrik Sjoberg (pasjo@wmdata.com) for finding a bug here.
         // Install() would fail in unattended installations. Event logging
         // is now a non-fatal error
 
-        auto event_log = std::make_unique<CEventLog>();
+        auto event_log{ std::make_unique<CEventLog>() };
 
         if ( event_log.get() not_eq nullptr )
         {
@@ -682,9 +682,7 @@ _Check_return_ bool Win32FoundationClasses::CServiceControlManager::Install( __i
             }
         }
 
-        auto service_handle = reinterpret_cast< SC_HANDLE >( NULL );
-
-        service_handle = ::CreateServiceW( m_ManagerHandle,
+        auto service_handle{ ::CreateServiceW(m_ManagerHandle,
             service_name,
             friendly_name,
             SERVICE_ALL_ACCESS,
@@ -696,7 +694,7 @@ _Check_return_ bool Win32FoundationClasses::CServiceControlManager::Install( __i
             nullptr,
             L"EventLog\0\0",
             nullptr,
-            nullptr );
+            nullptr) };
 
         if ( service_handle == static_cast< SC_HANDLE >( NULL ) )
         {
@@ -744,7 +742,7 @@ _Check_return_ bool Win32FoundationClasses::CServiceControlManager::Install( __i
             TCHAR user_name[ 2048 ];
             TCHAR temp_string[ 2100 ];
 
-            DWORD size_of_user_name = static_cast<DWORD>(std::size( user_name ));
+            auto size_of_user_name{ static_cast<DWORD>(std::size(user_name)) };
 
             ::ZeroMemory( user_name,   sizeof( user_name   ) );
             ::ZeroMemory( temp_string, sizeof( temp_string ) );
@@ -782,24 +780,24 @@ _Check_return_ bool Win32FoundationClasses::CServiceControlManager::IsDatabaseLo
         return( false );
     }
 
-    DWORD buffer_size            = 8192; // insanely large buffer
-    DWORD number_of_bytes_needed = 0;
+    DWORD buffer_size{ 8192 }; // insanely large buffer
+    DWORD number_of_bytes_needed{ 0 };
 
-    auto buffer = std::make_unique<uint8_t[]>(buffer_size);
+    auto buffer{ std::make_unique<uint8_t[]>(buffer_size) };
 
     // Always always always zero buffers
 
     ::ZeroMemory( buffer.get(), buffer_size );
 
-    BOOL return_value = ::QueryServiceLockStatus( m_ManagerHandle,
+    auto return_value{ ::QueryServiceLockStatus(m_ManagerHandle,
             reinterpret_cast<LPQUERY_SERVICE_LOCK_STATUS>(buffer.get()),
             buffer_size,
-            &number_of_bytes_needed );
+            &number_of_bytes_needed) };
 
     if ( return_value not_eq FALSE )
     {
         // Get the data from the structure
-        auto status_p = reinterpret_cast< LPQUERY_SERVICE_LOCK_STATUS >( buffer.get() );
+        auto status_p{ reinterpret_cast<LPQUERY_SERVICE_LOCK_STATUS>(buffer.get()) };
 
         if ( status_p->fIsLocked not_eq 0 )
         {
@@ -930,7 +928,7 @@ _Check_return_ bool Win32FoundationClasses::CServiceControlManager::Pause( __in_
             return( false );
         }
 
-        auto service_handle = ::OpenServiceW( m_ManagerHandle, service_name, SERVICE_PAUSE_CONTINUE );
+        auto service_handle{ ::OpenServiceW(m_ManagerHandle, service_name, SERVICE_PAUSE_CONTINUE) };
 
         if ( service_handle == static_cast< SC_HANDLE >( NULL ) )
         {
@@ -942,7 +940,7 @@ _Check_return_ bool Win32FoundationClasses::CServiceControlManager::Pause( __in_
 
         SERVICE_STATUS service_status{ 0, 0, 0, 0, 0, 0, 0 };
 
-        auto return_value = ::ControlService( service_handle, SERVICE_CONTROL_PAUSE, &service_status );
+        auto return_value{ ::ControlService(service_handle, SERVICE_CONTROL_PAUSE, &service_status) };
 
         if ( return_value == FALSE )
         {
@@ -1124,7 +1122,7 @@ _Check_return_ bool Win32FoundationClasses::CServiceControlManager::SetConfigura
 
     WFC_TRY
     {
-        auto const service_handle = ::OpenServiceW( m_ManagerHandle, service_name, SERVICE_CHANGE_CONFIG);
+        auto const service_handle { ::OpenServiceW(m_ManagerHandle, service_name, SERVICE_CHANGE_CONFIG)};
 
         if ( service_handle == static_cast< SC_HANDLE >( NULL ) )
         {
@@ -1137,7 +1135,7 @@ _Check_return_ bool Win32FoundationClasses::CServiceControlManager::SetConfigura
 
         // Lock the database so we can safely make the changes
 
-        bool return_value = LockDatabase();
+        bool return_value{ LockDatabase() };
 
         if ( return_value == true )
         {
@@ -1157,7 +1155,7 @@ _Check_return_ bool Win32FoundationClasses::CServiceControlManager::SetConfigura
                 normalized_executable_name.assign( name_of_executable_file );
             }
 
-            if ( normalized_executable_name.find(' ') not_eq std::wstring::npos )
+            if ( normalized_executable_name.find(' ') not_eq normalized_executable_name.npos )
             {
                 // The name contains a space. We must make sure the name is in quotes
 
@@ -1175,17 +1173,17 @@ _Check_return_ bool Win32FoundationClasses::CServiceControlManager::SetConfigura
                 }
             }
 
-            BOOL const api_return_value = ::ChangeServiceConfigW( service_handle,
+            auto const api_return_value{ ::ChangeServiceConfigW(service_handle,
                 type_of_service,
                 when_to_start,
                 error_control,
-                (LPCWSTR) ( ( normalized_executable_name.empty() == true ) ? (LPCWSTR) nullptr : normalized_executable_name.c_str() ),
+                (LPCWSTR)((normalized_executable_name.empty() == true) ? (LPCWSTR) nullptr : normalized_executable_name.c_str()),
                 load_order_group,
                 nullptr,
                 dependencies,
                 start_name,
                 password,
-                display_name );
+                display_name) };
 
             if (api_return_value == FALSE )
             {
@@ -1248,7 +1246,7 @@ _Check_return_ bool Win32FoundationClasses::CServiceControlManager::Start( __in_
             return( false );
         }
 
-        auto service_handle = ::OpenServiceW( m_ManagerHandle, service_name, SERVICE_START );
+        auto service_handle{ ::OpenServiceW(m_ManagerHandle, service_name, SERVICE_START) };
 
         if ( service_handle == static_cast< SC_HANDLE >( NULL ) )
         {
@@ -1258,7 +1256,7 @@ _Check_return_ bool Win32FoundationClasses::CServiceControlManager::Start( __in_
             return( false );
         }
 
-        BOOL return_value = ::StartService( service_handle, service_argc, service_argv );
+        auto return_value{ ::StartService(service_handle, service_argc, service_argv) };
 
         if ( return_value == FALSE )
         {
@@ -1313,7 +1311,7 @@ _Check_return_ bool Win32FoundationClasses::CServiceControlManager::Stop( _In_z_
         // I was not opening the service with permission to query it's status.
         // That caused the QueryServiceStatus() later on to fail.
 
-        auto service_handle = ::OpenServiceW( m_ManagerHandle, service_name, SERVICE_STOP bitor SERVICE_QUERY_STATUS );
+        auto service_handle{ ::OpenServiceW(m_ManagerHandle, service_name, SERVICE_STOP bitor SERVICE_QUERY_STATUS) };
 
         if ( service_handle == static_cast< SC_HANDLE >( NULL ) )
         {
@@ -1325,7 +1323,7 @@ _Check_return_ bool Win32FoundationClasses::CServiceControlManager::Stop( _In_z_
 
         SERVICE_STATUS service_status{ 0, 0, 0, 0, 0, 0, 0 };
 
-        auto return_value = ::ControlService( service_handle, SERVICE_CONTROL_STOP, &service_status );
+        auto return_value{ ::ControlService(service_handle, SERVICE_CONTROL_STOP, &service_status) };
 
         if ( return_value == FALSE )
         {
@@ -1337,8 +1335,8 @@ _Check_return_ bool Win32FoundationClasses::CServiceControlManager::Stop( _In_z_
             return( false );
         }
 
-        DWORD old_checkpoint  = 0;
-        DWORD number_of_tries = 0;
+        DWORD old_checkpoint{ 0 };
+        DWORD number_of_tries{ 0 };
 
         while( service_status.dwCurrentState not_eq SERVICE_STOPPED )
         {
@@ -1393,7 +1391,7 @@ _Check_return_ bool Win32FoundationClasses::CServiceControlManager::UnlockDataba
         return( true );
     }
 
-    auto return_value = ::UnlockServiceDatabase( m_DatabaseLockHandle );
+    auto return_value{ ::UnlockServiceDatabase(m_DatabaseLockHandle) };
 
     if ( return_value == FALSE )
     {
@@ -1413,9 +1411,8 @@ _Check_return_ bool Win32FoundationClasses::CServiceControlManager::UnlockDataba
 
 static VOID CALLBACK __stop_notification_callback(PVOID parameter) noexcept
 {
-    auto notify = reinterpret_cast<SERVICE_NOTIFYW *>(parameter);
-
-    auto event_handle = reinterpret_cast<HANDLE>(notify->pContext);
+    auto notify{ reinterpret_cast<SERVICE_NOTIFYW*>(parameter) };
+    auto event_handle{ reinterpret_cast<HANDLE>(notify->pContext) };
 
     SetEvent(event_handle);
 }
@@ -1445,7 +1442,7 @@ _Check_return_ bool Win32FoundationClasses::CServiceControlManager::WaitForStop(
             return(false);
         }
 
-        auto service_handle = ::OpenServiceW(m_ManagerHandle, service_name, SERVICE_QUERY_STATUS);
+        auto service_handle{ ::OpenServiceW(m_ManagerHandle, service_name, SERVICE_QUERY_STATUS) };
 
         if (service_handle == static_cast<SC_HANDLE>(NULL))
         {
@@ -1469,7 +1466,7 @@ _Check_return_ bool Win32FoundationClasses::CServiceControlManager::WaitForStop(
             return(true);
         }
 
-        auto const event_handle = MANUAL_RESET_EVENT();
+        auto const event_handle{ MANUAL_RESET_EVENT() };
 
         // The service is running
 
@@ -2048,7 +2045,7 @@ Unlocks the service control database.
 
 &#35;if defined( _DEBUG )
 &#35;undef THIS_FILE
-static char THIS_FILE[] = __FILE__;
+static auto const THIS_FILE{ __FILE__ };
 &#35;endif
 
 DWORD WINAPI worker_thread( LPVOID pointer_to_parent_CService_class );
@@ -2126,11 +2123,11 @@ log.Report( CEventLog::eventInformation, 0, MSG_WATCHDOG_SERVICE_STARTED );
 
 std::vector&lt;std::wstring&gt; names_of_services_to_keep_alive;
 
-DWORD number_of_seconds_to_sleep = 0;
+DWORD number_of_seconds_to_sleep { 0 };
 
 std::wstring machine_name( TEXT( &quot;&quot; ) );
 
-BOOL return_value = TRUE;
+BOOL return_value { TRUE };
 
 {
 <A HREF="REGISTRY.htm">CRegistry</A> registry;
@@ -2152,7 +2149,7 @@ registry.GetValue( TEXT( &quot;NumberOfSecondsBetweenChecks&quot; ), number_of_s
 registry.GetValue( TEXT( &quot;MachineName&quot; ), machine_name );
 }
 
-DWORD sleep_time = 1000 * number_of_seconds_to_sleep;
+DWORD sleep_time { 1000 * number_of_seconds_to_sleep };
 
 if ( sleep_time &lt; 2000 )
 {
@@ -2160,7 +2157,7 @@ if ( sleep_time &lt; 2000 )
 sleep_time = 2000;
 }
 
-int number_of_services_to_keep_alive = names_of_services_to_keep_alive.GetSize();
+int number_of_services_to_keep_alive { names_of_services_to_keep_alive.GetSize() };
 
 <B>CServiceControlManager</B> service_control_manager;
 
@@ -2198,9 +2195,9 @@ stopped_services.Add( status.lpServiceName );
 
 // Now that we have the service names, we need to see which services need to be started
 
-int number_of_stopped_services = stopped_services.GetSize();
-int alive_index                = 0;
-int stopped_index              = 0;
+int number_of_stopped_services { stopped_services.GetSize() };
+int alive_index                { 0 };
+int stopped_index              { 0 };
 
 while( alive_index &lt; number_of_services_to_keep_alive )
 {
@@ -2260,7 +2257,7 @@ if ( registry.Connect( CRegistry::keyLocalMachine ) not_eq FALSE )
 {
 if ( registry.Create( TEXT( &quot;SYSTEM\\CurrentControlSet\\Services\\WatchDog\\Parameters&quot; ) not_eq FALSE ) )
 {
-DWORD default_sleep_time = 60;
+DWORD default_sleep_time {60};
 
 if ( registry.SetValue( TEXT( &quot;NumberOfSecondsBetweenChecks&quot; ), default_sleep_time ) == FALSE )
 {

@@ -54,7 +54,7 @@
 #if defined( _DEBUG ) && defined( _INC_CRTDBG )
 #define new DEBUG_NEW
 #undef THIS_FILE
-static char THIS_FILE[] = __FILE__;
+static auto const THIS_FILE{ __FILE__ };
 #endif // _DEBUG
 
 // Construction

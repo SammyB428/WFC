@@ -47,7 +47,7 @@
 
 #if defined( _DEBUG ) && defined( _INC_CRTDBG )
 #undef THIS_FILE
-static char THIS_FILE[] = __FILE__;
+static auto const THIS_FILE{ __FILE__ };
 #define new DEBUG_NEW
 #endif // _DEBUG
 
@@ -62,7 +62,7 @@ void Win32FoundationClasses::CDataChunk::GetIdentifier( _In_ uint32_t const id, 
       return;
    }
 
-   uint32_t identifier = id;
+   uint32_t identifier{ id };
 
    string.push_back( character );
 
@@ -151,18 +151,18 @@ _Check_return_ bool Win32FoundationClasses::CDataFile::AddData( _In_ uint32_t co
 
    // Write the identifier
 
-   uint32_t temp_long = identifier;
+   uint32_t temp_long{ identifier };
 
-   uint8_t byte_1 = (uint8_t) (temp_long bitand 0xFF );
+   uint8_t byte_1{ (uint8_t)(temp_long bitand 0xFF) };
    temp_long >>= 8;
 
-   uint8_t byte_2 = (uint8_t) (temp_long bitand 0xFF );
+   uint8_t byte_2{ (uint8_t)(temp_long bitand 0xFF) };
    temp_long >>= 8;
 
-   uint8_t byte_3 = (uint8_t) (temp_long bitand 0xFF );
+   uint8_t byte_3{ (uint8_t)(temp_long bitand 0xFF) };
    temp_long >>= 8;
 
-   uint8_t byte_4 = (uint8_t) (temp_long bitand 0xFF );
+   uint8_t byte_4{ (uint8_t)(temp_long bitand 0xFF) };
 
    uint8_t buffer[ 9 ];
 
@@ -242,7 +242,7 @@ _Check_return_ bool Win32FoundationClasses::CDataFile::GetData( _Out_ uint32_t& 
 
       // Now get the number of bytes in the chunk
 
-      uint32_t length = MAKE_DATA_LENGTH( bytes[ 4 ], bytes[ 5 ], bytes[ 6 ], bytes[ 7 ] );
+      uint32_t length{ MAKE_DATA_LENGTH(bytes[4], bytes[5], bytes[6], bytes[7]) };
 
       data.resize( length );
 

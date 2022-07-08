@@ -47,7 +47,7 @@
 
 #if defined( _DEBUG ) && defined( _INC_CRTDBG )
 #undef THIS_FILE
-static char THIS_FILE[] = __FILE__;
+static auto const THIS_FILE{ __FILE__ };
 #define new DEBUG_NEW
 #endif // _DEBUG
 
@@ -680,11 +680,11 @@ void get_sector( TCHAR drive_letter, DWORD sector_number, std::vector&lt;uint8_t
       return;
    }
 
-   DWORD sector_size = 0;
+   DWORD sector_size { 0 };
 
    disk.GetSectorSize( sector_size );
 
-   DWORD location_to_seek_to = sector_size * sector_number;
+   DWORD location_to_seek_to { sector_size * sector_number };
 
    if ( ( location_to_seek_to + sector_size ) &gt; disk.GetLength() )
    {

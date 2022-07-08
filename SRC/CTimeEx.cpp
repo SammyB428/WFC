@@ -47,7 +47,7 @@
 
 #if defined( _DEBUG ) && defined( _INC_CRTDBG )
 #undef THIS_FILE
-static char THIS_FILE[] = __FILE__;
+static auto const THIS_FILE{ __FILE__ };
 #define new DEBUG_NEW
 #endif // WIN32
 
@@ -72,9 +72,9 @@ _Check_return_ std::wstring Win32FoundationClasses::CTimeSpan::Format( _In_z_ wc
    std::wstring return_value;
    std::wstring number_string;
 
-   int format_string_index = 0;
+   int format_string_index{ 0 };
 
-   wchar_t character = format_string[ format_string_index ];
+   wchar_t character{ format_string[format_string_index] };
 
    while( character not_eq 0 )
    {
@@ -164,21 +164,20 @@ void Win32FoundationClasses::CTimeEx::CopyModifiedJulianDate( _In_ double const 
 {
    WFC_VALIDATE_POINTER( this );
 
-   double whole_days = 0.0;
-
-   double fractional_days = std::modf( number_of_days_since_17_november_1858, &whole_days );
+   double whole_days{ 0.0 };
+   double fractional_days{ std::modf(number_of_days_since_17_november_1858, &whole_days) };
 
    whole_days -= 40587.0;
 
    // There are 40,587 days between 17 Nov 1858 and 01 Jan 1970
    // There are 86,400 seconds in one day
 
-   double number_of_seconds_into_the_day = fractional_days * 86400.0;
+   double number_of_seconds_into_the_day{ fractional_days * 86400.0 };
 
-   m_Time = (long) (whole_days * 86400.0);
+   m_Time = static_cast<long>(whole_days * 86400.0);
 
-   double whole_seconds = 0.0;
-   double fractional_seconds = std::modf( number_of_seconds_into_the_day, &whole_seconds );
+   double whole_seconds{ 0.0 };
+   double fractional_seconds{ std::modf(number_of_seconds_into_the_day, &whole_seconds) };
 
    m_Time += static_cast<long>(whole_seconds);
 }
@@ -247,7 +246,7 @@ void Win32FoundationClasses::CTimeEx::GetCurrentTheTime( _Out_ CTimeEx& source )
 {
    struct tm time_structure { 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 
-   auto const current_time = ::time( nullptr );
+   auto const current_time{ ::time(nullptr) };
 
    GreenwichMeanTime( &current_time, &time_structure );
 
@@ -258,7 +257,7 @@ void Win32FoundationClasses::CTimeEx::Now( void ) noexcept
 {
    struct tm time_structure { 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 
-   auto const current_time = ::time( nullptr );
+   auto const current_time{ ::time(nullptr) };
 
    GreenwichMeanTime( &current_time, &time_structure );
 
@@ -306,7 +305,7 @@ _Check_return_ int Win32FoundationClasses::CTimeEx::GetMinuteOfDay( void ) const
 
    GetTime( time_structure );
 
-   int const minutes = ( time_structure.tm_hour * 60 ) + time_structure.tm_min;
+   int const minutes{ (time_structure.tm_hour * 60) + time_structure.tm_min };
 
    return( minutes );
 }
@@ -393,11 +392,10 @@ void Win32FoundationClasses::CTimeEx::GreenwichMeanTime( _In_ time_t const * tim
 
    tm_structure_p->tm_hour = 0;
 
-   long calendar_time_to_convert = (long) *time_t_pointer;
+   long calendar_time_to_convert{ static_cast<long>(*time_t_pointer) };
 
-   int is_current_year_a_leap_year = 0;
-
-   int temporary_time = 0;
+   int is_current_year_a_leap_year{ 0 };
+   int temporary_time{ 0 };
 
    int days_in_a_year_by_month[ 13 ];
 
@@ -549,9 +547,9 @@ _Check_return_ time_t Win32FoundationClasses::CTimeEx::m_Make_time_t( _In_ struc
  */
 #define ChkMul(dest, src1, src2)   ( src1 ? (dest/src1 not_eq src2) : 0 )
 
-   long time_1 = 0;
-   long time_2 = 0;
-   long time_3 = 0;
+   long time_1{ 0 };
+   long time_2{ 0 };
+   long time_3{ 0 };
 
    struct tm tm_time { 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 
@@ -607,11 +605,11 @@ _Check_return_ time_t Win32FoundationClasses::CTimeEx::m_Make_time_t( _In_ struc
     * month. Check for leap year and adjust if necessary.
     */
 
-   constexpr int const days[ 13 ] = { -1, 30, 58, 89, 119, 150, 180, 211, 242, 272, 303, 333, 364 };
+   constexpr int const days[ 13 ]{ -1, 30, 58, 89, 119, 150, 180, 211, 242, 272, 303, 333, 364 };
 
    time_2 = days[ tm_time.tm_mon ];
 
-   if ( ! ( time_1 bitand 3 ) and ( tm_time.tm_mon > 1 ) )
+   if ( not ( time_1 bitand 3 ) and ( tm_time.tm_mon > 1 ) )
    {
       time_2++;
    }
@@ -748,7 +746,7 @@ void Win32FoundationClasses::CTimeEx::Set( _In_ std::wstring const& iso_8601_str
 
    std::wstring temp_string( iso_8601_string );
 
-   std::size_t const string_length = temp_string.length();
+   auto const string_length{ temp_string.length() };
 
    if ( string_length < 4 )
    {
@@ -757,7 +755,7 @@ void Win32FoundationClasses::CTimeEx::Set( _In_ std::wstring const& iso_8601_str
 
    std::wstring value( temp_string.substr( 0, 4 ) );
 
-   int const year = static_cast<int>(Win32FoundationClasses::as_integer( value ));
+   auto const year{ static_cast<int>(Win32FoundationClasses::as_integer(value)) };
 
    temp_string.erase(0, 4);
 
@@ -804,7 +802,7 @@ void Win32FoundationClasses::CTimeEx::Set( _In_ std::wstring const& iso_8601_str
 
    temp_string.erase(0, 2);
 
-   int const month = static_cast<int>(Win32FoundationClasses::as_integer(value));
+   auto const month{ static_cast<int>(Win32FoundationClasses::as_integer(value)) };
 
    // Now let's idiot proof the month
 
@@ -857,7 +855,7 @@ void Win32FoundationClasses::CTimeEx::Set( _In_ std::wstring const& iso_8601_str
 
    temp_string.erase(0, 2);
 
-   int const day = static_cast<int>(as_integer(value));
+   auto const day{ static_cast<int>(as_integer(value)) };
 
    // Now let's idiot proof the day
 
@@ -908,7 +906,7 @@ void Win32FoundationClasses::CTimeEx::Set( _In_ std::wstring const& iso_8601_str
 
    value.assign( temp_string.substr( 0, 2 ) );
 
-   int const hours = static_cast<int>(as_integer(value));
+   auto const hours{ static_cast<int>(as_integer(value)) };
 
    if ( hours > 24 )
    {
@@ -951,7 +949,7 @@ void Win32FoundationClasses::CTimeEx::Set( _In_ std::wstring const& iso_8601_str
 
    value.assign( temp_string.substr( 0, 2 ) );
 
-   int minutes = static_cast<int>(as_integer(value));
+   auto minutes{ static_cast<int>(as_integer(value)) };
 
    if ( minutes > 59 )
    {
@@ -1000,7 +998,7 @@ void Win32FoundationClasses::CTimeEx::Set( _In_ std::wstring const& iso_8601_str
 
    value.assign( temp_string.substr( 0, 2 ) );
 
-   int seconds = static_cast<int>(as_integer(value));
+   auto seconds{ static_cast<int>(as_integer(value)) };
 
    temp_string.erase(0, 2);
 
@@ -1012,7 +1010,7 @@ void Win32FoundationClasses::CTimeEx::Set( _In_ std::wstring const& iso_8601_str
       return;
    }
 
-   char const character = static_cast<char>(temp_string.at( 0 ));
+   char const character{ static_cast<char>(temp_string.at(0)) };
 
    // Here's where it gets interesting, this can be the
    // end of the string or a fractional second
@@ -1024,13 +1022,13 @@ void Win32FoundationClasses::CTimeEx::Set( _In_ std::wstring const& iso_8601_str
       return;
    }
 
-   unsigned long nanoseconds = 0;
+   unsigned long nanoseconds{ 0 };
 
    if ( character == '.' )
    {
-      std::size_t const character_index = temp_string.find_first_of(WSTRING_VIEW(L"Z+-"));
+      auto const character_index{ temp_string.find_first_of(WSTRING_VIEW(L"Z+-")) };
 
-      if ( character_index == std::wstring::npos )
+      if ( character_index == temp_string.npos )
       {
          //WFCTRACE( TEXT( "Ill formed fractional seconds" ) );
          return;
@@ -1039,7 +1037,7 @@ void Win32FoundationClasses::CTimeEx::Set( _In_ std::wstring const& iso_8601_str
       value.assign(WSTRING_VIEW(L"0."));
       value.append( temp_string.substr( 0, character_index ) );
 
-      double fractional_second = Win32FoundationClasses::as_double( value );
+      double fractional_second{ Win32FoundationClasses::as_double(value) };
 
       fractional_second *= static_cast<double>(NUMBER_OF_NANOSECONDS_IN_ONE_SECOND);
 
@@ -1086,8 +1084,8 @@ void Win32FoundationClasses::CTimeEx::Set( _In_ std::wstring const& iso_8601_str
       return;
    }
 
-   int const offset_hours   = static_cast<int>(Win32FoundationClasses::as_integer(temp_string.substr( 1, 2 )));
-   int const offset_minutes = static_cast<int>(Win32FoundationClasses::as_integer(temp_string.substr( 4, 2 )));
+   auto const offset_hours{ static_cast<int>(Win32FoundationClasses::as_integer(temp_string.substr(1, 2))) };
+   auto const offset_minutes{ static_cast<int>(Win32FoundationClasses::as_integer(temp_string.substr(4, 2))) };
 
    Win32FoundationClasses::CTimeSpan const time_span( 0, offset_hours, offset_minutes, 0 );
 

@@ -47,7 +47,7 @@
 
 #if defined( _DEBUG ) && defined( _INC_CRTDBG )
 #undef THIS_FILE
-static char THIS_FILE[] = __FILE__;
+static auto const THIS_FILE{ __FILE__ };
 #endif // _DEBUG
 
 #if defined( _DEBUG ) && defined( _INC_CRTDBG )
@@ -395,7 +395,7 @@ void test_CEventLog( void )
 
    <B>CEventLogRecord</B> record;
 
-   DWORD loop_index = 0;
+   DWORD loop_index { 0};
 
    while( log.Read( loop_index, record ) == true )
    {

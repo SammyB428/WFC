@@ -47,7 +47,7 @@
 
 #if defined( _DEBUG ) && defined( _INC_CRTDBG )
 #undef THIS_FILE
-static char THIS_FILE[] = __FILE__;
+static auto const THIS_FILE{ __FILE__ };
 #define new DEBUG_NEW
 #endif // _DEBUG
 
@@ -641,7 +641,7 @@ static _Check_return_ bool __wide_read_recursively(_In_ std::wstring const& dire
     return(true);
 }
 
-_Check_return_ bool Win32FoundationClasses::CFileDirectory::ReadRecursively(__callback Win32FoundationClasses::WIDE_FILE_ACTION_FUNCTION action_to_take, _In_ void * action_parameter) noexcept
+_Check_return_ bool Win32FoundationClasses::CFileDirectory::ReadRecursively(__callback Win32FoundationClasses::WIDE_FILE_ACTION_FUNCTION action_to_take, _In_opt_ void * action_parameter) noexcept
 {
     WFC_VALIDATE_POINTER(this);
     WFC_VALIDATE_POINTER(action_to_take);
@@ -1067,7 +1067,7 @@ BOOL action_to_take( void * action_parameter, const std::wstring&amp; complete_f
 {
    <A HREF="WfcTrace.htm">WFCTRACEINIT</A>( TEXT( &quot;action_to_take()&quot; ) );
 
-   DWORD * file_counter_p = reinterpret_cast&lt; DWORD * &gt;( action_parameter );
+   DWORD * file_counter_p { reinterpret_cast&lt; DWORD * &gt;( action_parameter )};
 
    (*file_counter_p)++; // increment the counter
 
@@ -1079,9 +1079,9 @@ int _tmain( int number_of_command_line_arguments, LPCTSTR command_line_arguments
 {
    <A HREF="WfcTrace.htm">WFCTRACEINIT</A>( TEXT( &quot;_tmain()&quot; ) );
 
-   int argument_index = 1;
+   int argument_index { 1};
 
-   DWORD total_number_of_files = 0;
+   DWORD total_number_of_files { 0};
 
    <B>CFileDirectory</B> directory;
 

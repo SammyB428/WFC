@@ -46,7 +46,7 @@
 
 #if defined( _DEBUG ) && defined( _INC_CRTDBG )
 #undef THIS_FILE
-static char THIS_FILE[] = __FILE__;
+static auto const THIS_FILE{ __FILE__ };
 #define new DEBUG_NEW
 #endif // _DEBUG
 
@@ -86,7 +86,7 @@ __checkReturn bool test_CQueue( __out std::string& class_name, __out int& test_n
       return(failure());
    }
 
-   std::size_t item = 0;
+   std::size_t item{ 0 };
 
    if ( queue.Get( item ) == false )
    {

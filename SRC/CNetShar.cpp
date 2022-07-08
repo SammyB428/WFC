@@ -47,7 +47,7 @@
 
 #if defined( _DEBUG ) && defined( _INC_CRTDBG )
 #undef THIS_FILE
-static char THIS_FILE[] = __FILE__;
+static auto const THIS_FILE{ __FILE__ };
 #endif // _DEBUG
 
 /*
@@ -264,7 +264,7 @@ _Check_return_ bool Win32FoundationClasses::CNetworkShares::Add(_Inout_ Win32Fou
    share_info_2.shi2_max_uses     = share_to_add.MaximumNumberOfUses;
    share_info_2.shi2_current_uses = share_to_add.CurrentNumberOfUses;
 
-   DWORD parameter_error = 0;
+   DWORD parameter_error{ 0 };
 
    m_ErrorCode = ::NetShareAdd( (LMSTR) m_WideMachineName.get(),
                                         2,
@@ -299,7 +299,7 @@ _Check_return_ DWORD Win32FoundationClasses::CNetworkShares::Check( _In_ std::ws
 
    wcsncpy(wide_device_name, name_of_device.data(), std::min(std::size(wide_device_name) - 1, name_of_device.length()));
 
-   DWORD device_type = 0;
+   DWORD device_type{ 0 };
 
    m_ErrorCode = ::NetShareCheck( (LMSTR) m_WideMachineName.get(),
                                   (LMSTR) wide_device_name,
@@ -714,7 +714,7 @@ When you reach the end of the list, <B>GetNext</B>() will return FALSE.
    }
    else
    {
-      DWORD error_code = shares.GetErrorCode();
+      DWORD error_code {shares.GetErrorCode()};
 
       std::wstring error_message;
 

@@ -47,7 +47,7 @@
 
 #if defined( _DEBUG ) && defined( _INC_CRTDBG )
 #undef THIS_FILE
-static char THIS_FILE[] = __FILE__;
+static auto const THIS_FILE{ __FILE__ };
 #define new DEBUG_NEW
 #endif // _DEBUG
 
@@ -102,7 +102,7 @@ _Check_return_ bool Win32FoundationClasses::CDesktop::Close( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
-   BOOL return_value = TRUE;
+   BOOL return_value{ TRUE };
 
    if ( m_DesktopHandle not_eq static_cast< HDESK >( NULL ) )
    {
@@ -133,7 +133,7 @@ _Check_return_ bool Win32FoundationClasses::CDesktop::Create( _In_ std::wstring_
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER_NULL_OK( security_attributes_p );
 
-   bool return_value = false;
+   bool return_value{ false };
 
    if ( m_DesktopHandle not_eq static_cast< HDESK >( NULL ) and m_AutomaticallyClose == true)
    {
@@ -217,7 +217,7 @@ _Check_return_ bool Win32FoundationClasses::CDesktop::GetWindows( _Out_ std::vec
 
    window_handles.clear();
 
-   bool return_value = false;
+   bool return_value{ false };
 
    if ( m_DesktopHandle == static_cast<HDESK>( NULL ) )
    {
@@ -259,7 +259,7 @@ _Check_return_ bool Win32FoundationClasses::CDesktop::Open( _In_ std::wstring_vi
 {
    WFC_VALIDATE_POINTER( this );
 
-   bool return_value = FALSE;
+   bool return_value{ false };
 
    if ( m_DesktopHandle not_eq static_cast< HDESK >( NULL ) and m_AutomaticallyClose == true)
    {
@@ -299,7 +299,7 @@ _Check_return_ bool Win32FoundationClasses::CDesktop::OpenInput( _In_ DWORD desi
 {
    WFC_VALIDATE_POINTER( this );
 
-   bool return_value = FALSE;
+   bool return_value{ false };
 
    if ( m_DesktopHandle not_eq static_cast< HDESK >( NULL ) and m_AutomaticallyClose == true)
    {
@@ -341,7 +341,7 @@ _Check_return_ bool Win32FoundationClasses::CDesktop::SetThread( void ) noexcept
 {
    WFC_VALIDATE_POINTER( this );
 
-   BOOL return_value = ::SetThreadDesktop( m_DesktopHandle );
+   auto return_value{ ::SetThreadDesktop(m_DesktopHandle) };
 
    if ( return_value == FALSE )
    {
@@ -360,7 +360,7 @@ _Check_return_ bool Win32FoundationClasses::CDesktop::SwitchTo( _In_ Win32Founda
 {
    WFC_VALIDATE_POINTER( this );
 
-   BOOL return_value = ::SwitchDesktop( desktop_to_switch_to.m_DesktopHandle );
+   auto return_value{ ::SwitchDesktop(desktop_to_switch_to.m_DesktopHandle) };
 
    if ( return_value == FALSE )
    {

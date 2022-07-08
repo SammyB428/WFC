@@ -45,9 +45,9 @@
 
 #define WIN32_FOUNDATION_CLASSES
 
-#define WFC_RELEASE_NUMBER (107)
+#define WFC_RELEASE_NUMBER (108)
 #if ! defined( WFC_SILENT )
-#pragma message( "WFC Release 107." )
+#pragma message( "WFC Release 108." )
 #endif // WFC_SILENT
 
 #define TAB_CHARACTER   (9)
@@ -1246,9 +1246,9 @@ _Check_return_ bool PASCAL wfc_convert_to_unicode( _Inout_ VOID *       unicode_
                                     __out_opt DWORD *      real_code_page_p = nullptr ) noexcept; // New for 52
 #endif // NO_WFC_CONVERT_TO_UNICODE
 
-#define WFC_INITIALIZE_SINGLE_THREADED_COM() ::CoInitialize( nullptr )
-#define WFC_INITIALIZE_SINGLE_THREADED_COM_NO_DDE() ::CoInitializeEx( nullptr, COINIT_APARTMENTTHREADED bitor COINIT_DISABLE_OLE1DDE bitor COINIT_SPEED_OVER_MEMORY )
-#define WFC_INITIALIZE_MULTITHREADED_COM() ::CoInitializeEx( nullptr, COINIT_MULTITHREADED bitor COINIT_DISABLE_OLE1DDE bitor COINIT_SPEED_OVER_MEMORY )
+#define WFC_INITIALIZE_SINGLE_THREADED_COM() (void) ::CoInitialize( nullptr )
+#define WFC_INITIALIZE_SINGLE_THREADED_COM_NO_DDE() (void) ::CoInitializeEx( nullptr, COINIT_APARTMENTTHREADED bitor COINIT_DISABLE_OLE1DDE bitor COINIT_SPEED_OVER_MEMORY )
+#define WFC_INITIALIZE_MULTITHREADED_COM() (void) ::CoInitializeEx( nullptr, COINIT_MULTITHREADED bitor COINIT_DISABLE_OLE1DDE bitor COINIT_SPEED_OVER_MEMORY )
 
 /*
 ** Last but not least, let's see if we are building a UNICODE console

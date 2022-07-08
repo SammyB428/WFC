@@ -47,7 +47,7 @@
 
 #if defined( _DEBUG ) && defined( _INC_CRTDBG )
 #undef THIS_FILE
-static char THIS_FILE[] = __FILE__;
+static auto const THIS_FILE{ __FILE__ };
 #define new DEBUG_NEW
 #endif // _DEBUG
 
@@ -180,7 +180,7 @@ using the <B>CloseHandle</B>() Win32 API.
 
    _stprintf( physical_disk, TEXT( &quot;\\\\.\\PHYSICALDRIVE%u&quot; ), _ttoi( command_line_arguments[ 1 ] ) );
 
-   auto disk_handle = static_cast< HANDLE >( NULL );
+   auto disk_handle { static_cast< HANDLE >( NULL ) };
 
    disk_handle = CreateFile( physical_disk,
                              GENERIC_READ bitor GENERIC_WRITE,
@@ -196,7 +196,7 @@ using the <B>CloseHandle</B>() Win32 API.
 
       ZeroMemory( &amp;disk_geometry, sizeof( disk_geometry ) );
 
-      DWORD number_of_bytes_read = 0;
+      DWORD number_of_bytes_read { 0 };
 
       if ( DeviceIoControl( disk_handle,
                             IOCTL_DISK_GET_DRIVE_GEOMETRY,

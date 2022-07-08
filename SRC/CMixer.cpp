@@ -48,7 +48,7 @@
 #if defined( _DEBUG ) && defined( _INC_CRTDBG )
 #define new DEBUG_NEW
 #undef THIS_FILE
-static char THIS_FILE[] = __FILE__;
+static auto const THIS_FILE{ __FILE__ };
 #endif // _DEBUG
 
 #if defined( _WFC_DEBUG_MIXER_GET_CONTROL_DETAILS )
@@ -858,7 +858,7 @@ _Check_return_ bool Win32FoundationClasses::CMixer::SetControlDetails(_In_ Win32
         number_of_items_per_channel = control.NumberOfItemsPerChannel;
     }
 
-    std::size_t number_of_elements = number_of_channels * ((number_of_items_per_channel == 0) ? 1 : number_of_items_per_channel);
+    std::size_t number_of_elements{ number_of_channels * ((number_of_items_per_channel == 0) ? 1 : number_of_items_per_channel) };
 
     //WFCTRACEVAL( TEXT( "Number of elements is " ), (DWORD) number_of_elements );
 

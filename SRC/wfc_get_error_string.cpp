@@ -47,7 +47,7 @@
 
 #if defined( _DEBUG ) && defined( _INC_CRTDBG )
 #undef THIS_FILE
-static char THIS_FILE[] = __FILE__;
+static auto const THIS_FILE{ __FILE__ };
 #define new DEBUG_NEW
 #endif // _DEBUG
 
@@ -112,7 +112,7 @@ it into something humanly readable.
 {
    <A HREF="WfcTrace.htm">WFCTRACEINIT</A>( TEXT( &quot;print_error()&quot; ) );
 
-   DWORD error_code = GetLastError();
+   DWORD error_code {GetLastError()};
 
    std::wstring something_a_human_can_understand;
 

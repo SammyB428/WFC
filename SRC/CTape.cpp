@@ -47,7 +47,7 @@
 
 #if defined( _DEBUG ) && defined( _INC_CRTDBG )
 #undef THIS_FILE
-static char THIS_FILE[] = __FILE__;
+static auto const THIS_FILE{ __FILE__ };
 #define new DEBUG_NEW
 #endif // _DEBUG
 
@@ -361,7 +361,7 @@ void CTapeGetDriveParameters::Dump( CDumpContext& dump_context ) const
 
    dump_context << TEXT( "   FeaturesHigh = "          ) << FeaturesHigh          << TEXT( " (" );
 
-   DWORD features_high = FeaturesHigh;
+   DWORD features_high{ FeaturesHigh };
 
    features_high or_eq TAPE_DRIVE_HIGH_FEATURES;
 
@@ -969,7 +969,7 @@ bool Win32FoundationClasses::CTape::GetParameters( _Out_ Win32FoundationClasses:
 {
    WFC_VALIDATE_POINTER( this );
 
-   DWORD size = sizeof( TAPE_GET_DRIVE_PARAMETERS );
+   DWORD size{ sizeof(TAPE_GET_DRIVE_PARAMETERS) };
 
    TAPE_GET_DRIVE_PARAMETERS drive_parameters;
 
@@ -990,7 +990,7 @@ bool Win32FoundationClasses::CTape::GetParameters( _Out_ Win32FoundationClasses:
 {
    WFC_VALIDATE_POINTER( this );
 
-   DWORD size = sizeof( TAPE_GET_MEDIA_PARAMETERS );
+   DWORD size{ sizeof(TAPE_GET_MEDIA_PARAMETERS) };
 
    TAPE_GET_MEDIA_PARAMETERS media_parameters;
 
@@ -1069,13 +1069,13 @@ _Check_return_ bool Win32FoundationClasses::CTape::Open( _In_ UINT const tape_dr
 
    _stprintf_s( tape_drive_name, std::size( tape_drive_name ), TEXT( "\\\\.\\TAPE%u" ), tape_drive_number_starting_at_zero );
 
-   HANDLE const file_handle = ::CreateFile( tape_drive_name,
+   auto const file_handle{ ::CreateFile(tape_drive_name,
                                GENERIC_READ bitor GENERIC_WRITE,
                                0,
                                nullptr,
                                OPEN_EXISTING,
                                FILE_ATTRIBUTE_NORMAL,
-                               static_cast< HANDLE >( NULL ) );
+                               static_cast<HANDLE>(NULL)) };
 
    if ( file_handle == static_cast< HANDLE >( INVALID_HANDLE_VALUE ) )
    {
@@ -1130,13 +1130,13 @@ _Check_return_ bool Win32FoundationClasses::CTape::BackupRead(__out_bcount(numbe
 
    WFC_TRY
    {
-      BOOL return_value = ::BackupRead( m_FileHandle,
+      auto return_value { ::BackupRead(m_FileHandle,
                                         buffer,
                                         number_of_bytes_to_read,
                                         number_of_bytes_read,
                                         abort == true ? TRUE : FALSE,
                                         restore_security_data == true ? TRUE : FALSE,
-                                       &m_BackupReadContextPointer );
+                                       &m_BackupReadContextPointer) };
 
       if ( return_value == FALSE )
       {
@@ -1169,7 +1169,7 @@ _Check_return_ bool Win32FoundationClasses::CTape::BackupSeek( _In_ DWORD const 
 
    WFC_TRY
    {
-      BOOL const return_value = ::BackupSeek( m_FileHandle, seek_low, seek_high, seeked_low, seeked_high, &m_BackupReadContextPointer );
+      auto const return_value { ::BackupSeek(m_FileHandle, seek_low, seek_high, seeked_low, seeked_high, &m_BackupReadContextPointer)};
 
       if ( return_value == FALSE )
       {
@@ -1256,13 +1256,13 @@ _Check_return_ bool Win32FoundationClasses::CTape::BackupWrite(__in_bcount(numbe
 
    WFC_TRY
    {
-      BOOL const return_value = ::BackupWrite( m_FileHandle,
+      auto const return_value { ::BackupWrite(m_FileHandle,
                                          buffer,
                                          number_of_bytes_to_write,
                                          number_of_bytes_written,
                                          abort == true ? TRUE : FALSE,
                                          restore_security_data == true ? TRUE : FALSE,
-                                        &m_BackupWriteContextPointer );
+                                        &m_BackupWriteContextPointer) };
       if ( return_value == FALSE )
       {
          m_LastError = ::GetLastError();

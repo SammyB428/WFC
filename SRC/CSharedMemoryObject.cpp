@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 1995-2019, Samuel R. Blackburn
+** Copyright, 1995-2022, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -47,7 +47,7 @@
 
 #if defined( _DEBUG ) && defined( _INC_CRTDBG )
 #undef THIS_FILE
-static char THIS_FILE[] = __FILE__;
+static auto const THIS_FILE{ __FILE__ };
 #define new DEBUG_NEW
 #endif // _DEBUG
 
@@ -207,7 +207,7 @@ void update_time( const std::wstring&amp queue_name )
 
    if ( queue.<B>Create</B>( queue_name, sizeof( APPLICATION_QUEUE ) not_eq FALSE )
    {
-      APPLICATION_QUEUE * queue_p = nullptr;
+      APPLICATION_QUEUE * queue_p { nullptr };
 
       queue_p = (APPLICATION_QUEUE *) queue.<B>GetPointer</B>();
 

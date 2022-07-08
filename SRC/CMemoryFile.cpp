@@ -47,7 +47,7 @@
 
 #if defined( _DEBUG ) && defined( _INC_CRTDBG )
 #undef THIS_FILE
-static char THIS_FILE[] = __FILE__;
+static auto const THIS_FILE{ __FILE__ };
 #define new DEBUG_NEW
 #endif // _DEBUG
 
@@ -298,7 +298,7 @@ _Check_return_ void * Win32FoundationClasses::CMemoryFile::Map( _In_ uint64_t co
     m_MapOffsetParameter = offset;
     m_MapLengthParameter = length;
 
-    ULARGE_INTEGER large_file_offset = { 0, 0 };
+    ULARGE_INTEGER large_file_offset{ 0, 0 };
 
     large_file_offset.QuadPart = offset;
 
@@ -344,7 +344,7 @@ _Check_return_ void * Win32FoundationClasses::CMemoryFile::Map( _In_ uint64_t co
     m_Length   = m_MapLengthParameter;
     Size       = m_MapLengthParameter;
 
-    auto temp_pointer = (char *) m_MappedPointer;
+    auto temp_pointer{ (char*)m_MappedPointer };
 
     m_Pointer = &temp_pointer[ m_MappedLength - m_MapLengthParameter ];
 
@@ -410,7 +410,7 @@ _Check_return_ bool Win32FoundationClasses::CMemoryFile::m_MapTheFile( _In_ HAND
 
     // Let's adjust number_of_bytes_to_map if we're using an offset
 
-    LARGE_INTEGER file_length = { 0, 0 };
+    LARGE_INTEGER file_length{ 0, 0 };
 
     if ( ::GetFileSizeEx( file_handle, &file_length ) == FALSE )
     {
@@ -629,18 +629,18 @@ void Win32FoundationClasses::CSharedMemory::Close(void) noexcept
 
 static _Check_return_ bool CreateDACL(_Inout_ SECURITY_ATTRIBUTES *sa) noexcept
 {
-    auto sdd = L"D:"
+    auto sdd{ L"D:"
         L"(D;OICI;GA;;;BG)" //Deny guests
         L"(D;OICI;GA;;;AN)" //Deny anonymous
         L"(A;OICI;GRGWGX;;;AU)" //Allow read, write and execute for Users
-        L"(A;OICI;GA;;;BA)"; //Allow all for Administrators
+        L"(A;OICI;GA;;;BA)" }; //Allow all for Administrators
 
     return ConvertStringSecurityDescriptorToSecurityDescriptor(sdd, SDDL_REVISION_1, &sa->lpSecurityDescriptor, nullptr) == TRUE;
 }
 
 static _Check_return_ bool CreateLowIntegritySACL( _Inout_ SECURITY_ATTRIBUTES *sa ) noexcept
 {
-    auto sdd = L"S:(ML;;NW;;;LW)";
+    auto sdd{ L"S:(ML;;NW;;;LW)" };
 
     return ConvertStringSecurityDescriptorToSecurityDescriptor(sdd, SDDL_REVISION_1, &sa->lpSecurityDescriptor, nullptr) == TRUE;
 }
@@ -658,12 +658,12 @@ _Check_return_ bool Win32FoundationClasses::CSharedMemory::Create(_In_ std::wstr
     security_attributes.lpSecurityDescriptor = nullptr;
     security_attributes.bInheritHandle       = TRUE;
 
-    bool security_access_created = false;
+    bool security_access_created{ false };
 
     //security_access_created = CreateDACL( &security_attributes );
     //security_access_created = CreateLowIntegritySACL( &security_attributes );
 
-    auto const return_value = Create( name, number_of_bytes, &security_attributes );
+    auto const return_value{ Create(name, number_of_bytes, &security_attributes) };
 
     Win32FoundationClasses::wfc_destroy_null_dacl( security_attributes.lpSecurityDescriptor );
 
@@ -937,7 +937,7 @@ void test_CMemoryFile( void )
 
 memory_mapped_file.SetAttributes( FILE_FLAG_DELETE_ON_CLOSE );
 
-BYTE * pointer = nullptr;
+BYTE * pointer { nullptr};
 
 if ( memory_mapped_file.Open( TEXT( &quot;datafile.dat&quot; ) ) == false )
 {

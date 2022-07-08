@@ -47,7 +47,7 @@
 
 #if defined( _DEBUG ) && defined( _INC_CRTDBG )
 #undef THIS_FILE
-static char THIS_FILE[] = __FILE__;
+static auto const THIS_FILE{ __FILE__ };
 #define new DEBUG_NEW
 #endif // _DEBUG
 
@@ -90,9 +90,9 @@ _Check_return_ bool Win32FoundationClasses::CJulianDate::Set( _In_ int const yea
       m_JulianDays = m_JulianDays + ::floor( x / 4800.0 ) - ::floor( x / 1200.0 ) + 38;
    }
 
-   double double_hours   = (double) hours;
-   double double_minutes = (double) minutes;
-   double double_seconds = (double) seconds;
+   auto double_hours{ static_cast<double>(hours) };
+   auto double_minutes{ static_cast<double>(minutes) };
+   auto double_seconds{ static_cast<double>(seconds) };
 
    double_hours   /= (double) 24.0;
    double_minutes /= (double) 1440.0;

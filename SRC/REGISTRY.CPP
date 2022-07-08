@@ -47,7 +47,7 @@
 
 #if defined( _DEBUG ) && defined( _INC_CRTDBG )
 #undef THIS_FILE
-static char THIS_FILE[] = __FILE__;
+static auto const THIS_FILE{ __FILE__ };
 #endif // _DEBUG
 
 #if defined( _DEBUG ) && defined( _INC_CRTDBG )
@@ -219,7 +219,7 @@ _Check_return_ bool Win32FoundationClasses::CRegistry::Connect( _In_ HKEY key_to
             if ( name_of_computer == nullptr )
             {
                 wchar_t computer_name[MAX_PATH]{ 0 };
-                DWORD size{ std::size(computer_name) };
+                auto size{ static_cast<DWORD>(std::size(computer_name)) };
 
                 if ( ::GetComputerNameEx(COMPUTER_NAME_FORMAT::ComputerNameDnsHostname, computer_name, &size ) == FALSE )
                 {
@@ -381,7 +381,7 @@ _Check_return_ bool Win32FoundationClasses::CRegistry::DeleteKey( __in_z wchar_t
 
         std::wstring full_key_name( name_of_key_to_delete );
 
-        if ( full_key_name.find( '\\' ) == std::wstring::npos )
+        if ( full_key_name.find( '\\' ) == full_key_name.npos )
         {
             /*
             ** User had not given us a full path so assume the name of the key he passed us
@@ -630,8 +630,7 @@ _Check_return_ bool Win32FoundationClasses::CRegistry::GetBinaryValue( __in_z wc
 
     std::size_t size_of_buffer{ m_LongestValueDataLength };
 
-    auto allocated_buffer = std::make_unique<uint8_t[]>(size_of_buffer);
-
+    auto allocated_buffer{ std::make_unique<uint8_t[]>(size_of_buffer) };
     auto memory_buffer{ allocated_buffer.get() };
 
     if ( memory_buffer == nullptr )
@@ -1571,7 +1570,7 @@ should look like:
 
 <PRE><CODE>BYTE buffer[ 4096 ];
 
-DWORD size_of_buffer = 4096;
+DWORD size_of_buffer { 4096 };
 
 while( registry.EnumerateValues( enumerator, name, type, buffer, size_of_buffer ) == true )
 {
@@ -1804,8 +1803,8 @@ string_array.RemoveAll();
 
 if ( registry.GetStringArrayValue( TEXT( &quot;Sources&quot; ), string_array ) not_eq FALSE )
 {
-int index = 0;
-int number_of_strings = string_array.GetSize();
+int index { 0 };
+int number_of_strings { string_array.GetSize() };
 
 TRACE1( TEXT( &quot;There are %d strings\n&quot; ), number_of_strings );
 

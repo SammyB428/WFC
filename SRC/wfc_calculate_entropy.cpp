@@ -44,7 +44,7 @@
 
 #if defined( _DEBUG ) && defined( _INC_CRTDBG )
 #undef THIS_FILE
-static char THIS_FILE[] = __FILE__;
+static auto const THIS_FILE{ __FILE__ };
 #define new DEBUG_NEW
 #endif // _DEBUG
 
@@ -277,9 +277,9 @@ _Check_return_ static int64_t _find_byte_256(_In_ uint8_t const byte_value, _In_
     __declspec(align(32)) __m256i const byte_to_find = _mm256_set1_epi8(byte_value); // AVX2
     __declspec(align(32)) __m256i const zero = _mm256_setzero_si256(); // AVX2
 
-    int64_t const last_buffer_index = buffer_size - 31;
+    int64_t const last_buffer_index{ buffer_size - 31 };
 
-    int64_t buffer_index = 0;
+    int64_t buffer_index{ 0 };
 
     if (buffer_size > 31)
     {
@@ -537,8 +537,8 @@ a program (as opposed to display it to a user).
 
    <B>wfc_get_web_page</B>( url, weather_report );
 
-   int index = 0;
-   int number_of_lines_in_report = weather_report.GetSize();
+   int index { 0 };
+   int number_of_lines_in_report {weather_report.GetSize()};
 
    while( index &lt; number_of_lines_in_report )
    {

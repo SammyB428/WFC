@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 2000-2003, Samuel R. Blackburn
+** Copyright, 2000-2022, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -46,7 +46,7 @@
 
 #if defined( _DEBUG ) && defined( _INC_CRTDBG )
 #undef THIS_FILE
-static char THIS_FILE[] = __FILE__;
+static auto const THIS_FILE{ __FILE__ };
 #define new DEBUG_NEW
 #endif // _DEBUG
 
@@ -58,7 +58,7 @@ void test_CNetworkConnections( __in_z LPCTSTR machine_name ) noexcept
 
    Win32FoundationClasses::CNetworkConnectionInformation connection_information;
 
-   if ( connections.Enumerate( TEXT( "data" ) ) == true )
+   if ( connections.Enumerate( WSTRING_VIEW(L"data") ) == true )
    {
       _tprintf( TEXT( "Network Connections Information:\n" ) );
 

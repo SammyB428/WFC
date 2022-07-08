@@ -48,7 +48,7 @@
 #if defined( _DEBUG ) && defined( _INC_CRTDBG )
 #define new DEBUG_NEW
 #undef THIS_FILE
-static char THIS_FILE[] = __FILE__;
+static auto const THIS_FILE{ __FILE__ };
 #endif // _DEBUG
 
 Win32FoundationClasses::CMixerControl::CMixerControl()
@@ -127,7 +127,7 @@ void CMixerControl::Dump( CDumpContext& dump_context ) const
    dump_context << TEXT( "a CMixerControl at " ) << (VOID *) this << TEXT( "\n{\n" );
    dump_context << TEXT( "   ID is " ) << ID << TEXT( "\n" );
 
-   DWORD thing = Type bitand MIXERCONTROL_CT_CLASS_MASK;
+   DWORD thing{ Type bitand MIXERCONTROL_CT_CLASS_MASK };
 
    switch( thing )
    {
@@ -602,7 +602,7 @@ _Check_return_ Win32FoundationClasses::CMixerControl::Units Win32FoundationClass
 {
    WFC_VALIDATE_POINTER( this );
 
-   uint32_t const units = static_cast<uint32_t>( static_cast<uint32_t>(Type) bitand MIXERCONTROL_CT_UNITS_MASK);
+   auto const units{ static_cast<uint32_t>(static_cast<uint32_t>(Type) bitand MIXERCONTROL_CT_UNITS_MASK) };
 
    switch( units )
    {

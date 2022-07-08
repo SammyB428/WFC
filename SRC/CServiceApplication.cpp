@@ -47,7 +47,7 @@
 
 #if defined( _DEBUG ) && defined( _INC_CRTDBG )
 #undef THIS_FILE
-static char THIS_FILE[] = __FILE__;
+static auto const THIS_FILE{ __FILE__ };
 #define new DEBUG_NEW
 #endif // _DEBUG
 
@@ -299,11 +299,11 @@ DWORD WINAPI worker_thread( LPVOID )
 
    std::vector&lt;std::wstring&gt; names_of_services_to_keep_alive;
 
-   DWORD number_of_seconds_to_sleep = 0;
+   DWORD number_of_seconds_to_sleep { 0 };
 
    std::wstring machine_name( TEXT( &quot;&quot; ) );
 
-   BOOL return_value = TRUE;
+   BOOL return_value { TRUE };
 
    {
       <A HREF="REGISTRY.htm">CRegistry</A> registry;
@@ -325,7 +325,7 @@ DWORD WINAPI worker_thread( LPVOID )
       registry.GetValue( TEXT( &quot;MachineName&quot; ), machine_name );
    }
 
-   DWORD sleep_time = 1000 * number_of_seconds_to_sleep;
+   DWORD sleep_time { 1000 * number_of_seconds_to_sleep };
 
    if ( sleep_time &lt; 2000 )
    {
@@ -333,7 +333,7 @@ DWORD WINAPI worker_thread( LPVOID )
       sleep_time = 2000;
    }
 
-   int number_of_services_to_keep_alive = names_of_services_to_keep_alive.GetSize();
+   int number_of_services_to_keep_alive { names_of_services_to_keep_alive.GetSize() };
 
    <A HREF="CSvcMgr.htm">CServiceControlManager</A> service_control_manager;
 
@@ -371,9 +371,9 @@ DWORD WINAPI worker_thread( LPVOID )
 
             // Now that we have the service names, we need to see which services need to be started
 
-            int number_of_stopped_services = stopped_services.GetSize();
-            int alive_index                = 0;
-            int stopped_index              = 0;
+            int number_of_stopped_services { stopped_services.GetSize() };
+            int alive_index                { 0 };
+            int stopped_index              { 0 };
 
             while( alive_index &lt; number_of_services_to_keep_alive )
             {
@@ -433,11 +433,11 @@ void set_default_parameters( void )
    {
       if ( registry.Create( TEXT( &quot;SYSTEM\\CurrentControlSet\\Services\\WatchDog\\Parameters&quot; ) ) not_eq FALSE )
       {
-         DWORD default_sleep_time = 60;
+         DWORD default_sleep_time { 60 };
 
          if ( registry.SetValue( TEXT( &quot;NumberOfSecondsBetweenChecks&quot; ), default_sleep_time ) == FALSE )
          {
-            LPVOID message_buffer = (LPVOID) nullptr;
+            LPVOID message_buffer { nullptr };
 
             ::FormatMessage( FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM,
                              nullptr,
@@ -473,7 +473,7 @@ void set_default_parameters( void )
 
          if ( registry.SetValue( TEXT( &quot;Services&quot; ), strings ) == FALSE )
          {
-            LPVOID message_buffer = (LPVOID) nullptr;
+            LPVOID message_buffer { nullptr };
 
             ::FormatMessage( FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM,
                              nullptr,
@@ -500,7 +500,7 @@ void set_default_parameters( void )
       }
       else
       {
-         LPVOID message_buffer = (LPVOID) nullptr;
+         LPVOID message_buffer { nullptr };
 
          ::FormatMessage( FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM,
                           nullptr,
@@ -527,7 +527,7 @@ void set_default_parameters( void )
    }
    else
    {
-      LPVOID message_buffer = (LPVOID) nullptr;
+      LPVOID message_buffer { nullptr };
 
       ::FormatMessage( FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM,
                        nullptr,

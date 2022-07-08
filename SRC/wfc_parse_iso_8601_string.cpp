@@ -47,7 +47,7 @@
 
 #if defined( _DEBUG ) && defined( _INC_CRTDBG )
 #undef THIS_FILE
-static char THIS_FILE[] = __FILE__;
+static auto const THIS_FILE{ __FILE__ };
 #define new DEBUG_NEW
 #endif // _DEBUG
 
@@ -142,7 +142,7 @@ static inline _Check_return_ bool __parse_ymdhmsf( _In_ std::wstring_view time_s
 
     std::ignore = std::from_chars(temp_string, &temp_string[4], year, 10);
 
-    std::size_t index = 4;
+    std::size_t index{ 4 };
 
     // index should be pointing here
     //     |
@@ -489,7 +489,7 @@ static inline _Check_return_ bool __parse_ymdhmsf( _In_ std::wstring_view time_s
                 temp_string[9] = 0x00;
                 temp_string[10] = 0x00;
 
-                std::size_t temp_string_index = 1;
+                std::size_t temp_string_index{ 1 };
 
                 while (index < time_string.length() and fast_is_digit(time_string[index]) == true)
                 {
@@ -708,17 +708,17 @@ BOOL Win32FoundationClasses::wfc_parse_iso_8601_string( LPCTSTR time_string, COl
         return( FALSE );
     }
 
-    int year    = 0;
-    int month   = 0;
-    int day     = 0;
-    int hours   = 0;
-    int minutes = 0;
-    int seconds = 0;
+    int year{ 0 };
+    int month{ 0 };
+    int day{ 0 };
+    int hours{ 0 };
+    int minutes{ 0 };
+    int seconds{ 0 };
 
-    TCHAR offset_character = 0;
+    TCHAR offset_character{ 0 };
 
-    int offset_hours   = 0;
-    int offset_minutes = 0;
+    int offset_hours{ 0 };
+    int offset_minutes{ 0 };
 
     if ( __parse_ymdhms( time_string, year, month, day, hours, minutes, seconds, offset_character, offset_hours, offset_minutes ) == FALSE )
     {
@@ -971,7 +971,7 @@ _Check_return_ bool Win32FoundationClasses::wfc_parse_hex_string(_In_ std::strin
         return(false);
     }
 
-    std::size_t string_index = 0;
+    std::size_t string_index{ 0 };
 
     for ( auto const buffer_index : Range(required_buffer_size) )
     {

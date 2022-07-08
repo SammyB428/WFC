@@ -47,7 +47,7 @@
 
 #if defined( _DEBUG ) && defined( _INC_CRTDBG )
 #undef THIS_FILE
-static char THIS_FILE[] = __FILE__;
+static auto const THIS_FILE{ __FILE__ };
 #define new DEBUG_NEW
 #endif // _DEBUG
 
@@ -55,13 +55,13 @@ _Check_return_ bool Win32FoundationClasses::wfc_am_i_administrator( void ) noexc
 {
    // Plagerized from Microsoft Knowledge Base article Q118626
 
-   auto access_token_handle = static_cast< HANDLE >( NULL );
+   auto access_token_handle{ static_cast<HANDLE>(NULL) };
 
    BYTE buffer[ 1024 ];
 
-   auto token_groups_p = reinterpret_cast<PTOKEN_GROUPS>(buffer);
+   auto token_groups_p{ reinterpret_cast<PTOKEN_GROUPS>(buffer) };
 
-   DWORD buffer_size = 0;
+   DWORD buffer_size{ 0 };
 
    if ( OpenThreadToken( GetCurrentThread(),
                          TOKEN_QUERY,
@@ -83,11 +83,11 @@ _Check_return_ bool Win32FoundationClasses::wfc_am_i_administrator( void ) noexc
       }
    }
 
-   BOOL success = ::GetTokenInformation( access_token_handle,
+   BOOL success{ ::GetTokenInformation(access_token_handle,
                                   TokenGroups,
                                   buffer,
                                   1024,
-                                 &buffer_size );
+                                 &buffer_size) };
 
    // use wfc_close_handle instead of CloseHandle when you don't want exceptions thrown
    std::ignore = Win32FoundationClasses::wfc_close_handle( access_token_handle );

@@ -47,7 +47,7 @@
 
 #if defined( _DEBUG ) && defined( _INC_CRTDBG )
 #undef THIS_FILE
-static char THIS_FILE[] = __FILE__;
+static auto const THIS_FILE{ __FILE__ };
 #endif // _DEBUG
 
 #if defined( _DEBUG ) && defined( _INC_CRTDBG )
@@ -833,7 +833,7 @@ void Win32FoundationClasses::CBitArray::FreeExtra( void ) noexcept
 
    while( number_of_bits >= SizeOfBitRepresentation() )
    {
-      m_Bits.erase(m_Bits.begin());
+      m_Bits.erase(std::begin(m_Bits));
       number_of_bits      -= SizeOfBitRepresentation();
       m_TotalNumberOfBits -= SizeOfBitRepresentation();
    }
@@ -881,10 +881,10 @@ void Win32FoundationClasses::CBitArray::FreeExtra( void ) noexcept
 
       auto loop_index{ m_Bits.size() - 1 };
 
-      for( auto const index : Range(loop_index) )
+      for( auto const this_set_of_bits_index : Range(loop_index) )
       {
-         this_set_of_bits = m_Bits.at( index );
-         that_set_of_bits = m_Bits.at( index + 1 );
+         this_set_of_bits = m_Bits.at(this_set_of_bits_index);
+         that_set_of_bits = m_Bits.at(this_set_of_bits_index + 1 );
 
          if ( _bittest( reinterpret_cast<LONG const *>(&that_set_of_bits), MostSignificantBitLocation() ) == 1 )
          {
@@ -897,8 +897,8 @@ void Win32FoundationClasses::CBitArray::FreeExtra( void ) noexcept
 
          that_set_of_bits <<= 1;
 
-         m_Bits.at( index ) = this_set_of_bits;
-         m_Bits.at( index + 1 ) = that_set_of_bits;
+         m_Bits.at(this_set_of_bits_index) = this_set_of_bits;
+         m_Bits.at(this_set_of_bits_index + 1 ) = that_set_of_bits;
       }
 
       number_of_bits--;

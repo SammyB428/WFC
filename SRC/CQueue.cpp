@@ -47,7 +47,7 @@
 
 #if defined( _DEBUG ) && defined( _INC_CRTDBG )
 #undef THIS_FILE
-static char THIS_FILE[] = __FILE__;
+static auto const THIS_FILE{ __FILE__ };
 #define new DEBUG_NEW
 #endif // _DEBUG
 
@@ -195,7 +195,7 @@ As you can see, the double-locking mechanism is the best.
    queue.Add( 4 );
    queue.Add( 5 );
 
-   DWORD item = 0;
+   DWORD item { 0 };
 
    while( queue.Get( item ) == true )
    {

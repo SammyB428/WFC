@@ -46,7 +46,7 @@
 
 #if defined( _DEBUG ) && defined( _INC_CRTDBG )
 #undef THIS_FILE
-static char THIS_FILE[] = __FILE__;
+static auto const THIS_FILE{ __FILE__ };
 #define new DEBUG_NEW
 #endif // _DEBUG
 
@@ -166,14 +166,14 @@ static _Check_return_ bool count_ones_and_zeroes( _In_ uint32_t const number_of_
    // The last test we perform is to determine an even distribution of ones over the 32 bit positions.
    // Arbitrarily chosen to be a deviation of no more than 1%
 
-   DWORD const distance = maximum_number_of_ones - minimum_number_of_ones;
+   DWORD const distance{ maximum_number_of_ones - minimum_number_of_ones };
 
    // We had two choices for the value of the bit, 1 or 0. We can assume that roughly
    // half the values will turn out to be 1. This means our distance should be
    // calculated using the assumed total number of 1's.
-   DWORD const half_the_sample_size = number_of_dwords_to_test / 2; // We had two choices for the
+   DWORD const half_the_sample_size{ number_of_dwords_to_test / 2 }; // We had two choices for the
 
-   double percentage = (double) ( (double) distance / (double) half_the_sample_size ) * (double) 100.0;
+   double percentage{ (double)((double)distance / (double)half_the_sample_size) * (double)100.0 };
 
    if ( percentage > (double) 1.0 )
    {
@@ -206,11 +206,11 @@ _Check_return_ bool test_CRandomNumberGenerator( _Out_ std::string& class_name, 
            6172232.0   8354498.0  10633180.0
 ************************************************************************/
 
-    Win32FoundationClasses::CRandomNumberGenerator random_number( MAKELONG( 1802, 9373 ) );
+   Win32FoundationClasses::CRandomNumberGenerator random_number( MAKELONG( 1802, 9373 ) );
 
    class_name.assign(STRING_VIEW("CRandomNumberGenerator"));
 
-   double temp_double = 0.0;
+   double temp_double{ 0.0 };
 
    for ( auto const index : Range(20000) )
    {
@@ -219,9 +219,7 @@ _Check_return_ bool test_CRandomNumberGenerator( _Out_ std::string& class_name, 
 
    temp_double = 4096.0 * 4096.0;
 
-   double test_number = 0.0;
-
-   test_number = random_number.GetFloat() * temp_double;
+   double test_number{ random_number.GetFloat() * temp_double };
 
    if ( test_number not_eq (DWORD) 6533892 )
    {

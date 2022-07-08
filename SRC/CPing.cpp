@@ -47,7 +47,7 @@
 
 #if defined( _DEBUG ) && defined( _INC_CRTDBG )
 #undef THIS_FILE
-static char THIS_FILE[] = __FILE__;
+static auto const THIS_FILE{ __FILE__ };
 #define new DEBUG_NEW
 #endif // _DEBUG
 
@@ -249,7 +249,7 @@ _Check_return_ DWORD Win32FoundationClasses::CPing::Ping( _In_ std::wstring cons
 
     WFC_TRY
     {
-       auto icmp_handle = m_Open();
+       auto icmp_handle { m_Open() };
 
        if (icmp_handle == static_cast<HANDLE>(INVALID_HANDLE_VALUE))
        {
@@ -257,7 +257,7 @@ _Check_return_ DWORD Win32FoundationClasses::CPing::Ping( _In_ std::wstring cons
           return(0);
        }
 
-       DWORD status = 0;
+       DWORD status{ 0 };
 
        if (m_Text == nullptr)
        {
@@ -272,7 +272,7 @@ _Check_return_ DWORD Win32FoundationClasses::CPing::Ping( _In_ std::wstring cons
           SetText(buffer, 59);
        }
 
-       auto echo_reply_p = static_cast<Win32FoundationClasses::IP_ECHO_REPLY *>(GlobalAllocPtr(GHND, sizeof(IP_ECHO_REPLY) + m_NumberOfTextBytes));
+       auto echo_reply_p{ static_cast<Win32FoundationClasses::IP_ECHO_REPLY*>(GlobalAllocPtr(GHND, sizeof(IP_ECHO_REPLY) + m_NumberOfTextBytes)) };
 
        if (echo_reply_p not_eq nullptr)
        {
@@ -292,7 +292,7 @@ _Check_return_ DWORD Win32FoundationClasses::CPing::Ping( _In_ std::wstring cons
           // Thanks go to Curits Yanko (cyanko@ziplink.net) for finding
           // a boo boo here. I was linking inet_addr() and not thunking it.
 
-          ULONG internet_address = 0L;
+          ULONG internet_address{ 0 };
 
           // DANGER! DANGER! DANGER! inet_addr() is not UNICODE correct!!!
 
@@ -446,7 +446,7 @@ int _tmain( int number_of_command_line_arguments, TCHAR *command_line_arguments[
 
    <B>CPing</B> ping;
 
-   DWORD return_value = 0;
+   DWORD return_value { 0 };
 
    <A HREF="CPingRes.htm">CPingResults</A> results;
 
@@ -454,7 +454,7 @@ int _tmain( int number_of_command_line_arguments, TCHAR *command_line_arguments[
 
    if ( return_value == 0 )
    {
-      DWORD error_code = ping.GetErrorCode();
+      DWORD error_code { ping.GetErrorCode() };
 
       std::wstring error_message;
 

@@ -46,7 +46,7 @@
 
 #if defined( _DEBUG ) && defined( _INC_CRTDBG )
 #undef THIS_FILE
-static char THIS_FILE[] = __FILE__;
+static auto const THIS_FILE{ __FILE__ };
 #define new DEBUG_NEW
 #endif // _DEBUG
 
@@ -93,7 +93,7 @@ _Check_return_ bool test_CNetResource( _Out_ std::string& class_name, _Out_ int&
    }
    else
    {
-       auto error_code{ net_resource.GetErrorCode() };
+      auto error_code{ net_resource.GetErrorCode() };
 
       std::wstring error_message;
 

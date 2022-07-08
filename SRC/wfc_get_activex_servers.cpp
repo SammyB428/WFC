@@ -47,7 +47,7 @@
 
 #if defined( _DEBUG ) && defined( _INC_CRTDBG )
 #undef THIS_FILE
-static char THIS_FILE[] = __FILE__;
+static auto const THIS_FILE{ __FILE__ };
 #define new DEBUG_NEW
 #endif // _DEBUG
 
@@ -88,7 +88,7 @@ _Check_return_ bool Win32FoundationClasses::wfc_get_activex_servers( _Out_ std::
 
    auto location_of_semicolon{ server_name.find(';') };
 
-   while( location_of_semicolon not_eq std::wstring::npos )
+   while( location_of_semicolon not_eq server_name.npos )
    {
       temp_string.assign( server_name.substr( 0, location_of_semicolon ) );
 
@@ -161,7 +161,7 @@ downloaded from.
       return( false );
    }
 
-   int loop_index = 0;
+   int loop_index { 0 };
 
    std::wstring server_name;
 

@@ -47,7 +47,7 @@
 
 #if defined( _DEBUG ) && defined( _INC_CRTDBG )
 #undef THIS_FILE
-static char THIS_FILE[] = __FILE__;
+static auto const THIS_FILE{ __FILE__ };
 #define new DEBUG_NEW
 #endif // _DEBUG
 
@@ -67,7 +67,7 @@ _Check_return_ VOID * Win32FoundationClasses::wfc_get_unicode_conversion_context
 {
    if ( is_com_already_started_in_this_thread == false )
    {
-       std::ignore = WFC_INITIALIZE_SINGLE_THREADED_COM_NO_DDE();
+       WFC_INITIALIZE_SINGLE_THREADED_COM_NO_DDE();
    }
 
    GUID const mlang_class_id               { 0x275C23E2, 0x3747, 0x11D0, 0x9F, 0xEA, 0x00, 0xAA, 0x00, 0x3F, 0x86, 0x46 };
@@ -293,8 +293,6 @@ _Check_return_ bool Win32FoundationClasses::wfc_convert_to_unicode( _Inout_ VOID
    {
       ZeroMemory( unicode_string, number_of_wide_characters * sizeof( wchar_t ) );
 
-      HRESULT result_code{ 0 };
-
       DWORD mode{ 0 };
 
       UINT source_size{ static_cast<UINT>(number_of_bytes_in_buffer) };
@@ -304,7 +302,7 @@ _Check_return_ bool Win32FoundationClasses::wfc_convert_to_unicode( _Inout_ VOID
       {
          // We must assume COM has been inialized...
 
-         IMultilanguage2InterfacePointer = reinterpret_cast<IMultiLanguage2 *>(Win32FoundationClasses::wfc_get_unicode_conversion_context( false ));
+         IMultilanguage2InterfacePointer = reinterpret_cast<IMultiLanguage2*>(Win32FoundationClasses::wfc_get_unicode_conversion_context(false));
 
          if ( IMultilanguage2InterfacePointer == nullptr )
          {
@@ -313,15 +311,15 @@ _Check_return_ bool Win32FoundationClasses::wfc_convert_to_unicode( _Inout_ VOID
          }
       }
 
-      result_code = IMultilanguage2InterfacePointer->ConvertStringToUnicodeEx(
+      auto const result_code{ IMultilanguage2InterfacePointer->ConvertStringToUnicodeEx(
                    &mode,
                     suggested_code_page,
-           reinterpret_cast<CHAR *>(const_cast<BYTE *>(bytes)),
+           reinterpret_cast<CHAR*>(const_cast<BYTE*>(bytes)),
                    &source_size,
                     unicode_string,
                    &destination_number_of_characters,
                     0,
-                    nullptr );
+                    nullptr) };
 
       //WFCTRACEVAL( TEXT( "result_code is " ), result_code );
 
@@ -385,7 +383,7 @@ int _tmain( int number_of_command_line_arguments, LPCTSTR command_line_arguments
 
    ZeroMemory( dos_device_names, sizeof( dos_device_names ) );
 
-   DWORD return_value = 0;
+   DWORD return_value { 0 };
 
    return_value = QueryDosDevice( nullptr, dos_device_names, std::size( dos_device_names ) );
 
@@ -393,8 +391,8 @@ int _tmain( int number_of_command_line_arguments, LPCTSTR command_line_arguments
 
    <B>wfc_convert_double_null_terminated_string</B>( reinterpret_cast&lt; const BYTE * &gt;( dos_device_names ), names );
 
-   int loop_index         = 0;
-   int number_of_elements = names.GetSize();
+   int loop_index         { 0};
+   int number_of_elements { names.GetSize()};
 
    while( loop_index < number_of_elements )
    {

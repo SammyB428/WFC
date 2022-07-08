@@ -47,38 +47,38 @@
 
 #if defined( _DEBUG ) && defined( _INC_CRTDBG )
 #undef THIS_FILE
-static char THIS_FILE[] = __FILE__;
+static auto const THIS_FILE{ __FILE__ };
 #define new DEBUG_NEW
 #endif // _DEBUG
 
 static bool inline _Check_return_ does_directory_exist( __in_z LPCTSTR full_path ) noexcept
 {
-   auto directory_handle = CreateFileW( full_path,
-                                         0, // zero means we want NO access, we just want to query the device
-                                         0,
-                                         nullptr,
-                                         OPEN_EXISTING,
-                                         FILE_ATTRIBUTE_NORMAL bitor FILE_FLAG_BACKUP_SEMANTICS, // We need FILE_FLAG_BACKUP_SEMANTICS to open the root directory
-                                         nullptr );
+    auto directory_handle{ ::CreateFileW(full_path,
+                                          0, // zero means we want NO access, we just want to query the device
+                                          0,
+                                          nullptr,
+                                          OPEN_EXISTING,
+                                          FILE_ATTRIBUTE_NORMAL bitor FILE_FLAG_BACKUP_SEMANTICS, // We need FILE_FLAG_BACKUP_SEMANTICS to open the root directory
+                                          nullptr) };
 
-   if ( directory_handle ==INVALID_HANDLE_VALUE )
+   if ( directory_handle == INVALID_HANDLE_VALUE )
    {
       return( false );
    }
 
-   CloseHandle( directory_handle );
+   ::CloseHandle( directory_handle );
    return( true );
 }
 
 static bool inline _Check_return_ does_wide_directory_exist( __in_z wchar_t const * full_path ) noexcept
 {
-   auto directory_handle = ::CreateFileW( full_path,
-                                            0, // zero means we want NO access, we just want to query the device
-                                            0,
-                                            nullptr,
-                                            OPEN_EXISTING,
-                                            FILE_ATTRIBUTE_NORMAL bitor FILE_FLAG_BACKUP_SEMANTICS, // We need FILE_FLAG_BACKUP_SEMANTICS to open the root directory
-                                            nullptr );
+    auto directory_handle{ ::CreateFileW(full_path,
+                                             0, // zero means we want NO access, we just want to query the device
+                                             0,
+                                             nullptr,
+                                             OPEN_EXISTING,
+                                             FILE_ATTRIBUTE_NORMAL bitor FILE_FLAG_BACKUP_SEMANTICS, // We need FILE_FLAG_BACKUP_SEMANTICS to open the root directory
+                                             nullptr) };
 
    if ( directory_handle == INVALID_HANDLE_VALUE )
    {
@@ -126,7 +126,7 @@ _Check_return_ bool Win32FoundationClasses::wfc_create_path( __in_z LPCTSTR path
 
             std::wstring this_directory;
 
-            std::size_t location_of_backslash = directory_path.find( '\\' );
+            auto location_of_backslash{ directory_path.find('\\') };
 
             if ( location_of_backslash == 0 )
             {
@@ -138,7 +138,7 @@ _Check_return_ bool Win32FoundationClasses::wfc_create_path( __in_z LPCTSTR path
 
                   location_of_backslash = directory_path.find( '\\', 2 );
 
-                  if ( location_of_backslash == std::wstring::npos )
+                  if ( location_of_backslash == directory_path.npos )
                   {
                      return( false );
                   }
@@ -149,31 +149,31 @@ _Check_return_ bool Win32FoundationClasses::wfc_create_path( __in_z LPCTSTR path
                }
             }
 
-            if ( location_of_backslash == std::wstring::npos)
+            if ( location_of_backslash == directory_path.npos)
             {
                return( false );
             }
 
             location_of_backslash = directory_path.find( '\\', location_of_backslash + 1 );
 
-            while( location_of_backslash not_eq std::wstring::npos )
+            while( location_of_backslash not_eq directory_path.npos )
             {
                this_directory.assign( directory_path.substr( 0, location_of_backslash ) );
 
                if ( this_directory.empty() == false )
                {
-                  CreateDirectoryW( this_directory.c_str(), security_attributes_p );
+                  ::CreateDirectoryW( this_directory.c_str(), security_attributes_p );
                   location_of_backslash = directory_path.find( '\\', location_of_backslash + 1 );
                }
                else
                {
-                  location_of_backslash = std::wstring::npos;
+                  location_of_backslash = directory_path.npos;
                }
             }
 
-            if ( CreateDirectoryW( directory_path.c_str(), security_attributes_p ) == FALSE )
+            if ( ::CreateDirectoryW( directory_path.c_str(), security_attributes_p ) == FALSE )
             {
-               last_error = GetLastError();
+               last_error = ::GetLastError();
 
                if ( last_error not_eq ERROR_PATH_NOT_FOUND )
                {
@@ -210,9 +210,9 @@ _Check_return_ bool Win32FoundationClasses::wfc_create_wide_path( _In_z_ wchar_t
          return( true );
       }
 
-      if ( CreateDirectoryW( path_name, security_attributes_p ) == FALSE )
+      if ( ::CreateDirectoryW( path_name, security_attributes_p ) == FALSE )
       {
-         DWORD last_error = GetLastError();
+         auto last_error{ ::GetLastError() };
 
          if ( last_error not_eq ERROR_PATH_NOT_FOUND and
               last_error not_eq ERROR_ALREADY_EXISTS )
@@ -232,7 +232,7 @@ _Check_return_ bool Win32FoundationClasses::wfc_create_wide_path( _In_z_ wchar_t
 
             std::wstring this_directory;
 
-            std::size_t location_of_backslash = directory_path.find( '\\' );
+            auto location_of_backslash{ directory_path.find('\\') };
 
             if ( location_of_backslash == 0 )
             {
@@ -244,7 +244,7 @@ _Check_return_ bool Win32FoundationClasses::wfc_create_wide_path( _In_z_ wchar_t
 
                   location_of_backslash = directory_path.find( '\\', 2 );
 
-                  if ( location_of_backslash == std::wstring::npos )
+                  if ( location_of_backslash == directory_path.npos )
                   {
                      return( false );
                   }
@@ -255,31 +255,31 @@ _Check_return_ bool Win32FoundationClasses::wfc_create_wide_path( _In_z_ wchar_t
                }
             }
 
-            if ( location_of_backslash == std::wstring::npos )
+            if ( location_of_backslash == directory_path.npos )
             {
                return( false );
             }
 
             location_of_backslash = directory_path.find( '\\', location_of_backslash + 1 );
 
-            while( location_of_backslash not_eq std::wstring::npos)
+            while( location_of_backslash not_eq directory_path.npos)
             {
                this_directory.assign( directory_path.substr(0, location_of_backslash) );
 
                if ( this_directory.empty() == false )
                {
-                  CreateDirectoryW( this_directory.c_str(), security_attributes_p );
+                  ::CreateDirectoryW( this_directory.c_str(), security_attributes_p );
                   location_of_backslash = directory_path.find( '\\', location_of_backslash + 1 );
                }
                else
                {
-                  location_of_backslash = std::wstring::npos;
+                  location_of_backslash = directory_path.npos;
                }
             }
 
-            if ( CreateDirectoryW( directory_path.c_str(), security_attributes_p ) == FALSE )
+            if ( ::CreateDirectoryW( directory_path.c_str(), security_attributes_p ) == FALSE )
             {
-               last_error = GetLastError();
+               last_error = ::GetLastError();
 
                if ( last_error not_eq ERROR_PATH_NOT_FOUND )
                {

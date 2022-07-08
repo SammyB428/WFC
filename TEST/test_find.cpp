@@ -42,7 +42,7 @@
 
 #if defined( _DEBUG ) && defined( _INC_CRTDBG )
 #undef THIS_FILE
-static char THIS_FILE[] = __FILE__;
+static auto const THIS_FILE{ __FILE__ };
 #define new DEBUG_NEW
 #endif // _DEBUG
 
@@ -118,7 +118,7 @@ static _Check_return_ std::size_t prepare_buffer(_Inout_ uint8_t * buffer, _In_ 
 
     static_assert(sizeof(_pattern) == (36 * 32), "pattern buffer is not a multiple of 32");
 
-    static constexpr std::size_t const number_of_needles = 32 + 32 + 2 + 4;
+    static constexpr std::size_t const number_of_needles{ 32 + 32 + 2 + 4 };
 
     std::size_t return_value{ 0 };
 
@@ -468,14 +468,14 @@ __checkReturn bool test_find(__out std::string& class_name, __out int& test_numb
 
     std::size_t const desired_needle_index = needle_index - 1;
 
-    LARGE_INTEGER start_1 = { 0, 0 };
-    LARGE_INTEGER end_1 = { 0, 0 };
-    LARGE_INTEGER end_2 = { 0, 0 };
+    LARGE_INTEGER start_1 { 0, 0 };
+    LARGE_INTEGER end_1 { 0, 0 };
+    LARGE_INTEGER end_2 { 0, 0 };
 
     QueryPerformanceCounter(&start_1);
-    std::size_t const found_1 = _find_byte_SSE41_1(0xAA, &buffer[1], TEST_FIND_BUFFER_SIZE - 1);
+    std::size_t const found_1{ _find_byte_SSE41_1(0xAA, &buffer[1], TEST_FIND_BUFFER_SIZE - 1) };
     QueryPerformanceCounter(&end_1);
-    std::size_t const found_2 = _find_byte_SSE41_2(0xAA, &buffer[1], TEST_FIND_BUFFER_SIZE - 1);
+    std::size_t const found_2{ _find_byte_SSE41_2(0xAA, &buffer[1], TEST_FIND_BUFFER_SIZE - 1) };
     QueryPerformanceCounter(&end_2);
 
     if (found_1 not_eq desired_needle_index)
@@ -488,19 +488,19 @@ __checkReturn bool test_find(__out std::string& class_name, __out int& test_numb
         _ASSERT_EXPR(FALSE, _CRT_WIDE("found_1 is not equal to found_2"));
     }
 
-    int64_t const time_1 = end_1.QuadPart - start_1.QuadPart;
-    int64_t const time_2 = end_2.QuadPart - end_1.QuadPart;
+    int64_t const time_1{ end_1.QuadPart - start_1.QuadPart };
+    int64_t const time_2{ end_2.QuadPart - end_1.QuadPart };
 
     //printf("Method 1: %" PRId64 "\nMethod 2: %" PRId64 "\n", time_1, time_2);
 
     if (time_2 < time_1)
     {
-        int64_t const beating_ticks = time_1 - time_2;
+        int64_t const beating_ticks{ time_1 - time_2 };
         //printf("_find_byte_SSE41_2 wins by %" PRId64 " ticks\n", beating_ticks);
     }
     else
     {
-        int64_t const beating_ticks = time_2 - time_1;
+        int64_t const beating_ticks{ time_2 - time_1 };
         //printf("_find_byte_SSE41 wins by %" PRId64 " ticks\n", beating_ticks);
     }
 

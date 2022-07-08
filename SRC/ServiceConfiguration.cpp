@@ -47,7 +47,7 @@
 
 #if defined( _DEBUG ) && defined( _INC_CRTDBG )
 #undef THIS_FILE
-static char THIS_FILE[] = __FILE__;
+static auto const THIS_FILE{ __FILE__ };
 #define new DEBUG_NEW
 #endif // _DEBUG
 
@@ -193,7 +193,7 @@ void Win32FoundationClasses::CServiceConfigurationA::Copy( _In_ _QUERY_SERVICE_C
 
       if ( source.lpDependencies not_eq nullptr )
       {
-         BYTE *temp_pointer = (BYTE *) source.lpDependencies;
+         auto temp_pointer{ (BYTE*)source.lpDependencies };
 
          while ( temp_pointer[ 0 ] not_eq 0x00 )
          {

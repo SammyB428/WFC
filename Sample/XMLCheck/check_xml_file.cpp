@@ -47,7 +47,7 @@
 
 #if defined( _DEBUG )
 #undef THIS_FILE
-static char THIS_FILE[] = __FILE__;
+static auto const THIS_FILE{ __FILE__ };
 #define new DEBUG_NEW
 #endif // _DEBUG
 
@@ -144,7 +144,7 @@ void check_xml_file( wchar_t const * filename ) noexcept
       }
       else
       {
-          auto const number_of_milliseconds = end_tick_count - start_tick_count;
+          auto const number_of_milliseconds{ end_tick_count - start_tick_count };
          //WFCTRACEVAL( TEXT( "Parse time in seconds is " ), time_span.GetTotalSeconds() );
          _tprintf( TEXT( "It took %" PRIu32 " seconds (%" PRIu64 " milliseconds) to parse %zu elements (%zu bytes).\n\n" ),
                   (uint32_t) time_span.GetTotalSeconds(),
@@ -178,9 +178,9 @@ void check_xml_file( wchar_t const * filename ) noexcept
 
 #if 0
 
-      CExtensibleMarkupLanguageElement * element_p = document.GetElement( TEXT( "ovvoba.vergabenummern.gesamtvergabelosnummer" ) );
+      auto element_p{ document.GetElement(TEXT("ovvoba.vergabenummern.gesamtvergabelosnummer")) };
 
-      if ( element_p != NULL )
+      if ( element_p not_eq NULL )
       {
          CString directory;
 

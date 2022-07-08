@@ -47,7 +47,7 @@
 
 #if defined( _DEBUG ) && defined( _INC_CRTDBG )
 #undef THIS_FILE
-static char THIS_FILE[] = __FILE__;
+static auto const THIS_FILE{ __FILE__ };
 #define new DEBUG_NEW
 #endif // _DEBUG
 
@@ -88,7 +88,7 @@ static void __stdcall __set_visual_studio_thread_name( __in_z LPCSTR thread_name
 
 static inline _Check_return_ Win32FoundationClasses::WFC_THREAD_INFORMATION_BLOCK * _get_thread_information_block( void ) noexcept
 {
-    Win32FoundationClasses::WFC_THREAD_INFORMATION_BLOCK * return_value = nullptr;
+    Win32FoundationClasses::WFC_THREAD_INFORMATION_BLOCK * return_value{ nullptr };
 
 #if 0
 #if defined( _MSC_VER )

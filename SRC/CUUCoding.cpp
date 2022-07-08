@@ -47,7 +47,7 @@
 
 #if defined( _DEBUG ) && defined( _INC_CRTDBG )
 #undef THIS_FILE
-static char THIS_FILE[] = __FILE__;
+static auto const THIS_FILE{ __FILE__ };
 #define new DEBUG_NEW
 #endif // _DEBUG
 
@@ -70,7 +70,7 @@ _Check_return_ bool Win32FoundationClasses::CUUCoding::OutputFilename(_In_ std::
     // part of an application, let's go for a speedy method for accessing
     // the source data.
 
-    auto input_buffer = source.data();
+    auto input_buffer{ source.data() };
 
     while (index < number_of_bytes_to_decode)
     {
@@ -146,23 +146,23 @@ _Check_return_ bool Win32FoundationClasses::CUUCoding::Decode(_In_ std::vector<u
 
     destination.clear();
 
-    uint8_t byte_to_add = 0;
-    uint8_t character_1 = 0;
-    uint8_t character_2 = 0;
-    uint8_t character_3 = 0;
-    uint8_t character_4 = 0;
+    uint8_t byte_to_add{ 0 };
+    uint8_t character_1{ 0 };
+    uint8_t character_2{ 0 };
+    uint8_t character_3{ 0 };
+    uint8_t character_4{ 0 };
 
-    std::size_t index = 0;
-    std::size_t number_of_characters_in_this_line = 0;
-    std::size_t line_index = 0;
+    std::size_t index{ 0 };
+    std::size_t number_of_characters_in_this_line{ 0 };
+    std::size_t line_index{ 0 };
 
-    auto number_of_bytes_to_decode = source.size();
+    auto number_of_bytes_to_decode{ source.size() };
 
     // Since we're decoding, we are most likely in a performance-minded
     // part of an application, let's go for a speedy method for accessing
     // the source data.
 
-    auto input_buffer = source.data();
+    auto input_buffer{ source.data() };
 
     while (index < number_of_bytes_to_decode)
     {
@@ -360,19 +360,19 @@ _Check_return_ bool Win32FoundationClasses::CUUCoding::Encode( _In_ std::vector<
 
     auto const number_of_bytes_to_encode{ source.size() };
 
-    std::size_t index      = 0;
-    std::size_t line_index = 0;
+    std::size_t index{ 0 };
+    std::size_t line_index{ 0 };
 
-    uint8_t byte_to_encode_1 = 0;
-    uint8_t byte_to_encode_2 = 0;
-    uint8_t byte_to_encode_3 = 0;
+    uint8_t byte_to_encode_1{ 0 };
+    uint8_t byte_to_encode_2{ 0 };
+    uint8_t byte_to_encode_3{ 0 };
 
-    uint8_t character_to_output_1 = 0;
-    uint8_t character_to_output_2 = 0;
-    uint8_t character_to_output_3 = 0;
-    uint8_t character_to_output_4 = 0;
+    uint8_t character_to_output_1{ 0 };
+    uint8_t character_to_output_2{ 0 };
+    uint8_t character_to_output_3{ 0 };
+    uint8_t character_to_output_4{ 0 };
 
-    auto input_buffer = source.data();
+    auto input_buffer{ source.data() };
 
     while( index < number_of_bytes_to_encode ) // Cannot be converted to a Range loop
     {
@@ -488,7 +488,7 @@ _Check_return_ bool CUUCoding::Encode( _In_ std::vector<uint8_t> const& source, 
 
     std::vector<uint8_t> encoded_bytes;
 
-    bool return_value = Encode( source, encoded_bytes );
+    auto return_value{ Encode(source, encoded_bytes) };
 
     if ( return_value == false )
     {
@@ -497,10 +497,10 @@ _Check_return_ bool CUUCoding::Encode( _In_ std::vector<uint8_t> const& source, 
 
     // We have to do this the slow way to preserve UNICODE...
 
-    std::size_t loop_index           = 0;
-    std::size_t const number_of_characters = encoded_bytes.GetSize();
+    std::size_t loop_index{ 0 };
+    std::size_t const number_of_characters{ encoded_bytes.GetSize() };
 
-    BYTE const * encoded_buffer = encoded_bytes.GetData();
+    BYTE const* encoded_buffer{ encoded_bytes.GetData() };
 
     while( loop_index < number_of_characters )
     {

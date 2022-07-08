@@ -85,7 +85,7 @@ inline void replace(_Inout_ std::wstring& s, _In_ std::wstring_view what_to_repl
 
     auto location{ s.find(what_to_replace) };
 
-    while (location not_eq std::wstring::npos)
+    while (location not_eq s.npos)
     {
         // Append the data up to the what_to_replace to our translated string
 
@@ -107,7 +107,7 @@ inline void replace(_Inout_ std::string& s, _In_ std::string_view what_to_replac
 
     auto location{ s.find(what_to_replace) };
 
-    while (location not_eq std::string::npos)
+    while (location not_eq s.npos)
     {
         // Append the data up to the what_to_replace to our translated string
 

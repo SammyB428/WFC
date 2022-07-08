@@ -47,7 +47,7 @@
 
 #if defined( _DEBUG ) && defined( _INC_CRTDBG )
 #undef THIS_FILE
-static char THIS_FILE[] = __FILE__;
+static auto const THIS_FILE{ __FILE__ };
 #define new DEBUG_NEW
 #endif // _DEBUG
 
@@ -223,20 +223,20 @@ _Check_return_ UINT Win32FoundationClasses::CDataMemory::Read(__out_bcount(read_
       return( 0 );
    }
 
-   UINT number_of_bytes_to_read = read_size;
+   UINT number_of_bytes_to_read{ read_size };
 
    // The user passed us a pointer, don't trust it
 
    WFC_TRY
    {
-      std::size_t number_of_bytes_read = 0;
+      std::size_t number_of_bytes_read { 0};
 
       if ( ( m_Position + number_of_bytes_to_read ) > (DWORD) m_Data.size() )
       {
          number_of_bytes_to_read = (UINT) ( (LONGLONG) m_Data.size() - m_Position );
       }
 
-      auto byte_buffer = reinterpret_cast<BYTE *>( buffer );
+      auto byte_buffer{ reinterpret_cast<BYTE*>(buffer) };
 
       if ( number_of_bytes_to_read > 0 )
       {

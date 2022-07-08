@@ -47,7 +47,7 @@
 
 #if defined( _DEBUG ) && defined( _INC_CRTDBG )
 #undef THIS_FILE
-static char THIS_FILE[] = __FILE__;
+static auto const THIS_FILE{ __FILE__ };
 #define new DEBUG_NEW
 #endif // _DEBUG
 
@@ -77,16 +77,16 @@ _Check_return_ bool Win32FoundationClasses::CVolume::AutomaticallyEject( void ) 
       return( false );
    }
 
-   DWORD number_of_bytes_returned = 0;
+   DWORD number_of_bytes_returned{ 0 };
 
-   const BOOL return_value = ::DeviceIoControl( m_Handle,
+   auto const return_value{ ::DeviceIoControl(m_Handle,
                                      IOCTL_STORAGE_EJECT_MEDIA,
                                      nullptr,
                                      0,
                                      nullptr,
                                      0,
                                     &number_of_bytes_returned,
-                                     nullptr );
+                                     nullptr) };
 
    return( return_value == FALSE ? false : true );
 }
@@ -120,14 +120,14 @@ _Check_return_ bool Win32FoundationClasses::CVolume::Dismount( void ) noexcept
 
    DWORD number_of_bytes_returned{ 0 };
 
-   const BOOL return_value = ::DeviceIoControl( m_Handle,
+   auto const return_value{ ::DeviceIoControl(m_Handle,
                                      FSCTL_DISMOUNT_VOLUME,
                                      nullptr,
                                      0,
                                      nullptr,
                                      0,
                                     &number_of_bytes_returned,
-                                     nullptr );
+                                     nullptr) };
 
    return( return_value == FALSE ? false : true );
 }
@@ -268,16 +268,16 @@ _Check_return_ bool Win32FoundationClasses::CVolume::Load( void ) noexcept
       return( false );
    }
 
-   DWORD number_of_bytes_returned = 0;
+   DWORD number_of_bytes_returned{ 0 };
 
-   const BOOL return_value = ::DeviceIoControl( m_Handle,
+   auto const return_value{ ::DeviceIoControl(m_Handle,
                                      IOCTL_STORAGE_LOAD_MEDIA,
                                      nullptr,
                                      0,
                                      nullptr,
                                      0,
                                     &number_of_bytes_returned,
-                                     nullptr );
+                                     nullptr) };
 
    return( return_value == FALSE ? false : true );
 }
@@ -292,10 +292,8 @@ _Check_return_ bool Win32FoundationClasses::CVolume::Lock( void ) noexcept
       return( false );
    }
 
-   DWORD number_of_bytes_returned = 0;
-   DWORD sleep_time               = 0;
-
-   sleep_time = 10000 / 20; // Try 20 times in 10 seconds
+   DWORD number_of_bytes_returned{ 0 };
+   DWORD sleep_time{ 10000 / 20 }; // Try 20 times in 10 seconds
 
    for ( auto const number_of_tries : Range(20) )
    {
@@ -332,7 +330,7 @@ _Check_return_ bool Win32FoundationClasses::CVolume::Open( _In_ TCHAR const driv
 
    m_DriveType = ::GetDriveTypeW( root_directory.c_str() );
 
-   DWORD access_flags = 0;
+   DWORD access_flags{ 0 };
 
    switch( m_DriveType )
    {
@@ -383,7 +381,7 @@ _Check_return_ bool Win32FoundationClasses::CVolume::PreventRemoval( _In_ bool c
       return( false );
    }
 
-   DWORD number_of_bytes_returned = 0;
+   DWORD number_of_bytes_returned{ 0 };
 
    PREVENT_MEDIA_REMOVAL buffer;
 
@@ -391,14 +389,14 @@ _Check_return_ bool Win32FoundationClasses::CVolume::PreventRemoval( _In_ bool c
 
    buffer.PreventMediaRemoval = (BOOLEAN) prevent_removal;
 
-   const BOOL return_value = ::DeviceIoControl( m_Handle,
+   auto const return_value{ ::DeviceIoControl(m_Handle,
                                      IOCTL_STORAGE_MEDIA_REMOVAL,
                                     &buffer,
-                                     sizeof( buffer ),
+                                     sizeof(buffer),
                                      nullptr,
                                      0,
                                     &number_of_bytes_returned,
-                                     nullptr );
+                                     nullptr) };
 
    return(return_value == FALSE ? false : true );
 }
@@ -412,16 +410,16 @@ _Check_return_ bool Win32FoundationClasses::CVolume::Unlock( void ) noexcept
       return( false );
    }
 
-   DWORD number_of_bytes_returned = 0;
+   DWORD number_of_bytes_returned{ 0 };
 
-   const BOOL return_value = ::DeviceIoControl( m_Handle,
+   auto const return_value{ ::DeviceIoControl(m_Handle,
                                      FSCTL_UNLOCK_VOLUME,
                                      nullptr,
                                      0,
                                      nullptr,
                                      0,
                                     &number_of_bytes_returned,
-                                     nullptr );
+                                     nullptr) };
 
    return( return_value == FALSE ? false : true );
 }

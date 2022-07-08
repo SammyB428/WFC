@@ -47,7 +47,7 @@
 
 #if defined( _DEBUG ) && defined( _INC_CRTDBG )
 #undef THIS_FILE
-static char THIS_FILE[] = __FILE__;
+static auto const THIS_FILE{ __FILE__ };
 #define new DEBUG_NEW
 #endif // _DEBUG
 
@@ -241,16 +241,14 @@ _Check_return_ bool Win32FoundationClasses::CListeningSocket::WaitForConnection(
 
    SOCKADDR incoming_socket_address;
 
-   int byte_count = 0;
-
-   byte_count = sizeof( incoming_socket_address );
+   int byte_count{ sizeof(incoming_socket_address) };
 
    ::ZeroMemory( &incoming_socket_address, byte_count );
 
    // The filename should be the host name followed by IP address then port number.
    // Example: "Sammy (195.99.72.1) Port: 23"
 
-   short port_number = 0;
+   short port_number{ 0 };
 
    GetPort( port_number );
 
@@ -272,9 +270,7 @@ _Check_return_ bool Win32FoundationClasses::CListeningSocket::WaitForConnection(
    ** when that happens and continue along our merry way.
    */
 
-   SOCKET socket_id = 0;
-
-   socket_id = m_Thunk_p->accept( m_SocketID, &incoming_socket_address, &byte_count );
+   auto socket_id{ m_Thunk_p->accept(m_SocketID, &incoming_socket_address, &byte_count) };
 
    if ( socket_id == INVALID_SOCKET )
    {
@@ -289,7 +285,7 @@ _Check_return_ bool Win32FoundationClasses::CListeningSocket::WaitForConnection(
    ** the idea of sockets came out of the Unix world...
    */
 
-   LPSTR dotted_ip_address = nullptr;
+   LPSTR dotted_ip_address{ nullptr };
 
    struct in_addr internet_address;
 
@@ -310,9 +306,7 @@ _Check_return_ bool Win32FoundationClasses::CListeningSocket::WaitForConnection(
       return( false );
    }
 
-   ULONG temp_long = 0L;
-
-   temp_long = m_Thunk_p->inet_addr( (LPCSTR) dotted_ip_address );
+   ULONG temp_long{ m_Thunk_p->inet_addr((LPCSTR)dotted_ip_address) };
 
    if ( temp_long == INADDR_NONE )
    {
@@ -337,7 +331,7 @@ _Check_return_ bool Win32FoundationClasses::CListeningSocket::WaitForConnection(
       return( true );
    }
 
-   auto host_entry_p = m_Thunk_p->gethostbyaddr( reinterpret_cast<char const *>(&temp_long), 4, PF_INET );
+   auto host_entry_p{ m_Thunk_p->gethostbyaddr(reinterpret_cast<char const*>(&temp_long), 4, PF_INET) };
 
    if ( host_entry_p == nullptr )
    {
@@ -471,7 +465,7 @@ void CTimeSocket::OnNewConnection( SOCKET socket_id, const char *host_name, cons
 
    CSimpleSocketFile socket( socket_id, host_name, dotted_ip_address );
 
-   DWORD number_of_seconds_since_1970 = 0;
+   DWORD number_of_seconds_since_1970 { 0 };
 
    CTime time_now = CTime::GetCurrentTime();
 

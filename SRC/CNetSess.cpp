@@ -47,7 +47,7 @@
 
 #if defined( _DEBUG ) && defined( _INC_CRTDBG )
 #undef THIS_FILE
-static char THIS_FILE[] = __FILE__;
+static auto const THIS_FILE{ __FILE__ };
 #endif // _DEBUG
 
 #if defined( _DEBUG ) && defined( _INC_CRTDBG )
@@ -83,8 +83,8 @@ _Check_return_ bool Win32FoundationClasses::CNetworkSessions::Delete( __inout Wi
    ::ZeroMemory( wide_user_name,   sizeof( wide_user_name   ) );
    ::ZeroMemory( wide_client_name, sizeof( wide_client_name ) );
 
-   LPWSTR user   = nullptr;
-   LPWSTR client = nullptr;
+   LPWSTR user{ nullptr };
+   LPWSTR client{ nullptr };
 
    if ( information.UserName.empty() == false)
    {
@@ -126,7 +126,7 @@ _Check_return_ bool Win32FoundationClasses::CNetworkSessions::Enumerate( __inout
 {
    WFC_VALIDATE_POINTER( this );
 
-   SESSION_INFO_502 *information_p = nullptr;
+   SESSION_INFO_502 * information_p{ nullptr };
 
    SESSION_INFO_502 s;
 
@@ -134,9 +134,9 @@ _Check_return_ bool Win32FoundationClasses::CNetworkSessions::Enumerate( __inout
 
    information_p = &s;
 
-   DWORD prefered_maximum_length = sizeof( SESSION_INFO_502 ) * 128;
-   DWORD number_of_entries_read  = 0;
-   DWORD total_number_of_entries = 0;
+   DWORD prefered_maximum_length{ sizeof(SESSION_INFO_502) * 128 };
+   DWORD number_of_entries_read{ 0 };
+   DWORD total_number_of_entries{ 0 };
 
    m_ErrorCode = ::NetSessionEnum( (LMSTR) m_WideMachineName.get(),
                                    (LMSTR) nullptr,
@@ -179,7 +179,7 @@ void Win32FoundationClasses::CNetworkSessions::m_Get_0_Data( void ) noexcept
 
    if ( buffer not_eq nullptr )
    {
-      auto information_p = reinterpret_cast<SESSION_INFO_0 const *>(buffer);
+      auto information_p{ reinterpret_cast<SESSION_INFO_0 const*>(buffer) };
 
       /*
       ** Now store the info we want...

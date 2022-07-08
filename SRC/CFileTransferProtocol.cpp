@@ -49,7 +49,7 @@
 
 #if defined( _DEBUG )
 #undef THIS_FILE
-static char THIS_FILE[] = __FILE__;
+static auto const THIS_FILE{ __FILE__ };
 #define new DEBUG_NEW
 #endif // _DEBUG
 
@@ -79,7 +79,7 @@ CFileTransferProtocol::CFileTransferProtocol( LPCTSTR user_name, LPCTSTR passwor
    }
 
    TCHAR default_user_name[ 512 ];
-   DWORD size_of_user_name = 0;
+   DWORD size_of_user_name{ 0 };
 
    ZeroMemory( default_user_name, sizeof( default_user_name ) );
 
@@ -127,11 +127,11 @@ void CFileTransferProtocol::GetDirectory( _In_ CUniformResourceLocator const& ur
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER_NULL_OK( filter );
 
-   CInternetSession * internet_session_p = nullptr;
+   CInternetSession* internet_session_p{ nullptr };
 
-   CFtpConnection * connection_p = nullptr;
+   CFtpConnection* connection_p{ nullptr };
 
-   CFtpFileFind * file_find_p = nullptr;
+   CFtpFileFind* file_find_p{ nullptr };
 
    std::vector<uint8_t> read_buffer;
 
@@ -288,9 +288,9 @@ void CFileTransferProtocol::GetFile( CUniformResourceLocator const& url, std::ve
    // Start with an empty array
    file_contents.RemoveAll();
 
-   CInternetSession * internet_session_p = nullptr;
+   CInternetSession* internet_session_p{ nullptr };
 
-   CFtpConnection * connection_p = nullptr;
+   CFtpConnection* connection_p{ nullptr };
 
    std::vector<uint8_t> read_buffer;
 
@@ -361,7 +361,7 @@ void CFileTransferProtocol::GetFile( CUniformResourceLocator const& url, std::ve
          return;
       }
 
-      CInternetFile * source_file_p = nullptr;
+      CInternetFile* source_file_p{ nullptr };
 
       WFC_TRY
       {
@@ -403,7 +403,7 @@ void CFileTransferProtocol::GetFile( CUniformResourceLocator const& url, std::ve
       read_buffer.SetSize( 65535 * 4 ); // A really big buffer...
       source_file_p->SetReadBufferSize( read_buffer.GetSize() );
 
-      UINT number_of_bytes_read = 0;
+      UINT number_of_bytes_read{ 0 };
 
       WFC_TRY
       {
@@ -506,13 +506,13 @@ _Check_return_ BOOL CFileTransferProtocol::PutFile( _In_ CUniformResourceLocator
 {
    WFC_VALIDATE_POINTER( this );
 
-   CInternetSession * internet_session_p = nullptr;
+   CInternetSession* internet_session_p{ nullptr };
 
-   CFtpConnection * connection_p = nullptr;
+   CFtpConnection* connection_p{ nullptr };
 
    std::vector<uint8_t> read_buffer;
 
-   BOOL return_value = FALSE;
+   BOOL return_value{ FALSE };
 
    WFC_TRY
    {
@@ -583,7 +583,7 @@ _Check_return_ BOOL CFileTransferProtocol::PutFile( _In_ CUniformResourceLocator
          return( FALSE );
       }
 
-      CInternetFile * source_file_p = nullptr;
+      CInternetFile* source_file_p{ nullptr };
 
       WFC_TRY
       {
@@ -792,7 +792,7 @@ void test_CFileTransferProtocol( void )
 
    _tprintf( TEXT( &quot;Directory for %s\n&quot; ), (LPCTSTR) url );
 
-   int index = 0;
+   int index { 0 };
 
    while( index &lt; directory.GetSize() )
    {

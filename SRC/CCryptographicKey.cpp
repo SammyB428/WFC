@@ -54,7 +54,7 @@
 #if defined( _DEBUG ) && defined( _INC_CRTDBG )
 #define new DEBUG_NEW
 #undef THIS_FILE
-static char THIS_FILE[] = __FILE__;
+static auto const THIS_FILE{ __FILE__ };
 #endif // _DEBUG
 
 static inline _Check_return_ bool wfc_trim_decrypted_data( __inout std::vector<uint8_t>& decrypted_data ) noexcept
@@ -86,7 +86,7 @@ static inline _Check_return_ bool wfc_trim_decrypted_data( __inout std::vector<u
 
    // Now strip off that nasty padding....
 
-   auto const number_of_bytes_to_strip = decrypted_data.size() - size_of_plaintext;
+   auto const number_of_bytes_to_strip{ decrypted_data.size() - size_of_plaintext };
 
    Win32FoundationClasses::remove_at( decrypted_data, decrypted_data.size() - number_of_bytes_to_strip, number_of_bytes_to_strip );
 
@@ -144,7 +144,7 @@ _Check_return_ bool Win32FoundationClasses::CCryptographicKey::Decrypt(_In_ std:
     // the possibility of using memory mapped files. Normally, Microsoft
     // would notice something like this. This must be some pinhead's idea.
 
-    auto hash_handle = static_cast<HCRYPTHASH>(NULL);
+    auto hash_handle{ static_cast<HCRYPTHASH>(NULL) };
 
     if (hash_p == nullptr)
     {
@@ -332,7 +332,7 @@ _Check_return_ bool Win32FoundationClasses::CCryptographicKey::Destroy( void ) n
       return( true );
    }
 
-   BOOL return_value = ::CryptDestroyKey( m_Key );
+   auto return_value{ ::CryptDestroyKey(m_Key) };
 
    if ( return_value == FALSE )
    {
@@ -365,7 +365,7 @@ _Check_return_ bool Win32FoundationClasses::CCryptographicKey::Encrypt( std::vec
    // the possibility of using memory mapped files. Normally, Microsoft
    // would notice something like this. This must be some pinhead's idea.
 
-   auto hash_handle = static_cast< HCRYPTHASH >( NULL );
+   auto hash_handle{ static_cast<HCRYPTHASH>(NULL) };
 
    if ( hash_p == nullptr )
    {
@@ -592,12 +592,12 @@ _Check_return_ bool Win32FoundationClasses::CCryptographicKey::Export(Win32Found
 
    // Figure out how big an exported key is
 
-   BOOL return_value = ::CryptExportKey( m_Key,
+   auto return_value{ ::CryptExportKey(m_Key,
                                     their_key,
                                     static_cast<DWORD>(format_of_exported_key),
                                     flags,
                                     nullptr,
-                                   &number_of_bytes_in_exported_key );
+                                   &number_of_bytes_in_exported_key) };
 
    if ( return_value == FALSE )
    {
@@ -728,7 +728,7 @@ _Check_return_ bool Win32FoundationClasses::CCryptographicKey::GetParameter( _In
    WFC_VALIDATE_POINTER( this );
    WFC_VALIDATE_POINTER( buffer );
 
-   BOOL return_value = ::CryptGetKeyParam( m_Key, static_cast<DWORD>(parameter_to_get), buffer, &buffer_length, flags );
+   auto return_value{ ::CryptGetKeyParam(m_Key, static_cast<DWORD>(parameter_to_get), buffer, &buffer_length, flags) };
 
    if ( return_value == FALSE )
    {
@@ -797,7 +797,7 @@ _Check_return_ bool Win32FoundationClasses::CCryptographicKey::GetAlgorithmIdent
 {
    WFC_VALIDATE_POINTER( this );
 
-   DWORD buffer_length = sizeof( identifier );
+   auto buffer_length{ static_cast<DWORD>(sizeof(identifier)) };
 
    return( GetParameter( Parameter::AlgorithmIdentifier, (BYTE *) &identifier, buffer_length ) );
 }
@@ -826,9 +826,8 @@ _Check_return_ bool Win32FoundationClasses::CCryptographicKey::GetInitialization
 
    initialization_vector.resize( 65536 ); // A Massive initialization vector
 
-   DWORD buffer_length = static_cast<DWORD>(initialization_vector.size());
-
-   bool const return_value = GetParameter( Parameter::InitializationVector, initialization_vector.data(), buffer_length );
+   auto buffer_length{ static_cast<DWORD>(initialization_vector.size()) };
+   auto const return_value{ GetParameter(Parameter::InitializationVector, initialization_vector.data(), buffer_length) };
 
    if ( return_value == true)
    {
@@ -922,7 +921,7 @@ _Check_return_ bool Win32FoundationClasses::CCryptographicKey::SetParameter( _In
    // CryptoAPI promises not to modify it. However, the parameter is not
    // typed as const. This means they screwed up the prototype.
 
-   BOOL return_value = ::CryptSetKeyParam( m_Key, static_cast<DWORD>(parameter_to_set), buffer, flags );
+   auto return_value{ ::CryptSetKeyParam(m_Key, static_cast<DWORD>(parameter_to_set), buffer, flags) };
 
    if ( return_value == FALSE )
    {

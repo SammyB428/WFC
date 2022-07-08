@@ -46,7 +46,7 @@
 
 #if defined( _DEBUG ) && defined( _INC_CRTDBG )
 #undef THIS_FILE
-static char THIS_FILE[] = __FILE__;
+static auto const THIS_FILE{ __FILE__ };
 #define new DEBUG_NEW
 #endif // _DEBUG
 
@@ -57,9 +57,7 @@ void test_CEventLog( void ) noexcept
 #if 0
    CEventLog log( TEXT( "Dodah" ) );
 
-   LPCTSTR string_array[ 1 ];
-
-   string_array[ 0 ] = TEXT( "Hello World" );
+   LPCTSTR string_array[1]{ TEXT("Hello World") };
 
    log.Report( CEventLog::eventInformation, 0, 0, 1, string_array );
    log.ReportInformation( TEXT( "ReportInformation" ) );
@@ -68,7 +66,7 @@ void test_CEventLog( void ) noexcept
 
    Win32FoundationClasses::CEventLog log;
 
-   DWORD enumerator = 0;
+   DWORD enumerator{ 0 };
 
    if ( log.EnumerateLogs( enumerator ) == false )
    {
@@ -105,7 +103,7 @@ void test_CEventLog( void ) noexcept
 
    Win32FoundationClasses::CEventLogRecord record;
 
-   DWORD loop_index = 0;
+   DWORD loop_index{ 0 };
 
    while( log.Read( loop_index, record ) == true )
    {

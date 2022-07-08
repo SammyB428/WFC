@@ -47,7 +47,7 @@
 
 #if defined( _DEBUG ) && defined( _INC_CRTDBG )
 #undef THIS_FILE
-static char THIS_FILE[] = __FILE__;
+static auto const THIS_FILE{ __FILE__ };
 #endif // _DEBUG
 
 #if defined( _DEBUG ) && defined( _INC_CRTDBG )
@@ -492,12 +492,12 @@ void test_CServer( LPCTSTR machine_name )
    std::wstring os;
    std::wstring domain;
 
-   DWORD major_version   = 0;
-   DWORD minor_version   = 0;
-   DWORD type            = 0;
-   DWORD users           = 0;
-   DWORD number_of_users = 0;
-   DWORD number_of_opens = 0;
+   DWORD major_version   { 0 };
+   DWORD minor_version   { 0 };
+   DWORD type            { 0 };
+   DWORD users           { 0 };
+   DWORD number_of_users { 0 };
+   DWORD number_of_opens { 0 };
 
    server.GetUserPath( path );
    server.GetName( name );

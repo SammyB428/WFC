@@ -47,7 +47,7 @@
 
 #if defined( _DEBUG ) && defined( _INC_CRTDBG )
 #undef THIS_FILE
-static char THIS_FILE[] = __FILE__;
+static auto const THIS_FILE{ __FILE__ };
 #define new DEBUG_NEW
 #endif // _DEBUG
 
@@ -131,7 +131,7 @@ _Check_return_ double Win32FoundationClasses::CSuperRandomNumberGenerator::GetVa
 {
    WFC_VALIDATE_POINTER( this );
 
-   auto temporary_value = m_Seeds[ m_Index_J24 ] - m_Seeds[ m_Index_I24 ] - m_Carry;
+   auto temporary_value{ m_Seeds[m_Index_J24] - m_Seeds[m_Index_I24] - m_Carry };
 
    if ( temporary_value < (double) 0.0 )
    {
@@ -148,7 +148,7 @@ _Check_return_ double Win32FoundationClasses::CSuperRandomNumberGenerator::GetVa
    m_Index_I24 = m_NextValue[ m_Index_I24 ];
    m_Index_J24 = m_NextValue[ m_Index_J24 ];
 
-   auto return_value = temporary_value;
+   auto return_value{ temporary_value };
 
    if ( temporary_value < m_TwoM12 )
    {

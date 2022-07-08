@@ -47,7 +47,7 @@
 
 #if defined( _DEBUG ) && defined( _INC_CRTDBG )
 #undef THIS_FILE
-static char THIS_FILE[] = __FILE__;
+static auto const THIS_FILE{ __FILE__ };
 #define new DEBUG_NEW
 #endif // _DEBUG
 
@@ -213,7 +213,7 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageEntities::A
 
    auto const index{ add_to_unique_sorted_vector(entity, m_Entities) };
 
-   if (index >= (SSIZE_T) m_Values.size())
+   if (index >= static_cast<SSIZE_T>(m_Values.size()))
    {
        // Appended
        m_Values.push_back(resolved_string);
@@ -228,7 +228,7 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageEntities::A
        else
        {
            // Insert new value at this index
-           m_Values.insert(m_Values.begin() + index, resolved_string);
+           m_Values.insert(std::begin(m_Values) + index, resolved_string);
        }
    }
 

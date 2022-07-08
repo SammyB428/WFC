@@ -47,7 +47,7 @@
 
 #if defined( _DEBUG ) && defined( _INC_CRTDBG )
 #undef THIS_FILE
-static char THIS_FILE[] = __FILE__;
+static auto const THIS_FILE{ __FILE__ };
 #define new DEBUG_NEW
 #endif // _DEBUG
 
@@ -228,7 +228,7 @@ void Win32FoundationClasses::wfc_calculate_lanman_hash(_In_ std::string_view asc
         return;
     }
 
-    static DWORD(__stdcall *SystemFunction006)(LPCSTR, LPBYTE) = nullptr;
+    static DWORD(__stdcall * SystemFunction006)(LPCSTR, LPBYTE) { nullptr };
 
 #pragma warning(disable:4191)
     if (SystemFunction006 == nullptr)
@@ -294,7 +294,7 @@ void Win32FoundationClasses::wfc_calculate_nt_hash(_In_ std::wstring_view unicod
         return;
     }
 
-    static DWORD(__stdcall *SystemFunction007)(PCUNICODE_STRING, LPBYTE) = nullptr;
+    static DWORD(__stdcall * SystemFunction007)(PCUNICODE_STRING, LPBYTE) { nullptr };
 
 #pragma warning(disable:4191)
     if (SystemFunction007 == nullptr)
@@ -371,7 +371,7 @@ _tprintf( TEXT) &quot;}\n&quot; );
 
 _tprintf( TEXT( &quot;CommitCharge     = %lu\n&quot;, process_p-&gt;CommitCharge );
 
-DWORD loop_index = 0;
+DWORD loop_index { 0 };
 
 while( loop_index &lt; process_p-&gt;ThreadCount )
 {
@@ -387,9 +387,9 @@ int _tmain( int, LPCTSTR[] )
 {
 <A HREF="WfcTrace.htm">WFCTRACEINIT</A>( TEXT( &quot;_tmain()&quot; ) );
 
-DWORD size_of_buffer = 128 * 1024;
+DWORD size_of_buffer {128 * 1024};
 
-BYTE * buffer = (BYTE *) malloc( size_of_buffer );
+BYTE * buffer { (BYTE *) malloc( size_of_buffer ) };
 
 if ( <B>wfc_undocumented_get_system_process_list</B>( buffer, size_of_buffer ) == FALSE )
 {

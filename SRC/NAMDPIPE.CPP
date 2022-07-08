@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 1995-2019, Samuel R. Blackburn
+** Copyright, 1995-2022, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -47,7 +47,7 @@
 
 #if defined( _DEBUG ) && defined( _INC_CRTDBG )
 #undef THIS_FILE
-static char THIS_FILE[] = __FILE__;
+static auto const THIS_FILE{ __FILE__ };
 #define new DEBUG_NEW
 #endif // _DEBUG
 
@@ -144,13 +144,13 @@ _Check_return_  bool Win32FoundationClasses::CNamedPipe::Call( __inout std::wstr
    ** Writes to the pipe then reads from it
    */
 
-   BOOL const return_value = ::CallNamedPipeW( pipe_name.c_str(), 
+   auto const return_value{ ::CallNamedPipeW(pipe_name.c_str(),
                                    write_buffer,
                                    size_of_write_buffer,
                                    read_buffer,
                                    size_of_read_buffer,
                                    address_of_number_of_bytes_read,
-                                   number_of_milliseconds_to_wait );
+                                   number_of_milliseconds_to_wait) };
 
    if ( return_value == false )
    {
@@ -265,7 +265,7 @@ _Check_return_ bool Win32FoundationClasses::CNamedPipe::Disconnect( void ) noexc
 {
    WFC_VALIDATE_POINTER( this );
 
-   BOOL const return_value = ::DisconnectNamedPipe( m_PipeHandle );
+   auto const return_value{ ::DisconnectNamedPipe(m_PipeHandle) };
 
    if ( return_value == FALSE )
    {
@@ -282,16 +282,16 @@ _Check_return_ bool Win32FoundationClasses::CNamedPipe::GetInformation( void ) n
 {
    WFC_VALIDATE_POINTER( this );
 
-   DWORD type_of_pipe                = 0;
-   DWORD size_of_output_buffer       = 0;
-   DWORD size_of_input_buffer        = 0;
-   DWORD maximum_number_of_instances = 0;
+   DWORD type_of_pipe{ 0 };
+   DWORD size_of_output_buffer{ 0 };
+   DWORD size_of_input_buffer{ 0 };
+   DWORD maximum_number_of_instances{ 0 };
 
-   BOOL const return_value = ::GetNamedPipeInfo( m_PipeHandle,
+   auto const return_value{ ::GetNamedPipeInfo(m_PipeHandle,
                                      &type_of_pipe,
                                      &size_of_output_buffer,
                                      &size_of_input_buffer,
-                                     &maximum_number_of_instances );
+                                     &maximum_number_of_instances) };
 
    if ( return_value == FALSE )
    {
@@ -312,13 +312,13 @@ _Check_return_ bool Win32FoundationClasses::CNamedPipe::GetState( void ) noexcep
 
    ::ZeroMemory( temp_string, sizeof( temp_string ) );
 
-   BOOL const return_value = ::GetNamedPipeHandleStateW( m_PipeHandle,
+   auto const return_value{ ::GetNamedPipeHandleStateW(m_PipeHandle,
                                             &m_PipeState,
                                             &m_NumberOfInstances,
                                             &m_MaximumNumberOfBytesBeforeRemoteTransmission,
                                             &m_MaximumNumberOfMillisecondsBeforeRemoteTransmission,
                                              temp_string,
-                                             static_cast<DWORD>(std::size( temp_string )) );
+                                             static_cast<DWORD>(std::size(temp_string))) };
 
    m_UserNameOfClientProcess.assign( temp_string );
 
@@ -359,7 +359,7 @@ _Check_return_ bool Win32FoundationClasses::CNamedPipe::Open(_In_ std::filesyste
 
    if ( compare_no_case( unc.ShareName, WSTRING_VIEW(L"PIPE") ) not_eq I_AM_EQUAL_TO_THAT )
    {
-      std::wstring temp_string = unc.ShareName;
+      std::wstring temp_string( unc.ShareName );
 
       unc.ShareName.assign(WSTRING_VIEW(L"PIPE"));
 
@@ -392,12 +392,12 @@ _Check_return_ bool Win32FoundationClasses::CNamedPipe::Peek( __out_bcount( size
    ** buffer_address can be nullptr
    */
 
-   BOOL const return_value = ::PeekNamedPipe( m_PipeHandle, 
-                                   buffer_address, 
-                                   size_of_buffer, 
+   auto const return_value{ ::PeekNamedPipe(m_PipeHandle,
+                                   buffer_address,
+                                   size_of_buffer,
                                   &number_of_bytes_read,
                                   &number_of_bytes_available,
-                                  &number_of_bytes_remaining_in_message );
+                                  &number_of_bytes_remaining_in_message) };
 
    if ( return_value == FALSE )
    {
@@ -416,14 +416,14 @@ _Check_return_ bool Win32FoundationClasses::CNamedPipe::SetState( _In_ uint32_t 
 {
    WFC_VALIDATE_POINTER( this );
 
-   DWORD npm = new_pipe_mode;
-   DWORD mnbbt = maximum_number_of_bytes_before_transmission;
-   DWORD mnmbt = maximum_number_of_milliseconds_before_transmission;
+   DWORD npm{ new_pipe_mode };
+   DWORD mnbbt{ maximum_number_of_bytes_before_transmission };
+   DWORD mnmbt{ maximum_number_of_milliseconds_before_transmission };
 
-   BOOL const return_value = ::SetNamedPipeHandleState( m_PipeHandle,
+   auto const return_value{ ::SetNamedPipeHandleState(m_PipeHandle,
                                             &npm,
                                             &mnbbt,
-                                            &mnmbt);
+                                            &mnmbt) };
 
    if ( return_value == FALSE )
    {
@@ -443,13 +443,13 @@ _Check_return_ bool Win32FoundationClasses::CNamedPipe::Transact( __inout_opt LP
 
    // overlapped_p can be nullptr
 
-   BOOL const return_value = ::TransactNamedPipe( m_PipeHandle,
+   auto const return_value{ ::TransactNamedPipe(m_PipeHandle,
                                        m_OutputBuffer.get(),
                                        m_NumberOfBytesToWrite,
                                        m_InputBuffer.get(),
                                        m_InputBufferSize,
                                       &m_NumberOfBytesRead,
-                                       overlapped_p );
+                                       overlapped_p) };
 
    if ( return_value == FALSE )
    {
@@ -491,7 +491,7 @@ _Check_return_ bool Win32FoundationClasses::CNamedPipe::Wait( __in_z_opt LPCTSTR
    full_pipe_name.append(WSTRING_VIEW(L"\\pipe\\"));
    full_pipe_name.append( name_of_pipe );
 
-   BOOL const return_value = ::WaitNamedPipeW( full_pipe_name.c_str(), number_of_milliseconds );
+   auto const return_value{ ::WaitNamedPipeW(full_pipe_name.c_str(), number_of_milliseconds) };
 
    if ( return_value == FALSE )
    {

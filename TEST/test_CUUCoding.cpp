@@ -46,7 +46,7 @@
 
 #if defined( _DEBUG ) && defined( _INC_CRTDBG )
 #undef THIS_FILE
-static char THIS_FILE[] = __FILE__;
+static auto const THIS_FILE{ __FILE__ };
 #define new DEBUG_NEW
 #endif // _DEBUG
 
@@ -103,7 +103,7 @@ __checkReturn bool test_CUUCoding( __out std::string& class_name, __out int& tes
 
     // See if what was decoded matches the test data (what was encoded)
 
-    std::size_t number_of_decoded_bytes = decoded_bytes.size();
+    auto number_of_decoded_bytes{ decoded_bytes.size() };
 
     if ( number_of_decoded_bytes not_eq bytes_to_encode.size() )
     {

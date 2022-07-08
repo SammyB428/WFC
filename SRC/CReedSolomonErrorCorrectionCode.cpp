@@ -47,7 +47,7 @@
 
 #if defined( _DEBUG ) && defined( _INC_CRTDBG )
 #undef THIS_FILE
-static char THIS_FILE[] = __FILE__;
+static auto const THIS_FILE{ __FILE__ };
 #define new DEBUG_NEW
 #endif // _DEBUG
 
@@ -130,14 +130,14 @@ _Check_return_ SSIZE_T Win32FoundationClasses::CReedSolomonErrorCorrectionCode::
    std::vector<uint8_t> chunk;
    std::vector<int> errors;
 
-   std::size_t number_of_errors_corrected               = 0;
-   std::size_t number_of_errors_corrected_in_this_chunk = 0;
-   std::size_t encoded_data_index                       = 0;
-   std::size_t chunk_index                              = 0;
+   std::size_t number_of_errors_corrected{ 0 };
+   std::size_t number_of_errors_corrected_in_this_chunk{ 0 };
+   std::size_t encoded_data_index{ 0 };
+   std::size_t chunk_index{ 0 };
 
-   auto encoded_data_length = encoded_data.size();
+   auto encoded_data_length{ encoded_data.size() };
 
-   uint8_t chunk_length = 0;
+   uint8_t chunk_length{ 0 };
 
    chunk.resize( 255 );
 
@@ -191,10 +191,10 @@ _Check_return_ bool Win32FoundationClasses::CReedSolomonErrorCorrectionCode::Enc
    // We must chunkify the data into 222 byte pieces. This leaves us room for
    // a one-byte data-length value and 1 bit per byte parity (255 bits == 32 bytes)
 
-   auto const data_length = data.size();
-   std::size_t data_index = 0;
+   auto const data_length{ data.size() };
+   std::size_t data_index{ 0 };
 
-   uint8_t chunk_length = 0;
+   uint8_t chunk_length{ 0 };
 
    while( data_index < data_length ) // Cannot be converted to a Range loop
    {
@@ -260,33 +260,33 @@ _Check_return_ int Win32FoundationClasses::CReedSolomonErrorCorrectionCode::m_De
 
    // During testing, this code GPF'd. Oh well.
 
-   int deg_lambda                 = 0;
-   int el                         = 0;
-   int deg_omega                  = 0;
-   int j                          = 0;
-   int step_number                = 0;
-   int u                          = 0;
-   int q                          = 0;
-   int tmp                        = 0;
-   int num1                       = 0;
-   int num2                       = 0;
-   int denominator                = 0;
-   int discrepancy_at_step_number = 0;
-   int syndrome_error             = 0;
-   int count                      = 0;
+   int deg_lambda{ 0 };
+   int el{ 0 };
+   int deg_omega{ 0 };
+   int j{ 0 };
+   int step_number{ 0 };
+   int u{ 0 };
+   int q{ 0 };
+   int tmp{ 0 };
+   int num1{ 0 };
+   int num2{ 0 };
+   int denominator{ 0 };
+   int discrepancy_at_step_number{ 0 };
+   int syndrome_error{ 0 };
+   int count{ 0 };
 
    WFC_TRY
    {
-      auto recd   = std::make_unique<int[]>(m_BlockSize);
-      auto lambda = std::make_unique<int[]>(m_BlockSize - m_NumberOfSymbolsPerBlock + 1);
-      auto s      = std::make_unique<int[]>(m_BlockSize - m_NumberOfSymbolsPerBlock + 1);
+      auto recd   { std::make_unique<int[]>(m_BlockSize) };
+      auto lambda{ std::make_unique<int[]>(m_BlockSize - m_NumberOfSymbolsPerBlock + 1) };
+      auto s{ std::make_unique<int[]>(m_BlockSize - m_NumberOfSymbolsPerBlock + 1) };
       /* Err+Eras Locator poly and syndrome poly */
-      auto b      = std::make_unique<int[]>(m_BlockSize - m_NumberOfSymbolsPerBlock + 1);
-      auto t      = std::make_unique<int[]>(m_BlockSize - m_NumberOfSymbolsPerBlock + 1);
-      auto omega  = std::make_unique<int[]>(m_BlockSize - m_NumberOfSymbolsPerBlock + 1);
-      auto root   = std::make_unique<int[]>(m_BlockSize - m_NumberOfSymbolsPerBlock    );
-      auto reg    = std::make_unique<int[]>(m_BlockSize - m_NumberOfSymbolsPerBlock + 1);
-      auto loc    = std::make_unique<int[]>(m_BlockSize - m_NumberOfSymbolsPerBlock    );
+      auto b{ std::make_unique<int[]>(m_BlockSize - m_NumberOfSymbolsPerBlock + 1) };
+      auto t{ std::make_unique<int[]>(m_BlockSize - m_NumberOfSymbolsPerBlock + 1) };
+      auto omega{ std::make_unique<int[]>(m_BlockSize - m_NumberOfSymbolsPerBlock + 1) };
+      auto root{ std::make_unique<int[]>(m_BlockSize - m_NumberOfSymbolsPerBlock) };
+      auto reg{ std::make_unique<int[]>(m_BlockSize - m_NumberOfSymbolsPerBlock + 1) };
+      auto loc{ std::make_unique<int[]>(m_BlockSize - m_NumberOfSymbolsPerBlock) };
 
       eras_pos.resize( m_BlockSize - m_NumberOfSymbolsPerBlock );
 
@@ -895,16 +895,16 @@ void test_CReedSolomonErrorCorrectionCode( void )
    
    // Add some errors
 
-   int number_of_errors_to_introduce = encoded_data.GetSize() / 16;
-   int error_number = 0;
+   int number_of_errors_to_introduce { encoded_data.GetSize() / 16 };
+   int error_number { 0 };
 
    _tprintf( TEXT( &quot;Adding %d errors to the data\n&quot; ), number_of_errors_to_introduce );
 
-   int index = 0;
+   int index { 0 };
 
-   BYTE random_value = 0;
+   BYTE random_value{ 0 };
 
-   DWORD value = 0;
+   DWORD value{ 0 };
 
    while( error_number &lt; number_of_errors_to_introduce )
    {
@@ -934,7 +934,7 @@ void test_CReedSolomonErrorCorrectionCode( void )
 
    std::vector&lt;uint8_t&gt; decoded_data;
 
-   int number_of_errors_corrected = receiver.Decode( encoded_data, decoded_data );
+   int number_of_errors_corrected { receiver.Decode( encoded_data, decoded_data ) };
 
    if ( number_of_errors_corrected not_eq (-1) )
    {

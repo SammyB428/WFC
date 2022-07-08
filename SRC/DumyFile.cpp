@@ -45,7 +45,7 @@
 
 #if defined( _DEBUG ) && defined( _INC_CRTDBG )
 #undef THIS_FILE
-static char THIS_FILE[] = __FILE__;
+static auto const THIS_FILE{ __FILE__ };
 #endif // _DEBUG
 
 #if defined( _DEBUG ) && defined( _INC_CRTDBG )
@@ -215,12 +215,12 @@ void Win32FoundationClasses::CDummyFile::Write(_In_ std::vector<uint8_t> const& 
 {
    WFC_VALIDATE_POINTER( this );
 
-   UINT number_of_bytes_to_write = (UINT) data_to_write.size();
+   UINT number_of_bytes_to_write{ (UINT)data_to_write.size() };
 
    // Well whaddya know, there's an undocumented yet "public" function
    // that let's us have quick access to the raw bytes...
 
-   auto buffer = data_to_write.data();
+   auto buffer{ data_to_write.data() };
 
    Win32FoundationClasses::CFile64::Write( static_cast<void const *>(buffer), number_of_bytes_to_write );
 }

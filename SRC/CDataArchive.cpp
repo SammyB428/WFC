@@ -47,7 +47,7 @@
 
 #if defined( _DEBUG ) && defined( _INC_CRTDBG )
 #undef THIS_FILE
-static char THIS_FILE[] = __FILE__;
+static auto const THIS_FILE{ __FILE__ };
 #define new DEBUG_NEW
 #endif // _DEBUG
 
@@ -154,7 +154,7 @@ void Win32FoundationClasses::CDataArchive::Read(_Out_ std::vector<uint8_t>& arra
 
        array.resize(number_of_array_entries);
 
-       auto buffer = m_ReadFromDataChunk_p->Data.data();
+       auto buffer{ m_ReadFromDataChunk_p->Data.data() };
 
        ::memcpy(array.data(), &buffer[m_Position], number_of_array_entries);
 
@@ -199,7 +199,7 @@ void Win32FoundationClasses::CDataArchive::Read(_Out_ std::vector<uint32_t>& arr
 
        array.resize(number_of_array_entries);
 
-       auto buffer = m_ReadFromDataChunk_p->Data.data();
+       auto buffer{ m_ReadFromDataChunk_p->Data.data() };
 
        ::memcpy(array.data(), &buffer[m_Position], number_of_array_entries * sizeof(uint32_t));
 
@@ -336,7 +336,7 @@ void Win32FoundationClasses::CDataArchive::Read(_Out_ std::vector<uint16_t>& arr
 
        array.resize(number_of_array_entries);
 
-       auto buffer = m_ReadFromDataChunk_p->Data.data();
+       auto buffer{ m_ReadFromDataChunk_p->Data.data() };
 
        ::memcpy(array.data(), &buffer[m_Position], number_of_array_entries * sizeof(uint16_t));
 
@@ -366,7 +366,7 @@ void Win32FoundationClasses::CDataArchive::Read(_Out_ double& value) noexcept
 
     WFC_TRY
     {
-       auto buffer = m_ReadFromDataChunk_p->Data.data();
+       auto buffer {m_ReadFromDataChunk_p->Data.data()};
 
        value = *((double *)&buffer[m_Position]);
        m_Position += sizeof(double);
@@ -395,7 +395,7 @@ void Win32FoundationClasses::CDataArchive::Read(_Out_ uint32_t& value) noexcept
 
     WFC_TRY
     {
-       auto buffer = m_ReadFromDataChunk_p->Data.data();
+       auto buffer { m_ReadFromDataChunk_p->Data.data()};
 
        value = *((uint32_t *)&buffer[m_Position]);
 
@@ -425,7 +425,7 @@ void Win32FoundationClasses::CDataArchive::Read(_Out_ float& value) noexcept
 
     WFC_TRY
     {
-       auto buffer = m_ReadFromDataChunk_p->Data.data();
+       auto buffer { m_ReadFromDataChunk_p->Data.data()};
 
        value = *((float *)&buffer[m_Position]);
        m_Position += sizeof(float);
@@ -454,7 +454,7 @@ void Win32FoundationClasses::CDataArchive::Read( _Out_ int32_t& value) noexcept
 
     WFC_TRY
     {
-       auto buffer = m_ReadFromDataChunk_p->Data.data();
+       auto buffer { m_ReadFromDataChunk_p->Data.data()};
 
        value = *((int32_t *)&buffer[m_Position]);
        m_Position += sizeof(int32_t);
@@ -483,7 +483,7 @@ void Win32FoundationClasses::CDataArchive::Read(_Out_ uint64_t& value) noexcept
 
     WFC_TRY
     {
-       auto buffer = m_ReadFromDataChunk_p->Data.data();
+       auto buffer { m_ReadFromDataChunk_p->Data.data()};
 
        value = *((uint64_t *)&buffer[m_Position]);
        m_Position += sizeof(uint64_t);
@@ -512,7 +512,7 @@ void Win32FoundationClasses::CDataArchive::Read(_Out_ uint16_t& value) noexcept
 
     WFC_TRY
     {
-       auto buffer = m_ReadFromDataChunk_p->Data.data();
+       auto buffer { m_ReadFromDataChunk_p->Data.data()};
 
        value = *((uint16_t *)&buffer[m_Position]);
        m_Position += sizeof(uint16_t);
@@ -541,7 +541,7 @@ void Win32FoundationClasses::CDataArchive::Read(_Out_ wchar_t& value) noexcept
 
     WFC_TRY
     {
-       auto buffer = m_ReadFromDataChunk_p->Data.data();
+       auto buffer { m_ReadFromDataChunk_p->Data.data()};
 
        value = *((wchar_t *)&buffer[m_Position]);
        m_Position += sizeof(wchar_t);

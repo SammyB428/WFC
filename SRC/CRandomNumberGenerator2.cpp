@@ -97,7 +97,7 @@
 
 #if defined( _DEBUG ) && defined( _INC_CRTDBG )
 #undef THIS_FILE
-static char THIS_FILE[] = __FILE__;
+static auto const THIS_FILE{ __FILE__ };
 #define new DEBUG_NEW
 #endif // _DEBUG
 
@@ -232,9 +232,9 @@ void Win32FoundationClasses::CRandomNumberGenerator2::InitializeSeed( void ) noe
    uint32_t number_of_free_clusters{ 0 };
    uint32_t total_number_of_clusters{ 0 };
 
-   FILETIME a = { 0, 0 };
-   FILETIME b = { 0, 0 };
-   FILETIME c = { 0, 0 };
+   FILETIME a { 0, 0 };
+   FILETIME b { 0, 0 };
+   FILETIME c { 0, 0 };
 
    uint32_t totaler{ ::GetCurrentProcessId() };
 
@@ -758,7 +758,7 @@ void test_CRandomNumberGenerator( void )
 {
    <B>CRandomNumberGenerator2</B> random_number;
 
-   int index = 0;
+   int index { 0 };
 
    while( index &lt; 20 )
    {

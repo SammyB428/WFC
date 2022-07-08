@@ -47,7 +47,7 @@
 
 #if defined( _DEBUG ) && defined( _INC_CRTDBG )
 #undef THIS_FILE
-static char THIS_FILE[] = __FILE__;
+static auto const THIS_FILE{ __FILE__ };
 #endif // _DEBUG
 
 #if ! defined( WFC_NO_RAS )
@@ -140,9 +140,9 @@ void CRemoteAccessServicePort::Copy( RAS_PORT_0 const * source )
       ** let me know.
       */
 
-      SIZE_T temp_dword = ( ( (DWORD) source ) + offsetof( RAS_PORT_0, Flags ) ) - sizeof( DWORD );
+      SIZE_T temp_dword{ (((DWORD)source) + offsetof(RAS_PORT_0, Flags)) - sizeof(DWORD) };
 
-      DWORD * address_of_randomly_named_field = (DWORD *) temp_dword;
+      auto address_of_randomly_named_field{ (DWORD*)temp_dword };
       
       MediaID = *address_of_randomly_named_field;
    }

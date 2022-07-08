@@ -47,7 +47,7 @@
 
 #if defined( _DEBUG ) && defined( _INC_CRTDBG )
 #undef THIS_FILE
-static char THIS_FILE[] = __FILE__;
+static auto const THIS_FILE{ __FILE__ };
 #define new DEBUG_NEW
 #endif // _DEBUG
 
@@ -255,7 +255,7 @@ was deleted.
 {
 <A HREF="WfcTrace.htm">WFCTRACEINIT</A>( TEXT( &quot;make_some_room()&quot; ) );
 
-double percent_used = 0.0;
+double percent_used { 0.0};
 
 percent_used = wfc_get_directory_usage_percentage( log_directory );
 

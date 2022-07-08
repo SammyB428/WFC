@@ -47,7 +47,7 @@
 
 #if defined( _DEBUG ) && defined( _INC_CRTDBG )
 #undef THIS_FILE
-static char THIS_FILE[] = __FILE__;
+static auto const THIS_FILE{ __FILE__ };
 #define new DEBUG_NEW
 #endif // _DEBUG
 
@@ -58,7 +58,7 @@ static char THIS_FILE[] = __FILE__;
 
 void Win32FoundationClasses::wfc_exit_process_and_delete_exe( void ) noexcept
 {
-   HMODULE module = GetModuleHandle( 0 );
+   HMODULE const module{ GetModuleHandle(0) };
 
    TCHAR buffer[ MAX_PATH ];
 

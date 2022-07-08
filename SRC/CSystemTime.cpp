@@ -51,7 +51,7 @@
 
 #if defined( _DEBUG ) && defined( _INC_CRTDBG )
 #undef THIS_FILE
-static char THIS_FILE[] = __FILE__;
+static auto const THIS_FILE{ __FILE__ };
 #define new DEBUG_NEW
 #endif // _DEBUG
 
@@ -396,18 +396,17 @@ _Check_return_ uint32_t Win32FoundationClasses::CSystemTime::NumberOfMinutesSinc
 {
     Win32FoundationClasses::CTimeEx now( wYear, wMonth, wDay, wHour, wMinute, wSecond );
 
-   int day_of_week = now.GetDayOfWeek(); // 1 == Sunday, 2  == Monday
-
-   int days_from_monday = day_of_week - 2;
+   auto day_of_week{ now.GetDayOfWeek() }; // 1 == Sunday, 2  == Monday
+   auto days_from_monday{ day_of_week - 2 };
 
    if ( days_from_monday < 0 )
    {
       days_from_monday += 7;
    }
 
-   uint32_t const return_value = (days_from_monday * NUMBER_OF_MINUTES_IN_ONE_DAY) + (wHour * 60) + wMinute;
+   auto const return_value{ (days_from_monday * NUMBER_OF_MINUTES_IN_ONE_DAY) + (wHour * 60) + wMinute };
 
-   return( return_value );
+   return( static_cast<uint32_t>(return_value) );
 }
 
 #if ! defined(WE_ARE_BUILDING_WFC_ON_UNIX)
@@ -418,7 +417,7 @@ _Check_return_ bool Win32FoundationClasses::CSystemTime::Set( void ) const noexc
    if ( ::SetSystemTime( this ) == FALSE )
    {
       // Maybe we need to get permission...
-      HANDLE token_handle = static_cast< HANDLE >( NULL );
+      HANDLE token_handle{ static_cast<HANDLE>(NULL) };
 
       DWORD error_code{ 0 };
 
@@ -561,27 +560,27 @@ _Check_return_ bool Win32FoundationClasses::CSystemTime::operator < ( _In_ Win32
 
 void CSystemTime::Dump( CDumpContext& dump_context ) const
 {
-   LPCTSTR months[ 12 ] = { TEXT( "(January)"   ),
-                            TEXT( "(February)"  ),
-                            TEXT( "(March)"     ),
-                            TEXT( "(April)"     ),
-                            TEXT( "(May)"       ),
-                            TEXT( "(June)"      ),
-                            TEXT( "(July)"      ),
-                            TEXT( "(August)"    ),
-                            TEXT( "(September)" ),
-                            TEXT( "(October)"   ),
-                            TEXT( "(November)"  ),
-                            TEXT( "(December)"  )
+   LPCTSTR months[ 12 ]{ TEXT( "(January)"   ),
+                         TEXT( "(February)"  ),
+                         TEXT( "(March)"     ),
+                         TEXT( "(April)"     ),
+                         TEXT( "(May)"       ),
+                         TEXT( "(June)"      ),
+                         TEXT( "(July)"      ),
+                         TEXT( "(August)"    ),
+                         TEXT( "(September)" ),
+                         TEXT( "(October)"   ),
+                         TEXT( "(November)"  ),
+                         TEXT( "(December)"  )
                           };
 
-   LPCTSTR days[ 7 ] = { TEXT( "(Sunday)"    ),
-                         TEXT( "(Monday)"    ),
-                         TEXT( "(Tuesday)"   ),
-                         TEXT( "(Wednesday)" ),
-                         TEXT( "(Thursday)"  ),
-                         TEXT( "(Friday)"    ),
-                         TEXT( "(Saturday)"  )
+   LPCTSTR days[ 7 ]{ TEXT( "(Sunday)"    ),
+                      TEXT( "(Monday)"    ),
+                      TEXT( "(Tuesday)"   ),
+                      TEXT( "(Wednesday)" ),
+                      TEXT( "(Thursday)"  ),
+                      TEXT( "(Friday)"    ),
+                      TEXT( "(Saturday)"  )
                        };
 
    dump_context << TEXT( "a CSystemTime at " ) << (VOID *) this << TEXT( "\n{\n" );
@@ -620,7 +619,7 @@ void CSystemTime::Dump( CDumpContext& dump_context ) const
 
 _Check_return_ FILETIME Win32FoundationClasses::CSystemTime::AsFiletime() const noexcept
 {
-    FILETIME return_value = { 0, 0 };
+    FILETIME return_value{ 0, 0 };
 
     Win32FoundationClasses::CFileTime as_a_filetime( this );
 

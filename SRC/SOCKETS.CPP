@@ -47,14 +47,14 @@
 
 #if defined( _DEBUG ) && defined( _INC_CRTDBG )
 #undef THIS_FILE
-static char THIS_FILE[] = __FILE__;
+static auto const THIS_FILE{ __FILE__ };
 #define new DEBUG_NEW
 #endif // _DEBUG
 
 #include <VersionHelpers.h>
 
-long Win32FoundationClasses::CSimpleSocket::m_ReferenceCount = 0;
-Win32FoundationClasses::WFC_SOCKET_THUNK * Win32FoundationClasses::CSimpleSocket::m_Thunk_p = nullptr;
+long Win32FoundationClasses::CSimpleSocket::m_ReferenceCount{ 0 };
+Win32FoundationClasses::WFC_SOCKET_THUNK * Win32FoundationClasses::CSimpleSocket::m_Thunk_p{ nullptr };
 
 static _Check_return_ HANDLE inline _create_socket_thunk_mutex( void ) noexcept
 {
@@ -63,9 +63,9 @@ static _Check_return_ HANDLE inline _create_socket_thunk_mutex( void ) noexcept
    // create the mutex with a NULL DACL. Please read Knowledge Base
    // article Q106387
 
-   LPCTSTR mutex_name = TEXT( "CSimpleSocketWinsockThunkInitializationMutex" );
+   LPCTSTR mutex_name{ TEXT("CSimpleSocketWinsockThunkInitializationMutex") };
 
-   auto security_descriptor_p = Win32FoundationClasses::wfc_create_null_dacl();
+   auto security_descriptor_p{ Win32FoundationClasses::wfc_create_null_dacl() };
 
    if ( security_descriptor_p == nullptr )
    {
@@ -81,7 +81,7 @@ static _Check_return_ HANDLE inline _create_socket_thunk_mutex( void ) noexcept
    security_attributes.lpSecurityDescriptor = security_descriptor_p;
    security_attributes.bInheritHandle       = TRUE;
 
-   auto const mutex_handle = CreateMutex( &security_attributes, FALSE, mutex_name );
+   auto const mutex_handle{ CreateMutex(&security_attributes, FALSE, mutex_name) };
 
    Win32FoundationClasses::wfc_destroy_null_dacl( security_descriptor_p );
 
@@ -106,7 +106,7 @@ Win32FoundationClasses::CSimpleSocket::CSimpleSocket() noexcept
 
    if ( m_ReferenceCount == 0 )
    {
-      auto const mutex_handle = _create_socket_thunk_mutex();
+      auto const mutex_handle{ _create_socket_thunk_mutex() };
 
       if ( mutex_handle not_eq static_cast< HANDLE >( NULL ) )
       {
@@ -183,7 +183,7 @@ Win32FoundationClasses::CSimpleSocket::CSimpleSocket( _In_ SOCKET const socket_i
 
    if ( m_ReferenceCount == 0 )
    {
-      HANDLE const mutex_handle = _create_socket_thunk_mutex();
+      HANDLE const mutex_handle{ _create_socket_thunk_mutex() };
 
       if ( mutex_handle not_eq static_cast< HANDLE >( NULL ) )
       {
@@ -265,7 +265,7 @@ Win32FoundationClasses::CSimpleSocket::~CSimpleSocket() noexcept
 
    if ( m_ReferenceCount == 0 )
    {
-      HANDLE const mutex_handle = _create_socket_thunk_mutex();
+      HANDLE const mutex_handle{ _create_socket_thunk_mutex() };
 
       if ( mutex_handle not_eq static_cast< HANDLE >( NULL ) )
       {
@@ -316,11 +316,11 @@ void Win32FoundationClasses::CSimpleSocket::Close( void ) noexcept
       // This should be a BYTE buffer but recv is mis-prototyped.
       char buffer[ 4096 ];
 
-      int number_of_bytes_read = 1;
+      int number_of_bytes_read{ 1 };
 
 #if defined( _DEBUG )
 
-      DWORD total_number_of_bytes_read = 0;
+      DWORD total_number_of_bytes_read{ 0 };
 
 #endif // _DEBUG
 
@@ -393,13 +393,13 @@ void Win32FoundationClasses::CSimpleSocket::GetMyAddress( _Out_ std::wstring& ip
 {
    ip_address.clear();
 
-   BOOL i_started_winsock = FALSE;
+   BOOL i_started_winsock{ FALSE };
 
    char my_name[ 4096 ];
 
    ZeroMemory( my_name, sizeof( my_name ) );
 
-   DWORD error_code = 0;
+   DWORD error_code{ 0 };
 
    if ( m_Thunk_p == nullptr )
    {
@@ -411,7 +411,7 @@ void Win32FoundationClasses::CSimpleSocket::GetMyAddress( _Out_ std::wstring& ip
        return;
    }
 
-   int return_value = m_Thunk_p->gethostname( my_name, static_cast<int>(std::size( my_name )) );
+   int return_value{ m_Thunk_p->gethostname(my_name, static_cast<int>(std::size(my_name))) };
 
    if ( return_value not_eq 0 )
    {
@@ -443,9 +443,7 @@ void Win32FoundationClasses::CSimpleSocket::GetMyAddress( _Out_ std::wstring& ip
 
    // We now have our name
 
-   LPHOSTENT host_entry_p = (LPHOSTENT) nullptr;
-
-   host_entry_p = m_Thunk_p->gethostbyname( my_name );
+   auto host_entry_p{ m_Thunk_p->gethostbyname(my_name) };
 
    if ( host_entry_p == nullptr )
    {
@@ -459,7 +457,7 @@ void Win32FoundationClasses::CSimpleSocket::GetMyAddress( _Out_ std::wstring& ip
       return;
    }
 
-   LPSTR dotted_ip_address = nullptr;
+   LPSTR dotted_ip_address{ nullptr };
 
    /*
    ** You just gotta love the way Unix people thought . . . NOT!
@@ -499,13 +497,13 @@ void Win32FoundationClasses::CSimpleSocket::GetMyAddress( __out_bcount( 4 ) uint
    as_bytes[ 2 ] = 0;
    as_bytes[ 3 ] = 0;
 
-   BOOL i_started_winsock = FALSE;
+   BOOL i_started_winsock{ FALSE };
 
    char my_name[ 4096 ];
 
    ZeroMemory( my_name, sizeof( my_name ) );
 
-   DWORD error_code = 0;
+   DWORD error_code{ 0 };
 
    if ( m_Thunk_p == nullptr )
    {
@@ -517,7 +515,7 @@ void Win32FoundationClasses::CSimpleSocket::GetMyAddress( __out_bcount( 4 ) uint
        return;
    }
 
-   int return_value = m_Thunk_p->gethostname( my_name, static_cast<int>(std::size( my_name )) );
+   int return_value{ m_Thunk_p->gethostname(my_name, static_cast<int>(std::size(my_name))) };
 
    if ( return_value not_eq 0 )
    {
@@ -549,9 +547,7 @@ void Win32FoundationClasses::CSimpleSocket::GetMyAddress( __out_bcount( 4 ) uint
 
    // We now have our name
 
-   LPHOSTENT host_entry_p = nullptr;
-
-   host_entry_p = m_Thunk_p->gethostbyname( my_name );
+   auto host_entry_p{ m_Thunk_p->gethostbyname(my_name) };
 
    if ( host_entry_p == nullptr )
    {
@@ -565,7 +561,7 @@ void Win32FoundationClasses::CSimpleSocket::GetMyAddress( __out_bcount( 4 ) uint
       return;
    }
 
-   LPSTR dotted_ip_address = nullptr;
+   LPSTR dotted_ip_address{ nullptr };
 
    /*
    ** You just gotta love the way Unix people thought . . . NOT!
@@ -586,9 +582,9 @@ void Win32FoundationClasses::CSimpleSocket::GetMyName( _Out_ std::wstring& host_
 {
    host_name.clear();
 
-   BOOL i_started_winsock = FALSE;
+   BOOL i_started_winsock{ FALSE };
 
-   DWORD error_code = 0;
+   DWORD error_code{ 0 };
 
    if ( m_Thunk_p == nullptr )
    {
@@ -604,7 +600,7 @@ void Win32FoundationClasses::CSimpleSocket::GetMyName( _Out_ std::wstring& host_
 
    ZeroMemory(my_name, sizeof(my_name));
 
-   int return_value = m_Thunk_p->gethostname( my_name, static_cast<int>(std::size( my_name )) );
+   int return_value{ m_Thunk_p->gethostname(my_name, static_cast<int>(std::size(my_name))) };
 
    if ( return_value not_eq 0 )
    {
@@ -699,8 +695,8 @@ _Check_return_ bool Win32FoundationClasses::CSimpleSocket::IsDataWaiting( void )
       return( false );
    }
 
-   int bytes_for_this_socket = 0;
-   int socket_status         = 0;
+   int bytes_for_this_socket{ 0 };
+   int socket_status{ 0 };
 
    FD_SET socket_in;
 
@@ -962,7 +958,7 @@ _Check_return_ UINT Win32FoundationClasses::CSimpleSocket::Read( __out_bcount(si
    {
       if ( m_SocketID not_eq INVALID_SOCKET )
       {
-         int number_of_bytes_read = 0;
+         int number_of_bytes_read{ 0 };
 
          ::ZeroMemory( buffer, size_of_buffer );
    
@@ -1009,9 +1005,9 @@ _Check_return_ bool Win32FoundationClasses::CSimpleSocket::Read( _Out_ std::stri
 
    if ( m_SocketID not_eq INVALID_SOCKET )
    {
-      char character = 0;
+      char character{ 0 };
 
-      int number_of_bytes_read = 0;
+      int number_of_bytes_read{ 0 };
 
       /*
       ** Thanks go to A. Mackay (eddie@tag.co.uk) for finding
@@ -1094,15 +1090,15 @@ void Win32FoundationClasses::CSimpleSocket::SetAddress( _In_ std::wstring_view a
       ** Given either, we must fill in host_name and IP_address
       */
 
-      LPHOSTENT host_entry_p = nullptr;
+      LPHOSTENT host_entry_p{ nullptr };
 
       /*
       ** See if it is in xxx.xxx.xxx.xxx form
       */
 
-      SIZE_T index = 0;
+      SIZE_T index{ 0 };
 
-      bool exit_loop = FALSE;
+      bool exit_loop{ false };
 
       while( index < address.length() and exit_loop == false )
       {
@@ -1170,7 +1166,7 @@ void Win32FoundationClasses::CSimpleSocket::SetAddress( _In_ std::wstring_view a
 
          if (is_flagged( m_Options, optionsDontResolveHostName ) == false )
          {
-            ULONG internet_address = m_Thunk_p->inet_addr( ascii_address_string );
+             ULONG internet_address{ m_Thunk_p->inet_addr(ascii_address_string) };
             host_entry_p = m_Thunk_p->gethostbyaddr( reinterpret_cast<char const *>(&internet_address), 4, PF_INET );
          }
       }
@@ -1190,7 +1186,7 @@ void Win32FoundationClasses::CSimpleSocket::SetAddress( _In_ std::wstring_view a
       }
       else
       {
-         LPSTR dotted_ip_address = nullptr;
+         LPSTR dotted_ip_address{ nullptr };
 
          /*
          ** You just gotta love the way Unix people thought . . . NOT!
@@ -1239,7 +1235,7 @@ void Win32FoundationClasses::CSimpleSocket::SetAddress( _In_ std::wstring_view a
 
       std::wstring new_string;
 
-      int index_2 = 0;
+      int index_2{ 0 };
 
       while( host_entry_p->h_aliases[ index ] not_eq nullptr )
       {
@@ -1329,7 +1325,7 @@ void Win32FoundationClasses::CSimpleSocket::SetPort( __in_z LPCTSTR name_string 
    {
       // Let's see if the user passed us a number as a string
 
-      int number_value = _ttoi( name_string );
+      int number_value { _ttoi(name_string)};
 
       if ( number_value not_eq 0 )
       {
@@ -1353,7 +1349,7 @@ void Win32FoundationClasses::CSimpleSocket::SetPort( __in_z LPCTSTR name_string 
       ** This routine sets port_name and m_PortNumberInNetworkByteOrder
       */
 
-      LPSERVENT service_entry_p = nullptr;
+      LPSERVENT service_entry_p{ nullptr };
 
 #if defined( UNICODE )
 
@@ -1414,9 +1410,7 @@ void Win32FoundationClasses::CSimpleSocket::SetPort( _In_ short const p ) noexce
    }
    else
    {
-      LPSERVENT service_entry_p = nullptr;
-
-      service_entry_p = m_Thunk_p->getservbyport( m_PortNumberInNetworkByteOrder, nullptr );
+      auto service_entry_p{ m_Thunk_p->getservbyport(m_PortNumberInNetworkByteOrder, nullptr) };
 
       if ( service_entry_p == nullptr )
       {
@@ -1504,15 +1498,13 @@ void __stdcall Win32FoundationClasses::CSimpleSocket::StartWindowsSockets(_In_ u
 
    WSADATA winsock_data{ 0 };
 
-   int socket_error = 0;
-
-   WORD const desired_winsock_version = MAKEWORD(major_version, minor_version);
-   BYTE major_version_required = 0;
-   BYTE minor_version_required = 0;
+   WORD const desired_winsock_version{ MAKEWORD(major_version, minor_version) };
+   BYTE major_version_required{ 0 };
+   BYTE minor_version_required{ 0 };
 
    ::ZeroMemory( &winsock_data, sizeof( winsock_data ) );
 
-   socket_error = m_Thunk_p->WSAStartup( desired_winsock_version, (LPWSADATA) &winsock_data );
+   auto socket_error{ m_Thunk_p->WSAStartup(desired_winsock_version, (LPWSADATA)&winsock_data) };
 
    if ( socket_error not_eq 0 )
    {
@@ -1908,7 +1900,7 @@ _Check_return_ bool Win32FoundationClasses::CSimpleSocket::Transmit( _Inout_ Win
 
       ::ZeroMemory( &transmit_file_buffers, sizeof( transmit_file_buffers ) );
 
-      TRANSMIT_FILE_BUFFERS *buffers_p = nullptr;
+      TRANSMIT_FILE_BUFFERS * buffers_p{ nullptr };
 
       if ( send_before not_eq nullptr )
       {
@@ -1924,13 +1916,13 @@ _Check_return_ bool Win32FoundationClasses::CSimpleSocket::Transmit( _Inout_ Win
          transmit_file_buffers.TailLength = (DWORD) send_after->size();
       }
 
-      BOOL return_value = m_Thunk_p->TransmitFile( m_SocketID, 
+      BOOL return_value{ m_Thunk_p->TransmitFile(m_SocketID,
                                                    file_to_send.GetHandle(),
                                                    0,
                                                    0,
                                                    nullptr,
                                                    buffers_p,
-                                                   flags );
+                                                   flags) };
 
       if ( return_value == FALSE )
       {
@@ -1972,9 +1964,7 @@ void Win32FoundationClasses::CSimpleSocket::Write( __in_bcount( number_of_bytes_
          return;
       }
 
-      BYTE *byte_buffer = nullptr;
-
-      byte_buffer = (BYTE *) buffer;
+      auto byte_buffer{ (BYTE*)buffer };
 
       if ( byte_buffer == nullptr )
       {
@@ -1986,10 +1976,10 @@ void Win32FoundationClasses::CSimpleSocket::Write( __in_bcount( number_of_bytes_
       ** Loop until the bytes are sent or until we give up
       */
 
-      BOOL bytes_were_sent = FALSE;
+      BOOL bytes_were_sent{ FALSE };
 
-      int number_of_bytes_sent = 0;
-      int loop_count           = 0;
+      int number_of_bytes_sent{ 0 };
+      int loop_count{ 0 };
 
       while( bytes_were_sent == FALSE and loop_count < 100 )
       {
@@ -2226,7 +2216,7 @@ int close_the_socket( <B>CSimpleSocket</B>&amp; the_socket )
 {
    <A HREF="WfcTrace.htm">WFCTRACEINIT</A>( TEXT( &quot;close_the_socket()&quot; ) );
 
-   DWORD socket_options = the_socket.<A HREF="#GetOptions">GetOptions</A>();
+   DWORD socket_options { the_socket.<A HREF="#GetOptions">GetOptions</A>()};
 
    if ( socket_options &amp; <A HREF="#optionsDontResolveHostName">optionsDontResolveHostName</A> )
    {

@@ -47,7 +47,7 @@
 
 #if defined( _DEBUG ) && defined( _INC_CRTDBG )
 #undef THIS_FILE
-static char THIS_FILE[] = __FILE__;
+static auto const THIS_FILE{ __FILE__ };
 #endif // _DEBUG
 
 #if defined( _DEBUG ) && defined( _INC_CRTDBG )
@@ -135,7 +135,7 @@ _Check_return_ BOOL Win32FoundationClasses::CSerialFile::CancelWaitFor( void ) n
 {
    WFC_VALIDATE_POINTER( this );
 
-   BOOL return_value = ::SetCommMask( m_FileHandle, 0 );
+   BOOL return_value{ ::SetCommMask(m_FileHandle, 0) };
 
    if ( return_value == FALSE )
    {
@@ -167,7 +167,7 @@ _Check_return_ BOOL Win32FoundationClasses::CSerialFile::ClearBreak( void ) noex
       return( FALSE );
    }
 
-   BOOL return_value = ::ClearCommBreak( m_FileHandle );
+   BOOL return_value{ ::ClearCommBreak(m_FileHandle) };
 
    if ( return_value == FALSE )
    {
@@ -233,7 +233,7 @@ _Check_return_ bool Win32FoundationClasses::CSerialFile::ConfigurationDialog( __
 
    CCommunicationProperties properties;
 
-   BOOL return_value = GetProperties( properties );
+   BOOL return_value{ GetProperties(properties) };
 
    if ( return_value == FALSE )
    {
@@ -247,18 +247,18 @@ _Check_return_ bool Win32FoundationClasses::CSerialFile::ConfigurationDialog( __
       return( FALSE );
    }
 
-   std::size_t colon_location = Name.find( TEXT( ':' ) );
+   auto colon_location{ Name.find(TEXT(':')) };
 
-   if ( colon_location == std::wstring::npos )
+   if ( colon_location == Name.npos )
    {
       return( false );
    }
 
    std::wstring device_name( Name.substr(0, colon_location ) );
 
-   auto allocated_bytes = std::make_unique<uint8_t[]>(8192);
+   auto allocated_bytes{ std::make_unique<uint8_t[]>(8192) };
 
-   auto buffer = allocated_bytes.get();
+   auto buffer{ allocated_bytes.get() };
 
    if ( buffer == nullptr )
    {
@@ -268,7 +268,7 @@ _Check_return_ bool Win32FoundationClasses::CSerialFile::ConfigurationDialog( __
    // Always, always always zeroize the buffer
    ZeroMemory( buffer, 8192 );
 
-   auto communications_configuration_p = reinterpret_cast< LPCOMMCONFIG >( buffer );
+   auto communications_configuration_p{ reinterpret_cast<LPCOMMCONFIG>(buffer) };
 
    communications_configuration_p->dwSize        = 8192;
    communications_configuration_p->dcb.DCBlength = sizeof( DCB );
@@ -334,7 +334,7 @@ _Check_return_ HANDLE Win32FoundationClasses::CSerialFile::Detach( void ) noexce
    // A new method as suggested by Fabio Angelini (fabioang@iol.it or nico.sw@ibm.net)
    // 1998-07-14
 
-   HANDLE return_value = m_FileHandle;
+   HANDLE return_value{ m_FileHandle };
 
    m_IsOpen   = false;
 #if defined( WFC_STL )
@@ -509,11 +509,11 @@ _Check_return_ bool Win32FoundationClasses::CSerialFile::GetConfiguration( __ino
 
    configuration.Empty();
 
-   DWORD buffer_size = 8 * 1024;
+   DWORD buffer_size{ 8 * 1024 };
 
-   auto buffer = std::make_unique<uint8_t[]>(buffer_size);
+   auto buffer{ std::make_unique<uint8_t[]>(buffer_size) };
 
-   auto buffer_p = buffer.get();
+   auto buffer_p{ buffer.get() };
 
    if ( buffer_p == nullptr )
    {
@@ -523,12 +523,12 @@ _Check_return_ bool Win32FoundationClasses::CSerialFile::GetConfiguration( __ino
    // Always, always always zeroize the buffer
    ZeroMemory( buffer_p, buffer_size );
 
-   auto communications_configuration_p = reinterpret_cast< LPCOMMCONFIG >( buffer_p );
+   auto communications_configuration_p{ reinterpret_cast<LPCOMMCONFIG>(buffer_p) };
 
    communications_configuration_p->dwSize        = buffer_size;
    communications_configuration_p->dcb.DCBlength = sizeof( DCB );
 
-   BOOL const return_value = ::GetCommConfig( m_FileHandle, communications_configuration_p, &buffer_size );
+   BOOL const return_value{ ::GetCommConfig(m_FileHandle, communications_configuration_p, &buffer_size) };
 
    if ( return_value == FALSE )
    {
@@ -558,7 +558,7 @@ _Check_return_ DWORD Win32FoundationClasses::CSerialFile::GetFlowControl( void )
       return( 0 );
    }
 
-   DWORD flow_control = 0;
+   DWORD flow_control{ 0 };
 
    CDeviceControlBlock device_control_block;
 
@@ -620,9 +620,9 @@ _Check_return_ DWORD Win32FoundationClasses::CSerialFile::GetModemStatus( void )
       return( 0 );
    }
 
-   DWORD modem_status = 0;
+   DWORD modem_status{ 0 };
 
-   BOOL return_value = ::GetCommModemStatus( m_FileHandle, &modem_status );
+   auto return_value{ ::GetCommModemStatus(m_FileHandle, &modem_status) };
 
    if ( return_value == FALSE )
    {
@@ -675,7 +675,7 @@ _Check_return_ BOOL Win32FoundationClasses::CSerialFile::GetProperties( __inout 
       return( FALSE );
    }
 
-   BOOL return_value = ::GetCommProperties( m_FileHandle, &properties );
+   BOOL return_value{ ::GetCommProperties(m_FileHandle, &properties) };
 
    if ( return_value == FALSE )
    {
@@ -727,7 +727,7 @@ _Check_return_ BOOL Win32FoundationClasses::CSerialFile::GetTimeouts( __inout CO
       return( FALSE );
    }
 
-   BOOL return_value = ::GetCommTimeouts( m_FileHandle, &timeouts );
+   BOOL return_value{ ::GetCommTimeouts(m_FileHandle, &timeouts) };
 
    if ( return_value == FALSE )
    {
@@ -1002,8 +1002,8 @@ _Check_return_ bool Win32FoundationClasses::CSerialFile::Open( void ) noexcept
 
    std::wstring com_port_name(WSTRING_VIEW(L"\\\\.\\"));
 
-   std::size_t index = 0;
-   std::size_t string_length = Name.length();
+   std::size_t index{ 0 };
+   std::size_t string_length{ Name.length() };
 
    while( index < string_length and Name.at( index ) not_eq ':' )
    {
@@ -1023,7 +1023,7 @@ _Check_return_ bool Win32FoundationClasses::CSerialFile::Open( void ) noexcept
 
    std::wstring number_string;
 
-   std::size_t com_port_name_string_length = com_port_name.length();
+   auto com_port_name_string_length{ com_port_name.length() };
 
    while( index < com_port_name_string_length )
    {
@@ -1039,7 +1039,7 @@ _Check_return_ bool Win32FoundationClasses::CSerialFile::Open( void ) noexcept
       }
    }
 
-   int const port_number = static_cast<int>(as_integer(number_string));
+   auto const port_number{ static_cast<int>(as_integer(number_string)) };
 
    if ( port_number > 0 and port_number < 10 )
    {
@@ -1243,7 +1243,7 @@ _Check_return_ BOOL Win32FoundationClasses::CSerialFile::Purge( _In_ DWORD const
       return( FALSE );
    }
 
-   BOOL return_value = ::PurgeComm( m_FileHandle, what_to_purge );
+   BOOL return_value{ ::PurgeComm(m_FileHandle, what_to_purge) };
 
    if ( return_value == FALSE )
    {
@@ -1340,7 +1340,7 @@ _Check_return_ BOOL Win32FoundationClasses::CSerialFile::SetBreak( void ) noexce
       return( FALSE );
    }
 
-   BOOL return_value = ::SetCommBreak( m_FileHandle );
+   BOOL return_value{ ::SetCommBreak(m_FileHandle) };
 
    if ( return_value == FALSE )
    {
@@ -1408,7 +1408,7 @@ _Check_return_ BOOL Win32FoundationClasses::CSerialFile::SetDataTerminalReady( _
       return( FALSE );
    }
 
-   BOOL return_value = FALSE;
+   BOOL return_value{ FALSE };
 
    if ( set_DTR_on == true )
    {
@@ -1520,7 +1520,7 @@ _Check_return_ bool Win32FoundationClasses::CSerialFile::SetPurgeBufferOnError( 
 {
    WFC_VALIDATE_POINTER( this );
 
-   auto return_value = m_PurgeBufferOnError;
+   auto return_value{ m_PurgeBufferOnError };
 
    m_PurgeBufferOnError = purge_buffer;
 
@@ -1543,7 +1543,7 @@ _Check_return_ bool Win32FoundationClasses::CSerialFile::SetRequestToSend(_In_ b
       return( false );
    }
 
-   BOOL return_value = FALSE;
+   BOOL return_value{ FALSE };
 
    if ( set_RTS_on not_eq FALSE )
    {
@@ -1635,7 +1635,7 @@ _Check_return_ BOOL Win32FoundationClasses::CSerialFile::SetTimeouts( __in_opt C
       communications_timeouts.WriteTotalTimeoutConstant   = 0;
    }
 
-   BOOL return_value = ::SetCommTimeouts( m_FileHandle, &communications_timeouts );
+   BOOL return_value{ ::SetCommTimeouts(m_FileHandle, &communications_timeouts) };
 
    if ( return_value == FALSE )
    {
@@ -1668,7 +1668,7 @@ _Check_return_ BOOL Win32FoundationClasses::CSerialFile::TransmitCharacter( _In_
       return( FALSE );
    }
 
-   BOOL return_value = ::TransmitCommChar( m_FileHandle, character_to_transmit );
+   BOOL return_value{ ::TransmitCommChar(m_FileHandle, character_to_transmit) };
 
    if ( return_value == FALSE )
    {
@@ -1702,7 +1702,7 @@ _Check_return_ BOOL Win32FoundationClasses::CSerialFile::WaitFor(__inout DWORD& 
       return( FALSE );
    }
 
-   BOOL return_value = ::SetCommMask( m_FileHandle, what_to_wait_for );
+   BOOL return_value{ ::SetCommMask(m_FileHandle, what_to_wait_for) };
 
    if ( return_value == FALSE )
    {
@@ -1751,9 +1751,9 @@ _Check_return_ bool Win32FoundationClasses::CSerialFile::WaitForString( _In_ std
 
    std::size_t const length_of_string_to_wait_for{ string_to_wait_for.length() };
 
-   CTime current_time = CTime::GetCurrentTime();
+   CTime current_time{ CTime::GetCurrentTime() };
 
-   CTime expiration_time = current_time;
+   CTime expiration_time{ current_time };
 
    expiration_time += CTimeSpan( 0, 0, 0, seconds_to_wait + 1 );
 
@@ -1872,11 +1872,11 @@ void Win32FoundationClasses::CSerialFile::Write( __in_bcount( length ) void cons
 
       // Windows 95 sucks!
 
-      DWORD number_of_bytes_written       = 0;
-      DWORD total_number_of_bytes_written = 0;
-      DWORD number_of_bytes_to_write      = length;
+      DWORD number_of_bytes_written{ 0 };
+      DWORD total_number_of_bytes_written{ 0 };
+      DWORD number_of_bytes_to_write{ length };
 
-      auto temp_buffer = static_cast<uint8_t const *>(buffer);
+      auto temp_buffer{ static_cast<uint8_t const*>(buffer) };
 
       while( total_number_of_bytes_written < length )
       {

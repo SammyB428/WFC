@@ -47,7 +47,7 @@
 
 #if defined( _DEBUG ) && defined( _INC_CRTDBG )
 #undef THIS_FILE
-static char THIS_FILE[] = __FILE__;
+static auto const THIS_FILE{ __FILE__ };
 #define new DEBUG_NEW
 #endif // _DEBUG
 
@@ -200,14 +200,14 @@ void Win32FoundationClasses::CMTFDateTime::Convert( _Out_ Win32FoundationClasses
 {
    WFC_VALIDATE_POINTER( this );
 
-   int year    = 0;
-   int month   = 0;
-   int day     = 0;
-   int hours   = 0;
-   int minutes = 0;
-   int seconds = 0;
+   int year{ 0 };
+   int month{ 0 };
+   int day{ 0 };
+   int hours{ 0 };
+   int minutes{ 0 };
+   int seconds{ 0 };
 
-   uint8_t temp_byte = 0;
+   uint8_t temp_byte{ 0 };
 
    /*
    ** Compressed date structure for storing dates in minimal space on tape
@@ -313,13 +313,13 @@ void Win32FoundationClasses::CMTFDateTime::Copy( _In_ Win32FoundationClasses::CT
 {
    WFC_VALIDATE_POINTER( this );
 
-   uint8_t byte_0 = 0;
-   uint8_t byte_1 = 0;
-   uint8_t byte_2 = 0;
-   uint8_t byte_3 = 0;
-   uint8_t byte_4 = 0;
+   uint8_t byte_0{ 0 };
+   uint8_t byte_1{ 0 };
+   uint8_t byte_2{ 0 };
+   uint8_t byte_3{ 0 };
+   uint8_t byte_4{ 0 };
 
-   uint16_t temp_word = 0;
+   uint16_t temp_word{ 0 };
 
    /*
    ** Compressed date structure for storing dates in minimal space on tape
@@ -351,7 +351,7 @@ void Win32FoundationClasses::CMTFDateTime::Copy( _In_ Win32FoundationClasses::CT
    **                 ^^  ^^
    */
 
-   auto temp_dword = static_cast<uint32_t>(source.GetMonth());
+   auto temp_dword{ static_cast<uint32_t>(source.GetMonth()) };
 
    if ( _bittest( reinterpret_cast<LONG const *>(&temp_dword), 3 ) == 1 )
    {

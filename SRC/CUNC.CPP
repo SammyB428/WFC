@@ -47,7 +47,7 @@
 
 #if defined( _DEBUG ) && defined( _INC_CRTDBG )
 #undef THIS_FILE
-static char THIS_FILE[] = __FILE__;
+static auto const THIS_FILE{ __FILE__ };
 #endif // _DEBUG
 
 #if defined( _DEBUG ) && defined( _INC_CRTDBG )
@@ -125,9 +125,9 @@ void Win32FoundationClasses::CUniversalNamingConvention::Copy( _In_ Win32Foundat
    ServerName.assign( source.MachineName );
    PathName.assign( source.PathName );
 
-   std::size_t location_of_slash = PathName.find( '/' );
+   auto location_of_slash{ PathName.find('/') };
 
-   if ( location_of_slash not_eq std::wstring::npos )
+   if ( location_of_slash not_eq PathName.npos )
    {
       ShareName.assign( PathName.substr( 0, location_of_slash ) );
       PathName.assign( right( PathName, ( PathName.length() - location_of_slash ) - 1 ) );
@@ -190,13 +190,13 @@ void Win32FoundationClasses::CUniversalNamingConvention::Copy( __in_z LPCTSTR so
          temp_string.erase(0, 1);
       }
 
-      std::size_t location_of_back_slash = temp_string.find( '\\' );
+      auto location_of_back_slash{ temp_string.find('\\') };
 
       /*
       ** First field is ServerName
       */
 
-      if ( location_of_back_slash == std::wstring::npos )
+      if ( location_of_back_slash == temp_string.npos )
       {
          /*
          ** The user sent us something like "\\dodah.txt"
@@ -221,7 +221,7 @@ void Win32FoundationClasses::CUniversalNamingConvention::Copy( __in_z LPCTSTR so
 
       location_of_back_slash = temp_string.find( '\\' );
 
-      if ( location_of_back_slash == std::wstring::npos )
+      if ( location_of_back_slash == temp_string.npos )
       {
          /*
          ** User sent us something like "\\server_name\"

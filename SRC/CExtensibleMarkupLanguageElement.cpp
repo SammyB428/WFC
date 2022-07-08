@@ -47,7 +47,7 @@
 
 #if defined( _DEBUG ) && defined( _INC_CRTDBG )
 #undef THIS_FILE
-static char THIS_FILE[] = __FILE__;
+static auto const THIS_FILE{ __FILE__ };
 #define new DEBUG_NEW
 #endif // _DEBUG
 
@@ -111,7 +111,7 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageElement::Ad
 {
     WFC_VALIDATE_POINTER( this );
 
-    auto attribute_p = new Win32FoundationClasses::CExtensibleMarkupLanguageAttribute;
+    auto attribute_p{ new Win32FoundationClasses::CExtensibleMarkupLanguageAttribute };
 
     //WFCTRACEVAL( TEXT( "Adding attribute named " ), name );
     //WFCTRACEVAL( TEXT( "Value is " ), value );
@@ -707,7 +707,7 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageElement::Fo
 
     if (EnumerateChildren(enumerator) == true)
     {
-        Win32FoundationClasses::CExtensibleMarkupLanguageElement * child_p = nullptr;
+        Win32FoundationClasses::CExtensibleMarkupLanguageElement * child_p{ nullptr };
 
         bool exit_loop{ false };
 
@@ -752,7 +752,7 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageElement::Fo
 
     if ( EnumerateChildren( enumerator ) == true)
     {
-        Win32FoundationClasses::CExtensibleMarkupLanguageElement * child_p = nullptr;
+        Win32FoundationClasses::CExtensibleMarkupLanguageElement * child_p{ nullptr };
 
         bool exit_loop{ false };
 
@@ -790,7 +790,7 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageElement::Ge
 
     if ( EnumerateAttributes( enumerator ) == true)
     {
-        Win32FoundationClasses::CExtensibleMarkupLanguageAttribute * this_attribute_p = nullptr;
+        Win32FoundationClasses::CExtensibleMarkupLanguageAttribute * this_attribute_p{ nullptr };
 
         while( GetNextAttribute( enumerator, this_attribute_p ) == true )
         {
@@ -820,7 +820,7 @@ _Check_return_ Win32FoundationClasses::CExtensibleMarkupLanguageAttribute * Win3
 
     if ( EnumerateAttributes( enumerator ) == true)
     {
-        Win32FoundationClasses::CExtensibleMarkupLanguageAttribute * this_attribute_p = nullptr;
+        Win32FoundationClasses::CExtensibleMarkupLanguageAttribute * this_attribute_p{ nullptr };
 
         while( GetNextAttribute( enumerator, this_attribute_p ) == true )
         {
@@ -848,7 +848,7 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageElement::Ge
 
     if ( EnumerateAttributes( enumerator ) == true)
     {
-        Win32FoundationClasses::CExtensibleMarkupLanguageAttribute * this_attribute_p = nullptr;
+        Win32FoundationClasses::CExtensibleMarkupLanguageAttribute * this_attribute_p{ nullptr };
 
         while( GetNextAttribute( enumerator, this_attribute_p ) == true )
         {
@@ -883,7 +883,7 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageElement::Ge
 
     if ( EnumerateAttributes( enumerator ) == true)
     {
-        Win32FoundationClasses::CExtensibleMarkupLanguageAttribute * this_attribute_p = nullptr;
+        Win32FoundationClasses::CExtensibleMarkupLanguageAttribute * this_attribute_p{ nullptr };
 
         while( GetNextAttribute( enumerator, this_attribute_p ) == true )
         {
@@ -1098,7 +1098,7 @@ _Check_return_ Win32FoundationClasses::CExtensibleMarkupLanguageElement * Win32F
 
     if ( parent_element_p->EnumerateChildren( enumerator ) == true)
     {
-        Win32FoundationClasses::CExtensibleMarkupLanguageElement * child_element_p = nullptr;
+        Win32FoundationClasses::CExtensibleMarkupLanguageElement * child_element_p{ nullptr };
 
         while( parent_element_p->GetNextChild( enumerator, child_element_p ) == true )
         {
@@ -1130,13 +1130,13 @@ _Check_return_ int Win32FoundationClasses::CExtensibleMarkupLanguageElement::Get
 
     auto parent_element_p{ GetParent() };
 
-    std::size_t enumerator = 0;
+    std::size_t enumerator{ 0 };
 
     if ( parent_element_p->EnumerateChildren( enumerator ) == true)
     {
         std::size_t instance_number{ 0 };
 
-        Win32FoundationClasses::CExtensibleMarkupLanguageElement * child_element_p = nullptr;
+        Win32FoundationClasses::CExtensibleMarkupLanguageElement * child_element_p{ nullptr };
 
         while( parent_element_p->GetNextChild( enumerator, child_element_p ) == true )
         {
@@ -2494,7 +2494,7 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageElement::m_
 
     while( exit_loop == false )
     {
-        Win32FoundationClasses::CExtensibleMarkupLanguageElement * sub_element_p = nullptr;
+        Win32FoundationClasses::CExtensibleMarkupLanguageElement * sub_element_p{ nullptr };
 
         if ( parser.PeekCharacter( beginning_of_child, 0 ) == '<' )
         {
@@ -3735,7 +3735,7 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageElement::m_
             temp_string.push_back('=');
             temp_string.push_back('\"');
 
-            std::size_t offset_of_attribute_name = 0;
+            std::size_t offset_of_attribute_name{ 0 };
             auto tag_index_of_attribute_name{ tag.find(temp_string, m_Tag.length()) };
 
             if (tag_index_of_attribute_name == tag.npos)
@@ -4039,10 +4039,10 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageElement::m_
 
         // Now validate the contents of EncName
 
-        wchar_t const character = value.at( 0 );
+        auto const character{ value.at(0) };
 
         if (  ( character >= 'a' and character <= 'z' ) or
-            ( character >= 'A' and character <= 'Z' ) )
+              ( character >= 'A' and character <= 'Z' ) )
         {
             // Do Nothing
         }
@@ -4802,7 +4802,7 @@ _Check_return_ bool Win32FoundationClasses::CExtensibleMarkupLanguageElement::Pa
 
             // We've parsed our opening tag, let's see what the future holds
 
-            Win32FoundationClasses::CExtensibleMarkupLanguageElement * sub_element_p = nullptr;
+            Win32FoundationClasses::CExtensibleMarkupLanguageElement * sub_element_p{ nullptr };
 
             // while ( m_IsTagTerminated == false or m_Type == typeProcessingInstruction )
             while ( m_IsTagTerminated == false )
@@ -5464,7 +5464,7 @@ void Win32FoundationClasses::CExtensibleMarkupLanguageElement::WriteTo( _Inout_ 
 
             if ( m_Children.empty() == false )
             {
-                Win32FoundationClasses::CExtensibleMarkupLanguageElement * first_child_p = m_Children[ 0 ];
+                auto first_child_p{ m_Children[0] };
 
                 if ( first_child_p->m_Type not_eq ElementType::TextSegment or m_Children.size() > 1 )
                 {
@@ -5994,7 +5994,7 @@ struct SUM_TOTAL
 
 void <A TITLE="This is an XML_ELEMENT_CALLBACK function.">entry_callback</A>( void * context, <B>CExtensibleMarkupLanguageElement</B> * element_p )
 {
-SUM_TOTAL_P sum_p = (SUM_TOTAL_P) context;
+auto sum_p { (SUM_TOTAL_P) context};
 
 std::wstring text;
 

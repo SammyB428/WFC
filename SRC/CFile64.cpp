@@ -47,7 +47,7 @@
 
 #if defined( _DEBUG ) && defined( _INC_CRTDBG )
 #undef THIS_FILE
-static char THIS_FILE[] = __FILE__;
+static auto const THIS_FILE{ __FILE__ };
 #define new DEBUG_NEW
 #endif // _DEBUG
 
@@ -71,9 +71,9 @@ static inline _Check_return_ UINT __GetFileName( _In_z_ LPCTSTR path_name_parame
     WFC_VALIDATE_POINTER_NULL_OK( title_parameter );
 
     // always capture the complete file name including extension (if present)
-    LPTSTR temporary_writable_pointer = const_cast< LPTSTR >( path_name_parameter );
+    auto temporary_writable_pointer{ const_cast<LPTSTR>(path_name_parameter) };
 
-    LPCTSTR temporary_pointer = nullptr;
+    LPCTSTR temporary_pointer{ nullptr };
 
     for ( temporary_pointer = path_name_parameter; *temporary_pointer not_eq '\0'; temporary_pointer = _tcsinc( temporary_pointer ) )
     {
@@ -179,7 +179,7 @@ static inline _Check_return_ bool __FullPath( _Out_ wchar_t * lpszPathOut, _In_z
     WFC_VALIDATE_POINTER( lpszPathOut );
 
     // first, fully qualify the path name
-    wchar_t * lpszFilePart = nullptr;
+    wchar_t* lpszFilePart{ nullptr };
 
     if (not GetFullPathNameW( lpszFileIn, _MAX_PATH, lpszPathOut, &lpszFilePart ) )
     {
@@ -194,8 +194,8 @@ static inline _Check_return_ bool __FullPath( _Out_ wchar_t * lpszPathOut, _In_z
 
     // get file system information for the volume
 
-    DWORD dwFlags = 0;
-    DWORD dwDummy = 0;
+    DWORD dwFlags{ 0 };
+    DWORD dwDummy{ 0 };
 
     if (not GetVolumeInformationW(strRoot.c_str(), nullptr, 0, nullptr, &dwDummy, &dwFlags, nullptr, 0 ) )
     {
@@ -215,7 +215,7 @@ static inline _Check_return_ bool __FullPath( _Out_ wchar_t * lpszPathOut, _In_z
     {
         WIN32_FIND_DATA data;
 
-        auto const h = FindFirstFile( lpszFileIn, &data );
+        auto const h{ FindFirstFile(lpszFileIn, &data) };
 
         if ( h not_eq static_cast< HANDLE >( INVALID_HANDLE_VALUE ) )
         {
@@ -234,9 +234,9 @@ static inline _Check_return_ std::size_t __GetFileTitle( _In_z_ wchar_t const * 
 
     // use a temporary to avoid bugs in ::GetFileTitle when lpszTitle is NULL
     wchar_t szTemp[_MAX_PATH];
-    wchar_t * lpszTemp = title;
+    wchar_t* lpszTemp{ title };
 
-    UINT maximum_length = nMax;
+    UINT maximum_length{ nMax };
 
     if (lpszTemp == nullptr)
     {
@@ -782,9 +782,9 @@ _Check_return_ Win32FoundationClasses::CFile64 * Win32FoundationClasses::CFile64
         return( (CFile64 *) nullptr );
     }
 
-    auto return_value =  new Win32FoundationClasses::CFile64;
+    auto return_value{ new Win32FoundationClasses::CFile64() };
 
-    auto duplicate_file_handle = static_cast< HANDLE >( INVALID_HANDLE_VALUE );
+    auto duplicate_file_handle{ static_cast<HANDLE>(INVALID_HANDLE_VALUE) };
 
     if ( ::DuplicateHandle( ::GetCurrentProcess(), m_FileHandle, ::GetCurrentProcess(), &duplicate_file_handle, 0, FALSE, DUPLICATE_SAME_ACCESS ) == FALSE )
     {
@@ -903,7 +903,7 @@ _Check_return_ uint64_t Win32FoundationClasses::CFile64::GetLength( void ) const
 {
     WFC_VALIDATE_POINTER( this );
 
-    LARGE_INTEGER length = { 0, 0 };
+    LARGE_INTEGER length{ 0, 0 };
 
     if ( m_FileHandle == static_cast< HANDLE >( INVALID_HANDLE_VALUE ) )
     {
@@ -928,10 +928,8 @@ _Check_return_ uint64_t Win32FoundationClasses::CFile64::GetPosition( void ) con
         return( (uint64_t) -1 );
     }
 
-    LARGE_INTEGER return_value;
-    LARGE_INTEGER zero = { 0, 0 };
-
-    return_value.QuadPart = 0;
+    LARGE_INTEGER return_value{ 0,0 };
+    LARGE_INTEGER zero{ 0, 0 };
 
     // There's a bug in NT where SetFilePointer() doesn't set last error correctly or at all...
 
@@ -1042,7 +1040,7 @@ _Check_return_ BOOL CFile64::GetStatus( _In_z_ LPCTSTR filename, _Out_ CFileStat
 
     WIN32_FIND_DATA find_data;
 
-    auto const find_handle = ::FindFirstFile( (LPTSTR) filename, &find_data );
+    auto const find_handle{ ::FindFirstFile((LPTSTR)filename, &find_data) };
 
     if ( find_handle == static_cast< HANDLE >( INVALID_HANDLE_VALUE ) )
     {
@@ -1215,7 +1213,7 @@ _Check_return_ bool Win32FoundationClasses::CFile64::Open(_In_ std::filesystem::
 
     Close();
 
-    UINT open_flags = open_flags_parameter;
+    UINT open_flags{ open_flags_parameter };
 
     WFC_TRY
     {
@@ -1255,7 +1253,7 @@ _Check_return_ bool Win32FoundationClasses::CFile64::Open(_In_ std::filesystem::
             ASSERT( FALSE );  // invalid share mode
         }
 
-        DWORD share_mode = 0;
+        DWORD share_mode{ 0 };
 
         switch ( static_cast<OpenFlags>(open_flags bitand 0x70) )    // map compatibility mode to exclusive
         {
@@ -1403,9 +1401,9 @@ _Check_return_ bool Win32FoundationClasses::CFile64::Read( _Inout_ std::string& 
 
     string_from_file.clear();
 
-    BYTE byte_from_file = 0x00;
+    BYTE byte_from_file{ 0x00 };
 
-    bool exit_loop = false;
+    bool exit_loop{ false };
 
     while( exit_loop == false )
     {
@@ -1415,7 +1413,7 @@ _Check_return_ bool Win32FoundationClasses::CFile64::Read( _Inout_ std::string& 
         }
 
         if ( byte_from_file == 0x00 or
-            byte_from_file == LINE_FEED )
+             byte_from_file == LINE_FEED )
         {
             return( true );
         }
@@ -1424,7 +1422,7 @@ _Check_return_ bool Win32FoundationClasses::CFile64::Read( _Inout_ std::string& 
         {
             // See if next character is  a line feed...
 
-            uint64_t current_position = GetPosition();
+            uint64_t current_position{ GetPosition() };
 
             if ( Read( &byte_from_file, 1 ) not_eq 1 )
             {
@@ -1512,7 +1510,7 @@ _Check_return_ uint32_t Win32FoundationClasses::CFile64::Read( __out_bcount( num
         return( 0 );
     }
 
-    DWORD number_of_bytes_read = 0;
+    DWORD number_of_bytes_read{ 0 };
 
     if ( ::ReadFile( m_FileHandle, buffer, number_of_bytes_to_read, &number_of_bytes_read, nullptr ) == FALSE )
     {
@@ -1550,11 +1548,11 @@ _Check_return_ uint32_t Win32FoundationClasses::CFile64::AtomicRead( _In_ HANDLE
     overlapped.Internal     = 0;
     overlapped.InternalHigh = 0;
 
-    DWORD number_of_bytes_read = 0;
+    DWORD number_of_bytes_read{ 0 };
 
     if ( ::ReadFile( m_FileHandle, buffer, number_of_bytes_to_read, &number_of_bytes_read, &overlapped ) == FALSE )
     {
-        uint32_t const last_error = ::GetLastError();
+        auto const last_error{ ::GetLastError() };
 
         if (last_error == ERROR_IO_PENDING)
         {
@@ -1604,15 +1602,15 @@ _Check_return_ uint32_t Win32FoundationClasses::CFile64::AtomicWrite(_In_ HANDLE
     overlapped.Internal = 0;
     overlapped.InternalHigh = 0;
 
-    DWORD number_of_bytes_written = 0;
+    DWORD number_of_bytes_written{ 0 };
 
     // Unfortunately, atomic writes don't work. They reset the file pointer to the offset
     // after the last byte of the write. DOH! Halfway useful...
-    auto const current_file_position = GetPosition();
+    auto const current_file_position{ GetPosition() };
 
     if (::WriteFile(m_FileHandle, buffer, (DWORD) number_of_bytes_to_write, &number_of_bytes_written, &overlapped) == FALSE)
     {
-        uint32_t const last_error = ::GetLastError();
+        auto const last_error{ ::GetLastError() };
 
         if (last_error == ERROR_IO_PENDING)
         {
@@ -1628,7 +1626,7 @@ _Check_return_ uint32_t Win32FoundationClasses::CFile64::AtomicWrite(_In_ HANDLE
         }
     }
 
-    LARGE_INTEGER return_value = { 0, 0 };
+    LARGE_INTEGER return_value{ 0, 0 };
     LARGE_INTEGER distance_to_move;
 
     distance_to_move.QuadPart = current_file_position;
@@ -1676,7 +1674,7 @@ _Check_return_ uint64_t Win32FoundationClasses::CFile64::Seek( _In_ int64_t cons
         return(std::numeric_limits<std::uint64_t>::max());
     }
 
-    DWORD move_method = 0;
+    DWORD move_method{ 0 };
 
     switch( from )
     {
@@ -1703,7 +1701,7 @@ _Check_return_ uint64_t Win32FoundationClasses::CFile64::Seek( _In_ int64_t cons
         return(std::numeric_limits<std::uint64_t>::max());
     }
 
-    LARGE_INTEGER return_value = { 0, 0 };
+    LARGE_INTEGER return_value{ 0, 0 };
     LARGE_INTEGER distance_to_move;
 
     distance_to_move.QuadPart = offset;
@@ -1817,16 +1815,16 @@ _Check_return_ bool Win32FoundationClasses::CFile64::SparsifyRegion( _In_ uint64
 
     ZeroMemory( &overlapped, sizeof( overlapped ) );
 
-    DWORD number_of_bytes_returned = 0;
+    DWORD number_of_bytes_returned{ 0 };
 
-    BOOL return_value = ::DeviceIoControl( m_FileHandle,
+    auto return_value{ ::DeviceIoControl(m_FileHandle,
         FSCTL_SET_ZERO_DATA,
         &region_to_sparsify,
-        sizeof( region_to_sparsify ),
+        sizeof(region_to_sparsify),
         nullptr,
         0,
         &number_of_bytes_returned,
-        &overlapped );
+        &overlapped) };
 
     if ( return_value not_eq 0 )
     {
@@ -1868,19 +1866,19 @@ _Check_return_ bool Win32FoundationClasses::CFile64::ProcessContent(_In_ HANDLE 
         return( false );
     }
 
-    auto buffer = static_cast<uint8_t *>(_aligned_malloc( step_size, 4096 ));
+    auto buffer{ static_cast<uint8_t*>(_aligned_malloc(step_size, 4096)) };
 
     if ( buffer == nullptr )
     {
         return( false );
     }
 
-    int64_t const number_of_bytes_to_process = GetLength();
-    int64_t number_of_bytes_processed = 0;
+    int64_t const number_of_bytes_to_process{ static_cast<int64_t>(GetLength()) };
+    int64_t number_of_bytes_processed{ 0 };
 
     while( number_of_bytes_processed < number_of_bytes_to_process ) // Cannot be converted to a Range loop
     {
-        int64_t number_of_bytes_to_process_in_this_call = number_of_bytes_to_process - number_of_bytes_processed;
+        int64_t number_of_bytes_to_process_in_this_call{ number_of_bytes_to_process - number_of_bytes_processed };
 
         if ( number_of_bytes_to_process_in_this_call <= 0 )
         {
@@ -1939,7 +1937,7 @@ void Win32FoundationClasses::CFile64::Write( __in_bcount( number_of_bytes_to_wri
 
     std::wstring debug_message;
 
-    uint64_t file_position = GetPosition();
+    auto file_position{ GetPosition() };
 
     format( debug_message, L"Writing at offset %" PRIu64, file_position );
 
@@ -1949,16 +1947,16 @@ void Win32FoundationClasses::CFile64::Write( __in_bcount( number_of_bytes_to_wri
 
     WFC_VALIDATE_POINTER( buffer );
 
-    DWORD number_of_bytes_written = 0;
+    DWORD number_of_bytes_written{ 0 };
 
     while ( ::WriteFile( m_FileHandle, buffer, number_of_bytes_to_write, &number_of_bytes_written, nullptr ) == FALSE )
     {
-        DWORD error_code = ::GetLastError();
+        auto error_code{ ::GetLastError() };
         //WFCTRACEERROR( error_code );
 
         if ( m_SafeWriteCallback not_eq nullptr )
         {
-            int const return_value = m_SafeWriteCallback( m_SafeWriteContext, error_code, m_FileName.c_str() );
+            auto const return_value{ m_SafeWriteCallback(m_SafeWriteContext, error_code, m_FileName.c_str()) };
 
             switch( return_value )
             {
@@ -2035,7 +2033,7 @@ void Win32FoundationClasses::CFile64::Write( _In_ std::vector<std::string> const
 
         if ( include_end_of_lines == true)
         {
-            uint8_t end_of_line[ 2 ] = { CARRIAGE_RETURN, LINE_FEED };
+            uint8_t end_of_line[ 2 ]{ CARRIAGE_RETURN, LINE_FEED };
             Write( end_of_line, 2 );
         }
     }
@@ -2049,7 +2047,7 @@ void Win32FoundationClasses::CFile64::Write(_In_ std::vector<std::wstring> const
 
         if (include_end_of_lines == true)
         {
-            wchar_t end_of_line[2] = { CARRIAGE_RETURN, LINE_FEED };
+            wchar_t end_of_line[2]{ CARRIAGE_RETURN, LINE_FEED };
             Write(end_of_line, 2);
         }
     }
@@ -2062,11 +2060,11 @@ _Check_return_ bool Win32FoundationClasses::CFile64::SetShortName( _In_z_ LPCTST
 
 _Check_return_ bool Win32FoundationClasses::CFile64::SetValidData( _In_ int64_t const valid_data_length )  noexcept// New for 73
 {
-    int return_value = ::SetFileValidData( m_FileHandle, valid_data_length );
+    auto return_value{ ::SetFileValidData(m_FileHandle, valid_data_length) };
 
     if ( return_value == 0 )
     {
-        uint32_t const last_error = ::GetLastError();
+        auto const last_error{ ::GetLastError() };
 
         if ( last_error == ERROR_PRIVILEGE_NOT_HELD )
         {

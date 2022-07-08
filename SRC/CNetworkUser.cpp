@@ -47,7 +47,7 @@
 
 #if defined( _DEBUG ) && defined( _INC_CRTDBG )
 #undef THIS_FILE
-static char THIS_FILE[] = __FILE__;
+static auto const THIS_FILE{ __FILE__ };
 #endif // _DEBUG
 
 #if defined( _DEBUG ) && defined( _INC_CRTDBG )
@@ -163,14 +163,14 @@ bool Win32FoundationClasses::CNetworkUsers::Add( _In_ Win32FoundationClasses::CN
       }
    }
 
-   auto index = user_to_add.LogonHours.size();
+   auto index{ user_to_add.LogonHours.size() };
 
    while(index < 21) // Can't be converted to range loop
    {
       logon_hours[index] = 0xFF;
    }
 
-   DWORD parameter_causing_the_error = 0;
+   DWORD parameter_causing_the_error{ 0 };
 
    m_ErrorCode = ::NetUserAdd( m_WideDoubleBackslashPreceededMachineName.get(),
                                2,
@@ -698,7 +698,7 @@ bool Win32FoundationClasses::CNetworkUsers::ExpirePassword( _In_ std::wstring co
 
 #endif // UNICODE
 
-   USER_INFO_3 * user_information_p = nullptr;
+   USER_INFO_3 * user_information_p{ nullptr };
 
    m_ErrorCode = ::NetUserGetInfo( m_WideDoubleBackslashPreceededMachineName.get(),
                                    wide_name,
@@ -709,7 +709,7 @@ bool Win32FoundationClasses::CNetworkUsers::ExpirePassword( _In_ std::wstring co
    {
       if ( user_information_p not_eq nullptr )
       {
-         DWORD parameter_error = 0;
+         DWORD parameter_error{ 0 };
 
          user_information_p->usri3_password_expired = TRUE;
 
@@ -1516,7 +1516,7 @@ void test_CNetworkUsers( LPCTSTR machine_name )
          _tprintf( TEXT( &quot; Password Has Expired - %lu\n&quot; ),              user_information.PasswordHasExpired );
          _tprintf( TEXT( &quot; Encrypted Password: &quot; ) );
 
-         int index = 0;
+         int index { 0 };
 
          while( index &lt; user_information.EncryptedPassword.GetSize() )
          {
@@ -1529,7 +1529,7 @@ void test_CNetworkUsers( LPCTSTR machine_name )
    }
    else
    {
-      DWORD error_code = users.GetErrorCode();
+      DWORD error_code { users.GetErrorCode() };
 
       std::wstring error_message;
 

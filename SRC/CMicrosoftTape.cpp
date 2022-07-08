@@ -47,7 +47,7 @@
 
 #if defined( _DEBUG ) && defined( _INC_CRTDBG )
 #undef THIS_FILE
-static char THIS_FILE[] = __FILE__;
+static auto const THIS_FILE{ __FILE__ };
 #define new DEBUG_NEW
 #endif // _DEBUG
 
@@ -139,7 +139,7 @@ _Check_return_ bool Win32FoundationClasses::CMicrosoftTape::ReadHeader( void ) n
 
    //Rewind();
 
-   DWORD number_of_bytes_read = 0;
+   DWORD number_of_bytes_read{ 0 };
 
    if ( ::ReadFile( m_FileHandle, (LPVOID) (MTF_TAPE *) &m_TapeHeader, sizeof( MTF_TAPE ), &number_of_bytes_read, nullptr ) == FALSE )
    {
