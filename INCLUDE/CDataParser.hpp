@@ -2,7 +2,7 @@
 ** Author: Samuel R. Blackburn
 ** Internet: wfc@pobox.com
 **
-** Copyright, 1995-2019, Samuel R. Blackburn
+** Copyright, 1995-2022, Samuel R. Blackburn
 **
 ** "You can get credit for something or get it done, but not both."
 ** Dr. Richard Garwin
@@ -1650,7 +1650,7 @@ public:
 
         uint32_t line_character{ 0 };
 
-        while (line_count < number_of_lines  )
+        while (line_count < number_of_lines)
         {
             if (GetNextCharacter(parse_point, line_character) == false)
             {
@@ -1667,7 +1667,7 @@ public:
                     line_count++;
                 }
             }
-            else if (line_character == LINE_FEED)
+            else if (line_character == LINE_FEED or line_character < TAB_CHARACTER)
             {
                 line_count++;
             }
@@ -1703,6 +1703,10 @@ public:
             else if ( line_character == LINE_FEED )
             {
                 return( true );
+            }
+            else if ( line_character < TAB_CHARACTER )
+            {
+                return(true);
             }
 
             line.push_back( static_cast<wchar_t>(line_character) );
@@ -1741,7 +1745,7 @@ public:
 
                 return(true);
             }
-            else if (line_character == LINE_FEED or line_character == 0x00)
+            else if (line_character == LINE_FEED or line_character < TAB_CHARACTER)
             {
                 return(true);
             }
@@ -1783,9 +1787,13 @@ public:
 
                 return( true );
             }
-            else if ( line_character == LINE_FEED or line_character == 0x00 )
+            else if ( line_character == LINE_FEED )
             {
                 return( true );
+            }
+            else if ( line_character < TAB_CHARACTER )
+            {
+                return(true);
             }
 
             length++;
